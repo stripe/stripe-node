@@ -18,7 +18,9 @@ const stripe = require('../src/stripe.cjs.node.js');
 
 const testingHttpAgent = new http.Agent({keepAlive: false});
 
+const FAKE_API_KEY = 'sk_test_123';
 const utils = (module.exports = {
+  FAKE_API_KEY,
   getTestServerStripe: (clientOptions, handler, callback) => {
     const server = http.createServer((req, res) => {
       const {shouldStayOpen} = handler(req, res) || {};
@@ -49,7 +51,7 @@ const utils = (module.exports = {
   getStripeMockClient: () => {
     const stripe = require('../src/stripe.cjs.node.js');
 
-    return stripe('sk_test_123', {
+    return stripe(FAKE_API_KEY, {
       host: process.env.STRIPE_MOCK_HOST || 'localhost',
       port: process.env.STRIPE_MOCK_PORT || 12111,
       protocol: 'http',
@@ -109,7 +111,7 @@ const utils = (module.exports = {
           stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
         )
     );
-    return stripeFactory('fakeAuthToken', config);
+    return stripeFactory(FAKE_API_KEY, config);
   },
 
   createMockClient: (requests) => {
@@ -188,7 +190,7 @@ const utils = (module.exports = {
     // Provide a testable stripe instance
     // That is, with mock-requests built in and hookable
     const stripe = require('../src/stripe.cjs.node.js');
-    const stripeInstance = stripe('fakeAuthToken', config);
+    const stripeInstance = stripe(FAKE_API_KEY, config);
 
     stripeInstance.REQUESTS = [];
 
@@ -199,87 +201,6 @@ const utils = (module.exports = {
 
     return stripeInstance;
   },
-
-  /**
-   * A utility where cleanup functions can be registered to be called post-spec.
-   * CleanupUtility will automatically register on the mocha afterEach hook,
-   * ensuring its called after each descendent-describe block.
-   */
-  CleanupUtility: (() => {
-    CleanupUtility.DEFAULT_TIMEOUT = 20000;
-
-    function CleanupUtility(timeout) {
-      // eslint-disable-next-line @typescript-eslint/no-this-alias
-      const self = this;
-      this._cleanupFns = [];
-      this._stripe = require('../src/stripe.cjs.node.js')(
-        utils.getUserStripeKey(),
-        'latest'
-      );
-      afterEach(function(done) {
-        this.timeout(timeout || CleanupUtility.DEFAULT_TIMEOUT);
-        return self.doCleanup(done);
-      });
-    }
-
-    CleanupUtility.prototype = {
-      doCleanup(done) {
-        const cleanups = this._cleanupFns;
-        const total = cleanups.length;
-        let completed = 0;
-        let fn;
-        while ((fn = cleanups.shift())) {
-          const promise = fn.call(this);
-          if (!promise || !promise.then) {
-            throw new Error(
-              'CleanupUtility expects cleanup functions to return promises!'
-            );
-          }
-          promise.then(
-            () => {
-              // cleanup successful
-              completed += 1;
-              if (completed === total) {
-                done();
-              }
-            },
-            (err) => {
-              // not successful
-              throw err;
-            }
-          );
-        }
-        if (total === 0) {
-          done();
-        }
-      },
-      add(fn) {
-        this._cleanupFns.push(fn);
-      },
-      deleteCustomer(custId) {
-        this.add(function() {
-          return this._stripe.customers.del(custId);
-        });
-      },
-      deletePlan(pId) {
-        this.add(function() {
-          return this._stripe.plans.del(pId);
-        });
-      },
-      deleteCoupon(cId) {
-        this.add(function() {
-          return this._stripe.coupons.del(cId);
-        });
-      },
-      deleteInvoiceItem(iiId) {
-        this.add(function() {
-          return this._stripe.invoiceItems.del(iiId);
-        });
-      },
-    };
-
-    return CleanupUtility;
-  })(),
 
   /**
    * Get a random string for test Object creation

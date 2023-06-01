@@ -26,7 +26,7 @@ describe('Integration test', function() {
       cd testProjects/${projectName} &&
       npm install &&
       npm run lint &&
-      npm run runtestproject -- ${testUtils.getUserStripeKey()}
+      npm run runtestproject -- ${testUtils.FAKE_API_KEY}
     `);
   };
 

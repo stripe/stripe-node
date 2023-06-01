@@ -7,41 +7,36 @@ import {createStripe} from '../src/stripe.core.js';
 import {getMockPlatformFunctions} from './testUtils.js';
 import {ApiVersion} from '../src/apiVersion.js';
 
-const testUtils = require('./testUtils.js');
-const Stripe = require('../src/stripe.cjs.node.js');
-const stripe = require('../src/stripe.cjs.node.js')(
-  testUtils.getUserStripeKey(),
-  'latest'
-);
-const crypto = require('crypto');
+import * as testUtils from './testUtils.js';
+import Stripe = require('../src/stripe.cjs.node.js');
+import crypto = require('crypto');
+const stripe = testUtils.getStripeMockClient();
+const {FAKE_API_KEY} = testUtils;
 
 const expect = require('chai').expect;
 
 const CUSTOMER_DETAILS = {
   description: 'Some customer',
-  card: 'tok_visa',
+  email: 'jenny.rosen@example.com',
 };
 
 describe('Stripe Module', function() {
-  const cleanup = new testUtils.CleanupUtility();
-  this.timeout(20000);
-
   describe('config object', () => {
     it('should only accept either an object or a string', () => {
       expect(() => {
-        Stripe(testUtils.getUserStripeKey(), 123);
+        Stripe(FAKE_API_KEY, 123);
       }).to.throw(/Config must either be an object or a string/);
 
       expect(() => {
-        Stripe(testUtils.getUserStripeKey(), ['2019-12-12']);
+        Stripe(FAKE_API_KEY, ['2019-12-12']);
       }).to.throw(/Config must either be an object or a string/);
 
       expect(() => {
-        Stripe(testUtils.getUserStripeKey(), '2019-12-12');
+        Stripe(FAKE_API_KEY, '2019-12-12');
       }).to.not.throw();
 
       expect(() => {
-        Stripe(testUtils.getUserStripeKey(), {
+        Stripe(FAKE_API_KEY, {
           apiVersion: 'latest',
         });
       }).to.not.throw();
@@ -49,14 +44,14 @@ describe('Stripe Module', function() {
 
     it('should only contain allowed properties', () => {
       expect(() => {
-        Stripe(testUtils.getUserStripeKey(), {
+        Stripe(FAKE_API_KEY, {
           foo: 'bar',
           apiVersion: 'latest',
         });
       }).to.throw(/Config object may only contain the following:/);
 
       expect(() => {
-        Stripe(testUtils.getUserStripeKey(), {
+        Stripe(FAKE_API_KEY, {
           apiVersion: '2019-12-12',
           maxNetworkRetries: 2,
           httpAgent: 'agent',
@@ -68,40 +63,40 @@ describe('Stripe Module', function() {
     });
     it('should forbid sending http to *.stripe.com', () => {
       expect(() => {
-        Stripe(testUtils.getUserStripeKey(), {
+        Stripe(FAKE_API_KEY, {
           host: 'foo.stripe.com',
           protocol: 'http',
         });
       }).to.throw(/The `https` protocol must be used/);
 
       expect(() => {
-        Stripe(testUtils.getUserStripeKey(), {
+        Stripe(FAKE_API_KEY, {
           protocol: 'http',
         });
       }).to.throw(/The `https` protocol must be used/);
 
       expect(() => {
-        Stripe(testUtils.getUserStripeKey(), {
+        Stripe(FAKE_API_KEY, {
           protocol: 'http',
           host: 'api.stripe.com',
         });
       }).to.throw(/The `https` protocol must be used/);
 
       expect(() => {
-        Stripe(testUtils.getUserStripeKey(), {
+        Stripe(FAKE_API_KEY, {
           protocol: 'https',
           host: 'api.stripe.com',
         });
       }).not.to.throw();
 
       expect(() => {
-        Stripe(testUtils.getUserStripeKey(), {
+        Stripe(FAKE_API_KEY, {
           host: 'api.stripe.com',
         });
       }).not.to.throw();
 
       expect(() => {
-        Stripe(testUtils.getUserStripeKey(), {
+        Stripe(FAKE_API_KEY, {
           protocol: 'http',
           host: 'localhost',
         });
@@ -113,18 +108,18 @@ describe('Stripe Module', function() {
 
       cases.forEach((item) => {
         expect(() => {
-          Stripe(testUtils.getUserStripeKey(), item);
+          Stripe(FAKE_API_KEY, item);
         }).to.not.throw();
       });
 
       cases.forEach((item) => {
-        const newStripe = Stripe(testUtils.getUserStripeKey(), item);
+        const newStripe = Stripe(FAKE_API_KEY, item);
         expect(newStripe.getApiField('version')).to.equal(ApiVersion);
       });
     });
 
     it('should enable telemetry if not explicitly set', () => {
-      const newStripe = Stripe(testUtils.getUserStripeKey());
+      const newStripe = Stripe(FAKE_API_KEY);
 
       expect(newStripe.getTelemetryEnabled()).to.equal(true);
     });
@@ -134,14 +129,14 @@ describe('Stripe Module', function() {
       let newStripe;
 
       vals.forEach((val) => {
-        newStripe = Stripe(testUtils.getUserStripeKey(), {
+        newStripe = Stripe(FAKE_API_KEY, {
           telemetry: val,
         });
 
         expect(newStripe.getTelemetryEnabled()).to.equal(true);
       });
 
-      newStripe = Stripe(testUtils.getUserStripeKey(), {
+      newStripe = Stripe(FAKE_API_KEY, {
         telemetry: false,
       });
 
@@ -151,9 +146,7 @@ describe('Stripe Module', function() {
 
   describe('setApiKey', () => {
     it('uses Bearer auth', () => {
-      expect(stripe.getApiField('auth')).to.equal(
-        `Bearer ${testUtils.getUserStripeKey()}`
-      );
+      expect(stripe.getApiField('auth')).to.equal(`Bearer ${FAKE_API_KEY}`);
     });
   });
 
@@ -185,7 +178,7 @@ describe('Stripe Module', function() {
     it('Should include whether typescript: true was passed, respecting reinstantiations', () => {
       return new Promise((resolve) => resolve(null))
         .then(() => {
-          const newStripe = new Stripe('sk_test_123', {
+          const newStripe = new Stripe(FAKE_API_KEY, {
             typescript: true,
           });
           return expect(
@@ -197,7 +190,7 @@ describe('Stripe Module', function() {
           ).to.eventually.have.property('typescript', 'true');
         })
         .then(() => {
-          const newStripe = new Stripe('sk_test_123', {});
+          const newStripe = new Stripe(FAKE_API_KEY, {});
           return expect(
             new Promise((resolve, reject) => {
               newStripe.getClientUserAgent((c) => {
@@ -249,7 +242,7 @@ describe('Stripe Module', function() {
           getMockPlatformFunctions((cmd: string, cb: any): void => {
             cb(null, 'foøname');
           })
-        )(testUtils.getUserStripeKey(), 'latest');
+        )(FAKE_API_KEY, 'latest');
         return expect(
           new Promise((resolve, reject) => {
             stripe.getClientUserAgentSeeded({lang: 'node'}, (c) => {
@@ -264,7 +257,7 @@ describe('Stripe Module', function() {
           getMockPlatformFunctions((cmd: string, cb: any): void => {
             cb(new Error('security'), null);
           })
-        )(testUtils.getUserStripeKey(), 'latest');
+        )(FAKE_API_KEY, 'latest');
         return expect(
           new Promise((resolve, reject) => {
             stripe.getClientUserAgentSeeded({lang: 'node'}, (c) => {
@@ -282,13 +275,13 @@ describe('Stripe Module', function() {
       expect(stripe.getApiField('timeout')).to.equal(defaultTimeout);
     });
     it('Should allow me to set a custom timeout', () => {
-      const newStripe = Stripe('sk_test', {
+      const newStripe = Stripe(FAKE_API_KEY, {
         timeout: 900,
       });
       expect(newStripe.getApiField('timeout')).to.equal(900);
     });
     it('Should allow me to set null, to reset to the default', () => {
-      const newStripe = Stripe('sk_test', {
+      const newStripe = Stripe(FAKE_API_KEY, {
         timeout: null,
       });
       expect(newStripe.getApiField('timeout')).to.equal(defaultTimeout);
@@ -311,7 +304,7 @@ describe('Stripe Module', function() {
     describe('when given a non-object variable', () => {
       it('should throw an error', () => {
         expect(() => {
-          Stripe('sk_test', {
+          Stripe(FAKE_API_KEY, {
             appInfo: 'foo',
           });
         }).to.throw(/AppInfo must be an object./);
@@ -321,13 +314,13 @@ describe('Stripe Module', function() {
     describe('when given an object with no `name`', () => {
       it('should throw an error', () => {
         expect(() => {
-          Stripe('sk_test', {
+          Stripe(FAKE_API_KEY, {
             appInfo: {},
           });
         }).to.throw(/AppInfo.name is required/);
 
         expect(() => {
-          Stripe('sk_test', {
+          Stripe(FAKE_API_KEY, {
             appInfo: {
               version: '1.2.3',
             },
@@ -335,7 +328,7 @@ describe('Stripe Module', function() {
         }).to.throw(/AppInfo.name is required/);
 
         expect(() => {
-          Stripe('sk_test', {
+          Stripe(FAKE_API_KEY, {
             appInfo: {
               cats: '42',
             },
@@ -346,7 +339,7 @@ describe('Stripe Module', function() {
 
     describe('when given at least a `name`', () => {
       it('should set name, partner ID, url, and version of stripe._appInfo', () => {
-        let newStripe = Stripe('sk_test', {
+        let newStripe = Stripe(FAKE_API_KEY, {
           appInfo: {
             name: 'MyAwesomeApp',
           },
@@ -355,7 +348,7 @@ describe('Stripe Module', function() {
           name: 'MyAwesomeApp',
         });
 
-        newStripe = Stripe('sk_test', {
+        newStripe = Stripe(FAKE_API_KEY, {
           appInfo: {
             name: 'MyAwesomeApp',
             version: '1.2.345',
@@ -366,7 +359,7 @@ describe('Stripe Module', function() {
           version: '1.2.345',
         });
 
-        newStripe = Stripe('sk_test', {
+        newStripe = Stripe(FAKE_API_KEY, {
           appInfo: {
             name: 'MyAwesomeApp',
             url: 'https://myawesomeapp.info',
@@ -377,7 +370,7 @@ describe('Stripe Module', function() {
           url: 'https://myawesomeapp.info',
         });
 
-        newStripe = Stripe('sk_test', {
+        newStripe = Stripe(FAKE_API_KEY, {
           appInfo: {
             name: 'MyAwesomeApp',
             partner_id: 'partner_1234',
@@ -390,7 +383,7 @@ describe('Stripe Module', function() {
       });
 
       it('should ignore any invalid properties', () => {
-        const newStripe = Stripe('sk_test', {
+        const newStripe = Stripe(FAKE_API_KEY, {
           appInfo: {
             name: 'MyAwesomeApp',
             partner_id: 'partner_1234',
@@ -415,7 +408,7 @@ describe('Stripe Module', function() {
         url: 'https://myawesomeapp.info',
       };
 
-      const newStripe = Stripe('sk_test', {
+      const newStripe = Stripe(FAKE_API_KEY, {
         appInfo,
       });
 
@@ -437,7 +430,6 @@ describe('Stripe Module', function() {
         expect(
           new Promise((resolve, reject) => {
             stripe.customers.create(CUSTOMER_DETAILS, (err, customer) => {
-              cleanup.deleteCustomer(customer.id);
               resolve('Called!');
             });
           })
@@ -448,8 +440,7 @@ describe('Stripe Module', function() {
           expect(
             new Promise((resolve, reject) => {
               stripe.customers.create(CUSTOMER_DETAILS, (err, customer) => {
-                cleanup.deleteCustomer(customer.id);
-
+                if (err) return reject(err);
                 const headers = customer.lastResponse.headers;
                 expect(headers).to.contain.keys('request-id');
 
@@ -460,16 +451,12 @@ describe('Stripe Module', function() {
             })
           ).to.eventually.equal('Called!'));
 
-        it('Will have request id, status code and version', () =>
+        it('Will have request id and status code', () =>
           expect(
             new Promise((resolve, reject) => {
               stripe.customers.create(CUSTOMER_DETAILS, (_err, customer) => {
-                cleanup.deleteCustomer(customer.id);
-
                 expect(customer.lastResponse.requestId).to.match(/^req_/);
                 expect(customer.lastResponse.statusCode).to.equal(200);
-                expect(customer.lastResponse.apiVersion).to.be.a('string').that
-                  .is.not.empty;
 
                 resolve('Called!');
               });
@@ -488,8 +475,6 @@ describe('Stripe Module', function() {
                   idempotencyKey: key,
                 },
                 (err, customer) => {
-                  cleanup.deleteCustomer(customer.id);
-
                   expect(customer.lastResponse.idempotencyKey).to.equal(key);
 
                   resolve('Called!');
@@ -502,10 +487,11 @@ describe('Stripe Module', function() {
       it('Given an error the callback will receive it', () =>
         expect(
           new Promise((resolve, reject) => {
-            stripe.customers.createSource(
-              'nonExistentCustId',
-              {card: {}},
+            stripe.customers.create(
+              {this_is_not_a_real_param: 'foobar'},
               (err, customer) => {
+                console.log(err);
+                console.log(customer);
                 if (err) {
                   resolve('ErrorWasPassed');
                 } else {
@@ -598,21 +584,21 @@ describe('Stripe Module', function() {
 
     describe('when passed in via the config object', () => {
       it('should default to 0 if a non-integer is passed', () => {
-        const newStripe = Stripe(testUtils.getUserStripeKey(), {
+        const newStripe = Stripe(FAKE_API_KEY, {
           maxNetworkRetries: 'foo',
         });
 
         expect(newStripe.getMaxNetworkRetries()).to.equal(0);
 
         expect(() => {
-          Stripe(testUtils.getUserStripeKey(), {
+          Stripe(FAKE_API_KEY, {
             maxNetworkRetries: 2,
           });
         }).to.not.throw();
       });
 
       it('should correctly set the amount of network retries', () => {
-        const newStripe = Stripe(testUtils.getUserStripeKey(), {
+        const newStripe = Stripe(FAKE_API_KEY, {
           maxNetworkRetries: 5,
         });
 
@@ -622,7 +608,7 @@ describe('Stripe Module', function() {
 
     describe('when not set', () => {
       it('should use the default', () => {
-        const newStripe = Stripe(testUtils.getUserStripeKey());
+        const newStripe = Stripe(FAKE_API_KEY);
 
         expect(newStripe.getMaxNetworkRetries()).to.equal(0);
       });
@@ -631,7 +617,7 @@ describe('Stripe Module', function() {
 
   describe('VERSION', () => {
     it('should return the current package version', () => {
-      const newStripe = Stripe(testUtils.getUserStripeKey());
+      const newStripe = Stripe(FAKE_API_KEY);
 
       expect(newStripe.VERSION).to.equal(Stripe.PACKAGE_VERSION);
     });

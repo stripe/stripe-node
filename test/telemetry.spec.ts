@@ -58,7 +58,7 @@ describe('Client Telemetry', () => {
       },
       (host, port) => {
         const stripe = require('../src/stripe.cjs.node.js')(
-          'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
+          testUtils.FAKE_API_KEY,
           {
             telemetry: false,
             host,

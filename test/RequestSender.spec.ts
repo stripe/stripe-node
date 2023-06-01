@@ -23,7 +23,7 @@ describe('RequestSender', () => {
   describe('_makeHeaders', () => {
     it('sets the Authorization header with Bearer auth using the global API key', () => {
       const headers = sender._makeHeaders(null, 0, null);
-      expect(headers.Authorization).to.equal('Bearer fakeAuthToken');
+      expect(headers.Authorization).to.equal(`Bearer ${utils.FAKE_API_KEY}`);
     });
     it('sets the Authorization header with Bearer auth using the specified API key', () => {
       const headers = sender._makeHeaders('anotherFakeAuthToken', 0, null);
@@ -88,9 +88,7 @@ describe('RequestSender', () => {
 
   describe('Parameter encoding', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
-    const realStripe = require('../src/stripe.cjs.node.js')(
-      utils.getUserStripeKey()
-    );
+    const realStripe = require('../src/stripe.cjs.node.js')('sk_test_xyz');
 
     after(() => {
       nock.cleanAll();
@@ -337,9 +335,7 @@ describe('RequestSender', () => {
 
   describe('Retry Network Requests', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
-    const realStripe = require('../src/stripe.cjs.node.js')(
-      utils.getUserStripeKey()
-    );
+    const realStripe = require('../src/stripe.cjs.node.js')('sk_test_xyz');
 
     // Override the sleep timer to speed up tests
     realStripe.charges._getSleepTimeInMS = () => 0;
