@@ -7,6 +7,7 @@ import {
   RequestHeaders,
   MultipartRequestData,
   RequestCallback,
+  APIMode,
 } from './Types.js';
 
 const OPTIONS_KEYS = [
@@ -25,8 +26,6 @@ type Settings = {
   timeout?: number;
   maxNetworkRetries?: number;
 };
-
-type APIMode = 'preview' | 'standard' | null;
 
 type Options = {
   auth: string | null;
@@ -49,15 +48,11 @@ export function isOptionsHash(o: unknown): boolean | unknown {
  * Stringifies an Object, accommodating nested objects
  * (forming the conventional key 'parent[child]=value')
  */
-export function queryStringifyRequestData(
-  data: RequestData | string,
-  apiMode?: APIMode
-): string {
+export function queryStringifyRequestData(data: RequestData | string): string {
   return (
     qs
       .stringify(data, {
         serializeDate: (d: Date) => Math.floor(d.getTime() / 1000).toString(),
-        arrayFormat: apiMode === 'preview' ? 'repeat' : 'indices',
       })
       // Don't use strict form encoding by changing the square bracket control
       // characters back to their literals. This is fine by the server, and

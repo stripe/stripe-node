@@ -791,10 +791,11 @@ describe('Stripe Module', function() {
       expect(response).to.have.property('object', 'list');
     });
 
-    it('should throw error when passing in params to non-POST request', () => {
-      expect(
+    it('should throw error when passing in params to non-POST request', async () => {
+      await expect(
         stripe.rawRequest('GET', '/v1/customers/cus_123', {foo: 'bar'})
-      ).to.eventually.throw(
+      ).to.be.rejectedWith(
+        Error,
         /rawRequest only supports params on POST requests. Please pass null and add your parameters to path./
       );
     });

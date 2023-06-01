@@ -51,11 +51,12 @@ export type RequestEvent = {
   request_start_time: number;
 };
 export type RequestHeaders = Record<string, string | number | string[]>;
+export type APIMode = 'preview' | 'standard';
 export type RequestOptions = {
   settings?: RequestSettings;
   streaming?: boolean;
   headers?: RequestHeaders;
-  apiMode?: 'standard' | 'preview';
+  apiMode?: APIMode;
 };
 export type RequestOpts = {
   requestMethod: string;
@@ -67,7 +68,7 @@ export type RequestOpts = {
   host: string | null;
   streaming: boolean;
   settings: RequestSettings;
-  apiMode?: 'standard' | 'preview';
+  apiMode?: APIMode;
 };
 export type RequestSettings = {timeout?: number; maxNetworkRetries?: number};
 export type ResponseEvent = {

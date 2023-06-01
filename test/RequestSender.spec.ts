@@ -528,13 +528,9 @@ describe('RequestSender', () => {
             error,
           });
 
-        try {
-          await realStripe.rawRequest('POST', '/v1/charges');
-          throw new Error('Should not reach here');
-        } catch (err) {
-          expect(err).to.be.an.instanceOf(StripeError);
-          expect(err.message).to.equal('Unacceptable');
-        }
+        await expect(
+          realStripe.rawRequest('POST', '/v1/charges')
+        ).to.be.rejectedWith(StripeError, /Unacceptable/);
       });
 
       it('retries connection timeout errors', (done) => {

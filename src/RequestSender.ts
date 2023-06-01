@@ -14,7 +14,6 @@ import {
   queryStringifyRequestData,
   getDataFromArgs,
   getOptionsFromArgs,
-  callbackifyPromiseWithTimeout,
 } from './utils.js';
 import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
 import {
@@ -648,10 +647,7 @@ export class RequestSender {
       if (options.apiMode === 'preview') {
         stringifiedData = data ? jsonStringifyRequestData(data) : '';
       } else {
-        stringifiedData = queryStringifyRequestData(
-          data || {},
-          options.apiMode
-        );
+        stringifiedData = queryStringifyRequestData(data || {});
       }
 
       prepareAndMakeRequest(null, stringifiedData);
