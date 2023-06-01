@@ -186,7 +186,7 @@ const stripe = Stripe('sk_test_...', {
 | Option              | Default            | Description                                                                                                                                                                                                                                       |
 | ------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `apiVersion`        | `null`             | Stripe API version to be used. If not set, stripe-node will use the latest version at the time of release.                                                                                                                                        |
-| `maxNetworkRetries` | 0                  | The amount of times a request should be [retried](#network-retries).                                                                                                                                                                              |
+| `maxNetworkRetries` | 1                  | The amount of times a request should be [retried](#network-retries).                                                                                                                                                                              |
 | `httpAgent`         | `null`             | [Proxy](#configuring-a-proxy) agent to be used by the library.                                                                                                                                                                                    |
 | `timeout`           | 80000              | [Maximum time each request can take in ms.](#configuring-timeout)                                                                                                                                                                                 |
 | `host`              | `'api.stripe.com'` | Host that requests are made to.                                                                                                                                                                                                                   |
@@ -253,10 +253,14 @@ if (process.env.http_proxy) {
 
 ### Network retries
 
-Automatic network retries can be enabled with the `maxNetworkRetries` config option.
-This will retry requests `n` times with exponential backoff if they fail due to an intermittent network problem.
-[Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
+As of [v13](https://github.com/stripe/stripe-node/releases/tag/v13.0.0) stripe-node will automatically do one reattempt for failed requests that are safe to retry. Automatic network retries can be disabled by setting the `maxNetworkRetries` config option to `0`. You can also set a higher number to reattempt multiple times, with exponential backoff. [Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
 
+```js
+const stripe = Stripe('sk_test_...', {
+  maxNetworkRetries: 0, // Disable retries
+});
+
+```
 ```js
 const stripe = Stripe('sk_test_...', {
   maxNetworkRetries: 2, // Retry a request twice before giving up
