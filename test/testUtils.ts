@@ -43,16 +43,13 @@ export const getTestServerStripe = (
   });
   server.listen(0, () => {
     const {port} = server.address() as any;
-    const stripe = require('../src/stripe.cjs.node.js')(
-      module.exports.getUserStripeKey(),
-      {
-        host: 'localhost',
-        port,
-        protocol: 'http',
-        httpAgent: testingHttpAgent,
-        ...clientOptions,
-      }
-    );
+    const stripe = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
+      host: 'localhost',
+      port,
+      protocol: 'http',
+      httpAgent: testingHttpAgent,
+      ...clientOptions,
+    });
     return callback(null, stripe, () => {
       server.close();
     });
@@ -67,13 +64,6 @@ export const getStripeMockClient = (): StripeClient => {
     port: process.env.STRIPE_MOCK_PORT || 12111,
     protocol: 'http',
   });
-};
-
-export const getUserStripeKey = (): string => {
-  const key =
-    process.env.STRIPE_TEST_API_KEY || 'tGN0bIwXnHdwOa85VABjPdSn8nWY7G7I';
-
-  return key;
 };
 
 export const getMockPlatformFunctions = (
