@@ -1,7 +1,5 @@
 // @ts-nocheck
 
-require('./testUtils.js');
-
 import * as fs from 'fs';
 import * as path from 'path';
 

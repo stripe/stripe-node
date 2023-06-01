@@ -1,5 +1,5 @@
 import * as childProcess from 'child_process';
-const testUtils = require('./testUtils.js');
+import {FAKE_API_KEY} from './testUtils.js';
 
 const nodeVersion = parseInt(process.versions.node.split('.')[0], 10);
 
@@ -26,7 +26,7 @@ describe('Integration test', function() {
       cd testProjects/${projectName} &&
       npm install &&
       npm run lint &&
-      npm run runtestproject -- ${testUtils.FAKE_API_KEY}
+      npm run runtestproject -- ${FAKE_API_KEY}
     `);
   };
 

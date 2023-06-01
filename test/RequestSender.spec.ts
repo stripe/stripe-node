@@ -1,29 +1,31 @@
 // @ts-nocheck
-
-const {RequestSender} = require('../src/RequestSender.js');
-
-const stripe = require('./testUtils.js').getSpyableStripe();
-const expect = require('chai').expect;
-
-const {HttpClientResponse} = require('../src/net/HttpClient.js');
-const utils = require('./testUtils.js');
-const nock = require('nock');
-
-const {
+import {expect} from 'chai';
+import {
   StripeAuthenticationError,
+  StripeConnectionError,
+  StripeError,
   StripeIdempotencyError,
   StripePermissionError,
   StripeRateLimitError,
-  StripeError,
-  StripeConnectionError,
-} = require('../src/Error.js');
+} from '../src/Error.js';
+import {HttpClientResponse} from '../src/net/HttpClient.js';
+import {RequestSender} from '../src/RequestSender.js';
+import {
+  FAKE_API_KEY,
+  getSpyableStripe,
+  getTestServerStripe,
+} from './testUtils.js';
+import nock = require('nock');
+
+const stripe = getSpyableStripe();
+
 describe('RequestSender', () => {
   const sender = new RequestSender(stripe, 0);
 
   describe('_makeHeaders', () => {
     it('sets the Authorization header with Bearer auth using the global API key', () => {
       const headers = sender._makeHeaders(null, 0, null);
-      expect(headers.Authorization).to.equal(`Bearer ${utils.FAKE_API_KEY}`);
+      expect(headers.Authorization).to.equal(`Bearer ${FAKE_API_KEY}`);
     });
     it('sets the Authorization header with Bearer auth using the specified API key', () => {
       const headers = sender._makeHeaders('anotherFakeAuthToken', 0, null);
@@ -375,7 +377,7 @@ describe('RequestSender', () => {
       });
 
       it('throws an error on connection timeout', (done) => {
-        return utils.getTestServerStripe(
+        return getTestServerStripe(
           {timeout: 10},
           (req, res) => {
             // Do nothing. This will trigger a timeout.
@@ -397,7 +399,7 @@ describe('RequestSender', () => {
       });
 
       it('throws an error on invalid JSON', (done) => {
-        return utils.getTestServerStripe(
+        return getTestServerStripe(
           {},
           (req, res) => {
             // Write back JSON to close out the server.
@@ -419,7 +421,7 @@ describe('RequestSender', () => {
         );
       });
       it('throws an valid headers but connection error', (done) => {
-        return utils.getTestServerStripe(
+        return getTestServerStripe(
           {},
           (req, res) => {
             // Send out valid headers and a partial response. We then interrupt
@@ -511,7 +513,7 @@ describe('RequestSender', () => {
 
       it('retries connection timeout errors', (done) => {
         let nRequestsReceived = 0;
-        return utils.getTestServerStripe(
+        return getTestServerStripe(
           {timeout: 10, maxNetworkRetries: 2},
           (req, res) => {
             nRequestsReceived += 1;
@@ -894,7 +896,7 @@ describe('RequestSender', () => {
         const returnedCharge = {
           id: 'ch_123',
         };
-        return utils.getTestServerStripe(
+        return getTestServerStripe(
           {},
           (req, res) => {
             res.write(JSON.stringify(returnedCharge));
@@ -917,7 +919,7 @@ describe('RequestSender', () => {
         const returnedCharge = {
           id: 'ch_123',
         };
-        return utils.getTestServerStripe(
+        return getTestServerStripe(
           {},
           (req, res) => {
             res.write(JSON.stringify(returnedCharge));

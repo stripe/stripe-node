@@ -3,17 +3,20 @@
 
 'use strict';
 
-import {createStripe} from '../src/stripe.core.js';
-import {getMockPlatformFunctions} from './testUtils.js';
+import {expect} from 'chai';
 import {ApiVersion} from '../src/apiVersion.js';
-
-import * as testUtils from './testUtils.js';
+import {createStripe} from '../src/stripe.core.js';
+import {
+  getMockPlatformFunctions,
+  getRandomString,
+  getTestServerStripe,
+  getStripeMockClient,
+  FAKE_API_KEY,
+} from './testUtils.js';
 import Stripe = require('../src/stripe.cjs.node.js');
 import crypto = require('crypto');
-const stripe = testUtils.getStripeMockClient();
-const {FAKE_API_KEY} = testUtils;
 
-const expect = require('chai').expect;
+const stripe = getStripeMockClient();
 
 const CUSTOMER_DETAILS = {
   description: 'Some customer',
@@ -403,7 +406,7 @@ describe('Stripe Module', function() {
 
     it('should be included in the ClientUserAgent and be added to the UserAgent String', (done) => {
       const appInfo = {
-        name: testUtils.getRandomString(),
+        name: getRandomString(),
         version: '1.2.345',
         url: 'https://myawesomeapp.info',
       };
@@ -520,7 +523,7 @@ describe('Stripe Module', function() {
       let stripeClient;
       let closeServer;
       beforeEach((callback) => {
-        testUtils.getTestServerStripe(
+        getTestServerStripe(
           {
             stripeAccount: 'my_stripe_account',
           },
