@@ -1,5 +1,4 @@
-import {Stripe} from 'stripe';
-import DefaultStripe from 'stripe';
+import DefaultStripe, {Stripe} from 'stripe';
 import assert from 'assert';
 
 assert(Stripe.PACKAGE_VERSION);
@@ -41,8 +40,16 @@ assert(Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 assert(Stripe.webhooks);
 assert(Stripe.resources);
 
-const stripe = new Stripe(process.argv[2]);
-const defaultStripe = new DefaultStripe(process.argv[2]);
+const stripe = new Stripe(process.argv[2], {
+    host: process.env.STRIPE_MOCK_HOST || 'localhost',
+    port: process.env.STRIPE_MOCK_PORT || 12111,
+    protocol: 'http',
+});
+const defaultStripe = new DefaultStripe(process.argv[2], {
+    host: process.env.STRIPE_MOCK_HOST || 'localhost',
+    port: process.env.STRIPE_MOCK_PORT || 12111,
+    protocol: 'http',
+});
 
 assert(stripe._platformFunctions);
 assert(stripe._api);

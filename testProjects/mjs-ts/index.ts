@@ -1,8 +1,16 @@
 import DefaultStripe, {Stripe} from 'stripe';
 
-const stripe = new Stripe(process.argv[2], {apiVersion: '2022-11-15'});
+const stripe = new Stripe(process.argv[2], {
+  apiVersion: '2022-11-15', 
+  host: process.env.STRIPE_MOCK_HOST || 'localhost',
+  port: process.env.STRIPE_MOCK_PORT || 12111,
+  protocol: 'http',
+});
 const defaultStripe = new DefaultStripe(process.argv[2], {
   apiVersion: '2022-11-15',
+  host: process.env.STRIPE_MOCK_HOST || 'localhost',
+  port: process.env.STRIPE_MOCK_PORT || 12111,
+  protocol: 'http',
 });
 
 try {
