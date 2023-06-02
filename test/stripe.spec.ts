@@ -632,7 +632,7 @@ describe('Stripe Module', function() {
     };
 
     it('should make request with specified encoding FORM', (done) => {
-      return testUtils.getTestServerStripe(
+      return getTestServerStripe(
         {},
         (req, res) => {
           expect(req.headers['content-type']).to.equal(
@@ -670,7 +670,7 @@ describe('Stripe Module', function() {
     });
 
     it('should make request with specified encoding JSON', (done) => {
-      return testUtils.getTestServerStripe(
+      return getTestServerStripe(
         {},
         (req, res) => {
           expect(req.headers['content-type']).to.equal('application/json');
@@ -712,7 +712,7 @@ describe('Stripe Module', function() {
     });
 
     it('defaults to form encoding request if not specified', (done) => {
-      return testUtils.getTestServerStripe(
+      return getTestServerStripe(
         {},
         (req, res) => {
           expect(req.headers['content-type']).to.equal(
@@ -749,7 +749,7 @@ describe('Stripe Module', function() {
     });
 
     it('should make request with specified additional headers', (done) => {
-      return testUtils.getTestServerStripe(
+      return getTestServerStripe(
         {},
         (req, res) => {
           expect(req.headers.foo).to.equal('bar');
