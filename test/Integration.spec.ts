@@ -83,10 +83,9 @@ describe('Integration test', function() {
     }
 
     const script = `
-      pushd examples/webhook-signing/${projectName} &&
+      (cd examples/webhook-signing/${projectName} &&
         rm -rf node_modules &&
-        npm install &&
-      popd &&
+        npm install) &&
       cd examples/webhook-signing/test && rm -rf node_modules &&
       npm install &&
       ./main.ts ../${projectName}
