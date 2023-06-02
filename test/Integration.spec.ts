@@ -8,15 +8,20 @@ describe('Integration test', function() {
   const testExec = (cmd: string): Promise<void> => {
     const child = childProcess.exec(cmd);
 
-    child.stdout?.on('data', console.debug);
-    child.stderr?.on('data', console.debug);
+    let out = '';
+    child.stdout?.on('data', (chunk) => {
+      out += chunk;
+    });
+    child.stderr?.on('data', (chunk) => {
+      out += chunk;
+    });
 
     return new Promise((resolve, reject) => {
       child.on('exit', (code) => {
         if (code == 0) {
           resolve();
         } else {
-          reject(new Error('Test failed'));
+          reject(new Error('Test failed: ' + out));
         }
       });
     });
