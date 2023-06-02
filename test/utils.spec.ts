@@ -1,6 +1,4 @@
 // @ts-nocheck
-require('./testUtils.js');
-
 import * as utils from '../src/utils.js';
 import {expect} from 'chai';
 
