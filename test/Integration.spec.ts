@@ -23,7 +23,7 @@ describe('Integration test', function() {
   };
   const runTestProject = (projectName: string): Promise<void> => {
     return testExec(`
-      cd testProjects/${projectName} && rm -r node_modules &&
+      cd testProjects/${projectName} && rm -rf node_modules &&
       npm install &&
       npm run lint &&
       npm run runtestproject -- ${FAKE_API_KEY}
@@ -79,10 +79,10 @@ describe('Integration test', function() {
 
     const script = `
       pushd examples/webhook-signing/${projectName} &&
-        rm -r node_modules &&
+        rm -rf node_modules &&
         npm install &&
       popd &&
-      cd examples/webhook-signing/test && rm -r node_modules &&
+      cd examples/webhook-signing/test && rm -rf node_modules &&
       npm install &&
       ./main.ts ../${projectName}
     `;
