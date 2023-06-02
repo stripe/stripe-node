@@ -656,7 +656,6 @@ describe('RequestSender', () => {
       });
 
       it('should retry on a 409 error', (done) => {
-        global.debug = true;
         nock(`https://${options.host}`)
           .post(options.path, options.params)
           .reply(409, {
@@ -674,7 +673,6 @@ describe('RequestSender', () => {
         realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.charges.create(options.data, (err, charge) => {
-          global.debug = false;
           expect(charge.id).to.equal('ch_123');
           done(err);
         });
