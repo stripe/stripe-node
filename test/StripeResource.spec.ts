@@ -211,7 +211,7 @@ describe('StripeResource', () => {
     });
 
     it('failure', (callback) => {
-      const handleRequest = (req, res) => {
+      const handleRequest = (_req, res, nPreviousRequests) => {
         setTimeout(() => res.writeHead(500));
         setTimeout(
           () =>
@@ -221,6 +221,8 @@ describe('StripeResource', () => {
           10
         );
         setTimeout(() => res.end(), 20);
+        // fail twice, then close the server
+        return {shouldStayOpen: nPreviousRequests < 1};
       };
 
       getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
@@ -230,17 +232,20 @@ describe('StripeResource', () => {
 
         const foos = makeResourceWithPDFMethod(stripe);
 
-        return foos.pdf({id: 'foo_123'}, {host: 'localhost'}, (err, res) => {
-          closeServer();
-          expect(err).to.exist;
-          expect(err.raw.type).to.equal('api_error');
-          expect(err.raw.message).to.equal('this is bad');
-          return callback();
-        });
+        return foos.pdf(
+          {id: 'foo_123'},
+          {host: 'localhost', maxNetworkRetries: 1},
+          (err, res) => {
+            closeServer();
+            expect(err).to.exist;
+            expect(err.raw.type).to.equal('api_error');
+            expect(err.raw.message).to.equal('this is bad');
+            return callback();
+          }
+        );
       });
     });
   });
-
   describe('makeRequest args', () => {
     it('does not mutate user-supplied deprecated opts', () => {
       const args = [

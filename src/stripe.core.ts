@@ -113,7 +113,7 @@ export function createStripe(
       maxNetworkRetries: validateInteger(
         'maxNetworkRetries',
         props.maxNetworkRetries,
-        0
+        1
       ),
       agent: agent,
       httpClient:
