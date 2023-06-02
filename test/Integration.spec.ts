@@ -1,5 +1,5 @@
 import * as childProcess from 'child_process';
-const testUtils = require('./testUtils.js');
+import {FAKE_API_KEY} from './testUtils.js';
 
 const nodeVersion = parseInt(process.versions.node.split('.')[0], 10);
 
@@ -8,25 +8,30 @@ describe('Integration test', function() {
   const testExec = (cmd: string): Promise<void> => {
     const child = childProcess.exec(cmd);
 
-    child.stdout?.on('data', console.debug);
-    child.stderr?.on('data', console.debug);
+    let out = '';
+    child.stdout?.on('data', (chunk) => {
+      out += chunk;
+    });
+    child.stderr?.on('data', (chunk) => {
+      out += chunk;
+    });
 
     return new Promise((resolve, reject) => {
       child.on('exit', (code) => {
         if (code == 0) {
           resolve();
         } else {
-          reject(new Error('Test failed'));
+          reject(new Error('Test failed: ' + out));
         }
       });
     });
   };
   const runTestProject = (projectName: string): Promise<void> => {
     return testExec(`
-      cd testProjects/${projectName} &&
+      cd testProjects/${projectName} && rm -rf node_modules &&
       npm install &&
       npm run lint &&
-      npm run runtestproject -- ${testUtils.getUserStripeKey()}
+      npm run runtestproject -- ${FAKE_API_KEY}
     `);
   };
 
@@ -78,7 +83,10 @@ describe('Integration test', function() {
     }
 
     const script = `
-      cd examples/webhook-signing/test &&
+      (cd examples/webhook-signing/${projectName} &&
+        rm -rf node_modules &&
+        npm install) &&
+      cd examples/webhook-signing/test && rm -rf node_modules &&
       npm install &&
       ./main.ts ../${projectName}
     `;

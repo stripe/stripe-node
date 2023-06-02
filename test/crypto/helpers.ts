@@ -1,3 +1,5 @@
+import {CryptoProvider} from '../../src/crypto/CryptoProvider.js';
+
 const expect = require('chai').expect;
 
 const SECRET = 'test_secret';
@@ -7,9 +9,9 @@ const SECRET = 'test_secret';
  * make sure it satisfies the expected contract.
  */
 export const createCryptoProviderTestSuite = (
-  cryptoProvider,
+  cryptoProvider: CryptoProvider,
   isAsyncOnly = false
-) => {
+): void => {
   const testCases = [
     {
       caseName: 'empty payload',
