@@ -1149,12 +1149,12 @@ declare module 'stripe' {
           /**
            * A unique and immutable identifier assigned by Cash App to every buyer.
            */
-          buyer_id?: string | null;
+          buyer_id: string | null;
 
           /**
            * A public identifier for buyers using Cash App.
            */
-          cashtag?: string | null;
+          cashtag: string | null;
         }
 
         interface CustomerBalance {}
