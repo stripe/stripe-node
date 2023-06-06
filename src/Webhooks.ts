@@ -180,6 +180,7 @@ export function createWebhooks(
         encodedHeader,
         this.EXPECTED_SCHEME
       );
+      const secretContainsWhitespace = /\s/.test(secret);
 
       cryptoProvider = cryptoProvider || getCryptoProvider();
       const expectedSignature = cryptoProvider.computeHMACSignature(
@@ -194,6 +195,7 @@ export function createWebhooks(
         expectedSignature,
         tolerance,
         suspectPayloadType,
+        secretContainsWhitespace,
         receivedAt
       );
 
@@ -218,6 +220,7 @@ export function createWebhooks(
         encodedHeader,
         this.EXPECTED_SCHEME
       );
+      const secretContainsWhitespace = /\s/.test(secret);
 
       cryptoProvider = cryptoProvider || getCryptoProvider();
 
@@ -233,6 +236,7 @@ export function createWebhooks(
         expectedSignature,
         tolerance,
         suspectPayloadType,
+        secretContainsWhitespace,
         receivedAt
       );
     },
@@ -332,11 +336,20 @@ export function createWebhooks(
     expectedSignature: string,
     tolerance: number,
     suspectPayloadType: boolean,
+    secretContainsWhitespace: boolean,
     receivedAt: number
   ): boolean {
     const signatureFound = !!details.signatures.filter(
       platformFunctions.secureCompare.bind(platformFunctions, expectedSignature)
     ).length;
+
+    const docsLocation =
+      '\nLearn more about webhook signing and explore webhook integration examples for various frameworks at ' +
+      'https://github.com/stripe/stripe-node#webhook-signing';
+
+    const whitespaceMessage = secretContainsWhitespace
+      ? '\n\nNote: The provided signing secret contains whitespace. This often indicates an extra newline or space is in the value'
+      : '';
 
     if (!signatureFound) {
       if (suspectPayloadType) {
@@ -345,16 +358,16 @@ export function createWebhooks(
             'Webhook payload must be provided as a string or a Buffer (https://nodejs.org/api/buffer.html) instance representing the _raw_ request body.' +
             'Payload was provided as a parsed JavaScript object instead. \n' +
             'Signature verification is impossible without access to the original signed material. \n' +
-            'Learn more about webhook signing and explore webhook integration examples for various frameworks at ' +
-            'https://github.com/stripe/stripe-node#webhook-signing',
+            docsLocation +
+            whitespaceMessage,
         });
       }
       throw new StripeSignatureVerificationError(header, payload, {
         message:
           'No signatures found matching the expected signature for payload.' +
           ' Are you passing the raw request body you received from Stripe? \n' +
-          'Learn more about webhook signing and explore webhook integration examples for various frameworks at ' +
-          'https://github.com/stripe/stripe-node#webhook-signing',
+          docsLocation +
+          whitespaceMessage,
       });
     }
 
