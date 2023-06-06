@@ -90,7 +90,7 @@ declare module 'stripe' {
         object: Data.Object;
 
         /**
-         * Object containing the names of the attributes that have changed, and their previous values (sent along only with *.updated events).
+         * Object containing the names of the updated attributes and their values prior to the event (only included in events of type `*.updated`). If an array attribute has any updated elements, this object contains the entire array. In Stripe API versions 2017-04-06 or earlier, an updated array attribute in this object includes only the updated array elements.
          */
         previous_attributes?: Data.PreviousAttributes;
       }
