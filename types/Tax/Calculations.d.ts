@@ -339,12 +339,34 @@ declare module 'stripe' {
           tax_rate_details: TaxBreakdown.TaxRateDetails;
 
           /**
+           * The reasoning behind this tax, for example, if the product is tax exempt. We might extend the possible values for this field to support new tax rules.
+           */
+          taxability_reason: TaxBreakdown.TaxabilityReason;
+
+          /**
            * The amount on which tax is calculated, in integer cents.
            */
           taxable_amount: number;
         }
 
         namespace TaxBreakdown {
+          type TaxabilityReason =
+            | 'customer_exempt'
+            | 'not_collecting'
+            | 'not_subject_to_tax'
+            | 'not_supported'
+            | 'portion_product_exempt'
+            | 'portion_reduced_rated'
+            | 'portion_standard_rated'
+            | 'product_exempt'
+            | 'product_exempt_holiday'
+            | 'proportionally_rated'
+            | 'reduced_rated'
+            | 'reverse_charge'
+            | 'standard_rated'
+            | 'taxable_basis_reduced'
+            | 'zero_rated';
+
           interface TaxRateDetails {
             /**
              * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
