@@ -358,7 +358,7 @@ export function createWebhooks(
             'Webhook payload must be provided as a string or a Buffer (https://nodejs.org/api/buffer.html) instance representing the _raw_ request body.' +
             'Payload was provided as a parsed JavaScript object instead. \n' +
             'Signature verification is impossible without access to the original signed material. \n' +
-            docsLocation +
+            docsLocation + '\n' +
             whitespaceMessage,
         });
       }
@@ -366,7 +366,7 @@ export function createWebhooks(
         message:
           'No signatures found matching the expected signature for payload.' +
           ' Are you passing the raw request body you received from Stripe? \n' +
-          docsLocation +
+          docsLocation + '\n' +
           whitespaceMessage,
       });
     }
