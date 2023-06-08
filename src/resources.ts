@@ -61,7 +61,6 @@ import {VerificationSessions as IdentityVerificationSessions} from './resources/
 
 export {Accounts as Account} from './resources/Accounts.js';
 export {OAuth} from './resources/OAuth.js';
-export {AcceptedFinancing} from './resources/AcceptedFinancing.js';
 export {Accounts} from './resources/Accounts.js';
 export {AccountLinks} from './resources/AccountLinks.js';
 export {AccountSessions} from './resources/AccountSessions.js';
