@@ -3,7 +3,7 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The LoginLink object.
+     * Login Links are single-use login link for an Express account to access their Stripe dashboard.
      */
     interface LoginLink {
       /**
