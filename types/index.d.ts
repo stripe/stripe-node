@@ -7,6 +7,7 @@
 ///<reference path='./Webhooks.d.ts' />
 ///<reference path='./UpcomingInvoices.d.ts' />
 // Imports: The beginning of the section generated from our OpenAPI spec
+///<reference path='./AcceptedFinancingResource.d.ts' />
 ///<reference path='./AccountLinksResource.d.ts' />
 ///<reference path='./AccountSessionsResource.d.ts' />
 ///<reference path='./AccountsResource.d.ts' />
@@ -110,6 +111,7 @@
 ///<reference path='./Treasury/TransactionEntriesResource.d.ts' />
 ///<reference path='./Treasury/TransactionsResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
+///<reference path='./AcceptedFinancing.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./AccountSessions.d.ts' />
 ///<reference path='./Accounts.d.ts' />
@@ -249,6 +251,7 @@ declare module 'stripe' {
     StripeResource: Stripe.StripeResource;
 
     // Fields: The beginning of the section generated from our OpenAPI spec
+    acceptedFinancing: Stripe.AcceptedFinancingResource;
     accountLinks: Stripe.AccountLinksResource;
     accountSessions: Stripe.AccountSessionsResource;
     accounts: Stripe.AccountsResource;
