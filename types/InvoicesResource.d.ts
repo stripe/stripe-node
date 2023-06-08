@@ -14,7 +14,7 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
-       * Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
+       * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
        */
       auto_advance?: boolean;
 
@@ -639,7 +639,7 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
-       * Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice.
+       * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice.
        */
       auto_advance?: boolean;
 
@@ -1244,7 +1244,7 @@ declare module 'stripe' {
 
     interface InvoiceFinalizeInvoiceParams {
       /**
-       * Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/invoicing/automatic-charging) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
+       * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
        */
       auto_advance?: boolean;
 
