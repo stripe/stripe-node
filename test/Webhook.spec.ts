@@ -370,6 +370,20 @@ describe('Webhooks', () => {
         );
       });
 
+      it('should raise a SignatureVerificationError when the signing secret contians whitespace', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        await expect(
+          verifyHeaderFn(EVENT_PAYLOAD_STRING, header, SECRET + ' ')
+        ).to.be.rejectedWith(
+          StripeSignatureVerificationError,
+          /The provided signing secret contains whitespace/
+        );
+      });
+
       describe('custom CryptoProvider', () => {
         const cryptoProvider = new FakeCryptoProvider();
 
