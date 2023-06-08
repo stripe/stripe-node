@@ -1,5 +1,8 @@
 # Changelog
 
+## 12.10.0-beta.1 - 2023-06-08
+* [#1811](https://github.com/stripe/stripe-node/pull/1811) Update generated code for beta
+
 ## 12.9.0-beta.1 - 2023-06-01
 * [#1801](https://github.com/stripe/stripe-node/pull/1801) Update generated code for beta
   * Add support for `subscription_details` on `Invoice`
