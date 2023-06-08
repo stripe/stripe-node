@@ -492,7 +492,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 
         /**
-         * Finializes a payment on a Reader.
+         * Finalizes a payment on a Reader.
          */
         confirmPaymentIntent(
           id: string,
