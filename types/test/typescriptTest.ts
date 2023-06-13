@@ -284,3 +284,12 @@ Stripe.errors.StripeError.generate({
 stripe.accounts.retrieve('123', {
   host: 'my_host',
 });
+stripe.files.create({
+  purpose: 'dispute_evidence',
+  file: {
+    data: Buffer.from('File'),
+    name: 'minimal.pdf',
+    type: 'application/octet-stream',
+  },
+  file_link_data: {create: true},
+});
