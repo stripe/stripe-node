@@ -1,5 +1,11 @@
 # Changelog
 
+## 12.9.0 - 2023-06-08
+* [#1809](https://github.com/stripe/stripe-node/pull/1809) Update generated code
+  * Change `Charge.payment_method_details.cashapp.buyer_id`, `Charge.payment_method_details.cashapp.cashtag`, `PaymentMethod.cashapp.buyer_id`, and `PaymentMethod.cashapp.cashtag` to be required
+  * Add support for `taxability_reason` on `Tax.Calculation.tax_breakdown[]`
+* [#1812](https://github.com/stripe/stripe-node/pull/1812) More helpful error when signing secrets contain whitespace
+
 ## 12.8.0 - 2023-06-01
 * [#1799](https://github.com/stripe/stripe-node/pull/1799) Update generated code
   * Add support for `numeric` and `text` on `CheckoutSessionCreateParams.custom_fields[]`, `PaymentLinkCreateParams.custom_fields[]`, and `PaymentLinkUpdateParams.custom_fields[]`
