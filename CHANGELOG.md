@@ -3,6 +3,12 @@
 ## 12.10.0-beta.1 - 2023-06-08
 * [#1811](https://github.com/stripe/stripe-node/pull/1811) Update generated code for beta
 
+## 12.9.0 - 2023-06-08
+* [#1809](https://github.com/stripe/stripe-node/pull/1809) Update generated code
+  * Change `Charge.payment_method_details.cashapp.buyer_id`, `Charge.payment_method_details.cashapp.cashtag`, `PaymentMethod.cashapp.buyer_id`, and `PaymentMethod.cashapp.cashtag` to be required
+  * Add support for `taxability_reason` on `Tax.Calculation.tax_breakdown[]`
+* [#1812](https://github.com/stripe/stripe-node/pull/1812) More helpful error when signing secrets contain whitespace
+
 ## 12.9.0-beta.1 - 2023-06-01
 * [#1801](https://github.com/stripe/stripe-node/pull/1801) Update generated code for beta
   * Add support for `subscription_details` on `Invoice`

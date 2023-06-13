@@ -1892,6 +1892,14 @@ describe('CreditNotes', function() {
     });
     expect(creditNote).not.to.be.null;
   });
+
+  it('listPreviewLineItems method', async function() {
+    const creditNoteLineItems = await stripe.creditNotes.listPreviewLineItems({
+      limit: 3,
+      invoice: 'in_xxxxxxxxxxxxx',
+    });
+    expect(creditNoteLineItems).not.to.be.null;
+  });
 });
 
 describe('Disputes', function() {
