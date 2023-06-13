@@ -6158,7 +6158,8 @@ declare module 'stripe' {
        * If the selected payment method requires additional authentication steps, the
        * PaymentIntent will transition to the requires_action status and
        * suggest additional actions via next_action. If payment fails,
-       * the PaymentIntent will transition to the requires_payment_method status. If
+       * the PaymentIntent transitions to the requires_payment_method status or the
+       * canceled status if the confirmation limit is reached. If
        * payment succeeds, the PaymentIntent will transition to the succeeded
        * status (or requires_capture, if capture_method is set to manual).
        * If the confirmation_method is automatic, payment may be attempted
