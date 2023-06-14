@@ -146,7 +146,7 @@ declare module 'stripe' {
       metadata: Stripe.Metadata;
 
       /**
-       * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
+       * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
        */
       on_behalf_of: string | Stripe.Account | null;
 
@@ -251,7 +251,7 @@ declare module 'stripe' {
       transfer_data: Charge.TransferData | null;
 
       /**
-       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
+       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers#transfer-options) for details.
        */
       transfer_group: string | null;
     }

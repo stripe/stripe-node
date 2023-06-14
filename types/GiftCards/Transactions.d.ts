@@ -68,7 +68,7 @@ declare module 'stripe' {
         status: Transaction.Status | null;
 
         /**
-         * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
+         * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
          */
         transfer_group: string | null;
       }
