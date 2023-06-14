@@ -85,6 +85,11 @@ declare module 'stripe' {
       on_behalf_of?: string;
 
       /**
+       * Provides industry-specific information about the charge.
+       */
+      payment_details?: PaymentIntentCreateParams.PaymentDetails;
+
+      /**
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
        *
        * If neither the `payment_method` parameter nor the `source` parameter are provided with `confirm=true`, `source` will be automatically populated with `customer.default_source` to improve the migration experience for users of the Charges API. We recommend that you explicitly provide the `payment_method` going forward.
@@ -231,6 +236,291 @@ declare module 'stripe' {
       }
 
       type OffSession = 'one_off' | 'recurring';
+
+      interface PaymentDetails {
+        /**
+         * Car rental details for this PaymentIntent.
+         */
+        car_rental?: PaymentDetails.CarRental;
+
+        /**
+         * Flight reservation details for this PaymentIntent
+         */
+        flight?: PaymentDetails.Flight;
+
+        /**
+         * Lodging reservation details for this PaymentIntent
+         */
+        lodging?: PaymentDetails.Lodging;
+      }
+
+      namespace PaymentDetails {
+        interface CarRental {
+          /**
+           * The booking number associated with the car rental.
+           */
+          booking_number: string;
+
+          /**
+           * Class code of the car.
+           */
+          car_class_code?: string;
+
+          /**
+           * Make of the car.
+           */
+          car_make?: string;
+
+          /**
+           * Model of the car.
+           */
+          car_model?: string;
+
+          /**
+           * The name of the rental car company.
+           */
+          company?: string;
+
+          /**
+           * The customer service phone number of the car rental company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Number of days the car is being rented.
+           */
+          days_rented: number;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<CarRental.ExtraCharge>;
+
+          /**
+           * Indicates if the customer did not keep nor cancel their booking.
+           */
+          no_show?: boolean;
+
+          /**
+           * Car pick-up address.
+           */
+          pickup_address?: Stripe.AddressParam;
+
+          /**
+           * Car pick-up time. Measured in seconds since the Unix epoch.
+           */
+          pickup_at: number;
+
+          /**
+           * Rental rate.
+           */
+          rate_amount?: number;
+
+          /**
+           * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+           */
+          rate_interval?: CarRental.RateInterval;
+
+          /**
+           * The name of the person or entity renting the car.
+           */
+          renter_name?: string;
+
+          /**
+           * Car return address.
+           */
+          return_address?: Stripe.AddressParam;
+
+          /**
+           * Car return time. Measured in seconds since the Unix epoch.
+           */
+          return_at: number;
+
+          /**
+           * Indicates whether the goods or services are tax-exempt or tax is not collected.
+           */
+          tax_exempt?: boolean;
+        }
+
+        namespace CarRental {
+          type ExtraCharge =
+            | 'extra_mileage'
+            | 'gas'
+            | 'late_return'
+            | 'one_way_service'
+            | 'parking_violation';
+
+          type RateInterval = 'day' | 'month' | 'week';
+        }
+
+        interface Flight {
+          /**
+           * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
+           */
+          agency_number?: string;
+
+          /**
+           * The International Air Transport Association (IATA) carrier code of the carrier that issued the ticket.
+           */
+          carrier?: string;
+
+          /**
+           * The name of the person or entity on the reservation.
+           */
+          passenger_name?: string;
+
+          /**
+           * The individual flight segments associated with the trip.
+           */
+          segments: Array<Flight.Segment>;
+
+          /**
+           * The ticket number associated with the travel reservation.
+           */
+          ticket_number?: string;
+        }
+
+        namespace Flight {
+          interface Segment {
+            /**
+             * The International Air Transport Association (IATA) airport code for the arrival airport.
+             */
+            arrival_airport?: string;
+
+            /**
+             * The arrival time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            arrives_at?: number;
+
+            /**
+             * The International Air Transport Association (IATA) carrier code of the carrier operating the flight segment.
+             */
+            carrier?: string;
+
+            /**
+             * The departure time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            departs_at: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the departure airport.
+             */
+            departure_airport?: string;
+
+            /**
+             * The flight number associated with the segment
+             */
+            flight_number?: string;
+
+            /**
+             * The fare class for the segment.
+             */
+            service_class?: Segment.ServiceClass;
+          }
+
+          namespace Segment {
+            type ServiceClass =
+              | 'business'
+              | 'economy'
+              | 'first'
+              | 'premium_economy';
+          }
+        }
+
+        interface Lodging {
+          /**
+           * The lodging location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * The number of adults on the booking
+           */
+          adults?: number;
+
+          /**
+           * The booking number associated with the lodging reservation.
+           */
+          booking_number?: string;
+
+          /**
+           * The lodging category
+           */
+          category?: Lodging.Category;
+
+          /**
+           * Loding check-in time. Measured in seconds since the Unix epoch.
+           */
+          checkin_at: number;
+
+          /**
+           * Lodging check-out time. Measured in seconds since the Unix epoch.
+           */
+          checkout_at: number;
+
+          /**
+           * The customer service phone number of the lodging company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * The daily lodging room rate.
+           */
+          daily_room_rate_amount?: number;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<Lodging.ExtraCharge>;
+
+          /**
+           * Indicates whether the lodging location is compliant with the Fire Safety Act.
+           */
+          fire_safety_act_compliance?: boolean;
+
+          /**
+           * The name of the lodging location.
+           */
+          name?: string;
+
+          /**
+           * Indicates if the customer did not keep their booking while failing to cancel the reservation.
+           */
+          no_show?: boolean;
+
+          /**
+           * The phone number of the lodging location.
+           */
+          property_phone_number?: string;
+
+          /**
+           * The number of room nights
+           */
+          room_nights?: number;
+
+          /**
+           * The total tax amount associating with the room reservation.
+           */
+          total_room_tax_amount?: number;
+
+          /**
+           * The total tax amount
+           */
+          total_tax_amount?: number;
+        }
+
+        namespace Lodging {
+          type Category = 'hotel' | 'vacation_rental';
+
+          type ExtraCharge =
+            | 'gift_shop'
+            | 'laundry'
+            | 'mini_bar'
+            | 'other'
+            | 'restaurant'
+            | 'telephone';
+        }
+      }
 
       interface PaymentMethodData {
         /**
@@ -1229,6 +1519,11 @@ declare module 'stripe' {
            * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
            */
           statement_descriptor_suffix_kanji?: Stripe.Emptyable<string>;
+
+          /**
+           * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
+           */
+          statement_details?: Stripe.Emptyable<Card.StatementDetails>;
         }
 
         namespace Card {
@@ -1336,6 +1631,18 @@ declare module 'stripe' {
           type RequestThreeDSecure = 'any' | 'automatic';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          interface StatementDetails {
+            /**
+             * Please pass in an address that is within your Stripe user account country
+             */
+            address?: Stripe.AddressParam;
+
+            /**
+             * Phone number (e.g., a toll-free number that customers can call)
+             */
+            phone?: string;
+          }
         }
 
         interface CardPresent {
@@ -2116,6 +2423,13 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
+       * Provides industry-specific information about the charge.
+       */
+      payment_details?: Stripe.Emptyable<
+        PaymentIntentUpdateParams.PaymentDetails
+      >;
+
+      /**
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.
        */
       payment_method?: string;
@@ -2216,6 +2530,291 @@ declare module 'stripe' {
              */
             user_agent?: string;
           }
+        }
+      }
+
+      interface PaymentDetails {
+        /**
+         * Car rental details for this PaymentIntent.
+         */
+        car_rental?: PaymentDetails.CarRental;
+
+        /**
+         * Flight reservation details for this PaymentIntent
+         */
+        flight?: PaymentDetails.Flight;
+
+        /**
+         * Lodging reservation details for this PaymentIntent
+         */
+        lodging?: PaymentDetails.Lodging;
+      }
+
+      namespace PaymentDetails {
+        interface CarRental {
+          /**
+           * The booking number associated with the car rental.
+           */
+          booking_number: string;
+
+          /**
+           * Class code of the car.
+           */
+          car_class_code?: string;
+
+          /**
+           * Make of the car.
+           */
+          car_make?: string;
+
+          /**
+           * Model of the car.
+           */
+          car_model?: string;
+
+          /**
+           * The name of the rental car company.
+           */
+          company?: string;
+
+          /**
+           * The customer service phone number of the car rental company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Number of days the car is being rented.
+           */
+          days_rented: number;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<CarRental.ExtraCharge>;
+
+          /**
+           * Indicates if the customer did not keep nor cancel their booking.
+           */
+          no_show?: boolean;
+
+          /**
+           * Car pick-up address.
+           */
+          pickup_address?: Stripe.AddressParam;
+
+          /**
+           * Car pick-up time. Measured in seconds since the Unix epoch.
+           */
+          pickup_at: number;
+
+          /**
+           * Rental rate.
+           */
+          rate_amount?: number;
+
+          /**
+           * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+           */
+          rate_interval?: CarRental.RateInterval;
+
+          /**
+           * The name of the person or entity renting the car.
+           */
+          renter_name?: string;
+
+          /**
+           * Car return address.
+           */
+          return_address?: Stripe.AddressParam;
+
+          /**
+           * Car return time. Measured in seconds since the Unix epoch.
+           */
+          return_at: number;
+
+          /**
+           * Indicates whether the goods or services are tax-exempt or tax is not collected.
+           */
+          tax_exempt?: boolean;
+        }
+
+        namespace CarRental {
+          type ExtraCharge =
+            | 'extra_mileage'
+            | 'gas'
+            | 'late_return'
+            | 'one_way_service'
+            | 'parking_violation';
+
+          type RateInterval = 'day' | 'month' | 'week';
+        }
+
+        interface Flight {
+          /**
+           * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
+           */
+          agency_number?: string;
+
+          /**
+           * The International Air Transport Association (IATA) carrier code of the carrier that issued the ticket.
+           */
+          carrier?: string;
+
+          /**
+           * The name of the person or entity on the reservation.
+           */
+          passenger_name?: string;
+
+          /**
+           * The individual flight segments associated with the trip.
+           */
+          segments: Array<Flight.Segment>;
+
+          /**
+           * The ticket number associated with the travel reservation.
+           */
+          ticket_number?: string;
+        }
+
+        namespace Flight {
+          interface Segment {
+            /**
+             * The International Air Transport Association (IATA) airport code for the arrival airport.
+             */
+            arrival_airport?: string;
+
+            /**
+             * The arrival time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            arrives_at?: number;
+
+            /**
+             * The International Air Transport Association (IATA) carrier code of the carrier operating the flight segment.
+             */
+            carrier?: string;
+
+            /**
+             * The departure time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            departs_at: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the departure airport.
+             */
+            departure_airport?: string;
+
+            /**
+             * The flight number associated with the segment
+             */
+            flight_number?: string;
+
+            /**
+             * The fare class for the segment.
+             */
+            service_class?: Segment.ServiceClass;
+          }
+
+          namespace Segment {
+            type ServiceClass =
+              | 'business'
+              | 'economy'
+              | 'first'
+              | 'premium_economy';
+          }
+        }
+
+        interface Lodging {
+          /**
+           * The lodging location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * The number of adults on the booking
+           */
+          adults?: number;
+
+          /**
+           * The booking number associated with the lodging reservation.
+           */
+          booking_number?: string;
+
+          /**
+           * The lodging category
+           */
+          category?: Lodging.Category;
+
+          /**
+           * Loding check-in time. Measured in seconds since the Unix epoch.
+           */
+          checkin_at: number;
+
+          /**
+           * Lodging check-out time. Measured in seconds since the Unix epoch.
+           */
+          checkout_at: number;
+
+          /**
+           * The customer service phone number of the lodging company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * The daily lodging room rate.
+           */
+          daily_room_rate_amount?: number;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<Lodging.ExtraCharge>;
+
+          /**
+           * Indicates whether the lodging location is compliant with the Fire Safety Act.
+           */
+          fire_safety_act_compliance?: boolean;
+
+          /**
+           * The name of the lodging location.
+           */
+          name?: string;
+
+          /**
+           * Indicates if the customer did not keep their booking while failing to cancel the reservation.
+           */
+          no_show?: boolean;
+
+          /**
+           * The phone number of the lodging location.
+           */
+          property_phone_number?: string;
+
+          /**
+           * The number of room nights
+           */
+          room_nights?: number;
+
+          /**
+           * The total tax amount associating with the room reservation.
+           */
+          total_room_tax_amount?: number;
+
+          /**
+           * The total tax amount
+           */
+          total_tax_amount?: number;
+        }
+
+        namespace Lodging {
+          type Category = 'hotel' | 'vacation_rental';
+
+          type ExtraCharge =
+            | 'gift_shop'
+            | 'laundry'
+            | 'mini_bar'
+            | 'other'
+            | 'restaurant'
+            | 'telephone';
         }
       }
 
@@ -3216,6 +3815,11 @@ declare module 'stripe' {
            * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
            */
           statement_descriptor_suffix_kanji?: Stripe.Emptyable<string>;
+
+          /**
+           * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
+           */
+          statement_details?: Stripe.Emptyable<Card.StatementDetails>;
         }
 
         namespace Card {
@@ -3323,6 +3927,18 @@ declare module 'stripe' {
           type RequestThreeDSecure = 'any' | 'automatic';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          interface StatementDetails {
+            /**
+             * Please pass in an address that is within your Stripe user account country
+             */
+            address?: Stripe.AddressParam;
+
+            /**
+             * Phone number (e.g., a toll-free number that customers can call)
+             */
+            phone?: string;
+          }
         }
 
         interface CardPresent {
@@ -4099,6 +4715,13 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
+       * Provides industry-specific information about the charge.
+       */
+      payment_details?: Stripe.Emptyable<
+        PaymentIntentCaptureParams.PaymentDetails
+      >;
+
+      /**
        * For non-card charges, you can use this value as the complete description that appears on your customers' statements. Must contain at least one letter, maximum 22 characters.
        */
       statement_descriptor?: string;
@@ -4116,6 +4739,291 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentCaptureParams {
+      interface PaymentDetails {
+        /**
+         * Car rental details for this PaymentIntent.
+         */
+        car_rental?: PaymentDetails.CarRental;
+
+        /**
+         * Flight reservation details for this PaymentIntent
+         */
+        flight?: PaymentDetails.Flight;
+
+        /**
+         * Lodging reservation details for this PaymentIntent
+         */
+        lodging?: PaymentDetails.Lodging;
+      }
+
+      namespace PaymentDetails {
+        interface CarRental {
+          /**
+           * The booking number associated with the car rental.
+           */
+          booking_number: string;
+
+          /**
+           * Class code of the car.
+           */
+          car_class_code?: string;
+
+          /**
+           * Make of the car.
+           */
+          car_make?: string;
+
+          /**
+           * Model of the car.
+           */
+          car_model?: string;
+
+          /**
+           * The name of the rental car company.
+           */
+          company?: string;
+
+          /**
+           * The customer service phone number of the car rental company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Number of days the car is being rented.
+           */
+          days_rented: number;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<CarRental.ExtraCharge>;
+
+          /**
+           * Indicates if the customer did not keep nor cancel their booking.
+           */
+          no_show?: boolean;
+
+          /**
+           * Car pick-up address.
+           */
+          pickup_address?: Stripe.AddressParam;
+
+          /**
+           * Car pick-up time. Measured in seconds since the Unix epoch.
+           */
+          pickup_at: number;
+
+          /**
+           * Rental rate.
+           */
+          rate_amount?: number;
+
+          /**
+           * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+           */
+          rate_interval?: CarRental.RateInterval;
+
+          /**
+           * The name of the person or entity renting the car.
+           */
+          renter_name?: string;
+
+          /**
+           * Car return address.
+           */
+          return_address?: Stripe.AddressParam;
+
+          /**
+           * Car return time. Measured in seconds since the Unix epoch.
+           */
+          return_at: number;
+
+          /**
+           * Indicates whether the goods or services are tax-exempt or tax is not collected.
+           */
+          tax_exempt?: boolean;
+        }
+
+        namespace CarRental {
+          type ExtraCharge =
+            | 'extra_mileage'
+            | 'gas'
+            | 'late_return'
+            | 'one_way_service'
+            | 'parking_violation';
+
+          type RateInterval = 'day' | 'month' | 'week';
+        }
+
+        interface Flight {
+          /**
+           * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
+           */
+          agency_number?: string;
+
+          /**
+           * The International Air Transport Association (IATA) carrier code of the carrier that issued the ticket.
+           */
+          carrier?: string;
+
+          /**
+           * The name of the person or entity on the reservation.
+           */
+          passenger_name?: string;
+
+          /**
+           * The individual flight segments associated with the trip.
+           */
+          segments: Array<Flight.Segment>;
+
+          /**
+           * The ticket number associated with the travel reservation.
+           */
+          ticket_number?: string;
+        }
+
+        namespace Flight {
+          interface Segment {
+            /**
+             * The International Air Transport Association (IATA) airport code for the arrival airport.
+             */
+            arrival_airport?: string;
+
+            /**
+             * The arrival time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            arrives_at?: number;
+
+            /**
+             * The International Air Transport Association (IATA) carrier code of the carrier operating the flight segment.
+             */
+            carrier?: string;
+
+            /**
+             * The departure time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            departs_at: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the departure airport.
+             */
+            departure_airport?: string;
+
+            /**
+             * The flight number associated with the segment
+             */
+            flight_number?: string;
+
+            /**
+             * The fare class for the segment.
+             */
+            service_class?: Segment.ServiceClass;
+          }
+
+          namespace Segment {
+            type ServiceClass =
+              | 'business'
+              | 'economy'
+              | 'first'
+              | 'premium_economy';
+          }
+        }
+
+        interface Lodging {
+          /**
+           * The lodging location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * The number of adults on the booking
+           */
+          adults?: number;
+
+          /**
+           * The booking number associated with the lodging reservation.
+           */
+          booking_number?: string;
+
+          /**
+           * The lodging category
+           */
+          category?: Lodging.Category;
+
+          /**
+           * Loding check-in time. Measured in seconds since the Unix epoch.
+           */
+          checkin_at: number;
+
+          /**
+           * Lodging check-out time. Measured in seconds since the Unix epoch.
+           */
+          checkout_at: number;
+
+          /**
+           * The customer service phone number of the lodging company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * The daily lodging room rate.
+           */
+          daily_room_rate_amount?: number;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<Lodging.ExtraCharge>;
+
+          /**
+           * Indicates whether the lodging location is compliant with the Fire Safety Act.
+           */
+          fire_safety_act_compliance?: boolean;
+
+          /**
+           * The name of the lodging location.
+           */
+          name?: string;
+
+          /**
+           * Indicates if the customer did not keep their booking while failing to cancel the reservation.
+           */
+          no_show?: boolean;
+
+          /**
+           * The phone number of the lodging location.
+           */
+          property_phone_number?: string;
+
+          /**
+           * The number of room nights
+           */
+          room_nights?: number;
+
+          /**
+           * The total tax amount associating with the room reservation.
+           */
+          total_room_tax_amount?: number;
+
+          /**
+           * The total tax amount
+           */
+          total_tax_amount?: number;
+        }
+
+        namespace Lodging {
+          type Category = 'hotel' | 'vacation_rental';
+
+          type ExtraCharge =
+            | 'gift_shop'
+            | 'laundry'
+            | 'mini_bar'
+            | 'other'
+            | 'restaurant'
+            | 'telephone';
+        }
+      }
+
       interface TransferData {
         /**
          * The amount that will be transferred automatically when a charge succeeds.
@@ -4161,6 +5069,13 @@ declare module 'stripe' {
        * Set to `true` to indicate that the customer is not in your checkout flow during this payment attempt, and therefore is unable to authenticate. This parameter is intended for scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
        */
       off_session?: boolean | PaymentIntentConfirmParams.OffSession;
+
+      /**
+       * Provides industry-specific information about the charge.
+       */
+      payment_details?: Stripe.Emptyable<
+        PaymentIntentConfirmParams.PaymentDetails
+      >;
 
       /**
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.
@@ -4308,6 +5223,291 @@ declare module 'stripe' {
       }
 
       type OffSession = 'one_off' | 'recurring';
+
+      interface PaymentDetails {
+        /**
+         * Car rental details for this PaymentIntent.
+         */
+        car_rental?: PaymentDetails.CarRental;
+
+        /**
+         * Flight reservation details for this PaymentIntent
+         */
+        flight?: PaymentDetails.Flight;
+
+        /**
+         * Lodging reservation details for this PaymentIntent
+         */
+        lodging?: PaymentDetails.Lodging;
+      }
+
+      namespace PaymentDetails {
+        interface CarRental {
+          /**
+           * The booking number associated with the car rental.
+           */
+          booking_number: string;
+
+          /**
+           * Class code of the car.
+           */
+          car_class_code?: string;
+
+          /**
+           * Make of the car.
+           */
+          car_make?: string;
+
+          /**
+           * Model of the car.
+           */
+          car_model?: string;
+
+          /**
+           * The name of the rental car company.
+           */
+          company?: string;
+
+          /**
+           * The customer service phone number of the car rental company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Number of days the car is being rented.
+           */
+          days_rented: number;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<CarRental.ExtraCharge>;
+
+          /**
+           * Indicates if the customer did not keep nor cancel their booking.
+           */
+          no_show?: boolean;
+
+          /**
+           * Car pick-up address.
+           */
+          pickup_address?: Stripe.AddressParam;
+
+          /**
+           * Car pick-up time. Measured in seconds since the Unix epoch.
+           */
+          pickup_at: number;
+
+          /**
+           * Rental rate.
+           */
+          rate_amount?: number;
+
+          /**
+           * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+           */
+          rate_interval?: CarRental.RateInterval;
+
+          /**
+           * The name of the person or entity renting the car.
+           */
+          renter_name?: string;
+
+          /**
+           * Car return address.
+           */
+          return_address?: Stripe.AddressParam;
+
+          /**
+           * Car return time. Measured in seconds since the Unix epoch.
+           */
+          return_at: number;
+
+          /**
+           * Indicates whether the goods or services are tax-exempt or tax is not collected.
+           */
+          tax_exempt?: boolean;
+        }
+
+        namespace CarRental {
+          type ExtraCharge =
+            | 'extra_mileage'
+            | 'gas'
+            | 'late_return'
+            | 'one_way_service'
+            | 'parking_violation';
+
+          type RateInterval = 'day' | 'month' | 'week';
+        }
+
+        interface Flight {
+          /**
+           * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
+           */
+          agency_number?: string;
+
+          /**
+           * The International Air Transport Association (IATA) carrier code of the carrier that issued the ticket.
+           */
+          carrier?: string;
+
+          /**
+           * The name of the person or entity on the reservation.
+           */
+          passenger_name?: string;
+
+          /**
+           * The individual flight segments associated with the trip.
+           */
+          segments: Array<Flight.Segment>;
+
+          /**
+           * The ticket number associated with the travel reservation.
+           */
+          ticket_number?: string;
+        }
+
+        namespace Flight {
+          interface Segment {
+            /**
+             * The International Air Transport Association (IATA) airport code for the arrival airport.
+             */
+            arrival_airport?: string;
+
+            /**
+             * The arrival time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            arrives_at?: number;
+
+            /**
+             * The International Air Transport Association (IATA) carrier code of the carrier operating the flight segment.
+             */
+            carrier?: string;
+
+            /**
+             * The departure time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            departs_at: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the departure airport.
+             */
+            departure_airport?: string;
+
+            /**
+             * The flight number associated with the segment
+             */
+            flight_number?: string;
+
+            /**
+             * The fare class for the segment.
+             */
+            service_class?: Segment.ServiceClass;
+          }
+
+          namespace Segment {
+            type ServiceClass =
+              | 'business'
+              | 'economy'
+              | 'first'
+              | 'premium_economy';
+          }
+        }
+
+        interface Lodging {
+          /**
+           * The lodging location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * The number of adults on the booking
+           */
+          adults?: number;
+
+          /**
+           * The booking number associated with the lodging reservation.
+           */
+          booking_number?: string;
+
+          /**
+           * The lodging category
+           */
+          category?: Lodging.Category;
+
+          /**
+           * Loding check-in time. Measured in seconds since the Unix epoch.
+           */
+          checkin_at: number;
+
+          /**
+           * Lodging check-out time. Measured in seconds since the Unix epoch.
+           */
+          checkout_at: number;
+
+          /**
+           * The customer service phone number of the lodging company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * The daily lodging room rate.
+           */
+          daily_room_rate_amount?: number;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<Lodging.ExtraCharge>;
+
+          /**
+           * Indicates whether the lodging location is compliant with the Fire Safety Act.
+           */
+          fire_safety_act_compliance?: boolean;
+
+          /**
+           * The name of the lodging location.
+           */
+          name?: string;
+
+          /**
+           * Indicates if the customer did not keep their booking while failing to cancel the reservation.
+           */
+          no_show?: boolean;
+
+          /**
+           * The phone number of the lodging location.
+           */
+          property_phone_number?: string;
+
+          /**
+           * The number of room nights
+           */
+          room_nights?: number;
+
+          /**
+           * The total tax amount associating with the room reservation.
+           */
+          total_room_tax_amount?: number;
+
+          /**
+           * The total tax amount
+           */
+          total_tax_amount?: number;
+        }
+
+        namespace Lodging {
+          type Category = 'hotel' | 'vacation_rental';
+
+          type ExtraCharge =
+            | 'gift_shop'
+            | 'laundry'
+            | 'mini_bar'
+            | 'other'
+            | 'restaurant'
+            | 'telephone';
+        }
+      }
 
       interface PaymentMethodData {
         /**
@@ -5306,6 +6506,11 @@ declare module 'stripe' {
            * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
            */
           statement_descriptor_suffix_kanji?: Stripe.Emptyable<string>;
+
+          /**
+           * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
+           */
+          statement_details?: Stripe.Emptyable<Card.StatementDetails>;
         }
 
         namespace Card {
@@ -5413,6 +6618,18 @@ declare module 'stripe' {
           type RequestThreeDSecure = 'any' | 'automatic';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          interface StatementDetails {
+            /**
+             * Please pass in an address that is within your Stripe user account country
+             */
+            address?: Stripe.AddressParam;
+
+            /**
+             * Phone number (e.g., a toll-free number that customers can call)
+             */
+            phone?: string;
+          }
         }
 
         interface CardPresent {
