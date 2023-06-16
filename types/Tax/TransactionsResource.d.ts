@@ -44,7 +44,7 @@ declare module 'stripe' {
         original_transaction: string;
 
         /**
-         * A custom identifier for this reversal, such as 'myOrder_123-refund_1', which must be unique across all transactions. The reference helps identify this reversal transaction in exported [tax reports](https://stripe.com/docs/tax/reports).
+         * A custom identifier for this reversal, such as `myOrder_123-refund_1`, which must be unique across all transactions. The reference helps identify this reversal transaction in exported [tax reports](https://stripe.com/docs/tax/reports).
          */
         reference: string;
 
