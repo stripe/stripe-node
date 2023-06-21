@@ -26,7 +26,7 @@ Node 12 or higher.
 Install the package with:
 
 ```sh
-npm install stripe --save
+npm install stripe
 # or
 yarn add stripe
 ```
