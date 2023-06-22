@@ -26,6 +26,11 @@ declare module 'stripe' {
       multi_use?: Mandate.MultiUse;
 
       /**
+       * The account (if any) for which the mandate is intended.
+       */
+      on_behalf_of?: string;
+
+      /**
        * ID of the payment method associated with this mandate.
        */
       payment_method: string | Stripe.PaymentMethod;

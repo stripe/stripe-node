@@ -1075,7 +1075,7 @@ declare module 'stripe' {
             /**
              * Type of registration to be created in the US.
              */
-            type: 'state_sales_tax';
+            type: Us.Type;
           }
 
           namespace Us {
@@ -1092,6 +1092,8 @@ declare module 'stripe' {
                */
               jurisdiction: string;
             }
+
+            type Type = 'local_lease_tax' | 'state_sales_tax';
           }
 
           interface Za {
