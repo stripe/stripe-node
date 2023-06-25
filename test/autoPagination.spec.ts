@@ -1,12 +1,10 @@
 // @ts-nocheck
 /* eslint-disable callback-return */
 
-const testUtils = require('./testUtils.js');
-const {StripeResource} = require('../src/StripeResource.js');
-
-const {makeAutoPaginationMethods} = require('../src/autoPagination.js');
-
-const expect = require('chai').expect;
+import {expect} from 'chai';
+import {makeAutoPaginationMethods} from '../src/autoPagination.js';
+import {StripeResource} from '../src/StripeResource.js';
+import {getMockStripe} from './testUtils.js';
 
 describe('auto pagination', () => {
   const testCase = (mockPaginationFn) => ({
@@ -41,7 +39,7 @@ describe('auto pagination', () => {
         apiMode: 'v1',
       };
 
-      const mockStripe = testUtils.getMockStripe(
+      const mockStripe = getMockStripe(
         {},
         (_1, _2, path, _4, _5, _6, callback) => {
           paramsLog.push(path.slice(path.indexOf('?')));
@@ -661,7 +659,7 @@ describe('auto pagination', () => {
         return {...props, ...nextPageProperties};
       };
 
-      const mockStripe = testUtils.getMockStripe(
+      const mockStripe = getMockStripe(
         {},
         (_1, _2, path, _4, _5, _6, callback) => {
           paramsLog.push(path.slice(path.indexOf('?')));

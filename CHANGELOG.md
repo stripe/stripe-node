@@ -1,5 +1,61 @@
 # Changelog
 
+## 12.11.0-beta.1 - 2023-06-22
+* [#1821](https://github.com/stripe/stripe-node/pull/1821) Update generated code for beta
+  * Add support for new resource `CustomerSession`
+  * Add support for `create` method on resource `CustomerSession`
+  * Change type of `Tax.Registration.country_options.us.type` and `TaxRegistrationCreateParams.country_options.us.type` from `literal('state_sales_tax')` to `enum('local_lease_tax'|'state_sales_tax')`
+
+## 12.10.0 - 2023-06-22
+* [#1820](https://github.com/stripe/stripe-node/pull/1820) Update generated code
+  * Add support for `on_behalf_of` on `Mandate`
+* [#1817](https://github.com/stripe/stripe-node/pull/1817) Update README.md
+* [#1819](https://github.com/stripe/stripe-node/pull/1819) Update generated code
+  * Release specs are identical.
+* [#1813](https://github.com/stripe/stripe-node/pull/1813) Update generated code
+  * Change type of `Checkout.Session.success_url` from `string` to `string | null`
+  * Change type of `FileCreateParams.file` from `string` to `file`
+* [#1815](https://github.com/stripe/stripe-node/pull/1815) Generate FileCreateParams
+
+## 12.10.0-beta.2 - 2023-06-15
+* [#1818](https://github.com/stripe/stripe-node/pull/1818) Update generated code for beta
+  * Add support for `payment_details` on `ChargeCaptureParams`, `ChargeUpdateParams`, `PaymentIntentCaptureParams`, `PaymentIntentConfirmParams`, `PaymentIntentCreateParams`, `PaymentIntentUpdateParams`, and `PaymentIntent`
+  * Add support for `statement_details` on `PaymentIntent.payment_method_options.card`, `PaymentIntentConfirmParams.payment_method_options.card`, `PaymentIntentCreateParams.payment_method_options.card`, and `PaymentIntentUpdateParams.payment_method_options.card`
+* [#1814](https://github.com/stripe/stripe-node/pull/1814) Update generated code for beta
+
+## 12.10.0-beta.1 - 2023-06-08
+* [#1811](https://github.com/stripe/stripe-node/pull/1811) Update generated code for beta
+
+## 12.9.0 - 2023-06-08
+* [#1809](https://github.com/stripe/stripe-node/pull/1809) Update generated code
+  * Change `Charge.payment_method_details.cashapp.buyer_id`, `Charge.payment_method_details.cashapp.cashtag`, `PaymentMethod.cashapp.buyer_id`, and `PaymentMethod.cashapp.cashtag` to be required
+  * Add support for `taxability_reason` on `Tax.Calculation.tax_breakdown[]`
+* [#1812](https://github.com/stripe/stripe-node/pull/1812) More helpful error when signing secrets contain whitespace
+
+## 12.9.0-beta.1 - 2023-06-01
+* [#1801](https://github.com/stripe/stripe-node/pull/1801) Update generated code for beta
+  * Add support for `subscription_details` on `Invoice`
+  * Add support for new values `aba` and `swift` on enums `Order.payment.settings.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `OrderCreateParams.payment.settings.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, and `OrderUpdateParams.payment.settings.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`
+  * Add support for new value `us_bank_transfer` on enums `Order.payment.settings.payment_method_options.customer_balance.bank_transfer.type`, `OrderCreateParams.payment.settings.payment_method_options.customer_balance.bank_transfer.type`, and `OrderUpdateParams.payment.settings.payment_method_options.customer_balance.bank_transfer.type`
+  * Add support for `set_pause_collection` on `QuoteCreateParams.lines[]`, `QuoteLine`, `QuoteUpdateParams.lines[]`, and `SubscriptionScheduleAmendParams.amendments[]`
+  * Add support for new value `pause_collection_start` on enums `Quote.subscription_data.bill_on_acceptance.bill_from.type`, `Quote.subscription_data_overrides[].bill_on_acceptance.bill_from.type`, `QuoteCreateParams.subscription_data.bill_on_acceptance.bill_from.type`, `QuoteCreateParams.subscription_data_overrides[].bill_on_acceptance.bill_from.type`, `QuoteUpdateParams.subscription_data.bill_on_acceptance.bill_from.type`, and `QuoteUpdateParams.subscription_data_overrides[].bill_on_acceptance.bill_from.type`
+  * Add support for `pause_collection` on `SubscriptionSchedule.phases[]`, `SubscriptionScheduleCreateParams.phases[]`, and `SubscriptionScheduleUpdateParams.phases[]`
+  * Add support for `local_amusement_tax` on `Tax.Registration.country_options.us` and `TaxRegistrationCreateParams.country_options.us`
+  * Remove support for `locations` on `Tax.Settings` and `TaxSettingUpdateParams`
+  * Add support for new values `customer.subscription.collection_paused` and `customer.subscription.collection_resumed` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+* [#1775](https://github.com/stripe/stripe-node/pull/1775) Introduce stripe.rawRequest as a canonical way to request APIs without definitions
+  * Please refer to the [Custom Requests README section](https://github.com/stripe/stripe-node/tree/beta#custom-requests) for usage instructions.
+
+## 12.8.0 - 2023-06-01
+* [#1799](https://github.com/stripe/stripe-node/pull/1799) Update generated code
+  * Add support for `numeric` and `text` on `CheckoutSessionCreateParams.custom_fields[]`, `PaymentLinkCreateParams.custom_fields[]`, and `PaymentLinkUpdateParams.custom_fields[]`
+  * Add support for new values `aba` and `swift` on enums `Checkout.Session.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `CheckoutSessionCreateParams.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `PaymentIntent.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `PaymentIntentConfirmParams.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `PaymentIntentCreateParams.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, and `PaymentIntentUpdateParams.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`
+  * Add support for new value `us_bank_transfer` on enums `Checkout.Session.payment_method_options.customer_balance.bank_transfer.type`, `CheckoutSessionCreateParams.payment_method_options.customer_balance.bank_transfer.type`, `CustomerCreateFundingInstructionsParams.bank_transfer.type`, `PaymentIntent.next_action.display_bank_transfer_instructions.type`, `PaymentIntent.payment_method_options.customer_balance.bank_transfer.type`, `PaymentIntentConfirmParams.payment_method_options.customer_balance.bank_transfer.type`, `PaymentIntentCreateParams.payment_method_options.customer_balance.bank_transfer.type`, and `PaymentIntentUpdateParams.payment_method_options.customer_balance.bank_transfer.type`
+  * Add support for `maximum_length` and `minimum_length` on `Checkout.Session.custom_fields[].numeric` and `Checkout.Session.custom_fields[].text`
+  * Add support for `preferred_locales` on `Issuing.Cardholder`, `IssuingCardholderCreateParams`, and `IssuingCardholderUpdateParams`
+  * Add support for `description`, `iin`, and `issuer` on `PaymentMethod.card_present` and `PaymentMethod.interac_present`
+  * Add support for `payer_email` on `PaymentMethod.paypal`
+
 ## 12.8.0-beta.1 - 2023-05-25
 * [#1795](https://github.com/stripe/stripe-node/pull/1795) Update generated code for beta
 

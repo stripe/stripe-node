@@ -12,7 +12,7 @@ declare module 'stripe' {
      * information, read about the
      * [transfer/payout split](https://stripe.com/docs/transfer-payout-split).
      *
-     * Related guide: [Creating separate charges and transfers](https://stripe.com/docs/connect/charges-transfers)
+     * Related guide: [Creating separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers)
      */
     interface Transfer {
       /**
@@ -96,7 +96,7 @@ declare module 'stripe' {
       source_type?: string;
 
       /**
-       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
+       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers#transfer-options) for details.
        */
       transfer_group: string | null;
     }

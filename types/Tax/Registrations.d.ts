@@ -877,6 +877,8 @@ declare module 'stripe' {
           }
 
           interface Us {
+            local_amusement_tax?: Us.LocalAmusementTax;
+
             local_lease_tax?: Us.LocalLeaseTax;
 
             /**
@@ -887,16 +889,25 @@ declare module 'stripe' {
             /**
              * Type of registration in the US.
              */
-            type: 'state_sales_tax';
+            type: Us.Type;
           }
 
           namespace Us {
+            interface LocalAmusementTax {
+              /**
+               * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
+               */
+              jurisdiction: string;
+            }
+
             interface LocalLeaseTax {
               /**
                * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
                */
               jurisdiction: string;
             }
+
+            type Type = 'local_lease_tax' | 'state_sales_tax';
           }
 
           interface Za {

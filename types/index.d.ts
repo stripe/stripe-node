@@ -25,6 +25,7 @@
 ///<reference path='./CountrySpecsResource.d.ts' />
 ///<reference path='./CouponsResource.d.ts' />
 ///<reference path='./CreditNotesResource.d.ts' />
+///<reference path='./CustomerSessionsResource.d.ts' />
 ///<reference path='./CustomersResource.d.ts' />
 ///<reference path='./DisputesResource.d.ts' />
 ///<reference path='./EphemeralKeysResource.d.ts' />
@@ -137,6 +138,7 @@
 ///<reference path='./CreditNotes.d.ts' />
 ///<reference path='./CustomerBalanceTransactions.d.ts' />
 ///<reference path='./CustomerCashBalanceTransactions.d.ts' />
+///<reference path='./CustomerSessions.d.ts' />
 ///<reference path='./Customers.d.ts' />
 ///<reference path='./Discounts.d.ts' />
 ///<reference path='./Disputes.d.ts' />
@@ -260,6 +262,7 @@ declare module 'stripe' {
     countrySpecs: Stripe.CountrySpecsResource;
     coupons: Stripe.CouponsResource;
     creditNotes: Stripe.CreditNotesResource;
+    customerSessions: Stripe.CustomerSessionsResource;
     customers: Stripe.CustomersResource;
     disputes: Stripe.DisputesResource;
     ephemeralKeys: Stripe.EphemeralKeysResource;
@@ -408,6 +411,25 @@ declare module 'stripe' {
       event: 'response',
       handler: (event: Stripe.ResponseEvent) => void
     ): void;
+
+    /**
+     * Allows for sending "raw" requests to the Stripe API, which can be used for
+     * testing new API endpoints or performing requests that the library does
+     * not support yet.
+     *
+     * This is an experimental interface and is not yet stable.
+     *
+     * @param method - HTTP request method, 'GET', 'POST', or 'DELETE'
+     * @param path - The path of the request, e.g. '/v1/beta_endpoint'
+     * @param params - The parameters to include in the request body.
+     * @param options - Additional request options.
+     */
+    rawRequest(
+      method: string,
+      path: string,
+      params?: {[key: string]: unknown},
+      options?: Stripe.RawRequestOptions
+    ): Promise<Stripe.Response<unknown>>;
   }
 
   export default Stripe;

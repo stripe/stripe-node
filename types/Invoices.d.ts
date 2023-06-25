@@ -12,7 +12,7 @@ declare module 'stripe' {
      * If your invoice is configured to be billed through automatic charges,
      * Stripe automatically finalizes your invoice and attempts payment. Note
      * that finalizing the invoice,
-     * [when automatic](https://stripe.com/docs/billing/invoices/workflow/#auto_advance), does
+     * [when automatic](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection), does
      * not happen immediately as the invoice is created. Stripe waits
      * until one hour after the last webhook was successfully sent (or the last
      * webhook timed out after failing). If you (and the platforms you may have
@@ -111,7 +111,7 @@ declare module 'stripe' {
       attempted: boolean;
 
       /**
-       * Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
+       * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
        */
       auto_advance?: boolean;
 
@@ -374,6 +374,11 @@ declare module 'stripe' {
        * The subscription that this invoice was prepared for, if any.
        */
       subscription: string | Stripe.Subscription | null;
+
+      /**
+       * Details about the subscription that created this invoice.
+       */
+      subscription_details?: Invoice.SubscriptionDetails | null;
 
       /**
        * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
@@ -990,7 +995,7 @@ declare module 'stripe' {
               eu_bank_transfer?: BankTransfer.EuBankTransfer;
 
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
+               * The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
                */
               type: string | null;
             }
@@ -1206,6 +1211,31 @@ declare module 'stripe' {
          * The time that the invoice was voided.
          */
         voided_at: number | null;
+      }
+
+      interface SubscriptionDetails {
+        /**
+         * If specified, payment collection for this subscription will be paused.
+         */
+        pause_collection: SubscriptionDetails.PauseCollection | null;
+      }
+
+      namespace SubscriptionDetails {
+        interface PauseCollection {
+          /**
+           * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+           */
+          behavior: PauseCollection.Behavior;
+
+          /**
+           * The time after which the subscription will resume collecting payments.
+           */
+          resumes_at: number | null;
+        }
+
+        namespace PauseCollection {
+          type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+        }
       }
 
       interface ThresholdReason {

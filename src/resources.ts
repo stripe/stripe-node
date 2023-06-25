@@ -73,6 +73,7 @@ export {CountrySpecs} from './resources/CountrySpecs.js';
 export {Coupons} from './resources/Coupons.js';
 export {CreditNotes} from './resources/CreditNotes.js';
 export {Customers} from './resources/Customers.js';
+export {CustomerSessions} from './resources/CustomerSessions.js';
 export {Disputes} from './resources/Disputes.js';
 export {EphemeralKeys} from './resources/EphemeralKeys.js';
 export {Events} from './resources/Events.js';

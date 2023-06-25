@@ -26,7 +26,7 @@ Node 12 or higher.
 Install the package with:
 
 ```sh
-npm install stripe --save
+npm install stripe
 # or
 yarn add stripe
 ```
@@ -502,6 +502,39 @@ If your beta feature requires a `Stripe-Version` header to be sent, use the `api
 const stripe = new Stripe('sk_test_...', {
   apiVersion: '2022-08-01; feature_beta=v3',
 });
+```
+
+### Custom requests
+
+If you would like to send a request to an undocumented API (for example you are in a private beta), or if you prefer to bypass the method definitions in the library and specify your request details directly, you can use the `rawRequest` method on the Stripe object.
+
+```javascript
+const stripe = require('stripe')('sk_test_...');
+
+stripe.rawRequest(
+    'POST',
+    '/v1/beta_endpoint',
+    { param: 123 },
+    { apiVersion: '2022-11-15; feature_beta=v3' }
+  )
+  .then((response) => /* handle response */ )
+  .catch((error) => console.error(error));
+```
+
+Or using ES modules and `async`/`await`:
+
+```javascript
+import Stripe from 'stripe';
+const stripe = new Stripe('sk_test_...');
+
+const response = await stripe.rawRequest(
+  'POST',
+  '/v1/beta_endpoint',
+  { param: 123 },
+  { apiVersion: '2022-11-15; feature_beta=v3' }
+);
+
+// handle response
 ```
 
 ## Support

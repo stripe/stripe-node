@@ -1,9 +1,9 @@
 // @ts-nocheck
 
-const {StripeSignatureVerificationError} = require('../src/Error.js');
-const {getSpyableStripe, FakeCryptoProvider} = require('./testUtils.js');
-const stripe = getSpyableStripe();
 import {expect} from 'chai';
+import {StripeSignatureVerificationError} from '../src/Error.js';
+import {FakeCryptoProvider, getSpyableStripe} from './testUtils.js';
+const stripe = getSpyableStripe();
 
 const EVENT_PAYLOAD = {
   id: 'evt_test_webhook',
@@ -367,6 +367,20 @@ describe('Webhooks', () => {
         ).to.be.rejectedWith(
           StripeSignatureVerificationError,
           /Webhook payload must be provided as a string or a Buffer/
+        );
+      });
+
+      it('should raise a SignatureVerificationError when the signing secret contians whitespace', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        await expect(
+          verifyHeaderFn(EVENT_PAYLOAD_STRING, header, SECRET + ' ')
+        ).to.be.rejectedWith(
+          StripeSignatureVerificationError,
+          /The provided signing secret contains whitespace/
         );
       });
 

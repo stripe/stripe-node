@@ -143,6 +143,8 @@ declare module 'stripe' {
        */
       on_behalf_of: string | Stripe.Account | null;
 
+      payment_details?: PaymentIntent.PaymentDetails;
+
       /**
        * ID of the payment method used in this PaymentIntent.
        */
@@ -832,7 +834,8 @@ declare module 'stripe' {
             | 'eu_bank_transfer'
             | 'gb_bank_transfer'
             | 'jp_bank_transfer'
-            | 'mx_bank_transfer';
+            | 'mx_bank_transfer'
+            | 'us_bank_transfer';
         }
 
         interface KonbiniDisplayDetails {
@@ -1115,6 +1118,104 @@ declare module 'stripe' {
            * An universal link that redirect to WeChat Pay app
            */
           native_url: string;
+        }
+      }
+
+      interface PaymentDetails {
+        car_rental?: PaymentDetails.CarRental;
+      }
+
+      namespace PaymentDetails {
+        interface CarRental {
+          /**
+           * The booking number associated with the car rental.
+           */
+          booking_number: string;
+
+          /**
+           * Class code of the car.
+           */
+          car_class_code?: string;
+
+          /**
+           * Make of the car.
+           */
+          car_make?: string;
+
+          /**
+           * Model of the car.
+           */
+          car_model?: string;
+
+          /**
+           * The name of the rental car company.
+           */
+          company?: string;
+
+          /**
+           * The customer service phone number of the car rental company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Number of days the car is being rented.
+           */
+          days_rented: number;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<CarRental.ExtraCharge>;
+
+          /**
+           * Indicates if the customer did not keep nor cancel their booking.
+           */
+          no_show?: boolean;
+
+          pickup_address?: Stripe.Address;
+
+          /**
+           * Car pick-up time. Measured in seconds since the Unix epoch.
+           */
+          pickup_at: number;
+
+          /**
+           * Rental rate.
+           */
+          rate_amount?: number;
+
+          /**
+           * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+           */
+          rate_interval?: CarRental.RateInterval;
+
+          /**
+           * The full name of the person or entity renting the car.
+           */
+          renter_name?: string;
+
+          return_address?: Stripe.Address;
+
+          /**
+           * Car return time. Measured in seconds since the Unix epoch.
+           */
+          return_at: number;
+
+          /**
+           * Indicates whether the goods or services are tax-exempt or tax is not collected.
+           */
+          tax_exempt?: boolean;
+        }
+
+        namespace CarRental {
+          type ExtraCharge =
+            | 'extra_mileage'
+            | 'gas'
+            | 'late_return'
+            | 'one_way_service'
+            | 'parking_violation';
+
+          type RateInterval = 'day' | 'month' | 'week';
         }
       }
 
@@ -1417,6 +1518,8 @@ declare module 'stripe' {
            * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
            */
           statement_descriptor_suffix_kanji?: string;
+
+          statement_details?: Card.StatementDetails;
         }
 
         namespace Card {
@@ -1544,6 +1647,49 @@ declare module 'stripe' {
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          interface StatementDetails {
+            address?: StatementDetails.Address;
+
+            /**
+             * Phone number
+             */
+            phone?: string;
+          }
+
+          namespace StatementDetails {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country?: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1?: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
         }
 
         interface CardPresent {
@@ -1608,7 +1754,7 @@ declare module 'stripe' {
             requested_address_types?: Array<BankTransfer.RequestedAddressType>;
 
             /**
-             * The bank transfer type that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
+             * The bank transfer type that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
              */
             type: BankTransfer.Type | null;
           }
@@ -1626,17 +1772,20 @@ declare module 'stripe' {
             }
 
             type RequestedAddressType =
+              | 'aba'
               | 'iban'
               | 'sepa'
               | 'sort_code'
               | 'spei'
+              | 'swift'
               | 'zengin';
 
             type Type =
               | 'eu_bank_transfer'
               | 'gb_bank_transfer'
               | 'jp_bank_transfer'
-              | 'mx_bank_transfer';
+              | 'mx_bank_transfer'
+              | 'us_bank_transfer';
           }
         }
 

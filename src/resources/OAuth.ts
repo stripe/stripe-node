@@ -1,7 +1,7 @@
 'use strict';
 
 import {StripeResource} from '../StripeResource.js';
-import {stringifyRequestData} from '../utils.js';
+import {queryStringifyRequestData} from '../utils.js';
 
 type OAuthAuthorizeUrlParams = {
   response_type?: 'code';
@@ -48,7 +48,7 @@ export const OAuth = StripeResource.extend({
       params.scope = 'read_write';
     }
 
-    return `https://${oAuthHost}/${path}?${stringifyRequestData(params)}`;
+    return `https://${oAuthHost}/${path}?${queryStringifyRequestData(params)}`;
   },
 
   token: stripeMethod({

@@ -517,12 +517,12 @@ declare module 'stripe' {
         /**
          * A unique and immutable identifier assigned by Cash App to every buyer.
          */
-        buyer_id?: string | null;
+        buyer_id: string | null;
 
         /**
          * A public identifier for buyers using Cash App.
          */
-        cashtag?: string | null;
+        cashtag: string | null;
       }
 
       interface CustomerBalance {}
@@ -843,6 +843,12 @@ declare module 'stripe' {
          * Uniquely identifies this particular PayPal account. You can use this attribute to check whether two PayPal accounts are the same.
          */
         fingerprint?: string | null;
+
+        /**
+         * Owner's email. Values are provided by PayPal directly
+         * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+         */
+        payer_email?: string | null;
 
         /**
          * PayPal account PayerID. This identifier uniquely identifies the PayPal customer.

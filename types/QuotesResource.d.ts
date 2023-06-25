@@ -233,6 +233,11 @@ declare module 'stripe' {
         proration_behavior?: Line.ProrationBehavior;
 
         /**
+         * Defines how to pause collection for the underlying subscription throughout the duration of the amendment.
+         */
+        set_pause_collection?: Line.SetPauseCollection;
+
+        /**
          * Timestamp helper to end the underlying schedule early, based on the acompanying line's start or end date.
          */
         set_schedule_end?: Line.SetScheduleEnd;
@@ -676,6 +681,33 @@ declare module 'stripe' {
           | 'always_invoice'
           | 'create_prorations'
           | 'none';
+
+        interface SetPauseCollection {
+          /**
+           * Details of the pause_collection behavior to apply to the amendment.
+           */
+          set?: SetPauseCollection.Set;
+
+          /**
+           * Determines the type of the pause_collection amendment.
+           */
+          type: SetPauseCollection.Type;
+        }
+
+        namespace SetPauseCollection {
+          interface Set {
+            /**
+             * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+             */
+            behavior: Set.Behavior;
+          }
+
+          namespace Set {
+            type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+          }
+
+          type Type = 'remove' | 'set';
+        }
 
         type SetScheduleEnd = 'line_ends_at' | 'line_starts_at';
 
@@ -1262,6 +1294,7 @@ declare module 'stripe' {
             type Type =
               | 'line_starts_at'
               | 'now'
+              | 'pause_collection_start'
               | 'quote_acceptance_date'
               | 'timestamp';
           }
@@ -1454,6 +1487,7 @@ declare module 'stripe' {
             type Type =
               | 'line_starts_at'
               | 'now'
+              | 'pause_collection_start'
               | 'quote_acceptance_date'
               | 'timestamp';
           }
@@ -1763,6 +1797,11 @@ declare module 'stripe' {
          * Changes to how Stripe handles prorations during the quote line's time span. Affects if and how prorations are created when a future phase starts.
          */
         proration_behavior?: Line.ProrationBehavior;
+
+        /**
+         * Defines how to pause collection for the underlying subscription throughout the duration of the amendment.
+         */
+        set_pause_collection?: Line.SetPauseCollection;
 
         /**
          * Timestamp helper to end the underlying schedule early, based on the acompanying line's start or end date.
@@ -2208,6 +2247,33 @@ declare module 'stripe' {
           | 'always_invoice'
           | 'create_prorations'
           | 'none';
+
+        interface SetPauseCollection {
+          /**
+           * Details of the pause_collection behavior to apply to the amendment.
+           */
+          set?: SetPauseCollection.Set;
+
+          /**
+           * Determines the type of the pause_collection amendment.
+           */
+          type: SetPauseCollection.Type;
+        }
+
+        namespace SetPauseCollection {
+          interface Set {
+            /**
+             * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+             */
+            behavior: Set.Behavior;
+          }
+
+          namespace Set {
+            type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+          }
+
+          type Type = 'remove' | 'set';
+        }
 
         type SetScheduleEnd = 'line_ends_at' | 'line_starts_at';
 
@@ -2796,6 +2862,7 @@ declare module 'stripe' {
             type Type =
               | 'line_starts_at'
               | 'now'
+              | 'pause_collection_start'
               | 'quote_acceptance_date'
               | 'timestamp';
           }
@@ -2990,6 +3057,7 @@ declare module 'stripe' {
             type Type =
               | 'line_starts_at'
               | 'now'
+              | 'pause_collection_start'
               | 'quote_acceptance_date'
               | 'timestamp';
           }

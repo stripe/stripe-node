@@ -3,7 +3,7 @@ import {
   getOptionsFromArgs,
   makeURLInterpolator,
   protoExtend,
-  stringifyRequestData,
+  queryStringifyRequestData,
 } from './utils.js';
 import {stripeMethod} from './StripeMethod.js';
 import {
@@ -157,6 +157,7 @@ StripeResource.prototype = {
     const options = getOptionsFromArgs(args);
     const host = options.host || spec.host;
     const streaming = !!spec.streaming;
+
     // Validate that there are no more args.
     if (args.filter((x) => x != null).length) {
       throw new Error(
@@ -226,7 +227,7 @@ StripeResource.prototype = {
       const path = [
         opts.requestPath,
         emptyQuery ? '' : '?',
-        stringifyRequestData(opts.queryData),
+        queryStringifyRequestData(opts.queryData),
       ].join('');
 
       const {headers, settings} = opts;
