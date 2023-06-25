@@ -1,9 +1,8 @@
 // @ts-nocheck
 
-require('./testUtils.js');
-const http = require('http');
-
-const expect = require('chai').expect;
+import http = require('http');
+import {expect} from 'chai';
+import {FAKE_API_KEY} from './testUtils.js';
 let testServer = null;
 
 function createTestServer(handlerFunc, cb) {
@@ -57,15 +56,12 @@ describe('Client Telemetry', () => {
         res.end('{}');
       },
       (host, port) => {
-        const stripe = require('../src/stripe.cjs.node.js')(
-          'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
-          {
-            telemetry: false,
-            host,
-            port,
-            protocol: 'http',
-          }
-        );
+        const stripe = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
+          telemetry: false,
+          host,
+          port,
+          protocol: 'http',
+        });
 
         stripe.balance
           .retrieve()

@@ -3,11 +3,10 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * To charge a credit or a debit card, you create a `Charge` object. You can
-     * retrieve and refund individual charges as well as list all charges. Charges
-     * are identified by a unique, random ID.
-     *
-     * Related guide: [Accept a payment with the Charges API](https://stripe.com/docs/payments/accept-a-payment-charges)
+     * The `Charge` object represents a single attempt to move money into your Stripe account.
+     * PaymentIntent confirmation is the most common way to create Charges, but transferring
+     * money to a different Stripe account through Connect also creates Charges.
+     * Some legacy payment flows create Charges directly, which is not recommended for new integrations.
      */
     interface Charge {
       /**
@@ -147,7 +146,7 @@ declare module 'stripe' {
       metadata: Stripe.Metadata;
 
       /**
-       * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
+       * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
        */
       on_behalf_of: string | Stripe.Account | null;
 
@@ -252,7 +251,7 @@ declare module 'stripe' {
       transfer_data: Charge.TransferData | null;
 
       /**
-       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
+       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers#transfer-options) for details.
        */
       transfer_group: string | null;
     }
@@ -1150,12 +1149,12 @@ declare module 'stripe' {
           /**
            * A unique and immutable identifier assigned by Cash App to every buyer.
            */
-          buyer_id?: string | null;
+          buyer_id: string | null;
 
           /**
            * A public identifier for buyers using Cash App.
            */
-          cashtag?: string | null;
+          cashtag: string | null;
         }
 
         interface CustomerBalance {}

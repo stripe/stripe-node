@@ -332,9 +332,19 @@ declare module 'stripe' {
           label: CustomField.Label;
 
           /**
+           * Configuration for `type=numeric` fields.
+           */
+          numeric?: CustomField.Numeric;
+
+          /**
            * Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
            */
           optional?: boolean;
+
+          /**
+           * Configuration for `type=text` fields.
+           */
+          text?: CustomField.Text;
 
           /**
            * The type of the field.
@@ -374,6 +384,30 @@ declare module 'stripe' {
              * The type of the label.
              */
             type: 'custom';
+          }
+
+          interface Numeric {
+            /**
+             * The maximum character length constraint for the customer's input.
+             */
+            maximum_length?: number;
+
+            /**
+             * The minimum character length requirement for the customer's input.
+             */
+            minimum_length?: number;
+          }
+
+          interface Text {
+            /**
+             * The maximum character length constraint for the customer's input.
+             */
+            maximum_length?: number;
+
+            /**
+             * The minimum character length requirement for the customer's input.
+             */
+            minimum_length?: number;
           }
 
           type Type = 'dropdown' | 'numeric' | 'text';
@@ -1218,17 +1252,20 @@ declare module 'stripe' {
               }
 
               type RequestedAddressType =
+                | 'aba'
                 | 'iban'
                 | 'sepa'
                 | 'sort_code'
                 | 'spei'
+                | 'swift'
                 | 'zengin';
 
               type Type =
                 | 'eu_bank_transfer'
                 | 'gb_bank_transfer'
                 | 'jp_bank_transfer'
-                | 'mx_bank_transfer';
+                | 'mx_bank_transfer'
+                | 'us_bank_transfer';
             }
           }
 

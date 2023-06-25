@@ -1,12 +1,10 @@
 // @ts-nocheck
+import {expect} from 'chai';
+import * as nock from 'nock';
+import {StripeResource} from '../src/StripeResource.js';
+import {getSpyableStripe, getTestServerStripe} from './testUtils.js';
 
-const nock = require('nock');
-
-const stripe = require('./testUtils.js').getSpyableStripe();
-const expect = require('chai').expect;
-const testUtils = require('./testUtils.js');
-
-const {StripeResource} = require('../src/StripeResource.js');
+const stripe = getSpyableStripe();
 const stripeMethod = StripeResource.method;
 
 describe('StripeResource', () => {
@@ -72,25 +70,21 @@ describe('StripeResource', () => {
         res.end();
       };
 
-      testUtils.getTestServerStripe(
-        {},
-        handleRequest,
-        (err, stripe, closeServer) => {
-          const resource = new (StripeResource.extend({
-            test: stripeMethod({
-              method: 'GET',
-              fullPath: '/v1/parent/{param1}/child/{param2}',
-            }),
-          }))(stripe);
+      getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
+        const resource = new (StripeResource.extend({
+          test: stripeMethod({
+            method: 'GET',
+            fullPath: '/v1/parent/{param1}/child/{param2}',
+          }),
+        }))(stripe);
 
-          return resource.test('hello', 'world', (err, res) => {
-            closeServer();
-            // Spot check that we received a response.
-            expect(res).to.deep.equal({});
-            return callback(err);
-          });
-        }
-      );
+        return resource.test('hello', 'world', (err, res) => {
+          closeServer();
+          // Spot check that we received a response.
+          expect(res).to.deep.equal({});
+          return callback(err);
+        });
+      });
     });
   });
 
@@ -149,25 +143,21 @@ describe('StripeResource', () => {
         res.end();
       };
 
-      testUtils.getTestServerStripe(
-        {},
-        handleRequest,
-        (err, stripe, closeServer) => {
-          const resource = new (StripeResource.extend({
-            test: stripeMethod({
-              method: 'GET',
-              fullPath: '/v1/parent/{param1}/child/{param2}',
-            }),
-          }))(stripe);
+      getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
+        const resource = new (StripeResource.extend({
+          test: stripeMethod({
+            method: 'GET',
+            fullPath: '/v1/parent/{param1}/child/{param2}',
+          }),
+        }))(stripe);
 
-          return resource.test('hello', 'world', (err, res) => {
-            closeServer();
-            // Spot check that we received a response.
-            expect(res).to.deep.equal({});
-            return callback(err);
-          });
-        }
-      );
+        return resource.test('hello', 'world', (err, res) => {
+          closeServer();
+          // Spot check that we received a response.
+          expect(res).to.deep.equal({});
+          return callback(err);
+        });
+      });
     });
   });
 
@@ -196,32 +186,28 @@ describe('StripeResource', () => {
         setTimeout(() => res.end(), 40);
       };
 
-      testUtils.getTestServerStripe(
-        {},
-        handleRequest,
-        (err, stripe, closeServer) => {
-          const foos = makeResourceWithPDFMethod(stripe);
+      getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
+        const foos = makeResourceWithPDFMethod(stripe);
+        if (err) {
+          return callback(err);
+        }
+
+        return foos.pdf({id: 'foo_123'}, {host: 'localhost'}, (err, res) => {
+          closeServer();
           if (err) {
             return callback(err);
           }
-
-          return foos.pdf({id: 'foo_123'}, {host: 'localhost'}, (err, res) => {
-            closeServer();
-            if (err) {
-              return callback(err);
-            }
-            const chunks = [];
-            res.on('data', (chunk) => chunks.push(chunk));
-            res.on('error', callback);
-            res.on('end', () => {
-              expect(Buffer.concat(chunks).toString()).to.equal(
-                'pretend this is a pdf'
-              );
-              return callback();
-            });
+          const chunks = [];
+          res.on('data', (chunk) => chunks.push(chunk));
+          res.on('error', callback);
+          res.on('end', () => {
+            expect(Buffer.concat(chunks).toString()).to.equal(
+              'pretend this is a pdf'
+            );
+            return callback();
           });
-        }
-      );
+        });
+      });
     });
 
     it('failure', (callback) => {
@@ -237,25 +223,21 @@ describe('StripeResource', () => {
         setTimeout(() => res.end(), 20);
       };
 
-      testUtils.getTestServerStripe(
-        {},
-        handleRequest,
-        (err, stripe, closeServer) => {
-          if (err) {
-            return callback(err);
-          }
-
-          const foos = makeResourceWithPDFMethod(stripe);
-
-          return foos.pdf({id: 'foo_123'}, {host: 'localhost'}, (err, res) => {
-            closeServer();
-            expect(err).to.exist;
-            expect(err.raw.type).to.equal('api_error');
-            expect(err.raw.message).to.equal('this is bad');
-            return callback();
-          });
+      getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
+        if (err) {
+          return callback(err);
         }
-      );
+
+        const foos = makeResourceWithPDFMethod(stripe);
+
+        return foos.pdf({id: 'foo_123'}, {host: 'localhost'}, (err, res) => {
+          closeServer();
+          expect(err).to.exist;
+          expect(err.raw.type).to.equal('api_error');
+          expect(err.raw.message).to.equal('this is bad');
+          return callback();
+        });
+      });
     });
   });
 

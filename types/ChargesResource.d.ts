@@ -48,7 +48,7 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
-       * The Stripe account ID for which these funds are intended. Automatically set if you use the `destination` parameter. For details, see [Creating Separate Charges and Transfers](https://stripe.com/docs/connect/charges-transfers#on-behalf-of).
+       * The Stripe account ID for which these funds are intended. Automatically set if you use the `destination` parameter. For details, see [Creating Separate Charges and Transfers](https://stripe.com/docs/connect/separate-charges-and-transfers#on-behalf-of).
        */
       on_behalf_of?: string;
 
@@ -88,7 +88,7 @@ declare module 'stripe' {
       transfer_data?: ChargeCreateParams.TransferData;
 
       /**
-       * A string that identifies this transaction as part of a group. For details, see [Grouping transactions](https://stripe.com/docs/connect/charges-transfers#transfer-options).
+       * A string that identifies this transaction as part of a group. For details, see [Grouping transactions](https://stripe.com/docs/connect/separate-charges-and-transfers#transfer-options).
        */
       transfer_group?: string;
     }
@@ -197,7 +197,7 @@ declare module 'stripe' {
       shipping?: ChargeUpdateParams.Shipping;
 
       /**
-       * A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
+       * A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers#transfer-options) for details.
        */
       transfer_group?: string;
     }
@@ -308,7 +308,7 @@ declare module 'stripe' {
       transfer_data?: ChargeCaptureParams.TransferData;
 
       /**
-       * A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
+       * A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers#transfer-options) for details.
        */
       transfer_group?: string;
     }
@@ -346,7 +346,9 @@ declare module 'stripe' {
 
     class ChargesResource {
       /**
-       * To charge a credit card or other payment source, you create a Charge object. If your API key is in test mode, the supplied payment source (e.g., card) won't actually be charged, although everything else will occur as if in live mode. (Stripe assumes that the charge would have completed successfully).
+       * Use the [Payment Intents API](https://stripe.com/docs/api/payment_intents) to initiate a new payment instead
+       * of using this method. Confirmation of the PaymentIntent creates the Charge
+       * object used to request payment, so this method is limited to legacy integrations.
        */
       create(
         params?: ChargeCreateParams,
@@ -386,9 +388,11 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.Charge>;
 
       /**
-       * Capture the payment of an existing, uncaptured, charge. This is the second half of the two-step payment flow, where first you [created a charge](https://stripe.com/docs/api#create_charge) with the capture option set to false.
+       * Capture the payment of an existing, uncaptured charge that was created with the capture option set to false.
        *
-       * Uncaptured payments expire a set number of days after they are created ([7 by default](https://stripe.com/docs/charges/placing-a-hold)). If they are not captured by that point in time, they will be marked as refunded and will no longer be capturable.
+       * Uncaptured payments expire a set number of days after they are created ([7 by default](https://stripe.com/docs/charges/placing-a-hold)), after which they are marked as refunded and capture attempts will fail.
+       *
+       * Don't use this method to capture a PaymentIntent-initiated charge. Use [Capture a PaymentIntent](https://stripe.com/docs/api/payment_intents/capture).
        */
       capture(
         id: string,

@@ -1409,7 +1409,7 @@ declare module 'stripe' {
             requested_address_types?: Array<BankTransfer.RequestedAddressType>;
 
             /**
-             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
              */
             type: BankTransfer.Type;
           }
@@ -1423,17 +1423,20 @@ declare module 'stripe' {
             }
 
             type RequestedAddressType =
+              | 'aba'
               | 'iban'
               | 'sepa'
               | 'sort_code'
               | 'spei'
+              | 'swift'
               | 'zengin';
 
             type Type =
               | 'eu_bank_transfer'
               | 'gb_bank_transfer'
               | 'jp_bank_transfer'
-              | 'mx_bank_transfer';
+              | 'mx_bank_transfer'
+              | 'us_bank_transfer';
           }
         }
 
@@ -3319,7 +3322,7 @@ declare module 'stripe' {
             requested_address_types?: Array<BankTransfer.RequestedAddressType>;
 
             /**
-             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
              */
             type: BankTransfer.Type;
           }
@@ -3333,17 +3336,20 @@ declare module 'stripe' {
             }
 
             type RequestedAddressType =
+              | 'aba'
               | 'iban'
               | 'sepa'
               | 'sort_code'
               | 'spei'
+              | 'swift'
               | 'zengin';
 
             type Type =
               | 'eu_bank_transfer'
               | 'gb_bank_transfer'
               | 'jp_bank_transfer'
-              | 'mx_bank_transfer';
+              | 'mx_bank_transfer'
+              | 'us_bank_transfer';
           }
         }
 
@@ -5369,7 +5375,7 @@ declare module 'stripe' {
             requested_address_types?: Array<BankTransfer.RequestedAddressType>;
 
             /**
-             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
              */
             type: BankTransfer.Type;
           }
@@ -5383,17 +5389,20 @@ declare module 'stripe' {
             }
 
             type RequestedAddressType =
+              | 'aba'
               | 'iban'
               | 'sepa'
               | 'sort_code'
               | 'spei'
+              | 'swift'
               | 'zengin';
 
             type Type =
               | 'eu_bank_transfer'
               | 'gb_bank_transfer'
               | 'jp_bank_transfer'
-              | 'mx_bank_transfer';
+              | 'mx_bank_transfer'
+              | 'us_bank_transfer';
           }
         }
 
@@ -6149,7 +6158,8 @@ declare module 'stripe' {
        * If the selected payment method requires additional authentication steps, the
        * PaymentIntent will transition to the requires_action status and
        * suggest additional actions via next_action. If payment fails,
-       * the PaymentIntent will transition to the requires_payment_method status. If
+       * the PaymentIntent transitions to the requires_payment_method status or the
+       * canceled status if the confirmation limit is reached. If
        * payment succeeds, the PaymentIntent will transition to the succeeded
        * status (or requires_capture, if capture_method is set to manual).
        * If the confirmation_method is automatic, payment may be attempted

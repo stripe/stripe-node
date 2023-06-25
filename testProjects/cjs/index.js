@@ -1,4 +1,8 @@
-const stripe = require('stripe')(process.argv[2]);
+const stripe = require('stripe')(process.argv[2], {
+  host: process.env.STRIPE_MOCK_HOST || 'localhost',
+  port: process.env.STRIPE_MOCK_PORT || 12111,
+  protocol: 'http',
+});
 
 try {
   throw new stripe.errors.StripeError({
