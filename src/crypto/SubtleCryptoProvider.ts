@@ -1,4 +1,7 @@
-import {CryptoProvider} from './CryptoProvider.js';
+import {
+  CryptoProvider,
+  CryptoProviderOnlySupportsAsyncError,
+} from './CryptoProvider.js';
 
 /**
  * `CryptoProvider which uses the SubtleCrypto interface of the Web Crypto API.
@@ -19,7 +22,7 @@ export class SubtleCryptoProvider extends CryptoProvider {
 
   /** @override */
   computeHMACSignature(payload: string, secret: string): string {
-    throw new Error(
+    throw new CryptoProviderOnlySupportsAsyncError(
       'SubtleCryptoProvider cannot be used in a synchronous context.'
     );
   }

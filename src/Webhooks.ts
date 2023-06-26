@@ -1,5 +1,8 @@
 import {StripeError, StripeSignatureVerificationError} from './Error.js';
-import {CryptoProvider} from './crypto/CryptoProvider.js';
+import {
+  CryptoProvider,
+  CryptoProviderOnlySupportsAsyncError,
+} from './crypto/CryptoProvider.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 
 type WebhookHeader = string | Uint8Array;
@@ -79,14 +82,22 @@ export function createWebhooks(
       cryptoProvider: CryptoProvider,
       receivedAt: number
     ): WebhookEvent {
-      this.signature.verifyHeader(
-        payload,
-        header,
-        secret,
-        tolerance || Webhook.DEFAULT_TOLERANCE,
-        cryptoProvider,
-        receivedAt
-      );
+      try {
+        this.signature.verifyHeader(
+          payload,
+          header,
+          secret,
+          tolerance || Webhook.DEFAULT_TOLERANCE,
+          cryptoProvider,
+          receivedAt
+        );
+      } catch (e) {
+        if (e instanceof CryptoProviderOnlySupportsAsyncError) {
+          e.message +=
+            '\nUse `await constructEventAsync(...)` instead of `constructEvent(...).`';
+        }
+        throw e;
+      }
 
       const jsonPayload =
         payload instanceof Uint8Array
