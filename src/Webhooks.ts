@@ -94,7 +94,7 @@ export function createWebhooks(
       } catch (e) {
         if (e instanceof CryptoProviderOnlySupportsAsyncError) {
           e.message +=
-            '\nUse `await constructEventAsync(...)` instead of `constructEvent(...).`';
+            '\nUse `await constructEventAsync(...)` instead of `constructEvent(...)`';
         }
         throw e;
       }
