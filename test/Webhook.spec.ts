@@ -169,7 +169,7 @@ describe('Webhooks', () => {
             throw new CryptoProviderOnlySupportsAsyncError('foobar');
           },
         });
-      }).to.throw(/Use `await constructEventAsync/);
+      }).to.throw(/foobar\nUse `await constructEventAsync/);
     });
   });
 
