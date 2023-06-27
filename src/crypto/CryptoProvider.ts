@@ -30,3 +30,12 @@ export class CryptoProvider {
     throw new Error('computeHMACSignatureAsync not implemented.');
   }
 }
+
+/**
+ * If the crypto provider only supports asynchronous operations,
+ * throw CryptoProviderOnlySupportsAsyncError instead of
+ * a generic error so that the caller can choose to provide
+ * a more helpful error message to direct the user to use
+ * an asynchronous pathway.
+ */
+export class CryptoProviderOnlySupportsAsyncError extends Error {}
