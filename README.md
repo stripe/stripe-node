@@ -526,7 +526,7 @@ $ yarn test
 
 If you do not have `yarn` installed, you can get it with `npm install --global yarn`.
 
-The tests also depends on [stripe-mock][stripe-mock], so make sure to fetch and
+The tests also depend on [stripe-mock][stripe-mock], so make sure to fetch and
 run it from a background terminal ([stripe-mock's README][stripe-mock-usage]
 also contains instructions for installing via Homebrew and other methods):
 
