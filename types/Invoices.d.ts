@@ -225,7 +225,7 @@ declare module 'stripe' {
       due_date: number | null;
 
       /**
-       * The date when this invoice is in effect. Same as `finalized_at` unless overwritten by the user. When defined, this value replaces the system-generated 'Date of issue' printed on the invoice PDF and receipt.
+       * The date when this invoice is in effect. Same as `finalized_at` unless overwritten. When defined, this value replaces the system-generated 'Date of issue' printed on the invoice PDF and receipt.
        */
       effective_at: number | null;
 

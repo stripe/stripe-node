@@ -62,7 +62,7 @@ declare module 'stripe' {
       discount_amounts: Array<CreditNote.DiscountAmount>;
 
       /**
-       * The date when this credit note is in effect. Same as `created` unless overwritten by the user. When defined, this value replaces the system-generated 'Date of issue' printed on the credit note PDF.
+       * The date when this credit note is in effect. Same as `created` unless overwritten. When defined, this value replaces the system-generated 'Date of issue' printed on the credit note PDF.
        */
       effective_at: number | null;
 
