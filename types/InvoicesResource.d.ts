@@ -79,6 +79,11 @@ declare module 'stripe' {
       due_date?: number;
 
       /**
+       * The date when this invoice is in effect. Same as `finalized_at` unless overwritten by the user. When defined, this value replaces the system-generated 'Date of issue' printed on the invoice PDF and receipt.
+       */
+      effective_at?: number;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -692,6 +697,11 @@ declare module 'stripe' {
        * The date on which payment for this invoice is due. Only valid for invoices where `collection_method=send_invoice`. This field can only be updated on `draft` invoices.
        */
       due_date?: number;
+
+      /**
+       * The date when this invoice is in effect. Same as `finalized_at` unless overwritten by the user. When defined, this value replaces the system-generated 'Date of issue' printed on the invoice PDF and receipt.
+       */
+      effective_at?: Stripe.Emptyable<number>;
 
       /**
        * Specifies which fields in the response should be expanded.
