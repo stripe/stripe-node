@@ -594,6 +594,7 @@ declare module 'stripe' {
           | 'amount_too_large'
           | 'amount_too_small'
           | 'api_key_expired'
+          | 'application_fees_not_allowed'
           | 'authentication_required'
           | 'balance_insufficient'
           | 'bank_account_bad_routing_numbers'

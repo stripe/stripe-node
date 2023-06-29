@@ -3,7 +3,6 @@
 import {multipartRequestDataProcessor} from '../multipart.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-
 export const Files = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
@@ -13,12 +12,7 @@ export const Files = StripeResource.extend({
     },
     host: 'files.stripe.com',
   }),
-
-  retrieve: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/files/{file}',
-  }),
-
+  retrieve: stripeMethod({method: 'GET', fullPath: '/v1/files/{file}'}),
   list: stripeMethod({
     method: 'GET',
     fullPath: '/v1/files',

@@ -225,6 +225,11 @@ declare module 'stripe' {
       due_date: number | null;
 
       /**
+       * The date when this invoice is in effect. Same as `finalized_at` unless overwritten. When defined, this value replaces the system-generated 'Date of issue' printed on the invoice PDF and receipt.
+       */
+      effective_at: number | null;
+
+      /**
        * Ending customer balance after the invoice is finalized. Invoices are finalized approximately an hour after successful webhook delivery or when payment collection is attempted for the invoice. If the invoice has not been finalized yet, this will be null.
        */
       ending_balance: number | null;
@@ -489,7 +494,7 @@ declare module 'stripe' {
 
       interface CustomerTaxId {
         /**
-         * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `eu_oss_vat`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, or `unknown`
+         * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `pe_ruc`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, or `unknown`
          */
         type: CustomerTaxId.Type;
 
@@ -501,10 +506,13 @@ declare module 'stripe' {
 
       namespace CustomerTaxId {
         type Type =
+          | 'ad_nrt'
           | 'ae_trn'
+          | 'ar_cuit'
           | 'au_abn'
           | 'au_arn'
           | 'bg_uic'
+          | 'bo_tin'
           | 'br_cnpj'
           | 'br_cpf'
           | 'ca_bn'
@@ -515,6 +523,11 @@ declare module 'stripe' {
           | 'ca_qst'
           | 'ch_vat'
           | 'cl_tin'
+          | 'cn_tin'
+          | 'co_nit'
+          | 'cr_tin'
+          | 'do_rcn'
+          | 'ec_ruc'
           | 'eg_tin'
           | 'es_cif'
           | 'eu_oss_vat'
@@ -539,19 +552,25 @@ declare module 'stripe' {
           | 'my_sst'
           | 'no_vat'
           | 'nz_gst'
+          | 'pe_ruc'
           | 'ph_tin'
+          | 'rs_pib'
           | 'ru_inn'
           | 'ru_kpp'
           | 'sa_vat'
           | 'sg_gst'
           | 'sg_uen'
           | 'si_tin'
+          | 'sv_nit'
           | 'th_vat'
           | 'tr_tin'
           | 'tw_vat'
           | 'ua_vat'
           | 'unknown'
           | 'us_ein'
+          | 'uy_ruc'
+          | 've_rif'
+          | 'vn_tin'
           | 'za_vat';
       }
 
@@ -691,6 +710,7 @@ declare module 'stripe' {
           | 'amount_too_large'
           | 'amount_too_small'
           | 'api_key_expired'
+          | 'application_fees_not_allowed'
           | 'authentication_required'
           | 'balance_insufficient'
           | 'bank_account_bad_routing_numbers'
