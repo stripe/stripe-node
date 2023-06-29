@@ -1235,9 +1235,14 @@ declare module 'stripe' {
 
       interface SubscriptionDetails {
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will reflect the metadata of the subscription at the time of invoice creation. *Note: This attribute is populated only for invoices created on or after June 28, 2023.*
+         */
+        metadata?: Stripe.Metadata | null;
+
+        /**
          * If specified, payment collection for this subscription will be paused.
          */
-        pause_collection: SubscriptionDetails.PauseCollection | null;
+        pause_collection?: SubscriptionDetails.PauseCollection | null;
       }
 
       namespace SubscriptionDetails {
