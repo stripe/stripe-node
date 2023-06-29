@@ -2,18 +2,12 @@
 
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-
 export const Registrations = StripeResource.extend({
-  create: stripeMethod({
-    method: 'POST',
-    fullPath: '/v1/tax/registrations',
-  }),
-
+  create: stripeMethod({method: 'POST', fullPath: '/v1/tax/registrations'}),
   update: stripeMethod({
     method: 'POST',
     fullPath: '/v1/tax/registrations/{id}',
   }),
-
   list: stripeMethod({
     method: 'GET',
     fullPath: '/v1/tax/registrations',

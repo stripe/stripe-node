@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {resourceNamespace} from './ResourceNamespace.js';
-
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
@@ -58,12 +57,10 @@ import {ValueListItems as RadarValueListItems} from './resources/Radar/ValueList
 import {ValueLists as RadarValueLists} from './resources/Radar/ValueLists.js';
 import {VerificationReports as IdentityVerificationReports} from './resources/Identity/VerificationReports.js';
 import {VerificationSessions as IdentityVerificationSessions} from './resources/Identity/VerificationSessions.js';
-
 export {Accounts as Account} from './resources/Accounts.js';
-export {OAuth} from './resources/OAuth.js';
-export {Accounts} from './resources/Accounts.js';
 export {AccountLinks} from './resources/AccountLinks.js';
 export {AccountSessions} from './resources/AccountSessions.js';
+export {Accounts} from './resources/Accounts.js';
 export {ApplePayDomains} from './resources/ApplePayDomains.js';
 export {ApplicationFees} from './resources/ApplicationFees.js';
 export {Balance} from './resources/Balance.js';
@@ -72,17 +69,18 @@ export {Charges} from './resources/Charges.js';
 export {CountrySpecs} from './resources/CountrySpecs.js';
 export {Coupons} from './resources/Coupons.js';
 export {CreditNotes} from './resources/CreditNotes.js';
-export {Customers} from './resources/Customers.js';
 export {CustomerSessions} from './resources/CustomerSessions.js';
+export {Customers} from './resources/Customers.js';
 export {Disputes} from './resources/Disputes.js';
 export {EphemeralKeys} from './resources/EphemeralKeys.js';
 export {Events} from './resources/Events.js';
 export {ExchangeRates} from './resources/ExchangeRates.js';
-export {Files} from './resources/Files.js';
 export {FileLinks} from './resources/FileLinks.js';
-export {Invoices} from './resources/Invoices.js';
+export {Files} from './resources/Files.js';
 export {InvoiceItems} from './resources/InvoiceItems.js';
+export {Invoices} from './resources/Invoices.js';
 export {Mandates} from './resources/Mandates.js';
+export {OAuth} from './resources/OAuth.js';
 export {Orders} from './resources/Orders.js';
 export {PaymentIntents} from './resources/PaymentIntents.js';
 export {PaymentLinks} from './resources/PaymentLinks.js';
@@ -92,24 +90,23 @@ export {Plans} from './resources/Plans.js';
 export {Prices} from './resources/Prices.js';
 export {Products} from './resources/Products.js';
 export {PromotionCodes} from './resources/PromotionCodes.js';
-export {Quotes} from './resources/Quotes.js';
 export {QuotePhases} from './resources/QuotePhases.js';
+export {Quotes} from './resources/Quotes.js';
 export {Refunds} from './resources/Refunds.js';
 export {Reviews} from './resources/Reviews.js';
 export {SetupAttempts} from './resources/SetupAttempts.js';
 export {SetupIntents} from './resources/SetupIntents.js';
 export {ShippingRates} from './resources/ShippingRates.js';
 export {Sources} from './resources/Sources.js';
-export {Subscriptions} from './resources/Subscriptions.js';
 export {SubscriptionItems} from './resources/SubscriptionItems.js';
 export {SubscriptionSchedules} from './resources/SubscriptionSchedules.js';
+export {Subscriptions} from './resources/Subscriptions.js';
 export {TaxCodes} from './resources/TaxCodes.js';
 export {TaxRates} from './resources/TaxRates.js';
 export {Tokens} from './resources/Tokens.js';
 export {Topups} from './resources/Topups.js';
 export {Transfers} from './resources/Transfers.js';
 export {WebhookEndpoints} from './resources/WebhookEndpoints.js';
-
 export const Apps = resourceNamespace('apps', {Secrets: AppsSecrets});
 export const BillingPortal = resourceNamespace('billingPortal', {
   Configurations: BillingPortalConfigurations,

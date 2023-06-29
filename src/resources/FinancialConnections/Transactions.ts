@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-
 export const Transactions = StripeResource.extend({
   list: stripeMethod({
     method: 'GET',
