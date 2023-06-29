@@ -1,5 +1,12 @@
 # Changelog
 
+## 12.11.0 - 2023-06-29
+* [#1823](https://github.com/stripe/stripe-node/pull/1823) Update generated code
+  * Add support for new value `application_fees_not_allowed` on enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`
+  * Add support for new tax IDs `ad_nrt`, `ar_cuit`, `bo_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `pe_ruc`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, and `vn_tin`
+  * Add support for `effective_at` on `CreditNoteCreateParams`, `CreditNotePreviewLinesParams`, `CreditNotePreviewParams`, `CreditNote`, `InvoiceCreateParams`, `InvoiceUpdateParams`, and `Invoice`
+* [#1828](https://github.com/stripe/stripe-node/pull/1828) Better CryptoProvider error
+
 ## 12.10.0 - 2023-06-22
 * [#1820](https://github.com/stripe/stripe-node/pull/1820) Update generated code
   * Add support for `on_behalf_of` on `Mandate`
