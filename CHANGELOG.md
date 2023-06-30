@@ -1,5 +1,10 @@
 # Changelog
 
+## 12.12.0-beta.1 - 2023-06-29
+* [#1824](https://github.com/stripe/stripe-node/pull/1824) Update generated code for beta
+  * Add support for `metadata` on `Invoice.subscription_details`
+  * Change `Invoice.subscription_details.pause_collection` to be optional
+
 ## 12.11.0-beta.1 - 2023-06-22
 * [#1821](https://github.com/stripe/stripe-node/pull/1821) Update generated code for beta
   * Add support for new resource `CustomerSession`
@@ -9,13 +14,8 @@
 ## 12.10.0 - 2023-06-22
 * [#1820](https://github.com/stripe/stripe-node/pull/1820) Update generated code
   * Add support for `on_behalf_of` on `Mandate`
-* [#1817](https://github.com/stripe/stripe-node/pull/1817) Update README.md
-* [#1819](https://github.com/stripe/stripe-node/pull/1819) Update generated code
-  * Release specs are identical.
 * [#1813](https://github.com/stripe/stripe-node/pull/1813) Update generated code
   * Change type of `Checkout.Session.success_url` from `string` to `string | null`
-  * Change type of `FileCreateParams.file` from `string` to `file`
-* [#1815](https://github.com/stripe/stripe-node/pull/1815) Generate FileCreateParams
 
 ## 12.10.0-beta.2 - 2023-06-15
 * [#1818](https://github.com/stripe/stripe-node/pull/1818) Update generated code for beta
