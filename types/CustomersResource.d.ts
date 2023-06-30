@@ -328,7 +328,7 @@ declare module 'stripe' {
       /**
        * Customer's email address. It's displayed alongside the customer in your dashboard and can be useful for searching and tracking. This may be up to *512 characters*.
        */
-      email?: string;
+      email?: string | null;
 
       /**
        * Specifies which fields in the response should be expanded.
