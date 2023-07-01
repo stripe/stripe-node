@@ -143,6 +143,11 @@ declare module 'stripe' {
       >;
 
       /**
+       * The identifier of the plan to add to the subscription.
+       */
+      plan?: string;
+
+      /**
        * The API ID of a promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription.
        */
       promotion_code?: string;
@@ -797,6 +802,11 @@ declare module 'stripe' {
       pending_invoice_item_interval?: Stripe.Emptyable<
         SubscriptionUpdateParams.PendingInvoiceItemInterval
       >;
+
+      /**
+       * The identifier of the new plan for this subscription.
+       */
+      plan?: string;
 
       /**
        * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription.

@@ -185,6 +185,11 @@ declare module 'stripe' {
       pending_update: Subscription.PendingUpdate | null;
 
       /**
+       * The [Plan](https://stripe.com/docs/api/plans) from the only subscription item. If there are none or multiple subscription items, or if the subscription item has a one-off price, this property is null.
+       */
+      plan: Stripe.Plan | null;
+
+      /**
        * The schedule attached to the subscription
        */
       schedule: string | Stripe.SubscriptionSchedule | null;
