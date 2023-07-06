@@ -1,5 +1,10 @@
 # Changelog
 
+## 12.12.0 - 2023-07-06
+* [#1831](https://github.com/stripe/stripe-node/pull/1831) Update generated code
+  * Add support for `numeric` and `text` on `PaymentLink.custom_fields[]`
+  * Add support for `automatic_tax` on `SubscriptionListParams`
+
 ## 12.11.0 - 2023-06-29
 * [#1823](https://github.com/stripe/stripe-node/pull/1823) Update generated code
   * Add support for new value `application_fees_not_allowed` on enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`
