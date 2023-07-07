@@ -1,5 +1,10 @@
 # Changelog
 
+## 12.12.0 - 2023-07-06
+* [#1831](https://github.com/stripe/stripe-node/pull/1831) Update generated code
+  * Add support for `numeric` and `text` on `PaymentLink.custom_fields[]`
+  * Add support for `automatic_tax` on `SubscriptionListParams`
+
 ## 12.12.0-beta.1 - 2023-06-29
 * [#1824](https://github.com/stripe/stripe-node/pull/1824) Update generated code for beta
   * Add support for `metadata` on `Invoice.subscription_details`
