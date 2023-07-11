@@ -84,6 +84,7 @@ export {OAuth} from './resources/OAuth.js';
 export {Orders} from './resources/Orders.js';
 export {PaymentIntents} from './resources/PaymentIntents.js';
 export {PaymentLinks} from './resources/PaymentLinks.js';
+export {PaymentMethodConfigurations} from './resources/PaymentMethodConfigurations.js';
 export {PaymentMethods} from './resources/PaymentMethods.js';
 export {Payouts} from './resources/Payouts.js';
 export {Plans} from './resources/Plans.js';

@@ -53,6 +53,7 @@
 ///<reference path='./OrdersResource.d.ts' />
 ///<reference path='./PaymentIntentsResource.d.ts' />
 ///<reference path='./PaymentLinksResource.d.ts' />
+///<reference path='./PaymentMethodConfigurationsResource.d.ts' />
 ///<reference path='./PaymentMethodsResource.d.ts' />
 ///<reference path='./PayoutsResource.d.ts' />
 ///<reference path='./PlansResource.d.ts' />
@@ -175,6 +176,7 @@
 ///<reference path='./Orders.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
+///<reference path='./PaymentMethodConfigurations.d.ts' />
 ///<reference path='./PaymentMethods.d.ts' />
 ///<reference path='./Payouts.d.ts' />
 ///<reference path='./Persons.d.ts' />
@@ -276,6 +278,7 @@ declare module 'stripe' {
     orders: Stripe.OrdersResource;
     paymentIntents: Stripe.PaymentIntentsResource;
     paymentLinks: Stripe.PaymentLinksResource;
+    paymentMethodConfigurations: Stripe.PaymentMethodConfigurationsResource;
     paymentMethods: Stripe.PaymentMethodsResource;
     payouts: Stripe.PayoutsResource;
     plans: Stripe.PlansResource;
