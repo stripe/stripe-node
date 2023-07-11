@@ -37,6 +37,7 @@ import {Secrets as AppsSecrets} from './resources/Apps/Secrets.js';
 import {Sessions as BillingPortalSessions} from './resources/BillingPortal/Sessions.js';
 import {Sessions as CheckoutSessions} from './resources/Checkout/Sessions.js';
 import {Sessions as FinancialConnectionsSessions} from './resources/FinancialConnections/Sessions.js';
+import {Settings as TaxSettings} from './resources/Tax/Settings.js';
 import {TestClocks as TestHelpersTestClocks} from './resources/TestHelpers/TestClocks.js';
 import {TransactionEntries as TreasuryTransactionEntries} from './resources/Treasury/TransactionEntries.js';
 import {Transactions as IssuingTransactions} from './resources/Issuing/Transactions.js';
@@ -129,6 +130,7 @@ export const Sigma = resourceNamespace('sigma', {
 });
 export const Tax = resourceNamespace('tax', {
   Calculations: TaxCalculations,
+  Settings: TaxSettings,
   Transactions: TaxTransactions,
 });
 export const Terminal = resourceNamespace('terminal', {
