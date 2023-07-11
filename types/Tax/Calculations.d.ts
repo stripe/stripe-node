@@ -208,7 +208,7 @@ declare module 'stripe' {
           amount_tax: number;
 
           /**
-           * The ID of an existing [ShippingRate](https://stripe.com/docs/api/shipping_rates/object)
+           * The ID of an existing [ShippingRate](https://stripe.com/docs/api/shipping_rates/object).
            */
           shipping_rate?: string;
 
