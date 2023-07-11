@@ -97,6 +97,11 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
+       * The ID of the payment method configuration to use with this PaymentIntent.
+       */
+      payment_method_configuration?: string;
+
+      /**
        * If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear
        * in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method)
        * property on the PaymentIntent.
@@ -2433,6 +2438,11 @@ declare module 'stripe' {
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.
        */
       payment_method?: string;
+
+      /**
+       * The ID of the payment method configuration to use with this PaymentIntent.
+       */
+      payment_method_configuration?: string;
 
       /**
        * If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear

@@ -151,6 +151,11 @@ declare module 'stripe' {
       payment_method: string | Stripe.PaymentMethod | null;
 
       /**
+       * Information about the payment method configuration used for this PaymentIntent.
+       */
+      payment_method_configuration_details?: PaymentIntent.PaymentMethodConfigurationDetails | null;
+
+      /**
        * Payment-method-specific configuration for this PaymentIntent.
        */
       payment_method_options: PaymentIntent.PaymentMethodOptions | null;
@@ -1218,6 +1223,18 @@ declare module 'stripe' {
 
           type RateInterval = 'day' | 'month' | 'week';
         }
+      }
+
+      interface PaymentMethodConfigurationDetails {
+        /**
+         * ID of the payment method configuration used.
+         */
+        id: string;
+
+        /**
+         * ID of the parent payment method configuration used.
+         */
+        parent: string | null;
       }
 
       interface PaymentMethodOptions {
