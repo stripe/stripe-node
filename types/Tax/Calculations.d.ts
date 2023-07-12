@@ -325,6 +325,8 @@ declare module 'stripe' {
 
             namespace TaxRateDetails {
               type TaxType =
+                | 'amusement_tax'
+                | 'communications_tax'
                 | 'gst'
                 | 'hst'
                 | 'igst'
@@ -405,6 +407,8 @@ declare module 'stripe' {
 
           namespace TaxRateDetails {
             type TaxType =
+              | 'amusement_tax'
+              | 'communications_tax'
               | 'gst'
               | 'hst'
               | 'igst'
