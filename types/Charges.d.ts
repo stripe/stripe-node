@@ -571,6 +571,11 @@ declare module 'stripe' {
 
         interface AfterpayClearpay {
           /**
+           * The Afterpay order ID associated with this payment intent.
+           */
+          order_id: string | null;
+
+          /**
            * Order identifier shown to the merchant in Afterpay's online portal.
            */
           reference: string | null;
