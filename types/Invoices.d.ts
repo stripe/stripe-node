@@ -763,6 +763,7 @@ declare module 'stripe' {
           | 'invalid_expiry_year'
           | 'invalid_number'
           | 'invalid_source_usage'
+          | 'invalid_tax_location'
           | 'invoice_no_customer_line_items'
           | 'invoice_no_payment_method_types'
           | 'invoice_no_subscription_line_items'

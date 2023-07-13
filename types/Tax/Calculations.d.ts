@@ -208,7 +208,7 @@ declare module 'stripe' {
           amount_tax: number;
 
           /**
-           * The ID of an existing [ShippingRate](https://stripe.com/docs/api/shipping_rates/object)
+           * The ID of an existing [ShippingRate](https://stripe.com/docs/api/shipping_rates/object).
            */
           shipping_rate?: string;
 
@@ -325,6 +325,8 @@ declare module 'stripe' {
 
             namespace TaxRateDetails {
               type TaxType =
+                | 'amusement_tax'
+                | 'communications_tax'
                 | 'gst'
                 | 'hst'
                 | 'igst'
@@ -405,6 +407,8 @@ declare module 'stripe' {
 
           namespace TaxRateDetails {
             type TaxType =
+              | 'amusement_tax'
+              | 'communications_tax'
               | 'gst'
               | 'hst'
               | 'igst'
