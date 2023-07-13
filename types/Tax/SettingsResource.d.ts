@@ -3,18 +3,18 @@
 declare module 'stripe' {
   namespace Stripe {
     namespace Tax {
-      interface SettingRetrieveParams {
+      interface SettingsRetrieveParams {
         /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
       }
 
-      interface SettingUpdateParams {
+      interface SettingsUpdateParams {
         /**
          * Default configuration to be used on Stripe Tax calculations.
          */
-        defaults?: SettingUpdateParams.Defaults;
+        defaults?: SettingsUpdateParams.Defaults;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -24,10 +24,10 @@ declare module 'stripe' {
         /**
          * The place where your business is located.
          */
-        head_office?: SettingUpdateParams.HeadOffice;
+        head_office?: SettingsUpdateParams.HeadOffice;
       }
 
-      namespace SettingUpdateParams {
+      namespace SettingsUpdateParams {
         interface Defaults {
           /**
            * Specifies the default [tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#tax-behavior) to be used when the item's price has unspecified tax behavior. One of inclusive, exclusive, or inferred_by_currency. Once specified, it cannot be changed back to null.
@@ -57,7 +57,7 @@ declare module 'stripe' {
          * Retrieves Tax Settings for a merchant.
          */
         retrieve(
-          params?: SettingRetrieveParams,
+          params?: SettingsRetrieveParams,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Tax.Settings>>;
         retrieve(
@@ -68,7 +68,7 @@ declare module 'stripe' {
          * Updates Tax Settings parameters used in tax calculations. All parameters are editable but none can be removed once set.
          */
         update(
-          params?: SettingUpdateParams,
+          params?: SettingsUpdateParams,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Tax.Settings>>;
       }
