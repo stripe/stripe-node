@@ -33,7 +33,7 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * A Product ID.
+         * The ID of an existing [Product](https://stripe.com/docs/api/products/object).
          */
         product: string | null;
 
@@ -160,6 +160,8 @@ declare module 'stripe' {
 
           namespace TaxRateDetails {
             type TaxType =
+              | 'amusement_tax'
+              | 'communications_tax'
               | 'gst'
               | 'hst'
               | 'igst'

@@ -97,6 +97,11 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
+       * The ID of the payment method configuration to use with this PaymentIntent.
+       */
+      payment_method_configuration?: string;
+
+      /**
        * If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear
        * in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method)
        * property on the PaymentIntent.
@@ -177,9 +182,20 @@ declare module 'stripe' {
     namespace PaymentIntentCreateParams {
       interface AutomaticPaymentMethods {
         /**
+         * Controls whether this PaymentIntent will accept redirect-based payment methods.
+         *
+         * Redirect-based payment methods may require your customer to be redirected to a payment method's app or site for authentication or additional steps. To [confirm](https://stripe.com/docs/api/payment_intents/confirm) this PaymentIntent, you may be required to provide a `return_url` to redirect customers back to your site after they authenticate or complete the payment.
+         */
+        allow_redirects?: AutomaticPaymentMethods.AllowRedirects;
+
+        /**
          * Whether this feature is enabled.
          */
         enabled: boolean;
+      }
+
+      namespace AutomaticPaymentMethods {
+        type AllowRedirects = 'always' | 'never';
       }
 
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
@@ -2433,6 +2449,11 @@ declare module 'stripe' {
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.
        */
       payment_method?: string;
+
+      /**
+       * The ID of the payment method configuration to use with this PaymentIntent.
+       */
+      payment_method_configuration?: string;
 
       /**
        * If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear

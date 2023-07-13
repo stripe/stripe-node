@@ -151,6 +151,11 @@ declare module 'stripe' {
       payment_method: string | Stripe.PaymentMethod | null;
 
       /**
+       * Information about the payment method configuration used for this PaymentIntent.
+       */
+      payment_method_configuration_details?: PaymentIntent.PaymentMethodConfigurationDetails | null;
+
+      /**
        * Payment-method-specific configuration for this PaymentIntent.
        */
       payment_method_options: PaymentIntent.PaymentMethodOptions | null;
@@ -246,9 +251,20 @@ declare module 'stripe' {
 
       interface AutomaticPaymentMethods {
         /**
+         * Controls whether this PaymentIntent will accept redirect-based payment methods.
+         *
+         * Redirect-based payment methods may require your customer to be redirected to a payment method's app or site for authentication or additional steps. To [confirm](https://stripe.com/docs/api/payment_intents/confirm) this PaymentIntent, you may be required to provide a `return_url` to redirect customers back to your site after they authenticate or complete the payment.
+         */
+        allow_redirects?: AutomaticPaymentMethods.AllowRedirects;
+
+        /**
          * Automatically calculates compatible payment methods
          */
         enabled: boolean;
+      }
+
+      namespace AutomaticPaymentMethods {
+        type AllowRedirects = 'always' | 'never';
       }
 
       type CancellationReason =
@@ -1218,6 +1234,18 @@ declare module 'stripe' {
 
           type RateInterval = 'day' | 'month' | 'week';
         }
+      }
+
+      interface PaymentMethodConfigurationDetails {
+        /**
+         * ID of the payment method configuration used.
+         */
+        id: string;
+
+        /**
+         * ID of the parent payment method configuration used.
+         */
+        parent: string | null;
       }
 
       interface PaymentMethodOptions {
