@@ -27,11 +27,10 @@ export const Quotes = StripeResource.extend({
     fullPath: '/v1/quotes/{quote}/line_items',
     methodType: 'list',
   }),
-
   pdf: stripeMethod({
-    host: 'files.stripe.com',
     method: 'GET',
     fullPath: '/v1/quotes/{quote}/pdf',
+    host: 'files.stripe.com',
     streaming: true,
   }),
 });
