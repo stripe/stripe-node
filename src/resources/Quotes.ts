@@ -40,11 +40,10 @@ export const Quotes = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/quotes/{quote}/mark_stale',
   }),
-
   pdf: stripeMethod({
-    host: 'files.stripe.com',
     method: 'GET',
     fullPath: '/v1/quotes/{quote}/pdf',
+    host: 'files.stripe.com',
     streaming: true,
   }),
   previewInvoiceLines: stripeMethod({
