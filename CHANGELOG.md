@@ -42,9 +42,9 @@
 
 ## 12.8.0 - 2023-06-01
 * [#1799](https://github.com/stripe/stripe-node/pull/1799) Update generated code
-  * Add support for `numeric` and `text` on `CheckoutSessionCreateParams.custom_fields[]`, `PaymentLinkCreateParams.custom_fields[]`, and `PaymentLinkUpdateParams.custom_fields[]`
-  * Add support for new values `aba` and `swift` on enums `Checkout.Session.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `CheckoutSessionCreateParams.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `PaymentIntent.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `PaymentIntentConfirmParams.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `PaymentIntentCreateParams.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, and `PaymentIntentUpdateParams.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`
-  * Add support for new value `us_bank_transfer` on enums `Checkout.Session.payment_method_options.customer_balance.bank_transfer.type`, `CheckoutSessionCreateParams.payment_method_options.customer_balance.bank_transfer.type`, `CustomerCreateFundingInstructionsParams.bank_transfer.type`, `PaymentIntent.next_action.display_bank_transfer_instructions.type`, `PaymentIntent.payment_method_options.customer_balance.bank_transfer.type`, `PaymentIntentConfirmParams.payment_method_options.customer_balance.bank_transfer.type`, `PaymentIntentCreateParams.payment_method_options.customer_balance.bank_transfer.type`, and `PaymentIntentUpdateParams.payment_method_options.customer_balance.bank_transfer.type`
+  * Add support for `numeric` and `text` on `Checkout.SessionCreateParams.custom_fields[]`, `PaymentLinkCreateParams.custom_fields[]`, and `PaymentLinkUpdateParams.custom_fields[]`
+  * Add support for new values `aba` and `swift` on enums `Checkout.Session.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `Checkout.SessionCreateParams.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `PaymentIntent.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `PaymentIntentConfirmParams.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `PaymentIntentCreateParams.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, and `PaymentIntentUpdateParams.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`
+  * Add support for new value `us_bank_transfer` on enums `Checkout.Session.payment_method_options.customer_balance.bank_transfer.type`, `Checkout.SessionCreateParams.payment_method_options.customer_balance.bank_transfer.type`, `CustomerCreateFundingInstructionsParams.bank_transfer.type`, `PaymentIntent.next_action.display_bank_transfer_instructions.type`, `PaymentIntent.payment_method_options.customer_balance.bank_transfer.type`, `PaymentIntentConfirmParams.payment_method_options.customer_balance.bank_transfer.type`, `PaymentIntentCreateParams.payment_method_options.customer_balance.bank_transfer.type`, and `PaymentIntentUpdateParams.payment_method_options.customer_balance.bank_transfer.type`
   * Add support for `maximum_length` and `minimum_length` on `Checkout.Session.custom_fields[].numeric` and `Checkout.Session.custom_fields[].text`
   * Add support for `preferred_locales` on `Issuing.Cardholder`, `IssuingCardholderCreateParams`, and `IssuingCardholderUpdateParams`
   * Add support for `description`, `iin`, and `issuer` on `PaymentMethod.card_present` and `PaymentMethod.interac_present`
@@ -55,7 +55,7 @@
   * Add support for `zip_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
   * Change type of `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code` from `string` to `enum`
   * Add support for `zip` on `Charge.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, `PaymentMethodUpdateParams`, `PaymentMethod`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentCreateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_data`
-  * Add support for new value `zip` on enums `CheckoutSessionCreateParams.payment_method_types[]` and `PaymentMethodCreateParams.type`
+  * Add support for new value `zip` on enums `Checkout.SessionCreateParams.payment_method_types[]` and `PaymentMethodCreateParams.type`
   * Add support for new value `zip` on enums `CustomerListPaymentMethodsParams.type` and `PaymentMethodListParams.type`
   * Add support for new value `zip` on enums `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `SetupIntentConfirmParams.payment_method_data.type`, `SetupIntentCreateParams.payment_method_data.type`, and `SetupIntentUpdateParams.payment_method_data.type`
   * Add support for new value `zip` on enum `PaymentMethod.type`
@@ -70,9 +70,9 @@
 
 ## 12.5.0 - 2023-05-11
 * [#1785](https://github.com/stripe/stripe-node/pull/1785) Update generated code
-  * Add support for `paypal` on `Charge.payment_method_details`, `CheckoutSessionCreateParams.payment_method_options`, `Mandate.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, `PaymentMethod`, `SetupAttempt.payment_method_details`, `SetupIntent.payment_method_options`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentConfirmParams.payment_method_options`, `SetupIntentCreateParams.payment_method_data`, `SetupIntentCreateParams.payment_method_options`, `SetupIntentUpdateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_options`
+  * Add support for `paypal` on `Charge.payment_method_details`, `Checkout.SessionCreateParams.payment_method_options`, `Mandate.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, `PaymentMethod`, `SetupAttempt.payment_method_details`, `SetupIntent.payment_method_options`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentConfirmParams.payment_method_options`, `SetupIntentCreateParams.payment_method_data`, `SetupIntentCreateParams.payment_method_options`, `SetupIntentUpdateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_options`
   * Add support for `network_token` on `Charge.payment_method_details.card`
-  * Add support for new value `paypal` on enums `CheckoutSessionCreateParams.payment_method_types[]` and `PaymentMethodCreateParams.type`
+  * Add support for new value `paypal` on enums `Checkout.SessionCreateParams.payment_method_types[]` and `PaymentMethodCreateParams.type`
   * Add support for `taxability_reason` and `taxable_amount` on `Checkout.Session.shipping_cost.taxes[]`, `Checkout.Session.total_details.breakdown.taxes[]`, `CreditNote.shipping_cost.taxes[]`, `CreditNote.tax_amounts[]`, `Invoice.shipping_cost.taxes[]`, `Invoice.total_tax_amounts[]`, `LineItem.taxes[]`, `Quote.computed.recurring.total_details.breakdown.taxes[]`, `Quote.computed.upfront.total_details.breakdown.taxes[]`, and `Quote.total_details.breakdown.taxes[]`
   * Add support for new value `paypal` on enums `CustomerListPaymentMethodsParams.type` and `PaymentMethodListParams.type`
   * Add support for new value `paypal` on enums `Invoice.payment_settings.payment_method_types[]`, `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Subscription.payment_settings.payment_method_types[]`, `SubscriptionCreateParams.payment_settings.payment_method_types[]`, and `SubscriptionUpdateParams.payment_settings.payment_method_types[]`
@@ -87,13 +87,13 @@
 
 ## 12.4.0 - 2023-05-04
 * [#1774](https://github.com/stripe/stripe-node/pull/1774) Update generated code
-  * Add support for `link` on `Checkout.Session.payment_method_options` and `CheckoutSessionCreateParams.payment_method_options`
+  * Add support for `link` on `Checkout.Session.payment_method_options` and `Checkout.SessionCreateParams.payment_method_options`
   * Add support for `brand`, `country`, `description`, `exp_month`, `exp_year`, `fingerprint`, `funding`, `iin`, `issuer`, `last4`, `network`, and `wallet` on `SetupAttempt.payment_method_details.card`
 * [#1782](https://github.com/stripe/stripe-node/pull/1782) Let user supply a timestamp when verifying webhooks
 
 ## 12.3.0 - 2023-04-27
 * [#1770](https://github.com/stripe/stripe-node/pull/1770) Update generated code
-  * Add support for `billing_cycle_anchor` and `proration_behavior` on `CheckoutSessionCreateParams.subscription_data`
+  * Add support for `billing_cycle_anchor` and `proration_behavior` on `Checkout.SessionCreateParams.subscription_data`
   * Add support for `terminal_id` on `Issuing.Authorization.merchant_data` and `Issuing.Transaction.merchant_data`
   * Add support for `metadata` on `PaymentIntentCaptureParams`
   * Add support for `checks` on `SetupAttempt.payment_method_details.card`
@@ -172,7 +172,7 @@ This was added to maintain backwards compatibility during the transition of stri
   * Add support for new resources `Tax.CalculationLineItem`, `Tax.Calculation`, `Tax.TransactionLineItem`, and `Tax.Transaction`
   * Add support for `create` and `list_line_items` methods on resource `Calculation`
   * Add support for `create_from_calculation`, `create_reversal`, `create`, `list_line_items`, and `retrieve` methods on resource `Transaction`
-  * Add support for new value `link` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Add support for new value `link` on enum `Checkout.SessionCreateParams.payment_method_types[]`
   * Add support for `currency_conversion` on `Checkout.Session`
   * Add support for new value `link` on enums `PaymentLink.payment_method_types[]`, `PaymentLinkCreateParams.payment_method_types[]`, and `PaymentLinkUpdateParams.payment_method_types[]`
   * Add support for `automatic_payment_methods` on `SetupIntentCreateParams` and `SetupIntent`
@@ -184,7 +184,7 @@ This was added to maintain backwards compatibility during the transition of stri
   * Add support for new value `cashapp` as a new `type` throughout the API.
   * Add support for `future_requirements` and `requirements` on `BankAccount`
   * Add support for `country` on `Charge.payment_method_details.link`
-  * Add support for new value `automatic_async` on enums `CheckoutSessionCreateParams.payment_intent_data.capture_method`, `PaymentIntent.capture_method`, `PaymentIntentConfirmParams.capture_method`, `PaymentIntentCreateParams.capture_method`, `PaymentIntentUpdateParams.capture_method`, `PaymentLink.payment_intent_data.capture_method`, and `PaymentLinkCreateParams.payment_intent_data.capture_method`
+  * Add support for new value `automatic_async` on enums `Checkout.SessionCreateParams.payment_intent_data.capture_method`, `PaymentIntent.capture_method`, `PaymentIntentConfirmParams.capture_method`, `PaymentIntentCreateParams.capture_method`, `PaymentIntentUpdateParams.capture_method`, `PaymentLink.payment_intent_data.capture_method`, and `PaymentLinkCreateParams.payment_intent_data.capture_method`
 
   * Add support for `preferred_locale` on `PaymentIntent.payment_method_options.affirm`,
   * Add support for `cashapp_handle_redirect_or_display_qr_code` on `PaymentIntent.next_action` and `SetupIntent.next_action`
@@ -194,8 +194,8 @@ This was added to maintain backwards compatibility during the transition of stri
 * [#1704](https://github.com/stripe/stripe-node/pull/1704) Configure 2 TypeScript compile targets for ESM and CJS
 * [#1710](https://github.com/stripe/stripe-node/pull/1710) Update generated code (new)
   * Add support for `cashapp_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
-  * Add support for `cashapp` on `Charge.payment_method_details`, `Checkout.Session.payment_method_options`, `CheckoutSessionCreateParams.payment_method_options`, `Mandate.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, `PaymentMethodUpdateParams`, `PaymentMethod`, `SetupAttempt.payment_method_details`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentCreateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_data`
-  * Add support for new value `cashapp` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Add support for `cashapp` on `Charge.payment_method_details`, `Checkout.Session.payment_method_options`, `Checkout.SessionCreateParams.payment_method_options`, `Mandate.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, `PaymentMethodUpdateParams`, `PaymentMethod`, `SetupAttempt.payment_method_details`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentCreateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_data`
+  * Add support for new value `cashapp` on enum `Checkout.SessionCreateParams.payment_method_types[]`
   * Add support for new value `cashapp` on enums `CustomerListPaymentMethodsParams.type` and `PaymentMethodListParams.type`
   * Add support for new value `cashapp` on enums `Invoice.payment_settings.payment_method_types[]`, `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Subscription.payment_settings.payment_method_types[]`, `SubscriptionCreateParams.payment_settings.payment_method_types[]`, and `SubscriptionUpdateParams.payment_settings.payment_method_types[]`
   * Add support for new value `cashapp` on enums `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `SetupIntentConfirmParams.payment_method_data.type`, `SetupIntentCreateParams.payment_method_data.type`, and `SetupIntentUpdateParams.payment_method_data.type`
@@ -235,7 +235,7 @@ This was added to maintain backwards compatibility during the transition of stri
 * [#1681](https://github.com/stripe/stripe-node/pull/1681) API Updates
   * Add support for `refund_payment` method on resource `Terminal.Reader`
   * Add support for new value `name` on enums `BillingPortal.Configuration.features.customer_update.allowed_updates[]`, `BillingPortalConfigurationCreateParams.features.customer_update.allowed_updates[]`, and `BillingPortalConfigurationUpdateParams.features.customer_update.allowed_updates[]`
-  * Add support for `custom_fields` on `Checkout.Session`, `CheckoutSessionCreateParams`, `PaymentLinkCreateParams`, `PaymentLinkUpdateParams`, and `PaymentLink`
+  * Add support for `custom_fields` on `Checkout.Session`, `Checkout.SessionCreateParams`, `PaymentLinkCreateParams`, `PaymentLinkUpdateParams`, and `PaymentLink`
   * Change `Subscription.trial_settings.end_behavior` and `Subscription.trial_settings` to be required
   * Add support for `interac_present` on `TerminalReaderPresentPaymentMethodParams.testHelpers`
   * Change type of `TerminalReaderPresentPaymentMethodParams.testHelpers.type` from `literal('card_present')` to `enum('card_present'|'interac_present')`
@@ -255,7 +255,7 @@ This was added to maintain backwards compatibility during the transition of stri
 * [#1669](https://github.com/stripe/stripe-node/pull/1669) API Updates
   * Add support for `resume` method on resource `Subscription`
   * Add support for `payment_link` on `CheckoutSessionListParams`
-  * Add support for `trial_settings` on `CheckoutSessionCreateParams.subscription_data`, `SubscriptionCreateParams`, `SubscriptionUpdateParams`, and `Subscription`
+  * Add support for `trial_settings` on `Checkout.SessionCreateParams.subscription_data`, `SubscriptionCreateParams`, `SubscriptionUpdateParams`, and `Subscription`
   * Add support for `shipping_cost` on `CreditNoteCreateParams`, `CreditNotePreviewLinesParams`, `CreditNotePreviewParams`, `CreditNote`, `InvoiceCreateParams`, `InvoiceUpdateParams`, and `Invoice`
   * Add support for `amount_shipping` on `CreditNote` and `Invoice`
   * Add support for `shipping_details` on `InvoiceCreateParams`, `InvoiceUpdateParams`, and `Invoice`
@@ -294,7 +294,7 @@ This was added to maintain backwards compatibility during the transition of stri
 * [#1642](https://github.com/stripe/stripe-node/pull/1642) API Updates
   * Add support for new value `merchant_default` on enums `CashBalanceUpdateParams.settings.reconciliation_mode`, `CustomerCreateParams.cash_balance.settings.reconciliation_mode`, and `CustomerUpdateParams.cash_balance.settings.reconciliation_mode`
   * Add support for `using_merchant_default` on `CashBalance.settings`
-  * Change `CheckoutSessionCreateParams.cancel_url` to be optional
+  * Change `Checkout.SessionCreateParams.cancel_url` to be optional
   * Change type of `Checkout.Session.cancel_url` from `string` to `string | null`
 
 ## 11.4.0 - 2022-12-15
@@ -312,7 +312,7 @@ This was added to maintain backwards compatibility during the transition of stri
   * Add support for `flow` on `BillingPortal.Session`
 * [#1631](https://github.com/stripe/stripe-node/pull/1631) API Updates
   * Add support for `india_international_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
-  * Add support for `invoice_creation` on `Checkout.Session` and `CheckoutSessionCreateParams`
+  * Add support for `invoice_creation` on `Checkout.Session` and `Checkout.SessionCreateParams`
   * Add support for `invoice` on `Checkout.Session`
   * Add support for `metadata` on `SubscriptionSchedule.phases[].items[]`, `SubscriptionScheduleCreateParams.phases[].items[]`, and `SubscriptionScheduleUpdateParams.phases[].items[]`
 * [#1630](https://github.com/stripe/stripe-node/pull/1630) Remove BASIC_METHODS from TS definitions
@@ -326,7 +326,7 @@ This was added to maintain backwards compatibility during the transition of stri
 * [#1623](https://github.com/stripe/stripe-node/pull/1623) API Updates
   * Add support for `hosted_instructions_url` on `PaymentIntent.next_action.wechat_pay_display_qr_code`
 * [#1622](https://github.com/stripe/stripe-node/pull/1622) API Updates
-  * Add support for `custom_text` on `Checkout.Session`, `CheckoutSessionCreateParams`, `PaymentLinkCreateParams`, `PaymentLinkUpdateParams`, and `PaymentLink`
+  * Add support for `custom_text` on `Checkout.Session`, `Checkout.SessionCreateParams`, `PaymentLinkCreateParams`, `PaymentLinkUpdateParams`, and `PaymentLink`
   * Add support for `hosted_instructions_url` on `PaymentIntent.next_action.paynow_display_qr_code`
 
 
@@ -340,7 +340,7 @@ This release includes breaking changes resulting from moving to use the new API 
 * [#1619](https://github.com/stripe/stripe-node/pull/1619) Annotate prototypes with types
 * [#1612](https://github.com/stripe/stripe-node/pull/1612) Add type information here and there
 * [#1615](https://github.com/stripe/stripe-node/pull/1615) API Updates
-  * ⚠️ Remove support for `tos_shown_and_accepted` on `CheckoutSessionCreateParams.payment_method_options.paynow`. The property was mistakenly released and never worked.
+  * ⚠️ Remove support for `tos_shown_and_accepted` on `Checkout.SessionCreateParams.payment_method_options.paynow`. The property was mistakenly released and never worked.
 
 ### ⚠️ Changed
 * Drop support for Node.js 8 and 10. We now support Node.js 12+. ((#1579)
@@ -349,7 +349,7 @@ This release includes breaking changes resulting from moving to use the new API 
 ### ⚠️ Removed
 * Remove `Orders` resource. (#1580)
 * Remove `SKU` resource (#1583)
-* Remove deprecated `CheckoutSessionCreateParams.subscription_data.items`. (#1580)
+* Remove deprecated `Checkout.SessionCreateParams.subscription_data.items`. (#1580)
 * Remove deprecated configuration setter methods (`setHost`, `setProtocol`, `setPort`, `setApiVersion`, `setApiKey`, `setTimeout`, `setAppInfo`, `setHttpAgent`, `setMaxNetworkRetries`, and `setTelemetryEnabled`). (#1597)
 
   Use the config object to set these options instead, for example:
@@ -408,7 +408,7 @@ This release includes breaking changes resulting from moving to use the new API 
 
 ## 10.16.0 - 2022-11-03
 * [#1596](https://github.com/stripe/stripe-node/pull/1596) API Updates
-  * Add support for `on_behalf_of` on `CheckoutSessionCreateParams.subscription_data`, `SubscriptionCreateParams`, `SubscriptionSchedule.default_settings`, `SubscriptionSchedule.phases[]`, `SubscriptionScheduleCreateParams.default_settings`, `SubscriptionScheduleCreateParams.phases[]`, `SubscriptionScheduleUpdateParams.default_settings`, `SubscriptionScheduleUpdateParams.phases[]`, `SubscriptionUpdateParams`, and `Subscription`
+  * Add support for `on_behalf_of` on `Checkout.SessionCreateParams.subscription_data`, `SubscriptionCreateParams`, `SubscriptionSchedule.default_settings`, `SubscriptionSchedule.phases[]`, `SubscriptionScheduleCreateParams.default_settings`, `SubscriptionScheduleCreateParams.phases[]`, `SubscriptionScheduleUpdateParams.default_settings`, `SubscriptionScheduleUpdateParams.phases[]`, `SubscriptionUpdateParams`, and `Subscription`
   * Add support for `tax_behavior` and `tax_code` on `InvoiceItemCreateParams`, `InvoiceItemUpdateParams`, `InvoiceUpcomingLinesParams.invoice_items[]`, and `InvoiceUpcomingParams.invoice_items[]`
 
 ## 10.15.0 - 2022-10-20
@@ -440,23 +440,23 @@ This release includes breaking changes resulting from moving to use the new API 
   * Change type of `Charge.payment_method_details.card_present.incremental_authorization_supported` and `Charge.payment_method_details.card_present.overcapture_supported` from `boolean | null` to `boolean`
   * Add support for `created` on `Checkout.Session`
   * Add support for `setup_future_usage` on `PaymentIntent.payment_method_options.pix`, `PaymentIntentConfirmParams.payment_method_options.pix`, `PaymentIntentCreateParams.payment_method_options.pix`, and `PaymentIntentUpdateParams.payment_method_options.pix`
-  * Deprecate `CheckoutSessionCreateParams.subscription_data.items` (use the `line_items` param instead). This will be removed in the next major version.
+  * Deprecate `Checkout.SessionCreateParams.subscription_data.items` (use the `line_items` param instead). This will be removed in the next major version.
 * [#1563](https://github.com/stripe/stripe-node/pull/1563) Migrate other Stripe infrastructure to TS
 * [#1562](https://github.com/stripe/stripe-node/pull/1562) Restore lib after generating
 * [#1551](https://github.com/stripe/stripe-node/pull/1551) Re-introduce Typescript changes
 
 ## 10.11.0 - 2022-09-22
 * [#1560](https://github.com/stripe/stripe-node/pull/1560) API Updates
-  * Add support for `terms_of_service` on `Checkout.Session.consent_collection`, `Checkout.Session.consent`, `CheckoutSessionCreateParams.consent_collection`, `PaymentLink.consent_collection`, and `PaymentLinkCreateParams.consent_collection`
-  * ⚠️  Remove support for `plan` on `CheckoutSessionCreateParams.payment_method_options.card.installments`. The property was mistakenly released and never worked.
+  * Add support for `terms_of_service` on `Checkout.Session.consent_collection`, `Checkout.Session.consent`, `Checkout.SessionCreateParams.consent_collection`, `PaymentLink.consent_collection`, and `PaymentLinkCreateParams.consent_collection`
+  * ⚠️  Remove support for `plan` on `Checkout.SessionCreateParams.payment_method_options.card.installments`. The property was mistakenly released and never worked.
   * Add support for `statement_descriptor` on `PaymentIntentIncrementAuthorizationParams`
   * Change `SubscriptionSchedule.phases[].currency` to be required
 
 
 ## 10.10.0 - 2022-09-15
 * [#1552](https://github.com/stripe/stripe-node/pull/1552) API Updates
-  * Add support for `pix` on `Charge.payment_method_details`, `Checkout.Session.payment_method_options`, `CheckoutSessionCreateParams.payment_method_options`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, `PaymentMethod`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentCreateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_data`
-  * Add support for new value `pix` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Add support for `pix` on `Charge.payment_method_details`, `Checkout.Session.payment_method_options`, `Checkout.SessionCreateParams.payment_method_options`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, `PaymentMethod`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentCreateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_data`
+  * Add support for new value `pix` on enum `Checkout.SessionCreateParams.payment_method_types[]`
   * Add support for new value `pix` on enums `CustomerListPaymentMethodsParams.type` and `PaymentMethodListParams.type`
   * Add support for `from_invoice` on `InvoiceCreateParams` and `Invoice`
   * Add support for `latest_revision` on `Invoice`
@@ -523,7 +523,7 @@ This release includes breaking changes resulting from moving to use the new API 
 
 ## 10.2.0 - 2022-08-11
 * [#1510](https://github.com/stripe/stripe-node/pull/1510) API Updates
-  * Add support for `payment_method_collection` on `Checkout.Session`, `CheckoutSessionCreateParams`, `PaymentLinkCreateParams`, `PaymentLinkUpdateParams`, and `PaymentLink`
+  * Add support for `payment_method_collection` on `Checkout.Session`, `Checkout.SessionCreateParams`, `PaymentLinkCreateParams`, `PaymentLinkUpdateParams`, and `PaymentLink`
 
 
 ## 10.1.0 - 2022-08-09
@@ -582,13 +582,13 @@ This release includes breaking changes resulting from:
 ## 9.16.0 - 2022-07-26
 * [#1492](https://github.com/stripe/stripe-node/pull/1492) API Updates
   * Add support for new value `exempted` on enums `Charge.payment_method_details.card.three_d_secure.result` and `SetupAttempt.payment_method_details.card.three_d_secure.result`
-  * Add support for `customer_balance` on `Checkout.Session.payment_method_options` and `CheckoutSessionCreateParams.payment_method_options`
-  * Add support for new value `customer_balance` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Add support for `customer_balance` on `Checkout.Session.payment_method_options` and `Checkout.SessionCreateParams.payment_method_options`
+  * Add support for new value `customer_balance` on enum `Checkout.SessionCreateParams.payment_method_types[]`
   * Add support for new values `en-CA` and `fr-CA` on enums `OrderCreateParams.payment.settings.payment_method_options.klarna.preferred_locale`, `OrderUpdateParams.payment.settings.payment_method_options.klarna.preferred_locale`, `PaymentIntentConfirmParams.payment_method_options.klarna.preferred_locale`, `PaymentIntentCreateParams.payment_method_options.klarna.preferred_locale`, and `PaymentIntentUpdateParams.payment_method_options.klarna.preferred_locale`
 
 ## 9.15.0 - 2022-07-25
 * [#1486](https://github.com/stripe/stripe-node/pull/1486) API Updates
-  * Add support for `installments` on `Checkout.Session.payment_method_options.card`, `CheckoutSessionCreateParams.payment_method_options.card`, `Invoice.payment_settings.payment_method_options.card`, `InvoiceCreateParams.payment_settings.payment_method_options.card`, and `InvoiceUpdateParams.payment_settings.payment_method_options.card`
+  * Add support for `installments` on `Checkout.Session.payment_method_options.card`, `Checkout.SessionCreateParams.payment_method_options.card`, `Invoice.payment_settings.payment_method_options.card`, `InvoiceCreateParams.payment_settings.payment_method_options.card`, and `InvoiceUpdateParams.payment_settings.payment_method_options.card`
   * Add support for `default_currency` and `invoice_credit_balance` on `Customer`
   * Add support for `currency` on `InvoiceCreateParams`
   * Add support for `default_mandate` on `Invoice.payment_settings`, `InvoiceCreateParams.payment_settings`, and `InvoiceUpdateParams.payment_settings`
@@ -600,8 +600,8 @@ This release includes breaking changes resulting from:
 * [#1477](https://github.com/stripe/stripe-node/pull/1477) API Updates
   * Add support for `blik_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
   * Add support for `blik` on `Charge.payment_method_details`, `Mandate.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, `PaymentMethodUpdateParams`, `PaymentMethod`, `SetupAttempt.payment_method_details`, `SetupIntent.payment_method_options`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentConfirmParams.payment_method_options`, `SetupIntentCreateParams.payment_method_data`, `SetupIntentCreateParams.payment_method_options`, `SetupIntentUpdateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_options`
-  * Change type of `Checkout.Session.consent_collection.promotions`, `CheckoutSessionCreateParams.consent_collection.promotions`, `PaymentLink.consent_collection.promotions`, and `PaymentLinkCreateParams.consent_collection.promotions` from `literal('auto')` to `enum('auto'|'none')`
-  * Add support for new value `blik` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Change type of `Checkout.Session.consent_collection.promotions`, `Checkout.SessionCreateParams.consent_collection.promotions`, `PaymentLink.consent_collection.promotions`, and `PaymentLinkCreateParams.consent_collection.promotions` from `literal('auto')` to `enum('auto'|'none')`
+  * Add support for new value `blik` on enum `Checkout.SessionCreateParams.payment_method_types[]`
   * Add support for new value `blik` on enums `CustomerListPaymentMethodsParams.type` and `PaymentMethodListParams.type`
   * Add support for new value `blik` on enums `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `SetupIntentConfirmParams.payment_method_data.type`, `SetupIntentCreateParams.payment_method_data.type`, and `SetupIntentUpdateParams.payment_method_data.type`
   * Add support for new value `blik` on enums `PaymentLink.payment_method_types[]`, `PaymentLinkCreateParams.payment_method_types[]`, and `PaymentLinkUpdateParams.payment_method_types[]`
@@ -619,8 +619,8 @@ This release includes breaking changes resulting from:
 
 ## 9.12.0 - 2022-07-07
 * [#1468](https://github.com/stripe/stripe-node/pull/1468) API Updates
-  * Add support for `currency` on `CheckoutSessionCreateParams`, `InvoiceUpcomingLinesParams`, `InvoiceUpcomingParams`, `PaymentLinkCreateParams`, `SubscriptionCreateParams`, `SubscriptionSchedule.phases[]`, `SubscriptionScheduleCreateParams.phases[]`, `SubscriptionScheduleUpdateParams.phases[]`, and `Subscription`
-  * Add support for `currency_options` on `CheckoutSessionCreateParams.shipping_options[].shipping_rate_data.fixed_amount`, `CouponCreateParams`, `CouponUpdateParams`, `Coupon`, `OrderCreateParams.shipping_cost.shipping_rate_data.fixed_amount`, `OrderUpdateParams.shipping_cost.shipping_rate_data.fixed_amount`, `PriceCreateParams`, `PriceUpdateParams`, `Price`, `ProductCreateParams.default_price_data`, `PromotionCode.restrictions`, `PromotionCodeCreateParams.restrictions`, `ShippingRate.fixed_amount`, and `ShippingRateCreateParams.fixed_amount`
+  * Add support for `currency` on `Checkout.SessionCreateParams`, `InvoiceUpcomingLinesParams`, `InvoiceUpcomingParams`, `PaymentLinkCreateParams`, `SubscriptionCreateParams`, `SubscriptionSchedule.phases[]`, `SubscriptionScheduleCreateParams.phases[]`, `SubscriptionScheduleUpdateParams.phases[]`, and `Subscription`
+  * Add support for `currency_options` on `Checkout.SessionCreateParams.shipping_options[].shipping_rate_data.fixed_amount`, `CouponCreateParams`, `CouponUpdateParams`, `Coupon`, `OrderCreateParams.shipping_cost.shipping_rate_data.fixed_amount`, `OrderUpdateParams.shipping_cost.shipping_rate_data.fixed_amount`, `PriceCreateParams`, `PriceUpdateParams`, `Price`, `ProductCreateParams.default_price_data`, `PromotionCode.restrictions`, `PromotionCodeCreateParams.restrictions`, `ShippingRate.fixed_amount`, and `ShippingRateCreateParams.fixed_amount`
   * Add support for `restrictions` on `PromotionCodeUpdateParams`
   * Add support for `fixed_amount` and `tax_behavior` on `ShippingRateUpdateParams`
 * [#1467](https://github.com/stripe/stripe-node/pull/1467) API Updates
@@ -640,7 +640,7 @@ This release includes breaking changes resulting from:
 * [#1458](https://github.com/stripe/stripe-node/pull/1458) API Updates
   * Add support for `promptpay_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
   * Add support for `promptpay` on `Charge.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, `PaymentMethod`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentCreateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_data`
-  * Add support for new value `promptpay` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Add support for new value `promptpay` on enum `Checkout.SessionCreateParams.payment_method_types[]`
   * Add support for `subtotal_excluding_tax` on `CreditNote` and `Invoice`
   * Add support for `amount_excluding_tax` and `unit_amount_excluding_tax` on `CreditNoteLineItem` and `InvoiceLineItem`
   * Add support for new value `promptpay` on enums `CustomerListPaymentMethodsParams.type` and `PaymentMethodListParams.type`
@@ -658,7 +658,7 @@ This release includes breaking changes resulting from:
 * [#1453](https://github.com/stripe/stripe-node/pull/1453) API Updates
   * Add support for `fund_cash_balance` test helper method on resource `Customer`
   * Add support for `statement_descriptor_prefix_kana` and `statement_descriptor_prefix_kanji` on `Account.settings.card_payments`, `Account.settings.payments`, `AccountCreateParams.settings.card_payments`, and `AccountUpdateParams.settings.card_payments`
-  * Add support for `statement_descriptor_suffix_kana` and `statement_descriptor_suffix_kanji` on `Checkout.Session.payment_method_options.card`, `CheckoutSessionCreateParams.payment_method_options.card`, `PaymentIntent.payment_method_options.card`, `PaymentIntentConfirmParams.payment_method_options.card`, `PaymentIntentCreateParams.payment_method_options.card`, and `PaymentIntentUpdateParams.payment_method_options.card`
+  * Add support for `statement_descriptor_suffix_kana` and `statement_descriptor_suffix_kanji` on `Checkout.Session.payment_method_options.card`, `Checkout.SessionCreateParams.payment_method_options.card`, `PaymentIntent.payment_method_options.card`, `PaymentIntentConfirmParams.payment_method_options.card`, `PaymentIntentCreateParams.payment_method_options.card`, and `PaymentIntentUpdateParams.payment_method_options.card`
   * Add support for `total_excluding_tax` on `CreditNote`
   * Change type of `CustomerCreateParams.invoice_settings.rendering_options` and `CustomerUpdateParams.invoice_settings.rendering_options` from `rendering_options_param` to `emptyStringable(rendering_options_param)`
   * Add support for `rendering_options` on `Customer.invoice_settings` and `Invoice`
@@ -681,9 +681,9 @@ This release includes breaking changes resulting from:
 
 ## 9.7.0 - 2022-06-08
 * [#1441](https://github.com/stripe/stripe-node/pull/1441) API Updates
-  * Add support for `affirm`, `bancontact`, `card`, `ideal`, `p24`, and `sofort` on `Checkout.Session.payment_method_options` and `CheckoutSessionCreateParams.payment_method_options`
-  * Add support for `afterpay_clearpay`, `au_becs_debit`, `bacs_debit`, `eps`, `fpx`, `giropay`, `grabpay`, `klarna`, `paynow`, and `sepa_debit` on `CheckoutSessionCreateParams.payment_method_options`
-  * Add support for `setup_future_usage` on `Checkout.Session.payment_method_options.*` and `CheckoutSessionCreateParams.payment_method_options.*`,
+  * Add support for `affirm`, `bancontact`, `card`, `ideal`, `p24`, and `sofort` on `Checkout.Session.payment_method_options` and `Checkout.SessionCreateParams.payment_method_options`
+  * Add support for `afterpay_clearpay`, `au_becs_debit`, `bacs_debit`, `eps`, `fpx`, `giropay`, `grabpay`, `klarna`, `paynow`, and `sepa_debit` on `Checkout.SessionCreateParams.payment_method_options`
+  * Add support for `setup_future_usage` on `Checkout.Session.payment_method_options.*` and `Checkout.SessionCreateParams.payment_method_options.*`,
   * Change `PaymentMethod.us_bank_account.networks` and `SetupIntent.flow_directions` to be required
   * Add support for `attach_to_self` on `SetupAttempt`, `SetupIntentCreateParams`, `SetupIntentListParams`, and `SetupIntentUpdateParams`
   * Add support for `flow_directions` on `SetupAttempt`, `SetupIntentCreateParams`, and `SetupIntentUpdateParams`
@@ -704,7 +704,7 @@ This release includes breaking changes resulting from:
 * [#1434](https://github.com/stripe/stripe-node/pull/1434) API Updates
   * Add support for `affirm_payments` and `link_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
   * Add support for `id_number_secondary` on `AccountCreateParams.individual`, `AccountUpdateParams.individual`, `PersonCreateParams`, `PersonUpdateParams`, `TokenCreateParams.account.individual`, and `TokenCreateParams.person`
-  * Add support for new value `affirm` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Add support for new value `affirm` on enum `Checkout.SessionCreateParams.payment_method_types[]`
   * Add support for `hosted_instructions_url` on `PaymentIntent.next_action.display_bank_transfer_instructions`
   * Add support for `id_number_secondary_provided` on `Person`
   * Add support for `card_issuing` on `TreasuryFinancialAccountCreateParams.features`, `TreasuryFinancialAccountUpdateFeaturesParams`, and `TreasuryFinancialAccountUpdateParams.features`
@@ -744,7 +744,7 @@ This release includes breaking changes resulting from:
 
 ## 9.1.0 - 2022-05-11
 * [#1420](https://github.com/stripe/stripe-node/pull/1420) API Updates
-  * Add support for `description` on `CheckoutSessionCreateParams.subscription_data`, `SubscriptionCreateParams`, `SubscriptionUpdateParams`, and `Subscription`
+  * Add support for `description` on `Checkout.SessionCreateParams.subscription_data`, `SubscriptionCreateParams`, `SubscriptionUpdateParams`, and `Subscription`
   * Add support for `consent_collection`, `payment_intent_data`, `shipping_options`, `submit_type`, and `tax_id_collection` on `PaymentLinkCreateParams` and `PaymentLink`
   * Add support for `customer_creation` on `PaymentLinkCreateParams`, `PaymentLinkUpdateParams`, and `PaymentLink`
   * Add support for `metadata` on `SubscriptionSchedule.phases[]`, `SubscriptionScheduleCreateParams.phases[]`, and `SubscriptionScheduleUpdateParams.phases[]`
@@ -774,7 +774,7 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
 ## 8.221.0 - 2022-05-05
 * [#1413](https://github.com/stripe/stripe-node/pull/1413) API Updates
   * Add support for new resources `FinancialConnections.AccountOwner`, `FinancialConnections.AccountOwnership`, `FinancialConnections.Account`, and `FinancialConnections.Session`
-  * Add support for `financial_connections` on `Checkout.Session.payment_method_options.us_bank_account`, `CheckoutSessionCreateParams.payment_method_options.us_bank_account`, `Invoice.payment_settings.payment_method_options.us_bank_account`, `InvoiceCreateParams.payment_settings.payment_method_options.us_bank_account`, `InvoiceUpdateParams.payment_settings.payment_method_options.us_bank_account`, `PaymentIntent.payment_method_options.us_bank_account`, `PaymentIntentConfirmParams.payment_method_options.us_bank_account`, `PaymentIntentCreateParams.payment_method_options.us_bank_account`, `PaymentIntentUpdateParams.payment_method_options.us_bank_account`, `SetupIntent.payment_method_options.us_bank_account`, `SetupIntentConfirmParams.payment_method_options.us_bank_account`, `SetupIntentCreateParams.payment_method_options.us_bank_account`, `SetupIntentUpdateParams.payment_method_options.us_bank_account`, `Subscription.payment_settings.payment_method_options.us_bank_account`, `SubscriptionCreateParams.payment_settings.payment_method_options.us_bank_account`, and `SubscriptionUpdateParams.payment_settings.payment_method_options.us_bank_account`
+  * Add support for `financial_connections` on `Checkout.Session.payment_method_options.us_bank_account`, `Checkout.SessionCreateParams.payment_method_options.us_bank_account`, `Invoice.payment_settings.payment_method_options.us_bank_account`, `InvoiceCreateParams.payment_settings.payment_method_options.us_bank_account`, `InvoiceUpdateParams.payment_settings.payment_method_options.us_bank_account`, `PaymentIntent.payment_method_options.us_bank_account`, `PaymentIntentConfirmParams.payment_method_options.us_bank_account`, `PaymentIntentCreateParams.payment_method_options.us_bank_account`, `PaymentIntentUpdateParams.payment_method_options.us_bank_account`, `SetupIntent.payment_method_options.us_bank_account`, `SetupIntentConfirmParams.payment_method_options.us_bank_account`, `SetupIntentCreateParams.payment_method_options.us_bank_account`, `SetupIntentUpdateParams.payment_method_options.us_bank_account`, `Subscription.payment_settings.payment_method_options.us_bank_account`, `SubscriptionCreateParams.payment_settings.payment_method_options.us_bank_account`, and `SubscriptionUpdateParams.payment_settings.payment_method_options.us_bank_account`
   * Add support for `financial_connections_account` on `PaymentIntentConfirmParams.payment_method_data.us_bank_account`, `PaymentIntentCreateParams.payment_method_data.us_bank_account`, `PaymentIntentUpdateParams.payment_method_data.us_bank_account`, `PaymentMethod.us_bank_account`, `PaymentMethodCreateParams.us_bank_account`, `SetupIntentConfirmParams.payment_method_data.us_bank_account`, `SetupIntentCreateParams.payment_method_data.us_bank_account`, and `SetupIntentUpdateParams.payment_method_data.us_bank_account`
 
 * [#1410](https://github.com/stripe/stripe-node/pull/1410) API Updates
@@ -789,8 +789,8 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
 * [#1407](https://github.com/stripe/stripe-node/pull/1407) API Updates
   * Add support for new resource `CashBalance`
   * Change type of `BillingPortal.Configuration.application` from `$Application` to `deletable($Application)`
-  * Add support for `alipay` on `Checkout.Session.payment_method_options` and `CheckoutSessionCreateParams.payment_method_options`
-  * Change type of `CheckoutSessionCreateParams.payment_method_options.konbini.expires_after_days` from `emptyStringable(integer)` to `integer`
+  * Add support for `alipay` on `Checkout.Session.payment_method_options` and `Checkout.SessionCreateParams.payment_method_options`
+  * Change type of `Checkout.SessionCreateParams.payment_method_options.konbini.expires_after_days` from `emptyStringable(integer)` to `integer`
   * Add support for new value `eu_oss_vat` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, and `TaxId.type`
   * Add support for new value `eu_oss_vat` on enums `CustomerCreateParams.tax_id_data[].type`, `InvoiceUpcomingLinesParams.customer_details.tax_ids[].type`, `InvoiceUpcomingParams.customer_details.tax_ids[].type`, and `TaxIdCreateParams.type`
   * Add support for `cash_balance` on `Customer`
@@ -871,8 +871,8 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
           * Add support for `us_bank_account` on `PaymentMethodUpdateParams`
           * Add support for new values `paynow` and `us_bank_account` on enums `PaymentMethod.type`, `PaymentMethodCreateParams.type`. and `PaymentMethodListParams.type`
       * **Checkout Session** ([API ref](https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-payment_method_types))
-          * Add support for `us_bank_account` on `payment_method_options` on `Checkout.Session` and `CheckoutSessionCreateParams`
-          * Add support for new values `paynow` and `us_bank_account` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+          * Add support for `us_bank_account` on `payment_method_options` on `Checkout.Session` and `Checkout.SessionCreateParams`
+          * Add support for new values `paynow` and `us_bank_account` on enum `Checkout.SessionCreateParams.payment_method_types[]`
       * **Invoice** ([API ref](https://stripe.com/docs/api/invoices/object#invoice_object-payment_settings-payment_method_types))
           * Add support for `us_bank_account` on `payment_settings.payment_method_options` on `Invoice`, `InvoiceCreateParams`, and `InvoiceUpdateParams`
           * Add support for new values `paynow` and `us_bank_account` on enums `payment_settings.payment_method_types[]` on `Invoice`, `InvoiceCreateParams`, and `InvoiceUpdateParams`
@@ -963,7 +963,7 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
 
 ## 8.202.0 - 2022-02-03
 * [#1344](https://github.com/stripe/stripe-node/pull/1344) API Updates
-  * Add support for new value `au_becs_debit` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Add support for new value `au_becs_debit` on enum `Checkout.SessionCreateParams.payment_method_types[]`
   * Change type of `Refund.reason` from `string` to `enum('duplicate'|'expired_uncaptured_charge'|'fraudulent'|'requested_by_customer')`
 
 ## 8.201.0 - 2022-01-28
@@ -998,7 +998,7 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
 
 ## 8.196.0 - 2022-01-12
 * [#1328](https://github.com/stripe/stripe-node/pull/1328) API Updates
-  * Add support for `customer_creation` on `CheckoutSessionCreateParams` and `Checkout.Session`
+  * Add support for `customer_creation` on `Checkout.SessionCreateParams` and `Checkout.Session`
   * Add support for `fpx` and `grabpay` on `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_options`, and `PaymentIntent.payment_method_options`
 * [#1315](https://github.com/stripe/stripe-node/pull/1315) API Updates
   * Add support for `mandate_options` on `SubscriptionCreateParams.payment_settings.payment_method_options.card`, `SubscriptionUpdateParams.payment_settings.payment_method_options.card`, and `Subscription.payment_settings.payment_method_options.card`
@@ -1051,7 +1051,7 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
 ## 8.189.0 - 2021-11-16
 * [#1295](https://github.com/stripe/stripe-node/pull/1295) API Updates
   * Add support for new resource `ShippingRate`
-  * Add support for `shipping_options` on `CheckoutSessionCreateParams` and `Checkout.Session`
+  * Add support for `shipping_options` on `Checkout.SessionCreateParams` and `Checkout.Session`
   * Add support for `shipping_rate` on `Checkout.Session`
 
 ## 8.188.0 - 2021-11-12
@@ -1096,7 +1096,7 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
 ## 8.182.0 - 2021-10-14
 * [#1271](https://github.com/stripe/stripe-node/pull/1271) API Updates
   * Change `Charge.payment_method_details.klarna.payment_method_category`, `Charge.payment_method_details.klarna.preferred_locale`, `Checkout.Session.customer_details.phone`, and `PaymentMethod.klarna.dob` to be required
-  * Add support for new value `klarna` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Add support for new value `klarna` on enum `Checkout.SessionCreateParams.payment_method_types[]`
 
 ## 8.181.0 - 2021-10-11
 * [#1269](https://github.com/stripe/stripe-node/pull/1269) API Updates
@@ -1113,7 +1113,7 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
 
 ## 8.179.0 - 2021-10-07
 * [#1265](https://github.com/stripe/stripe-node/pull/1265) API Updates
-  * Add support for `phone_number_collection` on `CheckoutSessionCreateParams` and `Checkout.Session`
+  * Add support for `phone_number_collection` on `Checkout.SessionCreateParams` and `Checkout.Session`
   * Add support for `phone` on `Checkout.Session.customer_details`
   * Change `PaymentMethodListParams.customer` to be optional
   * Add support for new value `customer_id` on enums `RadarValueListCreateParams.item_type` and `Radar.ValueList.item_type`
@@ -1138,7 +1138,7 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
 ## 8.175.0 - 2021-09-15
 * [#1242](https://github.com/stripe/stripe-node/pull/1242) API Updates
   * Change `BillingPortal.Configuration.features.subscription_cancel.cancellation_reason` to be required
-  * Add support for `default_for` on `CheckoutSessionCreateParams.payment_method_options.acss_debit.mandate_options`, `Checkout.Session.payment_method_options.acss_debit.mandate_options`, `Mandate.payment_method_details.acss_debit`, `SetupIntentCreateParams.payment_method_options.acss_debit.mandate_options`, `SetupIntentUpdateParams.payment_method_options.acss_debit.mandate_options`, `SetupIntentConfirmParams.payment_method_options.acss_debit.mandate_options`, and `SetupIntent.payment_method_options.acss_debit.mandate_options`
+  * Add support for `default_for` on `Checkout.SessionCreateParams.payment_method_options.acss_debit.mandate_options`, `Checkout.Session.payment_method_options.acss_debit.mandate_options`, `Mandate.payment_method_details.acss_debit`, `SetupIntentCreateParams.payment_method_options.acss_debit.mandate_options`, `SetupIntentUpdateParams.payment_method_options.acss_debit.mandate_options`, `SetupIntentConfirmParams.payment_method_options.acss_debit.mandate_options`, and `SetupIntent.payment_method_options.acss_debit.mandate_options`
   * Add support for `acss_debit` on `InvoiceCreateParams.payment_settings.payment_method_options`, `InvoiceUpdateParams.payment_settings.payment_method_options`, `Invoice.payment_settings.payment_method_options`, `SubscriptionCreateParams.payment_settings.payment_method_options`, `SubscriptionUpdateParams.payment_settings.payment_method_options`, and `Subscription.payment_settings.payment_method_options`
   * Add support for new value `acss_debit` on enums `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Invoice.payment_settings.payment_method_types[]`, `SubscriptionCreateParams.payment_settings.payment_method_types[]`, `SubscriptionUpdateParams.payment_settings.payment_method_types[]`, and `Subscription.payment_settings.payment_method_types[]`
   * Add support for `livemode` on `Reporting.ReportType`
@@ -1157,7 +1157,7 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
 
 ## 8.173.0 - 2021-09-01
 * [#1230](https://github.com/stripe/stripe-node/pull/1230) [#1228](https://github.com/stripe/stripe-node/pull/1228) API Updates
-  * Add support for `after_expiration`, `consent_collection`, and `expires_at` on `CheckoutSessionCreateParams` and `Checkout.Session`
+  * Add support for `after_expiration`, `consent_collection`, and `expires_at` on `Checkout.SessionCreateParams` and `Checkout.Session`
   * Add support for `consent` and `recovered_from` on `Checkout.Session`
 
 ## 8.172.0 - 2021-08-31
@@ -1169,7 +1169,7 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
 
 ## 8.170.0 - 2021-08-19
 * [#1223](https://github.com/stripe/stripe-node/pull/1223) API Updates
-  * Add support for new value `fil` on enums `CheckoutSessionCreateParams.locale` and `Checkout.Session.locale`
+  * Add support for new value `fil` on enums `Checkout.SessionCreateParams.locale` and `Checkout.Session.locale`
   * Add support for new value `au_arn` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, and `TaxId.type`
   * Add support for new value `au_arn` on enums `CustomerCreateParams.tax_id_data[].type`, `InvoiceUpcomingParams.customer_details.tax_ids[].type`, `InvoiceUpcomingLinesParams.customer_details.tax_ids[].type`, and `TaxIdCreateParams.type`
 * [#1221](https://github.com/stripe/stripe-node/pull/1221) Add client name property to HttpClient.
@@ -1205,7 +1205,7 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
 
 ## 8.165.0 - 2021-07-22
 * [#1197](https://github.com/stripe/stripe-node/pull/1197) API Updates
-  * Add support for new values `hr`, `ko`, and `vi` on enums `CheckoutSessionCreateParams.locale` and `Checkout.Session.locale`
+  * Add support for new values `hr`, `ko`, and `vi` on enums `Checkout.SessionCreateParams.locale` and `Checkout.Session.locale`
   * Add support for `payment_settings` on `SubscriptionCreateParams`, `SubscriptionUpdateParams`, and `Subscription`
 
 ## 8.164.0 - 2021-07-20
@@ -1240,8 +1240,8 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
 
 ## 8.159.0 - 2021-06-30
 * [#1180](https://github.com/stripe/stripe-node/pull/1180) API Updates
-  * Add support for `wechat_pay` on `Charge.payment_method_details`, `CheckoutSessionCreateParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntent.payment_method_options`, `PaymentMethodCreateParams`, and `PaymentMethod`
-  * Add support for new value `wechat_pay` on enums `CheckoutSessionCreateParams.payment_method_types[]`, `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Invoice.payment_settings.payment_method_types[]`, `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentMethodCreateParams.type`, `PaymentMethodListParams.type`, and `PaymentMethod.type`
+  * Add support for `wechat_pay` on `Charge.payment_method_details`, `Checkout.SessionCreateParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntent.payment_method_options`, `PaymentMethodCreateParams`, and `PaymentMethod`
+  * Add support for new value `wechat_pay` on enums `Checkout.SessionCreateParams.payment_method_types[]`, `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Invoice.payment_settings.payment_method_types[]`, `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentMethodCreateParams.type`, `PaymentMethodListParams.type`, and `PaymentMethod.type`
   * Add support for `wechat_pay_display_qr_code`, `wechat_pay_redirect_to_android_app`, and `wechat_pay_redirect_to_ios_app` on `PaymentIntent.next_action`
 
 ## 8.158.0 - 2021-06-29
