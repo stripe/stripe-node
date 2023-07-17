@@ -239,9 +239,20 @@ declare module 'stripe' {
 
       interface AutomaticPaymentMethods {
         /**
+         * Controls whether this PaymentIntent will accept redirect-based payment methods.
+         *
+         * Redirect-based payment methods may require your customer to be redirected to a payment method's app or site for authentication or additional steps. To [confirm](https://stripe.com/docs/api/payment_intents/confirm) this PaymentIntent, you may be required to provide a `return_url` to redirect customers back to your site after they authenticate or complete the payment.
+         */
+        allow_redirects?: AutomaticPaymentMethods.AllowRedirects;
+
+        /**
          * Automatically calculates compatible payment methods
          */
         enabled: boolean;
+      }
+
+      namespace AutomaticPaymentMethods {
+        type AllowRedirects = 'always' | 'never';
       }
 
       type CancellationReason =
@@ -369,6 +380,7 @@ declare module 'stripe' {
           | 'amount_too_large'
           | 'amount_too_small'
           | 'api_key_expired'
+          | 'application_fees_not_allowed'
           | 'authentication_required'
           | 'balance_insufficient'
           | 'bank_account_bad_routing_numbers'
@@ -421,6 +433,7 @@ declare module 'stripe' {
           | 'invalid_expiry_year'
           | 'invalid_number'
           | 'invalid_source_usage'
+          | 'invalid_tax_location'
           | 'invoice_no_customer_line_items'
           | 'invoice_no_payment_method_types'
           | 'invoice_no_subscription_line_items'

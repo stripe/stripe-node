@@ -19,6 +19,11 @@ declare module 'stripe' {
       credit_amount?: number;
 
       /**
+       * The date when this credit note is in effect. Same as `created` unless overwritten. When defined, this value replaces the system-generated 'Date of issue' printed on the credit note PDF.
+       */
+      effective_at?: number;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -190,6 +195,11 @@ declare module 'stripe' {
       credit_amount?: number;
 
       /**
+       * The date when this credit note is in effect. Same as `created` unless overwritten. When defined, this value replaces the system-generated 'Date of issue' printed on the credit note PDF.
+       */
+      effective_at?: number;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -311,6 +321,11 @@ declare module 'stripe' {
        * The integer amount in cents (or local equivalent) representing the amount to credit the customer's balance, which will be automatically applied to their next invoice.
        */
       credit_amount?: number;
+
+      /**
+       * The date when this credit note is in effect. Same as `created` unless overwritten. When defined, this value replaces the system-generated 'Date of issue' printed on the credit note PDF.
+       */
+      effective_at?: number;
 
       /**
        * Specifies which fields in the response should be expanded.

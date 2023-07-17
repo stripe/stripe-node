@@ -219,9 +219,19 @@ declare module 'stripe' {
         label: CustomField.Label;
 
         /**
+         * Configuration for `type=numeric` fields.
+         */
+        numeric: CustomField.Numeric | null;
+
+        /**
          * Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
          */
         optional: boolean;
+
+        /**
+         * Configuration for `type=text` fields.
+         */
+        text: CustomField.Text | null;
 
         /**
          * The type of the field.
@@ -261,6 +271,30 @@ declare module 'stripe' {
            * The type of the label.
            */
           type: 'custom';
+        }
+
+        interface Numeric {
+          /**
+           * The maximum character length constraint for the customer's input.
+           */
+          maximum_length: number | null;
+
+          /**
+           * The minimum character length requirement for the customer's input.
+           */
+          minimum_length: number | null;
+        }
+
+        interface Text {
+          /**
+           * The maximum character length constraint for the customer's input.
+           */
+          maximum_length: number | null;
+
+          /**
+           * The minimum character length requirement for the customer's input.
+           */
+          minimum_length: number | null;
         }
 
         type Type = 'dropdown' | 'numeric' | 'text';

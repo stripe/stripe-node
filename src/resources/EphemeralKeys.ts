@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-
 export const EphemeralKeys = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
@@ -15,9 +14,5 @@ export const EphemeralKeys = StripeResource.extend({
       }
     },
   }),
-
-  del: stripeMethod({
-    method: 'DELETE',
-    fullPath: '/v1/ephemeral_keys/{key}',
-  }),
+  del: stripeMethod({method: 'DELETE', fullPath: '/v1/ephemeral_keys/{key}'}),
 });
