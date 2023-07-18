@@ -44,7 +44,7 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * Funds that are not yet available in the balance, due to the 7-day rolling pay cycle. The pending balance for each currency, and for each payment type, can be found in the `source_types` property.
+       * Funds that are not yet available in the balance. The pending balance for each currency, and for each payment type, can be found in the `source_types` property.
        */
       pending: Array<Balance.Pending>;
     }

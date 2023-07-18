@@ -327,8 +327,6 @@ declare module 'stripe' {
               namespace Tax {
                 type TaxabilityReason =
                   | 'customer_exempt'
-                  | 'excluded_territory'
-                  | 'jurisdiction_unsupported'
                   | 'not_collecting'
                   | 'not_subject_to_tax'
                   | 'not_supported'
@@ -342,7 +340,6 @@ declare module 'stripe' {
                   | 'reverse_charge'
                   | 'standard_rated'
                   | 'taxable_basis_reduced'
-                  | 'vat_exempt'
                   | 'zero_rated';
               }
             }
@@ -444,8 +441,6 @@ declare module 'stripe' {
               namespace Tax {
                 type TaxabilityReason =
                   | 'customer_exempt'
-                  | 'excluded_territory'
-                  | 'jurisdiction_unsupported'
                   | 'not_collecting'
                   | 'not_subject_to_tax'
                   | 'not_supported'
@@ -459,7 +454,6 @@ declare module 'stripe' {
                   | 'reverse_charge'
                   | 'standard_rated'
                   | 'taxable_basis_reduced'
-                  | 'vat_exempt'
                   | 'zero_rated';
               }
             }
@@ -1094,8 +1088,6 @@ declare module 'stripe' {
           namespace Tax {
             type TaxabilityReason =
               | 'customer_exempt'
-              | 'excluded_territory'
-              | 'jurisdiction_unsupported'
               | 'not_collecting'
               | 'not_subject_to_tax'
               | 'not_supported'
@@ -1109,7 +1101,6 @@ declare module 'stripe' {
               | 'reverse_charge'
               | 'standard_rated'
               | 'taxable_basis_reduced'
-              | 'vat_exempt'
               | 'zero_rated';
           }
         }
