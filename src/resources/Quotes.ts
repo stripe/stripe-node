@@ -36,6 +36,21 @@ export const Quotes = StripeResource.extend({
     fullPath: '/v1/quotes/{quote}/lines',
     methodType: 'list',
   }),
+  listPreviewInvoiceLines: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/quotes/{quote}/preview_invoices/{preview_invoice}/lines',
+    methodType: 'list',
+  }),
+  listPreviewInvoices: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/quotes/{quote}/preview_invoices',
+    methodType: 'list',
+  }),
+  listPreviewSubscriptionSchedules: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/quotes/{quote}/preview_subscription_schedules',
+    methodType: 'list',
+  }),
   markStaleQuote: stripeMethod({
     method: 'POST',
     fullPath: '/v1/quotes/{quote}/mark_stale',
@@ -45,21 +60,6 @@ export const Quotes = StripeResource.extend({
     fullPath: '/v1/quotes/{quote}/pdf',
     host: 'files.stripe.com',
     streaming: true,
-  }),
-  previewInvoiceLines: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/quotes/{quote}/preview_invoices/{preview_invoice}/lines',
-    methodType: 'list',
-  }),
-  previewInvoices: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/quotes/{quote}/preview_invoices',
-    methodType: 'list',
-  }),
-  previewSubscriptionSchedules: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/quotes/{quote}/preview_subscription_schedules',
-    methodType: 'list',
   }),
   reestimate: stripeMethod({
     method: 'POST',
