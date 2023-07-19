@@ -227,7 +227,13 @@ declare module 'stripe' {
                 value: string | null;
               }
 
-              type Type = 'selection' | 'signature';
+              type Type =
+                | 'email'
+                | 'numeric'
+                | 'phone'
+                | 'selection'
+                | 'signature'
+                | 'text';
             }
           }
 
