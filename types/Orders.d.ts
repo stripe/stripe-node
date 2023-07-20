@@ -805,8 +805,6 @@ declare module 'stripe' {
         namespace Tax {
           type TaxabilityReason =
             | 'customer_exempt'
-            | 'excluded_territory'
-            | 'jurisdiction_unsupported'
             | 'not_collecting'
             | 'not_subject_to_tax'
             | 'not_supported'
@@ -820,7 +818,6 @@ declare module 'stripe' {
             | 'reverse_charge'
             | 'standard_rated'
             | 'taxable_basis_reduced'
-            | 'vat_exempt'
             | 'zero_rated';
         }
       }
@@ -866,7 +863,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `pe_ruc`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, or `unknown`
+           * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, or `unknown`
            */
           type: TaxId.Type;
 
@@ -926,6 +923,7 @@ declare module 'stripe' {
             | 'nz_gst'
             | 'pe_ruc'
             | 'ph_tin'
+            | 'ro_tin'
             | 'rs_pib'
             | 'ru_inn'
             | 'ru_kpp'
@@ -1024,8 +1022,6 @@ declare module 'stripe' {
           namespace Tax {
             type TaxabilityReason =
               | 'customer_exempt'
-              | 'excluded_territory'
-              | 'jurisdiction_unsupported'
               | 'not_collecting'
               | 'not_subject_to_tax'
               | 'not_supported'
@@ -1039,7 +1035,6 @@ declare module 'stripe' {
               | 'reverse_charge'
               | 'standard_rated'
               | 'taxable_basis_reduced'
-              | 'vat_exempt'
               | 'zero_rated';
           }
         }

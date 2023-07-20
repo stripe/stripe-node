@@ -2542,8 +2542,8 @@ describe('Quotes', function() {
     expect(quote).not.to.be.null;
   });
 
-  it('previewInvoiceLines method', async function() {
-    const invoiceLineItems = await stripe.quotes.previewInvoiceLines(
+  it('listPreviewInvoiceLines method', async function() {
+    const invoiceLineItems = await stripe.quotes.listPreviewInvoiceLines(
       'qt_xyz',
       'in_xyz'
     );
