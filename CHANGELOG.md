@@ -10,6 +10,17 @@
 * [#1849](https://github.com/stripe/stripe-node/pull/1849) Changelog: fix delimiterless namespaced param types
 * [#1848](https://github.com/stripe/stripe-node/pull/1848) Changelog: `CheckoutSessionCreateParams` -> `Checkout.SessionCreateParams`
 
+## 12.14.0-beta.1 - 2023-07-13
+* [#1840](https://github.com/stripe/stripe-node/pull/1840) Update generated code for beta
+  Release specs are identical.
+* [#1837](https://github.com/stripe/stripe-node/pull/1837) Update generated code for beta
+  * Add support for new resource `PaymentMethodConfiguration`
+  * Add support for `create`, `list`, `retrieve`, and `update` methods on resource `PaymentMethodConfiguration`
+  * Add support for `payment_method_configuration` on `PaymentIntentCreateParams` and `PaymentIntentUpdateParams`
+  * Add support for `payment_method_configuration_details` on `PaymentIntent`
+  * Rename `Tax.SettingRetrieveParam` to `Tax.SettingsRetrieveParam` and `Tax.SettingUpdateParams` to `Tax.SettingsUpdateParams` (parity with main release)
+* [#1832](https://github.com/stripe/stripe-node/pull/1832) Update generated code for beta
+
 ## 12.13.0 - 2023-07-13
 * [#1838](https://github.com/stripe/stripe-node/pull/1838) Update generated code
   * Add support for new resource `Tax.Settings`
