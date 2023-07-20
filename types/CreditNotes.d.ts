@@ -225,7 +225,7 @@ declare module 'stripe' {
           /**
            * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
            */
-          taxability_reason: Tax.TaxabilityReason | null;
+          taxability_reason: Tax.TaxabilityReason;
 
           /**
            * The amount on which tax is calculated, in %s.
@@ -236,6 +236,8 @@ declare module 'stripe' {
         namespace Tax {
           type TaxabilityReason =
             | 'customer_exempt'
+            | 'excluded_territory'
+            | 'jurisdiction_unsupported'
             | 'not_collecting'
             | 'not_subject_to_tax'
             | 'not_supported'
@@ -249,6 +251,7 @@ declare module 'stripe' {
             | 'reverse_charge'
             | 'standard_rated'
             | 'taxable_basis_reduced'
+            | 'vat_exempt'
             | 'zero_rated';
         }
       }
