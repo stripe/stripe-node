@@ -1108,7 +1108,7 @@ declare module 'stripe' {
           /**
            * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
            */
-          taxability_reason: Tax.TaxabilityReason;
+          taxability_reason: Tax.TaxabilityReason | null;
 
           /**
            * The amount on which tax is calculated, in %s.
