@@ -3276,9 +3276,9 @@ declare module 'stripe' {
        * With [Connect](https://stripe.com/docs/connect), you can create Stripe accounts for your users.
        * To do this, you'll first need to [register your platform](https://dashboard.stripe.com/account/applications/settings).
        *
-       * If you've already collected information for your connected accounts, you [can pre-fill that information](https://stripe.com/docs/connect/best-practices#onboarding) when
-       * creating the account. Connect Onboarding won't ask for the pre-filled information during account onboarding.
-       * You can pre-fill any information on the account.
+       * If you've already collected information for your connected accounts, you [can prefill that information](https://stripe.com/docs/connect/best-practices#onboarding) when
+       * creating the account. Connect Onboarding won't ask for the prefilled information during account onboarding.
+       * You can prefill any information on the account.
        */
       create(
         params?: AccountCreateParams,
