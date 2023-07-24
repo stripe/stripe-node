@@ -1,5 +1,7 @@
 // NOTE: testUtils should be require'd before anything else in each spec file!
 
+import {HttpClient, HttpClientResponseInterface} from '../src/net/HttpClient';
+
 require('mocha');
 import http = require('http');
 
@@ -17,6 +19,7 @@ import {
   StripeObject as StripeClient,
 } from '../src/Types.js';
 import stripe = require('../src/stripe.cjs.node.js');
+import {NodeHttpClient} from '../src/net/NodeHttpClient';
 
 const testingHttpAgent = new http.Agent({keepAlive: false});
 
@@ -58,11 +61,32 @@ export const getTestServerStripe = (
 
 export const getStripeMockClient = (): StripeClient => {
   const stripe = require('../src/stripe.cjs.node.js');
+  class StripeMockForwardingClient extends NodeHttpClient {
+    makeRequest(
+      _host: string,
+      _port: string,
+      path: string,
+      method: string,
+      headers: RequestHeaders,
+      requestData: RequestData,
+      _protocol: string,
+      timeout: number
+    ): Promise<HttpClientResponseInterface> {
+      return super.makeRequest(
+        process.env.STRIPE_MOCK_HOST || 'localhost',
+        (process.env.STRIPE_MOCK_PORT || 12111).toString(),
+        path,
+        method,
+        headers,
+        requestData,
+        'http',
+        timeout
+      );
+    }
+  }
 
   return stripe(FAKE_API_KEY, {
-    host: process.env.STRIPE_MOCK_HOST || 'localhost',
-    port: process.env.STRIPE_MOCK_PORT || 12111,
-    protocol: 'http',
+    httpClient: new StripeMockForwardingClient(),
   });
 };
 
