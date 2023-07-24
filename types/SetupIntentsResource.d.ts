@@ -94,6 +94,11 @@ declare module 'stripe' {
        * Indicates how the payment method is intended to be used in the future. If not provided, this value defaults to `off_session`.
        */
       usage?: SetupIntentCreateParams.Usage;
+
+      /**
+       * Set to `true` when confirming server-side and using Stripe.js, iOS, or Android client-side SDKs to handle the next actions.
+       */
+      use_stripe_sdk?: boolean;
     }
 
     namespace SetupIntentCreateParams {
@@ -1989,6 +1994,11 @@ declare module 'stripe' {
        * This parameter is only used for cards and other redirect-based payment methods.
        */
       return_url?: string;
+
+      /**
+       * Set to `true` when confirming server-side and using Stripe.js, iOS, or Android client-side SDKs to handle the next actions.
+       */
+      use_stripe_sdk?: boolean;
     }
 
     namespace SetupIntentConfirmParams {
