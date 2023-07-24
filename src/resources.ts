@@ -23,6 +23,7 @@ import {FinancialAccounts as TreasuryFinancialAccounts} from './resources/Treasu
 import {FinancingOffers as CapitalFinancingOffers} from './resources/Capital/FinancingOffers.js';
 import {FinancingSummary as CapitalFinancingSummary} from './resources/Capital/FinancingSummary.js';
 import {FinancingTransactions as CapitalFinancingTransactions} from './resources/Capital/FinancingTransactions.js';
+import {Forms as TaxForms} from './resources/Tax/Forms.js';
 import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {Locations as TerminalLocations} from './resources/Terminal/Locations.js';
@@ -157,6 +158,7 @@ export const Sigma = resourceNamespace('sigma', {
 });
 export const Tax = resourceNamespace('tax', {
   Calculations: TaxCalculations,
+  Forms: TaxForms,
   Registrations: TaxRegistrations,
   Settings: TaxSettings,
   Transactions: TaxTransactions,
