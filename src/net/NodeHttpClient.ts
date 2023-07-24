@@ -1,5 +1,5 @@
-import * as http from 'http';
-import * as https from 'https';
+import http from 'http';
+import https from 'https';
 import {RequestHeaders, RequestData} from '../Types.js';
 import {
   HttpClient,
