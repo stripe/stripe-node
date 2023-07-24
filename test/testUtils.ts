@@ -1,7 +1,5 @@
 // NOTE: testUtils should be require'd before anything else in each spec file!
 
-import {HttpClient, HttpClientResponseInterface} from '../src/net/HttpClient';
-
 require('mocha');
 import http = require('http');
 
@@ -19,7 +17,8 @@ import {
   StripeObject as StripeClient,
 } from '../src/Types.js';
 import stripe = require('../src/stripe.cjs.node.js');
-import {NodeHttpClient} from '../src/net/NodeHttpClient';
+import {NodeHttpClient} from '../src/net/NodeHttpClient.js';
+import {HttpClientResponseInterface} from '../src/net/HttpClient.js';
 
 const testingHttpAgent = new http.Agent({keepAlive: false});
 

@@ -2546,6 +2546,11 @@ describe('Quotes', function() {
     const lineItems = await stripe.quotes.listLineItems('qt_xxxxxxxxxxxxx');
     expect(lineItems).not.to.be.null;
   });
+
+  it('pdf method', async function() {
+    const file = await stripe.quotes.pdf('qt_xxxxxxxxxxxxx');
+    expect(file).not.to.be.null;
+  });
 });
 
 describe('Radar.EarlyFraudWarnings', function() {
