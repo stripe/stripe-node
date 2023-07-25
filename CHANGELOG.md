@@ -183,6 +183,15 @@
   * Add support for `metadata` on `PaymentIntentCaptureParams`
   * Add support for `checks` on `SetupAttempt.payment_method_details.card`
   * Add support for `tax_breakdown` on `Tax.Calculation.shipping_cost` and `Tax.Transaction.shipping_cost`
+  * Change type of `TaxRegistrationCreateParams.active_from`, `TaxRegistrationUpdateParams.active_from`, and `TaxRegistrationUpdateParams.expires_at` from `longInteger` to `longInteger | literal('now')`
+
+## 12.3.0 - 2023-04-27
+* [#1770](https://github.com/stripe/stripe-node/pull/1770) Update generated code
+  * Add support for `billing_cycle_anchor` and `proration_behavior` on `Checkout.SessionCreateParams.subscription_data`
+  * Add support for `terminal_id` on `Issuing.Authorization.merchant_data` and `Issuing.Transaction.merchant_data`
+  * Add support for `metadata` on `PaymentIntentCaptureParams`
+  * Add support for `checks` on `SetupAttempt.payment_method_details.card`
+  * Add support for `tax_breakdown` on `Tax.Calculation.shipping_cost` and `Tax.Transaction.shipping_cost`
 
 ## 12.3.0-beta.1 - 2023-04-20
 * [#1760](https://github.com/stripe/stripe-node/pull/1760) Update generated code for beta
@@ -851,6 +860,7 @@ Breaking changes that arose during code generation of the library that we postpo
   * Add support for new value `blik` on enums `PaymentLink.payment_method_types[]`, `PaymentLinkCreateParams.payment_method_types[]`, and `PaymentLinkUpdateParams.payment_method_types[]`
   * Add support for new value `blik` on enum `PaymentMethodCreateParams.type`
   * Add support for new value `blik` on enum `PaymentMethod.type`
+  * Add support for `cancel` method on `Subscriptions` resource. This has the same functionality as the `del` method - if you are on a version less than 9.14.0, please use `del`.
 * [#1476](https://github.com/stripe/stripe-node/pull/1476) fix: Include trailing slash when passing empty query parameters.
 * [#1475](https://github.com/stripe/stripe-node/pull/1475) Move @types/node to devDependencies
 

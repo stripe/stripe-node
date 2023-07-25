@@ -6,7 +6,7 @@ declare module 'stripe' {
      * This is an object representing a person associated with a Stripe account.
      *
      * A platform cannot access a Standard or Express account's persons after the account starts onboarding, such as after generating an account link for the account.
-     * See the [Standard onboarding](https://stripe.com/docs/connect/standard-accounts) or [Express onboarding documentation](https://stripe.com/docs/connect/express-accounts) for information about platform pre-filling and account onboarding steps.
+     * See the [Standard onboarding](https://stripe.com/docs/connect/standard-accounts) or [Express onboarding documentation](https://stripe.com/docs/connect/express-accounts) for information about platform prefilling and account onboarding steps.
      *
      * Related guide: [Handling identity verification with the API](https://stripe.com/docs/connect/identity-verification-api#person-information)
      */

@@ -166,6 +166,11 @@ declare module 'stripe' {
         payment_method_collection?: SessionCreateParams.PaymentMethodCollection;
 
         /**
+         * The ID of the payment method configuration to use with this Checkout session.
+         */
+        payment_method_configuration?: string;
+
+        /**
          * Payment-method-specific configuration.
          */
         payment_method_options?: SessionCreateParams.PaymentMethodOptions;
