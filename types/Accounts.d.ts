@@ -120,6 +120,8 @@ declare module 'stripe' {
          */
         mcc: string | null;
 
+        monthly_estimated_revenue?: BusinessProfile.MonthlyEstimatedRevenue;
+
         /**
          * The customer-facing business name.
          */
@@ -154,6 +156,20 @@ declare module 'stripe' {
          * The business's publicly available website.
          */
         url: string | null;
+      }
+
+      namespace BusinessProfile {
+        interface MonthlyEstimatedRevenue {
+          /**
+           * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           */
+          amount: number;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+        }
       }
 
       type BusinessType =

@@ -94,6 +94,11 @@ declare module 'stripe' {
         mcc?: string;
 
         /**
+         * An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
+         */
+        monthly_estimated_revenue?: BusinessProfile.MonthlyEstimatedRevenue;
+
+        /**
          * The customer-facing business name.
          */
         name?: string;
@@ -127,6 +132,20 @@ declare module 'stripe' {
          * The business's publicly available website.
          */
         url?: string;
+      }
+
+      namespace BusinessProfile {
+        interface MonthlyEstimatedRevenue {
+          /**
+           * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           */
+          amount: number;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+        }
       }
 
       type BusinessType =
@@ -1355,6 +1374,11 @@ declare module 'stripe' {
         mcc?: string;
 
         /**
+         * An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
+         */
+        monthly_estimated_revenue?: BusinessProfile.MonthlyEstimatedRevenue;
+
+        /**
          * The customer-facing business name.
          */
         name?: string;
@@ -1388,6 +1412,20 @@ declare module 'stripe' {
          * The business's publicly available website.
          */
         url?: string;
+      }
+
+      namespace BusinessProfile {
+        interface MonthlyEstimatedRevenue {
+          /**
+           * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           */
+          amount: number;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+        }
       }
 
       type BusinessType =
