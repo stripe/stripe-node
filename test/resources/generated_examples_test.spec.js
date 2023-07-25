@@ -3572,3 +3572,10 @@ describe('Tax.Calculations', function() {
     expect(calculation).not.to.be.null;
   });
 });
+
+describe('Tax.Forms', function() {
+  it('pdf method', async function() {
+    const file = await stripe.tax.forms.pdf('form_xxxxxxxxxxxxx');
+    expect(file).not.to.be.null;
+  });
+});
