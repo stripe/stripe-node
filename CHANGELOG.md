@@ -619,6 +619,7 @@ This release includes breaking changes resulting from:
   * Add support for new value `blik` on enum `PaymentMethod.type`
 * [#1476](https://github.com/stripe/stripe-node/pull/1476) fix: Include trailing slash when passing empty query parameters.
 * [#1475](https://github.com/stripe/stripe-node/pull/1475) Move @types/node to devDependencies
+* Add support for `cancel` method on `Subscriptions` resource. This has the same functionality as the `del` method - if you are on a version less than 9.14.0, please use `del`.
 
 ## 9.13.0 - 2022-07-12
 * [#1473](https://github.com/stripe/stripe-node/pull/1473) API Updates
