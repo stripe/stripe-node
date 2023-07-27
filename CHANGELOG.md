@@ -1,5 +1,10 @@
 # Changelog
 
+## 12.15.0 - 2023-07-27
+* [#1853](https://github.com/stripe/stripe-node/pull/1853) Update generated code
+  * Add support for `monthly_estimated_revenue` on `Account.business_profile`, `AccountCreateParams.business_profile`, and `AccountUpdateParams.business_profile`
+* [#1854](https://github.com/stripe/stripe-node/pull/1854) NodeHTTPClient: ensure `node:http` and `node:https` are monkey-patchable when importing Stripe via ESM
+
 ## 12.14.0 - 2023-07-20
 * [#1842](https://github.com/stripe/stripe-node/pull/1842) Update generated code
   * Add support for new value `ro_tin` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, `Tax.Calculation.customer_details.tax_ids[].type`, and `Tax.Transaction.customer_details.tax_ids[].type`
