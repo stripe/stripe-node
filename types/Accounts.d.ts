@@ -82,7 +82,7 @@ declare module 'stripe' {
        * This is an object representing a person associated with a Stripe account.
        *
        * A platform cannot access a Standard or Express account's persons after the account starts onboarding, such as after generating an account link for the account.
-       * See the [Standard onboarding](https://stripe.com/docs/connect/standard-accounts) or [Express onboarding documentation](https://stripe.com/docs/connect/express-accounts) for information about platform pre-filling and account onboarding steps.
+       * See the [Standard onboarding](https://stripe.com/docs/connect/standard-accounts) or [Express onboarding documentation](https://stripe.com/docs/connect/express-accounts) for information about platform prefilling and account onboarding steps.
        *
        * Related guide: [Handling identity verification with the API](https://stripe.com/docs/connect/identity-verification-api#person-information)
        */
@@ -120,6 +120,8 @@ declare module 'stripe' {
          */
         mcc: string | null;
 
+        monthly_estimated_revenue?: BusinessProfile.MonthlyEstimatedRevenue;
+
         /**
          * The customer-facing business name.
          */
@@ -154,6 +156,20 @@ declare module 'stripe' {
          * The business's publicly available website.
          */
         url: string | null;
+      }
+
+      namespace BusinessProfile {
+        interface MonthlyEstimatedRevenue {
+          /**
+           * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           */
+          amount: number;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+        }
       }
 
       type BusinessType =

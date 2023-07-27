@@ -94,6 +94,11 @@ declare module 'stripe' {
         mcc?: string;
 
         /**
+         * An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
+         */
+        monthly_estimated_revenue?: BusinessProfile.MonthlyEstimatedRevenue;
+
+        /**
          * The customer-facing business name.
          */
         name?: string;
@@ -127,6 +132,20 @@ declare module 'stripe' {
          * The business's publicly available website.
          */
         url?: string;
+      }
+
+      namespace BusinessProfile {
+        interface MonthlyEstimatedRevenue {
+          /**
+           * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           */
+          amount: number;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+        }
       }
 
       type BusinessType =
@@ -1355,6 +1374,11 @@ declare module 'stripe' {
         mcc?: string;
 
         /**
+         * An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
+         */
+        monthly_estimated_revenue?: BusinessProfile.MonthlyEstimatedRevenue;
+
+        /**
          * The customer-facing business name.
          */
         name?: string;
@@ -1388,6 +1412,20 @@ declare module 'stripe' {
          * The business's publicly available website.
          */
         url?: string;
+      }
+
+      namespace BusinessProfile {
+        interface MonthlyEstimatedRevenue {
+          /**
+           * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           */
+          amount: number;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+        }
       }
 
       type BusinessType =
@@ -3276,9 +3314,9 @@ declare module 'stripe' {
        * With [Connect](https://stripe.com/docs/connect), you can create Stripe accounts for your users.
        * To do this, you'll first need to [register your platform](https://dashboard.stripe.com/account/applications/settings).
        *
-       * If you've already collected information for your connected accounts, you [can pre-fill that information](https://stripe.com/docs/connect/best-practices#onboarding) when
-       * creating the account. Connect Onboarding won't ask for the pre-filled information during account onboarding.
-       * You can pre-fill any information on the account.
+       * If you've already collected information for your connected accounts, you [can prefill that information](https://stripe.com/docs/connect/best-practices#onboarding) when
+       * creating the account. Connect Onboarding won't ask for the prefilled information during account onboarding.
+       * You can prefill any information on the account.
        */
       create(
         params?: AccountCreateParams,

@@ -920,7 +920,7 @@ declare module 'stripe' {
 
         interface Link {
           /**
-           * Token used for persistent Link logins.
+           * [Deprecated] This is a legacy parameter that no longer has any function.
            */
           persistent_token?: string;
         }
@@ -1834,7 +1834,7 @@ declare module 'stripe' {
 
         interface Link {
           /**
-           * Token used for persistent Link logins.
+           * [Deprecated] This is a legacy parameter that no longer has any function.
            */
           persistent_token?: string;
         }
@@ -2835,7 +2835,7 @@ declare module 'stripe' {
 
         interface Link {
           /**
-           * Token used for persistent Link logins.
+           * [Deprecated] This is a legacy parameter that no longer has any function.
            */
           persistent_token?: string;
         }
