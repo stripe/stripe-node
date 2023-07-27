@@ -1958,7 +1958,7 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
-           * Token used for persistent Link logins.
+           * [Deprecated] This is a legacy parameter that no longer has any function.
            */
           persistent_token?: string;
 
@@ -4259,7 +4259,7 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
-           * Token used for persistent Link logins.
+           * [Deprecated] This is a legacy parameter that no longer has any function.
            */
           persistent_token?: string;
 
@@ -6950,7 +6950,7 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
-           * Token used for persistent Link logins.
+           * [Deprecated] This is a legacy parameter that no longer has any function.
            */
           persistent_token?: string;
 
