@@ -12,6 +12,7 @@ export const Forms = StripeResource.extend({
   pdf: stripeMethod({
     method: 'GET',
     fullPath: '/v1/tax/forms/{id}/pdf',
+    host: 'files.stripe.com',
     streaming: true,
   }),
 });
