@@ -1,9 +1,12 @@
 # Changelog
 
-## 12.15.0 - 2023-07-27
+## 12.16.0 - 2023-07-27
 * [#1853](https://github.com/stripe/stripe-node/pull/1853) Update generated code
   * Add support for `monthly_estimated_revenue` on `Account.business_profile`, `AccountCreateParams.business_profile`, and `AccountUpdateParams.business_profile`
-* [#1854](https://github.com/stripe/stripe-node/pull/1854) NodeHTTPClient: ensure `node:http` and `node:https` are monkey-patchable when importing Stripe via ESM
+* [#1859](https://github.com/stripe/stripe-node/pull/1859) Revert "import * as http -> import http from 'http'"
+
+## 12.15.0 - 2023-07-27 (DEPRECATED ⚠️ )
+* This version included a breaking change [#1859](https://github.com/stripe/stripe-node/pull/1859) that we should not have released. It has been deprecated on npmjs.org. Please do not use this version.
 
 ## 12.14.0 - 2023-07-20
 * [#1842](https://github.com/stripe/stripe-node/pull/1842) Update generated code
