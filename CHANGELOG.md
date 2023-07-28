@@ -1,5 +1,8 @@
 # Changelog
 
+## 12.17.0-beta.1 - 2023-07-27
+  * Updated stable APIs to the latest version
+
 ## 12.16.0 - 2023-07-27
 * [#1853](https://github.com/stripe/stripe-node/pull/1853) Update generated code
   * Add support for `monthly_estimated_revenue` on `Account.business_profile`, `AccountCreateParams.business_profile`, and `AccountUpdateParams.business_profile`
