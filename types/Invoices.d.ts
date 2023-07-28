@@ -379,6 +379,11 @@ declare module 'stripe' {
       subscription: string | Stripe.Subscription | null;
 
       /**
+       * Details about the subscription that created this invoice.
+       */
+      subscription_details?: Invoice.SubscriptionDetails | null;
+
+      /**
        * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
        */
       subscription_proration_date?: number;
@@ -1185,6 +1190,13 @@ declare module 'stripe' {
          * The time that the invoice was voided.
          */
         voided_at: number | null;
+      }
+
+      interface SubscriptionDetails {
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will reflect the metadata of the subscription at the time of invoice creation. *Note: This attribute is populated only for invoices created on or after June 29, 2023.*
+         */
+        metadata?: Stripe.Metadata | null;
       }
 
       interface ThresholdReason {
