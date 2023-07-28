@@ -9,8 +9,7 @@
     "noImplicitThis": true,
     "strict": true,
     "strictFunctionTypes": true,
-    "types": [ "node" ],
-    "esModuleInterop": true
+    "types": [ "node" ]
   },
   "include": ["./src/**/*"],
   "exclude": ["./src/stripe.esm.node.ts", "./src/stripe.esm.worker.ts"],

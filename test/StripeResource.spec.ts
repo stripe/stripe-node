@@ -1,6 +1,6 @@
 // @ts-nocheck
 import {expect} from 'chai';
-import nock from 'nock';
+import * as nock from 'nock';
 import {StripeResource} from '../src/StripeResource.js';
 import {getSpyableStripe, getTestServerStripe} from './testUtils.js';
 

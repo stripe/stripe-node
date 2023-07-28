@@ -1,15 +1,5 @@
-// It's important to do a default import here, rather thane
-// `import * as http from 'http'` because the latter will
-// use a "Module Namespace Exotic Object" which is immune to
-// monkey-patching, whereas http.default (in an ES Module context)
-// will resolve to the same thing as require('http'), which is
-// monkey-patchable. We care about this because users in their test
-// suites might be using a library like "nock" which relies on the ability
-// to monkey-patch and intercept calls to http.request.
-// In order to get this to play nicely with commonJS, in our TSConfig we have
-// esModuleInterop set to true.
-import http from 'http';
-import https from 'https';
+import * as http from 'http';
+import * as https from 'https';
 import {RequestHeaders, RequestData} from '../Types.js';
 import {
   HttpClient,
