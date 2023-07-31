@@ -37,7 +37,7 @@ declare module 'stripe' {
           /**
            * Specifies the payee type. Always `account`.
            */
-          type: 'account';
+          type?: 'account';
         }
 
         type Type = 'us_1099_k' | 'us_1099_misc' | 'us_1099_nec';
