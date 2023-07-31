@@ -38,7 +38,7 @@ declare module 'stripe' {
       application_fee_amount: number | null;
 
       /**
-       * This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account.
+       * This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account.
        */
       application_fee_percent: number | null;
 
