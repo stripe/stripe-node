@@ -650,21 +650,21 @@ declare module 'stripe' {
             /**
              * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
              */
-            files?: Array<string>;
+            files?: Array<Stripe.Emptyable<string>>;
           }
 
           interface Passport {
             /**
              * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
              */
-            files?: Array<string>;
+            files?: Array<Stripe.Emptyable<string>>;
           }
 
           interface Visa {
             /**
              * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
              */
-            files?: Array<string>;
+            files?: Array<Stripe.Emptyable<string>>;
           }
         }
 

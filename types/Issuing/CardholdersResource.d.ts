@@ -165,7 +165,7 @@ declare module 'stripe' {
               /**
                * The user agent of the browser from which the cardholder accepted the Authorized User Terms.
                */
-              user_agent?: string;
+              user_agent?: Stripe.Emptyable<string>;
             }
           }
 
@@ -1316,7 +1316,7 @@ declare module 'stripe' {
               /**
                * The user agent of the browser from which the cardholder accepted the Authorized User Terms.
                */
-              user_agent?: string;
+              user_agent?: Stripe.Emptyable<string>;
             }
           }
 

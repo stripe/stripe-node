@@ -26,7 +26,7 @@ declare module 'stripe' {
       /**
        * An optional description of what the webhook is used for.
        */
-      description?: string;
+      description?: Stripe.Emptyable<string>;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -378,7 +378,7 @@ declare module 'stripe' {
       /**
        * An optional description of what the webhook is used for.
        */
-      description?: string;
+      description?: Stripe.Emptyable<string>;
 
       /**
        * Disable the webhook endpoint if set to true.

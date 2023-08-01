@@ -80,7 +80,7 @@ declare module 'stripe' {
         /**
          * The ID of a configuration that will be used to customize all readers in this location.
          */
-        configuration_overrides?: string;
+        configuration_overrides?: Stripe.Emptyable<string>;
 
         /**
          * A name for the location.

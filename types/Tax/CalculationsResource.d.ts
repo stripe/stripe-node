@@ -73,7 +73,7 @@ declare module 'stripe' {
             /**
              * City, district, suburb, town, or village.
              */
-            city?: string;
+            city?: Stripe.Emptyable<string>;
 
             /**
              * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -83,22 +83,22 @@ declare module 'stripe' {
             /**
              * Address line 1 (e.g., street, PO Box, or company name).
              */
-            line1?: string;
+            line1?: Stripe.Emptyable<string>;
 
             /**
              * Address line 2 (e.g., apartment, suite, unit, or building).
              */
-            line2?: string;
+            line2?: Stripe.Emptyable<string>;
 
             /**
              * ZIP or postal code.
              */
-            postal_code?: string;
+            postal_code?: Stripe.Emptyable<string>;
 
             /**
              * State/province as an [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) subdivision code, without country prefix. Example: "NY" or "TX".
              */
-            state?: string;
+            state?: Stripe.Emptyable<string>;
           }
 
           type AddressSource = 'billing' | 'shipping';

@@ -81,7 +81,7 @@ declare module 'stripe' {
         /**
          * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
          */
-        description?: string;
+        description?: Stripe.Emptyable<string>;
 
         /**
          * All invoices will be billed using the specified settings.
@@ -199,7 +199,7 @@ declare module 'stripe' {
         /**
          * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
          */
-        description?: string;
+        description?: Stripe.Emptyable<string>;
 
         /**
          * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
@@ -531,7 +531,7 @@ declare module 'stripe' {
         /**
          * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
          */
-        description?: string;
+        description?: Stripe.Emptyable<string>;
 
         /**
          * All invoices will be billed using the specified settings.
@@ -649,7 +649,7 @@ declare module 'stripe' {
         /**
          * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
          */
-        description?: string;
+        description?: Stripe.Emptyable<string>;
 
         /**
          * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.

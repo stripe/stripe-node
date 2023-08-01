@@ -479,12 +479,12 @@ declare module 'stripe' {
           /**
            * Full name.
            */
-          name?: string;
+          name?: Stripe.Emptyable<string>;
 
           /**
            * Billing phone number (including extension).
            */
-          phone?: string;
+          phone?: Stripe.Emptyable<string>;
         }
 
         interface Blik {}
@@ -1601,7 +1601,7 @@ declare module 'stripe' {
           /**
            * An optional 10 to 11 digit numeric-only string determining the confirmation code at applicable convenience stores. Must not consist of only zeroes and could be rejected in case of insufficient uniqueness. We recommend to use the customer's phone number.
            */
-          confirmation_number?: string;
+          confirmation_number?: Stripe.Emptyable<string>;
 
           /**
            * The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST. Defaults to 3 days.
@@ -1616,7 +1616,7 @@ declare module 'stripe' {
           /**
            * A product descriptor of up to 22 characters, which will appear to customers at the convenience store.
            */
-          product_description?: string;
+          product_description?: Stripe.Emptyable<string>;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -2392,12 +2392,12 @@ declare module 'stripe' {
           /**
            * Full name.
            */
-          name?: string;
+          name?: Stripe.Emptyable<string>;
 
           /**
            * Billing phone number (including extension).
            */
-          phone?: string;
+          phone?: Stripe.Emptyable<string>;
         }
 
         interface Blik {}
@@ -3514,7 +3514,7 @@ declare module 'stripe' {
           /**
            * An optional 10 to 11 digit numeric-only string determining the confirmation code at applicable convenience stores. Must not consist of only zeroes and could be rejected in case of insufficient uniqueness. We recommend to use the customer's phone number.
            */
-          confirmation_number?: string;
+          confirmation_number?: Stripe.Emptyable<string>;
 
           /**
            * The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST. Defaults to 3 days.
@@ -3529,7 +3529,7 @@ declare module 'stripe' {
           /**
            * A product descriptor of up to 22 characters, which will appear to customers at the convenience store.
            */
-          product_description?: string;
+          product_description?: Stripe.Emptyable<string>;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -4445,12 +4445,12 @@ declare module 'stripe' {
           /**
            * Full name.
            */
-          name?: string;
+          name?: Stripe.Emptyable<string>;
 
           /**
            * Billing phone number (including extension).
            */
-          phone?: string;
+          phone?: Stripe.Emptyable<string>;
         }
 
         interface Blik {}
@@ -5567,7 +5567,7 @@ declare module 'stripe' {
           /**
            * An optional 10 to 11 digit numeric-only string determining the confirmation code at applicable convenience stores. Must not consist of only zeroes and could be rejected in case of insufficient uniqueness. We recommend to use the customer's phone number.
            */
-          confirmation_number?: string;
+          confirmation_number?: Stripe.Emptyable<string>;
 
           /**
            * The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST. Defaults to 3 days.
@@ -5582,7 +5582,7 @@ declare module 'stripe' {
           /**
            * A product descriptor of up to 22 characters, which will appear to customers at the convenience store.
            */
-          product_description?: string;
+          product_description?: Stripe.Emptyable<string>;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
