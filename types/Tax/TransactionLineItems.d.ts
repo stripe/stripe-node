@@ -38,6 +38,11 @@ declare module 'stripe' {
         metadata: Stripe.Metadata | null;
 
         /**
+         * The ID of an existing [Product](https://stripe.com/docs/api/products/object).
+         */
+        product: string | null;
+
+        /**
          * The number of units of the item being purchased. For reversals, this is the quantity reversed.
          */
         quantity: number;

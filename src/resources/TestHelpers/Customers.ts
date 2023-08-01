@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-
 export const Customers = StripeResource.extend({
   fundCashBalance: stripeMethod({
     method: 'POST',

@@ -1,5 +1,8 @@
 import {StripeError, StripeSignatureVerificationError} from './Error.js';
-import {CryptoProvider} from './crypto/CryptoProvider.js';
+import {
+  CryptoProvider,
+  CryptoProviderOnlySupportsAsyncError,
+} from './crypto/CryptoProvider.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 
 type WebhookHeader = string | Uint8Array;
@@ -79,14 +82,22 @@ export function createWebhooks(
       cryptoProvider: CryptoProvider,
       receivedAt: number
     ): WebhookEvent {
-      this.signature.verifyHeader(
-        payload,
-        header,
-        secret,
-        tolerance || Webhook.DEFAULT_TOLERANCE,
-        cryptoProvider,
-        receivedAt
-      );
+      try {
+        this.signature.verifyHeader(
+          payload,
+          header,
+          secret,
+          tolerance || Webhook.DEFAULT_TOLERANCE,
+          cryptoProvider,
+          receivedAt
+        );
+      } catch (e) {
+        if (e instanceof CryptoProviderOnlySupportsAsyncError) {
+          e.message +=
+            '\nUse `await constructEventAsync(...)` instead of `constructEvent(...)`';
+        }
+        throw e;
+      }
 
       const jsonPayload =
         payload instanceof Uint8Array
@@ -180,6 +191,7 @@ export function createWebhooks(
         encodedHeader,
         this.EXPECTED_SCHEME
       );
+      const secretContainsWhitespace = /\s/.test(secret);
 
       cryptoProvider = cryptoProvider || getCryptoProvider();
       const expectedSignature = cryptoProvider.computeHMACSignature(
@@ -194,6 +206,7 @@ export function createWebhooks(
         expectedSignature,
         tolerance,
         suspectPayloadType,
+        secretContainsWhitespace,
         receivedAt
       );
 
@@ -218,6 +231,7 @@ export function createWebhooks(
         encodedHeader,
         this.EXPECTED_SCHEME
       );
+      const secretContainsWhitespace = /\s/.test(secret);
 
       cryptoProvider = cryptoProvider || getCryptoProvider();
 
@@ -233,6 +247,7 @@ export function createWebhooks(
         expectedSignature,
         tolerance,
         suspectPayloadType,
+        secretContainsWhitespace,
         receivedAt
       );
     },
@@ -332,11 +347,20 @@ export function createWebhooks(
     expectedSignature: string,
     tolerance: number,
     suspectPayloadType: boolean,
+    secretContainsWhitespace: boolean,
     receivedAt: number
   ): boolean {
     const signatureFound = !!details.signatures.filter(
       platformFunctions.secureCompare.bind(platformFunctions, expectedSignature)
     ).length;
+
+    const docsLocation =
+      '\nLearn more about webhook signing and explore webhook integration examples for various frameworks at ' +
+      'https://github.com/stripe/stripe-node#webhook-signing';
+
+    const whitespaceMessage = secretContainsWhitespace
+      ? '\n\nNote: The provided signing secret contains whitespace. This often indicates an extra newline or space is in the value'
+      : '';
 
     if (!signatureFound) {
       if (suspectPayloadType) {
@@ -345,16 +369,18 @@ export function createWebhooks(
             'Webhook payload must be provided as a string or a Buffer (https://nodejs.org/api/buffer.html) instance representing the _raw_ request body.' +
             'Payload was provided as a parsed JavaScript object instead. \n' +
             'Signature verification is impossible without access to the original signed material. \n' +
-            'Learn more about webhook signing and explore webhook integration examples for various frameworks at ' +
-            'https://github.com/stripe/stripe-node#webhook-signing',
+            docsLocation +
+            '\n' +
+            whitespaceMessage,
         });
       }
       throw new StripeSignatureVerificationError(header, payload, {
         message:
           'No signatures found matching the expected signature for payload.' +
           ' Are you passing the raw request body you received from Stripe? \n' +
-          'Learn more about webhook signing and explore webhook integration examples for various frameworks at ' +
-          'https://github.com/stripe/stripe-node#webhook-signing',
+          docsLocation +
+          '\n' +
+          whitespaceMessage,
       });
     }
 

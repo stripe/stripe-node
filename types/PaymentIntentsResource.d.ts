@@ -167,9 +167,20 @@ declare module 'stripe' {
     namespace PaymentIntentCreateParams {
       interface AutomaticPaymentMethods {
         /**
+         * Controls whether this PaymentIntent will accept redirect-based payment methods.
+         *
+         * Redirect-based payment methods may require your customer to be redirected to a payment method's app or site for authentication or additional steps. To [confirm](https://stripe.com/docs/api/payment_intents/confirm) this PaymentIntent, you may be required to provide a `return_url` to redirect customers back to your site after they authenticate or complete the payment.
+         */
+        allow_redirects?: AutomaticPaymentMethods.AllowRedirects;
+
+        /**
          * Whether this feature is enabled.
          */
         enabled: boolean;
+      }
+
+      namespace AutomaticPaymentMethods {
+        type AllowRedirects = 'always' | 'never';
       }
 
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
@@ -1630,7 +1641,7 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
-           * Token used for persistent Link logins.
+           * [Deprecated] This is a legacy parameter that no longer has any function.
            */
           persistent_token?: string;
 
@@ -3543,7 +3554,7 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
-           * Token used for persistent Link logins.
+           * [Deprecated] This is a legacy parameter that no longer has any function.
            */
           persistent_token?: string;
 
@@ -5596,7 +5607,7 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
-           * Token used for persistent Link logins.
+           * [Deprecated] This is a legacy parameter that no longer has any function.
            */
           persistent_token?: string;
 
@@ -6158,7 +6169,8 @@ declare module 'stripe' {
        * If the selected payment method requires additional authentication steps, the
        * PaymentIntent will transition to the requires_action status and
        * suggest additional actions via next_action. If payment fails,
-       * the PaymentIntent will transition to the requires_payment_method status. If
+       * the PaymentIntent transitions to the requires_payment_method status or the
+       * canceled status if the confirmation limit is reached. If
        * payment succeeds, the PaymentIntent will transition to the succeeded
        * status (or requires_capture, if capture_method is set to manual).
        * If the confirmation_method is automatic, payment may be attempted

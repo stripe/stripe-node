@@ -168,7 +168,7 @@ declare module 'stripe' {
 
         interface FinancialAddresses {
           /**
-           * Toggle settings for enabling/disabling a feature
+           * Toggle settings for enabling/disabling the ABA address feature
            */
           aba?: FinancialAddresses.Aba;
         }

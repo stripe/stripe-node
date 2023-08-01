@@ -2,7 +2,6 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-
 export const Readers = StripeResource.extend({
   presentPaymentMethod: stripeMethod({
     method: 'POST',

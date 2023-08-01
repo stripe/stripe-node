@@ -206,7 +206,7 @@ declare module 'stripe' {
 
       interface TaxIdDatum {
         /**
-         * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ph_tin`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+         * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
          */
         type: TaxIdDatum.Type;
 
@@ -218,10 +218,13 @@ declare module 'stripe' {
 
       namespace TaxIdDatum {
         type Type =
+          | 'ad_nrt'
           | 'ae_trn'
+          | 'ar_cuit'
           | 'au_abn'
           | 'au_arn'
           | 'bg_uic'
+          | 'bo_tin'
           | 'br_cnpj'
           | 'br_cpf'
           | 'ca_bn'
@@ -232,6 +235,11 @@ declare module 'stripe' {
           | 'ca_qst'
           | 'ch_vat'
           | 'cl_tin'
+          | 'cn_tin'
+          | 'co_nit'
+          | 'cr_tin'
+          | 'do_rcn'
+          | 'ec_ruc'
           | 'eg_tin'
           | 'es_cif'
           | 'eu_oss_vat'
@@ -256,18 +264,25 @@ declare module 'stripe' {
           | 'my_sst'
           | 'no_vat'
           | 'nz_gst'
+          | 'pe_ruc'
           | 'ph_tin'
+          | 'ro_tin'
+          | 'rs_pib'
           | 'ru_inn'
           | 'ru_kpp'
           | 'sa_vat'
           | 'sg_gst'
           | 'sg_uen'
           | 'si_tin'
+          | 'sv_nit'
           | 'th_vat'
           | 'tr_tin'
           | 'tw_vat'
           | 'ua_vat'
           | 'us_ein'
+          | 'uy_ruc'
+          | 've_rif'
+          | 'vn_tin'
           | 'za_vat';
       }
     }
@@ -609,7 +624,7 @@ declare module 'stripe' {
 
     interface TaxIdCreateParams {
       /**
-       * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ph_tin`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+       * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
        */
       type: TaxIdCreateParams.Type;
 
@@ -626,10 +641,13 @@ declare module 'stripe' {
 
     namespace TaxIdCreateParams {
       type Type =
+        | 'ad_nrt'
         | 'ae_trn'
+        | 'ar_cuit'
         | 'au_abn'
         | 'au_arn'
         | 'bg_uic'
+        | 'bo_tin'
         | 'br_cnpj'
         | 'br_cpf'
         | 'ca_bn'
@@ -640,6 +658,11 @@ declare module 'stripe' {
         | 'ca_qst'
         | 'ch_vat'
         | 'cl_tin'
+        | 'cn_tin'
+        | 'co_nit'
+        | 'cr_tin'
+        | 'do_rcn'
+        | 'ec_ruc'
         | 'eg_tin'
         | 'es_cif'
         | 'eu_oss_vat'
@@ -664,18 +687,25 @@ declare module 'stripe' {
         | 'my_sst'
         | 'no_vat'
         | 'nz_gst'
+        | 'pe_ruc'
         | 'ph_tin'
+        | 'ro_tin'
+        | 'rs_pib'
         | 'ru_inn'
         | 'ru_kpp'
         | 'sa_vat'
         | 'sg_gst'
         | 'sg_uen'
         | 'si_tin'
+        | 'sv_nit'
         | 'th_vat'
         | 'tr_tin'
         | 'tw_vat'
         | 'ua_vat'
         | 'us_ein'
+        | 'uy_ruc'
+        | 've_rif'
+        | 'vn_tin'
         | 'za_vat';
     }
 

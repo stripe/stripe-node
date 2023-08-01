@@ -517,12 +517,12 @@ declare module 'stripe' {
         /**
          * A unique and immutable identifier assigned by Cash App to every buyer.
          */
-        buyer_id?: string | null;
+        buyer_id: string | null;
 
         /**
          * A public identifier for buyers using Cash App.
          */
-        cashtag?: string | null;
+        cashtag: string | null;
       }
 
       interface CustomerBalance {}
@@ -793,7 +793,7 @@ declare module 'stripe' {
         email: string | null;
 
         /**
-         * Token used for persistent Link logins.
+         * [Deprecated] This is a legacy parameter that no longer has any function.
          */
         persistent_token?: string;
       }

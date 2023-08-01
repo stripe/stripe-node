@@ -3,6 +3,7 @@
 import {expect} from 'chai';
 import {StripeSignatureVerificationError} from '../src/Error.js';
 import {FakeCryptoProvider, getSpyableStripe} from './testUtils.js';
+import {CryptoProviderOnlySupportsAsyncError} from '../src/crypto/CryptoProvider.js';
 const stripe = getSpyableStripe();
 
 const EVENT_PAYLOAD = {
@@ -152,13 +153,25 @@ describe('Webhooks', () => {
     };
   };
 
-  describe(
-    '.constructEvent',
+  describe('.constructEvent', () => {
     makeConstructEventTests(async (...args: any) => {
       const result = await stripe.webhooks.constructEvent(...args);
       return result;
-    })
-  );
+    })();
+    it('should provide helpful information when CryptoProviderOnlySupportsAsyncError is thrown', () => {
+      const header = stripe.webhooks.generateTestHeaderString({
+        payload: 'payload',
+        secret: 'secret',
+      });
+      expect(() => {
+        stripe.webhooks.constructEvent('payload', header, 'secret', 0, {
+          computeHMACSignature() {
+            throw new CryptoProviderOnlySupportsAsyncError('foobar');
+          },
+        });
+      }).to.throw(/foobar\nUse `await constructEventAsync/);
+    });
+  });
 
   describe(
     '.constructEventAsync',
@@ -367,6 +380,20 @@ describe('Webhooks', () => {
         ).to.be.rejectedWith(
           StripeSignatureVerificationError,
           /Webhook payload must be provided as a string or a Buffer/
+        );
+      });
+
+      it('should raise a SignatureVerificationError when the signing secret contians whitespace', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        await expect(
+          verifyHeaderFn(EVENT_PAYLOAD_STRING, header, SECRET + ' ')
+        ).to.be.rejectedWith(
+          StripeSignatureVerificationError,
+          /The provided signing secret contains whitespace/
         );
       });
 
