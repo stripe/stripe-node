@@ -245,7 +245,7 @@ declare module 'stripe' {
         /**
          * ID of the mandate to be used for this invoice. It must correspond to the payment method used to pay the invoice, including the invoice's default_payment_method or default_source, if set.
          */
-        default_mandate?: string;
+        default_mandate?: Stripe.Emptyable<string>;
 
         /**
          * Payment-method-specific configuration to provide to the invoice's PaymentIntent.
@@ -664,7 +664,7 @@ declare module 'stripe' {
         /**
          * Recipient phone (including extension)
          */
-        phone?: string;
+        phone?: Stripe.Emptyable<string>;
       }
 
       interface TransferData {
@@ -731,7 +731,7 @@ declare module 'stripe' {
       /**
        * ID of the default payment source for the invoice. It must belong to the customer associated with the invoice and be in a chargeable state. If not set, defaults to the subscription's default source, if any, or to the customer's default source.
        */
-      default_source?: string;
+      default_source?: Stripe.Emptyable<string>;
 
       /**
        * The tax rates that will apply to any line item that does not have `tax_rates` set. Pass an empty string to remove previously-defined tax rates.
@@ -893,7 +893,7 @@ declare module 'stripe' {
         /**
          * ID of the mandate to be used for this invoice. It must correspond to the payment method used to pay the invoice, including the invoice's default_payment_method or default_source, if set.
          */
-        default_mandate?: string;
+        default_mandate?: Stripe.Emptyable<string>;
 
         /**
          * Payment-method-specific configuration to provide to the invoice's PaymentIntent.
@@ -1307,7 +1307,7 @@ declare module 'stripe' {
         /**
          * Recipient phone (including extension)
          */
-        phone?: string;
+        phone?: Stripe.Emptyable<string>;
       }
 
       interface TransferData {
@@ -2104,7 +2104,7 @@ declare module 'stripe' {
       /**
        * ID of the mandate to be used for this invoice. It must correspond to the payment method used to pay the invoice, including the payment_method param or the invoice's default_payment_method or default_source, if set.
        */
-      mandate?: string;
+      mandate?: Stripe.Emptyable<string>;
 
       /**
        * Indicates if a customer is on or off-session while an invoice payment is attempted. Defaults to `true` (off-session).

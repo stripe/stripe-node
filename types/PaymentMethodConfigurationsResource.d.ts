@@ -1651,7 +1651,7 @@ declare module 'stripe' {
       /**
        * The Connect application to filter by.
        */
-      application?: string;
+      application?: Stripe.Emptyable<string>;
 
       /**
        * Specifies which fields in the response should be expanded.

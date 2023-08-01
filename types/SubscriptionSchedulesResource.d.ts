@@ -93,7 +93,7 @@ declare module 'stripe' {
         /**
          * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
          */
-        description?: string;
+        description?: Stripe.Emptyable<string>;
 
         /**
          * All invoices will be billed using the specified settings.
@@ -211,7 +211,7 @@ declare module 'stripe' {
         /**
          * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
          */
-        description?: string;
+        description?: Stripe.Emptyable<string>;
 
         /**
          * The coupons to redeem into discounts for the schedule phase. If not specified, inherits the discount from the subscription's customer. Pass an empty string to avoid inheriting any discounts.
@@ -823,7 +823,7 @@ declare module 'stripe' {
         /**
          * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
          */
-        description?: string;
+        description?: Stripe.Emptyable<string>;
 
         /**
          * All invoices will be billed using the specified settings.
@@ -941,7 +941,7 @@ declare module 'stripe' {
         /**
          * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
          */
-        description?: string;
+        description?: Stripe.Emptyable<string>;
 
         /**
          * The coupons to redeem into discounts for the schedule phase. If not specified, inherits the discount from the subscription's customer. Pass an empty string to avoid inheriting any discounts.

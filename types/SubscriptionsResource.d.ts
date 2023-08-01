@@ -967,7 +967,7 @@ declare module 'stripe' {
       /**
        * ID of the default payment source for the subscription. It must belong to the customer associated with the subscription and be in a chargeable state. If `default_payment_method` is also set, `default_payment_method` will take precedence. If neither are set, invoices will use the customer's [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) or [default_source](https://stripe.com/docs/api/customers/object#customer_object-default_source).
        */
-      default_source?: string;
+      default_source?: Stripe.Emptyable<string>;
 
       /**
        * The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription. Pass an empty string to remove previously-defined tax rates.
@@ -977,7 +977,7 @@ declare module 'stripe' {
       /**
        * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces.
        */
-      description?: string;
+      description?: Stripe.Emptyable<string>;
 
       /**
        * The coupons to redeem into discounts for the subscription. If not specified or empty, inherits the discount from the subscription's customer.
@@ -1222,7 +1222,7 @@ declare module 'stripe' {
         /**
          * Additional comments about why the user canceled the subscription, if the subscription was cancelled explicitly by the user.
          */
-        comment?: string;
+        comment?: Stripe.Emptyable<string>;
 
         /**
          * The customer submitted reason for why they cancelled, if the subscription was cancelled explicitly by the user.
@@ -1920,7 +1920,7 @@ declare module 'stripe' {
         /**
          * Additional comments about why the user canceled the subscription, if the subscription was cancelled explicitly by the user.
          */
-        comment?: string;
+        comment?: Stripe.Emptyable<string>;
 
         /**
          * The customer submitted reason for why they cancelled, if the subscription was cancelled explicitly by the user.
@@ -1968,7 +1968,7 @@ declare module 'stripe' {
         /**
          * Additional comments about why the user canceled the subscription, if the subscription was cancelled explicitly by the user.
          */
-        comment?: string;
+        comment?: Stripe.Emptyable<string>;
 
         /**
          * The customer submitted reason for why they cancelled, if the subscription was cancelled explicitly by the user.
