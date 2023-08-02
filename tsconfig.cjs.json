@@ -10,7 +10,7 @@
     "strict": true,
     "strictFunctionTypes": true,
     "types": [ "node" ],
-    "esModuleInterop": false
+    "esModuleInterop": false // This is a viral option, do not enable https://www.semver-ts.org/#module-interop
   },
   "include": ["./src/**/*"],
   "exclude": ["./src/stripe.esm.node.ts", "./src/stripe.esm.worker.ts"],
