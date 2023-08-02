@@ -3266,6 +3266,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Reason the Quote is being marked stale.
+       */
+      reason?: string;
     }
 
     interface QuotePdfParams {

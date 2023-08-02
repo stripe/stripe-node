@@ -1398,12 +1398,12 @@ declare module 'stripe' {
       currency?: string;
 
       /**
-       * The identifier of the customer whose upcoming invoice you'd like to retrieve.
+       * The identifier of the customer whose upcoming invoice you'd like to retrieve. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
        */
       customer?: string;
 
       /**
-       * Details about the customer you want to invoice or overrides for an existing customer.
+       * Details about the customer you want to invoice or overrides for an existing customer. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
        */
       customer_details?: InvoiceListUpcomingLinesParams.CustomerDetails;
 
@@ -2144,12 +2144,12 @@ declare module 'stripe' {
       currency?: string;
 
       /**
-       * The identifier of the customer whose upcoming invoice you'd like to retrieve.
+       * The identifier of the customer whose upcoming invoice you'd like to retrieve. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
        */
       customer?: string;
 
       /**
-       * Details about the customer you want to invoice or overrides for an existing customer.
+       * Details about the customer you want to invoice or overrides for an existing customer. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
        */
       customer_details?: InvoiceRetrieveUpcomingParams.CustomerDetails;
 

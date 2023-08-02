@@ -552,6 +552,11 @@ declare module 'stripe' {
             line_invalid?: string;
 
             /**
+             * The user supplied mark stale reason.
+             */
+            marked_stale?: string | null;
+
+            /**
              * The ID of the subscription that was canceled.
              */
             subscription_canceled?: string;
@@ -559,7 +564,7 @@ declare module 'stripe' {
             subscription_changed?: LastReason.SubscriptionChanged;
 
             /**
-             * The ID of the subscription that was expired
+             * The ID of the subscription that was expired.
              */
             subscription_expired?: string;
 
