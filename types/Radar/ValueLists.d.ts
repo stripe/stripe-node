@@ -37,7 +37,7 @@ declare module 'stripe' {
         deleted?: void;
 
         /**
-         * The type of items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, `case_sensitive_string`, or `customer_id`.
+         * The type of items in the value list. One of `card_fingerprint`, `us_bank_account_fingerprint`, `sepa_debit_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, `case_sensitive_string`, or `customer_id`.
          */
         item_type: ValueList.ItemType;
 
@@ -71,7 +71,9 @@ declare module 'stripe' {
           | 'customer_id'
           | 'email'
           | 'ip_address'
-          | 'string';
+          | 'sepa_debit_fingerprint'
+          | 'string'
+          | 'us_bank_account_fingerprint';
       }
 
       /**
