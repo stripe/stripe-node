@@ -1,13 +1,3 @@
-// It's important to do a default import here, rather thane
-// `import * as http from 'http'` because the latter will
-// use a "Module Namespace Exotic Object" which is immune to
-// monkey-patching, whereas http.default (in an ES Module context)
-// will resolve to the same thing as require('http'), which is
-// monkey-patchable. We care about this because users in their test
-// suites might be using a library like "nock" which relies on the ability
-// to monkey-patch and intercept calls to http.request.
-
-// Get rid of this type error Module '"http"' has no default export.ts(1192)
 import * as http_ from 'http';
 import * as https_ from 'https';
 import {RequestHeaders, RequestData} from '../Types.js';
@@ -17,9 +7,16 @@ import {
   HttpClientResponseInterface,
 } from './HttpClient.js';
 
+// `import * as http_ from 'http'` creates a "Module Namespace Exotic Object"
+// which is immune to monkey-patching, whereas http_.default (in an ES Module context)
+// will resolve to the same thing as require('http'), which is
+// monkey-patchable. We care about this because users in their test
+// suites might be using a library like "nock" which relies on the ability
+// to monkey-patch and intercept calls to http.request.
 const http = ((http_ as unknown) as {default: typeof http_}).default || http_;
 const https =
   ((https_ as unknown) as {default: typeof https_}).default || https_;
+
 const defaultHttpAgent = new http.Agent({keepAlive: true});
 const defaultHttpsAgent = new https.Agent({keepAlive: true});
 
