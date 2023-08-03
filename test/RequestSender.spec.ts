@@ -515,22 +515,6 @@ describe('RequestSender', () => {
         });
       });
 
-      it('uses developer_message if it exists in error response', async () => {
-        const error = {
-          developer_message: 'Unacceptable',
-        };
-
-        nock(`https://${options.host}`)
-          .post('/v1/charges')
-          .reply(400, {
-            error,
-          });
-
-        await expect(
-          realStripe.rawRequest('POST', '/v1/charges')
-        ).to.be.rejectedWith(StripeError, /Unacceptable/);
-      });
-
       it('retries connection timeout errors', (done) => {
         let nRequestsReceived = 0;
         return getTestServerStripe(

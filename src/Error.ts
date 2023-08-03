@@ -50,7 +50,7 @@ export class StripeError extends Error {
   readonly source?: any;
 
   constructor(raw: StripeRawError = {}) {
-    super(raw.developer_message || raw.message);
+    super(raw.message);
     this.type = this.constructor.name;
 
     this.raw = raw;
@@ -63,7 +63,7 @@ export class StripeError extends Error {
     this.requestId = raw.requestId;
     this.statusCode = raw.statusCode;
     // @ts-ignore
-    this.message = raw.developer_message || raw.message;
+    this.message = raw.message;
 
     this.charge = raw.charge;
     this.decline_code = raw.decline_code;

@@ -176,7 +176,6 @@ export type RequestSender = {
 };
 export type StripeRawError = {
   message?: string;
-  developer_message?: string;
   type?: RawErrorType;
   headers?: {[header: string]: string};
   statusCode?: number;
