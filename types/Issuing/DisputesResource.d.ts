@@ -102,7 +102,7 @@ declare module 'stripe' {
             /**
              * Reason for canceling the order.
              */
-            cancellation_reason?: string;
+            cancellation_reason?: Stripe.Emptyable<string>;
 
             /**
              * Date when the cardholder expected to receive the product.
@@ -112,12 +112,12 @@ declare module 'stripe' {
             /**
              * Explanation of why the cardholder is disputing this transaction.
              */
-            explanation?: string;
+            explanation?: Stripe.Emptyable<string>;
 
             /**
              * Description of the merchandise or service that was purchased.
              */
-            product_description?: string;
+            product_description?: Stripe.Emptyable<string>;
 
             /**
              * Whether the product was a merchandise or service.
@@ -165,7 +165,7 @@ declare module 'stripe' {
             /**
              * Explanation of why the cardholder is disputing this transaction.
              */
-            explanation?: string;
+            explanation?: Stripe.Emptyable<string>;
 
             /**
              * Transaction (e.g., ipi_...) that the disputed transaction is a duplicate of. Of the two or more transactions that are copies of each other, this is original undisputed one.
@@ -182,7 +182,7 @@ declare module 'stripe' {
             /**
              * Explanation of why the cardholder is disputing this transaction.
              */
-            explanation?: string;
+            explanation?: Stripe.Emptyable<string>;
           }
 
           interface MerchandiseNotAsDescribed {
@@ -194,7 +194,7 @@ declare module 'stripe' {
             /**
              * Explanation of why the cardholder is disputing this transaction.
              */
-            explanation?: string;
+            explanation?: Stripe.Emptyable<string>;
 
             /**
              * Date when the product was received.
@@ -204,7 +204,7 @@ declare module 'stripe' {
             /**
              * Description of the cardholder's attempt to return the product.
              */
-            return_description?: string;
+            return_description?: Stripe.Emptyable<string>;
 
             /**
              * Result of cardholder's attempt to return the product.
@@ -237,12 +237,12 @@ declare module 'stripe' {
             /**
              * Explanation of why the cardholder is disputing this transaction.
              */
-            explanation?: string;
+            explanation?: Stripe.Emptyable<string>;
 
             /**
              * Description of the merchandise or service that was purchased.
              */
-            product_description?: string;
+            product_description?: Stripe.Emptyable<string>;
 
             /**
              * Whether the product was a merchandise or service.
@@ -263,12 +263,12 @@ declare module 'stripe' {
             /**
              * Explanation of why the cardholder is disputing this transaction.
              */
-            explanation?: string;
+            explanation?: Stripe.Emptyable<string>;
 
             /**
              * Description of the merchandise or service that was purchased.
              */
-            product_description?: string;
+            product_description?: Stripe.Emptyable<string>;
 
             /**
              * Whether the product was a merchandise or service.
@@ -303,12 +303,12 @@ declare module 'stripe' {
             /**
              * Reason for canceling the order.
              */
-            cancellation_reason?: string;
+            cancellation_reason?: Stripe.Emptyable<string>;
 
             /**
              * Explanation of why the cardholder is disputing this transaction.
              */
-            explanation?: string;
+            explanation?: Stripe.Emptyable<string>;
 
             /**
              * Date when the product was received.
@@ -421,7 +421,7 @@ declare module 'stripe' {
             /**
              * Reason for canceling the order.
              */
-            cancellation_reason?: string;
+            cancellation_reason?: Stripe.Emptyable<string>;
 
             /**
              * Date when the cardholder expected to receive the product.
@@ -431,12 +431,12 @@ declare module 'stripe' {
             /**
              * Explanation of why the cardholder is disputing this transaction.
              */
-            explanation?: string;
+            explanation?: Stripe.Emptyable<string>;
 
             /**
              * Description of the merchandise or service that was purchased.
              */
-            product_description?: string;
+            product_description?: Stripe.Emptyable<string>;
 
             /**
              * Whether the product was a merchandise or service.
@@ -484,7 +484,7 @@ declare module 'stripe' {
             /**
              * Explanation of why the cardholder is disputing this transaction.
              */
-            explanation?: string;
+            explanation?: Stripe.Emptyable<string>;
 
             /**
              * Transaction (e.g., ipi_...) that the disputed transaction is a duplicate of. Of the two or more transactions that are copies of each other, this is original undisputed one.
@@ -501,7 +501,7 @@ declare module 'stripe' {
             /**
              * Explanation of why the cardholder is disputing this transaction.
              */
-            explanation?: string;
+            explanation?: Stripe.Emptyable<string>;
           }
 
           interface MerchandiseNotAsDescribed {
@@ -513,7 +513,7 @@ declare module 'stripe' {
             /**
              * Explanation of why the cardholder is disputing this transaction.
              */
-            explanation?: string;
+            explanation?: Stripe.Emptyable<string>;
 
             /**
              * Date when the product was received.
@@ -523,7 +523,7 @@ declare module 'stripe' {
             /**
              * Description of the cardholder's attempt to return the product.
              */
-            return_description?: string;
+            return_description?: Stripe.Emptyable<string>;
 
             /**
              * Result of cardholder's attempt to return the product.
@@ -556,12 +556,12 @@ declare module 'stripe' {
             /**
              * Explanation of why the cardholder is disputing this transaction.
              */
-            explanation?: string;
+            explanation?: Stripe.Emptyable<string>;
 
             /**
              * Description of the merchandise or service that was purchased.
              */
-            product_description?: string;
+            product_description?: Stripe.Emptyable<string>;
 
             /**
              * Whether the product was a merchandise or service.
@@ -582,12 +582,12 @@ declare module 'stripe' {
             /**
              * Explanation of why the cardholder is disputing this transaction.
              */
-            explanation?: string;
+            explanation?: Stripe.Emptyable<string>;
 
             /**
              * Description of the merchandise or service that was purchased.
              */
-            product_description?: string;
+            product_description?: Stripe.Emptyable<string>;
 
             /**
              * Whether the product was a merchandise or service.
@@ -622,12 +622,12 @@ declare module 'stripe' {
             /**
              * Reason for canceling the order.
              */
-            cancellation_reason?: string;
+            cancellation_reason?: Stripe.Emptyable<string>;
 
             /**
              * Explanation of why the cardholder is disputing this transaction.
              */
-            explanation?: string;
+            explanation?: Stripe.Emptyable<string>;
 
             /**
              * Date when the product was received.

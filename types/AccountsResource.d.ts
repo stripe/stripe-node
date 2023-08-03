@@ -1181,7 +1181,7 @@ declare module 'stripe' {
             /**
              * The user agent of the browser from which the account representative accepted the service agreement.
              */
-            user_agent?: string;
+            user_agent?: Stripe.Emptyable<string>;
           }
         }
 
@@ -1314,7 +1314,7 @@ declare module 'stripe' {
             /**
              * The user agent of the browser from which the account representative accepted the service agreement.
              */
-            user_agent?: string;
+            user_agent?: Stripe.Emptyable<string>;
           }
         }
       }
@@ -2436,7 +2436,7 @@ declare module 'stripe' {
             /**
              * The user agent of the browser from which the account representative accepted the service agreement.
              */
-            user_agent?: string;
+            user_agent?: Stripe.Emptyable<string>;
           }
         }
 
@@ -2569,7 +2569,7 @@ declare module 'stripe' {
             /**
              * The user agent of the browser from which the account representative accepted the service agreement.
              */
-            user_agent?: string;
+            user_agent?: Stripe.Emptyable<string>;
           }
         }
       }

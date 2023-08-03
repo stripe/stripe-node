@@ -123,7 +123,7 @@ declare module 'stripe' {
           card_issuing?: Individual.CardIssuing;
 
           /**
-           * The date of birth of this cardholder.
+           * The date of birth of this cardholder. Cardholders must be older than 13 years old.
            */
           dob?: Individual.Dob;
 
@@ -166,7 +166,7 @@ declare module 'stripe' {
               /**
                * The user agent of the browser from which the cardholder accepted the Authorized User Terms.
                */
-              user_agent?: string;
+              user_agent?: Stripe.Emptyable<string>;
             }
           }
 
@@ -1275,7 +1275,7 @@ declare module 'stripe' {
           card_issuing?: Individual.CardIssuing;
 
           /**
-           * The date of birth of this cardholder.
+           * The date of birth of this cardholder. Cardholders must be older than 13 years old.
            */
           dob?: Individual.Dob;
 
@@ -1318,7 +1318,7 @@ declare module 'stripe' {
               /**
                * The user agent of the browser from which the cardholder accepted the Authorized User Terms.
                */
-              user_agent?: string;
+              user_agent?: Stripe.Emptyable<string>;
             }
           }
 

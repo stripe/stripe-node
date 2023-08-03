@@ -108,12 +108,12 @@ declare module 'stripe' {
             /**
              * Full name.
              */
-            name?: string;
+            name?: Stripe.Emptyable<string>;
 
             /**
              * Billing phone number (including extension).
              */
-            phone?: string;
+            phone?: Stripe.Emptyable<string>;
           }
 
           type Type = 'financial_account' | 'us_bank_account';

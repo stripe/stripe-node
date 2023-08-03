@@ -40,7 +40,7 @@ declare module 'stripe' {
           /**
            * The messaging shown to customers in the portal.
            */
-          headline?: string;
+          headline?: Stripe.Emptyable<string>;
 
           /**
            * A link to the business's publicly available privacy policy.
@@ -289,7 +289,7 @@ declare module 'stripe' {
           /**
            * The messaging shown to customers in the portal.
            */
-          headline?: string;
+          headline?: Stripe.Emptyable<string>;
 
           /**
            * A link to the business's publicly available privacy policy.

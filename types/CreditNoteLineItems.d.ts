@@ -17,12 +17,12 @@ declare module 'stripe' {
       object: 'credit_note_line_item';
 
       /**
-       * The integer amount in %s representing the gross amount being credited for this line item, excluding (exclusive) tax and discounts.
+       * The integer amount in cents (or local equivalent) representing the gross amount being credited for this line item, excluding (exclusive) tax and discounts.
        */
       amount: number;
 
       /**
-       * The integer amount in %s representing the amount being credited for this line item, excluding all tax and discounts.
+       * The integer amount in cents (or local equivalent) representing the amount being credited for this line item, excluding all tax and discounts.
        */
       amount_excluding_tax: number | null;
 
@@ -32,7 +32,7 @@ declare module 'stripe' {
       description: string | null;
 
       /**
-       * The integer amount in %s representing the discount being credited for this line item.
+       * The integer amount in cents (or local equivalent) representing the discount being credited for this line item.
        */
       discount_amount: number;
 
@@ -82,7 +82,7 @@ declare module 'stripe' {
       unit_amount_decimal: string | null;
 
       /**
-       * The amount in %s representing the unit amount being credited for this line item, excluding all tax and discounts.
+       * The amount in cents (or local equivalent) representing the unit amount being credited for this line item, excluding all tax and discounts.
        */
       unit_amount_excluding_tax: string | null;
     }
@@ -90,7 +90,7 @@ declare module 'stripe' {
     namespace CreditNoteLineItem {
       interface DiscountAmount {
         /**
-         * The amount, in %s, of the discount.
+         * The amount, in cents (or local equivalent), of the discount.
          */
         amount: number;
 
@@ -102,7 +102,7 @@ declare module 'stripe' {
 
       interface TaxAmount {
         /**
-         * The amount, in %s, of the tax.
+         * The amount, in cents (or local equivalent), of the tax.
          */
         amount: number;
 
@@ -122,7 +122,7 @@ declare module 'stripe' {
         taxability_reason: TaxAmount.TaxabilityReason | null;
 
         /**
-         * The amount on which tax is calculated, in %s.
+         * The amount on which tax is calculated, in cents (or local equivalent).
          */
         taxable_amount: number | null;
       }

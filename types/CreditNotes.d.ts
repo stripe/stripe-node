@@ -19,7 +19,7 @@ declare module 'stripe' {
       object: 'credit_note';
 
       /**
-       * The integer amount in %s representing the total amount of the credit note, including tax.
+       * The integer amount in cents (or local equivalent) representing the total amount of the credit note, including tax.
        */
       amount: number;
 
@@ -52,7 +52,7 @@ declare module 'stripe' {
         | null;
 
       /**
-       * The integer amount in %s representing the total amount of discount that was credited.
+       * The integer amount in cents (or local equivalent) representing the total amount of discount that was credited.
        */
       discount_amount: number;
 
@@ -127,12 +127,12 @@ declare module 'stripe' {
       status: CreditNote.Status;
 
       /**
-       * The integer amount in %s representing the amount of the credit note, excluding exclusive tax and invoice level discounts.
+       * The integer amount in cents (or local equivalent) representing the amount of the credit note, excluding exclusive tax and invoice level discounts.
        */
       subtotal: number;
 
       /**
-       * The integer amount in %s representing the amount of the credit note, excluding all tax and invoice level discounts.
+       * The integer amount in cents (or local equivalent) representing the amount of the credit note, excluding all tax and invoice level discounts.
        */
       subtotal_excluding_tax: number | null;
 
@@ -142,12 +142,12 @@ declare module 'stripe' {
       tax_amounts: Array<CreditNote.TaxAmount>;
 
       /**
-       * The integer amount in %s representing the total amount of the credit note, including tax and all discount.
+       * The integer amount in cents (or local equivalent) representing the total amount of the credit note, including tax and all discount.
        */
       total: number;
 
       /**
-       * The integer amount in %s representing the total amount of the credit note, excluding tax, but including discounts.
+       * The integer amount in cents (or local equivalent) representing the total amount of the credit note, excluding tax, but including discounts.
        */
       total_excluding_tax: number | null;
 
@@ -165,7 +165,7 @@ declare module 'stripe' {
     namespace CreditNote {
       interface DiscountAmount {
         /**
-         * The amount, in %s, of the discount.
+         * The amount, in cents (or local equivalent), of the discount.
          */
         amount: number;
 
@@ -228,7 +228,7 @@ declare module 'stripe' {
           taxability_reason: Tax.TaxabilityReason | null;
 
           /**
-           * The amount on which tax is calculated, in %s.
+           * The amount on which tax is calculated, in cents (or local equivalent).
            */
           taxable_amount: number | null;
         }
@@ -260,7 +260,7 @@ declare module 'stripe' {
 
       interface TaxAmount {
         /**
-         * The amount, in %s, of the tax.
+         * The amount, in cents (or local equivalent), of the tax.
          */
         amount: number;
 
@@ -280,7 +280,7 @@ declare module 'stripe' {
         taxability_reason: TaxAmount.TaxabilityReason | null;
 
         /**
-         * The amount on which tax is calculated, in %s.
+         * The amount on which tax is calculated, in cents (or local equivalent).
          */
         taxable_amount: number | null;
       }

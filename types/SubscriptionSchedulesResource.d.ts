@@ -59,7 +59,7 @@ declare module 'stripe' {
 
       interface DefaultSettings {
         /**
-         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
+         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
          */
         application_fee_percent?: number;
 
@@ -93,7 +93,7 @@ declare module 'stripe' {
         /**
          * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
          */
-        description?: string;
+        description?: Stripe.Emptyable<string>;
 
         /**
          * All invoices will be billed using the specified settings.
@@ -144,7 +144,7 @@ declare module 'stripe' {
 
         interface TransferData {
           /**
-           * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
+           * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
            */
           amount_percent?: number;
 
@@ -164,7 +164,7 @@ declare module 'stripe' {
         add_invoice_items?: Array<Phase.AddInvoiceItem>;
 
         /**
-         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
+         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
          */
         application_fee_percent?: number;
 
@@ -211,7 +211,7 @@ declare module 'stripe' {
         /**
          * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
          */
-        description?: string;
+        description?: Stripe.Emptyable<string>;
 
         /**
          * The coupons to redeem into discounts for the schedule phase. If not specified, inherits the discount from the subscription's customer. Pass an empty string to avoid inheriting any discounts.
@@ -685,7 +685,7 @@ declare module 'stripe' {
 
         interface TransferData {
           /**
-           * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
+           * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
            */
           amount_percent?: number;
 
@@ -789,7 +789,7 @@ declare module 'stripe' {
 
       interface DefaultSettings {
         /**
-         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
+         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
          */
         application_fee_percent?: number;
 
@@ -823,7 +823,7 @@ declare module 'stripe' {
         /**
          * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
          */
-        description?: string;
+        description?: Stripe.Emptyable<string>;
 
         /**
          * All invoices will be billed using the specified settings.
@@ -874,7 +874,7 @@ declare module 'stripe' {
 
         interface TransferData {
           /**
-           * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
+           * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
            */
           amount_percent?: number;
 
@@ -894,7 +894,7 @@ declare module 'stripe' {
         add_invoice_items?: Array<Phase.AddInvoiceItem>;
 
         /**
-         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
+         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
          */
         application_fee_percent?: number;
 
@@ -941,7 +941,7 @@ declare module 'stripe' {
         /**
          * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
          */
-        description?: string;
+        description?: Stripe.Emptyable<string>;
 
         /**
          * The coupons to redeem into discounts for the schedule phase. If not specified, inherits the discount from the subscription's customer. Pass an empty string to avoid inheriting any discounts.
@@ -1420,7 +1420,7 @@ declare module 'stripe' {
 
         interface TransferData {
           /**
-           * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
+           * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
            */
           amount_percent?: number;
 

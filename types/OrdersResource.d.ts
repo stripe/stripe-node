@@ -242,7 +242,7 @@ declare module 'stripe' {
           /**
            * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
            */
-          description?: string;
+          description?: Stripe.Emptyable<string>;
 
           /**
            * A unique identifier for this product.
@@ -279,7 +279,7 @@ declare module 'stripe' {
           /**
            * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
            */
-          tax_code?: string;
+          tax_code?: Stripe.Emptyable<string>;
 
           /**
            * A URL of a publicly-accessible webpage for this product.
@@ -1164,7 +1164,7 @@ declare module 'stripe' {
         /**
          * The phone number (including extension) for the recipient of the order.
          */
-        phone?: string;
+        phone?: Stripe.Emptyable<string>;
       }
 
       interface TaxDetails {
@@ -1302,7 +1302,7 @@ declare module 'stripe' {
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
-      description?: string;
+      description?: Stripe.Emptyable<string>;
 
       /**
        * The coupons, promotion codes, and/or discounts to apply to the order. Pass the empty string `""` to unset this field.
@@ -1518,7 +1518,7 @@ declare module 'stripe' {
           /**
            * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
            */
-          description?: string;
+          description?: Stripe.Emptyable<string>;
 
           /**
            * A unique identifier for this product.
@@ -1555,7 +1555,7 @@ declare module 'stripe' {
           /**
            * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
            */
-          tax_code?: string;
+          tax_code?: Stripe.Emptyable<string>;
 
           /**
            * A URL of a publicly-accessible webpage for this product.
@@ -2444,7 +2444,7 @@ declare module 'stripe' {
         /**
          * The phone number (including extension) for the recipient of the order.
          */
-        phone?: string;
+        phone?: Stripe.Emptyable<string>;
       }
 
       interface TaxDetails {

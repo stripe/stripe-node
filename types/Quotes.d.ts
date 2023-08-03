@@ -42,7 +42,7 @@ declare module 'stripe' {
       application_fee_amount: number | null;
 
       /**
-       * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. Only applicable if there are line items with recurring prices on the quote.
+       * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. Only applicable if there are line items with recurring prices on the quote.
        */
       application_fee_percent: number | null;
 
@@ -319,7 +319,7 @@ declare module 'stripe' {
                 taxability_reason: Tax.TaxabilityReason | null;
 
                 /**
-                 * The amount on which tax is calculated, in %s.
+                 * The amount on which tax is calculated, in cents (or local equivalent).
                  */
                 taxable_amount: number | null;
               }
@@ -436,7 +436,7 @@ declare module 'stripe' {
                 taxability_reason: Tax.TaxabilityReason | null;
 
                 /**
-                 * The amount on which tax is calculated, in %s.
+                 * The amount on which tax is calculated, in cents (or local equivalent).
                  */
                 taxable_amount: number | null;
               }
@@ -552,6 +552,11 @@ declare module 'stripe' {
             line_invalid?: string;
 
             /**
+             * The user supplied mark stale reason.
+             */
+            marked_stale?: string | null;
+
+            /**
              * The ID of the subscription that was canceled.
              */
             subscription_canceled?: string;
@@ -559,7 +564,7 @@ declare module 'stripe' {
             subscription_changed?: LastReason.SubscriptionChanged;
 
             /**
-             * The ID of the subscription that was expired
+             * The ID of the subscription that was expired.
              */
             subscription_expired?: string;
 
@@ -1086,7 +1091,7 @@ declare module 'stripe' {
             taxability_reason: Tax.TaxabilityReason | null;
 
             /**
-             * The amount on which tax is calculated, in %s.
+             * The amount on which tax is calculated, in cents (or local equivalent).
              */
             taxable_amount: number | null;
           }
@@ -1117,12 +1122,12 @@ declare module 'stripe' {
 
       interface TransferData {
         /**
-         * The amount in %s that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
+         * The amount in cents (or local equivalent) that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
          */
         amount: number | null;
 
         /**
-         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount will be transferred to the destination.
+         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the destination account. By default, the entire amount will be transferred to the destination.
          */
         amount_percent: number | null;
 
