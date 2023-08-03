@@ -29,7 +29,7 @@ declare module 'stripe' {
       object: 'transfer_reversal';
 
       /**
-       * Amount, in %s.
+       * Amount, in cents (or local equivalent).
        */
       amount: number;
 

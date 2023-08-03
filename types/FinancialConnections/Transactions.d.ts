@@ -23,7 +23,7 @@ declare module 'stripe' {
         account: string;
 
         /**
-         * The amount of this transaction, in %s.
+         * The amount of this transaction, in cents (or local equivalent).
          */
         amount: number;
 

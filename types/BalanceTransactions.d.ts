@@ -20,7 +20,7 @@ declare module 'stripe' {
       object: 'balance_transaction';
 
       /**
-       * Gross amount of the transaction, in %s.
+       * Gross amount of the transaction, in cents (or local equivalent).
        */
       amount: number;
 
@@ -50,17 +50,17 @@ declare module 'stripe' {
       exchange_rate: number | null;
 
       /**
-       * Fees (in %s) paid for this transaction.
+       * Fees (in cents (or local equivalent)) paid for this transaction.
        */
       fee: number;
 
       /**
-       * Detailed breakdown of fees (in %s) paid for this transaction.
+       * Detailed breakdown of fees (in cents (or local equivalent)) paid for this transaction.
        */
       fee_details: Array<BalanceTransaction.FeeDetail>;
 
       /**
-       * Net amount of the transaction, in %s.
+       * Net amount of the transaction, in cents (or local equivalent).
        */
       net: number;
 

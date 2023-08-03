@@ -319,7 +319,7 @@ declare module 'stripe' {
                 taxability_reason: Tax.TaxabilityReason | null;
 
                 /**
-                 * The amount on which tax is calculated, in %s.
+                 * The amount on which tax is calculated, in cents (or local equivalent).
                  */
                 taxable_amount: number | null;
               }
@@ -436,7 +436,7 @@ declare module 'stripe' {
                 taxability_reason: Tax.TaxabilityReason | null;
 
                 /**
-                 * The amount on which tax is calculated, in %s.
+                 * The amount on which tax is calculated, in cents (or local equivalent).
                  */
                 taxable_amount: number | null;
               }
@@ -1091,7 +1091,7 @@ declare module 'stripe' {
             taxability_reason: Tax.TaxabilityReason | null;
 
             /**
-             * The amount on which tax is calculated, in %s.
+             * The amount on which tax is calculated, in cents (or local equivalent).
              */
             taxable_amount: number | null;
           }
@@ -1122,7 +1122,7 @@ declare module 'stripe' {
 
       interface TransferData {
         /**
-         * The amount in %s that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
+         * The amount in cents (or local equivalent) that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
          */
         amount: number | null;
 

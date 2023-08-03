@@ -737,7 +737,7 @@ declare module 'stripe' {
 
       interface TransferData {
         /**
-         * The amount in %s that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
+         * The amount in cents (or local equivalent) that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
          */
         amount: number | null;
 

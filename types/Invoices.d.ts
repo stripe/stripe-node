@@ -70,12 +70,12 @@ declare module 'stripe' {
       amount_due: number;
 
       /**
-       * The amount, in %s, that was paid.
+       * The amount, in cents (or local equivalent), that was paid.
        */
       amount_paid: number;
 
       /**
-       * The difference between amount_due and amount_paid, in %s.
+       * The difference between amount_due and amount_paid, in cents (or local equivalent).
        */
       amount_remaining: number;
 
@@ -94,7 +94,7 @@ declare module 'stripe' {
         | null;
 
       /**
-       * The fee in %s that will be applied to the invoice and transferred to the application owner's Stripe account when the invoice is paid.
+       * The fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account when the invoice is paid.
        */
       application_fee_amount: number | null;
 
@@ -396,7 +396,7 @@ declare module 'stripe' {
       subtotal: number;
 
       /**
-       * The integer amount in %s representing the subtotal of the invoice before any invoice level discount or tax is applied. Item discounts are already incorporated
+       * The integer amount in cents (or local equivalent) representing the subtotal of the invoice before any invoice level discount or tax is applied. Item discounts are already incorporated
        */
       subtotal_excluding_tax: number | null;
 
@@ -423,7 +423,7 @@ declare module 'stripe' {
       total_discount_amounts: Array<Invoice.TotalDiscountAmount> | null;
 
       /**
-       * The integer amount in %s representing the total amount of the invoice including all discounts but excluding all tax.
+       * The integer amount in cents (or local equivalent) representing the total amount of the invoice including all discounts but excluding all tax.
        */
       total_excluding_tax: number | null;
 
@@ -1158,7 +1158,7 @@ declare module 'stripe' {
           taxability_reason: Tax.TaxabilityReason | null;
 
           /**
-           * The amount on which tax is calculated, in %s.
+           * The amount on which tax is calculated, in cents (or local equivalent).
            */
           taxable_amount: number | null;
         }
@@ -1292,7 +1292,7 @@ declare module 'stripe' {
 
       interface TotalDiscountAmount {
         /**
-         * The amount, in %s, of the discount.
+         * The amount, in cents (or local equivalent), of the discount.
          */
         amount: number;
 
@@ -1304,7 +1304,7 @@ declare module 'stripe' {
 
       interface TotalTaxAmount {
         /**
-         * The amount, in %s, of the tax.
+         * The amount, in cents (or local equivalent), of the tax.
          */
         amount: number;
 
@@ -1324,7 +1324,7 @@ declare module 'stripe' {
         taxability_reason: TotalTaxAmount.TaxabilityReason | null;
 
         /**
-         * The amount on which tax is calculated, in %s.
+         * The amount on which tax is calculated, in cents (or local equivalent).
          */
         taxable_amount: number | null;
       }
@@ -1350,7 +1350,7 @@ declare module 'stripe' {
 
       interface TransferData {
         /**
-         * The amount in %s that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
+         * The amount in cents (or local equivalent) that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
          */
         amount: number | null;
 

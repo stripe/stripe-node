@@ -26,12 +26,12 @@ declare module 'stripe' {
       object: 'transfer';
 
       /**
-       * Amount in %s to be transferred.
+       * Amount in cents (or local equivalent) to be transferred.
        */
       amount: number;
 
       /**
-       * Amount in %s reversed (can be less than the amount attribute on the transfer if a partial reversal was issued).
+       * Amount in cents (or local equivalent) reversed (can be less than the amount attribute on the transfer if a partial reversal was issued).
        */
       amount_reversed: number;
 
