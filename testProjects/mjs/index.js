@@ -1,5 +1,6 @@
 import DefaultStripe, {Stripe} from 'stripe';
 import assert from 'assert';
+import * as http from 'http';
 
 assert(Stripe.PACKAGE_VERSION);
 assert(Stripe.USER_AGENT);
@@ -90,9 +91,43 @@ async function exampleFunction(args) {
   }
 }
 
+
+// Test that http is monkey-patchable (motivation: https://github.com/stripe/stripe-node/issues/1844)
+async function exampleMonkeyPatchFunction() {
+  http.default.request = () => {
+    throw new Error('foo');
+  };
+
+  try {
+    await stripe.paymentIntents.create({
+      currency: 'usd',
+      amount: 2000,
+      confirm: true,
+      payment_method: 'pm_card_visa',
+    });
+  } catch (e) {
+    assert (e instanceof stripe.errors.StripeConnectionError);
+    if (e.detail.message === 'foo') {
+      return;
+    } else {
+      throw e;
+    }
+  }
+
+  throw new Error('Expected an error');
+}
+
 exampleFunction({
   // The required parameter currency is missing
   amount: 2000,
   confirm: true,
   payment_method: 'pm_card_visa',
-});
+}).then(() => {
+  return exampleMonkeyPatchFunction()
+}).then(() => {
+  process.exit(0);
+}).catch((e) => {
+  console.error(e);
+  process.exit(1);
+}
+);
