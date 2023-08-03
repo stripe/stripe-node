@@ -109,7 +109,7 @@ declare module 'stripe' {
       ideal?: PaymentMethodConfigurationCreateParams.Ideal;
 
       /**
-       * JCB is a credit card company based in Japan. JCB is currently available in Japan to businesses approved by JCB, and available to all businesses in the US, Canada, Australia, and New Zealand, and available in private beta to businesses in the UK and IE. Check this [page](https://support.stripe.com/questions/accepting-japan-credit-bureau-%28jcb%29-payments) for more details.
+       * JCB is a credit card company based in Japan. JCB is currently available in Japan to businesses approved by JCB, and available to all businesses in the US, Canada, Australia, New Zealand, UK, and Ireland. Check this [page](https://support.stripe.com/questions/accepting-japan-credit-bureau-%28jcb%29-payments) for more details.
        */
       jcb?: PaymentMethodConfigurationCreateParams.Jcb;
 
@@ -940,7 +940,7 @@ declare module 'stripe' {
       ideal?: PaymentMethodConfigurationUpdateParams.Ideal;
 
       /**
-       * JCB is a credit card company based in Japan. JCB is currently available in Japan to businesses approved by JCB, and available to all businesses in the US, Canada, Australia, and New Zealand, and available in private beta to businesses in the UK and IE. Check this [page](https://support.stripe.com/questions/accepting-japan-credit-bureau-%28jcb%29-payments) for more details.
+       * JCB is a credit card company based in Japan. JCB is currently available in Japan to businesses approved by JCB, and available to all businesses in the US, Canada, Australia, New Zealand, UK, and Ireland. Check this [page](https://support.stripe.com/questions/accepting-japan-credit-bureau-%28jcb%29-payments) for more details.
        */
       jcb?: PaymentMethodConfigurationUpdateParams.Jcb;
 
