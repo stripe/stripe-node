@@ -278,7 +278,7 @@ declare module 'stripe' {
       /**
        * A short one-line description of the product, meant to be displayable to the customer. May only be set if `type=good`.
        */
-      caption?: string;
+      caption?: Stripe.Emptyable<string>;
 
       /**
        * An array of Connect application names or identifiers that should not be able to order the SKUs for this product. May only be set if `type=good`.
@@ -293,7 +293,7 @@ declare module 'stripe' {
       /**
        * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
        */
-      description?: string;
+      description?: Stripe.Emptyable<string>;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -343,7 +343,7 @@ declare module 'stripe' {
       /**
        * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal. May only be set if `type=service`.
        */
-      unit_label?: string;
+      unit_label?: Stripe.Emptyable<string>;
 
       /**
        * A URL of a publicly-accessible webpage for this product.

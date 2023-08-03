@@ -24,7 +24,7 @@ declare module 'stripe' {
       object: 'payout';
 
       /**
-       * Amount (in %s) to be transferred to your bank account or debit card.
+       * Amount (in cents (or local equivalent)) to be transferred to your bank account or debit card.
        */
       amount: number;
 

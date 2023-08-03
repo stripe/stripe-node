@@ -38,7 +38,7 @@ declare module 'stripe' {
       application_fee_amount: number | null;
 
       /**
-       * This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account.
+       * This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account.
        */
       application_fee_percent: number | null;
 
@@ -737,7 +737,7 @@ declare module 'stripe' {
 
       interface TransferData {
         /**
-         * The amount in %s that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
+         * The amount in cents (or local equivalent) that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
          */
         amount: number | null;
 
