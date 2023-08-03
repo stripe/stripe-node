@@ -2063,7 +2063,7 @@ declare module 'stripe' {
           /**
            * The subscription's description, meant to be displayable to the customer.
            * Use this field to optionally store an explanation of the subscription
-           * for rendering in Stripe hosted surfaces.
+           * for rendering in the [customer portal](https://stripe.com/docs/customer-management).
            */
           description?: string;
 
