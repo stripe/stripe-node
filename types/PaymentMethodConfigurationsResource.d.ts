@@ -154,6 +154,11 @@ declare module 'stripe' {
       paynow?: PaymentMethodConfigurationCreateParams.Paynow;
 
       /**
+       * PayPal, a digital wallet popular with customers in Europe, allows your customers worldwide to pay using their PayPal account. Check this [page](https://stripe.com/docs/payments/paypal) for more details.
+       */
+      paypal?: PaymentMethodConfigurationCreateParams.Paypal;
+
+      /**
        * PromptPay is a Thailand-based payment method that allows customers to make a payment using their preferred app from participating banks. Check this [page](https://stripe.com/docs/payments/promptpay) for more details.
        */
       promptpay?: PaymentMethodConfigurationCreateParams.Promptpay;
@@ -720,6 +725,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Paypal {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Paypal.DisplayPreference;
+      }
+
+      namespace Paypal {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Promptpay {
         /**
          * Whether or not the payment method should be displayed.
@@ -978,6 +1003,11 @@ declare module 'stripe' {
        * PayNow is a Singapore-based payment method that allows customers to make a payment using their preferred app from participating banks and participating non-bank financial institutions. Check this [page](https://stripe.com/docs/payments/paynow) for more details.
        */
       paynow?: PaymentMethodConfigurationUpdateParams.Paynow;
+
+      /**
+       * PayPal, a digital wallet popular with customers in Europe, allows your customers worldwide to pay using their PayPal account. Check this [page](https://stripe.com/docs/payments/paypal) for more details.
+       */
+      paypal?: PaymentMethodConfigurationUpdateParams.Paypal;
 
       /**
        * PromptPay is a Thailand-based payment method that allows customers to make a payment using their preferred app from participating banks. Check this [page](https://stripe.com/docs/payments/promptpay) for more details.
@@ -1534,6 +1564,26 @@ declare module 'stripe' {
       }
 
       namespace Paynow {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Paypal {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Paypal.DisplayPreference;
+      }
+
+      namespace Paypal {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

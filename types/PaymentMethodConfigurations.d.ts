@@ -106,6 +106,8 @@ declare module 'stripe' {
 
       paynow?: PaymentMethodConfiguration.Paynow;
 
+      paypal?: PaymentMethodConfiguration.Paypal;
+
       promptpay?: PaymentMethodConfiguration.Promptpay;
 
       sepa_debit?: PaymentMethodConfiguration.SepaDebit;
@@ -1116,6 +1118,40 @@ declare module 'stripe' {
       }
 
       namespace Paynow {
+        interface DisplayPreference {
+          /**
+           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
+      interface Paypal {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: Paypal.DisplayPreference;
+      }
+
+      namespace Paypal {
         interface DisplayPreference {
           /**
            * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
