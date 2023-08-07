@@ -21,7 +21,7 @@ declare module 'stripe' {
       object: 'fee_refund';
 
       /**
-       * Amount, in %s.
+       * Amount, in cents (or local equivalent).
        */
       amount: number;
 

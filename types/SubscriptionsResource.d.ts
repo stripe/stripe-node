@@ -14,7 +14,7 @@ declare module 'stripe' {
       add_invoice_items?: Array<SubscriptionCreateParams.AddInvoiceItem>;
 
       /**
-       * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
+       * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
        */
       application_fee_percent?: number;
 
@@ -627,7 +627,7 @@ declare module 'stripe' {
 
       interface TransferData {
         /**
-         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
+         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
          */
         amount_percent?: number;
 
@@ -672,7 +672,7 @@ declare module 'stripe' {
       add_invoice_items?: Array<SubscriptionUpdateParams.AddInvoiceItem>;
 
       /**
-       * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
+       * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
        */
       application_fee_percent?: number;
 
@@ -731,7 +731,7 @@ declare module 'stripe' {
       /**
        * ID of the default payment source for the subscription. It must belong to the customer associated with the subscription and be in a chargeable state. If `default_payment_method` is also set, `default_payment_method` will take precedence. If neither are set, invoices will use the customer's [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) or [default_source](https://stripe.com/docs/api/customers/object#customer_object-default_source).
        */
-      default_source?: string;
+      default_source?: Stripe.Emptyable<string>;
 
       /**
        * The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription. Pass an empty string to remove previously-defined tax rates.
@@ -741,7 +741,7 @@ declare module 'stripe' {
       /**
        * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces.
        */
-      description?: string;
+      description?: Stripe.Emptyable<string>;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -915,7 +915,7 @@ declare module 'stripe' {
         /**
          * Additional comments about why the user canceled the subscription, if the subscription was cancelled explicitly by the user.
          */
-        comment?: string;
+        comment?: Stripe.Emptyable<string>;
 
         /**
          * The customer submitted reason for why they cancelled, if the subscription was cancelled explicitly by the user.
@@ -1340,7 +1340,7 @@ declare module 'stripe' {
 
       interface TransferData {
         /**
-         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
+         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
          */
         amount_percent?: number;
 
@@ -1469,7 +1469,7 @@ declare module 'stripe' {
         /**
          * Additional comments about why the user canceled the subscription, if the subscription was cancelled explicitly by the user.
          */
-        comment?: string;
+        comment?: Stripe.Emptyable<string>;
 
         /**
          * The customer submitted reason for why they cancelled, if the subscription was cancelled explicitly by the user.
@@ -1517,7 +1517,7 @@ declare module 'stripe' {
         /**
          * Additional comments about why the user canceled the subscription, if the subscription was cancelled explicitly by the user.
          */
-        comment?: string;
+        comment?: Stripe.Emptyable<string>;
 
         /**
          * The customer submitted reason for why they cancelled, if the subscription was cancelled explicitly by the user.

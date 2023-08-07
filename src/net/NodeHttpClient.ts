@@ -1,11 +1,21 @@
-import * as http from 'http';
-import * as https from 'https';
+import * as http_ from 'http';
+import * as https_ from 'https';
 import {RequestHeaders, RequestData} from '../Types.js';
 import {
   HttpClient,
   HttpClientResponse,
   HttpClientResponseInterface,
 } from './HttpClient.js';
+
+// `import * as http_ from 'http'` creates a "Module Namespace Exotic Object"
+// which is immune to monkey-patching, whereas http_.default (in an ES Module context)
+// will resolve to the same thing as require('http'), which is
+// monkey-patchable. We care about this because users in their test
+// suites might be using a library like "nock" which relies on the ability
+// to monkey-patch and intercept calls to http.request.
+const http = ((http_ as unknown) as {default: typeof http_}).default || http_;
+const https =
+  ((https_ as unknown) as {default: typeof https_}).default || https_;
 
 const defaultHttpAgent = new http.Agent({keepAlive: true});
 const defaultHttpsAgent = new https.Agent({keepAlive: true});
@@ -15,9 +25,9 @@ const defaultHttpsAgent = new https.Agent({keepAlive: true});
  * requests.`
  */
 export class NodeHttpClient extends HttpClient {
-  _agent?: http.Agent | https.Agent | undefined;
+  _agent?: http_.Agent | https_.Agent | undefined;
 
-  constructor(agent?: http.Agent | https.Agent) {
+  constructor(agent?: http_.Agent | https_.Agent) {
     super();
     this._agent = agent;
   }
@@ -93,19 +103,19 @@ export class NodeHttpClient extends HttpClient {
 
 export class NodeHttpClientResponse extends HttpClientResponse
   implements HttpClientResponseInterface {
-  _res: http.IncomingMessage;
+  _res: http_.IncomingMessage;
 
-  constructor(res: http.IncomingMessage) {
+  constructor(res: http_.IncomingMessage) {
     // @ts-ignore
     super(res.statusCode, res.headers || {});
     this._res = res;
   }
 
-  getRawResponse(): http.IncomingMessage {
+  getRawResponse(): http_.IncomingMessage {
     return this._res;
   }
 
-  toStream(streamCompleteCallback: () => void): http.IncomingMessage {
+  toStream(streamCompleteCallback: () => void): http_.IncomingMessage {
     // The raw response is itself the stream, so we just return that. To be
     // backwards compatible, we should invoke the streamCompleteCallback only
     // once the stream has been fully consumed.

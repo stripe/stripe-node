@@ -102,7 +102,7 @@ declare module 'stripe' {
         taxability_reason: Tax.TaxabilityReason | null;
 
         /**
-         * The amount on which tax is calculated, in %s.
+         * The amount on which tax is calculated, in cents (or local equivalent).
          */
         taxable_amount: number | null;
       }

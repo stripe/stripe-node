@@ -9,7 +9,7 @@ declare module 'stripe' {
       application_fee_amount?: Stripe.Emptyable<number>;
 
       /**
-       * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. There must be at least 1 line item with a recurring price to use this field.
+       * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. There must be at least 1 line item with a recurring price to use this field.
        */
       application_fee_percent?: Stripe.Emptyable<number>;
 
@@ -36,7 +36,7 @@ declare module 'stripe' {
       /**
        * A description that will be displayed on the quote PDF. If no value is passed, the default description configured in your [quote template settings](https://dashboard.stripe.com/settings/billing/quote) will be used.
        */
-      description?: string;
+      description?: Stripe.Emptyable<string>;
 
       /**
        * The discounts applied to the quote. You can only set up to one discount.
@@ -56,7 +56,7 @@ declare module 'stripe' {
       /**
        * A footer that will be displayed on the quote PDF. If no value is passed, the default footer configured in your [quote template settings](https://dashboard.stripe.com/settings/billing/quote) will be used.
        */
-      footer?: string;
+      footer?: Stripe.Emptyable<string>;
 
       /**
        * Clone an existing quote. The new quote will be created in `status=draft`. When using this parameter, you cannot specify any other parameters except for `expires_at`.
@@ -66,7 +66,7 @@ declare module 'stripe' {
       /**
        * A header that will be displayed on the quote PDF. If no value is passed, the default header configured in your [quote template settings](https://dashboard.stripe.com/settings/billing/quote) will be used.
        */
-      header?: string;
+      header?: Stripe.Emptyable<string>;
 
       /**
        * All invoices will be billed using the specified settings.
@@ -245,7 +245,7 @@ declare module 'stripe' {
         amount?: number;
 
         /**
-         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination. There must be at least 1 line item with a recurring price to use this field.
+         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the destination account. By default, the entire amount is transferred to the destination. There must be at least 1 line item with a recurring price to use this field.
          */
         amount_percent?: number;
 
@@ -270,7 +270,7 @@ declare module 'stripe' {
       application_fee_amount?: Stripe.Emptyable<number>;
 
       /**
-       * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. There must be at least 1 line item with a recurring price to use this field.
+       * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. There must be at least 1 line item with a recurring price to use this field.
        */
       application_fee_percent?: Stripe.Emptyable<number>;
 
@@ -297,7 +297,7 @@ declare module 'stripe' {
       /**
        * A description that will be displayed on the quote PDF.
        */
-      description?: string;
+      description?: Stripe.Emptyable<string>;
 
       /**
        * The discounts applied to the quote. You can only set up to one discount.
@@ -317,12 +317,12 @@ declare module 'stripe' {
       /**
        * A footer that will be displayed on the quote PDF.
        */
-      footer?: string;
+      footer?: Stripe.Emptyable<string>;
 
       /**
        * A header that will be displayed on the quote PDF.
        */
-      header?: string;
+      header?: Stripe.Emptyable<string>;
 
       /**
        * All invoices will be billed using the specified settings.
@@ -469,7 +469,7 @@ declare module 'stripe' {
         /**
          * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
          */
-        description?: string;
+        description?: Stripe.Emptyable<string>;
 
         /**
          * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. When updating a subscription, the date of which the subscription will be updated using a subscription schedule. The special value `current_period_end` can be provided to update a subscription at the end of its current period. The `effective_date` is ignored if it is in the past when the quote is accepted.
@@ -489,7 +489,7 @@ declare module 'stripe' {
         amount?: number;
 
         /**
-         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination. There must be at least 1 line item with a recurring price to use this field.
+         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the destination account. By default, the entire amount is transferred to the destination. There must be at least 1 line item with a recurring price to use this field.
          */
         amount_percent?: number;
 

@@ -17,7 +17,7 @@ declare module 'stripe' {
       object: 'connect_collection_transfer';
 
       /**
-       * Amount transferred, in %s.
+       * Amount transferred, in cents (or local equivalent).
        */
       amount: number;
 

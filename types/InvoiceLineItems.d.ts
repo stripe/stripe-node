@@ -17,12 +17,12 @@ declare module 'stripe' {
       object: 'line_item';
 
       /**
-       * The amount, in %s.
+       * The amount, in cents (or local equivalent).
        */
       amount: number;
 
       /**
-       * The integer amount in %s representing the amount for this line item, excluding all tax and discounts.
+       * The integer amount in cents (or local equivalent) representing the amount for this line item, excluding all tax and discounts.
        */
       amount_excluding_tax: number | null;
 
@@ -119,7 +119,7 @@ declare module 'stripe' {
       type: InvoiceLineItem.Type;
 
       /**
-       * The amount in %s representing the unit amount for this line item, excluding all tax and discounts.
+       * The amount in cents (or local equivalent) representing the unit amount for this line item, excluding all tax and discounts.
        */
       unit_amount_excluding_tax: string | null;
     }
@@ -127,7 +127,7 @@ declare module 'stripe' {
     namespace InvoiceLineItem {
       interface DiscountAmount {
         /**
-         * The amount, in %s, of the discount.
+         * The amount, in cents (or local equivalent), of the discount.
          */
         amount: number;
 
@@ -172,7 +172,7 @@ declare module 'stripe' {
 
       interface TaxAmount {
         /**
-         * The amount, in %s, of the tax.
+         * The amount, in cents (or local equivalent), of the tax.
          */
         amount: number;
 
@@ -192,7 +192,7 @@ declare module 'stripe' {
         taxability_reason: TaxAmount.TaxabilityReason | null;
 
         /**
-         * The amount on which tax is calculated, in %s.
+         * The amount on which tax is calculated, in cents (or local equivalent).
          */
         taxable_amount: number | null;
       }
