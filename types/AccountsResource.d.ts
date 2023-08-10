@@ -728,6 +728,7 @@ declare module 'stripe' {
           | 'government_instrumentality'
           | 'governmental_unit'
           | 'incorporated_non_profit'
+          | 'incorporated_partnership'
           | 'limited_liability_partnership'
           | 'llc'
           | 'multi_member_llc'
@@ -742,7 +743,8 @@ declare module 'stripe' {
           | 'sole_proprietorship'
           | 'tax_exempt_government_instrumentality'
           | 'unincorporated_association'
-          | 'unincorporated_non_profit';
+          | 'unincorporated_non_profit'
+          | 'unincorporated_partnership';
 
         interface Verification {
           /**
@@ -2062,6 +2064,7 @@ declare module 'stripe' {
           | 'government_instrumentality'
           | 'governmental_unit'
           | 'incorporated_non_profit'
+          | 'incorporated_partnership'
           | 'limited_liability_partnership'
           | 'llc'
           | 'multi_member_llc'
@@ -2076,7 +2079,8 @@ declare module 'stripe' {
           | 'sole_proprietorship'
           | 'tax_exempt_government_instrumentality'
           | 'unincorporated_association'
-          | 'unincorporated_non_profit';
+          | 'unincorporated_non_profit'
+          | 'unincorporated_partnership';
 
         interface Verification {
           /**
