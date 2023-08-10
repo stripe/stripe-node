@@ -19,6 +19,8 @@ declare module 'stripe' {
        */
       object: 'customer_cash_balance_transaction';
 
+      adjusted_for_overdraft?: CustomerCashBalanceTransaction.AdjustedForOverdraft;
+
       applied_to_payment?: CustomerCashBalanceTransaction.AppliedToPayment;
 
       /**
@@ -64,6 +66,13 @@ declare module 'stripe' {
     }
 
     namespace CustomerCashBalanceTransaction {
+      interface AdjustedForOverdraft {
+        /**
+         * The [Cash Balance Transaction](https://stripe.com/docs/api/cash_balance_transactions/object) that brought the customer balance negative, triggering the clawback of funds.
+         */
+        linked_transaction: string | Stripe.CustomerCashBalanceTransaction;
+      }
+
       interface AppliedToPayment {
         /**
          * The [Payment Intent](https://stripe.com/docs/api/payment_intents/object) that funds were applied to.
@@ -181,6 +190,7 @@ declare module 'stripe' {
       }
 
       type Type =
+        | 'adjusted_for_overdraft'
         | 'applied_to_payment'
         | 'funded'
         | 'funding_reversed'

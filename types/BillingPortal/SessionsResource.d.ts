@@ -25,7 +25,7 @@ declare module 'stripe' {
         flow_data?: SessionCreateParams.FlowData;
 
         /**
-         * The IETF language tag of the locale Customer Portal is displayed in. If blank or auto, the customer's `preferred_locales` or browser's locale is used.
+         * The IETF language tag of the locale customer portal is displayed in. If blank or auto, the customer's `preferred_locales` or browser's locale is used.
          */
         locale?: SessionCreateParams.Locale;
 

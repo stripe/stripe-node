@@ -3,7 +3,7 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The CreditNoteLineItem object.
+     * The credit note line item object
      */
     interface CreditNoteLineItem {
       /**
