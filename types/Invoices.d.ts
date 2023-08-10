@@ -342,6 +342,11 @@ declare module 'stripe' {
       receipt_number: string | null;
 
       /**
+       * The rendering-related settings that control how the invoice is displayed on customer-facing surfaces such as PDF and Hosted Invoice Page.
+       */
+      rendering: Invoice.Rendering | null;
+
+      /**
        * Options for invoice PDF rendering.
        */
       rendering_options: Invoice.RenderingOptions | null;
@@ -381,7 +386,7 @@ declare module 'stripe' {
       /**
        * Details about the subscription that created this invoice.
        */
-      subscription_details?: Invoice.SubscriptionDetails | null;
+      subscription_details: Invoice.SubscriptionDetails | null;
 
       /**
        * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
@@ -1062,6 +1067,26 @@ declare module 'stripe' {
           | 'wechat_pay';
       }
 
+      interface Rendering {
+        /**
+         * Invoice pdf rendering options
+         */
+        pdf: Rendering.Pdf | null;
+      }
+
+      namespace Rendering {
+        interface Pdf {
+          /**
+           * Page size of invoice pdf. Options include a4, letter, and auto. If set to auto, page size will be switched to a4 or letter based on customer locale.
+           */
+          page_size: Pdf.PageSize | null;
+        }
+
+        namespace Pdf {
+          type PageSize = 'a4' | 'auto' | 'letter';
+        }
+      }
+
       interface RenderingOptions {
         /**
          * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
@@ -1196,7 +1221,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will reflect the metadata of the subscription at the time of invoice creation. *Note: This attribute is populated only for invoices created on or after June 29, 2023.*
          */
-        metadata?: Stripe.Metadata | null;
+        metadata: Stripe.Metadata | null;
       }
 
       interface ThresholdReason {
