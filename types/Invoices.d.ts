@@ -383,7 +383,7 @@ declare module 'stripe' {
       /**
        * Details about the subscription that created this invoice.
        */
-      subscription_details?: Invoice.SubscriptionDetails | null;
+      subscription_details: Invoice.SubscriptionDetails | null;
 
       /**
        * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
@@ -1238,7 +1238,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will reflect the metadata of the subscription at the time of invoice creation. *Note: This attribute is populated only for invoices created on or after June 29, 2023.*
          */
-        metadata?: Stripe.Metadata | null;
+        metadata: Stripe.Metadata | null;
 
         /**
          * If specified, payment collection for this subscription will be paused.
