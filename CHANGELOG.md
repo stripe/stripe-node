@@ -5,6 +5,12 @@
   * Add support for `paypal` on `PaymentMethodConfigurationCreateParams`, `PaymentMethodConfigurationUpdateParams`, and `PaymentMethodConfiguration`
   * Add support for new value `quote.accept_failed` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
 
+## 12.18.0 - 2023-08-10
+* [#1867](https://github.com/stripe/stripe-node/pull/1867) Update generated code
+  * Add support for new values `incorporated_partnership` and `unincorporated_partnership` on enums `Account.company.structure`, `AccountCreateParams.company.structure`, `AccountUpdateParams.company.structure`, and `TokenCreateParams.account.company.structure`
+  * Add support for new value `payment_reversal` on enum `BalanceTransaction.type`
+  * Change `Invoice.subscription_details.metadata` and `Invoice.subscription_details` to be required
+
 ## 12.18.0-beta.1 - 2023-08-03
 * [#1861](https://github.com/stripe/stripe-node/pull/1861) Update generated code for beta
   * Add support for `submit_card` test helper method on resource `Issuing.Card`
