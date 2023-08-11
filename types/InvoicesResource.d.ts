@@ -119,11 +119,6 @@ declare module 'stripe' {
       pending_invoice_items_behavior?: InvoiceCreateParams.PendingInvoiceItemsBehavior;
 
       /**
-       * The rendering-related settings that control how the invoice is displayed on customer-facing surfaces such as PDF and Hosted Invoice Page.
-       */
-      rendering?: InvoiceCreateParams.Rendering;
-
-      /**
        * Options for invoice PDF rendering.
        */
       rendering_options?: Stripe.Emptyable<
@@ -449,27 +444,6 @@ declare module 'stripe' {
         | 'include'
         | 'include_and_require';
 
-      interface Rendering {
-        /**
-         * Invoice pdf rendering options
-         */
-        pdf?: Rendering.Pdf;
-      }
-
-      namespace Rendering {
-        interface Pdf {
-          /**
-           * Page size for invoice PDF. Can be set to a4, letter, or auto.
-           *  If set to auto, page size will be switched to a4 or letter based on customer locale.
-           */
-          page_size?: Pdf.PageSize;
-        }
-
-        namespace Pdf {
-          type PageSize = 'a4' | 'auto' | 'letter';
-        }
-      }
-
       interface RenderingOptions {
         /**
          * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
@@ -753,11 +727,6 @@ declare module 'stripe' {
        * Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
        */
       payment_settings?: InvoiceUpdateParams.PaymentSettings;
-
-      /**
-       * The rendering-related settings that control how the invoice is displayed on customer-facing surfaces such as PDF and Hosted Invoice Page.
-       */
-      rendering?: InvoiceUpdateParams.Rendering;
 
       /**
        * Options for invoice PDF rendering.
@@ -1061,27 +1030,6 @@ declare module 'stripe' {
           | 'sofort'
           | 'us_bank_account'
           | 'wechat_pay';
-      }
-
-      interface Rendering {
-        /**
-         * Invoice pdf rendering options
-         */
-        pdf?: Rendering.Pdf;
-      }
-
-      namespace Rendering {
-        interface Pdf {
-          /**
-           * Page size for invoice PDF. Can be set to a4, letter, or auto.
-           *  If set to auto, page size will be switched to a4 or letter based on customer locale.
-           */
-          page_size?: Pdf.PageSize;
-        }
-
-        namespace Pdf {
-          type PageSize = 'a4' | 'auto' | 'letter';
-        }
       }
 
       interface RenderingOptions {
