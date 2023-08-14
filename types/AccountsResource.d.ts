@@ -711,6 +711,7 @@ declare module 'stripe' {
           | 'government_instrumentality'
           | 'governmental_unit'
           | 'incorporated_non_profit'
+          | 'incorporated_partnership'
           | 'limited_liability_partnership'
           | 'llc'
           | 'multi_member_llc'
@@ -725,7 +726,8 @@ declare module 'stripe' {
           | 'sole_proprietorship'
           | 'tax_exempt_government_instrumentality'
           | 'unincorporated_association'
-          | 'unincorporated_non_profit';
+          | 'unincorporated_non_profit'
+          | 'unincorporated_partnership';
 
         interface Verification {
           /**
@@ -1991,6 +1993,7 @@ declare module 'stripe' {
           | 'government_instrumentality'
           | 'governmental_unit'
           | 'incorporated_non_profit'
+          | 'incorporated_partnership'
           | 'limited_liability_partnership'
           | 'llc'
           | 'multi_member_llc'
@@ -2005,7 +2008,8 @@ declare module 'stripe' {
           | 'sole_proprietorship'
           | 'tax_exempt_government_instrumentality'
           | 'unincorporated_association'
-          | 'unincorporated_non_profit';
+          | 'unincorporated_non_profit'
+          | 'unincorporated_partnership';
 
         interface Verification {
           /**
@@ -3359,7 +3363,7 @@ declare module 'stripe' {
        * for a Standard or Express account, some parameters can no longer be changed. These are marked as Custom Only or Custom and Express
        * below.
        *
-       * To update your own account, use the [Dashboard](https://dashboard.stripe.com/account). Refer to our
+       * To update your own account, use the [Dashboard](https://dashboard.stripe.com/settings/account). Refer to our
        * [Connect](https://stripe.com/docs/connect/updating-accounts) documentation to learn more about updating accounts.
        */
       update(
@@ -3382,7 +3386,7 @@ declare module 'stripe' {
        *
        * Accounts created using test-mode keys can be deleted at any time. Standard accounts created using live-mode keys cannot be deleted. Custom or Express accounts created using live-mode keys can only be deleted once all balances are zero.
        *
-       * If you want to delete your own account, use the [account information tab in your account settings](https://dashboard.stripe.com/account) instead.
+       * If you want to delete your own account, use the [account information tab in your account settings](https://dashboard.stripe.com/settings/account) instead.
        */
       del(
         id: string,
