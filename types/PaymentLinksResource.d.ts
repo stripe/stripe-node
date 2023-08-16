@@ -883,7 +883,7 @@ declare module 'stripe' {
       payment_method_collection?: PaymentLinkUpdateParams.PaymentMethodCollection;
 
       /**
-       * The list of payment method types that customers can use. Pass an empty string to enable automatic payment methods that use your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
+       * The list of payment method types that customers can use. Pass an empty string to enable dynamic payment methods that use your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
        */
       payment_method_types?: Stripe.Emptyable<
         Array<PaymentLinkUpdateParams.PaymentMethodType>
