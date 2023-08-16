@@ -586,12 +586,12 @@ describe('Stripe Module', function() {
     });
 
     describe('when passed in via the config object', () => {
-      it('should default to 0 if a non-integer is passed', () => {
+      it('should default to 1 if a non-integer is passed', () => {
         const newStripe = Stripe(FAKE_API_KEY, {
           maxNetworkRetries: 'foo',
         });
 
-        expect(newStripe.getMaxNetworkRetries()).to.equal(0);
+        expect(newStripe.getMaxNetworkRetries()).to.equal(1);
 
         expect(() => {
           Stripe(FAKE_API_KEY, {
@@ -613,7 +613,7 @@ describe('Stripe Module', function() {
       it('should use the default', () => {
         const newStripe = Stripe(FAKE_API_KEY);
 
-        expect(newStripe.getMaxNetworkRetries()).to.equal(0);
+        expect(newStripe.getMaxNetworkRetries()).to.equal(1);
       });
     });
   });
