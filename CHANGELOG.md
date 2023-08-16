@@ -12,7 +12,7 @@
   * ⚠️Remove support for values `custom_account_update` and `custom_account_verification` from enum `AccountLinkCreateParams.type`
     * These values are not fully operational
   * ⚠️Remove support for `available_on` on `BalanceTransactionListParams`
-    * Use of this parameter is discouraged. You may use [`.AddExtraParam`](https://github.com/stripe/stripe-dotnet/#parameters) if sending the parameter is still required.
+    * Use of this parameter is discouraged. Suppress the Typescript error with `// @ts-ignore` or `any` if sending the parameter is still required.
   * ⚠️Remove support for `alternate_statement_descriptors` and `dispute` on `Charge`
       * Use of these fields is discouraged.
   * ⚠️Remove support for `destination` on `Charge`
