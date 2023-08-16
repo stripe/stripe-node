@@ -726,11 +726,6 @@ declare module 'stripe' {
         acss_debit?: PaymentMethodOptions.AcssDebit;
 
         /**
-         * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
-         */
-        blik?: PaymentMethodOptions.Blik;
-
-        /**
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
@@ -815,13 +810,6 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
-        }
-
-        interface Blik {
-          /**
-           * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
-           */
-          code?: string;
         }
 
         interface Card {
@@ -1674,11 +1662,6 @@ declare module 'stripe' {
         acss_debit?: PaymentMethodOptions.AcssDebit;
 
         /**
-         * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
-         */
-        blik?: PaymentMethodOptions.Blik;
-
-        /**
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
@@ -1763,13 +1746,6 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
-        }
-
-        interface Blik {
-          /**
-           * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
-           */
-          code?: string;
         }
 
         interface Card {
@@ -2704,11 +2680,6 @@ declare module 'stripe' {
         acss_debit?: PaymentMethodOptions.AcssDebit;
 
         /**
-         * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
-         */
-        blik?: PaymentMethodOptions.Blik;
-
-        /**
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
@@ -2793,13 +2764,6 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
-        }
-
-        interface Blik {
-          /**
-           * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
-           */
-          code?: string;
         }
 
         interface Card {

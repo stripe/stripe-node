@@ -601,44 +601,14 @@ declare module 'stripe' {
 
     interface PaymentMethodUpdateParams {
       /**
-       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
-       */
-      acss_debit?: PaymentMethodUpdateParams.AcssDebit;
-
-      /**
-       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
-       */
-      affirm?: PaymentMethodUpdateParams.Affirm;
-
-      /**
-       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
-       */
-      au_becs_debit?: PaymentMethodUpdateParams.AuBecsDebit;
-
-      /**
-       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
-       */
-      bacs_debit?: PaymentMethodUpdateParams.BacsDebit;
-
-      /**
        * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
        */
       billing_details?: PaymentMethodUpdateParams.BillingDetails;
 
       /**
-       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
-       */
-      blik?: PaymentMethodUpdateParams.Blik;
-
-      /**
        * If this is a `card` PaymentMethod, this hash contains the user's card details.
        */
       card?: PaymentMethodUpdateParams.Card;
-
-      /**
-       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
-       */
-      cashapp?: PaymentMethodUpdateParams.Cashapp;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -656,30 +626,12 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
-       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
-       */
-      sepa_debit?: PaymentMethodUpdateParams.SepaDebit;
-
-      /**
        * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
        */
       us_bank_account?: PaymentMethodUpdateParams.UsBankAccount;
-
-      /**
-       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
-       */
-      zip?: PaymentMethodUpdateParams.Zip;
     }
 
     namespace PaymentMethodUpdateParams {
-      interface AcssDebit {}
-
-      interface Affirm {}
-
-      interface AuBecsDebit {}
-
-      interface BacsDebit {}
-
       interface BillingDetails {
         /**
          * Billing address.
@@ -702,8 +654,6 @@ declare module 'stripe' {
         phone?: Stripe.Emptyable<string>;
       }
 
-      interface Blik {}
-
       interface Card {
         /**
          * Two-digit number representing the card's expiration month.
@@ -716,11 +666,7 @@ declare module 'stripe' {
         exp_year?: number;
       }
 
-      interface Cashapp {}
-
       interface Link {}
-
-      interface SepaDebit {}
 
       interface UsBankAccount {
         /**
@@ -732,8 +678,6 @@ declare module 'stripe' {
       namespace UsBankAccount {
         type AccountHolderType = 'company' | 'individual';
       }
-
-      interface Zip {}
     }
 
     interface PaymentMethodListParams extends PaginationParams {
@@ -765,7 +709,6 @@ declare module 'stripe' {
         | 'blik'
         | 'boleto'
         | 'card'
-        | 'card_present'
         | 'cashapp'
         | 'customer_balance'
         | 'eps'

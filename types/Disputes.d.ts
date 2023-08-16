@@ -82,7 +82,7 @@ declare module 'stripe' {
       reason: string;
 
       /**
-       * Current status of dispute. Possible values are `warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `charge_refunded`, `won`, or `lost`.
+       * Current status of dispute. Possible values are `warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `won`, or `lost`.
        */
       status: Dispute.Status;
     }
@@ -248,7 +248,6 @@ declare module 'stripe' {
       }
 
       type Status =
-        | 'charge_refunded'
         | 'lost'
         | 'needs_response'
         | 'under_review'
