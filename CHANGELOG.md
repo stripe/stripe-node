@@ -3,10 +3,12 @@
 ## 13.0.0 - 2023-08-16
 * This release changes the pinned API version to `2023-08-16`. Please read the [API Upgrade Guide](https://stripe.com/docs/upgrades#2023-08-16) and carefully review the API changes before upgrading `stripe-node`.
 * More information is available in the [stripe-node v13 migration guide](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v13)
-" ⚠️" symbol highlights breaking changes.
+
+"⚠️" symbol highlights breaking changes.
+
 * ⚠️[#1803](https://github.com/stripe/stripe-node/pull/1803) Change the default behavior to perform 1 reattempt on retryable request failures (previously the default was 0).
 * [#1808](https://github.com/stripe/stripe-node/pull/1808) Allow request-level options to disable retries.
-* ⚠️Remove deprecated `del` method on `Subcriptions`. Please use the `cancel` method instead, which was introduced in [v9.14.0](https://github.com/stripe/stripe-node/blob/master/CHANGELOG.md#9140---2022-07-18):
+* ⚠️Remove deprecated `del` method on `Subscriptions`. Please use the `cancel` method instead, which was introduced in [v9.14.0](https://github.com/stripe/stripe-node/blob/master/CHANGELOG.md#9140---2022-07-18):
 * [#1872](https://github.com/stripe/stripe-node/pull/1872) Update generated code
   * ⚠️Add support for new values `verification_directors_mismatch`, `verification_document_directors_mismatch`, `verification_extraneous_directors`, and `verification_missing_directors` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `BankAccount.future_requirements.errors[].code`, and `BankAccount.requirements.errors[].code`
   * ⚠️Remove support for values `custom_account_update` and `custom_account_verification` from enum `AccountLinkCreateParams.type`
