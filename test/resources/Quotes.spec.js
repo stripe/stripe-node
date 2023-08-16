@@ -169,7 +169,7 @@ describe('Quotes Resource', () => {
     });
 
     it('failure', (callback) => {
-      const handleRequest = (req, res) => {
+      const handleRequest = (req, res, nPreviousRequests) => {
         setTimeout(() => res.writeHead(500));
         setTimeout(
           () =>
@@ -179,6 +179,7 @@ describe('Quotes Resource', () => {
           10
         );
         setTimeout(() => res.end(), 20);
+        return {shouldStayOpen: nPreviousRequests < 1};
       };
 
       testUtils.getTestServerStripe(
@@ -191,7 +192,7 @@ describe('Quotes Resource', () => {
 
           return stripe.quotes.pdf(
             'foo_123',
-            {host: 'localhost'},
+            {host: 'localhost', maxNetworkRetries: 1},
             (err, res) => {
               closeServer();
               expect(err).to.exist;

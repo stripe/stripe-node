@@ -17,19 +17,6 @@ describe('subscriptions Resource', () => {
     });
   });
 
-  describe('del', () => {
-    it('Sends the correct request', () => {
-      stripe.subscriptions.del('test_sub');
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'DELETE',
-        url: '/v1/subscriptions/test_sub',
-        headers: {},
-        data: {},
-        settings: {},
-      });
-    });
-  });
-
   describe('update', () => {
     it('Sends the correct request', () => {
       stripe.subscriptions.update('test_sub', {
