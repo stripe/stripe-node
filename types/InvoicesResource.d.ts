@@ -1315,7 +1315,7 @@ declare module 'stripe' {
       invoice_items?: Array<InvoiceListUpcomingLinesParams.InvoiceItem>;
 
       /**
-       * The identifier of the unstarted schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
+       * The identifier of the schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
        */
       schedule?: string;
 
@@ -1900,7 +1900,7 @@ declare module 'stripe' {
       invoice_items?: Array<InvoiceRetrieveUpcomingParams.InvoiceItem>;
 
       /**
-       * The identifier of the unstarted schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
+       * The identifier of the schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
        */
       schedule?: string;
 

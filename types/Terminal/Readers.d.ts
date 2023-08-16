@@ -158,9 +158,18 @@ declare module 'stripe' {
             generated_card?: string;
 
             /**
+             * Represents a per-setup override of a reader configuration
+             */
+            process_config?: ProcessSetupIntent.ProcessConfig;
+
+            /**
              * Most recent SetupIntent processed by the reader.
              */
             setup_intent: string | Stripe.SetupIntent;
+          }
+
+          namespace ProcessSetupIntent {
+            interface ProcessConfig {}
           }
 
           interface RefundPayment {

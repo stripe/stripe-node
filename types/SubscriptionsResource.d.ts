@@ -1490,54 +1490,6 @@ declare module 'stripe' {
       }
     }
 
-    interface SubscriptionDeleteParams {
-      /**
-       * Details about why this subscription was cancelled
-       */
-      cancellation_details?: SubscriptionDeleteParams.CancellationDetails;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items.
-       */
-      invoice_now?: boolean;
-
-      /**
-       * Will generate a proration invoice item that credits remaining unused time until the subscription period end.
-       */
-      prorate?: boolean;
-    }
-
-    namespace SubscriptionDeleteParams {
-      interface CancellationDetails {
-        /**
-         * Additional comments about why the user canceled the subscription, if the subscription was cancelled explicitly by the user.
-         */
-        comment?: Stripe.Emptyable<string>;
-
-        /**
-         * The customer submitted reason for why they cancelled, if the subscription was cancelled explicitly by the user.
-         */
-        feedback?: Stripe.Emptyable<CancellationDetails.Feedback>;
-      }
-
-      namespace CancellationDetails {
-        type Feedback =
-          | 'customer_service'
-          | 'low_quality'
-          | 'missing_features'
-          | 'other'
-          | 'switched_service'
-          | 'too_complex'
-          | 'too_expensive'
-          | 'unused';
-      }
-    }
-
     interface SubscriptionDeleteDiscountParams {}
 
     interface SubscriptionResumeParams {
@@ -1649,23 +1601,6 @@ declare module 'stripe' {
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Subscription>>;
       cancel(
-        id: string,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Subscription>>;
-
-      /**
-       * Cancels a customer's subscription immediately. The customer will not be charged again for the subscription.
-       *
-       * Note, however, that any pending invoice items that you've created will still be charged for at the end of the period, unless manually [deleted](https://stripe.com/docs/api#delete_invoiceitem). If you've set the subscription to cancel at the end of the period, any pending prorations will also be left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations will be removed.
-       *
-       * By default, upon subscription cancellation, Stripe will stop automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
-       */
-      del(
-        id: string,
-        params?: SubscriptionDeleteParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Subscription>>;
-      del(
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Subscription>>;

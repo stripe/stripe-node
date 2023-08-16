@@ -152,6 +152,15 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+
+        /**
+         * Configuration overrides
+         */
+        process_config?: ReaderProcessSetupIntentParams.ProcessConfig;
+      }
+
+      namespace ReaderProcessSetupIntentParams {
+        interface ProcessConfig {}
       }
 
       interface ReaderRefundPaymentParams {
