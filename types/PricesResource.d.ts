@@ -373,11 +373,6 @@ declare module 'stripe' {
       nickname?: string;
 
       /**
-       * The recurring components of a price such as `interval` and `usage_type`.
-       */
-      recurring?: Stripe.Emptyable<PriceUpdateParams.Recurring>;
-
-      /**
        * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
        */
       tax_behavior?: PriceUpdateParams.TaxBehavior;
@@ -467,13 +462,6 @@ declare module 'stripe' {
            */
           up_to: 'inf' | number;
         }
-      }
-
-      interface Recurring {
-        /**
-         * Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
-         */
-        trial_period_days?: number;
       }
 
       type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';

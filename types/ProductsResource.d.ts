@@ -14,21 +14,6 @@ declare module 'stripe' {
       active?: boolean;
 
       /**
-       * A list of up to 5 alphanumeric attributes. Should only be set if type=`good`.
-       */
-      attributes?: Array<string>;
-
-      /**
-       * A short one-line description of the product, meant to be displayable to the customer. May only be set if type=`good`.
-       */
-      caption?: string;
-
-      /**
-       * An array of Connect application names or identifiers that should not be able to order the SKUs for this product. May only be set if type=`good`.
-       */
-      deactivate_on?: Array<string>;
-
-      /**
        * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object. This Price will be set as the default price for this product.
        */
       default_price_data?: ProductCreateParams.DefaultPriceData;
@@ -269,21 +254,6 @@ declare module 'stripe' {
        * Whether the product is available for purchase.
        */
       active?: boolean;
-
-      /**
-       * A list of up to 5 alphanumeric attributes that each SKU can provide values for (e.g., `["color", "size"]`). If a value for `attributes` is specified, the list specified will replace the existing attributes list on this product. Any attributes not present after the update will be deleted from the SKUs for this product.
-       */
-      attributes?: Stripe.Emptyable<Array<string>>;
-
-      /**
-       * A short one-line description of the product, meant to be displayable to the customer. May only be set if `type=good`.
-       */
-      caption?: Stripe.Emptyable<string>;
-
-      /**
-       * An array of Connect application names or identifiers that should not be able to order the SKUs for this product. May only be set if `type=good`.
-       */
-      deactivate_on?: Array<string>;
 
       /**
        * The ID of the [Price](https://stripe.com/docs/api/prices) object that is the default price for this product.
