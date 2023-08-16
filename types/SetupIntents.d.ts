@@ -50,7 +50,7 @@ declare module 'stripe' {
       attach_to_self?: boolean;
 
       /**
-       * Settings for automatic payment methods compatible with this Setup Intent
+       * Settings for dynamic payment methods compatible with this Setup Intent
        */
       automatic_payment_methods: SetupIntent.AutomaticPaymentMethods | null;
 
