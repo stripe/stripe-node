@@ -21,10 +21,6 @@ export const Subscriptions = StripeResource.extend({
     method: 'DELETE',
     fullPath: '/v1/subscriptions/{subscription_exposed_id}',
   }),
-  del: stripeMethod({
-    method: 'DELETE',
-    fullPath: '/v1/subscriptions/{subscription_exposed_id}',
-  }),
   deleteDiscount: stripeMethod({
     method: 'DELETE',
     fullPath: '/v1/subscriptions/{subscription_exposed_id}/discount',

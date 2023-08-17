@@ -50,7 +50,7 @@ declare module 'stripe' {
       attach_to_self?: boolean;
 
       /**
-       * Settings for automatic payment methods compatible with this Setup Intent
+       * Settings for dynamic payment methods compatible with this Setup Intent
        */
       automatic_payment_methods: SetupIntent.AutomaticPaymentMethods | null;
 
@@ -540,8 +540,6 @@ declare module 'stripe' {
       interface PaymentMethodOptions {
         acss_debit?: PaymentMethodOptions.AcssDebit;
 
-        blik?: PaymentMethodOptions.Blik;
-
         card?: PaymentMethodOptions.Card;
 
         link?: PaymentMethodOptions.Link;
@@ -607,56 +605,6 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
-        }
-
-        interface Blik {
-          mandate_options?: Blik.MandateOptions;
-        }
-
-        namespace Blik {
-          interface MandateOptions {
-            /**
-             * Date at which the mandate expires.
-             */
-            expires_after: number | null;
-
-            off_session?: MandateOptions.OffSession;
-
-            /**
-             * Type of the mandate.
-             */
-            type: MandateOptions.Type | null;
-          }
-
-          namespace MandateOptions {
-            interface OffSession {
-              /**
-               * Amount of each recurring payment.
-               */
-              amount: number | null;
-
-              /**
-               * Currency of each recurring payment.
-               */
-              currency: string | null;
-
-              /**
-               * Frequency interval of each recurring payment.
-               */
-              interval: OffSession.Interval | null;
-
-              /**
-               * Frequency indicator of each recurring payment.
-               */
-              interval_count: number | null;
-            }
-
-            namespace OffSession {
-              type Interval = 'day' | 'month' | 'week' | 'year';
-            }
-
-            type Type = 'off_session' | 'on_session';
-          }
         }
 
         interface Card {

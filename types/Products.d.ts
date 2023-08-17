@@ -29,24 +29,9 @@ declare module 'stripe' {
       active: boolean;
 
       /**
-       * A list of up to 5 attributes that each SKU can provide values for (e.g., `["color", "size"]`).
-       */
-      attributes: Array<string> | null;
-
-      /**
-       * A short one-line description of the product, meant to be displayable to the customer. Only applicable to products of `type=good`.
-       */
-      caption?: string | null;
-
-      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created: number;
-
-      /**
-       * An array of connect application identifiers that cannot purchase this product. Only applicable to products of `type=good`.
-       */
-      deactivate_on?: Array<string>;
 
       /**
        * The ID of the [Price](https://stripe.com/docs/api/prices) object that is the default price for this product.

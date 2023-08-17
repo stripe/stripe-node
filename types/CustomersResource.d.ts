@@ -744,7 +744,6 @@ declare module 'stripe' {
         | 'blik'
         | 'boleto'
         | 'card'
-        | 'card_present'
         | 'cashapp'
         | 'customer_balance'
         | 'eps'

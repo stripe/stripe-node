@@ -342,11 +342,6 @@ declare module 'stripe' {
       receipt_number: string | null;
 
       /**
-       * The rendering-related settings that control how the invoice is displayed on customer-facing surfaces such as PDF and Hosted Invoice Page.
-       */
-      rendering: Invoice.Rendering | null;
-
-      /**
        * Options for invoice PDF rendering.
        */
       rendering_options: Invoice.RenderingOptions | null;
@@ -1067,26 +1062,6 @@ declare module 'stripe' {
           | 'wechat_pay';
       }
 
-      interface Rendering {
-        /**
-         * Invoice pdf rendering options
-         */
-        pdf: Rendering.Pdf | null;
-      }
-
-      namespace Rendering {
-        interface Pdf {
-          /**
-           * Page size of invoice pdf. Options include a4, letter, and auto. If set to auto, page size will be switched to a4 or letter based on customer locale.
-           */
-          page_size: Pdf.PageSize | null;
-        }
-
-        namespace Pdf {
-          type PageSize = 'a4' | 'auto' | 'letter';
-        }
-      }
-
       interface RenderingOptions {
         /**
          * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
@@ -1149,8 +1124,6 @@ declare module 'stripe' {
         namespace Tax {
           type TaxabilityReason =
             | 'customer_exempt'
-            | 'excluded_territory'
-            | 'jurisdiction_unsupported'
             | 'not_collecting'
             | 'not_subject_to_tax'
             | 'not_supported'
@@ -1164,7 +1137,6 @@ declare module 'stripe' {
             | 'reverse_charge'
             | 'standard_rated'
             | 'taxable_basis_reduced'
-            | 'vat_exempt'
             | 'zero_rated';
         }
       }

@@ -1,8 +1,56 @@
 # Changelog
 
+## 13.1.0 - 2023-08-17
+* [#1875](https://github.com/stripe/stripe-node/pull/1875) Update Typescript types to support version `2023-08-16`.
+
+## 13.0.0 - 2023-08-16
+* This release changes the pinned API version to `2023-08-16`. Please read the [API Upgrade Guide](https://stripe.com/docs/upgrades#2023-08-16) and carefully review the API changes before upgrading `stripe-node`.
+* More information is available in the [stripe-node v13 migration guide](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v13)
+
+"⚠️" symbol highlights breaking changes.
+
+* ⚠️[#1803](https://github.com/stripe/stripe-node/pull/1803) Change the default behavior to perform 1 reattempt on retryable request failures (previously the default was 0).
+* [#1808](https://github.com/stripe/stripe-node/pull/1808) Allow request-level options to disable retries.
+* ⚠️Remove deprecated `del` method on `Subscriptions`. Please use the `cancel` method instead, which was introduced in [v9.14.0](https://github.com/stripe/stripe-node/blob/master/CHANGELOG.md#9140---2022-07-18):
+* [#1872](https://github.com/stripe/stripe-node/pull/1872) Update generated code
+  * ⚠️Add support for new values `verification_directors_mismatch`, `verification_document_directors_mismatch`, `verification_extraneous_directors`, and `verification_missing_directors` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `BankAccount.future_requirements.errors[].code`, and `BankAccount.requirements.errors[].code`
+  * ⚠️Remove support for values `custom_account_update` and `custom_account_verification` from enum `AccountLinkCreateParams.type`
+    * These values are not fully operational
+  * ⚠️Remove support for `available_on` on `BalanceTransactionListParams`
+    * Use of this parameter is discouraged. Suppress the Typescript error with `// @ts-ignore` or `any` if sending the parameter is still required.
+  * ⚠️Remove support for `alternate_statement_descriptors` and `dispute` on `Charge`
+      * Use of these fields is discouraged.
+  * ⚠️Remove support for `destination` on `Charge`
+    * Please use `transfer_data` or `on_behalf_of` instead.
+  * ⚠️Remove support for `shipping_rates` on `Checkout.SessionCreateParams`
+    * Please use `shipping_options` instead.
+  * ⚠️Remove support for `coupon` and `trial_from_plan` on `Checkout.SessionCreateParams.subscription_data`
+    * Please [migrate to the Prices API](https://stripe.com/docs/billing/migration/migrating-prices), or suppress the Typescript error with `// @ts-ignore` or `any` if sending the parameter is still required.
+  * ⚠️Remove support for value `card_present` from enums `CustomerListPaymentMethodsParams.type` and `PaymentMethodListParams.type`
+    * This value was not fully operational.
+  * ⚠️Remove support for value `charge_refunded` from enum `Dispute.status`
+    * This value was not fully operational.
+  * ⚠️Remove support for `blik` on `Mandate.payment_method_details`, `PaymentMethodUpdateParams`, `SetupAttempt.payment_method_details`, `SetupIntent.payment_method_options`, `SetupIntentConfirmParams.payment_method_options`, `SetupIntentCreateParams.payment_method_options`, and `SetupIntentUpdateParams.payment_method_options`
+      * These fields were mistakenly released.
+  * ⚠️Remove support for `acss_debit`, `affirm`, `au_becs_debit`, `bacs_debit`, `cashapp`, `sepa_debit`, and `zip` on `PaymentMethodUpdateParams`
+      * These fields are empty.
+  * ⚠️Remove support for `country` on `PaymentMethod.link`
+      * This field was not fully operational.
+  * ⚠️Remove support for `recurring` on `PriceUpdateParams`
+      * This property should be set on create only.
+  * ⚠️Remove support for `attributes`, `caption`, and `deactivate_on` on `ProductCreateParams`, `ProductUpdateParams`, and `Product`
+    * These fields are not fully operational.
+  * ⚠️Add support for new value `2023-08-16` on enum `WebhookEndpointCreateParams.api_version`
+
+## 12.18.0 - 2023-08-10
+* [#1867](https://github.com/stripe/stripe-node/pull/1867) Update generated code
+  * Add support for new values `incorporated_partnership` and `unincorporated_partnership` on enums `Account.company.structure`, `AccountCreateParams.company.structure`, `AccountUpdateParams.company.structure`, and `TokenCreateParams.account.company.structure`
+  * Add support for new value `payment_reversal` on enum `BalanceTransaction.type`
+  * Change `Invoice.subscription_details.metadata` and `Invoice.subscription_details` to be required
+
 ## 12.17.0 - 2023-08-03
 * [#1863](https://github.com/stripe/stripe-node/pull/1863) Update generated code
-  * Change type of `AccountCreateParams.settings.card_issuing.tos_acceptance.user_agent`, `AccountCreateParams.settings.treasury.tos_acceptance.user_agent`, `AccountUpdateParams.settings.card_issuing.tos_acceptance.user_agent`, `AccountUpdateParams.settings.treasury.tos_acceptance.user_agent`, `BillingPortal.ConfigurationCreateParams.business_profile.headline`, `BillingPortal.ConfigurationUpdateParams.business_profile.headline`, `InvoiceCreateParams.payment_settings.default_mandate`, `InvoiceCreateParams.shipping_details.phone`, `InvoicePayParams.mandate`, `InvoiceUpdateParams.default_source`, `InvoiceUpdateParams.payment_settings.default_mandate`, `InvoiceUpdateParams.shipping_details.phone`, `Issuing.CardholderCreateParams.individual.card_issuing.user_terms_acceptance.user_agent`, `Issuing.CardholderUpdateParams.individual.card_issuing.user_terms_acceptance.user_agent`, `Issuing.DisputeCreateParams.evidence.canceled.cancellation_reason`, `Issuing.DisputeCreateParams.evidence.canceled.explanation`, `Issuing.DisputeCreateParams.evidence.canceled.product_description`, `Issuing.DisputeCreateParams.evidence.duplicate.explanation`, `Issuing.DisputeCreateParams.evidence.fraudulent.explanation`, `Issuing.DisputeCreateParams.evidence.merchandise_not_as_described.explanation`, `Issuing.DisputeCreateParams.evidence.merchandise_not_as_described.return_description`, `Issuing.DisputeCreateParams.evidence.not_received.explanation`, `Issuing.DisputeCreateParams.evidence.not_received.product_description`, `Issuing.DisputeCreateParams.evidence.other.explanation`, `Issuing.DisputeCreateParams.evidence.other.product_description`, `Issuing.DisputeCreateParams.evidence.service_not_as_described.cancellation_reason`, `Issuing.DisputeCreateParams.evidence.service_not_as_described.explanation`, `Issuing.DisputeUpdateParams.evidence.canceled.cancellation_reason`, `Issuing.DisputeUpdateParams.evidence.canceled.explanation`, `Issuing.DisputeUpdateParams.evidence.canceled.product_description`, `Issuing.DisputeUpdateParams.evidence.duplicate.explanation`, `Issuing.DisputeUpdateParams.evidence.fraudulent.explanation`, `Issuing.DisputeUpdateParams.evidence.merchandise_not_as_described.explanation`, `Issuing.DisputeUpdateParams.evidence.merchandise_not_as_described.return_description`, `Issuing.DisputeUpdateParams.evidence.not_received.explanation`, `Issuing.DisputeUpdateParams.evidence.not_received.product_description`, `Issuing.DisputeUpdateParams.evidence.other.explanation`, `Issuing.DisputeUpdateParams.evidence.other.product_description`, `Issuing.DisputeUpdateParams.evidence.service_not_as_described.cancellation_reason`, `Issuing.DisputeUpdateParams.evidence.service_not_as_described.explanation`, `PaymentIntentConfirmParams.payment_method_data.billing_details.name`, `PaymentIntentConfirmParams.payment_method_data.billing_details.phone`, `PaymentIntentConfirmParams.payment_method_options.konbini.confirmation_number`, `PaymentIntentConfirmParams.payment_method_options.konbini.product_description`, `PaymentIntentCreateParams.payment_method_data.billing_details.name`, `PaymentIntentCreateParams.payment_method_data.billing_details.phone`, `PaymentIntentCreateParams.payment_method_options.konbini.confirmation_number`, `PaymentIntentCreateParams.payment_method_options.konbini.product_description`, `PaymentIntentUpdateParams.payment_method_data.billing_details.name`, `PaymentIntentUpdateParams.payment_method_data.billing_details.phone`, `PaymentIntentUpdateParams.payment_method_options.konbini.confirmation_number`, `PaymentIntentUpdateParams.payment_method_options.konbini.product_description`, `PaymentMethodCreateParams.billing_details.name`, `PaymentMethodCreateParams.billing_details.phone`, `PaymentMethodUpdateParams.billing_details.name`, `PaymentMethodUpdateParams.billing_details.phone`, `ProductUpdateParams.caption`, `ProductUpdateParams.description`, `ProductUpdateParams.unit_label`, `QuoteCreateParams.description`, `QuoteCreateParams.footer`, `QuoteCreateParams.header`, `QuoteUpdateParams.description`, `QuoteUpdateParams.footer`, `QuoteUpdateParams.header`, `QuoteUpdateParams.subscription_data.description`, `SetupIntentConfirmParams.payment_method_data.billing_details.name`, `SetupIntentConfirmParams.payment_method_data.billing_details.phone`, `SetupIntentCreateParams.payment_method_data.billing_details.name`, `SetupIntentCreateParams.payment_method_data.billing_details.phone`, `SetupIntentUpdateParams.payment_method_data.billing_details.name`, `SetupIntentUpdateParams.payment_method_data.billing_details.phone`, `SubscriptionCancelParams.cancellation_details.comment`, `SubscriptionScheduleCreateParams.default_settings.description`, `SubscriptionScheduleCreateParams.phases[].description`, `SubscriptionScheduleUpdateParams.default_settings.description`, `SubscriptionScheduleUpdateParams.phases[].description`, `SubscriptionUpdateParams.cancellation_details.comment`, `SubscriptionUpdateParams.default_source`, `SubscriptionUpdateParams.description`, `Tax.CalculationCreateParams.customer_details.address.city`, `Tax.CalculationCreateParams.customer_details.address.line1`, `Tax.CalculationCreateParams.customer_details.address.line2`, `Tax.CalculationCreateParams.customer_details.address.postal_code`, `Tax.CalculationCreateParams.customer_details.address.state`, `Terminal.LocationUpdateParams.configuration_overrides`, `Terminal.ReaderUpdateParams.label`, `TokenCreateParams.person.documents.company_authorization.files[]`, `TokenCreateParams.person.documents.passport.files[]`, `TokenCreateParams.person.documents.visa.files[]`, `Treasury.OutboundPaymentCreateParams.destination_payment_method_data.billing_details.name`, `Treasury.OutboundPaymentCreateParams.destination_payment_method_data.billing_details.phone`, `WebhookEndpointCreateParams.description`, and `WebhookEndpointUpdateParams.description` from `string` to `emptyStringable(string)`
+  * Change many types from `string` to `emptyStringable(string)`
   * Add support for `subscription_details` on `Invoice`
   * Add support for `preferred_settlement_speed` on `PaymentIntent.payment_method_options.us_bank_account`, `PaymentIntentConfirmParams.payment_method_options.us_bank_account`, `PaymentIntentCreateParams.payment_method_options.us_bank_account`, and `PaymentIntentUpdateParams.payment_method_options.us_bank_account`
   * Add support for new values `sepa_debit_fingerprint` and `us_bank_account_fingerprint` on enums `Radar.ValueList.item_type` and `Radar.ValueListCreateParams.item_type`
