@@ -54,6 +54,11 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
+         * A flat amount to reverse across the entire transaction, in negative integer cents. This value represents the total amount to refund from the transaction, including taxes.
+         */
+        flat_amount?: number;
+
+        /**
          * The line item amounts to reverse.
          */
         line_items?: Array<TransactionCreateReversalParams.LineItem>;
