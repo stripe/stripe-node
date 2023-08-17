@@ -1,5 +1,8 @@
 # Changelog
 
+## 13.1.0 - 2023-08-17
+* [#1875](https://github.com/stripe/stripe-node/pull/1875) Update Typescript types to support version `2023-08-16`.
+
 ## 13.0.0 - 2023-08-16
 * This release changes the pinned API version to `2023-08-16`. Please read the [API Upgrade Guide](https://stripe.com/docs/upgrades#2023-08-16) and carefully review the API changes before upgrading `stripe-node`.
 * More information is available in the [stripe-node v13 migration guide](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v13)
