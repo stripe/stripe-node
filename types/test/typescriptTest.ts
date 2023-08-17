@@ -45,7 +45,7 @@ stripe = new Stripe('sk_test_123', {
     description: 'test',
   };
   const opts: Stripe.RequestOptions = {
-    apiVersion: '2022-11-15',
+    apiVersion: '2023-08-16',
   };
   const customer: Stripe.Customer = await stripe.customers.create(params, opts);
 
