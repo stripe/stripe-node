@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.2.0 - 2023-08-17
+* [#1876](https://github.com/stripe/stripe-node/pull/1876) Update generated code
+  * Add support for `flat_amount` on `Tax.TransactionCreateReversalParams`
+
 ## 13.1.0 - 2023-08-17
 * [#1875](https://github.com/stripe/stripe-node/pull/1875) Update Typescript types to support version `2023-08-16`.
 
