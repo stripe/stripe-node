@@ -27,16 +27,19 @@ export const getTestServerStripe = (
   clientOptions: RequestSettings,
   handler: (
     req: http.IncomingMessage,
-    res: http.ServerResponse
-  ) => {shouldStayOpen?: true} | null,
+    res: http.ServerResponse,
+    nPreviousRequests: number
+  ) => {shouldStayOpen?: boolean} | null,
   callback: (
     err: Error | null,
     stripe: StripeClient,
     closeServer: () => void
   ) => void
 ): void => {
+  let nPreviousRequests = 0;
   const server = http.createServer((req, res) => {
-    const {shouldStayOpen} = handler(req, res) || {};
+    const {shouldStayOpen} = handler(req, res, nPreviousRequests) || {};
+    nPreviousRequests += 1;
     if (!shouldStayOpen) {
       res.on('close', () => {
         server.close();
