@@ -9,7 +9,7 @@
 import Stripe from 'stripe';
 
 let stripe = new Stripe('sk_test_123', {
-  apiVersion: '2022-11-15',
+  apiVersion: '2023-08-16',
 });
 
 // @ts-ignore lazily ignore apiVersion requirement.
@@ -27,7 +27,7 @@ stripe = new Stripe('sk_test_123', {
 
 // Check config object.
 stripe = new Stripe('sk_test_123', {
-  apiVersion: '2022-11-15',
+  apiVersion: '2023-08-16',
   typescript: true,
   maxNetworkRetries: 1,
   timeout: 1000,
