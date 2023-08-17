@@ -94,8 +94,6 @@ declare module 'stripe' {
 
           gr?: CountryOptions.Gr;
 
-          hk?: CountryOptions.Hk;
-
           hr?: CountryOptions.Hr;
 
           hu?: CountryOptions.Hu;
@@ -514,13 +512,6 @@ declare module 'stripe' {
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-          }
-
-          interface Hk {
-            /**
-             * Type of registration in `country`.
-             */
-            type: 'standard';
           }
 
           interface Hr {

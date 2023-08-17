@@ -128,11 +128,6 @@ declare module 'stripe' {
           gr?: CountryOptions.Gr;
 
           /**
-           * Options for the registration in HK.
-           */
-          hk?: CountryOptions.Hk;
-
-          /**
            * Options for the registration in HR.
            */
           hr?: CountryOptions.Hr;
@@ -679,13 +674,6 @@ declare module 'stripe' {
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
-          }
-
-          interface Hk {
-            /**
-             * Type of registration to be created in `country`.
-             */
-            type: 'standard';
           }
 
           interface Hr {
