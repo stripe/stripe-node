@@ -76,6 +76,8 @@ declare module 'stripe' {
        */
       payment_intent: string | Stripe.PaymentIntent | null;
 
+      payment_method_details?: Dispute.PaymentMethodDetails;
+
       /**
        * Reason given by cardholder for dispute. Possible values are `bank_cannot_process`, `check_returned`, `credit_not_processed`, `customer_initiated`, `debit_not_authorized`, `duplicate`, `fraudulent`, `general`, `incorrect_account_details`, `insufficient_funds`, `product_not_received`, `product_unacceptable`, `subscription_canceled`, or `unrecognized`. Read more about [dispute reasons](https://stripe.com/docs/disputes/categories).
        */
@@ -245,6 +247,32 @@ declare module 'stripe' {
          * The number of times evidence has been submitted. Typically, you may only submit evidence once.
          */
         submission_count: number;
+      }
+
+      interface PaymentMethodDetails {
+        /**
+         * Card specific dispute details.
+         */
+        card: PaymentMethodDetails.Card | null;
+
+        /**
+         * Payment method type.
+         */
+        type: 'card';
+      }
+
+      namespace PaymentMethodDetails {
+        interface Card {
+          /**
+           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           */
+          brand: string;
+
+          /**
+           * The card network's specific dispute reason code, which maps to one of Stripe's primary dispute categories to simplify response guidance. The [Network code map](https://stripe.com/docs/disputes/categories#network-code-map) lists all available dispute reason codes by network.
+           */
+          network_reason_code: string | null;
+        }
       }
 
       type Status =
