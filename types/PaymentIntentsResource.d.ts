@@ -67,7 +67,7 @@ declare module 'stripe' {
       /**
        * This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
        */
-      mandate_data?: PaymentIntentCreateParams.MandateData;
+      mandate_data?: Stripe.Emptyable<PaymentIntentCreateParams.MandateData>;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -4066,9 +4066,10 @@ declare module 'stripe' {
       /**
        * This hash contains details about the Mandate to create
        */
-      mandate_data?:
+      mandate_data?: Stripe.Emptyable<
         | PaymentIntentConfirmParams.MandateData1
-        | PaymentIntentConfirmParams.MandateData2;
+        | PaymentIntentConfirmParams.MandateData2
+      >;
 
       /**
        * Set to `true` to indicate that the customer is not in your checkout flow during this payment attempt, and therefore is unable to authenticate. This parameter is intended for scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
