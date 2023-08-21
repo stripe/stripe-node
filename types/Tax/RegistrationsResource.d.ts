@@ -408,22 +408,14 @@ declare module 'stripe' {
             /**
              * Type of registration to be created in `country`.
              */
-            type: Cl.Type;
-          }
-
-          namespace Cl {
-            type Type = 'simplified' | 'standard';
+            type: 'simplified';
           }
 
           interface Co {
             /**
              * Type of registration to be created in `country`.
              */
-            type: Co.Type;
-          }
-
-          namespace Co {
-            type Type = 'simplified' | 'standard';
+            type: 'simplified';
           }
 
           interface Cy {
@@ -734,11 +726,7 @@ declare module 'stripe' {
             /**
              * Type of registration to be created in `country`.
              */
-            type: Id.Type;
-          }
-
-          namespace Id {
-            type Type = 'simplified' | 'standard';
+            type: 'simplified';
           }
 
           interface Ie {
@@ -813,11 +801,7 @@ declare module 'stripe' {
             /**
              * Type of registration to be created in `country`.
              */
-            type: Kr.Type;
-          }
-
-          namespace Kr {
-            type Type = 'simplified' | 'standard';
+            type: 'simplified';
           }
 
           interface Lt {
@@ -932,22 +916,14 @@ declare module 'stripe' {
             /**
              * Type of registration to be created in `country`.
              */
-            type: Mx.Type;
-          }
-
-          namespace Mx {
-            type Type = 'simplified' | 'standard';
+            type: 'simplified';
           }
 
           interface My {
             /**
              * Type of registration to be created in `country`.
              */
-            type: My.Type;
-          }
-
-          namespace My {
-            type Type = 'simplified' | 'standard';
+            type: 'simplified';
           }
 
           interface Nl {
@@ -1076,11 +1052,7 @@ declare module 'stripe' {
             /**
              * Type of registration to be created in `country`.
              */
-            type: Sa.Type;
-          }
-
-          namespace Sa {
-            type Type = 'simplified' | 'standard';
+            type: 'simplified';
           }
 
           interface Se {
@@ -1175,22 +1147,14 @@ declare module 'stripe' {
             /**
              * Type of registration to be created in `country`.
              */
-            type: Th.Type;
-          }
-
-          namespace Th {
-            type Type = 'simplified' | 'standard';
+            type: 'simplified';
           }
 
           interface Tr {
             /**
              * Type of registration to be created in `country`.
              */
-            type: Tr.Type;
-          }
-
-          namespace Tr {
-            type Type = 'simplified' | 'standard';
+            type: 'simplified';
           }
 
           interface Us {
@@ -1237,11 +1201,7 @@ declare module 'stripe' {
             /**
              * Type of registration to be created in `country`.
              */
-            type: Vn.Type;
-          }
-
-          namespace Vn {
-            type Type = 'simplified' | 'standard';
+            type: 'simplified';
           }
 
           interface Za {
