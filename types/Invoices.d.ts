@@ -1056,7 +1056,7 @@ declare module 'stripe' {
               /**
                * Data features requested to be retrieved upon account creation.
                */
-              prefetch?: Array<FinancialConnections.Prefetch> | null;
+              prefetch: Array<FinancialConnections.Prefetch> | null;
             }
 
             namespace FinancialConnections {
