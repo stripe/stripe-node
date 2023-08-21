@@ -1025,6 +1025,11 @@ declare module 'stripe' {
                * The list of permissions to request. The `payment_method` permission must be included.
                */
               permissions?: Array<FinancialConnections.Permission>;
+
+              /**
+               * Data features requested to be retrieved upon account creation.
+               */
+              prefetch: Array<'balances'> | null;
             }
 
             namespace FinancialConnections {

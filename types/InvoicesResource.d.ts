@@ -398,6 +398,11 @@ declare module 'stripe' {
                * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
+
+              /**
+               * List of data features that you would like to retrieve upon account creation.
+               */
+              prefetch?: Array<'balances'>;
             }
 
             namespace FinancialConnections {
@@ -991,6 +996,11 @@ declare module 'stripe' {
                * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
+
+              /**
+               * List of data features that you would like to retrieve upon account creation.
+               */
+              prefetch?: Array<'balances'>;
             }
 
             namespace FinancialConnections {
