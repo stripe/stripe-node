@@ -209,7 +209,7 @@ declare module 'stripe' {
         shipping_address_collection?: SessionCreateParams.ShippingAddressCollection;
 
         /**
-         * The shipping rate options to apply to this Session.
+         * The shipping rate options to apply to this Session. Up to a maximum of 5.
          */
         shipping_options?: Array<SessionCreateParams.ShippingOption>;
 
