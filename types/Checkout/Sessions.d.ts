@@ -185,7 +185,7 @@ declare module 'stripe' {
         payment_method_collection: Session.PaymentMethodCollection | null;
 
         /**
-         * Information about the payment method configuration used for this Checkout session.
+         * Information about the payment method configuration used for this Checkout session if using dynamic payment methods.
          */
         payment_method_configuration_details?: Session.PaymentMethodConfigurationDetails | null;
 
