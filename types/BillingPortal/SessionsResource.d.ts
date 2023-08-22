@@ -106,9 +106,37 @@ declare module 'stripe' {
 
           interface SubscriptionCancel {
             /**
+             * Specify a retention strategy to be used in the cancellation flow.
+             */
+            retention?: SubscriptionCancel.Retention;
+
+            /**
              * The ID of the subscription to be canceled.
              */
             subscription: string;
+          }
+
+          namespace SubscriptionCancel {
+            interface Retention {
+              /**
+               * Configuration when `retention.type=coupon_offer`.
+               */
+              coupon_offer: Retention.CouponOffer;
+
+              /**
+               * Type of retention strategy to use with the customer.
+               */
+              type: 'coupon_offer';
+            }
+
+            namespace Retention {
+              interface CouponOffer {
+                /**
+                 * The ID of the coupon to be offered.
+                 */
+                coupon: string;
+              }
+            }
           }
 
           interface SubscriptionUpdate {
