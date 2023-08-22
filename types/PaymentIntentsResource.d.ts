@@ -169,7 +169,7 @@ declare module 'stripe' {
       transfer_data?: PaymentIntentCreateParams.TransferData;
 
       /**
-       * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
+       * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
        */
       transfer_group?: string;
 
