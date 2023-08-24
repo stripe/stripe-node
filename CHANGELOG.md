@@ -1,5 +1,13 @@
 # Changelog
 
+## 13.0.0-beta.1 - 2023-08-24
+* [#1873](https://github.com/stripe/stripe-node/pull/1873) Update generated code for beta
+  * Add support for new resources `QuotePreviewInvoice` and `QuotePreviewSchedule`
+  * Change `Checkout.Session.payment_method_options.us_bank_account.financial_connections.prefetch`, `FinancialConnections.Session.prefetch`, `Invoice.charge`, `Invoice.customer`, `Invoice.payment_settings.payment_method_options.us_bank_account.financial_connections.prefetch`, `PaymentIntent.payment_method_options.us_bank_account.financial_connections.prefetch`, `SetupIntent.payment_method_options.us_bank_account.financial_connections.prefetch`, and `Subscription.payment_settings.payment_method_options.us_bank_account.financial_connections.prefetch` to be required
+  * Remove support for `applies_to` on `Invoice` and `SubscriptionSchedule`
+  * Add support for `cl`, `co`, `id`, `kr`, `mx`, `my`, `sa`, `th`, `tr`, and `vn` on `Tax.Registration.country_options` and `Tax.RegistrationCreateParams.country_options`
+  * Remove support for `hk` on `Tax.Registration.country_options` and `Tax.RegistrationCreateParams.country_options`
+
 ## 13.2.0 - 2023-08-17
 * [#1876](https://github.com/stripe/stripe-node/pull/1876) Update generated code
   * Add support for `flat_amount` on `Tax.TransactionCreateReversalParams`
