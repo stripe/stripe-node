@@ -27,6 +27,11 @@ declare module 'stripe' {
         filters?: SessionCreateParams.Filters;
 
         /**
+         * List of data features that you would like to retrieve upon account creation.
+         */
+        prefetch?: Array<SessionCreateParams.Prefetch>;
+
+        /**
          * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
          */
         return_url?: string;
@@ -66,6 +71,8 @@ declare module 'stripe' {
           | 'ownership'
           | 'payment_method'
           | 'transactions';
+
+        type Prefetch = 'balances' | 'ownership';
       }
 
       interface SessionRetrieveParams {

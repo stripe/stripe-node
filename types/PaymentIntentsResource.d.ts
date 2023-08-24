@@ -67,7 +67,7 @@ declare module 'stripe' {
       /**
        * This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
        */
-      mandate_data?: PaymentIntentCreateParams.MandateData;
+      mandate_data?: Stripe.Emptyable<PaymentIntentCreateParams.MandateData>;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -154,7 +154,7 @@ declare module 'stripe' {
       transfer_data?: PaymentIntentCreateParams.TransferData;
 
       /**
-       * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
+       * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
        */
       transfer_group?: string;
 
@@ -1902,6 +1902,11 @@ declare module 'stripe' {
              * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * List of data features that you would like to retrieve upon account creation.
+             */
+            prefetch?: Array<'balances'>;
 
             /**
              * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
@@ -3826,6 +3831,11 @@ declare module 'stripe' {
             permissions?: Array<FinancialConnections.Permission>;
 
             /**
+             * List of data features that you would like to retrieve upon account creation.
+             */
+            prefetch?: Array<'balances'>;
+
+            /**
              * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
              */
             return_url?: string;
@@ -4066,9 +4076,10 @@ declare module 'stripe' {
       /**
        * This hash contains details about the Mandate to create
        */
-      mandate_data?:
+      mandate_data?: Stripe.Emptyable<
         | PaymentIntentConfirmParams.MandateData1
-        | PaymentIntentConfirmParams.MandateData2;
+        | PaymentIntentConfirmParams.MandateData2
+      >;
 
       /**
        * Set to `true` to indicate that the customer is not in your checkout flow during this payment attempt, and therefore is unable to authenticate. This parameter is intended for scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
@@ -5886,6 +5897,11 @@ declare module 'stripe' {
              * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * List of data features that you would like to retrieve upon account creation.
+             */
+            prefetch?: Array<'balances'>;
 
             /**
              * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.

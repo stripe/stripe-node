@@ -204,7 +204,7 @@ declare module 'stripe' {
         shipping_address_collection?: SessionCreateParams.ShippingAddressCollection;
 
         /**
-         * The shipping rate options to apply to this Session.
+         * The shipping rate options to apply to this Session. Up to a maximum of 5.
          */
         shipping_options?: Array<SessionCreateParams.ShippingOption>;
 
@@ -783,7 +783,7 @@ declare module 'stripe' {
           transfer_data?: PaymentIntentData.TransferData;
 
           /**
-           * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
+           * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
            */
           transfer_group?: string;
         }
@@ -1524,6 +1524,11 @@ declare module 'stripe' {
                * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
+
+              /**
+               * List of data features that you would like to retrieve upon account creation.
+               */
+              prefetch?: Array<'balances'>;
             }
 
             namespace FinancialConnections {
