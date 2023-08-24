@@ -37,11 +37,7 @@ declare module 'stripe' {
     namespace AccountLinkCreateParams {
       type Collect = 'currently_due' | 'eventually_due';
 
-      type Type =
-        | 'account_onboarding'
-        | 'account_update'
-        | 'custom_account_update'
-        | 'custom_account_verification';
+      type Type = 'account_onboarding' | 'account_update';
     }
 
     class AccountLinksResource {

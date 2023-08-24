@@ -254,7 +254,7 @@ declare module 'stripe' {
         /**
          * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
          *
-         * *Starting May 1, 2021, card fingerprint in India for Connect will change to allow two fingerprints for the same card --- one for India and one for the rest of the world.*
+         * *As of May 1, 2021, card fingerprint in India for Connect changed to allow two fingerprints for the same card---one for India and one for the rest of the world.*
          */
         fingerprint?: string | null;
 
@@ -457,7 +457,7 @@ declare module 'stripe' {
         /**
          * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
          *
-         * *Starting May 1, 2021, card fingerprint in India for Connect will change to allow two fingerprints for the same card --- one for India and one for the rest of the world.*
+         * *As of May 1, 2021, card fingerprint in India for Connect changed to allow two fingerprints for the same card---one for India and one for the rest of the world.*
          */
         fingerprint: string | null;
 
@@ -691,7 +691,7 @@ declare module 'stripe' {
         /**
          * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
          *
-         * *Starting May 1, 2021, card fingerprint in India for Connect will change to allow two fingerprints for the same card --- one for India and one for the rest of the world.*
+         * *As of May 1, 2021, card fingerprint in India for Connect changed to allow two fingerprints for the same card---one for India and one for the rest of the world.*
          */
         fingerprint: string | null;
 
@@ -781,12 +781,6 @@ declare module 'stripe' {
       interface Konbini {}
 
       interface Link {
-        /**
-         * Two-letter ISO code representing the funding source (i.e. card, bank) country beneath the Link payment method.
-         * You could use this attribute to get a sense of the international breakdown of funding sources you've collected.
-         */
-        country?: string;
-
         /**
          * Account owner's email address.
          */

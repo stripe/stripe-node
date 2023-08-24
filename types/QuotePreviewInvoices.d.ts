@@ -36,7 +36,7 @@ declare module 'stripe' {
      *
      * Related guide: [Send invoices to customers](https://stripe.com/docs/billing/invoices/sending)
      */
-    interface Invoice {
+    interface QuotePreviewInvoice {
       /**
        * Unique identifier for the object. This property is always present unless the invoice is an upcoming invoice. See [Retrieve an upcoming invoice](https://stripe.com/docs/api/invoices/upcoming) for more details.
        */
@@ -45,7 +45,7 @@ declare module 'stripe' {
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object: 'invoice';
+      object: 'quote_preview_invoice';
 
       /**
        * The country of the business associated with this invoice, most often the business creating the invoice.
@@ -98,6 +98,8 @@ declare module 'stripe' {
        */
       application_fee_amount: number | null;
 
+      applies_to: QuotePreviewInvoice.AppliesTo;
+
       /**
        * Number of payment attempts made for this invoice, from the perspective of the payment retry schedule. Any payment attempt counts as the first attempt, and subsequently only automatic retries increment the attempt count. In other words, manual payment attempts after the first attempt do not affect the retry schedule.
        */
@@ -108,27 +110,17 @@ declare module 'stripe' {
        */
       attempted: boolean;
 
-      /**
-       * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
-       */
-      auto_advance?: boolean;
-
-      automatic_tax: Invoice.AutomaticTax;
+      automatic_tax: QuotePreviewInvoice.AutomaticTax;
 
       /**
        * Indicates the reason why the invoice was created. `subscription_cycle` indicates an invoice created by a subscription advancing into a new period. `subscription_create` indicates an invoice created due to creating a subscription. `subscription_update` indicates an invoice created due to updating a subscription. `subscription` is set for all old invoices to indicate either a change to a subscription or a period advancement. `manual` is set for all invoices unrelated to a subscription (for example: created via the invoice editor). The `upcoming` value is reserved for simulated invoices per the upcoming invoice endpoint. `subscription_threshold` indicates an invoice created due to a billing threshold being reached.
        */
-      billing_reason: Invoice.BillingReason | null;
-
-      /**
-       * ID of the latest charge generated for this invoice, if any.
-       */
-      charge: string | Stripe.Charge | null;
+      billing_reason: QuotePreviewInvoice.BillingReason | null;
 
       /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions.
        */
-      collection_method: Invoice.CollectionMethod;
+      collection_method: QuotePreviewInvoice.CollectionMethod;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -143,12 +135,7 @@ declare module 'stripe' {
       /**
        * Custom fields displayed on the invoice.
        */
-      custom_fields: Array<Invoice.CustomField> | null;
-
-      /**
-       * The ID of the customer who will be billed.
-       */
-      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+      custom_fields: Array<QuotePreviewInvoice.CustomField> | null;
 
       /**
        * The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
@@ -173,17 +160,17 @@ declare module 'stripe' {
       /**
        * The customer's shipping information. Until the invoice is finalized, this field will equal `customer.shipping`. Once the invoice is finalized, this field will no longer be updated.
        */
-      customer_shipping: Invoice.CustomerShipping | null;
+      customer_shipping: QuotePreviewInvoice.CustomerShipping | null;
 
       /**
        * The customer's tax exempt status. Until the invoice is finalized, this field will equal `customer.tax_exempt`. Once the invoice is finalized, this field will no longer be updated.
        */
-      customer_tax_exempt: Invoice.CustomerTaxExempt | null;
+      customer_tax_exempt: QuotePreviewInvoice.CustomerTaxExempt | null;
 
       /**
        * The customer's tax IDs. Until the invoice is finalized, this field will contain the same tax IDs as `customer.tax_ids`. Once the invoice is finalized, this field will no longer be updated.
        */
-      customer_tax_ids?: Array<Invoice.CustomerTaxId> | null;
+      customer_tax_ids?: Array<QuotePreviewInvoice.CustomerTaxId> | null;
 
       /**
        * ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription's default payment method, if any, or to the default payment method in the customer's invoice settings.
@@ -199,8 +186,6 @@ declare module 'stripe' {
        * The tax rates applied to this invoice, if any.
        */
       default_tax_rates: Array<Stripe.TaxRate>;
-
-      deleted?: void;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
@@ -242,22 +227,12 @@ declare module 'stripe' {
       /**
        * Details of the invoice that was cloned. See the [revision documentation](https://stripe.com/docs/invoicing/invoice-revisions) for more details.
        */
-      from_invoice: Invoice.FromInvoice | null;
-
-      /**
-       * The URL for the hosted invoice page, which allows customers to view and pay an invoice. If the invoice has not been finalized yet, this will be null.
-       */
-      hosted_invoice_url?: string | null;
-
-      /**
-       * The link to download the PDF for the invoice. If the invoice has not been finalized yet, this will be null.
-       */
-      invoice_pdf?: string | null;
+      from_invoice: QuotePreviewInvoice.FromInvoice | null;
 
       /**
        * The error encountered during the previous attempt to finalize the invoice. This field is cleared when the invoice is successfully finalized.
        */
-      last_finalization_error: Invoice.LastFinalizationError | null;
+      last_finalization_error: QuotePreviewInvoice.LastFinalizationError | null;
 
       /**
        * The ID of the most recent non-draft revision of this invoice
@@ -309,7 +284,7 @@ declare module 'stripe' {
        */
       payment_intent: string | Stripe.PaymentIntent | null;
 
-      payment_settings: Invoice.PaymentSettings;
+      payment_settings: QuotePreviewInvoice.PaymentSettings;
 
       /**
        * End of the usage period during which invoice items were added to this invoice.
@@ -344,17 +319,17 @@ declare module 'stripe' {
       /**
        * Options for invoice PDF rendering.
        */
-      rendering_options: Invoice.RenderingOptions | null;
+      rendering_options: QuotePreviewInvoice.RenderingOptions | null;
 
       /**
        * The details of the cost of shipping, including the ShippingRate applied on the invoice.
        */
-      shipping_cost: Invoice.ShippingCost | null;
+      shipping_cost: QuotePreviewInvoice.ShippingCost | null;
 
       /**
        * Shipping details for the invoice. The Invoice PDF will use the `shipping_details` value if it is set, otherwise the PDF will render the shipping address from the customer.
        */
-      shipping_details: Invoice.ShippingDetails | null;
+      shipping_details: QuotePreviewInvoice.ShippingDetails | null;
 
       /**
        * Starting customer balance before the invoice is finalized. If the invoice has not been finalized yet, this will be the current customer balance. For revision invoices, this also includes any customer balance that was applied to the original invoice.
@@ -369,9 +344,9 @@ declare module 'stripe' {
       /**
        * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
        */
-      status: Invoice.Status | null;
+      status: QuotePreviewInvoice.Status | null;
 
-      status_transitions: Invoice.StatusTransitions;
+      status_transitions: QuotePreviewInvoice.StatusTransitions;
 
       /**
        * The subscription that this invoice was prepared for, if any.
@@ -381,7 +356,7 @@ declare module 'stripe' {
       /**
        * Details about the subscription that created this invoice.
        */
-      subscription_details: Invoice.SubscriptionDetails | null;
+      subscription_details: QuotePreviewInvoice.SubscriptionDetails | null;
 
       /**
        * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
@@ -408,7 +383,7 @@ declare module 'stripe' {
        */
       test_clock: string | Stripe.TestHelpers.TestClock | null;
 
-      threshold_reason?: Invoice.ThresholdReason;
+      threshold_reason?: QuotePreviewInvoice.ThresholdReason;
 
       /**
        * Total after discounts and taxes.
@@ -418,7 +393,9 @@ declare module 'stripe' {
       /**
        * The aggregate amounts calculated per discount across all line items.
        */
-      total_discount_amounts: Array<Invoice.TotalDiscountAmount> | null;
+      total_discount_amounts: Array<
+        QuotePreviewInvoice.TotalDiscountAmount
+      > | null;
 
       /**
        * The integer amount in cents (or local equivalent) representing the total amount of the invoice including all discounts but excluding all tax.
@@ -428,12 +405,12 @@ declare module 'stripe' {
       /**
        * The aggregate amounts calculated per tax rate for all line items.
        */
-      total_tax_amounts: Array<Invoice.TotalTaxAmount>;
+      total_tax_amounts: Array<QuotePreviewInvoice.TotalTaxAmount>;
 
       /**
        * The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to for the invoice.
        */
-      transfer_data: Invoice.TransferData | null;
+      transfer_data: QuotePreviewInvoice.TransferData | null;
 
       /**
        * Invoices are automatically paid or sent 1 hour after webhooks are delivered, or until all webhook delivery attempts have [been exhausted](https://stripe.com/docs/billing/webhooks#understand). This field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had no webhooks to deliver, this will be set while the invoice is being created.
@@ -441,7 +418,28 @@ declare module 'stripe' {
       webhooks_delivered_at: number | null;
     }
 
-    namespace Invoice {
+    namespace QuotePreviewInvoice {
+      interface AppliesTo {
+        /**
+         * A custom string that identifies a new subscription schedule being created upon quote acceptance. All quote lines with the same `new_reference` field will be applied to the creation of a new subscription schedule.
+         */
+        new_reference: string | null;
+
+        /**
+         * The ID of the schedule the line applies to.
+         */
+        subscription_schedule: string | null;
+
+        /**
+         * Describes whether the quote line is affecting a new schedule or an existing schedule.
+         */
+        type: AppliesTo.Type;
+      }
+
+      namespace AppliesTo {
+        type Type = 'new_reference' | 'subscription_schedule';
+      }
+
       interface AutomaticTax {
         /**
          * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
@@ -1333,26 +1331,6 @@ declare module 'stripe' {
          */
         destination: string | Stripe.Account;
       }
-    }
-
-    /**
-     * The DeletedInvoice object.
-     */
-    interface DeletedInvoice {
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object: 'invoice';
-
-      /**
-       * Always true for a deleted object
-       */
-      deleted: true;
     }
   }
 }

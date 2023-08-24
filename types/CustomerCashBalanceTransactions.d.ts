@@ -68,6 +68,11 @@ declare module 'stripe' {
     namespace CustomerCashBalanceTransaction {
       interface AdjustedForOverdraft {
         /**
+         * The [Balance Transaction](docs/api/balance_transactions/object) that corresponds to funds taken out of your Stripe balance.
+         */
+        balance_transaction: string | Stripe.BalanceTransaction;
+
+        /**
          * The [Cash Balance Transaction](https://stripe.com/docs/api/cash_balance_transactions/object) that brought the customer balance negative, triggering the clawback of funds.
          */
         linked_transaction: string | Stripe.CustomerCashBalanceTransaction;

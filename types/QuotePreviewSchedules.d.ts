@@ -3,11 +3,9 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * A subscription schedule allows you to create and manage the lifecycle of a subscription by predefining expected changes.
-     *
-     * Related guide: [Subscription schedules](https://stripe.com/docs/billing/subscriptions/subscription-schedules)
+     * The QuotePreviewSchedule object.
      */
-    interface SubscriptionSchedule {
+    interface QuotePreviewSchedule {
       /**
        * Unique identifier for the object.
        */
@@ -16,7 +14,7 @@ declare module 'stripe' {
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object: 'subscription_schedule';
+      object: 'quote_preview_schedule';
 
       /**
        * ID of the Connect Application that created the schedule.
@@ -27,10 +25,12 @@ declare module 'stripe' {
         | Stripe.DeletedApplication
         | null;
 
+      applies_to: QuotePreviewSchedule.AppliesTo;
+
       /**
        * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
        */
-      billing_behavior?: SubscriptionSchedule.BillingBehavior;
+      billing_behavior?: QuotePreviewSchedule.BillingBehavior;
 
       /**
        * Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.
@@ -50,19 +50,19 @@ declare module 'stripe' {
       /**
        * Object representing the start and end dates for the current phase of the subscription schedule, if it is `active`.
        */
-      current_phase: SubscriptionSchedule.CurrentPhase | null;
+      current_phase: QuotePreviewSchedule.CurrentPhase | null;
 
       /**
        * ID of the customer who owns the subscription schedule.
        */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
-      default_settings: SubscriptionSchedule.DefaultSettings;
+      default_settings: QuotePreviewSchedule.DefaultSettings;
 
       /**
        * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
        */
-      end_behavior: SubscriptionSchedule.EndBehavior;
+      end_behavior: QuotePreviewSchedule.EndBehavior;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -77,12 +77,12 @@ declare module 'stripe' {
       /**
        * Configuration for the subscription schedule's phases.
        */
-      phases: Array<SubscriptionSchedule.Phase>;
+      phases: Array<QuotePreviewSchedule.Phase>;
 
       /**
        * Time period and invoice for a Subscription billed in advance.
        */
-      prebilling?: SubscriptionSchedule.Prebilling | null;
+      prebilling?: QuotePreviewSchedule.Prebilling | null;
 
       /**
        * Time at which the subscription schedule was released. Measured in seconds since the Unix epoch.
@@ -97,7 +97,7 @@ declare module 'stripe' {
       /**
        * The present status of the subscription schedule. Possible values are `not_started`, `active`, `completed`, `released`, and `canceled`. You can read more about the different states in our [behavior guide](https://stripe.com/docs/billing/subscriptions/subscription-schedules).
        */
-      status: SubscriptionSchedule.Status;
+      status: QuotePreviewSchedule.Status;
 
       /**
        * ID of the subscription managed by the subscription schedule.
@@ -110,7 +110,28 @@ declare module 'stripe' {
       test_clock: string | Stripe.TestHelpers.TestClock | null;
     }
 
-    namespace SubscriptionSchedule {
+    namespace QuotePreviewSchedule {
+      interface AppliesTo {
+        /**
+         * A custom string that identifies a new subscription schedule being created upon quote acceptance. All quote lines with the same `new_reference` field will be applied to the creation of a new subscription schedule.
+         */
+        new_reference: string | null;
+
+        /**
+         * The ID of the schedule the line applies to.
+         */
+        subscription_schedule: string | null;
+
+        /**
+         * Describes whether the quote line is affecting a new schedule or an existing schedule.
+         */
+        type: AppliesTo.Type;
+      }
+
+      namespace AppliesTo {
+        type Type = 'new_reference' | 'subscription_schedule';
+      }
+
       type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
 
       interface CurrentPhase {

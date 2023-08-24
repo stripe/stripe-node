@@ -209,14 +209,9 @@ declare module 'stripe' {
         shipping_address_collection?: SessionCreateParams.ShippingAddressCollection;
 
         /**
-         * The shipping rate options to apply to this Session.
+         * The shipping rate options to apply to this Session. Up to a maximum of 5.
          */
         shipping_options?: Array<SessionCreateParams.ShippingOption>;
-
-        /**
-         * [Deprecated] The shipping rate to apply to this Session. Only up to one may be specified.
-         */
-        shipping_rates?: Array<string>;
 
         /**
          * Describes the type of transaction being performed by Checkout in order to customize
@@ -793,7 +788,7 @@ declare module 'stripe' {
           transfer_data?: PaymentIntentData.TransferData;
 
           /**
-           * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
+           * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
            */
           transfer_group?: string;
         }
@@ -2049,11 +2044,6 @@ declare module 'stripe' {
           billing_cycle_anchor?: number;
 
           /**
-           * The ID of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
-           */
-          coupon?: string;
-
-          /**
            * The tax rates that will apply to any subscription item that does not have
            * `tax_rates` set. Invoices created will have their `default_tax_rates` populated
            * from the subscription.
@@ -2093,11 +2083,6 @@ declare module 'stripe' {
            * 48 hours in the future.
            */
           trial_end?: number;
-
-          /**
-           * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` on `subscription_data` is preferred. Defaults to `false`.
-           */
-          trial_from_plan?: boolean;
 
           /**
            * Integer representing the number of trial period days before the

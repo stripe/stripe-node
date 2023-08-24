@@ -188,6 +188,8 @@
 ///<reference path='./PromotionCodes.d.ts' />
 ///<reference path='./QuoteLines.d.ts' />
 ///<reference path='./QuotePhases.d.ts' />
+///<reference path='./QuotePreviewInvoices.d.ts' />
+///<reference path='./QuotePreviewSchedules.d.ts' />
 ///<reference path='./Quotes.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarnings.d.ts' />
 ///<reference path='./Radar/ValueListItems.d.ts' />

@@ -19,8 +19,6 @@ declare module 'stripe' {
        */
       object: 'charge';
 
-      alternate_statement_descriptors?: Charge.AlternateStatementDescriptors;
-
       /**
        * Amount intended to be collected by this payment. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
        */
@@ -92,16 +90,6 @@ declare module 'stripe' {
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
       description: string | null;
-
-      /**
-       * ID of an existing, connected Stripe account to transfer funds to if `transfer_data` was specified in the charge request.
-       */
-      destination: string | Stripe.Account | null;
-
-      /**
-       * Details about the dispute if the charge has been disputed.
-       */
-      dispute: string | Stripe.Dispute | null;
 
       /**
        * Whether the charge has been disputed.
@@ -257,18 +245,6 @@ declare module 'stripe' {
     }
 
     namespace Charge {
-      interface AlternateStatementDescriptors {
-        /**
-         * The Kana variation of the descriptor.
-         */
-        kana?: string;
-
-        /**
-         * The Kanji variation of the descriptor.
-         */
-        kanji?: string;
-      }
-
       interface BillingDetails {
         /**
          * Billing address.
@@ -733,7 +709,7 @@ declare module 'stripe' {
           /**
            * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
            *
-           * *Starting May 1, 2021, card fingerprint in India for Connect will change to allow two fingerprints for the same card --- one for India and one for the rest of the world.*
+           * *As of May 1, 2021, card fingerprint in India for Connect changed to allow two fingerprints for the same card---one for India and one for the rest of the world.*
            */
           fingerprint?: string | null;
 
@@ -1035,7 +1011,7 @@ declare module 'stripe' {
           /**
            * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
            *
-           * *Starting May 1, 2021, card fingerprint in India for Connect will change to allow two fingerprints for the same card --- one for India and one for the rest of the world.*
+           * *As of May 1, 2021, card fingerprint in India for Connect changed to allow two fingerprints for the same card---one for India and one for the rest of the world.*
            */
           fingerprint: string | null;
 
@@ -1393,7 +1369,7 @@ declare module 'stripe' {
           /**
            * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
            *
-           * *Starting May 1, 2021, card fingerprint in India for Connect will change to allow two fingerprints for the same card --- one for India and one for the rest of the world.*
+           * *As of May 1, 2021, card fingerprint in India for Connect changed to allow two fingerprints for the same card---one for India and one for the rest of the world.*
            */
           fingerprint: string | null;
 

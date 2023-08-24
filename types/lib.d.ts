@@ -27,7 +27,7 @@ declare module 'stripe' {
       }): (...args: any[]) => Response<ResponseObject>; //eslint-disable-line @typescript-eslint/no-explicit-any
       static MAX_BUFFERED_REQUEST_METRICS: number;
     }
-    export type LatestApiVersion = '2022-11-15';
+    export type LatestApiVersion = '2023-08-16';
     export type HttpAgent = Agent;
     export type HttpProtocol = 'http' | 'https';
 
@@ -53,8 +53,10 @@ declare module 'stripe' {
       typescript?: true;
 
       /**
-       * Enables automatic network retries with exponential backoff, up to the specified number of retries (default 0).
-       * Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
+       * Specifies maximum number of automatic network retries (default 1).
+       * Retries will be attempted with exponential backoff.
+       * Retries can be disabled by setting this option to 0.
+       * [Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
        * @docs https://github.com/stripe/stripe-node#network-retries
        */
       maxNetworkRetries?: number;

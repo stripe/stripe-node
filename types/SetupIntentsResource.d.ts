@@ -47,7 +47,7 @@ declare module 'stripe' {
       /**
        * This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
        */
-      mandate_data?: SetupIntentCreateParams.MandateData;
+      mandate_data?: Stripe.Emptyable<SetupIntentCreateParams.MandateData>;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -726,11 +726,6 @@ declare module 'stripe' {
         acss_debit?: PaymentMethodOptions.AcssDebit;
 
         /**
-         * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
-         */
-        blik?: PaymentMethodOptions.Blik;
-
-        /**
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
@@ -815,13 +810,6 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
-        }
-
-        interface Blik {
-          /**
-           * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
-           */
-          code?: string;
         }
 
         interface Card {
@@ -1674,11 +1662,6 @@ declare module 'stripe' {
         acss_debit?: PaymentMethodOptions.AcssDebit;
 
         /**
-         * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
-         */
-        blik?: PaymentMethodOptions.Blik;
-
-        /**
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
@@ -1763,13 +1746,6 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
-        }
-
-        interface Blik {
-          /**
-           * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
-           */
-          code?: string;
         }
 
         interface Card {
@@ -2036,9 +2012,10 @@ declare module 'stripe' {
       /**
        * This hash contains details about the Mandate to create
        */
-      mandate_data?:
+      mandate_data?: Stripe.Emptyable<
         | SetupIntentConfirmParams.MandateData1
-        | SetupIntentConfirmParams.MandateData2;
+        | SetupIntentConfirmParams.MandateData2
+      >;
 
       /**
        * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
@@ -2704,11 +2681,6 @@ declare module 'stripe' {
         acss_debit?: PaymentMethodOptions.AcssDebit;
 
         /**
-         * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
-         */
-        blik?: PaymentMethodOptions.Blik;
-
-        /**
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
@@ -2793,13 +2765,6 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
-        }
-
-        interface Blik {
-          /**
-           * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
-           */
-          code?: string;
         }
 
         interface Card {

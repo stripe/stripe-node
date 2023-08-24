@@ -185,7 +185,7 @@ declare module 'stripe' {
         payment_method_collection: Session.PaymentMethodCollection | null;
 
         /**
-         * Information about the payment method configuration used for this Checkout session.
+         * Information about the payment method configuration used for this Checkout session if using dynamic payment methods.
          */
         payment_method_configuration_details?: Session.PaymentMethodConfigurationDetails | null;
 
@@ -1297,7 +1297,7 @@ declare module 'stripe' {
               /**
                * Data features requested to be retrieved upon account creation.
                */
-              prefetch?: Array<FinancialConnections.Prefetch> | null;
+              prefetch: Array<FinancialConnections.Prefetch> | null;
 
               /**
                * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
@@ -1649,8 +1649,6 @@ declare module 'stripe' {
           namespace Tax {
             type TaxabilityReason =
               | 'customer_exempt'
-              | 'excluded_territory'
-              | 'jurisdiction_unsupported'
               | 'not_collecting'
               | 'not_subject_to_tax'
               | 'not_supported'
@@ -1664,7 +1662,6 @@ declare module 'stripe' {
               | 'reverse_charge'
               | 'standard_rated'
               | 'taxable_basis_reduced'
-              | 'vat_exempt'
               | 'zero_rated';
           }
         }
@@ -1791,8 +1788,6 @@ declare module 'stripe' {
             namespace Tax {
               type TaxabilityReason =
                 | 'customer_exempt'
-                | 'excluded_territory'
-                | 'jurisdiction_unsupported'
                 | 'not_collecting'
                 | 'not_subject_to_tax'
                 | 'not_supported'
@@ -1806,7 +1801,6 @@ declare module 'stripe' {
                 | 'reverse_charge'
                 | 'standard_rated'
                 | 'taxable_basis_reduced'
-                | 'vat_exempt'
                 | 'zero_rated';
             }
           }
