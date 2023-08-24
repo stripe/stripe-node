@@ -53,8 +53,10 @@ declare module 'stripe' {
       typescript?: true;
 
       /**
-       * Enables automatic network retries with exponential backoff, up to the specified number of retries (default 0).
-       * Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
+       * Specifies maximum number of automatic network retries (default 1).
+       * Retries will be attempted with exponential backoff.
+       * Retries can be disabled by setting this option to 0.
+       * [Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
        * @docs https://github.com/stripe/stripe-node#network-retries
        */
       maxNetworkRetries?: number;
