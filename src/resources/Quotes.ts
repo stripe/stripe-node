@@ -46,7 +46,7 @@ export const Quotes = StripeResource.extend({
     fullPath: '/v1/quotes/{quote}/preview_invoices',
     methodType: 'list',
   }),
-  listPreviewSubscriptionSchedules: stripeMethod({
+  listPreviewSchedules: stripeMethod({
     method: 'GET',
     fullPath: '/v1/quotes/{quote}/preview_subscription_schedules',
     methodType: 'list',
