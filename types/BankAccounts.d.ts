@@ -82,7 +82,7 @@ declare module 'stripe' {
       fingerprint: string | null;
 
       /**
-       * Information about upcoming new requirements for the bank account, including what information needs to be collected.
+       * Information about the [upcoming new requirements for the bank account](https://stripe.com/docs/connect/custom-accounts/future-requirements), including what information needs to be collected, and by when.
        */
       future_requirements?: BankAccount.FutureRequirements | null;
 
