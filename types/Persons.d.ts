@@ -73,7 +73,7 @@ declare module 'stripe' {
       full_name_aliases?: Array<string>;
 
       /**
-       * Information about the upcoming new requirements for this person, including what information needs to be collected, and by when.
+       * Information about the [upcoming new requirements for this person](https://stripe.com/docs/connect/custom-accounts/future-requirements), including what information needs to be collected, and by when.
        */
       future_requirements?: Person.FutureRequirements | null;
 
