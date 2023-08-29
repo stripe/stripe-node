@@ -13,6 +13,9 @@ declare module 'stripe' {
        */
       bank_account?: string | TokenCreateParams.BankAccount;
 
+      /**
+       * The card this token will represent. If you also pass in a customer, the card must be the ID of a card belonging to the customer. Otherwise, if you do not pass in a customer, this is a dictionary containing a user's credit card details, with the options described below.
+       */
       card?: TokenCreateParams.Card | string;
 
       /**
@@ -453,28 +456,64 @@ declare module 'stripe' {
       }
 
       interface Card {
+        /**
+         * City / District / Suburb / Town / Village.
+         */
         address_city?: string;
 
+        /**
+         * Billing address country, if provided.
+         */
         address_country?: string;
 
+        /**
+         * Address line 1 (Street address / PO Box / Company name).
+         */
         address_line1?: string;
 
+        /**
+         * Address line 2 (Apartment / Suite / Unit / Building).
+         */
         address_line2?: string;
 
+        /**
+         * State / County / Province / Region.
+         */
         address_state?: string;
 
+        /**
+         * ZIP or postal code.
+         */
         address_zip?: string;
 
+        /**
+         * Required in order to add the card to an account; in all other cases, this parameter is not used. When added to an account, the card (which must be a debit card) can be used as a transfer destination for funds in this currency.
+         */
         currency?: string;
 
+        /**
+         * Card security code. Highly recommended to always include this value.
+         */
         cvc?: string;
 
+        /**
+         * Two-digit number representing the card's expiration month.
+         */
         exp_month: string;
 
+        /**
+         * Two- or four-digit number representing the card's expiration year.
+         */
         exp_year: string;
 
+        /**
+         * Cardholder's full name.
+         */
         name?: string;
 
+        /**
+         * The card number, as a string without any separators.
+         */
         number: string;
       }
 
