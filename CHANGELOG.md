@@ -1,5 +1,16 @@
 # Changelog
 
+## 13.3.0 - 2023-08-24
+* [#1879](https://github.com/stripe/stripe-node/pull/1879) Update generated code
+  * Add support for `retention` on `BillingPortal.Session.flow.subscription_cancel` and `BillingPortal.SessionCreateParams.flow_data.subscription_cancel`
+  * Add support for `prefetch` on `Checkout.Session.payment_method_options.us_bank_account.financial_connections`, `Checkout.SessionCreateParams.payment_method_options.us_bank_account.financial_connections`, `FinancialConnections.SessionCreateParams`, `FinancialConnections.Session`, `Invoice.payment_settings.payment_method_options.us_bank_account.financial_connections`, `InvoiceCreateParams.payment_settings.payment_method_options.us_bank_account.financial_connections`, `InvoiceUpdateParams.payment_settings.payment_method_options.us_bank_account.financial_connections`, `PaymentIntent.payment_method_options.us_bank_account.financial_connections`, `PaymentIntentConfirmParams.payment_method_options.us_bank_account.financial_connections`, `PaymentIntentCreateParams.payment_method_options.us_bank_account.financial_connections`, `PaymentIntentUpdateParams.payment_method_options.us_bank_account.financial_connections`, `SetupIntent.payment_method_options.us_bank_account.financial_connections`, `SetupIntentConfirmParams.payment_method_options.us_bank_account.financial_connections`, `SetupIntentCreateParams.payment_method_options.us_bank_account.financial_connections`, `SetupIntentUpdateParams.payment_method_options.us_bank_account.financial_connections`, `Subscription.payment_settings.payment_method_options.us_bank_account.financial_connections`, `SubscriptionCreateParams.payment_settings.payment_method_options.us_bank_account.financial_connections`, and `SubscriptionUpdateParams.payment_settings.payment_method_options.us_bank_account.financial_connections`
+  * Add support for `payment_method_details` on `Dispute`
+  * Change type of `PaymentIntentCreateParams.mandate_data` and `SetupIntentCreateParams.mandate_data` from `secret_key_param` to `emptyStringable(secret_key_param)`
+  * Change type of `PaymentIntentConfirmParams.mandate_data` and `SetupIntentConfirmParams.mandate_data` from `secret_key_param | client_key_param` to `emptyStringable(secret_key_param | client_key_param)`
+  * Add support for `balance_transaction` on `CustomerCashBalanceTransaction.adjusted_for_overdraft`
+* [#1882](https://github.com/stripe/stripe-node/pull/1882) Update v13.0.0 CHANGELOG.md
+* [#1880](https://github.com/stripe/stripe-node/pull/1880) Improved `maxNetworkRetries` options JSDoc
+
 ## 13.2.0 - 2023-08-17
 * [#1876](https://github.com/stripe/stripe-node/pull/1876) Update generated code
   * Add support for `flat_amount` on `Tax.TransactionCreateReversalParams`
@@ -19,7 +30,7 @@
 * [#1872](https://github.com/stripe/stripe-node/pull/1872) Update generated code
   * ⚠️Add support for new values `verification_directors_mismatch`, `verification_document_directors_mismatch`, `verification_extraneous_directors`, and `verification_missing_directors` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `BankAccount.future_requirements.errors[].code`, and `BankAccount.requirements.errors[].code`
   * ⚠️Remove support for values `custom_account_update` and `custom_account_verification` from enum `AccountLinkCreateParams.type`
-    * These values are not fully operational
+    * These values are not fully operational. Please use `account_update` and `account_onboarding` instead (see [API reference](https://stripe.com/docs/api/account_links/create#create_account_link-type)).
   * ⚠️Remove support for `available_on` on `BalanceTransactionListParams`
     * Use of this parameter is discouraged. Suppress the Typescript error with `// @ts-ignore` or `any` if sending the parameter is still required.
   * ⚠️Remove support for `alternate_statement_descriptors` and `dispute` on `Charge`

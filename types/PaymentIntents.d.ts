@@ -218,7 +218,7 @@ declare module 'stripe' {
       transfer_data: PaymentIntent.TransferData | null;
 
       /**
-       * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
+       * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
        */
       transfer_group: string | null;
     }
@@ -1962,6 +1962,11 @@ declare module 'stripe' {
              * The list of permissions to request. The `payment_method` permission must be included.
              */
             permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * Data features requested to be retrieved upon account creation.
+             */
+            prefetch: Array<'balances'> | null;
 
             /**
              * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.

@@ -47,7 +47,7 @@ declare module 'stripe' {
       /**
        * This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
        */
-      mandate_data?: SetupIntentCreateParams.MandateData;
+      mandate_data?: Stripe.Emptyable<SetupIntentCreateParams.MandateData>;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -956,6 +956,11 @@ declare module 'stripe' {
             permissions?: Array<FinancialConnections.Permission>;
 
             /**
+             * List of data features that you would like to retrieve upon account creation.
+             */
+            prefetch?: Array<'balances'>;
+
+            /**
              * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
              */
             return_url?: string;
@@ -1858,6 +1863,11 @@ declare module 'stripe' {
             permissions?: Array<FinancialConnections.Permission>;
 
             /**
+             * List of data features that you would like to retrieve upon account creation.
+             */
+            prefetch?: Array<'balances'>;
+
+            /**
              * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
              */
             return_url?: string;
@@ -1944,9 +1954,10 @@ declare module 'stripe' {
       /**
        * This hash contains details about the Mandate to create
        */
-      mandate_data?:
+      mandate_data?: Stripe.Emptyable<
         | SetupIntentConfirmParams.MandateData1
-        | SetupIntentConfirmParams.MandateData2;
+        | SetupIntentConfirmParams.MandateData2
+      >;
 
       /**
        * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
@@ -2845,6 +2856,11 @@ declare module 'stripe' {
              * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * List of data features that you would like to retrieve upon account creation.
+             */
+            prefetch?: Array<'balances'>;
 
             /**
              * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.

@@ -34,7 +34,7 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
-       * The method used to send this payout, which can be `standard` or `instant`. `instant` is only supported for payouts to debit cards. (See [Instant payouts for marketplaces for more information](https://stripe.com/blog/instant-payouts-for-marketplaces).)
+       * The method used to send this payout, which can be `standard` or `instant`. `instant` is supported for payouts to debit cards and bank accounts in certain countries. (See [Bank support for Instant Payouts](https://stripe.com/docs/payouts/instant-payouts-banks) for more information.)
        */
       method?: PayoutCreateParams.Method;
 

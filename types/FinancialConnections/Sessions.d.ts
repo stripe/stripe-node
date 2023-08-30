@@ -45,6 +45,11 @@ declare module 'stripe' {
         permissions: Array<Session.Permission>;
 
         /**
+         * Data features requested to be retrieved upon account creation.
+         */
+        prefetch: Array<Session.Prefetch> | null;
+
+        /**
          * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
          */
         return_url?: string;
@@ -84,6 +89,8 @@ declare module 'stripe' {
           | 'ownership'
           | 'payment_method'
           | 'transactions';
+
+        type Prefetch = 'balances' | 'ownership';
       }
     }
   }
