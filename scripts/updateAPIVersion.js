@@ -11,10 +11,12 @@ const edit = (file, cb) => write(file, cb(read(file)));
 const API_VERSION = '2[0-9][2-9][0-9]-[0-9]{2}-[0-9]{2}';
 
 const main = () => {
-  const matches = [...read('src/apiVersion.ts').matchAll(/'([^']*)'/g)];
+  const matches = [
+    ...read('src/apiVersion.ts').matchAll(/ApiVersion . '([^']*)'/g),
+  ];
   if (matches.length !== 1) {
     throw new Error(
-      `Expected src/apiVersion.ts to include 1 single-quote-delimited string, but found ${matches.length}`
+      `Expected src/apiVersion.ts to include 1 match for ApiVersion = '...' but found ${matches.length}`
     );
   }
   const apiVersion = matches[0][1];
