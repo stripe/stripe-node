@@ -49,6 +49,7 @@ import {VerificationReports as IdentityVerificationReports} from './resources/Id
 import {VerificationSessions as IdentityVerificationSessions} from './resources/Identity/VerificationSessions.js';
 export {Accounts as Account} from './resources/Accounts.js';
 export {AccountLinks} from './resources/AccountLinks.js';
+export {AccountSessions} from './resources/AccountSessions.js';
 export {Accounts} from './resources/Accounts.js';
 export {ApplePayDomains} from './resources/ApplePayDomains.js';
 export {ApplicationFees} from './resources/ApplicationFees.js';

@@ -8,6 +8,7 @@
 ///<reference path='./UpcomingInvoices.d.ts' />
 // Imports: The beginning of the section generated from our OpenAPI spec
 ///<reference path='./AccountLinksResource.d.ts' />
+///<reference path='./AccountSessionsResource.d.ts' />
 ///<reference path='./AccountsResource.d.ts' />
 ///<reference path='./ApplePayDomainsResource.d.ts' />
 ///<reference path='./ApplicationFeesResource.d.ts' />
@@ -98,6 +99,7 @@
 ///<reference path='./Treasury/TransactionsResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
+///<reference path='./AccountSessions.d.ts' />
 ///<reference path='./Accounts.d.ts' />
 ///<reference path='./ApplePayDomains.d.ts' />
 ///<reference path='./ApplicationFees.d.ts' />
@@ -223,6 +225,7 @@ declare module 'stripe' {
 
     // Fields: The beginning of the section generated from our OpenAPI spec
     accountLinks: Stripe.AccountLinksResource;
+    accountSessions: Stripe.AccountSessionsResource;
     accounts: Stripe.AccountsResource;
     applePayDomains: Stripe.ApplePayDomainsResource;
     applicationFees: Stripe.ApplicationFeesResource;
