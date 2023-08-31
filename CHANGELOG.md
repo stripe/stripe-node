@@ -1,5 +1,14 @@
 # Changelog
 
+## 13.4.0 - 2023-08-31
+* [#1884](https://github.com/stripe/stripe-node/pull/1884) Update generated code
+  * Add support for new resource `AccountSession`
+  * Add support for `create` method on resource `AccountSession`
+  * Add support for new values `obligation_inbound`, `obligation_outbound`, `obligation_payout_failure`, `obligation_payout`, `obligation_reversal_inbound`, and `obligation_reversal_outbound` on enum `BalanceTransaction.type`
+  * Change type of `Event.type` from `string` to `enum`
+  * Add support for `application` on `PaymentLink`
+  * Add support for new value `obligation` on enum `Reporting.ReportRunCreateParams.parameters.reporting_category`
+
 ## 13.3.0 - 2023-08-24
 * [#1879](https://github.com/stripe/stripe-node/pull/1879) Update generated code
   * Add support for `retention` on `BillingPortal.Session.flow.subscription_cancel` and `BillingPortal.SessionCreateParams.flow_data.subscription_cancel`
