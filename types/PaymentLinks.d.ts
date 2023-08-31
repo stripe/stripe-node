@@ -33,6 +33,15 @@ declare module 'stripe' {
       allow_promotion_codes: boolean;
 
       /**
+       * The ID of the Connect application that created the Payment Link.
+       */
+      application:
+        | string
+        | Stripe.Application
+        | Stripe.DeletedApplication
+        | null;
+
+      /**
        * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account.
        */
       application_fee_amount: number | null;
