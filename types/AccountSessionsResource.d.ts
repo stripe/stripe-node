@@ -9,7 +9,7 @@ declare module 'stripe' {
       account: string;
 
       /**
-       * Each key of the dictionary represents an embedded component, and each embedded component maps to its configuration (e.g. whether it has been enabled or not, its corresponding features, etc.).
+       * Each key of the dictionary represents an embedded component, and each embedded component maps to its configuration (e.g. whether it has been enabled or not).
        */
       components: AccountSessionCreateParams.Components;
 
