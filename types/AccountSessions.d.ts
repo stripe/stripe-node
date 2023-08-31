@@ -31,6 +31,8 @@ declare module 'stripe' {
        */
       client_secret: string;
 
+      components: AccountSession.Components;
+
       /**
        * The timestamp at which this AccountSession will expire.
        */
@@ -40,6 +42,48 @@ declare module 'stripe' {
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
+    }
+
+    namespace AccountSession {
+      interface Components {
+        account_onboarding: Components.AccountOnboarding;
+
+        payment_details?: Components.PaymentDetails;
+
+        payments?: Components.Payments;
+
+        payouts?: Components.Payouts;
+      }
+
+      namespace Components {
+        interface AccountOnboarding {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+        }
+
+        interface PaymentDetails {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+        }
+
+        interface Payments {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+        }
+
+        interface Payouts {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+        }
+      }
     }
   }
 }
