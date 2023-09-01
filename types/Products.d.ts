@@ -46,6 +46,11 @@ declare module 'stripe' {
       description: string | null;
 
       /**
+       * A list of up to 15 features for this product. These are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
+       */
+      features: Array<Product.Feature>;
+
+      /**
        * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
        */
       images: Array<string>;
@@ -107,6 +112,13 @@ declare module 'stripe' {
     }
 
     namespace Product {
+      interface Feature {
+        /**
+         * The feature's name. Up to 80 characters long.
+         */
+        name: string;
+      }
+
       interface PackageDimensions {
         /**
          * Height, in inches.
