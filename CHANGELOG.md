@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.5.0-beta.1 - 2023-08-31
+* [#1883](https://github.com/stripe/stripe-node/pull/1883) Update generated code for beta
+  * Rename `Quote.listPreviewSubscriptionSchedules` to `Quote.listPreviewSchedules` and `Quote.listPreview
+
 ## 13.3.0 - 2023-08-24
 * [#1879](https://github.com/stripe/stripe-node/pull/1879) Update generated code
   * Add support for `retention` on `BillingPortal.Session.flow.subscription_cancel` and `BillingPortal.SessionCreateParams.flow_data.subscription_cancel`
