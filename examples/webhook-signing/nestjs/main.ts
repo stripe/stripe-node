@@ -5,7 +5,7 @@ import { INestApplication } from "@nestjs/common";
 import { AppModule } from "./app.module";
 
 async function bootstrap() {
-  const app = await NestFactory.create<INestApplication>(AppModule);
+  const app = await NestFactory.create<INestApplication>(AppModule, { rawBody: true });
   app.enableCors({
     origin: "*",
   });
