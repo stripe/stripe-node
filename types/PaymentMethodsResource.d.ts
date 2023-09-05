@@ -409,6 +409,7 @@ declare module 'stripe' {
           | 'ing'
           | 'knab'
           | 'moneyou'
+          | 'n26'
           | 'rabobank'
           | 'regiobank'
           | 'revolut'
