@@ -201,7 +201,6 @@ declare module 'stripe' {
         | 'invoice.voided'
         | 'invoiceitem.created'
         | 'invoiceitem.deleted'
-        | 'invoiceitem.updated'
         | 'issuing_authorization.created'
         | 'issuing_authorization.request'
         | 'issuing_authorization.updated'
