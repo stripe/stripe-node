@@ -1121,6 +1121,8 @@ declare module 'stripe' {
          */
         cancellation_reason?: CardUpdateParams.CancellationReason;
 
+        card_design?: string;
+
         /**
          * Specifies which fields in the response should be expanded.
          */
