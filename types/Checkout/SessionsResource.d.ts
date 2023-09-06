@@ -1226,7 +1226,7 @@ declare module 'stripe' {
               /**
                * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
                *
-               * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
+               * Permitted values include: `sort_code`, `zengin`, `iban`, `spei`, or `ca_bank_account_address`.
                */
               requested_address_types?: Array<
                 BankTransfer.RequestedAddressType
