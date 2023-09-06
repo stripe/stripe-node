@@ -360,7 +360,8 @@ declare module 'stripe' {
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created';
+        | 'treasury.received_debit.created'
+        | 'invoiceitem.updated';
     }
   }
 }
