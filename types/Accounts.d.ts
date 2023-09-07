@@ -1000,6 +1000,8 @@ declare module 'stripe' {
 
         sepa_debit_payments?: Settings.SepaDebitPayments;
 
+        tax_forms?: Settings.TaxForms;
+
         treasury?: Settings.Treasury;
       }
 
@@ -1171,6 +1173,13 @@ declare module 'stripe' {
            * SEPA creditor identifier that identifies the company making the payment.
            */
           creditor_id?: string;
+        }
+
+        interface TaxForms {
+          /**
+           * Whether the account opted out of receiving their tax forms by postal delivery.
+           */
+          consented_to_paperless_delivery: boolean;
         }
 
         interface Treasury {

@@ -77,6 +77,7 @@ declare module 'stripe' {
         | Stripe.ApplicationFee
         | Stripe.Charge
         | Stripe.ConnectCollectionTransfer
+        | Stripe.CustomerCashBalanceTransaction
         | Stripe.Dispute
         | Stripe.FeeRefund
         | Stripe.Issuing.Authorization

@@ -1220,12 +1220,12 @@ declare module 'stripe' {
 
       interface CancellationDetails {
         /**
-         * Additional comments about why the user canceled the subscription, if the subscription was cancelled explicitly by the user.
+         * Additional comments about why the user canceled the subscription, if the subscription was canceled explicitly by the user.
          */
         comment?: Stripe.Emptyable<string>;
 
         /**
-         * The customer submitted reason for why they cancelled, if the subscription was cancelled explicitly by the user.
+         * The customer submitted reason for why they canceled, if the subscription was canceled explicitly by the user.
          */
         feedback?: Stripe.Emptyable<CancellationDetails.Feedback>;
       }
@@ -1918,12 +1918,12 @@ declare module 'stripe' {
     namespace SubscriptionCancelParams {
       interface CancellationDetails {
         /**
-         * Additional comments about why the user canceled the subscription, if the subscription was cancelled explicitly by the user.
+         * Additional comments about why the user canceled the subscription, if the subscription was canceled explicitly by the user.
          */
         comment?: Stripe.Emptyable<string>;
 
         /**
-         * The customer submitted reason for why they cancelled, if the subscription was cancelled explicitly by the user.
+         * The customer submitted reason for why they canceled, if the subscription was canceled explicitly by the user.
          */
         feedback?: Stripe.Emptyable<CancellationDetails.Feedback>;
       }

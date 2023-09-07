@@ -69,7 +69,7 @@ declare module 'stripe' {
       }
 
       namespace CardDesignListParams {
-        type Preference = 'default' | 'none';
+        type Preference = 'default' | 'none' | 'platform_default';
 
         type Status = 'active' | 'inactive' | 'rejected' | 'review';
       }

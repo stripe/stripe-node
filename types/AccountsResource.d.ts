@@ -1133,6 +1133,11 @@ declare module 'stripe' {
         payouts?: Settings.Payouts;
 
         /**
+         * Settings specific to the account's tax forms.
+         */
+        tax_forms?: Settings.TaxForms;
+
+        /**
          * Settings specific to the account's Treasury FinancialAccounts.
          */
         treasury?: Settings.Treasury;
@@ -1292,6 +1297,13 @@ declare module 'stripe' {
               | 'tuesday'
               | 'wednesday';
           }
+        }
+
+        interface TaxForms {
+          /**
+           * Whether the account opted out of receiving their tax forms by postal delivery.
+           */
+          consented_to_paperless_delivery?: boolean;
         }
 
         interface Treasury {
@@ -2390,6 +2402,11 @@ declare module 'stripe' {
         payouts?: Settings.Payouts;
 
         /**
+         * Settings specific to the account's tax forms.
+         */
+        tax_forms?: Settings.TaxForms;
+
+        /**
          * Settings specific to the account's Treasury FinancialAccounts.
          */
         treasury?: Settings.Treasury;
@@ -2549,6 +2566,13 @@ declare module 'stripe' {
               | 'tuesday'
               | 'wednesday';
           }
+        }
+
+        interface TaxForms {
+          /**
+           * Whether the account opted out of receiving their tax forms by postal delivery.
+           */
+          consented_to_paperless_delivery?: boolean;
         }
 
         interface Treasury {

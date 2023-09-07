@@ -245,7 +245,6 @@ declare module 'stripe' {
         | 'invoice.voided'
         | 'invoiceitem.created'
         | 'invoiceitem.deleted'
-        | 'invoiceitem.updated'
         | 'issuing_authorization.created'
         | 'issuing_authorization.request'
         | 'issuing_authorization.updated'
@@ -390,7 +389,8 @@ declare module 'stripe' {
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created';
+        | 'treasury.received_debit.created'
+        | 'invoiceitem.updated';
     }
 
     interface WebhookEndpointRetrieveParams {
@@ -537,7 +537,6 @@ declare module 'stripe' {
         | 'invoice.voided'
         | 'invoiceitem.created'
         | 'invoiceitem.deleted'
-        | 'invoiceitem.updated'
         | 'issuing_authorization.created'
         | 'issuing_authorization.request'
         | 'issuing_authorization.updated'
@@ -682,7 +681,8 @@ declare module 'stripe' {
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created';
+        | 'treasury.received_debit.created'
+        | 'invoiceitem.updated';
     }
 
     interface WebhookEndpointListParams extends PaginationParams {
