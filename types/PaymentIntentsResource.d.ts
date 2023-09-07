@@ -2042,7 +2042,7 @@ declare module 'stripe' {
 
     interface PaymentIntentRetrieveParams {
       /**
-       * The client secret of the PaymentIntent. Required if a publishable key is used to retrieve the source.
+       * The client secret of the PaymentIntent. It's required if you use a publishable key to retrieve the source.
        */
       client_secret?: string;
 
@@ -6123,9 +6123,9 @@ declare module 'stripe' {
       /**
        * Retrieves the details of a PaymentIntent that has previously been created.
        *
-       * Client-side retrieval using a publishable key is allowed when the client_secret is provided in the query string.
+       * You can retrieve a PaymentIntent client-side using a publishable key when the client_secret is in the query string.
        *
-       * When retrieved with a publishable key, only a subset of properties will be returned. Please refer to the [payment intent](https://stripe.com/docs/api#payment_intent_object) object reference for more details.
+       * If you retrieve a PaymentIntent with a publishable key, it only returns a subset of properties. Refer to the [payment intent](https://stripe.com/docs/api#payment_intent_object) object reference for more details.
        */
       retrieve(
         id: string,
