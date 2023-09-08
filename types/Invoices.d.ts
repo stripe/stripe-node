@@ -856,6 +856,7 @@ declare module 'stripe' {
           | 'sku_inactive'
           | 'state_unsupported'
           | 'status_transition_invalid'
+          | 'stripe_tax_inactive'
           | 'tax_id_invalid'
           | 'taxes_calculation_failed'
           | 'terminal_location_country_unsupported'
