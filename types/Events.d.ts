@@ -223,6 +223,7 @@ declare module 'stripe' {
         | 'issuing_card.updated'
         | 'issuing_card_design.activated'
         | 'issuing_card_design.deactivated'
+        | 'issuing_card_design.rejected'
         | 'issuing_card_design.updated'
         | 'issuing_cardholder.created'
         | 'issuing_cardholder.updated'
