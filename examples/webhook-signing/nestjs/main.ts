@@ -10,8 +10,7 @@ async function bootstrap() {
     origin: "*",
   });
 
-  await app.listen(3000, () => {
-    console.log(`Webhook endpoint available at http://localhost:3000/webhooks`);
-  });
+  await app.listen(0);
+  console.log(`Webhook endpoint available at ${await app.getUrl()}/webhook`);
 }
 bootstrap();
