@@ -1,13 +1,13 @@
 export const config: {
   Stripe: {
     publishable_key: string
-    api_secret: string
+    secret_key: string
     webhook_secret: string
   }
 } = {
   Stripe: {
-    publishable_key: process.env.STRIPE_SECRET_KEY || '',
-    api_secret: process.env.STRIPE_WEBHOOK_SECRET || '',
+    publishable_key: process.env.STRIPE_PUBLISHABLE_KEY || '',
+    secret_key: process.env.STRIPE_SECRET_KEY || '',
     webhook_secret: process.env.STRIPE_WEBHOOK_SECRET || '',
   }
 }
