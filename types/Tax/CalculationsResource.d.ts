@@ -96,7 +96,7 @@ declare module 'stripe' {
             postal_code?: Stripe.Emptyable<string>;
 
             /**
-             * State/province as an [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) subdivision code, without country prefix. Example: "NY" or "TX".
+             * State, county, province, or region. We recommend sending [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) subdivision code value when possible.
              */
             state?: Stripe.Emptyable<string>;
           }
