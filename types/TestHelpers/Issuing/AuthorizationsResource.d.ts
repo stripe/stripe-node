@@ -67,6 +67,11 @@ declare module 'stripe' {
              * The ATM withdrawal fee.
              */
             atm_fee?: number;
+
+            /**
+             * The amount of cash requested by the cardholder.
+             */
+            cashback_amount?: number;
           }
 
           type AuthorizationMethod =
