@@ -8,6 +8,7 @@
 ///<reference path='./UpcomingInvoices.d.ts' />
 // Imports: The beginning of the section generated from our OpenAPI spec
 ///<reference path='./AccountLinksResource.d.ts' />
+///<reference path='./AccountSessionsResource.d.ts' />
 ///<reference path='./AccountsResource.d.ts' />
 ///<reference path='./ApplePayDomainsResource.d.ts' />
 ///<reference path='./ApplicationFeesResource.d.ts' />
@@ -42,6 +43,7 @@
 ///<reference path='./MandatesResource.d.ts' />
 ///<reference path='./PaymentIntentsResource.d.ts' />
 ///<reference path='./PaymentLinksResource.d.ts' />
+///<reference path='./PaymentMethodDomainsResource.d.ts' />
 ///<reference path='./PaymentMethodsResource.d.ts' />
 ///<reference path='./PayoutsResource.d.ts' />
 ///<reference path='./PlansResource.d.ts' />
@@ -98,6 +100,7 @@
 ///<reference path='./Treasury/TransactionsResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
+///<reference path='./AccountSessions.d.ts' />
 ///<reference path='./Accounts.d.ts' />
 ///<reference path='./ApplePayDomains.d.ts' />
 ///<reference path='./ApplicationFees.d.ts' />
@@ -149,6 +152,7 @@
 ///<reference path='./Mandates.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
+///<reference path='./PaymentMethodDomains.d.ts' />
 ///<reference path='./PaymentMethods.d.ts' />
 ///<reference path='./Payouts.d.ts' />
 ///<reference path='./Persons.d.ts' />
@@ -223,6 +227,7 @@ declare module 'stripe' {
 
     // Fields: The beginning of the section generated from our OpenAPI spec
     accountLinks: Stripe.AccountLinksResource;
+    accountSessions: Stripe.AccountSessionsResource;
     accounts: Stripe.AccountsResource;
     applePayDomains: Stripe.ApplePayDomainsResource;
     applicationFees: Stripe.ApplicationFeesResource;
@@ -244,6 +249,7 @@ declare module 'stripe' {
     mandates: Stripe.MandatesResource;
     paymentIntents: Stripe.PaymentIntentsResource;
     paymentLinks: Stripe.PaymentLinksResource;
+    paymentMethodDomains: Stripe.PaymentMethodDomainsResource;
     paymentMethods: Stripe.PaymentMethodsResource;
     payouts: Stripe.PayoutsResource;
     plans: Stripe.PlansResource;

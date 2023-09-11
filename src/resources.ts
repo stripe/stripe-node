@@ -49,6 +49,7 @@ import {VerificationReports as IdentityVerificationReports} from './resources/Id
 import {VerificationSessions as IdentityVerificationSessions} from './resources/Identity/VerificationSessions.js';
 export {Accounts as Account} from './resources/Accounts.js';
 export {AccountLinks} from './resources/AccountLinks.js';
+export {AccountSessions} from './resources/AccountSessions.js';
 export {Accounts} from './resources/Accounts.js';
 export {ApplePayDomains} from './resources/ApplePayDomains.js';
 export {ApplicationFees} from './resources/ApplicationFees.js';
@@ -71,6 +72,7 @@ export {Mandates} from './resources/Mandates.js';
 export {OAuth} from './resources/OAuth.js';
 export {PaymentIntents} from './resources/PaymentIntents.js';
 export {PaymentLinks} from './resources/PaymentLinks.js';
+export {PaymentMethodDomains} from './resources/PaymentMethodDomains.js';
 export {PaymentMethods} from './resources/PaymentMethods.js';
 export {Payouts} from './resources/Payouts.js';
 export {Plans} from './resources/Plans.js';
