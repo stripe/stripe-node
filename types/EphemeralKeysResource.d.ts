@@ -19,6 +19,11 @@ declare module 'stripe' {
       issuing_card?: string;
 
       /**
+       * The nonce you'd like to use to mint the resulting ephemeral key.
+       */
+      nonce?: string
+
+      /**
        * The ID of the Identity VerificationSession you'd like to access using the resulting ephemeral key
        */
       verification_session?: string;
