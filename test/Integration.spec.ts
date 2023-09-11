@@ -107,4 +107,6 @@ describe('Integration test', function() {
   });
 
   it('Webhook sample deno', () => runWebhookTest('deno'));
+
+  it('Webhook sample nestjs', () => runWebhookTest('nestjs'));
 });
