@@ -509,8 +509,7 @@ declare module 'stripe' {
               capture_method?: AfterpayClearpay.CaptureMethod;
 
               /**
-               * Order identifier shown to the customer in Afterpay's online portal. We recommend using a value that helps you answer any questions a customer might have about
-               * the payment. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.
+               * An internal identifier or reference this payment corresponds to. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.
                */
               reference?: string;
 
@@ -1789,8 +1788,7 @@ declare module 'stripe' {
               capture_method?: AfterpayClearpay.CaptureMethod;
 
               /**
-               * Order identifier shown to the customer in Afterpay's online portal. We recommend using a value that helps you answer any questions a customer might have about
-               * the payment. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.
+               * An internal identifier or reference this payment corresponds to. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.
                */
               reference?: string;
 
