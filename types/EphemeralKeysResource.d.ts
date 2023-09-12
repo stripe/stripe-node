@@ -19,6 +19,11 @@ declare module 'stripe' {
       issuing_card?: string;
 
       /**
+       * A single-use token, created by Stripe.js, used for creating ephemeral keys for Issuing Cards without exchanging sensitive information.
+       */
+      nonce?: string;
+
+      /**
        * The ID of the Identity VerificationSession you'd like to access using the resulting ephemeral key
        */
       verification_session?: string;
