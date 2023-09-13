@@ -69,6 +69,7 @@ export {ApplicationFees} from './resources/ApplicationFees.js';
 export {Balance} from './resources/Balance.js';
 export {BalanceTransactions} from './resources/BalanceTransactions.js';
 export {Charges} from './resources/Charges.js';
+export {ConfirmationTokens} from './resources/ConfirmationTokens.js';
 export {CountrySpecs} from './resources/CountrySpecs.js';
 export {Coupons} from './resources/Coupons.js';
 export {CreditNotes} from './resources/CreditNotes.js';

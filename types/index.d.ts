@@ -22,6 +22,7 @@
 ///<reference path='./Capital/FinancingTransactionsResource.d.ts' />
 ///<reference path='./ChargesResource.d.ts' />
 ///<reference path='./Checkout/SessionsResource.d.ts' />
+///<reference path='./ConfirmationTokensResource.d.ts' />
 ///<reference path='./CountrySpecsResource.d.ts' />
 ///<reference path='./CouponsResource.d.ts' />
 ///<reference path='./CreditNotesResource.d.ts' />
@@ -136,6 +137,7 @@
 ///<reference path='./CashBalances.d.ts' />
 ///<reference path='./Charges.d.ts' />
 ///<reference path='./Checkout/Sessions.d.ts' />
+///<reference path='./ConfirmationTokens.d.ts' />
 ///<reference path='./ConnectCollectionTransfers.d.ts' />
 ///<reference path='./CountrySpecs.d.ts' />
 ///<reference path='./Coupons.d.ts' />
@@ -269,6 +271,7 @@ declare module 'stripe' {
     balance: Stripe.BalanceResource;
     balanceTransactions: Stripe.BalanceTransactionsResource;
     charges: Stripe.ChargesResource;
+    confirmationTokens: Stripe.ConfirmationTokensResource;
     countrySpecs: Stripe.CountrySpecsResource;
     coupons: Stripe.CouponsResource;
     creditNotes: Stripe.CreditNotesResource;
