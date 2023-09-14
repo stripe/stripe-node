@@ -76,7 +76,9 @@
 ///<reference path='./Terminal/LocationsResource.d.ts' />
 ///<reference path='./Terminal/ReadersResource.d.ts' />
 ///<reference path='./TestHelpers/CustomersResource.d.ts' />
+///<reference path='./TestHelpers/Issuing/AuthorizationsResource.d.ts' />
 ///<reference path='./TestHelpers/Issuing/CardsResource.d.ts' />
+///<reference path='./TestHelpers/Issuing/TransactionsResource.d.ts' />
 ///<reference path='./TestHelpers/RefundsResource.d.ts' />
 ///<reference path='./TestHelpers/Terminal/ReadersResource.d.ts' />
 ///<reference path='./TestHelpers/TestClocksResource.d.ts' />
@@ -325,7 +327,9 @@ declare module 'stripe' {
       refunds: Stripe.TestHelpers.RefundsResource;
       testClocks: Stripe.TestHelpers.TestClocksResource;
       issuing: {
+        authorizations: Stripe.TestHelpers.Issuing.AuthorizationsResource;
         cards: Stripe.TestHelpers.Issuing.CardsResource;
+        transactions: Stripe.TestHelpers.Issuing.TransactionsResource;
       };
       terminal: {
         readers: Stripe.TestHelpers.Terminal.ReadersResource;

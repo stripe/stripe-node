@@ -1106,7 +1106,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.CustomerSource>>;
 
       /**
-       * Creates a new TaxID object for a customer.
+       * Creates a new tax_id object for a customer.
        */
       createTaxId(
         id: string,
@@ -1151,7 +1151,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * Deletes an existing TaxID object.
+       * Deletes an existing tax_id object.
        */
       deleteTaxId(
         customerId: string,
@@ -1304,7 +1304,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.CustomerSource>>;
 
       /**
-       * Retrieves the TaxID object with the given identifier.
+       * Retrieves the tax_id object with the given identifier.
        */
       retrieveTaxId(
         customerId: string,
