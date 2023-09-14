@@ -131,6 +131,11 @@ declare module 'stripe' {
       payment_method: string | Stripe.PaymentMethod | null;
 
       /**
+       * Information about the payment method configuration used for this Setup Intent.
+       */
+      payment_method_configuration_details?: SetupIntent.PaymentMethodConfigurationDetails | null;
+
+      /**
        * Payment-method-specific configuration for this SetupIntent.
        */
       payment_method_options: SetupIntent.PaymentMethodOptions | null;
@@ -536,6 +541,18 @@ declare module 'stripe' {
         namespace VerifyWithMicrodeposits {
           type MicrodepositType = 'amounts' | 'descriptor_code';
         }
+      }
+
+      interface PaymentMethodConfigurationDetails {
+        /**
+         * ID of the payment method configuration used.
+         */
+        id: string;
+
+        /**
+         * ID of the parent payment method configuration used.
+         */
+        parent: string | null;
       }
 
       interface PaymentMethodOptions {

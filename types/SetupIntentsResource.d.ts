@@ -65,6 +65,11 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
+       * The ID of the payment method configuration to use with this Setup Intent.
+       */
+      payment_method_configuration?: string;
+
+      /**
        * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-payment_method)
        * value in the SetupIntent.
        */
@@ -1058,6 +1063,11 @@ declare module 'stripe' {
        * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
        */
       payment_method?: string;
+
+      /**
+       * The ID of the payment method configuration to use with this SetupIntent.
+       */
+      payment_method_configuration?: string;
 
       /**
        * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-payment_method)

@@ -74,6 +74,7 @@ export {Mandates} from './resources/Mandates.js';
 export {OAuth} from './resources/OAuth.js';
 export {PaymentIntents} from './resources/PaymentIntents.js';
 export {PaymentLinks} from './resources/PaymentLinks.js';
+export {PaymentMethodConfigurations} from './resources/PaymentMethodConfigurations.js';
 export {PaymentMethodDomains} from './resources/PaymentMethodDomains.js';
 export {PaymentMethods} from './resources/PaymentMethods.js';
 export {Payouts} from './resources/Payouts.js';
