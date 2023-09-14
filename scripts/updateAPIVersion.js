@@ -11,7 +11,15 @@ const edit = (file, cb) => write(file, cb(read(file)));
 const API_VERSION = '2[0-9][2-9][0-9]-[0-9]{2}-[0-9]{2}';
 
 const main = () => {
-  const apiVersion = read('API_VERSION').trim();
+  const matches = [
+    ...read('src/apiVersion.ts').matchAll(/ApiVersion . '([^']*)'/g),
+  ];
+  if (matches.length !== 1) {
+    throw new Error(
+      `Expected src/apiVersion.ts to include 1 match for ApiVersion = '...' but found ${matches.length}`
+    );
+  }
+  const apiVersion = matches[0][1];
 
   const replaceAPIVersion = (file, pattern) =>
     edit(file, (text) => {
