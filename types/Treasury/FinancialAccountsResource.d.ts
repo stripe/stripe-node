@@ -129,7 +129,7 @@ declare module 'stripe' {
             ach?: OutboundPayments.Ach;
 
             /**
-             * Enables US domestic wire tranfers via the OutboundPayments API.
+             * Enables US domestic wire transfers via the OutboundPayments API.
              */
             us_domestic_wire?: OutboundPayments.UsDomesticWire;
           }
@@ -157,7 +157,7 @@ declare module 'stripe' {
             ach?: OutboundTransfers.Ach;
 
             /**
-             * Enables US domestic wire tranfers via the OutboundTransfers API.
+             * Enables US domestic wire transfers via the OutboundTransfers API.
              */
             us_domestic_wire?: OutboundTransfers.UsDomesticWire;
           }
@@ -326,7 +326,7 @@ declare module 'stripe' {
             ach?: OutboundPayments.Ach;
 
             /**
-             * Enables US domestic wire tranfers via the OutboundPayments API.
+             * Enables US domestic wire transfers via the OutboundPayments API.
              */
             us_domestic_wire?: OutboundPayments.UsDomesticWire;
           }
@@ -354,7 +354,7 @@ declare module 'stripe' {
             ach?: OutboundTransfers.Ach;
 
             /**
-             * Enables US domestic wire tranfers via the OutboundTransfers API.
+             * Enables US domestic wire transfers via the OutboundTransfers API.
              */
             us_domestic_wire?: OutboundTransfers.UsDomesticWire;
           }
@@ -514,7 +514,7 @@ declare module 'stripe' {
           ach?: OutboundPayments.Ach;
 
           /**
-           * Enables US domestic wire tranfers via the OutboundPayments API.
+           * Enables US domestic wire transfers via the OutboundPayments API.
            */
           us_domestic_wire?: OutboundPayments.UsDomesticWire;
         }
@@ -542,7 +542,7 @@ declare module 'stripe' {
           ach?: OutboundTransfers.Ach;
 
           /**
-           * Enables US domestic wire tranfers via the OutboundTransfers API.
+           * Enables US domestic wire transfers via the OutboundTransfers API.
            */
           us_domestic_wire?: OutboundTransfers.UsDomesticWire;
         }
