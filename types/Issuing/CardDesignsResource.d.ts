@@ -97,7 +97,7 @@ declare module 'stripe' {
         /**
          * The file for the card logo, for use with card bundles that support card logos.
          */
-        card_logo?: string;
+        card_logo?: Stripe.Emptyable<string>;
 
         /**
          * Hash containing carrier text, for use with card bundles that support carrier text.
@@ -112,7 +112,7 @@ declare module 'stripe' {
         /**
          * A lookup key used to retrieve card designs dynamically from a static string. This may be up to 200 characters.
          */
-        lookup_key?: string;
+        lookup_key?: Stripe.Emptyable<string>;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -122,7 +122,7 @@ declare module 'stripe' {
         /**
          * Friendly display name. Providing an empty string will set the field to null.
          */
-        name?: string;
+        name?: Stripe.Emptyable<string>;
 
         /**
          * Information on whether this card design is used to create cards when one is not specified.
