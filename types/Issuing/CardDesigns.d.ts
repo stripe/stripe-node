@@ -47,10 +47,7 @@ declare module 'stripe' {
          */
         name: string | null;
 
-        /**
-         * Whether this card design is used to create cards when one is not specified.
-         */
-        preference: CardDesign.Preference;
+        preferences: CardDesign.Preferences;
 
         rejection_reasons: CardDesign.RejectionReasons;
 
@@ -83,7 +80,17 @@ declare module 'stripe' {
           header_title: string | null;
         }
 
-        type Preference = 'default' | 'none' | 'platform_default';
+        interface Preferences {
+          /**
+           * Whether this card design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no card design is set as the account default.
+           */
+          account_default: boolean;
+
+          /**
+           * Whether this card design is used to create cards when one is not specified and an account default for this connected account does not exist.
+           */
+          platform_default: boolean | null;
+        }
 
         interface RejectionReasons {
           /**

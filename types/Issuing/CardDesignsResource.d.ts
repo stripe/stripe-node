@@ -40,9 +40,9 @@ declare module 'stripe' {
         name?: string;
 
         /**
-         * Whether this card design is used to create cards when one is not specified.
+         * Information on whether this card design is used to create cards when one is not specified.
          */
-        preference?: CardDesignCreateParams.Preference;
+        preferences?: CardDesignCreateParams.Preferences;
 
         /**
          * If set to true, will atomically remove the lookup key from the existing card design, and assign it to this card design.
@@ -73,7 +73,12 @@ declare module 'stripe' {
           header_title?: string;
         }
 
-        type Preference = 'default' | 'none';
+        interface Preferences {
+          /**
+           * Whether this card design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no card design is set as the account default.
+           */
+          account_default: boolean;
+        }
       }
 
       interface CardDesignRetrieveParams {
@@ -120,9 +125,9 @@ declare module 'stripe' {
         name?: string;
 
         /**
-         * Whether this card design is used to create cards when one is not specified.
+         * Information on whether this card design is used to create cards when one is not specified.
          */
-        preference?: CardDesignUpdateParams.Preference;
+        preferences?: CardDesignUpdateParams.Preferences;
 
         /**
          * If set to true, will atomically remove the lookup key from the existing card design, and assign it to this card design.
@@ -153,7 +158,12 @@ declare module 'stripe' {
           header_title?: string;
         }
 
-        type Preference = 'default' | 'none';
+        interface Preferences {
+          /**
+           * Whether this card design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no card design is set as the account default.
+           */
+          account_default: boolean;
+        }
       }
 
       interface CardDesignListParams extends PaginationParams {
@@ -168,9 +178,9 @@ declare module 'stripe' {
         lookup_keys?: Array<string>;
 
         /**
-         * Only return card designs with the given preference.
+         * Only return card designs with the given preferences.
          */
-        preference?: CardDesignListParams.Preference;
+        preferences?: CardDesignListParams.Preferences;
 
         /**
          * Only return card designs with the given status.
@@ -179,7 +189,17 @@ declare module 'stripe' {
       }
 
       namespace CardDesignListParams {
-        type Preference = 'default' | 'none' | 'platform_default';
+        interface Preferences {
+          /**
+           * Only return the card design that is set as the account default. A connected account will use the Connect platform's default if no card design is set as the account default.
+           */
+          account_default?: boolean;
+
+          /**
+           * Only return the card design that is set as the Connect platform's default. This parameter is only applicable to connected accounts.
+           */
+          platform_default?: boolean;
+        }
 
         type Status = 'active' | 'inactive' | 'rejected' | 'review';
       }
