@@ -1,5 +1,21 @@
 # Changelog
 
+## 13.6.0 - 2023-09-14
+* [#1905](https://github.com/stripe/stripe-node/pull/1905) Update generated code
+  * Add support for new resource `PaymentMethodConfiguration`
+  * Add support for `create`, `list`, `retrieve`, and `update` methods on resource `PaymentMethodConfiguration`
+  * Add support for `payment_method_configuration` on `Checkout.SessionCreateParams`, `PaymentIntentCreateParams`, `PaymentIntentUpdateParams`, `SetupIntentCreateParams`, and `SetupIntentUpdateParams`
+  * Add support for `payment_method_configuration_details` on `Checkout.Session`, `PaymentIntent`, and `SetupIntent`
+* [#1897](https://github.com/stripe/stripe-node/pull/1897) Update generated code
+  * Add support for `capture`, `create`, `expire`, `increment`, and `reverse` test helper methods on resource `Issuing.Authorization`
+  * Add support for `create_force_capture`, `create_unlinked_refund`, and `refund` test helper methods on resource `Issuing.Transaction`
+  * Add support for new value `stripe_tax_inactive` on enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`
+  * Add support for `nonce` on `EphemeralKeyCreateParams`
+  * Add support for `cashback_amount` on `Issuing.Authorization.amount_details`, `Issuing.Authorization.pending_request.amount_details`, `Issuing.Authorization.request_history[].amount_details`, and `Issuing.Transaction.amount_details`
+  * Add support for `serial_number` on `Terminal.ReaderListParams`
+* [#1895](https://github.com/stripe/stripe-node/pull/1895) feat: webhook signing Nestjs
+* [#1878](https://github.com/stripe/stripe-node/pull/1878) Use src/apiVersion.ts, not API_VERSION as source of truth
+
 ## 13.5.0 - 2023-09-07
 * [#1893](https://github.com/stripe/stripe-node/pull/1893) Update generated code
   * Add support for new resource `PaymentMethodDomain`
