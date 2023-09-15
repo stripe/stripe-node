@@ -3564,3 +3564,296 @@ describe('Tax.Calculations', function() {
     expect(calculation).not.to.be.null;
   });
 });
+
+describe('PaymentMethodConfigurations', function() {
+  it('list method', async function() {
+    const paymentMethodConfigurations = await stripe.paymentMethodConfigurations.list(
+      {
+        application: 'foo',
+      }
+    );
+    expect(paymentMethodConfigurations).not.to.be.null;
+  });
+
+  it('create method', async function() {
+    const paymentMethodConfiguration = await stripe.paymentMethodConfigurations.create(
+      {
+        acss_debit: {
+          display_preference: {
+            preference: 'none',
+          },
+        },
+        affirm: {
+          display_preference: {
+            preference: 'none',
+          },
+        },
+      }
+    );
+    expect(paymentMethodConfiguration).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const paymentMethodConfiguration = await stripe.paymentMethodConfigurations.retrieve(
+      'foo'
+    );
+    expect(paymentMethodConfiguration).not.to.be.null;
+  });
+
+  it('update method', async function() {
+    const paymentMethodConfiguration = await stripe.paymentMethodConfigurations.update(
+      'foo',
+      {
+        acss_debit: {
+          display_preference: {
+            preference: 'on',
+          },
+        },
+      }
+    );
+    expect(paymentMethodConfiguration).not.to.be.null;
+  });
+});
+
+describe('TestHelpers.Issuing.Authorizations', function() {
+  it('create method', async function() {
+    const authorization = await stripe.testHelpers.issuing.authorizations.create(
+      {
+        amount: 100,
+        amount_details: {
+          atm_fee: 10,
+          cashback_amount: 5,
+        },
+        authorization_method: 'chip',
+        card: 'foo',
+        currency: 'usd',
+        is_amount_controllable: true,
+        merchant_data: {
+          category: 'ac_refrigeration_repair',
+          city: 'foo',
+          country: 'bar',
+          name: 'foo',
+          network_id: 'bar',
+          postal_code: 'foo',
+          state: 'bar',
+          terminal_id: 'foo',
+        },
+        network_data: {
+          acquiring_institution_id: 'foo',
+        },
+        verification_data: {
+          address_line1_check: 'mismatch',
+          address_postal_code_check: 'match',
+          cvc_check: 'match',
+          expiry_check: 'mismatch',
+        },
+        wallet: 'apple_pay',
+      }
+    );
+    expect(authorization).not.to.be.null;
+  });
+
+  it('capture method', async function() {
+    const authorization = await stripe.testHelpers.issuing.authorizations.capture(
+      'example_authorization',
+      {
+        capture_amount: 100,
+        close_authorization: true,
+        purchase_details: {
+          flight: {
+            departure_at: 1633651200,
+            passenger_name: 'John Doe',
+            refundable: true,
+            segments: [
+              {
+                arrival_airport_code: 'SFO',
+                carrier: 'Delta',
+                departure_airport_code: 'LAX',
+                flight_number: 'DL100',
+                service_class: 'Economy',
+                stopover_allowed: true,
+              },
+            ],
+            travel_agency: 'Orbitz',
+          },
+          fuel: {
+            type: 'diesel',
+            unit: 'liter',
+            unit_cost_decimal: '3.5',
+            volume_decimal: '10',
+          },
+          lodging: {
+            check_in_at: 1633651200,
+            nights: 2,
+          },
+          receipt: [
+            {
+              description: 'Room charge',
+              quantity: '1',
+              total: 200,
+              unit_cost: 200,
+            },
+          ],
+          reference: 'foo',
+        },
+      }
+    );
+    expect(authorization).not.to.be.null;
+  });
+
+  it('expire method', async function() {
+    const authorization = await stripe.testHelpers.issuing.authorizations.expire(
+      'example_authorization'
+    );
+    expect(authorization).not.to.be.null;
+  });
+
+  it('increment method', async function() {
+    const authorization = await stripe.testHelpers.issuing.authorizations.increment(
+      'example_authorization',
+      {
+        increment_amount: 50,
+        is_amount_controllable: true,
+      }
+    );
+    expect(authorization).not.to.be.null;
+  });
+
+  it('reverse method', async function() {
+    const authorization = await stripe.testHelpers.issuing.authorizations.reverse(
+      'example_authorization',
+      {
+        reverse_amount: 20,
+      }
+    );
+    expect(authorization).not.to.be.null;
+  });
+});
+
+describe('TestHelpers.Issuing.Transactions', function() {
+  it('createForceCapture method', async function() {
+    const transaction = await stripe.testHelpers.issuing.transactions.createForceCapture(
+      {
+        amount: 100,
+        card: 'foo',
+        currency: 'usd',
+        merchant_data: {
+          category: 'ac_refrigeration_repair',
+          city: 'foo',
+          country: 'US',
+          name: 'foo',
+          network_id: 'bar',
+          postal_code: '10001',
+          state: 'NY',
+          terminal_id: 'foo',
+        },
+        purchase_details: {
+          flight: {
+            departure_at: 1633651200,
+            passenger_name: 'John Doe',
+            refundable: true,
+            segments: [
+              {
+                arrival_airport_code: 'SFO',
+                carrier: 'Delta',
+                departure_airport_code: 'LAX',
+                flight_number: 'DL100',
+                service_class: 'Economy',
+                stopover_allowed: true,
+              },
+            ],
+            travel_agency: 'Orbitz',
+          },
+          fuel: {
+            type: 'diesel',
+            unit: 'liter',
+            unit_cost_decimal: '3.5',
+            volume_decimal: '10',
+          },
+          lodging: {
+            check_in_at: 1533651200,
+            nights: 2,
+          },
+          receipt: [
+            {
+              description: 'Room charge',
+              quantity: '1',
+              total: 200,
+              unit_cost: 200,
+            },
+          ],
+          reference: 'foo',
+        },
+      }
+    );
+    expect(transaction).not.to.be.null;
+  });
+
+  it('createUnlinkedRefund method', async function() {
+    const transaction = await stripe.testHelpers.issuing.transactions.createUnlinkedRefund(
+      {
+        amount: 100,
+        card: 'foo',
+        currency: 'usd',
+        merchant_data: {
+          category: 'ac_refrigeration_repair',
+          city: 'foo',
+          country: 'bar',
+          name: 'foo',
+          network_id: 'bar',
+          postal_code: 'foo',
+          state: 'bar',
+          terminal_id: 'foo',
+        },
+        purchase_details: {
+          flight: {
+            departure_at: 1533651200,
+            passenger_name: 'John Doe',
+            refundable: true,
+            segments: [
+              {
+                arrival_airport_code: 'SFO',
+                carrier: 'Delta',
+                departure_airport_code: 'LAX',
+                flight_number: 'DL100',
+                service_class: 'Economy',
+                stopover_allowed: true,
+              },
+            ],
+            travel_agency: 'Orbitz',
+          },
+          fuel: {
+            type: 'diesel',
+            unit: 'liter',
+            unit_cost_decimal: '3.5',
+            volume_decimal: '10',
+          },
+          lodging: {
+            check_in_at: 1533651200,
+            nights: 2,
+          },
+          receipt: [
+            {
+              description: 'Room charge',
+              quantity: '1',
+              total: 200,
+              unit_cost: 200,
+            },
+          ],
+          reference: 'foo',
+        },
+      }
+    );
+    expect(transaction).not.to.be.null;
+  });
+
+  it('refund method', async function() {
+    const transaction = await stripe.testHelpers.issuing.transactions.refund(
+      'example_transaction',
+      {
+        refund_amount: 50,
+      }
+    );
+    expect(transaction).not.to.be.null;
+  });
+});

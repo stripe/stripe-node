@@ -185,6 +185,11 @@ declare module 'stripe' {
         payment_method_collection: Session.PaymentMethodCollection | null;
 
         /**
+         * Information about the payment method configuration used for this Checkout session if using dynamic payment methods.
+         */
+        payment_method_configuration_details?: Session.PaymentMethodConfigurationDetails | null;
+
+        /**
          * Payment-method-specific configuration for the PaymentIntent or SetupIntent of this CheckoutSession.
          */
         payment_method_options: Session.PaymentMethodOptions | null;
@@ -754,6 +759,18 @@ declare module 'stripe' {
         type Mode = 'payment' | 'setup' | 'subscription';
 
         type PaymentMethodCollection = 'always' | 'if_required';
+
+        interface PaymentMethodConfigurationDetails {
+          /**
+           * ID of the payment method configuration used.
+           */
+          id: string;
+
+          /**
+           * ID of the parent payment method configuration used.
+           */
+          parent: string | null;
+        }
 
         interface PaymentMethodOptions {
           acss_debit?: PaymentMethodOptions.AcssDebit;
