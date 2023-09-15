@@ -4,10 +4,8 @@ declare module 'stripe' {
   namespace Stripe {
     /**
      * A dispute occurs when a customer questions your charge with their card issuer.
-     * When this happens, you're given the opportunity to respond to the dispute with
-     * evidence that shows that the charge is legitimate. You can find more
-     * information about the dispute process in our [Disputes and
-     * Fraud](https://stripe.com/docs/disputes) documentation.
+     * When this happens, you have the opportunity to respond to the dispute with
+     * evidence that shows that the charge is legitimate.
      *
      * Related guide: [Disputes and fraud](https://stripe.com/docs/disputes)
      */
@@ -23,7 +21,7 @@ declare module 'stripe' {
       object: 'dispute';
 
       /**
-       * Disputed amount. Usually the amount of the charge, but can differ (usually because of currency fluctuation or because only part of the order is disputed).
+       * Disputed amount. Usually the amount of the charge, but it can differ (usually because of currency fluctuation or because only part of the order is disputed).
        */
       amount: number;
 
@@ -33,7 +31,7 @@ declare module 'stripe' {
       balance_transactions: Array<Stripe.BalanceTransaction>;
 
       /**
-       * ID of the charge that was disputed.
+       * ID of the charge that's disputed.
        */
       charge: string | Stripe.Charge;
 
@@ -52,7 +50,7 @@ declare module 'stripe' {
       evidence_details: Dispute.EvidenceDetails;
 
       /**
-       * If true, it is still possible to refund the disputed payment. Once the payment has been fully refunded, no further funds will be withdrawn from your Stripe account as a result of this dispute.
+       * If true, it's still possible to refund the disputed payment. After the payment has been fully refunded, no further funds are withdrawn from your Stripe account as a result of this dispute.
        */
       is_charge_refundable: boolean;
 
@@ -72,14 +70,14 @@ declare module 'stripe' {
       network_reason_code?: string | null;
 
       /**
-       * ID of the PaymentIntent that was disputed.
+       * ID of the PaymentIntent that's disputed.
        */
       payment_intent: string | Stripe.PaymentIntent | null;
 
       payment_method_details?: Dispute.PaymentMethodDetails;
 
       /**
-       * Reason given by cardholder for dispute. Possible values are `bank_cannot_process`, `check_returned`, `credit_not_processed`, `customer_initiated`, `debit_not_authorized`, `duplicate`, `fraudulent`, `general`, `incorrect_account_details`, `insufficient_funds`, `product_not_received`, `product_unacceptable`, `subscription_canceled`, or `unrecognized`. Read more about [dispute reasons](https://stripe.com/docs/disputes/categories).
+       * Reason given by cardholder for dispute. Possible values are `bank_cannot_process`, `check_returned`, `credit_not_processed`, `customer_initiated`, `debit_not_authorized`, `duplicate`, `fraudulent`, `general`, `incorrect_account_details`, `insufficient_funds`, `product_not_received`, `product_unacceptable`, `subscription_canceled`, or `unrecognized`. Learn more about [dispute reasons](https://stripe.com/docs/disputes/categories).
        */
       reason: string;
 
