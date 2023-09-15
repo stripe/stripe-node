@@ -107,4 +107,13 @@ describe('Integration test', function() {
   });
 
   it('Webhook sample deno', () => runWebhookTest('deno'));
+
+  it('Webhook sample nestjs', function() {
+    // Next.js supports Node.js >=16
+    if (nodeVersion < 16) {
+      this.skip();
+    }
+
+    runWebhookTest('nestjs');
+  });
 });

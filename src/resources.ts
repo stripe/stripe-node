@@ -2,6 +2,7 @@
 
 import {resourceNamespace} from './ResourceNamespace.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
+import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
 import {CardBundles as IssuingCardBundles} from './resources/Issuing/CardBundles.js';
@@ -49,6 +50,7 @@ import {Sessions as FinancialConnectionsSessions} from './resources/FinancialCon
 import {Settings as TaxSettings} from './resources/Tax/Settings.js';
 import {TestClocks as TestHelpersTestClocks} from './resources/TestHelpers/TestClocks.js';
 import {TransactionEntries as TreasuryTransactionEntries} from './resources/Treasury/TransactionEntries.js';
+import {Transactions as TestHelpersIssuingTransactions} from './resources/TestHelpers/Issuing/Transactions.js';
 import {Transactions as FinancialConnectionsTransactions} from './resources/FinancialConnections/Transactions.js';
 import {Transactions as GiftCardsTransactions} from './resources/GiftCards/Transactions.js';
 import {Transactions as IssuingTransactions} from './resources/Issuing/Transactions.js';
@@ -67,6 +69,7 @@ export {ApplicationFees} from './resources/ApplicationFees.js';
 export {Balance} from './resources/Balance.js';
 export {BalanceTransactions} from './resources/BalanceTransactions.js';
 export {Charges} from './resources/Charges.js';
+export {ConfirmationTokens} from './resources/ConfirmationTokens.js';
 export {CountrySpecs} from './resources/CountrySpecs.js';
 export {Coupons} from './resources/Coupons.js';
 export {CreditNotes} from './resources/CreditNotes.js';
@@ -175,8 +178,10 @@ export const TestHelpers = resourceNamespace('testHelpers', {
   Refunds: TestHelpersRefunds,
   TestClocks: TestHelpersTestClocks,
   Issuing: resourceNamespace('issuing', {
+    Authorizations: TestHelpersIssuingAuthorizations,
     CardDesigns: TestHelpersIssuingCardDesigns,
     Cards: TestHelpersIssuingCards,
+    Transactions: TestHelpersIssuingTransactions,
   }),
   Terminal: resourceNamespace('terminal', {
     Readers: TestHelpersTerminalReaders,

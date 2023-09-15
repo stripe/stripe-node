@@ -22,17 +22,17 @@ declare module 'stripe' {
       object: 'balance';
 
       /**
-       * Funds that are available to be transferred or paid out, whether automatically by Stripe or explicitly via the [Transfers API](https://stripe.com/docs/api#transfers) or [Payouts API](https://stripe.com/docs/api#payouts). The available balance for each currency and payment type can be found in the `source_types` property.
+       * Available funds that you can transfer or pay out automatically by Stripe or explicitly through the [Transfers API](https://stripe.com/docs/api#transfers) or [Payouts API](https://stripe.com/docs/api#payouts). You can find the available balance for each currency and payment type in the `source_types` property.
        */
       available: Array<Balance.Available>;
 
       /**
-       * Funds held due to negative balances on connected Custom accounts. The connect reserve balance for each currency and payment type can be found in the `source_types` property.
+       * Funds held due to negative balances on connected Custom accounts. You can find the connect reserve balance for each currency and payment type in the `source_types` property.
        */
       connect_reserved?: Array<Balance.ConnectReserved>;
 
       /**
-       * Funds that can be paid out using Instant Payouts.
+       * Funds that you can pay out using Instant Payouts.
        */
       instant_available?: Array<Balance.InstantAvailable>;
 
@@ -44,7 +44,7 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * Funds that are not yet available in the balance. The pending balance for each currency, and for each payment type, can be found in the `source_types` property.
+       * Funds that aren't available in the balance yet. You can find the pending balance for each currency and each payment type in the `source_types` property.
        */
       pending: Array<Balance.Pending>;
     }

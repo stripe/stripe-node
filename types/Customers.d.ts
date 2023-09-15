@@ -3,7 +3,7 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * This object represents a customer of your business. It lets you create recurring charges and track payments that belong to the same customer.
+     * This object represents a customer of your business. Use it to create recurring charges and track payments that belong to the same customer.
      *
      * Related guide: [Save a card during payment](https://stripe.com/docs/payments/save-during-payment)
      */
@@ -24,12 +24,12 @@ declare module 'stripe' {
       address?: Stripe.Address | null;
 
       /**
-       * Current balance, if any, being stored on the customer. If negative, the customer has credit to apply to their next invoice. If positive, the customer has an amount owed that will be added to their next invoice. The balance does not refer to any unpaid invoices; it solely takes into account amounts that have yet to be successfully applied to any invoice. This balance is only taken into account as invoices are finalized.
+       * The current balance, if any, that's stored on the customer. If negative, the customer has credit to apply to their next invoice. If positive, the customer has an amount owed that's added to their next invoice. The balance only considers amounts that Stripe hasn't successfully applied to any invoice. It doesn't reflect unpaid invoices. This balance is only taken into account after invoices finalize.
        */
       balance: number;
 
       /**
-       * The current funds being held by Stripe on behalf of the customer. These funds can be applied towards payment intents with source "cash_balance". The settings[reconciliation_mode] field describes whether these funds are applied to such payment intents manually or automatically.
+       * The current funds being held by Stripe on behalf of the customer. You can apply these funds towards payment intents when the source is "cash_balance". The `settings[reconciliation_mode]` field describes if these funds apply to these payment intents manually or automatically.
        */
       cash_balance?: Stripe.CashBalance | null;
 
@@ -46,16 +46,16 @@ declare module 'stripe' {
       /**
        * ID of the default payment source for the customer.
        *
-       * If you are using payment methods created via the PaymentMethods API, see the [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) field instead.
+       * If you use payment methods created through the PaymentMethods API, see the [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) field instead.
        */
       default_source: string | Stripe.CustomerSource | null;
 
       deleted?: void;
 
       /**
-       * When the customer's latest invoice is billed by charging automatically, `delinquent` is `true` if the invoice's latest charge failed. When the customer's latest invoice is billed by sending an invoice, `delinquent` is `true` if the invoice isn't paid by its due date.
+       * If Stripe bills the customer's latest invoice by automatically charging and the latest charge fails, it sets `delinquent`` to `true``. If Stripe bills the invoice by sending it, and the invoice isn't paid by the due date, it also sets `delinquent`` to `true`.
        *
-       * If an invoice is marked uncollectible by [dunning](https://stripe.com/docs/billing/automatic-collection), `delinquent` doesn't get reset to `false`.
+       * If an invoice becomes uncollectible by [dunning](https://stripe.com/docs/billing/automatic-collection), `delinquent` doesn't reset to `false`.
        */
       delinquent?: boolean | null;
 
@@ -75,7 +75,7 @@ declare module 'stripe' {
       email: string | null;
 
       /**
-       * The current multi-currency balances, if any, being stored on the customer. If positive in a currency, the customer has a credit to apply to their next invoice denominated in that currency. If negative, the customer has an amount owed that will be added to their next invoice denominated in that currency. These balances do not refer to any unpaid invoices. They solely track amounts that have yet to be successfully applied to any invoice. A balance in a particular currency is only applied to any invoice as an invoice in that currency is finalized.
+       * The current multi-currency balances, if any, that's stored on the customer. If positive in a currency, the customer has a credit to apply to their next invoice denominated in that currency. If negative, the customer has an amount owed that's added to their next invoice denominated in that currency. These balances don't apply to unpaid invoices. They solely track amounts that Stripe hasn't successfully applied to any invoice. Stripe only applies a balance in a specific currency to an invoice after that invoice (which is in the same currency) finalizes.
        */
       invoice_credit_balance?: {
         [key: string]: number;
@@ -104,7 +104,7 @@ declare module 'stripe' {
       name?: string | null;
 
       /**
-       * The suffix of the customer's next invoice number, e.g., 0001.
+       * The suffix of the customer's next invoice number (for example, 0001).
        */
       next_invoice_sequence?: number;
 
@@ -136,7 +136,7 @@ declare module 'stripe' {
       tax?: Customer.Tax;
 
       /**
-       * Describes the customer's tax exemption status. One of `none`, `exempt`, or `reverse`. When set to `reverse`, invoice and receipt PDFs include the text **"Reverse charge"**.
+       * Describes the customer's tax exemption status, which is `none`, `exempt`, or `reverse`. When set to `reverse`, invoice and receipt PDFs include the following text: **"Reverse charge"**.
        */
       tax_exempt?: Customer.TaxExempt | null;
 
@@ -146,7 +146,7 @@ declare module 'stripe' {
       tax_ids?: ApiList<Stripe.TaxId>;
 
       /**
-       * ID of the test clock this customer belongs to.
+       * ID of the test clock that this customer belongs to.
        */
       test_clock?: string | Stripe.TestHelpers.TestClock | null;
     }

@@ -3,14 +3,22 @@
 declare module 'stripe' {
   namespace Stripe {
     namespace Issuing {
-      interface CardDesignRetrieveParams {
+      interface CardDesignCreateParams {
         /**
-         * Specifies which fields in the response should be expanded.
+         * The card bundle object belonging to this card design.
          */
-        expand?: Array<string>;
-      }
+        card_bundle: string;
 
-      interface CardDesignUpdateParams {
+        /**
+         * The file for the card logo, for use with card bundles that support card logos.
+         */
+        card_logo?: string;
+
+        /**
+         * Hash containing carrier text, for use with card bundles that support carrier text.
+         */
+        carrier_text?: CardDesignCreateParams.CarrierText;
+
         /**
          * Specifies which fields in the response should be expanded.
          */
@@ -27,14 +35,99 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * Friendly display name. Providing an empty string will set the field to null.
+         * Friendly display name.
          */
         name?: string;
 
         /**
-         * Whether this card design is used to create cards when one is not specified.
+         * Information on whether this card design is used to create cards when one is not specified.
          */
-        preference?: CardDesignUpdateParams.Preference;
+        preferences?: CardDesignCreateParams.Preferences;
+
+        /**
+         * If set to true, will atomically remove the lookup key from the existing card design, and assign it to this card design.
+         */
+        transfer_lookup_key?: boolean;
+      }
+
+      namespace CardDesignCreateParams {
+        interface CarrierText {
+          /**
+           * The footer body text of the carrier letter.
+           */
+          footer_body?: string;
+
+          /**
+           * The footer title text of the carrier letter.
+           */
+          footer_title?: string;
+
+          /**
+           * The header body text of the carrier letter.
+           */
+          header_body?: string;
+
+          /**
+           * The header title text of the carrier letter.
+           */
+          header_title?: string;
+        }
+
+        interface Preferences {
+          /**
+           * Whether this card design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no card design is set as the account default.
+           */
+          account_default: boolean;
+        }
+      }
+
+      interface CardDesignRetrieveParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
+      interface CardDesignUpdateParams {
+        /**
+         * The card bundle object belonging to this card design.
+         */
+        card_bundle?: string;
+
+        /**
+         * The file for the card logo, for use with card bundles that support card logos.
+         */
+        card_logo?: Stripe.Emptyable<string>;
+
+        /**
+         * Hash containing carrier text, for use with card bundles that support carrier text.
+         */
+        carrier_text?: CardDesignUpdateParams.CarrierText;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * A lookup key used to retrieve card designs dynamically from a static string. This may be up to 200 characters.
+         */
+        lookup_key?: Stripe.Emptyable<string>;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
+         * Friendly display name. Providing an empty string will set the field to null.
+         */
+        name?: Stripe.Emptyable<string>;
+
+        /**
+         * Information on whether this card design is used to create cards when one is not specified.
+         */
+        preferences?: CardDesignUpdateParams.Preferences;
 
         /**
          * If set to true, will atomically remove the lookup key from the existing card design, and assign it to this card design.
@@ -43,7 +136,34 @@ declare module 'stripe' {
       }
 
       namespace CardDesignUpdateParams {
-        type Preference = 'default' | 'none';
+        interface CarrierText {
+          /**
+           * The footer body text of the carrier letter.
+           */
+          footer_body?: string;
+
+          /**
+           * The footer title text of the carrier letter.
+           */
+          footer_title?: string;
+
+          /**
+           * The header body text of the carrier letter.
+           */
+          header_body?: string;
+
+          /**
+           * The header title text of the carrier letter.
+           */
+          header_title?: string;
+        }
+
+        interface Preferences {
+          /**
+           * Whether this card design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no card design is set as the account default.
+           */
+          account_default: boolean;
+        }
       }
 
       interface CardDesignListParams extends PaginationParams {
@@ -58,9 +178,9 @@ declare module 'stripe' {
         lookup_keys?: Array<string>;
 
         /**
-         * Only return card designs with the given preference.
+         * Only return card designs with the given preferences.
          */
-        preference?: CardDesignListParams.Preference;
+        preferences?: CardDesignListParams.Preferences;
 
         /**
          * Only return card designs with the given status.
@@ -69,12 +189,30 @@ declare module 'stripe' {
       }
 
       namespace CardDesignListParams {
-        type Preference = 'default' | 'none' | 'platform_default';
+        interface Preferences {
+          /**
+           * Only return the card design that is set as the account default. A connected account will use the Connect platform's default if no card design is set as the account default.
+           */
+          account_default?: boolean;
+
+          /**
+           * Only return the card design that is set as the Connect platform's default. This parameter is only applicable to connected accounts.
+           */
+          platform_default?: boolean;
+        }
 
         type Status = 'active' | 'inactive' | 'rejected' | 'review';
       }
 
       class CardDesignsResource {
+        /**
+         * Creates a card design object.
+         */
+        create(
+          params: CardDesignCreateParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Issuing.CardDesign>>;
+
         /**
          * Retrieves a card design object.
          */

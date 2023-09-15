@@ -71,6 +71,11 @@ declare module 'stripe' {
         location?: string;
 
         /**
+         * Filters readers by serial number
+         */
+        serial_number?: string;
+
+        /**
          * A status filter to filter readers to only offline or online readers
          */
         status?: ReaderListParams.Status;

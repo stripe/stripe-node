@@ -13,4 +13,9 @@ export const CardDesigns = StripeResource.extend({
     fullPath:
       '/v1/test_helpers/issuing/card_designs/{card_design}/status/deactivate',
   }),
+  rejectTestmode: stripeMethod({
+    method: 'POST',
+    fullPath:
+      '/v1/test_helpers/issuing/card_designs/{card_design}/status/reject',
+  }),
 });

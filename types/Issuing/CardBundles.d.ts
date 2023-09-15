@@ -17,6 +17,8 @@ declare module 'stripe' {
          */
         object: 'issuing.card_bundle';
 
+        features?: CardBundle.Features;
+
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
@@ -39,6 +41,24 @@ declare module 'stripe' {
       }
 
       namespace CardBundle {
+        interface Features {
+          /**
+           * The policy for how to use card logo images in a card design with this card bundle.
+           */
+          card_logo: Features.CardLogo;
+
+          /**
+           * The policy for how to use carrier letter text in a card design with this card bundle.
+           */
+          carrier_text: Features.CarrierText;
+        }
+
+        namespace Features {
+          type CardLogo = 'optional' | 'required' | 'unsupported';
+
+          type CarrierText = 'optional' | 'required' | 'unsupported';
+        }
+
         type Status = 'active' | 'inactive' | 'review';
 
         type Type = 'custom' | 'standard';
