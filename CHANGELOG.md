@@ -1,5 +1,36 @@
 # Changelog
 
+## 13.7.0-beta.1 - 2023-09-14
+* [#1900](https://github.com/stripe/stripe-node/pull/1900) Update generated code for beta
+  * Add support for new resource `ConfirmationToken`
+  * Add support for `retrieve` method on resource `ConfirmationToken`
+  * Add support for `create` method on resource `Issuing.CardDesign`
+  * Add support for `reject_testmode` test helper method on resource `Issuing.CardDesign`
+  * Add support for new value `issuing_card_design.rejected` on enum `Event.type`
+  * Add support for `features` on `Issuing.CardBundle`
+  * Add support for `preferences` on `Issuing.CardDesignListParams`, `Issuing.CardDesignUpdateParams`, and `Issuing.CardDesign`
+  * Remove support for `preference` on `Issuing.CardDesignListParams`, `Issuing.CardDesignUpdateParams`, and `Issuing.CardDesign`
+  * Add support for `card_bundle` on `Issuing.CardDesignUpdateParams`
+  * Add support for `card_logo` and `carrier_text` on `Issuing.CardDesignUpdateParams` and `Issuing.CardDesign`
+  * Change type of `Issuing.CardDesignUpdateParams.lookup_key` and `Issuing.CardDesignUpdateParams.name` from `string` to `emptyStringable(string)`
+  * Add support for `rejection_reasons` on `Issuing.CardDesign`
+  * Add support for `confirmation_token` on `PaymentIntentConfirmParams`, `PaymentIntentCreateParams`, `SetupIntentConfirmParams`, and `SetupIntentCreateParams`
+  * Add support for new value `issuing_card_design.rejected` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
+## 13.6.0 - 2023-09-14
+* [#1905](https://github.com/stripe/stripe-node/pull/1905) Update generated code
+  * Add support for new resource `PaymentMethodConfiguration`
+  * Add support for `create`, `list`, `retrieve`, and `update` methods on resource `PaymentMethodConfiguration`
+  * Add support for `payment_method_configuration` on `Checkout.SessionCreateParams`, `PaymentIntentCreateParams`, `PaymentIntentUpdateParams`, `SetupIntentCreateParams`, and `SetupIntentUpdateParams`
+  * Add support for `payment_method_configuration_details` on `Checkout.Session`, `PaymentIntent`, and `SetupIntent`
+* [#1897](https://github.com/stripe/stripe-node/pull/1897) Update generated code
+  * Add support for `capture`, `create`, `expire`, `increment`, and `reverse` test helper methods on resource `Issuing.Authorization`
+  * Add support for `create_force_capture`, `create_unlinked_refund`, and `refund` test helper methods on resource `Issuing.Transaction`
+  * Add support for new value `stripe_tax_inactive` on enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`
+  * Add support for `nonce` on `EphemeralKeyCreateParams`
+  * Add support for `cashback_amount` on `Issuing.Authorization.amount_details`, `Issuing.Authorization.pending_request.amount_details`, `Issuing.Authorization.request_history[].amount_details`, and `Issuing.Transaction.amount_details`
+  * Add support for `serial_number` on `Terminal.ReaderListParams`
+
 ## 13.6.0-beta.1 - 2023-09-07
 * [#1898](https://github.com/stripe/stripe-node/pull/1898) Update generated code for beta
   * Release specs are identical.
