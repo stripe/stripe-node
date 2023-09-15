@@ -3641,7 +3641,7 @@ describe('TestHelpers.Issuing.Authorizations', function() {
         },
         authorization_method: 'chip',
         card: 'foo',
-        currency: 'bar',
+        currency: 'usd',
         is_amount_controllable: true,
         merchant_data: {
           category: 'ac_refrigeration_repair',
@@ -3751,7 +3751,7 @@ describe('TestHelpers.Issuing.Transactions', function() {
       {
         amount: 100,
         card: 'foo',
-        currency: 'bar',
+        currency: 'usd',
         merchant_data: {
           category: 'ac_refrigeration_repair',
           city: 'foo',
@@ -3809,7 +3809,7 @@ describe('TestHelpers.Issuing.Transactions', function() {
       {
         amount: 100,
         card: 'foo',
-        currency: 'bar',
+        currency: 'usd',
         merchant_data: {
           category: 'ac_refrigeration_repair',
           city: 'foo',
