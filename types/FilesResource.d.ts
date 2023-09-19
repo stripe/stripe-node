@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     interface FileCreateParams {
       /**
-       * A file to upload. The file should follow the specifications of RFC 2388 (which defines file transfers for the `multipart/form-data` protocol).
+       * A file to upload. Make sure that the specifications follow RFC 2388, which defines file transfers for the `multipart/form-data` protocol.
        */
       file: FileData;
 
@@ -19,7 +19,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Optional parameters to automatically create a [file link](https://stripe.com/docs/api#file_links) for the newly created file.
+       * Optional parameters that automatically create a [file link](https://stripe.com/docs/api#file_links) for the newly created file.
        */
       file_link_data?: FileCreateParams.FileLinkData;
     }
@@ -32,7 +32,7 @@ declare module 'stripe' {
         create: boolean;
 
         /**
-         * A future timestamp after which the link will no longer be usable.
+         * The link isn't available after this future timestamp.
          */
         expires_at?: number;
 
@@ -71,7 +71,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * The file purpose to filter queries by. If none is provided, files will not be filtered by purpose.
+       * Filter queries by the file purpose. If you don't provide a purpose, the queries return unfiltered files.
        */
       purpose?: FileListParams.Purpose;
     }
@@ -97,9 +97,9 @@ declare module 'stripe' {
 
     class FilesResource {
       /**
-       * To upload a file to Stripe, you'll need to send a request of type multipart/form-data. The request should contain the file you would like to upload, as well as the parameters for creating a file.
+       * To upload a file to Stripe, you need to send a request of type multipart/form-data. Include the file you want to upload in the request, and the parameters for creating a file.
        *
-       * All of Stripe's officially supported Client libraries should have support for sending multipart/form-data.
+       * All of Stripe's officially supported Client libraries support sending multipart/form-data.
        */
       create(
         params: FileCreateParams,
@@ -107,7 +107,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.File>>;
 
       /**
-       * Retrieves the details of an existing file object. Supply the unique file ID from a file, and Stripe will return the corresponding file object. To access file contents, see the [File Upload Guide](https://stripe.com/docs/file-upload#download-file-contents).
+       * Retrieves the details of an existing file object. After you supply a unique file ID, Stripe returns the corresponding file object. Learn how to [access file contents](https://stripe.com/docs/file-upload#download-file-contents).
        */
       retrieve(
         id: string,
@@ -120,7 +120,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.File>>;
 
       /**
-       * Returns a list of the files that your account has access to. The files are returned sorted by creation date, with the most recently created files appearing first.
+       * Returns a list of the files that your account has access to. Stripe sorts and returns the files by their creation dates, placing the most recently created files at the top.
        */
       list(
         params?: FileListParams,
