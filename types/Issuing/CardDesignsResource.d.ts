@@ -102,7 +102,7 @@ declare module 'stripe' {
         /**
          * Hash containing carrier text, for use with card bundles that support carrier text.
          */
-        carrier_text?: CardDesignUpdateParams.CarrierText;
+        carrier_text?: Stripe.Emptyable<CardDesignUpdateParams.CarrierText>;
 
         /**
          * Specifies which fields in the response should be expanded.
