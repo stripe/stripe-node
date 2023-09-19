@@ -629,6 +629,11 @@ declare module 'stripe' {
            * Custom text that should be displayed alongside the payment confirmation button.
            */
           submit: CustomText.Submit | null;
+
+          /**
+           * Custom text that should be displayed in place of the default terms of service agreement text.
+           */
+          terms_of_service_acceptance: CustomText.TermsOfServiceAcceptance | null;
         }
 
         namespace CustomText {
@@ -640,6 +645,13 @@ declare module 'stripe' {
           }
 
           interface Submit {
+            /**
+             * Text may be up to 1000 characters in length.
+             */
+            message: string;
+          }
+
+          interface TermsOfServiceAcceptance {
             /**
              * Text may be up to 1000 characters in length.
              */
