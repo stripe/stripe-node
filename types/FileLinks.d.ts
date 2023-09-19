@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     /**
      * To share the contents of a `File` object with non-Stripe users, you can
-     * create a `FileLink`. `FileLink`s contain a URL that can be used to
+     * create a `FileLink`. `FileLink`s contain a URL that you can use to
      * retrieve the contents of the file without authentication.
      */
     interface FileLink {
@@ -24,12 +24,12 @@ declare module 'stripe' {
       created: number;
 
       /**
-       * Whether this link is already expired.
+       * Returns if the link is already expired.
        */
       expired: boolean;
 
       /**
-       * Time at which the link expires.
+       * Time that the link expires.
        */
       expires_at: number | null;
 
