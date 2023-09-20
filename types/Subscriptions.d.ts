@@ -249,6 +249,29 @@ declare module 'stripe' {
          * Whether Stripe automatically computes tax on this subscription.
          */
         enabled: boolean;
+
+        /**
+         * The connected account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+         */
+        liability?: AutomaticTax.Liability | null;
+      }
+
+      namespace AutomaticTax {
+        interface Liability {
+          /**
+           * The connected account being referenced when `type` is `account`.
+           */
+          account: string | Stripe.Account | null;
+
+          /**
+           * Type of the account referenced.
+           */
+          type: Liability.Type;
+        }
+
+        namespace Liability {
+          type Type = 'account' | 'self';
+        }
       }
 
       interface BillingThresholds {
