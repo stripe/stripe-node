@@ -38,6 +38,9 @@ declare module 'stripe' {
        */
       default_price?: string | Stripe.Price | null;
 
+      /**
+       * Always true for a deleted object
+       */
       deleted?: void;
 
       /**

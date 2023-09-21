@@ -19,6 +19,9 @@ declare module 'stripe' {
 
         bbpos_wisepos_e?: Configuration.BbposWiseposE;
 
+        /**
+         * Always true for a deleted object
+         */
         deleted?: void;
 
         /**

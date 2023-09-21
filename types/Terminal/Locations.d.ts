@@ -26,6 +26,9 @@ declare module 'stripe' {
          */
         configuration_overrides?: string;
 
+        /**
+         * Always true for a deleted object
+         */
         deleted?: void;
 
         /**

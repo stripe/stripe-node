@@ -100,6 +100,9 @@ declare module 'stripe' {
        */
       default_for_currency?: boolean | null;
 
+      /**
+       * Always true for a deleted object
+       */
       deleted?: void;
 
       /**

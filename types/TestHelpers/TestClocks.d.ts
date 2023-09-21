@@ -24,6 +24,9 @@ declare module 'stripe' {
          */
         created: number;
 
+        /**
+         * Always true for a deleted object
+         */
         deleted?: void;
 
         /**
