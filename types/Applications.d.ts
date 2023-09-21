@@ -16,6 +16,9 @@ declare module 'stripe' {
        */
       object: 'application';
 
+      /**
+       * Always true for a deleted object
+       */
       deleted?: void;
 
       /**

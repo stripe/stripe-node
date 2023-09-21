@@ -34,6 +34,9 @@ declare module 'stripe' {
        */
       customer: string | Stripe.Customer | null;
 
+      /**
+       * Always true for a deleted object
+       */
       deleted?: void;
 
       /**

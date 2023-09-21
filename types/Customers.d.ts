@@ -50,6 +50,9 @@ declare module 'stripe' {
        */
       default_source: string | Stripe.CustomerSource | null;
 
+      /**
+       * Always true for a deleted object
+       */
       deleted?: void;
 
       /**
