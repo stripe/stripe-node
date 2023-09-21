@@ -1855,7 +1855,7 @@ declare module 'stripe' {
           /**
            * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
            */
-          reference?: string | null;
+          reference: string | null;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
