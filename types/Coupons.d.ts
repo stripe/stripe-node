@@ -42,6 +42,9 @@ declare module 'stripe' {
         [key: string]: Coupon.CurrencyOptions;
       };
 
+      /**
+       * Always true for a deleted object
+       */
       deleted?: void;
 
       /**

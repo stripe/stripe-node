@@ -2125,7 +2125,7 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentUpdateParams.PaymentMethodOptions;
 
       /**
-       * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use. Use automatic_payment_methods to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+       * The list of payment method types (for example, card) that this PaymentIntent can use. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
        */
       payment_method_types?: Array<string>;
 
@@ -2163,12 +2163,12 @@ declare module 'stripe' {
       statement_descriptor_suffix?: string;
 
       /**
-       * The parameters used to automatically create a Transfer when the payment succeeds. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       * Use this parameter to automatically create a Transfer when the payment succeeds. Learn more about the [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       transfer_data?: PaymentIntentUpdateParams.TransferData;
 
       /**
-       * A string that identifies the resulting payment as part of a group. `transfer_group` may only be provided if it has not been set. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
+       * A string that identifies the resulting payment as part of a group. You can only provide `transfer_group` if it hasn't been set. Learn more about the [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       transfer_group?: string;
     }
@@ -6150,10 +6150,10 @@ declare module 'stripe' {
       /**
        * Updates properties on a PaymentIntent object without confirming.
        *
-       * Depending on which properties you update, you may need to confirm the
-       * PaymentIntent again. For example, updating the payment_method will
-       * always require you to confirm the PaymentIntent again. If you prefer to
-       * update and confirm at the same time, we recommend updating properties via
+       * Depending on which properties you update, you might need to confirm the
+       * PaymentIntent again. For example, updating the payment_method
+       * always requires you to confirm the PaymentIntent again. If you prefer to
+       * update and confirm at the same time, we recommend updating properties through
        * the [confirm API](https://stripe.com/docs/api/payment_intents/confirm) instead.
        */
       update(

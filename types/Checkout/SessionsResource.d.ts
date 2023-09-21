@@ -423,19 +423,33 @@ declare module 'stripe' {
            * Custom text that should be displayed alongside the payment confirmation button.
            */
           submit?: Stripe.Emptyable<CustomText.Submit>;
+
+          /**
+           * Custom text that should be displayed in place of the default terms of service agreement text.
+           */
+          terms_of_service_acceptance?: Stripe.Emptyable<
+            CustomText.TermsOfServiceAcceptance
+          >;
         }
 
         namespace CustomText {
           interface ShippingAddress {
             /**
-             * Text may be up to 1000 characters in length.
+             * Text may be up to 1200 characters in length.
              */
             message: string;
           }
 
           interface Submit {
             /**
-             * Text may be up to 1000 characters in length.
+             * Text may be up to 1200 characters in length.
+             */
+            message: string;
+          }
+
+          interface TermsOfServiceAcceptance {
+            /**
+             * Text may be up to 1200 characters in length.
              */
             message: string;
           }

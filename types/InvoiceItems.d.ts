@@ -46,6 +46,9 @@ declare module 'stripe' {
        */
       date: number;
 
+      /**
+       * Always true for a deleted object
+       */
       deleted?: void;
 
       /**

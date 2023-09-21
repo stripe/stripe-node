@@ -58,6 +58,9 @@ declare module 'stripe' {
        */
       currency: string;
 
+      /**
+       * Always true for a deleted object
+       */
       deleted?: void;
 
       /**

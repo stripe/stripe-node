@@ -24,6 +24,9 @@ declare module 'stripe' {
          */
         action: Reader.Action | null;
 
+        /**
+         * Always true for a deleted object
+         */
         deleted?: void;
 
         /**

@@ -208,6 +208,9 @@ declare module 'stripe' {
        */
       default_tax_rates: Array<Stripe.TaxRate>;
 
+      /**
+       * Always true for a deleted object
+       */
       deleted?: void;
 
       /**
