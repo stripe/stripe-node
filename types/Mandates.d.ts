@@ -191,7 +191,7 @@ declare module 'stripe' {
           /**
            * PayPal account PayerID. This identifier uniquely identifies the PayPal customer.
            */
-          payer_id?: string | null;
+          payer_id: string | null;
 
           /**
            * Owner's verified email. Values are verified or provided by PayPal directly
