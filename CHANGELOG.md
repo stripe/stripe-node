@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.7.0 - 2023-09-21
+* [#1907](https://github.com/stripe/stripe-node/pull/1907) Update generated code
+  * Add support for `terms_of_service_acceptance` on `Checkout.Session.custom_text`, `Checkout.SessionCreateParams.custom_text`, `PaymentLink.custom_text`, `PaymentLinkCreateParams.custom_text`, and `PaymentLinkUpdateParams.custom_text`
+
 ## 13.6.0 - 2023-09-14
 * [#1905](https://github.com/stripe/stripe-node/pull/1905) Update generated code
   * Add support for new resource `PaymentMethodConfiguration`
