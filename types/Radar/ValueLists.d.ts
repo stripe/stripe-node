@@ -34,6 +34,9 @@ declare module 'stripe' {
          */
         created_by: string;
 
+        /**
+         * Always true for a deleted object
+         */
         deleted?: void;
 
         /**

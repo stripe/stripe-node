@@ -59,6 +59,9 @@ declare module 'stripe' {
        */
       default_currency?: string;
 
+      /**
+       * Always true for a deleted object
+       */
       deleted?: void;
 
       /**
@@ -84,7 +87,7 @@ declare module 'stripe' {
        * A platform cannot access a Standard or Express account's persons after the account starts onboarding, such as after generating an account link for the account.
        * See the [Standard onboarding](https://stripe.com/docs/connect/standard-accounts) or [Express onboarding documentation](https://stripe.com/docs/connect/express-accounts) for information about platform prefilling and account onboarding steps.
        *
-       * Related guide: [Handling identity verification with the API](https://stripe.com/docs/connect/identity-verification-api#person-information)
+       * Related guide: [Handling identity verification with the API](https://stripe.com/docs/connect/handling-api-verification#person-information)
        */
       individual?: Stripe.Person;
 

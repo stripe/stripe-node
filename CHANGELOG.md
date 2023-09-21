@@ -30,6 +30,8 @@
   * Add support for `nonce` on `EphemeralKeyCreateParams`
   * Add support for `cashback_amount` on `Issuing.Authorization.amount_details`, `Issuing.Authorization.pending_request.amount_details`, `Issuing.Authorization.request_history[].amount_details`, and `Issuing.Transaction.amount_details`
   * Add support for `serial_number` on `Terminal.ReaderListParams`
+* [#1895](https://github.com/stripe/stripe-node/pull/1895) feat: webhook signing Nestjs
+* [#1878](https://github.com/stripe/stripe-node/pull/1878) Use src/apiVersion.ts, not API_VERSION as source of truth
 
 ## 13.6.0-beta.1 - 2023-09-07
 * [#1898](https://github.com/stripe/stripe-node/pull/1898) Update generated code for beta

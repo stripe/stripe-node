@@ -53,6 +53,9 @@ declare module 'stripe' {
        */
       custom_unit_amount: Price.CustomUnitAmount | null;
 
+      /**
+       * Always true for a deleted object
+       */
       deleted?: void;
 
       /**

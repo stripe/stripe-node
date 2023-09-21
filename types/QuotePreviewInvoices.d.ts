@@ -238,6 +238,11 @@ declare module 'stripe' {
       from_invoice: QuotePreviewInvoice.FromInvoice | null;
 
       /**
+       * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+       */
+      issuer?: QuotePreviewInvoice.Issuer | null;
+
+      /**
        * The error encountered during the previous attempt to finalize the invoice. This field is cleared when the invoice is successfully finalized.
        */
       last_finalization_error: QuotePreviewInvoice.LastFinalizationError | null;
@@ -455,12 +460,33 @@ declare module 'stripe' {
         enabled: boolean;
 
         /**
+         * The connected account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+         */
+        liability?: AutomaticTax.Liability | null;
+
+        /**
          * The status of the most recent automated tax calculation for this invoice.
          */
         status: AutomaticTax.Status | null;
       }
 
       namespace AutomaticTax {
+        interface Liability {
+          /**
+           * The connected account being referenced when `type` is `account`.
+           */
+          account: string | Stripe.Account | null;
+
+          /**
+           * Type of the account referenced.
+           */
+          type: Liability.Type;
+        }
+
+        namespace Liability {
+          type Type = 'account' | 'self';
+        }
+
         type Status = 'complete' | 'failed' | 'requires_location_inputs';
       }
 
@@ -608,6 +634,22 @@ declare module 'stripe' {
          * The invoice that was cloned.
          */
         invoice: string | Stripe.Invoice;
+      }
+
+      interface Issuer {
+        /**
+         * The connected account being referenced when `type` is `account`.
+         */
+        account: string | Stripe.Account | null;
+
+        /**
+         * Type of the account referenced.
+         */
+        type: Issuer.Type;
+      }
+
+      namespace Issuer {
+        type Type = 'account' | 'self';
       }
 
       interface LastFinalizationError {
