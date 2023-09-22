@@ -9,6 +9,10 @@
   * Change type of `Issuing.CardDesignUpdateParams.carrier_text` from `carrier_text_param` to `emptyStringable(carrier_text_param)`
   * Add support for `invoice_settings` on `SubscriptionCreateParams` and `SubscriptionUpdateParams`
 
+## 13.7.0 - 2023-09-21
+* [#1907](https://github.com/stripe/stripe-node/pull/1907) Update generated code
+  * Add support for `terms_of_service_acceptance` on `Checkout.Session.custom_text`, `Checkout.SessionCreateParams.custom_text`, `PaymentLink.custom_text`, `PaymentLinkCreateParams.custom_text`, and `PaymentLinkUpdateParams.custom_text`
+
 ## 13.7.0-beta.1 - 2023-09-14
 * [#1900](https://github.com/stripe/stripe-node/pull/1900) Update generated code for beta
   * Add support for new resource `ConfirmationToken`
