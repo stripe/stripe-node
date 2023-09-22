@@ -330,6 +330,11 @@ declare module 'stripe' {
       receipt_number: string | null;
 
       /**
+       * The rendering-related settings that control how the invoice is displayed on customer-facing surfaces such as PDF and Hosted Invoice Page.
+       */
+      rendering: QuotePreviewInvoice.Rendering | null;
+
+      /**
        * Options for invoice PDF rendering.
        */
       rendering_options: QuotePreviewInvoice.RenderingOptions | null;
@@ -1128,6 +1133,31 @@ declare module 'stripe' {
           | 'sofort'
           | 'us_bank_account'
           | 'wechat_pay';
+      }
+
+      interface Rendering {
+        /**
+         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
+         */
+        amount_tax_display: string | null;
+
+        /**
+         * Invoice pdf rendering options
+         */
+        pdf: Rendering.Pdf | null;
+      }
+
+      namespace Rendering {
+        interface Pdf {
+          /**
+           * Page size of invoice pdf. Options include a4, letter, and auto. If set to auto, page size will be switched to a4 or letter based on customer locale.
+           */
+          page_size: Pdf.PageSize | null;
+        }
+
+        namespace Pdf {
+          type PageSize = 'a4' | 'auto' | 'letter';
+        }
       }
 
       interface RenderingOptions {
