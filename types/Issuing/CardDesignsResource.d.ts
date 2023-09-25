@@ -10,7 +10,7 @@ declare module 'stripe' {
         card_bundle: string;
 
         /**
-         * The file for the card logo, for use with card bundles that support card logos.
+         * The file for the card logo, for use with card bundles that support card logos. Must have `purpose` value of `issuing_logo`.
          */
         card_logo?: string;
 
@@ -95,7 +95,7 @@ declare module 'stripe' {
         card_bundle?: string;
 
         /**
-         * The file for the card logo, for use with card bundles that support card logos.
+         * The file for the card logo, for use with card bundles that support card logos. Must have `purpose` value of `issuing_logo`.
          */
         card_logo?: Stripe.Emptyable<string>;
 
