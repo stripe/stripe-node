@@ -55,22 +55,22 @@ declare module 'stripe' {
           /**
            * The footer body text of the carrier letter.
            */
-          footer_body?: string;
+          footer_body?: Stripe.Emptyable<string>;
 
           /**
            * The footer title text of the carrier letter.
            */
-          footer_title?: string;
+          footer_title?: Stripe.Emptyable<string>;
 
           /**
            * The header body text of the carrier letter.
            */
-          header_body?: string;
+          header_body?: Stripe.Emptyable<string>;
 
           /**
            * The header title text of the carrier letter.
            */
-          header_title?: string;
+          header_title?: Stripe.Emptyable<string>;
         }
 
         interface Preferences {
@@ -140,22 +140,22 @@ declare module 'stripe' {
           /**
            * The footer body text of the carrier letter.
            */
-          footer_body?: string;
+          footer_body?: Stripe.Emptyable<string>;
 
           /**
            * The footer title text of the carrier letter.
            */
-          footer_title?: string;
+          footer_title?: Stripe.Emptyable<string>;
 
           /**
            * The header body text of the carrier letter.
            */
-          header_body?: string;
+          header_body?: Stripe.Emptyable<string>;
 
           /**
            * The header title text of the carrier letter.
            */
-          header_title?: string;
+          header_title?: Stripe.Emptyable<string>;
         }
 
         interface Preferences {
