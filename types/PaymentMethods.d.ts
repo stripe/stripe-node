@@ -1006,7 +1006,7 @@ declare module 'stripe' {
         /**
          * Contains information about the future reusability of this PaymentMethod.
          */
-        status_details?: UsBankAccount.StatusDetails | null;
+        status_details: UsBankAccount.StatusDetails | null;
       }
 
       namespace UsBankAccount {
