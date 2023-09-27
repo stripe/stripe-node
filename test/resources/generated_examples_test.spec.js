@@ -2944,6 +2944,11 @@ describe('Subscriptions', function() {
     });
     expect(subscriptions).not.to.be.null;
   });
+
+  it('deleteDiscount method', async function() {
+    const deleted = await stripe.subscriptions.deleteDiscount('sub_xyz');
+    expect(deleted).not.to.be.null;
+  });
 });
 
 describe('TaxCodes', function() {

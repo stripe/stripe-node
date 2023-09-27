@@ -1289,8 +1289,8 @@ declare module 'stripe' {
           capture_method?: 'manual';
 
           /**
-           * Order identifier shown to the customer in Afterpay's online portal. We recommend using a value that helps you answer any questions a customer might have about
-           * the payment. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.
+           * An internal identifier or reference that this payment corresponds to. You must limit the identifier to 128 characters, and it can only contain letters, numbers, underscores, backslashes, and dashes.
+           * This field differs from the statement descriptor and item name.
            */
           reference: string | null;
 
