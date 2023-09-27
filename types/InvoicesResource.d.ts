@@ -129,7 +129,7 @@ declare module 'stripe' {
       rendering?: InvoiceCreateParams.Rendering;
 
       /**
-       * Options for invoice PDF rendering.
+       * This is a legacy field that will be removed soon. For details about `rendering_options`, refer to `rendering` instead. Options for invoice PDF rendering.
        */
       rendering_options?: Stripe.Emptyable<
         InvoiceCreateParams.RenderingOptions
@@ -871,7 +871,7 @@ declare module 'stripe' {
       rendering?: InvoiceUpdateParams.Rendering;
 
       /**
-       * Options for invoice PDF rendering.
+       * This is a legacy field that will be removed soon. For details about `rendering_options`, refer to `rendering` instead. Options for invoice PDF rendering.
        */
       rendering_options?: Stripe.Emptyable<
         InvoiceUpdateParams.RenderingOptions

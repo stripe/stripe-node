@@ -335,7 +335,7 @@ declare module 'stripe' {
       rendering: QuotePreviewInvoice.Rendering | null;
 
       /**
-       * Options for invoice PDF rendering.
+       * This is a legacy field that will be removed soon. For details about `rendering_options`, refer to `rendering` instead. Options for invoice PDF rendering.
        */
       rendering_options: QuotePreviewInvoice.RenderingOptions | null;
 
