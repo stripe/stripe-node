@@ -48,6 +48,15 @@ declare module 'stripe' {
            * Whether the embedded component is enabled.
            */
           enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: AccountOnboarding.Features;
+        }
+
+        namespace AccountOnboarding {
+          interface Features {}
         }
 
         interface PaymentDetails {
@@ -55,6 +64,30 @@ declare module 'stripe' {
            * Whether the embedded component is enabled.
            */
           enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: PaymentDetails.Features;
+        }
+
+        namespace PaymentDetails {
+          interface Features {
+            /**
+             * Whether to allow capturing and cancelling payment intents. This is `true` by default.
+             */
+            capture_payments?: boolean;
+
+            /**
+             * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
+             */
+            dispute_management?: boolean;
+
+            /**
+             * Whether to allow sending refunds. This is `true` by default.
+             */
+            refund_management?: boolean;
+          }
         }
 
         interface Payments {
@@ -62,6 +95,30 @@ declare module 'stripe' {
            * Whether the embedded component is enabled.
            */
           enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: Payments.Features;
+        }
+
+        namespace Payments {
+          interface Features {
+            /**
+             * Whether to allow capturing and cancelling payment intents. This is `true` by default.
+             */
+            capture_payments?: boolean;
+
+            /**
+             * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
+             */
+            dispute_management?: boolean;
+
+            /**
+             * Whether to allow sending refunds. This is `true` by default.
+             */
+            refund_management?: boolean;
+          }
         }
 
         interface Payouts {
@@ -69,6 +126,15 @@ declare module 'stripe' {
            * Whether the embedded component is enabled.
            */
           enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: Payouts.Features;
+        }
+
+        namespace Payouts {
+          interface Features {}
         }
       }
     }
