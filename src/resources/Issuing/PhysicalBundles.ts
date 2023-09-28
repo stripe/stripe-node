@@ -2,14 +2,14 @@
 
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const CardBundles = StripeResource.extend({
+export const PhysicalBundles = StripeResource.extend({
   retrieve: stripeMethod({
     method: 'GET',
-    fullPath: '/v1/issuing/card_bundles/{card_bundle}',
+    fullPath: '/v1/issuing/physical_bundles/{physical_bundle}',
   }),
   list: stripeMethod({
     method: 'GET',
-    fullPath: '/v1/issuing/card_bundles',
+    fullPath: '/v1/issuing/physical_bundles',
     methodType: 'list',
   }),
 });

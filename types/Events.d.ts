@@ -73,6 +73,11 @@ declare module 'stripe' {
       pending_webhooks: number;
 
       /**
+       * Information about the action that causes the event. Only present when the event is triggered by an API request or an [Automation](https://stripe.com/docs/billing/revenue-recovery/automations) action.
+       */
+      reason?: Event.Reason | null;
+
+      /**
        * Information on the API request that triggers the event.
        */
       request: Event.Request | null;
@@ -100,6 +105,59 @@ declare module 'stripe' {
         interface Object {}
 
         interface PreviousAttributes {}
+      }
+
+      interface Reason {
+        automation_action?: Reason.AutomationAction;
+
+        request?: Reason.Request;
+
+        /**
+         * The type of the reason for the event.
+         */
+        type: Reason.Type;
+      }
+
+      namespace Reason {
+        interface AutomationAction {
+          stripe_send_webhook_custom_event?: AutomationAction.StripeSendWebhookCustomEvent;
+
+          /**
+           * The trigger name of the automation that triggered this action.
+           *  Please visit [Revenue and retention automations](https://stripe.com/docs/billing/revenue-recovery/automations#choose-a-trigger) for all possible trigger names.
+           */
+          trigger: string;
+
+          /**
+           * The type of the `automation_action`.
+           */
+          type: 'stripe_send_webhook_custom_event';
+        }
+
+        namespace AutomationAction {
+          interface StripeSendWebhookCustomEvent {
+            /**
+             * Set of key-value pairs attached to the action when creating an Automation.
+             */
+            custom_data: {
+              [key: string]: string;
+            } | null;
+          }
+        }
+
+        interface Request {
+          /**
+           * ID of the API request that caused the event. If null, the event was automatic (e.g., Stripe's automatic subscription handling). Request logs are available in the [dashboard](https://dashboard.stripe.com/logs), but currently not in the API.
+           */
+          id: string | null;
+
+          /**
+           * The idempotency key transmitted during the request, if any. *Note: This property is populated only for events on or after May 23, 2017*.
+           */
+          idempotency_key: string | null;
+        }
+
+        type Type = 'automation_action' | 'request';
       }
 
       interface Request {
@@ -174,6 +232,7 @@ declare module 'stripe' {
         | 'customer.subscription.collection_paused'
         | 'customer.subscription.collection_resumed'
         | 'customer.subscription.created'
+        | 'customer.subscription.custom_event'
         | 'customer.subscription.deleted'
         | 'customer.subscription.paused'
         | 'customer.subscription.pending_update_applied'
@@ -222,10 +281,6 @@ declare module 'stripe' {
         | 'issuing_authorization.updated'
         | 'issuing_card.created'
         | 'issuing_card.updated'
-        | 'issuing_card_design.activated'
-        | 'issuing_card_design.deactivated'
-        | 'issuing_card_design.rejected'
-        | 'issuing_card_design.updated'
         | 'issuing_cardholder.created'
         | 'issuing_cardholder.updated'
         | 'issuing_dispute.closed'
@@ -233,6 +288,10 @@ declare module 'stripe' {
         | 'issuing_dispute.funds_reinstated'
         | 'issuing_dispute.submitted'
         | 'issuing_dispute.updated'
+        | 'issuing_personalization_design.activated'
+        | 'issuing_personalization_design.deactivated'
+        | 'issuing_personalization_design.rejected'
+        | 'issuing_personalization_design.updated'
         | 'issuing_transaction.created'
         | 'issuing_transaction.updated'
         | 'mandate.updated'

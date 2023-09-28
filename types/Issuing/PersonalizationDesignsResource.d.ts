@@ -3,21 +3,21 @@
 declare module 'stripe' {
   namespace Stripe {
     namespace Issuing {
-      interface CardDesignCreateParams {
+      interface PersonalizationDesignCreateParams {
         /**
-         * The card bundle object belonging to this card design.
+         * The physical bundle object belonging to this personalization design.
          */
-        card_bundle: string;
+        physical_bundle: string;
 
         /**
-         * The file for the card logo, for use with card bundles that support card logos. Must have `purpose` value of `issuing_logo`.
+         * The file for the card logo, for use with physical bundles that support card logos. Must have `purpose` value of `issuing_logo`.
          */
         card_logo?: string;
 
         /**
-         * Hash containing carrier text, for use with card bundles that support carrier text.
+         * Hash containing carrier text, for use with physical bundles that support carrier text.
          */
-        carrier_text?: CardDesignCreateParams.CarrierText;
+        carrier_text?: PersonalizationDesignCreateParams.CarrierText;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -25,7 +25,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * A lookup key used to retrieve card designs dynamically from a static string. This may be up to 200 characters.
+         * A lookup key used to retrieve personalization designs dynamically from a static string. This may be up to 200 characters.
          */
         lookup_key?: string;
 
@@ -40,17 +40,17 @@ declare module 'stripe' {
         name?: string;
 
         /**
-         * Information on whether this card design is used to create cards when one is not specified.
+         * Information on whether this personalization design is used to create cards when one is not specified.
          */
-        preferences?: CardDesignCreateParams.Preferences;
+        preferences?: PersonalizationDesignCreateParams.Preferences;
 
         /**
-         * If set to true, will atomically remove the lookup key from the existing card design, and assign it to this card design.
+         * If set to true, will atomically remove the lookup key from the existing personalization design, and assign it to this personalization design.
          */
         transfer_lookup_key?: boolean;
       }
 
-      namespace CardDesignCreateParams {
+      namespace PersonalizationDesignCreateParams {
         interface CarrierText {
           /**
            * The footer body text of the carrier letter.
@@ -75,34 +75,31 @@ declare module 'stripe' {
 
         interface Preferences {
           /**
-           * Whether this card design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no card design is set as the account default.
+           * Whether this personalization design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no personalization design is set as the account default.
            */
           account_default: boolean;
         }
       }
 
-      interface CardDesignRetrieveParams {
+      interface PersonalizationDesignRetrieveParams {
         /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
       }
 
-      interface CardDesignUpdateParams {
+      interface PersonalizationDesignUpdateParams {
         /**
-         * The card bundle object belonging to this card design.
-         */
-        card_bundle?: string;
-
-        /**
-         * The file for the card logo, for use with card bundles that support card logos. Must have `purpose` value of `issuing_logo`.
+         * The file for the card logo, for use with physical bundles that support card logos. Must have `purpose` value of `issuing_logo`.
          */
         card_logo?: Stripe.Emptyable<string>;
 
         /**
-         * Hash containing carrier text, for use with card bundles that support carrier text.
+         * Hash containing carrier text, for use with physical bundles that support carrier text.
          */
-        carrier_text?: Stripe.Emptyable<CardDesignUpdateParams.CarrierText>;
+        carrier_text?: Stripe.Emptyable<
+          PersonalizationDesignUpdateParams.CarrierText
+        >;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -110,7 +107,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * A lookup key used to retrieve card designs dynamically from a static string. This may be up to 200 characters.
+         * A lookup key used to retrieve personalization designs dynamically from a static string. This may be up to 200 characters.
          */
         lookup_key?: Stripe.Emptyable<string>;
 
@@ -125,17 +122,22 @@ declare module 'stripe' {
         name?: Stripe.Emptyable<string>;
 
         /**
-         * Information on whether this card design is used to create cards when one is not specified.
+         * The physical bundle object belonging to this personalization design.
          */
-        preferences?: CardDesignUpdateParams.Preferences;
+        physical_bundle?: string;
 
         /**
-         * If set to true, will atomically remove the lookup key from the existing card design, and assign it to this card design.
+         * Information on whether this personalization design is used to create cards when one is not specified.
+         */
+        preferences?: PersonalizationDesignUpdateParams.Preferences;
+
+        /**
+         * If set to true, will atomically remove the lookup key from the existing personalization design, and assign it to this personalization design.
          */
         transfer_lookup_key?: boolean;
       }
 
-      namespace CardDesignUpdateParams {
+      namespace PersonalizationDesignUpdateParams {
         interface CarrierText {
           /**
            * The footer body text of the carrier letter.
@@ -160,43 +162,43 @@ declare module 'stripe' {
 
         interface Preferences {
           /**
-           * Whether this card design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no card design is set as the account default.
+           * Whether this personalization design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no personalization design is set as the account default.
            */
           account_default: boolean;
         }
       }
 
-      interface CardDesignListParams extends PaginationParams {
+      interface PersonalizationDesignListParams extends PaginationParams {
         /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
 
         /**
-         * Only return card designs with the given lookup keys.
+         * Only return personalization designs with the given lookup keys.
          */
         lookup_keys?: Array<string>;
 
         /**
-         * Only return card designs with the given preferences.
+         * Only return personalization designs with the given preferences.
          */
-        preferences?: CardDesignListParams.Preferences;
+        preferences?: PersonalizationDesignListParams.Preferences;
 
         /**
-         * Only return card designs with the given status.
+         * Only return personalization designs with the given status.
          */
-        status?: CardDesignListParams.Status;
+        status?: PersonalizationDesignListParams.Status;
       }
 
-      namespace CardDesignListParams {
+      namespace PersonalizationDesignListParams {
         interface Preferences {
           /**
-           * Only return the card design that is set as the account default. A connected account will use the Connect platform's default if no card design is set as the account default.
+           * Only return the personalization design that is set as the account default. A connected account will use the Connect platform's default if no personalization design is set as the account default.
            */
           account_default?: boolean;
 
           /**
-           * Only return the card design that is set as the Connect platform's default. This parameter is only applicable to connected accounts.
+           * Only return the personalization design that is set as the Connect platform's default. This parameter is only applicable to connected accounts.
            */
           platform_default?: boolean;
         }
@@ -204,47 +206,47 @@ declare module 'stripe' {
         type Status = 'active' | 'inactive' | 'rejected' | 'review';
       }
 
-      class CardDesignsResource {
+      class PersonalizationDesignsResource {
         /**
-         * Creates a card design object.
+         * Creates a personalization design object.
          */
         create(
-          params: CardDesignCreateParams,
+          params: PersonalizationDesignCreateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Issuing.CardDesign>>;
+        ): Promise<Stripe.Response<Stripe.Issuing.PersonalizationDesign>>;
 
         /**
-         * Retrieves a card design object.
+         * Retrieves a personalization design object.
          */
         retrieve(
           id: string,
-          params?: CardDesignRetrieveParams,
+          params?: PersonalizationDesignRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Issuing.CardDesign>>;
+        ): Promise<Stripe.Response<Stripe.Issuing.PersonalizationDesign>>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Issuing.CardDesign>>;
+        ): Promise<Stripe.Response<Stripe.Issuing.PersonalizationDesign>>;
 
         /**
-         * Updates a card design object.
+         * Updates a card personalization object.
          */
         update(
           id: string,
-          params?: CardDesignUpdateParams,
+          params?: PersonalizationDesignUpdateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Issuing.CardDesign>>;
+        ): Promise<Stripe.Response<Stripe.Issuing.PersonalizationDesign>>;
 
         /**
-         * Returns a list of card design objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+         * Returns a list of personalization design objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
          */
         list(
-          params?: CardDesignListParams,
+          params?: PersonalizationDesignListParams,
           options?: RequestOptions
-        ): ApiListPromise<Stripe.Issuing.CardDesign>;
+        ): ApiListPromise<Stripe.Issuing.PersonalizationDesign>;
         list(
           options?: RequestOptions
-        ): ApiListPromise<Stripe.Issuing.CardDesign>;
+        ): ApiListPromise<Stripe.Issuing.PersonalizationDesign>;
       }
     }
   }

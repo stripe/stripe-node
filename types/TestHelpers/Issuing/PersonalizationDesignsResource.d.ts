@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace TestHelpers {
       namespace Issuing {
-        interface CardDesignActivateTestmodeParams {
+        interface PersonalizationDesignActivateParams {
           /**
            * Specifies which fields in the response should be expanded.
            */
@@ -13,7 +13,7 @@ declare module 'stripe' {
       }
 
       namespace Issuing {
-        interface CardDesignDeactivateTestmodeParams {
+        interface PersonalizationDesignDeactivateParams {
           /**
            * Specifies which fields in the response should be expanded.
            */
@@ -22,11 +22,11 @@ declare module 'stripe' {
       }
 
       namespace Issuing {
-        interface CardDesignRejectTestmodeParams {
+        interface PersonalizationDesignRejectParams {
           /**
-           * The reason(s) the card design was rejected.
+           * The reason(s) the personalization design was rejected.
            */
-          rejection_reasons: CardDesignRejectTestmodeParams.RejectionReasons;
+          rejection_reasons: PersonalizationDesignRejectParams.RejectionReasons;
 
           /**
            * Specifies which fields in the response should be expanded.
@@ -34,7 +34,7 @@ declare module 'stripe' {
           expand?: Array<string>;
         }
 
-        namespace CardDesignRejectTestmodeParams {
+        namespace PersonalizationDesignRejectParams {
           interface RejectionReasons {
             /**
              * The reason(s) the card logo was rejected.
@@ -71,41 +71,41 @@ declare module 'stripe' {
       }
 
       namespace Issuing {
-        class CardDesignsResource {
+        class PersonalizationDesignsResource {
           /**
-           * Updates the status of the specified testmode card design object to active.
+           * Updates the status of the specified testmode personalization design object to active.
            */
-          activateTestmode(
+          activate(
             id: string,
-            params?: CardDesignActivateTestmodeParams,
+            params?: PersonalizationDesignActivateParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.Issuing.CardDesign>>;
-          activateTestmode(
+          ): Promise<Stripe.Response<Stripe.Issuing.PersonalizationDesign>>;
+          activate(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.Issuing.CardDesign>>;
+          ): Promise<Stripe.Response<Stripe.Issuing.PersonalizationDesign>>;
 
           /**
-           * Updates the status of the specified testmode card design object to inactive.
+           * Updates the status of the specified testmode personalization design object to inactive.
            */
-          deactivateTestmode(
+          deactivate(
             id: string,
-            params?: CardDesignDeactivateTestmodeParams,
+            params?: PersonalizationDesignDeactivateParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.Issuing.CardDesign>>;
-          deactivateTestmode(
+          ): Promise<Stripe.Response<Stripe.Issuing.PersonalizationDesign>>;
+          deactivate(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.Issuing.CardDesign>>;
+          ): Promise<Stripe.Response<Stripe.Issuing.PersonalizationDesign>>;
 
           /**
-           * Updates the status of the specified testmode card design object to rejected.
+           * Updates the status of the specified testmode personalization design object to rejected.
            */
-          rejectTestmode(
+          reject(
             id: string,
-            params: CardDesignRejectTestmodeParams,
+            params: PersonalizationDesignRejectParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.Issuing.CardDesign>>;
+          ): Promise<Stripe.Response<Stripe.Issuing.PersonalizationDesign>>;
         }
       }
     }
