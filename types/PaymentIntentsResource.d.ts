@@ -19,7 +19,7 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
-       * When enabled, this PaymentIntent will accept payment methods that you have enabled in the Dashboard and are compatible with this PaymentIntent's other parameters.
+       * When you enable this parameter, this PaymentIntent accepts payment methods that you enable in the Dashboard and that are compatible with this PaymentIntent's other parameters.
        */
       automatic_payment_methods?: PaymentIntentCreateParams.AutomaticPaymentMethods;
 
@@ -29,7 +29,7 @@ declare module 'stripe' {
       capture_method?: PaymentIntentCreateParams.CaptureMethod;
 
       /**
-       * Set to `true` to attempt to [confirm](https://stripe.com/docs/api/payment_intents/confirm) this PaymentIntent immediately. This parameter defaults to `false`. When creating and confirming a PaymentIntent at the same time, parameters available in the [confirm](https://stripe.com/docs/api/payment_intents/confirm) API may also be provided.
+       * Set to `true` to attempt to [confirm this PaymentIntent](https://stripe.com/docs/api/payment_intents/confirm) this PaymentIntent immediately. This parameter defaults to `false`. When creating and confirming a PaymentIntent at the same time, you can also provide the parameters available in the [Confirm API](https://stripe.com/docs/api/payment_intents/confirm).
        */
       confirm?: boolean;
 
@@ -50,7 +50,7 @@ declare module 'stripe' {
       description?: string;
 
       /**
-       * Set to `true` to fail the payment attempt if the PaymentIntent transitions into `requires_action`. This parameter is intended for simpler integrations that do not handle customer actions, like [saving cards without authentication](https://stripe.com/docs/payments/save-card-without-authentication). This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
+       * Set to `true` to fail the payment attempt if the PaymentIntent transitions into `requires_action`. Use this parameter for simpler integrations that don't handle customer actions, such as [saving cards without authentication](https://stripe.com/docs/payments/save-card-without-authentication). This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
        */
       error_on_requires_action?: boolean;
 
@@ -60,7 +60,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * ID of the mandate to be used for this payment. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
+       * ID of the mandate that's used for this payment. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
        */
       mandate?: string;
 
@@ -75,19 +75,19 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
-       * Set to `true` to indicate that the customer is not in your checkout flow during this payment attempt, and therefore is unable to authenticate. This parameter is intended for scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards). This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
+       * Set to `true` to indicate that the customer isn't in your checkout flow during this payment attempt and can't authenticate. Use this parameter in scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards). This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
        */
       off_session?: boolean | PaymentIntentCreateParams.OffSession;
 
       /**
-       * The Stripe account ID for which these funds are intended. For details, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       * The Stripe account ID that these funds are intended for. Learn more about the [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       on_behalf_of?: string;
 
       /**
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
        *
-       * If neither the `payment_method` parameter nor the `source` parameter are provided with `confirm=true`, `source` will be automatically populated with `customer.default_source` to improve the migration experience for users of the Charges API. We recommend that you explicitly provide the `payment_method` going forward.
+       * If you don't provide the `payment_method` parameter or the `source` parameter with `confirm=true`, `source` automatically populates with `customer.default_source` to improve migration for users of the Charges API. We recommend that you explicitly provide the `payment_method` moving forward.
        */
       payment_method?: string;
 
@@ -104,22 +104,22 @@ declare module 'stripe' {
       payment_method_data?: PaymentIntentCreateParams.PaymentMethodData;
 
       /**
-       * Payment-method-specific configuration for this PaymentIntent.
+       * Payment method-specific configuration for this PaymentIntent.
        */
       payment_method_options?: PaymentIntentCreateParams.PaymentMethodOptions;
 
       /**
-       * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use. If this is not provided, defaults to ["card"]. Use automatic_payment_methods to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+       * The list of payment method types (for example, a card) that this PaymentIntent can use. If you don't provide this, it defaults to ["card"]. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
        */
       payment_method_types?: Array<string>;
 
       /**
-       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       * Options to configure Radar. Learn more about [Radar Sessions](https://stripe.com/docs/radar/radar-session).
        */
       radar_options?: PaymentIntentCreateParams.RadarOptions;
 
       /**
-       * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
+       * Email address to send the receipt to. If you specify `receipt_email` for a payment in live mode, you send a receipt regardless of your [email settings](https://dashboard.stripe.com/account/emails).
        */
       receipt_email?: string;
 
@@ -143,23 +143,23 @@ declare module 'stripe' {
       shipping?: PaymentIntentCreateParams.Shipping;
 
       /**
-       * For non-card charges, you can use this value as the complete description that appears on your customers' statements. Must contain at least one letter, maximum 22 characters.
+       * For non-card charges, you can use this value as the complete description that appears on your customers' statements. It must contain at least one letter and be 1–22 characters long.
        */
       statement_descriptor?: string;
 
       /**
-       * Provides information about a card payment that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
+       * Provides information about a card payment that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. The concatenated descriptor must contain 1-22 characters.
        */
       statement_descriptor_suffix?: string;
 
       /**
-       * The parameters used to automatically create a Transfer when the payment succeeds.
-       * For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       * The parameters that you can use to automatically create a Transfer after the payment succeeds.
+       * Learn more about the [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       transfer_data?: PaymentIntentCreateParams.TransferData;
 
       /**
-       * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+       * A string that identifies the resulting payment as part of a group. Learn more about the [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers).
        */
       transfer_group?: string;
 
@@ -1056,8 +1056,8 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
-           * Order identifier shown to the customer in Afterpay's online portal. We recommend using a value that helps you answer any questions a customer might have about
-           * the payment. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.
+           * An internal identifier or reference that this payment corresponds to. You must limit the identifier to 128 characters, and it can only contain letters, numbers, underscores, backslashes, and dashes.
+           * This field differs from the statement descriptor and item name.
            */
           reference?: string;
 
@@ -2047,7 +2047,7 @@ declare module 'stripe' {
 
     interface PaymentIntentRetrieveParams {
       /**
-       * The client secret of the PaymentIntent. It's required if you use a publishable key to retrieve the source.
+       * The client secret of the PaymentIntent. We require it if you use a publishable key to retrieve the source.
        */
       client_secret?: string;
 
@@ -2989,8 +2989,8 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
-           * Order identifier shown to the customer in Afterpay's online portal. We recommend using a value that helps you answer any questions a customer might have about
-           * the payment. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.
+           * An internal identifier or reference that this payment corresponds to. You must limit the identifier to 128 characters, and it can only contain letters, numbers, underscores, backslashes, and dashes.
+           * This field differs from the statement descriptor and item name.
            */
           reference?: string;
 
@@ -3959,12 +3959,12 @@ declare module 'stripe' {
 
     interface PaymentIntentListParams extends PaginationParams {
       /**
-       * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
+       * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp or a dictionary with a number of different query options.
        */
       created?: Stripe.RangeQueryParam | number;
 
       /**
-       * Only return PaymentIntents for the customer specified by this customer ID.
+       * Only return PaymentIntents for the customer that this customer ID specifies.
        */
       customer?: string;
 
@@ -3976,13 +3976,13 @@ declare module 'stripe' {
 
     interface PaymentIntentApplyCustomerBalanceParams {
       /**
-       * Amount intended to be applied to this PaymentIntent from the customer's cash balance.
+       * Amount that you intend to apply to this PaymentIntent from the customer's cash balance.
        *
-       * A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency).
+       * A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (for example, 100 cents to charge 1 USD or 100 to charge 100 JPY, a zero-decimal currency).
        *
        * The maximum amount is the amount of the PaymentIntent.
        *
-       * When omitted, the amount defaults to the remaining amount requested on the PaymentIntent.
+       * When you omit the amount, it defaults to the remaining amount requested on the PaymentIntent.
        */
       amount?: number;
 
@@ -3999,7 +3999,7 @@ declare module 'stripe' {
 
     interface PaymentIntentCancelParams {
       /**
-       * Reason for canceling this PaymentIntent. Possible values are `duplicate`, `fraudulent`, `requested_by_customer`, or `abandoned`
+       * Reason for canceling this PaymentIntent. Possible values are: `duplicate`, `fraudulent`, `requested_by_customer`, or `abandoned`
        */
       cancellation_reason?: PaymentIntentCancelParams.CancellationReason;
 
@@ -4019,7 +4019,7 @@ declare module 'stripe' {
 
     interface PaymentIntentCaptureParams {
       /**
-       * The amount to capture from the PaymentIntent, which must be less than or equal to the original amount. Any additional amount will be automatically refunded. Defaults to the full `amount_capturable` if not provided.
+       * The amount to capture from the PaymentIntent, which must be less than or equal to the original amount. Any additional amount is automatically refunded. Defaults to the full `amount_capturable` if it's not provided.
        */
       amount_to_capture?: number;
 
@@ -4044,13 +4044,13 @@ declare module 'stripe' {
       statement_descriptor?: string;
 
       /**
-       * Provides information about a card payment that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
+       * Provides information about a card payment that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. The concatenated descriptor must be 1-22 characters long.
        */
       statement_descriptor_suffix?: string;
 
       /**
-       * The parameters used to automatically create a Transfer when the payment
-       * is captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       * The parameters that you can use to automatically create a transfer after the payment
+       * is captured. Learn more about the [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       transfer_data?: PaymentIntentCaptureParams.TransferData;
     }
@@ -4081,20 +4081,17 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * ID of the mandate to be used for this payment.
+       * ID of the mandate that's used for this payment.
        */
       mandate?: string;
 
-      /**
-       * This hash contains details about the Mandate to create
-       */
       mandate_data?: Stripe.Emptyable<
         | PaymentIntentConfirmParams.MandateData1
         | PaymentIntentConfirmParams.MandateData2
       >;
 
       /**
-       * Set to `true` to indicate that the customer is not in your checkout flow during this payment attempt, and therefore is unable to authenticate. This parameter is intended for scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
+       * Set to `true` to indicate that the customer isn't in your checkout flow during this payment attempt and can't authenticate. Use this parameter in scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
        */
       off_session?: boolean | PaymentIntentConfirmParams.OffSession;
 
@@ -4111,12 +4108,12 @@ declare module 'stripe' {
       payment_method_data?: PaymentIntentConfirmParams.PaymentMethodData;
 
       /**
-       * Payment-method-specific configuration for this PaymentIntent.
+       * Payment method-specific configuration for this PaymentIntent.
        */
       payment_method_options?: PaymentIntentConfirmParams.PaymentMethodOptions;
 
       /**
-       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       * Options to configure Radar. Learn more about [Radar Sessions](https://stripe.com/docs/radar/radar-session).
        */
       radar_options?: PaymentIntentConfirmParams.RadarOptions;
 
@@ -5058,8 +5055,8 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
-           * Order identifier shown to the customer in Afterpay's online portal. We recommend using a value that helps you answer any questions a customer might have about
-           * the payment. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.
+           * An internal identifier or reference that this payment corresponds to. You must limit the identifier to 128 characters, and it can only contain letters, numbers, underscores, backslashes, and dashes.
+           * This field differs from the statement descriptor and item name.
            */
           reference?: string;
 
@@ -6028,7 +6025,7 @@ declare module 'stripe' {
 
     interface PaymentIntentIncrementAuthorizationParams {
       /**
-       * The updated total amount you intend to collect from the cardholder. This amount must be greater than the currently authorized amount.
+       * The updated total amount that you intend to collect from the cardholder. This amount must be greater than the currently authorized amount.
        */
       amount: number;
 
@@ -6058,8 +6055,8 @@ declare module 'stripe' {
       statement_descriptor?: string;
 
       /**
-       * The parameters used to automatically create a Transfer when the payment is captured.
-       * For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       * The parameters used to automatically create a transfer after the payment is captured.
+       * Learn more about the [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       transfer_data?: PaymentIntentIncrementAuthorizationParams.TransferData;
     }
@@ -6117,13 +6114,13 @@ declare module 'stripe' {
        * Creates a PaymentIntent object.
        *
        * After the PaymentIntent is created, attach a payment method and [confirm](https://stripe.com/docs/api/payment_intents/confirm)
-       * to continue the payment. You can read more about the different payment flows
-       * available via the Payment Intents API [here](https://stripe.com/docs/payments/payment-intents).
+       * to continue the payment. Learn more about <a href="/docs/payments/payment-intents">the available payment flows
+       * with the Payment Intents API.
        *
-       * When confirm=true is used during creation, it is equivalent to creating
-       * and confirming the PaymentIntent in the same call. You may use any parameters
-       * available in the [confirm API](https://stripe.com/docs/api/payment_intents/confirm) when confirm=true
-       * is supplied.
+       * When you use confirm=true during creation, it's equivalent to creating
+       * and confirming the PaymentIntent in the same call. You can use any parameters
+       * available in the [confirm API](https://stripe.com/docs/api/payment_intents/confirm) when you supply
+       * confirm=true.
        */
       create(
         params: PaymentIntentCreateParams,
@@ -6185,11 +6182,11 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
 
       /**
-       * A PaymentIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action or, [in rare cases](https://stripe.com/docs/payments/intents), processing.
+       * You can cancel a PaymentIntent object when it's in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action or, [in rare cases](https://stripe.com/docs/payments/intents), processing.
        *
-       * Once canceled, no additional charges will be made by the PaymentIntent and any operations on the PaymentIntent will fail with an error. For PaymentIntents with a status of requires_capture, the remaining amount_capturable will automatically be refunded.
+       * After it's canceled, no additional charges are made by the PaymentIntent and any operations on the PaymentIntent fail with an error. For PaymentIntents with a status of requires_capture, the remaining amount_capturable is automatically refunded.
        *
-       * You cannot cancel the PaymentIntent for a Checkout Session. [Expire the Checkout Session](https://stripe.com/docs/api/checkout/sessions/expire) instead.
+       * You can't cancel the PaymentIntent for a Checkout Session. [Expire the Checkout Session](https://stripe.com/docs/api/checkout/sessions/expire) instead.
        */
       cancel(
         id: string,
@@ -6204,7 +6201,7 @@ declare module 'stripe' {
       /**
        * Capture the funds of an existing uncaptured PaymentIntent when its status is requires_capture.
        *
-       * Uncaptured PaymentIntents will be canceled a set number of days after they are created (7 by default).
+       * Uncaptured PaymentIntents are cancelled a set number of days (7 by default) after their creation.
        *
        * Learn more about [separate authorization and capture](https://stripe.com/docs/payments/capture-later).
        */
@@ -6261,21 +6258,21 @@ declare module 'stripe' {
        * must be true.
        *
        * Incremental authorizations attempt to increase the authorized amount on
-       * your customer's card to the new, higher amount provided. As with the
-       * initial authorization, incremental authorizations may be declined. A
+       * your customer's card to the new, higher amount provided. Similar to the
+       * initial authorization, incremental authorizations can be declined. A
        * single PaymentIntent can call this endpoint multiple times to further
        * increase the authorized amount.
        *
-       * If the incremental authorization succeeds, the PaymentIntent object is
-       * returned with the updated
+       * If the incremental authorization succeeds, the PaymentIntent object
+       * returns with the updated
        * [amount](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-amount).
        * If the incremental authorization fails, a
-       * [card_declined](https://stripe.com/docs/error-codes#card-declined) error is returned, and no
-       * fields on the PaymentIntent or Charge are updated. The PaymentIntent
+       * [card_declined](https://stripe.com/docs/error-codes#card-declined) error returns, and no other
+       * fields on the PaymentIntent or Charge update. The PaymentIntent
        * object remains capturable for the previously authorized amount.
        *
        * Each PaymentIntent can have a maximum of 10 incremental authorization attempts, including declines.
-       * Once captured, a PaymentIntent can no longer be incremented.
+       * After it's captured, a PaymentIntent can no longer be incremented.
        *
        * Learn more about [incremental authorizations](https://stripe.com/docs/terminal/features/incremental-authorizations).
        */

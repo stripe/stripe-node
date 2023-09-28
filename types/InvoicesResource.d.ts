@@ -119,7 +119,12 @@ declare module 'stripe' {
       pending_invoice_items_behavior?: InvoiceCreateParams.PendingInvoiceItemsBehavior;
 
       /**
-       * Options for invoice PDF rendering.
+       * The rendering-related settings that control how the invoice is displayed on customer-facing surfaces such as PDF and Hosted Invoice Page.
+       */
+      rendering?: InvoiceCreateParams.Rendering;
+
+      /**
+       * This is a legacy field that will be removed soon. For details about `rendering_options`, refer to `rendering` instead. Options for invoice PDF rendering.
        */
       rendering_options?: Stripe.Emptyable<
         InvoiceCreateParams.RenderingOptions
@@ -449,6 +454,34 @@ declare module 'stripe' {
         | 'include'
         | 'include_and_require';
 
+      interface Rendering {
+        /**
+         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
+         */
+        amount_tax_display?: Stripe.Emptyable<Rendering.AmountTaxDisplay>;
+
+        /**
+         * Invoice pdf rendering options
+         */
+        pdf?: Rendering.Pdf;
+      }
+
+      namespace Rendering {
+        type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
+
+        interface Pdf {
+          /**
+           * Page size for invoice PDF. Can be set to a4, letter, or auto.
+           *  If set to auto, page size will be switched to a4 or letter based on customer locale.
+           */
+          page_size?: Pdf.PageSize;
+        }
+
+        namespace Pdf {
+          type PageSize = 'a4' | 'auto' | 'letter';
+        }
+      }
+
       interface RenderingOptions {
         /**
          * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
@@ -734,7 +767,12 @@ declare module 'stripe' {
       payment_settings?: InvoiceUpdateParams.PaymentSettings;
 
       /**
-       * Options for invoice PDF rendering.
+       * The rendering-related settings that control how the invoice is displayed on customer-facing surfaces such as PDF and Hosted Invoice Page.
+       */
+      rendering?: InvoiceUpdateParams.Rendering;
+
+      /**
+       * This is a legacy field that will be removed soon. For details about `rendering_options`, refer to `rendering` instead. Options for invoice PDF rendering.
        */
       rendering_options?: Stripe.Emptyable<
         InvoiceUpdateParams.RenderingOptions
@@ -1040,6 +1078,34 @@ declare module 'stripe' {
           | 'sofort'
           | 'us_bank_account'
           | 'wechat_pay';
+      }
+
+      interface Rendering {
+        /**
+         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
+         */
+        amount_tax_display?: Stripe.Emptyable<Rendering.AmountTaxDisplay>;
+
+        /**
+         * Invoice pdf rendering options
+         */
+        pdf?: Rendering.Pdf;
+      }
+
+      namespace Rendering {
+        type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
+
+        interface Pdf {
+          /**
+           * Page size for invoice PDF. Can be set to a4, letter, or auto.
+           *  If set to auto, page size will be switched to a4 or letter based on customer locale.
+           */
+          page_size?: Pdf.PageSize;
+        }
+
+        namespace Pdf {
+          type PageSize = 'a4' | 'auto' | 'letter';
+        }
       }
 
       interface RenderingOptions {

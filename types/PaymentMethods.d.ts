@@ -965,7 +965,7 @@ declare module 'stripe' {
         /**
          * The ID of the Financial Connections Account used to create the payment method.
          */
-        financial_connections_account?: string | null;
+        financial_connections_account: string | null;
 
         /**
          * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
@@ -990,7 +990,7 @@ declare module 'stripe' {
         /**
          * Contains information about the future reusability of this PaymentMethod.
          */
-        status_details?: UsBankAccount.StatusDetails | null;
+        status_details: UsBankAccount.StatusDetails | null;
       }
 
       namespace UsBankAccount {

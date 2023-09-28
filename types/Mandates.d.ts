@@ -3,7 +3,7 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * A Mandate is a record of the permission a customer has given you to debit their payment method.
+     * A Mandate is a record of the permission that your customer gives you to debit their payment method.
      */
     interface Mandate {
       /**
@@ -26,7 +26,7 @@ declare module 'stripe' {
       multi_use?: Mandate.MultiUse;
 
       /**
-       * The account (if any) for which the mandate is intended.
+       * The account (if any) that the mandate is intended for.
        */
       on_behalf_of?: string;
 
@@ -40,7 +40,7 @@ declare module 'stripe' {
       single_use?: Mandate.SingleUse;
 
       /**
-       * The status of the mandate, which indicates whether it can be used to initiate a payment.
+       * The mandate status indicates whether or not you can use it to initiate a payment.
        */
       status: Mandate.Status;
 
@@ -53,7 +53,7 @@ declare module 'stripe' {
     namespace Mandate {
       interface CustomerAcceptance {
         /**
-         * The time at which the customer accepted the Mandate.
+         * The time that the customer accepts the mandate.
          */
         accepted_at: number | null;
 
@@ -62,7 +62,7 @@ declare module 'stripe' {
         online?: CustomerAcceptance.Online;
 
         /**
-         * The type of customer acceptance information included with the Mandate. One of `online` or `offline`.
+         * The mandate includes the type of customer acceptance information, such as: `online` or `offline`.
          */
         type: CustomerAcceptance.Type;
       }
@@ -72,12 +72,12 @@ declare module 'stripe' {
 
         interface Online {
           /**
-           * The IP address from which the Mandate was accepted by the customer.
+           * The customer accepts the mandate from this IP address.
            */
           ip_address: string | null;
 
           /**
-           * The user agent of the browser from which the Mandate was accepted by the customer.
+           * The customer accepts the mandate using the user agent of the browser.
            */
           user_agent: string | null;
         }
@@ -105,7 +105,7 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodDetails.SepaDebit;
 
         /**
-         * The type of the payment method associated with this mandate. An additional hash is included on `payment_method_details` with a name matching this value. It contains mandate information specific to the payment method.
+         * This mandate corresponds with a specific payment method type. The `payment_method_details` includes an additional hash with the same name and contains mandate information that's specific to that payment method.
          */
         type: string;
 
@@ -206,12 +206,12 @@ declare module 'stripe' {
 
       interface SingleUse {
         /**
-         * On a single use mandate, the amount of the payment.
+         * The amount of the payment on a single use mandate.
          */
         amount: number;
 
         /**
-         * On a single use mandate, the currency of the payment.
+         * The currency of the payment on a single use mandate.
          */
         currency: string;
       }

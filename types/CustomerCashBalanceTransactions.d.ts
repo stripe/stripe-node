@@ -68,7 +68,7 @@ declare module 'stripe' {
     namespace CustomerCashBalanceTransaction {
       interface AdjustedForOverdraft {
         /**
-         * The [Balance Transaction](docs/api/balance_transactions/object) that corresponds to funds taken out of your Stripe balance.
+         * The [Balance Transaction](https://stripe.com/docs/api/balance_transactions/object) that corresponds to funds taken out of your Stripe balance.
          */
         balance_transaction: string | Stripe.BalanceTransaction;
 

@@ -217,7 +217,6 @@ declare module 'stripe' {
         | 'issuing_transaction.created'
         | 'issuing_transaction.updated'
         | 'mandate.updated'
-        | 'order.created'
         | 'payment_intent.amount_capturable_updated'
         | 'payment_intent.canceled'
         | 'payment_intent.created'
@@ -258,9 +257,6 @@ declare module 'stripe' {
         | 'quote.finalized'
         | 'radar.early_fraud_warning.created'
         | 'radar.early_fraud_warning.updated'
-        | 'recipient.created'
-        | 'recipient.deleted'
-        | 'recipient.updated'
         | 'refund.created'
         | 'refund.updated'
         | 'reporting.report_run.failed'
@@ -274,9 +270,6 @@ declare module 'stripe' {
         | 'setup_intent.setup_failed'
         | 'setup_intent.succeeded'
         | 'sigma.scheduled_query_run.created'
-        | 'sku.created'
-        | 'sku.deleted'
-        | 'sku.updated'
         | 'source.canceled'
         | 'source.chargeable'
         | 'source.failed'
@@ -337,7 +330,14 @@ declare module 'stripe' {
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
         | 'treasury.received_debit.created'
-        | 'invoiceitem.updated';
+        | 'invoiceitem.updated'
+        | 'order.created'
+        | 'recipient.created'
+        | 'recipient.deleted'
+        | 'recipient.updated'
+        | 'sku.created'
+        | 'sku.deleted'
+        | 'sku.updated';
     }
   }
 }

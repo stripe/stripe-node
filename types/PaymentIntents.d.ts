@@ -39,7 +39,7 @@ declare module 'stripe' {
       amount_details?: PaymentIntent.AmountDetails;
 
       /**
-       * Amount that was collected by this PaymentIntent.
+       * Amount that this PaymentIntent collects.
        */
       amount_received: number;
 
@@ -119,7 +119,7 @@ declare module 'stripe' {
       last_payment_error: PaymentIntent.LastPaymentError | null;
 
       /**
-       * The latest charge created by this payment intent.
+       * The latest charge created by this PaymentIntent.
        */
       latest_charge?: string | Stripe.Charge | null;
 
@@ -129,7 +129,7 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. For more information, see the [documentation](https://stripe.com/docs/payments/payment-intents/creating-payment-intents#storing-information-in-metadata).
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Learn more about [storing information in metadata](https://stripe.com/docs/payments/payment-intents/creating-payment-intents#storing-information-in-metadata).
        */
       metadata: Stripe.Metadata;
 
@@ -218,12 +218,12 @@ declare module 'stripe' {
       status: PaymentIntent.Status;
 
       /**
-       * The data with which to automatically create a Transfer when the payment is finalized. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
+       * The data that automatically creates a Transfer after the payment finalizes. Learn more about the [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       transfer_data: PaymentIntent.TransferData | null;
 
       /**
-       * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+       * A string that identifies the resulting payment as part of a group. Learn more about the [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers).
        */
       transfer_group: string | null;
     }
@@ -1289,8 +1289,8 @@ declare module 'stripe' {
           capture_method?: 'manual';
 
           /**
-           * Order identifier shown to the customer in Afterpay's online portal. We recommend using a value that helps you answer any questions a customer might have about
-           * the payment. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.
+           * An internal identifier or reference that this payment corresponds to. You must limit the identifier to 128 characters, and it can only contain letters, numbers, underscores, backslashes, and dashes.
+           * This field differs from the statement descriptor and item name.
            */
           reference: string | null;
 
@@ -2115,8 +2115,8 @@ declare module 'stripe' {
         amount?: number;
 
         /**
-         * The account (if any) the payment will be attributed to for tax
-         * reporting, and where funds from the payment will be transferred to upon
+         * The account (if any) that the payment is attributed to for tax
+         * reporting, and where funds from the payment are transferred to after
          * payment success.
          */
         destination: string | Stripe.Account;
