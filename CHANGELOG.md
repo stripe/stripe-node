@@ -1,5 +1,10 @@
 # Changelog
 
+## 13.8.0 - 2023-09-28
+* [#1911](https://github.com/stripe/stripe-node/pull/1911) Update generated code
+  * Add support for `rendering` on `InvoiceCreateParams`, `InvoiceUpdateParams`, and `Invoice`
+  * Change `PaymentMethod.us_bank_account.financial_connections_account` and `PaymentMethod.us_bank_account.status_details` to be required
+
 ## 13.7.0 - 2023-09-21
 * [#1907](https://github.com/stripe/stripe-node/pull/1907) Update generated code
   * Add support for `terms_of_service_acceptance` on `Checkout.Session.custom_text`, `Checkout.SessionCreateParams.custom_text`, `PaymentLink.custom_text`, `PaymentLinkCreateParams.custom_text`, and `PaymentLinkUpdateParams.custom_text`
