@@ -203,7 +203,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The connected account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+           * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
            */
           liability?: AutomaticTax.Liability | null;
         }
@@ -469,7 +469,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The connected account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+           * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
            */
           liability?: AutomaticTax.Liability | null;
         }

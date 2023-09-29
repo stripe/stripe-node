@@ -1,5 +1,10 @@
 # Changelog
 
+## 13.8.0 - 2023-09-28
+* [#1911](https://github.com/stripe/stripe-node/pull/1911) Update generated code
+  * Add support for `rendering` on `InvoiceCreateParams`, `InvoiceUpdateParams`, and `Invoice`
+  * Change `PaymentMethod.us_bank_account.financial_connections_account` and `PaymentMethod.us_bank_account.status_details` to be required
+
 ## 13.8.0-beta.1 - 2023-09-21
 * [#1906](https://github.com/stripe/stripe-node/pull/1906) Update generated code for beta
   * Remove support for `customer` on `ConfirmationToken`
@@ -8,6 +13,10 @@
   * Add support for `liability` on `Invoice.automatic_tax`, `InvoiceCreateParams.automatic_tax`, `InvoiceUpcomingLinesParams.automatic_tax`, `InvoiceUpcomingParams.automatic_tax`, `InvoiceUpdateParams.automatic_tax`, `Quote.automatic_tax`, `QuoteCreateParams.automatic_tax`, `QuoteUpdateParams.automatic_tax`, `Subscription.automatic_tax`, `SubscriptionCreateParams.automatic_tax`, `SubscriptionSchedule.default_settings.automatic_tax`, `SubscriptionSchedule.phases[].automatic_tax`, `SubscriptionScheduleCreateParams.default_settings.automatic_tax`, `SubscriptionScheduleCreateParams.phases[].automatic_tax`, `SubscriptionScheduleUpdateParams.default_settings.automatic_tax`, `SubscriptionScheduleUpdateParams.phases[].automatic_tax`, and `SubscriptionUpdateParams.automatic_tax`
   * Change type of `Issuing.CardDesignUpdateParams.carrier_text` from `carrier_text_param` to `emptyStringable(carrier_text_param)`
   * Add support for `invoice_settings` on `SubscriptionCreateParams` and `SubscriptionUpdateParams`
+
+## 13.7.0 - 2023-09-21
+* [#1907](https://github.com/stripe/stripe-node/pull/1907) Update generated code
+  * Add support for `terms_of_service_acceptance` on `Checkout.Session.custom_text`, `Checkout.SessionCreateParams.custom_text`, `PaymentLink.custom_text`, `PaymentLinkCreateParams.custom_text`, and `PaymentLinkUpdateParams.custom_text`
 
 ## 13.7.0-beta.1 - 2023-09-14
 * [#1900](https://github.com/stripe/stripe-node/pull/1900) Update generated code for beta

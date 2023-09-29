@@ -5,9 +5,6 @@ import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialCon
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
-import {CardBundles as IssuingCardBundles} from './resources/Issuing/CardBundles.js';
-import {CardDesigns as TestHelpersIssuingCardDesigns} from './resources/TestHelpers/Issuing/CardDesigns.js';
-import {CardDesigns as IssuingCardDesigns} from './resources/Issuing/CardDesigns.js';
 import {Cardholders as IssuingCardholders} from './resources/Issuing/Cardholders.js';
 import {Cards as TestHelpersIssuingCards} from './resources/TestHelpers/Issuing/Cards.js';
 import {Cards as GiftCardsCards} from './resources/GiftCards/Cards.js';
@@ -32,6 +29,9 @@ import {OutboundPayments as TestHelpersTreasuryOutboundPayments} from './resourc
 import {OutboundPayments as TreasuryOutboundPayments} from './resources/Treasury/OutboundPayments.js';
 import {OutboundTransfers as TestHelpersTreasuryOutboundTransfers} from './resources/TestHelpers/Treasury/OutboundTransfers.js';
 import {OutboundTransfers as TreasuryOutboundTransfers} from './resources/Treasury/OutboundTransfers.js';
+import {PersonalizationDesigns as TestHelpersIssuingPersonalizationDesigns} from './resources/TestHelpers/Issuing/PersonalizationDesigns.js';
+import {PersonalizationDesigns as IssuingPersonalizationDesigns} from './resources/Issuing/PersonalizationDesigns.js';
+import {PhysicalBundles as IssuingPhysicalBundles} from './resources/Issuing/PhysicalBundles.js';
 import {Readers as TestHelpersTerminalReaders} from './resources/TestHelpers/Terminal/Readers.js';
 import {Readers as TerminalReaders} from './resources/Terminal/Readers.js';
 import {ReceivedCredits as TestHelpersTreasuryReceivedCredits} from './resources/TestHelpers/Treasury/ReceivedCredits.js';
@@ -141,11 +141,11 @@ export const Identity = resourceNamespace('identity', {
 });
 export const Issuing = resourceNamespace('issuing', {
   Authorizations: IssuingAuthorizations,
-  CardBundles: IssuingCardBundles,
-  CardDesigns: IssuingCardDesigns,
   Cardholders: IssuingCardholders,
   Cards: IssuingCards,
   Disputes: IssuingDisputes,
+  PersonalizationDesigns: IssuingPersonalizationDesigns,
+  PhysicalBundles: IssuingPhysicalBundles,
   Transactions: IssuingTransactions,
 });
 export const Radar = resourceNamespace('radar', {
@@ -179,8 +179,8 @@ export const TestHelpers = resourceNamespace('testHelpers', {
   TestClocks: TestHelpersTestClocks,
   Issuing: resourceNamespace('issuing', {
     Authorizations: TestHelpersIssuingAuthorizations,
-    CardDesigns: TestHelpersIssuingCardDesigns,
     Cards: TestHelpersIssuingCards,
+    PersonalizationDesigns: TestHelpersIssuingPersonalizationDesigns,
     Transactions: TestHelpersIssuingTransactions,
   }),
   Terminal: resourceNamespace('terminal', {

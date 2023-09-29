@@ -358,7 +358,12 @@ declare module 'stripe' {
       receipt_number: string | null;
 
       /**
-       * Options for invoice PDF rendering.
+       * The rendering-related settings that control how the invoice is displayed on customer-facing surfaces such as PDF and Hosted Invoice Page.
+       */
+      rendering: Invoice.Rendering | null;
+
+      /**
+       * This is a legacy field that will be removed soon. For details about `rendering_options`, refer to `rendering` instead. Options for invoice PDF rendering.
        */
       rendering_options: Invoice.RenderingOptions | null;
 
@@ -465,7 +470,7 @@ declare module 'stripe' {
         enabled: boolean;
 
         /**
-         * The connected account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+         * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
          */
         liability?: AutomaticTax.Liability | null;
 
@@ -1133,6 +1138,31 @@ declare module 'stripe' {
           | 'sofort'
           | 'us_bank_account'
           | 'wechat_pay';
+      }
+
+      interface Rendering {
+        /**
+         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
+         */
+        amount_tax_display: string | null;
+
+        /**
+         * Invoice pdf rendering options
+         */
+        pdf: Rendering.Pdf | null;
+      }
+
+      namespace Rendering {
+        interface Pdf {
+          /**
+           * Page size of invoice pdf. Options include a4, letter, and auto. If set to auto, page size will be switched to a4 or letter based on customer locale.
+           */
+          page_size: Pdf.PageSize | null;
+        }
+
+        namespace Pdf {
+          type PageSize = 'a4' | 'auto' | 'letter';
+        }
       }
 
       interface RenderingOptions {

@@ -4,9 +4,9 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Issuing {
       /**
-       * A Card Bundle represents the bundle of physical items - card stock, carrier letter, and envelope - that is shipped to a cardholder when you create a physical card.
+       * A Physical Bundle represents the bundle of physical items - card stock, carrier letter, and envelope - that is shipped to a cardholder when you create a physical card.
        */
-      interface CardBundle {
+      interface PhysicalBundle {
         /**
          * Unique identifier for the object.
          */
@@ -15,9 +15,9 @@ declare module 'stripe' {
         /**
          * String representing the object's type. Objects of the same type share the same value.
          */
-        object: 'issuing.card_bundle';
+        object: 'issuing.physical_bundle';
 
-        features?: CardBundle.Features;
+        features?: PhysicalBundle.Features;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -30,25 +30,25 @@ declare module 'stripe' {
         name: string;
 
         /**
-         * Whether this card bundle can be used to create cards.
+         * Whether this physical bundle can be used to create cards.
          */
-        status: CardBundle.Status;
+        status: PhysicalBundle.Status;
 
         /**
-         * Whether this card bundle is a standard Stripe offering or custom-made for you.
+         * Whether this physical bundle is a standard Stripe offering or custom-made for you.
          */
-        type: CardBundle.Type;
+        type: PhysicalBundle.Type;
       }
 
-      namespace CardBundle {
+      namespace PhysicalBundle {
         interface Features {
           /**
-           * The policy for how to use card logo images in a card design with this card bundle.
+           * The policy for how to use card logo images in a card design with this physical bundle.
            */
           card_logo: Features.CardLogo;
 
           /**
-           * The policy for how to use carrier letter text in a card design with this card bundle.
+           * The policy for how to use carrier letter text in a card design with this physical bundle.
            */
           carrier_text: Features.CarrierText;
         }

@@ -28,11 +28,6 @@ declare module 'stripe' {
         cancellation_reason: Card.CancellationReason | null;
 
         /**
-         * The card design object belonging to this card.
-         */
-        card_design?: string | Stripe.Issuing.CardDesign | null;
-
-        /**
          * An Issuing `Cardholder` object represents an individual or business entity who is [issued](https://stripe.com/docs/issuing) cards.
          *
          * Related guide: [How to create a cardholder](https://stripe.com/docs/issuing/cards#create-cardholder)
@@ -88,6 +83,14 @@ declare module 'stripe' {
          * The full unredacted card number. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with [the `expand` parameter](https://stripe.com/docs/api/expanding_objects). Additionally, it's only available via the ["Retrieve a card" endpoint](https://stripe.com/docs/api/issuing/cards/retrieve), not via "List all cards" or any other endpoint.
          */
         number?: string;
+
+        /**
+         * The personalization design object belonging to this card.
+         */
+        personalization_design?:
+          | string
+          | Stripe.Issuing.PersonalizationDesign
+          | null;
 
         /**
          * The latest card that replaces this card, if any.

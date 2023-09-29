@@ -4,9 +4,9 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Issuing {
       /**
-       * A Card Design is a logical grouping of a Card Bundle, card logo, and carrier text that represents a product line.
+       * A Personalization Design is a logical grouping of a Physical Bundle, card logo, and carrier text that represents a product line.
        */
-      interface CardDesign {
+      interface PersonalizationDesign {
         /**
          * Unique identifier for the object.
          */
@@ -15,25 +15,20 @@ declare module 'stripe' {
         /**
          * String representing the object's type. Objects of the same type share the same value.
          */
-        object: 'issuing.card_design';
+        object: 'issuing.personalization_design';
 
         /**
-         * The card bundle object belonging to this card design.
-         */
-        card_bundle: string | Stripe.Issuing.CardBundle;
-
-        /**
-         * The file for the card logo, for use with card bundles that support card logos.
+         * The file for the card logo, for use with physical bundles that support card logos.
          */
         card_logo: string | Stripe.File | null;
 
         /**
-         * Hash containing carrier text, for use with card bundles that support carrier text.
+         * Hash containing carrier text, for use with physical bundles that support carrier text.
          */
-        carrier_text: CardDesign.CarrierText | null;
+        carrier_text: PersonalizationDesign.CarrierText | null;
 
         /**
-         * A lookup key used to retrieve card designs dynamically from a static string. This may be up to 200 characters.
+         * A lookup key used to retrieve personalization designs dynamically from a static string. This may be up to 200 characters.
          */
         lookup_key: string | null;
 
@@ -47,17 +42,22 @@ declare module 'stripe' {
          */
         name: string | null;
 
-        preferences: CardDesign.Preferences;
+        /**
+         * The physical bundle object belonging to this personalization design.
+         */
+        physical_bundle: string | Stripe.Issuing.PhysicalBundle;
 
-        rejection_reasons: CardDesign.RejectionReasons;
+        preferences: PersonalizationDesign.Preferences;
+
+        rejection_reasons: PersonalizationDesign.RejectionReasons;
 
         /**
-         * Whether this card design can be used to create cards.
+         * Whether this personalization design can be used to create cards.
          */
-        status: CardDesign.Status;
+        status: PersonalizationDesign.Status;
       }
 
-      namespace CardDesign {
+      namespace PersonalizationDesign {
         interface CarrierText {
           /**
            * The footer body text of the carrier letter.
@@ -82,12 +82,12 @@ declare module 'stripe' {
 
         interface Preferences {
           /**
-           * Whether this card design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no card design is set as the account default.
+           * Whether this personalization design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no personalization design is set as the account default.
            */
           account_default: boolean;
 
           /**
-           * Whether this card design is used to create cards when one is not specified and an account default for this connected account does not exist.
+           * Whether this personalization design is used to create cards when one is not specified and an account default for this connected account does not exist.
            */
           platform_default: boolean | null;
         }

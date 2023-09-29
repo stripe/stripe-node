@@ -11,7 +11,7 @@ declare module 'stripe' {
 
       /**
        * A filter on the list, based on the object `created` field. The value
-       * can be a string with an integer Unix timestamp, or it can be a
+       * can be a string with an integer Unix timestamp or a
        * dictionary with a number of different query options.
        */
       created?: Stripe.RangeQueryParam | number;
@@ -24,7 +24,7 @@ declare module 'stripe' {
 
     class SetupAttemptsResource {
       /**
-       * Returns a list of SetupAttempts associated with a provided SetupIntent.
+       * Returns a list of SetupAttempts that associate with a provided SetupIntent.
        */
       list(
         params: SetupAttemptListParams,
