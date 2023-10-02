@@ -3,7 +3,20 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * An object detailing payment method configurations.
+     * PaymentMethodConfigurations control which payment methods are displayed to your customers when you don't explicitly specify payment method types. You can have multiple configurations with different sets of payment methods for different scenarios.
+     *
+     * There are two types of PaymentMethodConfigurations. Which is used depends on the [charge type](https://stripe.com/docs/connect/charges):
+     *
+     * **Direct** configurations apply to payments created on your account, including Connect destination charges, Connect separate charges and transfers, and payments not involving Connect.
+     *
+     * **Child** configurations apply to payments created on your connected accounts using direct charges, and charges with the on_behalf_of parameter.
+     *
+     * Child configurations have a `parent` that sets default values and controls which settings connected accounts may override. You can specify a parent ID at payment time, and Stripe will automatically resolve the connected account's associated child configuration. Parent configurations are [managed in the dashboard](https://dashboard.stripe.com/settings/payment_methods/connected_accounts) and are not available in this API.
+     *
+     * Related guides:
+     * - [Payment Method Configurations API](https://stripe.com/docs/connect/payment-method-configurations)
+     * - [Multiple payment method configurations on dynamic payment methods](https://stripe.com/docs/payments/multiple-payment-method-configs)
+     * - [Multiple configurations for your Connect accounts](https://stripe.com/docs/connect/multiple-payment-method-configurations)
      */
     interface PaymentMethodConfiguration {
       /**
@@ -32,7 +45,7 @@ declare module 'stripe' {
       apple_pay?: PaymentMethodConfiguration.ApplePay;
 
       /**
-       * The Connect application associated with this configuration.
+       * For child configs, the Connect application associated with the configuration.
        */
       application: string | null;
 
@@ -67,7 +80,7 @@ declare module 'stripe' {
       ideal?: PaymentMethodConfiguration.Ideal;
 
       /**
-       * The default configuration is used whenever no payment method configuration is specified.
+       * The default configuration is used whenever a payment method configuration is not specified.
        */
       is_default: boolean;
 
@@ -87,7 +100,7 @@ declare module 'stripe' {
       multibanco?: PaymentMethodConfiguration.Multibanco;
 
       /**
-       * Configuration name.
+       * The configuration's name.
        */
       name: string;
 
@@ -98,7 +111,7 @@ declare module 'stripe' {
       p24?: PaymentMethodConfiguration.P24;
 
       /**
-       * The configuration's parent configuration.
+       * For child configs, the configuration's parent configuration.
        */
       parent: string | null;
 
@@ -134,7 +147,7 @@ declare module 'stripe' {
       namespace AcssDebit {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -168,7 +181,7 @@ declare module 'stripe' {
       namespace Affirm {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -202,7 +215,7 @@ declare module 'stripe' {
       namespace AfterpayClearpay {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -236,7 +249,7 @@ declare module 'stripe' {
       namespace Alipay {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -270,7 +283,7 @@ declare module 'stripe' {
       namespace ApplePay {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -304,7 +317,7 @@ declare module 'stripe' {
       namespace AuBecsDebit {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -338,7 +351,7 @@ declare module 'stripe' {
       namespace BacsDebit {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -372,7 +385,7 @@ declare module 'stripe' {
       namespace Bancontact {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -406,7 +419,7 @@ declare module 'stripe' {
       namespace Blik {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -440,7 +453,7 @@ declare module 'stripe' {
       namespace Boleto {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -474,7 +487,7 @@ declare module 'stripe' {
       namespace Card {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -508,7 +521,7 @@ declare module 'stripe' {
       namespace CartesBancaires {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -542,7 +555,7 @@ declare module 'stripe' {
       namespace Cashapp {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -576,7 +589,7 @@ declare module 'stripe' {
       namespace Eps {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -610,7 +623,7 @@ declare module 'stripe' {
       namespace Fpx {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -644,7 +657,7 @@ declare module 'stripe' {
       namespace Giropay {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -678,7 +691,7 @@ declare module 'stripe' {
       namespace GooglePay {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -712,7 +725,7 @@ declare module 'stripe' {
       namespace Grabpay {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -746,7 +759,7 @@ declare module 'stripe' {
       namespace IdBankTransfer {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -780,7 +793,7 @@ declare module 'stripe' {
       namespace Ideal {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -814,7 +827,7 @@ declare module 'stripe' {
       namespace Jcb {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -848,7 +861,7 @@ declare module 'stripe' {
       namespace Klarna {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -882,7 +895,7 @@ declare module 'stripe' {
       namespace Konbini {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -916,7 +929,7 @@ declare module 'stripe' {
       namespace Link {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -950,7 +963,7 @@ declare module 'stripe' {
       namespace Multibanco {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -984,7 +997,7 @@ declare module 'stripe' {
       namespace Netbanking {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -1018,7 +1031,7 @@ declare module 'stripe' {
       namespace Oxxo {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -1052,7 +1065,7 @@ declare module 'stripe' {
       namespace P24 {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -1086,7 +1099,7 @@ declare module 'stripe' {
       namespace PayByBank {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -1120,7 +1133,7 @@ declare module 'stripe' {
       namespace Paynow {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -1154,7 +1167,7 @@ declare module 'stripe' {
       namespace Paypal {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -1188,7 +1201,7 @@ declare module 'stripe' {
       namespace Promptpay {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -1222,7 +1235,7 @@ declare module 'stripe' {
       namespace SepaDebit {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -1256,7 +1269,7 @@ declare module 'stripe' {
       namespace Sofort {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -1290,7 +1303,7 @@ declare module 'stripe' {
       namespace Upi {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -1324,7 +1337,7 @@ declare module 'stripe' {
       namespace UsBankAccount {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
@@ -1358,7 +1371,7 @@ declare module 'stripe' {
       namespace WechatPay {
         interface DisplayPreference {
           /**
-           * For child configurations, whether or not the account's preference will be observed. If `false`, the parent configuration's preference is used.
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
            */
           overridable: boolean | null;
 
