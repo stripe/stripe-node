@@ -60,7 +60,7 @@ declare module 'stripe' {
         expand?: Array<string>;
       }
 
-      interface InferredBalanceListParams extends PaginationParams {
+      interface AccountInferredBalanceListParams extends PaginationParams {
         /**
          * Specifies which fields in the response should be expanded.
          */
@@ -171,13 +171,13 @@ declare module 'stripe' {
          */
         listInferredBalances(
           id: string,
-          params?: InferredBalanceListParams,
+          params?: AccountInferredBalanceListParams,
           options?: RequestOptions
-        ): ApiListPromise<Stripe.FinancialConnections.InferredBalance>;
+        ): ApiListPromise<Stripe.FinancialConnections.AccountInferredBalance>;
         listInferredBalances(
           id: string,
           options?: RequestOptions
-        ): ApiListPromise<Stripe.FinancialConnections.InferredBalance>;
+        ): ApiListPromise<Stripe.FinancialConnections.AccountInferredBalance>;
 
         /**
          * Refreshes the data associated with a Financial Connections Account.
