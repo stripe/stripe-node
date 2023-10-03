@@ -40,6 +40,7 @@ import {Sessions as CheckoutSessions} from './resources/Checkout/Sessions.js';
 import {Sessions as FinancialConnectionsSessions} from './resources/FinancialConnections/Sessions.js';
 import {Settings as TaxSettings} from './resources/Tax/Settings.js';
 import {TestClocks as TestHelpersTestClocks} from './resources/TestHelpers/TestClocks.js';
+import {Tokens as IssuingTokens} from './resources/Issuing/Tokens.js';
 import {TransactionEntries as TreasuryTransactionEntries} from './resources/Treasury/TransactionEntries.js';
 import {Transactions as TestHelpersIssuingTransactions} from './resources/TestHelpers/Issuing/Transactions.js';
 import {Transactions as IssuingTransactions} from './resources/Issuing/Transactions.js';
@@ -119,6 +120,7 @@ export const Issuing = resourceNamespace('issuing', {
   Cardholders: IssuingCardholders,
   Cards: IssuingCards,
   Disputes: IssuingDisputes,
+  Tokens: IssuingTokens,
   Transactions: IssuingTransactions,
 });
 export const Radar = resourceNamespace('radar', {

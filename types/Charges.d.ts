@@ -677,6 +677,11 @@ declare module 'stripe' {
 
         interface Card {
           /**
+           * The authorized amount.
+           */
+          amount_authorized?: number | null;
+
+          /**
            * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           brand: string | null;
@@ -706,6 +711,8 @@ declare module 'stripe' {
            */
           exp_year: number;
 
+          extended_authorization?: Card.ExtendedAuthorization;
+
           /**
            * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
            *
@@ -722,6 +729,8 @@ declare module 'stripe' {
            * Issuer identification number of the card. (For internal use only and not typically available in standard API requests.)
            */
           iin?: string | null;
+
+          incremental_authorization?: Card.IncrementalAuthorization;
 
           /**
            * Installment details for this payment (Mexico only).
@@ -750,6 +759,8 @@ declare module 'stripe' {
            */
           moto?: boolean | null;
 
+          multicapture?: Card.Multicapture;
+
           /**
            * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
@@ -759,6 +770,8 @@ declare module 'stripe' {
            * If this card has network token credentials, this contains the details of the network token credentials.
            */
           network_token?: Card.NetworkToken | null;
+
+          overcapture?: Card.Overcapture;
 
           /**
            * Populated if this transaction used 3D Secure authentication.
@@ -789,6 +802,28 @@ declare module 'stripe' {
             cvc_check: string | null;
           }
 
+          interface ExtendedAuthorization {
+            /**
+             * Indicates whether or not the capture window is extended beyond the standard authorization.
+             */
+            status: ExtendedAuthorization.Status;
+          }
+
+          namespace ExtendedAuthorization {
+            type Status = 'disabled' | 'enabled';
+          }
+
+          interface IncrementalAuthorization {
+            /**
+             * Indicates whether or not the incremental authorization feature is supported.
+             */
+            status: IncrementalAuthorization.Status;
+          }
+
+          namespace IncrementalAuthorization {
+            type Status = 'available' | 'unavailable';
+          }
+
           interface Installments {
             /**
              * Installment plan selected for the payment.
@@ -816,11 +851,38 @@ declare module 'stripe' {
             }
           }
 
+          interface Multicapture {
+            /**
+             * Indicates whether or not multiple captures are supported.
+             */
+            status: Multicapture.Status;
+          }
+
+          namespace Multicapture {
+            type Status = 'available' | 'unavailable';
+          }
+
           interface NetworkToken {
             /**
              * Indicates if Stripe used a network token, either user provided or Stripe managed when processing the transaction.
              */
             used: boolean;
+          }
+
+          interface Overcapture {
+            /**
+             * The maximum amount that can be captured.
+             */
+            maximum_amount_capturable: number;
+
+            /**
+             * Indicates whether or not the authorized amount can be over-captured.
+             */
+            status: Overcapture.Status;
+          }
+
+          namespace Overcapture {
+            type Status = 'available' | 'unavailable';
           }
 
           interface ThreeDSecure {

@@ -39,6 +39,7 @@
 ///<reference path='./Issuing/CardholdersResource.d.ts' />
 ///<reference path='./Issuing/CardsResource.d.ts' />
 ///<reference path='./Issuing/DisputesResource.d.ts' />
+///<reference path='./Issuing/TokensResource.d.ts' />
 ///<reference path='./Issuing/TransactionsResource.d.ts' />
 ///<reference path='./MandatesResource.d.ts' />
 ///<reference path='./PaymentIntentsResource.d.ts' />
@@ -149,10 +150,12 @@
 ///<reference path='./Issuing/Cardholders.d.ts' />
 ///<reference path='./Issuing/Cards.d.ts' />
 ///<reference path='./Issuing/Disputes.d.ts' />
+///<reference path='./Issuing/Tokens.d.ts' />
 ///<reference path='./Issuing/Transactions.d.ts' />
 ///<reference path='./LineItems.d.ts' />
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
+///<reference path='./Margins.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
 ///<reference path='./PaymentMethodConfigurations.d.ts' />
@@ -300,6 +303,7 @@ declare module 'stripe' {
       cards: Stripe.Issuing.CardsResource;
       cardholders: Stripe.Issuing.CardholdersResource;
       disputes: Stripe.Issuing.DisputesResource;
+      tokens: Stripe.Issuing.TokensResource;
       transactions: Stripe.Issuing.TransactionsResource;
     };
     radar: {

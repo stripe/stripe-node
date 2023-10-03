@@ -109,6 +109,11 @@ declare module 'stripe' {
         status: Authorization.Status;
 
         /**
+         * [Token](https://stripe.com/docs/api/issuing/tokens/object) object used for this authorization. If a network token was not used for this authorization, this field will be null.
+         */
+        token?: string | Stripe.Issuing.Token | null;
+
+        /**
          * List of [transactions](https://stripe.com/docs/api/issuing/transactions) associated with this authorization.
          */
         transactions: Array<Stripe.Issuing.Transaction>;

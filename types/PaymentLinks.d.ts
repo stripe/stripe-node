@@ -425,6 +425,11 @@ declare module 'stripe' {
         capture_method: PaymentIntentData.CaptureMethod | null;
 
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on [Payment Intents] (/docs/api/payment_intents) generated from this payment link.
+         */
+        metadata?: Stripe.Metadata;
+
+        /**
          * Indicates that you intend to make future payments with the payment method collected during checkout.
          */
         setup_future_usage: PaymentIntentData.SetupFutureUsage | null;
@@ -742,6 +747,11 @@ declare module 'stripe' {
          * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
          */
         description: string | null;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on [Subscriptions] (/docs/api/subscriptions) generated from this payment link.
+         */
+        metadata?: Stripe.Metadata;
 
         /**
          * Integer representing the number of trial period days before the customer is charged for the first time.
