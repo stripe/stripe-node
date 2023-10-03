@@ -62,6 +62,11 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
+       * The margins applied to the line item. When set, the `default_margins` on the invoice do not apply to the line item. Use `expand[]=margins` to expand each margin.
+       */
+      margins: Array<string | Stripe.Margin> | null;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription` this will reflect the metadata of the subscription that caused the line item to be created.
        */
       metadata: Stripe.Metadata;

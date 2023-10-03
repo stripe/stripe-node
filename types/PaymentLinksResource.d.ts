@@ -464,6 +464,11 @@ declare module 'stripe' {
         capture_method?: PaymentIntentData.CaptureMethod;
 
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Payment Intents] (/docs/api/payment_intents) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
          * Indicates that you intend to [make future payments](https://stripe.com/docs/payments/payment-intents#future-usage) with the payment method collected by this Checkout Session.
          *
          * When setting this to `on_session`, Checkout will show a notice to the customer that their payment details will be saved.
@@ -789,6 +794,11 @@ declare module 'stripe' {
         description?: string;
 
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Subscriptions] (/docs/api/subscriptions) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
          * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
          */
         trial_period_days?: number;
@@ -887,6 +897,8 @@ declare module 'stripe' {
        */
       metadata?: Stripe.MetadataParam;
 
+      payment_intent_data?: PaymentLinkUpdateParams.PaymentIntentData;
+
       /**
        * Specify whether Checkout should collect a payment method. When set to `if_required`, Checkout will not collect a payment method when the total due for the session is 0.This may occur if the Checkout Session includes a free trial or a discount.
        *
@@ -909,6 +921,11 @@ declare module 'stripe' {
       shipping_address_collection?: Stripe.Emptyable<
         PaymentLinkUpdateParams.ShippingAddressCollection
       >;
+
+      /**
+       * When creating a subscription, the specified configuration data will be used. There must be at least one line item with a recurring price to use `subscription_data`.
+       */
+      subscription_data?: PaymentLinkUpdateParams.SubscriptionData;
     }
 
     namespace PaymentLinkUpdateParams {
@@ -1207,6 +1224,13 @@ declare module 'stripe' {
         }
       }
 
+      interface PaymentIntentData {
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Payment Intents] (/docs/api/payment_intents) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         */
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+      }
+
       type PaymentMethodCollection = 'always' | 'if_required';
 
       type PaymentMethodType =
@@ -1486,6 +1510,13 @@ declare module 'stripe' {
           | 'ZM'
           | 'ZW'
           | 'ZZ';
+      }
+
+      interface SubscriptionData {
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Subscriptions] (/docs/api/subscriptions) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         */
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
       }
     }
 

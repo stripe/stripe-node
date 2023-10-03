@@ -49,6 +49,7 @@
 ///<reference path='./Issuing/DisputesResource.d.ts' />
 ///<reference path='./Issuing/PersonalizationDesignsResource.d.ts' />
 ///<reference path='./Issuing/PhysicalBundlesResource.d.ts' />
+///<reference path='./Issuing/TokensResource.d.ts' />
 ///<reference path='./Issuing/TransactionsResource.d.ts' />
 ///<reference path='./MandatesResource.d.ts' />
 ///<reference path='./OrdersResource.d.ts' />
@@ -175,10 +176,12 @@
 ///<reference path='./Issuing/Disputes.d.ts' />
 ///<reference path='./Issuing/PersonalizationDesigns.d.ts' />
 ///<reference path='./Issuing/PhysicalBundles.d.ts' />
+///<reference path='./Issuing/Tokens.d.ts' />
 ///<reference path='./Issuing/Transactions.d.ts' />
 ///<reference path='./LineItems.d.ts' />
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
+///<reference path='./Margins.d.ts' />
 ///<reference path='./Orders.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
@@ -195,7 +198,7 @@
 ///<reference path='./QuoteLines.d.ts' />
 ///<reference path='./QuotePhases.d.ts' />
 ///<reference path='./QuotePreviewInvoices.d.ts' />
-///<reference path='./QuotePreviewSchedules.d.ts' />
+///<reference path='./QuotePreviewSubscriptionSchedules.d.ts' />
 ///<reference path='./Quotes.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarnings.d.ts' />
 ///<reference path='./Radar/ValueListItems.d.ts' />
@@ -349,6 +352,7 @@ declare module 'stripe' {
       disputes: Stripe.Issuing.DisputesResource;
       personalizationDesigns: Stripe.Issuing.PersonalizationDesignsResource;
       physicalBundles: Stripe.Issuing.PhysicalBundlesResource;
+      tokens: Stripe.Issuing.TokensResource;
       transactions: Stripe.Issuing.TransactionsResource;
     };
     radar: {

@@ -1526,6 +1526,26 @@ declare module 'stripe' {
           network: Card.Network | null;
 
           /**
+           * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/docs/payments/extended-authorization) for this PaymentIntent.
+           */
+          request_extended_authorization?: Card.RequestExtendedAuthorization;
+
+          /**
+           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
+           */
+          request_incremental_authorization?: Card.RequestIncrementalAuthorization;
+
+          /**
+           * Request ability to make [multiple captures](https://stripe.com/docs/payments/multicapture) for this PaymentIntent.
+           */
+          request_multicapture?: Card.RequestMulticapture;
+
+          /**
+           * Request ability to [overcapture](https://stripe.com/docs/payments/overcapture) for this PaymentIntent.
+           */
+          request_overcapture?: Card.RequestOvercapture;
+
+          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure: Card.RequestThreeDSecure | null;
@@ -1673,6 +1693,14 @@ declare module 'stripe' {
             | 'unionpay'
             | 'unknown'
             | 'visa';
+
+          type RequestExtendedAuthorization = 'if_available' | 'never';
+
+          type RequestIncrementalAuthorization = 'if_available' | 'never';
+
+          type RequestMulticapture = 'if_available' | 'never';
+
+          type RequestOvercapture = 'if_available' | 'never';
 
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
 
