@@ -273,7 +273,7 @@ declare module 'stripe' {
           approved: boolean;
 
           /**
-           * A code created by Stripe which is shared with the merchant to validate the authorization. This field will be populated if the authorization message was approved. The code is typically a six-digit number prefixed with ‘S'. For example, S498162. Please note that the code is not guaranteed to be unique across authorizations.
+           * A code created by Stripe which is shared with the merchant to validate the authorization. This field will be populated if the authorization message was approved. The code typically starts with the letter "S", followed by a six-digit number. For example, "S498162". Please note that the code is not guaranteed to be unique across authorizations.
            */
           authorization_code: string | null;
 
