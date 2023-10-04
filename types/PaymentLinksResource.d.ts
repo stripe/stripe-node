@@ -897,6 +897,9 @@ declare module 'stripe' {
        */
       metadata?: Stripe.MetadataParam;
 
+      /**
+       * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
+       */
       payment_intent_data?: PaymentLinkUpdateParams.PaymentIntentData;
 
       /**
