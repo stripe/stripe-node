@@ -2857,8 +2857,6 @@ declare module 'stripe' {
        * Filter external accounts according to a particular object type.
        */
       object?: ExternalAccountListParams.Object;
-
-      object?: ExternalAccountListParams.Object;
     }
 
     namespace ExternalAccountListParams {
