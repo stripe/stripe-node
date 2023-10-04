@@ -4,6 +4,11 @@ declare module 'stripe' {
   namespace Stripe {
     interface QuoteCreateParams {
       /**
+       * Set to true to allow quote lines to have `starts_at` in the past if collection is paused between `starts_at` and now.
+       */
+      allow_backdated_lines?: boolean;
+
+      /**
        * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. There cannot be any line items with recurring prices when using this field.
        */
       application_fee_amount?: Stripe.Emptyable<number>;
@@ -1632,6 +1637,11 @@ declare module 'stripe' {
     }
 
     interface QuoteUpdateParams {
+      /**
+       * Set to true to allow quote lines to have `starts_at` in the past if collection is paused between `starts_at` and now.
+       */
+      allow_backdated_lines?: boolean;
+
       /**
        * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. There cannot be any line items with recurring prices when using this field.
        */

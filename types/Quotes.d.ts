@@ -18,6 +18,11 @@ declare module 'stripe' {
       object: 'quote';
 
       /**
+       * Allow quote lines to have `starts_at` in the past if collection is paused between `starts_at` and now.
+       */
+      allow_backdated_lines?: boolean | null;
+
+      /**
        * Total before any discounts or taxes are applied.
        */
       amount_subtotal: number;
