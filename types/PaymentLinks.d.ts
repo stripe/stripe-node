@@ -433,6 +433,16 @@ declare module 'stripe' {
          * Indicates that you intend to make future payments with the payment method collected during checkout.
          */
         setup_future_usage: PaymentIntentData.SetupFutureUsage | null;
+
+        /**
+         * Extra information about the payment. This will appear on your customer's statement when this payment succeeds in creating a charge.
+         */
+        statement_descriptor: string | null;
+
+        /**
+         * Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
+         */
+        statement_descriptor_suffix: string | null;
       }
 
       namespace PaymentIntentData {

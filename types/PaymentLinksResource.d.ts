@@ -482,6 +482,16 @@ declare module 'stripe' {
          * When processing card payments, Checkout also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as SCA.
          */
         setup_future_usage?: PaymentIntentData.SetupFutureUsage;
+
+        /**
+         * Extra information about the payment. This will appear on your customer's statement when this payment succeeds in creating a charge.
+         */
+        statement_descriptor?: string;
+
+        /**
+         * Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
+         */
+        statement_descriptor_suffix?: string;
       }
 
       namespace PaymentIntentData {
@@ -1232,6 +1242,16 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Payment Intents] (/docs/api/payment_intents) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * Extra information about the payment. This will appear on your customer's statement when this payment succeeds in creating a charge.
+         */
+        statement_descriptor?: Stripe.Emptyable<string>;
+
+        /**
+         * Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
+         */
+        statement_descriptor_suffix?: Stripe.Emptyable<string>;
       }
 
       type PaymentMethodCollection = 'always' | 'if_required';
