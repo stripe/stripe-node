@@ -208,7 +208,7 @@ declare module 'stripe' {
           ip_address: string | null;
 
           /**
-           * `true`` if the OutboundPayment creation request is being made on behalf of an end user by a platform. Otherwise, `false`.
+           * `true` if the OutboundPayment creation request is being made on behalf of an end user by a platform. Otherwise, `false`.
            */
           present: boolean;
         }

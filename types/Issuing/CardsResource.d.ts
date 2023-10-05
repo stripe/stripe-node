@@ -2236,6 +2236,8 @@ declare module 'stripe' {
          */
         last4?: string;
 
+        personalization_design?: string;
+
         /**
          * Only return cards that have the given status. One of `active`, `inactive`, or `canceled`.
          */

@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     interface TokenCreateParams {
       /**
-       * Information for the account this token will represent.
+       * Information for the account this token represents.
        */
       account?: TokenCreateParams.Account;
 
@@ -19,12 +19,12 @@ declare module 'stripe' {
       card?: TokenCreateParams.Card | string;
 
       /**
-       * The customer (owned by the application's account) for which to create a token. This can be used only with an [OAuth access token](https://stripe.com/docs/connect/standard-accounts) or [Stripe-Account header](https://stripe.com/docs/connect/authentication). For more details, see [Cloning Saved Payment Methods](https://stripe.com/docs/connect/cloning-saved-payment-methods).
+       * Create a token for the customer, which is owned by the application's account. You can only use this with an [OAuth access token](https://stripe.com/docs/connect/standard-accounts) or [Stripe-Account header](https://stripe.com/docs/connect/authentication). Learn more about [cloning saved payment methods](https://stripe.com/docs/connect/cloning-saved-payment-methods).
        */
       customer?: string;
 
       /**
-       * The updated CVC value this token will represent.
+       * The updated CVC value this token represents.
        */
       cvc_update?: TokenCreateParams.CvcUpdate;
 
@@ -34,12 +34,12 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Information for the person this token will represent.
+       * Information for the person this token represents.
        */
       person?: TokenCreateParams.Person;
 
       /**
-       * The PII this token will represent.
+       * The PII this token represents.
        */
       pii?: TokenCreateParams.Pii;
     }
@@ -798,7 +798,7 @@ declare module 'stripe' {
     class TokensResource {
       /**
        * Creates a single-use token that represents a bank account's details.
-       * This token can be used with any API method in place of a bank account dictionary. This token can be used only once, by attaching it to a [Custom account](https://stripe.com/docs/api#accounts).
+       * You can use this token with any API method in place of a bank account dictionary. You can only use this token once. To do so, attach it to a [Custom account](https://stripe.com/docs/api#accounts).
        */
       create(
         params?: TokenCreateParams,

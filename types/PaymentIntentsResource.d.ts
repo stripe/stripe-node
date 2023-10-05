@@ -1519,6 +1519,26 @@ declare module 'stripe' {
           network?: Card.Network;
 
           /**
+           * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/docs/payments/extended-authorization) for this PaymentIntent.
+           */
+          request_extended_authorization?: Card.RequestExtendedAuthorization;
+
+          /**
+           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
+           */
+          request_incremental_authorization?: Card.RequestIncrementalAuthorization;
+
+          /**
+           * Request ability to make [multiple captures](https://stripe.com/docs/payments/multicapture) for this PaymentIntent.
+           */
+          request_multicapture?: Card.RequestMulticapture;
+
+          /**
+           * Request ability to [overcapture](https://stripe.com/docs/payments/overcapture) for this PaymentIntent.
+           */
+          request_overcapture?: Card.RequestOvercapture;
+
+          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
@@ -1652,6 +1672,14 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
+          type RequestExtendedAuthorization = 'if_available' | 'never';
+
+          type RequestIncrementalAuthorization = 'if_available' | 'never';
+
+          type RequestMulticapture = 'if_available' | 'never';
+
+          type RequestOvercapture = 'if_available' | 'never';
+
           type RequestThreeDSecure = 'any' | 'automatic';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
@@ -1676,9 +1704,18 @@ declare module 'stripe' {
           request_extended_authorization?: boolean;
 
           /**
+           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
+           */
+          request_incremental_authorization?: CardPresent.RequestIncrementalAuthorization;
+
+          /**
            * Request ability to [increment](https://stripe.com/docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
            */
           request_incremental_authorization_support?: boolean;
+        }
+
+        namespace CardPresent {
+          type RequestIncrementalAuthorization = 'if_available' | 'never';
         }
 
         interface Cashapp {
@@ -3830,6 +3867,26 @@ declare module 'stripe' {
           network?: Card.Network;
 
           /**
+           * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/docs/payments/extended-authorization) for this PaymentIntent.
+           */
+          request_extended_authorization?: Card.RequestExtendedAuthorization;
+
+          /**
+           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
+           */
+          request_incremental_authorization?: Card.RequestIncrementalAuthorization;
+
+          /**
+           * Request ability to make [multiple captures](https://stripe.com/docs/payments/multicapture) for this PaymentIntent.
+           */
+          request_multicapture?: Card.RequestMulticapture;
+
+          /**
+           * Request ability to [overcapture](https://stripe.com/docs/payments/overcapture) for this PaymentIntent.
+           */
+          request_overcapture?: Card.RequestOvercapture;
+
+          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
@@ -3963,6 +4020,14 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
+          type RequestExtendedAuthorization = 'if_available' | 'never';
+
+          type RequestIncrementalAuthorization = 'if_available' | 'never';
+
+          type RequestMulticapture = 'if_available' | 'never';
+
+          type RequestOvercapture = 'if_available' | 'never';
+
           type RequestThreeDSecure = 'any' | 'automatic';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
@@ -3987,9 +4052,18 @@ declare module 'stripe' {
           request_extended_authorization?: boolean;
 
           /**
+           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
+           */
+          request_incremental_authorization?: CardPresent.RequestIncrementalAuthorization;
+
+          /**
            * Request ability to [increment](https://stripe.com/docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
            */
           request_incremental_authorization_support?: boolean;
+        }
+
+        namespace CardPresent {
+          type RequestIncrementalAuthorization = 'if_available' | 'never';
         }
 
         interface Cashapp {
@@ -4756,6 +4830,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Defaults to `true`. When capturing a PaymentIntent, setting `final_capture` to `false` notifies Stripe to not release the remaining uncaptured funds to make sure that they're captured in future requests. You can only use this setting when [multicapture](https://stripe.com/docs/payments/multicapture) is available for PaymentIntents.
+       */
+      final_capture?: boolean;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -6536,6 +6615,26 @@ declare module 'stripe' {
           network?: Card.Network;
 
           /**
+           * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/docs/payments/extended-authorization) for this PaymentIntent.
+           */
+          request_extended_authorization?: Card.RequestExtendedAuthorization;
+
+          /**
+           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
+           */
+          request_incremental_authorization?: Card.RequestIncrementalAuthorization;
+
+          /**
+           * Request ability to make [multiple captures](https://stripe.com/docs/payments/multicapture) for this PaymentIntent.
+           */
+          request_multicapture?: Card.RequestMulticapture;
+
+          /**
+           * Request ability to [overcapture](https://stripe.com/docs/payments/overcapture) for this PaymentIntent.
+           */
+          request_overcapture?: Card.RequestOvercapture;
+
+          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
@@ -6669,6 +6768,14 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
+          type RequestExtendedAuthorization = 'if_available' | 'never';
+
+          type RequestIncrementalAuthorization = 'if_available' | 'never';
+
+          type RequestMulticapture = 'if_available' | 'never';
+
+          type RequestOvercapture = 'if_available' | 'never';
+
           type RequestThreeDSecure = 'any' | 'automatic';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
@@ -6693,9 +6800,18 @@ declare module 'stripe' {
           request_extended_authorization?: boolean;
 
           /**
+           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
+           */
+          request_incremental_authorization?: CardPresent.RequestIncrementalAuthorization;
+
+          /**
            * Request ability to [increment](https://stripe.com/docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
            */
           request_incremental_authorization_support?: boolean;
+        }
+
+        namespace CardPresent {
+          type RequestIncrementalAuthorization = 'if_available' | 'never';
         }
 
         interface Cashapp {

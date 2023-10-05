@@ -13,10 +13,6 @@ export const Quotes = StripeResource.extend({
   }),
   accept: stripeMethod({method: 'POST', fullPath: '/v1/quotes/{quote}/accept'}),
   cancel: stripeMethod({method: 'POST', fullPath: '/v1/quotes/{quote}/cancel'}),
-  draftQuote: stripeMethod({
-    method: 'POST',
-    fullPath: '/v1/quotes/{quote}/mark_draft',
-  }),
   finalizeQuote: stripeMethod({
     method: 'POST',
     fullPath: '/v1/quotes/{quote}/finalize',
@@ -46,12 +42,16 @@ export const Quotes = StripeResource.extend({
     fullPath: '/v1/quotes/{quote}/preview_invoices',
     methodType: 'list',
   }),
-  listPreviewSchedules: stripeMethod({
+  listPreviewSubscriptionSchedules: stripeMethod({
     method: 'GET',
     fullPath: '/v1/quotes/{quote}/preview_subscription_schedules',
     methodType: 'list',
   }),
-  markStaleQuote: stripeMethod({
+  markDraft: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/quotes/{quote}/mark_draft',
+  }),
+  markStale: stripeMethod({
     method: 'POST',
     fullPath: '/v1/quotes/{quote}/mark_stale',
   }),

@@ -6,7 +6,7 @@ declare module 'stripe' {
       /**
        * A historical balance for the account on a particular day. It may be sourced from a balance snapshot provided by a financial institution, or inferred using transactions data.
        */
-      interface InferredBalance {
+      interface AccountInferredBalance {
         /**
          * Unique identifier for the object.
          */

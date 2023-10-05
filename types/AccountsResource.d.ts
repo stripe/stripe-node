@@ -2948,6 +2948,9 @@ declare module 'stripe' {
        */
       expand?: Array<string>;
 
+      /**
+       * Filter external accounts according to a particular object type.
+       */
       object?: ExternalAccountListParams.Object;
     }
 
