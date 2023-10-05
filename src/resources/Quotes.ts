@@ -32,7 +32,7 @@ export const Quotes = StripeResource.extend({
     fullPath: '/v1/quotes/{quote}/lines',
     methodType: 'list',
   }),
-  listLinesPreviewInvoices: stripeMethod({
+  listPreviewInvoiceLines: stripeMethod({
     method: 'GET',
     fullPath: '/v1/quotes/{quote}/preview_invoices/{preview_invoice}/lines',
     methodType: 'list',
