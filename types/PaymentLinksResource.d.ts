@@ -464,6 +464,11 @@ declare module 'stripe' {
         capture_method?: PaymentIntentData.CaptureMethod;
 
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Payment Intents] (/docs/api/payment_intents) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
          * Indicates that you intend to [make future payments](https://stripe.com/docs/payments/payment-intents#future-usage) with the payment method collected by this Checkout Session.
          *
          * When setting this to `on_session`, Checkout will show a notice to the customer that their payment details will be saved.
@@ -477,6 +482,16 @@ declare module 'stripe' {
          * When processing card payments, Checkout also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as SCA.
          */
         setup_future_usage?: PaymentIntentData.SetupFutureUsage;
+
+        /**
+         * Extra information about the payment. This will appear on your customer's statement when this payment succeeds in creating a charge.
+         */
+        statement_descriptor?: string;
+
+        /**
+         * Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
+         */
+        statement_descriptor_suffix?: string;
       }
 
       namespace PaymentIntentData {
@@ -789,6 +804,11 @@ declare module 'stripe' {
         description?: string;
 
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Subscriptions] (/docs/api/subscriptions) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
          * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
          */
         trial_period_days?: number;
@@ -888,6 +908,11 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
+       * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
+       */
+      payment_intent_data?: PaymentLinkUpdateParams.PaymentIntentData;
+
+      /**
        * Specify whether Checkout should collect a payment method. When set to `if_required`, Checkout will not collect a payment method when the total due for the session is 0.This may occur if the Checkout Session includes a free trial or a discount.
        *
        * Can only be set in `subscription` mode.
@@ -909,6 +934,11 @@ declare module 'stripe' {
       shipping_address_collection?: Stripe.Emptyable<
         PaymentLinkUpdateParams.ShippingAddressCollection
       >;
+
+      /**
+       * When creating a subscription, the specified configuration data will be used. There must be at least one line item with a recurring price to use `subscription_data`.
+       */
+      subscription_data?: PaymentLinkUpdateParams.SubscriptionData;
     }
 
     namespace PaymentLinkUpdateParams {
@@ -1207,6 +1237,23 @@ declare module 'stripe' {
         }
       }
 
+      interface PaymentIntentData {
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Payment Intents] (/docs/api/payment_intents) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         */
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * Extra information about the payment. This will appear on your customer's statement when this payment succeeds in creating a charge.
+         */
+        statement_descriptor?: Stripe.Emptyable<string>;
+
+        /**
+         * Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
+         */
+        statement_descriptor_suffix?: Stripe.Emptyable<string>;
+      }
+
       type PaymentMethodCollection = 'always' | 'if_required';
 
       type PaymentMethodType =
@@ -1486,6 +1533,13 @@ declare module 'stripe' {
           | 'ZM'
           | 'ZW'
           | 'ZZ';
+      }
+
+      interface SubscriptionData {
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Subscriptions] (/docs/api/subscriptions) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         */
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
       }
     }
 

@@ -20,7 +20,7 @@ declare module 'stripe' {
       object: 'balance_transaction';
 
       /**
-       * Gross amount of the transaction (in cents (or local equivalent)).
+       * Gross amount of this transaction (in cents (or local equivalent)). A positive value represents funds charged to another party, and a negative value represents funds sent to another party.
        */
       amount: number;
 
@@ -50,7 +50,7 @@ declare module 'stripe' {
       exchange_rate: number | null;
 
       /**
-       * Fees (in cents (or local equivalent)) paid for this transaction.
+       * Fees (in cents (or local equivalent)) paid for this transaction. Represented as a positive integer when assessed.
        */
       fee: number;
 
@@ -60,7 +60,7 @@ declare module 'stripe' {
       fee_details: Array<BalanceTransaction.FeeDetail>;
 
       /**
-       * Net amount of the transaction (in cents (or local equivalent)).
+       * Net impact to a Stripe balance (in cents (or local equivalent)). A positive value represents incrementing a Stripe balance, and a negative value decrementing a Stripe balance. You can calculate the net impact of a transaction on a balance by `amount` - `fee`
        */
       net: number;
 

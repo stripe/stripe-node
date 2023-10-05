@@ -340,25 +340,24 @@ declare module 'stripe' {
 
         /**
          * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
-         * For example, you could use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
+         * For example, you can use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
          * Later, you can use [PaymentIntents](https://stripe.com/docs/api#payment_intents) to drive the payment flow.
          *
-         * Create a SetupIntent as soon as you're ready to collect your customer's payment credentials.
-         * Do not maintain long-lived, unconfirmed SetupIntents as they may no longer be valid.
-         * The SetupIntent then transitions through multiple [statuses](https://stripe.com/docs/payments/intents#intent-statuses) as it guides
+         * Create a SetupIntent when you're ready to collect your customer's payment credentials.
+         * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
+         * The SetupIntent transitions through multiple [statuses](https://stripe.com/docs/payments/intents#intent-statuses) as it guides
          * you through the setup process.
          *
          * Successful SetupIntents result in payment credentials that are optimized for future payments.
-         * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) may need to be run through
-         * [Strong Customer Authentication](https://stripe.com/docs/strong-customer-authentication) at the time of payment method collection
-         * in order to streamline later [off-session payments](https://stripe.com/docs/payments/setup-intents).
-         * If the SetupIntent is used with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer), upon success,
-         * it will automatically attach the resulting payment method to that Customer.
+         * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
+         * [Strong Customer Authentication](https://stripe.com/docs/strong-customer-authentication) during payment method collection
+         * to streamline later [off-session payments](https://stripe.com/docs/payments/setup-intents).
+         * If you use the SetupIntent with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer),
+         * it automatically attaches the resulting payment method to that Customer after successful setup.
          * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
-         * PaymentIntents to save payment methods in order to prevent saving invalid or unoptimized payment methods.
+         * PaymentIntents to save payment methods to prevent saving invalid or unoptimized payment methods.
          *
-         * By using SetupIntents, you ensure that your customers experience the minimum set of required friction,
-         * even as regulations change over time.
+         * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
          *
          * Related guide: [Setup Intents API](https://stripe.com/docs/payments/setup-intents)
          */
@@ -1417,6 +1416,26 @@ declare module 'stripe' {
           network: Card.Network | null;
 
           /**
+           * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/docs/payments/extended-authorization) for this PaymentIntent.
+           */
+          request_extended_authorization?: Card.RequestExtendedAuthorization;
+
+          /**
+           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
+           */
+          request_incremental_authorization?: Card.RequestIncrementalAuthorization;
+
+          /**
+           * Request ability to make [multiple captures](https://stripe.com/docs/payments/multicapture) for this PaymentIntent.
+           */
+          request_multicapture?: Card.RequestMulticapture;
+
+          /**
+           * Request ability to [overcapture](https://stripe.com/docs/payments/overcapture) for this PaymentIntent.
+           */
+          request_overcapture?: Card.RequestOvercapture;
+
+          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure: Card.RequestThreeDSecure | null;
@@ -1562,6 +1581,14 @@ declare module 'stripe' {
             | 'unionpay'
             | 'unknown'
             | 'visa';
+
+          type RequestExtendedAuthorization = 'if_available' | 'never';
+
+          type RequestIncrementalAuthorization = 'if_available' | 'never';
+
+          type RequestMulticapture = 'if_available' | 'never';
+
+          type RequestOvercapture = 'if_available' | 'never';
 
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
 

@@ -11,12 +11,12 @@ declare module 'stripe' {
       attach_to_self?: boolean;
 
       /**
-       * When enabled, this SetupIntent will accept payment methods that you have enabled in the Dashboard and are compatible with this SetupIntent's other parameters.
+       * When you enable this parameter, this SetupIntent accepts payment methods that you enable in the Dashboard and that are compatible with its other parameters.
        */
       automatic_payment_methods?: SetupIntentCreateParams.AutomaticPaymentMethods;
 
       /**
-       * Set to `true` to attempt to confirm this SetupIntent immediately. This parameter defaults to `false`. If the payment method attached is a card, a return_url may be provided in case additional authentication is required.
+       * Set to `true` to attempt to confirm this SetupIntent immediately. This parameter defaults to `false`. If a card is the attached payment method, you can provide a `return_url` in case further authentication is necessary.
        */
       confirm?: boolean;
 
@@ -45,7 +45,7 @@ declare module 'stripe' {
       flow_directions?: Array<SetupIntentCreateParams.FlowDirection>;
 
       /**
-       * This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
+       * This hash contains details about the mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
        */
       mandate_data?: Stripe.Emptyable<SetupIntentCreateParams.MandateData>;
 
@@ -55,7 +55,7 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
-       * The Stripe account ID for which this SetupIntent is created.
+       * The Stripe account ID created for this SetupIntent.
        */
       on_behalf_of?: string;
 
@@ -65,7 +65,7 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
-       * The ID of the payment method configuration to use with this Setup Intent.
+       * The ID of the payment method configuration to use with this SetupIntent.
        */
       payment_method_configuration?: string;
 
@@ -76,22 +76,22 @@ declare module 'stripe' {
       payment_method_data?: SetupIntentCreateParams.PaymentMethodData;
 
       /**
-       * Payment-method-specific configuration for this SetupIntent.
+       * Payment method-specific configuration for this SetupIntent.
        */
       payment_method_options?: SetupIntentCreateParams.PaymentMethodOptions;
 
       /**
-       * The list of payment method types (e.g. card) that this SetupIntent is allowed to use. If this is not provided, defaults to ["card"].
+       * The list of payment method types (for example, card) that this SetupIntent can use. If you don't provide this, it defaults to ["card"].
        */
       payment_method_types?: Array<string>;
 
       /**
-       * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. If you'd prefer to redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
+       * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. To redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
        */
       return_url?: string;
 
       /**
-       * If this hash is populated, this SetupIntent will generate a single_use Mandate on success.
+       * If you populate this hash, this SetupIntent generates a `single_use` mandate after successful completion.
        */
       single_use?: SetupIntentCreateParams.SingleUse;
 
@@ -1012,7 +1012,7 @@ declare module 'stripe' {
 
     interface SetupIntentRetrieveParams {
       /**
-       * The client secret of the SetupIntent. Required if a publishable key is used to retrieve the SetupIntent.
+       * The client secret of the SetupIntent. We require this string if you use a publishable key to retrieve the SetupIntent.
        */
       client_secret?: string;
 
@@ -1076,12 +1076,12 @@ declare module 'stripe' {
       payment_method_data?: SetupIntentUpdateParams.PaymentMethodData;
 
       /**
-       * Payment-method-specific configuration for this SetupIntent.
+       * Payment method-specific configuration for this SetupIntent.
        */
       payment_method_options?: SetupIntentUpdateParams.PaymentMethodOptions;
 
       /**
-       * The list of payment method types (e.g. card) that this SetupIntent is allowed to set up. If this is not provided, defaults to ["card"].
+       * The list of payment method types (for example, card) that this SetupIntent can set up. If you don't provide this array, it defaults to ["card"].
        */
       payment_method_types?: Array<string>;
     }
@@ -2926,8 +2926,8 @@ declare module 'stripe' {
       /**
        * Creates a SetupIntent object.
        *
-       * After the SetupIntent is created, attach a payment method and [confirm](https://stripe.com/docs/api/setup_intents/confirm)
-       * to collect any required permissions to charge the payment method later.
+       * After you create the SetupIntent, attach a payment method and [confirm](https://stripe.com/docs/api/setup_intents/confirm)
+       * it to collect any required permissions to charge the payment method later.
        */
       create(
         params?: SetupIntentCreateParams,

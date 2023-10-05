@@ -109,6 +109,11 @@ declare module 'stripe' {
         status: Authorization.Status;
 
         /**
+         * [Token](https://stripe.com/docs/api/issuing/tokens/object) object used for this authorization. If a network token was not used for this authorization, this field will be null.
+         */
+        token?: string | Stripe.Issuing.Token | null;
+
+        /**
          * List of [transactions](https://stripe.com/docs/api/issuing/transactions) associated with this authorization.
          */
         transactions: Array<Stripe.Issuing.Transaction>;
@@ -261,6 +266,11 @@ declare module 'stripe' {
            * Whether this request was approved.
            */
           approved: boolean;
+
+          /**
+           * A code created by Stripe which is shared with the merchant to validate the authorization. This field will be populated if the authorization message was approved. The code typically starts with the letter "S", followed by a six-digit number. For example, "S498162". Please note that the code is not guaranteed to be unique across authorizations.
+           */
+          authorization_code: string | null;
 
           /**
            * Time at which the object was created. Measured in seconds since the Unix epoch.

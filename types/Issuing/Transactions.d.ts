@@ -94,6 +94,11 @@ declare module 'stripe' {
         purchase_details: Transaction.PurchaseDetails | null;
 
         /**
+         * [Token](https://stripe.com/docs/api/issuing/tokens/object) object used for this transaction. If a network token was not used for this transaction, this field will be null.
+         */
+        token?: string | Stripe.Issuing.Token | null;
+
+        /**
          * [Treasury](https://stripe.com/docs/api/treasury) details related to this transaction if it was created on a [FinancialAccount](/docs/api/treasury/financial_accounts
          */
         treasury?: Transaction.Treasury | null;
