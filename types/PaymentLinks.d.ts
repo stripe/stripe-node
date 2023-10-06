@@ -425,7 +425,7 @@ declare module 'stripe' {
         capture_method: PaymentIntentData.CaptureMethod | null;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on [Payment Intents] (/docs/api/payment_intents) generated from this payment link.
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on [Payment Intents](https://stripe.com/docs/api/payment_intents) generated from this payment link.
          */
         metadata: Stripe.Metadata;
 
@@ -759,7 +759,7 @@ declare module 'stripe' {
         description: string | null;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on [Subscriptions] (/docs/api/subscriptions) generated from this payment link.
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on [Subscriptions](https://stripe.com/docs/api/subscriptions) generated from this payment link.
          */
         metadata: Stripe.Metadata;
 
