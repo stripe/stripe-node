@@ -379,6 +379,11 @@ declare module 'stripe' {
           expiry_check: VerificationData.ExpiryCheck;
 
           /**
+           * The postal code submitted as part of the authorization used for postal code verification.
+           */
+          postal_code: string | null;
+
+          /**
            * 3D Secure details.
            */
           three_d_secure?: VerificationData.ThreeDSecure | null;
