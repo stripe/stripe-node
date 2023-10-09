@@ -13,6 +13,7 @@ import {Configurations as BillingPortalConfigurations} from './resources/Billing
 import {Configurations as TerminalConfigurations} from './resources/Terminal/Configurations.js';
 import {ConnectionTokens as TerminalConnectionTokens} from './resources/Terminal/ConnectionTokens.js';
 import {CreditReversals as TreasuryCreditReversals} from './resources/Treasury/CreditReversals.js';
+import {CreditUnderwritingRecords as IssuingCreditUnderwritingRecords} from './resources/Issuing/CreditUnderwritingRecords.js';
 import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Customers.js';
 import {DebitReversals as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
 import {Disputes as IssuingDisputes} from './resources/Issuing/Disputes.js';
@@ -63,6 +64,7 @@ import {VerificationReports as IdentityVerificationReports} from './resources/Id
 import {VerificationSessions as IdentityVerificationSessions} from './resources/Identity/VerificationSessions.js';
 export {Accounts as Account} from './resources/Accounts.js';
 export {AccountLinks} from './resources/AccountLinks.js';
+export {AccountNotices} from './resources/AccountNotices.js';
 export {AccountSessions} from './resources/AccountSessions.js';
 export {Accounts} from './resources/Accounts.js';
 export {ApplePayDomains} from './resources/ApplePayDomains.js';
@@ -144,6 +146,7 @@ export const Issuing = resourceNamespace('issuing', {
   Authorizations: IssuingAuthorizations,
   Cardholders: IssuingCardholders,
   Cards: IssuingCards,
+  CreditUnderwritingRecords: IssuingCreditUnderwritingRecords,
   Disputes: IssuingDisputes,
   PersonalizationDesigns: IssuingPersonalizationDesigns,
   PhysicalBundles: IssuingPhysicalBundles,
