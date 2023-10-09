@@ -261,7 +261,7 @@ declare module 'stripe' {
           /**
            * The connected account being referenced when `type` is `account`.
            */
-          account: string | Stripe.Account | null;
+          account?: string | Stripe.Account;
 
           /**
            * Type of the account referenced.
