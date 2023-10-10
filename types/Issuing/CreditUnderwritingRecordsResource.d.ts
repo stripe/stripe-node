@@ -39,11 +39,6 @@ declare module 'stripe' {
         decision?: CreditUnderwritingRecordCorrectParams.Decision;
 
         /**
-         * If an exception to the usual underwriting criteria was made for this decision, details about the exception must be provided. Exceptions should only be granted in rare circumstances, in consultation with Stripe Compliance.
-         */
-        exception?: CreditUnderwritingRecordCorrectParams.Exception;
-
-        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -377,29 +372,6 @@ declare module 'stripe' {
             | 'no_changes'
             | 'withdrawn_by_applicant';
         }
-
-        interface Exception {
-          /**
-           * The decision before the exception was applied.
-           */
-          original_decision_type: Exception.OriginalDecisionType;
-
-          /**
-           * Written explanation for the exception.
-           */
-          reason: string;
-        }
-
-        namespace Exception {
-          type OriginalDecisionType =
-            | 'additional_information_requested'
-            | 'application_rejected'
-            | 'credit_limit_approved'
-            | 'credit_limit_decreased'
-            | 'credit_line_closed'
-            | 'no_changes'
-            | 'withdrawn_by_applicant';
-        }
       }
 
       interface CreditUnderwritingRecordCreateFromApplicationParams {
@@ -476,11 +448,6 @@ declare module 'stripe' {
          * Details about the decision.
          */
         decision: CreditUnderwritingRecordCreateFromProactiveReviewParams.Decision;
-
-        /**
-         * If an exception to the usual underwriting criteria was made for this decision, details about the exception must be provided. Exceptions should only be granted in rare circumstances, in consultation with Stripe Compliance.
-         */
-        exception?: CreditUnderwritingRecordCreateFromProactiveReviewParams.Exception;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -709,29 +676,6 @@ declare module 'stripe' {
             | 'credit_line_closed'
             | 'no_changes';
         }
-
-        interface Exception {
-          /**
-           * The decision before the exception was applied.
-           */
-          original_decision_type: Exception.OriginalDecisionType;
-
-          /**
-           * Written explanation for the exception.
-           */
-          reason: string;
-        }
-
-        namespace Exception {
-          type OriginalDecisionType =
-            | 'additional_information_requested'
-            | 'application_rejected'
-            | 'credit_limit_approved'
-            | 'credit_limit_decreased'
-            | 'credit_line_closed'
-            | 'no_changes'
-            | 'withdrawn_by_applicant';
-        }
       }
 
       interface CreditUnderwritingRecordReportDecisionParams {
@@ -744,11 +688,6 @@ declare module 'stripe' {
          * Details about the decision.
          */
         decision: CreditUnderwritingRecordReportDecisionParams.Decision;
-
-        /**
-         * If an exception to the usual underwriting criteria was made for this decision, details about the exception must be provided. Exceptions should only be granted in rare circumstances, in consultation with Stripe Compliance.
-         */
-        exception?: CreditUnderwritingRecordReportDecisionParams.Exception;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -872,29 +811,6 @@ declare module 'stripe' {
             | 'additional_information_requested'
             | 'application_rejected'
             | 'credit_limit_approved'
-            | 'withdrawn_by_applicant';
-        }
-
-        interface Exception {
-          /**
-           * The decision before the exception was applied.
-           */
-          original_decision_type: Exception.OriginalDecisionType;
-
-          /**
-           * Written explanation for the exception.
-           */
-          reason: string;
-        }
-
-        namespace Exception {
-          type OriginalDecisionType =
-            | 'additional_information_requested'
-            | 'application_rejected'
-            | 'credit_limit_approved'
-            | 'credit_limit_decreased'
-            | 'credit_line_closed'
-            | 'no_changes'
             | 'withdrawn_by_applicant';
         }
       }
