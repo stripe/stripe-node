@@ -551,10 +551,7 @@ declare module 'stripe' {
         }
 
         interface CustomField {
-          /**
-           * Configuration for `type=dropdown` fields.
-           */
-          dropdown: CustomField.Dropdown | null;
+          dropdown?: CustomField.Dropdown;
 
           /**
            * String of your choice that your integration can use to reconcile this field. Must be unique to this field, alphanumeric, and up to 200 characters.
@@ -563,20 +560,14 @@ declare module 'stripe' {
 
           label: CustomField.Label;
 
-          /**
-           * Configuration for `type=numeric` fields.
-           */
-          numeric: CustomField.Numeric | null;
+          numeric?: CustomField.Numeric;
 
           /**
            * Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
            */
           optional: boolean;
 
-          /**
-           * Configuration for `type=text` fields.
-           */
-          text: CustomField.Text | null;
+          text?: CustomField.Text;
 
           /**
            * The type of the field.
