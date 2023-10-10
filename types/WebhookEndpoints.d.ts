@@ -3,6 +3,26 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
+     * The DeletedWebhookEndpoint object.
+     */
+    interface DeletedWebhookEndpoint {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'webhook_endpoint';
+
+      /**
+       * Always true for a deleted object
+       */
+      deleted: true;
+    }
+
+    /**
      * You can configure [webhook endpoints](https://stripe.com/docs/webhooks/) via the API to be
      * notified about events that happen in your Stripe account or connected
      * accounts.
@@ -76,26 +96,6 @@ declare module 'stripe' {
        * The URL of the webhook endpoint.
        */
       url: string;
-    }
-
-    /**
-     * The DeletedWebhookEndpoint object.
-     */
-    interface DeletedWebhookEndpoint {
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object: 'webhook_endpoint';
-
-      /**
-       * Always true for a deleted object
-       */
-      deleted: true;
     }
   }
 }

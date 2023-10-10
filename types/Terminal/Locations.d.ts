@@ -4,6 +4,26 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Terminal {
       /**
+       * The DeletedLocation object.
+       */
+      interface DeletedLocation {
+        /**
+         * Unique identifier for the object.
+         */
+        id: string;
+
+        /**
+         * String representing the object's type. Objects of the same type share the same value.
+         */
+        object: 'terminal.location';
+
+        /**
+         * Always true for a deleted object
+         */
+        deleted: true;
+      }
+
+      /**
        * A Location represents a grouping of readers.
        *
        * Related guide: [Fleet management](https://stripe.com/docs/terminal/fleet/locations)
@@ -45,26 +65,6 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
         metadata: Stripe.Metadata;
-      }
-
-      /**
-       * The DeletedLocation object.
-       */
-      interface DeletedLocation {
-        /**
-         * Unique identifier for the object.
-         */
-        id: string;
-
-        /**
-         * String representing the object's type. Objects of the same type share the same value.
-         */
-        object: 'terminal.location';
-
-        /**
-         * Always true for a deleted object
-         */
-        deleted: true;
       }
     }
   }
