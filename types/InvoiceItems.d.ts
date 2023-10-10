@@ -3,6 +3,26 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
+     * The DeletedInvoiceItem object.
+     */
+    interface DeletedInvoiceItem {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'invoiceitem';
+
+      /**
+       * Always true for a deleted object
+       */
+      deleted: true;
+    }
+
+    /**
      * Invoice Items represent the component lines of an [invoice](https://stripe.com/docs/api/invoices). An invoice item is added to an
      * invoice by creating or updating it with an `invoice` field, at which point it will be included as
      * [an invoice line item](https://stripe.com/docs/api/invoices/line_item) within
@@ -146,26 +166,6 @@ declare module 'stripe' {
          */
         start: number;
       }
-    }
-
-    /**
-     * The DeletedInvoiceItem object.
-     */
-    interface DeletedInvoiceItem {
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object: 'invoiceitem';
-
-      /**
-       * Always true for a deleted object
-       */
-      deleted: true;
     }
   }
 }

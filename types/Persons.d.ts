@@ -3,6 +3,26 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
+     * The DeletedPerson object.
+     */
+    interface DeletedPerson {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'person';
+
+      /**
+       * Always true for a deleted object
+       */
+      deleted: true;
+    }
+
+    /**
      * This is an object representing a person associated with a Stripe account.
      *
      * A platform cannot access a Standard or Express account's persons after the account starts onboarding, such as after generating an account link for the account.
@@ -587,26 +607,6 @@ declare module 'stripe' {
           front: string | Stripe.File | null;
         }
       }
-    }
-
-    /**
-     * The DeletedPerson object.
-     */
-    interface DeletedPerson {
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object: 'person';
-
-      /**
-       * Always true for a deleted object
-       */
-      deleted: true;
     }
   }
 }
