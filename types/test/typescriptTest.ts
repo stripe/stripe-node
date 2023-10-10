@@ -258,6 +258,17 @@ async (): Promise<void> => {
     cryptoProvider
   );
 
+  if (event.type == 'customer.created') {
+    const customer: Stripe.Customer = event.data.object;
+    const previous_attributes = event.data.previous_attributes;
+  }
+
+  // @ts-expect-error unknown type
+  if (event.type == 'customer.created2') {
+    // @ts-expect-error unknown type doesn't have a typed object
+    const customer: Stripe.Customer = event.data.object;
+  }
+
   const event2 = await stripe.events.retrieve(event.id);
 };
 

@@ -3,6 +3,26 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
+     * The DeletedPlan object.
+     */
+    interface DeletedPlan {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'plan';
+
+      /**
+       * Always true for a deleted object
+       */
+      deleted: true;
+    }
+
+    /**
      * You can now model subscriptions more flexibly using the [Prices API](https://stripe.com/docs/api#prices). It replaces the Plans API and is backwards compatible to simplify your migration.
      *
      * Plans define the base price, currency, and billing cycle for recurring purchases of products.
@@ -172,26 +192,6 @@ declare module 'stripe' {
       }
 
       type UsageType = 'licensed' | 'metered';
-    }
-
-    /**
-     * The DeletedPlan object.
-     */
-    interface DeletedPlan {
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object: 'plan';
-
-      /**
-       * Always true for a deleted object
-       */
-      deleted: true;
     }
   }
 }

@@ -4,6 +4,26 @@ declare module 'stripe' {
   namespace Stripe {
     namespace TestHelpers {
       /**
+       * The DeletedTestClock object.
+       */
+      interface DeletedTestClock {
+        /**
+         * Unique identifier for the object.
+         */
+        id: string;
+
+        /**
+         * String representing the object's type. Objects of the same type share the same value.
+         */
+        object: 'test_helpers.test_clock';
+
+        /**
+         * Always true for a deleted object
+         */
+        deleted: true;
+      }
+
+      /**
        * A test clock enables deterministic control over objects in testmode. With a test clock, you can create
        * objects at a frozen time in the past or future, and advance to a specific future time to observe webhooks and state changes. After the clock advances,
        * you can either validate the current state of your scenario (and test your assumptions), change the current state of your scenario (and test more complex scenarios), or keep advancing forward in time.
@@ -57,26 +77,6 @@ declare module 'stripe' {
 
       namespace TestClock {
         type Status = 'advancing' | 'internal_failure' | 'ready';
-      }
-
-      /**
-       * The DeletedTestClock object.
-       */
-      interface DeletedTestClock {
-        /**
-         * Unique identifier for the object.
-         */
-        id: string;
-
-        /**
-         * String representing the object's type. Objects of the same type share the same value.
-         */
-        object: 'test_helpers.test_clock';
-
-        /**
-         * Always true for a deleted object
-         */
-        deleted: true;
       }
     }
   }

@@ -3,6 +3,26 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
+     * The DeletedSubscriptionItem object.
+     */
+    interface DeletedSubscriptionItem {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'subscription_item';
+
+      /**
+       * Always true for a deleted object
+       */
+      deleted: true;
+    }
+
+    /**
      * Subscription items allow you to create customer subscriptions with more than
      * one plan, making it easy to represent complex billing relationships.
      */
@@ -82,26 +102,6 @@ declare module 'stripe' {
          */
         usage_gte: number | null;
       }
-    }
-
-    /**
-     * The DeletedSubscriptionItem object.
-     */
-    interface DeletedSubscriptionItem {
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object: 'subscription_item';
-
-      /**
-       * Always true for a deleted object
-       */
-      deleted: true;
     }
   }
 }
