@@ -3,6 +3,26 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
+     * The DeletedProduct object.
+     */
+    interface DeletedProduct {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'product';
+
+      /**
+       * Always true for a deleted object
+       */
+      deleted: true;
+    }
+
+    /**
      * Products describe the specific goods or services you offer to your customers.
      * For example, you might offer a Standard and Premium version of your goods or service; each version would be a separate Product.
      * They can be used in conjunction with [Prices](https://stripe.com/docs/api#prices) to configure pricing in Payment Links, Checkout, and Subscriptions.
@@ -145,26 +165,6 @@ declare module 'stripe' {
       }
 
       type Type = 'good' | 'service';
-    }
-
-    /**
-     * The DeletedProduct object.
-     */
-    interface DeletedProduct {
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object: 'product';
-
-      /**
-       * Always true for a deleted object
-       */
-      deleted: true;
     }
   }
 }

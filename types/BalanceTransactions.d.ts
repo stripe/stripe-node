@@ -65,7 +65,7 @@ declare module 'stripe' {
       net: number;
 
       /**
-       * Learn more about how [reporting categories] (https://stripe.com/docs/reports/reporting-categories) can help you understand balance transactions from an accounting perspective.
+       * Learn more about how [reporting categories](https://stripe.com/docs/reports/reporting-categories) can help you understand balance transactions from an accounting perspective.
        */
       reporting_category: string;
 

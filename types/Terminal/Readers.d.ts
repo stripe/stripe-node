@@ -4,6 +4,26 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Terminal {
       /**
+       * The DeletedReader object.
+       */
+      interface DeletedReader {
+        /**
+         * Unique identifier for the object.
+         */
+        id: string;
+
+        /**
+         * String representing the object's type. Objects of the same type share the same value.
+         */
+        object: 'terminal.reader';
+
+        /**
+         * Always true for a deleted object
+         */
+        deleted: true;
+      }
+
+      /**
        * A Reader represents a physical device for accepting payment details.
        *
        * Related guide: [Connecting to a reader](https://stripe.com/docs/terminal/payments/connect-reader)
@@ -292,26 +312,6 @@ declare module 'stripe' {
           | 'simulated_wisepos_e'
           | 'stripe_m2'
           | 'verifone_P400';
-      }
-
-      /**
-       * The DeletedReader object.
-       */
-      interface DeletedReader {
-        /**
-         * Unique identifier for the object.
-         */
-        id: string;
-
-        /**
-         * String representing the object's type. Objects of the same type share the same value.
-         */
-        object: 'terminal.reader';
-
-        /**
-         * Always true for a deleted object
-         */
-        deleted: true;
       }
     }
   }

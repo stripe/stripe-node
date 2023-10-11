@@ -3,6 +3,26 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
+     * The DeletedTaxId object.
+     */
+    interface DeletedTaxId {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'tax_id';
+
+      /**
+       * Always true for a deleted object
+       */
+      deleted: true;
+    }
+
+    /**
      * You can add one or multiple tax IDs to a [customer](https://stripe.com/docs/api/customers) or account.
      * Customer and account tax IDs get displayed on related invoices and credit notes.
      *
@@ -150,26 +170,6 @@ declare module 'stripe' {
       namespace Verification {
         type Status = 'pending' | 'unavailable' | 'unverified' | 'verified';
       }
-    }
-
-    /**
-     * The DeletedTaxId object.
-     */
-    interface DeletedTaxId {
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object: 'tax_id';
-
-      /**
-       * Always true for a deleted object
-       */
-      deleted: true;
     }
   }
 }

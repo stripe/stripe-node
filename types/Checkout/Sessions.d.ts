@@ -70,6 +70,11 @@ declare module 'stripe' {
         client_reference_id: string | null;
 
         /**
+         * Client secret to be used when initializing Stripe.js embedded checkout.
+         */
+        client_secret?: string | null;
+
+        /**
          * Results of `consent_collection` for this session.
          */
         consent: Session.Consent | null;
@@ -214,6 +219,16 @@ declare module 'stripe' {
         recovered_from: string | null;
 
         /**
+         * Applies to Checkout Sessions with `ui_mode: embedded`. By default, Stripe will always redirect to your return_url after a successful confirmation. If you set `redirect_on_completion: 'if_required'`, then we will only redirect if your user chooses a redirect-based payment method.
+         */
+        redirect_on_completion?: Session.RedirectOnCompletion;
+
+        /**
+         * Applies to Checkout Sessions with `ui_mode: embedded`. The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site.
+         */
+        return_url?: string;
+
+        /**
          * The ID of the SetupIntent for Checkout Sessions in `setup` mode.
          */
         setup_intent: string | Stripe.SetupIntent | null;
@@ -268,6 +283,11 @@ declare module 'stripe' {
          * Tax and discount details for the computed total amount.
          */
         total_details: Session.TotalDetails | null;
+
+        /**
+         * The UI mode of the Session. Can be `hosted` (default) or `embedded`.
+         */
+        ui_mode?: Session.UiMode | null;
 
         /**
          * The URL to the Checkout Session. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://stripe.com/docs/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
@@ -510,10 +530,7 @@ declare module 'stripe' {
         }
 
         interface CustomField {
-          /**
-           * Configuration for `type=dropdown` fields.
-           */
-          dropdown: CustomField.Dropdown | null;
+          dropdown?: CustomField.Dropdown;
 
           /**
            * String of your choice that your integration can use to reconcile this field. Must be unique to this field, alphanumeric, and up to 200 characters.
@@ -522,20 +539,14 @@ declare module 'stripe' {
 
           label: CustomField.Label;
 
-          /**
-           * Configuration for `type=numeric` fields.
-           */
-          numeric: CustomField.Numeric | null;
+          numeric?: CustomField.Numeric;
 
           /**
            * Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
            */
           optional: boolean;
 
-          /**
-           * Configuration for `type=text` fields.
-           */
-          text: CustomField.Text | null;
+          text?: CustomField.Text;
 
           /**
            * The type of the field.
@@ -1338,6 +1349,8 @@ declare module 'stripe' {
           enabled: boolean;
         }
 
+        type RedirectOnCompletion = 'always' | 'if_required' | 'never';
+
         interface ShippingAddressCollection {
           /**
            * An array of two-letter ISO country codes representing which countries Checkout should provide as options for
@@ -1798,6 +1811,8 @@ declare module 'stripe' {
             }
           }
         }
+
+        type UiMode = 'embedded' | 'hosted';
       }
     }
   }

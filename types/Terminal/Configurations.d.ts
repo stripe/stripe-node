@@ -34,6 +34,8 @@ declare module 'stripe' {
          */
         livemode: boolean;
 
+        offline?: Configuration.Offline;
+
         tipping?: Configuration.Tipping;
 
         verifone_p400?: Configuration.VerifoneP400;
@@ -45,6 +47,13 @@ declare module 'stripe' {
            * A File ID representing an image you would like displayed on the reader.
            */
           splashscreen?: string | Stripe.File;
+        }
+
+        interface Offline {
+          /**
+           * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
+           */
+          enabled: boolean | null;
         }
 
         interface Tipping {
