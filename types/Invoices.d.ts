@@ -3,6 +3,26 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
+     * The DeletedInvoice object.
+     */
+    interface DeletedInvoice {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'invoice';
+
+      /**
+       * Always true for a deleted object
+       */
+      deleted: true;
+    }
+
+    /**
      * Invoices are statements of amounts owed by a customer, and are either
      * generated one-off, or generated periodically from a subscription.
      *
@@ -485,7 +505,7 @@ declare module 'stripe' {
           /**
            * The connected account being referenced when `type` is `account`.
            */
-          account: string | Stripe.Account | null;
+          account?: string | Stripe.Account;
 
           /**
            * Type of the account referenced.
@@ -650,7 +670,7 @@ declare module 'stripe' {
         /**
          * The connected account being referenced when `type` is `account`.
          */
-        account: string | Stripe.Account | null;
+        account?: string | Stripe.Account;
 
         /**
          * Type of the account referenced.
@@ -1416,26 +1436,6 @@ declare module 'stripe' {
          */
         destination: string | Stripe.Account;
       }
-    }
-
-    /**
-     * The DeletedInvoice object.
-     */
-    interface DeletedInvoice {
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object: 'invoice';
-
-      /**
-       * Always true for a deleted object
-       */
-      deleted: true;
     }
   }
 }

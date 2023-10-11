@@ -4,6 +4,26 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Radar {
       /**
+       * The DeletedValueListItem object.
+       */
+      interface DeletedValueListItem {
+        /**
+         * Unique identifier for the object.
+         */
+        id: string;
+
+        /**
+         * String representing the object's type. Objects of the same type share the same value.
+         */
+        object: 'radar.value_list_item';
+
+        /**
+         * Always true for a deleted object
+         */
+        deleted: true;
+      }
+
+      /**
        * Value list items allow you to add specific values to a given Radar value list, which can then be used in rules.
        *
        * Related guide: [Managing list items](https://stripe.com/docs/radar/lists#managing-list-items)
@@ -48,26 +68,6 @@ declare module 'stripe' {
          * The identifier of the value list this item belongs to.
          */
         value_list: string;
-      }
-
-      /**
-       * The DeletedValueListItem object.
-       */
-      interface DeletedValueListItem {
-        /**
-         * Unique identifier for the object.
-         */
-        id: string;
-
-        /**
-         * String representing the object's type. Objects of the same type share the same value.
-         */
-        object: 'radar.value_list_item';
-
-        /**
-         * Always true for a deleted object
-         */
-        deleted: true;
       }
     }
   }

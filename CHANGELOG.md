@@ -1,5 +1,18 @@
 # Changelog
 
+## 13.10.0 - 2023-10-11
+* [#1920](https://github.com/stripe/stripe-node/pull/1920) Update generated code
+  * Add support for `redirect_on_completion`, `return_url`, and `ui_mode` on `Checkout.SessionCreateParams` and `Checkout.Session`
+  * Change `Checkout.Session.custom_fields[].dropdown`, `Checkout.Session.custom_fields[].numeric`, `Checkout.Session.custom_fields[].text`, `Checkout.SessionCreateParams.success_url`, `PaymentLink.custom_fields[].dropdown`, `PaymentLink.custom_fields[].numeric`, and `PaymentLink.custom_fields[].text` to be optional
+  * Add support for `client_secret` on `Checkout.Session`
+  * Change type of `Checkout.Session.custom_fields[].dropdown` from `PaymentPagesCheckoutSessionCustomFieldsDropdown | null` to `PaymentPagesCheckoutSessionCustomFieldsDropdown`
+  * Change type of `Checkout.Session.custom_fields[].numeric` and `Checkout.Session.custom_fields[].text` from `PaymentPagesCheckoutSessionCustomFieldsNumeric | null` to `PaymentPagesCheckoutSessionCustomFieldsNumeric`
+  * Add support for `postal_code` on `Issuing.Authorization.verification_data`
+  * Change type of `PaymentLink.custom_fields[].dropdown` from `PaymentLinksResourceCustomFieldsDropdown | null` to `PaymentLinksResourceCustomFieldsDropdown`
+  * Change type of `PaymentLink.custom_fields[].numeric` and `PaymentLink.custom_fields[].text` from `PaymentLinksResourceCustomFieldsNumeric | null` to `PaymentLinksResourceCustomFieldsNumeric`
+  * Add support for `offline` on `Terminal.ConfigurationCreateParams`, `Terminal.ConfigurationUpdateParams`, and `Terminal.Configuration`
+* [#1914](https://github.com/stripe/stripe-node/pull/1914) Bump get-func-name from 2.0.0 to 2.0.2
+
 ## 13.10.0-beta.1 - 2023-10-05
 * [#1917](https://github.com/stripe/stripe-node/pull/1917) Update generated code for beta
   * Add support for `mark_draft` and `mark_stale` methods on resource `Quote`
@@ -10,6 +23,19 @@
   * Add support for `personalization_design` on `Issuing.CardListParams`
   * Add support for `allow_backdated_lines` on `QuoteCreateParams`, `QuoteUpdateParams`, and `Quote`
 
+## 13.9.0 - 2023-10-05
+* [#1916](https://github.com/stripe/stripe-node/pull/1916) Update generated code
+  * Add support for new resource `Issuing.Token`
+  * Add support for `list`, `retrieve`, and `update` methods on resource `Token`
+  * Add support for `amount_authorized`, `extended_authorization`, `incremental_authorization`, `multicapture`, and `overcapture` on `Charge.payment_method_details.card`
+  * Add support for `token` on `Issuing.Authorization` and `Issuing.Transaction`
+  * Add support for `authorization_code` on `Issuing.Authorization.request_history[]`
+  * Add support for `request_extended_authorization`, `request_multicapture`, and `request_overcapture` on `PaymentIntent.payment_method_options.card`, `PaymentIntentConfirmParams.payment_method_options.card`, `PaymentIntentCreateParams.payment_method_options.card`, and `PaymentIntentUpdateParams.payment_method_options.card`
+  * Add support for `request_incremental_authorization` on `PaymentIntent.payment_method_options.card`, `PaymentIntentConfirmParams.payment_method_options.card_present`, `PaymentIntentConfirmParams.payment_method_options.card`, `PaymentIntentCreateParams.payment_method_options.card_present`, `PaymentIntentCreateParams.payment_method_options.card`, `PaymentIntentUpdateParams.payment_method_options.card_present`, and `PaymentIntentUpdateParams.payment_method_options.card`
+  * Add support for `final_capture` on `PaymentIntentCaptureParams`
+  * Add support for `metadata` on `PaymentLink.payment_intent_data`, `PaymentLink.subscription_data`, `PaymentLinkCreateParams.payment_intent_data`, and `PaymentLinkCreateParams.subscription_data`
+  * Add support for `statement_descriptor_suffix` and `statement_descriptor` on `PaymentLink.payment_intent_data` and `PaymentLinkCreateParams.payment_intent_data`
+  * Add support for `payment_intent_data` and `subscription_data` on `PaymentLinkUpdateParams`
 
 ## 13.9.0-beta.1 - 2023-09-28
 * [#1910](https://github.com/stripe/stripe-node/pull/1910) Update generated code for beta

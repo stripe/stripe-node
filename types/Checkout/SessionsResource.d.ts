@@ -5,14 +5,6 @@ declare module 'stripe' {
     namespace Checkout {
       interface SessionCreateParams {
         /**
-         * The URL to which Stripe should send customers when payment or setup
-         * is complete.
-         * If you'd like to use information from the successful Checkout Session on your page,
-         * read the guide on [customizing your success page](https://stripe.com/docs/payments/checkout/custom-success-page).
-         */
-        success_url: string;
-
-        /**
          * Configure actions after a Checkout Session has expired.
          */
         after_expiration?: SessionCreateParams.AfterExpiration;
@@ -199,6 +191,18 @@ declare module 'stripe' {
         phone_number_collection?: SessionCreateParams.PhoneNumberCollection;
 
         /**
+         * This parameter applies to `ui_mode: embedded`. By default, Stripe will always redirect to your return_url after a successful confirmation. If you set `redirect_on_completion: 'if_required'`, then we will only redirect if your user chooses a redirect-based payment method.
+         */
+        redirect_on_completion?: SessionCreateParams.RedirectOnCompletion;
+
+        /**
+         * The URL to redirect your customer back to after they authenticate or cancel their payment on the
+         * payment method's app or site. This parameter is required if ui_mode is `embedded`
+         * and redirect-based payment methods are enabled on the session.
+         */
+        return_url?: string;
+
+        /**
          * A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
          */
         setup_intent_data?: SessionCreateParams.SetupIntentData;
@@ -227,9 +231,22 @@ declare module 'stripe' {
         subscription_data?: SessionCreateParams.SubscriptionData;
 
         /**
+         * The URL to which Stripe should send customers when payment or setup
+         * is complete.
+         * If you'd like to use information from the successful Checkout Session on your page,
+         * read the guide on [customizing your success page](https://stripe.com/docs/payments/checkout/custom-success-page).
+         */
+        success_url?: string;
+
+        /**
          * Controls tax ID collection settings for the session.
          */
         tax_id_collection?: SessionCreateParams.TaxIdCollection;
+
+        /**
+         * `ui_mode` can be `hosted` or `embedded`. The default is `hosted`.
+         */
+        ui_mode?: SessionCreateParams.UiMode;
       }
 
       namespace SessionCreateParams {
@@ -1684,6 +1701,8 @@ declare module 'stripe' {
           enabled: boolean;
         }
 
+        type RedirectOnCompletion = 'always' | 'if_required' | 'never';
+
         interface SetupIntentData {
           /**
            * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -2226,6 +2245,8 @@ declare module 'stripe' {
            */
           enabled: boolean;
         }
+
+        type UiMode = 'embedded' | 'hosted';
       }
 
       interface SessionRetrieveParams {
@@ -2295,7 +2316,10 @@ declare module 'stripe' {
          * Creates a Session object.
          */
         create(
-          params: SessionCreateParams,
+          params?: SessionCreateParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
+        create(
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 

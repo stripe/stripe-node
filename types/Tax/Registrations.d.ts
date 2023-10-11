@@ -981,7 +981,11 @@ declare module 'stripe' {
               jurisdiction: string;
             }
 
-            type Type = 'local_lease_tax' | 'state_sales_tax';
+            type Type =
+              | 'local_amusement_tax'
+              | 'local_lease_tax'
+              | 'state_communications_tax'
+              | 'state_sales_tax';
           }
 
           interface Vn {

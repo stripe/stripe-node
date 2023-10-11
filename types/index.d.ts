@@ -8,6 +8,7 @@
 ///<reference path='./UpcomingInvoices.d.ts' />
 // Imports: The beginning of the section generated from our OpenAPI spec
 ///<reference path='./AccountLinksResource.d.ts' />
+///<reference path='./AccountNoticesResource.d.ts' />
 ///<reference path='./AccountSessionsResource.d.ts' />
 ///<reference path='./AccountsResource.d.ts' />
 ///<reference path='./ApplePayDomainsResource.d.ts' />
@@ -46,6 +47,7 @@
 ///<reference path='./Issuing/AuthorizationsResource.d.ts' />
 ///<reference path='./Issuing/CardholdersResource.d.ts' />
 ///<reference path='./Issuing/CardsResource.d.ts' />
+///<reference path='./Issuing/CreditUnderwritingRecordsResource.d.ts' />
 ///<reference path='./Issuing/DisputesResource.d.ts' />
 ///<reference path='./Issuing/PersonalizationDesignsResource.d.ts' />
 ///<reference path='./Issuing/PhysicalBundlesResource.d.ts' />
@@ -119,6 +121,7 @@
 ///<reference path='./Treasury/TransactionsResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
+///<reference path='./AccountNotices.d.ts' />
 ///<reference path='./AccountSessions.d.ts' />
 ///<reference path='./Accounts.d.ts' />
 ///<reference path='./ApplePayDomains.d.ts' />
@@ -173,6 +176,7 @@
 ///<reference path='./Issuing/Authorizations.d.ts' />
 ///<reference path='./Issuing/Cardholders.d.ts' />
 ///<reference path='./Issuing/Cards.d.ts' />
+///<reference path='./Issuing/CreditUnderwritingRecords.d.ts' />
 ///<reference path='./Issuing/Disputes.d.ts' />
 ///<reference path='./Issuing/PersonalizationDesigns.d.ts' />
 ///<reference path='./Issuing/PhysicalBundles.d.ts' />
@@ -266,6 +270,7 @@ declare module 'stripe' {
 
     // Fields: The beginning of the section generated from our OpenAPI spec
     accountLinks: Stripe.AccountLinksResource;
+    accountNotices: Stripe.AccountNoticesResource;
     accountSessions: Stripe.AccountSessionsResource;
     accounts: Stripe.AccountsResource;
     applePayDomains: Stripe.ApplePayDomainsResource;
@@ -348,6 +353,7 @@ declare module 'stripe' {
       authorizations: Stripe.Issuing.AuthorizationsResource;
       cards: Stripe.Issuing.CardsResource;
       cardholders: Stripe.Issuing.CardholdersResource;
+      creditUnderwritingRecords: Stripe.Issuing.CreditUnderwritingRecordsResource;
       disputes: Stripe.Issuing.DisputesResource;
       personalizationDesigns: Stripe.Issuing.PersonalizationDesignsResource;
       physicalBundles: Stripe.Issuing.PhysicalBundlesResource;

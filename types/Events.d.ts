@@ -179,6 +179,8 @@ declare module 'stripe' {
         | 'account.external_account.deleted'
         | 'account.external_account.updated'
         | 'account.updated'
+        | 'account_notice.created'
+        | 'account_notice.updated'
         | 'application_fee.created'
         | 'application_fee.refund.updated'
         | 'application_fee.refunded'

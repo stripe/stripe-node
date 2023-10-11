@@ -4,6 +4,26 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Radar {
       /**
+       * The DeletedValueList object.
+       */
+      interface DeletedValueList {
+        /**
+         * Unique identifier for the object.
+         */
+        id: string;
+
+        /**
+         * String representing the object's type. Objects of the same type share the same value.
+         */
+        object: 'radar.value_list';
+
+        /**
+         * Always true for a deleted object
+         */
+        deleted: true;
+      }
+
+      /**
        * Value lists allow you to group values together which can then be referenced in rules.
        *
        * Related guide: [Default Stripe lists](https://stripe.com/docs/radar/lists#managing-list-items)
@@ -77,26 +97,6 @@ declare module 'stripe' {
           | 'sepa_debit_fingerprint'
           | 'string'
           | 'us_bank_account_fingerprint';
-      }
-
-      /**
-       * The DeletedValueList object.
-       */
-      interface DeletedValueList {
-        /**
-         * Unique identifier for the object.
-         */
-        id: string;
-
-        /**
-         * String representing the object's type. Objects of the same type share the same value.
-         */
-        object: 'radar.value_list';
-
-        /**
-         * Always true for a deleted object
-         */
-        deleted: true;
       }
     }
   }
