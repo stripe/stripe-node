@@ -52,11 +52,6 @@ declare module 'stripe' {
         decision_deadline: number | null;
 
         /**
-         * If an exception to the usual underwriting criteria was made for this application, details about the exception must be provided. Exceptions should only be granted in rare circumstances, in consultation with Stripe Compliance.
-         */
-        exception: CreditUnderwritingRecord.Exception | null;
-
-        /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
@@ -65,6 +60,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
         metadata: Stripe.Metadata | null;
+
+        /**
+         * If an exception to the usual underwriting criteria was made for this application, details about the exception must be provided. Exceptions should only be granted in rare circumstances, in consultation with Stripe Compliance.
+         */
+        underwriting_exception: CreditUnderwritingRecord.UnderwritingException | null;
       }
 
       namespace CreditUnderwritingRecord {
@@ -393,19 +393,19 @@ declare module 'stripe' {
             | 'withdrawn_by_applicant';
         }
 
-        interface Exception {
-          /**
-           * The decision before the exception was applied.
-           */
-          original_decision_type: Exception.OriginalDecisionType;
-
+        interface UnderwritingException {
           /**
            * Written explanation for the exception.
            */
-          reason: string;
+          explanation: string;
+
+          /**
+           * The decision before the exception was applied.
+           */
+          original_decision_type: UnderwritingException.OriginalDecisionType;
         }
 
-        namespace Exception {
+        namespace UnderwritingException {
           type OriginalDecisionType =
             | 'additional_information_requested'
             | 'application_rejected'

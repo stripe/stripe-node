@@ -47,6 +47,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
+
+        /**
+         * If an exception to the usual underwriting criteria was made for this decision, details about the exception must be provided. Exceptions should only be granted in rare circumstances, in consultation with Stripe Compliance.
+         */
+        underwriting_exception?: CreditUnderwritingRecordCorrectParams.UnderwritingException;
       }
 
       namespace CreditUnderwritingRecordCorrectParams {
@@ -372,6 +377,29 @@ declare module 'stripe' {
             | 'no_changes'
             | 'withdrawn_by_applicant';
         }
+
+        interface UnderwritingException {
+          /**
+           * Written explanation for the exception.
+           */
+          explanation: string;
+
+          /**
+           * The decision before the exception was applied.
+           */
+          original_decision_type: UnderwritingException.OriginalDecisionType;
+        }
+
+        namespace UnderwritingException {
+          type OriginalDecisionType =
+            | 'additional_information_requested'
+            | 'application_rejected'
+            | 'credit_limit_approved'
+            | 'credit_limit_decreased'
+            | 'credit_line_closed'
+            | 'no_changes'
+            | 'withdrawn_by_applicant';
+        }
       }
 
       interface CreditUnderwritingRecordCreateFromApplicationParams {
@@ -458,6 +486,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
+
+        /**
+         * If an exception to the usual underwriting criteria was made for this decision, details about the exception must be provided. Exceptions should only be granted in rare circumstances, in consultation with Stripe Compliance.
+         */
+        underwriting_exception?: CreditUnderwritingRecordCreateFromProactiveReviewParams.UnderwritingException;
       }
 
       namespace CreditUnderwritingRecordCreateFromProactiveReviewParams {
@@ -676,6 +709,29 @@ declare module 'stripe' {
             | 'credit_line_closed'
             | 'no_changes';
         }
+
+        interface UnderwritingException {
+          /**
+           * Written explanation for the exception.
+           */
+          explanation: string;
+
+          /**
+           * The decision before the exception was applied.
+           */
+          original_decision_type: UnderwritingException.OriginalDecisionType;
+        }
+
+        namespace UnderwritingException {
+          type OriginalDecisionType =
+            | 'additional_information_requested'
+            | 'application_rejected'
+            | 'credit_limit_approved'
+            | 'credit_limit_decreased'
+            | 'credit_line_closed'
+            | 'no_changes'
+            | 'withdrawn_by_applicant';
+        }
       }
 
       interface CreditUnderwritingRecordReportDecisionParams {
@@ -698,6 +754,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
+
+        /**
+         * If an exception to the usual underwriting criteria was made for this decision, details about the exception must be provided. Exceptions should only be granted in rare circumstances, in consultation with Stripe Compliance.
+         */
+        underwriting_exception?: CreditUnderwritingRecordReportDecisionParams.UnderwritingException;
       }
 
       namespace CreditUnderwritingRecordReportDecisionParams {
@@ -811,6 +872,29 @@ declare module 'stripe' {
             | 'additional_information_requested'
             | 'application_rejected'
             | 'credit_limit_approved'
+            | 'withdrawn_by_applicant';
+        }
+
+        interface UnderwritingException {
+          /**
+           * Written explanation for the exception.
+           */
+          explanation: string;
+
+          /**
+           * The decision before the exception was applied.
+           */
+          original_decision_type: UnderwritingException.OriginalDecisionType;
+        }
+
+        namespace UnderwritingException {
+          type OriginalDecisionType =
+            | 'additional_information_requested'
+            | 'application_rejected'
+            | 'credit_limit_approved'
+            | 'credit_limit_decreased'
+            | 'credit_line_closed'
+            | 'no_changes'
             | 'withdrawn_by_applicant';
         }
       }
