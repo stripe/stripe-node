@@ -471,8 +471,9 @@ declare module 'stripe' {
 
         interface Pdf {
           /**
-           * Page size for invoice PDF. Can be set to a4, letter, or auto.
-           *  If set to auto, page size will be switched to a4 or letter based on customer locale.
+           * Page size for invoice PDF. Can be set to `a4`, `letter`, or `auto`.
+           *  If set to `auto`, invoice PDF page size defaults to `a4` for customers with
+           *  Japanese locale and `letter` for customers with other locales.
            */
           page_size?: Pdf.PageSize;
         }
@@ -1097,8 +1098,9 @@ declare module 'stripe' {
 
         interface Pdf {
           /**
-           * Page size for invoice PDF. Can be set to a4, letter, or auto.
-           *  If set to auto, page size will be switched to a4 or letter based on customer locale.
+           * Page size for invoice PDF. Can be set to `a4`, `letter`, or `auto`.
+           *  If set to `auto`, invoice PDF page size defaults to `a4` for customers with
+           *  Japanese locale and `letter` for customers with other locales.
            */
           page_size?: Pdf.PageSize;
         }

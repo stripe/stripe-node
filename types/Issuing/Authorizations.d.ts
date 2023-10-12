@@ -372,6 +372,11 @@ declare module 'stripe' {
            * Whether the cardholder provided an expiry date and if it matched Stripe's record.
            */
           expiry_check: VerificationData.ExpiryCheck;
+
+          /**
+           * The postal code submitted as part of the authorization used for postal code verification.
+           */
+          postal_code: string | null;
         }
 
         namespace VerificationData {

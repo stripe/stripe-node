@@ -1933,14 +1933,14 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Only return SetupIntents associated with the specified payment method.
+       * Only return SetupIntents that associate with the specified payment method.
        */
       payment_method?: string;
     }
 
     interface SetupIntentCancelParams {
       /**
-       * Reason for canceling this SetupIntent. Possible values are `abandoned`, `requested_by_customer`, or `duplicate`
+       * Reason for canceling this SetupIntent. Possible values are: `abandoned`, `requested_by_customer`, or `duplicate`
        */
       cancellation_reason?: SetupIntentCancelParams.CancellationReason;
 
@@ -1963,9 +1963,6 @@ declare module 'stripe' {
        */
       expand?: Array<string>;
 
-      /**
-       * This hash contains details about the Mandate to create
-       */
       mandate_data?: Stripe.Emptyable<
         | SetupIntentConfirmParams.MandateData1
         | SetupIntentConfirmParams.MandateData2
@@ -1983,7 +1980,7 @@ declare module 'stripe' {
       payment_method_data?: SetupIntentConfirmParams.PaymentMethodData;
 
       /**
-       * Payment-method-specific configuration for this SetupIntent.
+       * Payment method-specific configuration for this SetupIntent.
        */
       payment_method_options?: SetupIntentConfirmParams.PaymentMethodOptions;
 
@@ -2973,9 +2970,9 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.SetupIntent>;
 
       /**
-       * A SetupIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_confirmation, or requires_action.
+       * You can cancel a SetupIntent object when it's in one of these statuses: requires_payment_method, requires_confirmation, or requires_action.
        *
-       * Once canceled, setup is abandoned and any operations on the SetupIntent will fail with an error.
+       * After you cancel it, setup is abandoned and any operations on the SetupIntent fail with an error.
        */
       cancel(
         id: string,

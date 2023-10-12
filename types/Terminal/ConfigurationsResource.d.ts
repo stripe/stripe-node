@@ -15,6 +15,11 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
+         * Configurations for collecting transactions offline.
+         */
+        offline?: Stripe.Emptyable<ConfigurationCreateParams.Offline>;
+
+        /**
          * Tipping configurations for readers supporting on-reader tips
          */
         tipping?: Stripe.Emptyable<ConfigurationCreateParams.Tipping>;
@@ -31,6 +36,13 @@ declare module 'stripe' {
            * A File ID representing an image you would like displayed on the reader.
            */
           splashscreen?: Stripe.Emptyable<string>;
+        }
+
+        interface Offline {
+          /**
+           * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
+           */
+          enabled: boolean;
         }
 
         interface Tipping {
@@ -374,6 +386,11 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
+         * Configurations for collecting transactions offline.
+         */
+        offline?: Stripe.Emptyable<ConfigurationUpdateParams.Offline>;
+
+        /**
          * Tipping configurations for readers supporting on-reader tips
          */
         tipping?: Stripe.Emptyable<ConfigurationUpdateParams.Tipping>;
@@ -392,6 +409,13 @@ declare module 'stripe' {
            * A File ID representing an image you would like displayed on the reader.
            */
           splashscreen?: Stripe.Emptyable<string>;
+        }
+
+        interface Offline {
+          /**
+           * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
+           */
+          enabled: boolean;
         }
 
         interface Tipping {
