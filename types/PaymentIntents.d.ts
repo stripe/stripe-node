@@ -198,8 +198,7 @@ declare module 'stripe' {
       source:
         | string
         | Stripe.CustomerSource
-        | Stripe.DeletedBankAccount
-        | Stripe.DeletedCard
+        | Stripe.DeletedCustomerSource
         | null;
 
       /**
