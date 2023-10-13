@@ -135,13 +135,9 @@ declare module 'stripe' {
 
     /**
      * The resulting source of [a Connect platform debiting a connected account](https://stripe.com/docs/connect/account-debits#charging-a-connected-account).
+     * @deprecated prefer Stripe.Account
      */
-    type AccountDebitSource = {
-      id: string;
-      object: 'account';
-    };
-
-    type CustomerSource = AccountDebitSource | BankAccount | Card | Source;
+    type AccountDebitSource = Account;
 
     interface RangeQueryParam {
       /**
