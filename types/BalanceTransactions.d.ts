@@ -72,26 +72,7 @@ declare module 'stripe' {
       /**
        * This transaction relates to the Stripe object.
        */
-      source:
-        | string
-        | Stripe.ApplicationFee
-        | Stripe.Charge
-        | Stripe.ConnectCollectionTransfer
-        | Stripe.CustomerCashBalanceTransaction
-        | Stripe.Dispute
-        | Stripe.FeeRefund
-        | Stripe.Issuing.Authorization
-        | Stripe.Issuing.Dispute
-        | Stripe.Issuing.Transaction
-        | Stripe.Payout
-        | Stripe.PlatformTaxFee
-        | Stripe.Refund
-        | Stripe.ReserveTransaction
-        | Stripe.TaxDeductedAtSource
-        | Stripe.Topup
-        | Stripe.Transfer
-        | Stripe.TransferReversal
-        | null;
+      source: string | Stripe.BalanceTransactionSource | null;
 
       /**
        * The transaction's net funds status in the Stripe balance, which are either `available` or `pending`.
