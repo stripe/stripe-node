@@ -77,7 +77,7 @@ declare module 'stripe' {
       /**
        * External accounts (bank accounts and debit cards) currently attached to this account
        */
-      external_accounts?: ApiList<Stripe.BankAccount | Stripe.Card>;
+      external_accounts?: ApiList<Stripe.ExternalAccount>;
 
       future_requirements?: Account.FutureRequirements;
 
