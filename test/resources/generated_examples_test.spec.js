@@ -8,13 +8,13 @@ const expect = require('chai').expect;
 
 describe('Accounts', function() {
   it('listExternalAccounts method', async function() {
-    const externalAccount = await stripe.accounts.listExternalAccounts(
+    const externalAccounts = await stripe.accounts.listExternalAccounts(
       'acct_xxxxxxxxxxxxx',
       {
         limit: 3,
       }
     );
-    expect(externalAccount).not.to.be.null;
+    expect(externalAccounts).not.to.be.null;
   });
 
   it('list method', async function() {
@@ -93,6 +93,28 @@ describe('Accounts', function() {
     expect(capability).not.to.be.null;
   });
 
+  it('listExternalAccounts method', async function() {
+    const externalAccounts = await stripe.accounts.listExternalAccounts(
+      'acct_xxxxxxxxxxxxx',
+      {
+        object: 'bank_account',
+        limit: 3,
+      }
+    );
+    expect(externalAccounts).not.to.be.null;
+  });
+
+  it('listExternalAccounts method', async function() {
+    const externalAccounts = await stripe.accounts.listExternalAccounts(
+      'acct_xxxxxxxxxxxxx',
+      {
+        object: 'card',
+        limit: 3,
+      }
+    );
+    expect(externalAccounts).not.to.be.null;
+  });
+
   it('createExternalAccount method', async function() {
     const externalAccount = await stripe.accounts.createExternalAccount(
       'acct_xxxxxxxxxxxxx',
@@ -114,19 +136,19 @@ describe('Accounts', function() {
   });
 
   it('deleteExternalAccount method', async function() {
-    const deletedExternalAccount = await stripe.accounts.deleteExternalAccount(
+    const deleted = await stripe.accounts.deleteExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx'
     );
-    expect(deletedExternalAccount).not.to.be.null;
+    expect(deleted).not.to.be.null;
   });
 
   it('deleteExternalAccount method', async function() {
-    const deletedExternalAccount = await stripe.accounts.deleteExternalAccount(
+    const deleted = await stripe.accounts.deleteExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx'
     );
-    expect(deletedExternalAccount).not.to.be.null;
+    expect(deleted).not.to.be.null;
   });
 
   it('retrieveExternalAccount method', async function() {
@@ -417,10 +439,14 @@ describe('Customers', function() {
   });
 
   it('updateSource method', async function() {
-    const card = await stripe.customers.updateSource('cus_123', 'card_123', {
-      account_holder_name: 'Kamil',
-    });
-    expect(card).not.to.be.null;
+    const customerSource = await stripe.customers.updateSource(
+      'cus_123',
+      'card_123',
+      {
+        account_holder_name: 'Kamil',
+      }
+    );
+    expect(customerSource).not.to.be.null;
   });
 
   it('list method', async function() {
@@ -517,81 +543,81 @@ describe('Customers', function() {
   });
 
   it('listSources method', async function() {
-    const paymentSource = await stripe.customers.listSources(
+    const customerSources = await stripe.customers.listSources(
       'cus_xxxxxxxxxxxxx',
       {
         object: 'bank_account',
         limit: 3,
       }
     );
-    expect(paymentSource).not.to.be.null;
+    expect(customerSources).not.to.be.null;
   });
 
   it('listSources method', async function() {
-    const paymentSource = await stripe.customers.listSources(
+    const customerSources = await stripe.customers.listSources(
       'cus_xxxxxxxxxxxxx',
       {
         object: 'card',
         limit: 3,
       }
     );
-    expect(paymentSource).not.to.be.null;
+    expect(customerSources).not.to.be.null;
   });
 
   it('createSource method', async function() {
-    const paymentSource = await stripe.customers.createSource(
+    const customerSource = await stripe.customers.createSource(
       'cus_xxxxxxxxxxxxx',
       {
         source: 'btok_xxxxxxxxxxxxx',
       }
     );
-    expect(paymentSource).not.to.be.null;
+    expect(customerSource).not.to.be.null;
   });
 
   it('createSource method', async function() {
-    const paymentSource = await stripe.customers.createSource(
+    const customerSource = await stripe.customers.createSource(
       'cus_xxxxxxxxxxxxx',
       {
         source: 'tok_xxxx',
       }
     );
-    expect(paymentSource).not.to.be.null;
+    expect(customerSource).not.to.be.null;
   });
 
   it('deleteSource method', async function() {
-    const paymentSource = await stripe.customers.deleteSource(
+    const customerSource = await stripe.customers.deleteSource(
       'cus_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx'
     );
-    expect(paymentSource).not.to.be.null;
+    expect(customerSource).not.to.be.null;
   });
 
   it('deleteSource method', async function() {
-    const paymentSource = await stripe.customers.deleteSource(
+    const customerSource = await stripe.customers.deleteSource(
       'cus_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx'
     );
-    expect(paymentSource).not.to.be.null;
+    expect(customerSource).not.to.be.null;
   });
 
   it('retrieveSource method', async function() {
-    const paymentSource = await stripe.customers.retrieveSource(
+    const customerSource = await stripe.customers.retrieveSource(
       'cus_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx'
     );
-    expect(paymentSource).not.to.be.null;
+    expect(customerSource).not.to.be.null;
   });
 
   it('retrieveSource method', async function() {
-    const paymentSource = await stripe.customers.retrieveSource(
+    const customerSource = await stripe.customers.retrieveSource(
       'cus_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx'
     );
-    expect(paymentSource).not.to.be.null;
+    expect(customerSource).not.to.be.null;
   });
 
   it('updateSource method', async function() {
-    const card = await stripe.customers.updateSource(
+    const customerSource = await stripe.customers.updateSource(
       'cus_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx',
       {
@@ -600,18 +626,18 @@ describe('Customers', function() {
         },
       }
     );
-    expect(card).not.to.be.null;
+    expect(customerSource).not.to.be.null;
   });
 
   it('updateSource method', async function() {
-    const card = await stripe.customers.updateSource(
+    const customerSource = await stripe.customers.updateSource(
       'cus_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx',
       {
         name: 'Jenny Rosen',
       }
     );
-    expect(card).not.to.be.null;
+    expect(customerSource).not.to.be.null;
   });
 
   it('verifySource method', async function() {

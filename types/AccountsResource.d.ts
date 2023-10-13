@@ -3410,7 +3410,7 @@ declare module 'stripe' {
         id: string,
         params: ExternalAccountCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
+      ): Promise<Stripe.Response<Stripe.ExternalAccount>>;
 
       /**
        * Creates a single-use login link for an Express account to access their Stripe dashboard.
@@ -3448,16 +3448,12 @@ declare module 'stripe' {
         id: string,
         params?: ExternalAccountDeleteParams,
         options?: RequestOptions
-      ): Promise<
-        Stripe.Response<Stripe.DeletedBankAccount | Stripe.DeletedCard>
-      >;
+      ): Promise<Stripe.Response<Stripe.DeletedExternalAccount>>;
       deleteExternalAccount(
         accountId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<
-        Stripe.Response<Stripe.DeletedBankAccount | Stripe.DeletedCard>
-      >;
+      ): Promise<Stripe.Response<Stripe.DeletedExternalAccount>>;
 
       /**
        * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
@@ -3494,11 +3490,11 @@ declare module 'stripe' {
         id: string,
         params?: ExternalAccountListParams,
         options?: RequestOptions
-      ): ApiListPromise<Stripe.BankAccount | Stripe.Card>;
+      ): ApiListPromise<Stripe.ExternalAccount>;
       listExternalAccounts(
         id: string,
         options?: RequestOptions
-      ): ApiListPromise<Stripe.BankAccount | Stripe.Card>;
+      ): ApiListPromise<Stripe.ExternalAccount>;
 
       /**
        * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
@@ -3547,12 +3543,12 @@ declare module 'stripe' {
         id: string,
         params?: ExternalAccountRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
+      ): Promise<Stripe.Response<Stripe.ExternalAccount>>;
       retrieveExternalAccount(
         accountId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
+      ): Promise<Stripe.Response<Stripe.ExternalAccount>>;
 
       /**
        * Retrieves an existing person.
@@ -3594,12 +3590,12 @@ declare module 'stripe' {
         id: string,
         params?: ExternalAccountUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
+      ): Promise<Stripe.Response<Stripe.ExternalAccount>>;
       updateExternalAccount(
         accountId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
+      ): Promise<Stripe.Response<Stripe.ExternalAccount>>;
 
       /**
        * Updates an existing person.
