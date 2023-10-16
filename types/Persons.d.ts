@@ -46,6 +46,8 @@ declare module 'stripe' {
        */
       account: string;
 
+      additional_tos_acceptances?: Person.AdditionalTosAcceptances;
+
       address?: Stripe.Address;
 
       /**
@@ -173,6 +175,29 @@ declare module 'stripe' {
     }
 
     namespace Person {
+      interface AdditionalTosAcceptances {
+        account: AdditionalTosAcceptances.Account;
+      }
+
+      namespace AdditionalTosAcceptances {
+        interface Account {
+          /**
+           * The Unix timestamp marking when the legal guardian accepted the service agreement.
+           */
+          date: number | null;
+
+          /**
+           * The IP address from which the legal guardian accepted the service agreement.
+           */
+          ip: string | null;
+
+          /**
+           * The user agent of the browser from which the legal guardian accepted the service agreement.
+           */
+          user_agent: string | null;
+        }
+      }
+
       interface AddressKana {
         /**
          * City/Ward.
@@ -329,10 +354,43 @@ declare module 'stripe' {
         namespace Error {
           type Code =
             | 'invalid_address_city_state_postal_code'
+            | 'invalid_address_highway_contract_box'
+            | 'invalid_address_private_mailbox'
+            | 'invalid_business_profile_name'
+            | 'invalid_business_profile_name_denylisted'
+            | 'invalid_company_name_denylisted'
+            | 'invalid_dob_age_over_maximum'
             | 'invalid_dob_age_under_18'
+            | 'invalid_product_description_length'
+            | 'invalid_product_description_url_match'
             | 'invalid_representative_country'
+            | 'invalid_statement_descriptor_business_mismatch'
+            | 'invalid_statement_descriptor_denylisted'
+            | 'invalid_statement_descriptor_length'
+            | 'invalid_statement_descriptor_prefix_denylisted'
+            | 'invalid_statement_descriptor_prefix_mismatch'
             | 'invalid_street_address'
+            | 'invalid_tax_id'
+            | 'invalid_tax_id_format'
             | 'invalid_tos_acceptance'
+            | 'invalid_url_denylisted'
+            | 'invalid_url_format'
+            | 'invalid_url_length'
+            | 'invalid_url_web_presence_detected'
+            | 'invalid_url_website_business_information_mismatch'
+            | 'invalid_url_website_empty'
+            | 'invalid_url_website_inaccessible'
+            | 'invalid_url_website_inaccessible_geoblocked'
+            | 'invalid_url_website_inaccessible_password_protected'
+            | 'invalid_url_website_incomplete'
+            | 'invalid_url_website_incomplete_cancellation_policy'
+            | 'invalid_url_website_incomplete_customer_service_details'
+            | 'invalid_url_website_incomplete_legal_restrictions'
+            | 'invalid_url_website_incomplete_refund_policy'
+            | 'invalid_url_website_incomplete_return_policy'
+            | 'invalid_url_website_incomplete_terms_and_conditions'
+            | 'invalid_url_website_incomplete_under_construction'
+            | 'invalid_url_website_other'
             | 'invalid_value_other'
             | 'verification_directors_mismatch'
             | 'verification_document_address_mismatch'
@@ -396,6 +454,11 @@ declare module 'stripe' {
          * Whether the person has significant responsibility to control, manage, or direct the organization.
          */
         executive: boolean | null;
+
+        /**
+         * Whether the person is the legal guardian of the account's representative.
+         */
+        legal_guardian: boolean | null;
 
         /**
          * Whether the person is an owner of the account's legal entity.
@@ -483,10 +546,43 @@ declare module 'stripe' {
         namespace Error {
           type Code =
             | 'invalid_address_city_state_postal_code'
+            | 'invalid_address_highway_contract_box'
+            | 'invalid_address_private_mailbox'
+            | 'invalid_business_profile_name'
+            | 'invalid_business_profile_name_denylisted'
+            | 'invalid_company_name_denylisted'
+            | 'invalid_dob_age_over_maximum'
             | 'invalid_dob_age_under_18'
+            | 'invalid_product_description_length'
+            | 'invalid_product_description_url_match'
             | 'invalid_representative_country'
+            | 'invalid_statement_descriptor_business_mismatch'
+            | 'invalid_statement_descriptor_denylisted'
+            | 'invalid_statement_descriptor_length'
+            | 'invalid_statement_descriptor_prefix_denylisted'
+            | 'invalid_statement_descriptor_prefix_mismatch'
             | 'invalid_street_address'
+            | 'invalid_tax_id'
+            | 'invalid_tax_id_format'
             | 'invalid_tos_acceptance'
+            | 'invalid_url_denylisted'
+            | 'invalid_url_format'
+            | 'invalid_url_length'
+            | 'invalid_url_web_presence_detected'
+            | 'invalid_url_website_business_information_mismatch'
+            | 'invalid_url_website_empty'
+            | 'invalid_url_website_inaccessible'
+            | 'invalid_url_website_inaccessible_geoblocked'
+            | 'invalid_url_website_inaccessible_password_protected'
+            | 'invalid_url_website_incomplete'
+            | 'invalid_url_website_incomplete_cancellation_policy'
+            | 'invalid_url_website_incomplete_customer_service_details'
+            | 'invalid_url_website_incomplete_legal_restrictions'
+            | 'invalid_url_website_incomplete_refund_policy'
+            | 'invalid_url_website_incomplete_return_policy'
+            | 'invalid_url_website_incomplete_terms_and_conditions'
+            | 'invalid_url_website_incomplete_under_construction'
+            | 'invalid_url_website_other'
             | 'invalid_value_other'
             | 'verification_directors_mismatch'
             | 'verification_document_address_mismatch'
