@@ -102,6 +102,8 @@ declare module 'stripe' {
       | IssuingDisputeFundsReinstatedEvent
       | IssuingDisputeSubmittedEvent
       | IssuingDisputeUpdatedEvent
+      | IssuingTokenCreatedEvent
+      | IssuingTokenUpdatedEvent
       | IssuingTransactionCreatedEvent
       | IssuingTransactionUpdatedEvent
       | MandateUpdatedEvent
@@ -1611,6 +1613,34 @@ declare module 'stripe' {
     namespace IssuingDisputeUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Dispute;
+      }
+    }
+
+    /**
+     * Occurs whenever an issuing digital wallet token is created.
+     */
+    interface IssuingTokenCreatedEvent extends EventBase {
+      type: 'issuing_token.created';
+      data: IssuingTokenCreatedEvent.Data;
+    }
+
+    namespace IssuingTokenCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.Token;
+      }
+    }
+
+    /**
+     * Occurs whenever an issuing digital wallet token is updated.
+     */
+    interface IssuingTokenUpdatedEvent extends EventBase {
+      type: 'issuing_token.updated';
+      data: IssuingTokenUpdatedEvent.Data;
+    }
+
+    namespace IssuingTokenUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.Token;
       }
     }
 
