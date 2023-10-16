@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.12.0-beta.1 - 2023-10-16
+* [#1925](https://github.com/stripe/stripe-node/pull/1925) Update generated code for beta
+
+
 ## 13.11.0 - 2023-10-16
 * [#1924](https://github.com/stripe/stripe-node/pull/1924) Update generated code
   * Add support for new values `issuing_token.created` and `issuing_token.updated` on enum `Event.type`
