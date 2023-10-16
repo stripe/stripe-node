@@ -526,6 +526,11 @@ declare module 'stripe' {
 
       interface Person {
         /**
+         * Details on the legal guardian's acceptance of the required Stripe agreements.
+         */
+        additional_tos_acceptances?: Person.AdditionalTosAcceptances;
+
+        /**
          * The person's address.
          */
         address?: Stripe.AddressParam;
@@ -652,6 +657,32 @@ declare module 'stripe' {
       }
 
       namespace Person {
+        interface AdditionalTosAcceptances {
+          /**
+           * Details on the legal guardian's acceptance of the main Stripe service agreement.
+           */
+          account?: AdditionalTosAcceptances.Account;
+        }
+
+        namespace AdditionalTosAcceptances {
+          interface Account {
+            /**
+             * The Unix timestamp marking when the account representative accepted the service agreement.
+             */
+            date?: number;
+
+            /**
+             * The IP address from which the account representative accepted the service agreement.
+             */
+            ip?: string;
+
+            /**
+             * The user agent of the browser from which the account representative accepted the service agreement.
+             */
+            user_agent?: Stripe.Emptyable<string>;
+          }
+        }
+
         interface Dob {
           /**
            * The day of birth, between 1 and 31.
@@ -719,6 +750,11 @@ declare module 'stripe' {
            * Whether the person has significant responsibility to control, manage, or direct the organization.
            */
           executive?: boolean;
+
+          /**
+           * Whether the person is the legal guardian of the account's representative.
+           */
+          legal_guardian?: boolean;
 
           /**
            * Whether the person is an owner of the account's legal entity.

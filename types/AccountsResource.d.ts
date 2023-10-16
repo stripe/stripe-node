@@ -2667,6 +2667,11 @@ declare module 'stripe' {
 
     interface PersonCreateParams {
       /**
+       * Details on the legal guardian's acceptance of the required Stripe agreements.
+       */
+      additional_tos_acceptances?: PersonCreateParams.AdditionalTosAcceptances;
+
+      /**
        * The person's address.
        */
       address?: Stripe.AddressParam;
@@ -2803,6 +2808,32 @@ declare module 'stripe' {
     }
 
     namespace PersonCreateParams {
+      interface AdditionalTosAcceptances {
+        /**
+         * Details on the legal guardian's acceptance of the main Stripe service agreement.
+         */
+        account?: AdditionalTosAcceptances.Account;
+      }
+
+      namespace AdditionalTosAcceptances {
+        interface Account {
+          /**
+           * The Unix timestamp marking when the account representative accepted the service agreement.
+           */
+          date?: number;
+
+          /**
+           * The IP address from which the account representative accepted the service agreement.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the account representative accepted the service agreement.
+           */
+          user_agent?: Stripe.Emptyable<string>;
+        }
+      }
+
       interface Dob {
         /**
          * The day of birth, between 1 and 31.
@@ -2870,6 +2901,11 @@ declare module 'stripe' {
          * Whether the person has significant responsibility to control, manage, or direct the organization.
          */
         executive?: boolean;
+
+        /**
+         * Whether the person is the legal guardian of the account's representative.
+         */
+        legal_guardian?: boolean;
 
         /**
          * Whether the person is an owner of the account's legal entity.
@@ -2981,6 +3017,11 @@ declare module 'stripe' {
          * A filter on the list of people returned based on whether these people are executives of the account's company.
          */
         executive?: boolean;
+
+        /**
+         * A filter on the list of people returned based on whether these people are legal guardians of the account's representative.
+         */
+        legal_guardian?: boolean;
 
         /**
          * A filter on the list of people returned based on whether these people are owners of the account's company.
@@ -3149,6 +3190,11 @@ declare module 'stripe' {
 
     interface PersonUpdateParams {
       /**
+       * Details on the legal guardian's acceptance of the required Stripe agreements.
+       */
+      additional_tos_acceptances?: PersonUpdateParams.AdditionalTosAcceptances;
+
+      /**
        * The person's address.
        */
       address?: Stripe.AddressParam;
@@ -3285,6 +3331,32 @@ declare module 'stripe' {
     }
 
     namespace PersonUpdateParams {
+      interface AdditionalTosAcceptances {
+        /**
+         * Details on the legal guardian's acceptance of the main Stripe service agreement.
+         */
+        account?: AdditionalTosAcceptances.Account;
+      }
+
+      namespace AdditionalTosAcceptances {
+        interface Account {
+          /**
+           * The Unix timestamp marking when the account representative accepted the service agreement.
+           */
+          date?: number;
+
+          /**
+           * The IP address from which the account representative accepted the service agreement.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the account representative accepted the service agreement.
+           */
+          user_agent?: Stripe.Emptyable<string>;
+        }
+      }
+
       interface Dob {
         /**
          * The day of birth, between 1 and 31.
@@ -3352,6 +3424,11 @@ declare module 'stripe' {
          * Whether the person has significant responsibility to control, manage, or direct the organization.
          */
         executive?: boolean;
+
+        /**
+         * Whether the person is the legal guardian of the account's representative.
+         */
+        legal_guardian?: boolean;
 
         /**
          * Whether the person is an owner of the account's legal entity.
