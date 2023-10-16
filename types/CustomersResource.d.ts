@@ -1136,18 +1136,14 @@ declare module 'stripe' {
         params?: CustomerSourceDeleteParams,
         options?: RequestOptions
       ): Promise<
-        Stripe.Response<
-          Stripe.CustomerSource | Stripe.DeletedBankAccount | Stripe.DeletedCard
-        >
+        Stripe.Response<Stripe.CustomerSource | Stripe.DeletedCustomerSource>
       >;
       deleteSource(
         customerId: string,
         id: string,
         options?: RequestOptions
       ): Promise<
-        Stripe.Response<
-          Stripe.CustomerSource | Stripe.DeletedBankAccount | Stripe.DeletedCard
-        >
+        Stripe.Response<Stripe.CustomerSource | Stripe.DeletedCustomerSource>
       >;
 
       /**
@@ -1365,16 +1361,12 @@ declare module 'stripe' {
         id: string,
         params?: CustomerSourceUpdateParams,
         options?: RequestOptions
-      ): Promise<
-        Stripe.Response<Stripe.Card | Stripe.BankAccount | Stripe.Source>
-      >;
+      ): Promise<Stripe.Response<Stripe.CustomerSource>>;
       updateSource(
         customerId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<
-        Stripe.Response<Stripe.Card | Stripe.BankAccount | Stripe.Source>
-      >;
+      ): Promise<Stripe.Response<Stripe.CustomerSource>>;
 
       /**
        * Verify a specified bank account for a given customer.

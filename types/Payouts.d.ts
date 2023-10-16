@@ -63,10 +63,8 @@ declare module 'stripe' {
        */
       destination:
         | string
-        | Stripe.BankAccount
-        | Stripe.DeletedBankAccount
-        | Stripe.Card
-        | Stripe.DeletedCard
+        | Stripe.ExternalAccount
+        | Stripe.DeletedExternalAccount
         | null;
 
       /**

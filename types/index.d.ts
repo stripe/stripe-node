@@ -5,6 +5,7 @@
 ///<reference path='./Errors.d.ts' />
 ///<reference path='./OAuth.d.ts' />
 ///<reference path='./Webhooks.d.ts' />
+///<reference path='./EventTypes.d.ts' />
 ///<reference path='./UpcomingInvoices.d.ts' />
 // Imports: The beginning of the section generated from our OpenAPI spec
 ///<reference path='./AccountLinksResource.d.ts' />
@@ -129,6 +130,7 @@
 ///<reference path='./Applications.d.ts' />
 ///<reference path='./Apps/Secrets.d.ts' />
 ///<reference path='./Balance.d.ts' />
+///<reference path='./BalanceTransactionSources.d.ts' />
 ///<reference path='./BalanceTransactions.d.ts' />
 ///<reference path='./BankAccounts.d.ts' />
 ///<reference path='./BillingPortal/Configurations.d.ts' />
@@ -150,12 +152,14 @@
 ///<reference path='./CustomerBalanceTransactions.d.ts' />
 ///<reference path='./CustomerCashBalanceTransactions.d.ts' />
 ///<reference path='./CustomerSessions.d.ts' />
+///<reference path='./CustomerSources.d.ts' />
 ///<reference path='./Customers.d.ts' />
 ///<reference path='./Discounts.d.ts' />
 ///<reference path='./Disputes.d.ts' />
 ///<reference path='./EphemeralKeys.d.ts' />
 ///<reference path='./Events.d.ts' />
 ///<reference path='./ExchangeRates.d.ts' />
+///<reference path='./ExternalAccounts.d.ts' />
 ///<reference path='./FeeRefunds.d.ts' />
 ///<reference path='./FileLinks.d.ts' />
 ///<reference path='./Files.d.ts' />
