@@ -1,5 +1,12 @@
 # Changelog
 
+## 13.11.0 - 2023-10-16
+* [#1924](https://github.com/stripe/stripe-node/pull/1924) Update generated code
+  * Add support for new values `issuing_token.created` and `issuing_token.updated` on enum `Event.type`
+  * Add support for new values `issuing_token.created` and `issuing_token.updated` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+* [#1926](https://github.com/stripe/stripe-node/pull/1926) Add named unions for all polymorphic types
+* [#1921](https://github.com/stripe/stripe-node/pull/1921) Add event types
+
 ## 13.11.0-beta.1 - 2023-10-11
 * [#1919](https://github.com/stripe/stripe-node/pull/1919) Update generated code for beta
   * Add support for new resources `AccountNotice` and `Issuing.CreditUnderwritingRecord`
