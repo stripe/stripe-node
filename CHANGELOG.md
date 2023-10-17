@@ -1,5 +1,10 @@
 # Changelog
 
+## 14.2.0-beta.1 - 2023-10-17
+* [#1935](https://github.com/stripe/stripe-node/pull/1935) Update generated code for beta
+* [#1930](https://github.com/stripe/stripe-node/pull/1930) Update generated code for beta
+  - Update pinned API version to `2023-10-16`
+
 ## 14.1.0 - 2023-10-17
 * [#1933](https://github.com/stripe/stripe-node/pull/1933) Update generated code
   * Add support for new value `invalid_dob_age_under_minimum` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `BankAccount.future_requirements.errors[].code`, and `BankAccount.requirements.errors[].code`
