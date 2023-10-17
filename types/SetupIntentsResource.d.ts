@@ -933,6 +933,11 @@ declare module 'stripe' {
           billing_agreement_id?: string;
 
           currency?: string;
+
+          /**
+           * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+           */
+          subsellers?: Array<string>;
         }
 
         interface SepaDebit {
@@ -1870,6 +1875,11 @@ declare module 'stripe' {
           billing_agreement_id?: string;
 
           currency?: string;
+
+          /**
+           * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+           */
+          subsellers?: Array<string>;
         }
 
         interface SepaDebit {
@@ -2894,6 +2904,11 @@ declare module 'stripe' {
           billing_agreement_id?: string;
 
           currency?: string;
+
+          /**
+           * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+           */
+          subsellers?: Array<string>;
         }
 
         interface SepaDebit {
