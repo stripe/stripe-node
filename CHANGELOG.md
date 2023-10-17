@@ -1,5 +1,10 @@
 # Changelog
 
+## 14.1.0 - 2023-10-17
+* [#1933](https://github.com/stripe/stripe-node/pull/1933) Update generated code
+  * Add support for new value `invalid_dob_age_under_minimum` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `BankAccount.future_requirements.errors[].code`, and `BankAccount.requirements.errors[].code`
+  * Change `Checkout.Session.client_secret` and `Checkout.Session.ui_mode` to be required
+
 ## 14.0.0 - 2023-10-16
 * This release changes the pinned API version to `2023-10-16`. Please read the [API Upgrade Guide](https://stripe.com/docs/upgrades#2023-10-16) and carefully review the API changes before upgrading `stripe` package.
 * [#1932](https://github.com/stripe/stripe-node/pull/1932) Update generated code
