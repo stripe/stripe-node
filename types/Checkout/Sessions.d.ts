@@ -72,7 +72,7 @@ declare module 'stripe' {
         /**
          * Client secret to be used when initializing Stripe.js embedded checkout.
          */
-        client_secret?: string | null;
+        client_secret: string | null;
 
         /**
          * Results of `consent_collection` for this session.
@@ -287,7 +287,7 @@ declare module 'stripe' {
         /**
          * The UI mode of the Session. Can be `hosted` (default) or `embedded`.
          */
-        ui_mode?: Session.UiMode | null;
+        ui_mode: Session.UiMode | null;
 
         /**
          * The URL to the Checkout Session. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://stripe.com/docs/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
