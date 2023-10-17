@@ -51,6 +51,10 @@ const main = () => {
     'types/test/typescriptTest.ts',
     'apiVersion: [\'"]API_VERSION[\'"]'
   );
+  replaceAPIVersion(
+    'testProjects/mjs-ts/index.ts',
+    'apiVersion: [\'"]API_VERSION[\'"]'
+  );
 };
 
 if (require.main === module) {
