@@ -12,7 +12,6 @@ let stripe = new Stripe('sk_test_123', {
   apiVersion: '2023-10-16',
 });
 
-// @ts-ignore lazily ignore apiVersion requirement.
 stripe = new Stripe('sk_test_123');
 
 stripe = new Stripe('sk_test_123', {
