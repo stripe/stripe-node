@@ -5,7 +5,6 @@ export async function onRequestPost({env, request}) {
   const body = await request.text();
 
   const stripe = new Stripe(env.STRIPE_API_KEY, {
-    apiVersion: '2023-08-16',
     httpClient: Stripe.createFetchHttpClient(),
   });
   const webCrypto = Stripe.createSubtleCryptoProvider();
