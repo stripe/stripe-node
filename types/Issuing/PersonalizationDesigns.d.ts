@@ -84,12 +84,12 @@ declare module 'stripe' {
           /**
            * Whether this personalization design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no personalization design is set as the account default.
            */
-          account_default: boolean;
+          is_default: boolean;
 
           /**
-           * Whether this personalization design is used to create cards when one is not specified and an account default for this connected account does not exist.
+           * Whether this personalization design is used to create cards when one is not specified and a default for this connected account does not exist.
            */
-          platform_default: boolean | null;
+          is_platform_default: boolean | null;
         }
 
         interface RejectionReasons {

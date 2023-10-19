@@ -75,9 +75,9 @@ declare module 'stripe' {
 
         interface Preferences {
           /**
-           * Whether this personalization design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no personalization design is set as the account default.
+           * Whether this personalization design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no personalization design is set as default.
            */
-          account_default: boolean;
+          is_default: boolean;
         }
       }
 
@@ -162,9 +162,9 @@ declare module 'stripe' {
 
         interface Preferences {
           /**
-           * Whether this personalization design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no personalization design is set as the account default.
+           * Whether this personalization design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no personalization design is set as default.
            */
-          account_default: boolean;
+          is_default: boolean;
         }
       }
 
@@ -193,14 +193,14 @@ declare module 'stripe' {
       namespace PersonalizationDesignListParams {
         interface Preferences {
           /**
-           * Only return the personalization design that is set as the account default. A connected account will use the Connect platform's default if no personalization design is set as the account default.
+           * Only return the personalization design that is set as default. A connected account will use the Connect platform's default if no personalization design is set as default.
            */
-          account_default?: boolean;
+          is_default?: boolean;
 
           /**
            * Only return the personalization design that is set as the Connect platform's default. This parameter is only applicable to connected accounts.
            */
-          platform_default?: boolean;
+          is_platform_default?: boolean;
         }
 
         type Status = 'active' | 'inactive' | 'rejected' | 'review';
