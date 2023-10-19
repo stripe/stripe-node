@@ -181,6 +181,29 @@ declare module 'stripe' {
          * If `true`, tax will be calculated automatically using the customer's location.
          */
         enabled: boolean;
+
+        /**
+         * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+         */
+        liability?: AutomaticTax.Liability;
+      }
+
+      namespace AutomaticTax {
+        interface Liability {
+          /**
+           * The connected account being referenced when `type` is `account`.
+           */
+          account?: string;
+
+          /**
+           * Type of the account referenced in the request.
+           */
+          type: Liability.Type;
+        }
+
+        namespace Liability {
+          type Type = 'account' | 'self';
+        }
       }
 
       type BillingAddressCollection = 'auto' | 'required';
@@ -383,6 +406,11 @@ declare module 'stripe' {
           footer?: string;
 
           /**
+           * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+           */
+          issuer?: InvoiceData.Issuer;
+
+          /**
            * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
           metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
@@ -404,6 +432,22 @@ declare module 'stripe' {
              * The value of the custom field. This may be up to 30 characters.
              */
             value: string;
+          }
+
+          interface Issuer {
+            /**
+             * The connected account being referenced when `type` is `account`.
+             */
+            account?: string;
+
+            /**
+             * Type of the account referenced in the request.
+             */
+            type: Issuer.Type;
+          }
+
+          namespace Issuer {
+            type Type = 'account' | 'self';
           }
 
           interface RenderingOptions {
@@ -804,6 +848,11 @@ declare module 'stripe' {
         description?: string;
 
         /**
+         * All invoices will be billed using the specified settings.
+         */
+        invoice_settings?: SubscriptionData.InvoiceSettings;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Subscriptions](https://stripe.com/docs/api/subscriptions) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
         metadata?: Stripe.MetadataParam;
@@ -812,6 +861,33 @@ declare module 'stripe' {
          * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
          */
         trial_period_days?: number;
+      }
+
+      namespace SubscriptionData {
+        interface InvoiceSettings {
+          /**
+           * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+           */
+          issuer?: InvoiceSettings.Issuer;
+        }
+
+        namespace InvoiceSettings {
+          interface Issuer {
+            /**
+             * The connected account being referenced when `type` is `account`.
+             */
+            account?: string;
+
+            /**
+             * Type of the account referenced in the request.
+             */
+            type: Issuer.Type;
+          }
+
+          namespace Issuer {
+            type Type = 'account' | 'self';
+          }
+        }
       }
 
       interface TaxIdCollection {
@@ -982,6 +1058,29 @@ declare module 'stripe' {
          * If `true`, tax will be calculated automatically using the customer's location.
          */
         enabled: boolean;
+
+        /**
+         * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+         */
+        liability?: AutomaticTax.Liability;
+      }
+
+      namespace AutomaticTax {
+        interface Liability {
+          /**
+           * The connected account being referenced when `type` is `account`.
+           */
+          account?: string;
+
+          /**
+           * Type of the account referenced in the request.
+           */
+          type: Liability.Type;
+        }
+
+        namespace Liability {
+          type Type = 'account' | 'self';
+        }
       }
 
       type BillingAddressCollection = 'auto' | 'required';
@@ -1163,6 +1262,11 @@ declare module 'stripe' {
           footer?: string;
 
           /**
+           * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+           */
+          issuer?: InvoiceData.Issuer;
+
+          /**
            * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
           metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
@@ -1184,6 +1288,22 @@ declare module 'stripe' {
              * The value of the custom field. This may be up to 30 characters.
              */
             value: string;
+          }
+
+          interface Issuer {
+            /**
+             * The connected account being referenced when `type` is `account`.
+             */
+            account?: string;
+
+            /**
+             * Type of the account referenced in the request.
+             */
+            type: Issuer.Type;
+          }
+
+          namespace Issuer {
+            type Type = 'account' | 'self';
           }
 
           interface RenderingOptions {
@@ -1537,9 +1657,41 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
+         * All invoices will be billed using the specified settings.
+         */
+        invoice_settings?: SubscriptionData.InvoiceSettings;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Subscriptions](https://stripe.com/docs/api/subscriptions) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+      }
+
+      namespace SubscriptionData {
+        interface InvoiceSettings {
+          /**
+           * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+           */
+          issuer?: InvoiceSettings.Issuer;
+        }
+
+        namespace InvoiceSettings {
+          interface Issuer {
+            /**
+             * The connected account being referenced when `type` is `account`.
+             */
+            account?: string;
+
+            /**
+             * Type of the account referenced in the request.
+             */
+            type: Issuer.Type;
+          }
+
+          namespace Issuer {
+            type Type = 'account' | 'self';
+          }
+        }
       }
     }
 
