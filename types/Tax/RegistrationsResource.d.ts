@@ -5,7 +5,7 @@ declare module 'stripe' {
     namespace Tax {
       interface RegistrationCreateParams {
         /**
-         * Time at which the Tax Registration becomes active. It can be either `now` to indicate the current time, or a timestamp measured in seconds since the Unix epoch.
+         * Time at which the Tax Registration becomes active. It can be either `now` to indicate the current time, or a future timestamp measured in seconds since the Unix epoch.
          */
         active_from: number | 'now';
 
