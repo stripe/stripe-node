@@ -109,7 +109,7 @@ declare module 'stripe' {
       subscription_data?: QuoteCreateParams.SubscriptionData;
 
       /**
-       * List representing overrides for `subscription_data` configurations for specific groups.
+       * List representing overrides for `subscription_data` configurations for specific subscription schedules.
        */
       subscription_data_overrides?: Array<
         QuoteCreateParams.SubscriptionDataOverride
@@ -1738,7 +1738,7 @@ declare module 'stripe' {
       subscription_data?: QuoteUpdateParams.SubscriptionData;
 
       /**
-       * List representing overrides for `subscription_data` configurations for specific groups.
+       * List representing overrides for `subscription_data` configurations for specific subscription schedules.
        */
       subscription_data_overrides?: Stripe.Emptyable<
         Array<QuoteUpdateParams.SubscriptionDataOverride>

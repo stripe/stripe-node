@@ -169,6 +169,9 @@ declare module 'stripe' {
 
       subscription_data: Quote.SubscriptionData;
 
+      /**
+       * List representing overrides for `subscription_data` configurations for specific subscription schedules.
+       */
       subscription_data_overrides?: Array<
         Quote.SubscriptionDataOverride
       > | null;
