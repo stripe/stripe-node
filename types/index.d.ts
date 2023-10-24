@@ -55,6 +55,7 @@
 ///<reference path='./Issuing/TokensResource.d.ts' />
 ///<reference path='./Issuing/TransactionsResource.d.ts' />
 ///<reference path='./MandatesResource.d.ts' />
+///<reference path='./MarginsResource.d.ts' />
 ///<reference path='./OrdersResource.d.ts' />
 ///<reference path='./PaymentIntentsResource.d.ts' />
 ///<reference path='./PaymentLinksResource.d.ts' />
@@ -189,6 +190,7 @@
 ///<reference path='./LineItems.d.ts' />
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
+///<reference path='./Margins.d.ts' />
 ///<reference path='./Orders.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
@@ -297,6 +299,7 @@ declare module 'stripe' {
     invoiceItems: Stripe.InvoiceItemsResource;
     invoices: Stripe.InvoicesResource;
     mandates: Stripe.MandatesResource;
+    margins: Stripe.MarginsResource;
     orders: Stripe.OrdersResource;
     paymentIntents: Stripe.PaymentIntentsResource;
     paymentLinks: Stripe.PaymentLinksResource;

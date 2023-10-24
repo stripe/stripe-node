@@ -214,6 +214,11 @@ declare module 'stripe' {
       customer_tax_ids?: Array<Invoice.CustomerTaxId> | null;
 
       /**
+       * The margins applied to the invoice. Can be overridden by line item `margins`. Use `expand[]=default_margins` to expand each margin.
+       */
+      default_margins?: Array<string | Stripe.Margin> | null;
+
+      /**
        * ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription's default payment method, if any, or to the default payment method in the customer's invoice settings.
        */
       default_payment_method: string | Stripe.PaymentMethod | null;
@@ -465,6 +470,11 @@ declare module 'stripe' {
        * The integer amount in cents (or local equivalent) representing the total amount of the invoice including all discounts but excluding all tax.
        */
       total_excluding_tax: number | null;
+
+      /**
+       * The aggregate amounts calculated per margin across all line items.
+       */
+      total_margin_amounts?: Array<Invoice.TotalMarginAmount> | null;
 
       /**
        * The aggregate amounts calculated per tax rate for all line items.
@@ -1377,6 +1387,18 @@ declare module 'stripe' {
          * The discount that was applied to get this discount amount.
          */
         discount: string | Stripe.Discount | Stripe.DeletedDiscount;
+      }
+
+      interface TotalMarginAmount {
+        /**
+         * The amount, in cents (or local equivalent), of the reduction in line item amount.
+         */
+        amount: number;
+
+        /**
+         * The margin that was applied to get this margin amount.
+         */
+        margin: string | Stripe.Margin;
       }
 
       interface TotalTaxAmount {
