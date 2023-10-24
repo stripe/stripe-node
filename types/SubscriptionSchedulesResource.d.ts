@@ -91,7 +91,7 @@ declare module 'stripe' {
         default_payment_method?: string;
 
         /**
-         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description?: Stripe.Emptyable<string>;
 
@@ -255,7 +255,7 @@ declare module 'stripe' {
         default_tax_rates?: Stripe.Emptyable<Array<string>>;
 
         /**
-         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description?: Stripe.Emptyable<string>;
 
@@ -913,7 +913,7 @@ declare module 'stripe' {
         default_payment_method?: string;
 
         /**
-         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description?: Stripe.Emptyable<string>;
 
@@ -1077,7 +1077,7 @@ declare module 'stripe' {
         default_tax_rates?: Stripe.Emptyable<Array<string>>;
 
         /**
-         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description?: Stripe.Emptyable<string>;
 

@@ -1250,7 +1250,7 @@ declare module 'stripe' {
         billing_cycle_anchor?: Stripe.Emptyable<'reset'>;
 
         /**
-         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description?: string;
 
@@ -1447,7 +1447,7 @@ declare module 'stripe' {
         customer?: string;
 
         /**
-         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description?: string;
 
@@ -2879,7 +2879,7 @@ declare module 'stripe' {
         billing_cycle_anchor?: Stripe.Emptyable<'reset'>;
 
         /**
-         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description?: Stripe.Emptyable<string>;
 
@@ -3068,7 +3068,7 @@ declare module 'stripe' {
         customer?: string;
 
         /**
-         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description?: Stripe.Emptyable<string>;
 

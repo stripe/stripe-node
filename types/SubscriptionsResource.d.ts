@@ -86,7 +86,7 @@ declare module 'stripe' {
       default_tax_rates?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces.
+       * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
        */
       description?: string;
 
@@ -1028,7 +1028,7 @@ declare module 'stripe' {
       default_tax_rates?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces.
+       * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
        */
       description?: Stripe.Emptyable<string>;
 
