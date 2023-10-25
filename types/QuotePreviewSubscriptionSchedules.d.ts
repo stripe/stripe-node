@@ -696,7 +696,7 @@ declare module 'stripe' {
 
         interface TrialSettings {
           /**
-           * Defines how the subscription should behaves when a trial ensd.
+           * Defines how the subscription should behave when a trial ends.
            */
           end_behavior: TrialSettings.EndBehavior | null;
         }
