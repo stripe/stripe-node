@@ -302,6 +302,7 @@ declare module 'stripe' {
           | 'application_fees_not_allowed'
           | 'authentication_required'
           | 'balance_insufficient'
+          | 'balance_invalid_parameter'
           | 'bank_account_bad_routing_numbers'
           | 'bank_account_declined'
           | 'bank_account_exists'
