@@ -153,7 +153,7 @@ declare module 'stripe' {
       statement_descriptor_suffix?: string;
 
       /**
-       * The parameters that you can use to automatically create a Transfer after the payment succeeds.
+       * The parameters that you can use to automatically create a Transfer.
        * Learn more about the [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       transfer_data?: PaymentIntentCreateParams.TransferData;
