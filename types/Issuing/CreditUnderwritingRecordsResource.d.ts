@@ -905,7 +905,7 @@ declare module 'stripe' {
         ): ApiListPromise<Stripe.Issuing.CreditUnderwritingRecord>;
 
         /**
-         * Update a CreditUnderwritingRecord object to correct mistakes
+         * Update a CreditUnderwritingRecord object to correct mistakes.
          */
         correct(
           id: string,
@@ -918,7 +918,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Issuing.CreditUnderwritingRecord>>;
 
         /**
-         * Creates a CreditUnderwritingRecord object with information about a credit application submission
+         * Creates a CreditUnderwritingRecord object with information about a credit application submission.
          */
         createFromApplication(
           params: CreditUnderwritingRecordCreateFromApplicationParams,
@@ -926,7 +926,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Issuing.CreditUnderwritingRecord>>;
 
         /**
-         * Creates a CreditUnderwritingRecord object from an underwriting decision coming from a proactive review of an existing accountholder
+         * Creates a CreditUnderwritingRecord object from an underwriting decision coming from a proactive review of an existing accountholder.
          */
         createFromProactiveReview(
           params: CreditUnderwritingRecordCreateFromProactiveReviewParams,
@@ -934,7 +934,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Issuing.CreditUnderwritingRecord>>;
 
         /**
-         * Update a CreditUnderwritingRecord object from an decision made on a credit application
+         * Update a CreditUnderwritingRecord object from a decision made on a credit application.
          */
         reportDecision(
           id: string,

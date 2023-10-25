@@ -4,9 +4,9 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Issuing {
       /**
-       * Every time an applicant submits an application for a Charge Card product your Platform offers, or every time your Platform takes a proactive credit decision on an existing account, you must record the decision by creating a new CreditUnderwritingRecord object on a Connected account.
+       * Every time an applicant submits an application for a Charge Card product your platform offers, or every time your platform takes a proactive credit decision on an existing account, you must record the decision by creating a new `CreditUnderwritingRecord` object on a connected account.
        *
-       * [Follow the guide](https://stripe.com/docs/issuing/coming_soon) to learn about your requirements as a Platform.
+       * [Follow the guide](https://stripe.com/docs/issuing/credit/report-credit-decisions-and-manage-aans) to learn about your requirements as a platform.
        */
       interface CreditUnderwritingRecord {
         /**
