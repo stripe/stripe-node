@@ -44,7 +44,7 @@ declare module 'stripe' {
        *
        * @docs https://stripe.com/docs/api/versioning
        */
-      apiVersion: LatestApiVersion;
+      apiVersion?: LatestApiVersion;
 
       /**
        * Optionally indicate that you are using TypeScript.

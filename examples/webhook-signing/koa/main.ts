@@ -11,9 +11,7 @@ const app = new Koa();
 env.config();
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2023-08-16',
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const handleWebhook = async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
   const sig = ctx.request.headers['stripe-signature'];
