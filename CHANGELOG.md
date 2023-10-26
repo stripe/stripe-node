@@ -1,5 +1,11 @@
 # Changelog
 
+## 14.2.0 - 2023-10-26
+* [#1939](https://github.com/stripe/stripe-node/pull/1939) Update generated code
+  * Add support for new value `balance_invalid_parameter` on enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`
+  * Change `Issuing.Cardholder.individual.card_issuing` to be optional
+* [#1940](https://github.com/stripe/stripe-node/pull/1940) Do not require passing apiVersion
+
 ## 14.1.0 - 2023-10-17
 * [#1933](https://github.com/stripe/stripe-node/pull/1933) Update generated code
   * Add support for new value `invalid_dob_age_under_minimum` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `BankAccount.future_requirements.errors[].code`, and `BankAccount.requirements.errors[].code`
