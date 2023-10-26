@@ -10,7 +10,7 @@ declare module 'stripe' {
         physical_bundle: string;
 
         /**
-         * The file for the card logo, for use with physical bundles that support card logos. Must have `purpose` value of `issuing_logo`.
+         * The file for the card logo, for use with physical bundles that support card logos. Must have a `purpose` value of `issuing_logo`.
          */
         card_logo?: string;
 
@@ -75,7 +75,7 @@ declare module 'stripe' {
 
         interface Preferences {
           /**
-           * Whether this personalization design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no personalization design is set as default.
+           * Whether we use this personalization design to create cards when one isn't specified. A connected account uses the Connect platform's default design if no personalization design is set as the default design.
            */
           is_default: boolean;
         }
@@ -90,7 +90,7 @@ declare module 'stripe' {
 
       interface PersonalizationDesignUpdateParams {
         /**
-         * The file for the card logo, for use with physical bundles that support card logos. Must have `purpose` value of `issuing_logo`.
+         * The file for the card logo, for use with physical bundles that support card logos. Must have a `purpose` value of `issuing_logo`.
          */
         card_logo?: Stripe.Emptyable<string>;
 
@@ -162,7 +162,7 @@ declare module 'stripe' {
 
         interface Preferences {
           /**
-           * Whether this personalization design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no personalization design is set as default.
+           * Whether we use this personalization design to create cards when one isn't specified. A connected account uses the Connect platform's default design if no personalization design is set as the default design.
            */
           is_default: boolean;
         }
@@ -193,7 +193,7 @@ declare module 'stripe' {
       namespace PersonalizationDesignListParams {
         interface Preferences {
           /**
-           * Only return the personalization design that is set as default. A connected account will use the Connect platform's default if no personalization design is set as default.
+           * Only return the personalization design that's set as the default. A connected account uses the Connect platform's default design if no personalization design is set as the default.
            */
           is_default?: boolean;
 

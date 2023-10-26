@@ -18,7 +18,7 @@ declare module 'stripe' {
         object: 'issuing.personalization_design';
 
         /**
-         * The file for the card logo, for use with physical bundles that support card logos.
+         * The file for the card logo to use with physical bundles that support card logos. Must have a `purpose` value of `issuing_logo`.
          */
         card_logo: string | Stripe.File | null;
 
@@ -82,7 +82,7 @@ declare module 'stripe' {
 
         interface Preferences {
           /**
-           * Whether this personalization design is used to create cards when one is not specified. A connected account will use the Connect platform's default if no personalization design is set as the account default.
+           * Whether we use this personalization design to create cards when one isn't specified. A connected account uses the Connect platform's default design if no personalization design is set as the default design.
            */
           is_default: boolean;
 
