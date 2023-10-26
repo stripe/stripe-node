@@ -302,6 +302,7 @@ declare module 'stripe' {
           | 'application_fees_not_allowed'
           | 'authentication_required'
           | 'balance_insufficient'
+          | 'balance_invalid_parameter'
           | 'bank_account_bad_routing_numbers'
           | 'bank_account_declined'
           | 'bank_account_exists'
@@ -736,6 +737,11 @@ declare module 'stripe' {
            * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
            */
           currency?: string | null;
+
+          /**
+           * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+           */
+          subsellers?: Array<string>;
         }
 
         interface SepaDebit {

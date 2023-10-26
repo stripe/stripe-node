@@ -70,9 +70,7 @@ and instantiate it as `new Stripe()` with the latest API version.
 
 ```ts
 import Stripe from 'stripe';
-const stripe = new Stripe('sk_test_...', {
-  apiVersion: '2023-10-16',
-});
+const stripe = new Stripe('sk_test_...');
 
 const createCustomer = async () => {
   const params: Stripe.CustomerCreateParams = {
@@ -158,11 +156,13 @@ stripe.customers
       });
   });
 ```
+
 ### Usage with Deno
 
 As of 11.16.0, stripe-node provides a `deno` export target. In your Deno project, import stripe-node using an npm specifier:
 
 Import using npm specifiers:
+
 ```js
 import Stripe from 'npm:stripe';
 ```
@@ -179,7 +179,6 @@ The package can be initialized with several options:
 import ProxyAgent from 'https-proxy-agent';
 
 const stripe = Stripe('sk_test_...', {
-  apiVersion: '2019-08-08',
   maxNetworkRetries: 1,
   httpAgent: new ProxyAgent(process.env.http_proxy),
   timeout: 1000,
@@ -265,8 +264,8 @@ As of [v13](https://github.com/stripe/stripe-node/releases/tag/v13.0.0) stripe-n
 const stripe = Stripe('sk_test_...', {
   maxNetworkRetries: 0, // Disable retries
 });
-
 ```
+
 ```js
 const stripe = Stripe('sk_test_...', {
   maxNetworkRetries: 2, // Retry a request twice before giving up
@@ -394,7 +393,7 @@ const stripe = require('stripe')('sk_test_...', {
     name: 'MyAwesomePlugin',
     version: '1.2.34', // Optional
     url: 'https://myawesomeplugin.info', // Optional
-  }
+  },
 });
 ```
 
@@ -406,7 +405,7 @@ const stripe = new Stripe(apiKey, {
     name: 'MyAwesomePlugin',
     version: '1.2.34', // Optional
     url: 'https://myawesomeplugin.info', // Optional
-  }
+  },
 });
 ```
 
@@ -496,6 +495,7 @@ const stripe = new Stripe('sk_test_...', {
 Stripe has features in the beta phase that can be accessed via the beta version of this package.
 We would love for you to try these and share feedback with us before these features reach the stable phase.
 The beta versions can be installed in one of two ways
+
 - To install the latest beta version, run the command `npm install stripe@beta --save`
 - To install a specific beta version, replace the term "beta" in the above command with the version number like `npm install stripe@1.2.3-beta.1 --save`
 

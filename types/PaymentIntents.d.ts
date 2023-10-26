@@ -393,6 +393,7 @@ declare module 'stripe' {
           | 'application_fees_not_allowed'
           | 'authentication_required'
           | 'balance_insufficient'
+          | 'balance_invalid_parameter'
           | 'bank_account_bad_routing_numbers'
           | 'bank_account_declined'
           | 'bank_account_exists'
@@ -717,6 +718,11 @@ declare module 'stripe' {
         namespace DisplayBankTransferInstructions {
           interface FinancialAddress {
             /**
+             * ABA Records contain U.S. bank account details per the ABA format.
+             */
+            aba?: FinancialAddress.Aba;
+
+            /**
              * Iban Records contain E.U. bank account details per the SEPA format.
              */
             iban?: FinancialAddress.Iban;
@@ -737,6 +743,11 @@ declare module 'stripe' {
             supported_networks?: Array<FinancialAddress.SupportedNetwork>;
 
             /**
+             * SWIFT Records contain U.S. bank account details per the SWIFT format.
+             */
+            swift?: FinancialAddress.Swift;
+
+            /**
              * The type of financial address
              */
             type: FinancialAddress.Type;
@@ -748,6 +759,23 @@ declare module 'stripe' {
           }
 
           namespace FinancialAddress {
+            interface Aba {
+              /**
+               * The ABA account number
+               */
+              account_number: string;
+
+              /**
+               * The bank name
+               */
+              bank_name: string;
+
+              /**
+               * The ABA routing number
+               */
+              routing_number: string;
+            }
+
             interface Iban {
               /**
                * The name of the person or business that owns the bank account
@@ -804,9 +832,40 @@ declare module 'stripe' {
               clabe: string;
             }
 
-            type SupportedNetwork = 'bacs' | 'fps' | 'sepa' | 'spei' | 'zengin';
+            type SupportedNetwork =
+              | 'ach'
+              | 'bacs'
+              | 'domestic_wire_us'
+              | 'fps'
+              | 'sepa'
+              | 'spei'
+              | 'swift'
+              | 'zengin';
 
-            type Type = 'iban' | 'sort_code' | 'spei' | 'zengin';
+            interface Swift {
+              /**
+               * The account number
+               */
+              account_number: string;
+
+              /**
+               * The bank name
+               */
+              bank_name: string;
+
+              /**
+               * The SWIFT code
+               */
+              swift_code: string;
+            }
+
+            type Type =
+              | 'aba'
+              | 'iban'
+              | 'sort_code'
+              | 'spei'
+              | 'swift'
+              | 'zengin';
 
             interface Zengin {
               /**
@@ -2050,6 +2109,11 @@ declare module 'stripe' {
            * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
            */
           setup_future_usage?: Paypal.SetupFutureUsage;
+
+          /**
+           * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+           */
+          subsellers?: Array<string>;
         }
 
         namespace Paypal {

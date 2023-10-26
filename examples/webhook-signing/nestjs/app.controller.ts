@@ -20,7 +20,6 @@ export class AppController {
   private readonly client: Stripe;
   constructor(@Inject(ConfigService) private readonly config: ConfigService) {
     this.client = new Stripe(this.config.get('Stripe.secret_key'), {
-      apiVersion: '2022-11-15',
       typescript: true,
     });
   }

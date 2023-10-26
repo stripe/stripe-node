@@ -175,7 +175,7 @@ declare module 'stripe' {
         default_payment_method: string | Stripe.PaymentMethod | null;
 
         /**
-         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description: string | null;
 
@@ -336,7 +336,7 @@ declare module 'stripe' {
         default_tax_rates?: Array<Stripe.TaxRate> | null;
 
         /**
-         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description: string | null;
 
@@ -696,7 +696,7 @@ declare module 'stripe' {
 
         interface TrialSettings {
           /**
-           * Defines how the subscription should behaves when a trial ensd.
+           * Defines how the subscription should behave when a trial ends.
            */
           end_behavior: TrialSettings.EndBehavior | null;
         }

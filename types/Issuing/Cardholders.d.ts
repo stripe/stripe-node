@@ -101,7 +101,7 @@ declare module 'stripe' {
           /**
            * Information related to the card_issuing program for this cardholder.
            */
-          card_issuing: Individual.CardIssuing | null;
+          card_issuing?: Individual.CardIssuing | null;
 
           /**
            * The date of birth of this cardholder.

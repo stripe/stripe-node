@@ -169,6 +169,9 @@ declare module 'stripe' {
 
       subscription_data: Quote.SubscriptionData;
 
+      /**
+       * List representing overrides for `subscription_data` configurations for specific subscription schedules.
+       */
       subscription_data_overrides?: Array<
         Quote.SubscriptionDataOverride
       > | null;
@@ -645,6 +648,7 @@ declare module 'stripe' {
             }
 
             type Type =
+              | 'accept_failed_validations'
               | 'bill_on_acceptance_invalid'
               | 'line_invalid'
               | 'marked_stale'
@@ -692,7 +696,7 @@ declare module 'stripe' {
         billing_cycle_anchor?: 'reset' | null;
 
         /**
-         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description: string | null;
 
@@ -877,7 +881,7 @@ declare module 'stripe' {
         customer: string | null;
 
         /**
-         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description: string | null;
 

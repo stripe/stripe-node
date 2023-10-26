@@ -170,7 +170,7 @@ declare module 'stripe' {
       statement_descriptor_suffix?: string;
 
       /**
-       * The parameters that you can use to automatically create a Transfer after the payment succeeds.
+       * The parameters that you can use to automatically create a Transfer.
        * Learn more about the [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       transfer_data?: PaymentIntentCreateParams.TransferData;
@@ -1704,14 +1704,14 @@ declare module 'stripe' {
           request_extended_authorization?: boolean;
 
           /**
-           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
-           */
-          request_incremental_authorization?: CardPresent.RequestIncrementalAuthorization;
-
-          /**
            * Request ability to [increment](https://stripe.com/docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
            */
           request_incremental_authorization_support?: boolean;
+
+          /**
+           * This field was released by mistake and will be removed in the next major version
+           */
+          request_incremental_authorization?: CardPresent.RequestIncrementalAuthorization;
         }
 
         namespace CardPresent {
@@ -2108,6 +2108,11 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<Paypal.SetupFutureUsage>;
+
+          /**
+           * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+           */
+          subsellers?: Array<string>;
         }
 
         namespace Paypal {
@@ -4052,14 +4057,14 @@ declare module 'stripe' {
           request_extended_authorization?: boolean;
 
           /**
-           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
-           */
-          request_incremental_authorization?: CardPresent.RequestIncrementalAuthorization;
-
-          /**
            * Request ability to [increment](https://stripe.com/docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
            */
           request_incremental_authorization_support?: boolean;
+
+          /**
+           * This field was released by mistake and will be removed in the next major version
+           */
+          request_incremental_authorization?: CardPresent.RequestIncrementalAuthorization;
         }
 
         namespace CardPresent {
@@ -4456,6 +4461,11 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<Paypal.SetupFutureUsage>;
+
+          /**
+           * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+           */
+          subsellers?: Array<string>;
         }
 
         namespace Paypal {
@@ -6800,14 +6810,14 @@ declare module 'stripe' {
           request_extended_authorization?: boolean;
 
           /**
-           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
-           */
-          request_incremental_authorization?: CardPresent.RequestIncrementalAuthorization;
-
-          /**
            * Request ability to [increment](https://stripe.com/docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
            */
           request_incremental_authorization_support?: boolean;
+
+          /**
+           * This field was released by mistake and will be removed in the next major version
+           */
+          request_incremental_authorization?: CardPresent.RequestIncrementalAuthorization;
         }
 
         namespace CardPresent {
@@ -7204,6 +7214,11 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<Paypal.SetupFutureUsage>;
+
+          /**
+           * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+           */
+          subsellers?: Array<string>;
         }
 
         namespace Paypal {

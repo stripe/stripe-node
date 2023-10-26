@@ -862,6 +862,11 @@ declare module 'stripe' {
                * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
                */
               setup_future_usage?: Stripe.Emptyable<Paypal.SetupFutureUsage>;
+
+              /**
+               * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+               */
+              subsellers?: Array<string>;
             }
 
             namespace Paypal {
@@ -2141,6 +2146,11 @@ declare module 'stripe' {
                * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
                */
               setup_future_usage?: Stripe.Emptyable<Paypal.SetupFutureUsage>;
+
+              /**
+               * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+               */
+              subsellers?: Array<string>;
             }
 
             namespace Paypal {

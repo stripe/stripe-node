@@ -132,27 +132,25 @@ declare module 'stripe' {
 
           namespace ApplicationRejected {
             type Reason =
+              | 'applicant_is_not_beneficial_owner'
               | 'applicant_too_young'
               | 'application_is_not_beneficial_owner'
               | 'bankruptcy'
               | 'business_size_too_small'
-              | 'change_in_financial_state'
-              | 'change_in_utilization_of_credit_line'
+              | 'current_account_tier_ineligible'
               | 'customer_already_exists'
+              | 'customer_requested_account_closure'
               | 'debt_to_cash_balance_ratio_too_high'
               | 'debt_to_equity_ratio_too_high'
-              | 'decrease_in_income_to_expense_ratio'
-              | 'decrease_in_social_media_performance'
               | 'delinquent_credit_obligations'
+              | 'dispute_rate_too_high'
               | 'duration_of_residence'
-              | 'exceeds_acceptable_platform_exposure'
               | 'excessive_income_or_revenue_obligations'
               | 'expenses_to_cash_balance_ratio_too_high'
               | 'foreclosure_or_repossession'
               | 'frozen_file_at_credit_bureau'
               | 'garnishment_or_attachment'
               | 'government_loan_program_criteria'
-              | 'has_recent_credit_limit_increase'
               | 'high_concentration_of_clients'
               | 'incomplete_application'
               | 'inconsistent_monthly_revenues'
@@ -162,14 +160,13 @@ declare module 'stripe' {
               | 'insufficient_cash_flow'
               | 'insufficient_collateral'
               | 'insufficient_credit_experience'
-              | 'insufficient_credit_utilization'
               | 'insufficient_deposits'
               | 'insufficient_income'
               | 'insufficient_period_in_operation'
               | 'insufficient_revenue'
               | 'insufficient_social_media_performance'
               | 'insufficient_trade_credit_insurance'
-              | 'insufficient_usage_as_qualified_expenses'
+              | 'invalid_business_license'
               | 'late_payment_history_reported_to_bureau'
               | 'lien_collection_action_or_judgement'
               | 'negative_public_information'
@@ -177,7 +174,6 @@ declare module 'stripe' {
               | 'other'
               | 'outside_supported_country'
               | 'outside_supported_state'
-              | 'poor_payment_history_with_platform'
               | 'prior_or_current_legal_action'
               | 'prohibited_industry'
               | 'rate_of_cash_balance_fluctuation_too_high'
@@ -230,18 +226,22 @@ declare module 'stripe' {
 
           namespace CreditLimitDecreased {
             type Reason =
+              | 'applicant_is_not_beneficial_owner'
               | 'applicant_too_young'
               | 'application_is_not_beneficial_owner'
               | 'bankruptcy'
               | 'business_size_too_small'
               | 'change_in_financial_state'
               | 'change_in_utilization_of_credit_line'
+              | 'current_account_tier_ineligible'
               | 'customer_already_exists'
+              | 'customer_requested_account_closure'
               | 'debt_to_cash_balance_ratio_too_high'
               | 'debt_to_equity_ratio_too_high'
               | 'decrease_in_income_to_expense_ratio'
               | 'decrease_in_social_media_performance'
               | 'delinquent_credit_obligations'
+              | 'dispute_rate_too_high'
               | 'duration_of_residence'
               | 'exceeds_acceptable_platform_exposure'
               | 'excessive_income_or_revenue_obligations'
@@ -268,6 +268,7 @@ declare module 'stripe' {
               | 'insufficient_social_media_performance'
               | 'insufficient_trade_credit_insurance'
               | 'insufficient_usage_as_qualified_expenses'
+              | 'invalid_business_license'
               | 'late_payment_history_reported_to_bureau'
               | 'lien_collection_action_or_judgement'
               | 'negative_public_information'
@@ -306,18 +307,22 @@ declare module 'stripe' {
 
           namespace CreditLineClosed {
             type Reason =
+              | 'applicant_is_not_beneficial_owner'
               | 'applicant_too_young'
               | 'application_is_not_beneficial_owner'
               | 'bankruptcy'
               | 'business_size_too_small'
               | 'change_in_financial_state'
               | 'change_in_utilization_of_credit_line'
+              | 'current_account_tier_ineligible'
               | 'customer_already_exists'
+              | 'customer_requested_account_closure'
               | 'debt_to_cash_balance_ratio_too_high'
               | 'debt_to_equity_ratio_too_high'
               | 'decrease_in_income_to_expense_ratio'
               | 'decrease_in_social_media_performance'
               | 'delinquent_credit_obligations'
+              | 'dispute_rate_too_high'
               | 'duration_of_residence'
               | 'exceeds_acceptable_platform_exposure'
               | 'excessive_income_or_revenue_obligations'
@@ -344,6 +349,7 @@ declare module 'stripe' {
               | 'insufficient_social_media_performance'
               | 'insufficient_trade_credit_insurance'
               | 'insufficient_usage_as_qualified_expenses'
+              | 'invalid_business_license'
               | 'late_payment_history_reported_to_bureau'
               | 'lien_collection_action_or_judgement'
               | 'negative_public_information'
@@ -565,18 +571,22 @@ declare module 'stripe' {
 
           namespace CreditLimitDecreased {
             type Reason =
+              | 'applicant_is_not_beneficial_owner'
               | 'applicant_too_young'
               | 'application_is_not_beneficial_owner'
               | 'bankruptcy'
               | 'business_size_too_small'
               | 'change_in_financial_state'
               | 'change_in_utilization_of_credit_line'
+              | 'current_account_tier_ineligible'
               | 'customer_already_exists'
+              | 'customer_requested_account_closure'
               | 'debt_to_cash_balance_ratio_too_high'
               | 'debt_to_equity_ratio_too_high'
               | 'decrease_in_income_to_expense_ratio'
               | 'decrease_in_social_media_performance'
               | 'delinquent_credit_obligations'
+              | 'dispute_rate_too_high'
               | 'duration_of_residence'
               | 'exceeds_acceptable_platform_exposure'
               | 'excessive_income_or_revenue_obligations'
@@ -603,6 +613,7 @@ declare module 'stripe' {
               | 'insufficient_social_media_performance'
               | 'insufficient_trade_credit_insurance'
               | 'insufficient_usage_as_qualified_expenses'
+              | 'invalid_business_license'
               | 'late_payment_history_reported_to_bureau'
               | 'lien_collection_action_or_judgement'
               | 'negative_public_information'
@@ -641,18 +652,22 @@ declare module 'stripe' {
 
           namespace CreditLineClosed {
             type Reason =
+              | 'applicant_is_not_beneficial_owner'
               | 'applicant_too_young'
               | 'application_is_not_beneficial_owner'
               | 'bankruptcy'
               | 'business_size_too_small'
               | 'change_in_financial_state'
               | 'change_in_utilization_of_credit_line'
+              | 'current_account_tier_ineligible'
               | 'customer_already_exists'
+              | 'customer_requested_account_closure'
               | 'debt_to_cash_balance_ratio_too_high'
               | 'debt_to_equity_ratio_too_high'
               | 'decrease_in_income_to_expense_ratio'
               | 'decrease_in_social_media_performance'
               | 'delinquent_credit_obligations'
+              | 'dispute_rate_too_high'
               | 'duration_of_residence'
               | 'exceeds_acceptable_platform_exposure'
               | 'excessive_income_or_revenue_obligations'
@@ -679,6 +694,7 @@ declare module 'stripe' {
               | 'insufficient_social_media_performance'
               | 'insufficient_trade_credit_insurance'
               | 'insufficient_usage_as_qualified_expenses'
+              | 'invalid_business_license'
               | 'late_payment_history_reported_to_bureau'
               | 'lien_collection_action_or_judgement'
               | 'negative_public_information'
@@ -794,27 +810,25 @@ declare module 'stripe' {
 
           namespace ApplicationRejected {
             type Reason =
+              | 'applicant_is_not_beneficial_owner'
               | 'applicant_too_young'
               | 'application_is_not_beneficial_owner'
               | 'bankruptcy'
               | 'business_size_too_small'
-              | 'change_in_financial_state'
-              | 'change_in_utilization_of_credit_line'
+              | 'current_account_tier_ineligible'
               | 'customer_already_exists'
+              | 'customer_requested_account_closure'
               | 'debt_to_cash_balance_ratio_too_high'
               | 'debt_to_equity_ratio_too_high'
-              | 'decrease_in_income_to_expense_ratio'
-              | 'decrease_in_social_media_performance'
               | 'delinquent_credit_obligations'
+              | 'dispute_rate_too_high'
               | 'duration_of_residence'
-              | 'exceeds_acceptable_platform_exposure'
               | 'excessive_income_or_revenue_obligations'
               | 'expenses_to_cash_balance_ratio_too_high'
               | 'foreclosure_or_repossession'
               | 'frozen_file_at_credit_bureau'
               | 'garnishment_or_attachment'
               | 'government_loan_program_criteria'
-              | 'has_recent_credit_limit_increase'
               | 'high_concentration_of_clients'
               | 'incomplete_application'
               | 'inconsistent_monthly_revenues'
@@ -824,14 +838,13 @@ declare module 'stripe' {
               | 'insufficient_cash_flow'
               | 'insufficient_collateral'
               | 'insufficient_credit_experience'
-              | 'insufficient_credit_utilization'
               | 'insufficient_deposits'
               | 'insufficient_income'
               | 'insufficient_period_in_operation'
               | 'insufficient_revenue'
               | 'insufficient_social_media_performance'
               | 'insufficient_trade_credit_insurance'
-              | 'insufficient_usage_as_qualified_expenses'
+              | 'invalid_business_license'
               | 'late_payment_history_reported_to_bureau'
               | 'lien_collection_action_or_judgement'
               | 'negative_public_information'
@@ -839,7 +852,6 @@ declare module 'stripe' {
               | 'other'
               | 'outside_supported_country'
               | 'outside_supported_state'
-              | 'poor_payment_history_with_platform'
               | 'prior_or_current_legal_action'
               | 'prohibited_industry'
               | 'rate_of_cash_balance_fluctuation_too_high'
@@ -925,7 +937,7 @@ declare module 'stripe' {
         ): ApiListPromise<Stripe.Issuing.CreditUnderwritingRecord>;
 
         /**
-         * Update a CreditUnderwritingRecord object to correct mistakes
+         * Update a CreditUnderwritingRecord object to correct mistakes.
          */
         correct(
           id: string,
@@ -938,7 +950,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Issuing.CreditUnderwritingRecord>>;
 
         /**
-         * Creates a CreditUnderwritingRecord object with information about a credit application submission
+         * Creates a CreditUnderwritingRecord object with information about a credit application submission.
          */
         createFromApplication(
           params: CreditUnderwritingRecordCreateFromApplicationParams,
@@ -946,7 +958,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Issuing.CreditUnderwritingRecord>>;
 
         /**
-         * Creates a CreditUnderwritingRecord object from an underwriting decision coming from a proactive review of an existing accountholder
+         * Creates a CreditUnderwritingRecord object from an underwriting decision coming from a proactive review of an existing accountholder.
          */
         createFromProactiveReview(
           params: CreditUnderwritingRecordCreateFromProactiveReviewParams,
@@ -954,7 +966,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Issuing.CreditUnderwritingRecord>>;
 
         /**
-         * Update a CreditUnderwritingRecord object from an decision made on a credit application
+         * Update a CreditUnderwritingRecord object from a decision made on a credit application.
          */
         reportDecision(
           id: string,

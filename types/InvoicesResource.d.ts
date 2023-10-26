@@ -49,6 +49,11 @@ declare module 'stripe' {
       days_until_due?: number;
 
       /**
+       * The ids of the margins to apply to the invoice. Can be overridden by line item `margins`.
+       */
+      default_margins?: Array<string>;
+
+      /**
        * ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription's default payment method, if any, or to the default payment method in the customer's invoice settings.
        */
       default_payment_method?: string;
@@ -800,6 +805,11 @@ declare module 'stripe' {
        * The number of days from which the invoice is created until it is due. Only valid for invoices where `collection_method=send_invoice`. This field can only be updated on `draft` invoices.
        */
       days_until_due?: number;
+
+      /**
+       * The ids of the margins to apply to the invoice. Can be overridden by line item `margins`.
+       */
+      default_margins?: Stripe.Emptyable<Array<string>>;
 
       /**
        * ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription's default payment method, if any, or to the default payment method in the customer's invoice settings.

@@ -87,6 +87,7 @@ export {Files} from './resources/Files.js';
 export {InvoiceItems} from './resources/InvoiceItems.js';
 export {Invoices} from './resources/Invoices.js';
 export {Mandates} from './resources/Mandates.js';
+export {Margins} from './resources/Margins.js';
 export {OAuth} from './resources/OAuth.js';
 export {Orders} from './resources/Orders.js';
 export {PaymentIntents} from './resources/PaymentIntents.js';
