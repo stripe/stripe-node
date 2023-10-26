@@ -718,6 +718,11 @@ declare module 'stripe' {
         namespace DisplayBankTransferInstructions {
           interface FinancialAddress {
             /**
+             * ABA Records contain U.S. bank account details per the ABA format.
+             */
+            aba?: FinancialAddress.Aba;
+
+            /**
              * Iban Records contain E.U. bank account details per the SEPA format.
              */
             iban?: FinancialAddress.Iban;
@@ -738,6 +743,11 @@ declare module 'stripe' {
             supported_networks?: Array<FinancialAddress.SupportedNetwork>;
 
             /**
+             * SWIFT Records contain U.S. bank account details per the SWIFT format.
+             */
+            swift?: FinancialAddress.Swift;
+
+            /**
              * The type of financial address
              */
             type: FinancialAddress.Type;
@@ -749,6 +759,23 @@ declare module 'stripe' {
           }
 
           namespace FinancialAddress {
+            interface Aba {
+              /**
+               * The ABA account number
+               */
+              account_number: string;
+
+              /**
+               * The bank name
+               */
+              bank_name: string;
+
+              /**
+               * The ABA routing number
+               */
+              routing_number: string;
+            }
+
             interface Iban {
               /**
                * The name of the person or business that owns the bank account
@@ -805,9 +832,40 @@ declare module 'stripe' {
               clabe: string;
             }
 
-            type SupportedNetwork = 'bacs' | 'fps' | 'sepa' | 'spei' | 'zengin';
+            type SupportedNetwork =
+              | 'ach'
+              | 'bacs'
+              | 'domestic_wire_us'
+              | 'fps'
+              | 'sepa'
+              | 'spei'
+              | 'swift'
+              | 'zengin';
 
-            type Type = 'iban' | 'sort_code' | 'spei' | 'zengin';
+            interface Swift {
+              /**
+               * The account number
+               */
+              account_number: string;
+
+              /**
+               * The bank name
+               */
+              bank_name: string;
+
+              /**
+               * The SWIFT code
+               */
+              swift_code: string;
+            }
+
+            type Type =
+              | 'aba'
+              | 'iban'
+              | 'sort_code'
+              | 'spei'
+              | 'swift'
+              | 'zengin';
 
             interface Zengin {
               /**
