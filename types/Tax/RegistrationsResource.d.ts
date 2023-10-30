@@ -1234,7 +1234,7 @@ declare module 'stripe' {
         expires_at?: Stripe.Emptyable<number | 'now'>;
       }
 
-      interface RegistrationListParams {
+      interface RegistrationListParams extends PaginationParams {
         /**
          * Specifies which fields in the response should be expanded.
          */
