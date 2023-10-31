@@ -31,6 +31,7 @@ import {ReceivedCredits as TreasuryReceivedCredits} from './resources/Treasury/R
 import {ReceivedDebits as TestHelpersTreasuryReceivedDebits} from './resources/TestHelpers/Treasury/ReceivedDebits.js';
 import {ReceivedDebits as TreasuryReceivedDebits} from './resources/Treasury/ReceivedDebits.js';
 import {Refunds as TestHelpersRefunds} from './resources/TestHelpers/Refunds.js';
+import {Registrations as TaxRegistrations} from './resources/Tax/Registrations.js';
 import {ReportRuns as ReportingReportRuns} from './resources/Reporting/ReportRuns.js';
 import {ReportTypes as ReportingReportTypes} from './resources/Reporting/ReportTypes.js';
 import {ScheduledQueryRuns as SigmaScheduledQueryRuns} from './resources/Sigma/ScheduledQueryRuns.js';
@@ -137,6 +138,7 @@ export const Sigma = resourceNamespace('sigma', {
 });
 export const Tax = resourceNamespace('tax', {
   Calculations: TaxCalculations,
+  Registrations: TaxRegistrations,
   Settings: TaxSettings,
   Transactions: TaxTransactions,
 });
