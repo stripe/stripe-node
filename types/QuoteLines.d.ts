@@ -49,7 +49,7 @@ declare module 'stripe' {
       /**
        * Timestamp helper to end the underlying schedule early, based on the acompanying line's start or end date.
        */
-      set_schedule_end?: QuoteLine.SetScheduleEnd | null;
+      set_schedule_end: QuoteLine.SetScheduleEnd | null;
 
       /**
        * Details to identify the earliest timestamp where the proposed change should take effect.
