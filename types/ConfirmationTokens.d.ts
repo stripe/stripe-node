@@ -171,6 +171,8 @@ declare module 'stripe' {
 
         promptpay?: PaymentMethodPreview.Promptpay;
 
+        revolut_pay?: PaymentMethodPreview.RevolutPay;
+
         sepa_debit?: PaymentMethodPreview.SepaDebit;
 
         sofort?: PaymentMethodPreview.Sofort;
@@ -930,6 +932,8 @@ declare module 'stripe' {
 
         interface Promptpay {}
 
+        interface RevolutPay {}
+
         interface SepaDebit {
           /**
            * Bank code of bank associated with the bank account.
@@ -1012,6 +1016,7 @@ declare module 'stripe' {
           | 'paypal'
           | 'pix'
           | 'promptpay'
+          | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
