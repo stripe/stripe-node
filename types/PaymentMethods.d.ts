@@ -103,6 +103,8 @@ declare module 'stripe' {
        */
       radar_options?: PaymentMethod.RadarOptions;
 
+      revolut_pay?: PaymentMethod.RevolutPay;
+
       sepa_debit?: PaymentMethod.SepaDebit;
 
       sofort?: PaymentMethod.Sofort;
@@ -858,6 +860,8 @@ declare module 'stripe' {
         session?: string;
       }
 
+      interface RevolutPay {}
+
       interface SepaDebit {
         /**
          * Bank code of bank associated with the bank account.
@@ -940,6 +944,7 @@ declare module 'stripe' {
         | 'paypal'
         | 'pix'
         | 'promptpay'
+        | 'revolut_pay'
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'

@@ -1254,6 +1254,8 @@ declare module 'stripe' {
 
         promptpay?: PaymentMethodOptions.Promptpay;
 
+        revolut_pay?: PaymentMethodOptions.RevolutPay;
+
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
         sofort?: PaymentMethodOptions.Sofort;
@@ -1987,6 +1989,8 @@ declare module 'stripe' {
            */
           setup_future_usage?: 'none';
         }
+
+        interface RevolutPay {}
 
         interface SepaDebit {
           mandate_options?: SepaDebit.MandateOptions;
