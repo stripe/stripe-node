@@ -181,7 +181,7 @@ declare module 'stripe' {
           /**
            * URL provided by the merchant on a 3DS request
            */
-          url?: string | null;
+          url: string | null;
         }
 
         interface NetworkData {
