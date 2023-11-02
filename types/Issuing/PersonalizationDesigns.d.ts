@@ -28,6 +28,11 @@ declare module 'stripe' {
         carrier_text: PersonalizationDesign.CarrierText | null;
 
         /**
+         * Time at which the object was created. Measured in seconds since the Unix epoch.
+         */
+        created: number;
+
+        /**
          * A lookup key used to retrieve personalization designs dynamically from a static string. This may be up to 200 characters.
          */
         lookup_key: string | null;

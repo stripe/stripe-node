@@ -177,6 +177,7 @@
 ///<reference path='./Identity/VerificationSessions.d.ts' />
 ///<reference path='./InvoiceItems.d.ts' />
 ///<reference path='./InvoiceLineItems.d.ts' />
+///<reference path='./InvoicePayments.d.ts' />
 ///<reference path='./Invoices.d.ts' />
 ///<reference path='./Issuing/Authorizations.d.ts' />
 ///<reference path='./Issuing/Cardholders.d.ts' />

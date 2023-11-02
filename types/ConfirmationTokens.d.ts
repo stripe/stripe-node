@@ -171,6 +171,8 @@ declare module 'stripe' {
 
         promptpay?: PaymentMethodPreview.Promptpay;
 
+        revolut_pay?: PaymentMethodPreview.RevolutPay;
+
         sepa_debit?: PaymentMethodPreview.SepaDebit;
 
         sofort?: PaymentMethodPreview.Sofort;
@@ -912,12 +914,12 @@ declare module 'stripe' {
            * Owner's email. Values are provided by PayPal directly
            * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          payer_email?: string | null;
+          payer_email: string | null;
 
           /**
            * PayPal account PayerID. This identifier uniquely identifies the PayPal customer.
            */
-          payer_id?: string | null;
+          payer_id: string | null;
 
           /**
            * Owner's verified email. Values are verified or provided by PayPal directly
@@ -929,6 +931,8 @@ declare module 'stripe' {
         interface Pix {}
 
         interface Promptpay {}
+
+        interface RevolutPay {}
 
         interface SepaDebit {
           /**
@@ -1012,6 +1016,7 @@ declare module 'stripe' {
           | 'paypal'
           | 'pix'
           | 'promptpay'
+          | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'

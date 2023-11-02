@@ -169,6 +169,11 @@ declare module 'stripe' {
       radar_options?: PaymentMethodCreateParams.RadarOptions;
 
       /**
+       * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
+       */
+      revolut_pay?: PaymentMethodCreateParams.RevolutPay;
+
+      /**
        * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
        */
       sepa_debit?: PaymentMethodCreateParams.SepaDebit;
@@ -507,6 +512,8 @@ declare module 'stripe' {
         session?: string;
       }
 
+      interface RevolutPay {}
+
       interface SepaDebit {
         /**
          * IBAN of the bank account.
@@ -552,6 +559,7 @@ declare module 'stripe' {
         | 'paypal'
         | 'pix'
         | 'promptpay'
+        | 'revolut_pay'
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'
@@ -729,6 +737,7 @@ declare module 'stripe' {
         | 'paypal'
         | 'pix'
         | 'promptpay'
+        | 'revolut_pay'
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'

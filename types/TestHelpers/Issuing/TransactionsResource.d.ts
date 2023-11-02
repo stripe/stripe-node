@@ -78,6 +78,9 @@ declare module 'stripe' {
              */
             terminal_id?: string;
 
+            /**
+             * URL provided by the merchant on a 3DS request
+             */
             url?: string;
           }
 
@@ -601,6 +604,9 @@ declare module 'stripe' {
              */
             terminal_id?: string;
 
+            /**
+             * URL provided by the merchant on a 3DS request
+             */
             url?: string;
           }
 

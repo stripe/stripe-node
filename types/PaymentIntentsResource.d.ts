@@ -692,6 +692,11 @@ declare module 'stripe' {
         radar_options?: PaymentMethodData.RadarOptions;
 
         /**
+         * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
+         */
+        revolut_pay?: PaymentMethodData.RevolutPay;
+
+        /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
@@ -1001,6 +1006,8 @@ declare module 'stripe' {
           session?: string;
         }
 
+        interface RevolutPay {}
+
         interface SepaDebit {
           /**
            * IBAN of the bank account.
@@ -1045,6 +1052,7 @@ declare module 'stripe' {
           | 'paypal'
           | 'pix'
           | 'promptpay'
+          | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
@@ -1233,6 +1241,11 @@ declare module 'stripe' {
          * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
          */
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
+
+        /**
+         * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Demo Pay payment method options.
+         */
+        revolut_pay?: Stripe.Emptyable<PaymentMethodOptions.RevolutPay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -2176,6 +2189,21 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface RevolutPay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<RevolutPay.SetupFutureUsage>;
+        }
+
+        namespace RevolutPay {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface SepaDebit {
@@ -3045,6 +3073,11 @@ declare module 'stripe' {
         radar_options?: PaymentMethodData.RadarOptions;
 
         /**
+         * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
+         */
+        revolut_pay?: PaymentMethodData.RevolutPay;
+
+        /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
@@ -3354,6 +3387,8 @@ declare module 'stripe' {
           session?: string;
         }
 
+        interface RevolutPay {}
+
         interface SepaDebit {
           /**
            * IBAN of the bank account.
@@ -3398,6 +3433,7 @@ declare module 'stripe' {
           | 'paypal'
           | 'pix'
           | 'promptpay'
+          | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
@@ -3586,6 +3622,11 @@ declare module 'stripe' {
          * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
          */
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
+
+        /**
+         * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Demo Pay payment method options.
+         */
+        revolut_pay?: Stripe.Emptyable<PaymentMethodOptions.RevolutPay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -4529,6 +4570,21 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface RevolutPay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<RevolutPay.SetupFutureUsage>;
+        }
+
+        namespace RevolutPay {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface SepaDebit {
@@ -5798,6 +5854,11 @@ declare module 'stripe' {
         radar_options?: PaymentMethodData.RadarOptions;
 
         /**
+         * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
+         */
+        revolut_pay?: PaymentMethodData.RevolutPay;
+
+        /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
@@ -6107,6 +6168,8 @@ declare module 'stripe' {
           session?: string;
         }
 
+        interface RevolutPay {}
+
         interface SepaDebit {
           /**
            * IBAN of the bank account.
@@ -6151,6 +6214,7 @@ declare module 'stripe' {
           | 'paypal'
           | 'pix'
           | 'promptpay'
+          | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
@@ -6339,6 +6403,11 @@ declare module 'stripe' {
          * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
          */
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
+
+        /**
+         * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Demo Pay payment method options.
+         */
+        revolut_pay?: Stripe.Emptyable<PaymentMethodOptions.RevolutPay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -7282,6 +7351,21 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface RevolutPay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<RevolutPay.SetupFutureUsage>;
+        }
+
+        namespace RevolutPay {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface SepaDebit {

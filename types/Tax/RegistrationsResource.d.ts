@@ -7,7 +7,7 @@ declare module 'stripe' {
         /**
          * Time at which the Tax Registration becomes active. It can be either `now` to indicate the current time, or a future timestamp measured in seconds since the Unix epoch.
          */
-        active_from: number | 'now';
+        active_from: 'now' | number;
 
         /**
          * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -1221,7 +1221,7 @@ declare module 'stripe' {
         /**
          * Time at which the registration becomes active. It can be either `now` to indicate the current time, or a timestamp measured in seconds since the Unix epoch.
          */
-        active_from?: number | 'now';
+        active_from?: 'now' | number;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -1231,10 +1231,10 @@ declare module 'stripe' {
         /**
          * If set, the registration stops being active at this time. If not set, the registration will be active indefinitely. It can be either `now` to indicate the current time, or a timestamp measured in seconds since the Unix epoch.
          */
-        expires_at?: Stripe.Emptyable<number | 'now'>;
+        expires_at?: Stripe.Emptyable<'now' | number>;
       }
 
-      interface RegistrationListParams {
+      interface RegistrationListParams extends PaginationParams {
         /**
          * Specifies which fields in the response should be expanded.
          */

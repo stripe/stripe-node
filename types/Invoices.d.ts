@@ -105,6 +105,11 @@ declare module 'stripe' {
       amount_shipping: number;
 
       /**
+       * List of expected payments and corresponding due dates. This value will be null for invoices where collection_method=charge_automatically.
+       */
+      amounts_due?: Array<Invoice.AmountsDue> | null;
+
+      /**
        * ID of the Connect Application that created the invoice.
        */
       application:
@@ -353,6 +358,11 @@ declare module 'stripe' {
       payment_settings: Invoice.PaymentSettings;
 
       /**
+       * Payments for this invoice
+       */
+      payments?: ApiList<Stripe.InvoicePayment>;
+
+      /**
        * End of the usage period during which invoice items were added to this invoice.
        */
       period_end: number;
@@ -493,6 +503,52 @@ declare module 'stripe' {
     }
 
     namespace Invoice {
+      interface AmountsDue {
+        /**
+         * Incremental amount due for this payment in cents (or local equivalent).
+         */
+        amount: number;
+
+        /**
+         * The amount in cents (or local equivalent) that was paid for this payment.
+         */
+        amount_paid: number;
+
+        /**
+         * The difference between the payment's amount and amount_paid, in cents (or local equivalent).
+         */
+        amount_remaining: number;
+
+        /**
+         * Number of days from when invoice is finalized until the payment is due.
+         */
+        days_until_due: number | null;
+
+        /**
+         * An arbitrary string attached to the object. Often useful for displaying to users.
+         */
+        description: string | null;
+
+        /**
+         * Date on which a payment plan's payment is due.
+         */
+        due_date: number | null;
+
+        /**
+         * Timestamp when the payment was paid.
+         */
+        paid_at: number | null;
+
+        /**
+         * The status of the payment, one of `open`, `paid`, or `past_due`
+         */
+        status: AmountsDue.Status;
+      }
+
+      namespace AmountsDue {
+        type Status = 'open' | 'paid' | 'past_due';
+      }
+
       interface AutomaticTax {
         /**
          * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
@@ -950,6 +1006,7 @@ declare module 'stripe' {
           | 'testmode_charges_only'
           | 'tls_version_unsupported'
           | 'token_already_used'
+          | 'token_card_network_invalid'
           | 'token_in_use'
           | 'transfer_source_balance_parameters_mismatch'
           | 'transfers_not_allowed'

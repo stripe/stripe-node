@@ -122,6 +122,9 @@ declare module 'stripe' {
              */
             terminal_id?: string;
 
+            /**
+             * URL provided by the merchant on a 3DS request
+             */
             url?: string;
           }
 
@@ -442,6 +445,11 @@ declare module 'stripe' {
             address_postal_code_check?: VerificationData.AddressPostalCodeCheck;
 
             /**
+             * The exemption applied to this authorization.
+             */
+            authentication_exemption?: VerificationData.AuthenticationExemption;
+
+            /**
              * Whether the cardholder provided a CVC and if it matched Stripe's record.
              */
             cvc_check?: VerificationData.CvcCheck;
@@ -461,6 +469,24 @@ declare module 'stripe' {
             type AddressLine1Check = 'match' | 'mismatch' | 'not_provided';
 
             type AddressPostalCodeCheck = 'match' | 'mismatch' | 'not_provided';
+
+            interface AuthenticationExemption {
+              /**
+               * The entity that requested the exemption, either the acquiring merchant or the Issuing user.
+               */
+              claimed_by: AuthenticationExemption.ClaimedBy;
+
+              /**
+               * The specific exemption claimed for this authorization.
+               */
+              type: AuthenticationExemption.Type;
+            }
+
+            namespace AuthenticationExemption {
+              type ClaimedBy = 'acquirer' | 'issuer';
+
+              type Type = 'low_value_transaction' | 'transaction_risk_analysis';
+            }
 
             type CvcCheck = 'match' | 'mismatch' | 'not_provided';
 

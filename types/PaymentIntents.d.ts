@@ -537,6 +537,7 @@ declare module 'stripe' {
           | 'testmode_charges_only'
           | 'tls_version_unsupported'
           | 'token_already_used'
+          | 'token_card_network_invalid'
           | 'token_in_use'
           | 'transfer_source_balance_parameters_mismatch'
           | 'transfers_not_allowed'
@@ -1363,6 +1364,8 @@ declare module 'stripe' {
 
         promptpay?: PaymentMethodOptions.Promptpay;
 
+        revolut_pay?: PaymentMethodOptions.RevolutPay;
+
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
         sofort?: PaymentMethodOptions.Sofort;
@@ -2094,7 +2097,7 @@ declare module 'stripe' {
           /**
            * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
            */
-          reference?: string | null;
+          reference: string | null;
 
           /**
            * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
@@ -2151,6 +2154,8 @@ declare module 'stripe' {
            */
           setup_future_usage?: 'none';
         }
+
+        interface RevolutPay {}
 
         interface SepaDebit {
           mandate_options?: SepaDebit.MandateOptions;
