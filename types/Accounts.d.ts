@@ -323,6 +323,11 @@ declare module 'stripe' {
         promptpay_payments?: Capabilities.PromptpayPayments;
 
         /**
+         * The status of the RevolutPay capability of the account, or whether the account can directly process RevolutPay payments.
+         */
+        revolut_pay_payments?: Capabilities.RevolutPayPayments;
+
+        /**
          * The status of the SEPA Direct Debits payments capability of the account, or whether the account can directly process SEPA Direct Debits charges.
          */
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
@@ -419,6 +424,8 @@ declare module 'stripe' {
         type PaynowPayments = 'active' | 'inactive' | 'pending';
 
         type PromptpayPayments = 'active' | 'inactive' | 'pending';
+
+        type RevolutPayPayments = 'active' | 'inactive' | 'pending';
 
         type SepaDebitPayments = 'active' | 'inactive' | 'pending';
 

@@ -172,6 +172,11 @@ declare module 'stripe' {
            * An ID assigned by the seller to the location of the sale.
            */
           terminal_id: string | null;
+
+          /**
+           * URL provided by the merchant on a 3DS request
+           */
+          url: string | null;
         }
 
         interface PurchaseDetails {

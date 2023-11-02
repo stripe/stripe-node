@@ -842,6 +842,8 @@ declare module 'stripe' {
 
           pix?: PaymentMethodOptions.Pix;
 
+          revolut_pay?: PaymentMethodOptions.RevolutPay;
+
           sepa_debit?: PaymentMethodOptions.SepaDebit;
 
           sofort?: PaymentMethodOptions.Sofort;
@@ -1263,6 +1265,8 @@ declare module 'stripe' {
              */
             expires_after_seconds: number | null;
           }
+
+          interface RevolutPay {}
 
           interface SepaDebit {
             /**

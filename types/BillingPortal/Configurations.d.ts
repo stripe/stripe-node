@@ -210,7 +210,7 @@ declare module 'stripe' {
             enabled: boolean;
 
             /**
-             * The list of products that support subscription updates.
+             * The list of up to 10 products that support subscription updates.
              */
             products: Array<SubscriptionUpdate.Product> | null;
 

@@ -526,6 +526,7 @@ declare module 'stripe' {
           | 'testmode_charges_only'
           | 'tls_version_unsupported'
           | 'token_already_used'
+          | 'token_card_network_invalid'
           | 'token_in_use'
           | 'transfer_source_balance_parameters_mismatch'
           | 'transfers_not_allowed'
@@ -707,6 +708,11 @@ declare module 'stripe' {
         namespace DisplayBankTransferInstructions {
           interface FinancialAddress {
             /**
+             * ABA Records contain U.S. bank account details per the ABA format.
+             */
+            aba?: FinancialAddress.Aba;
+
+            /**
              * Iban Records contain E.U. bank account details per the SEPA format.
              */
             iban?: FinancialAddress.Iban;
@@ -727,6 +733,11 @@ declare module 'stripe' {
             supported_networks?: Array<FinancialAddress.SupportedNetwork>;
 
             /**
+             * SWIFT Records contain U.S. bank account details per the SWIFT format.
+             */
+            swift?: FinancialAddress.Swift;
+
+            /**
              * The type of financial address
              */
             type: FinancialAddress.Type;
@@ -738,6 +749,23 @@ declare module 'stripe' {
           }
 
           namespace FinancialAddress {
+            interface Aba {
+              /**
+               * The ABA account number
+               */
+              account_number: string;
+
+              /**
+               * The bank name
+               */
+              bank_name: string;
+
+              /**
+               * The ABA routing number
+               */
+              routing_number: string;
+            }
+
             interface Iban {
               /**
                * The name of the person or business that owns the bank account
@@ -794,9 +822,40 @@ declare module 'stripe' {
               clabe: string;
             }
 
-            type SupportedNetwork = 'bacs' | 'fps' | 'sepa' | 'spei' | 'zengin';
+            type SupportedNetwork =
+              | 'ach'
+              | 'bacs'
+              | 'domestic_wire_us'
+              | 'fps'
+              | 'sepa'
+              | 'spei'
+              | 'swift'
+              | 'zengin';
 
-            type Type = 'iban' | 'sort_code' | 'spei' | 'zengin';
+            interface Swift {
+              /**
+               * The account number
+               */
+              account_number: string;
+
+              /**
+               * The bank name
+               */
+              bank_name: string;
+
+              /**
+               * The SWIFT code
+               */
+              swift_code: string;
+            }
+
+            type Type =
+              | 'aba'
+              | 'iban'
+              | 'sort_code'
+              | 'spei'
+              | 'swift'
+              | 'zengin';
 
             interface Zengin {
               /**
@@ -1195,6 +1254,8 @@ declare module 'stripe' {
         pix?: PaymentMethodOptions.Pix;
 
         promptpay?: PaymentMethodOptions.Promptpay;
+
+        revolut_pay?: PaymentMethodOptions.RevolutPay;
 
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
@@ -1882,7 +1943,7 @@ declare module 'stripe' {
           /**
            * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
            */
-          reference?: string | null;
+          reference: string | null;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -1929,6 +1990,8 @@ declare module 'stripe' {
            */
           setup_future_usage?: 'none';
         }
+
+        interface RevolutPay {}
 
         interface SepaDebit {
           mandate_options?: SepaDebit.MandateOptions;

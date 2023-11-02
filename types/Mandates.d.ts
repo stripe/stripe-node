@@ -186,7 +186,7 @@ declare module 'stripe' {
           /**
            * PayPal account PayerID. This identifier uniquely identifies the PayPal customer.
            */
-          payer_id?: string | null;
+          payer_id: string | null;
         }
 
         interface SepaDebit {

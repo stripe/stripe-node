@@ -464,6 +464,11 @@ declare module 'stripe' {
         capture_method?: PaymentIntentData.CaptureMethod;
 
         /**
+         * An arbitrary string attached to the object. Often useful for displaying to users.
+         */
+        description?: string;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Payment Intents](https://stripe.com/docs/api/payment_intents) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
         metadata?: Stripe.MetadataParam;
@@ -1238,6 +1243,11 @@ declare module 'stripe' {
       }
 
       interface PaymentIntentData {
+        /**
+         * An arbitrary string attached to the object. Often useful for displaying to users.
+         */
+        description?: Stripe.Emptyable<string>;
+
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Payment Intents](https://stripe.com/docs/api/payment_intents) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
