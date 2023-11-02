@@ -221,6 +221,9 @@ declare module 'stripe' {
              */
             converts_to?: Array<string> | null;
 
+            /**
+             * Determines the type of trial for this item.
+             */
             type: Trial.Type;
           }
 
@@ -368,6 +371,9 @@ declare module 'stripe' {
              */
             converts_to?: Array<string> | null;
 
+            /**
+             * Determines the type of trial for this item.
+             */
             type: Trial.Type;
           }
 
