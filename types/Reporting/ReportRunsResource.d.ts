@@ -99,7 +99,8 @@ declare module 'stripe' {
             | 'topup'
             | 'topup_reversal'
             | 'transfer'
-            | 'transfer_reversal';
+            | 'transfer_reversal'
+            | 'unreconciled_customer_funds';
 
           type Timezone =
             | 'Africa/Abidjan'
