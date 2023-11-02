@@ -57,10 +57,10 @@ declare module 'stripe' {
         custom_text?: SessionCreateParams.CustomText;
 
         /**
-         * ID of an existing Customer, if one exists. In `payment` mode, the customer's most recent card
+         * ID of an existing Customer, if one exists. In `payment` mode, the customer's most recently saved card
          * payment method will be used to prefill the email, name, card details, and billing address
          * on the Checkout page. In `subscription` mode, the customer's [default payment method](https://stripe.com/docs/api/customers/update#update_customer-invoice_settings-default_payment_method)
-         * will be used if it's a card, and otherwise the most recent card will be used. A valid billing address, billing name and billing email are required on the payment method for Checkout to prefill the customer's card details.
+         * will be used if it's a card, otherwise the most recently saved card will be used. A valid billing address, billing name and billing email are required on the payment method for Checkout to prefill the customer's card details.
          *
          * If the Customer already has a valid [email](https://stripe.com/docs/api/customers/object#customer_object-email) set, the email will be prefilled and not editable in Checkout.
          * If the Customer does not have a valid `email`, Checkout will set the email entered during the session on the Customer.
