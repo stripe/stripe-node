@@ -106,6 +106,10 @@ declare module 'stripe' {
        */
       pdf: string;
 
+      post_payment_amount?: number;
+
+      pre_payment_amount?: number;
+
       /**
        * Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
        */
@@ -115,6 +119,11 @@ declare module 'stripe' {
        * Refund related to this credit note.
        */
       refund: string | Stripe.Refund | null;
+
+      /**
+       * Refunds related to this credit note.
+       */
+      refunds?: Array<CreditNote.Refund>;
 
       /**
        * The details of the cost of shipping, including the ShippingRate applied to the invoice.
@@ -180,6 +189,18 @@ declare module 'stripe' {
         | 'fraudulent'
         | 'order_change'
         | 'product_unsatisfactory';
+
+      interface Refund {
+        /**
+         * Amount of the refund that applies to this credit note, in cents (or local equivalent).
+         */
+        amount_refunded: number;
+
+        /**
+         * ID of the refund.
+         */
+        refund: string | Stripe.Refund;
+      }
 
       interface ShippingCost {
         /**

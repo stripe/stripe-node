@@ -9,6 +9,11 @@ declare module 'stripe' {
       account_tax_ids?: Stripe.Emptyable<Array<string>>;
 
       /**
+       * List of expected payments and corresponding due dates. Valid only for invoices where `collection_method=send_invoice`.
+       */
+      amounts_due?: Stripe.Emptyable<Array<InvoiceCreateParams.AmountsDue>>;
+
+      /**
        * A fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/billing/invoices/connect#collecting-fees).
        */
       application_fee_amount?: number;
@@ -167,6 +172,28 @@ declare module 'stripe' {
     }
 
     namespace InvoiceCreateParams {
+      interface AmountsDue {
+        /**
+         * The amount in cents (or local equivalent).
+         */
+        amount: number;
+
+        /**
+         * Number of days from when invoice is finalized until the payment is due.
+         */
+        days_until_due?: number;
+
+        /**
+         * An arbitrary string attached to the object. Often useful for displaying to users.
+         */
+        description: string;
+
+        /**
+         * Date on which a payment plan's payment is due.
+         */
+        due_date?: number;
+      }
+
       interface AutomaticTax {
         /**
          * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
@@ -777,6 +804,11 @@ declare module 'stripe' {
       account_tax_ids?: Stripe.Emptyable<Array<string>>;
 
       /**
+       * List of expected payments and corresponding due dates. Valid only for invoices where `collection_method=send_invoice`.
+       */
+      amounts_due?: Stripe.Emptyable<Array<InvoiceUpdateParams.AmountsDue>>;
+
+      /**
        * A fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/billing/invoices/connect#collecting-fees).
        */
       application_fee_amount?: number;
@@ -910,6 +942,28 @@ declare module 'stripe' {
     }
 
     namespace InvoiceUpdateParams {
+      interface AmountsDue {
+        /**
+         * The amount in cents (or local equivalent).
+         */
+        amount: number;
+
+        /**
+         * Number of days from when invoice is finalized until the payment is due.
+         */
+        days_until_due?: number;
+
+        /**
+         * An arbitrary string attached to the object. Often useful for displaying to users.
+         */
+        description: string;
+
+        /**
+         * Date on which a payment plan's payment is due.
+         */
+        due_date?: number;
+      }
+
       interface AutomaticTax {
         /**
          * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
@@ -1528,6 +1582,23 @@ declare module 'stripe' {
 
     interface InvoiceDeleteParams {}
 
+    interface InvoiceAttachPaymentIntentParams {
+      /**
+       * The ID of the PaymentIntent to attach to the invoice.
+       */
+      payment_intent: string;
+
+      /**
+       * The portion of the PaymentIntent's `amount` that should be applied to thisinvoice. Defaults to the entire amount.
+       */
+      amount_requested?: number;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface InvoiceFinalizeInvoiceParams {
       /**
        * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
@@ -1541,6 +1612,13 @@ declare module 'stripe' {
     }
 
     interface InvoiceLineItemListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface InvoicePaymentListParams extends PaginationParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -3613,6 +3691,13 @@ declare module 'stripe' {
        * A payment source to be charged. The source must be the ID of a source belonging to the customer associated with the invoice being paid.
        */
       source?: string;
+    }
+
+    interface InvoicePaymentRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
     }
 
     interface InvoiceRetrieveUpcomingParams {
@@ -5735,6 +5820,23 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.DeletedInvoice>>;
 
       /**
+       * Attaches a PaymentIntent to the invoice, adding it to the list of payments.
+       * When the PaymentIntent's status changes to succeeded, the payment is credited
+       * to the invoice, increasing its amount_paid. When the invoice is fully paid, the
+       * invoice's status becomes paid.
+       *
+       * If the PaymentIntent's status is already succeeded when it is attached, it is
+       * credited to the invoice immediately.
+       *
+       * Related guide: [Create an invoice payment](https://stripe.com/docs/invoicing/payments/create)
+       */
+      attachPaymentIntent(
+        id: string,
+        params: InvoiceAttachPaymentIntentParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Invoice>>;
+
+      /**
        * Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you'd like to finalize a draft invoice manually, you can do so using this method.
        */
       finalizeInvoice(
@@ -5759,6 +5861,19 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): ApiListPromise<Stripe.InvoiceLineItem>;
+
+      /**
+       * When retrieving an invoice, there is an includable payments property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of payments.
+       */
+      listPayments(
+        id: string,
+        params?: InvoicePaymentListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.InvoicePayment>;
+      listPayments(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.InvoicePayment>;
 
       /**
        * When retrieving an upcoming invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
@@ -5796,6 +5911,21 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Invoice>>;
+
+      /**
+       * Retrieves the invoice payment with the given ID.
+       */
+      retrievePayment(
+        invoiceId: string,
+        id: string,
+        params?: InvoicePaymentRetrieveParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.InvoicePayment>>;
+      retrievePayment(
+        invoiceId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.InvoicePayment>>;
 
       /**
        * At any time, you can preview the upcoming invoice for a customer. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discounts that are applicable to the invoice.

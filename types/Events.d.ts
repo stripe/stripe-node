@@ -183,6 +183,7 @@ declare module 'stripe' {
         | 'invoice.finalized'
         | 'invoice.marked_uncollectible'
         | 'invoice.paid'
+        | 'invoice.payment.overpaid'
         | 'invoice.payment_action_required'
         | 'invoice.payment_failed'
         | 'invoice.payment_succeeded'

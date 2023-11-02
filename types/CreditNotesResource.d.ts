@@ -64,6 +64,11 @@ declare module 'stripe' {
       refund_amount?: number;
 
       /**
+       * Refunds to link to this credit note.
+       */
+      refunds?: Array<CreditNoteCreateParams.Refund>;
+
+      /**
        * When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the credit note.
        */
       shipping_cost?: CreditNoteCreateParams.ShippingCost;
@@ -121,6 +126,18 @@ declare module 'stripe' {
         | 'fraudulent'
         | 'order_change'
         | 'product_unsatisfactory';
+
+      interface Refund {
+        /**
+         * Amount of the refund that applies to this credit note, in cents (or local equivalent). Defaults to the entire refund amount.
+         */
+        amount_refunded?: number;
+
+        /**
+         * ID of an existing refund to link this credit note to.
+         */
+        refund: string;
+      }
 
       interface ShippingCost {
         /**
@@ -240,6 +257,11 @@ declare module 'stripe' {
       refund_amount?: number;
 
       /**
+       * Refunds to link to this credit note.
+       */
+      refunds?: Array<CreditNoteListPreviewLineItemsParams.Refund>;
+
+      /**
        * When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the credit note.
        */
       shipping_cost?: CreditNoteListPreviewLineItemsParams.ShippingCost;
@@ -297,6 +319,18 @@ declare module 'stripe' {
         | 'fraudulent'
         | 'order_change'
         | 'product_unsatisfactory';
+
+      interface Refund {
+        /**
+         * Amount of the refund that applies to this credit note, in cents (or local equivalent). Defaults to the entire refund amount.
+         */
+        amount_refunded?: number;
+
+        /**
+         * ID of an existing refund to link this credit note to.
+         */
+        refund: string;
+      }
 
       interface ShippingCost {
         /**
@@ -368,6 +402,11 @@ declare module 'stripe' {
       refund_amount?: number;
 
       /**
+       * Refunds to link to this credit note.
+       */
+      refunds?: Array<CreditNotePreviewParams.Refund>;
+
+      /**
        * When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the credit note.
        */
       shipping_cost?: CreditNotePreviewParams.ShippingCost;
@@ -425,6 +464,18 @@ declare module 'stripe' {
         | 'fraudulent'
         | 'order_change'
         | 'product_unsatisfactory';
+
+      interface Refund {
+        /**
+         * Amount of the refund that applies to this credit note, in cents (or local equivalent). Defaults to the entire refund amount.
+         */
+        amount_refunded?: number;
+
+        /**
+         * ID of an existing refund to link this credit note to.
+         */
+        refund: string;
+      }
 
       interface ShippingCost {
         /**
