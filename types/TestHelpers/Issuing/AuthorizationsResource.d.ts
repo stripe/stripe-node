@@ -121,6 +121,11 @@ declare module 'stripe' {
              * An ID assigned by the seller to the location of the sale.
              */
             terminal_id?: string;
+
+            /**
+             * URL provided by the merchant on a 3DS request
+             */
+            url?: string;
           }
 
           namespace MerchantData {
@@ -440,6 +445,11 @@ declare module 'stripe' {
             address_postal_code_check?: VerificationData.AddressPostalCodeCheck;
 
             /**
+             * The exemption applied to this authorization.
+             */
+            authentication_exemption?: VerificationData.AuthenticationExemption;
+
+            /**
              * Whether the cardholder provided a CVC and if it matched Stripe's record.
              */
             cvc_check?: VerificationData.CvcCheck;
@@ -448,6 +458,11 @@ declare module 'stripe' {
              * Whether the cardholder provided an expiry date and if it matched Stripe's record.
              */
             expiry_check?: VerificationData.ExpiryCheck;
+
+            /**
+             * 3D Secure details.
+             */
+            three_d_secure?: VerificationData.ThreeDSecure;
           }
 
           namespace VerificationData {
@@ -455,9 +470,42 @@ declare module 'stripe' {
 
             type AddressPostalCodeCheck = 'match' | 'mismatch' | 'not_provided';
 
+            interface AuthenticationExemption {
+              /**
+               * The entity that requested the exemption, either the acquiring merchant or the Issuing user.
+               */
+              claimed_by: AuthenticationExemption.ClaimedBy;
+
+              /**
+               * The specific exemption claimed for this authorization.
+               */
+              type: AuthenticationExemption.Type;
+            }
+
+            namespace AuthenticationExemption {
+              type ClaimedBy = 'acquirer' | 'issuer';
+
+              type Type = 'low_value_transaction' | 'transaction_risk_analysis';
+            }
+
             type CvcCheck = 'match' | 'mismatch' | 'not_provided';
 
             type ExpiryCheck = 'match' | 'mismatch' | 'not_provided';
+
+            interface ThreeDSecure {
+              /**
+               * The outcome of the 3D Secure authentication request.
+               */
+              result: ThreeDSecure.Result;
+            }
+
+            namespace ThreeDSecure {
+              type Result =
+                | 'attempt_acknowledged'
+                | 'authenticated'
+                | 'failed'
+                | 'required';
+            }
           }
 
           type Wallet = 'apple_pay' | 'google_pay' | 'samsung_pay';

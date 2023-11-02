@@ -77,6 +77,11 @@ declare module 'stripe' {
              * An ID assigned by the seller to the location of the sale.
              */
             terminal_id?: string;
+
+            /**
+             * URL provided by the merchant on a 3DS request
+             */
+            url?: string;
           }
 
           namespace MerchantData {
@@ -598,6 +603,11 @@ declare module 'stripe' {
              * An ID assigned by the seller to the location of the sale.
              */
             terminal_id?: string;
+
+            /**
+             * URL provided by the merchant on a 3DS request
+             */
+            url?: string;
           }
 
           namespace MerchantData {
