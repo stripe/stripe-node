@@ -255,6 +255,7 @@ declare module 'stripe' {
         | 'quote.created'
         | 'quote.draft'
         | 'quote.finalized'
+        | 'quote.reestimate_failed'
         | 'quote.reestimated'
         | 'quote.stale'
         | 'radar.early_fraud_warning.created'
