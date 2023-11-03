@@ -153,7 +153,7 @@ declare module 'stripe' {
       /**
        * Information about the payment method configuration used for this PaymentIntent.
        */
-      payment_method_configuration_details?: PaymentIntent.PaymentMethodConfigurationDetails | null;
+      payment_method_configuration_details: PaymentIntent.PaymentMethodConfigurationDetails | null;
 
       /**
        * Payment-method-specific configuration for this PaymentIntent.

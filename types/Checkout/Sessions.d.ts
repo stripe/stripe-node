@@ -192,7 +192,7 @@ declare module 'stripe' {
         /**
          * Information about the payment method configuration used for this Checkout session if using dynamic payment methods.
          */
-        payment_method_configuration_details?: Session.PaymentMethodConfigurationDetails | null;
+        payment_method_configuration_details: Session.PaymentMethodConfigurationDetails | null;
 
         /**
          * Payment-method-specific configuration for the PaymentIntent or SetupIntent of this CheckoutSession.
