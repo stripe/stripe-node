@@ -233,8 +233,9 @@ declare module 'stripe' {
         /**
          * The URL to which Stripe should send customers when payment or setup
          * is complete.
-         * If you'd like to use information from the successful Checkout Session on your page,
-         * read the guide on [customizing your success page](https://stripe.com/docs/payments/checkout/custom-success-page).
+         * This parameter is not allowed if ui_mode is `embedded`. If you'd like to use
+         * information from the successful Checkout Session on your page, read the
+         * guide on [customizing your success page](https://stripe.com/docs/payments/checkout/custom-success-page).
          */
         success_url?: string;
 
