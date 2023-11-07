@@ -121,7 +121,7 @@ declare module 'stripe' {
       /**
        * The latest charge created by this PaymentIntent.
        */
-      latest_charge?: string | Stripe.Charge | null;
+      latest_charge: string | Stripe.Charge | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
