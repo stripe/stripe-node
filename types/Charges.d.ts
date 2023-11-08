@@ -681,7 +681,7 @@ declare module 'stripe' {
           /**
            * The authorized amount.
            */
-          amount_authorized?: number | null;
+          amount_authorized: number | null;
 
           /**
            * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
