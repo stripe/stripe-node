@@ -6,6 +6,12 @@ import {
   HttpClientResponseInterface,
 } from './HttpClient.js';
 
+type FetchWithTimeout = (
+  url: string,
+  init: RequestInit,
+  timeout: number
+) => Promise<Response>;
+
 /**
  * HTTP client which uses a `fetch` function to issue requests.
  *
@@ -15,11 +21,64 @@ import {
  * node-fetch package (https://github.com/node-fetch/node-fetch).
  */
 export class FetchHttpClient extends HttpClient implements HttpClientInterface {
-  _fetchFn?: typeof fetch;
+  private readonly _fetchFn: FetchWithTimeout;
 
-  constructor(fetchFn?: typeof fetch) {
+  constructor(fetchFn = fetch) {
     super();
-    this._fetchFn = fetchFn;
+    // Both timeout behaviors differs from Node:
+    // - Fetch uses a single timeout for the entire length of the request.
+    // - Node is more fine-grained and resets the timeout after each stage of the request.
+    if (globalThis.AbortController) {
+      // Utilise native AbortSignal if available
+      // AbortController was added in Node v15.0.0, v14.17.0
+      this._fetchFn = FetchHttpClient.makeFetchWithAbortTimeout(fetch);
+    } else {
+      // Fall to racing against a timeout promise if not available in the runtime
+      // This does not actually cancel the underlying fetch operation or resources
+      this._fetchFn = FetchHttpClient.makeFetchWithRaceTimeout(fetchFn);
+    }
+  }
+
+  private static makeFetchWithRaceTimeout(
+    fetchFn: typeof fetch
+  ): FetchWithTimeout {
+    return (url, init, timeout): Promise<Response> => {
+      let pendingTimeoutId: NodeJS.Timeout | null;
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        pendingTimeoutId = setTimeout(() => {
+          pendingTimeoutId = null;
+          reject(HttpClient.makeTimeoutError());
+        }, timeout);
+      });
+
+      const fetchPromise = fetchFn(url, init);
+      return Promise.race([fetchPromise, timeoutPromise]).finally(() => {
+        if (pendingTimeoutId) {
+          clearTimeout(pendingTimeoutId);
+        }
+      });
+    };
+  }
+
+  private static makeFetchWithAbortTimeout(
+    fetchFn: typeof fetch
+  ): FetchWithTimeout {
+    return (url, init, timeout: number): Promise<Response> => {
+      // Use AbortController because AbortSignal.timeout() was added later in Node v17.3.0, v16.14.0
+      const abort = new AbortController();
+      let timeoutId: NodeJS.Timeout | null = setTimeout(() => {
+        timeoutId = null;
+        abort.abort(HttpClient.makeTimeoutError());
+      }, timeout);
+      return fetchFn(url, {
+        ...init,
+        signal: AbortSignal.timeout(timeout),
+      }).finally(() => {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
+      });
+    };
   }
 
   /** @override. */
@@ -27,7 +86,7 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
     return 'fetch';
   }
 
-  makeRequest(
+  async makeRequest(
     host: string,
     port: string,
     path: string,
@@ -53,45 +112,18 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
       method == 'POST' || method == 'PUT' || method == 'PATCH';
     const body = requestData || (methodHasPayload ? '' : undefined);
 
-    const fetchFn = this._fetchFn || fetch;
-    const fetchPromise = fetchFn(url.toString(), {
-      method,
-      // @ts-ignore
-      headers,
-      // @ts-ignore
-      body,
-    });
-
-    // The Fetch API does not support passing in a timeout natively, so a
-    // timeout promise is constructed to race against the fetch and preempt the
-    // request, simulating a timeout.
-    //
-    // This timeout behavior differs from Node:
-    // - Fetch uses a single timeout for the entire length of the request.
-    // - Node is more fine-grained and resets the timeout after each stage of
-    //   the request.
-    //
-    // As an example, if the timeout is set to 30s and the connection takes 20s
-    // to be established followed by 20s for the body, Fetch would timeout but
-    // Node would not. The more fine-grained timeout cannot be implemented with
-    // fetch.
-    let pendingTimeoutId: NodeJS.Timeout | null;
-    const timeoutPromise = new Promise((_, reject) => {
-      pendingTimeoutId = setTimeout(() => {
-        pendingTimeoutId = null;
-        reject(HttpClient.makeTimeoutError());
-      }, timeout);
-    });
-
-    return Promise.race([fetchPromise, timeoutPromise])
-      .then((res) => {
-        return new FetchHttpClientResponse(res as Response);
-      })
-      .finally(() => {
-        if (pendingTimeoutId) {
-          clearTimeout(pendingTimeoutId);
-        }
-      });
+    const res = await this._fetchFn(
+      url.toString(),
+      {
+        method,
+        // @ts-ignore
+        headers,
+        // @ts-ignore
+        body,
+      },
+      timeout
+    );
+    return new FetchHttpClientResponse(res);
   }
 }
 
