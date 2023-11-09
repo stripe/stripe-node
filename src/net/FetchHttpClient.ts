@@ -23,17 +23,29 @@ type FetchWithTimeout = (
 export class FetchHttpClient extends HttpClient implements HttpClientInterface {
   private readonly _fetchFn: FetchWithTimeout;
 
-  constructor(fetchFn = fetch) {
+  constructor(fetchFn?: typeof fetch) {
     super();
+
+    // Default to global fetch if available
+    if (!fetchFn) {
+      if (!globalThis.fetch) {
+        throw new Error(
+          'fetch() function not provided and is not defined in the global scope. ' +
+            'You must provide a fetch implementation.'
+        );
+      }
+      fetchFn = globalThis.fetch;
+    }
+
     // Both timeout behaviors differs from Node:
     // - Fetch uses a single timeout for the entire length of the request.
     // - Node is more fine-grained and resets the timeout after each stage of the request.
     if (globalThis.AbortController) {
       // Utilise native AbortController if available
       // AbortController was added in Node v15.0.0, v14.17.0
-      this._fetchFn = FetchHttpClient.makeFetchWithAbortTimeout(fetch);
+      this._fetchFn = FetchHttpClient.makeFetchWithAbortTimeout(fetchFn);
     } else {
-      // Fall to racing against a timeout promise if not available in the runtime
+      // Fall back to racing against a timeout promise if not available in the runtime
       // This does not actually cancel the underlying fetch operation or resources
       this._fetchFn = FetchHttpClient.makeFetchWithRaceTimeout(fetchFn);
     }
