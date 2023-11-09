@@ -233,6 +233,11 @@ declare module 'stripe' {
         effective_date?: Stripe.Emptyable<'current_period_end' | number>;
 
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on the subscription or subscription schedule when the quote is accepted. If a recurring price is included in `line_items`, this field will be passed to the resulting subscription's `metadata` field. If `subscription_data.effective_date` is used, this field will be passed to the resulting subscription schedule's `phases.metadata` field. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days?: Stripe.Emptyable<number>;
@@ -475,6 +480,11 @@ declare module 'stripe' {
          * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. When updating a subscription, the date of which the subscription will be updated using a subscription schedule. The special value `current_period_end` can be provided to update a subscription at the end of its current period. The `effective_date` is ignored if it is in the past when the quote is accepted.
          */
         effective_date?: Stripe.Emptyable<'current_period_end' | number>;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on the subscription or subscription schedule when the quote is accepted. If a recurring price is included in `line_items`, this field will be passed to the resulting subscription's `metadata` field. If `subscription_data.effective_date` is used, this field will be passed to the resulting subscription schedule's `phases.metadata` field. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         */
+        metadata?: Stripe.MetadataParam;
 
         /**
          * Integer representing the number of trial period days before the customer is charged for the first time.

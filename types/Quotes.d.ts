@@ -487,6 +487,11 @@ declare module 'stripe' {
         effective_date: number | null;
 
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on the subscription or subscription schedule when the quote is accepted. If a recurring price is included in `line_items`, this field will be passed to the resulting subscription's `metadata` field. If `subscription_data.effective_date` is used, this field will be passed to the resulting subscription schedule's `phases.metadata` field. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         */
+        metadata: Stripe.Metadata | null;
+
+        /**
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days: number | null;
