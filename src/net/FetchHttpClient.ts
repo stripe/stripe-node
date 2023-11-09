@@ -72,7 +72,7 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
       }, timeout);
       return fetchFn(url, {
         ...init,
-        signal: AbortSignal.timeout(timeout),
+        signal: abort.signal,
       }).finally(() => {
         if (timeoutId) {
           clearTimeout(timeoutId);
