@@ -29,7 +29,7 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
     // - Fetch uses a single timeout for the entire length of the request.
     // - Node is more fine-grained and resets the timeout after each stage of the request.
     if (globalThis.AbortController) {
-      // Utilise native AbortSignal if available
+      // Utilise native AbortController if available
       // AbortController was added in Node v15.0.0, v14.17.0
       this._fetchFn = FetchHttpClient.makeFetchWithAbortTimeout(fetch);
     } else {
