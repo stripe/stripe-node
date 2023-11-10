@@ -1,5 +1,12 @@
 # Changelog
 
+## 14.5.0-beta.1 - 2023-11-10
+* [#1948](https://github.com/stripe/stripe-node/pull/1948) Update generated code for beta
+  * Add support for new value `quote.reestimate_failed` on enum `Event.type`
+  * Add support for `metadata` on `QuoteCreateParams.phases[]`, `QuotePhase`, and `QuoteUpdateParams.phases[]`
+  * Add support for `last_reestimation_details` on `Quote.computed`
+  * Add support for new value `quote.reestimate_failed` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
 ## 14.4.0 - 2023-11-09
 * [#1947](https://github.com/stripe/stripe-node/pull/1947) Update generated code
   * Add support for new value `terminal_reader_hardware_fault` on enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`
