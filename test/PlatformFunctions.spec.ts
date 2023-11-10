@@ -365,7 +365,11 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
 
     describe('createFetchHttpClient', () => {
       it('should create an instance of FetchHttpClient', () => {
-        const cryptoProvider = platformFunctions.createFetchHttpClient();
+        // Test will fail on Node.js 12 because there is no global fetch implementation
+        // unless we provide a stub function
+        const cryptoProvider = platformFunctions.createFetchHttpClient(
+          function() {}
+        );
         expect(cryptoProvider).to.be.an.instanceof(FetchHttpClient);
       });
     });
