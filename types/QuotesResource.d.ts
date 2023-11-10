@@ -1009,6 +1009,11 @@ declare module 'stripe' {
         line_items: Array<Phase.LineItem>;
 
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on the subscription schedule's phases when the quote is accepted.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
          * If the update changes the current phase, indicates whether the changes should be prorated. The default value is `create_prorations`.
          */
         proration_behavior?: Phase.ProrationBehavior;
@@ -1273,6 +1278,11 @@ declare module 'stripe' {
          * The id of a subscription that the quote will update. By default, the quote will contain the state of the subscription (such as line items, collection method and billing thresholds) unless overridden.
          */
         from_subscription?: string;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on the subscription or subscription schedule when the quote is accepted. If a recurring price is included in `line_items`, this field will be passed to the resulting subscription's `metadata` field. If `subscription_data.effective_date` is used, this field will be passed to the resulting subscription schedule's `phases.metadata` field. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         */
+        metadata?: Stripe.MetadataParam;
 
         /**
          * If specified, the invoicing for the given billing cycle iterations will be processed when the quote is accepted. Cannot be used with `effective_date`.
@@ -2636,6 +2646,11 @@ declare module 'stripe' {
         line_items: Array<Phase.LineItem>;
 
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on the subscription schedule's phases when the quote is accepted. After a quote has been finalized, this field can be updated by specifying an identical set of quote phases to what was on the quote originally, excluding changes in metadata and phases that are now in the past.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
          * If the update changes the current phase, indicates whether the changes should be prorated. The default value is `create_prorations`.
          */
         proration_behavior?: Phase.ProrationBehavior;
@@ -2892,6 +2907,11 @@ declare module 'stripe' {
          * Behavior of the subscription schedule and underlying subscription when it ends.
          */
         end_behavior?: SubscriptionData.EndBehavior;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on the subscription or subscription schedule when the quote is accepted. If a recurring price is included in `line_items`, this field will be passed to the resulting subscription's `metadata` field. If `subscription_data.effective_date` is used, this field will be passed to the resulting subscription schedule's `phases.metadata` field. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         */
+        metadata?: Stripe.MetadataParam;
 
         /**
          * If specified, the invoicing for the given billing cycle iterations will be processed when the quote is accepted. Cannot be used with `effective_date`.

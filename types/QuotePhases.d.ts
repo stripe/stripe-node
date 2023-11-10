@@ -67,6 +67,11 @@ declare module 'stripe' {
       line_items?: ApiList<Stripe.LineItem>;
 
       /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on the subscription schedule's phases when the quote is accepted.
+       */
+      metadata: Stripe.Metadata | null;
+
+      /**
        * If the quote will prorate when transitioning to this phase. Possible values are `create_prorations` and `none`.
        */
       proration_behavior: QuotePhase.ProrationBehavior;

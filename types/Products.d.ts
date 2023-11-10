@@ -144,7 +144,7 @@ declare module 'stripe' {
         /**
          * The feature's name. Up to 80 characters long.
          */
-        name: string;
+        name?: string;
       }
 
       interface PackageDimensions {

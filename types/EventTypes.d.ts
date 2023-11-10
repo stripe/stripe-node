@@ -171,6 +171,7 @@ declare module 'stripe' {
       | QuoteCreatedEvent
       | QuoteDraftEvent
       | QuoteFinalizedEvent
+      | QuoteReestimateFailedEvent
       | QuoteReestimatedEvent
       | QuoteStaleEvent
       | RadarEarlyFraudWarningCreatedEvent
@@ -2518,7 +2519,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a quote fails during the acceptance flow
+     * Occurs whenever a quote acceptance fails
      */
     interface QuoteAcceptFailedEvent extends EventBase {
       type: 'quote.accept_failed';
@@ -2610,6 +2611,20 @@ declare module 'stripe' {
     }
 
     namespace QuoteFinalizedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Quote;
+      }
+    }
+
+    /**
+     * Occurs whenever a quote reestimate fails
+     */
+    interface QuoteReestimateFailedEvent extends EventBase {
+      type: 'quote.reestimate_failed';
+      data: QuoteReestimateFailedEvent.Data;
+    }
+
+    namespace QuoteReestimateFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Quote;
       }

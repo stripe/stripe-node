@@ -241,6 +241,11 @@ declare module 'stripe' {
 
       interface Computed {
         /**
+         * Details of the most recent reestimate of the quote's preview schedules and upcoming invoices, including the status of Stripe's calculation.
+         */
+        last_reestimation_details?: Computed.LastReestimationDetails | null;
+
+        /**
          * The definitive totals and line items the customer will be charged on a recurring basis. Takes into account the line items with recurring prices and discounts with `duration=forever` coupons only. Defaults to `null` if no inputted line items with recurring prices.
          */
         recurring: Computed.Recurring | null;
@@ -254,6 +259,43 @@ declare module 'stripe' {
       }
 
       namespace Computed {
+        interface LastReestimationDetails {
+          /**
+           * When `status` is `failed`, provides details about the quote reestimation failure.
+           */
+          failed: LastReestimationDetails.Failed | null;
+
+          /**
+           * Latest status of the reestimation.
+           */
+          status: LastReestimationDetails.Status;
+        }
+
+        namespace LastReestimationDetails {
+          interface Failed {
+            /**
+             * The failure `code` is more granular than the `reason` provided and may correspond to a Stripe error code. For automation errors, this field is one of: `reverse_api_failure`, `reverse_api_deadline_exceeeded`, or `reverse_api_response_validation_error`, which are Stripe error codes and map to the error `message` field.
+             */
+            failure_code: string | null;
+
+            /**
+             * Information derived from the `failure_code` or a freeform message that explains the error as a human-readable English string. For example, "margin ID is not a valid ID".
+             */
+            message: string | null;
+
+            /**
+             * The reason the reestimation failed.
+             */
+            reason: Failed.Reason;
+          }
+
+          namespace Failed {
+            type Reason = 'automation_failure' | 'internal_error';
+          }
+
+          type Status = 'failed' | 'in_progress' | 'succeeded';
+        }
+
         interface Recurring {
           /**
            * Total before any discounts or taxes are applied.
@@ -719,6 +761,11 @@ declare module 'stripe' {
          * The id of the subscription that will be updated when the quote is accepted.
          */
         from_subscription?: string | Stripe.Subscription | null;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on the subscription or subscription schedule when the quote is accepted. If a recurring price is included in `line_items`, this field will be passed to the resulting subscription's `metadata` field. If `subscription_data.effective_date` is used, this field will be passed to the resulting subscription schedule's `phases.metadata` field. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
+         */
+        metadata: Stripe.Metadata | null;
 
         /**
          * If specified, the invoicing for the given billing cycle iterations will be processed when the quote is accepted. Cannot be used with `effective_date`.
