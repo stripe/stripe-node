@@ -121,7 +121,7 @@ declare module 'stripe' {
       /**
        * The latest charge created by this PaymentIntent.
        */
-      latest_charge?: string | Stripe.Charge | null;
+      latest_charge: string | Stripe.Charge | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -151,7 +151,7 @@ declare module 'stripe' {
       /**
        * Information about the payment method configuration used for this PaymentIntent.
        */
-      payment_method_configuration_details?: PaymentIntent.PaymentMethodConfigurationDetails | null;
+      payment_method_configuration_details: PaymentIntent.PaymentMethodConfigurationDetails | null;
 
       /**
        * Payment-method-specific configuration for this PaymentIntent.
@@ -521,6 +521,7 @@ declare module 'stripe' {
           | 'taxes_calculation_failed'
           | 'terminal_location_country_unsupported'
           | 'terminal_reader_busy'
+          | 'terminal_reader_hardware_fault'
           | 'terminal_reader_offline'
           | 'terminal_reader_timeout'
           | 'testmode_charges_only'

@@ -132,7 +132,7 @@ declare module 'stripe' {
       /**
        * Information about the payment method configuration used for this Setup Intent.
        */
-      payment_method_configuration_details?: SetupIntent.PaymentMethodConfigurationDetails | null;
+      payment_method_configuration_details: SetupIntent.PaymentMethodConfigurationDetails | null;
 
       /**
        * Payment method-specific configuration for this SetupIntent.
@@ -437,6 +437,7 @@ declare module 'stripe' {
           | 'taxes_calculation_failed'
           | 'terminal_location_country_unsupported'
           | 'terminal_reader_busy'
+          | 'terminal_reader_hardware_fault'
           | 'terminal_reader_offline'
           | 'terminal_reader_timeout'
           | 'testmode_charges_only'
