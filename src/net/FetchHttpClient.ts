@@ -75,21 +75,32 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
   private static makeFetchWithAbortTimeout(
     fetchFn: typeof fetch
   ): FetchWithTimeout {
-    return (url, init, timeout: number): Promise<Response> => {
+    return async (url, init, timeout): Promise<Response> => {
       // Use AbortController because AbortSignal.timeout() was added later in Node v17.3.0, v16.14.0
       const abort = new AbortController();
       let timeoutId: NodeJS.Timeout | null = setTimeout(() => {
         timeoutId = null;
         abort.abort(HttpClient.makeTimeoutError());
       }, timeout);
-      return fetchFn(url, {
-        ...init,
-        signal: abort.signal,
-      }).finally(() => {
+      try {
+        return await fetchFn(url, {
+          ...init,
+          signal: abort.signal,
+        });
+      } catch (err) {
+        // Some implementations, like node-fetch, do not respect the reason passed to AbortController.abort()
+        // and instead it always throws an AbortError
+        // We catch this case to normalise all timeout errors
+        if ((err as any).name === 'AbortError') {
+          throw HttpClient.makeTimeoutError();
+        } else {
+          throw err;
+        }
+      } finally {
         if (timeoutId) {
           clearTimeout(timeoutId);
         }
-      });
+      }
     };
   }
 
