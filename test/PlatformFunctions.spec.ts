@@ -364,8 +364,9 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
     });
 
     describe('createFetchHttpClient', () => {
-      if (process.versions.node.startsWith('12')) {
-        // Will throw on Node.js 12 because there is no global fetch implementation
+      if (process.versions.node < '18.0.0') {
+        // Until Node.js 18.0.0 global fetch was either behind the behind --experimental-global-fetch CLI flag
+        // or not defined at all and this test will therefore throw
         it('should throw without fetch implementation on Node 12', () => {
           expect(() => {
             platformFunctions.createFetchHttpClient();
