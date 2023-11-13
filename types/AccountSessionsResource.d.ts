@@ -27,6 +27,16 @@ declare module 'stripe' {
         account_onboarding?: Components.AccountOnboarding;
 
         /**
+         * Configuration for the issuing card component.
+         */
+        issuing_card?: Components.IssuingCard;
+
+        /**
+         * Configuration for the issuing cards list component.
+         */
+        issuing_cards_list?: Components.IssuingCardsList;
+
+        /**
          * Configuration for the payment details embedded component.
          */
         payment_details?: Components.PaymentDetails;
@@ -56,6 +66,38 @@ declare module 'stripe' {
         }
 
         namespace AccountOnboarding {
+          interface Features {}
+        }
+
+        interface IssuingCard {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: IssuingCard.Features;
+        }
+
+        namespace IssuingCard {
+          interface Features {}
+        }
+
+        interface IssuingCardsList {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: IssuingCardsList.Features;
+        }
+
+        namespace IssuingCardsList {
           interface Features {}
         }
 
