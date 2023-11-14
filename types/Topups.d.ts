@@ -71,7 +71,7 @@ declare module 'stripe' {
       metadata: Stripe.Metadata;
 
       /**
-       * For most Stripe users, the source of every top-up is a bank account. This hash is then the [source object](https://stripe.com/docs/api#source_object) describing that bank account.
+       * The source field is deprecated. It might not always be present in the API response.
        */
       source: Stripe.Source | null;
 
