@@ -585,7 +585,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Price>>;
 
       /**
-       * Returns a list of your prices.
+       * Returns a list of your active prices. For the list of inactive prices, set active to false.
        */
       list(
         params?: PriceListParams,
