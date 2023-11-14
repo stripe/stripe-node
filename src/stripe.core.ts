@@ -156,7 +156,10 @@ export function createStripe(
     this._setApiKey(key);
 
     this.errors = _Error;
-    this.webhooks = Stripe.webhooks;
+
+    // Once Stripe.webhooks looses the factory function signature in a future release
+    // then this should become this.webhooks = Stripe.webhooks
+    this.webhooks = createWebhooksDefault();
 
     this._prevRequestMetrics = [];
     this._enableTelemetry = props.telemetry !== false;

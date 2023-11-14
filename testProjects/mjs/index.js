@@ -61,7 +61,6 @@ assert(stripe.VERSION);
 assert(stripe.errors);
 assert(stripe.webhookEndpoints);
 assert(stripe.webhooks);
-assert(stripe.webhooks === Stripe.webhooks);
 assert(stripe._emitter);
 assert(stripe.on);
 assert(stripe.off);
