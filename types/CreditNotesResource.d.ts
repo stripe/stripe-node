@@ -92,7 +92,12 @@ declare module 'stripe' {
         quantity?: number;
 
         /**
-         * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item`.
+         * A list of up to 10 tax amounts for the credit note line item. Cannot be mixed with `tax_rates`.
+         */
+        tax_amounts?: Stripe.Emptyable<Array<Line.TaxAmount>>;
+
+        /**
+         * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item` and cannot be mixed with `tax_amounts`.
          */
         tax_rates?: Stripe.Emptyable<Array<string>>;
 
@@ -113,6 +118,23 @@ declare module 'stripe' {
       }
 
       namespace Line {
+        interface TaxAmount {
+          /**
+           * The amount, in cents (or local equivalent), of the tax.
+           */
+          amount: number;
+
+          /**
+           * The id of the tax rate for this tax amount. The tax rate must have been automatically created by Stripe.
+           */
+          tax_rate: string;
+
+          /**
+           * The amount on which tax is calculated, in cents (or local equivalent).
+           */
+          taxable_amount: number;
+        }
+
         type Type = 'custom_line_item' | 'invoice_line_item';
       }
 
@@ -268,7 +290,12 @@ declare module 'stripe' {
         quantity?: number;
 
         /**
-         * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item`.
+         * A list of up to 10 tax amounts for the credit note line item. Cannot be mixed with `tax_rates`.
+         */
+        tax_amounts?: Stripe.Emptyable<Array<Line.TaxAmount>>;
+
+        /**
+         * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item` and cannot be mixed with `tax_amounts`.
          */
         tax_rates?: Stripe.Emptyable<Array<string>>;
 
@@ -289,6 +316,23 @@ declare module 'stripe' {
       }
 
       namespace Line {
+        interface TaxAmount {
+          /**
+           * The amount, in cents (or local equivalent), of the tax.
+           */
+          amount: number;
+
+          /**
+           * The id of the tax rate for this tax amount. The tax rate must have been automatically created by Stripe.
+           */
+          tax_rate: string;
+
+          /**
+           * The amount on which tax is calculated, in cents (or local equivalent).
+           */
+          taxable_amount: number;
+        }
+
         type Type = 'custom_line_item' | 'invoice_line_item';
       }
 
@@ -396,7 +440,12 @@ declare module 'stripe' {
         quantity?: number;
 
         /**
-         * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item`.
+         * A list of up to 10 tax amounts for the credit note line item. Cannot be mixed with `tax_rates`.
+         */
+        tax_amounts?: Stripe.Emptyable<Array<Line.TaxAmount>>;
+
+        /**
+         * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item` and cannot be mixed with `tax_amounts`.
          */
         tax_rates?: Stripe.Emptyable<Array<string>>;
 
@@ -417,6 +466,23 @@ declare module 'stripe' {
       }
 
       namespace Line {
+        interface TaxAmount {
+          /**
+           * The amount, in cents (or local equivalent), of the tax.
+           */
+          amount: number;
+
+          /**
+           * The id of the tax rate for this tax amount. The tax rate must have been automatically created by Stripe.
+           */
+          tax_rate: string;
+
+          /**
+           * The amount on which tax is calculated, in cents (or local equivalent).
+           */
+          taxable_amount: number;
+        }
+
         type Type = 'custom_line_item' | 'invoice_line_item';
       }
 
