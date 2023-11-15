@@ -11,7 +11,7 @@ import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import {RequestSender} from './RequestSender.js';
 import {StripeResource} from './StripeResource.js';
-import {createWebhooks} from './Webhooks.js';
+import {WebhookObject, createWebhooks} from './Webhooks.js';
 import {
   StripeObject,
   AppInfo,
@@ -69,6 +69,20 @@ export function createStripe(
   Stripe.HttpClient = HttpClient;
   Stripe.HttpClientResponse = HttpClientResponse;
   Stripe.CryptoProvider = CryptoProvider;
+
+  // Previously Stripe.webhooks was just the createWebhooks() factory function
+  // however going forward it will be a WebhookObject instance. To maintain
+  // backwards compatibility it is currently a factory function that also
+  // complies to the WebhookObject signature. The factory function signature
+  // will be removed as a breaking change in the next major release.
+  // See https://github.com/stripe/stripe-node/issues/1956
+  function createWebhooksDefault(fns = platformFunctions): WebhookObject {
+    return createWebhooks(fns);
+  }
+  Stripe.webhooks = Object.assign(
+    createWebhooksDefault,
+    createWebhooks(platformFunctions)
+  );
 
   function Stripe(
     this: StripeObject,
@@ -148,7 +162,10 @@ export function createStripe(
     this._setApiKey(key);
 
     this.errors = _Error;
-    this.webhooks = createWebhooks(platformFunctions);
+
+    // Once Stripe.webhooks looses the factory function signature in a future release
+    // then this should become this.webhooks = Stripe.webhooks
+    this.webhooks = createWebhooksDefault();
 
     this._prevRequestMetrics = [];
     this._enableTelemetry = props.telemetry !== false;
@@ -161,7 +178,6 @@ export function createStripe(
   }
 
   Stripe.errors = _Error;
-  Stripe.webhooks = createWebhooks;
 
   Stripe.createNodeHttpClient = platformFunctions.createNodeHttpClient;
 
