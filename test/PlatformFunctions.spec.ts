@@ -364,10 +364,20 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
     });
 
     describe('createFetchHttpClient', () => {
-      it('should create an instance of FetchHttpClient', () => {
-        const cryptoProvider = platformFunctions.createFetchHttpClient();
-        expect(cryptoProvider).to.be.an.instanceof(FetchHttpClient);
-      });
+      if (process.versions.node < '18.0.0') {
+        // Until Node.js 18.0.0 global fetch was either behind the behind --experimental-global-fetch CLI flag
+        // or not defined at all and this test will therefore throw
+        it('should throw without fetch implementation on Node 12', () => {
+          expect(() => {
+            platformFunctions.createFetchHttpClient();
+          }).to.throw();
+        });
+      } else {
+        it('should create an instance of FetchHttpClient using global fetch', () => {
+          const fetchClient = platformFunctions.createFetchHttpClient();
+          expect(fetchClient).to.be.an.instanceof(FetchHttpClient);
+        });
+      }
     });
 
     describe('createNodeCryptoProvider', () => {

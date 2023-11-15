@@ -4,7 +4,6 @@ import {expect} from 'chai';
 import {StripeSignatureVerificationError} from '../src/Error.js';
 import {FakeCryptoProvider, getSpyableStripe} from './testUtils.js';
 import {CryptoProviderOnlySupportsAsyncError} from '../src/crypto/CryptoProvider.js';
-const stripe = getSpyableStripe();
 
 const EVENT_PAYLOAD = {
   id: 'evt_test_webhook',
@@ -13,7 +12,17 @@ const EVENT_PAYLOAD = {
 const EVENT_PAYLOAD_STRING = JSON.stringify(EVENT_PAYLOAD, null, 2);
 const SECRET = 'whsec_test_secret';
 
-describe('Webhooks', () => {
+describe('Webhooks on static Stripe factory', () => {
+  const Stripe = require('../src/stripe.cjs.node.js');
+  createWebhooksTestSuite(Stripe);
+});
+
+describe('Webhooks on Stripe instance', () => {
+  const stripe = getSpyableStripe();
+  createWebhooksTestSuite(stripe);
+});
+
+function createWebhooksTestSuite(stripe) {
   describe('.generateTestHeaderString', () => {
     it('should throw when no opts are passed', () => {
       expect(() => {
@@ -456,4 +465,4 @@ describe('Webhooks', () => {
       stripe.webhooks.signature.verifyHeaderAsync(...args)
     )
   );
-});
+}
