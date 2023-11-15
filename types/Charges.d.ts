@@ -689,6 +689,11 @@ declare module 'stripe' {
           brand: string | null;
 
           /**
+           * When using manual capture, a future timestamp at which the charge will be automatically refunded if uncaptured.
+           */
+          capture_before?: number;
+
+          /**
            * Check results by Card networks on Card address and CVC at time of payment.
            */
           checks: Card.Checks | null;
