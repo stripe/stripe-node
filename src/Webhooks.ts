@@ -45,7 +45,7 @@ type WebhookSignatureObject = {
     receivedAt: number
   ) => Promise<boolean>;
 };
-type WebhookObject = {
+export type WebhookObject = {
   DEFAULT_TOLERANCE: number;
   signature: WebhookSignatureObject;
   constructEvent: (

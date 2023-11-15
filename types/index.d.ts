@@ -233,6 +233,12 @@ declare module 'stripe' {
   export class Stripe {
     static Stripe: typeof Stripe;
 
+    // Actually has the signature `Stripe.Webhooks & ((platformFunctions?: PlatformFunctions) => Stripe.Webhooks)`
+    // However the factory function signature was never public in the typings and
+    // will be removed in the next major version so it is omitted
+    // See https://github.com/stripe/stripe-node/issues/1956
+    static webhooks: Stripe.Webhooks;
+
     constructor(apiKey: string, config?: Stripe.StripeConfig);
 
     StripeResource: Stripe.StripeResource;
