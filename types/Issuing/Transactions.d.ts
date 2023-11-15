@@ -91,7 +91,7 @@ declare module 'stripe' {
         /**
          * Details about the transaction, such as processing dates, set by the card network.
          */
-        network_data?: Transaction.NetworkData | null;
+        network_data: Transaction.NetworkData | null;
 
         /**
          * Additional purchase information that is optionally provided by the merchant.
@@ -188,7 +188,7 @@ declare module 'stripe' {
           /**
            * The date the transaction was processed by the card network. This can be different from the date the seller recorded the transaction depending on when the acquirer submits the transaction to the network.
            */
-          processing_date?: string | null;
+          processing_date: string | null;
         }
 
         interface PurchaseDetails {
