@@ -2220,6 +2220,11 @@ declare module 'stripe' {
         payment_link?: string;
 
         /**
+         * Only return the Checkout Sessions matching the given status.
+         */
+        status?: SessionListParams.Status;
+
+        /**
          * Only return the Checkout Session for the subscription specified.
          */
         subscription?: string;
@@ -2232,6 +2237,8 @@ declare module 'stripe' {
            */
           email: string;
         }
+
+        type Status = 'complete' | 'expired' | 'open';
       }
 
       interface SessionExpireParams {
