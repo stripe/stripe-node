@@ -1200,10 +1200,16 @@ declare module 'stripe' {
 
       interface PaymentDetails {
         car_rental?: PaymentDetails.CarRental;
+
+        event_details?: PaymentDetails.EventDetails;
+
+        subscription?: PaymentDetails.Subscription;
       }
 
       namespace PaymentDetails {
         interface CarRental {
+          affiliate?: CarRental.Affiliate;
+
           /**
            * The booking number associated with the car rental.
            */
@@ -1238,6 +1244,13 @@ declare module 'stripe' {
            * Number of days the car is being rented.
            */
           days_rented: number;
+
+          delivery?: CarRental.Delivery;
+
+          /**
+           * The details of the drivers associated with the trip.
+           */
+          drivers?: Array<CarRental.Driver>;
 
           /**
            * List of additional charges being billed.
@@ -1285,6 +1298,50 @@ declare module 'stripe' {
         }
 
         namespace CarRental {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name?: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            receipient?: Delivery.Receipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Receipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Driver {
+            /**
+             * Full name of the driver on the reservation.
+             */
+            name?: string;
+          }
+
           type ExtraCharge =
             | 'extra_mileage'
             | 'gas'
@@ -1293,6 +1350,134 @@ declare module 'stripe' {
             | 'parking_violation';
 
           type RateInterval = 'day' | 'month' | 'week';
+        }
+
+        interface EventDetails {
+          /**
+           * Indicates if the tickets are digitally checked when entering the venue.
+           */
+          access_controlled_venue?: boolean;
+
+          address?: Stripe.Address;
+
+          affiliate?: EventDetails.Affiliate;
+
+          /**
+           * The name of the company
+           */
+          company?: string;
+
+          delivery?: EventDetails.Delivery;
+
+          /**
+           * Event end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Type of the event entertainment (concert, sports event etc)
+           */
+          genre?: string;
+
+          /**
+           * The name of the event.
+           */
+          name?: string;
+
+          /**
+           * Event start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace EventDetails {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name?: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            receipient?: Delivery.Receipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Receipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+        }
+
+        interface Subscription {
+          affiliate?: Subscription.Affiliate;
+
+          /**
+           * Info whether the subscription will be auto renewed upon expiry.
+           */
+          auto_renewal?: boolean;
+
+          billing_interval?: Subscription.BillingInterval;
+
+          /**
+           * Subscription end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Name of the product on subscription. e.g. Apple Music Subscription.
+           */
+          name?: string;
+
+          /**
+           * Subscription start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace Subscription {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name?: string;
+          }
+
+          interface BillingInterval {
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            count?: number;
+
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval?: BillingInterval.Interval;
+          }
+
+          namespace BillingInterval {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
         }
       }
 

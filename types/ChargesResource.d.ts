@@ -226,6 +226,11 @@ declare module 'stripe' {
         car_rental?: PaymentDetails.CarRental;
 
         /**
+         * Event details for this PaymentIntent
+         */
+        event_details?: PaymentDetails.EventDetails;
+
+        /**
          * Flight reservation details for this PaymentIntent
          */
         flight?: PaymentDetails.Flight;
@@ -234,10 +239,20 @@ declare module 'stripe' {
          * Lodging reservation details for this PaymentIntent
          */
         lodging?: PaymentDetails.Lodging;
+
+        /**
+         * Subscription details for this PaymentIntent
+         */
+        subscription?: PaymentDetails.Subscription;
       }
 
       namespace PaymentDetails {
         interface CarRental {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: CarRental.Affiliate;
+
           /**
            * The booking number associated with the car rental.
            */
@@ -272,6 +287,16 @@ declare module 'stripe' {
            * Number of days the car is being rented.
            */
           days_rented: number;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: CarRental.Delivery;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          drivers?: Array<CarRental.Driver>;
 
           /**
            * List of additional charges being billed.
@@ -325,6 +350,53 @@ declare module 'stripe' {
         }
 
         namespace CarRental {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            receipient?: Delivery.Receipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Receipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Driver {
+            /**
+             * Full name of the person or entity on the car reservation.
+             */
+            name: string;
+          }
+
           type ExtraCharge =
             | 'extra_mileage'
             | 'gas'
@@ -335,7 +407,101 @@ declare module 'stripe' {
           type RateInterval = 'day' | 'month' | 'week';
         }
 
+        interface EventDetails {
+          /**
+           * Indicates if the tickets are digitally checked when entering the venue.
+           */
+          access_controlled_venue?: boolean;
+
+          /**
+           * The event location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: EventDetails.Affiliate;
+
+          /**
+           * The name of the company
+           */
+          company?: string;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: EventDetails.Delivery;
+
+          /**
+           * Event end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Type of the event entertainment (concert, sports event etc)
+           */
+          genre?: string;
+
+          /**
+           * The name of the event.
+           */
+          name: string;
+
+          /**
+           * Event start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace EventDetails {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            receipient?: Delivery.Receipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Receipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+        }
+
         interface Flight {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Flight.Affiliate;
+
           /**
            * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
            */
@@ -347,9 +513,19 @@ declare module 'stripe' {
           carrier?: string;
 
           /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Flight.Delivery;
+
+          /**
            * The name of the person or entity on the reservation.
            */
           passenger_name?: string;
+
+          /**
+           * The details of the passengers in the travel reservation.
+           */
+          passengers?: Array<Flight.Passenger>;
 
           /**
            * The individual flight segments associated with the trip.
@@ -363,6 +539,53 @@ declare module 'stripe' {
         }
 
         namespace Flight {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            receipient?: Delivery.Receipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Receipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the flight reservation.
+             */
+            name: string;
+          }
+
           interface Segment {
             /**
              * The International Air Transport Association (IATA) airport code for the arrival airport.
@@ -421,6 +644,11 @@ declare module 'stripe' {
           adults?: number;
 
           /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Lodging.Affiliate;
+
+          /**
            * The booking number associated with the lodging reservation.
            */
           booking_number?: string;
@@ -451,6 +679,11 @@ declare module 'stripe' {
           daily_room_rate_amount?: number;
 
           /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Lodging.Delivery;
+
+          /**
            * List of additional charges being billed.
            */
           extra_charges?: Array<Lodging.ExtraCharge>;
@@ -469,6 +702,11 @@ declare module 'stripe' {
            * Indicates if the customer did not keep their booking while failing to cancel the reservation.
            */
           no_show?: boolean;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          passengers?: Array<Lodging.Passenger>;
 
           /**
            * The phone number of the lodging location.
@@ -492,7 +730,47 @@ declare module 'stripe' {
         }
 
         namespace Lodging {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
           type Category = 'hotel' | 'vacation_rental';
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            receipient?: Delivery.Receipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Receipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
 
           type ExtraCharge =
             | 'gift_shop'
@@ -501,6 +779,70 @@ declare module 'stripe' {
             | 'other'
             | 'restaurant'
             | 'telephone';
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the lodging reservation.
+             */
+            name: string;
+          }
+        }
+
+        interface Subscription {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Subscription.Affiliate;
+
+          /**
+           * Info whether the subscription will be auto renewed upon expiry.
+           */
+          auto_renewal?: boolean;
+
+          /**
+           * Subscription billing details for this purchase.
+           */
+          billing_interval?: Subscription.BillingInterval;
+
+          /**
+           * Subscription end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Name of the product on subscription. e.g. Apple Music Subscription
+           */
+          name: string;
+
+          /**
+           * Subscription start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace Subscription {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface BillingInterval {
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            count: number;
+
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: BillingInterval.Interval;
+          }
+
+          namespace BillingInterval {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
         }
       }
 
@@ -616,6 +958,11 @@ declare module 'stripe' {
         car_rental?: PaymentDetails.CarRental;
 
         /**
+         * Event details for this PaymentIntent
+         */
+        event_details?: PaymentDetails.EventDetails;
+
+        /**
          * Flight reservation details for this PaymentIntent
          */
         flight?: PaymentDetails.Flight;
@@ -624,10 +971,20 @@ declare module 'stripe' {
          * Lodging reservation details for this PaymentIntent
          */
         lodging?: PaymentDetails.Lodging;
+
+        /**
+         * Subscription details for this PaymentIntent
+         */
+        subscription?: PaymentDetails.Subscription;
       }
 
       namespace PaymentDetails {
         interface CarRental {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: CarRental.Affiliate;
+
           /**
            * The booking number associated with the car rental.
            */
@@ -662,6 +1019,16 @@ declare module 'stripe' {
            * Number of days the car is being rented.
            */
           days_rented: number;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: CarRental.Delivery;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          drivers?: Array<CarRental.Driver>;
 
           /**
            * List of additional charges being billed.
@@ -715,6 +1082,53 @@ declare module 'stripe' {
         }
 
         namespace CarRental {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            receipient?: Delivery.Receipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Receipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Driver {
+            /**
+             * Full name of the person or entity on the car reservation.
+             */
+            name: string;
+          }
+
           type ExtraCharge =
             | 'extra_mileage'
             | 'gas'
@@ -725,7 +1139,101 @@ declare module 'stripe' {
           type RateInterval = 'day' | 'month' | 'week';
         }
 
+        interface EventDetails {
+          /**
+           * Indicates if the tickets are digitally checked when entering the venue.
+           */
+          access_controlled_venue?: boolean;
+
+          /**
+           * The event location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: EventDetails.Affiliate;
+
+          /**
+           * The name of the company
+           */
+          company?: string;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: EventDetails.Delivery;
+
+          /**
+           * Event end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Type of the event entertainment (concert, sports event etc)
+           */
+          genre?: string;
+
+          /**
+           * The name of the event.
+           */
+          name: string;
+
+          /**
+           * Event start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace EventDetails {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            receipient?: Delivery.Receipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Receipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+        }
+
         interface Flight {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Flight.Affiliate;
+
           /**
            * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
            */
@@ -737,9 +1245,19 @@ declare module 'stripe' {
           carrier?: string;
 
           /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Flight.Delivery;
+
+          /**
            * The name of the person or entity on the reservation.
            */
           passenger_name?: string;
+
+          /**
+           * The details of the passengers in the travel reservation.
+           */
+          passengers?: Array<Flight.Passenger>;
 
           /**
            * The individual flight segments associated with the trip.
@@ -753,6 +1271,53 @@ declare module 'stripe' {
         }
 
         namespace Flight {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            receipient?: Delivery.Receipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Receipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the flight reservation.
+             */
+            name: string;
+          }
+
           interface Segment {
             /**
              * The International Air Transport Association (IATA) airport code for the arrival airport.
@@ -811,6 +1376,11 @@ declare module 'stripe' {
           adults?: number;
 
           /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Lodging.Affiliate;
+
+          /**
            * The booking number associated with the lodging reservation.
            */
           booking_number?: string;
@@ -841,6 +1411,11 @@ declare module 'stripe' {
           daily_room_rate_amount?: number;
 
           /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Lodging.Delivery;
+
+          /**
            * List of additional charges being billed.
            */
           extra_charges?: Array<Lodging.ExtraCharge>;
@@ -859,6 +1434,11 @@ declare module 'stripe' {
            * Indicates if the customer did not keep their booking while failing to cancel the reservation.
            */
           no_show?: boolean;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          passengers?: Array<Lodging.Passenger>;
 
           /**
            * The phone number of the lodging location.
@@ -882,7 +1462,47 @@ declare module 'stripe' {
         }
 
         namespace Lodging {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
           type Category = 'hotel' | 'vacation_rental';
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            receipient?: Delivery.Receipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Receipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
 
           type ExtraCharge =
             | 'gift_shop'
@@ -891,6 +1511,70 @@ declare module 'stripe' {
             | 'other'
             | 'restaurant'
             | 'telephone';
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the lodging reservation.
+             */
+            name: string;
+          }
+        }
+
+        interface Subscription {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Subscription.Affiliate;
+
+          /**
+           * Info whether the subscription will be auto renewed upon expiry.
+           */
+          auto_renewal?: boolean;
+
+          /**
+           * Subscription billing details for this purchase.
+           */
+          billing_interval?: Subscription.BillingInterval;
+
+          /**
+           * Subscription end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Name of the product on subscription. e.g. Apple Music Subscription
+           */
+          name: string;
+
+          /**
+           * Subscription start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace Subscription {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface BillingInterval {
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            count: number;
+
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: BillingInterval.Interval;
+          }
+
+          namespace BillingInterval {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
         }
       }
 
