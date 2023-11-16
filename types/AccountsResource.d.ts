@@ -1061,6 +1061,11 @@ declare module 'stripe' {
 
       interface Settings {
         /**
+         * Settings specific to Bacs Direct Debit.
+         */
+        bacs_debit_payments?: Settings.BacsDebitPayments;
+
+        /**
          * Settings used to apply the account's branding to email receipts, invoices, Checkout, and other products.
          */
         branding?: Settings.Branding;
@@ -1092,6 +1097,13 @@ declare module 'stripe' {
       }
 
       namespace Settings {
+        interface BacsDebitPayments {
+          /**
+           * The Bacs Direct Debit Display Name for this account. For payments made with Bacs Direct Debit, this name appears on the mandate as the statement descriptor. Mobile banking apps display it as the name of the business. To use custom branding, set the Bacs Direct Debit Display Name during or right after creation. Custom branding incurs an additional monthly fee for the platform. If you don't set the display name before requesting Bacs capability, it's automatically set as "Stripe" and the account is onboarded to Stripe branding, which is free.
+           */
+          display_name?: string;
+        }
+
         interface Branding {
           /**
            * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) An icon for the account. Must be square and at least 128px x 128px.
@@ -2318,6 +2330,11 @@ declare module 'stripe' {
 
       interface Settings {
         /**
+         * Settings specific to Bacs Direct Debit payments.
+         */
+        bacs_debit_payments?: Settings.BacsDebitPayments;
+
+        /**
          * Settings used to apply the account's branding to email receipts, invoices, Checkout, and other products.
          */
         branding?: Settings.Branding;
@@ -2349,6 +2366,13 @@ declare module 'stripe' {
       }
 
       namespace Settings {
+        interface BacsDebitPayments {
+          /**
+           * The Bacs Direct Debit Display Name for this account. For payments made with Bacs Direct Debit, this name appears on the mandate as the statement descriptor. Mobile banking apps display it as the name of the business. To use custom branding, set the Bacs Direct Debit Display Name during or right after creation. Custom branding incurs an additional monthly fee for the platform. If you don't set the display name before requesting Bacs capability, it's automatically set as "Stripe" and the account is onboarded to Stripe branding, which is free.
+           */
+          display_name?: string;
+        }
+
         interface Branding {
           /**
            * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) An icon for the account. Must be square and at least 128px x 128px.
