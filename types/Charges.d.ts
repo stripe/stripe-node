@@ -1120,6 +1120,11 @@ declare module 'stripe' {
           network: string | null;
 
           /**
+           * Details about payments collected offline.
+           */
+          offline: CardPresent.Offline | null;
+
+          /**
            * Defines whether the authorized amount can be over-captured or not
            */
           overcapture_supported: boolean;
@@ -1136,6 +1141,13 @@ declare module 'stripe' {
         }
 
         namespace CardPresent {
+          interface Offline {
+            /**
+             * Time at which the payment was collected while offline
+             */
+            stored_at: number | null;
+          }
+
           type ReadMethod =
             | 'contact_emv'
             | 'contactless_emv'
