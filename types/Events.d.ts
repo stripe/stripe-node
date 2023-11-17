@@ -283,8 +283,8 @@ declare module 'stripe' {
      * `Event` objects directly to an endpoint on your server. You can manage
      * webhooks in your
      * [account settings](https://dashboard.stripe.com/account/webhooks). Learn how
-     * to [listen for events]
-     * (/docs/webhooks) so that your integration can automatically trigger reactions.
+     * to [listen for events](https://stripe.com/docs/webhooks)
+     * so that your integration can automatically trigger reactions.
      *
      * When using [Connect](https://stripe.com/docs/connect), you can also receive event notifications
      * that occur in connected accounts. For these events, there's an
