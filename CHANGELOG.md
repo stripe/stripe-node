@@ -1,5 +1,19 @@
 # Changelog
 
+## 14.5.0 - 2023-11-16
+* [#1957](https://github.com/stripe/stripe-node/pull/1957) Update generated code
+  * Add support for `bacs_debit_payments` on `AccountCreateParams.settings` and `AccountUpdateParams.settings`
+  * Add support for `service_user_number` on `Account.settings.bacs_debit_payments`
+  * Change type of `Account.settings.bacs_debit_payments.display_name` from `string` to `string | null`
+  * Add support for `capture_before` on `Charge.payment_method_details.card`
+  * Add support for `paypal` on `Checkout.Session.payment_method_options`
+  * Add support for `tax_amounts` on `CreditNoteCreateParams.lines[]`, `CreditNotePreviewLinesParams.lines[]`, and `CreditNotePreviewParams.lines[]`
+  * Add support for `network_data` on `Issuing.Transaction`
+* [#1960](https://github.com/stripe/stripe-node/pull/1960) Update generated code
+  * Add support for `status` on `Checkout.SessionListParams`
+* [#1958](https://github.com/stripe/stripe-node/pull/1958) Move Webhooks instance to static field
+* [#1952](https://github.com/stripe/stripe-node/pull/1952) Use AbortController for native fetch cancellation when available
+
 ## 14.4.0 - 2023-11-09
 * [#1947](https://github.com/stripe/stripe-node/pull/1947) Update generated code
   * Add support for new value `terminal_reader_hardware_fault` on enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`
