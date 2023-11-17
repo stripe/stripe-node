@@ -20,6 +20,11 @@ declare module 'stripe' {
       client_secret: string;
 
       /**
+       * Time at which the object was created. Measured in seconds since the Unix epoch.
+       */
+      created: number;
+
+      /**
        * The customer the customer session was created for.
        */
       customer: string | Stripe.Customer;
