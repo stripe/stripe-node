@@ -208,6 +208,16 @@ declare module 'stripe' {
            * Identifier assigned to the acquirer by the card network. Sometimes this value is not provided by the network; in this case, the value will be `null`.
            */
           acquiring_institution_id: string | null;
+
+          /**
+           * The System Trace Audit Number (STAN) is a 6-digit identifier assigned by the acquirer. Prefer `network_data.transaction_id` if present, unless you have special requirements.
+           */
+          system_trace_audit_number: string | null;
+
+          /**
+           * Unique identifier for the authorization assigned by the card network used to match subsequent messages, disputes, and transactions.
+           */
+          transaction_id: string | null;
         }
 
         interface PendingRequest {
@@ -240,6 +250,11 @@ declare module 'stripe' {
            * The local currency the merchant is requesting to authorize.
            */
           merchant_currency: string;
+
+          /**
+           * The card network's estimate of the likelihood that an authorization is fraudulent. Takes on values between 1 and 99.
+           */
+          network_risk_score: number | null;
         }
 
         namespace PendingRequest {
@@ -298,6 +313,11 @@ declare module 'stripe' {
           merchant_currency: string;
 
           /**
+           * The card network's estimate of the likelihood that an authorization is fraudulent. Takes on values between 1 and 99.
+           */
+          network_risk_score: number | null;
+
+          /**
            * When an authorization is approved or declined by you or by Stripe, this field provides additional detail on the reason for the outcome.
            */
           reason: RequestHistory.Reason;
@@ -306,6 +326,11 @@ declare module 'stripe' {
            * If the `request_history.reason` is `webhook_error` because the direct webhook response is invalid (for example, parsing errors or missing parameters), we surface a more detailed error message via this field.
            */
           reason_message: string | null;
+
+          /**
+           * Time when the card network received an authorization request from the acquirer in UTC. Referred to by networks as transmission time.
+           */
+          requested_at: number | null;
         }
 
         namespace RequestHistory {
