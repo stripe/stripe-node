@@ -57,6 +57,8 @@ declare module 'stripe' {
 
       refunded_from_payment?: CustomerCashBalanceTransaction.RefundedFromPayment;
 
+      transferred_to_balance?: CustomerCashBalanceTransaction.TransferredToBalance;
+
       /**
        * The type of the cash balance transaction. New types may be added in future. See [Customer Balance](https://stripe.com/docs/payments/customer-balance#types) to learn more about these types.
        */
@@ -192,6 +194,13 @@ declare module 'stripe' {
          * The [Refund](https://stripe.com/docs/api/refunds/object) that moved these funds into the customer's cash balance.
          */
         refund: string | Stripe.Refund;
+      }
+
+      interface TransferredToBalance {
+        /**
+         * The [Balance Transaction](https://stripe.com/docs/api/balance_transactions/object) that corresponds to funds transferred to your Stripe balance.
+         */
+        balance_transaction: string | Stripe.BalanceTransaction;
       }
 
       type Type =
