@@ -22,7 +22,7 @@ declare module 'stripe' {
         object: 'issuing.authorization';
 
         /**
-         * The total amount that was authorized or rejected. This amount is in the card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+         * The total amount that was authorized or rejected. This amount is in `currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). `amount` should be the same as `merchant_amount`, unless `currency` and `merchant_currency` are different.
          */
         amount: number;
 
@@ -62,7 +62,7 @@ declare module 'stripe' {
         created: number;
 
         /**
-         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         * The currency of the cardholder. This currency can be different from the currency presented at authorization and the `merchant_currency` field on this authorization. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
         currency: string;
 
@@ -72,12 +72,12 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * The total amount that was authorized or rejected. This amount is in the `merchant_currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+         * The total amount that was authorized or rejected. This amount is in the `merchant_currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). `merchant_amount` should be the same as `amount`, unless `merchant_currency` and `currency` are different.
          */
         merchant_amount: number;
 
         /**
-         * The currency that was presented to the cardholder for the authorization. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         * The local currency that was presented to the cardholder for the authorization. This currency can be different from the cardholder currency and the `currency` field on this authorization. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
         merchant_currency: string;
 
@@ -208,6 +208,16 @@ declare module 'stripe' {
            * Identifier assigned to the acquirer by the card network. Sometimes this value is not provided by the network; in this case, the value will be `null`.
            */
           acquiring_institution_id: string | null;
+
+          /**
+           * The System Trace Audit Number (STAN) is a 6-digit identifier assigned by the acquirer. Prefer `network_data.transaction_id` if present, unless you have special requirements.
+           */
+          system_trace_audit_number: string | null;
+
+          /**
+           * Unique identifier for the authorization assigned by the card network used to match subsequent messages, disputes, and transactions.
+           */
+          transaction_id: string | null;
         }
 
         interface PendingRequest {
@@ -240,6 +250,11 @@ declare module 'stripe' {
            * The local currency the merchant is requesting to authorize.
            */
           merchant_currency: string;
+
+          /**
+           * The card network's estimate of the likelihood that an authorization is fraudulent. Takes on values between 1 and 99.
+           */
+          network_risk_score: number | null;
         }
 
         namespace PendingRequest {
@@ -298,14 +313,24 @@ declare module 'stripe' {
           merchant_currency: string;
 
           /**
+           * The card network's estimate of the likelihood that an authorization is fraudulent. Takes on values between 1 and 99.
+           */
+          network_risk_score: number | null;
+
+          /**
            * When an authorization is approved or declined by you or by Stripe, this field provides additional detail on the reason for the outcome.
            */
           reason: RequestHistory.Reason;
 
           /**
-           * If approve/decline decision is directly responsed to the webhook with json payload and if the response is invalid (e.g., parsing errors), we surface the detailed message via this field.
+           * If the `request_history.reason` is `webhook_error` because the direct webhook response is invalid (for example, parsing errors or missing parameters), we surface a more detailed error message via this field.
            */
           reason_message: string | null;
+
+          /**
+           * Time when the card network received an authorization request from the acquirer in UTC. Referred to by networks as transmission time.
+           */
+          requested_at: number | null;
         }
 
         namespace RequestHistory {

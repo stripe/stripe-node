@@ -843,6 +843,12 @@ declare module 'stripe' {
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
+
+          /**
+           * If 3D Secure authentication was performed with a third-party provider,
+           * the authentication details to use for this setup.
+           */
+          three_d_secure?: Card.ThreeDSecure;
         }
 
         namespace Card {
@@ -918,6 +924,95 @@ declare module 'stripe' {
             | 'visa';
 
           type RequestThreeDSecure = 'any' | 'automatic';
+
+          interface ThreeDSecure {
+            /**
+             * The `transStatus` returned from the card Issuer's ACS in the ARes.
+             */
+            ares_trans_status?: ThreeDSecure.AresTransStatus;
+
+            /**
+             * The cryptogram, also known as the "authentication value" (AAV, CAVV or
+             * AEVV). This value is 20 bytes, base64-encoded into a 28-character string.
+             * (Most 3D Secure providers will return the base64-encoded version, which
+             * is what you should specify here.)
+             */
+            cryptogram?: string;
+
+            /**
+             * The Electronic Commerce Indicator (ECI) is returned by your 3D Secure
+             * provider and indicates what degree of authentication was performed.
+             */
+            electronic_commerce_indicator?: ThreeDSecure.ElectronicCommerceIndicator;
+
+            /**
+             * Network specific 3DS fields. Network specific arguments require an
+             * explicit card brand choice. The parameter `payment_method_options.card.network``
+             * must be populated accordingly
+             */
+            network_options?: ThreeDSecure.NetworkOptions;
+
+            /**
+             * The challenge indicator (`threeDSRequestorChallengeInd`) which was requested in the
+             * AReq sent to the card Issuer's ACS. A string containing 2 digits from 01-99.
+             */
+            requestor_challenge_indicator?: string;
+
+            /**
+             * For 3D Secure 1, the XID. For 3D Secure 2, the Directory Server
+             * Transaction ID (dsTransID).
+             */
+            transaction_id?: string;
+
+            /**
+             * The version of 3D Secure that was performed.
+             */
+            version?: ThreeDSecure.Version;
+          }
+
+          namespace ThreeDSecure {
+            type AresTransStatus = 'A' | 'C' | 'I' | 'N' | 'R' | 'U' | 'Y';
+
+            type ElectronicCommerceIndicator = '01' | '02' | '05' | '06' | '07';
+
+            interface NetworkOptions {
+              /**
+               * Cartes Bancaires-specific 3DS fields.
+               */
+              cartes_bancaires?: NetworkOptions.CartesBancaires;
+            }
+
+            namespace NetworkOptions {
+              interface CartesBancaires {
+                /**
+                 * The cryptogram calculation algorithm used by the card Issuer's ACS
+                 * to calculate the Authentication cryptogram. Also known as `cavvAlgorithm`.
+                 * messageExtension: CB-AVALGO
+                 */
+                cb_avalgo: CartesBancaires.CbAvalgo;
+
+                /**
+                 * The exemption indicator returned from Cartes Bancaires in the ARes.
+                 * message extension: CB-EXEMPTION; string (4 characters)
+                 * This is a 3 byte bitmap (low significant byte first and most significant
+                 * bit first) that has been Base64 encoded
+                 */
+                cb_exemption?: string;
+
+                /**
+                 * The risk score returned from Cartes Bancaires in the ARes.
+                 * message extension: CB-SCORE; numeric value 0-99
+                 */
+                cb_score?: number;
+              }
+
+              namespace CartesBancaires {
+                type CbAvalgo = '0' | '1' | '2' | '3' | '4' | 'A';
+              }
+            }
+
+            type Version = '1.0.2' | '2.1.0' | '2.2.0';
+          }
         }
 
         interface Link {
@@ -1764,6 +1859,12 @@ declare module 'stripe' {
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
+
+          /**
+           * If 3D Secure authentication was performed with a third-party provider,
+           * the authentication details to use for this setup.
+           */
+          three_d_secure?: Card.ThreeDSecure;
         }
 
         namespace Card {
@@ -1839,6 +1940,95 @@ declare module 'stripe' {
             | 'visa';
 
           type RequestThreeDSecure = 'any' | 'automatic';
+
+          interface ThreeDSecure {
+            /**
+             * The `transStatus` returned from the card Issuer's ACS in the ARes.
+             */
+            ares_trans_status?: ThreeDSecure.AresTransStatus;
+
+            /**
+             * The cryptogram, also known as the "authentication value" (AAV, CAVV or
+             * AEVV). This value is 20 bytes, base64-encoded into a 28-character string.
+             * (Most 3D Secure providers will return the base64-encoded version, which
+             * is what you should specify here.)
+             */
+            cryptogram?: string;
+
+            /**
+             * The Electronic Commerce Indicator (ECI) is returned by your 3D Secure
+             * provider and indicates what degree of authentication was performed.
+             */
+            electronic_commerce_indicator?: ThreeDSecure.ElectronicCommerceIndicator;
+
+            /**
+             * Network specific 3DS fields. Network specific arguments require an
+             * explicit card brand choice. The parameter `payment_method_options.card.network``
+             * must be populated accordingly
+             */
+            network_options?: ThreeDSecure.NetworkOptions;
+
+            /**
+             * The challenge indicator (`threeDSRequestorChallengeInd`) which was requested in the
+             * AReq sent to the card Issuer's ACS. A string containing 2 digits from 01-99.
+             */
+            requestor_challenge_indicator?: string;
+
+            /**
+             * For 3D Secure 1, the XID. For 3D Secure 2, the Directory Server
+             * Transaction ID (dsTransID).
+             */
+            transaction_id?: string;
+
+            /**
+             * The version of 3D Secure that was performed.
+             */
+            version?: ThreeDSecure.Version;
+          }
+
+          namespace ThreeDSecure {
+            type AresTransStatus = 'A' | 'C' | 'I' | 'N' | 'R' | 'U' | 'Y';
+
+            type ElectronicCommerceIndicator = '01' | '02' | '05' | '06' | '07';
+
+            interface NetworkOptions {
+              /**
+               * Cartes Bancaires-specific 3DS fields.
+               */
+              cartes_bancaires?: NetworkOptions.CartesBancaires;
+            }
+
+            namespace NetworkOptions {
+              interface CartesBancaires {
+                /**
+                 * The cryptogram calculation algorithm used by the card Issuer's ACS
+                 * to calculate the Authentication cryptogram. Also known as `cavvAlgorithm`.
+                 * messageExtension: CB-AVALGO
+                 */
+                cb_avalgo: CartesBancaires.CbAvalgo;
+
+                /**
+                 * The exemption indicator returned from Cartes Bancaires in the ARes.
+                 * message extension: CB-EXEMPTION; string (4 characters)
+                 * This is a 3 byte bitmap (low significant byte first and most significant
+                 * bit first) that has been Base64 encoded
+                 */
+                cb_exemption?: string;
+
+                /**
+                 * The risk score returned from Cartes Bancaires in the ARes.
+                 * message extension: CB-SCORE; numeric value 0-99
+                 */
+                cb_score?: number;
+              }
+
+              namespace CartesBancaires {
+                type CbAvalgo = '0' | '1' | '2' | '3' | '4' | 'A';
+              }
+            }
+
+            type Version = '1.0.2' | '2.1.0' | '2.2.0';
+          }
         }
 
         interface Link {
@@ -2765,6 +2955,12 @@ declare module 'stripe' {
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
+
+          /**
+           * If 3D Secure authentication was performed with a third-party provider,
+           * the authentication details to use for this setup.
+           */
+          three_d_secure?: Card.ThreeDSecure;
         }
 
         namespace Card {
@@ -2840,6 +3036,95 @@ declare module 'stripe' {
             | 'visa';
 
           type RequestThreeDSecure = 'any' | 'automatic';
+
+          interface ThreeDSecure {
+            /**
+             * The `transStatus` returned from the card Issuer's ACS in the ARes.
+             */
+            ares_trans_status?: ThreeDSecure.AresTransStatus;
+
+            /**
+             * The cryptogram, also known as the "authentication value" (AAV, CAVV or
+             * AEVV). This value is 20 bytes, base64-encoded into a 28-character string.
+             * (Most 3D Secure providers will return the base64-encoded version, which
+             * is what you should specify here.)
+             */
+            cryptogram?: string;
+
+            /**
+             * The Electronic Commerce Indicator (ECI) is returned by your 3D Secure
+             * provider and indicates what degree of authentication was performed.
+             */
+            electronic_commerce_indicator?: ThreeDSecure.ElectronicCommerceIndicator;
+
+            /**
+             * Network specific 3DS fields. Network specific arguments require an
+             * explicit card brand choice. The parameter `payment_method_options.card.network``
+             * must be populated accordingly
+             */
+            network_options?: ThreeDSecure.NetworkOptions;
+
+            /**
+             * The challenge indicator (`threeDSRequestorChallengeInd`) which was requested in the
+             * AReq sent to the card Issuer's ACS. A string containing 2 digits from 01-99.
+             */
+            requestor_challenge_indicator?: string;
+
+            /**
+             * For 3D Secure 1, the XID. For 3D Secure 2, the Directory Server
+             * Transaction ID (dsTransID).
+             */
+            transaction_id?: string;
+
+            /**
+             * The version of 3D Secure that was performed.
+             */
+            version?: ThreeDSecure.Version;
+          }
+
+          namespace ThreeDSecure {
+            type AresTransStatus = 'A' | 'C' | 'I' | 'N' | 'R' | 'U' | 'Y';
+
+            type ElectronicCommerceIndicator = '01' | '02' | '05' | '06' | '07';
+
+            interface NetworkOptions {
+              /**
+               * Cartes Bancaires-specific 3DS fields.
+               */
+              cartes_bancaires?: NetworkOptions.CartesBancaires;
+            }
+
+            namespace NetworkOptions {
+              interface CartesBancaires {
+                /**
+                 * The cryptogram calculation algorithm used by the card Issuer's ACS
+                 * to calculate the Authentication cryptogram. Also known as `cavvAlgorithm`.
+                 * messageExtension: CB-AVALGO
+                 */
+                cb_avalgo: CartesBancaires.CbAvalgo;
+
+                /**
+                 * The exemption indicator returned from Cartes Bancaires in the ARes.
+                 * message extension: CB-EXEMPTION; string (4 characters)
+                 * This is a 3 byte bitmap (low significant byte first and most significant
+                 * bit first) that has been Base64 encoded
+                 */
+                cb_exemption?: string;
+
+                /**
+                 * The risk score returned from Cartes Bancaires in the ARes.
+                 * message extension: CB-SCORE; numeric value 0-99
+                 */
+                cb_score?: number;
+              }
+
+              namespace CartesBancaires {
+                type CbAvalgo = '0' | '1' | '2' | '3' | '4' | 'A';
+              }
+            }
+
+            type Version = '1.0.2' | '2.1.0' | '2.2.0';
+          }
         }
 
         interface Link {

@@ -585,7 +585,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Price>>;
 
       /**
-       * Returns a list of your active prices. For the list of inactive prices, set active to false.
+       * Returns a list of your active prices, excluding [inline prices](https://stripe.com/docs/products-prices/pricing-models#inline-pricing). For the list of inactive prices, set active to false.
        */
       list(
         params?: PriceListParams,

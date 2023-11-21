@@ -900,6 +900,23 @@ declare module 'stripe' {
             authentication_flow: ThreeDSecure.AuthenticationFlow | null;
 
             /**
+             * The Electronic Commerce Indicator (ECI). A protocol-level field
+             * indicating what degree of authentication was performed.
+             */
+            electronic_commerce_indicator: ThreeDSecure.ElectronicCommerceIndicator | null;
+
+            /**
+             * The exemption requested via 3DS and accepted by the issuer at authentication time.
+             */
+            exemption_indicator: ThreeDSecure.ExemptionIndicator | null;
+
+            /**
+             * Whether Stripe requested the value of `exemption_indicator` in the transaction. This will depend on
+             * the outcome of Stripe's internal risk assessment.
+             */
+            exemption_indicator_applied?: boolean;
+
+            /**
              * Indicates the outcome of 3D Secure authentication.
              */
             result: ThreeDSecure.Result | null;
@@ -911,6 +928,12 @@ declare module 'stripe' {
             result_reason: ThreeDSecure.ResultReason | null;
 
             /**
+             * The 3D Secure 1 XID or 3D Secure 2 Directory Server Transaction ID
+             * (dsTransId) for this payment.
+             */
+            transaction_id: string | null;
+
+            /**
              * The version of 3D Secure that was used.
              */
             version: ThreeDSecure.Version | null;
@@ -918,6 +941,10 @@ declare module 'stripe' {
 
           namespace ThreeDSecure {
             type AuthenticationFlow = 'challenge' | 'frictionless';
+
+            type ElectronicCommerceIndicator = '01' | '02' | '05' | '06' | '07';
+
+            type ExemptionIndicator = 'low_risk' | 'none';
 
             type Result =
               | 'attempt_acknowledged'
@@ -1120,6 +1147,11 @@ declare module 'stripe' {
           network: string | null;
 
           /**
+           * Details about payments collected offline.
+           */
+          offline: CardPresent.Offline | null;
+
+          /**
            * Defines whether the authorized amount can be over-captured or not
            */
           overcapture_supported: boolean;
@@ -1136,6 +1168,13 @@ declare module 'stripe' {
         }
 
         namespace CardPresent {
+          interface Offline {
+            /**
+             * Time at which the payment was collected while offline
+             */
+            stored_at: number | null;
+          }
+
           type ReadMethod =
             | 'contact_emv'
             | 'contactless_emv'

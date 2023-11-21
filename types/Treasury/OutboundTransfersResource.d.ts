@@ -45,7 +45,7 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * Statement descriptor to be shown on the receiving end of an OutboundTransfer. Maximum 10 characters for `ach` transfers or 140 characters for `wire` transfers. The default value is `transfer`.
+         * Statement descriptor to be shown on the receiving end of an OutboundTransfer. Maximum 10 characters for `ach` transfers or 140 characters for `us_domestic_wire` transfers. The default value is "transfer".
          */
         statement_descriptor?: string;
       }

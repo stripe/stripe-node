@@ -60,7 +60,7 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * The description that appears on the receiving end for this OutboundPayment (for example, bank statement for external bank transfer). Maximum 10 characters for `ach` payments, 140 characters for `wire` payments, or 500 characters for `stripe` network transfers. The default value is `payment`.
+         * The description that appears on the receiving end for this OutboundPayment (for example, bank statement for external bank transfer). Maximum 10 characters for `ach` payments, 140 characters for `us_domestic_wire` payments, or 500 characters for `stripe` network transfers. The default value is "payment".
          */
         statement_descriptor?: string;
       }
