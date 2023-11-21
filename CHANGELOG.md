@@ -1,5 +1,10 @@
 # Changelog
 
+## 14.7.0-beta.1 - 2023-11-21
+* [#1962](https://github.com/stripe/stripe-node/pull/1962) Update generated code for beta
+  * Rename `.delivery.receipient` to `.delivery.recipient` on `Charge` and `PaymentIntent` APIs.
+  * Add support for `components` on `CustomerSessionCreateParams` and `CustomerSession`
+
 ## 14.6.0 - 2023-11-21
 * [#1961](https://github.com/stripe/stripe-node/pull/1961) Update generated code
   * Add support for `electronic_commerce_indicator` on `Charge.payment_method_details.card.three_d_secure` and `SetupAttempt.payment_method_details.card.three_d_secure`
