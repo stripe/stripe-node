@@ -785,6 +785,7 @@ declare module 'stripe' {
           | 'debit_not_authorized'
           | 'email_invalid'
           | 'expired_card'
+          | 'financial_connections_account_inactive'
           | 'idempotency_key_in_use'
           | 'incorrect_address'
           | 'incorrect_cvc'
