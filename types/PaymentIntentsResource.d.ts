@@ -407,13 +407,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -512,13 +512,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -596,13 +596,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -789,13 +789,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -1923,6 +1923,12 @@ declare module 'stripe' {
            * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
            */
           statement_details?: Stripe.Emptyable<Card.StatementDetails>;
+
+          /**
+           * If 3D Secure authentication was performed with a third-party provider,
+           * the authentication details to use for this payment.
+           */
+          three_d_secure?: Card.ThreeDSecure;
         }
 
         namespace Card {
@@ -2049,6 +2055,102 @@ declare module 'stripe' {
              * Phone number (e.g., a toll-free number that customers can call)
              */
             phone?: string;
+          }
+
+          interface ThreeDSecure {
+            /**
+             * The `transStatus` returned from the card Issuer's ACS in the ARes.
+             */
+            ares_trans_status?: ThreeDSecure.AresTransStatus;
+
+            /**
+             * The cryptogram, also known as the "authentication value" (AAV, CAVV or
+             * AEVV). This value is 20 bytes, base64-encoded into a 28-character string.
+             * (Most 3D Secure providers will return the base64-encoded version, which
+             * is what you should specify here.)
+             */
+            cryptogram: string;
+
+            /**
+             * The Electronic Commerce Indicator (ECI) is returned by your 3D Secure
+             * provider and indicates what degree of authentication was performed.
+             */
+            electronic_commerce_indicator?: ThreeDSecure.ElectronicCommerceIndicator;
+
+            /**
+             * The exemption requested via 3DS and accepted by the issuer at authentication time.
+             */
+            exemption_indicator?: ThreeDSecure.ExemptionIndicator;
+
+            /**
+             * Network specific 3DS fields. Network specific arguments require an
+             * explicit card brand choice. The parameter `payment_method_options.card.network``
+             * must be populated accordingly
+             */
+            network_options?: ThreeDSecure.NetworkOptions;
+
+            /**
+             * The challenge indicator (`threeDSRequestorChallengeInd`) which was requested in the
+             * AReq sent to the card Issuer's ACS. A string containing 2 digits from 01-99.
+             */
+            requestor_challenge_indicator?: string;
+
+            /**
+             * For 3D Secure 1, the XID. For 3D Secure 2, the Directory Server
+             * Transaction ID (dsTransID).
+             */
+            transaction_id: string;
+
+            /**
+             * The version of 3D Secure that was performed.
+             */
+            version: ThreeDSecure.Version;
+          }
+
+          namespace ThreeDSecure {
+            type AresTransStatus = 'A' | 'C' | 'I' | 'N' | 'R' | 'U' | 'Y';
+
+            type ElectronicCommerceIndicator = '01' | '02' | '05' | '06' | '07';
+
+            type ExemptionIndicator = 'low_risk' | 'none';
+
+            interface NetworkOptions {
+              /**
+               * Cartes Bancaires-specific 3DS fields.
+               */
+              cartes_bancaires?: NetworkOptions.CartesBancaires;
+            }
+
+            namespace NetworkOptions {
+              interface CartesBancaires {
+                /**
+                 * The cryptogram calculation algorithm used by the card Issuer's ACS
+                 * to calculate the Authentication cryptogram. Also known as `cavvAlgorithm`.
+                 * messageExtension: CB-AVALGO
+                 */
+                cb_avalgo: CartesBancaires.CbAvalgo;
+
+                /**
+                 * The exemption indicator returned from Cartes Bancaires in the ARes.
+                 * message extension: CB-EXEMPTION; string (4 characters)
+                 * This is a 3 byte bitmap (low significant byte first and most significant
+                 * bit first) that has been Base64 encoded
+                 */
+                cb_exemption?: string;
+
+                /**
+                 * The risk score returned from Cartes Bancaires in the ARes.
+                 * message extension: CB-SCORE; numeric value 0-99
+                 */
+                cb_score?: number;
+              }
+
+              namespace CartesBancaires {
+                type CbAvalgo = '0' | '1' | '2' | '3' | '4' | 'A';
+              }
+            }
+
+            type Version = '1.0.2' | '2.1.0' | '2.2.0';
           }
         }
 
@@ -3130,13 +3232,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -3235,13 +3337,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -3319,13 +3421,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -3512,13 +3614,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -4646,6 +4748,12 @@ declare module 'stripe' {
            * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
            */
           statement_details?: Stripe.Emptyable<Card.StatementDetails>;
+
+          /**
+           * If 3D Secure authentication was performed with a third-party provider,
+           * the authentication details to use for this payment.
+           */
+          three_d_secure?: Card.ThreeDSecure;
         }
 
         namespace Card {
@@ -4772,6 +4880,102 @@ declare module 'stripe' {
              * Phone number (e.g., a toll-free number that customers can call)
              */
             phone?: string;
+          }
+
+          interface ThreeDSecure {
+            /**
+             * The `transStatus` returned from the card Issuer's ACS in the ARes.
+             */
+            ares_trans_status?: ThreeDSecure.AresTransStatus;
+
+            /**
+             * The cryptogram, also known as the "authentication value" (AAV, CAVV or
+             * AEVV). This value is 20 bytes, base64-encoded into a 28-character string.
+             * (Most 3D Secure providers will return the base64-encoded version, which
+             * is what you should specify here.)
+             */
+            cryptogram: string;
+
+            /**
+             * The Electronic Commerce Indicator (ECI) is returned by your 3D Secure
+             * provider and indicates what degree of authentication was performed.
+             */
+            electronic_commerce_indicator?: ThreeDSecure.ElectronicCommerceIndicator;
+
+            /**
+             * The exemption requested via 3DS and accepted by the issuer at authentication time.
+             */
+            exemption_indicator?: ThreeDSecure.ExemptionIndicator;
+
+            /**
+             * Network specific 3DS fields. Network specific arguments require an
+             * explicit card brand choice. The parameter `payment_method_options.card.network``
+             * must be populated accordingly
+             */
+            network_options?: ThreeDSecure.NetworkOptions;
+
+            /**
+             * The challenge indicator (`threeDSRequestorChallengeInd`) which was requested in the
+             * AReq sent to the card Issuer's ACS. A string containing 2 digits from 01-99.
+             */
+            requestor_challenge_indicator?: string;
+
+            /**
+             * For 3D Secure 1, the XID. For 3D Secure 2, the Directory Server
+             * Transaction ID (dsTransID).
+             */
+            transaction_id: string;
+
+            /**
+             * The version of 3D Secure that was performed.
+             */
+            version: ThreeDSecure.Version;
+          }
+
+          namespace ThreeDSecure {
+            type AresTransStatus = 'A' | 'C' | 'I' | 'N' | 'R' | 'U' | 'Y';
+
+            type ElectronicCommerceIndicator = '01' | '02' | '05' | '06' | '07';
+
+            type ExemptionIndicator = 'low_risk' | 'none';
+
+            interface NetworkOptions {
+              /**
+               * Cartes Bancaires-specific 3DS fields.
+               */
+              cartes_bancaires?: NetworkOptions.CartesBancaires;
+            }
+
+            namespace NetworkOptions {
+              interface CartesBancaires {
+                /**
+                 * The cryptogram calculation algorithm used by the card Issuer's ACS
+                 * to calculate the Authentication cryptogram. Also known as `cavvAlgorithm`.
+                 * messageExtension: CB-AVALGO
+                 */
+                cb_avalgo: CartesBancaires.CbAvalgo;
+
+                /**
+                 * The exemption indicator returned from Cartes Bancaires in the ARes.
+                 * message extension: CB-EXEMPTION; string (4 characters)
+                 * This is a 3 byte bitmap (low significant byte first and most significant
+                 * bit first) that has been Base64 encoded
+                 */
+                cb_exemption?: string;
+
+                /**
+                 * The risk score returned from Cartes Bancaires in the ARes.
+                 * message extension: CB-SCORE; numeric value 0-99
+                 */
+                cb_score?: number;
+              }
+
+              namespace CartesBancaires {
+                type CbAvalgo = '0' | '1' | '2' | '3' | '4' | 'A';
+              }
+            }
+
+            type Version = '1.0.2' | '2.1.0' | '2.2.0';
           }
         }
 
@@ -5763,13 +5967,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -5868,13 +6072,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -5952,13 +6156,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -6145,13 +6349,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -6595,13 +6799,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -6700,13 +6904,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -6784,13 +6988,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -6977,13 +7181,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -8111,6 +8315,12 @@ declare module 'stripe' {
            * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
            */
           statement_details?: Stripe.Emptyable<Card.StatementDetails>;
+
+          /**
+           * If 3D Secure authentication was performed with a third-party provider,
+           * the authentication details to use for this payment.
+           */
+          three_d_secure?: Card.ThreeDSecure;
         }
 
         namespace Card {
@@ -8237,6 +8447,102 @@ declare module 'stripe' {
              * Phone number (e.g., a toll-free number that customers can call)
              */
             phone?: string;
+          }
+
+          interface ThreeDSecure {
+            /**
+             * The `transStatus` returned from the card Issuer's ACS in the ARes.
+             */
+            ares_trans_status?: ThreeDSecure.AresTransStatus;
+
+            /**
+             * The cryptogram, also known as the "authentication value" (AAV, CAVV or
+             * AEVV). This value is 20 bytes, base64-encoded into a 28-character string.
+             * (Most 3D Secure providers will return the base64-encoded version, which
+             * is what you should specify here.)
+             */
+            cryptogram: string;
+
+            /**
+             * The Electronic Commerce Indicator (ECI) is returned by your 3D Secure
+             * provider and indicates what degree of authentication was performed.
+             */
+            electronic_commerce_indicator?: ThreeDSecure.ElectronicCommerceIndicator;
+
+            /**
+             * The exemption requested via 3DS and accepted by the issuer at authentication time.
+             */
+            exemption_indicator?: ThreeDSecure.ExemptionIndicator;
+
+            /**
+             * Network specific 3DS fields. Network specific arguments require an
+             * explicit card brand choice. The parameter `payment_method_options.card.network``
+             * must be populated accordingly
+             */
+            network_options?: ThreeDSecure.NetworkOptions;
+
+            /**
+             * The challenge indicator (`threeDSRequestorChallengeInd`) which was requested in the
+             * AReq sent to the card Issuer's ACS. A string containing 2 digits from 01-99.
+             */
+            requestor_challenge_indicator?: string;
+
+            /**
+             * For 3D Secure 1, the XID. For 3D Secure 2, the Directory Server
+             * Transaction ID (dsTransID).
+             */
+            transaction_id: string;
+
+            /**
+             * The version of 3D Secure that was performed.
+             */
+            version: ThreeDSecure.Version;
+          }
+
+          namespace ThreeDSecure {
+            type AresTransStatus = 'A' | 'C' | 'I' | 'N' | 'R' | 'U' | 'Y';
+
+            type ElectronicCommerceIndicator = '01' | '02' | '05' | '06' | '07';
+
+            type ExemptionIndicator = 'low_risk' | 'none';
+
+            interface NetworkOptions {
+              /**
+               * Cartes Bancaires-specific 3DS fields.
+               */
+              cartes_bancaires?: NetworkOptions.CartesBancaires;
+            }
+
+            namespace NetworkOptions {
+              interface CartesBancaires {
+                /**
+                 * The cryptogram calculation algorithm used by the card Issuer's ACS
+                 * to calculate the Authentication cryptogram. Also known as `cavvAlgorithm`.
+                 * messageExtension: CB-AVALGO
+                 */
+                cb_avalgo: CartesBancaires.CbAvalgo;
+
+                /**
+                 * The exemption indicator returned from Cartes Bancaires in the ARes.
+                 * message extension: CB-EXEMPTION; string (4 characters)
+                 * This is a 3 byte bitmap (low significant byte first and most significant
+                 * bit first) that has been Base64 encoded
+                 */
+                cb_exemption?: string;
+
+                /**
+                 * The risk score returned from Cartes Bancaires in the ARes.
+                 * message extension: CB-SCORE; numeric value 0-99
+                 */
+                cb_score?: number;
+              }
+
+              namespace CartesBancaires {
+                type CbAvalgo = '0' | '1' | '2' | '3' | '4' | 'A';
+              }
+            }
+
+            type Version = '1.0.2' | '2.1.0' | '2.2.0';
           }
         }
 

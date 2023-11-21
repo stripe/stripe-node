@@ -366,13 +366,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -471,13 +471,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -555,13 +555,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -748,13 +748,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -1098,13 +1098,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -1203,13 +1203,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -1287,13 +1287,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
@@ -1480,13 +1480,13 @@ declare module 'stripe' {
             /**
              * Details of the recipient.
              */
-            receipient?: Delivery.Receipient;
+            recipient?: Delivery.Recipient;
           }
 
           namespace Delivery {
             type Mode = 'email' | 'phone' | 'pickup' | 'post';
 
-            interface Receipient {
+            interface Recipient {
               /**
                * The email of the recipient the ticket is delivered to.
                */
