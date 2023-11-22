@@ -35,6 +35,13 @@ declare module 'stripe' {
       | CheckoutSessionAsyncPaymentSucceededEvent
       | CheckoutSessionCompletedEvent
       | CheckoutSessionExpiredEvent
+      | ClimateOrderCanceledEvent
+      | ClimateOrderCreatedEvent
+      | ClimateOrderDelayedEvent
+      | ClimateOrderDeliveredEvent
+      | ClimateOrderProductSubstitutedEvent
+      | ClimateProductCreatedEvent
+      | ClimateProductPricingUpdatedEvent
       | CouponCreatedEvent
       | CouponDeletedEvent
       | CouponUpdatedEvent
@@ -674,6 +681,104 @@ declare module 'stripe' {
     namespace CheckoutSessionExpiredEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Checkout.Session;
+      }
+    }
+
+    /**
+     * Occurs when a Climate order is canceled.
+     */
+    interface ClimateOrderCanceledEvent extends EventBase {
+      type: 'climate.order.canceled';
+      data: ClimateOrderCanceledEvent.Data;
+    }
+
+    namespace ClimateOrderCanceledEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Climate.Order;
+      }
+    }
+
+    /**
+     * Occurs when a Climate order is created.
+     */
+    interface ClimateOrderCreatedEvent extends EventBase {
+      type: 'climate.order.created';
+      data: ClimateOrderCreatedEvent.Data;
+    }
+
+    namespace ClimateOrderCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Climate.Order;
+      }
+    }
+
+    /**
+     * Occurs when a Climate order is delayed.
+     */
+    interface ClimateOrderDelayedEvent extends EventBase {
+      type: 'climate.order.delayed';
+      data: ClimateOrderDelayedEvent.Data;
+    }
+
+    namespace ClimateOrderDelayedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Climate.Order;
+      }
+    }
+
+    /**
+     * Occurs when a Climate order is delivered.
+     */
+    interface ClimateOrderDeliveredEvent extends EventBase {
+      type: 'climate.order.delivered';
+      data: ClimateOrderDeliveredEvent.Data;
+    }
+
+    namespace ClimateOrderDeliveredEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Climate.Order;
+      }
+    }
+
+    /**
+     * Occurs when a Climate order's product is substituted for another.
+     */
+    interface ClimateOrderProductSubstitutedEvent extends EventBase {
+      type: 'climate.order.product_substituted';
+      data: ClimateOrderProductSubstitutedEvent.Data;
+    }
+
+    namespace ClimateOrderProductSubstitutedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Climate.Order;
+      }
+    }
+
+    /**
+     * Occurs when a Climate product is created.
+     */
+    interface ClimateProductCreatedEvent extends EventBase {
+      type: 'climate.product.created';
+      data: ClimateProductCreatedEvent.Data;
+    }
+
+    namespace ClimateProductCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Climate.Product;
+      }
+    }
+
+    /**
+     * Occurs when a Climate product is updated.
+     */
+    interface ClimateProductPricingUpdatedEvent extends EventBase {
+      type: 'climate.product.pricing_updated';
+      data: ClimateProductPricingUpdatedEvent.Data;
+    }
+
+    namespace ClimateProductPricingUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Climate.Product;
       }
     }
 

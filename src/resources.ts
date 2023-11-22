@@ -20,10 +20,12 @@ import {FinancialAccounts as TreasuryFinancialAccounts} from './resources/Treasu
 import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {Locations as TerminalLocations} from './resources/Terminal/Locations.js';
+import {Orders as ClimateOrders} from './resources/Climate/Orders.js';
 import {OutboundPayments as TestHelpersTreasuryOutboundPayments} from './resources/TestHelpers/Treasury/OutboundPayments.js';
 import {OutboundPayments as TreasuryOutboundPayments} from './resources/Treasury/OutboundPayments.js';
 import {OutboundTransfers as TestHelpersTreasuryOutboundTransfers} from './resources/TestHelpers/Treasury/OutboundTransfers.js';
 import {OutboundTransfers as TreasuryOutboundTransfers} from './resources/Treasury/OutboundTransfers.js';
+import {Products as ClimateProducts} from './resources/Climate/Products.js';
 import {Readers as TestHelpersTerminalReaders} from './resources/TestHelpers/Terminal/Readers.js';
 import {Readers as TerminalReaders} from './resources/Terminal/Readers.js';
 import {ReceivedCredits as TestHelpersTreasuryReceivedCredits} from './resources/TestHelpers/Treasury/ReceivedCredits.js';
@@ -40,6 +42,7 @@ import {Sessions as BillingPortalSessions} from './resources/BillingPortal/Sessi
 import {Sessions as CheckoutSessions} from './resources/Checkout/Sessions.js';
 import {Sessions as FinancialConnectionsSessions} from './resources/FinancialConnections/Sessions.js';
 import {Settings as TaxSettings} from './resources/Tax/Settings.js';
+import {Suppliers as ClimateSuppliers} from './resources/Climate/Suppliers.js';
 import {TestClocks as TestHelpersTestClocks} from './resources/TestHelpers/TestClocks.js';
 import {Tokens as IssuingTokens} from './resources/Issuing/Tokens.js';
 import {TransactionEntries as TreasuryTransactionEntries} from './resources/Treasury/TransactionEntries.js';
@@ -107,6 +110,11 @@ export const BillingPortal = resourceNamespace('billingPortal', {
 });
 export const Checkout = resourceNamespace('checkout', {
   Sessions: CheckoutSessions,
+});
+export const Climate = resourceNamespace('climate', {
+  Orders: ClimateOrders,
+  Products: ClimateProducts,
+  Suppliers: ClimateSuppliers,
 });
 export const FinancialConnections = resourceNamespace('financialConnections', {
   Accounts: FinancialConnectionsAccounts,
