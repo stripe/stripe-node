@@ -24,6 +24,9 @@
 ///<reference path='./Capital/FinancingTransactionsResource.d.ts' />
 ///<reference path='./ChargesResource.d.ts' />
 ///<reference path='./Checkout/SessionsResource.d.ts' />
+///<reference path='./Climate/OrdersResource.d.ts' />
+///<reference path='./Climate/ProductsResource.d.ts' />
+///<reference path='./Climate/SuppliersResource.d.ts' />
 ///<reference path='./ConfirmationTokensResource.d.ts' />
 ///<reference path='./CountrySpecsResource.d.ts' />
 ///<reference path='./CouponsResource.d.ts' />
@@ -144,6 +147,9 @@
 ///<reference path='./CashBalances.d.ts' />
 ///<reference path='./Charges.d.ts' />
 ///<reference path='./Checkout/Sessions.d.ts' />
+///<reference path='./Climate/Orders.d.ts' />
+///<reference path='./Climate/Products.d.ts' />
+///<reference path='./Climate/Suppliers.d.ts' />
 ///<reference path='./ConfirmationTokens.d.ts' />
 ///<reference path='./ConnectCollectionTransfers.d.ts' />
 ///<reference path='./CountrySpecs.d.ts' />
@@ -349,6 +355,11 @@ declare module 'stripe' {
     };
     checkout: {
       sessions: Stripe.Checkout.SessionsResource;
+    };
+    climate: {
+      orders: Stripe.Climate.OrdersResource;
+      products: Stripe.Climate.ProductsResource;
+      suppliers: Stripe.Climate.SuppliersResource;
     };
     financialConnections: {
       accounts: Stripe.FinancialConnections.AccountsResource;
