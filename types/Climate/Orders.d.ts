@@ -83,7 +83,7 @@ declare module 'stripe' {
         /**
          * The year this order is expected to be delivered.
          */
-        expected_delivery_year: number | null;
+        expected_delivery_year: number;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
