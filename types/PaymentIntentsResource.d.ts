@@ -160,7 +160,7 @@ declare module 'stripe' {
       shipping?: PaymentIntentCreateParams.Shipping;
 
       /**
-       * For non-card charges, you can use this value as the complete description that appears on your customers' statements. It must contain at least one letter and be 1–22 characters long.
+       * For card charges, use [statement_descriptor_suffix](https://stripe.com/docs/payments/account/statement-descriptors#dynamic). Otherwise, you can use this value as the complete description of a charge on your customers' statements. It must contain at least one letter and be 1–22 characters long.
        */
       statement_descriptor?: string;
 
@@ -3027,7 +3027,7 @@ declare module 'stripe' {
       shipping?: Stripe.Emptyable<PaymentIntentUpdateParams.Shipping>;
 
       /**
-       * For non-card charges, you can use this value as the complete description that appears on your customers' statements. Must contain at least one letter, maximum 22 characters.
+       * For card charges, use [statement_descriptor_suffix](https://stripe.com/docs/payments/account/statement-descriptors#dynamic). Otherwise, you can use this value as the complete description of a charge on your customers' statements. It must contain at least one letter and be 1–22 characters long.
        */
       statement_descriptor?: string;
 
@@ -5803,7 +5803,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * For non-card charges, you can use this value as the complete description that appears on your customers' statements. Must contain at least one letter, maximum 22 characters.
+       * For card charges, use [statement_descriptor_suffix](https://stripe.com/docs/payments/account/statement-descriptors#dynamic). Otherwise, you can use this value as the complete description of a charge on your customers' statements. It must contain at least one letter and be 1–22 characters long.
        */
       statement_descriptor?: string;
 
@@ -9303,7 +9303,7 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
-       * For non-card charges, you can use this value as the complete description that appears on your customers' statements. Must contain at least one letter, maximum 22 characters.
+       * For card charges, use [statement_descriptor_suffix](https://stripe.com/docs/payments/account/statement-descriptors#dynamic). Otherwise, you can use this value as the complete description of a charge on your customers' statements. It must contain at least one letter and be 1–22 characters long.
        */
       statement_descriptor?: string;
 
