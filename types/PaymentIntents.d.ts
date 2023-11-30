@@ -1949,7 +1949,11 @@ declare module 'stripe' {
 
           type RequestOvercapture = 'if_available' | 'never';
 
-          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
+          type RequestThreeDSecure =
+            | 'any'
+            | 'automatic'
+            | 'challenge'
+            | 'challenge_only';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
