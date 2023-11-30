@@ -333,6 +333,7 @@ declare module 'stripe' {
           | 'debit_not_authorized'
           | 'email_invalid'
           | 'expired_card'
+          | 'financial_connections_account_inactive'
           | 'idempotency_key_in_use'
           | 'incorrect_address'
           | 'incorrect_cvc'
@@ -715,7 +716,11 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
-          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
+          type RequestThreeDSecure =
+            | 'any'
+            | 'automatic'
+            | 'challenge'
+            | 'challenge_only';
         }
 
         interface Link {

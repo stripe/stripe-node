@@ -2195,6 +2195,11 @@ declare module 'stripe' {
 
       interface SessionListParams extends PaginationParams {
         /**
+         * Only return the Checkout Sessions that were created during the given date interval.
+         */
+        created?: Stripe.RangeQueryParam | number;
+
+        /**
          * Only return the Checkout Sessions for the Customer specified.
          */
         customer?: string;
