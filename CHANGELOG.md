@@ -1,5 +1,8 @@
 # Changelog
 
+## 14.8.0-beta.1 - 2023-11-30
+* [#1967](https://github.com/stripe/stripe-node/pull/1967) Update generated code for beta
+
 ## 14.7.0-beta.2 - 2023-11-27
 * [#1966](https://github.com/stripe/stripe-node/pull/1966) beta: climate APIs
   * Add support for new resources `Climate.Order`, `Climate.Product`, and `Climate.Supplier`
