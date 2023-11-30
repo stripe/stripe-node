@@ -720,7 +720,11 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
-          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
+          type RequestThreeDSecure =
+            | 'any'
+            | 'automatic'
+            | 'challenge'
+            | 'challenge_only';
         }
 
         interface Link {
