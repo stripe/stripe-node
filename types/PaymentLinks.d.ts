@@ -81,6 +81,11 @@ declare module 'stripe' {
       customer_creation: PaymentLink.CustomerCreation;
 
       /**
+       * The custom message to be displayed to a customer when a payment link is no longer active.
+       */
+      inactive_message?: string | null;
+
+      /**
        * Configuration for creating invoice for payment mode payment links.
        */
       invoice_creation: PaymentLink.InvoiceCreation | null;
@@ -121,6 +126,11 @@ declare module 'stripe' {
       payment_method_types: Array<PaymentLink.PaymentMethodType> | null;
 
       phone_number_collection: PaymentLink.PhoneNumberCollection;
+
+      /**
+       * Settings that restrict the usage of a payment link.
+       */
+      restrictions?: PaymentLink.Restrictions | null;
 
       /**
        * Configuration for collecting the customer's shipping address.
@@ -528,6 +538,24 @@ declare module 'stripe' {
          * If `true`, a phone number will be collected during checkout.
          */
         enabled: boolean;
+      }
+
+      interface Restrictions {
+        completed_sessions: Restrictions.CompletedSessions;
+      }
+
+      namespace Restrictions {
+        interface CompletedSessions {
+          /**
+           * The current number of checkout sessions that have been completed on the payment link which count towards the `completed_sessions` restriction to be met.
+           */
+          count: number;
+
+          /**
+           * The maximum number of checkout sessions that can be completed for the `completed_sessions` restriction to be met.
+           */
+          limit: number;
+        }
       }
 
       interface ShippingAddressCollection {
