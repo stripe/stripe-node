@@ -892,6 +892,11 @@ declare module 'stripe' {
          * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
          */
         trial_period_days?: number;
+
+        /**
+         * Settings related to subscription trials.
+         */
+        trial_settings?: SubscriptionData.TrialSettings;
       }
 
       namespace SubscriptionData {
@@ -917,6 +922,26 @@ declare module 'stripe' {
 
           namespace Issuer {
             type Type = 'account' | 'self';
+          }
+        }
+
+        interface TrialSettings {
+          /**
+           * Defines how the subscription should behave when the user's free trial ends.
+           */
+          end_behavior: TrialSettings.EndBehavior;
+        }
+
+        namespace TrialSettings {
+          interface EndBehavior {
+            /**
+             * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
+             */
+            missing_payment_method: EndBehavior.MissingPaymentMethod;
+          }
+
+          namespace EndBehavior {
+            type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
           }
         }
       }
@@ -1727,6 +1752,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Subscriptions](https://stripe.com/docs/api/subscriptions) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * Settings related to subscription trials.
+         */
+        trial_settings?: Stripe.Emptyable<SubscriptionData.TrialSettings>;
       }
 
       namespace SubscriptionData {
@@ -1752,6 +1782,26 @@ declare module 'stripe' {
 
           namespace Issuer {
             type Type = 'account' | 'self';
+          }
+        }
+
+        interface TrialSettings {
+          /**
+           * Defines how the subscription should behave when the user's free trial ends.
+           */
+          end_behavior: TrialSettings.EndBehavior;
+        }
+
+        namespace TrialSettings {
+          interface EndBehavior {
+            /**
+             * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
+             */
+            missing_payment_method: EndBehavior.MissingPaymentMethod;
+          }
+
+          namespace EndBehavior {
+            type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
           }
         }
       }
