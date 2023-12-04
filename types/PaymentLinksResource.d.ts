@@ -69,6 +69,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * The custom message to be displayed to a customer when a payment link is no longer active.
+       */
+      inactive_message?: string;
+
+      /**
        * Generate a post-purchase Invoice for one-time payments.
        */
       invoice_creation?: PaymentLinkCreateParams.InvoiceCreation;
@@ -108,6 +113,11 @@ declare module 'stripe' {
        * We recommend that you review your privacy policy and check with your legal contacts.
        */
       phone_number_collection?: PaymentLinkCreateParams.PhoneNumberCollection;
+
+      /**
+       * Settings that restrict the usage of a payment link.
+       */
+      restrictions?: PaymentLinkCreateParams.Restrictions;
 
       /**
        * Configuration for collecting the customer's shipping address.
@@ -544,6 +554,22 @@ declare module 'stripe' {
         enabled: boolean;
       }
 
+      interface Restrictions {
+        /**
+         * Configuration for the `completed_sessions` restriction type.
+         */
+        completed_sessions: Restrictions.CompletedSessions;
+      }
+
+      namespace Restrictions {
+        interface CompletedSessions {
+          /**
+           * The maximum number of checkout sessions that can be completed for the `completed_sessions` restriction to be met.
+           */
+          limit: number;
+        }
+      }
+
       interface ShippingAddressCollection {
         /**
          * An array of two-letter ISO country codes representing which countries Checkout should provide as options for
@@ -898,6 +924,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * The custom message to be displayed to a customer when a payment link is no longer active.
+       */
+      inactive_message?: Stripe.Emptyable<string>;
+
+      /**
        * Generate a post-purchase Invoice for one-time payments.
        */
       invoice_creation?: PaymentLinkUpdateParams.InvoiceCreation;
@@ -932,6 +963,11 @@ declare module 'stripe' {
       payment_method_types?: Stripe.Emptyable<
         Array<PaymentLinkUpdateParams.PaymentMethodType>
       >;
+
+      /**
+       * Settings that restrict the usage of a payment link.
+       */
+      restrictions?: Stripe.Emptyable<PaymentLinkUpdateParams.Restrictions>;
 
       /**
        * Configuration for collecting the customer's shipping address.
@@ -1295,6 +1331,22 @@ declare module 'stripe' {
         | 'sofort'
         | 'us_bank_account'
         | 'wechat_pay';
+
+      interface Restrictions {
+        /**
+         * Configuration for the `completed_sessions` restriction type.
+         */
+        completed_sessions: Restrictions.CompletedSessions;
+      }
+
+      namespace Restrictions {
+        interface CompletedSessions {
+          /**
+           * The maximum number of checkout sessions that can be completed for the `completed_sessions` restriction to be met.
+           */
+          limit: number;
+        }
+      }
 
       interface ShippingAddressCollection {
         /**
