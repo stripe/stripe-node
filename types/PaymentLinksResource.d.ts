@@ -507,6 +507,11 @@ declare module 'stripe' {
          * Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
          */
         statement_descriptor_suffix?: string;
+
+        /**
+         * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+         */
+        transfer_group?: string;
       }
 
       namespace PaymentIntentData {
@@ -1325,6 +1330,11 @@ declare module 'stripe' {
          * Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
          */
         statement_descriptor_suffix?: Stripe.Emptyable<string>;
+
+        /**
+         * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+         */
+        transfer_group?: Stripe.Emptyable<string>;
       }
 
       type PaymentMethodCollection = 'always' | 'if_required';
