@@ -895,6 +895,7 @@ declare module 'stripe' {
           | 'email_invalid'
           | 'expired_card'
           | 'financial_connections_account_inactive'
+          | 'financial_connections_no_successful_transaction_refresh'
           | 'gift_card_balance_insufficient'
           | 'gift_card_code_exists'
           | 'gift_card_inactive'
