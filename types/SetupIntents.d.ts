@@ -330,10 +330,12 @@ declare module 'stripe' {
           | 'coupon_expired'
           | 'customer_max_payment_methods'
           | 'customer_max_subscriptions'
+          | 'customer_tax_location_invalid'
           | 'debit_not_authorized'
           | 'email_invalid'
           | 'expired_card'
           | 'financial_connections_account_inactive'
+          | 'financial_connections_no_successful_transaction_refresh'
           | 'idempotency_key_in_use'
           | 'incorrect_address'
           | 'incorrect_cvc'
@@ -639,7 +641,7 @@ declare module 'stripe' {
           network: Card.Network | null;
 
           /**
-           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure: Card.RequestThreeDSecure | null;
         }

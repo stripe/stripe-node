@@ -81,6 +81,11 @@ declare module 'stripe' {
       customer_creation: PaymentLink.CustomerCreation;
 
       /**
+       * The custom message to be displayed to a customer when a payment link is no longer active.
+       */
+      inactive_message?: string | null;
+
+      /**
        * Configuration for creating invoice for payment mode payment links.
        */
       invoice_creation: PaymentLink.InvoiceCreation | null;
@@ -121,6 +126,11 @@ declare module 'stripe' {
       payment_method_types: Array<PaymentLink.PaymentMethodType> | null;
 
       phone_number_collection: PaymentLink.PhoneNumberCollection;
+
+      /**
+       * Settings that restrict the usage of a payment link.
+       */
+      restrictions?: PaymentLink.Restrictions | null;
 
       /**
        * Configuration for collecting the customer's shipping address.
@@ -439,6 +449,11 @@ declare module 'stripe' {
          * Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
          */
         statement_descriptor_suffix: string | null;
+
+        /**
+         * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+         */
+        transfer_group: string | null;
       }
 
       namespace PaymentIntentData {
@@ -484,6 +499,24 @@ declare module 'stripe' {
          * If `true`, a phone number will be collected during checkout.
          */
         enabled: boolean;
+      }
+
+      interface Restrictions {
+        completed_sessions: Restrictions.CompletedSessions;
+      }
+
+      namespace Restrictions {
+        interface CompletedSessions {
+          /**
+           * The current number of checkout sessions that have been completed on the payment link which count towards the `completed_sessions` restriction to be met.
+           */
+          count: number;
+
+          /**
+           * The maximum number of checkout sessions that can be completed for the `completed_sessions` restriction to be met.
+           */
+          limit: number;
+        }
       }
 
       interface ShippingAddressCollection {
@@ -763,6 +796,33 @@ declare module 'stripe' {
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days: number | null;
+
+        /**
+         * Settings related to subscription trials.
+         */
+        trial_settings: SubscriptionData.TrialSettings | null;
+      }
+
+      namespace SubscriptionData {
+        interface TrialSettings {
+          /**
+           * Defines how a subscription behaves when a free trial ends.
+           */
+          end_behavior: TrialSettings.EndBehavior;
+        }
+
+        namespace TrialSettings {
+          interface EndBehavior {
+            /**
+             * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
+             */
+            missing_payment_method: EndBehavior.MissingPaymentMethod;
+          }
+
+          namespace EndBehavior {
+            type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
+          }
+        }
       }
 
       interface TaxIdCollection {

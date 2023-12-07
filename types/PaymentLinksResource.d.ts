@@ -69,6 +69,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * The custom message to be displayed to a customer when a payment link is no longer active.
+       */
+      inactive_message?: string;
+
+      /**
        * Generate a post-purchase Invoice for one-time payments.
        */
       invoice_creation?: PaymentLinkCreateParams.InvoiceCreation;
@@ -108,6 +113,11 @@ declare module 'stripe' {
        * We recommend that you review your privacy policy and check with your legal contacts.
        */
       phone_number_collection?: PaymentLinkCreateParams.PhoneNumberCollection;
+
+      /**
+       * Settings that restrict the usage of a payment link.
+       */
+      restrictions?: PaymentLinkCreateParams.Restrictions;
 
       /**
        * Configuration for collecting the customer's shipping address.
@@ -497,6 +507,11 @@ declare module 'stripe' {
          * Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
          */
         statement_descriptor_suffix?: string;
+
+        /**
+         * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+         */
+        transfer_group?: string;
       }
 
       namespace PaymentIntentData {
@@ -542,6 +557,22 @@ declare module 'stripe' {
          * Set to `true` to enable phone number collection.
          */
         enabled: boolean;
+      }
+
+      interface Restrictions {
+        /**
+         * Configuration for the `completed_sessions` restriction type.
+         */
+        completed_sessions: Restrictions.CompletedSessions;
+      }
+
+      namespace Restrictions {
+        interface CompletedSessions {
+          /**
+           * The maximum number of checkout sessions that can be completed for the `completed_sessions` restriction to be met.
+           */
+          limit: number;
+        }
       }
 
       interface ShippingAddressCollection {
@@ -817,6 +848,33 @@ declare module 'stripe' {
          * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
          */
         trial_period_days?: number;
+
+        /**
+         * Settings related to subscription trials.
+         */
+        trial_settings?: SubscriptionData.TrialSettings;
+      }
+
+      namespace SubscriptionData {
+        interface TrialSettings {
+          /**
+           * Defines how the subscription should behave when the user's free trial ends.
+           */
+          end_behavior: TrialSettings.EndBehavior;
+        }
+
+        namespace TrialSettings {
+          interface EndBehavior {
+            /**
+             * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
+             */
+            missing_payment_method: EndBehavior.MissingPaymentMethod;
+          }
+
+          namespace EndBehavior {
+            type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
+          }
+        }
       }
 
       interface TaxIdCollection {
@@ -898,6 +956,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * The custom message to be displayed to a customer when a payment link is no longer active.
+       */
+      inactive_message?: Stripe.Emptyable<string>;
+
+      /**
        * Generate a post-purchase Invoice for one-time payments.
        */
       invoice_creation?: PaymentLinkUpdateParams.InvoiceCreation;
@@ -932,6 +995,11 @@ declare module 'stripe' {
       payment_method_types?: Stripe.Emptyable<
         Array<PaymentLinkUpdateParams.PaymentMethodType>
       >;
+
+      /**
+       * Settings that restrict the usage of a payment link.
+       */
+      restrictions?: Stripe.Emptyable<PaymentLinkUpdateParams.Restrictions>;
 
       /**
        * Configuration for collecting the customer's shipping address.
@@ -1262,6 +1330,11 @@ declare module 'stripe' {
          * Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
          */
         statement_descriptor_suffix?: Stripe.Emptyable<string>;
+
+        /**
+         * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+         */
+        transfer_group?: Stripe.Emptyable<string>;
       }
 
       type PaymentMethodCollection = 'always' | 'if_required';
@@ -1295,6 +1368,22 @@ declare module 'stripe' {
         | 'sofort'
         | 'us_bank_account'
         | 'wechat_pay';
+
+      interface Restrictions {
+        /**
+         * Configuration for the `completed_sessions` restriction type.
+         */
+        completed_sessions: Restrictions.CompletedSessions;
+      }
+
+      namespace Restrictions {
+        interface CompletedSessions {
+          /**
+           * The maximum number of checkout sessions that can be completed for the `completed_sessions` restriction to be met.
+           */
+          limit: number;
+        }
+      }
 
       interface ShippingAddressCollection {
         /**
@@ -1550,6 +1639,33 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Subscriptions](https://stripe.com/docs/api/subscriptions) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * Settings related to subscription trials.
+         */
+        trial_settings?: Stripe.Emptyable<SubscriptionData.TrialSettings>;
+      }
+
+      namespace SubscriptionData {
+        interface TrialSettings {
+          /**
+           * Defines how the subscription should behave when the user's free trial ends.
+           */
+          end_behavior: TrialSettings.EndBehavior;
+        }
+
+        namespace TrialSettings {
+          interface EndBehavior {
+            /**
+             * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
+             */
+            missing_payment_method: EndBehavior.MissingPaymentMethod;
+          }
+
+          namespace EndBehavior {
+            type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
+          }
+        }
       }
     }
 

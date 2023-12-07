@@ -241,7 +241,7 @@ declare module 'stripe' {
 
       interface Recurring {
         /**
-         * Specifies a usage aggregation strategy for prices of `usage_type=metered`. Allowed values are `sum` for summing up all usage during a period, `last_during_period` for using the last usage record reported within a period, `last_ever` for using the last usage record ever (across period bounds) or `max` which uses the usage record with the maximum reported usage during a period. Defaults to `sum`.
+         * Specifies a usage aggregation strategy for prices of `usage_type=metered`. Defaults to `sum`.
          */
         aggregate_usage: Recurring.AggregateUsage | null;
 
