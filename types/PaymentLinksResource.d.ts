@@ -69,6 +69,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * The custom message to be displayed to a customer when a payment link is no longer active.
+       */
+      inactive_message?: string;
+
+      /**
        * Generate a post-purchase Invoice for one-time payments.
        */
       invoice_creation?: PaymentLinkCreateParams.InvoiceCreation;
@@ -108,6 +113,11 @@ declare module 'stripe' {
        * We recommend that you review your privacy policy and check with your legal contacts.
        */
       phone_number_collection?: PaymentLinkCreateParams.PhoneNumberCollection;
+
+      /**
+       * Settings that restrict the usage of a payment link.
+       */
+      restrictions?: PaymentLinkCreateParams.Restrictions;
 
       /**
        * Configuration for collecting the customer's shipping address.
@@ -210,6 +220,11 @@ declare module 'stripe' {
 
       interface ConsentCollection {
         /**
+         * Determines the display of payment method reuse agreement text in the UI. If set to `hidden`, it will hide legal text related to the reuse of a payment method.
+         */
+        payment_method_reuse_agreement?: ConsentCollection.PaymentMethodReuseAgreement;
+
+        /**
          * If set to `auto`, enables the collection of customer consent for promotional communications. The Checkout
          * Session will determine whether to display an option to opt into promotional communication
          * from the merchant depending on the customer's locale. Only available to US merchants.
@@ -224,6 +239,18 @@ declare module 'stripe' {
       }
 
       namespace ConsentCollection {
+        interface PaymentMethodReuseAgreement {
+          /**
+           * Determines the position and visibility of the payment method reuse agreement in the UI. When set to `auto`, Stripe's
+           * defaults will be used. When set to `hidden`, the payment method reuse agreement text will always be hidden in the UI.
+           */
+          position: PaymentMethodReuseAgreement.Position;
+        }
+
+        namespace PaymentMethodReuseAgreement {
+          type Position = 'auto' | 'hidden';
+        }
+
         type Promotions = 'auto' | 'none';
 
         type TermsOfService = 'none' | 'required';
@@ -331,6 +358,11 @@ declare module 'stripe' {
 
       interface CustomText {
         /**
+         * Custom text that should be displayed after the payment confirmation button.
+         */
+        after_submit?: Stripe.Emptyable<CustomText.AfterSubmit>;
+
+        /**
          * Custom text that should be displayed alongside shipping address collection.
          */
         shipping_address?: Stripe.Emptyable<CustomText.ShippingAddress>;
@@ -349,6 +381,13 @@ declare module 'stripe' {
       }
 
       namespace CustomText {
+        interface AfterSubmit {
+          /**
+           * Text may be up to 1200 characters in length.
+           */
+          message: string;
+        }
+
         interface ShippingAddress {
           /**
            * Text may be up to 1200 characters in length.
@@ -541,6 +580,11 @@ declare module 'stripe' {
          * Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
          */
         statement_descriptor_suffix?: string;
+
+        /**
+         * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+         */
+        transfer_group?: string;
       }
 
       namespace PaymentIntentData {
@@ -586,6 +630,22 @@ declare module 'stripe' {
          * Set to `true` to enable phone number collection.
          */
         enabled: boolean;
+      }
+
+      interface Restrictions {
+        /**
+         * Configuration for the `completed_sessions` restriction type.
+         */
+        completed_sessions: Restrictions.CompletedSessions;
+      }
+
+      namespace Restrictions {
+        interface CompletedSessions {
+          /**
+           * The maximum number of checkout sessions that can be completed for the `completed_sessions` restriction to be met.
+           */
+          limit: number;
+        }
       }
 
       interface ShippingAddressCollection {
@@ -866,6 +926,11 @@ declare module 'stripe' {
          * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
          */
         trial_period_days?: number;
+
+        /**
+         * Settings related to subscription trials.
+         */
+        trial_settings?: SubscriptionData.TrialSettings;
       }
 
       namespace SubscriptionData {
@@ -891,6 +956,26 @@ declare module 'stripe' {
 
           namespace Issuer {
             type Type = 'account' | 'self';
+          }
+        }
+
+        interface TrialSettings {
+          /**
+           * Defines how the subscription should behave when the user's free trial ends.
+           */
+          end_behavior: TrialSettings.EndBehavior;
+        }
+
+        namespace TrialSettings {
+          interface EndBehavior {
+            /**
+             * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
+             */
+            missing_payment_method: EndBehavior.MissingPaymentMethod;
+          }
+
+          namespace EndBehavior {
+            type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
           }
         }
       }
@@ -974,6 +1059,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * The custom message to be displayed to a customer when a payment link is no longer active.
+       */
+      inactive_message?: Stripe.Emptyable<string>;
+
+      /**
        * Generate a post-purchase Invoice for one-time payments.
        */
       invoice_creation?: PaymentLinkUpdateParams.InvoiceCreation;
@@ -1008,6 +1098,11 @@ declare module 'stripe' {
       payment_method_types?: Stripe.Emptyable<
         Array<PaymentLinkUpdateParams.PaymentMethodType>
       >;
+
+      /**
+       * Settings that restrict the usage of a payment link.
+       */
+      restrictions?: Stripe.Emptyable<PaymentLinkUpdateParams.Restrictions>;
 
       /**
        * Configuration for collecting the customer's shipping address.
@@ -1192,6 +1287,11 @@ declare module 'stripe' {
 
       interface CustomText {
         /**
+         * Custom text that should be displayed after the payment confirmation button.
+         */
+        after_submit?: Stripe.Emptyable<CustomText.AfterSubmit>;
+
+        /**
          * Custom text that should be displayed alongside shipping address collection.
          */
         shipping_address?: Stripe.Emptyable<CustomText.ShippingAddress>;
@@ -1210,6 +1310,13 @@ declare module 'stripe' {
       }
 
       namespace CustomText {
+        interface AfterSubmit {
+          /**
+           * Text may be up to 1200 characters in length.
+           */
+          message: string;
+        }
+
         interface ShippingAddress {
           /**
            * Text may be up to 1200 characters in length.
@@ -1382,6 +1489,11 @@ declare module 'stripe' {
          * Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
          */
         statement_descriptor_suffix?: Stripe.Emptyable<string>;
+
+        /**
+         * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+         */
+        transfer_group?: Stripe.Emptyable<string>;
       }
 
       type PaymentMethodCollection = 'always' | 'if_required';
@@ -1415,6 +1527,22 @@ declare module 'stripe' {
         | 'sofort'
         | 'us_bank_account'
         | 'wechat_pay';
+
+      interface Restrictions {
+        /**
+         * Configuration for the `completed_sessions` restriction type.
+         */
+        completed_sessions: Restrictions.CompletedSessions;
+      }
+
+      namespace Restrictions {
+        interface CompletedSessions {
+          /**
+           * The maximum number of checkout sessions that can be completed for the `completed_sessions` restriction to be met.
+           */
+          limit: number;
+        }
+      }
 
       interface ShippingAddressCollection {
         /**
@@ -1675,6 +1803,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Subscriptions](https://stripe.com/docs/api/subscriptions) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * Settings related to subscription trials.
+         */
+        trial_settings?: Stripe.Emptyable<SubscriptionData.TrialSettings>;
       }
 
       namespace SubscriptionData {
@@ -1700,6 +1833,26 @@ declare module 'stripe' {
 
           namespace Issuer {
             type Type = 'account' | 'self';
+          }
+        }
+
+        interface TrialSettings {
+          /**
+           * Defines how the subscription should behave when the user's free trial ends.
+           */
+          end_behavior: TrialSettings.EndBehavior;
+        }
+
+        namespace TrialSettings {
+          interface EndBehavior {
+            /**
+             * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
+             */
+            missing_payment_method: EndBehavior.MissingPaymentMethod;
+          }
+
+          namespace EndBehavior {
+            type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
           }
         }
       }

@@ -45,7 +45,7 @@ declare module 'stripe' {
         /**
          * The quantity of metric tons available for reservation.
          */
-        metric_tons_available?: string;
+        metric_tons_available: string;
 
         /**
          * The Climate product's name.

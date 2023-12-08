@@ -3,6 +3,13 @@
 declare module 'stripe' {
   namespace Stripe {
     namespace FinancialConnections {
+      interface TransactionRetrieveParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
       interface TransactionListParams extends PaginationParams {
         /**
          * The ID of the Stripe account whose transactions will be retrieved.
@@ -35,6 +42,19 @@ declare module 'stripe' {
       }
 
       class TransactionsResource {
+        /**
+         * Retrieves the details of a Financial Connections Transaction
+         */
+        retrieve(
+          id: string,
+          params?: TransactionRetrieveParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.FinancialConnections.Transaction>>;
+        retrieve(
+          id: string,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.FinancialConnections.Transaction>>;
+
         /**
          * Returns a list of Financial Connections Transaction objects.
          */

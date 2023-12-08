@@ -55,7 +55,7 @@ declare module 'stripe' {
         transacted_at: number;
 
         /**
-         * The transaction_refresh object that last updated or created this transaction.
+         * The token of the transaction refresh that last updated or created this transaction.
          */
         transaction_refresh: string;
 

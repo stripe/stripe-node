@@ -66,7 +66,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * This hash contains the features the Payment Element supports.
+           * This hash defines whether the payment element supports certain features.
            */
           features: PaymentElement.Features | null;
         }
@@ -74,25 +74,32 @@ declare module 'stripe' {
         namespace PaymentElement {
           interface Features {
             /**
-             * Whether the payment element supports detaching payment methods.
+             * Controls whether the Payment Element allows the removal of a saved payment method.
              */
-            payment_method_detach: Features.PaymentMethodDetach;
+            payment_method_remove: Features.PaymentMethodRemove;
 
             /**
-             * Whether the payment element supports setting payment methods as the customer's default.
+             * Controls whether the Payment Element offers to save a new payment method.
              */
-            payment_method_set_as_customer_default: Features.PaymentMethodSetAsCustomerDefault;
+            payment_method_save: Features.PaymentMethodSave;
 
             /**
-             * Whether the payment element supports updating payment methods.
+             * Controls whether the Payment Element offers to set a payment method as the default.
+             */
+            payment_method_set_as_default: Features.PaymentMethodSetAsDefault;
+
+            /**
+             * Controls whether the Payment Element allows the updating of a saved payment method.
              */
             payment_method_update: Features.PaymentMethodUpdate;
           }
 
           namespace Features {
-            type PaymentMethodDetach = 'auto' | 'never';
+            type PaymentMethodRemove = 'auto' | 'never';
 
-            type PaymentMethodSetAsCustomerDefault = 'auto' | 'never';
+            type PaymentMethodSave = 'auto' | 'never';
+
+            type PaymentMethodSetAsDefault = 'auto' | 'never';
 
             type PaymentMethodUpdate = 'auto' | 'never';
           }
