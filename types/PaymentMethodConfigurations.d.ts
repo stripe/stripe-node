@@ -75,6 +75,8 @@ declare module 'stripe' {
 
       grabpay?: PaymentMethodConfiguration.Grabpay;
 
+      id_bank_transfer?: PaymentMethodConfiguration.IdBankTransfer;
+
       ideal?: PaymentMethodConfiguration.Ideal;
 
       /**
@@ -95,10 +97,14 @@ declare module 'stripe' {
        */
       livemode: boolean;
 
+      multibanco?: PaymentMethodConfiguration.Multibanco;
+
       /**
        * The configuration's name.
        */
       name: string;
+
+      netbanking?: PaymentMethodConfiguration.Netbanking;
 
       oxxo?: PaymentMethodConfiguration.Oxxo;
 
@@ -109,6 +115,8 @@ declare module 'stripe' {
        */
       parent: string | null;
 
+      pay_by_bank?: PaymentMethodConfiguration.PayByBank;
+
       paynow?: PaymentMethodConfiguration.Paynow;
 
       paypal?: PaymentMethodConfiguration.Paypal;
@@ -118,6 +126,8 @@ declare module 'stripe' {
       sepa_debit?: PaymentMethodConfiguration.SepaDebit;
 
       sofort?: PaymentMethodConfiguration.Sofort;
+
+      upi?: PaymentMethodConfiguration.Upi;
 
       us_bank_account?: PaymentMethodConfiguration.UsBankAccount;
 
@@ -737,6 +747,40 @@ declare module 'stripe' {
         }
       }
 
+      interface IdBankTransfer {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: IdBankTransfer.DisplayPreference;
+      }
+
+      namespace IdBankTransfer {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
       interface Ideal {
         /**
          * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
@@ -907,6 +951,74 @@ declare module 'stripe' {
         }
       }
 
+      interface Multibanco {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: Multibanco.DisplayPreference;
+      }
+
+      namespace Multibanco {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
+      interface Netbanking {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: Netbanking.DisplayPreference;
+      }
+
+      namespace Netbanking {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
       interface Oxxo {
         /**
          * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
@@ -951,6 +1063,40 @@ declare module 'stripe' {
       }
 
       namespace P24 {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
+      interface PayByBank {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: PayByBank.DisplayPreference;
+      }
+
+      namespace PayByBank {
         interface DisplayPreference {
           /**
            * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
@@ -1121,6 +1267,40 @@ declare module 'stripe' {
       }
 
       namespace Sofort {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
+      interface Upi {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: Upi.DisplayPreference;
+      }
+
+      namespace Upi {
         interface DisplayPreference {
           /**
            * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
