@@ -1,5 +1,12 @@
 # Changelog
 
+## 14.9.0-beta.1 - 2023-12-08
+* [#1969](https://github.com/stripe/stripe-node/pull/1969) Update generated code for beta
+  * Add support for `retrieve` method on resource `FinancialConnections.Transaction`
+  * Remove support for `issuing_card` and `issuing_cards_list` on `AccountSessionCreateParams.components`
+  * Add support for `payment_method_remove`, `payment_method_save`, and `payment_method_set_as_default` on `CustomerSession.components.payment_element.features` and `CustomerSessionCreateParams.components.payment_element.features`
+  * Remove support for `payment_method_detach` and `payment_method_set_as_customer_default` on `CustomerSession.components.payment_element.features` and `CustomerSessionCreateParams.components.payment_element.features`
+
 ## 14.8.0 - 2023-12-07
 * [#1968](https://github.com/stripe/stripe-node/pull/1968) Update generated code
   * Add support for `payment_details`, `payments`, and `payouts` on `AccountSession.components` and `AccountSessionCreateParams.components`
