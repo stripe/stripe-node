@@ -3,6 +3,7 @@
 import http = require('http');
 import {expect} from 'chai';
 import {FAKE_API_KEY} from './testUtils.js';
+import {StripeResource} from '../src/StripeResource.js';
 let testServer = null;
 
 function createTestServer(handlerFunc, cb) {
@@ -121,6 +122,66 @@ describe('Client Telemetry', () => {
             done();
           })
           .catch(done);
+      }
+    );
+  });
+  it('Sends usage telemetry when registered', (done) => {
+    let numRequests = 0;
+
+    createTestServer(
+      (req, res) => {
+        numRequests += 1;
+
+        const telemetry = req.headers['x-stripe-client-telemetry'];
+
+        switch (numRequests) {
+          case 1:
+            expect(telemetry).to.not.exist;
+            break;
+          case 2:
+            expect(telemetry).to.exist;
+            expect(
+              JSON.parse(telemetry).last_request_metrics.request_id
+            ).to.equal('req_1');
+            expect(
+              JSON.parse(telemetry).last_request_metrics.usage
+            ).to.deep.equal(['llama', 'bufo' ]);
+            break;
+          default:
+            expect.fail(`Should not have reached request ${numRequests}`);
+        }
+
+        res.setHeader('Request-Id', `req_${numRequests}`);
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end('{}');
+      },
+      (host, port) => {
+        const stripe = require('../src/stripe.cjs.node.js')(
+          'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
+          {
+            telemetry: true,
+            host,
+            port,
+            protocol: 'http',
+          }
+        );
+
+        const resource = new (StripeResource.extend({
+          boop: StripeResource.method({
+            method: 'POST',
+            fullPath: '/v1/widgets/{widget}/boop',
+            usage: ['llama', 'bufo' ],
+          })}))(stripe)
+
+        return Promise.resolve()
+          .then(() => resource.boop('w_123'))
+          .then(() => resource.boop('w_123'))
+          .then(() => {
+            expect(numRequests).to.equal(2);
+          })
+          .catch(done)
+          .then(() => done())
+
       }
     );
   });
