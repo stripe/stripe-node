@@ -197,7 +197,7 @@ const stripe = Stripe('sk_test_...', {
 | `host`              | `'api.stripe.com'` | Host that requests are made to.                                                                                                                                                                                                                   |
 | `port`              | 443                | Port that requests are made to.                                                                                                                                                                                                                   |
 | `protocol`          | `'https'`          | `'https'` or `'http'`. `http` is never appropriate for sending requests to Stripe servers, and we strongly discourage `http`, even in local testing scenarios, as this can result in your credentials being transmitted over an insecure channel. |
-| `telemetry`         | `true`             | Allow Stripe to send latency [telemetry](#request-latency-telemetry).                                                                                                                                                                             |
+| `telemetry`         | `true`             | Allow Stripe to send [telemetry](#telemetry).                                                                                                                                                                             |
 
 > **Note**
 > Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
@@ -477,10 +477,12 @@ const allNewCustomers = await stripe.customers
   .autoPagingToArray({limit: 10000});
 ```
 
-### Request latency telemetry
+### Telemetry
 
-By default, the library sends request latency telemetry to Stripe. These
-numbers help Stripe improve the overall latency of its API for all users.
+By default, the library sends request telemetry to Stripe regarding request
+latency and feature usage. These
+numbers help Stripe improve the overall latency of its API for all users, and
+improve popular features.
 
 You can disable this behavior if you prefer:
 
