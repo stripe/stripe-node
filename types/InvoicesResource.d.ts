@@ -1684,7 +1684,7 @@ declare module 'stripe' {
       schedule?: string;
 
       /**
-       * The schedule creation or modification params to apply as a preview. Cannot be used with subscription or subscription fields.
+       * The schedule creation or modification params to apply as a preview. Cannot be used with `subscription` or `subscription_` prefixed fields.
        */
       schedule_details?: InvoiceListUpcomingLinesParams.ScheduleDetails;
 
@@ -1701,7 +1701,7 @@ declare module 'stripe' {
         | number;
 
       /**
-       * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period and prorations have been enabled using `proration_behavior`.
+       * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
        */
       subscription_cancel_at?: Stripe.Emptyable<number>;
 
@@ -1748,7 +1748,7 @@ declare module 'stripe' {
       subscription_resume_at?: 'now';
 
       /**
-       * Date a subscription is intended to start (can be future or past)
+       * Date a subscription is intended to start (can be future or past).
        */
       subscription_start_date?: number;
 
@@ -3783,7 +3783,7 @@ declare module 'stripe' {
       schedule?: string;
 
       /**
-       * The schedule creation or modification params to apply as a preview. Cannot be used with subscription or subscription fields.
+       * The schedule creation or modification params to apply as a preview. Cannot be used with `subscription` or `subscription_` prefixed fields.
        */
       schedule_details?: InvoiceRetrieveUpcomingParams.ScheduleDetails;
 
@@ -3800,7 +3800,7 @@ declare module 'stripe' {
         | number;
 
       /**
-       * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period and prorations have been enabled using `proration_behavior`.
+       * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
        */
       subscription_cancel_at?: Stripe.Emptyable<number>;
 
@@ -3847,7 +3847,7 @@ declare module 'stripe' {
       subscription_resume_at?: 'now';
 
       /**
-       * Date a subscription is intended to start (can be future or past)
+       * Date a subscription is intended to start (can be future or past).
        */
       subscription_start_date?: number;
 
