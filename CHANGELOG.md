@@ -1,5 +1,12 @@
 # Changelog
 
+## 14.9.0 - 2023-12-14
+* [#1973](https://github.com/stripe/stripe-node/pull/1973) Add `usage` to X-Stripe-Client-Telemetry
+* [#1971](https://github.com/stripe/stripe-node/pull/1971) Update generated code
+  * Add support for `payment_method_reuse_agreement` on `Checkout.Session.consent_collection`, `Checkout.SessionCreateParams.consent_collection`, `PaymentLink.consent_collection`, and `PaymentLinkCreateParams.consent_collection`
+  * Add support for `after_submit` on `Checkout.Session.custom_text`, `Checkout.SessionCreateParams.custom_text`, `PaymentLink.custom_text`, `PaymentLinkCreateParams.custom_text`, and `PaymentLinkUpdateParams.custom_text`
+  * Add support for `created` on `Radar.EarlyFraudWarningListParams`
+
 ## 14.8.0 - 2023-12-07
 * [#1968](https://github.com/stripe/stripe-node/pull/1968) Update generated code
   * Add support for `payment_details`, `payments`, and `payouts` on `AccountSession.components` and `AccountSessionCreateParams.components`
