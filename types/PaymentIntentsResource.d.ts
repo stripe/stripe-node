@@ -33,6 +33,9 @@ declare module 'stripe' {
        */
       confirm?: boolean;
 
+      /**
+       * Describes whether we can confirm this PaymentIntent automatically, or if it requires customer action to confirm the payment.
+       */
       confirmation_method?: PaymentIntentCreateParams.ConfirmationMethod;
 
       /**

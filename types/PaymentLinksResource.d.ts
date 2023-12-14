@@ -197,6 +197,11 @@ declare module 'stripe' {
 
       interface ConsentCollection {
         /**
+         * Determines the display of payment method reuse agreement text in the UI. If set to `hidden`, it will hide legal text related to the reuse of a payment method.
+         */
+        payment_method_reuse_agreement?: ConsentCollection.PaymentMethodReuseAgreement;
+
+        /**
          * If set to `auto`, enables the collection of customer consent for promotional communications. The Checkout
          * Session will determine whether to display an option to opt into promotional communication
          * from the merchant depending on the customer's locale. Only available to US merchants.
@@ -211,6 +216,18 @@ declare module 'stripe' {
       }
 
       namespace ConsentCollection {
+        interface PaymentMethodReuseAgreement {
+          /**
+           * Determines the position and visibility of the payment method reuse agreement in the UI. When set to `auto`, Stripe's
+           * defaults will be used. When set to `hidden`, the payment method reuse agreement text will always be hidden in the UI.
+           */
+          position: PaymentMethodReuseAgreement.Position;
+        }
+
+        namespace PaymentMethodReuseAgreement {
+          type Position = 'auto' | 'hidden';
+        }
+
         type Promotions = 'auto' | 'none';
 
         type TermsOfService = 'none' | 'required';
@@ -318,6 +335,11 @@ declare module 'stripe' {
 
       interface CustomText {
         /**
+         * Custom text that should be displayed after the payment confirmation button.
+         */
+        after_submit?: Stripe.Emptyable<CustomText.AfterSubmit>;
+
+        /**
          * Custom text that should be displayed alongside shipping address collection.
          */
         shipping_address?: Stripe.Emptyable<CustomText.ShippingAddress>;
@@ -336,6 +358,13 @@ declare module 'stripe' {
       }
 
       namespace CustomText {
+        interface AfterSubmit {
+          /**
+           * Text may be up to 1200 characters in length.
+           */
+          message: string;
+        }
+
         interface ShippingAddress {
           /**
            * Text may be up to 1200 characters in length.
@@ -1161,6 +1190,11 @@ declare module 'stripe' {
 
       interface CustomText {
         /**
+         * Custom text that should be displayed after the payment confirmation button.
+         */
+        after_submit?: Stripe.Emptyable<CustomText.AfterSubmit>;
+
+        /**
          * Custom text that should be displayed alongside shipping address collection.
          */
         shipping_address?: Stripe.Emptyable<CustomText.ShippingAddress>;
@@ -1179,6 +1213,13 @@ declare module 'stripe' {
       }
 
       namespace CustomText {
+        interface AfterSubmit {
+          /**
+           * Text may be up to 1200 characters in length.
+           */
+          message: string;
+        }
+
         interface ShippingAddress {
           /**
            * Text may be up to 1200 characters in length.

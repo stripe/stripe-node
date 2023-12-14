@@ -206,6 +206,11 @@ declare module 'stripe' {
 
       interface ConsentCollection {
         /**
+         * Settings related to the payment method reuse text shown in the Checkout UI.
+         */
+        payment_method_reuse_agreement: ConsentCollection.PaymentMethodReuseAgreement | null;
+
+        /**
          * If set to `auto`, enables the collection of customer consent for promotional communications.
          */
         promotions: ConsentCollection.Promotions | null;
@@ -217,6 +222,19 @@ declare module 'stripe' {
       }
 
       namespace ConsentCollection {
+        interface PaymentMethodReuseAgreement {
+          /**
+           * Determines the position and visibility of the payment method reuse agreement in the UI. When set to `auto`, Stripe's defaults will be used.
+           *
+           * When set to `hidden`, the payment method reuse agreement text will always be hidden in the UI.
+           */
+          position: PaymentMethodReuseAgreement.Position;
+        }
+
+        namespace PaymentMethodReuseAgreement {
+          type Position = 'auto' | 'hidden';
+        }
+
         type Promotions = 'auto' | 'none';
 
         type TermsOfService = 'none' | 'required';
@@ -312,6 +330,11 @@ declare module 'stripe' {
 
       interface CustomText {
         /**
+         * Custom text that should be displayed after the payment confirmation button.
+         */
+        after_submit: CustomText.AfterSubmit | null;
+
+        /**
          * Custom text that should be displayed alongside shipping address collection.
          */
         shipping_address: CustomText.ShippingAddress | null;
@@ -328,6 +351,13 @@ declare module 'stripe' {
       }
 
       namespace CustomText {
+        interface AfterSubmit {
+          /**
+           * Text may be up to 1200 characters in length.
+           */
+          message: string;
+        }
+
         interface ShippingAddress {
           /**
            * Text may be up to 1200 characters in length.

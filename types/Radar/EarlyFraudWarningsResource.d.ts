@@ -17,6 +17,11 @@ declare module 'stripe' {
         charge?: string;
 
         /**
+         * Only return early fraud warnings that were created during the given date interval.
+         */
+        created?: Stripe.RangeQueryParam | number;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
