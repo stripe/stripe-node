@@ -88,6 +88,7 @@ export class RequestSender {
    */
   _streamingResponseHandler(
     requestEvent: RequestEvent,
+    usage: Array<string>,
     callback: RequestCallback
   ): (res: HttpClientResponseInterface) => RequestCallbackReturn {
     return (res: HttpClientResponseInterface): RequestCallbackReturn => {
@@ -102,7 +103,8 @@ export class RequestSender {
         this._stripe._emitter.emit('response', responseEvent);
         this._recordRequestMetrics(
           this._getRequestId(headers),
-          responseEvent.elapsed
+          responseEvent.elapsed,
+          usage
         );
       };
 
@@ -122,7 +124,11 @@ export class RequestSender {
    * parses the JSON and returns it (i.e. passes it to the callback) if there
    * is no "error" field. Otherwise constructs/passes an appropriate Error.
    */
-  _jsonResponseHandler(requestEvent: RequestEvent, callback: RequestCallback) {
+  _jsonResponseHandler(
+    requestEvent: RequestEvent,
+    usage: Array<string>,
+    callback: RequestCallback
+  ) {
     return (res: HttpClientResponseInterface): void => {
       const headers = res.getHeaders();
       const requestId = this._getRequestId(headers);
@@ -180,7 +186,7 @@ export class RequestSender {
         )
         .then(
           (jsonResponse) => {
-            this._recordRequestMetrics(requestId, responseEvent.elapsed);
+            this._recordRequestMetrics(requestId, responseEvent.elapsed, usage);
 
             // Expose raw response object.
             const rawResponse = res.getRawResponse();
@@ -387,7 +393,11 @@ export class RequestSender {
     }
   }
 
-  _recordRequestMetrics(requestId: string, requestDurationMs: number): void {
+  _recordRequestMetrics(
+    requestId: string,
+    requestDurationMs: number,
+    usage: Array<string>
+  ): void {
     if (this._stripe.getTelemetryEnabled() && requestId) {
       if (
         this._stripe._prevRequestMetrics.length > this._maxBufferedRequestMetric
@@ -396,10 +406,18 @@ export class RequestSender {
           'Request metrics buffer is full, dropping telemetry message.'
         );
       } else {
-        this._stripe._prevRequestMetrics.push({
+        const m: {
+          request_id: string;
+          request_duration_ms: number;
+          usage?: Array<string>;
+        } = {
           request_id: requestId,
           request_duration_ms: requestDurationMs,
-        });
+        };
+        if (usage && usage.length > 0) {
+          m.usage = usage;
+        }
+        this._stripe._prevRequestMetrics.push(m);
       }
     }
   }
@@ -411,6 +429,7 @@ export class RequestSender {
     data: RequestData,
     auth: string | null,
     options: RequestOptions = {},
+    usage: Array<string> = [],
     callback: RequestCallback,
     requestDataProcessor: RequestDataProcessor | null = null
   ): void {
@@ -488,9 +507,17 @@ export class RequestSender {
               res.getHeaders()['retry-after']
             );
           } else if (options.streaming && res.getStatusCode() < 400) {
-            return this._streamingResponseHandler(requestEvent, callback)(res);
+            return this._streamingResponseHandler(
+              requestEvent,
+              usage,
+              callback
+            )(res);
           } else {
-            return this._jsonResponseHandler(requestEvent, callback)(res);
+            return this._jsonResponseHandler(
+              requestEvent,
+              usage,
+              callback
+            )(res);
           }
         })
         .catch((error: HttpClientResponseError) => {

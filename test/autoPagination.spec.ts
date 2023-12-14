@@ -41,7 +41,7 @@ describe('auto pagination', () => {
 
       const mockStripe = getMockStripe(
         {},
-        (_1, _2, path, _4, _5, _6, callback) => {
+        (_1, _2, path, _4, _5, _6, _7, callback) => {
           paramsLog.push(path.slice(path.indexOf('?')));
           callback(
             null,
@@ -661,7 +661,7 @@ describe('auto pagination', () => {
 
       const mockStripe = getMockStripe(
         {},
-        (_1, _2, path, _4, _5, _6, callback) => {
+        (_1, _2, path, _4, _5, _6, _7, callback) => {
           paramsLog.push(path.slice(path.indexOf('?')));
 
           callback(

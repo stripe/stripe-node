@@ -262,4 +262,27 @@ describe('StripeResource', () => {
       ]);
     });
   });
+
+  describe('usage', () => {
+    it('is passed to the request sender', (callback) => {
+      const mockSelf = new (StripeResource.extend({
+        boop: stripeMethod({
+          method: 'GET',
+          fullPath: '/v1/widgets/{widget}/boop',
+          usage: ['llama', 'bufo'],
+        }),
+      }))(stripe);
+
+      mockSelf.boop('foo', {bar: 'baz'}, (err, res) => {
+        if (err) {
+          return callback(err);
+        }
+        expect(stripe._requestSender._stripe.LAST_REQUEST.usage).to.deep.equal([
+          'llama',
+          'bufo',
+        ]);
+        return callback();
+      });
+    });
+  });
 });

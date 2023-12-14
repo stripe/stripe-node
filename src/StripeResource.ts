@@ -122,6 +122,7 @@ StripeResource.prototype = {
   ): RequestOpts {
     // Extract spec values with defaults.
     const requestMethod = (spec.method || 'GET').toUpperCase();
+    const usage = spec.usage || [];
     const urlParams = spec.urlParams || [];
     const encode = spec.encode || ((data): RequestData => data);
 
@@ -190,6 +191,7 @@ StripeResource.prototype = {
       host: host ?? null,
       streaming,
       settings: options.settings,
+      usage,
     };
   },
 
@@ -238,6 +240,7 @@ StripeResource.prototype = {
         opts.bodyData,
         opts.auth,
         {headers, settings, streaming: opts.streaming},
+        opts.usage,
         requestCallback,
         this.requestDataProcessor?.bind(this)
       );
