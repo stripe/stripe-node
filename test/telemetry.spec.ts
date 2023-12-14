@@ -169,48 +169,48 @@ describe('Client Telemetry', () => {
     await resource.boop('w_123');
     expect(numRequests).to.equal(2);
   });
-});
 
-it('Buffers metrics on concurrent requests', async () => {
-  let numRequests = 0;
+  it('Buffers metrics on concurrent requests', async () => {
+    let numRequests = 0;
 
-  const handle = (req, res) => {
-    numRequests += 1;
+    const handle = (req, res) => {
+      numRequests += 1;
 
-    const telemetry = req.headers['x-stripe-client-telemetry'];
+      const telemetry = req.headers['x-stripe-client-telemetry'];
 
-    switch (numRequests) {
-      case 1:
-      case 2:
-        expect(telemetry).to.not.exist;
-        break;
-      case 3:
-      case 4:
-        expect(telemetry).to.exist;
-        expect(
-          JSON.parse(telemetry).last_request_metrics.request_id
-        ).to.be.oneOf(['req_1', 'req_2']);
-        break;
-      default:
-        expect.fail(`Should not have reached request ${numRequests}`);
-    }
+      switch (numRequests) {
+        case 1:
+        case 2:
+          expect(telemetry).to.not.exist;
+          break;
+        case 3:
+        case 4:
+          expect(telemetry).to.exist;
+          expect(
+            JSON.parse(telemetry).last_request_metrics.request_id
+          ).to.be.oneOf(['req_1', 'req_2']);
+          break;
+        default:
+          expect.fail(`Should not have reached request ${numRequests}`);
+      }
 
-    res.setHeader('Request-Id', `req_${numRequests}`);
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.end('{}');
-  };
-  const {host, port} = await createTestServer(handle);
-  const stripe = require('../src/stripe.cjs.node.js')(
-    'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
-    {
-      telemetry: true,
-      host,
-      port,
-      protocol: 'http',
-    }
-  );
+      res.setHeader('Request-Id', `req_${numRequests}`);
+      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.end('{}');
+    };
+    const {host, port} = await createTestServer(handle);
+    const stripe = require('../src/stripe.cjs.node.js')(
+      'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
+      {
+        telemetry: true,
+        host,
+        port,
+        protocol: 'http',
+      }
+    );
 
-  await Promise.all([stripe.balance.retrieve(), stripe.balance.retrieve()]);
-  await Promise.all([stripe.balance.retrieve(), stripe.balance.retrieve()]);
-  expect(numRequests).to.equal(4);
+    await Promise.all([stripe.balance.retrieve(), stripe.balance.retrieve()]);
+    await Promise.all([stripe.balance.retrieve(), stripe.balance.retrieve()]);
+    expect(numRequests).to.equal(4);
+  });
 });
