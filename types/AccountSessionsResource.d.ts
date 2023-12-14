@@ -126,15 +126,6 @@ declare module 'stripe' {
            * Whether the embedded component is enabled.
            */
           enabled: boolean;
-
-          /**
-           * The list of features enabled in the embedded component.
-           */
-          features?: Payouts.Features;
-        }
-
-        namespace Payouts {
-          interface Features {}
         }
       }
     }
