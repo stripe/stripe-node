@@ -2195,6 +2195,16 @@ declare module 'stripe' {
         amendments?: Array<ScheduleDetails.Amendment>;
 
         /**
+         * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
+         */
+        billing_behavior?: ScheduleDetails.BillingBehavior;
+
+        /**
+         * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
+         */
+        end_behavior?: ScheduleDetails.EndBehavior;
+
+        /**
          * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
          */
         phases?: Array<ScheduleDetails.Phase>;
@@ -2203,6 +2213,11 @@ declare module 'stripe' {
          * Provide any time periods to bill in advance.
          */
         prebilling?: Stripe.Emptyable<Array<ScheduleDetails.Prebilling>>;
+
+        /**
+         * In cases where the `schedule_details` params update the currently active phase, specifies if and how to prorate at the time of the request.
+         */
+        proration_behavior?: ScheduleDetails.ProrationBehavior;
       }
 
       namespace ScheduleDetails {
@@ -2775,6 +2790,10 @@ declare module 'stripe' {
             }
           }
         }
+
+        type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+        type EndBehavior = 'cancel' | 'release';
 
         interface Phase {
           /**
@@ -3454,6 +3473,11 @@ declare module 'stripe' {
               | 'timestamp';
           }
         }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
       }
 
       type SubscriptionBillingCycleAnchor = 'now' | 'unchanged';
@@ -4270,6 +4294,16 @@ declare module 'stripe' {
         amendments?: Array<ScheduleDetails.Amendment>;
 
         /**
+         * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
+         */
+        billing_behavior?: ScheduleDetails.BillingBehavior;
+
+        /**
+         * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
+         */
+        end_behavior?: ScheduleDetails.EndBehavior;
+
+        /**
          * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
          */
         phases?: Array<ScheduleDetails.Phase>;
@@ -4278,6 +4312,11 @@ declare module 'stripe' {
          * Provide any time periods to bill in advance.
          */
         prebilling?: Stripe.Emptyable<Array<ScheduleDetails.Prebilling>>;
+
+        /**
+         * In cases where the `schedule_details` params update the currently active phase, specifies if and how to prorate at the time of the request.
+         */
+        proration_behavior?: ScheduleDetails.ProrationBehavior;
       }
 
       namespace ScheduleDetails {
@@ -4850,6 +4889,10 @@ declare module 'stripe' {
             }
           }
         }
+
+        type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+        type EndBehavior = 'cancel' | 'release';
 
         interface Phase {
           /**
@@ -5529,6 +5572,11 @@ declare module 'stripe' {
               | 'timestamp';
           }
         }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
       }
 
       type SubscriptionBillingCycleAnchor = 'now' | 'unchanged';
