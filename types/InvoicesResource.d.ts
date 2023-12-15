@@ -1679,12 +1679,17 @@ declare module 'stripe' {
       on_behalf_of?: Stripe.Emptyable<string>;
 
       /**
+       * Customizes the types of values to include when calculating the invoice. Defaults to `next` if unspecified.
+       */
+      preview_mode?: InvoiceListUpcomingLinesParams.PreviewMode;
+
+      /**
        * The identifier of the schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
        */
       schedule?: string;
 
       /**
-       * The schedule creation or modification params to apply as a preview. Cannot be used with subscription or subscription fields.
+       * The schedule creation or modification params to apply as a preview. Cannot be used with `subscription` or `subscription_` prefixed fields.
        */
       schedule_details?: InvoiceListUpcomingLinesParams.ScheduleDetails;
 
@@ -1694,73 +1699,73 @@ declare module 'stripe' {
       subscription?: string;
 
       /**
-       * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+       * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`. This field has been deprecated and will be removed in a future API version. Use `subscription_details.billing_cycle_anchor` instead.
        */
       subscription_billing_cycle_anchor?:
         | InvoiceListUpcomingLinesParams.SubscriptionBillingCycleAnchor
         | number;
 
       /**
-       * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
+       * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period. This field has been deprecated and will be removed in a future API version. Use `subscription_details.cancel_at` instead.
        */
       subscription_cancel_at?: Stripe.Emptyable<number>;
 
       /**
-       * Boolean indicating whether this subscription should cancel at the end of the current period.
+       * Boolean indicating whether this subscription should cancel at the end of the current period. This field has been deprecated and will be removed in a future API version. Use `subscription_details.cancel_at_period_end` instead.
        */
       subscription_cancel_at_period_end?: boolean;
 
       /**
-       * This simulates the subscription being canceled or expired immediately.
+       * This simulates the subscription being canceled or expired immediately. This field has been deprecated and will be removed in a future API version. Use `subscription_details.cancel_now` instead.
        */
       subscription_cancel_now?: boolean;
 
       /**
-       * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
+       * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set. This field has been deprecated and will be removed in a future API version. Use `subscription_details.default_tax_rates` instead.
        */
       subscription_default_tax_rates?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * A list of up to 20 subscription items, each with an attached price.
+       * The subscription creation or modification params to apply as a preview. Cannot be used with `schedule` or `schedule_details` fields.
+       */
+      subscription_details?: InvoiceListUpcomingLinesParams.SubscriptionDetails;
+
+      /**
+       * A list of up to 20 subscription items, each with an attached price. This field has been deprecated and will be removed in a future API version. Use `subscription_details.items` instead.
        */
       subscription_items?: Array<
         InvoiceListUpcomingLinesParams.SubscriptionItem
       >;
 
       /**
-       * The pre-billing to apply to the subscription as a preview.
+       * The pre-billing to apply to the subscription as a preview. This field has been deprecated and will be removed in a future API version. Use `subscription_details.prebilling` instead.
        */
       subscription_prebilling?: InvoiceListUpcomingLinesParams.SubscriptionPrebilling;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`. This field has been deprecated and will be removed in a future API version. Use `subscription_details.proration_behavior` instead.
        */
       subscription_proration_behavior?: InvoiceListUpcomingLinesParams.SubscriptionProrationBehavior;
 
       /**
-       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
+       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'. This field has been deprecated and will be removed in a future API version. Use `subscription_details.proration_date` instead.
        */
       subscription_proration_date?: number;
 
       /**
-       * For paused subscriptions, setting `subscription_resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed.
+       * For paused subscriptions, setting `subscription_resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed. This field has been deprecated and will be removed in a future API version. Use `subscription_details.resume_at` instead.
        */
       subscription_resume_at?: 'now';
 
       /**
-       * Date a subscription is intended to start (can be future or past).
+       * Date a subscription is intended to start (can be future or past). This field has been deprecated and will be removed in a future API version. Use `subscription_details.start_date` instead.
        */
       subscription_start_date?: number;
 
       /**
-       * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required.
+       * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required. This field has been deprecated and will be removed in a future API version. Use `subscription_details.trial_end` instead.
        */
       subscription_trial_end?: 'now' | number;
-
-      /**
-       * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed. See [Using trial periods on subscriptions](https://stripe.com/docs/billing/subscriptions/trials) to learn more.
-       */
-      subscription_trial_from_plan?: boolean;
     }
 
     namespace InvoiceListUpcomingLinesParams {
@@ -2188,11 +2193,23 @@ declare module 'stripe' {
         type Type = 'account' | 'self';
       }
 
+      type PreviewMode = 'next' | 'recurring';
+
       interface ScheduleDetails {
         /**
          * Changes to apply to the phases of the subscription schedule, in the order provided.
          */
         amendments?: Array<ScheduleDetails.Amendment>;
+
+        /**
+         * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
+         */
+        billing_behavior?: ScheduleDetails.BillingBehavior;
+
+        /**
+         * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
+         */
+        end_behavior?: ScheduleDetails.EndBehavior;
 
         /**
          * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
@@ -2203,6 +2220,11 @@ declare module 'stripe' {
          * Provide any time periods to bill in advance.
          */
         prebilling?: Stripe.Emptyable<Array<ScheduleDetails.Prebilling>>;
+
+        /**
+         * In cases where the `schedule_details` params update the currently active phase, specifies if and how to prorate at the time of the request.
+         */
+        proration_behavior?: ScheduleDetails.ProrationBehavior;
       }
 
       namespace ScheduleDetails {
@@ -2775,6 +2797,10 @@ declare module 'stripe' {
             }
           }
         }
+
+        type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+        type EndBehavior = 'cancel' | 'release';
 
         interface Phase {
           /**
@@ -3454,9 +3480,266 @@ declare module 'stripe' {
               | 'timestamp';
           }
         }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
       }
 
       type SubscriptionBillingCycleAnchor = 'now' | 'unchanged';
+
+      interface SubscriptionDetails {
+        /**
+         * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+         */
+        billing_cycle_anchor?: SubscriptionDetails.BillingCycleAnchor | number;
+
+        /**
+         * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
+         */
+        cancel_at?: Stripe.Emptyable<number>;
+
+        /**
+         * Boolean indicating whether this subscription should cancel at the end of the current period.
+         */
+        cancel_at_period_end?: boolean;
+
+        /**
+         * This simulates the subscription being canceled or expired immediately.
+         */
+        cancel_now?: boolean;
+
+        /**
+         * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
+         */
+        default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * A list of up to 20 subscription items, each with an attached price.
+         */
+        items?: Array<SubscriptionDetails.Item>;
+
+        /**
+         * The pre-billing to apply to the subscription as a preview.
+         */
+        prebilling?: SubscriptionDetails.Prebilling;
+
+        /**
+         * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+         */
+        proration_behavior?: SubscriptionDetails.ProrationBehavior;
+
+        /**
+         * If previewing an update to a subscription, and doing proration, `subscription_details.proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_details.items`, or `subscription_details.trial_end` are required. Also, `subscription_details.proration_behavior` cannot be set to 'none'.
+         */
+        proration_date?: number;
+
+        /**
+         * For paused subscriptions, setting `subscription_details.resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed.
+         */
+        resume_at?: 'now';
+
+        /**
+         * Date a subscription is intended to start (can be future or past).
+         */
+        start_date?: number;
+
+        /**
+         * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_details.items` or `subscription` is required.
+         */
+        trial_end?: 'now' | number;
+      }
+
+      namespace SubscriptionDetails {
+        type BillingCycleAnchor = 'now' | 'unchanged';
+
+        interface Item {
+          /**
+           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+           */
+          billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
+          /**
+           * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
+           */
+          clear_usage?: boolean;
+
+          /**
+           * A flag that, if set to `true`, will delete the specified item.
+           */
+          deleted?: boolean;
+
+          /**
+           * The coupons to redeem into discounts for the subscription item.
+           */
+          discounts?: Stripe.Emptyable<Array<Item.Discount>>;
+
+          /**
+           * Subscription item to update.
+           */
+          id?: string;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+          /**
+           * Plan ID for this item, as a string.
+           */
+          plan?: string;
+
+          /**
+           * The ID of the price object. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+           */
+          price?: string;
+
+          /**
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+           */
+          price_data?: Item.PriceData;
+
+          /**
+           * Quantity for this item.
+           */
+          quantity?: number;
+
+          /**
+           * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+           */
+          tax_rates?: Stripe.Emptyable<Array<string>>;
+        }
+
+        namespace Item {
+          interface BillingThresholds {
+            /**
+             * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+             */
+            usage_gte: number;
+          }
+
+          interface Discount {
+            /**
+             * ID of the coupon to create a new discount for.
+             */
+            coupon?: string;
+
+            /**
+             * ID of an existing discount on the object (or one of its ancestors) to reuse.
+             */
+            discount?: string;
+
+            /**
+             * Details to determine how long the discount should be applied for.
+             */
+            discount_end?: Discount.DiscountEnd;
+          }
+
+          namespace Discount {
+            interface DiscountEnd {
+              /**
+               * Time span for the redeemed discount.
+               */
+              duration?: DiscountEnd.Duration;
+
+              /**
+               * A precise Unix timestamp for the discount to end. Must be in the future.
+               */
+              timestamp?: number;
+
+              /**
+               * The type of calculation made to determine when the discount ends.
+               */
+              type: DiscountEnd.Type;
+            }
+
+            namespace DiscountEnd {
+              interface Duration {
+                /**
+                 * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+                 */
+                interval: Duration.Interval;
+
+                /**
+                 * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+                 */
+                interval_count: number;
+              }
+
+              namespace Duration {
+                type Interval = 'day' | 'month' | 'week' | 'year';
+              }
+
+              type Type = 'duration' | 'timestamp';
+            }
+          }
+
+          interface PriceData {
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * The ID of the product that this price will belong to.
+             */
+            product: string;
+
+            /**
+             * The recurring components of a price such as `interval` and `interval_count`.
+             */
+            recurring: PriceData.Recurring;
+
+            /**
+             * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             */
+            tax_behavior?: PriceData.TaxBehavior;
+
+            /**
+             * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+             */
+            unit_amount?: number;
+
+            /**
+             * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             */
+            unit_amount_decimal?: string;
+          }
+
+          namespace PriceData {
+            interface Recurring {
+              /**
+               * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Recurring.Interval;
+
+              /**
+               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+               */
+              interval_count?: number;
+            }
+
+            namespace Recurring {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          }
+        }
+
+        interface Prebilling {
+          /**
+           * This is used to determine the number of billing cycles to prebill.
+           */
+          iterations: number;
+        }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
+      }
 
       interface SubscriptionItem {
         /**
@@ -3754,12 +4037,17 @@ declare module 'stripe' {
       on_behalf_of?: Stripe.Emptyable<string>;
 
       /**
+       * Customizes the types of values to include when calculating the invoice. Defaults to `next` if unspecified.
+       */
+      preview_mode?: InvoiceRetrieveUpcomingParams.PreviewMode;
+
+      /**
        * The identifier of the schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
        */
       schedule?: string;
 
       /**
-       * The schedule creation or modification params to apply as a preview. Cannot be used with subscription or subscription fields.
+       * The schedule creation or modification params to apply as a preview. Cannot be used with `subscription` or `subscription_` prefixed fields.
        */
       schedule_details?: InvoiceRetrieveUpcomingParams.ScheduleDetails;
 
@@ -3769,73 +4057,73 @@ declare module 'stripe' {
       subscription?: string;
 
       /**
-       * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+       * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`. This field has been deprecated and will be removed in a future API version. Use `subscription_details.billing_cycle_anchor` instead.
        */
       subscription_billing_cycle_anchor?:
         | InvoiceRetrieveUpcomingParams.SubscriptionBillingCycleAnchor
         | number;
 
       /**
-       * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
+       * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period. This field has been deprecated and will be removed in a future API version. Use `subscription_details.cancel_at` instead.
        */
       subscription_cancel_at?: Stripe.Emptyable<number>;
 
       /**
-       * Boolean indicating whether this subscription should cancel at the end of the current period.
+       * Boolean indicating whether this subscription should cancel at the end of the current period. This field has been deprecated and will be removed in a future API version. Use `subscription_details.cancel_at_period_end` instead.
        */
       subscription_cancel_at_period_end?: boolean;
 
       /**
-       * This simulates the subscription being canceled or expired immediately.
+       * This simulates the subscription being canceled or expired immediately. This field has been deprecated and will be removed in a future API version. Use `subscription_details.cancel_now` instead.
        */
       subscription_cancel_now?: boolean;
 
       /**
-       * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
+       * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set. This field has been deprecated and will be removed in a future API version. Use `subscription_details.default_tax_rates` instead.
        */
       subscription_default_tax_rates?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * A list of up to 20 subscription items, each with an attached price.
+       * The subscription creation or modification params to apply as a preview. Cannot be used with `schedule` or `schedule_details` fields.
+       */
+      subscription_details?: InvoiceRetrieveUpcomingParams.SubscriptionDetails;
+
+      /**
+       * A list of up to 20 subscription items, each with an attached price. This field has been deprecated and will be removed in a future API version. Use `subscription_details.items` instead.
        */
       subscription_items?: Array<
         InvoiceRetrieveUpcomingParams.SubscriptionItem
       >;
 
       /**
-       * The pre-billing to apply to the subscription as a preview.
+       * The pre-billing to apply to the subscription as a preview. This field has been deprecated and will be removed in a future API version. Use `subscription_details.prebilling` instead.
        */
       subscription_prebilling?: InvoiceRetrieveUpcomingParams.SubscriptionPrebilling;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`. This field has been deprecated and will be removed in a future API version. Use `subscription_details.proration_behavior` instead.
        */
       subscription_proration_behavior?: InvoiceRetrieveUpcomingParams.SubscriptionProrationBehavior;
 
       /**
-       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
+       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'. This field has been deprecated and will be removed in a future API version. Use `subscription_details.proration_date` instead.
        */
       subscription_proration_date?: number;
 
       /**
-       * For paused subscriptions, setting `subscription_resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed.
+       * For paused subscriptions, setting `subscription_resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed. This field has been deprecated and will be removed in a future API version. Use `subscription_details.resume_at` instead.
        */
       subscription_resume_at?: 'now';
 
       /**
-       * Date a subscription is intended to start (can be future or past).
+       * Date a subscription is intended to start (can be future or past). This field has been deprecated and will be removed in a future API version. Use `subscription_details.start_date` instead.
        */
       subscription_start_date?: number;
 
       /**
-       * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required.
+       * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required. This field has been deprecated and will be removed in a future API version. Use `subscription_details.trial_end` instead.
        */
       subscription_trial_end?: 'now' | number;
-
-      /**
-       * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed. See [Using trial periods on subscriptions](https://stripe.com/docs/billing/subscriptions/trials) to learn more.
-       */
-      subscription_trial_from_plan?: boolean;
     }
 
     namespace InvoiceRetrieveUpcomingParams {
@@ -4263,11 +4551,23 @@ declare module 'stripe' {
         type Type = 'account' | 'self';
       }
 
+      type PreviewMode = 'next' | 'recurring';
+
       interface ScheduleDetails {
         /**
          * Changes to apply to the phases of the subscription schedule, in the order provided.
          */
         amendments?: Array<ScheduleDetails.Amendment>;
+
+        /**
+         * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
+         */
+        billing_behavior?: ScheduleDetails.BillingBehavior;
+
+        /**
+         * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
+         */
+        end_behavior?: ScheduleDetails.EndBehavior;
 
         /**
          * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
@@ -4278,6 +4578,11 @@ declare module 'stripe' {
          * Provide any time periods to bill in advance.
          */
         prebilling?: Stripe.Emptyable<Array<ScheduleDetails.Prebilling>>;
+
+        /**
+         * In cases where the `schedule_details` params update the currently active phase, specifies if and how to prorate at the time of the request.
+         */
+        proration_behavior?: ScheduleDetails.ProrationBehavior;
       }
 
       namespace ScheduleDetails {
@@ -4850,6 +5155,10 @@ declare module 'stripe' {
             }
           }
         }
+
+        type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+        type EndBehavior = 'cancel' | 'release';
 
         interface Phase {
           /**
@@ -5529,9 +5838,266 @@ declare module 'stripe' {
               | 'timestamp';
           }
         }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
       }
 
       type SubscriptionBillingCycleAnchor = 'now' | 'unchanged';
+
+      interface SubscriptionDetails {
+        /**
+         * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+         */
+        billing_cycle_anchor?: SubscriptionDetails.BillingCycleAnchor | number;
+
+        /**
+         * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
+         */
+        cancel_at?: Stripe.Emptyable<number>;
+
+        /**
+         * Boolean indicating whether this subscription should cancel at the end of the current period.
+         */
+        cancel_at_period_end?: boolean;
+
+        /**
+         * This simulates the subscription being canceled or expired immediately.
+         */
+        cancel_now?: boolean;
+
+        /**
+         * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
+         */
+        default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * A list of up to 20 subscription items, each with an attached price.
+         */
+        items?: Array<SubscriptionDetails.Item>;
+
+        /**
+         * The pre-billing to apply to the subscription as a preview.
+         */
+        prebilling?: SubscriptionDetails.Prebilling;
+
+        /**
+         * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+         */
+        proration_behavior?: SubscriptionDetails.ProrationBehavior;
+
+        /**
+         * If previewing an update to a subscription, and doing proration, `subscription_details.proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_details.items`, or `subscription_details.trial_end` are required. Also, `subscription_details.proration_behavior` cannot be set to 'none'.
+         */
+        proration_date?: number;
+
+        /**
+         * For paused subscriptions, setting `subscription_details.resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed.
+         */
+        resume_at?: 'now';
+
+        /**
+         * Date a subscription is intended to start (can be future or past).
+         */
+        start_date?: number;
+
+        /**
+         * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_details.items` or `subscription` is required.
+         */
+        trial_end?: 'now' | number;
+      }
+
+      namespace SubscriptionDetails {
+        type BillingCycleAnchor = 'now' | 'unchanged';
+
+        interface Item {
+          /**
+           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+           */
+          billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
+          /**
+           * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
+           */
+          clear_usage?: boolean;
+
+          /**
+           * A flag that, if set to `true`, will delete the specified item.
+           */
+          deleted?: boolean;
+
+          /**
+           * The coupons to redeem into discounts for the subscription item.
+           */
+          discounts?: Stripe.Emptyable<Array<Item.Discount>>;
+
+          /**
+           * Subscription item to update.
+           */
+          id?: string;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+          /**
+           * Plan ID for this item, as a string.
+           */
+          plan?: string;
+
+          /**
+           * The ID of the price object. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+           */
+          price?: string;
+
+          /**
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+           */
+          price_data?: Item.PriceData;
+
+          /**
+           * Quantity for this item.
+           */
+          quantity?: number;
+
+          /**
+           * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+           */
+          tax_rates?: Stripe.Emptyable<Array<string>>;
+        }
+
+        namespace Item {
+          interface BillingThresholds {
+            /**
+             * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+             */
+            usage_gte: number;
+          }
+
+          interface Discount {
+            /**
+             * ID of the coupon to create a new discount for.
+             */
+            coupon?: string;
+
+            /**
+             * ID of an existing discount on the object (or one of its ancestors) to reuse.
+             */
+            discount?: string;
+
+            /**
+             * Details to determine how long the discount should be applied for.
+             */
+            discount_end?: Discount.DiscountEnd;
+          }
+
+          namespace Discount {
+            interface DiscountEnd {
+              /**
+               * Time span for the redeemed discount.
+               */
+              duration?: DiscountEnd.Duration;
+
+              /**
+               * A precise Unix timestamp for the discount to end. Must be in the future.
+               */
+              timestamp?: number;
+
+              /**
+               * The type of calculation made to determine when the discount ends.
+               */
+              type: DiscountEnd.Type;
+            }
+
+            namespace DiscountEnd {
+              interface Duration {
+                /**
+                 * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+                 */
+                interval: Duration.Interval;
+
+                /**
+                 * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+                 */
+                interval_count: number;
+              }
+
+              namespace Duration {
+                type Interval = 'day' | 'month' | 'week' | 'year';
+              }
+
+              type Type = 'duration' | 'timestamp';
+            }
+          }
+
+          interface PriceData {
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * The ID of the product that this price will belong to.
+             */
+            product: string;
+
+            /**
+             * The recurring components of a price such as `interval` and `interval_count`.
+             */
+            recurring: PriceData.Recurring;
+
+            /**
+             * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             */
+            tax_behavior?: PriceData.TaxBehavior;
+
+            /**
+             * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+             */
+            unit_amount?: number;
+
+            /**
+             * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             */
+            unit_amount_decimal?: string;
+          }
+
+          namespace PriceData {
+            interface Recurring {
+              /**
+               * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Recurring.Interval;
+
+              /**
+               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+               */
+              interval_count?: number;
+            }
+
+            namespace Recurring {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          }
+        }
+
+        interface Prebilling {
+          /**
+           * This is used to determine the number of billing cycles to prebill.
+           */
+          iterations: number;
+        }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
+      }
 
       interface SubscriptionItem {
         /**
