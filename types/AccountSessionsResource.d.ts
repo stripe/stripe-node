@@ -127,9 +127,6 @@ declare module 'stripe' {
            */
           enabled: boolean;
 
-          /**
-           * The list of features enabled in the embedded component.
-           */
           features?: Payouts.Features;
         }
 
