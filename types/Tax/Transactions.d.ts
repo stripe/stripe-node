@@ -62,6 +62,11 @@ declare module 'stripe' {
         reversal: Transaction.Reversal | null;
 
         /**
+         * The details of the ship from location, such as the address.
+         */
+        ship_from_details?: Transaction.ShipFromDetails | null;
+
+        /**
          * The shipping cost details for the transaction.
          */
         shipping_cost: Transaction.ShippingCost | null;
@@ -202,6 +207,10 @@ declare module 'stripe' {
            * The `id` of the reversed `Transaction` object.
            */
           original_transaction: string | null;
+        }
+
+        interface ShipFromDetails {
+          address: Stripe.Address;
         }
 
         interface ShippingCost {
