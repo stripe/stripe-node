@@ -469,6 +469,7 @@ export class RequestSender {
           streaming: false,
           settings: {},
           apiMode: apiMode,
+          usage: [],
         };
       } catch (err) {
         reject(err);
@@ -495,6 +496,7 @@ export class RequestSender {
         opts.bodyData,
         opts.auth,
         {headers, settings, streaming: opts.streaming, apiMode: opts.apiMode},
+        opts.usage,
         requestCallback
       );
     });
