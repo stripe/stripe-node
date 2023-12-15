@@ -117,6 +117,7 @@ export const getMockStripe = (
       data: RequestData,
       auth: string | null,
       options: RequestOptions = {},
+      usage: Array<string>,
       callback: RequestCallback,
       requestDataProcessor: RequestDataProcessor | null = null
     ) {
@@ -127,6 +128,7 @@ export const getMockStripe = (
         data,
         auth,
         options,
+        usage,
         callback,
         requestDataProcessor
       );
@@ -149,7 +151,7 @@ export const getMockStripe = (
 export const createMockClient = (
   requests: Array<{method: string; path: string; response: string}>
 ): StripeClient => {
-  return getMockStripe({}, (method, _host, path, _4, _5, _6, callback) => {
+  return getMockStripe({}, (method, _host, path, _4, _5, _6, _7, callback) => {
     const request = requests.find((r) => r.method == method && r.path == path);
     if (!request) {
       throw new Error(`Unable to find a mock request for ${method} ${path}`);
@@ -170,6 +172,7 @@ export const getSpyableStripe = (
       data: RequestData,
       auth: string | null,
       options: RequestOptions = {},
+      usage: Array<string> = [],
       callback: RequestCallback,
       requestDataProcessor: RequestDataProcessor | null = null
     ) {
@@ -181,6 +184,7 @@ export const getSpyableStripe = (
         settings: RequestSettings;
         auth?: string;
         host?: string;
+        usage?: Array<string>;
       };
       const req: LastRequest = (stripeInstance.LAST_REQUEST = {
         method,
@@ -189,6 +193,9 @@ export const getSpyableStripe = (
         headers: options.headers || {},
         settings: options.settings || {},
       });
+      if (usage && usage.length > 1) {
+        req.usage = usage;
+      }
       if (auth) {
         req.auth = auth;
       }
@@ -217,6 +224,7 @@ export const getSpyableStripe = (
         data,
         auth,
         options,
+        usage,
         callback,
         requestDataProcessor
       );

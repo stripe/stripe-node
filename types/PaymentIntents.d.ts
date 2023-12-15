@@ -82,6 +82,9 @@ declare module 'stripe' {
        */
       client_secret: string | null;
 
+      /**
+       * Describes whether we can confirm this PaymentIntent automatically, or if it requires customer action to confirm the payment.
+       */
       confirmation_method: PaymentIntent.ConfirmationMethod;
 
       /**

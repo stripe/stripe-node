@@ -24,6 +24,7 @@ export type MethodSpec = {
   streaming?: boolean;
   host?: string;
   transformResponseData?: (response: HttpClientResponseInterface) => any;
+  usage?: Array<string>;
 };
 export type MultipartRequestData = RequestData | StreamingFile | BufferedFile;
 export type RawErrorType =
@@ -49,6 +50,7 @@ export type RequestEvent = {
   method?: string;
   path?: string;
   request_start_time: number;
+  usage: Array<string>;
 };
 export type RequestHeaders = Record<string, string | number | string[]>;
 export type APIMode = 'preview' | 'standard';
@@ -69,6 +71,7 @@ export type RequestOpts = {
   streaming: boolean;
   settings: RequestSettings;
   apiMode?: APIMode;
+  usage: Array<string>;
 };
 export type RequestSettings = {timeout?: number; maxNetworkRetries?: number};
 export type ResponseEvent = {
@@ -170,6 +173,7 @@ export type RequestSender = {
     data: RequestData,
     auth: string | null,
     options: RequestOptions,
+    usage: Array<string>,
     callback: RequestCallback,
     requestDataProcessor: RequestDataProcessor | undefined
   ): void;
