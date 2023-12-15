@@ -50,6 +50,8 @@ declare module 'stripe' {
        */
       description?: string;
 
+      destination_details?: Refund.DestinationDetails;
+
       /**
        * After the refund fails, this balance transaction describes the adjustment made on your account balance that reverses the initial balance transaction.
        */
@@ -104,6 +106,237 @@ declare module 'stripe' {
     }
 
     namespace Refund {
+      interface DestinationDetails {
+        affirm?: DestinationDetails.Affirm;
+
+        afterpay_clearpay?: DestinationDetails.AfterpayClearpay;
+
+        alipay?: DestinationDetails.Alipay;
+
+        au_bank_transfer?: DestinationDetails.AuBankTransfer;
+
+        blik?: DestinationDetails.Blik;
+
+        br_bank_transfer?: DestinationDetails.BrBankTransfer;
+
+        card?: DestinationDetails.Card;
+
+        cashapp?: DestinationDetails.Cashapp;
+
+        customer_cash_balance?: DestinationDetails.CustomerCashBalance;
+
+        eps?: DestinationDetails.Eps;
+
+        eu_bank_transfer?: DestinationDetails.EuBankTransfer;
+
+        gb_bank_transfer?: DestinationDetails.GbBankTransfer;
+
+        giropay?: DestinationDetails.Giropay;
+
+        grabpay?: DestinationDetails.Grabpay;
+
+        jp_bank_transfer?: DestinationDetails.JpBankTransfer;
+
+        klarna?: DestinationDetails.Klarna;
+
+        mx_bank_transfer?: DestinationDetails.MxBankTransfer;
+
+        p24?: DestinationDetails.P24;
+
+        paynow?: DestinationDetails.Paynow;
+
+        paypal?: DestinationDetails.Paypal;
+
+        pix?: DestinationDetails.Pix;
+
+        revolut?: DestinationDetails.Revolut;
+
+        sofort?: DestinationDetails.Sofort;
+
+        th_bank_transfer?: DestinationDetails.ThBankTransfer;
+
+        /**
+         * The type of transaction-specific details of the payment method used in the refund (e.g., `card`). An additional hash is included on `destination_details` with a name matching this value. It contains information specific to the refund transaction.
+         */
+        type: string;
+
+        us_bank_transfer?: DestinationDetails.UsBankTransfer;
+
+        wechat_pay?: DestinationDetails.WechatPay;
+
+        zip?: DestinationDetails.Zip;
+      }
+
+      namespace DestinationDetails {
+        interface Affirm {}
+
+        interface AfterpayClearpay {}
+
+        interface Alipay {}
+
+        interface AuBankTransfer {}
+
+        interface Blik {
+          /**
+           * The reference assigned to the refund.
+           */
+          reference: string | null;
+
+          /**
+           * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+           */
+          reference_status: string | null;
+        }
+
+        interface BrBankTransfer {
+          /**
+           * The reference assigned to the refund.
+           */
+          reference: string | null;
+
+          /**
+           * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+           */
+          reference_status: string | null;
+        }
+
+        interface Card {
+          /**
+           * Value of the reference number assigned to the refund.
+           */
+          reference?: string;
+
+          /**
+           * Status of the reference number on the refund. This can be `pending`, `available` or `unavailable`.
+           */
+          reference_status?: string;
+
+          /**
+           * Type of the reference number assigned to the refund.
+           */
+          reference_type?: string;
+
+          /**
+           * The type of refund. This can be `refund`, `reversal`, or `pending`.
+           */
+          type: Card.Type;
+        }
+
+        namespace Card {
+          type Type = 'pending' | 'refund' | 'reversal';
+        }
+
+        interface Cashapp {}
+
+        interface CustomerCashBalance {}
+
+        interface Eps {}
+
+        interface EuBankTransfer {
+          /**
+           * The reference assigned to the refund.
+           */
+          reference: string | null;
+
+          /**
+           * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+           */
+          reference_status: string | null;
+        }
+
+        interface GbBankTransfer {
+          /**
+           * The reference assigned to the refund.
+           */
+          reference: string | null;
+
+          /**
+           * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+           */
+          reference_status: string | null;
+        }
+
+        interface Giropay {}
+
+        interface Grabpay {}
+
+        interface JpBankTransfer {
+          /**
+           * The reference assigned to the refund.
+           */
+          reference: string | null;
+
+          /**
+           * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+           */
+          reference_status: string | null;
+        }
+
+        interface Klarna {}
+
+        interface MxBankTransfer {
+          /**
+           * The reference assigned to the refund.
+           */
+          reference: string | null;
+
+          /**
+           * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+           */
+          reference_status: string | null;
+        }
+
+        interface P24 {
+          /**
+           * The reference assigned to the refund.
+           */
+          reference: string | null;
+
+          /**
+           * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+           */
+          reference_status: string | null;
+        }
+
+        interface Paynow {}
+
+        interface Paypal {}
+
+        interface Pix {}
+
+        interface Revolut {}
+
+        interface Sofort {}
+
+        interface ThBankTransfer {
+          /**
+           * The reference assigned to the refund.
+           */
+          reference: string | null;
+
+          /**
+           * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+           */
+          reference_status: string | null;
+        }
+
+        interface UsBankTransfer {
+          /**
+           * The reference assigned to the refund.
+           */
+          reference: string | null;
+
+          /**
+           * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+           */
+          reference_status: string | null;
+        }
+
+        interface WechatPay {}
+
+        interface Zip {}
+      }
+
       interface NextAction {
         /**
          * Contains the refund details.
