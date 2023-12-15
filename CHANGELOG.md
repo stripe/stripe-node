@@ -1,5 +1,11 @@
 # Changelog
 
+## 14.10.0-beta.1 - 2023-12-14
+* [#1975](https://github.com/stripe/stripe-node/pull/1975) Update generated code for beta
+  * Add support for `preview_mode` and `subscription_details` on `InvoiceUpcomingLinesParams` and `InvoiceUpcomingParams`
+  * Remove support for `subscription_trial_from_plan` on `InvoiceUpcomingLinesParams` and `InvoiceUpcomingParams`
+  * Add support for `billing_behavior`, `end_behavior`, and `proration_behavior` on `InvoiceUpcomingLinesParams.schedule_details` and `InvoiceUpcomingParams.schedule_details`
+
 ## 14.9.0 - 2023-12-14
 * [#1973](https://github.com/stripe/stripe-node/pull/1973) Add `usage` to X-Stripe-Client-Telemetry
 * [#1971](https://github.com/stripe/stripe-node/pull/1971) Update generated code
