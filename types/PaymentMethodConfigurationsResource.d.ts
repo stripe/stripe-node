@@ -164,6 +164,11 @@ declare module 'stripe' {
       promptpay?: PaymentMethodConfigurationCreateParams.Promptpay;
 
       /**
+       * Revolut Pay, developed by Revolut, a global finance app, is a digital wallet payment method. Revolut Pay uses the customer's stored balance or cards to fund the payment, and offers the option for non-Revolut customers to save their details after their first purchase.
+       */
+      revolut_pay?: PaymentMethodConfigurationCreateParams.RevolutPay;
+
+      /**
        * The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is an initiative of the European Union to simplify payments within and across member countries. SEPA established and enforced banking standards to allow for the direct debiting of every EUR-denominated bank account within the SEPA region, check this [page](https://stripe.com/docs/payments/sepa-debit) for more details.
        */
       sepa_debit?: PaymentMethodConfigurationCreateParams.SepaDebit;
@@ -765,6 +770,26 @@ declare module 'stripe' {
         }
       }
 
+      interface RevolutPay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: RevolutPay.DisplayPreference;
+      }
+
+      namespace RevolutPay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface SepaDebit {
         /**
          * Whether or not the payment method should be displayed.
@@ -1013,6 +1038,11 @@ declare module 'stripe' {
        * PromptPay is a Thailand-based payment method that allows customers to make a payment using their preferred app from participating banks. Check this [page](https://stripe.com/docs/payments/promptpay) for more details.
        */
       promptpay?: PaymentMethodConfigurationUpdateParams.Promptpay;
+
+      /**
+       * Revolut Pay, developed by Revolut, a global finance app, is a digital wallet payment method. Revolut Pay uses the customer's stored balance or cards to fund the payment, and offers the option for non-Revolut customers to save their details after their first purchase.
+       */
+      revolut_pay?: PaymentMethodConfigurationUpdateParams.RevolutPay;
 
       /**
        * The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is an initiative of the European Union to simplify payments within and across member countries. SEPA established and enforced banking standards to allow for the direct debiting of every EUR-denominated bank account within the SEPA region, check this [page](https://stripe.com/docs/payments/sepa-debit) for more details.
@@ -1604,6 +1634,26 @@ declare module 'stripe' {
       }
 
       namespace Promptpay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface RevolutPay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: RevolutPay.DisplayPreference;
+      }
+
+      namespace RevolutPay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

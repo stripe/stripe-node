@@ -123,6 +123,8 @@ declare module 'stripe' {
 
       promptpay?: PaymentMethodConfiguration.Promptpay;
 
+      revolut_pay?: PaymentMethodConfiguration.RevolutPay;
+
       sepa_debit?: PaymentMethodConfiguration.SepaDebit;
 
       sofort?: PaymentMethodConfiguration.Sofort;
@@ -1199,6 +1201,40 @@ declare module 'stripe' {
       }
 
       namespace Promptpay {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
+      interface RevolutPay {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: RevolutPay.DisplayPreference;
+      }
+
+      namespace RevolutPay {
         interface DisplayPreference {
           /**
            * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
