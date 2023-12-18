@@ -305,7 +305,7 @@ declare module 'stripe' {
 
     namespace AccountExternalAccountCreatedEvent {
       interface Data extends Stripe.Event.Data {
-        object: Stripe.BankAccount | Stripe.Card | Stripe.Source;
+        object: Stripe.ExternalAccount;
       }
     }
 
@@ -319,7 +319,7 @@ declare module 'stripe' {
 
     namespace AccountExternalAccountDeletedEvent {
       interface Data extends Stripe.Event.Data {
-        object: Stripe.BankAccount | Stripe.Card | Stripe.Source;
+        object: Stripe.ExternalAccount;
       }
     }
 
@@ -333,7 +333,7 @@ declare module 'stripe' {
 
     namespace AccountExternalAccountUpdatedEvent {
       interface Data extends Stripe.Event.Data {
-        object: Stripe.BankAccount | Stripe.Card | Stripe.Source;
+        object: Stripe.ExternalAccount;
       }
     }
 
@@ -1131,7 +1131,7 @@ declare module 'stripe' {
 
     namespace CustomerSourceCreatedEvent {
       interface Data extends Stripe.Event.Data {
-        object: Stripe.BankAccount | Stripe.Card | Stripe.Source;
+        object: Stripe.CustomerSource;
       }
     }
 
@@ -1145,7 +1145,7 @@ declare module 'stripe' {
 
     namespace CustomerSourceDeletedEvent {
       interface Data extends Stripe.Event.Data {
-        object: Stripe.BankAccount | Stripe.Card | Stripe.Source;
+        object: Stripe.CustomerSource;
       }
     }
 
@@ -1159,7 +1159,7 @@ declare module 'stripe' {
 
     namespace CustomerSourceExpiringEvent {
       interface Data extends Stripe.Event.Data {
-        object: Stripe.Card | Stripe.Source;
+        object: Stripe.CustomerSource;
       }
     }
 
@@ -1173,7 +1173,7 @@ declare module 'stripe' {
 
     namespace CustomerSourceUpdatedEvent {
       interface Data extends Stripe.Event.Data {
-        object: Stripe.BankAccount | Stripe.Card | Stripe.Source;
+        object: Stripe.CustomerSource;
       }
     }
 
