@@ -247,10 +247,7 @@ declare module 'stripe' {
        */
       from_invoice: QuotePreviewInvoice.FromInvoice | null;
 
-      /**
-       * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
-       */
-      issuer?: QuotePreviewInvoice.Issuer | null;
+      issuer?: QuotePreviewInvoice.Issuer;
 
       /**
        * The error encountered during the previous attempt to finalize the invoice. This field is cleared when the invoice is successfully finalized.
