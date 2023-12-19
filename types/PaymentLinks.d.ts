@@ -884,10 +884,7 @@ declare module 'stripe' {
 
       namespace SubscriptionData {
         interface InvoiceSettings {
-          /**
-           * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
-           */
-          issuer?: InvoiceSettings.Issuer | null;
+          issuer?: InvoiceSettings.Issuer;
         }
 
         namespace InvoiceSettings {
