@@ -1395,7 +1395,7 @@ declare module 'stripe' {
 
           type RequestOvercapture = 'if_available' | 'never';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
@@ -3495,7 +3495,7 @@ declare module 'stripe' {
 
           type RequestOvercapture = 'if_available' | 'never';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
@@ -5733,7 +5733,7 @@ declare module 'stripe' {
 
           type RequestOvercapture = 'if_available' | 'never';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
