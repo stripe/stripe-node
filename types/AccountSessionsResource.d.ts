@@ -26,6 +26,8 @@ declare module 'stripe' {
          */
         account_onboarding?: Components.AccountOnboarding;
 
+        capital_financing_promotion?: Components.CapitalFinancingPromotion;
+
         /**
          * Configuration for the payment details embedded component.
          */
@@ -56,6 +58,22 @@ declare module 'stripe' {
         }
 
         namespace AccountOnboarding {
+          interface Features {}
+        }
+
+        interface CapitalFinancingPromotion {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: CapitalFinancingPromotion.Features;
+        }
+
+        namespace CapitalFinancingPromotion {
           interface Features {}
         }
 

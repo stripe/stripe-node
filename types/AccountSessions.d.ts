@@ -48,6 +48,8 @@ declare module 'stripe' {
       interface Components {
         account_onboarding: Components.AccountOnboarding;
 
+        capital_financing_promotion?: Components.CapitalFinancingPromotion | null;
+
         payment_details?: Components.PaymentDetails;
 
         payments?: Components.Payments;
@@ -66,6 +68,19 @@ declare module 'stripe' {
         }
 
         namespace AccountOnboarding {
+          interface Features {}
+        }
+
+        interface CapitalFinancingPromotion {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features?: CapitalFinancingPromotion.Features;
+        }
+
+        namespace CapitalFinancingPromotion {
           interface Features {}
         }
 
