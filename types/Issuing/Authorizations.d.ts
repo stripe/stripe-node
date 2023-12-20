@@ -439,7 +439,10 @@ declare module 'stripe' {
           namespace AuthenticationExemption {
             type ClaimedBy = 'acquirer' | 'issuer';
 
-            type Type = 'low_value_transaction' | 'transaction_risk_analysis';
+            type Type =
+              | 'low_value_transaction'
+              | 'transaction_risk_analysis'
+              | 'unknown';
           }
 
           type CvcCheck = 'match' | 'mismatch' | 'not_provided';
