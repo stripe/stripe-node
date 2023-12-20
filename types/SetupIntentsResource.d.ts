@@ -930,7 +930,7 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           interface ThreeDSecure {
             /**
@@ -1975,7 +1975,7 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           interface ThreeDSecure {
             /**
@@ -3107,7 +3107,7 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           interface ThreeDSecure {
             /**
