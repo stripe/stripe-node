@@ -108,7 +108,7 @@ declare module 'stripe' {
         /**
          * The list of data refresh subscriptions requested on this account.
          */
-        subscriptions?: Array<Account.Subscription> | null;
+        subscriptions: Array<Account.Subscription> | null;
 
         /**
          * The [PaymentMethod type](https://stripe.com/docs/api/payment_methods/object#payment_method_object-type)(s) that can be created from this account.
@@ -120,7 +120,7 @@ declare module 'stripe' {
         /**
          * The state of the most recent attempt to refresh the account transactions.
          */
-        transaction_refresh?: Account.TransactionRefresh | null;
+        transaction_refresh: Account.TransactionRefresh | null;
       }
 
       namespace Account {
