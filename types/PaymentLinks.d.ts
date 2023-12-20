@@ -861,10 +861,7 @@ declare module 'stripe' {
          */
         description: string | null;
 
-        /**
-         * All invoices will be billed using the specified settings.
-         */
-        invoice_settings?: SubscriptionData.InvoiceSettings | null;
+        invoice_settings?: SubscriptionData.InvoiceSettings;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on [Subscriptions](https://stripe.com/docs/api/subscriptions) generated from this payment link.
