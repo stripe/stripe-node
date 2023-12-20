@@ -568,7 +568,7 @@ declare module 'stripe' {
               /**
                * List of data features that you would like to retrieve upon account creation.
                */
-              prefetch?: Array<'balances'>;
+              prefetch?: Array<FinancialConnections.Prefetch>;
             }
 
             namespace FinancialConnections {
@@ -577,6 +577,8 @@ declare module 'stripe' {
                 | 'ownership'
                 | 'payment_method'
                 | 'transactions';
+
+              type Prefetch = 'balances' | 'transactions';
             }
 
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
@@ -1286,7 +1288,7 @@ declare module 'stripe' {
               /**
                * List of data features that you would like to retrieve upon account creation.
                */
-              prefetch?: Array<'balances'>;
+              prefetch?: Array<FinancialConnections.Prefetch>;
             }
 
             namespace FinancialConnections {
@@ -1295,6 +1297,8 @@ declare module 'stripe' {
                 | 'ownership'
                 | 'payment_method'
                 | 'transactions';
+
+              type Prefetch = 'balances' | 'transactions';
             }
 
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';

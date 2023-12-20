@@ -73,7 +73,31 @@ declare module 'stripe' {
       }
 
       namespace AccountRefreshParams {
-        type Feature = 'balance' | 'ownership';
+        type Feature = 'balance' | 'ownership' | 'transactions';
+      }
+
+      interface AccountSubscribeParams {
+        /**
+         * The list of account features to which you would like to subscribe.`.
+         */
+        features: Array<'transactions'>;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
+      interface AccountUnsubscribeParams {
+        /**
+         * The list of account features from which you would like to unsubscribe.
+         */
+        features: Array<'transactions'>;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
       }
 
       class AccountsResource {
@@ -129,6 +153,24 @@ declare module 'stripe' {
         refresh(
           id: string,
           params: AccountRefreshParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.FinancialConnections.Account>>;
+
+        /**
+         * Subscribes to periodic refreshes of data associated with a Financial Connections Account.
+         */
+        subscribe(
+          id: string,
+          params: AccountSubscribeParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.FinancialConnections.Account>>;
+
+        /**
+         * Unsubscribes from periodic refreshes of data associated with a Financial Connections Account.
+         */
+        unsubscribe(
+          id: string,
+          params: AccountUnsubscribeParams,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.FinancialConnections.Account>>;
       }

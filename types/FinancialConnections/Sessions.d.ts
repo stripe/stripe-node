@@ -90,7 +90,7 @@ declare module 'stripe' {
           | 'payment_method'
           | 'transactions';
 
-        type Prefetch = 'balances' | 'ownership';
+        type Prefetch = 'balances' | 'ownership' | 'transactions';
       }
     }
   }

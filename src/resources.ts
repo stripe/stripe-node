@@ -47,6 +47,7 @@ import {TestClocks as TestHelpersTestClocks} from './resources/TestHelpers/TestC
 import {Tokens as IssuingTokens} from './resources/Issuing/Tokens.js';
 import {TransactionEntries as TreasuryTransactionEntries} from './resources/Treasury/TransactionEntries.js';
 import {Transactions as TestHelpersIssuingTransactions} from './resources/TestHelpers/Issuing/Transactions.js';
+import {Transactions as FinancialConnectionsTransactions} from './resources/FinancialConnections/Transactions.js';
 import {Transactions as IssuingTransactions} from './resources/Issuing/Transactions.js';
 import {Transactions as TaxTransactions} from './resources/Tax/Transactions.js';
 import {Transactions as TreasuryTransactions} from './resources/Treasury/Transactions.js';
@@ -119,6 +120,7 @@ export const Climate = resourceNamespace('climate', {
 export const FinancialConnections = resourceNamespace('financialConnections', {
   Accounts: FinancialConnectionsAccounts,
   Sessions: FinancialConnectionsSessions,
+  Transactions: FinancialConnectionsTransactions,
 });
 export const Identity = resourceNamespace('identity', {
   VerificationReports: IdentityVerificationReports,

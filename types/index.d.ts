@@ -35,6 +35,7 @@
 ///<reference path='./FilesResource.d.ts' />
 ///<reference path='./FinancialConnections/AccountsResource.d.ts' />
 ///<reference path='./FinancialConnections/SessionsResource.d.ts' />
+///<reference path='./FinancialConnections/TransactionsResource.d.ts' />
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
 ///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
@@ -151,6 +152,7 @@
 ///<reference path='./FinancialConnections/AccountOwnerships.d.ts' />
 ///<reference path='./FinancialConnections/Accounts.d.ts' />
 ///<reference path='./FinancialConnections/Sessions.d.ts' />
+///<reference path='./FinancialConnections/Transactions.d.ts' />
 ///<reference path='./FundingInstructions.d.ts' />
 ///<reference path='./Identity/VerificationReports.d.ts' />
 ///<reference path='./Identity/VerificationSessions.d.ts' />
@@ -315,6 +317,7 @@ declare module 'stripe' {
     financialConnections: {
       accounts: Stripe.FinancialConnections.AccountsResource;
       sessions: Stripe.FinancialConnections.SessionsResource;
+      transactions: Stripe.FinancialConnections.TransactionsResource;
     };
     identity: {
       verificationReports: Stripe.Identity.VerificationReportsResource;

@@ -76,6 +76,7 @@ declare module 'stripe' {
       | FinancialConnectionsAccountDisconnectedEvent
       | FinancialConnectionsAccountReactivatedEvent
       | FinancialConnectionsAccountRefreshedBalanceEvent
+      | FinancialConnectionsAccountRefreshedTransactionsEvent
       | IdentityVerificationSessionCanceledEvent
       | IdentityVerificationSessionCreatedEvent
       | IdentityVerificationSessionProcessingEvent
@@ -1254,6 +1255,21 @@ declare module 'stripe' {
     }
 
     namespace FinancialConnectionsAccountRefreshedBalanceEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.FinancialConnections.Account;
+      }
+    }
+
+    /**
+     * Occurs when an Account’s `transaction_refresh` status transitions from `pending` to either `succeeded` or `failed`.
+     */
+    interface FinancialConnectionsAccountRefreshedTransactionsEvent
+      extends EventBase {
+      type: 'financial_connections.account.refreshed_transactions';
+      data: FinancialConnectionsAccountRefreshedTransactionsEvent.Data;
+    }
+
+    namespace FinancialConnectionsAccountRefreshedTransactionsEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.FinancialConnections.Account;
       }
