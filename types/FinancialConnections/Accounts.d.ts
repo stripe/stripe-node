@@ -101,11 +101,21 @@ declare module 'stripe' {
         subcategory: Account.Subcategory;
 
         /**
+         * The list of data refresh subscriptions requested on this account.
+         */
+        subscriptions: Array<'transactions'> | null;
+
+        /**
          * The [PaymentMethod type](https://stripe.com/docs/api/payment_methods/object#payment_method_object-type)(s) that can be created from this account.
          */
         supported_payment_method_types: Array<
           Account.SupportedPaymentMethodType
         >;
+
+        /**
+         * The state of the most recent attempt to refresh the account transactions.
+         */
+        transaction_refresh: Account.TransactionRefresh | null;
       }
 
       namespace Account {
@@ -194,6 +204,11 @@ declare module 'stripe' {
           last_attempted_at: number;
 
           /**
+           * Time at which the next balance refresh can be initiated. This value will be `null` when `status` is `pending`. Measured in seconds since the Unix epoch.
+           */
+          next_refresh_available_at: number | null;
+
+          /**
            * The status of the last refresh attempt.
            */
           status: BalanceRefresh.Status;
@@ -238,6 +253,32 @@ declare module 'stripe' {
           | 'savings';
 
         type SupportedPaymentMethodType = 'link' | 'us_bank_account';
+
+        interface TransactionRefresh {
+          /**
+           * Unique identifier for the object.
+           */
+          id: string;
+
+          /**
+           * The time at which the last refresh attempt was initiated. Measured in seconds since the Unix epoch.
+           */
+          last_attempted_at: number;
+
+          /**
+           * Time at which the next transaction refresh can be initiated. This value will be `null` when `status` is `pending`. Measured in seconds since the Unix epoch.
+           */
+          next_refresh_available_at: number | null;
+
+          /**
+           * The status of the last refresh attempt.
+           */
+          status: TransactionRefresh.Status;
+        }
+
+        namespace TransactionRefresh {
+          type Status = 'failed' | 'pending' | 'succeeded';
+        }
       }
     }
   }

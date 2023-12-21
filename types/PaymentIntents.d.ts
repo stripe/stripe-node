@@ -1658,7 +1658,7 @@ declare module 'stripe' {
 
           type RequestOvercapture = 'if_available' | 'never';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -2081,7 +2081,7 @@ declare module 'stripe' {
             /**
              * Data features requested to be retrieved upon account creation.
              */
-            prefetch: Array<'balances'> | null;
+            prefetch: Array<FinancialConnections.Prefetch> | null;
 
             /**
              * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
@@ -2095,6 +2095,8 @@ declare module 'stripe' {
               | 'ownership'
               | 'payment_method'
               | 'transactions';
+
+            type Prefetch = 'balances' | 'transactions';
           }
 
           type PreferredSettlementSpeed = 'fastest' | 'standard';

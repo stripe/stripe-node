@@ -25,4 +25,12 @@ export const Accounts = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/financial_connections/accounts/{account}/refresh',
   }),
+  subscribe: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/financial_connections/accounts/{account}/subscribe',
+  }),
+  unsubscribe: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/financial_connections/accounts/{account}/unsubscribe',
+  }),
 });

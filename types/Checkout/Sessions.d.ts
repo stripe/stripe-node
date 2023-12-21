@@ -262,7 +262,7 @@ declare module 'stripe' {
          * Describes the type of transaction being performed by Checkout in order to customize
          * relevant text on the page, such as the submit button. `submit_type` can only be
          * specified on Checkout Sessions in `payment` mode, but not Checkout Sessions
-         * in `subscription` or `setup` mode.
+         * in `subscription` or `setup` mode. Possible values are `auto`, `pay`, `book`, `donate`. If blank or `auto`, `pay` is used.
          */
         submit_type: Session.SubmitType | null;
 
@@ -1384,7 +1384,7 @@ declare module 'stripe' {
               /**
                * Data features requested to be retrieved upon account creation.
                */
-              prefetch: Array<'balances'> | null;
+              prefetch: Array<FinancialConnections.Prefetch> | null;
 
               /**
                * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
@@ -1398,6 +1398,8 @@ declare module 'stripe' {
                 | 'ownership'
                 | 'payment_method'
                 | 'transactions';
+
+              type Prefetch = 'balances' | 'transactions';
             }
 
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';

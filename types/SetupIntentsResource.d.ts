@@ -923,7 +923,7 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           interface ThreeDSecure {
             /**
@@ -1067,7 +1067,7 @@ declare module 'stripe' {
             /**
              * List of data features that you would like to retrieve upon account creation.
              */
-            prefetch?: Array<'balances'>;
+            prefetch?: Array<FinancialConnections.Prefetch>;
 
             /**
              * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
@@ -1081,6 +1081,8 @@ declare module 'stripe' {
               | 'ownership'
               | 'payment_method'
               | 'transactions';
+
+            type Prefetch = 'balances' | 'transactions';
           }
 
           interface Networks {
@@ -1939,7 +1941,7 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           interface ThreeDSecure {
             /**
@@ -2083,7 +2085,7 @@ declare module 'stripe' {
             /**
              * List of data features that you would like to retrieve upon account creation.
              */
-            prefetch?: Array<'balances'>;
+            prefetch?: Array<FinancialConnections.Prefetch>;
 
             /**
              * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
@@ -2097,6 +2099,8 @@ declare module 'stripe' {
               | 'ownership'
               | 'payment_method'
               | 'transactions';
+
+            type Prefetch = 'balances' | 'transactions';
           }
 
           interface Networks {
@@ -3035,7 +3039,7 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           interface ThreeDSecure {
             /**
@@ -3179,7 +3183,7 @@ declare module 'stripe' {
             /**
              * List of data features that you would like to retrieve upon account creation.
              */
-            prefetch?: Array<'balances'>;
+            prefetch?: Array<FinancialConnections.Prefetch>;
 
             /**
              * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
@@ -3193,6 +3197,8 @@ declare module 'stripe' {
               | 'ownership'
               | 'payment_method'
               | 'transactions';
+
+            type Prefetch = 'balances' | 'transactions';
           }
 
           interface Networks {
