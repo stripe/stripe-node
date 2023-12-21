@@ -1110,6 +1110,26 @@ describe('Generated tests', function() {
     expect(account).not.to.be.null;
   });
 
+  it('test_financial_connections_accounts_subscribe_post', async function() {
+    const account = await stripe.financialConnections.accounts.subscribe(
+      'fa_123',
+      {
+        features: ['transactions'],
+      }
+    );
+    expect(account).not.to.be.null;
+  });
+
+  it('test_financial_connections_accounts_unsubscribe_post', async function() {
+    const account = await stripe.financialConnections.accounts.unsubscribe(
+      'fa_123',
+      {
+        features: ['transactions'],
+      }
+    );
+    expect(account).not.to.be.null;
+  });
+
   it('test_financial_connections_sessions_get', async function() {
     const session = await stripe.financialConnections.sessions.retrieve(
       'fcsess_xyz'
@@ -1147,6 +1167,20 @@ describe('Generated tests', function() {
       },
     });
     expect(session).not.to.be.null;
+  });
+
+  it('test_financial_connections_transactions_get', async function() {
+    const transaction = await stripe.financialConnections.transactions.retrieve(
+      'tr_123'
+    );
+    expect(transaction).not.to.be.null;
+  });
+
+  it('test_financial_connections_transactions_get_2', async function() {
+    const transactions = await stripe.financialConnections.transactions.list({
+      account: 'fca_xyz',
+    });
+    expect(transactions).not.to.be.null;
   });
 
   it('test_identity_verification_reports_get', async function() {
