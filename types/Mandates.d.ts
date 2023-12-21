@@ -201,7 +201,12 @@ declare module 'stripe' {
           url: string;
         }
 
-        interface UsBankAccount {}
+        interface UsBankAccount {
+          /**
+           * Mandate collection method
+           */
+          collection_method?: 'paper';
+        }
       }
 
       interface SingleUse {

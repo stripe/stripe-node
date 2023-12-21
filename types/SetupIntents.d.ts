@@ -750,6 +750,8 @@ declare module 'stripe' {
         interface UsBankAccount {
           financial_connections?: UsBankAccount.FinancialConnections;
 
+          mandate_options?: UsBankAccount.MandateOptions;
+
           /**
            * Bank account verification method.
            */
@@ -782,6 +784,13 @@ declare module 'stripe' {
               | 'transactions';
 
             type Prefetch = 'balances' | 'transactions';
+          }
+
+          interface MandateOptions {
+            /**
+             * Mandate collection method
+             */
+            collection_method?: 'paper';
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
