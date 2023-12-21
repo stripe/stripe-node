@@ -2715,6 +2715,11 @@ declare module 'stripe' {
           financial_connections?: UsBankAccount.FinancialConnections;
 
           /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: UsBankAccount.MandateOptions;
+
+          /**
            * Additional fields for network related functions
            */
           networks?: UsBankAccount.Networks;
@@ -2789,6 +2794,13 @@ declare module 'stripe' {
               | 'inferred_balances'
               | 'ownership'
               | 'transactions';
+          }
+
+          interface MandateOptions {
+            /**
+             * The method used to collect offline mandate customer acceptance.
+             */
+            collection_method?: Stripe.Emptyable<'paper'>;
           }
 
           interface Networks {
@@ -5540,6 +5552,11 @@ declare module 'stripe' {
           financial_connections?: UsBankAccount.FinancialConnections;
 
           /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: UsBankAccount.MandateOptions;
+
+          /**
            * Additional fields for network related functions
            */
           networks?: UsBankAccount.Networks;
@@ -5614,6 +5631,13 @@ declare module 'stripe' {
               | 'inferred_balances'
               | 'ownership'
               | 'transactions';
+          }
+
+          interface MandateOptions {
+            /**
+             * The method used to collect offline mandate customer acceptance.
+             */
+            collection_method?: Stripe.Emptyable<'paper'>;
           }
 
           interface Networks {
@@ -9107,6 +9131,11 @@ declare module 'stripe' {
           financial_connections?: UsBankAccount.FinancialConnections;
 
           /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: UsBankAccount.MandateOptions;
+
+          /**
            * Additional fields for network related functions
            */
           networks?: UsBankAccount.Networks;
@@ -9181,6 +9210,13 @@ declare module 'stripe' {
               | 'inferred_balances'
               | 'ownership'
               | 'transactions';
+          }
+
+          interface MandateOptions {
+            /**
+             * The method used to collect offline mandate customer acceptance.
+             */
+            collection_method?: Stripe.Emptyable<'paper'>;
           }
 
           interface Networks {

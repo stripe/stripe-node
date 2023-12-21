@@ -2401,6 +2401,8 @@ declare module 'stripe' {
         interface UsBankAccount {
           financial_connections?: UsBankAccount.FinancialConnections;
 
+          mandate_options?: UsBankAccount.MandateOptions;
+
           /**
            * Preferred transaction settlement speed
            */
@@ -2464,6 +2466,13 @@ declare module 'stripe' {
               | 'inferred_balances'
               | 'ownership'
               | 'transactions';
+          }
+
+          interface MandateOptions {
+            /**
+             * Mandate collection method
+             */
+            collection_method?: 'paper';
           }
 
           type PreferredSettlementSpeed = 'fastest' | 'standard';
