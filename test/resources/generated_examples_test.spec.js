@@ -2641,6 +2641,20 @@ describe('Generated tests', function() {
     expect(taxRate).not.to.be.null;
   });
 
+  it('test_tax_settings_get', async function() {
+    const settings = await stripe.tax.settings.retrieve();
+    expect(settings).not.to.be.null;
+  });
+
+  it('test_tax_settings_post', async function() {
+    const settings = await stripe.tax.settings.update({
+      defaults: {
+        tax_code: 'txcd_10000000',
+      },
+    });
+    expect(settings).not.to.be.null;
+  });
+
   it('test_tax_transactions_create_from_calculation_post', async function() {
     const transaction = await stripe.tax.transactions.createFromCalculation({
       calculation: 'xxx',
