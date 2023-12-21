@@ -2641,6 +2641,36 @@ describe('Generated tests', function() {
     expect(taxRate).not.to.be.null;
   });
 
+  it('test_tax_registrations_get', async function() {
+    const registrations = await stripe.tax.registrations.list({
+      status: 'all',
+    });
+    expect(registrations).not.to.be.null;
+  });
+
+  it('test_tax_registrations_post', async function() {
+    const registration = await stripe.tax.registrations.create({
+      country: 'IE',
+      country_options: {
+        ie: {
+          type: 'oss_union',
+        },
+      },
+      active_from: 'now',
+    });
+    expect(registration).not.to.be.null;
+  });
+
+  it('test_tax_registrations_post_2', async function() {
+    const registration = await stripe.tax.registrations.update(
+      'taxreg_xxxxxxxxxxxxx',
+      {
+        expires_at: 'now',
+      }
+    );
+    expect(registration).not.to.be.null;
+  });
+
   it('test_tax_settings_get', async function() {
     const settings = await stripe.tax.settings.retrieve();
     expect(settings).not.to.be.null;
