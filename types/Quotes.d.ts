@@ -115,10 +115,7 @@ declare module 'stripe' {
        */
       invoice: string | Stripe.Invoice | Stripe.DeletedInvoice | null;
 
-      /**
-       * All invoices will be billed using the specified settings.
-       */
-      invoice_settings: Quote.InvoiceSettings | null;
+      invoice_settings: Quote.InvoiceSettings;
 
       /**
        * A list of items the customer is being quoted for.
@@ -550,10 +547,7 @@ declare module 'stripe' {
          */
         days_until_due: number | null;
 
-        /**
-         * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
-         */
-        issuer?: InvoiceSettings.Issuer | null;
+        issuer?: InvoiceSettings.Issuer;
       }
 
       namespace InvoiceSettings {

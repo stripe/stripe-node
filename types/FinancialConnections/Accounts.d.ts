@@ -108,7 +108,7 @@ declare module 'stripe' {
         /**
          * The list of data refresh subscriptions requested on this account.
          */
-        subscriptions?: Array<Account.Subscription> | null;
+        subscriptions: Array<Account.Subscription> | null;
 
         /**
          * The [PaymentMethod type](https://stripe.com/docs/api/payment_methods/object#payment_method_object-type)(s) that can be created from this account.
@@ -120,7 +120,7 @@ declare module 'stripe' {
         /**
          * The state of the most recent attempt to refresh the account transactions.
          */
-        transaction_refresh?: Account.TransactionRefresh | null;
+        transaction_refresh: Account.TransactionRefresh | null;
       }
 
       namespace Account {
@@ -211,7 +211,7 @@ declare module 'stripe' {
           /**
            * Time at which the next balance refresh can be initiated. This value will be `null` when `status` is `pending`. Measured in seconds since the Unix epoch.
            */
-          next_refresh_available_at?: number | null;
+          next_refresh_available_at: number | null;
 
           /**
            * The status of the last refresh attempt.

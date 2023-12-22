@@ -52,6 +52,11 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
+         * The details of the ship from location, such as the address.
+         */
+        ship_from_details?: Calculation.ShipFromDetails | null;
+
+        /**
          * The shipping cost details for the calculation.
          */
         shipping_cost: Calculation.ShippingCost | null;
@@ -195,6 +200,10 @@ declare module 'stripe' {
               | 'vn_tin'
               | 'za_vat';
           }
+        }
+
+        interface ShipFromDetails {
+          address: Stripe.Address;
         }
 
         interface ShippingCost {

@@ -30,6 +30,11 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
+         * Details about the address from which the goods are being shippped.
+         */
+        ship_from_details?: CalculationCreateParams.ShipFromDetails;
+
+        /**
          * Shipping cost details to be used for the calculation.
          */
         shipping_cost?: CalculationCreateParams.ShippingCost;
@@ -58,7 +63,7 @@ declare module 'stripe' {
           ip_address?: string;
 
           /**
-           * The customer's tax IDs.
+           * The customer's tax IDs. Stripe Tax might consider a transaction with applicable tax IDs to be B2B, which might affect the tax calculation result. Stripe Tax doesn't validate tax IDs for correctness.
            */
           tax_ids?: Array<CustomerDetails.TaxId>;
 
@@ -225,6 +230,47 @@ declare module 'stripe' {
 
         namespace LineItem {
           type TaxBehavior = 'exclusive' | 'inclusive';
+        }
+
+        interface ShipFromDetails {
+          /**
+           * The address from which the goods are being shipped from.
+           */
+          address: ShipFromDetails.Address;
+        }
+
+        namespace ShipFromDetails {
+          interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: Stripe.Emptyable<string>;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: Stripe.Emptyable<string>;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: Stripe.Emptyable<string>;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: Stripe.Emptyable<string>;
+
+            /**
+             * State/province as an [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) subdivision code, without country prefix. Example: "NY" or "TX".
+             */
+            state?: Stripe.Emptyable<string>;
+          }
         }
 
         interface ShippingCost {

@@ -861,10 +861,7 @@ declare module 'stripe' {
          */
         description: string | null;
 
-        /**
-         * All invoices will be billed using the specified settings.
-         */
-        invoice_settings?: SubscriptionData.InvoiceSettings | null;
+        invoice_settings?: SubscriptionData.InvoiceSettings;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on [Subscriptions](https://stripe.com/docs/api/subscriptions) generated from this payment link.
@@ -884,10 +881,7 @@ declare module 'stripe' {
 
       namespace SubscriptionData {
         interface InvoiceSettings {
-          /**
-           * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
-           */
-          issuer?: InvoiceSettings.Issuer | null;
+          issuer?: InvoiceSettings.Issuer;
         }
 
         namespace InvoiceSettings {

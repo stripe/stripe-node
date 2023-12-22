@@ -435,6 +435,7 @@ declare module 'stripe' {
           | 'setup_intent_mandate_invalid'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
+          | 'shipping_address_invalid'
           | 'shipping_calculation_failed'
           | 'sku_inactive'
           | 'state_unsupported'
@@ -764,6 +765,8 @@ declare module 'stripe' {
         interface UsBankAccount {
           financial_connections?: UsBankAccount.FinancialConnections;
 
+          mandate_options?: UsBankAccount.MandateOptions;
+
           /**
            * Bank account verification method.
            */
@@ -813,6 +816,13 @@ declare module 'stripe' {
               | 'inferred_balances'
               | 'ownership'
               | 'transactions';
+          }
+
+          interface MandateOptions {
+            /**
+             * Mandate collection method
+             */
+            collection_method?: 'paper';
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';

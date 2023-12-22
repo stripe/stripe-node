@@ -295,10 +295,7 @@ declare module 'stripe' {
        */
       invoice_pdf?: string | null;
 
-      /**
-       * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
-       */
-      issuer?: Invoice.Issuer | null;
+      issuer?: Invoice.Issuer;
 
       /**
        * The error encountered during the previous attempt to finalize the invoice. This field is cleared when the invoice is successfully finalized.
@@ -995,6 +992,7 @@ declare module 'stripe' {
           | 'setup_intent_mandate_invalid'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
+          | 'shipping_address_invalid'
           | 'shipping_calculation_failed'
           | 'sku_inactive'
           | 'state_unsupported'

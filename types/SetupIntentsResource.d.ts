@@ -930,7 +930,7 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           interface ThreeDSecure {
             /**
@@ -1061,6 +1061,11 @@ declare module 'stripe' {
           financial_connections?: UsBankAccount.FinancialConnections;
 
           /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: UsBankAccount.MandateOptions;
+
+          /**
            * Additional fields for network related functions
            */
           networks?: UsBankAccount.Networks;
@@ -1117,6 +1122,13 @@ declare module 'stripe' {
               | 'inferred_balances'
               | 'ownership'
               | 'transactions';
+          }
+
+          interface MandateOptions {
+            /**
+             * The method used to collect offline mandate customer acceptance.
+             */
+            collection_method?: Stripe.Emptyable<'paper'>;
           }
 
           interface Networks {
@@ -1975,7 +1987,7 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           interface ThreeDSecure {
             /**
@@ -2106,6 +2118,11 @@ declare module 'stripe' {
           financial_connections?: UsBankAccount.FinancialConnections;
 
           /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: UsBankAccount.MandateOptions;
+
+          /**
            * Additional fields for network related functions
            */
           networks?: UsBankAccount.Networks;
@@ -2162,6 +2179,13 @@ declare module 'stripe' {
               | 'inferred_balances'
               | 'ownership'
               | 'transactions';
+          }
+
+          interface MandateOptions {
+            /**
+             * The method used to collect offline mandate customer acceptance.
+             */
+            collection_method?: Stripe.Emptyable<'paper'>;
           }
 
           interface Networks {
@@ -3107,7 +3131,7 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           interface ThreeDSecure {
             /**
@@ -3238,6 +3262,11 @@ declare module 'stripe' {
           financial_connections?: UsBankAccount.FinancialConnections;
 
           /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: UsBankAccount.MandateOptions;
+
+          /**
            * Additional fields for network related functions
            */
           networks?: UsBankAccount.Networks;
@@ -3294,6 +3323,13 @@ declare module 'stripe' {
               | 'inferred_balances'
               | 'ownership'
               | 'transactions';
+          }
+
+          interface MandateOptions {
+            /**
+             * The method used to collect offline mandate customer acceptance.
+             */
+            collection_method?: Stripe.Emptyable<'paper'>;
           }
 
           interface Networks {
