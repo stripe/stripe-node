@@ -131,7 +131,7 @@ declare module 'stripe' {
 
       interface InvoiceSettings {
         /**
-         * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
+         * The list of up to 4 default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
          */
         custom_fields?: Stripe.Emptyable<Array<InvoiceSettings.CustomField>>;
 
@@ -429,7 +429,7 @@ declare module 'stripe' {
 
       interface InvoiceSettings {
         /**
-         * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
+         * The list of up to 4 default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
          */
         custom_fields?: Stripe.Emptyable<Array<InvoiceSettings.CustomField>>;
 
