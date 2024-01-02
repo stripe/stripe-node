@@ -83,7 +83,7 @@ declare module 'stripe' {
       /**
        * The custom message to be displayed to a customer when a payment link is no longer active.
        */
-      inactive_message?: string | null;
+      inactive_message: string | null;
 
       /**
        * Configuration for creating invoice for payment mode payment links.
@@ -130,7 +130,7 @@ declare module 'stripe' {
       /**
        * Settings that restrict the usage of a payment link.
        */
-      restrictions?: PaymentLink.Restrictions | null;
+      restrictions: PaymentLink.Restrictions | null;
 
       /**
        * Configuration for collecting the customer's shipping address.
