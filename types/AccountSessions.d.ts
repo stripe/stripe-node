@@ -50,11 +50,11 @@ declare module 'stripe' {
 
         capital_financing_promotion?: Components.CapitalFinancingPromotion | null;
 
-        payment_details?: Components.PaymentDetails;
+        payment_details: Components.PaymentDetails;
 
-        payments?: Components.Payments;
+        payments: Components.Payments;
 
-        payouts?: Components.Payouts;
+        payouts: Components.Payouts;
       }
 
       namespace Components {
@@ -77,7 +77,7 @@ declare module 'stripe' {
            */
           enabled: boolean;
 
-          features?: CapitalFinancingPromotion.Features;
+          features: CapitalFinancingPromotion.Features;
         }
 
         namespace CapitalFinancingPromotion {
@@ -90,7 +90,7 @@ declare module 'stripe' {
            */
           enabled: boolean;
 
-          features?: PaymentDetails.Features;
+          features: PaymentDetails.Features;
         }
 
         namespace PaymentDetails {
@@ -118,7 +118,7 @@ declare module 'stripe' {
            */
           enabled: boolean;
 
-          features?: Payments.Features;
+          features: Payments.Features;
         }
 
         namespace Payments {
@@ -146,7 +146,7 @@ declare module 'stripe' {
            */
           enabled: boolean;
 
-          features?: Payouts.Features;
+          features: Payouts.Features;
         }
 
         namespace Payouts {
