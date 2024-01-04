@@ -35,7 +35,7 @@ declare module 'stripe' {
       automatic_tax: Subscription.AutomaticTax;
 
       /**
-       * Determines the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. The timestamp is in UTC format.
+       * The reference point that aligns future [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle) dates. It sets the day of week for `week` intervals, the day of month for `month` and `year` intervals, and the month of year for `year` intervals. The timestamp is in UTC format.
        */
       billing_cycle_anchor: number;
 
