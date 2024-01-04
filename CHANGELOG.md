@@ -1,5 +1,12 @@
 # Changelog
 
+## 14.11.0 - 2024-01-04
+* [#1985](https://github.com/stripe/stripe-node/pull/1985) Update generated code
+  * Add support for `retrieve` method on resource `Tax.Registration`
+  * Change `AccountSession.components.payment_details.features`, `AccountSession.components.payment_details`, `AccountSession.components.payments.features`, `AccountSession.components.payments`, `AccountSession.components.payouts.features`, `AccountSession.components.payouts`, `PaymentLink.inactive_message`, and `PaymentLink.restrictions` to be required
+  * Change type of `SubscriptionSchedule.default_settings.invoice_settings` from `InvoiceSettingSubscriptionScheduleSetting | null` to `InvoiceSettingSubscriptionScheduleSetting`
+* [#1987](https://github.com/stripe/stripe-node/pull/1987) Update docstrings to indicate removal of deprecated event types
+
 ## 14.11.0-beta.1 - 2023-12-22
 * [#1977](https://github.com/stripe/stripe-node/pull/1977) Update generated code for beta
   * Add support for `capital_financing_promotion` on `AccountSession.components` and `AccountSessionCreateParams.components`
