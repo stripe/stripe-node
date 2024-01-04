@@ -146,10 +146,7 @@ declare module 'stripe' {
          */
         description: string | null;
 
-        /**
-         * The subscription schedule's default invoice settings.
-         */
-        invoice_settings: DefaultSettings.InvoiceSettings | null;
+        invoice_settings: DefaultSettings.InvoiceSettings;
 
         /**
          * The account (if any) the charge was made on behalf of for charges associated with the schedule's subscription. See the Connect documentation for details.

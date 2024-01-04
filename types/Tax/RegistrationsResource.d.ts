@@ -1217,6 +1217,13 @@ declare module 'stripe' {
         }
       }
 
+      interface RegistrationRetrieveParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
       interface RegistrationUpdateParams {
         /**
          * Time at which the registration becomes active. It can be either `now` to indicate the current time, or a timestamp measured in seconds since the Unix epoch.
@@ -1256,6 +1263,19 @@ declare module 'stripe' {
          */
         create(
           params: RegistrationCreateParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Tax.Registration>>;
+
+        /**
+         * Returns a Tax Registration object.
+         */
+        retrieve(
+          id: string,
+          params?: RegistrationRetrieveParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Tax.Registration>>;
+        retrieve(
+          id: string,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Tax.Registration>>;
 
