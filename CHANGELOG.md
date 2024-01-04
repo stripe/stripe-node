@@ -1,5 +1,10 @@
 # Changelog
 
+## 14.12.0-beta.1 - 2024-01-04
+* [#1986](https://github.com/stripe/stripe-node/pull/1986) Update generated code for beta
+  * Change `AccountSession.components.capital_financing_promotion.features` to be required
+  * Updated stable APIs to the latest version
+
 ## 14.11.0 - 2024-01-04
 * [#1985](https://github.com/stripe/stripe-node/pull/1985) Update generated code
   * Add support for `retrieve` method on resource `Tax.Registration`
