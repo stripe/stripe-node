@@ -588,6 +588,11 @@ declare module 'stripe' {
 
           interface Segment {
             /**
+             * The flight segment amount.
+             */
+            amount?: number;
+
+            /**
              * The International Air Transport Association (IATA) airport code for the arrival airport.
              */
             arrival_airport?: string;
@@ -704,6 +709,11 @@ declare module 'stripe' {
           no_show?: boolean;
 
           /**
+           * The number of rooms on the booking
+           */
+          number_of_rooms?: number;
+
+          /**
            * The details of the passengers in the travel reservation
            */
           passengers?: Array<Lodging.Passenger>;
@@ -712,6 +722,11 @@ declare module 'stripe' {
            * The phone number of the lodging location.
            */
           property_phone_number?: string;
+
+          /**
+           * The room class for this purchase.
+           */
+          room_class?: string;
 
           /**
            * The number of room nights
@@ -1320,6 +1335,11 @@ declare module 'stripe' {
 
           interface Segment {
             /**
+             * The flight segment amount.
+             */
+            amount?: number;
+
+            /**
              * The International Air Transport Association (IATA) airport code for the arrival airport.
              */
             arrival_airport?: string;
@@ -1436,6 +1456,11 @@ declare module 'stripe' {
           no_show?: boolean;
 
           /**
+           * The number of rooms on the booking
+           */
+          number_of_rooms?: number;
+
+          /**
            * The details of the passengers in the travel reservation
            */
           passengers?: Array<Lodging.Passenger>;
@@ -1444,6 +1469,11 @@ declare module 'stripe' {
            * The phone number of the lodging location.
            */
           property_phone_number?: string;
+
+          /**
+           * The room class for this purchase.
+           */
+          room_class?: string;
 
           /**
            * The number of room nights
