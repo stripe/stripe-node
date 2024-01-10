@@ -87,7 +87,6 @@ declare module 'stripe' {
             | 'issuing_dispute'
             | 'issuing_transaction'
             | 'network_cost'
-            | 'obligation'
             | 'other_adjustment'
             | 'partial_capture_reversal'
             | 'payout'
