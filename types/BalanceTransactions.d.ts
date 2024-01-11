@@ -153,7 +153,11 @@ declare module 'stripe' {
         | 'transfer'
         | 'transfer_cancel'
         | 'transfer_failure'
-        | 'transfer_refund';
+        | 'transfer_refund'
+        | 'obligation_inbound'
+        | 'obligation_payout'
+        | 'obligation_payout_failure'
+        | 'obligation_reversal_outbound';
     }
   }
 }
