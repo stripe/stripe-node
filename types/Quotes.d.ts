@@ -110,10 +110,7 @@ declare module 'stripe' {
        */
       invoice: string | Stripe.Invoice | Stripe.DeletedInvoice | null;
 
-      /**
-       * All invoices will be billed using the specified settings.
-       */
-      invoice_settings: Quote.InvoiceSettings | null;
+      invoice_settings: Quote.InvoiceSettings;
 
       /**
        * A list of items the customer is being quoted for.

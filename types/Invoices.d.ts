@@ -1071,11 +1071,13 @@ declare module 'stripe' {
               /**
                * Data features requested to be retrieved upon account creation.
                */
-              prefetch: Array<'balances'> | null;
+              prefetch: Array<FinancialConnections.Prefetch> | null;
             }
 
             namespace FinancialConnections {
               type Permission = 'balances' | 'payment_method' | 'transactions';
+
+              type Prefetch = 'balances' | 'transactions';
             }
 
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
@@ -1093,12 +1095,14 @@ declare module 'stripe' {
           | 'card'
           | 'cashapp'
           | 'customer_balance'
+          | 'eps'
           | 'fpx'
           | 'giropay'
           | 'grabpay'
           | 'ideal'
           | 'konbini'
           | 'link'
+          | 'p24'
           | 'paynow'
           | 'paypal'
           | 'promptpay'

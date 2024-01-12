@@ -1,5 +1,44 @@
 # Changelog
 
+## 14.12.0 - 2024-01-12
+* [#1990](https://github.com/stripe/stripe-node/pull/1990) Update generated code
+  * Add support for new resource `CustomerSession`
+  * Add support for `create` method on resource `CustomerSession`
+  * Remove support for values `obligation_inbound`, `obligation_payout_failure`, `obligation_payout`, and `obligation_reversal_outbound` from enum `BalanceTransaction.type`
+  * Add support for new values `eps` and `p24` on enums `Invoice.payment_settings.payment_method_types[]`, `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Subscription.payment_settings.payment_method_types[]`, `SubscriptionCreateParams.payment_settings.payment_method_types[]`, and `SubscriptionUpdateParams.payment_settings.payment_method_types[]`
+  * Remove support for value `obligation` from enum `Reporting.ReportRunCreateParams.parameters.reporting_category`
+  * Add support for `billing_cycle_anchor_config` on `SubscriptionCreateParams` and `Subscription`
+
+## 14.11.0 - 2024-01-04
+* [#1985](https://github.com/stripe/stripe-node/pull/1985) Update generated code
+  * Add support for `retrieve` method on resource `Tax.Registration`
+  * Change `AccountSession.components.payment_details.features`, `AccountSession.components.payment_details`, `AccountSession.components.payments.features`, `AccountSession.components.payments`, `AccountSession.components.payouts.features`, `AccountSession.components.payouts`, `PaymentLink.inactive_message`, and `PaymentLink.restrictions` to be required
+  * Change type of `SubscriptionSchedule.default_settings.invoice_settings` from `InvoiceSettingSubscriptionScheduleSetting | null` to `InvoiceSettingSubscriptionScheduleSetting`
+* [#1987](https://github.com/stripe/stripe-node/pull/1987) Update docstrings to indicate removal of deprecated event types
+
+## 14.10.0 - 2023-12-22
+* [#1979](https://github.com/stripe/stripe-node/pull/1979) Update generated code
+  * Add support for `collection_method` on `Mandate.payment_method_details.us_bank_account`
+  * Add support for `mandate_options` on `PaymentIntent.payment_method_options.us_bank_account`, `PaymentIntentConfirmParams.payment_method_options.us_bank_account`, `PaymentIntentCreateParams.payment_method_options.us_bank_account`, `PaymentIntentUpdateParams.payment_method_options.us_bank_account`, `SetupIntent.payment_method_options.us_bank_account`, `SetupIntentConfirmParams.payment_method_options.us_bank_account`, `SetupIntentCreateParams.payment_method_options.us_bank_account`, and `SetupIntentUpdateParams.payment_method_options.us_bank_account`
+* [#1976](https://github.com/stripe/stripe-node/pull/1976) Update generated code
+  * Add support for new resource `FinancialConnections.Transaction`
+  * Add support for `list` and `retrieve` methods on resource `Transaction`
+  * Add support for `subscribe` and `unsubscribe` methods on resource `FinancialConnections.Account`
+  * Add support for `features` on `AccountSessionCreateParams.components.payouts`
+  * Add support for `edit_payout_schedule`, `instant_payouts`, and `standard_payouts` on `AccountSession.components.payouts.features`
+  * Change type of `Checkout.Session.payment_method_options.us_bank_account.financial_connections.prefetch[]`, `Checkout.SessionCreateParams.payment_method_options.us_bank_account.financial_connections.prefetch[]`, `Invoice.payment_settings.payment_method_options.us_bank_account.financial_connections.prefetch[]`, `InvoiceCreateParams.payment_settings.payment_method_options.us_bank_account.financial_connections.prefetch[]`, `InvoiceUpdateParams.payment_settings.payment_method_options.us_bank_account.financial_connections.prefetch[]`, `PaymentIntent.payment_method_options.us_bank_account.financial_connections.prefetch[]`, `PaymentIntentConfirmParams.payment_method_options.us_bank_account.financial_connections.prefetch[]`, `PaymentIntentCreateParams.payment_method_options.us_bank_account.financial_connections.prefetch[]`, `PaymentIntentUpdateParams.payment_method_options.us_bank_account.financial_connections.prefetch[]`, `SetupIntent.payment_method_options.us_bank_account.financial_connections.prefetch[]`, `SetupIntentConfirmParams.payment_method_options.us_bank_account.financial_connections.prefetch[]`, `SetupIntentCreateParams.payment_method_options.us_bank_account.financial_connections.prefetch[]`, `SetupIntentUpdateParams.payment_method_options.us_bank_account.financial_connections.prefetch[]`, `Subscription.payment_settings.payment_method_options.us_bank_account.financial_connections.prefetch[]`, `SubscriptionCreateParams.payment_settings.payment_method_options.us_bank_account.financial_connections.prefetch[]`, and `SubscriptionUpdateParams.payment_settings.payment_method_options.us_bank_account.financial_connections.prefetch[]` from `literal('balances')` to `enum('balances'|'transactions')`
+  * Add support for new value `financial_connections.account.refreshed_transactions` on enum `Event.type`
+  * Add support for new value `transactions` on enum `FinancialConnections.AccountRefreshParams.features[]`
+  * Add support for `subscriptions` and `transaction_refresh` on `FinancialConnections.Account`
+  * Add support for `next_refresh_available_at` on `FinancialConnections.Account.balance_refresh`
+  * Add support for new value `transactions` on enums `FinancialConnections.Session.prefetch[]` and `FinancialConnections.SessionCreateParams.prefetch[]`
+  * Add support for new value `unknown` on enums `Issuing.Authorization.verification_data.authentication_exemption.type` and `Issuing.AuthorizationCreateParams.testHelpers.verification_data.authentication_exemption.type`
+  * Add support for new value `challenge` on enums `PaymentIntent.payment_method_options.card.request_three_d_secure`, `PaymentIntentConfirmParams.payment_method_options.card.request_three_d_secure`, `PaymentIntentCreateParams.payment_method_options.card.request_three_d_secure`, `PaymentIntentUpdateParams.payment_method_options.card.request_three_d_secure`, `SetupIntent.payment_method_options.card.request_three_d_secure`, `SetupIntentConfirmParams.payment_method_options.card.request_three_d_secure`, `SetupIntentCreateParams.payment_method_options.card.request_three_d_secure`, and `SetupIntentUpdateParams.payment_method_options.card.request_three_d_secure`
+  * Add support for `revolut_pay` on `PaymentMethodConfigurationCreateParams`, `PaymentMethodConfigurationUpdateParams`, and `PaymentMethodConfiguration`
+  * Change type of `Quote.invoice_settings` from `InvoiceSettingQuoteSetting | null` to `InvoiceSettingQuoteSetting`
+  * Add support for `destination_details` on `Refund`
+  * Add support for new value `financial_connections.account.refreshed_transactions` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
 ## 14.9.0 - 2023-12-14
 * [#1973](https://github.com/stripe/stripe-node/pull/1973) Add `usage` to X-Stripe-Client-Telemetry
 * [#1971](https://github.com/stripe/stripe-node/pull/1971) Update generated code

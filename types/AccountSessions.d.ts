@@ -48,11 +48,11 @@ declare module 'stripe' {
       interface Components {
         account_onboarding: Components.AccountOnboarding;
 
-        payment_details?: Components.PaymentDetails;
+        payment_details: Components.PaymentDetails;
 
-        payments?: Components.Payments;
+        payments: Components.Payments;
 
-        payouts?: Components.Payouts;
+        payouts: Components.Payouts;
       }
 
       namespace Components {
@@ -75,7 +75,7 @@ declare module 'stripe' {
            */
           enabled: boolean;
 
-          features?: PaymentDetails.Features;
+          features: PaymentDetails.Features;
         }
 
         namespace PaymentDetails {
@@ -103,7 +103,7 @@ declare module 'stripe' {
            */
           enabled: boolean;
 
-          features?: Payments.Features;
+          features: Payments.Features;
         }
 
         namespace Payments {
@@ -131,11 +131,26 @@ declare module 'stripe' {
            */
           enabled: boolean;
 
-          features?: Payouts.Features;
+          features: Payouts.Features;
         }
 
         namespace Payouts {
-          interface Features {}
+          interface Features {
+            /**
+             * Whether to allow payout schedule to be changed. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             */
+            edit_payout_schedule: boolean;
+
+            /**
+             * Whether to allow creation of instant payouts. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             */
+            instant_payouts: boolean;
+
+            /**
+             * Whether to allow creation of standard payouts. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             */
+            standard_payouts: boolean;
+          }
         }
       }
     }

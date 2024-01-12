@@ -674,6 +674,18 @@ describe('Generated tests', function() {
     expect(creditNote).not.to.be.null;
   });
 
+  it('test_customer_sessions_post', async function() {
+    const customerSession = await stripe.customerSessions.create({
+      customer: 'cus_123',
+      components: {
+        buy_button: {
+          enabled: true,
+        },
+      },
+    });
+    expect(customerSession).not.to.be.null;
+  });
+
   it('test_customers_balance_transactions_get', async function() {
     const customerBalanceTransactions = await stripe.customers.listBalanceTransactions(
       'cus_xxxxxxxxxxxxx',
@@ -1110,6 +1122,26 @@ describe('Generated tests', function() {
     expect(account).not.to.be.null;
   });
 
+  it('test_financial_connections_accounts_subscribe_post', async function() {
+    const account = await stripe.financialConnections.accounts.subscribe(
+      'fa_123',
+      {
+        features: ['transactions'],
+      }
+    );
+    expect(account).not.to.be.null;
+  });
+
+  it('test_financial_connections_accounts_unsubscribe_post', async function() {
+    const account = await stripe.financialConnections.accounts.unsubscribe(
+      'fa_123',
+      {
+        features: ['transactions'],
+      }
+    );
+    expect(account).not.to.be.null;
+  });
+
   it('test_financial_connections_sessions_get', async function() {
     const session = await stripe.financialConnections.sessions.retrieve(
       'fcsess_xyz'
@@ -1147,6 +1179,20 @@ describe('Generated tests', function() {
       },
     });
     expect(session).not.to.be.null;
+  });
+
+  it('test_financial_connections_transactions_get', async function() {
+    const transaction = await stripe.financialConnections.transactions.retrieve(
+      'tr_123'
+    );
+    expect(transaction).not.to.be.null;
+  });
+
+  it('test_financial_connections_transactions_get_2', async function() {
+    const transactions = await stripe.financialConnections.transactions.list({
+      account: 'fca_xyz',
+    });
+    expect(transactions).not.to.be.null;
   });
 
   it('test_identity_verification_reports_get', async function() {
@@ -2639,6 +2685,50 @@ describe('Generated tests', function() {
       active: false,
     });
     expect(taxRate).not.to.be.null;
+  });
+
+  it('test_tax_registrations_get', async function() {
+    const registrations = await stripe.tax.registrations.list({
+      status: 'all',
+    });
+    expect(registrations).not.to.be.null;
+  });
+
+  it('test_tax_registrations_post', async function() {
+    const registration = await stripe.tax.registrations.create({
+      country: 'IE',
+      country_options: {
+        ie: {
+          type: 'oss_union',
+        },
+      },
+      active_from: 'now',
+    });
+    expect(registration).not.to.be.null;
+  });
+
+  it('test_tax_registrations_post_2', async function() {
+    const registration = await stripe.tax.registrations.update(
+      'taxreg_xxxxxxxxxxxxx',
+      {
+        expires_at: 'now',
+      }
+    );
+    expect(registration).not.to.be.null;
+  });
+
+  it('test_tax_settings_get', async function() {
+    const settings = await stripe.tax.settings.retrieve();
+    expect(settings).not.to.be.null;
+  });
+
+  it('test_tax_settings_post', async function() {
+    const settings = await stripe.tax.settings.update({
+      defaults: {
+        tax_code: 'txcd_10000000',
+      },
+    });
+    expect(settings).not.to.be.null;
   });
 
   it('test_tax_transactions_create_from_calculation_post', async function() {

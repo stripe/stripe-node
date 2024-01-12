@@ -35,9 +35,14 @@ declare module 'stripe' {
       automatic_tax: Subscription.AutomaticTax;
 
       /**
-       * Determines the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. The timestamp is in UTC format.
+       * The reference point that aligns future [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle) dates. It sets the day of week for `week` intervals, the day of month for `month` and `year` intervals, and the month of year for `year` intervals. The timestamp is in UTC format.
        */
       billing_cycle_anchor: number;
+
+      /**
+       * The fixed values used to calculate the `billing_cycle_anchor`.
+       */
+      billing_cycle_anchor_config?: Subscription.BillingCycleAnchorConfig | null;
 
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
@@ -239,6 +244,33 @@ declare module 'stripe' {
          * Whether Stripe automatically computes tax on this subscription.
          */
         enabled: boolean;
+      }
+
+      interface BillingCycleAnchorConfig {
+        /**
+         * The day of the month of the billing_cycle_anchor.
+         */
+        day_of_month: number;
+
+        /**
+         * The hour of the day of the billing_cycle_anchor.
+         */
+        hour: number | null;
+
+        /**
+         * The minute of the hour of the billing_cycle_anchor.
+         */
+        minute: number | null;
+
+        /**
+         * The month to start full cycle billing periods.
+         */
+        month: number | null;
+
+        /**
+         * The second of the minute of the billing_cycle_anchor.
+         */
+        second: number | null;
       }
 
       interface BillingThresholds {
@@ -497,11 +529,13 @@ declare module 'stripe' {
               /**
                * Data features requested to be retrieved upon account creation.
                */
-              prefetch: Array<'balances'> | null;
+              prefetch: Array<FinancialConnections.Prefetch> | null;
             }
 
             namespace FinancialConnections {
               type Permission = 'balances' | 'payment_method' | 'transactions';
+
+              type Prefetch = 'balances' | 'transactions';
             }
 
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
@@ -519,12 +553,14 @@ declare module 'stripe' {
           | 'card'
           | 'cashapp'
           | 'customer_balance'
+          | 'eps'
           | 'fpx'
           | 'giropay'
           | 'grabpay'
           | 'ideal'
           | 'konbini'
           | 'link'
+          | 'p24'
           | 'paynow'
           | 'paypal'
           | 'promptpay'

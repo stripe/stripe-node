@@ -55,7 +55,7 @@ declare module 'stripe' {
       default_settings: SubscriptionSchedule.DefaultSettings;
 
       /**
-       * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
+       * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running. `cancel` will end the subscription schedule and cancel the underlying subscription.
        */
       end_behavior: SubscriptionSchedule.EndBehavior;
 
@@ -146,10 +146,7 @@ declare module 'stripe' {
          */
         description: string | null;
 
-        /**
-         * The subscription schedule's default invoice settings.
-         */
-        invoice_settings: DefaultSettings.InvoiceSettings | null;
+        invoice_settings: DefaultSettings.InvoiceSettings;
 
         /**
          * The account (if any) the charge was made on behalf of for charges associated with the schedule's subscription. See the Connect documentation for details.

@@ -750,6 +750,8 @@ declare module 'stripe' {
         interface UsBankAccount {
           financial_connections?: UsBankAccount.FinancialConnections;
 
+          mandate_options?: UsBankAccount.MandateOptions;
+
           /**
            * Bank account verification method.
            */
@@ -766,7 +768,7 @@ declare module 'stripe' {
             /**
              * Data features requested to be retrieved upon account creation.
              */
-            prefetch: Array<'balances'> | null;
+            prefetch: Array<FinancialConnections.Prefetch> | null;
 
             /**
              * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
@@ -780,6 +782,15 @@ declare module 'stripe' {
               | 'ownership'
               | 'payment_method'
               | 'transactions';
+
+            type Prefetch = 'balances' | 'transactions';
+          }
+
+          interface MandateOptions {
+            /**
+             * Mandate collection method
+             */
+            collection_method?: 'paper';
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';

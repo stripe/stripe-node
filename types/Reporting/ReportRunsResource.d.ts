@@ -87,7 +87,6 @@ declare module 'stripe' {
             | 'issuing_dispute'
             | 'issuing_transaction'
             | 'network_cost'
-            | 'obligation'
             | 'other_adjustment'
             | 'partial_capture_reversal'
             | 'payout'
@@ -102,7 +101,8 @@ declare module 'stripe' {
             | 'topup_reversal'
             | 'transfer'
             | 'transfer_reversal'
-            | 'unreconciled_customer_funds';
+            | 'unreconciled_customer_funds'
+            | 'obligation';
 
           type Timezone =
             | 'Africa/Abidjan'

@@ -76,6 +76,7 @@ declare module 'stripe' {
       | FinancialConnectionsAccountDisconnectedEvent
       | FinancialConnectionsAccountReactivatedEvent
       | FinancialConnectionsAccountRefreshedBalanceEvent
+      | FinancialConnectionsAccountRefreshedTransactionsEvent
       | IdentityVerificationSessionCanceledEvent
       | IdentityVerificationSessionCreatedEvent
       | IdentityVerificationSessionProcessingEvent
@@ -274,7 +275,7 @@ declare module 'stripe' {
 
     namespace AccountExternalAccountCreatedEvent {
       interface Data extends Stripe.Event.Data {
-        object: Stripe.BankAccount | Stripe.Card | Stripe.Source;
+        object: Stripe.ExternalAccount;
       }
     }
 
@@ -288,7 +289,7 @@ declare module 'stripe' {
 
     namespace AccountExternalAccountDeletedEvent {
       interface Data extends Stripe.Event.Data {
-        object: Stripe.BankAccount | Stripe.Card | Stripe.Source;
+        object: Stripe.ExternalAccount;
       }
     }
 
@@ -302,7 +303,7 @@ declare module 'stripe' {
 
     namespace AccountExternalAccountUpdatedEvent {
       interface Data extends Stripe.Event.Data {
-        object: Stripe.BankAccount | Stripe.Card | Stripe.Source;
+        object: Stripe.ExternalAccount;
       }
     }
 
@@ -946,7 +947,7 @@ declare module 'stripe' {
 
     namespace CustomerSourceCreatedEvent {
       interface Data extends Stripe.Event.Data {
-        object: Stripe.BankAccount | Stripe.Card | Stripe.Source;
+        object: Stripe.CustomerSource;
       }
     }
 
@@ -960,7 +961,7 @@ declare module 'stripe' {
 
     namespace CustomerSourceDeletedEvent {
       interface Data extends Stripe.Event.Data {
-        object: Stripe.BankAccount | Stripe.Card | Stripe.Source;
+        object: Stripe.CustomerSource;
       }
     }
 
@@ -974,7 +975,7 @@ declare module 'stripe' {
 
     namespace CustomerSourceExpiringEvent {
       interface Data extends Stripe.Event.Data {
-        object: Stripe.Card | Stripe.Source;
+        object: Stripe.CustomerSource;
       }
     }
 
@@ -988,7 +989,7 @@ declare module 'stripe' {
 
     namespace CustomerSourceUpdatedEvent {
       interface Data extends Stripe.Event.Data {
-        object: Stripe.BankAccount | Stripe.Card | Stripe.Source;
+        object: Stripe.CustomerSource;
       }
     }
 
@@ -1254,6 +1255,21 @@ declare module 'stripe' {
     }
 
     namespace FinancialConnectionsAccountRefreshedBalanceEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.FinancialConnections.Account;
+      }
+    }
+
+    /**
+     * Occurs when an Account’s `transaction_refresh` status transitions from `pending` to either `succeeded` or `failed`.
+     */
+    interface FinancialConnectionsAccountRefreshedTransactionsEvent
+      extends EventBase {
+      type: 'financial_connections.account.refreshed_transactions';
+      data: FinancialConnectionsAccountRefreshedTransactionsEvent.Data;
+    }
+
+    namespace FinancialConnectionsAccountRefreshedTransactionsEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.FinancialConnections.Account;
       }
@@ -3377,8 +3393,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The "invoiceitem.updated" event type.
-     * See https://stripe.com/docs/api/events/types#event_types-invoiceitem.updated for details.
+     * The "invoiceitem.updated" event is deprecated and will be removed in the next major version
      */
     interface InvoiceitemUpdatedEvent extends EventBase {
       type: 'invoiceitem.updated';
@@ -3390,8 +3405,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The "order.created" event type.
-     * See https://stripe.com/docs/api/events/types#event_types-order.created for details.
+     * The "order.created" event is deprecated and will be removed in the next major version
      */
     interface OrderCreatedEvent extends EventBase {
       type: 'order.created';
@@ -3403,8 +3417,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The "recipient.created" event type.
-     * See https://stripe.com/docs/api/events/types#event_types-recipient.created for details.
+     * The "recipient.created" event is deprecated and will be removed in the next major version
      */
     interface RecipientCreatedEvent extends EventBase {
       type: 'recipient.created';
@@ -3416,8 +3429,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The "recipient.deleted" event type.
-     * See https://stripe.com/docs/api/events/types#event_types-recipient.deleted for details.
+     * The "recipient.deleted" event is deprecated and will be removed in the next major version
      */
     interface RecipientDeletedEvent extends EventBase {
       type: 'recipient.deleted';
@@ -3429,8 +3441,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The "recipient.updated" event type.
-     * See https://stripe.com/docs/api/events/types#event_types-recipient.updated for details.
+     * The "recipient.updated" event is deprecated and will be removed in the next major version
      */
     interface RecipientUpdatedEvent extends EventBase {
       type: 'recipient.updated';
@@ -3442,8 +3453,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The "sku.created" event type.
-     * See https://stripe.com/docs/api/events/types#event_types-sku.created for details.
+     * The "sku.created" event is deprecated and will be removed in the next major version
      */
     interface SkuCreatedEvent extends EventBase {
       type: 'sku.created';
@@ -3455,8 +3465,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The "sku.deleted" event type.
-     * See https://stripe.com/docs/api/events/types#event_types-sku.deleted for details.
+     * The "sku.deleted" event is deprecated and will be removed in the next major version
      */
     interface SkuDeletedEvent extends EventBase {
       type: 'sku.deleted';
@@ -3468,8 +3477,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The "sku.updated" event type.
-     * See https://stripe.com/docs/api/events/types#event_types-sku.updated for details.
+     * The "sku.updated" event is deprecated and will be removed in the next major version
      */
     interface SkuUpdatedEvent extends EventBase {
       type: 'sku.updated';

@@ -993,7 +993,7 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<AcssDebit.SetupFutureUsage>;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: AcssDebit.VerificationMethod;
         }
@@ -1395,7 +1395,7 @@ declare module 'stripe' {
 
           type RequestOvercapture = 'if_available' | 'never';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
@@ -2044,6 +2044,11 @@ declare module 'stripe' {
           financial_connections?: UsBankAccount.FinancialConnections;
 
           /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: UsBankAccount.MandateOptions;
+
+          /**
            * Additional fields for network related functions
            */
           networks?: UsBankAccount.Networks;
@@ -2067,7 +2072,7 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<UsBankAccount.SetupFutureUsage>;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }
@@ -2082,7 +2087,7 @@ declare module 'stripe' {
             /**
              * List of data features that you would like to retrieve upon account creation.
              */
-            prefetch?: Array<'balances'>;
+            prefetch?: Array<FinancialConnections.Prefetch>;
 
             /**
              * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
@@ -2096,6 +2101,15 @@ declare module 'stripe' {
               | 'ownership'
               | 'payment_method'
               | 'transactions';
+
+            type Prefetch = 'balances' | 'transactions';
+          }
+
+          interface MandateOptions {
+            /**
+             * The method used to collect offline mandate customer acceptance.
+             */
+            collection_method?: Stripe.Emptyable<'paper'>;
           }
 
           interface Networks {
@@ -3093,7 +3107,7 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<AcssDebit.SetupFutureUsage>;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: AcssDebit.VerificationMethod;
         }
@@ -3495,7 +3509,7 @@ declare module 'stripe' {
 
           type RequestOvercapture = 'if_available' | 'never';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
@@ -4144,6 +4158,11 @@ declare module 'stripe' {
           financial_connections?: UsBankAccount.FinancialConnections;
 
           /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: UsBankAccount.MandateOptions;
+
+          /**
            * Additional fields for network related functions
            */
           networks?: UsBankAccount.Networks;
@@ -4167,7 +4186,7 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<UsBankAccount.SetupFutureUsage>;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }
@@ -4182,7 +4201,7 @@ declare module 'stripe' {
             /**
              * List of data features that you would like to retrieve upon account creation.
              */
-            prefetch?: Array<'balances'>;
+            prefetch?: Array<FinancialConnections.Prefetch>;
 
             /**
              * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
@@ -4196,6 +4215,15 @@ declare module 'stripe' {
               | 'ownership'
               | 'payment_method'
               | 'transactions';
+
+            type Prefetch = 'balances' | 'transactions';
+          }
+
+          interface MandateOptions {
+            /**
+             * The method used to collect offline mandate customer acceptance.
+             */
+            collection_method?: Stripe.Emptyable<'paper'>;
           }
 
           interface Networks {
@@ -5331,7 +5359,7 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<AcssDebit.SetupFutureUsage>;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: AcssDebit.VerificationMethod;
         }
@@ -5733,7 +5761,7 @@ declare module 'stripe' {
 
           type RequestOvercapture = 'if_available' | 'never';
 
-          type RequestThreeDSecure = 'any' | 'automatic';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
@@ -6382,6 +6410,11 @@ declare module 'stripe' {
           financial_connections?: UsBankAccount.FinancialConnections;
 
           /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: UsBankAccount.MandateOptions;
+
+          /**
            * Additional fields for network related functions
            */
           networks?: UsBankAccount.Networks;
@@ -6405,7 +6438,7 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<UsBankAccount.SetupFutureUsage>;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }
@@ -6420,7 +6453,7 @@ declare module 'stripe' {
             /**
              * List of data features that you would like to retrieve upon account creation.
              */
-            prefetch?: Array<'balances'>;
+            prefetch?: Array<FinancialConnections.Prefetch>;
 
             /**
              * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
@@ -6434,6 +6467,15 @@ declare module 'stripe' {
               | 'ownership'
               | 'payment_method'
               | 'transactions';
+
+            type Prefetch = 'balances' | 'transactions';
+          }
+
+          interface MandateOptions {
+            /**
+             * The method used to collect offline mandate customer acceptance.
+             */
+            collection_method?: Stripe.Emptyable<'paper'>;
           }
 
           interface Networks {
