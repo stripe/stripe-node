@@ -993,7 +993,7 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<AcssDebit.SetupFutureUsage>;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: AcssDebit.VerificationMethod;
         }
@@ -2072,7 +2072,7 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<UsBankAccount.SetupFutureUsage>;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }
@@ -3107,7 +3107,7 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<AcssDebit.SetupFutureUsage>;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: AcssDebit.VerificationMethod;
         }
@@ -4186,7 +4186,7 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<UsBankAccount.SetupFutureUsage>;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }
@@ -5359,7 +5359,7 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<AcssDebit.SetupFutureUsage>;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: AcssDebit.VerificationMethod;
         }
@@ -6438,7 +6438,7 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<UsBankAccount.SetupFutureUsage>;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }

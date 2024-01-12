@@ -674,6 +674,18 @@ describe('Generated tests', function() {
     expect(creditNote).not.to.be.null;
   });
 
+  it('test_customer_sessions_post', async function() {
+    const customerSession = await stripe.customerSessions.create({
+      customer: 'cus_123',
+      components: {
+        buy_button: {
+          enabled: true,
+        },
+      },
+    });
+    expect(customerSession).not.to.be.null;
+  });
+
   it('test_customers_balance_transactions_get', async function() {
     const customerBalanceTransactions = await stripe.customers.listBalanceTransactions(
       'cus_xxxxxxxxxxxxx',

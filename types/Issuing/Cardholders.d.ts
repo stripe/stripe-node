@@ -127,7 +127,7 @@ declare module 'stripe' {
         namespace Individual {
           interface CardIssuing {
             /**
-             * Information about cardholder acceptance of [Authorized User Terms](https://stripe.com/docs/issuing/cards).
+             * Information about cardholder acceptance of Celtic [Authorized User Terms](https://stripe.com/docs/issuing/cards#accept-authorized-user-terms). Required for cards backed by a Celtic program.
              */
             user_terms_acceptance: CardIssuing.UserTermsAcceptance | null;
           }
@@ -135,12 +135,12 @@ declare module 'stripe' {
           namespace CardIssuing {
             interface UserTermsAcceptance {
               /**
-               * The Unix timestamp marking when the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
+               * The Unix timestamp marking when the cardholder accepted the Authorized User Terms.
                */
               date: number | null;
 
               /**
-               * The IP address from which the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
+               * The IP address from which the cardholder accepted the Authorized User Terms.
                */
               ip: string | null;
 

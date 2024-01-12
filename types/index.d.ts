@@ -26,6 +26,7 @@
 ///<reference path='./CountrySpecsResource.d.ts' />
 ///<reference path='./CouponsResource.d.ts' />
 ///<reference path='./CreditNotesResource.d.ts' />
+///<reference path='./CustomerSessionsResource.d.ts' />
 ///<reference path='./CustomersResource.d.ts' />
 ///<reference path='./DisputesResource.d.ts' />
 ///<reference path='./EphemeralKeysResource.d.ts' />
@@ -137,6 +138,7 @@
 ///<reference path='./CreditNotes.d.ts' />
 ///<reference path='./CustomerBalanceTransactions.d.ts' />
 ///<reference path='./CustomerCashBalanceTransactions.d.ts' />
+///<reference path='./CustomerSessions.d.ts' />
 ///<reference path='./CustomerSources.d.ts' />
 ///<reference path='./Customers.d.ts' />
 ///<reference path='./Discounts.d.ts' />
@@ -263,6 +265,7 @@ declare module 'stripe' {
     countrySpecs: Stripe.CountrySpecsResource;
     coupons: Stripe.CouponsResource;
     creditNotes: Stripe.CreditNotesResource;
+    customerSessions: Stripe.CustomerSessionsResource;
     customers: Stripe.CustomersResource;
     disputes: Stripe.DisputesResource;
     ephemeralKeys: Stripe.EphemeralKeysResource;

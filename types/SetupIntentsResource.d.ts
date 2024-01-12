@@ -773,7 +773,7 @@ declare module 'stripe' {
           mandate_options?: AcssDebit.MandateOptions;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: AcssDebit.VerificationMethod;
         }
@@ -1057,7 +1057,7 @@ declare module 'stripe' {
           networks?: UsBankAccount.Networks;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }
@@ -1803,7 +1803,7 @@ declare module 'stripe' {
           mandate_options?: AcssDebit.MandateOptions;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: AcssDebit.VerificationMethod;
         }
@@ -2087,7 +2087,7 @@ declare module 'stripe' {
           networks?: UsBankAccount.Networks;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }
@@ -2913,7 +2913,7 @@ declare module 'stripe' {
           mandate_options?: AcssDebit.MandateOptions;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: AcssDebit.VerificationMethod;
         }
@@ -3197,7 +3197,7 @@ declare module 'stripe' {
           networks?: UsBankAccount.Networks;
 
           /**
-           * Verification method for the intent
+           * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }
