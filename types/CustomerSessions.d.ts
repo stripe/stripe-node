@@ -48,6 +48,11 @@ declare module 'stripe' {
     namespace CustomerSession {
       interface Components {
         /**
+         * This hash contains whether the buy button is enabled.
+         */
+        buy_button?: Components.BuyButton;
+
+        /**
          * This hash contains whether the payment element is enabled and the features it supports.
          */
         payment_element?: Components.PaymentElement;
@@ -59,6 +64,13 @@ declare module 'stripe' {
       }
 
       namespace Components {
+        interface BuyButton {
+          /**
+           * Whether the buy button is enabled.
+           */
+          enabled: boolean;
+        }
+
         interface PaymentElement {
           /**
            * Whether the payment element is enabled.

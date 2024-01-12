@@ -65,7 +65,7 @@ declare module 'stripe' {
        *
        * The presence of this property will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete.
        */
-      setup_future_usage?: ConfirmationToken.SetupFutureUsage | null;
+      setup_future_usage: ConfirmationToken.SetupFutureUsage | null;
 
       /**
        * ID of the SetupIntent that this ConfirmationToken was used to confirm, or null if this ConfirmationToken has not yet been used.

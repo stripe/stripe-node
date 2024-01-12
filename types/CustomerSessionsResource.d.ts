@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     interface CustomerSessionCreateParams {
       /**
-       * Configuration for each component.
+       * Configuration for each component. 1 component must be enabled.
        */
       components: CustomerSessionCreateParams.Components;
 
@@ -22,6 +22,11 @@ declare module 'stripe' {
     namespace CustomerSessionCreateParams {
       interface Components {
         /**
+         * Configuration for buy button.
+         */
+        buy_button?: Components.BuyButton;
+
+        /**
          * Configuration for the payment element.
          */
         payment_element?: Components.PaymentElement;
@@ -33,6 +38,13 @@ declare module 'stripe' {
       }
 
       namespace Components {
+        interface BuyButton {
+          /**
+           * Whether the buy button is enabled.
+           */
+          enabled: boolean;
+        }
+
         interface PaymentElement {
           /**
            * Whether the payment element is enabled.
