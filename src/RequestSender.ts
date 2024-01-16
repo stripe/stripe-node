@@ -469,7 +469,7 @@ export class RequestSender {
           streaming: false,
           settings: {},
           apiMode: apiMode,
-          usage: [],
+          usage: ['raw_request'],
         };
       } catch (err) {
         reject(err);
