@@ -42,7 +42,7 @@ declare module 'stripe' {
       /**
        * The fixed values used to calculate the `billing_cycle_anchor`.
        */
-      billing_cycle_anchor_config?: Subscription.BillingCycleAnchorConfig | null;
+      billing_cycle_anchor_config: Subscription.BillingCycleAnchorConfig | null;
 
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
