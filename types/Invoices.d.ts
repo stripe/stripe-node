@@ -295,7 +295,7 @@ declare module 'stripe' {
        */
       invoice_pdf?: string | null;
 
-      issuer?: Invoice.Issuer;
+      issuer: Invoice.Issuer;
 
       /**
        * The error encountered during the previous attempt to finalize the invoice. This field is cleared when the invoice is successfully finalized.
@@ -555,7 +555,7 @@ declare module 'stripe' {
         /**
          * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
          */
-        liability?: AutomaticTax.Liability | null;
+        liability: AutomaticTax.Liability | null;
 
         /**
          * The status of the most recent automated tax calculation for this invoice.
