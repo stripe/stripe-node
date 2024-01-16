@@ -779,21 +779,20 @@ describe('Stripe Module', function() {
       expect(response).to.have.property('object', 'list');
     });
 
-
-    it('should include \'raw_request\' in usage telemetry', (done) => {
-      let telemetryHeader
-      let shouldStayOpen = true
+    it("should include 'raw_request' in usage telemetry", (done) => {
+      let telemetryHeader;
+      let shouldStayOpen = true;
       return getTestServerStripe(
         {},
         (req, res) => {
           telemetryHeader = req.headers['x-stripe-client-telemetry'];
           res.setHeader('Request-Id', `req_1`);
-          res.writeHeader(200)
-          res.write("{}");
+          res.writeHeader(200);
+          res.write('{}');
           res.end();
-          const ret = {shouldStayOpen}
-          shouldStayOpen = false
-          return ret
+          const ret = {shouldStayOpen};
+          shouldStayOpen = false;
+          return ret;
         },
         async (err, stripe, closeServer) => {
           if (err) return done(err);
@@ -804,14 +803,16 @@ describe('Stripe Module', function() {
               {description: 'test customer'},
               {apiMode: 'standard'}
             );
-            expect(telemetryHeader).to.equal(undefined)
+            expect(telemetryHeader).to.equal(undefined);
             await stripe.rawRequest(
               'POST',
               '/v1/customers',
               {description: 'test customer'},
               {apiMode: 'standard'}
             );
-            expect(JSON.parse(telemetryHeader).last_request_metrics.usage).to.deep.equal(['raw_request'])
+            expect(
+              JSON.parse(telemetryHeader).last_request_metrics.usage
+            ).to.deep.equal(['raw_request']);
             closeServer();
             done();
           } catch (err) {
