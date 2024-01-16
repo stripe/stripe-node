@@ -1489,6 +1489,16 @@ declare module 'stripe' {
       invoice_items?: Array<InvoiceListUpcomingLinesParams.InvoiceItem>;
 
       /**
+       * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+       */
+      issuer?: InvoiceListUpcomingLinesParams.Issuer;
+
+      /**
+       * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+       */
+      on_behalf_of?: Stripe.Emptyable<string>;
+
+      /**
        * The identifier of the schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
        */
       schedule?: string;
@@ -1884,6 +1894,22 @@ declare module 'stripe' {
         type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
       }
 
+      interface Issuer {
+        /**
+         * The connected account being referenced when `type` is `account`.
+         */
+        account?: string;
+
+        /**
+         * Type of the account referenced in the request.
+         */
+        type: Issuer.Type;
+      }
+
+      namespace Issuer {
+        type Type = 'account' | 'self';
+      }
+
       type SubscriptionBillingCycleAnchor = 'now' | 'unchanged';
 
       interface SubscriptionItem {
@@ -2095,6 +2121,16 @@ declare module 'stripe' {
        * List of invoice items to add or update in the upcoming invoice preview.
        */
       invoice_items?: Array<InvoiceRetrieveUpcomingParams.InvoiceItem>;
+
+      /**
+       * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+       */
+      issuer?: InvoiceRetrieveUpcomingParams.Issuer;
+
+      /**
+       * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+       */
+      on_behalf_of?: Stripe.Emptyable<string>;
 
       /**
        * The identifier of the schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
@@ -2490,6 +2526,22 @@ declare module 'stripe' {
         }
 
         type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      }
+
+      interface Issuer {
+        /**
+         * The connected account being referenced when `type` is `account`.
+         */
+        account?: string;
+
+        /**
+         * Type of the account referenced in the request.
+         */
+        type: Issuer.Type;
+      }
+
+      namespace Issuer {
+        type Type = 'account' | 'self';
       }
 
       type SubscriptionBillingCycleAnchor = 'now' | 'unchanged';
