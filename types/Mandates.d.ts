@@ -162,6 +162,11 @@ declare module 'stripe' {
           reference: string;
 
           /**
+           * When the mandate is revoked on the Bacs network this field displays the reason for the revocation.
+           */
+          revocation_reason: BacsDebit.RevocationReason | null;
+
+          /**
            * The URL that will contain the mandate that the customer has signed.
            */
           url: string;
@@ -169,6 +174,13 @@ declare module 'stripe' {
 
         namespace BacsDebit {
           type NetworkStatus = 'accepted' | 'pending' | 'refused' | 'revoked';
+
+          type RevocationReason =
+            | 'account_closed'
+            | 'bank_account_restricted'
+            | 'bank_ownership_changed'
+            | 'could_not_process'
+            | 'debit_not_authorized';
         }
 
         interface Card {}
