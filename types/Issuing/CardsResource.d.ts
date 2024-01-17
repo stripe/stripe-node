@@ -37,6 +37,11 @@ declare module 'stripe' {
         personalization_design?: string;
 
         /**
+         * The desired PIN for this card.
+         */
+        pin?: CardCreateParams.Pin;
+
+        /**
          * The card this is meant to be a replacement for (if any).
          */
         replacement_for?: string;
@@ -63,6 +68,13 @@ declare module 'stripe' {
       }
 
       namespace CardCreateParams {
+        interface Pin {
+          /**
+           * The card's desired new PIN, encrypted under Stripe's public key.
+           */
+          encrypted_number?: string;
+        }
+
         type ReplacementReason = 'damaged' | 'expired' | 'lost' | 'stolen';
 
         interface Shipping {
