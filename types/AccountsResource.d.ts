@@ -1440,10 +1440,9 @@ declare module 'stripe' {
        *
        * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the [bank account](https://stripe.com/docs/api#account_create_bank_account) or [card creation](https://stripe.com/docs/api#account_create_card) APIs.
        */
-      external_account?:
-        | string
-        | AccountUpdateParams.BankAccount
-        | AccountUpdateParams.Card;
+      external_account?: Stripe.Emptyable<
+        string | AccountUpdateParams.BankAccount | AccountUpdateParams.Card
+      >;
 
       /**
        * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
