@@ -74,6 +74,11 @@ declare module 'stripe' {
       cashapp?: PaymentMethodConfigurationCreateParams.Cashapp;
 
       /**
+       * Uses a customer's [cash balance](https://stripe.com/docs/payments/customer-balance) for the payment. The cash balance can be funded via a bank transfer. Check this [page](https://stripe.com/docs/payments/bank-transfers) for more details.
+       */
+      customer_balance?: PaymentMethodConfigurationCreateParams.CustomerBalance;
+
+      /**
        * EPS is an Austria-based payment method that allows customers to complete transactions online using their bank credentials. EPS is supported by all Austrian banks and is accepted by over 80% of Austrian online retailers. Check this [page](https://stripe.com/docs/payments/eps) for more details.
        */
       eps?: PaymentMethodConfigurationCreateParams.Eps;
@@ -458,6 +463,26 @@ declare module 'stripe' {
       }
 
       namespace Cashapp {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface CustomerBalance {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: CustomerBalance.DisplayPreference;
+      }
+
+      namespace CustomerBalance {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -955,6 +980,11 @@ declare module 'stripe' {
       cashapp?: PaymentMethodConfigurationUpdateParams.Cashapp;
 
       /**
+       * Uses a customer's [cash balance](https://stripe.com/docs/payments/customer-balance) for the payment. The cash balance can be funded via a bank transfer. Check this [page](https://stripe.com/docs/payments/bank-transfers) for more details.
+       */
+      customer_balance?: PaymentMethodConfigurationUpdateParams.CustomerBalance;
+
+      /**
        * EPS is an Austria-based payment method that allows customers to complete transactions online using their bank credentials. EPS is supported by all Austrian banks and is accepted by over 80% of Austrian online retailers. Check this [page](https://stripe.com/docs/payments/eps) for more details.
        */
       eps?: PaymentMethodConfigurationUpdateParams.Eps;
@@ -1334,6 +1364,26 @@ declare module 'stripe' {
       }
 
       namespace Cashapp {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface CustomerBalance {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: CustomerBalance.DisplayPreference;
+      }
+
+      namespace CustomerBalance {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
