@@ -1370,7 +1370,10 @@ declare module 'stripe' {
        * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the [bank account](https://stripe.com/docs/api#account_create_bank_account) or [card creation](https://stripe.com/docs/api#account_create_card) APIs.
        */
       external_account?: Stripe.Emptyable<
-        string | AccountUpdateParams.BankAccount | AccountUpdateParams.Card
+        | string
+        | AccountUpdateParams.BankAccount
+        | AccountUpdateParams.Card
+        | AccountUpdateParams.CardToken
       >;
 
       /**
@@ -1981,6 +1984,14 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         default_for_currency?: boolean;
+      }
+
+      interface CardToken {
+        object: 'card';
+
+        currency?: string;
+
+        token: string;
       }
 
       interface Company {
@@ -2671,7 +2682,8 @@ declare module 'stripe' {
       external_account:
         | string
         | ExternalAccountCreateParams.Card
-        | ExternalAccountCreateParams.BankAccount;
+        | ExternalAccountCreateParams.BankAccount
+        | ExternalAccountCreateParams.CardToken;
 
       /**
        * When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
@@ -2759,6 +2771,14 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
         metadata?: Stripe.MetadataParam;
+      }
+
+      interface CardToken {
+        object: 'card';
+
+        currency?: string;
+
+        token: string;
       }
     }
 
