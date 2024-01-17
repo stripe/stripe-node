@@ -1372,7 +1372,7 @@ declare module 'stripe' {
 
         interface Ideal {
           /**
-           * The customer's bank. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `n26`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
+           * The customer's bank. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
            */
           bank: Ideal.Bank | null;
 
@@ -1413,6 +1413,7 @@ declare module 'stripe' {
             | 'knab'
             | 'moneyou'
             | 'n26'
+            | 'nn'
             | 'rabobank'
             | 'regiobank'
             | 'revolut'
@@ -1431,6 +1432,7 @@ declare module 'stripe' {
             | 'INGBNL2A'
             | 'KNABNL2H'
             | 'MOYONL21'
+            | 'NNBANL2G'
             | 'NTSBDEB1'
             | 'RABONL2U'
             | 'RBRBNL21'
