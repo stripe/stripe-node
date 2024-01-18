@@ -42,7 +42,7 @@ declare module 'stripe' {
       /**
        * The fixed values used to calculate the `billing_cycle_anchor`.
        */
-      billing_cycle_anchor_config?: Subscription.BillingCycleAnchorConfig | null;
+      billing_cycle_anchor_config: Subscription.BillingCycleAnchorConfig | null;
 
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
@@ -244,6 +244,29 @@ declare module 'stripe' {
          * Whether Stripe automatically computes tax on this subscription.
          */
         enabled: boolean;
+
+        /**
+         * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+         */
+        liability: AutomaticTax.Liability | null;
+      }
+
+      namespace AutomaticTax {
+        interface Liability {
+          /**
+           * The connected account being referenced when `type` is `account`.
+           */
+          account?: string | Stripe.Account;
+
+          /**
+           * Type of the account referenced.
+           */
+          type: Liability.Type;
+        }
+
+        namespace Liability {
+          type Type = 'account' | 'self';
+        }
       }
 
       interface BillingCycleAnchorConfig {

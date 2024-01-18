@@ -674,7 +674,7 @@ declare module 'stripe' {
         registration_number?: string;
 
         /**
-         * The category identifying the legal structure of the company or legal entity. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details.
+         * The category identifying the legal structure of the company or legal entity. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details. Pass an empty string to unset this value.
          */
         structure?: Stripe.Emptyable<Company.Structure>;
 
@@ -1369,7 +1369,12 @@ declare module 'stripe' {
        *
        * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the [bank account](https://stripe.com/docs/api#account_create_bank_account) or [card creation](https://stripe.com/docs/api#account_create_card) APIs.
        */
-      external_account?: string;
+      external_account?: Stripe.Emptyable<
+        | string
+        | AccountUpdateParams.BankAccount
+        | AccountUpdateParams.Card
+        | AccountUpdateParams.CardToken
+      >;
 
       /**
        * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
@@ -1393,6 +1398,44 @@ declare module 'stripe' {
     }
 
     namespace AccountUpdateParams {
+      interface BankAccount {
+        object: 'bank_account';
+
+        /**
+         * The name of the person or business that owns the bank account.This field is required when attaching the bank account to a `Customer` object.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The type of entity that holds the account. It can be `company` or `individual`. This field is required when attaching the bank account to a `Customer` object.
+         */
+        account_holder_type?: BankAccount.AccountHolderType;
+
+        /**
+         * The account number for the bank account, in string form. Must be a checking account.
+         */
+        account_number: string;
+
+        /**
+         * The country in which the bank account is located.
+         */
+        country: string;
+
+        /**
+         * The currency the bank account is in. This must be a country/currency pairing that [Stripe supports.](docs/payouts)
+         */
+        currency?: string;
+
+        /**
+         * The routing number, sort code, or other country-appropriateinstitution number for the bank account. For US bank accounts, this is required and should bethe ACH routing number, not the wire routing number. If you are providing an IBAN for`account_number`, this field is not required.
+         */
+        routing_number?: string;
+      }
+
+      namespace BankAccount {
+        type AccountHolderType = 'company' | 'individual';
+      }
+
       interface BusinessProfile {
         /**
          * [The merchant category code for the account](https://stripe.com/docs/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
@@ -1908,6 +1951,49 @@ declare module 'stripe' {
         }
       }
 
+      interface Card {
+        object: 'card';
+
+        address_city?: string;
+
+        address_country?: string;
+
+        address_line1?: string;
+
+        address_line2?: string;
+
+        address_state?: string;
+
+        address_zip?: string;
+
+        currency?: string;
+
+        cvc?: string;
+
+        exp_month: number;
+
+        exp_year: number;
+
+        name?: string;
+
+        number: string;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        default_for_currency?: boolean;
+      }
+
+      interface CardToken {
+        object: 'card';
+
+        currency?: string;
+
+        token: string;
+      }
+
       interface Company {
         /**
          * The company's primary address.
@@ -1980,7 +2066,7 @@ declare module 'stripe' {
         registration_number?: string;
 
         /**
-         * The category identifying the legal structure of the company or legal entity. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details.
+         * The category identifying the legal structure of the company or legal entity. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details. Pass an empty string to unset this value.
          */
         structure?: Stripe.Emptyable<Company.Structure>;
 
@@ -2593,7 +2679,11 @@ declare module 'stripe' {
       /**
        * Please refer to full [documentation](https://stripe.com/docs/api) instead.
        */
-      external_account: string;
+      external_account:
+        | string
+        | ExternalAccountCreateParams.Card
+        | ExternalAccountCreateParams.BankAccount
+        | ExternalAccountCreateParams.CardToken;
 
       /**
        * When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
@@ -2609,6 +2699,87 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.MetadataParam;
+    }
+
+    namespace ExternalAccountCreateParams {
+      interface BankAccount {
+        object: 'bank_account';
+
+        /**
+         * The name of the person or business that owns the bank account.This field is required when attaching the bank account to a `Customer` object.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The type of entity that holds the account. It can be `company` or `individual`. This field is required when attaching the bank account to a `Customer` object.
+         */
+        account_holder_type?: BankAccount.AccountHolderType;
+
+        /**
+         * The account number for the bank account, in string form. Must be a checking account.
+         */
+        account_number: string;
+
+        /**
+         * The country in which the bank account is located.
+         */
+        country: string;
+
+        /**
+         * The currency the bank account is in. This must be a country/currency pairing that [Stripe supports.](docs/payouts)
+         */
+        currency?: string;
+
+        /**
+         * The routing number, sort code, or other country-appropriateinstitution number for the bank account. For US bank accounts, this is required and should bethe ACH routing number, not the wire routing number. If you are providing an IBAN for`account_number`, this field is not required.
+         */
+        routing_number?: string;
+      }
+
+      namespace BankAccount {
+        type AccountHolderType = 'company' | 'individual';
+      }
+
+      interface Card {
+        object: 'card';
+
+        address_city?: string;
+
+        address_country?: string;
+
+        address_line1?: string;
+
+        address_line2?: string;
+
+        address_state?: string;
+
+        address_zip?: string;
+
+        currency?: string;
+
+        cvc?: string;
+
+        exp_month: number;
+
+        exp_year: number;
+
+        name?: string;
+
+        number: string;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         */
+        metadata?: Stripe.MetadataParam;
+      }
+
+      interface CardToken {
+        object: 'card';
+
+        currency?: string;
+
+        token: string;
+      }
     }
 
     interface LoginLinkCreateParams {

@@ -151,7 +151,7 @@ declare module 'stripe' {
           registration_number?: string;
 
           /**
-           * The category identifying the legal structure of the company or legal entity. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details.
+           * The category identifying the legal structure of the company or legal entity. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details. Pass an empty string to unset this value.
            */
           structure?: Stripe.Emptyable<Company.Structure>;
 

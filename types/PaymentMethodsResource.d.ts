@@ -418,6 +418,7 @@ declare module 'stripe' {
           | 'knab'
           | 'moneyou'
           | 'n26'
+          | 'nn'
           | 'rabobank'
           | 'regiobank'
           | 'revolut'
