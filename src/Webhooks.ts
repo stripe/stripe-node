@@ -378,6 +378,8 @@ export function createWebhooks(
         message:
           'No signatures found matching the expected signature for payload.' +
           ' Are you passing the raw request body you received from Stripe? \n' +
+          ' If a webhook request is being forwarded by a third-party tool,' +
+          ' ensure that the exact request body, including JSON formatting and new line style, is preserved.\n' +
           docsLocation +
           '\n' +
           whitespaceMessage,
