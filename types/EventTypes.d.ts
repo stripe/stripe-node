@@ -248,6 +248,8 @@ declare module 'stripe' {
     namespace AccountApplicationAuthorizedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Application;
+
+        previous_attributes?: Partial<Stripe.Application>;
       }
     }
 
@@ -262,6 +264,8 @@ declare module 'stripe' {
     namespace AccountApplicationDeauthorizedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Application;
+
+        previous_attributes?: Partial<Stripe.Application>;
       }
     }
 
@@ -276,6 +280,8 @@ declare module 'stripe' {
     namespace AccountExternalAccountCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.ExternalAccount;
+
+        previous_attributes?: Partial<Stripe.ExternalAccount>;
       }
     }
 
@@ -290,6 +296,8 @@ declare module 'stripe' {
     namespace AccountExternalAccountDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.ExternalAccount;
+
+        previous_attributes?: Partial<Stripe.ExternalAccount>;
       }
     }
 
@@ -304,6 +312,8 @@ declare module 'stripe' {
     namespace AccountExternalAccountUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.ExternalAccount;
+
+        previous_attributes?: Partial<Stripe.ExternalAccount>;
       }
     }
 
@@ -318,6 +328,8 @@ declare module 'stripe' {
     namespace AccountUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Account;
+
+        previous_attributes?: Partial<Stripe.Account>;
       }
     }
 
@@ -332,6 +344,8 @@ declare module 'stripe' {
     namespace ApplicationFeeCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.ApplicationFee;
+
+        previous_attributes?: Partial<Stripe.ApplicationFee>;
       }
     }
 
@@ -346,6 +360,8 @@ declare module 'stripe' {
     namespace ApplicationFeeRefundUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.FeeRefund;
+
+        previous_attributes?: Partial<Stripe.FeeRefund>;
       }
     }
 
@@ -360,6 +376,8 @@ declare module 'stripe' {
     namespace ApplicationFeeRefundedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.ApplicationFee;
+
+        previous_attributes?: Partial<Stripe.ApplicationFee>;
       }
     }
 
@@ -374,6 +392,8 @@ declare module 'stripe' {
     namespace BalanceAvailableEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Balance;
+
+        previous_attributes?: Partial<Stripe.Balance>;
       }
     }
 
@@ -388,6 +408,8 @@ declare module 'stripe' {
     namespace BillingPortalConfigurationCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.BillingPortal.Configuration;
+
+        previous_attributes?: Partial<Stripe.BillingPortal.Configuration>;
       }
     }
 
@@ -402,6 +424,8 @@ declare module 'stripe' {
     namespace BillingPortalConfigurationUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.BillingPortal.Configuration;
+
+        previous_attributes?: Partial<Stripe.BillingPortal.Configuration>;
       }
     }
 
@@ -416,6 +440,8 @@ declare module 'stripe' {
     namespace BillingPortalSessionCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.BillingPortal.Session;
+
+        previous_attributes?: Partial<Stripe.BillingPortal.Session>;
       }
     }
 
@@ -430,6 +456,8 @@ declare module 'stripe' {
     namespace CapabilityUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Capability;
+
+        previous_attributes?: Partial<Stripe.Capability>;
       }
     }
 
@@ -444,6 +472,8 @@ declare module 'stripe' {
     namespace CashBalanceFundsAvailableEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.CashBalance;
+
+        previous_attributes?: Partial<Stripe.CashBalance>;
       }
     }
 
@@ -458,6 +488,8 @@ declare module 'stripe' {
     namespace ChargeCapturedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Charge;
+
+        previous_attributes?: Partial<Stripe.Charge>;
       }
     }
 
@@ -472,6 +504,8 @@ declare module 'stripe' {
     namespace ChargeDisputeClosedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Dispute;
+
+        previous_attributes?: Partial<Stripe.Dispute>;
       }
     }
 
@@ -486,6 +520,8 @@ declare module 'stripe' {
     namespace ChargeDisputeCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Dispute;
+
+        previous_attributes?: Partial<Stripe.Dispute>;
       }
     }
 
@@ -500,6 +536,8 @@ declare module 'stripe' {
     namespace ChargeDisputeFundsReinstatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Dispute;
+
+        previous_attributes?: Partial<Stripe.Dispute>;
       }
     }
 
@@ -514,6 +552,8 @@ declare module 'stripe' {
     namespace ChargeDisputeFundsWithdrawnEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Dispute;
+
+        previous_attributes?: Partial<Stripe.Dispute>;
       }
     }
 
@@ -528,6 +568,8 @@ declare module 'stripe' {
     namespace ChargeDisputeUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Dispute;
+
+        previous_attributes?: Partial<Stripe.Dispute>;
       }
     }
 
@@ -542,6 +584,8 @@ declare module 'stripe' {
     namespace ChargeExpiredEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Charge;
+
+        previous_attributes?: Partial<Stripe.Charge>;
       }
     }
 
@@ -556,6 +600,8 @@ declare module 'stripe' {
     namespace ChargeFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Charge;
+
+        previous_attributes?: Partial<Stripe.Charge>;
       }
     }
 
@@ -570,6 +616,8 @@ declare module 'stripe' {
     namespace ChargePendingEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Charge;
+
+        previous_attributes?: Partial<Stripe.Charge>;
       }
     }
 
@@ -584,6 +632,8 @@ declare module 'stripe' {
     namespace ChargeRefundUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Refund;
+
+        previous_attributes?: Partial<Stripe.Refund>;
       }
     }
 
@@ -598,6 +648,8 @@ declare module 'stripe' {
     namespace ChargeRefundedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Charge;
+
+        previous_attributes?: Partial<Stripe.Charge>;
       }
     }
 
@@ -612,6 +664,8 @@ declare module 'stripe' {
     namespace ChargeSucceededEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Charge;
+
+        previous_attributes?: Partial<Stripe.Charge>;
       }
     }
 
@@ -626,6 +680,8 @@ declare module 'stripe' {
     namespace ChargeUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Charge;
+
+        previous_attributes?: Partial<Stripe.Charge>;
       }
     }
 
@@ -640,6 +696,8 @@ declare module 'stripe' {
     namespace CheckoutSessionAsyncPaymentFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Checkout.Session;
+
+        previous_attributes?: Partial<Stripe.Checkout.Session>;
       }
     }
 
@@ -654,6 +712,8 @@ declare module 'stripe' {
     namespace CheckoutSessionAsyncPaymentSucceededEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Checkout.Session;
+
+        previous_attributes?: Partial<Stripe.Checkout.Session>;
       }
     }
 
@@ -668,6 +728,8 @@ declare module 'stripe' {
     namespace CheckoutSessionCompletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Checkout.Session;
+
+        previous_attributes?: Partial<Stripe.Checkout.Session>;
       }
     }
 
@@ -682,6 +744,8 @@ declare module 'stripe' {
     namespace CheckoutSessionExpiredEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Checkout.Session;
+
+        previous_attributes?: Partial<Stripe.Checkout.Session>;
       }
     }
 
@@ -696,6 +760,8 @@ declare module 'stripe' {
     namespace ClimateOrderCanceledEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Climate.Order;
+
+        previous_attributes?: Partial<Stripe.Climate.Order>;
       }
     }
 
@@ -710,6 +776,8 @@ declare module 'stripe' {
     namespace ClimateOrderCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Climate.Order;
+
+        previous_attributes?: Partial<Stripe.Climate.Order>;
       }
     }
 
@@ -724,6 +792,8 @@ declare module 'stripe' {
     namespace ClimateOrderDelayedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Climate.Order;
+
+        previous_attributes?: Partial<Stripe.Climate.Order>;
       }
     }
 
@@ -738,6 +808,8 @@ declare module 'stripe' {
     namespace ClimateOrderDeliveredEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Climate.Order;
+
+        previous_attributes?: Partial<Stripe.Climate.Order>;
       }
     }
 
@@ -752,6 +824,8 @@ declare module 'stripe' {
     namespace ClimateOrderProductSubstitutedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Climate.Order;
+
+        previous_attributes?: Partial<Stripe.Climate.Order>;
       }
     }
 
@@ -766,6 +840,8 @@ declare module 'stripe' {
     namespace ClimateProductCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Climate.Product;
+
+        previous_attributes?: Partial<Stripe.Climate.Product>;
       }
     }
 
@@ -780,6 +856,8 @@ declare module 'stripe' {
     namespace ClimateProductPricingUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Climate.Product;
+
+        previous_attributes?: Partial<Stripe.Climate.Product>;
       }
     }
 
@@ -794,6 +872,8 @@ declare module 'stripe' {
     namespace CouponCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Coupon;
+
+        previous_attributes?: Partial<Stripe.Coupon>;
       }
     }
 
@@ -808,6 +888,8 @@ declare module 'stripe' {
     namespace CouponDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Coupon;
+
+        previous_attributes?: Partial<Stripe.Coupon>;
       }
     }
 
@@ -822,6 +904,8 @@ declare module 'stripe' {
     namespace CouponUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Coupon;
+
+        previous_attributes?: Partial<Stripe.Coupon>;
       }
     }
 
@@ -836,6 +920,8 @@ declare module 'stripe' {
     namespace CreditNoteCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.CreditNote;
+
+        previous_attributes?: Partial<Stripe.CreditNote>;
       }
     }
 
@@ -850,6 +936,8 @@ declare module 'stripe' {
     namespace CreditNoteUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.CreditNote;
+
+        previous_attributes?: Partial<Stripe.CreditNote>;
       }
     }
 
@@ -864,6 +952,8 @@ declare module 'stripe' {
     namespace CreditNoteVoidedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.CreditNote;
+
+        previous_attributes?: Partial<Stripe.CreditNote>;
       }
     }
 
@@ -878,6 +968,8 @@ declare module 'stripe' {
     namespace CustomerCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Customer;
+
+        previous_attributes?: Partial<Stripe.Customer>;
       }
     }
 
@@ -892,6 +984,8 @@ declare module 'stripe' {
     namespace CustomerDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Customer;
+
+        previous_attributes?: Partial<Stripe.Customer>;
       }
     }
 
@@ -906,6 +1000,8 @@ declare module 'stripe' {
     namespace CustomerDiscountCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Discount;
+
+        previous_attributes?: Partial<Stripe.Discount>;
       }
     }
 
@@ -920,6 +1016,8 @@ declare module 'stripe' {
     namespace CustomerDiscountDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Discount;
+
+        previous_attributes?: Partial<Stripe.Discount>;
       }
     }
 
@@ -934,6 +1032,8 @@ declare module 'stripe' {
     namespace CustomerDiscountUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Discount;
+
+        previous_attributes?: Partial<Stripe.Discount>;
       }
     }
 
@@ -948,6 +1048,8 @@ declare module 'stripe' {
     namespace CustomerSourceCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.CustomerSource;
+
+        previous_attributes?: Partial<Stripe.CustomerSource>;
       }
     }
 
@@ -962,6 +1064,8 @@ declare module 'stripe' {
     namespace CustomerSourceDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.CustomerSource;
+
+        previous_attributes?: Partial<Stripe.CustomerSource>;
       }
     }
 
@@ -976,6 +1080,8 @@ declare module 'stripe' {
     namespace CustomerSourceExpiringEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.CustomerSource;
+
+        previous_attributes?: Partial<Stripe.CustomerSource>;
       }
     }
 
@@ -990,6 +1096,8 @@ declare module 'stripe' {
     namespace CustomerSourceUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.CustomerSource;
+
+        previous_attributes?: Partial<Stripe.CustomerSource>;
       }
     }
 
@@ -1004,6 +1112,8 @@ declare module 'stripe' {
     namespace CustomerSubscriptionCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Subscription;
+
+        previous_attributes?: Partial<Stripe.Subscription>;
       }
     }
 
@@ -1018,6 +1128,8 @@ declare module 'stripe' {
     namespace CustomerSubscriptionDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Subscription;
+
+        previous_attributes?: Partial<Stripe.Subscription>;
       }
     }
 
@@ -1032,6 +1144,8 @@ declare module 'stripe' {
     namespace CustomerSubscriptionPausedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Subscription;
+
+        previous_attributes?: Partial<Stripe.Subscription>;
       }
     }
 
@@ -1046,6 +1160,8 @@ declare module 'stripe' {
     namespace CustomerSubscriptionPendingUpdateAppliedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Subscription;
+
+        previous_attributes?: Partial<Stripe.Subscription>;
       }
     }
 
@@ -1060,6 +1176,8 @@ declare module 'stripe' {
     namespace CustomerSubscriptionPendingUpdateExpiredEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Subscription;
+
+        previous_attributes?: Partial<Stripe.Subscription>;
       }
     }
 
@@ -1074,6 +1192,8 @@ declare module 'stripe' {
     namespace CustomerSubscriptionResumedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Subscription;
+
+        previous_attributes?: Partial<Stripe.Subscription>;
       }
     }
 
@@ -1088,6 +1208,8 @@ declare module 'stripe' {
     namespace CustomerSubscriptionTrialWillEndEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Subscription;
+
+        previous_attributes?: Partial<Stripe.Subscription>;
       }
     }
 
@@ -1102,6 +1224,8 @@ declare module 'stripe' {
     namespace CustomerSubscriptionUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Subscription;
+
+        previous_attributes?: Partial<Stripe.Subscription>;
       }
     }
 
@@ -1116,6 +1240,8 @@ declare module 'stripe' {
     namespace CustomerTaxIdCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.TaxId;
+
+        previous_attributes?: Partial<Stripe.TaxId>;
       }
     }
 
@@ -1130,6 +1256,8 @@ declare module 'stripe' {
     namespace CustomerTaxIdDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.TaxId;
+
+        previous_attributes?: Partial<Stripe.TaxId>;
       }
     }
 
@@ -1144,6 +1272,8 @@ declare module 'stripe' {
     namespace CustomerTaxIdUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.TaxId;
+
+        previous_attributes?: Partial<Stripe.TaxId>;
       }
     }
 
@@ -1158,6 +1288,8 @@ declare module 'stripe' {
     namespace CustomerUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Customer;
+
+        previous_attributes?: Partial<Stripe.Customer>;
       }
     }
 
@@ -1172,6 +1304,8 @@ declare module 'stripe' {
     namespace CustomerCashBalanceTransactionCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.CustomerCashBalanceTransaction;
+
+        previous_attributes?: Partial<Stripe.CustomerCashBalanceTransaction>;
       }
     }
 
@@ -1186,6 +1320,8 @@ declare module 'stripe' {
     namespace FileCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.File;
+
+        previous_attributes?: Partial<Stripe.File>;
       }
     }
 
@@ -1200,6 +1336,8 @@ declare module 'stripe' {
     namespace FinancialConnectionsAccountCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.FinancialConnections.Account;
+
+        previous_attributes?: Partial<Stripe.FinancialConnections.Account>;
       }
     }
 
@@ -1214,6 +1352,8 @@ declare module 'stripe' {
     namespace FinancialConnectionsAccountDeactivatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.FinancialConnections.Account;
+
+        previous_attributes?: Partial<Stripe.FinancialConnections.Account>;
       }
     }
 
@@ -1228,6 +1368,8 @@ declare module 'stripe' {
     namespace FinancialConnectionsAccountDisconnectedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.FinancialConnections.Account;
+
+        previous_attributes?: Partial<Stripe.FinancialConnections.Account>;
       }
     }
 
@@ -1242,6 +1384,8 @@ declare module 'stripe' {
     namespace FinancialConnectionsAccountReactivatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.FinancialConnections.Account;
+
+        previous_attributes?: Partial<Stripe.FinancialConnections.Account>;
       }
     }
 
@@ -1257,6 +1401,8 @@ declare module 'stripe' {
     namespace FinancialConnectionsAccountRefreshedBalanceEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.FinancialConnections.Account;
+
+        previous_attributes?: Partial<Stripe.FinancialConnections.Account>;
       }
     }
 
@@ -1272,6 +1418,8 @@ declare module 'stripe' {
     namespace FinancialConnectionsAccountRefreshedTransactionsEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.FinancialConnections.Account;
+
+        previous_attributes?: Partial<Stripe.FinancialConnections.Account>;
       }
     }
 
@@ -1286,6 +1434,8 @@ declare module 'stripe' {
     namespace IdentityVerificationSessionCanceledEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Identity.VerificationSession;
+
+        previous_attributes?: Partial<Stripe.Identity.VerificationSession>;
       }
     }
 
@@ -1300,6 +1450,8 @@ declare module 'stripe' {
     namespace IdentityVerificationSessionCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Identity.VerificationSession;
+
+        previous_attributes?: Partial<Stripe.Identity.VerificationSession>;
       }
     }
 
@@ -1314,6 +1466,8 @@ declare module 'stripe' {
     namespace IdentityVerificationSessionProcessingEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Identity.VerificationSession;
+
+        previous_attributes?: Partial<Stripe.Identity.VerificationSession>;
       }
     }
 
@@ -1328,6 +1482,8 @@ declare module 'stripe' {
     namespace IdentityVerificationSessionRedactedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Identity.VerificationSession;
+
+        previous_attributes?: Partial<Stripe.Identity.VerificationSession>;
       }
     }
 
@@ -1342,6 +1498,8 @@ declare module 'stripe' {
     namespace IdentityVerificationSessionRequiresInputEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Identity.VerificationSession;
+
+        previous_attributes?: Partial<Stripe.Identity.VerificationSession>;
       }
     }
 
@@ -1356,6 +1514,8 @@ declare module 'stripe' {
     namespace IdentityVerificationSessionVerifiedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Identity.VerificationSession;
+
+        previous_attributes?: Partial<Stripe.Identity.VerificationSession>;
       }
     }
 
@@ -1370,6 +1530,8 @@ declare module 'stripe' {
     namespace InvoiceCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
       }
     }
 
@@ -1384,6 +1546,8 @@ declare module 'stripe' {
     namespace InvoiceDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
       }
     }
 
@@ -1398,6 +1562,8 @@ declare module 'stripe' {
     namespace InvoiceFinalizationFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
       }
     }
 
@@ -1412,6 +1578,8 @@ declare module 'stripe' {
     namespace InvoiceFinalizedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
       }
     }
 
@@ -1426,6 +1594,8 @@ declare module 'stripe' {
     namespace InvoiceMarkedUncollectibleEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
       }
     }
 
@@ -1440,6 +1610,8 @@ declare module 'stripe' {
     namespace InvoicePaidEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
       }
     }
 
@@ -1454,6 +1626,8 @@ declare module 'stripe' {
     namespace InvoicePaymentActionRequiredEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
       }
     }
 
@@ -1468,6 +1642,8 @@ declare module 'stripe' {
     namespace InvoicePaymentFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
       }
     }
 
@@ -1482,6 +1658,8 @@ declare module 'stripe' {
     namespace InvoicePaymentSucceededEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
       }
     }
 
@@ -1496,6 +1674,8 @@ declare module 'stripe' {
     namespace InvoiceSentEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
       }
     }
 
@@ -1510,6 +1690,8 @@ declare module 'stripe' {
     namespace InvoiceUpcomingEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
       }
     }
 
@@ -1524,6 +1706,8 @@ declare module 'stripe' {
     namespace InvoiceUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
       }
     }
 
@@ -1538,6 +1722,8 @@ declare module 'stripe' {
     namespace InvoiceVoidedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
       }
     }
 
@@ -1552,6 +1738,8 @@ declare module 'stripe' {
     namespace InvoiceitemCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.InvoiceItem;
+
+        previous_attributes?: Partial<Stripe.InvoiceItem>;
       }
     }
 
@@ -1566,6 +1754,8 @@ declare module 'stripe' {
     namespace InvoiceitemDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.InvoiceItem;
+
+        previous_attributes?: Partial<Stripe.InvoiceItem>;
       }
     }
 
@@ -1580,6 +1770,8 @@ declare module 'stripe' {
     namespace IssuingAuthorizationCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Authorization;
+
+        previous_attributes?: Partial<Stripe.Issuing.Authorization>;
       }
     }
 
@@ -1594,6 +1786,8 @@ declare module 'stripe' {
     namespace IssuingAuthorizationRequestEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Authorization;
+
+        previous_attributes?: Partial<Stripe.Issuing.Authorization>;
       }
     }
 
@@ -1608,6 +1802,8 @@ declare module 'stripe' {
     namespace IssuingAuthorizationUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Authorization;
+
+        previous_attributes?: Partial<Stripe.Issuing.Authorization>;
       }
     }
 
@@ -1622,6 +1818,8 @@ declare module 'stripe' {
     namespace IssuingCardCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Card;
+
+        previous_attributes?: Partial<Stripe.Issuing.Card>;
       }
     }
 
@@ -1636,6 +1834,8 @@ declare module 'stripe' {
     namespace IssuingCardUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Card;
+
+        previous_attributes?: Partial<Stripe.Issuing.Card>;
       }
     }
 
@@ -1650,6 +1850,8 @@ declare module 'stripe' {
     namespace IssuingCardholderCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Cardholder;
+
+        previous_attributes?: Partial<Stripe.Issuing.Cardholder>;
       }
     }
 
@@ -1664,6 +1866,8 @@ declare module 'stripe' {
     namespace IssuingCardholderUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Cardholder;
+
+        previous_attributes?: Partial<Stripe.Issuing.Cardholder>;
       }
     }
 
@@ -1678,6 +1882,8 @@ declare module 'stripe' {
     namespace IssuingDisputeClosedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Dispute;
+
+        previous_attributes?: Partial<Stripe.Issuing.Dispute>;
       }
     }
 
@@ -1692,6 +1898,8 @@ declare module 'stripe' {
     namespace IssuingDisputeCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Dispute;
+
+        previous_attributes?: Partial<Stripe.Issuing.Dispute>;
       }
     }
 
@@ -1706,6 +1914,8 @@ declare module 'stripe' {
     namespace IssuingDisputeFundsReinstatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Dispute;
+
+        previous_attributes?: Partial<Stripe.Issuing.Dispute>;
       }
     }
 
@@ -1720,6 +1930,8 @@ declare module 'stripe' {
     namespace IssuingDisputeSubmittedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Dispute;
+
+        previous_attributes?: Partial<Stripe.Issuing.Dispute>;
       }
     }
 
@@ -1734,6 +1946,8 @@ declare module 'stripe' {
     namespace IssuingDisputeUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Dispute;
+
+        previous_attributes?: Partial<Stripe.Issuing.Dispute>;
       }
     }
 
@@ -1748,6 +1962,8 @@ declare module 'stripe' {
     namespace IssuingTokenCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Token;
+
+        previous_attributes?: Partial<Stripe.Issuing.Token>;
       }
     }
 
@@ -1762,6 +1978,8 @@ declare module 'stripe' {
     namespace IssuingTokenUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Token;
+
+        previous_attributes?: Partial<Stripe.Issuing.Token>;
       }
     }
 
@@ -1776,6 +1994,8 @@ declare module 'stripe' {
     namespace IssuingTransactionCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Transaction;
+
+        previous_attributes?: Partial<Stripe.Issuing.Transaction>;
       }
     }
 
@@ -1790,6 +2010,8 @@ declare module 'stripe' {
     namespace IssuingTransactionUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Transaction;
+
+        previous_attributes?: Partial<Stripe.Issuing.Transaction>;
       }
     }
 
@@ -1804,6 +2026,8 @@ declare module 'stripe' {
     namespace MandateUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Mandate;
+
+        previous_attributes?: Partial<Stripe.Mandate>;
       }
     }
 
@@ -1818,6 +2042,8 @@ declare module 'stripe' {
     namespace PaymentIntentAmountCapturableUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PaymentIntent;
+
+        previous_attributes?: Partial<Stripe.PaymentIntent>;
       }
     }
 
@@ -1832,6 +2058,8 @@ declare module 'stripe' {
     namespace PaymentIntentCanceledEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PaymentIntent;
+
+        previous_attributes?: Partial<Stripe.PaymentIntent>;
       }
     }
 
@@ -1846,6 +2074,8 @@ declare module 'stripe' {
     namespace PaymentIntentCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PaymentIntent;
+
+        previous_attributes?: Partial<Stripe.PaymentIntent>;
       }
     }
 
@@ -1860,6 +2090,8 @@ declare module 'stripe' {
     namespace PaymentIntentPartiallyFundedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PaymentIntent;
+
+        previous_attributes?: Partial<Stripe.PaymentIntent>;
       }
     }
 
@@ -1874,6 +2106,8 @@ declare module 'stripe' {
     namespace PaymentIntentPaymentFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PaymentIntent;
+
+        previous_attributes?: Partial<Stripe.PaymentIntent>;
       }
     }
 
@@ -1888,6 +2122,8 @@ declare module 'stripe' {
     namespace PaymentIntentProcessingEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PaymentIntent;
+
+        previous_attributes?: Partial<Stripe.PaymentIntent>;
       }
     }
 
@@ -1902,6 +2138,8 @@ declare module 'stripe' {
     namespace PaymentIntentRequiresActionEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PaymentIntent;
+
+        previous_attributes?: Partial<Stripe.PaymentIntent>;
       }
     }
 
@@ -1916,6 +2154,8 @@ declare module 'stripe' {
     namespace PaymentIntentSucceededEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PaymentIntent;
+
+        previous_attributes?: Partial<Stripe.PaymentIntent>;
       }
     }
 
@@ -1930,6 +2170,8 @@ declare module 'stripe' {
     namespace PaymentLinkCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PaymentLink;
+
+        previous_attributes?: Partial<Stripe.PaymentLink>;
       }
     }
 
@@ -1944,6 +2186,8 @@ declare module 'stripe' {
     namespace PaymentLinkUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PaymentLink;
+
+        previous_attributes?: Partial<Stripe.PaymentLink>;
       }
     }
 
@@ -1958,6 +2202,8 @@ declare module 'stripe' {
     namespace PaymentMethodAttachedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PaymentMethod;
+
+        previous_attributes?: Partial<Stripe.PaymentMethod>;
       }
     }
 
@@ -1972,6 +2218,8 @@ declare module 'stripe' {
     namespace PaymentMethodAutomaticallyUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PaymentMethod;
+
+        previous_attributes?: Partial<Stripe.PaymentMethod>;
       }
     }
 
@@ -1986,6 +2234,8 @@ declare module 'stripe' {
     namespace PaymentMethodDetachedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PaymentMethod;
+
+        previous_attributes?: Partial<Stripe.PaymentMethod>;
       }
     }
 
@@ -2000,6 +2250,8 @@ declare module 'stripe' {
     namespace PaymentMethodUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PaymentMethod;
+
+        previous_attributes?: Partial<Stripe.PaymentMethod>;
       }
     }
 
@@ -2014,6 +2266,8 @@ declare module 'stripe' {
     namespace PayoutCanceledEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Payout;
+
+        previous_attributes?: Partial<Stripe.Payout>;
       }
     }
 
@@ -2028,6 +2282,8 @@ declare module 'stripe' {
     namespace PayoutCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Payout;
+
+        previous_attributes?: Partial<Stripe.Payout>;
       }
     }
 
@@ -2042,6 +2298,8 @@ declare module 'stripe' {
     namespace PayoutFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Payout;
+
+        previous_attributes?: Partial<Stripe.Payout>;
       }
     }
 
@@ -2056,6 +2314,8 @@ declare module 'stripe' {
     namespace PayoutPaidEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Payout;
+
+        previous_attributes?: Partial<Stripe.Payout>;
       }
     }
 
@@ -2070,6 +2330,8 @@ declare module 'stripe' {
     namespace PayoutReconciliationCompletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Payout;
+
+        previous_attributes?: Partial<Stripe.Payout>;
       }
     }
 
@@ -2084,6 +2346,8 @@ declare module 'stripe' {
     namespace PayoutUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Payout;
+
+        previous_attributes?: Partial<Stripe.Payout>;
       }
     }
 
@@ -2098,6 +2362,8 @@ declare module 'stripe' {
     namespace PersonCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Person;
+
+        previous_attributes?: Partial<Stripe.Person>;
       }
     }
 
@@ -2112,6 +2378,8 @@ declare module 'stripe' {
     namespace PersonDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Person;
+
+        previous_attributes?: Partial<Stripe.Person>;
       }
     }
 
@@ -2126,6 +2394,8 @@ declare module 'stripe' {
     namespace PersonUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Person;
+
+        previous_attributes?: Partial<Stripe.Person>;
       }
     }
 
@@ -2140,6 +2410,8 @@ declare module 'stripe' {
     namespace PlanCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Plan;
+
+        previous_attributes?: Partial<Stripe.Plan>;
       }
     }
 
@@ -2154,6 +2426,8 @@ declare module 'stripe' {
     namespace PlanDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Plan;
+
+        previous_attributes?: Partial<Stripe.Plan>;
       }
     }
 
@@ -2168,6 +2442,8 @@ declare module 'stripe' {
     namespace PlanUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Plan;
+
+        previous_attributes?: Partial<Stripe.Plan>;
       }
     }
 
@@ -2182,6 +2458,8 @@ declare module 'stripe' {
     namespace PriceCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Price;
+
+        previous_attributes?: Partial<Stripe.Price>;
       }
     }
 
@@ -2196,6 +2474,8 @@ declare module 'stripe' {
     namespace PriceDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Price;
+
+        previous_attributes?: Partial<Stripe.Price>;
       }
     }
 
@@ -2210,6 +2490,8 @@ declare module 'stripe' {
     namespace PriceUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Price;
+
+        previous_attributes?: Partial<Stripe.Price>;
       }
     }
 
@@ -2224,6 +2506,8 @@ declare module 'stripe' {
     namespace ProductCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Product;
+
+        previous_attributes?: Partial<Stripe.Product>;
       }
     }
 
@@ -2238,6 +2522,8 @@ declare module 'stripe' {
     namespace ProductDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Product;
+
+        previous_attributes?: Partial<Stripe.Product>;
       }
     }
 
@@ -2252,6 +2538,8 @@ declare module 'stripe' {
     namespace ProductUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Product;
+
+        previous_attributes?: Partial<Stripe.Product>;
       }
     }
 
@@ -2266,6 +2554,8 @@ declare module 'stripe' {
     namespace PromotionCodeCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PromotionCode;
+
+        previous_attributes?: Partial<Stripe.PromotionCode>;
       }
     }
 
@@ -2280,6 +2570,8 @@ declare module 'stripe' {
     namespace PromotionCodeUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.PromotionCode;
+
+        previous_attributes?: Partial<Stripe.PromotionCode>;
       }
     }
 
@@ -2294,6 +2586,8 @@ declare module 'stripe' {
     namespace QuoteAcceptedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Quote;
+
+        previous_attributes?: Partial<Stripe.Quote>;
       }
     }
 
@@ -2308,6 +2602,8 @@ declare module 'stripe' {
     namespace QuoteCanceledEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Quote;
+
+        previous_attributes?: Partial<Stripe.Quote>;
       }
     }
 
@@ -2322,6 +2618,8 @@ declare module 'stripe' {
     namespace QuoteCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Quote;
+
+        previous_attributes?: Partial<Stripe.Quote>;
       }
     }
 
@@ -2336,6 +2634,8 @@ declare module 'stripe' {
     namespace QuoteFinalizedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Quote;
+
+        previous_attributes?: Partial<Stripe.Quote>;
       }
     }
 
@@ -2350,6 +2650,8 @@ declare module 'stripe' {
     namespace RadarEarlyFraudWarningCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Radar.EarlyFraudWarning;
+
+        previous_attributes?: Partial<Stripe.Radar.EarlyFraudWarning>;
       }
     }
 
@@ -2364,6 +2666,8 @@ declare module 'stripe' {
     namespace RadarEarlyFraudWarningUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Radar.EarlyFraudWarning;
+
+        previous_attributes?: Partial<Stripe.Radar.EarlyFraudWarning>;
       }
     }
 
@@ -2378,6 +2682,8 @@ declare module 'stripe' {
     namespace RefundCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Refund;
+
+        previous_attributes?: Partial<Stripe.Refund>;
       }
     }
 
@@ -2392,6 +2698,8 @@ declare module 'stripe' {
     namespace RefundUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Refund;
+
+        previous_attributes?: Partial<Stripe.Refund>;
       }
     }
 
@@ -2406,6 +2714,8 @@ declare module 'stripe' {
     namespace ReportingReportRunFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Reporting.ReportRun;
+
+        previous_attributes?: Partial<Stripe.Reporting.ReportRun>;
       }
     }
 
@@ -2420,6 +2730,8 @@ declare module 'stripe' {
     namespace ReportingReportRunSucceededEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Reporting.ReportRun;
+
+        previous_attributes?: Partial<Stripe.Reporting.ReportRun>;
       }
     }
 
@@ -2434,6 +2746,8 @@ declare module 'stripe' {
     namespace ReportingReportTypeUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Reporting.ReportType;
+
+        previous_attributes?: Partial<Stripe.Reporting.ReportType>;
       }
     }
 
@@ -2448,6 +2762,8 @@ declare module 'stripe' {
     namespace ReviewClosedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Review;
+
+        previous_attributes?: Partial<Stripe.Review>;
       }
     }
 
@@ -2462,6 +2778,8 @@ declare module 'stripe' {
     namespace ReviewOpenedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Review;
+
+        previous_attributes?: Partial<Stripe.Review>;
       }
     }
 
@@ -2476,6 +2794,8 @@ declare module 'stripe' {
     namespace SetupIntentCanceledEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SetupIntent;
+
+        previous_attributes?: Partial<Stripe.SetupIntent>;
       }
     }
 
@@ -2490,6 +2810,8 @@ declare module 'stripe' {
     namespace SetupIntentCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SetupIntent;
+
+        previous_attributes?: Partial<Stripe.SetupIntent>;
       }
     }
 
@@ -2504,6 +2826,8 @@ declare module 'stripe' {
     namespace SetupIntentRequiresActionEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SetupIntent;
+
+        previous_attributes?: Partial<Stripe.SetupIntent>;
       }
     }
 
@@ -2518,6 +2842,8 @@ declare module 'stripe' {
     namespace SetupIntentSetupFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SetupIntent;
+
+        previous_attributes?: Partial<Stripe.SetupIntent>;
       }
     }
 
@@ -2532,6 +2858,8 @@ declare module 'stripe' {
     namespace SetupIntentSucceededEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SetupIntent;
+
+        previous_attributes?: Partial<Stripe.SetupIntent>;
       }
     }
 
@@ -2546,6 +2874,8 @@ declare module 'stripe' {
     namespace SigmaScheduledQueryRunCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Sigma.ScheduledQueryRun;
+
+        previous_attributes?: Partial<Stripe.Sigma.ScheduledQueryRun>;
       }
     }
 
@@ -2560,6 +2890,8 @@ declare module 'stripe' {
     namespace SourceCanceledEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Source;
+
+        previous_attributes?: Partial<Stripe.Source>;
       }
     }
 
@@ -2574,6 +2906,8 @@ declare module 'stripe' {
     namespace SourceChargeableEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Source;
+
+        previous_attributes?: Partial<Stripe.Source>;
       }
     }
 
@@ -2588,6 +2922,8 @@ declare module 'stripe' {
     namespace SourceFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Source;
+
+        previous_attributes?: Partial<Stripe.Source>;
       }
     }
 
@@ -2602,6 +2938,8 @@ declare module 'stripe' {
     namespace SourceMandateNotificationEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SourceMandateNotification;
+
+        previous_attributes?: Partial<Stripe.SourceMandateNotification>;
       }
     }
 
@@ -2616,6 +2954,8 @@ declare module 'stripe' {
     namespace SourceRefundAttributesRequiredEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Source;
+
+        previous_attributes?: Partial<Stripe.Source>;
       }
     }
 
@@ -2630,6 +2970,8 @@ declare module 'stripe' {
     namespace SourceTransactionCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SourceTransaction;
+
+        previous_attributes?: Partial<Stripe.SourceTransaction>;
       }
     }
 
@@ -2644,6 +2986,8 @@ declare module 'stripe' {
     namespace SourceTransactionUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SourceTransaction;
+
+        previous_attributes?: Partial<Stripe.SourceTransaction>;
       }
     }
 
@@ -2658,6 +3002,8 @@ declare module 'stripe' {
     namespace SubscriptionScheduleAbortedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SubscriptionSchedule;
+
+        previous_attributes?: Partial<Stripe.SubscriptionSchedule>;
       }
     }
 
@@ -2672,6 +3018,8 @@ declare module 'stripe' {
     namespace SubscriptionScheduleCanceledEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SubscriptionSchedule;
+
+        previous_attributes?: Partial<Stripe.SubscriptionSchedule>;
       }
     }
 
@@ -2686,6 +3034,8 @@ declare module 'stripe' {
     namespace SubscriptionScheduleCompletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SubscriptionSchedule;
+
+        previous_attributes?: Partial<Stripe.SubscriptionSchedule>;
       }
     }
 
@@ -2700,6 +3050,8 @@ declare module 'stripe' {
     namespace SubscriptionScheduleCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SubscriptionSchedule;
+
+        previous_attributes?: Partial<Stripe.SubscriptionSchedule>;
       }
     }
 
@@ -2714,6 +3066,8 @@ declare module 'stripe' {
     namespace SubscriptionScheduleExpiringEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SubscriptionSchedule;
+
+        previous_attributes?: Partial<Stripe.SubscriptionSchedule>;
       }
     }
 
@@ -2728,6 +3082,8 @@ declare module 'stripe' {
     namespace SubscriptionScheduleReleasedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SubscriptionSchedule;
+
+        previous_attributes?: Partial<Stripe.SubscriptionSchedule>;
       }
     }
 
@@ -2742,6 +3098,8 @@ declare module 'stripe' {
     namespace SubscriptionScheduleUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SubscriptionSchedule;
+
+        previous_attributes?: Partial<Stripe.SubscriptionSchedule>;
       }
     }
 
@@ -2756,6 +3114,8 @@ declare module 'stripe' {
     namespace TaxSettingsUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Tax.Settings;
+
+        previous_attributes?: Partial<Stripe.Tax.Settings>;
       }
     }
 
@@ -2770,6 +3130,8 @@ declare module 'stripe' {
     namespace TaxRateCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.TaxRate;
+
+        previous_attributes?: Partial<Stripe.TaxRate>;
       }
     }
 
@@ -2784,6 +3146,8 @@ declare module 'stripe' {
     namespace TaxRateUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.TaxRate;
+
+        previous_attributes?: Partial<Stripe.TaxRate>;
       }
     }
 
@@ -2798,6 +3162,8 @@ declare module 'stripe' {
     namespace TerminalReaderActionFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Terminal.Reader;
+
+        previous_attributes?: Partial<Stripe.Terminal.Reader>;
       }
     }
 
@@ -2812,6 +3178,8 @@ declare module 'stripe' {
     namespace TerminalReaderActionSucceededEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Terminal.Reader;
+
+        previous_attributes?: Partial<Stripe.Terminal.Reader>;
       }
     }
 
@@ -2826,6 +3194,8 @@ declare module 'stripe' {
     namespace TestHelpersTestClockAdvancingEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.TestHelpers.TestClock;
+
+        previous_attributes?: Partial<Stripe.TestHelpers.TestClock>;
       }
     }
 
@@ -2840,6 +3210,8 @@ declare module 'stripe' {
     namespace TestHelpersTestClockCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.TestHelpers.TestClock;
+
+        previous_attributes?: Partial<Stripe.TestHelpers.TestClock>;
       }
     }
 
@@ -2854,6 +3226,8 @@ declare module 'stripe' {
     namespace TestHelpersTestClockDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.TestHelpers.TestClock;
+
+        previous_attributes?: Partial<Stripe.TestHelpers.TestClock>;
       }
     }
 
@@ -2868,6 +3242,8 @@ declare module 'stripe' {
     namespace TestHelpersTestClockInternalFailureEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.TestHelpers.TestClock;
+
+        previous_attributes?: Partial<Stripe.TestHelpers.TestClock>;
       }
     }
 
@@ -2882,6 +3258,8 @@ declare module 'stripe' {
     namespace TestHelpersTestClockReadyEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.TestHelpers.TestClock;
+
+        previous_attributes?: Partial<Stripe.TestHelpers.TestClock>;
       }
     }
 
@@ -2896,6 +3274,8 @@ declare module 'stripe' {
     namespace TopupCanceledEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Topup;
+
+        previous_attributes?: Partial<Stripe.Topup>;
       }
     }
 
@@ -2910,6 +3290,8 @@ declare module 'stripe' {
     namespace TopupCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Topup;
+
+        previous_attributes?: Partial<Stripe.Topup>;
       }
     }
 
@@ -2924,6 +3306,8 @@ declare module 'stripe' {
     namespace TopupFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Topup;
+
+        previous_attributes?: Partial<Stripe.Topup>;
       }
     }
 
@@ -2938,6 +3322,8 @@ declare module 'stripe' {
     namespace TopupReversedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Topup;
+
+        previous_attributes?: Partial<Stripe.Topup>;
       }
     }
 
@@ -2952,6 +3338,8 @@ declare module 'stripe' {
     namespace TopupSucceededEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Topup;
+
+        previous_attributes?: Partial<Stripe.Topup>;
       }
     }
 
@@ -2966,6 +3354,8 @@ declare module 'stripe' {
     namespace TransferCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Transfer;
+
+        previous_attributes?: Partial<Stripe.Transfer>;
       }
     }
 
@@ -2980,6 +3370,8 @@ declare module 'stripe' {
     namespace TransferReversedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Transfer;
+
+        previous_attributes?: Partial<Stripe.Transfer>;
       }
     }
 
@@ -2994,6 +3386,8 @@ declare module 'stripe' {
     namespace TransferUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Transfer;
+
+        previous_attributes?: Partial<Stripe.Transfer>;
       }
     }
 
@@ -3008,6 +3402,8 @@ declare module 'stripe' {
     namespace TreasuryCreditReversalCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.CreditReversal;
+
+        previous_attributes?: Partial<Stripe.Treasury.CreditReversal>;
       }
     }
 
@@ -3022,6 +3418,8 @@ declare module 'stripe' {
     namespace TreasuryCreditReversalPostedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.CreditReversal;
+
+        previous_attributes?: Partial<Stripe.Treasury.CreditReversal>;
       }
     }
 
@@ -3036,6 +3434,8 @@ declare module 'stripe' {
     namespace TreasuryDebitReversalCompletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.DebitReversal;
+
+        previous_attributes?: Partial<Stripe.Treasury.DebitReversal>;
       }
     }
 
@@ -3050,6 +3450,8 @@ declare module 'stripe' {
     namespace TreasuryDebitReversalCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.DebitReversal;
+
+        previous_attributes?: Partial<Stripe.Treasury.DebitReversal>;
       }
     }
 
@@ -3064,6 +3466,8 @@ declare module 'stripe' {
     namespace TreasuryDebitReversalInitialCreditGrantedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.DebitReversal;
+
+        previous_attributes?: Partial<Stripe.Treasury.DebitReversal>;
       }
     }
 
@@ -3078,6 +3482,8 @@ declare module 'stripe' {
     namespace TreasuryFinancialAccountClosedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.FinancialAccount;
+
+        previous_attributes?: Partial<Stripe.Treasury.FinancialAccount>;
       }
     }
 
@@ -3092,6 +3498,8 @@ declare module 'stripe' {
     namespace TreasuryFinancialAccountCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.FinancialAccount;
+
+        previous_attributes?: Partial<Stripe.Treasury.FinancialAccount>;
       }
     }
 
@@ -3107,6 +3515,8 @@ declare module 'stripe' {
     namespace TreasuryFinancialAccountFeaturesStatusUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.FinancialAccount;
+
+        previous_attributes?: Partial<Stripe.Treasury.FinancialAccount>;
       }
     }
 
@@ -3121,6 +3531,8 @@ declare module 'stripe' {
     namespace TreasuryInboundTransferCanceledEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.InboundTransfer;
+
+        previous_attributes?: Partial<Stripe.Treasury.InboundTransfer>;
       }
     }
 
@@ -3135,6 +3547,8 @@ declare module 'stripe' {
     namespace TreasuryInboundTransferCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.InboundTransfer;
+
+        previous_attributes?: Partial<Stripe.Treasury.InboundTransfer>;
       }
     }
 
@@ -3149,6 +3563,8 @@ declare module 'stripe' {
     namespace TreasuryInboundTransferFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.InboundTransfer;
+
+        previous_attributes?: Partial<Stripe.Treasury.InboundTransfer>;
       }
     }
 
@@ -3163,6 +3579,8 @@ declare module 'stripe' {
     namespace TreasuryInboundTransferSucceededEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.InboundTransfer;
+
+        previous_attributes?: Partial<Stripe.Treasury.InboundTransfer>;
       }
     }
 
@@ -3177,6 +3595,8 @@ declare module 'stripe' {
     namespace TreasuryOutboundPaymentCanceledEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.OutboundPayment;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundPayment>;
       }
     }
 
@@ -3191,6 +3611,8 @@ declare module 'stripe' {
     namespace TreasuryOutboundPaymentCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.OutboundPayment;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundPayment>;
       }
     }
 
@@ -3206,6 +3628,8 @@ declare module 'stripe' {
     namespace TreasuryOutboundPaymentExpectedArrivalDateUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.OutboundPayment;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundPayment>;
       }
     }
 
@@ -3220,6 +3644,8 @@ declare module 'stripe' {
     namespace TreasuryOutboundPaymentFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.OutboundPayment;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundPayment>;
       }
     }
 
@@ -3234,6 +3660,8 @@ declare module 'stripe' {
     namespace TreasuryOutboundPaymentPostedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.OutboundPayment;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundPayment>;
       }
     }
 
@@ -3248,6 +3676,8 @@ declare module 'stripe' {
     namespace TreasuryOutboundPaymentReturnedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.OutboundPayment;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundPayment>;
       }
     }
 
@@ -3262,6 +3692,8 @@ declare module 'stripe' {
     namespace TreasuryOutboundTransferCanceledEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.OutboundTransfer;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundTransfer>;
       }
     }
 
@@ -3276,6 +3708,8 @@ declare module 'stripe' {
     namespace TreasuryOutboundTransferCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.OutboundTransfer;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundTransfer>;
       }
     }
 
@@ -3291,6 +3725,8 @@ declare module 'stripe' {
     namespace TreasuryOutboundTransferExpectedArrivalDateUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.OutboundTransfer;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundTransfer>;
       }
     }
 
@@ -3305,6 +3741,8 @@ declare module 'stripe' {
     namespace TreasuryOutboundTransferFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.OutboundTransfer;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundTransfer>;
       }
     }
 
@@ -3319,6 +3757,8 @@ declare module 'stripe' {
     namespace TreasuryOutboundTransferPostedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.OutboundTransfer;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundTransfer>;
       }
     }
 
@@ -3333,6 +3773,8 @@ declare module 'stripe' {
     namespace TreasuryOutboundTransferReturnedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.OutboundTransfer;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundTransfer>;
       }
     }
 
@@ -3347,6 +3789,8 @@ declare module 'stripe' {
     namespace TreasuryReceivedCreditCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.ReceivedCredit;
+
+        previous_attributes?: Partial<Stripe.Treasury.ReceivedCredit>;
       }
     }
 
@@ -3361,6 +3805,8 @@ declare module 'stripe' {
     namespace TreasuryReceivedCreditFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.ReceivedCredit;
+
+        previous_attributes?: Partial<Stripe.Treasury.ReceivedCredit>;
       }
     }
 
@@ -3375,6 +3821,8 @@ declare module 'stripe' {
     namespace TreasuryReceivedCreditSucceededEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.ReceivedCredit;
+
+        previous_attributes?: Partial<Stripe.Treasury.ReceivedCredit>;
       }
     }
 
@@ -3389,6 +3837,8 @@ declare module 'stripe' {
     namespace TreasuryReceivedDebitCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.ReceivedDebit;
+
+        previous_attributes?: Partial<Stripe.Treasury.ReceivedDebit>;
       }
     }
 
