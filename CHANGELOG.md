@@ -1,5 +1,14 @@
 # Changelog
 
+## 14.14.0-beta.1 - 2024-01-18
+* [#1996](https://github.com/stripe/stripe-node/pull/1996) Update generated code for beta
+  Release specs are identical.
+* [#1993](https://github.com/stripe/stripe-node/pull/1993) Update generated code for beta
+  * Add support for new value `nn` on enum `ConfirmationToken.payment_method_preview.ideal.bank`
+  * Add support for new value `NNBANL2G` on enum `ConfirmationToken.payment_method_preview.ideal.bic`
+  * Change `Invoice.automatic_tax.liability`, `Invoice.issuer`, and `Subscription.automatic_tax.liability` to be required
+* [#1994](https://github.com/stripe/stripe-node/pull/1994) Beta: report `raw_request` usage
+
 ## 14.13.0 - 2024-01-18
 * [#1995](https://github.com/stripe/stripe-node/pull/1995) Update generated code
   * Add support for providing `BankAccount`, `Card`, and `CardToken` details on the `external_account` parameter in `AccountUpdateParams`
