@@ -50,12 +50,12 @@ declare module 'stripe' {
         /**
          * This hash contains whether the buy button is enabled.
          */
-        buy_button?: Components.BuyButton;
+        buy_button: Components.BuyButton;
 
         /**
          * This hash contains whether the pricing table is enabled.
          */
-        pricing_table?: Components.PricingTable;
+        pricing_table: Components.PricingTable;
       }
 
       namespace Components {
