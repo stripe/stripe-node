@@ -493,8 +493,6 @@ describe('Stripe Module', function() {
             stripe.customers.create(
               {this_is_not_a_real_param: 'foobar'},
               (err, customer) => {
-                console.log(err);
-                console.log(customer);
                 if (err) {
                   resolve('ErrorWasPassed');
                 } else {
@@ -779,6 +777,49 @@ describe('Stripe Module', function() {
       const response = await stripe.rawRequest('GET', '/v1/customers', {});
 
       expect(response).to.have.property('object', 'list');
+    });
+
+    it("should include 'raw_request' in usage telemetry", (done) => {
+      let telemetryHeader;
+      let shouldStayOpen = true;
+      return getTestServerStripe(
+        {},
+        (req, res) => {
+          telemetryHeader = req.headers['x-stripe-client-telemetry'];
+          res.setHeader('Request-Id', `req_1`);
+          res.writeHeader(200);
+          res.write('{}');
+          res.end();
+          const ret = {shouldStayOpen};
+          shouldStayOpen = false;
+          return ret;
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          try {
+            await stripe.rawRequest(
+              'POST',
+              '/v1/customers',
+              {description: 'test customer'},
+              {apiMode: 'standard'}
+            );
+            expect(telemetryHeader).to.equal(undefined);
+            await stripe.rawRequest(
+              'POST',
+              '/v1/customers',
+              {description: 'test customer'},
+              {apiMode: 'standard'}
+            );
+            expect(
+              JSON.parse(telemetryHeader).last_request_metrics.usage
+            ).to.deep.equal(['raw_request']);
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
     });
 
     it('should throw error when passing in params to non-POST request', async () => {
