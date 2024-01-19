@@ -441,6 +441,11 @@ declare module 'stripe' {
                * Details to determine how long the discount should be applied for.
                */
               discount_end?: Discount.DiscountEnd;
+
+              /**
+               * ID of the promotion code to create a new discount for.
+               */
+              promotion_code?: string;
             }
 
             namespace Discount {
@@ -578,6 +583,11 @@ declare module 'stripe' {
                * Details to determine how long the discount should be applied for.
                */
               discount_end?: Discount.DiscountEnd;
+
+              /**
+               * ID of the promotion code to create a new discount for.
+               */
+              promotion_code?: string;
             }
 
             namespace Discount {
@@ -1047,6 +1057,11 @@ declare module 'stripe' {
            * Details to determine how long the discount should be applied for.
            */
           discount_end?: Discount.DiscountEnd;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
         }
 
         namespace Discount {
@@ -2068,6 +2083,11 @@ declare module 'stripe' {
                * Details to determine how long the discount should be applied for.
                */
               discount_end?: Discount.DiscountEnd;
+
+              /**
+               * ID of the promotion code to create a new discount for.
+               */
+              promotion_code?: string;
             }
 
             namespace Discount {
@@ -2205,6 +2225,11 @@ declare module 'stripe' {
                * Details to determine how long the discount should be applied for.
                */
               discount_end?: Discount.DiscountEnd;
+
+              /**
+               * ID of the promotion code to create a new discount for.
+               */
+              promotion_code?: string;
             }
 
             namespace Discount {
@@ -2684,6 +2709,11 @@ declare module 'stripe' {
            * Details to determine how long the discount should be applied for.
            */
           discount_end?: Discount.DiscountEnd;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
         }
 
         namespace Discount {
