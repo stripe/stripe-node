@@ -8,9 +8,8 @@ declare module 'stripe' {
      * enabled to make live charges or receive payouts.
      *
      * For Custom accounts, the properties below are always returned. For other accounts, some properties are returned until that
-     * account has started to go through Connect Onboarding. Once you create an [Account Link](https://stripe.com/docs/api/account_links)
-     * for a Standard or Express account, some parameters are no longer returned. These are marked as **Custom Only** or **Custom and Express**
-     * below. Learn about the differences [between accounts](https://stripe.com/docs/connect/accounts).
+     * account has started to go through Connect Onboarding. Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions),
+     * some properties are only returned for Custom accounts. Learn about the differences [between accounts](https://stripe.com/docs/connect/accounts).
      */
     interface Account {
       /**
@@ -29,7 +28,7 @@ declare module 'stripe' {
       business_profile?: Account.BusinessProfile | null;
 
       /**
-       * The business type.
+       * The business type. Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property is only returned for Custom accounts.
        */
       business_type?: Account.BusinessType | null;
 
@@ -75,7 +74,7 @@ declare module 'stripe' {
       email: string | null;
 
       /**
-       * External accounts (bank accounts and debit cards) currently attached to this account
+       * External accounts (bank accounts and debit cards) currently attached to this account. External accounts are only returned for requests where `controller[is_controller]` is true.
        */
       external_accounts?: ApiList<Stripe.ExternalAccount>;
 
