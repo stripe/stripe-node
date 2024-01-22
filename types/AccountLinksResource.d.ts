@@ -14,9 +14,14 @@ declare module 'stripe' {
       type: AccountLinkCreateParams.Type;
 
       /**
-       * Which information the platform needs to collect from the user. One of `currently_due` or `eventually_due`. Default is `currently_due`.
+       * The collect parameter is deprecated. Use `collection_options` instead.
        */
       collect?: AccountLinkCreateParams.Collect;
+
+      /**
+       * Specifies the requirements that Stripe collects from connected accounts in the Connect Onboarding flow.
+       */
+      collection_options?: AccountLinkCreateParams.CollectionOptions;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -36,6 +41,24 @@ declare module 'stripe' {
 
     namespace AccountLinkCreateParams {
       type Collect = 'currently_due' | 'eventually_due';
+
+      interface CollectionOptions {
+        /**
+         * Specifies whether the platform collects only currently_due requirements (`currently_due`) or both currently_due and eventually_due requirements (`eventually_due`). If you don't specify `collection_options`, the default value is `currently_due`.
+         */
+        fields: CollectionOptions.Fields;
+
+        /**
+         * Options for collecting future_requirements in Connect Onboarding
+         */
+        future_requirements?: CollectionOptions.FutureRequirements;
+      }
+
+      namespace CollectionOptions {
+        type Fields = 'currently_due' | 'eventually_due';
+
+        type FutureRequirements = 'include' | 'omit';
+      }
 
       type Type = 'account_onboarding' | 'account_update';
     }
