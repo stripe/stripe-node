@@ -389,7 +389,7 @@ declare module 'stripe' {
               }
             }
 
-            type RequestThreeDSecure = 'any' | 'automatic';
+            type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
           }
 
           interface CustomerBalance {
@@ -1069,7 +1069,7 @@ declare module 'stripe' {
               }
             }
 
-            type RequestThreeDSecure = 'any' | 'automatic';
+            type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
           }
 
           interface CustomerBalance {

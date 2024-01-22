@@ -1053,7 +1053,7 @@ declare module 'stripe' {
               enabled: boolean | null;
             }
 
-            type RequestThreeDSecure = 'any' | 'automatic';
+            type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
           }
 
           interface CustomerBalance {
