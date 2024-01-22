@@ -514,6 +514,11 @@ declare module 'stripe' {
              * The ID of a discount to remove from the `discounts` array.
              */
             discount?: string;
+
+            /**
+             * The ID of a promotion code to remove from the `discounts` array.
+             */
+            promotion_code?: string;
           }
 
           interface RemoveItem {
@@ -533,6 +538,11 @@ declare module 'stripe' {
              * An ID of an existing discount to replace the `discounts` array with.
              */
             discount?: string;
+
+            /**
+             * An ID of an existing promotion code to replace the `discounts` array with.
+             */
+            promotion_code?: string;
           }
 
           interface SetItem {
@@ -2156,6 +2166,11 @@ declare module 'stripe' {
              * The ID of a discount to remove from the `discounts` array.
              */
             discount?: string;
+
+            /**
+             * The ID of a promotion code to remove from the `discounts` array.
+             */
+            promotion_code?: string;
           }
 
           interface RemoveItem {
@@ -2175,6 +2190,11 @@ declare module 'stripe' {
              * An ID of an existing discount to replace the `discounts` array with.
              */
             discount?: string;
+
+            /**
+             * An ID of an existing promotion code to replace the `discounts` array with.
+             */
+            promotion_code?: string;
           }
 
           interface SetItem {

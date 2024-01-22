@@ -1956,6 +1956,11 @@ declare module 'stripe' {
              * The index, starting at 0, at which to position the new discount. When not supplied, Stripe defaults to appending the discount to the end of the `discounts` array.
              */
             index?: number;
+
+            /**
+             * The promotion code to redeem.
+             */
+            promotion_code?: string;
           }
 
           namespace Add {
@@ -1977,6 +1982,11 @@ declare module 'stripe' {
              * The ID of a discount to remove from the `discounts` array.
              */
             discount?: string;
+
+            /**
+             * The ID of a promotion code to remove from the `discounts` array.
+             */
+            promotion_code?: string;
           }
 
           interface Set {
@@ -1989,6 +1999,11 @@ declare module 'stripe' {
              * An ID of an existing discount to replace the `discounts` array with.
              */
             discount?: string;
+
+            /**
+             * An ID of an existing promotion code to replace the `discounts` array with.
+             */
+            promotion_code?: string;
           }
 
           type Type = 'add' | 'remove' | 'set';
