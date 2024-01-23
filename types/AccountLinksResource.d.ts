@@ -49,7 +49,7 @@ declare module 'stripe' {
         fields: CollectionOptions.Fields;
 
         /**
-         * Options for collecting future_requirements in Connect Onboarding
+         * Specifies whether the platform collects future_requirements in addition to requirements in Connect Onboarding. The default value is `omit`.
          */
         future_requirements?: CollectionOptions.FutureRequirements;
       }
