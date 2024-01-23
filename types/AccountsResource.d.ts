@@ -91,6 +91,16 @@ declare module 'stripe' {
     namespace AccountCreateParams {
       interface BusinessProfile {
         /**
+         * The applicant's gross annual revenue for its preceding fiscal year.
+         */
+        annual_revenue?: BusinessProfile.AnnualRevenue;
+
+        /**
+         * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
+         */
+        estimated_worker_count?: number;
+
+        /**
          * [The merchant category code for the account](https://stripe.com/docs/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
          */
         mcc?: string;
@@ -137,6 +147,23 @@ declare module 'stripe' {
       }
 
       namespace BusinessProfile {
+        interface AnnualRevenue {
+          /**
+           * A non-negative integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           */
+          amount: number;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * The close-out date of the preceding fiscal year in ISO 8601 format. E.g. 2023-12-31 for the 31st of December, 2023.
+           */
+          fiscal_year_end: string;
+        }
+
         interface MonthlyEstimatedRevenue {
           /**
            * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
@@ -1443,6 +1470,16 @@ declare module 'stripe' {
 
       interface BusinessProfile {
         /**
+         * The applicant's gross annual revenue for its preceding fiscal year.
+         */
+        annual_revenue?: BusinessProfile.AnnualRevenue;
+
+        /**
+         * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
+         */
+        estimated_worker_count?: number;
+
+        /**
          * [The merchant category code for the account](https://stripe.com/docs/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
          */
         mcc?: string;
@@ -1489,6 +1526,23 @@ declare module 'stripe' {
       }
 
       namespace BusinessProfile {
+        interface AnnualRevenue {
+          /**
+           * A non-negative integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           */
+          amount: number;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * The close-out date of the preceding fiscal year in ISO 8601 format. E.g. 2023-12-31 for the 31st of December, 2023.
+           */
+          fiscal_year_end: string;
+        }
+
         interface MonthlyEstimatedRevenue {
           /**
            * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
