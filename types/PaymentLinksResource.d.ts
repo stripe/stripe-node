@@ -49,7 +49,7 @@ declare module 'stripe' {
       currency?: string;
 
       /**
-       * Collect additional information from your customer using custom fields. Up to 2 fields are supported.
+       * Collect additional information from your customer using custom fields. Up to 3 fields are supported.
        */
       custom_fields?: Array<PaymentLinkCreateParams.CustomField>;
 
@@ -963,7 +963,7 @@ declare module 'stripe' {
       billing_address_collection?: PaymentLinkUpdateParams.BillingAddressCollection;
 
       /**
-       * Collect additional information from your customer using custom fields. Up to 2 fields are supported.
+       * Collect additional information from your customer using custom fields. Up to 3 fields are supported.
        */
       custom_fields?: Stripe.Emptyable<
         Array<PaymentLinkUpdateParams.CustomField>
