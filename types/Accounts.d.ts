@@ -640,6 +640,7 @@ declare module 'stripe' {
           | 'public_company'
           | 'public_corporation'
           | 'public_partnership'
+          | 'registered_charity'
           | 'single_member_llc'
           | 'sole_establishment'
           | 'sole_proprietorship'
