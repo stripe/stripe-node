@@ -100,7 +100,7 @@ declare module 'stripe' {
         currency_conversion: Session.CurrencyConversion | null;
 
         /**
-         * Collect additional information from your customer using custom fields. Up to 2 fields are supported.
+         * Collect additional information from your customer using custom fields. Up to 3 fields are supported.
          */
         custom_fields: Array<Session.CustomField>;
 
