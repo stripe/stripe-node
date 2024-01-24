@@ -1239,7 +1239,7 @@ declare module 'stripe' {
           request_extended_authorization?: Card.RequestExtendedAuthorization;
 
           /**
-           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
+           * Request ability to [increment the authorization](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
            */
           request_incremental_authorization?: Card.RequestIncrementalAuthorization;
 
@@ -3354,7 +3354,7 @@ declare module 'stripe' {
           request_extended_authorization?: Card.RequestExtendedAuthorization;
 
           /**
-           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
+           * Request ability to [increment the authorization](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
            */
           request_incremental_authorization?: Card.RequestIncrementalAuthorization;
 
@@ -5607,7 +5607,7 @@ declare module 'stripe' {
           request_extended_authorization?: Card.RequestExtendedAuthorization;
 
           /**
-           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
+           * Request ability to [increment the authorization](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
            */
           request_incremental_authorization?: Card.RequestIncrementalAuthorization;
 
