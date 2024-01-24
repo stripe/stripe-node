@@ -206,7 +206,7 @@ declare module 'stripe' {
         /**
          * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
          */
-        liability?: AutomaticTax.Liability | null;
+        liability: AutomaticTax.Liability | null;
 
         /**
          * The status of the most recent automated tax calculation for this quote.
@@ -547,7 +547,7 @@ declare module 'stripe' {
          */
         days_until_due: number | null;
 
-        issuer?: InvoiceSettings.Issuer;
+        issuer: InvoiceSettings.Issuer;
       }
 
       namespace InvoiceSettings {
