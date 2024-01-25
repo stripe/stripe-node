@@ -1,5 +1,30 @@
 # Changelog
 
+## 14.14.0 - 2024-01-25
+* [#1998](https://github.com/stripe/stripe-node/pull/1998) Update generated code
+  * Add support for `annual_revenue` and `estimated_worker_count` on `Account.business_profile`, `AccountCreateParams.business_profile`, and `AccountUpdateParams.business_profile`
+  * Add support for new value `registered_charity` on enums `Account.company.structure`, `AccountCreateParams.company.structure`, `AccountUpdateParams.company.structure`, and `TokenCreateParams.account.company.structure`
+  * Add support for `collection_options` on `AccountLinkCreateParams`
+  * Add support for `liability` on `Checkout.Session.automatic_tax`, `Checkout.SessionCreateParams.automatic_tax`, `PaymentLink.automatic_tax`, `PaymentLinkCreateParams.automatic_tax`, `PaymentLinkUpdateParams.automatic_tax`, `Quote.automatic_tax`, `QuoteCreateParams.automatic_tax`, `QuoteUpdateParams.automatic_tax`, `SubscriptionSchedule.default_settings.automatic_tax`, `SubscriptionSchedule.phases[].automatic_tax`, `SubscriptionScheduleCreateParams.default_settings.automatic_tax`, `SubscriptionScheduleCreateParams.phases[].automatic_tax`, `SubscriptionScheduleUpdateParams.default_settings.automatic_tax`, and `SubscriptionScheduleUpdateParams.phases[].automatic_tax`
+  * Add support for `issuer` on `Checkout.Session.invoice_creation.invoice_data`, `Checkout.SessionCreateParams.invoice_creation.invoice_data`, `PaymentLink.invoice_creation.invoice_data`, `PaymentLinkCreateParams.invoice_creation.invoice_data`, `PaymentLinkUpdateParams.invoice_creation.invoice_data`, `Quote.invoice_settings`, `QuoteCreateParams.invoice_settings`, `QuoteUpdateParams.invoice_settings`, `SubscriptionSchedule.default_settings.invoice_settings`, `SubscriptionSchedule.phases[].invoice_settings`, `SubscriptionScheduleCreateParams.default_settings.invoice_settings`, `SubscriptionScheduleCreateParams.phases[].invoice_settings`, `SubscriptionScheduleUpdateParams.default_settings.invoice_settings`, and `SubscriptionScheduleUpdateParams.phases[].invoice_settings`
+  * Add support for `invoice_settings` on `Checkout.SessionCreateParams.subscription_data`, `PaymentLink.subscription_data`, `PaymentLinkCreateParams.subscription_data`, and `PaymentLinkUpdateParams.subscription_data`
+  * Add support for new value `challenge` on enums `Invoice.payment_settings.payment_method_options.card.request_three_d_secure`, `InvoiceCreateParams.payment_settings.payment_method_options.card.request_three_d_secure`, `InvoiceUpdateParams.payment_settings.payment_method_options.card.request_three_d_secure`, `Subscription.payment_settings.payment_method_options.card.request_three_d_secure`, `SubscriptionCreateParams.payment_settings.payment_method_options.card.request_three_d_secure`, and `SubscriptionUpdateParams.payment_settings.payment_method_options.card.request_three_d_secure`
+  * Add support for `promotion_code` on `InvoiceUpcomingLinesParams.discounts[]`, `InvoiceUpcomingLinesParams.invoice_items[].discounts[]`, `InvoiceUpcomingParams.discounts[]`, and `InvoiceUpcomingParams.invoice_items[].discounts[]`
+  * Add support for `account_type` on `PaymentMethodUpdateParams.us_bank_account`
+* [#1995](https://github.com/stripe/stripe-node/pull/1995) Update generated code
+  * Add support for providing `BankAccount`, `Card`, and `CardToken` details on the `external_account` parameter in `AccountUpdateParams`
+  * Add support for new value `nn` on enums `Charge.payment_method_details.ideal.bank`, `PaymentIntentConfirmParams.payment_method_data.ideal.bank`, `PaymentIntentCreateParams.payment_method_data.ideal.bank`, `PaymentIntentUpdateParams.payment_method_data.ideal.bank`, `PaymentMethod.ideal.bank`, `PaymentMethodCreateParams.ideal.bank`, `SetupAttempt.payment_method_details.ideal.bank`, `SetupIntentConfirmParams.payment_method_data.ideal.bank`, `SetupIntentCreateParams.payment_method_data.ideal.bank`, and `SetupIntentUpdateParams.payment_method_data.ideal.bank`
+  * Add support for new value `NNBANL2G` on enums `Charge.payment_method_details.ideal.bic`, `PaymentMethod.ideal.bic`, and `SetupAttempt.payment_method_details.ideal.bic`
+  * Change `CustomerSession.components.buy_button`, `CustomerSession.components.pricing_table`, and `Subscription.billing_cycle_anchor_config` to be required
+  * Add support for `issuer` on `InvoiceCreateParams`, `InvoiceUpcomingLinesParams`, `InvoiceUpcomingParams`, `InvoiceUpdateParams`, and `Invoice`
+  * Add support for `liability` on `Invoice.automatic_tax`, `InvoiceCreateParams.automatic_tax`, `InvoiceUpcomingLinesParams.automatic_tax`, `InvoiceUpcomingParams.automatic_tax`, `InvoiceUpdateParams.automatic_tax`, `Subscription.automatic_tax`, `SubscriptionCreateParams.automatic_tax`, and `SubscriptionUpdateParams.automatic_tax`
+  * Add support for `on_behalf_of` on `InvoiceUpcomingLinesParams` and `InvoiceUpcomingParams`
+  * Add support for `pin` on `Issuing.CardCreateParams`
+  * Add support for `revocation_reason` on `Mandate.payment_method_details.bacs_debit`
+  * Add support for `customer_balance` on `PaymentMethodConfigurationCreateParams`, `PaymentMethodConfigurationUpdateParams`, and `PaymentMethodConfiguration`
+  * Add support for `invoice_settings` on `SubscriptionCreateParams` and `SubscriptionUpdateParams`
+* [#1992](https://github.com/stripe/stripe-node/pull/1992) Add a hint about formatting during request forwarding
+
 ## 14.13.0 - 2024-01-18
 * [#1995](https://github.com/stripe/stripe-node/pull/1995) Update generated code
   * Add support for providing `BankAccount`, `Card`, and `CardToken` details on the `external_account` parameter in `AccountUpdateParams`
