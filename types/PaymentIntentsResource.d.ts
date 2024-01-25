@@ -1604,7 +1604,7 @@ declare module 'stripe' {
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
 
         /**
-         * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Demo Pay payment method options.
+         * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Revolut Pay payment method options.
          */
         revolut_pay?: Stripe.Emptyable<PaymentMethodOptions.RevolutPay>;
 
@@ -1898,7 +1898,7 @@ declare module 'stripe' {
           request_extended_authorization?: Card.RequestExtendedAuthorization;
 
           /**
-           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
+           * Request ability to [increment the authorization](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
            */
           request_incremental_authorization?: Card.RequestIncrementalAuthorization;
 
@@ -4457,7 +4457,7 @@ declare module 'stripe' {
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
 
         /**
-         * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Demo Pay payment method options.
+         * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Revolut Pay payment method options.
          */
         revolut_pay?: Stripe.Emptyable<PaymentMethodOptions.RevolutPay>;
 
@@ -4751,7 +4751,7 @@ declare module 'stripe' {
           request_extended_authorization?: Card.RequestExtendedAuthorization;
 
           /**
-           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
+           * Request ability to [increment the authorization](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
            */
           request_incremental_authorization?: Card.RequestIncrementalAuthorization;
 
@@ -8067,7 +8067,7 @@ declare module 'stripe' {
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
 
         /**
-         * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Demo Pay payment method options.
+         * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Revolut Pay payment method options.
          */
         revolut_pay?: Stripe.Emptyable<PaymentMethodOptions.RevolutPay>;
 
@@ -8361,7 +8361,7 @@ declare module 'stripe' {
           request_extended_authorization?: Card.RequestExtendedAuthorization;
 
           /**
-           * Request ability to [increment](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
+           * Request ability to [increment the authorization](https://stripe.com/docs/payments/incremental-authorization) for this PaymentIntent.
            */
           request_incremental_authorization?: Card.RequestIncrementalAuthorization;
 

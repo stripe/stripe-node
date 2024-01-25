@@ -374,6 +374,11 @@ declare module 'stripe' {
              * Details to determine how long the discount should be applied for.
              */
             discount_end?: Discount.DiscountEnd;
+
+            /**
+             * ID of the promotion code to create a new discount for.
+             */
+            promotion_code?: string;
           }
 
           namespace Discount {
@@ -508,6 +513,11 @@ declare module 'stripe' {
            * Details to determine how long the discount should be applied for.
            */
           discount_end?: Discount.DiscountEnd;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
         }
 
         namespace Discount {
@@ -649,6 +659,11 @@ declare module 'stripe' {
              * Details to determine how long the discount should be applied for.
              */
             discount_end?: Discount.DiscountEnd;
+
+            /**
+             * ID of the promotion code to create a new discount for.
+             */
+            promotion_code?: string;
           }
 
           namespace Discount {
@@ -730,7 +745,7 @@ declare module 'stripe' {
               interval: Recurring.Interval;
 
               /**
-               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
                */
               interval_count?: number;
             }
@@ -1201,6 +1216,11 @@ declare module 'stripe' {
              * Details to determine how long the discount should be applied for.
              */
             discount_end?: Discount.DiscountEnd;
+
+            /**
+             * ID of the promotion code to create a new discount for.
+             */
+            promotion_code?: string;
           }
 
           namespace Discount {
@@ -1335,6 +1355,11 @@ declare module 'stripe' {
            * Details to determine how long the discount should be applied for.
            */
           discount_end?: Discount.DiscountEnd;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
         }
 
         namespace Discount {
@@ -1476,6 +1501,11 @@ declare module 'stripe' {
              * Details to determine how long the discount should be applied for.
              */
             discount_end?: Discount.DiscountEnd;
+
+            /**
+             * ID of the promotion code to create a new discount for.
+             */
+            promotion_code?: string;
           }
 
           namespace Discount {
@@ -1557,7 +1587,7 @@ declare module 'stripe' {
               interval: Recurring.Interval;
 
               /**
-               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
                */
               interval_count?: number;
             }
@@ -1926,6 +1956,11 @@ declare module 'stripe' {
              * The index, starting at 0, at which to position the new discount. When not supplied, Stripe defaults to appending the discount to the end of the `discounts` array.
              */
             index?: number;
+
+            /**
+             * The promotion code to redeem.
+             */
+            promotion_code?: string;
           }
 
           namespace Add {
@@ -1947,6 +1982,11 @@ declare module 'stripe' {
              * The ID of a discount to remove from the `discounts` array.
              */
             discount?: string;
+
+            /**
+             * The ID of a promotion code to remove from the `discounts` array.
+             */
+            promotion_code?: string;
           }
 
           interface Set {
@@ -1959,6 +1999,11 @@ declare module 'stripe' {
              * An ID of an existing discount to replace the `discounts` array with.
              */
             discount?: string;
+
+            /**
+             * An ID of an existing promotion code to replace the `discounts` array with.
+             */
+            promotion_code?: string;
           }
 
           type Type = 'add' | 'remove' | 'set';
@@ -2035,6 +2080,11 @@ declare module 'stripe' {
                * Details to determine how long the discount should be applied for.
                */
               discount_end?: Discount.DiscountEnd;
+
+              /**
+               * ID of the promotion code to create a new discount for.
+               */
+              promotion_code?: string;
             }
 
             namespace Discount {
@@ -2148,6 +2198,11 @@ declare module 'stripe' {
                * Details to determine how long the discount should be applied for.
                */
               discount_end?: Discount.DiscountEnd;
+
+              /**
+               * ID of the promotion code to create a new discount for.
+               */
+              promotion_code?: string;
             }
 
             namespace Discount {

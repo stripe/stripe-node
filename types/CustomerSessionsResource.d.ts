@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     interface CustomerSessionCreateParams {
       /**
-       * Configuration for each component. 1 component must be enabled.
+       * Configuration for each component. Exactly 1 component must be enabled.
        */
       components: CustomerSessionCreateParams.Components;
 
@@ -81,13 +81,13 @@ declare module 'stripe' {
           }
 
           namespace Features {
-            type PaymentMethodRemove = 'auto' | 'never';
+            type PaymentMethodRemove = 'disabled' | 'enabled';
 
-            type PaymentMethodSave = 'auto' | 'never';
+            type PaymentMethodSave = 'disabled' | 'enabled';
 
-            type PaymentMethodSetAsDefault = 'auto' | 'never';
+            type PaymentMethodSetAsDefault = 'disabled' | 'enabled';
 
-            type PaymentMethodUpdate = 'auto' | 'never';
+            type PaymentMethodUpdate = 'disabled' | 'enabled';
           }
         }
 

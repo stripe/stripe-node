@@ -683,13 +683,20 @@ declare module 'stripe' {
 
       interface UsBankAccount {
         /**
-         * Bank account type.
+         * Bank account holder type.
          */
         account_holder_type?: UsBankAccount.AccountHolderType;
+
+        /**
+         * Bank account type.
+         */
+        account_type?: UsBankAccount.AccountType;
       }
 
       namespace UsBankAccount {
         type AccountHolderType = 'company' | 'individual';
+
+        type AccountType = 'checking' | 'savings';
       }
     }
 

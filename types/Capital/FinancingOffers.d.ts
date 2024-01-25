@@ -32,6 +32,11 @@ declare module 'stripe' {
         account: string;
 
         /**
+         * The time at which this financing offer was charged off, if applicable. Given in seconds since unix epoch.
+         */
+        charged_off_at?: number;
+
+        /**
          * Time at which the offer was created. Given in seconds since unix epoch.
          */
         created: number;

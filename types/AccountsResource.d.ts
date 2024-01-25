@@ -14,7 +14,7 @@ declare module 'stripe' {
       business_profile?: AccountCreateParams.BusinessProfile;
 
       /**
-       * The business type.
+       * The business type. Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property can only be updated for Custom accounts.
        */
       business_type?: AccountCreateParams.BusinessType;
 
@@ -24,7 +24,7 @@ declare module 'stripe' {
       capabilities?: AccountCreateParams.Capabilities;
 
       /**
-       * Information about the company or business. This field is available for any `business_type`.
+       * Information about the company or business. This field is available for any `business_type`. Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property can only be updated for Custom accounts.
        */
       company?: AccountCreateParams.Company;
 
@@ -62,11 +62,13 @@ declare module 'stripe' {
        * A card or bank account to attach to the account for receiving [payouts](https://stripe.com/docs/connect/bank-debit-card-payouts) (you won't be able to use it for top-ups). You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://stripe.com/docs/api#account_create_bank_account) creation.
        *
        * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the [bank account](https://stripe.com/docs/api#account_create_bank_account) or [card creation](https://stripe.com/docs/api#account_create_card) APIs.
+       *
+       * Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property can only be updated for Custom accounts.
        */
       external_account?: string | AccountCreateParams.ExternalAccount;
 
       /**
-       * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
+       * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`. Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property can only be updated for Custom accounts.
        */
       individual?: AccountCreateParams.Individual;
 
@@ -81,7 +83,7 @@ declare module 'stripe' {
       settings?: AccountCreateParams.Settings;
 
       /**
-       * Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
+       * Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance) This property can only be updated for Custom accounts.
        */
       tos_acceptance?: AccountCreateParams.TosAcceptance;
 
@@ -93,6 +95,16 @@ declare module 'stripe' {
 
     namespace AccountCreateParams {
       interface BusinessProfile {
+        /**
+         * The applicant's gross annual revenue for its preceding fiscal year.
+         */
+        annual_revenue?: BusinessProfile.AnnualRevenue;
+
+        /**
+         * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
+         */
+        estimated_worker_count?: number;
+
         /**
          * [The merchant category code for the account](https://stripe.com/docs/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
          */
@@ -140,6 +152,23 @@ declare module 'stripe' {
       }
 
       namespace BusinessProfile {
+        interface AnnualRevenue {
+          /**
+           * A non-negative integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           */
+          amount: number;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * The close-out date of the preceding fiscal year in ISO 8601 format. E.g. 2023-12-31 for the 31st of December, 2023.
+           */
+          fiscal_year_end: string;
+        }
+
         interface MonthlyEstimatedRevenue {
           /**
            * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
@@ -750,6 +779,7 @@ declare module 'stripe' {
           | 'public_company'
           | 'public_corporation'
           | 'public_partnership'
+          | 'registered_charity'
           | 'single_member_llc'
           | 'sole_establishment'
           | 'sole_proprietorship'
@@ -1401,7 +1431,7 @@ declare module 'stripe' {
       business_profile?: AccountUpdateParams.BusinessProfile;
 
       /**
-       * The business type.
+       * The business type. Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property can only be updated for Custom accounts.
        */
       business_type?: AccountUpdateParams.BusinessType;
 
@@ -1411,7 +1441,7 @@ declare module 'stripe' {
       capabilities?: AccountUpdateParams.Capabilities;
 
       /**
-       * Information about the company or business. This field is available for any `business_type`.
+       * Information about the company or business. This field is available for any `business_type`. Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property can only be updated for Custom accounts.
        */
       company?: AccountUpdateParams.Company;
 
@@ -1439,6 +1469,8 @@ declare module 'stripe' {
        * A card or bank account to attach to the account for receiving [payouts](https://stripe.com/docs/connect/bank-debit-card-payouts) (you won't be able to use it for top-ups). You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://stripe.com/docs/api#account_create_bank_account) creation.
        *
        * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the [bank account](https://stripe.com/docs/api#account_create_bank_account) or [card creation](https://stripe.com/docs/api#account_create_card) APIs.
+       *
+       * Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property can only be updated for Custom accounts.
        */
       external_account?: Stripe.Emptyable<
         | string
@@ -1448,7 +1480,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
+       * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`. Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property can only be updated for Custom accounts.
        */
       individual?: AccountUpdateParams.Individual;
 
@@ -1463,7 +1495,7 @@ declare module 'stripe' {
       settings?: AccountUpdateParams.Settings;
 
       /**
-       * Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
+       * Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance) This property can only be updated for Custom accounts.
        */
       tos_acceptance?: AccountUpdateParams.TosAcceptance;
     }
@@ -1508,6 +1540,16 @@ declare module 'stripe' {
       }
 
       interface BusinessProfile {
+        /**
+         * The applicant's gross annual revenue for its preceding fiscal year.
+         */
+        annual_revenue?: BusinessProfile.AnnualRevenue;
+
+        /**
+         * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
+         */
+        estimated_worker_count?: number;
+
         /**
          * [The merchant category code for the account](https://stripe.com/docs/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
          */
@@ -1555,6 +1597,23 @@ declare module 'stripe' {
       }
 
       namespace BusinessProfile {
+        interface AnnualRevenue {
+          /**
+           * A non-negative integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           */
+          amount: number;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * The close-out date of the preceding fiscal year in ISO 8601 format. E.g. 2023-12-31 for the 31st of December, 2023.
+           */
+          fiscal_year_end: string;
+        }
+
         interface MonthlyEstimatedRevenue {
           /**
            * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
@@ -2208,6 +2267,7 @@ declare module 'stripe' {
           | 'public_company'
           | 'public_corporation'
           | 'public_partnership'
+          | 'registered_charity'
           | 'single_member_llc'
           | 'sole_establishment'
           | 'sole_proprietorship'
@@ -3755,9 +3815,8 @@ declare module 'stripe' {
        * left unchanged.
        *
        * For Custom accounts, you can update any information on the account. For other accounts, you can update all information until that
-       * account has started to go through Connect Onboarding. Once you create an [Account Link](https://stripe.com/docs/api/account_links)
-       * for a Standard or Express account, some parameters can no longer be changed. These are marked as Custom Only or Custom and Express
-       * below.
+       * account has started to go through Connect Onboarding. Once you create an [Account Link or <a href="/docs/api/account_sessions">Account Session](https://stripe.com/docs/api/account_links),
+       * some properties can only be changed or updated for Custom accounts.
        *
        * To update your own account, use the [Dashboard](https://dashboard.stripe.com/settings/account). Refer to our
        * [Connect](https://stripe.com/docs/connect/updating-accounts) documentation to learn more about updating accounts.

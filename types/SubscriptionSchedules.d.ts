@@ -181,7 +181,7 @@ declare module 'stripe' {
           /**
            * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
            */
-          liability?: AutomaticTax.Liability | null;
+          liability: AutomaticTax.Liability | null;
         }
 
         namespace AutomaticTax {
@@ -224,7 +224,7 @@ declare module 'stripe' {
            */
           days_until_due: number | null;
 
-          issuer?: InvoiceSettings.Issuer;
+          issuer: InvoiceSettings.Issuer;
         }
 
         namespace InvoiceSettings {
@@ -418,6 +418,11 @@ declare module 'stripe' {
              * Details to determine how long the discount should be applied for.
              */
             discount_end?: Discount.DiscountEnd | null;
+
+            /**
+             * ID of the promotion code to create a new discount for.
+             */
+            promotion_code: string | Stripe.PromotionCode | null;
           }
 
           namespace Discount {
@@ -444,7 +449,7 @@ declare module 'stripe' {
           /**
            * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
            */
-          liability?: AutomaticTax.Liability | null;
+          liability: AutomaticTax.Liability | null;
         }
 
         namespace AutomaticTax {
@@ -496,6 +501,11 @@ declare module 'stripe' {
            * Details to determine how long the discount should be applied for.
            */
           discount_end?: Discount.DiscountEnd | null;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code: string | Stripe.PromotionCode | null;
         }
 
         namespace Discount {
@@ -521,7 +531,7 @@ declare module 'stripe' {
           /**
            * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
            */
-          issuer?: InvoiceSettings.Issuer | null;
+          issuer: InvoiceSettings.Issuer | null;
         }
 
         namespace InvoiceSettings {
@@ -607,6 +617,11 @@ declare module 'stripe' {
              * Details to determine how long the discount should be applied for.
              */
             discount_end?: Discount.DiscountEnd | null;
+
+            /**
+             * ID of the promotion code to create a new discount for.
+             */
+            promotion_code: string | Stripe.PromotionCode | null;
           }
 
           namespace Discount {
