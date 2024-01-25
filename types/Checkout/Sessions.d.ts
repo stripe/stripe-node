@@ -100,7 +100,7 @@ declare module 'stripe' {
         currency_conversion: Session.CurrencyConversion | null;
 
         /**
-         * Collect additional information from your customer using custom fields. Up to 2 fields are supported.
+         * Collect additional information from your customer using custom fields. Up to 3 fields are supported.
          */
         custom_fields: Array<Session.CustomField>;
 
@@ -337,12 +337,33 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
+           * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+           */
+          liability: AutomaticTax.Liability | null;
+
+          /**
            * The status of the most recent automated tax calculation for this session.
            */
           status: AutomaticTax.Status | null;
         }
 
         namespace AutomaticTax {
+          interface Liability {
+            /**
+             * The connected account being referenced when `type` is `account`.
+             */
+            account?: string | Stripe.Account;
+
+            /**
+             * Type of the account referenced.
+             */
+            type: Liability.Type;
+          }
+
+          namespace Liability {
+            type Type = 'account' | 'self';
+          }
+
           type Status = 'complete' | 'failed' | 'requires_location_inputs';
         }
 
@@ -734,6 +755,11 @@ declare module 'stripe' {
             footer: string | null;
 
             /**
+             * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+             */
+            issuer: InvoiceData.Issuer | null;
+
+            /**
              * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
              */
             metadata: Stripe.Metadata | null;
@@ -755,6 +781,22 @@ declare module 'stripe' {
                * The value of the custom field.
                */
               value: string;
+            }
+
+            interface Issuer {
+              /**
+               * The connected account being referenced when `type` is `account`.
+               */
+              account?: string | Stripe.Account;
+
+              /**
+               * Type of the account referenced.
+               */
+              type: Issuer.Type;
+            }
+
+            namespace Issuer {
+              type Type = 'account' | 'self';
             }
 
             interface RenderingOptions {

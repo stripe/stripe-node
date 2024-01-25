@@ -78,7 +78,7 @@ declare module 'stripe' {
 
       interface AccountSubscribeParams {
         /**
-         * The list of account features to which you would like to subscribe.`.
+         * The list of account features to which you would like to subscribe.
          */
         features: Array<'transactions'>;
 

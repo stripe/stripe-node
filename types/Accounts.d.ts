@@ -8,9 +8,8 @@ declare module 'stripe' {
      * enabled to make live charges or receive payouts.
      *
      * For Custom accounts, the properties below are always returned. For other accounts, some properties are returned until that
-     * account has started to go through Connect Onboarding. Once you create an [Account Link](https://stripe.com/docs/api/account_links)
-     * for a Standard or Express account, some parameters are no longer returned. These are marked as **Custom Only** or **Custom and Express**
-     * below. Learn about the differences [between accounts](https://stripe.com/docs/connect/accounts).
+     * account has started to go through Connect Onboarding. Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions),
+     * some properties are only returned for Custom accounts. Learn about the differences [between accounts](https://stripe.com/docs/connect/accounts).
      */
     interface Account {
       /**
@@ -29,7 +28,7 @@ declare module 'stripe' {
       business_profile?: Account.BusinessProfile | null;
 
       /**
-       * The business type.
+       * The business type. Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property is only returned for Custom accounts.
        */
       business_type?: Account.BusinessType | null;
 
@@ -75,7 +74,7 @@ declare module 'stripe' {
       email: string | null;
 
       /**
-       * External accounts (bank accounts and debit cards) currently attached to this account
+       * External accounts (bank accounts and debit cards) currently attached to this account. External accounts are only returned for requests where `controller[is_controller]` is true.
        */
       external_accounts?: ApiList<Stripe.ExternalAccount>;
 
@@ -118,6 +117,16 @@ declare module 'stripe' {
 
     namespace Account {
       interface BusinessProfile {
+        /**
+         * The applicant's gross annual revenue for its preceding fiscal year.
+         */
+        annual_revenue: BusinessProfile.AnnualRevenue | null;
+
+        /**
+         * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
+         */
+        estimated_worker_count: number | null;
+
         /**
          * [The merchant category code for the account](https://stripe.com/docs/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
          */
@@ -162,6 +171,23 @@ declare module 'stripe' {
       }
 
       namespace BusinessProfile {
+        interface AnnualRevenue {
+          /**
+           * A non-negative integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           */
+          amount: number | null;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string | null;
+
+          /**
+           * The close-out date of the preceding fiscal year in ISO 8601 format. E.g. 2023-12-31 for the 31st of December, 2023.
+           */
+          fiscal_year_end: string | null;
+        }
+
         interface MonthlyEstimatedRevenue {
           /**
            * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
@@ -641,6 +667,7 @@ declare module 'stripe' {
           | 'public_company'
           | 'public_corporation'
           | 'public_partnership'
+          | 'registered_charity'
           | 'single_member_llc'
           | 'sole_establishment'
           | 'sole_proprietorship'

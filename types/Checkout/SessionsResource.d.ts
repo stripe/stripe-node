@@ -47,7 +47,7 @@ declare module 'stripe' {
         currency?: string;
 
         /**
-         * Collect additional information from your customer using custom fields. Up to 2 fields are supported.
+         * Collect additional information from your customer using custom fields. Up to 3 fields are supported.
          */
         custom_fields?: Array<SessionCreateParams.CustomField>;
 
@@ -279,6 +279,29 @@ declare module 'stripe' {
            * Set to true to enable automatic taxes.
            */
           enabled: boolean;
+
+          /**
+           * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+           */
+          liability?: AutomaticTax.Liability;
+        }
+
+        namespace AutomaticTax {
+          interface Liability {
+            /**
+             * The connected account being referenced when `type` is `account`.
+             */
+            account?: string;
+
+            /**
+             * Type of the account referenced in the request.
+             */
+            type: Liability.Type;
+          }
+
+          namespace Liability {
+            type Type = 'account' | 'self';
+          }
         }
 
         type BillingAddressCollection = 'auto' | 'required';
@@ -549,6 +572,11 @@ declare module 'stripe' {
             footer?: string;
 
             /**
+             * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+             */
+            issuer?: InvoiceData.Issuer;
+
+            /**
              * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: Stripe.MetadataParam;
@@ -570,6 +598,22 @@ declare module 'stripe' {
                * The value of the custom field. This may be up to 30 characters.
                */
               value: string;
+            }
+
+            interface Issuer {
+              /**
+               * The connected account being referenced when `type` is `account`.
+               */
+              account?: string;
+
+              /**
+               * Type of the account referenced in the request.
+               */
+              type: Issuer.Type;
+            }
+
+            namespace Issuer {
+              type Type = 'account' | 'self';
             }
 
             interface RenderingOptions {
@@ -709,7 +753,7 @@ declare module 'stripe' {
               interval: Recurring.Interval;
 
               /**
-               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
                */
               interval_count?: number;
             }
@@ -2133,6 +2177,11 @@ declare module 'stripe' {
           description?: string;
 
           /**
+           * All invoices will be billed using the specified settings.
+           */
+          invoice_settings?: SubscriptionData.InvoiceSettings;
+
+          /**
            * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
           metadata?: Stripe.MetadataParam;
@@ -2172,6 +2221,31 @@ declare module 'stripe' {
         }
 
         namespace SubscriptionData {
+          interface InvoiceSettings {
+            /**
+             * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+             */
+            issuer?: InvoiceSettings.Issuer;
+          }
+
+          namespace InvoiceSettings {
+            interface Issuer {
+              /**
+               * The connected account being referenced when `type` is `account`.
+               */
+              account?: string;
+
+              /**
+               * Type of the account referenced in the request.
+               */
+              type: Issuer.Type;
+            }
+
+            namespace Issuer {
+              type Type = 'account' | 'self';
+            }
+          }
+
           type ProrationBehavior = 'create_prorations' | 'none';
 
           interface TransferData {

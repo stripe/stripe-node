@@ -389,7 +389,7 @@ declare module 'stripe' {
               }
             }
 
-            type RequestThreeDSecure = 'any' | 'automatic';
+            type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
           }
 
           interface CustomerBalance {
@@ -1069,7 +1069,7 @@ declare module 'stripe' {
               }
             }
 
-            type RequestThreeDSecure = 'any' | 'automatic';
+            type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
           }
 
           interface CustomerBalance {
@@ -1751,6 +1751,11 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       interface InvoiceItem {
@@ -1846,6 +1851,11 @@ declare module 'stripe' {
            * ID of an existing discount on the object (or one of its ancestors) to reuse.
            */
           discount?: string;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
         }
 
         interface Period {
@@ -2014,7 +2024,7 @@ declare module 'stripe' {
             interval: Recurring.Interval;
 
             /**
-             * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+             * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
              */
             interval_count?: number;
           }
@@ -2385,6 +2395,11 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       interface InvoiceItem {
@@ -2480,6 +2495,11 @@ declare module 'stripe' {
            * ID of an existing discount on the object (or one of its ancestors) to reuse.
            */
           discount?: string;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
         }
 
         interface Period {
@@ -2648,7 +2668,7 @@ declare module 'stripe' {
             interval: Recurring.Interval;
 
             /**
-             * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+             * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
              */
             interval_count?: number;
           }
