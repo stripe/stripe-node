@@ -81,13 +81,13 @@ declare module 'stripe' {
           }
 
           namespace Features {
-            type PaymentMethodRemove = 'auto' | 'never';
+            type PaymentMethodRemove = 'disabled' | 'enabled';
 
-            type PaymentMethodSave = 'auto' | 'never';
+            type PaymentMethodSave = 'disabled' | 'enabled';
 
-            type PaymentMethodSetAsDefault = 'auto' | 'never';
+            type PaymentMethodSetAsDefault = 'disabled' | 'enabled';
 
-            type PaymentMethodUpdate = 'auto' | 'never';
+            type PaymentMethodUpdate = 'disabled' | 'enabled';
           }
         }
 
