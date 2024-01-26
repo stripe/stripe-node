@@ -18,12 +18,12 @@ declare module 'stripe' {
         object: 'tax.calculation_line_item';
 
         /**
-         * The line item amount in integer cents. If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
+         * The line item amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
          */
         amount: number;
 
         /**
-         * The amount of tax calculated for this line item, in integer cents.
+         * The amount of tax calculated for this line item, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
          */
         amount_tax: number;
 
@@ -68,7 +68,7 @@ declare module 'stripe' {
 
         interface TaxBreakdown {
           /**
-           * The amount of tax, in integer cents.
+           * The amount of tax, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
            */
           amount: number;
 
@@ -90,7 +90,7 @@ declare module 'stripe' {
           taxability_reason: TaxBreakdown.TaxabilityReason;
 
           /**
-           * The amount on which tax is calculated, in integer cents.
+           * The amount on which tax is calculated, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
            */
           taxable_amount: number;
         }
