@@ -54,7 +54,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * A flat amount to reverse across the entire transaction, in negative integer cents. This value represents the total amount to refund from the transaction, including taxes.
+         * A flat amount to reverse across the entire transaction, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) in negative. This value represents the total amount to refund from the transaction, including taxes.
          */
         flat_amount?: number;
 
@@ -77,12 +77,12 @@ declare module 'stripe' {
       namespace TransactionCreateReversalParams {
         interface LineItem {
           /**
-           * The amount to reverse, in negative integer cents.
+           * The amount to reverse, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) in negative.
            */
           amount: number;
 
           /**
-           * The amount of tax to reverse, in negative integer cents.
+           * The amount of tax to reverse, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) in negative.
            */
           amount_tax: number;
 
@@ -111,12 +111,12 @@ declare module 'stripe' {
 
         interface ShippingCost {
           /**
-           * The amount to reverse, in negative integer cents.
+           * The amount to reverse, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) in negative.
            */
           amount: number;
 
           /**
-           * The amount of tax to reverse, in negative integer cents.
+           * The amount of tax to reverse, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) in negative.
            */
           amount_tax: number;
         }
