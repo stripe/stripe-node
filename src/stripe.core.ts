@@ -1,18 +1,18 @@
 import * as _Error from './Error.js';
 import * as apiVersion from './apiVersion.js';
 import * as resources from './resources.js';
-import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
+import { HttpClient, HttpClientResponse } from './net/HttpClient.js';
 import {
   determineProcessUserAgentProperties,
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
-import {CryptoProvider} from './crypto/CryptoProvider.js';
-import {PlatformFunctions} from './platform/PlatformFunctions.js';
-import {RequestSender} from './RequestSender.js';
-import {StripeResource} from './StripeResource.js';
-import {WebhookObject, createWebhooks} from './Webhooks.js';
-import {StripeObject, AppInfo, UserProvidedConfig} from './Types.js';
+import { CryptoProvider } from './crypto/CryptoProvider.js';
+import { PlatformFunctions } from './platform/PlatformFunctions.js';
+import { RequestSender } from './RequestSender.js';
+import { StripeResource } from './StripeResource.js';
+import { WebhookObject, createWebhooks } from './Webhooks.js';
+import { StripeObject, AppInfo, UserProvidedConfig } from './Types.js';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -103,16 +103,6 @@ export function createStripe(
     this.on = this._emitter.on.bind(this._emitter);
     this.once = this._emitter.once.bind(this._emitter);
     this.off = this._emitter.removeListener.bind(this._emitter);
-
-    if (
-      props.protocol &&
-      props.protocol !== 'https' &&
-      (!props.host || /\.stripe\.com$/.test(props.host))
-    ) {
-      throw new Error(
-        'The `https` protocol must be used when sending requests to `*.stripe.com`'
-      );
-    }
 
     const agent = props.httpAgent || null;
 
