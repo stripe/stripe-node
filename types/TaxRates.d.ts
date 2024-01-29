@@ -61,6 +61,11 @@ declare module 'stripe' {
       jurisdiction: string | null;
 
       /**
+       * The level of the jurisdiction that imposes this tax rate. Will be `null` for manually defined tax rates.
+       */
+      jurisdiction_level: TaxRate.JurisdictionLevel | null;
+
+      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
@@ -87,6 +92,14 @@ declare module 'stripe' {
     }
 
     namespace TaxRate {
+      type JurisdictionLevel =
+        | 'city'
+        | 'country'
+        | 'county'
+        | 'district'
+        | 'multiple'
+        | 'state';
+
       type TaxType =
         | 'amusement_tax'
         | 'communications_tax'
