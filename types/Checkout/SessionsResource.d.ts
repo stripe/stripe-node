@@ -1085,6 +1085,11 @@ declare module 'stripe' {
           sofort?: PaymentMethodOptions.Sofort;
 
           /**
+           * contains details about the Swish payment method options.
+           */
+          swish?: PaymentMethodOptions.Swish;
+
+          /**
            * contains details about the Us Bank Account payment method options.
            */
           us_bank_account?: PaymentMethodOptions.UsBankAccount;
@@ -1637,6 +1642,13 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface Swish {
+            /**
+             * The order reference that will be displayed to customers in the Swish application. Defaults to the `id` of the Payment Intent.
+             */
+            reference?: Stripe.Emptyable<string>;
+          }
+
           interface UsBankAccount {
             /**
              * Additional fields for Financial Connections Session creation
@@ -1746,6 +1758,7 @@ declare module 'stripe' {
           | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
+          | 'swish'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
