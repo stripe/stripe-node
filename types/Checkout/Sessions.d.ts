@@ -261,8 +261,7 @@ declare module 'stripe' {
         /**
          * Describes the type of transaction being performed by Checkout in order to customize
          * relevant text on the page, such as the submit button. `submit_type` can only be
-         * specified on Checkout Sessions in `payment` mode, but not Checkout Sessions
-         * in `subscription` or `setup` mode. Possible values are `auto`, `pay`, `book`, `donate`. If blank or `auto`, `pay` is used.
+         * specified on Checkout Sessions in `payment` mode. If blank or `auto`, `pay` is used.
          */
         submit_type: Session.SubmitType | null;
 
