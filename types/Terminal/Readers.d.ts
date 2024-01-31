@@ -92,7 +92,7 @@ declare module 'stripe' {
         /**
          * The networking status of the reader.
          */
-        status: string | null;
+        status: Reader.Status | null;
       }
 
       namespace Reader {
@@ -495,6 +495,8 @@ declare module 'stripe' {
           | 'simulated_wisepos_e'
           | 'stripe_m2'
           | 'verifone_P400';
+
+        type Status = 'offline' | 'online';
       }
     }
   }
