@@ -124,6 +124,11 @@ declare module 'stripe' {
       unit_label?: string | null;
 
       /**
+       * Features of a specific product to help users tell the differences between similar products.
+       */
+      features?: Array<string> | null;
+
+      /**
        * Time at which the object was last updated. Measured in seconds since the Unix epoch.
        */
       updated: number;
