@@ -321,7 +321,7 @@ declare module 'stripe' {
           available: Array<string>;
 
           /**
-           * The preferred network for the card. Will contain invalid_preference if requested network is not valid for the card.
+           * The preferred network for the card. Can be `cartes_bancaires`, `mastercard`, `visa` or `invalid_preference` if requested network is not valid for the card.
            */
           preferred: string | null;
         }
