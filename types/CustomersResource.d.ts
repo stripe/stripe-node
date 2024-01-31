@@ -801,6 +801,13 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
+    interface CustomerEntitlementListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface CustomerSourceListParams extends PaginationParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -842,6 +849,13 @@ declare module 'stripe' {
     }
 
     interface CustomerCashBalanceTransactionRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CustomerEntitlementSummaryRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -1220,6 +1234,19 @@ declare module 'stripe' {
       ): ApiListPromise<Stripe.CustomerCashBalanceTransaction>;
 
       /**
+       * Retrieve a list of entitlements for a customer
+       */
+      listEntitlements(
+        id: string,
+        params?: CustomerEntitlementListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.CustomerEntitlement>;
+      listEntitlements(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.CustomerEntitlement>;
+
+      /**
        * List sources for a specified customer.
        */
       listSources(
@@ -1302,6 +1329,19 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.CustomerCashBalanceTransaction>>;
+
+      /**
+       * Retrieve the entitlement summary for a customer
+       */
+      retrieveEntitlementSummary(
+        id: string,
+        params?: CustomerEntitlementSummaryRetrieveParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CustomerEntitlementSummary>>;
+      retrieveEntitlementSummary(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CustomerEntitlementSummary>>;
 
       /**
        * Retrieve a specified source for a given customer.

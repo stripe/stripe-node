@@ -29,7 +29,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * A list of up to 15 features for this product. These are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
+       * A list of up to 15 features for this product. Entries using `name` are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
        */
       features?: Array<ProductCreateParams.Feature>;
 
@@ -229,6 +229,11 @@ declare module 'stripe' {
 
       interface Feature {
         /**
+         * The ID of the [Feature](docs/api/entitlements/feature) object. This property is mutually-exclusive with `name`; either one must be specified, but not both.
+         */
+        feature?: string;
+
+        /**
          * The feature's name. Up to 80 characters long.
          */
         name: string;
@@ -319,7 +324,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * A list of up to 15 features for this product. These are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
+       * A list of up to 15 features for this product. Entries using `name` are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
        */
       features?: Stripe.Emptyable<Array<ProductUpdateParams.Feature>>;
 
@@ -376,6 +381,11 @@ declare module 'stripe' {
 
     namespace ProductUpdateParams {
       interface Feature {
+        /**
+         * The ID of the [Feature](docs/api/entitlements/feature) object. This property is mutually-exclusive with `name`; either one must be specified, but not both.
+         */
+        feature?: string;
+
         /**
          * The feature's name. Up to 80 characters long.
          */

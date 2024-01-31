@@ -148,6 +148,7 @@ declare module 'stripe' {
         | 'customer.discount.created'
         | 'customer.discount.deleted'
         | 'customer.discount.updated'
+        | 'customer.entitlement_summary.updated'
         | 'customer.source.created'
         | 'customer.source.deleted'
         | 'customer.source.expiring'
