@@ -781,6 +781,7 @@ declare module 'stripe' {
         | 'revolut_pay'
         | 'sepa_debit'
         | 'sofort'
+        | 'swish'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';

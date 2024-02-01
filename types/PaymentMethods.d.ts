@@ -109,6 +109,8 @@ declare module 'stripe' {
 
       sofort?: PaymentMethod.Sofort;
 
+      swish?: PaymentMethod.Swish;
+
       /**
        * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
        */
@@ -321,7 +323,7 @@ declare module 'stripe' {
           available: Array<string>;
 
           /**
-           * The preferred network for the card.
+           * The preferred network for the card. Can be `cartes_bancaires`, `mastercard`, `visa` or `invalid_preference` if requested network is not valid for the card.
            */
           preferred: string | null;
         }
@@ -917,6 +919,8 @@ declare module 'stripe' {
         country: string | null;
       }
 
+      interface Swish {}
+
       type Type =
         | 'acss_debit'
         | 'affirm'
@@ -949,6 +953,7 @@ declare module 'stripe' {
         | 'revolut_pay'
         | 'sepa_debit'
         | 'sofort'
+        | 'swish'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';

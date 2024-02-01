@@ -364,6 +364,11 @@ declare module 'stripe' {
         sofort_payments?: Capabilities.SofortPayments;
 
         /**
+         * The status of the Swish capability of the account, or whether the account can directly process Swish payments.
+         */
+        swish_payments?: Capabilities.SwishPayments;
+
+        /**
          * The status of the tax reporting 1099-K (US) capability of the account.
          */
         tax_reporting_us_1099_k?: Capabilities.TaxReportingUs1099K;
@@ -456,6 +461,8 @@ declare module 'stripe' {
         type SepaDebitPayments = 'active' | 'inactive' | 'pending';
 
         type SofortPayments = 'active' | 'inactive' | 'pending';
+
+        type SwishPayments = 'active' | 'inactive' | 'pending';
 
         type TaxReportingUs1099K = 'active' | 'inactive' | 'pending';
 

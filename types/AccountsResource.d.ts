@@ -56,9 +56,7 @@ declare module 'stripe' {
       /**
        * A card or bank account to attach to the account for receiving [payouts](https://stripe.com/docs/connect/bank-debit-card-payouts) (you won't be able to use it for top-ups). You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://stripe.com/docs/api#account_create_bank_account) creation.
        *
-       * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the [bank account](https://stripe.com/docs/api#account_create_bank_account) or [card creation](https://stripe.com/docs/api#account_create_card) APIs.
-       *
-       * Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property can only be updated for Custom accounts.
+       * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the [bank account](https://stripe.com/docs/api#account_create_bank_account) or [card creation](https://stripe.com/docs/api#account_create_card) APIs. After you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property can only be updated for Custom accounts.
        */
       external_account?: string | AccountCreateParams.ExternalAccount;
 
@@ -340,6 +338,11 @@ declare module 'stripe' {
         sofort_payments?: Capabilities.SofortPayments;
 
         /**
+         * The swish_payments capability.
+         */
+        swish_payments?: Capabilities.SwishPayments;
+
+        /**
          * The tax_reporting_us_1099_k capability.
          */
         tax_reporting_us_1099_k?: Capabilities.TaxReportingUs1099K;
@@ -582,6 +585,13 @@ declare module 'stripe' {
         }
 
         interface SofortPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface SwishPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1020,6 +1030,11 @@ declare module 'stripe' {
         registered_address?: Stripe.AddressParam;
 
         /**
+         * Describes the person's relationship to the account.
+         */
+        relationship?: Individual.Relationship;
+
+        /**
          * The last four digits of the individual's Social Security Number (U.S. only).
          */
         ssn_last_4?: string;
@@ -1049,6 +1064,33 @@ declare module 'stripe' {
         }
 
         type PoliticalExposure = 'existing' | 'none';
+
+        interface Relationship {
+          /**
+           * Whether the person is a director of the account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
+           */
+          director?: boolean;
+
+          /**
+           * Whether the person has significant responsibility to control, manage, or direct the organization.
+           */
+          executive?: boolean;
+
+          /**
+           * Whether the person is an owner of the account's legal entity.
+           */
+          owner?: boolean;
+
+          /**
+           * The percent owned by the person of the account's legal entity.
+           */
+          percent_ownership?: Stripe.Emptyable<number>;
+
+          /**
+           * The person's title (e.g., CEO, Support Engineer).
+           */
+          title?: string;
+        }
 
         interface Verification {
           /**
@@ -1397,9 +1439,7 @@ declare module 'stripe' {
       /**
        * A card or bank account to attach to the account for receiving [payouts](https://stripe.com/docs/connect/bank-debit-card-payouts) (you won't be able to use it for top-ups). You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://stripe.com/docs/api#account_create_bank_account) creation.
        *
-       * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the [bank account](https://stripe.com/docs/api#account_create_bank_account) or [card creation](https://stripe.com/docs/api#account_create_card) APIs.
-       *
-       * Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property can only be updated for Custom accounts.
+       * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the [bank account](https://stripe.com/docs/api#account_create_bank_account) or [card creation](https://stripe.com/docs/api#account_create_card) APIs. After you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property can only be updated for Custom accounts.
        */
       external_account?: Stripe.Emptyable<
         | string
@@ -1719,6 +1759,11 @@ declare module 'stripe' {
         sofort_payments?: Capabilities.SofortPayments;
 
         /**
+         * The swish_payments capability.
+         */
+        swish_payments?: Capabilities.SwishPayments;
+
+        /**
          * The tax_reporting_us_1099_k capability.
          */
         tax_reporting_us_1099_k?: Capabilities.TaxReportingUs1099K;
@@ -1961,6 +2006,13 @@ declare module 'stripe' {
         }
 
         interface SofortPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface SwishPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2405,6 +2457,11 @@ declare module 'stripe' {
         registered_address?: Stripe.AddressParam;
 
         /**
+         * Describes the person's relationship to the account.
+         */
+        relationship?: Individual.Relationship;
+
+        /**
          * The last four digits of the individual's Social Security Number (U.S. only).
          */
         ssn_last_4?: string;
@@ -2434,6 +2491,33 @@ declare module 'stripe' {
         }
 
         type PoliticalExposure = 'existing' | 'none';
+
+        interface Relationship {
+          /**
+           * Whether the person is a director of the account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
+           */
+          director?: boolean;
+
+          /**
+           * Whether the person has significant responsibility to control, manage, or direct the organization.
+           */
+          executive?: boolean;
+
+          /**
+           * Whether the person is an owner of the account's legal entity.
+           */
+          owner?: boolean;
+
+          /**
+           * The percent owned by the person of the account's legal entity.
+           */
+          percent_ownership?: Stripe.Emptyable<number>;
+
+          /**
+           * The person's title (e.g., CEO, Support Engineer).
+           */
+          title?: string;
+        }
 
         interface Verification {
           /**

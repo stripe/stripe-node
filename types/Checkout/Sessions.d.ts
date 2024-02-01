@@ -261,8 +261,7 @@ declare module 'stripe' {
         /**
          * Describes the type of transaction being performed by Checkout in order to customize
          * relevant text on the page, such as the submit button. `submit_type` can only be
-         * specified on Checkout Sessions in `payment` mode, but not Checkout Sessions
-         * in `subscription` or `setup` mode. Possible values are `auto`, `pay`, `book`, `donate`. If blank or `auto`, `pay` is used.
+         * specified on Checkout Sessions in `payment` mode. If blank or `auto`, `pay` is used.
          */
         submit_type: Session.SubmitType | null;
 
@@ -922,6 +921,8 @@ declare module 'stripe' {
 
           sofort?: PaymentMethodOptions.Sofort;
 
+          swish?: PaymentMethodOptions.Swish;
+
           us_bank_account?: PaymentMethodOptions.UsBankAccount;
         }
 
@@ -1396,6 +1397,13 @@ declare module 'stripe' {
              * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+          }
+
+          interface Swish {
+            /**
+             * The order reference that will be displayed to customers in the Swish application. Defaults to the `id` of the Payment Intent.
+             */
+            reference: string | null;
           }
 
           interface UsBankAccount {

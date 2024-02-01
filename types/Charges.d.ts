@@ -438,6 +438,8 @@ declare module 'stripe' {
 
         stripe_account?: PaymentMethodDetails.StripeAccount;
 
+        swish?: PaymentMethodDetails.Swish;
+
         /**
          * The type of transaction-specific details of the payment method used in the payment, one of `ach_credit_transfer`, `ach_debit`, `acss_debit`, `alipay`, `au_becs_debit`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `klarna`, `multibanco`, `p24`, `sepa_debit`, `sofort`, `stripe_account`, or `wechat`.
          * An additional hash is included on `payment_method_details` with a name matching this value.
@@ -1882,6 +1884,23 @@ declare module 'stripe' {
         }
 
         interface StripeAccount {}
+
+        interface Swish {
+          /**
+           * Uniquely identifies the payer's Swish account. You can use this attribute to check whether two Swish transactions were paid for by the same payer
+           */
+          fingerprint: string | null;
+
+          /**
+           * Payer bank reference number for the payment
+           */
+          payment_reference: string | null;
+
+          /**
+           * The last four digits of the Swish account phone number
+           */
+          verified_phone_last4: string | null;
+        }
 
         interface UsBankAccount {
           /**

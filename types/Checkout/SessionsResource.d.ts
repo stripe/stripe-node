@@ -220,8 +220,7 @@ declare module 'stripe' {
         /**
          * Describes the type of transaction being performed by Checkout in order to customize
          * relevant text on the page, such as the submit button. `submit_type` can only be
-         * specified on Checkout Sessions in `payment` mode, but not Checkout Sessions
-         * in `subscription` or `setup` mode. Possible values are `auto`, `pay`, `book`, `donate`. If blank or `auto`, `pay` is used.
+         * specified on Checkout Sessions in `payment` mode. If blank or `auto`, `pay` is used.
          */
         submit_type?: SessionCreateParams.SubmitType;
 
@@ -1085,6 +1084,11 @@ declare module 'stripe' {
           sofort?: PaymentMethodOptions.Sofort;
 
           /**
+           * contains details about the Swish payment method options.
+           */
+          swish?: PaymentMethodOptions.Swish;
+
+          /**
            * contains details about the Us Bank Account payment method options.
            */
           us_bank_account?: PaymentMethodOptions.UsBankAccount;
@@ -1627,6 +1631,13 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface Swish {
+            /**
+             * The order reference that will be displayed to customers in the Swish application. Defaults to the `id` of the Payment Intent.
+             */
+            reference?: Stripe.Emptyable<string>;
+          }
+
           interface UsBankAccount {
             /**
              * Additional fields for Financial Connections Session creation
@@ -1732,6 +1743,7 @@ declare module 'stripe' {
           | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
+          | 'swish'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
