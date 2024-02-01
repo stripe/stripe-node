@@ -569,6 +569,8 @@ declare module 'stripe' {
 
         redirect_to_url?: NextAction.RedirectToUrl;
 
+        swish_handle_redirect_or_display_qr_code?: NextAction.SwishHandleRedirectOrDisplayQrCode;
+
         /**
          * Type of the next action to perform, one of `redirect_to_url`, `use_stripe_sdk`, `alipay_handle_redirect`, `oxxo_display_details`, or `verify_with_microdeposits`.
          */
@@ -1098,6 +1100,39 @@ declare module 'stripe' {
           url: string | null;
         }
 
+        interface SwishHandleRedirectOrDisplayQrCode {
+          /**
+           * The URL to the hosted Swish instructions page, which allows customers to view the QR code.
+           */
+          hosted_instructions_url?: string;
+
+          /**
+           * The url for mobile redirect based auth
+           */
+          mobile_auth_url?: string;
+
+          qr_code?: SwishHandleRedirectOrDisplayQrCode.QrCode;
+        }
+
+        namespace SwishHandleRedirectOrDisplayQrCode {
+          interface QrCode {
+            /**
+             * The raw data string used to generate QR code, it should be used together with QR code library.
+             */
+            data?: string;
+
+            /**
+             * The image_url_png string used to render QR code
+             */
+            image_url_png?: string;
+
+            /**
+             * The image_url_svg string used to render QR code
+             */
+            image_url_svg?: string;
+          }
+        }
+
         interface UseStripeSdk {}
 
         interface VerifyWithMicrodeposits {
@@ -1267,6 +1302,8 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
         sofort?: PaymentMethodOptions.Sofort;
+
+        swish?: PaymentMethodOptions.Swish;
 
         us_bank_account?: PaymentMethodOptions.UsBankAccount;
 
@@ -2046,6 +2083,22 @@ declare module 'stripe' {
             | 'pl';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Swish {
+          /**
+           * The order ID displayed in the Swish app after the payment is authorized.
+           */
+          reference?: string | null;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: 'none';
         }
 
         interface UsBankAccount {

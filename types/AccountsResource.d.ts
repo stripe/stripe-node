@@ -338,6 +338,11 @@ declare module 'stripe' {
         sofort_payments?: Capabilities.SofortPayments;
 
         /**
+         * The swish_payments capability.
+         */
+        swish_payments?: Capabilities.SwishPayments;
+
+        /**
          * The tax_reporting_us_1099_k capability.
          */
         tax_reporting_us_1099_k?: Capabilities.TaxReportingUs1099K;
@@ -580,6 +585,13 @@ declare module 'stripe' {
         }
 
         interface SofortPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface SwishPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1747,6 +1759,11 @@ declare module 'stripe' {
         sofort_payments?: Capabilities.SofortPayments;
 
         /**
+         * The swish_payments capability.
+         */
+        swish_payments?: Capabilities.SwishPayments;
+
+        /**
          * The tax_reporting_us_1099_k capability.
          */
         tax_reporting_us_1099_k?: Capabilities.TaxReportingUs1099K;
@@ -1989,6 +2006,13 @@ declare module 'stripe' {
         }
 
         interface SofortPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface SwishPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
