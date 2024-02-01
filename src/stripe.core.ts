@@ -104,16 +104,6 @@ export function createStripe(
     this.once = this._emitter.once.bind(this._emitter);
     this.off = this._emitter.removeListener.bind(this._emitter);
 
-    if (
-      props.protocol &&
-      props.protocol !== 'https' &&
-      (!props.host || /\.stripe\.com$/.test(props.host))
-    ) {
-      throw new Error(
-        'The `https` protocol must be used when sending requests to `*.stripe.com`'
-      );
-    }
-
     const agent = props.httpAgent || null;
 
     this._api = {
