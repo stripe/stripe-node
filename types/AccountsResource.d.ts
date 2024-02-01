@@ -2580,6 +2580,11 @@ declare module 'stripe' {
         card_payments?: Settings.CardPayments;
 
         /**
+         * Settings specific to the account's use of Invoices.
+         */
+        invoices?: Settings.Invoices;
+
+        /**
          * Settings that apply across payment methods for charging on the account.
          */
         payments?: Settings.Payments;
@@ -2685,6 +2690,13 @@ declare module 'stripe' {
              */
             cvc_failure?: boolean;
           }
+        }
+
+        interface Invoices {
+          /**
+           * The list of default Account Tax IDs to automatically include on invoices. Account Tax IDs get added when an invoice is finalized.
+           */
+          default_account_tax_ids?: Stripe.Emptyable<Array<string>>;
         }
 
         interface Payments {

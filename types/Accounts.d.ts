@@ -1067,6 +1067,8 @@ declare module 'stripe' {
 
         dashboard: Settings.Dashboard;
 
+        invoices?: Settings.Invoices;
+
         payments: Settings.Payments;
 
         payouts?: Settings.Payouts;
@@ -1177,6 +1179,13 @@ declare module 'stripe' {
            * The timezone used in the Stripe Dashboard for this account. A list of possible time zone values is maintained at the [IANA Time Zone Database](http://www.iana.org/time-zones).
            */
           timezone: string | null;
+        }
+
+        interface Invoices {
+          /**
+           * The list of default Account Tax IDs to automatically include on invoices. Account Tax IDs get added when an invoice is finalized.
+           */
+          default_account_tax_ids: Array<string | Stripe.TaxId> | null;
         }
 
         interface Payments {
