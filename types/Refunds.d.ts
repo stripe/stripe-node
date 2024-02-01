@@ -153,6 +153,8 @@ declare module 'stripe' {
 
         sofort?: DestinationDetails.Sofort;
 
+        swish?: DestinationDetails.Swish;
+
         th_bank_transfer?: DestinationDetails.ThBankTransfer;
 
         /**
@@ -307,6 +309,18 @@ declare module 'stripe' {
         interface Revolut {}
 
         interface Sofort {}
+
+        interface Swish {
+          /**
+           * The reference assigned to the refund.
+           */
+          reference: string | null;
+
+          /**
+           * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+           */
+          reference_status: string | null;
+        }
 
         interface ThBankTransfer {
           /**

@@ -1067,6 +1067,11 @@ declare module 'stripe' {
         sofort?: PaymentMethodData.Sofort;
 
         /**
+         * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
+         */
+        swish?: PaymentMethodData.Swish;
+
+        /**
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
          */
         type: PaymentMethodData.Type;
@@ -1387,6 +1392,8 @@ declare module 'stripe' {
           type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
         }
 
+        interface Swish {}
+
         type Type =
           | 'acss_debit'
           | 'affirm'
@@ -1416,6 +1423,7 @@ declare module 'stripe' {
           | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
+          | 'swish'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
@@ -1617,6 +1625,11 @@ declare module 'stripe' {
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
         sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
+
+        /**
+         * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
+         */
+        swish?: Stripe.Emptyable<PaymentMethodOptions.Swish>;
 
         /**
          * If this is a `us_bank_account` PaymentMethod, this sub-hash contains details about the US bank account payment method options.
@@ -2722,6 +2735,24 @@ declare module 'stripe' {
             | 'pl';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Swish {
+          /**
+           * The order ID displayed in the Swish app after the payment is authorized.
+           */
+          reference?: Stripe.Emptyable<string>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface UsBankAccount {
@@ -3920,6 +3951,11 @@ declare module 'stripe' {
         sofort?: PaymentMethodData.Sofort;
 
         /**
+         * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
+         */
+        swish?: PaymentMethodData.Swish;
+
+        /**
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
          */
         type: PaymentMethodData.Type;
@@ -4240,6 +4276,8 @@ declare module 'stripe' {
           type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
         }
 
+        interface Swish {}
+
         type Type =
           | 'acss_debit'
           | 'affirm'
@@ -4269,6 +4307,7 @@ declare module 'stripe' {
           | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
+          | 'swish'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
@@ -4470,6 +4509,11 @@ declare module 'stripe' {
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
         sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
+
+        /**
+         * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
+         */
+        swish?: Stripe.Emptyable<PaymentMethodOptions.Swish>;
 
         /**
          * If this is a `us_bank_account` PaymentMethod, this sub-hash contains details about the US bank account payment method options.
@@ -5575,6 +5619,24 @@ declare module 'stripe' {
             | 'pl';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Swish {
+          /**
+           * The order ID displayed in the Swish app after the payment is authorized.
+           */
+          reference?: Stripe.Emptyable<string>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface UsBankAccount {
@@ -7530,6 +7592,11 @@ declare module 'stripe' {
         sofort?: PaymentMethodData.Sofort;
 
         /**
+         * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
+         */
+        swish?: PaymentMethodData.Swish;
+
+        /**
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
          */
         type: PaymentMethodData.Type;
@@ -7850,6 +7917,8 @@ declare module 'stripe' {
           type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
         }
 
+        interface Swish {}
+
         type Type =
           | 'acss_debit'
           | 'affirm'
@@ -7879,6 +7948,7 @@ declare module 'stripe' {
           | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
+          | 'swish'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
@@ -8080,6 +8150,11 @@ declare module 'stripe' {
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
         sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
+
+        /**
+         * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
+         */
+        swish?: Stripe.Emptyable<PaymentMethodOptions.Swish>;
 
         /**
          * If this is a `us_bank_account` PaymentMethod, this sub-hash contains details about the US bank account payment method options.
@@ -9185,6 +9260,24 @@ declare module 'stripe' {
             | 'pl';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Swish {
+          /**
+           * The order ID displayed in the Swish app after the payment is authorized.
+           */
+          reference?: Stripe.Emptyable<string>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface UsBankAccount {
