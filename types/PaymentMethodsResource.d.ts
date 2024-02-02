@@ -184,6 +184,11 @@ declare module 'stripe' {
       sofort?: PaymentMethodCreateParams.Sofort;
 
       /**
+       * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
+       */
+      swish?: PaymentMethodCreateParams.Swish;
+
+      /**
        * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
        */
       type?: PaymentMethodCreateParams.Type;
@@ -533,6 +538,8 @@ declare module 'stripe' {
         type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
       }
 
+      interface Swish {}
+
       type Type =
         | 'acss_debit'
         | 'affirm'
@@ -563,6 +570,7 @@ declare module 'stripe' {
         | 'revolut_pay'
         | 'sepa_debit'
         | 'sofort'
+        | 'swish'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
@@ -748,6 +756,7 @@ declare module 'stripe' {
         | 'revolut_pay'
         | 'sepa_debit'
         | 'sofort'
+        | 'swish'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';

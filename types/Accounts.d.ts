@@ -369,6 +369,11 @@ declare module 'stripe' {
         sofort_payments?: Capabilities.SofortPayments;
 
         /**
+         * The status of the Swish capability of the account, or whether the account can directly process Swish payments.
+         */
+        swish_payments?: Capabilities.SwishPayments;
+
+        /**
          * The status of the tax reporting 1099-K (US) capability of the account.
          */
         tax_reporting_us_1099_k?: Capabilities.TaxReportingUs1099K;
@@ -463,6 +468,8 @@ declare module 'stripe' {
         type SepaDebitPayments = 'active' | 'inactive' | 'pending';
 
         type SofortPayments = 'active' | 'inactive' | 'pending';
+
+        type SwishPayments = 'active' | 'inactive' | 'pending';
 
         type TaxReportingUs1099K = 'active' | 'inactive' | 'pending';
 
@@ -1099,6 +1106,8 @@ declare module 'stripe' {
 
         dashboard: Settings.Dashboard;
 
+        invoices?: Settings.Invoices;
+
         payments: Settings.Payments;
 
         payouts?: Settings.Payouts;
@@ -1211,6 +1220,13 @@ declare module 'stripe' {
            * The timezone used in the Stripe Dashboard for this account. A list of possible time zone values is maintained at the [IANA Time Zone Database](http://www.iana.org/time-zones).
            */
           timezone: string | null;
+        }
+
+        interface Invoices {
+          /**
+           * The list of default Account Tax IDs to automatically include on invoices. Account Tax IDs get added when an invoice is finalized.
+           */
+          default_account_tax_ids: Array<string | Stripe.TaxId> | null;
         }
 
         interface Payments {

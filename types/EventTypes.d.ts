@@ -64,6 +64,7 @@ declare module 'stripe' {
       | CustomerDiscountCreatedEvent
       | CustomerDiscountDeletedEvent
       | CustomerDiscountUpdatedEvent
+      | CustomerEntitlementSummaryUpdatedEvent
       | CustomerSourceCreatedEvent
       | CustomerSourceDeletedEvent
       | CustomerSourceExpiringEvent
@@ -1240,6 +1241,22 @@ declare module 'stripe' {
         object: Stripe.Discount;
 
         previous_attributes?: Partial<Stripe.Discount>;
+      }
+    }
+
+    /**
+     * Occurs whenever a customer's entitlements change.
+     */
+    interface CustomerEntitlementSummaryUpdatedEvent extends EventBase {
+      type: 'customer.entitlement_summary.updated';
+      data: CustomerEntitlementSummaryUpdatedEvent.Data;
+    }
+
+    namespace CustomerEntitlementSummaryUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.CustomerEntitlementSummary;
+
+        previous_attributes?: Partial<Stripe.CustomerEntitlementSummary>;
       }
     }
 

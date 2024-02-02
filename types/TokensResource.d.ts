@@ -343,6 +343,11 @@ declare module 'stripe' {
           registered_address?: Stripe.AddressParam;
 
           /**
+           * Describes the person's relationship to the account.
+           */
+          relationship?: Individual.Relationship;
+
+          /**
            * The last four digits of the individual's Social Security Number (U.S. only).
            */
           ssn_last_4?: string;
@@ -372,6 +377,33 @@ declare module 'stripe' {
           }
 
           type PoliticalExposure = 'existing' | 'none';
+
+          interface Relationship {
+            /**
+             * Whether the person is a director of the account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
+             */
+            director?: boolean;
+
+            /**
+             * Whether the person has significant responsibility to control, manage, or direct the organization.
+             */
+            executive?: boolean;
+
+            /**
+             * Whether the person is an owner of the account's legal entity.
+             */
+            owner?: boolean;
+
+            /**
+             * The percent owned by the person of the account's legal entity.
+             */
+            percent_ownership?: Stripe.Emptyable<number>;
+
+            /**
+             * The person's title (e.g., CEO, Support Engineer).
+             */
+            title?: string;
+          }
 
           interface Verification {
             /**
