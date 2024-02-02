@@ -1,5 +1,17 @@
 # Changelog
 
+## 14.15.0-beta.2 - 2024-02-01
+* [#2002](https://github.com/stripe/stripe-node/pull/2002) Update generated code for beta
+  * Add support for new resources `Entitlements.Event` and `Entitlements.Feature`
+  * Add support for `create` method on resource `Event`
+  * Add support for `create` and `list` methods on resource `Feature`
+  * Add support for `swish` on `ConfirmationToken.payment_method_preview`
+  * Add support for new value `swish` on enum `ConfirmationToken.payment_method_preview.type`
+  * Add support for new value `customer.entitlement_summary.updated` on enum `Event.type`
+  * Add support for `account_tax_ids` on `InvoiceCreatePreviewParams.schedule_details.phases[].invoice_settings`, `InvoiceUpcomingLinesParams.schedule_details.phases[].invoice_settings`, and `InvoiceUpcomingParams.schedule_details.phases[].invoice_settings`
+  * Add support for `feature` on `Product.features[]`, `ProductCreateParams.features[]`, and `ProductUpdateParams.features[]`
+  * Add support for new value `customer.entitlement_summary.updated` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
 ## 14.15.0-beta.1 - 2024-01-25
 * [#1997](https://github.com/stripe/stripe-node/pull/1997) Update generated code for beta
   * Add support for `create_preview` method on resource `Invoice`
