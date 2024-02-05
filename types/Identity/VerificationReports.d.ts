@@ -221,7 +221,7 @@ declare module 'stripe' {
           first_name: string | null;
 
           /**
-           * ID number.
+           * ID number. When `id_number_type` is `us_ssn`, only the last 4 digits are present.
            */
           id_number: string | null;
 
