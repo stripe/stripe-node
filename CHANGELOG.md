@@ -1,5 +1,14 @@
 # Changelog
 
+## 14.15.0 - 2024-02-05
+* [#2001](https://github.com/stripe/stripe-node/pull/2001) Update generated code
+  * Add support for `swish` payment method throughout the API
+  * Add support for `relationship` on `AccountCreateParams.individual`, `AccountUpdateParams.individual`, and `TokenCreateParams.account.individual`
+  * Add support for `jurisdiction_level` on `TaxRate`
+  * Change type of `Terminal.Reader.status` from `string` to `enum('offline'|'online')`
+* [#2009](https://github.com/stripe/stripe-node/pull/2009) Remove https check for *.stripe.com
+  * Stops throwing exceptions if `protocol: 'http'` is set for requests to `api.stripe.com`.
+
 ## 14.15.0-beta.2 - 2024-02-01
 * [#2002](https://github.com/stripe/stripe-node/pull/2002) Update generated code for beta
   * Add support for new resources `Entitlements.Event` and `Entitlements.Feature`
