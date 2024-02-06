@@ -1841,6 +1841,11 @@ declare module 'stripe' {
           request_three_d_secure: Card.RequestThreeDSecure | null;
 
           /**
+           * When enabled, using a card that is attached to a customer will require the CVC to be provided again (i.e. using the cvc_token parameter).
+           */
+          require_cvc_recollection?: boolean;
+
+          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
