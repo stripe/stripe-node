@@ -926,6 +926,7 @@ declare module 'stripe' {
             | 'santander_przelew24'
             | 'tmobile_usbugi_bankowe'
             | 'toyota_bank'
+            | 'velobank'
             | 'volkswagen_bank';
         }
 
