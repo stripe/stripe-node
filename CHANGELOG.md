@@ -1,5 +1,10 @@
 # Changelog
 
+## 14.17.0-beta.1 - 2024-02-08
+* [#2014](https://github.com/stripe/stripe-node/pull/2014) Update generated code for beta
+  * Add support for `payment_method_options` on `ConfirmationToken`
+  * Add support for new value `velobank` on enum `ConfirmationToken.payment_method_preview.p24.bank`
+
 ## 14.15.0 - 2024-02-05
 * [#2001](https://github.com/stripe/stripe-node/pull/2001) Update generated code
   * Add support for `swish` payment method throughout the API
