@@ -51,6 +51,11 @@ declare module 'stripe' {
       payment_method: string | Stripe.PaymentMethod | null;
 
       /**
+       * Payment-method-specific configuration for this ConfirmationToken.
+       */
+      payment_method_options: ConfirmationToken.PaymentMethodOptions | null;
+
+      /**
        * Payment details collected by the Payment Element, used to create a PaymentMethod when a PaymentIntent or SetupIntent is confirmed with this ConfirmationToken.
        */
       payment_method_preview: ConfirmationToken.PaymentMethodPreview | null;
@@ -111,6 +116,22 @@ declare module 'stripe' {
              */
             user_agent: string | null;
           }
+        }
+      }
+
+      interface PaymentMethodOptions {
+        /**
+         * This hash contains the card payment method options.
+         */
+        card: PaymentMethodOptions.Card | null;
+      }
+
+      namespace PaymentMethodOptions {
+        interface Card {
+          /**
+           * The `cvc_update` Token collected from the Payment Element.
+           */
+          cvc_token: string | null;
         }
       }
 
@@ -393,7 +414,7 @@ declare module 'stripe' {
             available: Array<string>;
 
             /**
-             * The preferred network for the card. Can be `cartes_bancaires`, `mastercard`, `visa` or `invalid_preference` if requested network is not valid for the card.
+             * The preferred network for co-branded cards. Can be `cartes_bancaires`, `mastercard`, `visa` or `invalid_preference` if requested network is not valid for the card.
              */
             preferred: string | null;
           }
@@ -905,6 +926,7 @@ declare module 'stripe' {
             | 'santander_przelew24'
             | 'tmobile_usbugi_bankowe'
             | 'toyota_bank'
+            | 'velobank'
             | 'volkswagen_bank';
         }
 

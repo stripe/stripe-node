@@ -323,7 +323,7 @@ declare module 'stripe' {
           available: Array<string>;
 
           /**
-           * The preferred network for the card. Can be `cartes_bancaires`, `mastercard`, `visa` or `invalid_preference` if requested network is not valid for the card.
+           * The preferred network for co-branded cards. Can be `cartes_bancaires`, `mastercard`, `visa` or `invalid_preference` if requested network is not valid for the card.
            */
           preferred: string | null;
         }
@@ -835,6 +835,7 @@ declare module 'stripe' {
           | 'santander_przelew24'
           | 'tmobile_usbugi_bankowe'
           | 'toyota_bank'
+          | 'velobank'
           | 'volkswagen_bank';
       }
 
