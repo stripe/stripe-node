@@ -76,6 +76,7 @@ declare module 'stripe' {
       | FinancialConnectionsAccountDisconnectedEvent
       | FinancialConnectionsAccountReactivatedEvent
       | FinancialConnectionsAccountRefreshedBalanceEvent
+      | FinancialConnectionsAccountRefreshedOwnershipEvent
       | FinancialConnectionsAccountRefreshedTransactionsEvent
       | IdentityVerificationSessionCanceledEvent
       | IdentityVerificationSessionCreatedEvent
@@ -1399,6 +1400,23 @@ declare module 'stripe' {
     }
 
     namespace FinancialConnectionsAccountRefreshedBalanceEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.FinancialConnections.Account;
+
+        previous_attributes?: Partial<Stripe.FinancialConnections.Account>;
+      }
+    }
+
+    /**
+     * Occurs when an Account’s `ownership_refresh` status transitions from `pending` to either `succeeded` or `failed`.
+     */
+    interface FinancialConnectionsAccountRefreshedOwnershipEvent
+      extends EventBase {
+      type: 'financial_connections.account.refreshed_ownership';
+      data: FinancialConnectionsAccountRefreshedOwnershipEvent.Data;
+    }
+
+    namespace FinancialConnectionsAccountRefreshedOwnershipEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.FinancialConnections.Account;
 
