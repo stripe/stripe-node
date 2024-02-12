@@ -1119,7 +1119,7 @@ declare module 'stripe' {
           hosted_instructions_url?: string;
 
           /**
-           * The url for mobile redirect based auth
+           * The url for mobile redirect based auth (for internal use only and not typically available in standard API requests).
            */
           mobile_auth_url?: string;
 
