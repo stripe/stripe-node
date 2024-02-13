@@ -307,9 +307,27 @@ declare module 'stripe' {
         exp_year: number;
 
         /**
+         * Contains information about card networks used to process the payment.
+         */
+        networks?: Card1.Networks;
+
+        /**
          * The card number, as a string without any separators.
          */
         number: string;
+      }
+
+      namespace Card1 {
+        interface Networks {
+          /**
+           * The customer's preferred card network for co-branded cards. Supports `cartes_bancaires`, `mastercard`, or `visa`. Selection of a network that does not apply to the card will be stored as `invalid_preference` on the card.
+           */
+          preferred?: Networks.Preferred;
+        }
+
+        namespace Networks {
+          type Preferred = 'cartes_bancaires' | 'mastercard' | 'visa';
+        }
       }
 
       interface Card2 {
@@ -686,6 +704,24 @@ declare module 'stripe' {
          * Four-digit number representing the card's expiration year.
          */
         exp_year?: number;
+
+        /**
+         * Contains information about card networks used to process the payment.
+         */
+        networks?: Card.Networks;
+      }
+
+      namespace Card {
+        interface Networks {
+          /**
+           * The customer's preferred card network for co-branded cards. Supports `cartes_bancaires`, `mastercard`, or `visa`. Selection of a network that does not apply to the card will be stored as `invalid_preference` on the card.
+           */
+          preferred?: Stripe.Emptyable<Networks.Preferred>;
+        }
+
+        namespace Networks {
+          type Preferred = 'cartes_bancaires' | 'mastercard' | 'visa';
+        }
       }
 
       interface Link {}

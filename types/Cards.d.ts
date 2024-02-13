@@ -162,6 +162,8 @@ declare module 'stripe' {
        */
       name: string | null;
 
+      networks?: Card.Networks;
+
       /**
        * For external accounts that are cards, possible values are `new` and `errored`. If a payout fails, the status is set to `errored` and [scheduled payouts](https://stripe.com/docs/payouts#payout-schedule) are stopped until account details are updated.
        */
@@ -175,6 +177,13 @@ declare module 'stripe' {
 
     namespace Card {
       type AvailablePayoutMethod = 'instant' | 'standard';
+
+      interface Networks {
+        /**
+         * The preferred network for co-branded cards. Can be `cartes_bancaires`, `mastercard`, `visa` or `invalid_preference` if requested network is not valid for the card.
+         */
+        preferred: string | null;
+      }
     }
 
     /**
