@@ -545,9 +545,27 @@ declare module 'stripe' {
         name?: string;
 
         /**
+         * Contains information about card networks used to process the payment.
+         */
+        networks?: Card.Networks;
+
+        /**
          * The card number, as a string without any separators.
          */
         number: string;
+      }
+
+      namespace Card {
+        interface Networks {
+          /**
+           * The customer's preferred card network for co-branded cards. Supports `cartes_bancaires`, `mastercard`, or `visa`. Selection of a network that does not apply to the card will be stored as `invalid_preference` on the card.
+           */
+          preferred?: Networks.Preferred;
+        }
+
+        namespace Networks {
+          type Preferred = 'cartes_bancaires' | 'mastercard' | 'visa';
+        }
       }
 
       interface CvcUpdate {
