@@ -94,6 +94,8 @@ declare module 'stripe' {
 
       paypal?: PaymentMethod.Paypal;
 
+      payto?: PaymentMethod.Payto;
+
       pix?: PaymentMethod.Pix;
 
       promptpay?: PaymentMethod.Promptpay;
@@ -870,6 +872,23 @@ declare module 'stripe' {
         verified_email?: string | null;
       }
 
+      interface Payto {
+        /**
+         * Bank-State-Branch number of the bank account.
+         */
+        bsb_number: string | null;
+
+        /**
+         * Last four digits of the bank account number.
+         */
+        last4: string | null;
+
+        /**
+         * The PayID alias for the bank account.
+         */
+        pay_id: string | null;
+      }
+
       interface Pix {}
 
       interface Promptpay {}
@@ -965,6 +984,7 @@ declare module 'stripe' {
         | 'p24'
         | 'paynow'
         | 'paypal'
+        | 'payto'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'

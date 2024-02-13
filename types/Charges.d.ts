@@ -424,6 +424,8 @@ declare module 'stripe' {
 
         paypal?: PaymentMethodDetails.Paypal;
 
+        payto?: PaymentMethodDetails.Payto;
+
         pix?: PaymentMethodDetails.Pix;
 
         promptpay?: PaymentMethodDetails.Promptpay;
@@ -1783,6 +1785,28 @@ declare module 'stripe' {
 
             type Status = 'eligible' | 'not_eligible' | 'partially_eligible';
           }
+        }
+
+        interface Payto {
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number: string | null;
+
+          /**
+           * Last four digits of the bank account number.
+           */
+          last4: string | null;
+
+          /**
+           * ID of the mandate used to make this payment.
+           */
+          mandate?: string;
+
+          /**
+           * The PayID alias for the bank account.
+           */
+          pay_id: string | null;
         }
 
         interface Pix {

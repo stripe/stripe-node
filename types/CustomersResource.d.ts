@@ -776,6 +776,7 @@ declare module 'stripe' {
         | 'p24'
         | 'paynow'
         | 'paypal'
+        | 'payto'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'

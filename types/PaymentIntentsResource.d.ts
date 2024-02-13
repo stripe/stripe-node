@@ -1037,6 +1037,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+         */
+        payto?: PaymentMethodData.Payto;
+
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -1362,6 +1367,23 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Payto {
+          /**
+           * The account number for the bank account.
+           */
+          account_number?: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number?: string;
+
+          /**
+           * The PayID alias for the bank account.
+           */
+          pay_id?: string;
+        }
+
         interface Pix {}
 
         interface Promptpay {}
@@ -1419,6 +1441,7 @@ declare module 'stripe' {
           | 'p24'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
@@ -1601,6 +1624,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
+
+        /**
+         * If this is a `payto` PaymentMethod, this sub-hash contains details about the PayTo payment method options.
+         */
+        payto?: Stripe.Emptyable<PaymentMethodOptions.Payto>;
 
         /**
          * If this is a `pix` PaymentMethod, this sub-hash contains details about the Pix payment method options.
@@ -2644,6 +2672,87 @@ declare module 'stripe' {
             | 'pt-PT'
             | 'sk-SK'
             | 'sv-SE';
+
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Payto {
+          /**
+           * Additional fields for Mandate creation. Only `purpose` field is configurable for PayTo PaymentIntent with `setup_future_usage=none`. Other fields are only applicable to PayTo PaymentIntent with `setup_future_usage=off_session`
+           */
+          mandate_options?: Payto.MandateOptions;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<Payto.SetupFutureUsage>;
+        }
+
+        namespace Payto {
+          interface MandateOptions {
+            /**
+             * Amount that will be collected. It is required when `amount_type` is `fixed`.
+             */
+            amount?: number;
+
+            /**
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+             */
+            end_date?: string;
+
+            /**
+             * The periodicity at which payments will be collected.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+             */
+            payments_per_period?: number;
+
+            /**
+             * The purpose for which payments are made. Defaults to retail.
+             */
+            purpose?: MandateOptions.Purpose;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'adhoc'
+              | 'annual'
+              | 'daily'
+              | 'fortnightly'
+              | 'monthly'
+              | 'quarterly'
+              | 'semi_annual'
+              | 'weekly';
+
+            type Purpose =
+              | 'dependant_support'
+              | 'government'
+              | 'loan'
+              | 'mortgage'
+              | 'other'
+              | 'pension'
+              | 'personal'
+              | 'retail'
+              | 'salary'
+              | 'tax'
+              | 'utility';
+          }
 
           type SetupFutureUsage = 'none' | 'off_session';
         }
@@ -3938,6 +4047,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+         */
+        payto?: PaymentMethodData.Payto;
+
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -4263,6 +4377,23 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Payto {
+          /**
+           * The account number for the bank account.
+           */
+          account_number?: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number?: string;
+
+          /**
+           * The PayID alias for the bank account.
+           */
+          pay_id?: string;
+        }
+
         interface Pix {}
 
         interface Promptpay {}
@@ -4320,6 +4451,7 @@ declare module 'stripe' {
           | 'p24'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
@@ -4502,6 +4634,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
+
+        /**
+         * If this is a `payto` PaymentMethod, this sub-hash contains details about the PayTo payment method options.
+         */
+        payto?: Stripe.Emptyable<PaymentMethodOptions.Payto>;
 
         /**
          * If this is a `pix` PaymentMethod, this sub-hash contains details about the Pix payment method options.
@@ -5545,6 +5682,87 @@ declare module 'stripe' {
             | 'pt-PT'
             | 'sk-SK'
             | 'sv-SE';
+
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Payto {
+          /**
+           * Additional fields for Mandate creation. Only `purpose` field is configurable for PayTo PaymentIntent with `setup_future_usage=none`. Other fields are only applicable to PayTo PaymentIntent with `setup_future_usage=off_session`
+           */
+          mandate_options?: Payto.MandateOptions;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<Payto.SetupFutureUsage>;
+        }
+
+        namespace Payto {
+          interface MandateOptions {
+            /**
+             * Amount that will be collected. It is required when `amount_type` is `fixed`.
+             */
+            amount?: number;
+
+            /**
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+             */
+            end_date?: string;
+
+            /**
+             * The periodicity at which payments will be collected.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+             */
+            payments_per_period?: number;
+
+            /**
+             * The purpose for which payments are made. Defaults to retail.
+             */
+            purpose?: MandateOptions.Purpose;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'adhoc'
+              | 'annual'
+              | 'daily'
+              | 'fortnightly'
+              | 'monthly'
+              | 'quarterly'
+              | 'semi_annual'
+              | 'weekly';
+
+            type Purpose =
+              | 'dependant_support'
+              | 'government'
+              | 'loan'
+              | 'mortgage'
+              | 'other'
+              | 'pension'
+              | 'personal'
+              | 'retail'
+              | 'salary'
+              | 'tax'
+              | 'utility';
+          }
 
           type SetupFutureUsage = 'none' | 'off_session';
         }
@@ -7596,6 +7814,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+         */
+        payto?: PaymentMethodData.Payto;
+
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -7921,6 +8144,23 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Payto {
+          /**
+           * The account number for the bank account.
+           */
+          account_number?: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number?: string;
+
+          /**
+           * The PayID alias for the bank account.
+           */
+          pay_id?: string;
+        }
+
         interface Pix {}
 
         interface Promptpay {}
@@ -7978,6 +8218,7 @@ declare module 'stripe' {
           | 'p24'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
@@ -8160,6 +8401,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
+
+        /**
+         * If this is a `payto` PaymentMethod, this sub-hash contains details about the PayTo payment method options.
+         */
+        payto?: Stripe.Emptyable<PaymentMethodOptions.Payto>;
 
         /**
          * If this is a `pix` PaymentMethod, this sub-hash contains details about the Pix payment method options.
@@ -9203,6 +9449,87 @@ declare module 'stripe' {
             | 'pt-PT'
             | 'sk-SK'
             | 'sv-SE';
+
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Payto {
+          /**
+           * Additional fields for Mandate creation. Only `purpose` field is configurable for PayTo PaymentIntent with `setup_future_usage=none`. Other fields are only applicable to PayTo PaymentIntent with `setup_future_usage=off_session`
+           */
+          mandate_options?: Payto.MandateOptions;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<Payto.SetupFutureUsage>;
+        }
+
+        namespace Payto {
+          interface MandateOptions {
+            /**
+             * Amount that will be collected. It is required when `amount_type` is `fixed`.
+             */
+            amount?: number;
+
+            /**
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+             */
+            end_date?: string;
+
+            /**
+             * The periodicity at which payments will be collected.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+             */
+            payments_per_period?: number;
+
+            /**
+             * The purpose for which payments are made. Defaults to retail.
+             */
+            purpose?: MandateOptions.Purpose;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'adhoc'
+              | 'annual'
+              | 'daily'
+              | 'fortnightly'
+              | 'monthly'
+              | 'quarterly'
+              | 'semi_annual'
+              | 'weekly';
+
+            type Purpose =
+              | 'dependant_support'
+              | 'government'
+              | 'loan'
+              | 'mortgage'
+              | 'other'
+              | 'pension'
+              | 'personal'
+              | 'retail'
+              | 'salary'
+              | 'tax'
+              | 'utility';
+          }
 
           type SetupFutureUsage = 'none' | 'off_session';
         }

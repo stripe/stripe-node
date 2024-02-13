@@ -154,6 +154,11 @@ declare module 'stripe' {
       paypal?: PaymentMethodCreateParams.Paypal;
 
       /**
+       * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+       */
+      payto?: PaymentMethodCreateParams.Payto;
+
+      /**
        * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
        */
       pix?: PaymentMethodCreateParams.Pix;
@@ -526,6 +531,23 @@ declare module 'stripe' {
 
       interface Paypal {}
 
+      interface Payto {
+        /**
+         * The account number for the bank account.
+         */
+        account_number?: string;
+
+        /**
+         * Bank-State-Branch number of the bank account.
+         */
+        bsb_number?: string;
+
+        /**
+         * The PayID alias for the bank account.
+         */
+        pay_id?: string;
+      }
+
       interface Pix {}
 
       interface Promptpay {}
@@ -584,6 +606,7 @@ declare module 'stripe' {
         | 'p24'
         | 'paynow'
         | 'paypal'
+        | 'payto'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'
@@ -666,6 +689,11 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
+       * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+       */
+      payto?: PaymentMethodUpdateParams.Payto;
+
+      /**
        * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
        */
       us_bank_account?: PaymentMethodUpdateParams.UsBankAccount;
@@ -725,6 +753,23 @@ declare module 'stripe' {
       }
 
       interface Link {}
+
+      interface Payto {
+        /**
+         * The account number for the bank account.
+         */
+        account_number?: string;
+
+        /**
+         * Bank-State-Branch number of the bank account.
+         */
+        bsb_number?: string;
+
+        /**
+         * The PayID alias for the bank account.
+         */
+        pay_id?: string;
+      }
 
       interface UsBankAccount {
         /**
@@ -788,6 +833,7 @@ declare module 'stripe' {
         | 'p24'
         | 'paynow'
         | 'paypal'
+        | 'payto'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'
