@@ -246,6 +246,11 @@ declare module 'stripe' {
         description?: string | null;
 
         /**
+         * The brand to use when displaying the card, this accounts for customer's brand choice on dual-branded cards. Can be `american_express`, `cartes_bancaires`, `diners_club`, `discover`, `eftpos_australia`, `interac`, `jcb`, `mastercard`, `union_pay`, `visa`, or `other` and may contain more values in the future.
+         */
+        display_brand: string | null;
+
+        /**
          * Two-digit number representing the card's expiration month.
          */
         exp_month: number;
