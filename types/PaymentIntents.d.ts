@@ -1827,6 +1827,11 @@ declare module 'stripe' {
           network: Card.Network | null;
 
           /**
+           * Request ability to [decrement the authorization](https://stripe.com/docs/payments/decremental-authorization) for this PaymentIntent.
+           */
+          request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+          /**
            * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/docs/payments/extended-authorization) for this PaymentIntent.
            */
           request_extended_authorization?: Card.RequestExtendedAuthorization;
@@ -1999,6 +2004,8 @@ declare module 'stripe' {
             | 'unionpay'
             | 'unknown'
             | 'visa';
+
+          type RequestDecrementalAuthorization = 'if_available' | 'never';
 
           type RequestExtendedAuthorization = 'if_available' | 'never';
 

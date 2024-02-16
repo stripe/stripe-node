@@ -33,6 +33,10 @@ export const PaymentIntents = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/payment_intents/{intent}/confirm',
   }),
+  decrementAuthorization: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/payment_intents/{intent}/decrement_authorization',
+  }),
   incrementAuthorization: stripeMethod({
     method: 'POST',
     fullPath: '/v1/payment_intents/{intent}/increment_authorization',

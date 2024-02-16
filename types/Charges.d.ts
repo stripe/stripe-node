@@ -709,6 +709,8 @@ declare module 'stripe' {
            */
           country: string | null;
 
+          decremental_authorization?: Card.DecrementalAuthorization;
+
           /**
            * A high-level description of the type of cards issued in this range. (For internal use only and not typically available in standard API requests.)
            */
@@ -813,6 +815,17 @@ declare module 'stripe' {
              * If a CVC was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
              */
             cvc_check: string | null;
+          }
+
+          interface DecrementalAuthorization {
+            /**
+             * Indicates whether or not the decremental authorization feature is supported.
+             */
+            status: DecrementalAuthorization.Status;
+          }
+
+          namespace DecrementalAuthorization {
+            type Status = 'available' | 'unavailable';
           }
 
           interface ExtendedAuthorization {

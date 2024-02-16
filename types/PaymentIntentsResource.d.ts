@@ -1954,6 +1954,11 @@ declare module 'stripe' {
           network?: Card.Network;
 
           /**
+           * Request ability to [decrement the authorization](https://stripe.com/docs/payments/decremental-authorization) for this PaymentIntent.
+           */
+          request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+          /**
            * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/docs/payments/extended-authorization) for this PaymentIntent.
            */
           request_extended_authorization?: Card.RequestExtendedAuthorization;
@@ -2117,6 +2122,8 @@ declare module 'stripe' {
             | 'unionpay'
             | 'unknown'
             | 'visa';
+
+          type RequestDecrementalAuthorization = 'if_available' | 'never';
 
           type RequestExtendedAuthorization = 'if_available' | 'never';
 
@@ -4972,6 +4979,11 @@ declare module 'stripe' {
           network?: Card.Network;
 
           /**
+           * Request ability to [decrement the authorization](https://stripe.com/docs/payments/decremental-authorization) for this PaymentIntent.
+           */
+          request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+          /**
            * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/docs/payments/extended-authorization) for this PaymentIntent.
            */
           request_extended_authorization?: Card.RequestExtendedAuthorization;
@@ -5135,6 +5147,8 @@ declare module 'stripe' {
             | 'unionpay'
             | 'unknown'
             | 'visa';
+
+          type RequestDecrementalAuthorization = 'if_available' | 'never';
 
           type RequestExtendedAuthorization = 'if_available' | 'never';
 
@@ -8747,6 +8761,11 @@ declare module 'stripe' {
           network?: Card.Network;
 
           /**
+           * Request ability to [decrement the authorization](https://stripe.com/docs/payments/decremental-authorization) for this PaymentIntent.
+           */
+          request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+          /**
            * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/docs/payments/extended-authorization) for this PaymentIntent.
            */
           request_extended_authorization?: Card.RequestExtendedAuthorization;
@@ -8910,6 +8929,8 @@ declare module 'stripe' {
             | 'unionpay'
             | 'unknown'
             | 'visa';
+
+          type RequestDecrementalAuthorization = 'if_available' | 'never';
 
           type RequestExtendedAuthorization = 'if_available' | 'never';
 
@@ -9873,6 +9894,18 @@ declare module 'stripe' {
       }
     }
 
+    interface PaymentIntentDecrementAuthorizationParams {
+      /**
+       * The updated total amount that you intend to collect from the cardholder. This amount must be smaller than the currently authorized amount.
+       */
+      amount: number;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface PaymentIntentIncrementAuthorizationParams {
       /**
        * The updated total amount that you intend to collect from the cardholder. This amount must be greater than the currently authorized amount.
@@ -10096,6 +10129,30 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
       confirm(
         id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
+
+      /**
+       * Perform an decremental authorization on an eligible
+       * [PaymentIntent](https://stripe.com/docs/api/payment_intents/object). To be eligible, the
+       * PaymentIntent's status must be requires_capture and
+       * [decremental_authorization.status](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card-decremental_authorization)
+       * must be available.
+       *
+       * Decremental authorizations decrease the authorized amount on your customer's card
+       * to the new, lower amount provided. A single PaymentIntent can call this endpoint multiple times to further decrease the authorized amount.
+       *
+       * After decrement, the PaymentIntent object
+       * returns with the updated
+       * [amount](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-amount).
+       * The PaymentIntent will now be capturable up to the new authorized amount.
+       *
+       * Each PaymentIntent can have a maximum of 10 decremental or incremental authorization attempts, including declines.
+       * After it's captured, a PaymentIntent can no longer be decremented.
+       */
+      decrementAuthorization(
+        id: string,
+        params: PaymentIntentDecrementAuthorizationParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
 
