@@ -399,6 +399,11 @@ declare module 'stripe' {
         treasury?: Capabilities.Treasury;
 
         /**
+         * The status of the Twint capability of the account, or whether the account can directly process Twint charges.
+         */
+        twint_payments?: Capabilities.TwintPayments;
+
+        /**
          * The status of the US bank account ACH payments capability of the account, or whether the account can directly process US bank account charges.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
@@ -485,6 +490,8 @@ declare module 'stripe' {
         type Transfers = 'active' | 'inactive' | 'pending';
 
         type Treasury = 'active' | 'inactive' | 'pending';
+
+        type TwintPayments = 'active' | 'inactive' | 'pending';
 
         type UsBankAccountAchPayments = 'active' | 'inactive' | 'pending';
 
