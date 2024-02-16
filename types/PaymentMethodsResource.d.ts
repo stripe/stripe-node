@@ -154,6 +154,11 @@ declare module 'stripe' {
       paypal?: PaymentMethodCreateParams.Paypal;
 
       /**
+       * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+       */
+      payto?: PaymentMethodCreateParams.Payto;
+
+      /**
        * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
        */
       pix?: PaymentMethodCreateParams.Pix;
@@ -187,6 +192,11 @@ declare module 'stripe' {
        * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
        */
       swish?: PaymentMethodCreateParams.Swish;
+
+      /**
+       * If this is a Twint PaymentMethod, this hash contains details about the Twint payment method.
+       */
+      twint?: PaymentMethodCreateParams.Twint;
 
       /**
        * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
@@ -307,9 +317,27 @@ declare module 'stripe' {
         exp_year: number;
 
         /**
+         * Contains information about card networks used to process the payment.
+         */
+        networks?: Card1.Networks;
+
+        /**
          * The card number, as a string without any separators.
          */
         number: string;
+      }
+
+      namespace Card1 {
+        interface Networks {
+          /**
+           * The customer's preferred card network for co-branded cards. Supports `cartes_bancaires`, `mastercard`, or `visa`. Selection of a network that does not apply to the card will be stored as `invalid_preference` on the card.
+           */
+          preferred?: Networks.Preferred;
+        }
+
+        namespace Networks {
+          type Preferred = 'cartes_bancaires' | 'mastercard' | 'visa';
+        }
       }
 
       interface Card2 {
@@ -508,6 +536,23 @@ declare module 'stripe' {
 
       interface Paypal {}
 
+      interface Payto {
+        /**
+         * The account number for the bank account.
+         */
+        account_number?: string;
+
+        /**
+         * Bank-State-Branch number of the bank account.
+         */
+        bsb_number?: string;
+
+        /**
+         * The PayID alias for the bank account.
+         */
+        pay_id?: string;
+      }
+
       interface Pix {}
 
       interface Promptpay {}
@@ -541,6 +586,8 @@ declare module 'stripe' {
 
       interface Swish {}
 
+      interface Twint {}
+
       type Type =
         | 'acss_debit'
         | 'affirm'
@@ -566,12 +613,14 @@ declare module 'stripe' {
         | 'p24'
         | 'paynow'
         | 'paypal'
+        | 'payto'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'
         | 'sepa_debit'
         | 'sofort'
         | 'swish'
+        | 'twint'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
@@ -648,6 +697,11 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
+       * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+       */
+      payto?: PaymentMethodUpdateParams.Payto;
+
+      /**
        * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
        */
       us_bank_account?: PaymentMethodUpdateParams.UsBankAccount;
@@ -686,9 +740,44 @@ declare module 'stripe' {
          * Four-digit number representing the card's expiration year.
          */
         exp_year?: number;
+
+        /**
+         * Contains information about card networks used to process the payment.
+         */
+        networks?: Card.Networks;
+      }
+
+      namespace Card {
+        interface Networks {
+          /**
+           * The customer's preferred card network for co-branded cards. Supports `cartes_bancaires`, `mastercard`, or `visa`. Selection of a network that does not apply to the card will be stored as `invalid_preference` on the card.
+           */
+          preferred?: Stripe.Emptyable<Networks.Preferred>;
+        }
+
+        namespace Networks {
+          type Preferred = 'cartes_bancaires' | 'mastercard' | 'visa';
+        }
       }
 
       interface Link {}
+
+      interface Payto {
+        /**
+         * The account number for the bank account.
+         */
+        account_number?: string;
+
+        /**
+         * Bank-State-Branch number of the bank account.
+         */
+        bsb_number?: string;
+
+        /**
+         * The PayID alias for the bank account.
+         */
+        pay_id?: string;
+      }
 
       interface UsBankAccount {
         /**
@@ -752,12 +841,14 @@ declare module 'stripe' {
         | 'p24'
         | 'paynow'
         | 'paypal'
+        | 'payto'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'
         | 'sepa_debit'
         | 'sofort'
         | 'swish'
+        | 'twint'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';

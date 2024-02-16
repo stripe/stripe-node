@@ -190,6 +190,8 @@ declare module 'stripe' {
 
         paypal?: PaymentMethodPreview.Paypal;
 
+        payto?: PaymentMethodPreview.Payto;
+
         pix?: PaymentMethodPreview.Pix;
 
         promptpay?: PaymentMethodPreview.Promptpay;
@@ -201,6 +203,8 @@ declare module 'stripe' {
         sofort?: PaymentMethodPreview.Sofort;
 
         swish?: PaymentMethodPreview.Swish;
+
+        twint?: PaymentMethodPreview.Twint;
 
         /**
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
@@ -335,6 +339,11 @@ declare module 'stripe' {
            * A high-level description of the type of cards issued in this range. (For internal use only and not typically available in standard API requests.)
            */
           description?: string | null;
+
+          /**
+           * The brand to use when displaying the card, this accounts for customer's brand choice on dual-branded cards. Can be `american_express`, `cartes_bancaires`, `diners_club`, `discover`, `eftpos_australia`, `interac`, `jcb`, `mastercard`, `union_pay`, `visa`, or `other` and may contain more values in the future.
+           */
+          display_brand: string | null;
 
           /**
            * Two-digit number representing the card's expiration month.
@@ -956,6 +965,23 @@ declare module 'stripe' {
           verified_email?: string | null;
         }
 
+        interface Payto {
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number: string | null;
+
+          /**
+           * Last four digits of the bank account number.
+           */
+          last4: string | null;
+
+          /**
+           * The PayID alias for the bank account.
+           */
+          pay_id: string | null;
+        }
+
         interface Pix {}
 
         interface Promptpay {}
@@ -1017,6 +1043,8 @@ declare module 'stripe' {
 
         interface Swish {}
 
+        interface Twint {}
+
         type Type =
           | 'acss_debit'
           | 'affirm'
@@ -1044,12 +1072,14 @@ declare module 'stripe' {
           | 'p24'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
           | 'swish'
+          | 'twint'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';

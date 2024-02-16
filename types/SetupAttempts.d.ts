@@ -114,6 +114,8 @@ declare module 'stripe' {
 
         paypal?: PaymentMethodDetails.Paypal;
 
+        payto?: PaymentMethodDetails.Payto;
+
         sepa_debit?: PaymentMethodDetails.SepaDebit;
 
         sofort?: PaymentMethodDetails.Sofort;
@@ -442,6 +444,8 @@ declare module 'stripe' {
         interface Link {}
 
         interface Paypal {}
+
+        interface Payto {}
 
         interface SepaDebit {}
 

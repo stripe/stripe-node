@@ -1119,7 +1119,7 @@ declare module 'stripe' {
           hosted_instructions_url?: string;
 
           /**
-           * The url for mobile redirect based auth
+           * The url for mobile redirect based auth (for internal use only and not typically available in standard API requests).
            */
           mobile_auth_url?: string;
 
@@ -1588,6 +1588,8 @@ declare module 'stripe' {
 
         paypal?: PaymentMethodOptions.Paypal;
 
+        payto?: PaymentMethodOptions.Payto;
+
         pix?: PaymentMethodOptions.Pix;
 
         promptpay?: PaymentMethodOptions.Promptpay;
@@ -1825,6 +1827,11 @@ declare module 'stripe' {
           network: Card.Network | null;
 
           /**
+           * Request ability to [decrement the authorization](https://stripe.com/docs/payments/decremental-authorization) for this PaymentIntent.
+           */
+          request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+          /**
            * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/docs/payments/extended-authorization) for this PaymentIntent.
            */
           request_extended_authorization?: Card.RequestExtendedAuthorization;
@@ -1845,7 +1852,7 @@ declare module 'stripe' {
           request_overcapture?: Card.RequestOvercapture;
 
           /**
-           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure: Card.RequestThreeDSecure | null;
 
@@ -1997,6 +2004,8 @@ declare module 'stripe' {
             | 'unionpay'
             | 'unknown'
             | 'visa';
+
+          type RequestDecrementalAuthorization = 'if_available' | 'never';
 
           type RequestExtendedAuthorization = 'if_available' | 'never';
 
@@ -2364,6 +2373,82 @@ declare module 'stripe' {
         }
 
         namespace Paypal {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Payto {
+          mandate_options?: Payto.MandateOptions;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Payto.SetupFutureUsage;
+        }
+
+        namespace Payto {
+          interface MandateOptions {
+            /**
+             * Amount that will be collected. It is required when `amount_type` is `fixed`.
+             */
+            amount: number | null;
+
+            /**
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             */
+            amount_type: MandateOptions.AmountType | null;
+
+            /**
+             * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+             */
+            end_date: string | null;
+
+            /**
+             * The periodicity at which payments will be collected.
+             */
+            payment_schedule: MandateOptions.PaymentSchedule | null;
+
+            /**
+             * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+             */
+            payments_per_period: number | null;
+
+            /**
+             * The purpose for which payments are made. Defaults to retail.
+             */
+            purpose: MandateOptions.Purpose | null;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'adhoc'
+              | 'annual'
+              | 'daily'
+              | 'fortnightly'
+              | 'monthly'
+              | 'quarterly'
+              | 'semi_annual'
+              | 'weekly';
+
+            type Purpose =
+              | 'dependant_support'
+              | 'government'
+              | 'loan'
+              | 'mortgage'
+              | 'other'
+              | 'pension'
+              | 'personal'
+              | 'retail'
+              | 'salary'
+              | 'tax'
+              | 'utility';
+          }
+
           type SetupFutureUsage = 'none' | 'off_session';
         }
 

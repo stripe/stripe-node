@@ -349,6 +349,11 @@ declare module 'stripe' {
         paypal_payments?: Capabilities.PaypalPayments;
 
         /**
+         * The status of the PayTo capability of the account, or whether the account can directly process PayTo charges.
+         */
+        payto_payments?: Capabilities.PaytoPayments;
+
+        /**
          * The status of the promptpay payments capability of the account, or whether the account can directly process promptpay charges.
          */
         promptpay_payments?: Capabilities.PromptpayPayments;
@@ -392,6 +397,11 @@ declare module 'stripe' {
          * The status of the banking capability, or whether the account can have bank accounts.
          */
         treasury?: Capabilities.Treasury;
+
+        /**
+         * The status of the Twint capability of the account, or whether the account can directly process Twint charges.
+         */
+        twint_payments?: Capabilities.TwintPayments;
 
         /**
          * The status of the US bank account ACH payments capability of the account, or whether the account can directly process US bank account charges.
@@ -461,6 +471,8 @@ declare module 'stripe' {
 
         type PaypalPayments = 'active' | 'inactive' | 'pending';
 
+        type PaytoPayments = 'active' | 'inactive' | 'pending';
+
         type PromptpayPayments = 'active' | 'inactive' | 'pending';
 
         type RevolutPayPayments = 'active' | 'inactive' | 'pending';
@@ -478,6 +490,8 @@ declare module 'stripe' {
         type Transfers = 'active' | 'inactive' | 'pending';
 
         type Treasury = 'active' | 'inactive' | 'pending';
+
+        type TwintPayments = 'active' | 'inactive' | 'pending';
 
         type UsBankAccountAchPayments = 'active' | 'inactive' | 'pending';
 

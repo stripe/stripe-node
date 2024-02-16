@@ -1,9 +1,26 @@
 # Changelog
 
+## 14.17.0 - 2024-02-15
+* [#2018](https://github.com/stripe/stripe-node/pull/2018) Update generated code
+  * Add support for `networks` on `Card`, `PaymentMethodCreateParams.card`, `PaymentMethodUpdateParams.card`, and `TokenCreateParams.card`
+  * Add support for new value `no_voec` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, `Tax.Calculation.customer_details.tax_ids[].type`, `Tax.Transaction.customer_details.tax_ids[].type`, and `TaxId.type`
+  * Add support for new value `no_voec` on enums `CustomerCreateParams.tax_id_data[].type`, `InvoiceUpcomingLinesParams.customer_details.tax_ids[].type`, `InvoiceUpcomingParams.customer_details.tax_ids[].type`, `Tax.CalculationCreateParams.customer_details.tax_ids[].type`, and `TaxIdCreateParams.type`
+  * Add support for new value `financial_connections.account.refreshed_ownership` on enum `Event.type`
+  * Add support for `display_brand` on `PaymentMethod.card`
+  * Add support for new value `financial_connections.account.refreshed_ownership` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
 ## 14.17.0-beta.1 - 2024-02-08
 * [#2014](https://github.com/stripe/stripe-node/pull/2014) Update generated code for beta
   * Add support for `payment_method_options` on `ConfirmationToken`
   * Add support for new value `velobank` on enum `ConfirmationToken.payment_method_preview.p24.bank`
+
+## 14.16.0 - 2024-02-08
+* [#2012](https://github.com/stripe/stripe-node/pull/2012) Update generated code
+  * Add support for `invoices` on `Account.settings` and `AccountUpdateParams.settings`
+  * Add support for new value `velobank` on enums `Charge.payment_method_details.p24.bank`, `PaymentIntentConfirmParams.payment_method_data.p24.bank`, `PaymentIntentCreateParams.payment_method_data.p24.bank`, `PaymentIntentUpdateParams.payment_method_data.p24.bank`, `PaymentMethod.p24.bank`, `PaymentMethodCreateParams.p24.bank`, `SetupIntentConfirmParams.payment_method_data.p24.bank`, `SetupIntentCreateParams.payment_method_data.p24.bank`, and `SetupIntentUpdateParams.payment_method_data.p24.bank`
+  * Add support for `setup_future_usage` on `PaymentIntent.payment_method_options.blik`, `PaymentIntentConfirmParams.payment_method_options.blik`, `PaymentIntentCreateParams.payment_method_options.blik`, and `PaymentIntentUpdateParams.payment_method_options.blik`
+  * Add support for `require_cvc_recollection` on `PaymentIntent.payment_method_options.card`, `PaymentIntentConfirmParams.payment_method_options.card`, `PaymentIntentCreateParams.payment_method_options.card`, and `PaymentIntentUpdateParams.payment_method_options.card`
+  * Add support for `account_tax_ids` on `SubscriptionCreateParams.invoice_settings`, `SubscriptionSchedule.default_settings.invoice_settings`, `SubscriptionSchedule.phases[].invoice_settings`, `SubscriptionScheduleCreateParams.default_settings.invoice_settings`, `SubscriptionScheduleCreateParams.phases[].invoice_settings`, `SubscriptionScheduleUpdateParams.default_settings.invoice_settings`, `SubscriptionScheduleUpdateParams.phases[].invoice_settings`, and `SubscriptionUpdateParams.invoice_settings`
 
 ## 14.15.0 - 2024-02-05
 * [#2001](https://github.com/stripe/stripe-node/pull/2001) Update generated code

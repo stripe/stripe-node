@@ -315,6 +315,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+         */
+        payto?: PaymentMethodData.Payto;
+
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -348,6 +353,11 @@ declare module 'stripe' {
          * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
          */
         swish?: PaymentMethodData.Swish;
+
+        /**
+         * If this is a Twint PaymentMethod, this hash contains details about the Twint payment method.
+         */
+        twint?: PaymentMethodData.Twint;
 
         /**
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
@@ -640,6 +650,23 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Payto {
+          /**
+           * The account number for the bank account.
+           */
+          account_number?: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number?: string;
+
+          /**
+           * The PayID alias for the bank account.
+           */
+          pay_id?: string;
+        }
+
         interface Pix {}
 
         interface Promptpay {}
@@ -673,6 +700,8 @@ declare module 'stripe' {
 
         interface Swish {}
 
+        interface Twint {}
+
         type Type =
           | 'acss_debit'
           | 'affirm'
@@ -697,12 +726,14 @@ declare module 'stripe' {
           | 'p24'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
           | 'swish'
+          | 'twint'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
@@ -765,6 +796,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: PaymentMethodOptions.Paypal;
+
+        /**
+         * If this is a `payto` SetupIntent, this sub-hash contains details about the PayTo payment method options.
+         */
+        payto?: PaymentMethodOptions.Payto;
 
         /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -857,7 +893,7 @@ declare module 'stripe' {
           network?: Card.Network;
 
           /**
-           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
 
@@ -1051,6 +1087,79 @@ declare module 'stripe' {
            * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
            */
           subsellers?: Array<string>;
+        }
+
+        interface Payto {
+          /**
+           * Additional fields for Mandate creation.
+           */
+          mandate_options?: Payto.MandateOptions;
+        }
+
+        namespace Payto {
+          interface MandateOptions {
+            /**
+             * Amount that will be collected. It is required when `amount_type` is `fixed`.
+             */
+            amount?: number;
+
+            /**
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+             */
+            end_date?: string;
+
+            /**
+             * The periodicity at which payments will be collected.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+             */
+            payments_per_period?: number;
+
+            /**
+             * The purpose for which payments are made. Defaults to retail.
+             */
+            purpose?: MandateOptions.Purpose;
+
+            /**
+             * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+             */
+            start_date?: string;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'adhoc'
+              | 'annual'
+              | 'daily'
+              | 'fortnightly'
+              | 'monthly'
+              | 'quarterly'
+              | 'semi_annual'
+              | 'weekly';
+
+            type Purpose =
+              | 'dependant_support'
+              | 'government'
+              | 'loan'
+              | 'mortgage'
+              | 'other'
+              | 'pension'
+              | 'personal'
+              | 'retail'
+              | 'salary'
+              | 'tax'
+              | 'utility';
+          }
         }
 
         interface SepaDebit {
@@ -1382,6 +1491,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+         */
+        payto?: PaymentMethodData.Payto;
+
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -1415,6 +1529,11 @@ declare module 'stripe' {
          * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
          */
         swish?: PaymentMethodData.Swish;
+
+        /**
+         * If this is a Twint PaymentMethod, this hash contains details about the Twint payment method.
+         */
+        twint?: PaymentMethodData.Twint;
 
         /**
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
@@ -1707,6 +1826,23 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Payto {
+          /**
+           * The account number for the bank account.
+           */
+          account_number?: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number?: string;
+
+          /**
+           * The PayID alias for the bank account.
+           */
+          pay_id?: string;
+        }
+
         interface Pix {}
 
         interface Promptpay {}
@@ -1740,6 +1876,8 @@ declare module 'stripe' {
 
         interface Swish {}
 
+        interface Twint {}
+
         type Type =
           | 'acss_debit'
           | 'affirm'
@@ -1764,12 +1902,14 @@ declare module 'stripe' {
           | 'p24'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
           | 'swish'
+          | 'twint'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
@@ -1832,6 +1972,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: PaymentMethodOptions.Paypal;
+
+        /**
+         * If this is a `payto` SetupIntent, this sub-hash contains details about the PayTo payment method options.
+         */
+        payto?: PaymentMethodOptions.Payto;
 
         /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -1924,7 +2069,7 @@ declare module 'stripe' {
           network?: Card.Network;
 
           /**
-           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
 
@@ -2118,6 +2263,79 @@ declare module 'stripe' {
            * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
            */
           subsellers?: Array<string>;
+        }
+
+        interface Payto {
+          /**
+           * Additional fields for Mandate creation.
+           */
+          mandate_options?: Payto.MandateOptions;
+        }
+
+        namespace Payto {
+          interface MandateOptions {
+            /**
+             * Amount that will be collected. It is required when `amount_type` is `fixed`.
+             */
+            amount?: number;
+
+            /**
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+             */
+            end_date?: string;
+
+            /**
+             * The periodicity at which payments will be collected.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+             */
+            payments_per_period?: number;
+
+            /**
+             * The purpose for which payments are made. Defaults to retail.
+             */
+            purpose?: MandateOptions.Purpose;
+
+            /**
+             * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+             */
+            start_date?: string;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'adhoc'
+              | 'annual'
+              | 'daily'
+              | 'fortnightly'
+              | 'monthly'
+              | 'quarterly'
+              | 'semi_annual'
+              | 'weekly';
+
+            type Purpose =
+              | 'dependant_support'
+              | 'government'
+              | 'loan'
+              | 'mortgage'
+              | 'other'
+              | 'pension'
+              | 'personal'
+              | 'retail'
+              | 'salary'
+              | 'tax'
+              | 'utility';
+          }
         }
 
         interface SepaDebit {
@@ -2536,6 +2754,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+         */
+        payto?: PaymentMethodData.Payto;
+
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -2569,6 +2792,11 @@ declare module 'stripe' {
          * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
          */
         swish?: PaymentMethodData.Swish;
+
+        /**
+         * If this is a Twint PaymentMethod, this hash contains details about the Twint payment method.
+         */
+        twint?: PaymentMethodData.Twint;
 
         /**
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
@@ -2861,6 +3089,23 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Payto {
+          /**
+           * The account number for the bank account.
+           */
+          account_number?: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number?: string;
+
+          /**
+           * The PayID alias for the bank account.
+           */
+          pay_id?: string;
+        }
+
         interface Pix {}
 
         interface Promptpay {}
@@ -2894,6 +3139,8 @@ declare module 'stripe' {
 
         interface Swish {}
 
+        interface Twint {}
+
         type Type =
           | 'acss_debit'
           | 'affirm'
@@ -2918,12 +3165,14 @@ declare module 'stripe' {
           | 'p24'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
           | 'swish'
+          | 'twint'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
@@ -2986,6 +3235,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: PaymentMethodOptions.Paypal;
+
+        /**
+         * If this is a `payto` SetupIntent, this sub-hash contains details about the PayTo payment method options.
+         */
+        payto?: PaymentMethodOptions.Payto;
 
         /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -3078,7 +3332,7 @@ declare module 'stripe' {
           network?: Card.Network;
 
           /**
-           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
 
@@ -3272,6 +3526,79 @@ declare module 'stripe' {
            * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
            */
           subsellers?: Array<string>;
+        }
+
+        interface Payto {
+          /**
+           * Additional fields for Mandate creation.
+           */
+          mandate_options?: Payto.MandateOptions;
+        }
+
+        namespace Payto {
+          interface MandateOptions {
+            /**
+             * Amount that will be collected. It is required when `amount_type` is `fixed`.
+             */
+            amount?: number;
+
+            /**
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+             */
+            end_date?: string;
+
+            /**
+             * The periodicity at which payments will be collected.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+             */
+            payments_per_period?: number;
+
+            /**
+             * The purpose for which payments are made. Defaults to retail.
+             */
+            purpose?: MandateOptions.Purpose;
+
+            /**
+             * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+             */
+            start_date?: string;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'adhoc'
+              | 'annual'
+              | 'daily'
+              | 'fortnightly'
+              | 'monthly'
+              | 'quarterly'
+              | 'semi_annual'
+              | 'weekly';
+
+            type Purpose =
+              | 'dependant_support'
+              | 'government'
+              | 'loan'
+              | 'mortgage'
+              | 'other'
+              | 'pension'
+              | 'personal'
+              | 'retail'
+              | 'salary'
+              | 'tax'
+              | 'utility';
+          }
         }
 
         interface SepaDebit {

@@ -52,6 +52,11 @@ declare module 'stripe' {
       discounts: Array<string | Stripe.Discount> | null;
 
       /**
+       * The ID of the invoice that contains this line item.
+       */
+      invoice: string | null;
+
+      /**
        * The ID of the [invoice item](https://stripe.com/docs/api/invoiceitems) associated with this line item if any.
        */
       invoice_item?: string | Stripe.InvoiceItem;
