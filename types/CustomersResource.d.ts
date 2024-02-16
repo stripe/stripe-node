@@ -97,7 +97,7 @@ declare module 'stripe' {
       /**
        * The customer's tax IDs.
        */
-      tax_id_data?: Array<CustomerCreateParams.TaxIdDatum>;
+      tax_id_data?: Array<CustomerCreateParams.CustomerTaxIdDatum>;
 
       /**
        * ID of the test clock to attach to the customer.
@@ -213,11 +213,11 @@ declare module 'stripe' {
 
       type TaxExempt = 'exempt' | 'none' | 'reverse';
 
-      interface TaxIdDatum {
+      interface CustomerTaxIdDatum {
         /**
          * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
          */
-        type: TaxIdDatum.Type;
+        type: CustomerTaxIdDatum.Type;
 
         /**
          * Value of the tax ID.
@@ -225,7 +225,7 @@ declare module 'stripe' {
         value: string;
       }
 
-      namespace TaxIdDatum {
+      namespace CustomerTaxIdDatum {
         type Type =
           | 'ad_nrt'
           | 'ae_trn'
@@ -640,11 +640,11 @@ declare module 'stripe' {
       validate?: boolean;
     }
 
-    interface TaxIdCreateParams {
+    interface CustomerTaxIdCreateParams {
       /**
        * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
        */
-      type: TaxIdCreateParams.Type;
+      type: CustomerTaxIdCreateParams.Type;
 
       /**
        * Value of the tax ID.
@@ -657,7 +657,7 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    namespace TaxIdCreateParams {
+    namespace CustomerTaxIdCreateParams {
       type Type =
         | 'ad_nrt'
         | 'ae_trn'
@@ -736,7 +736,7 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface TaxIdDeleteParams {}
+    interface CustomerTaxIdDeleteParams {}
 
     interface CustomerListPaymentMethodsParams extends PaginationParams {
       /**
@@ -814,7 +814,7 @@ declare module 'stripe' {
       object?: string;
     }
 
-    interface TaxIdListParams extends PaginationParams {
+    interface CustomerTaxIdListParams extends PaginationParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -856,7 +856,7 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface TaxIdRetrieveParams {
+    interface CustomerTaxIdRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -1130,7 +1130,7 @@ declare module 'stripe' {
        */
       createTaxId(
         id: string,
-        params: TaxIdCreateParams,
+        params: CustomerTaxIdCreateParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.TaxId>>;
 
@@ -1172,7 +1172,7 @@ declare module 'stripe' {
       deleteTaxId(
         customerId: string,
         id: string,
-        params?: TaxIdDeleteParams,
+        params?: CustomerTaxIdDeleteParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedTaxId>>;
       deleteTaxId(
@@ -1238,7 +1238,7 @@ declare module 'stripe' {
        */
       listTaxIds(
         id: string,
-        params?: TaxIdListParams,
+        params?: CustomerTaxIdListParams,
         options?: RequestOptions
       ): ApiListPromise<Stripe.TaxId>;
       listTaxIds(
@@ -1325,7 +1325,7 @@ declare module 'stripe' {
       retrieveTaxId(
         customerId: string,
         id: string,
-        params?: TaxIdRetrieveParams,
+        params?: CustomerTaxIdRetrieveParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.TaxId>>;
       retrieveTaxId(
