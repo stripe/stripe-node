@@ -16,6 +16,9 @@ declare module 'stripe' {
          */
         financial_account: string;
 
+        /**
+         * Only return Transactions that were created during the given date interval.
+         */
         created?: Stripe.RangeQueryParam | number;
 
         /**

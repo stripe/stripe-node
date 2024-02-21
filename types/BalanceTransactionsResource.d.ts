@@ -10,6 +10,9 @@ declare module 'stripe' {
     }
 
     interface BalanceTransactionListParams extends PaginationParams {
+      /**
+       * Only return transactions that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**

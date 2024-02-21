@@ -77,6 +77,9 @@ declare module 'stripe' {
     interface PayoutListParams extends PaginationParams {
       arrival_date?: Stripe.RangeQueryParam | number;
 
+      /**
+       * Only return payouts that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**

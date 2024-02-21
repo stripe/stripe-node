@@ -10,6 +10,9 @@ declare module 'stripe' {
     }
 
     interface EventListParams extends PaginationParams {
+      /**
+       * Only return events that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**

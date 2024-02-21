@@ -49,6 +49,9 @@ declare module 'stripe' {
     }
 
     interface FileLinkListParams extends PaginationParams {
+      /**
+       * Only return links that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**

@@ -138,6 +138,9 @@ declare module 'stripe' {
       }
 
       interface VerificationSessionListParams extends PaginationParams {
+        /**
+         * Only return VerificationSessions that were created during the given date interval.
+         */
         created?: Stripe.RangeQueryParam | number;
 
         /**

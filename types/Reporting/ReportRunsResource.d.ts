@@ -714,6 +714,9 @@ declare module 'stripe' {
       }
 
       interface ReportRunListParams extends PaginationParams {
+        /**
+         * Only return Report Runs that were created during the given date interval.
+         */
         created?: Stripe.RangeQueryParam | number;
 
         /**

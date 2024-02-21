@@ -78,6 +78,9 @@ declare module 'stripe' {
     }
 
     interface TransferListParams extends PaginationParams {
+      /**
+       * Only return transfers that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**

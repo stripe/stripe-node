@@ -1553,6 +1553,9 @@ declare module 'stripe' {
        */
       collection_method?: InvoiceListParams.CollectionMethod;
 
+      /**
+       * Only return invoices that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**

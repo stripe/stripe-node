@@ -84,6 +84,9 @@ declare module 'stripe' {
          */
         contains?: string;
 
+        /**
+         * Only return value lists that were created during the given date interval.
+         */
         created?: Stripe.RangeQueryParam | number;
 
         /**

@@ -11,6 +11,9 @@ declare module 'stripe' {
       }
 
       interface VerificationReportListParams extends PaginationParams {
+        /**
+         * Only return VerificationReports that were created during the given date interval.
+         */
         created?: Stripe.RangeQueryParam | number;
 
         /**

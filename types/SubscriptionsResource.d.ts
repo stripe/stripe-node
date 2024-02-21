@@ -2015,6 +2015,9 @@ declare module 'stripe' {
        */
       collection_method?: SubscriptionListParams.CollectionMethod;
 
+      /**
+       * Only return subscriptions that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       current_period_end?: Stripe.RangeQueryParam | number;
