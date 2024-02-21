@@ -129,7 +129,7 @@ declare module 'stripe' {
       payment_settings?: InvoiceCreateParams.PaymentSettings;
 
       /**
-       * How to handle pending invoice items on invoice creation. One of `include` or `exclude`. `include` will include any pending invoice items, and will create an empty draft invoice if no pending invoice items exist. `exclude` will always create an empty invoice draft regardless if there are pending invoice items or not. Defaults to `exclude` if the parameter is omitted.
+       * How to handle pending invoice items on invoice creation. Defaults to `exclude` if the parameter is omitted.
        */
       pending_invoice_items_behavior?: InvoiceCreateParams.PendingInvoiceItemsBehavior;
 
@@ -577,10 +577,7 @@ declare module 'stripe' {
           | 'wechat_pay';
       }
 
-      type PendingInvoiceItemsBehavior =
-        | 'exclude'
-        | 'include'
-        | 'include_and_require';
+      type PendingInvoiceItemsBehavior = 'exclude' | 'include';
 
       interface Rendering {
         /**
