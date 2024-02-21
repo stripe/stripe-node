@@ -577,7 +577,10 @@ declare module 'stripe' {
           | 'wechat_pay';
       }
 
-      type PendingInvoiceItemsBehavior = 'exclude' | 'include';
+      type PendingInvoiceItemsBehavior =
+        | 'exclude'
+        | 'include'
+        | 'include_and_require';
 
       interface Rendering {
         /**
