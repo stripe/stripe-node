@@ -1,5 +1,62 @@
 # Changelog
 
+## 14.18.0 - 2024-02-22
+* [#2022](https://github.com/stripe/stripe-node/pull/2022) Update generated code
+  * Add support for `client_reference_id` on `Identity.VerificationReportListParams`, `Identity.VerificationReport`, `Identity.VerificationSessionCreateParams`, `Identity.VerificationSessionListParams`, and `Identity.VerificationSession`
+  * Remove support for value `include_and_require` from enum `InvoiceCreateParams.pending_invoice_items_behavior`
+  * Remove support for value `service_tax` from enums `TaxRate.tax_type`, `TaxRateCreateParams.tax_type`, and `TaxRateUpdateParams.tax_type`
+  * Add support for `created` on `Treasury.OutboundPaymentListParams`
+* [#2025](https://github.com/stripe/stripe-node/pull/2025) Standardize parameter interface names
+  - `CapabilityListParams` renamed to `AccountListCapabilitiesParams`
+  - `CapabilityRetrieveParams` renamed to `AccountRetrieveCapabilityParams`
+  - `CapabilityUpdateParams` renamed to `AccountUpdateCapabilityParams`
+  - `CashBalanceRetrieveParams` renamed to `CustomerRetrieveCashBalanceParams`
+  - `CashBalanceUpdateParams` renamed to `CustomerUpdateCashBalanceParams`
+  - `CreditNoteLineItemListParams` renamed to `CreditNoteListLineItemsParams`
+  - `CustomerBalanceTransactionCreateParams` renamed to `CustomerCreateBalanceTransactionParams`
+  - `CustomerBalanceTransactionListParams` renamed to `CustomerListBalanceTransactionsParams`
+  - `CustomerBalanceTransactionRetrieveParams` renamed to `CustomerRetrieveBalanceTransactionParams`
+  - `CustomerBalanceTransactionUpdateParams` renamed to `CustomerUpdateBalanceTransactionParams`
+  - `CustomerCashBalanceTransactionListParams` renamed to `CustomerListCashBalanceTransactionsParams`
+  - `CustomerCashBalanceTransactionRetrieveParams` renamed to `CustomerRetrieveCashBalanceTransactionParams`
+  - `CustomerSourceCreateParams` renamed to `CustomerCreateSourceParams`
+  - `CustomerSourceDeleteParams` renamed to `CustomerDeleteSourceParams`
+  - `CustomerSourceListParams` renamed to `CustomerListSourcesParams`
+  - `CustomerSourceRetrieveParams` renamed to `CustomerRetrieveSourceParams`
+  - `CustomerSourceUpdateParams` renamed to `CustomerUpdateSourceParams`
+  - `CustomerSourceVerifyParams` renamed to `CustomerVerifySourceParams`
+  - `ExternalAccountCreateParams` renamed to `AccountCreateExternalAccountParams`
+  - `ExternalAccountDeleteParams` renamed to `AccountDeleteExternalAccountParams`
+  - `ExternalAccountListParams` renamed to `AccountListExternalAccountsParams`
+  - `ExternalAccountRetrieveParams` renamed to `AccountRetrieveExternalAccountParams`
+  - `ExternalAccountUpdateParams` renamed to `AccountUpdateExternalAccountParams`
+  - `FeeRefundCreateParams` renamed to `ApplicationFeeCreateRefundParams`
+  - `FeeRefundListParams` renamed to `ApplicationFeeListRefundsParams`
+  - `FeeRefundRetrieveParams` renamed to `ApplicationFeeRetrieveRefundParams`
+  - `FeeRefundUpdateParams` renamed to `ApplicationFeeUpdateRefundParams`
+  - `InvoiceLineItemListParams` renamed to `InvoiceListLineItemsParams`
+  - `InvoiceLineItemUpdateParams` renamed to `InvoiceUpdateLineItemParams`
+  - `LoginLinkCreateParams` renamed to `AccountCreateLoginLinkParams`
+  - `PersonCreateParams` renamed to `AccountCreatePersonParams`
+  - `PersonDeleteParams` renamed to `AccountDeletePersonParams`
+  - `PersonListParams` renamed to `AccountListPersonsParams`
+  - `PersonRetrieveParams` renamed to `AccountRetrievePersonParams`
+  - `PersonUpdateParams` renamed to `AccountUpdatePersonParams`
+  - `TaxIdCreateParams` renamed to `CustomerCreateTaxIdParams`
+  - `TaxIdDeleteParams` renamed to `CustomerDeleteTaxIdParams`
+  - `TaxIdListParams` renamed to `CustomerListTaxIdsParams`
+  - `TaxIdRetrieveParams` renamed to `CustomerRetrieveTaxIdParams`
+  - `TransferReversalCreateParams` renamed to `TransferCreateReversalParams`
+  - `TransferReversalListParams` renamed to `TransferListReversalsParams`
+  - `TransferReversalRetrieveParams` renamed to `TransferRetrieveReversalParams`
+  - `TransferReversalUpdateParams` renamed to `TransferUpdateReversalParams`
+  - `UsageRecordCreateParams` renamed to `SubscriptionItemCreateUsageRecordParams`
+  - `UsageRecordSummaryListParams` renamed to `SubscriptionItemListUsageRecordSummariesParams`
+  
+  Old names will still work but are deprecated and will be removed in future versions.
+* [#2021](https://github.com/stripe/stripe-node/pull/2021) Add TaxIds API
+  * Add support for `create`, `del`, `list`, and `retrieve` methods on resource `TaxId`
+
 ## 14.17.0 - 2024-02-15
 * [#2018](https://github.com/stripe/stripe-node/pull/2018) Update generated code
   * Add support for `networks` on `Card`, `PaymentMethodCreateParams.card`, `PaymentMethodUpdateParams.card`, and `TokenCreateParams.card`
