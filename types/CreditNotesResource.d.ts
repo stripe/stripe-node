@@ -193,7 +193,7 @@ declare module 'stripe' {
       invoice?: string;
     }
 
-    interface CreditNoteListLineItemsParams extends PaginationParams {
+    interface CreditNoteLineItemListParams extends PaginationParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -565,7 +565,7 @@ declare module 'stripe' {
        */
       listLineItems(
         id: string,
-        params?: CreditNoteListLineItemsParams,
+        params?: CreditNoteLineItemListParams,
         options?: RequestOptions
       ): ApiListPromise<Stripe.CreditNoteLineItem>;
       listLineItems(

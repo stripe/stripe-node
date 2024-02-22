@@ -28,6 +28,11 @@ declare module 'stripe' {
         object: 'identity.verification_report';
 
         /**
+         * A string to reference this user. This can be a customer ID, a session ID, or similar, and can be used to reconcile this verification with your internal systems.
+         */
+        client_reference_id: string | null;
+
+        /**
          * Time at which the object was created. Measured in seconds since the Unix epoch.
          */
         created: number;

@@ -119,7 +119,7 @@ declare module 'stripe' {
       payment_settings?: InvoiceCreateParams.PaymentSettings;
 
       /**
-       * How to handle pending invoice items on invoice creation. One of `include` or `exclude`. `include` will include any pending invoice items, and will create an empty draft invoice if no pending invoice items exist. `exclude` will always create an empty invoice draft regardless if there are pending invoice items or not. Defaults to `exclude` if the parameter is omitted.
+       * How to handle pending invoice items on invoice creation. Defaults to `exclude` if the parameter is omitted.
        */
       pending_invoice_items_behavior?: InvoiceCreateParams.PendingInvoiceItemsBehavior;
 
@@ -1393,6 +1393,9 @@ declare module 'stripe' {
        */
       collection_method?: InvoiceListParams.CollectionMethod;
 
+      /**
+       * Only return invoices that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**
@@ -1438,7 +1441,7 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface InvoiceListLineItemsParams extends PaginationParams {
+    interface InvoiceLineItemListParams extends PaginationParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -1543,7 +1546,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
        */
       subscription_proration_behavior?: InvoiceListUpcomingLinesParams.SubscriptionProrationBehavior;
 
@@ -2188,7 +2191,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
        */
       subscription_proration_behavior?: InvoiceRetrieveUpcomingParams.SubscriptionProrationBehavior;
 
@@ -2718,7 +2721,7 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface InvoiceUpdateLineItemParams {
+    interface InvoiceLineItemUpdateParams {
       /**
        * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. If you want to apply a credit to the customer's account, pass a negative amount.
        */
@@ -2737,7 +2740,7 @@ declare module 'stripe' {
       /**
        * The coupons & existing discounts which apply to the line item. Item discounts are applied before invoice discounts. Pass an empty string to remove previously-defined discounts.
        */
-      discounts?: Stripe.Emptyable<Array<InvoiceUpdateLineItemParams.Discount>>;
+      discounts?: Stripe.Emptyable<Array<InvoiceLineItemUpdateParams.Discount>>;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -2752,7 +2755,7 @@ declare module 'stripe' {
       /**
        * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
        */
-      period?: InvoiceUpdateLineItemParams.Period;
+      period?: InvoiceLineItemUpdateParams.Period;
 
       /**
        * The ID of the price object.
@@ -2762,7 +2765,7 @@ declare module 'stripe' {
       /**
        * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
        */
-      price_data?: InvoiceUpdateLineItemParams.PriceData;
+      price_data?: InvoiceLineItemUpdateParams.PriceData;
 
       /**
        * Non-negative integer. The quantity of units for the line item.
@@ -2773,7 +2776,7 @@ declare module 'stripe' {
        * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://stripe.com/docs/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://stripe.com/docs/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
        */
       tax_amounts?: Stripe.Emptyable<
-        Array<InvoiceUpdateLineItemParams.TaxAmount>
+        Array<InvoiceLineItemUpdateParams.TaxAmount>
       >;
 
       /**
@@ -2782,7 +2785,7 @@ declare module 'stripe' {
       tax_rates?: Stripe.Emptyable<Array<string>>;
     }
 
-    namespace InvoiceUpdateLineItemParams {
+    namespace InvoiceLineItemUpdateParams {
       interface Discount {
         /**
          * ID of the coupon to create a new discount for.
@@ -2945,7 +2948,6 @@ declare module 'stripe' {
             | 'qst'
             | 'rst'
             | 'sales_tax'
-            | 'service_tax'
             | 'vat';
         }
       }
@@ -3037,7 +3039,7 @@ declare module 'stripe' {
        */
       listLineItems(
         id: string,
-        params?: InvoiceListLineItemsParams,
+        params?: InvoiceLineItemListParams,
         options?: RequestOptions
       ): ApiListPromise<Stripe.InvoiceLineItem>;
       listLineItems(
@@ -3132,7 +3134,7 @@ declare module 'stripe' {
       updateLineItem(
         invoiceId: string,
         id: string,
-        params?: InvoiceUpdateLineItemParams,
+        params?: InvoiceLineItemUpdateParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.InvoiceLineItem>>;
       updateLineItem(

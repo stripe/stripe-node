@@ -33,7 +33,7 @@ declare module 'stripe' {
         card: string;
 
         /**
-         * Select Issuing tokens that were created during the given date interval.
+         * Only return Issuing tokens that were created during the given date interval.
          */
         created?: Stripe.RangeQueryParam | number;
 

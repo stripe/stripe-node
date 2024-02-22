@@ -12,13 +12,13 @@ export const Customers = StripeResource.extend({
     methodType: 'list',
   }),
   del: stripeMethod({method: 'DELETE', fullPath: '/v1/customers/{customer}'}),
-  createBalanceTransaction: stripeMethod({
-    method: 'POST',
-    fullPath: '/v1/customers/{customer}/balance_transactions',
-  }),
   createFundingInstructions: stripeMethod({
     method: 'POST',
     fullPath: '/v1/customers/{customer}/funding_instructions',
+  }),
+  createBalanceTransaction: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/customers/{customer}/balance_transactions',
   }),
   createSource: stripeMethod({
     method: 'POST',
@@ -40,6 +40,11 @@ export const Customers = StripeResource.extend({
     method: 'DELETE',
     fullPath: '/v1/customers/{customer}/tax_ids/{id}',
   }),
+  listPaymentMethods: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/customers/{customer}/payment_methods',
+    methodType: 'list',
+  }),
   listBalanceTransactions: stripeMethod({
     method: 'GET',
     fullPath: '/v1/customers/{customer}/balance_transactions',
@@ -48,11 +53,6 @@ export const Customers = StripeResource.extend({
   listCashBalanceTransactions: stripeMethod({
     method: 'GET',
     fullPath: '/v1/customers/{customer}/cash_balance_transactions',
-    methodType: 'list',
-  }),
-  listPaymentMethods: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/customers/{customer}/payment_methods',
     methodType: 'list',
   }),
   listSources: stripeMethod({
@@ -64,6 +64,10 @@ export const Customers = StripeResource.extend({
     method: 'GET',
     fullPath: '/v1/customers/{customer}/tax_ids',
     methodType: 'list',
+  }),
+  retrievePaymentMethod: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/customers/{customer}/payment_methods/{payment_method}',
   }),
   retrieveBalanceTransaction: stripeMethod({
     method: 'GET',
@@ -77,10 +81,6 @@ export const Customers = StripeResource.extend({
     method: 'GET',
     fullPath:
       '/v1/customers/{customer}/cash_balance_transactions/{transaction}',
-  }),
-  retrievePaymentMethod: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/customers/{customer}/payment_methods/{payment_method}',
   }),
   retrieveSource: stripeMethod({
     method: 'GET',

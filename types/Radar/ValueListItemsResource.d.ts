@@ -33,6 +33,9 @@ declare module 'stripe' {
          */
         value_list: string;
 
+        /**
+         * Only return items that were created during the given date interval.
+         */
         created?: Stripe.RangeQueryParam | number;
 
         /**

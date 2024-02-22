@@ -302,6 +302,9 @@ declare module 'stripe' {
     }
 
     interface InvoiceItemListParams extends PaginationParams {
+      /**
+       * Only return invoice items that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**

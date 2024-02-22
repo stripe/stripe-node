@@ -15,6 +15,9 @@ declare module 'stripe' {
        */
       charge?: string;
 
+      /**
+       * Only return applications fees that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**
@@ -23,7 +26,7 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface ApplicationFeeCreateRefundParams {
+    interface FeeRefundCreateParams {
       /**
        * A positive integer, in _cents (or local equivalent)_, representing how much of this fee to refund. Can refund only up to the remaining unrefunded amount of the fee.
        */
@@ -40,21 +43,21 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
     }
 
-    interface ApplicationFeeListRefundsParams extends PaginationParams {
+    interface FeeRefundListParams extends PaginationParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
     }
 
-    interface ApplicationFeeRetrieveRefundParams {
+    interface FeeRefundRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
     }
 
-    interface ApplicationFeeUpdateRefundParams {
+    interface FeeRefundUpdateParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -102,7 +105,7 @@ declare module 'stripe' {
        */
       createRefund(
         id: string,
-        params?: ApplicationFeeCreateRefundParams,
+        params?: FeeRefundCreateParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.FeeRefund>>;
       createRefund(
@@ -115,7 +118,7 @@ declare module 'stripe' {
        */
       listRefunds(
         id: string,
-        params?: ApplicationFeeListRefundsParams,
+        params?: FeeRefundListParams,
         options?: RequestOptions
       ): ApiListPromise<Stripe.FeeRefund>;
       listRefunds(
@@ -129,7 +132,7 @@ declare module 'stripe' {
       retrieveRefund(
         feeId: string,
         id: string,
-        params?: ApplicationFeeRetrieveRefundParams,
+        params?: FeeRefundRetrieveParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.FeeRefund>>;
       retrieveRefund(
@@ -146,7 +149,7 @@ declare module 'stripe' {
       updateRefund(
         feeId: string,
         id: string,
-        params?: ApplicationFeeUpdateRefundParams,
+        params?: FeeRefundUpdateParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.FeeRefund>>;
       updateRefund(
