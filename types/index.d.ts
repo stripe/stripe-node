@@ -80,6 +80,7 @@
 ///<reference path='./Tax/SettingsResource.d.ts' />
 ///<reference path='./Tax/TransactionsResource.d.ts' />
 ///<reference path='./TaxCodesResource.d.ts' />
+///<reference path='./TaxIdsResource.d.ts' />
 ///<reference path='./TaxRatesResource.d.ts' />
 ///<reference path='./Terminal/ConfigurationsResource.d.ts' />
 ///<reference path='./Terminal/ConnectionTokensResource.d.ts' />
@@ -298,6 +299,7 @@ declare module 'stripe' {
     subscriptionSchedules: Stripe.SubscriptionSchedulesResource;
     subscriptions: Stripe.SubscriptionsResource;
     taxCodes: Stripe.TaxCodesResource;
+    taxIds: Stripe.TaxIdsResource;
     taxRates: Stripe.TaxRatesResource;
     tokens: Stripe.TokensResource;
     topups: Stripe.TopupsResource;

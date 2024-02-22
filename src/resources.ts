@@ -100,6 +100,7 @@ export {SubscriptionItems} from './resources/SubscriptionItems.js';
 export {SubscriptionSchedules} from './resources/SubscriptionSchedules.js';
 export {Subscriptions} from './resources/Subscriptions.js';
 export {TaxCodes} from './resources/TaxCodes.js';
+export {TaxIds} from './resources/TaxIds.js';
 export {TaxRates} from './resources/TaxRates.js';
 export {Tokens} from './resources/Tokens.js';
 export {Topups} from './resources/Topups.js';
