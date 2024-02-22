@@ -1,5 +1,9 @@
 # Changelog
 
+## 14.19.0-beta.1 - 2024-02-22
+* [#2023](https://github.com/stripe/stripe-node/pull/2023) Update generated code for beta
+
+
 ## 14.18.0 - 2024-02-22
 * [#2022](https://github.com/stripe/stripe-node/pull/2022) Update generated code
   * Add support for `client_reference_id` on `Identity.VerificationReportListParams`, `Identity.VerificationReport`, `Identity.VerificationSessionCreateParams`, `Identity.VerificationSessionListParams`, and `Identity.VerificationSession`
@@ -52,7 +56,7 @@
   - `TransferReversalUpdateParams` renamed to `TransferUpdateReversalParams`
   - `UsageRecordCreateParams` renamed to `SubscriptionItemCreateUsageRecordParams`
   - `UsageRecordSummaryListParams` renamed to `SubscriptionItemListUsageRecordSummariesParams`
-  
+
   Old names will still work but are deprecated and will be removed in future versions.
 * [#2021](https://github.com/stripe/stripe-node/pull/2021) Add TaxIds API
   * Add support for `create`, `del`, `list`, and `retrieve` methods on resource `TaxId`
