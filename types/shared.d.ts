@@ -133,12 +133,6 @@ declare module 'stripe' {
       town?: string;
     }
 
-    /**
-     * The resulting source of [a Connect platform debiting a connected account](https://stripe.com/docs/connect/account-debits#charging-a-connected-account).
-     * @deprecated prefer Stripe.Account
-     */
-    type AccountDebitSource = Account;
-
     interface RangeQueryParam {
       /**
        * Minimum value to filter by (exclusive)
