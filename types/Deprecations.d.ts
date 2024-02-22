@@ -183,26 +183,6 @@ declare module 'stripe' {
     type PersonUpdateParams = AccountUpdatePersonParams;
 
     /**
-     * @deprecated prefer {@link CustomerCreateTaxIdParams}
-     **/
-    type TaxIdCreateParams = CustomerCreateTaxIdParams;
-
-    /**
-     * @deprecated prefer {@link CustomerDeleteTaxIdParams}
-     **/
-    type TaxIdDeleteParams = CustomerDeleteTaxIdParams;
-
-    /**
-     * @deprecated prefer {@link CustomerListTaxIdsParams}
-     **/
-    type TaxIdListParams = CustomerListTaxIdsParams;
-
-    /**
-     * @deprecated prefer {@link CustomerRetrieveTaxIdParams}
-     **/
-    type TaxIdRetrieveParams = CustomerRetrieveTaxIdParams;
-
-    /**
      * @deprecated prefer {@link TransferCreateReversalParams}
      **/
     type TransferReversalCreateParams = TransferCreateReversalParams;
