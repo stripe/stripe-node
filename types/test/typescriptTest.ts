@@ -6,7 +6,10 @@
  */
 
 ///<reference types=".." />
-import Stripe from 'stripe';
+import Stripe, {
+  UsageRecordCreateParams,
+  UsageRecordSummaryListParams,
+} from 'stripe';
 
 let stripe = new Stripe('sk_test_123', {
   apiVersion: '2023-10-16',
@@ -303,3 +306,6 @@ stripe.files.create({
   },
   file_link_data: {create: true},
 });
+
+// Test deprecated parameters still work
+const param: Stripe.UsageRecordSummaryListParams = {expand: []};
