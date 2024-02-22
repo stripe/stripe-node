@@ -7,6 +7,7 @@
 ///<reference path='./Webhooks.d.ts' />
 ///<reference path='./EventTypes.d.ts' />
 ///<reference path='./UpcomingInvoices.d.ts' />
+///<reference path='./Deprecations.d.ts' />
 // Imports: The beginning of the section generated from our OpenAPI spec
 ///<reference path='./AccountLinksResource.d.ts' />
 ///<reference path='./AccountSessionsResource.d.ts' />
