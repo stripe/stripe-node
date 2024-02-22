@@ -9099,7 +9099,8 @@ declare module 'stripe' {
             | 'qst'
             | 'rst'
             | 'sales_tax'
-            | 'vat';
+            | 'vat'
+            | 'service_tax';
         }
       }
     }

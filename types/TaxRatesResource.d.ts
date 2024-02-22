@@ -72,7 +72,8 @@ declare module 'stripe' {
         | 'qst'
         | 'rst'
         | 'sales_tax'
-        | 'vat';
+        | 'vat'
+        | 'service_tax';
     }
 
     interface TaxRateRetrieveParams {
@@ -142,7 +143,8 @@ declare module 'stripe' {
         | 'qst'
         | 'rst'
         | 'sales_tax'
-        | 'vat';
+        | 'vat'
+        | 'service_tax';
     }
 
     interface TaxRateListParams extends PaginationParams {
