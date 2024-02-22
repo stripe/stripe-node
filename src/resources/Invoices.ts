@@ -61,6 +61,10 @@ export const Invoices = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/invoices/{invoice}/send',
   }),
+  updateLineItem: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/invoices/{invoice}/lines/{line_item_id}',
+  }),
   voidInvoice: stripeMethod({
     method: 'POST',
     fullPath: '/v1/invoices/{invoice}/void',

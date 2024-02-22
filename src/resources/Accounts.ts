@@ -71,6 +71,7 @@ export const Accounts = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/accounts/{account}/reject',
   }),
+  retrieveCurrent: stripeMethod({method: 'GET', fullPath: '/v1/account'}),
   retrieveCapability: stripeMethod({
     method: 'GET',
     fullPath: '/v1/accounts/{account}/capabilities/{capability}',

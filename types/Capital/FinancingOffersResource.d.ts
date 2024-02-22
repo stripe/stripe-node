@@ -16,6 +16,9 @@ declare module 'stripe' {
          */
         connected_account?: string;
 
+        /**
+         * Only return offers that were created during the given date interval.
+         */
         created?: Stripe.RangeQueryParam | number;
 
         /**

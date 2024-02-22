@@ -11,6 +11,14 @@ declare module 'stripe' {
       }
 
       interface VerificationReportListParams extends PaginationParams {
+        /**
+         * A string to reference this user. This can be a customer ID, a session ID, or similar, and can be used to reconcile this verification with your internal systems.
+         */
+        client_reference_id?: string;
+
+        /**
+         * Only return VerificationReports that were created during the given date interval.
+         */
         created?: Stripe.RangeQueryParam | number;
 
         /**

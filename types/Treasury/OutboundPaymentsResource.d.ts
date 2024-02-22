@@ -201,6 +201,11 @@ declare module 'stripe' {
         financial_account: string;
 
         /**
+         * Only return OutboundPayments that were created during the given date interval.
+         */
+        created?: Stripe.RangeQueryParam | number;
+
+        /**
          * Only return OutboundPayments sent to this customer.
          */
         customer?: string;

@@ -78,6 +78,9 @@ declare module 'stripe' {
     }
 
     interface TransferListParams extends PaginationParams {
+      /**
+       * Only return transfers that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**
@@ -96,7 +99,7 @@ declare module 'stripe' {
       transfer_group?: string;
     }
 
-    interface TransferReversalCreateParams {
+    interface TransferCreateReversalParams {
       /**
        * A positive integer in cents (or local equivalent) representing how much of this transfer to reverse. Can only reverse up to the unreversed amount remaining of the transfer. Partial transfer reversals are only allowed for transfers to Stripe Accounts. Defaults to the entire transfer amount.
        */
@@ -123,21 +126,21 @@ declare module 'stripe' {
       refund_application_fee?: boolean;
     }
 
-    interface TransferReversalListParams extends PaginationParams {
+    interface TransferListReversalsParams extends PaginationParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
     }
 
-    interface TransferReversalRetrieveParams {
+    interface TransferRetrieveReversalParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
     }
 
-    interface TransferReversalUpdateParams {
+    interface TransferUpdateReversalParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -200,7 +203,7 @@ declare module 'stripe' {
        */
       createReversal(
         id: string,
-        params?: TransferReversalCreateParams,
+        params?: TransferCreateReversalParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.TransferReversal>>;
       createReversal(
@@ -213,7 +216,7 @@ declare module 'stripe' {
        */
       listReversals(
         id: string,
-        params?: TransferReversalListParams,
+        params?: TransferListReversalsParams,
         options?: RequestOptions
       ): ApiListPromise<Stripe.TransferReversal>;
       listReversals(
@@ -227,7 +230,7 @@ declare module 'stripe' {
       retrieveReversal(
         transferId: string,
         id: string,
-        params?: TransferReversalRetrieveParams,
+        params?: TransferRetrieveReversalParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.TransferReversal>>;
       retrieveReversal(
@@ -244,7 +247,7 @@ declare module 'stripe' {
       updateReversal(
         transferId: string,
         id: string,
-        params?: TransferReversalUpdateParams,
+        params?: TransferUpdateReversalParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.TransferReversal>>;
       updateReversal(

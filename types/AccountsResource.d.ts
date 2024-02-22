@@ -2964,6 +2964,9 @@ declare module 'stripe' {
     }
 
     interface AccountListParams extends PaginationParams {
+      /**
+       * Only return connected accounts that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**
@@ -2974,15 +2977,15 @@ declare module 'stripe' {
 
     interface AccountDeleteParams {}
 
-    interface ExternalAccountCreateParams {
+    interface AccountCreateExternalAccountParams {
       /**
        * Please refer to full [documentation](https://stripe.com/docs/api) instead.
        */
       external_account:
         | string
-        | ExternalAccountCreateParams.Card
-        | ExternalAccountCreateParams.BankAccount
-        | ExternalAccountCreateParams.CardToken;
+        | AccountCreateExternalAccountParams.Card
+        | AccountCreateExternalAccountParams.BankAccount
+        | AccountCreateExternalAccountParams.CardToken;
 
       /**
        * When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
@@ -3000,7 +3003,7 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
     }
 
-    namespace ExternalAccountCreateParams {
+    namespace AccountCreateExternalAccountParams {
       interface BankAccount {
         object: 'bank_account';
 
@@ -3081,18 +3084,18 @@ declare module 'stripe' {
       }
     }
 
-    interface LoginLinkCreateParams {
+    interface AccountCreateLoginLinkParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
     }
 
-    interface PersonCreateParams {
+    interface AccountCreatePersonParams {
       /**
        * Details on the legal guardian's acceptance of the required Stripe agreements.
        */
-      additional_tos_acceptances?: PersonCreateParams.AdditionalTosAcceptances;
+      additional_tos_acceptances?: AccountCreatePersonParams.AdditionalTosAcceptances;
 
       /**
        * The person's address.
@@ -3112,12 +3115,12 @@ declare module 'stripe' {
       /**
        * The person's date of birth.
        */
-      dob?: Stripe.Emptyable<PersonCreateParams.Dob>;
+      dob?: Stripe.Emptyable<AccountCreatePersonParams.Dob>;
 
       /**
        * Documents that may be submitted to satisfy various informational requests.
        */
-      documents?: PersonCreateParams.Documents;
+      documents?: AccountCreatePersonParams.Documents;
 
       /**
        * The person's email address.
@@ -3217,7 +3220,7 @@ declare module 'stripe' {
       /**
        * The relationship that this person has with the account's legal entity.
        */
-      relationship?: PersonCreateParams.Relationship;
+      relationship?: AccountCreatePersonParams.Relationship;
 
       /**
        * The last four digits of the person's Social Security number (U.S. only).
@@ -3227,10 +3230,10 @@ declare module 'stripe' {
       /**
        * The person's verification status.
        */
-      verification?: PersonCreateParams.Verification;
+      verification?: AccountCreatePersonParams.Verification;
     }
 
-    namespace PersonCreateParams {
+    namespace AccountCreatePersonParams {
       interface AdditionalTosAcceptances {
         /**
          * Details on the legal guardian's acceptance of the main Stripe service agreement.
@@ -3390,18 +3393,18 @@ declare module 'stripe' {
       }
     }
 
-    interface ExternalAccountDeleteParams {}
+    interface AccountDeleteExternalAccountParams {}
 
-    interface PersonDeleteParams {}
+    interface AccountDeletePersonParams {}
 
-    interface CapabilityListParams {
+    interface AccountListCapabilitiesParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
     }
 
-    interface ExternalAccountListParams extends PaginationParams {
+    interface AccountListExternalAccountsParams extends PaginationParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -3410,14 +3413,14 @@ declare module 'stripe' {
       /**
        * Filter external accounts according to a particular object type.
        */
-      object?: ExternalAccountListParams.Object;
+      object?: AccountListExternalAccountsParams.Object;
     }
 
-    namespace ExternalAccountListParams {
+    namespace AccountListExternalAccountsParams {
       type Object = 'bank_account' | 'card';
     }
 
-    interface PersonListParams extends PaginationParams {
+    interface AccountListPersonsParams extends PaginationParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -3426,10 +3429,10 @@ declare module 'stripe' {
       /**
        * Filters on the list of people returned based on the person's relationship to the account's company.
        */
-      relationship?: PersonListParams.Relationship;
+      relationship?: AccountListPersonsParams.Relationship;
     }
 
-    namespace PersonListParams {
+    namespace AccountListPersonsParams {
       interface Relationship {
         /**
          * A filter on the list of people returned based on whether these people are directors of the account's company.
@@ -3470,28 +3473,35 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface CapabilityRetrieveParams {
+    interface AccountRetrieveCurrentParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
     }
 
-    interface ExternalAccountRetrieveParams {
+    interface AccountRetrieveCapabilityParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
     }
 
-    interface PersonRetrieveParams {
+    interface AccountRetrieveExternalAccountParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
     }
 
-    interface CapabilityUpdateParams {
+    interface AccountRetrievePersonParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface AccountUpdateCapabilityParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -3505,7 +3515,7 @@ declare module 'stripe' {
       requested?: boolean;
     }
 
-    interface ExternalAccountUpdateParams {
+    interface AccountUpdateExternalAccountParams {
       /**
        * The name of the person or business that owns the bank account.
        */
@@ -3515,13 +3525,13 @@ declare module 'stripe' {
        * The type of entity that holds the account. This can be either `individual` or `company`.
        */
       account_holder_type?: Stripe.Emptyable<
-        ExternalAccountUpdateParams.AccountHolderType
+        AccountUpdateExternalAccountParams.AccountHolderType
       >;
 
       /**
        * The bank account type. This can only be `checking` or `savings` in most countries. In Japan, this can only be `futsu` or `toza`.
        */
-      account_type?: ExternalAccountUpdateParams.AccountType;
+      account_type?: AccountUpdateExternalAccountParams.AccountType;
 
       /**
        * City/District/Suburb/Town/Village.
@@ -3561,7 +3571,7 @@ declare module 'stripe' {
       /**
        * Documents that may be submitted to satisfy various informational requests.
        */
-      documents?: ExternalAccountUpdateParams.Documents;
+      documents?: AccountUpdateExternalAccountParams.Documents;
 
       /**
        * Two digit number representing the card's expiration month.
@@ -3589,7 +3599,7 @@ declare module 'stripe' {
       name?: string;
     }
 
-    namespace ExternalAccountUpdateParams {
+    namespace AccountUpdateExternalAccountParams {
       type AccountHolderType = 'company' | 'individual';
 
       type AccountType = 'checking' | 'futsu' | 'savings' | 'toza';
@@ -3611,11 +3621,11 @@ declare module 'stripe' {
       }
     }
 
-    interface PersonUpdateParams {
+    interface AccountUpdatePersonParams {
       /**
        * Details on the legal guardian's acceptance of the required Stripe agreements.
        */
-      additional_tos_acceptances?: PersonUpdateParams.AdditionalTosAcceptances;
+      additional_tos_acceptances?: AccountUpdatePersonParams.AdditionalTosAcceptances;
 
       /**
        * The person's address.
@@ -3635,12 +3645,12 @@ declare module 'stripe' {
       /**
        * The person's date of birth.
        */
-      dob?: Stripe.Emptyable<PersonUpdateParams.Dob>;
+      dob?: Stripe.Emptyable<AccountUpdatePersonParams.Dob>;
 
       /**
        * Documents that may be submitted to satisfy various informational requests.
        */
-      documents?: PersonUpdateParams.Documents;
+      documents?: AccountUpdatePersonParams.Documents;
 
       /**
        * The person's email address.
@@ -3740,7 +3750,7 @@ declare module 'stripe' {
       /**
        * The relationship that this person has with the account's legal entity.
        */
-      relationship?: PersonUpdateParams.Relationship;
+      relationship?: AccountUpdatePersonParams.Relationship;
 
       /**
        * The last four digits of the person's Social Security number (U.S. only).
@@ -3750,10 +3760,10 @@ declare module 'stripe' {
       /**
        * The person's verification status.
        */
-      verification?: PersonUpdateParams.Verification;
+      verification?: AccountUpdatePersonParams.Verification;
     }
 
-    namespace PersonUpdateParams {
+    namespace AccountUpdatePersonParams {
       interface AdditionalTosAcceptances {
         /**
          * Details on the legal guardian's acceptance of the main Stripe service agreement.
@@ -4002,7 +4012,7 @@ declare module 'stripe' {
        */
       createExternalAccount(
         id: string,
-        params: ExternalAccountCreateParams,
+        params: AccountCreateExternalAccountParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.ExternalAccount>>;
 
@@ -4013,7 +4023,7 @@ declare module 'stripe' {
        */
       createLoginLink(
         id: string,
-        params?: LoginLinkCreateParams,
+        params?: AccountCreateLoginLinkParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.LoginLink>>;
       createLoginLink(
@@ -4026,7 +4036,7 @@ declare module 'stripe' {
        */
       createPerson(
         id: string,
-        params?: PersonCreateParams,
+        params?: AccountCreatePersonParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Person>>;
       createPerson(
@@ -4040,7 +4050,7 @@ declare module 'stripe' {
       deleteExternalAccount(
         accountId: string,
         id: string,
-        params?: ExternalAccountDeleteParams,
+        params?: AccountDeleteExternalAccountParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedExternalAccount>>;
       deleteExternalAccount(
@@ -4055,7 +4065,7 @@ declare module 'stripe' {
       deletePerson(
         accountId: string,
         id: string,
-        params?: PersonDeleteParams,
+        params?: AccountDeletePersonParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedPerson>>;
       deletePerson(
@@ -4069,7 +4079,7 @@ declare module 'stripe' {
        */
       listCapabilities(
         id: string,
-        params?: CapabilityListParams,
+        params?: AccountListCapabilitiesParams,
         options?: RequestOptions
       ): ApiListPromise<Stripe.Capability>;
       listCapabilities(
@@ -4082,7 +4092,7 @@ declare module 'stripe' {
        */
       listExternalAccounts(
         id: string,
-        params?: ExternalAccountListParams,
+        params?: AccountListExternalAccountsParams,
         options?: RequestOptions
       ): ApiListPromise<Stripe.ExternalAccount>;
       listExternalAccounts(
@@ -4095,7 +4105,7 @@ declare module 'stripe' {
        */
       listPersons(
         id: string,
-        params?: PersonListParams,
+        params?: AccountListPersonsParams,
         options?: RequestOptions
       ): ApiListPromise<Stripe.Person>;
       listPersons(
@@ -4115,12 +4125,23 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Account>>;
 
       /**
+       * Retrieves the details of an account.
+       */
+      retrieveCurrent(
+        params?: AccountRetrieveCurrentParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Account>>;
+      retrieveCurrent(
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Account>>;
+
+      /**
        * Retrieves information about the specified Account Capability.
        */
       retrieveCapability(
         accountId: string,
         id: string,
-        params?: CapabilityRetrieveParams,
+        params?: AccountRetrieveCapabilityParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Capability>>;
       retrieveCapability(
@@ -4135,7 +4156,7 @@ declare module 'stripe' {
       retrieveExternalAccount(
         accountId: string,
         id: string,
-        params?: ExternalAccountRetrieveParams,
+        params?: AccountRetrieveExternalAccountParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.ExternalAccount>>;
       retrieveExternalAccount(
@@ -4150,7 +4171,7 @@ declare module 'stripe' {
       retrievePerson(
         accountId: string,
         id: string,
-        params?: PersonRetrieveParams,
+        params?: AccountRetrievePersonParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Person>>;
       retrievePerson(
@@ -4165,7 +4186,7 @@ declare module 'stripe' {
       updateCapability(
         accountId: string,
         id: string,
-        params?: CapabilityUpdateParams,
+        params?: AccountUpdateCapabilityParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Capability>>;
       updateCapability(
@@ -4182,7 +4203,7 @@ declare module 'stripe' {
       updateExternalAccount(
         accountId: string,
         id: string,
-        params?: ExternalAccountUpdateParams,
+        params?: AccountUpdateExternalAccountParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.ExternalAccount>>;
       updateExternalAccount(
@@ -4197,7 +4218,7 @@ declare module 'stripe' {
       updatePerson(
         accountId: string,
         id: string,
-        params?: PersonUpdateParams,
+        params?: AccountUpdatePersonParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Person>>;
       updatePerson(

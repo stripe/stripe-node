@@ -168,7 +168,7 @@ declare module 'stripe' {
       promotion_code?: string;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) resulting from the `billing_cycle_anchor`. If no value is passed, the default is `create_prorations`.
+       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) resulting from the `billing_cycle_anchor`. If no value is passed, the default is `create_prorations`.
        */
       proration_behavior?: SubscriptionCreateParams.ProrationBehavior;
 
@@ -1162,7 +1162,7 @@ declare module 'stripe' {
       promotion_code?: string;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
        */
       proration_behavior?: SubscriptionUpdateParams.ProrationBehavior;
 
@@ -2015,6 +2015,9 @@ declare module 'stripe' {
        */
       collection_method?: SubscriptionListParams.CollectionMethod;
 
+      /**
+       * Only return subscriptions that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       current_period_end?: Stripe.RangeQueryParam | number;
@@ -2137,7 +2140,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
        */
       proration_behavior?: SubscriptionResumeParams.ProrationBehavior;
 

@@ -10,6 +10,11 @@ declare module 'stripe' {
         type: VerificationSessionCreateParams.Type;
 
         /**
+         * A string to reference this user. This can be a customer ID, a session ID, or similar, and can be used to reconcile this verification with your internal systems.
+         */
+        client_reference_id?: string;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -138,6 +143,14 @@ declare module 'stripe' {
       }
 
       interface VerificationSessionListParams extends PaginationParams {
+        /**
+         * A string to reference this user. This can be a customer ID, a session ID, or similar, and can be used to reconcile this verification with your internal systems.
+         */
+        client_reference_id?: string;
+
+        /**
+         * Only return VerificationSessions that were created during the given date interval.
+         */
         created?: Stripe.RangeQueryParam | number;
 
         /**

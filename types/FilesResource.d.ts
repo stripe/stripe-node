@@ -63,6 +63,9 @@ declare module 'stripe' {
     }
 
     interface FileListParams extends PaginationParams {
+      /**
+       * Only return files that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**

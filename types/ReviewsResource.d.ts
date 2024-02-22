@@ -10,6 +10,9 @@ declare module 'stripe' {
     }
 
     interface ReviewListParams extends PaginationParams {
+      /**
+       * Only return reviews that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**
