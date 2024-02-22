@@ -320,7 +320,7 @@ declare module 'stripe' {
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
     }
 
-    interface UsageRecordCreateParams {
+    interface SubscriptionItemCreateUsageRecordParams {
       /**
        * The usage quantity for the specified timestamp.
        */
@@ -329,7 +329,7 @@ declare module 'stripe' {
       /**
        * Valid values are `increment` (default) or `set`. When using `increment` the specified `quantity` will be added to the usage at the specified timestamp. The `set` action will overwrite the usage quantity at that timestamp. If the subscription has [billing thresholds](https://stripe.com/docs/api/subscriptions/object#subscription_object-billing_thresholds), `increment` is the only allowed value.
        */
-      action?: UsageRecordCreateParams.Action;
+      action?: SubscriptionItemCreateUsageRecordParams.Action;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -342,11 +342,12 @@ declare module 'stripe' {
       timestamp?: 'now' | number;
     }
 
-    namespace UsageRecordCreateParams {
+    namespace SubscriptionItemCreateUsageRecordParams {
       type Action = 'increment' | 'set';
     }
 
-    interface UsageRecordSummaryListParams extends PaginationParams {
+    interface SubscriptionItemListUsageRecordSummariesParams
+      extends PaginationParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -416,7 +417,7 @@ declare module 'stripe' {
        */
       createUsageRecord(
         id: string,
-        params: UsageRecordCreateParams,
+        params: SubscriptionItemCreateUsageRecordParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.UsageRecord>>;
 
@@ -427,7 +428,7 @@ declare module 'stripe' {
        */
       listUsageRecordSummaries(
         id: string,
-        params?: UsageRecordSummaryListParams,
+        params?: SubscriptionItemListUsageRecordSummariesParams,
         options?: RequestOptions
       ): ApiListPromise<Stripe.UsageRecordSummary>;
       listUsageRecordSummaries(
