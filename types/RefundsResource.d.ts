@@ -92,6 +92,9 @@ declare module 'stripe' {
        */
       charge?: string;
 
+      /**
+       * Only return refunds that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**

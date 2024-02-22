@@ -396,6 +396,9 @@ declare module 'stripe' {
       }
 
       interface FinancialAccountListParams extends PaginationParams {
+        /**
+         * Only return FinancialAccounts that were created during the given date interval.
+         */
         created?: Stripe.RangeQueryParam | number;
 
         /**

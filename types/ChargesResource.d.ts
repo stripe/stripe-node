@@ -243,6 +243,9 @@ declare module 'stripe' {
     }
 
     interface ChargeListParams extends PaginationParams {
+      /**
+       * Only return charges that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**

@@ -514,6 +514,9 @@ declare module 'stripe' {
     }
 
     interface CustomerListParams extends PaginationParams {
+      /**
+       * Only return customers that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**

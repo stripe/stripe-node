@@ -639,7 +639,7 @@ declare module 'stripe' {
 
       interface DisputeListParams extends PaginationParams {
         /**
-         * Select Issuing disputes that were created during the given date interval.
+         * Only return Issuing disputes that were created during the given date interval.
          */
         created?: Stripe.RangeQueryParam | number;
 

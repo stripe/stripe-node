@@ -2821,6 +2821,9 @@ declare module 'stripe' {
     }
 
     interface AccountListParams extends PaginationParams {
+      /**
+       * Only return connected accounts that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**

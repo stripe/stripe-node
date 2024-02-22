@@ -119,7 +119,7 @@ declare module 'stripe' {
       payment_settings?: InvoiceCreateParams.PaymentSettings;
 
       /**
-       * How to handle pending invoice items on invoice creation. One of `include` or `exclude`. `include` will include any pending invoice items, and will create an empty draft invoice if no pending invoice items exist. `exclude` will always create an empty invoice draft regardless if there are pending invoice items or not. Defaults to `exclude` if the parameter is omitted.
+       * How to handle pending invoice items on invoice creation. Defaults to `exclude` if the parameter is omitted.
        */
       pending_invoice_items_behavior?: InvoiceCreateParams.PendingInvoiceItemsBehavior;
 
@@ -1393,6 +1393,9 @@ declare module 'stripe' {
        */
       collection_method?: InvoiceListParams.CollectionMethod;
 
+      /**
+       * Only return invoices that were created during the given date interval.
+       */
       created?: Stripe.RangeQueryParam | number;
 
       /**
@@ -1543,7 +1546,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
        */
       subscription_proration_behavior?: InvoiceListUpcomingLinesParams.SubscriptionProrationBehavior;
 
@@ -2188,7 +2191,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
        */
       subscription_proration_behavior?: InvoiceRetrieveUpcomingParams.SubscriptionProrationBehavior;
 
@@ -2945,8 +2948,8 @@ declare module 'stripe' {
             | 'qst'
             | 'rst'
             | 'sales_tax'
-            | 'service_tax'
-            | 'vat';
+            | 'vat'
+            | 'service_tax';
         }
       }
     }

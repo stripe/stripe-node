@@ -108,7 +108,7 @@ declare module 'stripe' {
         description: string | null;
 
         /**
-         * Type of the fee, one of: `application_fee`, `stripe_fee` or `tax`.
+         * Type of the fee, one of: `application_fee`, `payment_method_passthrough_fee`, `stripe_fee` or `tax`.
          */
         type: string;
       }
