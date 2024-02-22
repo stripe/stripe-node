@@ -68,16 +68,6 @@ declare module 'stripe' {
     type CustomerCashBalanceTransactionRetrieveParams = CustomerRetrieveCashBalanceTransactionParams;
 
     /**
-     * @deprecated prefer {@link CustomerListPaymentMethodsParams}
-     **/
-    type CustomerListPaymentMethodsParams = CustomerListPaymentMethodsParams;
-
-    /**
-     * @deprecated prefer {@link CustomerRetrievePaymentMethodParams}
-     **/
-    type CustomerRetrievePaymentMethodParams = CustomerRetrievePaymentMethodParams;
-
-    /**
      * @deprecated prefer {@link CustomerCreateSourceParams}
      **/
     type CustomerSourceCreateParams = CustomerCreateSourceParams;
