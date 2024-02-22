@@ -16,14 +16,14 @@ export const Accounts = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/financial_connections/accounts/{account}/disconnect',
   }),
-  listOwners: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/financial_connections/accounts/{account}/owners',
-    methodType: 'list',
-  }),
   listInferredBalances: stripeMethod({
     method: 'GET',
     fullPath: '/v1/financial_connections/accounts/{account}/inferred_balances',
+    methodType: 'list',
+  }),
+  listOwners: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/financial_connections/accounts/{account}/owners',
     methodType: 'list',
   }),
   refresh: stripeMethod({

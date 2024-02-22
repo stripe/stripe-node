@@ -3985,14 +3985,14 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface InvoiceLineItemListParams extends PaginationParams {
+    interface InvoiceListLineItemsParams extends PaginationParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
     }
 
-    interface InvoicePaymentListParams extends PaginationParams {
+    interface InvoiceListPaymentsParams extends PaginationParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -6416,7 +6416,7 @@ declare module 'stripe' {
       source?: string;
     }
 
-    interface InvoicePaymentRetrieveParams {
+    interface InvoiceRetrievePaymentParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -8823,7 +8823,7 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface InvoiceLineItemUpdateParams {
+    interface InvoiceUpdateLineItemParams {
       /**
        * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. If you want to apply a credit to the customer's account, pass a negative amount.
        */
@@ -8842,7 +8842,7 @@ declare module 'stripe' {
       /**
        * The coupons & existing discounts which apply to the line item. Item discounts are applied before invoice discounts. Pass an empty string to remove previously-defined discounts.
        */
-      discounts?: Stripe.Emptyable<Array<InvoiceLineItemUpdateParams.Discount>>;
+      discounts?: Stripe.Emptyable<Array<InvoiceUpdateLineItemParams.Discount>>;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -8862,7 +8862,7 @@ declare module 'stripe' {
       /**
        * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
        */
-      period?: InvoiceLineItemUpdateParams.Period;
+      period?: InvoiceUpdateLineItemParams.Period;
 
       /**
        * The ID of the price object.
@@ -8872,7 +8872,7 @@ declare module 'stripe' {
       /**
        * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
        */
-      price_data?: InvoiceLineItemUpdateParams.PriceData;
+      price_data?: InvoiceUpdateLineItemParams.PriceData;
 
       /**
        * Non-negative integer. The quantity of units for the line item.
@@ -8883,7 +8883,7 @@ declare module 'stripe' {
        * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://stripe.com/docs/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://stripe.com/docs/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
        */
       tax_amounts?: Stripe.Emptyable<
-        Array<InvoiceLineItemUpdateParams.TaxAmount>
+        Array<InvoiceUpdateLineItemParams.TaxAmount>
       >;
 
       /**
@@ -8892,7 +8892,7 @@ declare module 'stripe' {
       tax_rates?: Stripe.Emptyable<Array<string>>;
     }
 
-    namespace InvoiceLineItemUpdateParams {
+    namespace InvoiceUpdateLineItemParams {
       interface Discount {
         /**
          * ID of the coupon to create a new discount for.
@@ -9222,7 +9222,7 @@ declare module 'stripe' {
        */
       listLineItems(
         id: string,
-        params?: InvoiceLineItemListParams,
+        params?: InvoiceListLineItemsParams,
         options?: RequestOptions
       ): ApiListPromise<Stripe.InvoiceLineItem>;
       listLineItems(
@@ -9235,7 +9235,7 @@ declare module 'stripe' {
        */
       listPayments(
         id: string,
-        params?: InvoicePaymentListParams,
+        params?: InvoiceListPaymentsParams,
         options?: RequestOptions
       ): ApiListPromise<Stripe.InvoicePayment>;
       listPayments(
@@ -9286,7 +9286,7 @@ declare module 'stripe' {
       retrievePayment(
         invoiceId: string,
         id: string,
-        params?: InvoicePaymentRetrieveParams,
+        params?: InvoiceRetrievePaymentParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.InvoicePayment>>;
       retrievePayment(
@@ -9345,7 +9345,7 @@ declare module 'stripe' {
       updateLineItem(
         invoiceId: string,
         id: string,
-        params?: InvoiceLineItemUpdateParams,
+        params?: InvoiceUpdateLineItemParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.InvoiceLineItem>>;
       updateLineItem(

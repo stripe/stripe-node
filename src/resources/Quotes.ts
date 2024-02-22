@@ -17,6 +17,11 @@ export const Quotes = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/quotes/{quote}/finalize',
   }),
+  listPreviewInvoiceLines: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/quotes/{quote}/preview_invoices/{preview_invoice}/lines',
+    methodType: 'list',
+  }),
   listComputedUpfrontLineItems: stripeMethod({
     method: 'GET',
     fullPath: '/v1/quotes/{quote}/computed_upfront_line_items',
@@ -30,11 +35,6 @@ export const Quotes = StripeResource.extend({
   listLines: stripeMethod({
     method: 'GET',
     fullPath: '/v1/quotes/{quote}/lines',
-    methodType: 'list',
-  }),
-  listPreviewInvoiceLines: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/quotes/{quote}/preview_invoices/{preview_invoice}/lines',
     methodType: 'list',
   }),
   listPreviewInvoices: stripeMethod({
