@@ -6,10 +6,7 @@
  */
 
 ///<reference types=".." />
-import Stripe, {
-  UsageRecordCreateParams,
-  UsageRecordSummaryListParams,
-} from 'stripe';
+import Stripe from 'stripe';
 
 let stripe = new Stripe('sk_test_123', {
   apiVersion: '2023-10-16',

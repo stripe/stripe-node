@@ -1,5 +1,6 @@
 declare module 'stripe' {
   namespace Stripe {
+    // TODO (MAJOR): go/j/DEVSDK-1812 remove the entire file
     /**
      * The resulting source of [a Connect platform debiting a connected account](https://stripe.com/docs/connect/account-debits#charging-a-connected-account).
      * @deprecated prefer Stripe.Account
