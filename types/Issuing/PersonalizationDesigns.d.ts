@@ -33,6 +33,11 @@ declare module 'stripe' {
         created: number;
 
         /**
+         * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+         */
+        livemode: boolean;
+
+        /**
          * A lookup key used to retrieve personalization designs dynamically from a static string. This may be up to 200 characters.
          */
         lookup_key: string | null;
