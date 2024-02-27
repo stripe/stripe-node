@@ -122,6 +122,11 @@ declare module 'stripe' {
       namespace ReaderProcessPaymentIntentParams {
         interface ProcessConfig {
           /**
+           * Enables cancel button on transaction screens.
+           */
+          enable_customer_cancellation?: boolean;
+
+          /**
            * Override showing a tipping selection screen on this transaction.
            */
           skip_tipping?: boolean;
@@ -165,7 +170,12 @@ declare module 'stripe' {
       }
 
       namespace ReaderProcessSetupIntentParams {
-        interface ProcessConfig {}
+        interface ProcessConfig {
+          /**
+           * Enables cancel button on transaction screens.
+           */
+          enable_customer_cancellation?: boolean;
+        }
       }
 
       interface ReaderRefundPaymentParams {
@@ -200,9 +210,23 @@ declare module 'stripe' {
         refund_application_fee?: boolean;
 
         /**
+         * Configuration overrides
+         */
+        refund_payment_config?: ReaderRefundPaymentParams.RefundPaymentConfig;
+
+        /**
          * Boolean indicating whether the transfer should be reversed when refunding this charge. The transfer will be reversed proportionally to the amount being refunded (either the entire or partial amount). A transfer can be reversed only by the application that created the charge.
          */
         reverse_transfer?: boolean;
+      }
+
+      namespace ReaderRefundPaymentParams {
+        interface RefundPaymentConfig {
+          /**
+           * Enables cancel button on transaction screens.
+           */
+          enable_customer_cancellation?: boolean;
+        }
       }
 
       interface ReaderSetReaderDisplayParams {
