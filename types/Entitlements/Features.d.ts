@@ -32,27 +32,6 @@ declare module 'stripe' {
          * The feature's name, for your own purpose, not meant to be displayable to the customer.
          */
         name: string;
-
-        /**
-         * Contains information about type=quantity features. This is required when type=quantity.
-         */
-        quantity: Feature.Quantity | null;
-
-        /**
-         * The type of feature.
-         */
-        type: Feature.Type;
-      }
-
-      namespace Feature {
-        interface Quantity {
-          /**
-           * The quantity of units made available by this feature. This quantity will be multiplied by the line_item quantity for line_items that contain this feature.
-           */
-          units_available: number;
-        }
-
-        type Type = 'quantity' | 'switch';
       }
     }
   }

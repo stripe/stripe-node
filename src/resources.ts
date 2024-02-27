@@ -18,7 +18,6 @@ import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Custome
 import {DebitReversals as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
 import {Disputes as IssuingDisputes} from './resources/Issuing/Disputes.js';
 import {EarlyFraudWarnings as RadarEarlyFraudWarnings} from './resources/Radar/EarlyFraudWarnings.js';
-import {Events as EntitlementsEvents} from './resources/Entitlements/Events.js';
 import {Features as EntitlementsFeatures} from './resources/Entitlements/Features.js';
 import {FinancialAccounts as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts.js';
 import {FinancingOffers as CapitalFinancingOffers} from './resources/Capital/FinancingOffers.js';
@@ -142,7 +141,6 @@ export const Climate = resourceNamespace('climate', {
   Suppliers: ClimateSuppliers,
 });
 export const Entitlements = resourceNamespace('entitlements', {
-  Events: EntitlementsEvents,
   Features: EntitlementsFeatures,
 });
 export const FinancialConnections = resourceNamespace('financialConnections', {

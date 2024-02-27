@@ -15,30 +15,9 @@ declare module 'stripe' {
         name: string;
 
         /**
-         * The type of feature.
-         */
-        type: FeatureCreateParams.Type;
-
-        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
-
-        /**
-         * Contains information about type=quantity features. This is required when type=quantity.
-         */
-        quantity?: FeatureCreateParams.Quantity;
-      }
-
-      namespace FeatureCreateParams {
-        interface Quantity {
-          /**
-           * The quantity of units made available by this feature. This quantity will be multiplied by the line_item quantity for line_items that contain this feature.
-           */
-          units_available: number;
-        }
-
-        type Type = 'quantity' | 'switch';
       }
 
       interface FeatureListParams extends PaginationParams {
