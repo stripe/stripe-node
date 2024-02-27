@@ -62,7 +62,7 @@ declare module 'stripe' {
         /**
          * Type of report.
          */
-        type?: VerificationReport.Type;
+        type: VerificationReport.Type;
 
         /**
          * ID of the VerificationSession that created this report.
