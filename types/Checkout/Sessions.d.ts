@@ -121,7 +121,7 @@ declare module 'stripe' {
         customer_creation: Session.CustomerCreation | null;
 
         /**
-         * The customer details including the customer's tax exempt status and the customer's tax IDs. Only the customer's email is present on Sessions in `setup` mode.
+         * The customer details including the customer's tax exempt status and the customer's tax IDs. Customer's address details are not present on Sessions in `setup` mode.
          */
         customer_details: Session.CustomerDetails | null;
 
