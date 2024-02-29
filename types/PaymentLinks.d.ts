@@ -54,7 +54,7 @@ declare module 'stripe' {
       automatic_tax: PaymentLink.AutomaticTax;
 
       /**
-       * Configuration for collecting the customer's billing address.
+       * Configuration for collecting the customer's billing address. Defaults to `auto`.
        */
       billing_address_collection: PaymentLink.BillingAddressCollection;
 
@@ -116,7 +116,7 @@ declare module 'stripe' {
       payment_intent_data: PaymentLink.PaymentIntentData | null;
 
       /**
-       * Configuration for collecting a payment method during checkout.
+       * Configuration for collecting a payment method during checkout. Defaults to `always`.
        */
       payment_method_collection: PaymentLink.PaymentMethodCollection;
 
