@@ -125,7 +125,7 @@ declare module 'stripe' {
       description: string | null;
 
       /**
-       * Describes the current discount applied to this subscription, if there is one. When billing, a discount applied to a subscription overrides a discount applied on a customer-wide basis.
+       * Describes the current discount applied to this subscription, if there is one. When billing, a discount applied to a subscription overrides a discount applied on a customer-wide basis. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       discount: Stripe.Discount | null;
 

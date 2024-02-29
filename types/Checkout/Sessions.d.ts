@@ -53,7 +53,7 @@ declare module 'stripe' {
         automatic_tax: Session.AutomaticTax;
 
         /**
-         * Describes whether Checkout should collect the customer's billing address.
+         * Describes whether Checkout should collect the customer's billing address. Defaults to `auto`.
          */
         billing_address_collection: Session.BillingAddressCollection | null;
 
@@ -121,7 +121,7 @@ declare module 'stripe' {
         customer_creation: Session.CustomerCreation | null;
 
         /**
-         * The customer details including the customer's tax exempt status and the customer's tax IDs. Only the customer's email is present on Sessions in `setup` mode.
+         * The customer details including the customer's tax exempt status and the customer's tax IDs. Customer's address details are not present on Sessions in `setup` mode.
          */
         customer_details: Session.CustomerDetails | null;
 
@@ -185,7 +185,7 @@ declare module 'stripe' {
         payment_link: string | Stripe.PaymentLink | null;
 
         /**
-         * Configure whether a Checkout Session should collect a payment method.
+         * Configure whether a Checkout Session should collect a payment method. Defaults to `always`.
          */
         payment_method_collection: Session.PaymentMethodCollection | null;
 
@@ -219,7 +219,7 @@ declare module 'stripe' {
         recovered_from: string | null;
 
         /**
-         * Applies to Checkout Sessions with `ui_mode: embedded`. By default, Stripe will always redirect to your return_url after a successful confirmation. If you set `redirect_on_completion: 'if_required'`, then we will only redirect if your user chooses a redirect-based payment method.
+         * This parameter applies to `ui_mode: embedded`. Learn more about the [redirect behavior](https://stripe.com/docs/payments/checkout/custom-redirect-behavior) of embedded sessions. Defaults to `always`.
          */
         redirect_on_completion?: Session.RedirectOnCompletion;
 
@@ -284,7 +284,7 @@ declare module 'stripe' {
         total_details: Session.TotalDetails | null;
 
         /**
-         * The UI mode of the Session. Can be `hosted` (default) or `embedded`.
+         * The UI mode of the Session. Defaults to `hosted`.
          */
         ui_mode: Session.UiMode | null;
 

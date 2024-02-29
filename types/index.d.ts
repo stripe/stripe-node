@@ -35,7 +35,6 @@
 ///<reference path='./CustomerSessionsResource.d.ts' />
 ///<reference path='./CustomersResource.d.ts' />
 ///<reference path='./DisputesResource.d.ts' />
-///<reference path='./Entitlements/EventsResource.d.ts' />
 ///<reference path='./Entitlements/FeaturesResource.d.ts' />
 ///<reference path='./EphemeralKeysResource.d.ts' />
 ///<reference path='./EventsResource.d.ts' />
@@ -169,7 +168,6 @@
 ///<reference path='./Customers.d.ts' />
 ///<reference path='./Discounts.d.ts' />
 ///<reference path='./Disputes.d.ts' />
-///<reference path='./Entitlements/Events.d.ts' />
 ///<reference path='./Entitlements/Features.d.ts' />
 ///<reference path='./EphemeralKeys.d.ts' />
 ///<reference path='./Events.d.ts' />
@@ -371,7 +369,6 @@ declare module 'stripe' {
       suppliers: Stripe.Climate.SuppliersResource;
     };
     entitlements: {
-      events: Stripe.Entitlements.EventsResource;
       features: Stripe.Entitlements.FeaturesResource;
     };
     financialConnections: {

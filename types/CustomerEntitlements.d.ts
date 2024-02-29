@@ -30,27 +30,6 @@ declare module 'stripe' {
        * A unique key you provide as your own system identifier. This may be up to 80 characters.
        */
       lookup_key: string;
-
-      /**
-       * Contains information about entitlements relating to features with type=quantity. Required when the feature has type=quantity.
-       */
-      quantity: CustomerEntitlement.Quantity | null;
-
-      /**
-       * The type of feature.
-       */
-      type: CustomerEntitlement.Type;
-    }
-
-    namespace CustomerEntitlement {
-      interface Quantity {
-        /**
-         * The total quantity available to the customer.
-         */
-        total_available: number;
-      }
-
-      type Type = 'quantity' | 'switch';
     }
   }
 }
