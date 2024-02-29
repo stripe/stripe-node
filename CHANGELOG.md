@@ -1,5 +1,15 @@
 # Changelog
 
+## 14.20.0-beta.1 - 2024-02-29
+* [#2026](https://github.com/stripe/stripe-node/pull/2026) Update generated code for beta
+  * Remove support for resource `Entitlements.Event`
+  * Change type of `ConfirmationToken.mandate_data` from `ConfirmationTokensResourceMandateData | null` to `ConfirmationTokensResourceMandateData`
+  * Change `ConfirmationToken.mandate_data`, `ConfirmationToken.payment_method_options`, and `ConfirmationToken.payment_method` to be optional
+  * Remove support for `quantity` and `type` on `Entitlements.FeatureCreateParams` and `Entitlements.Feature`
+  * Add support for `livemode` on `Issuing.PersonalizationDesign`
+  * Add support for `application_fee_amount`, `description`, `metadata`, and `transfer_data` on `PaymentIntentDecrementAuthorizationParams`
+  * Add support for `enable_customer_cancellation` on `Terminal.Reader.action.collect_payment_method.collect_config` and `Terminal.ReaderCollectPaymentMethodParams.collect_config`
+
 ## 14.19.0-beta.1 - 2024-02-22
 * [#2023](https://github.com/stripe/stripe-node/pull/2023) Update generated code for beta
 
