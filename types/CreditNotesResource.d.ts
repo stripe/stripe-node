@@ -178,6 +178,11 @@ declare module 'stripe' {
 
     interface CreditNoteListParams extends PaginationParams {
       /**
+       * Only return credit notes that were created during the given date interval.
+       */
+      created?: Stripe.RangeQueryParam | number;
+
+      /**
        * Only return credit notes for the customer specified by this customer ID.
        */
       customer?: string;
