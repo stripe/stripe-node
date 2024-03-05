@@ -182,7 +182,7 @@ declare module 'stripe' {
             last4: string | null;
 
             /**
-             * The US bank account network used to send funds.
+             * The network rails used. See the [docs](https://stripe.com/docs/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
              */
             network: UsBankAccount.Network;
 
