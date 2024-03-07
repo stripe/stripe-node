@@ -168,8 +168,14 @@ declare module 'stripe' {
 
           namespace CollectInputs {
             interface Input {
+              /**
+               * Default text of input being collected.
+               */
               custom_text: Input.CustomText | null;
 
+              /**
+               * Indicate that this input is required, disabling the skip button.
+               */
               required: boolean | null;
 
               /**
@@ -182,10 +188,13 @@ declare module 'stripe' {
                */
               signature?: Input.Signature;
 
+              /**
+               * Indicate that this input was skipped by the user.
+               */
               skipped?: boolean;
 
               /**
-               * Which supported input type will be collected.
+               * Type of input being collected.
                */
               type: Input.Type;
             }

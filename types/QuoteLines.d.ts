@@ -496,6 +496,7 @@ declare module 'stripe' {
         }
 
         type Type =
+          | 'billing_period_end'
           | 'discount_end'
           | 'duration'
           | 'quote_acceptance_date'

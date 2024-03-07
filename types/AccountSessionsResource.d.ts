@@ -28,6 +28,8 @@ declare module 'stripe' {
 
         capital_financing_promotion?: Components.CapitalFinancingPromotion;
 
+        documents?: Components.Documents;
+
         /**
          * Configuration for the payment details embedded component.
          */
@@ -74,6 +76,22 @@ declare module 'stripe' {
         }
 
         namespace CapitalFinancingPromotion {
+          interface Features {}
+        }
+
+        interface Documents {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: Documents.Features;
+        }
+
+        namespace Documents {
           interface Features {}
         }
 

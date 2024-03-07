@@ -164,7 +164,7 @@ declare module 'stripe' {
         namespace DestinationPaymentMethodOptions {
           interface UsBankAccount {
             /**
-             * The US bank account network that must be used for this OutboundPayment. If not set, we will default to the PaymentMethod's preferred network.
+             * Specifies the network rails to be used. If not set, will default to the PaymentMethod's preferred network. See the [docs](https://stripe.com/docs/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
              */
             network?: UsBankAccount.Network;
           }
