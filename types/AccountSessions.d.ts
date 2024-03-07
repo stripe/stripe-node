@@ -48,6 +48,8 @@ declare module 'stripe' {
       interface Components {
         account_onboarding: Components.AccountOnboarding;
 
+        documents: Components.Documents;
+
         payment_details: Components.PaymentDetails;
 
         payments: Components.Payments;
@@ -66,6 +68,19 @@ declare module 'stripe' {
         }
 
         namespace AccountOnboarding {
+          interface Features {}
+        }
+
+        interface Documents {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: Documents.Features;
+        }
+
+        namespace Documents {
           interface Features {}
         }
 

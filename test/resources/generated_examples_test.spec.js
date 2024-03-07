@@ -2657,6 +2657,29 @@ describe('Generated tests', function() {
     expect(taxCode).not.to.be.null;
   });
 
+  it('test_tax_ids_delete', async function() {
+    const deleted = await stripe.taxIds.del('taxid_123');
+    expect(deleted).not.to.be.null;
+  });
+
+  it('test_tax_ids_get', async function() {
+    const taxIds = await stripe.taxIds.list();
+    expect(taxIds).not.to.be.null;
+  });
+
+  it('test_tax_ids_get_2', async function() {
+    const taxId = await stripe.taxIds.retrieve('taxid_123');
+    expect(taxId).not.to.be.null;
+  });
+
+  it('test_tax_ids_post', async function() {
+    const taxId = await stripe.taxIds.create({
+      type: 'eu_vat',
+      value: '123',
+    });
+    expect(taxId).not.to.be.null;
+  });
+
   it('test_tax_rates_get', async function() {
     const taxRates = await stripe.taxRates.list({
       limit: 3,
