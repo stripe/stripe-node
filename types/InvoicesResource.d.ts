@@ -300,6 +300,11 @@ declare module 'stripe' {
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
           /**
+           * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
+
+          /**
            * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
            */
           us_bank_account?: Stripe.Emptyable<
@@ -433,6 +438,8 @@ declare module 'stripe' {
           }
 
           interface Konbini {}
+
+          interface SepaDebit {}
 
           interface UsBankAccount {
             /**
@@ -985,6 +992,11 @@ declare module 'stripe' {
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
           /**
+           * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
+
+          /**
            * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
            */
           us_bank_account?: Stripe.Emptyable<
@@ -1118,6 +1130,8 @@ declare module 'stripe' {
           }
 
           interface Konbini {}
+
+          interface SepaDebit {}
 
           interface UsBankAccount {
             /**
