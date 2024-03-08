@@ -4,6 +4,13 @@
 * [#2032](https://github.com/stripe/stripe-node/pull/2032) Update generated code for beta
   * Add support for new value `billing_period_end` on enums `QuoteCreateParams.lines[].ends_at.type`, `QuoteLine.ends_at.type`, and `QuoteUpdateParams.lines[].ends_at.type`
 
+## 14.20.0 - 2024-03-07
+* [#2033](https://github.com/stripe/stripe-node/pull/2033) Update generated code
+  * Add support for `documents` on `AccountSession.components` and `AccountSessionCreateParams.components`
+  * Add support for `request_three_d_secure` on `Checkout.Session.payment_method_options.card` and `Checkout.SessionCreateParams.payment_method_options.card`
+  * Add support for `created` on `CreditNoteListParams`
+  * Add support for `sepa_debit` on `Invoice.payment_settings.payment_method_options`, `InvoiceCreateParams.payment_settings.payment_method_options`, and `InvoiceUpdateParams.payment_settings.payment_method_options`
+
 ## 14.20.0-beta.1 - 2024-02-29
 * [#2026](https://github.com/stripe/stripe-node/pull/2026) Update generated code for beta
   * Remove support for resource `Entitlements.Event`
