@@ -85,6 +85,14 @@ declare module 'stripe' {
         number?: string;
 
         /**
+         * The personalization design object belonging to this card.
+         */
+        personalization_design?:
+          | string
+          | Stripe.Issuing.PersonalizationDesign
+          | null;
+
+        /**
          * The latest card that replaces this card, if any.
          */
         replaced_by: string | Stripe.Issuing.Card | null;

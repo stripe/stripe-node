@@ -46,6 +46,8 @@
 ///<reference path='./Issuing/CardholdersResource.d.ts' />
 ///<reference path='./Issuing/CardsResource.d.ts' />
 ///<reference path='./Issuing/DisputesResource.d.ts' />
+///<reference path='./Issuing/PersonalizationDesignsResource.d.ts' />
+///<reference path='./Issuing/PhysicalBundlesResource.d.ts' />
 ///<reference path='./Issuing/TokensResource.d.ts' />
 ///<reference path='./Issuing/TransactionsResource.d.ts' />
 ///<reference path='./MandatesResource.d.ts' />
@@ -89,6 +91,7 @@
 ///<reference path='./TestHelpers/CustomersResource.d.ts' />
 ///<reference path='./TestHelpers/Issuing/AuthorizationsResource.d.ts' />
 ///<reference path='./TestHelpers/Issuing/CardsResource.d.ts' />
+///<reference path='./TestHelpers/Issuing/PersonalizationDesignsResource.d.ts' />
 ///<reference path='./TestHelpers/Issuing/TransactionsResource.d.ts' />
 ///<reference path='./TestHelpers/RefundsResource.d.ts' />
 ///<reference path='./TestHelpers/Terminal/ReadersResource.d.ts' />
@@ -167,6 +170,8 @@
 ///<reference path='./Issuing/Cardholders.d.ts' />
 ///<reference path='./Issuing/Cards.d.ts' />
 ///<reference path='./Issuing/Disputes.d.ts' />
+///<reference path='./Issuing/PersonalizationDesigns.d.ts' />
+///<reference path='./Issuing/PhysicalBundles.d.ts' />
 ///<reference path='./Issuing/Tokens.d.ts' />
 ///<reference path='./Issuing/Transactions.d.ts' />
 ///<reference path='./LineItems.d.ts' />
@@ -334,6 +339,8 @@ declare module 'stripe' {
       cards: Stripe.Issuing.CardsResource;
       cardholders: Stripe.Issuing.CardholdersResource;
       disputes: Stripe.Issuing.DisputesResource;
+      personalizationDesigns: Stripe.Issuing.PersonalizationDesignsResource;
+      physicalBundles: Stripe.Issuing.PhysicalBundlesResource;
       tokens: Stripe.Issuing.TokensResource;
       transactions: Stripe.Issuing.TransactionsResource;
     };
@@ -368,6 +375,7 @@ declare module 'stripe' {
       issuing: {
         authorizations: Stripe.TestHelpers.Issuing.AuthorizationsResource;
         cards: Stripe.TestHelpers.Issuing.CardsResource;
+        personalizationDesigns: Stripe.TestHelpers.Issuing.PersonalizationDesignsResource;
         transactions: Stripe.TestHelpers.Issuing.TransactionsResource;
       };
       terminal: {
