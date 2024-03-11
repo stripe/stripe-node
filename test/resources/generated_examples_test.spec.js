@@ -742,6 +742,16 @@ describe('Generated tests', function() {
     expect(cashBalance).not.to.be.null;
   });
 
+  it('test_customers_cash_balance_transactions_get', async function() {
+    const customerCashBalanceTransactions = await stripe.customers.listCashBalanceTransactions(
+      'cus_123',
+      {
+        limit: 3,
+      }
+    );
+    expect(customerCashBalanceTransactions).not.to.be.null;
+  });
+
   it('test_customers_delete', async function() {
     const deleted = await stripe.customers.del('cus_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
