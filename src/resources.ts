@@ -11,6 +11,7 @@ import {Cards as GiftCardsCards} from './resources/GiftCards/Cards.js';
 import {Cards as IssuingCards} from './resources/Issuing/Cards.js';
 import {Configurations as BillingPortalConfigurations} from './resources/BillingPortal/Configurations.js';
 import {Configurations as TerminalConfigurations} from './resources/Terminal/Configurations.js';
+import {ConfirmationTokens as TestHelpersConfirmationTokens} from './resources/TestHelpers/ConfirmationTokens.js';
 import {ConnectionTokens as TerminalConnectionTokens} from './resources/Terminal/ConnectionTokens.js';
 import {CreditReversals as TreasuryCreditReversals} from './resources/Treasury/CreditReversals.js';
 import {CreditUnderwritingRecords as IssuingCreditUnderwritingRecords} from './resources/Issuing/CreditUnderwritingRecords.js';
@@ -193,6 +194,7 @@ export const Terminal = resourceNamespace('terminal', {
   Readers: TerminalReaders,
 });
 export const TestHelpers = resourceNamespace('testHelpers', {
+  ConfirmationTokens: TestHelpersConfirmationTokens,
   Customers: TestHelpersCustomers,
   Refunds: TestHelpersRefunds,
   TestClocks: TestHelpersTestClocks,
