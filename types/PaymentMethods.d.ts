@@ -86,6 +86,8 @@ declare module 'stripe' {
        */
       metadata: Stripe.Metadata | null;
 
+      multibanco?: PaymentMethod.Multibanco;
+
       oxxo?: PaymentMethod.Oxxo;
 
       p24?: PaymentMethod.P24;
@@ -809,6 +811,8 @@ declare module 'stripe' {
         persistent_token?: string;
       }
 
+      interface Multibanco {}
+
       interface Oxxo {}
 
       interface P24 {
@@ -984,6 +988,7 @@ declare module 'stripe' {
         | 'klarna'
         | 'konbini'
         | 'link'
+        | 'multibanco'
         | 'oxxo'
         | 'p24'
         | 'paynow'

@@ -129,6 +129,11 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
+       * If this is a `multibanco` PaymentMethod, this hash contains details about the Multibanco payment method.
+       */
+      multibanco?: PaymentMethodCreateParams.Multibanco;
+
+      /**
        * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
        */
       oxxo?: PaymentMethodCreateParams.Oxxo;
@@ -493,6 +498,8 @@ declare module 'stripe' {
 
       interface Link {}
 
+      interface Multibanco {}
+
       interface Oxxo {}
 
       interface P24 {
@@ -609,6 +616,7 @@ declare module 'stripe' {
         | 'klarna'
         | 'konbini'
         | 'link'
+        | 'multibanco'
         | 'oxxo'
         | 'p24'
         | 'paynow'
@@ -837,6 +845,7 @@ declare module 'stripe' {
         | 'klarna'
         | 'konbini'
         | 'link'
+        | 'multibanco'
         | 'oxxo'
         | 'p24'
         | 'paynow'

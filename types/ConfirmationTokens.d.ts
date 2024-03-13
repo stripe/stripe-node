@@ -182,6 +182,8 @@ declare module 'stripe' {
 
         link?: PaymentMethodPreview.Link;
 
+        multibanco?: PaymentMethodPreview.Multibanco;
+
         oxxo?: PaymentMethodPreview.Oxxo;
 
         p24?: PaymentMethodPreview.P24;
@@ -900,6 +902,8 @@ declare module 'stripe' {
           persistent_token?: string;
         }
 
+        interface Multibanco {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -1068,6 +1072,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'multibanco'
           | 'oxxo'
           | 'p24'
           | 'paynow'
