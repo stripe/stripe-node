@@ -1,5 +1,14 @@
 # Changelog
 
+## 14.21.0 - 2024-03-14
+* [#2035](https://github.com/stripe/stripe-node/pull/2035) Update generated code
+  * Add support for new resources `Issuing.PersonalizationDesign` and `Issuing.PhysicalBundle`
+  * Add support for `create`, `list`, `retrieve`, and `update` methods on resource `PersonalizationDesign`
+  * Add support for `list` and `retrieve` methods on resource `PhysicalBundle`
+  * Add support for `personalization_design` on `Issuing.CardCreateParams`, `Issuing.CardListParams`, `Issuing.CardUpdateParams`, and `Issuing.Card`
+  * Change type of `SubscriptionCreateParams.application_fee_percent` and `SubscriptionUpdateParams.application_fee_percent` from `number` to `emptyStringable(number)`
+  * Add support for `sepa_debit` on `Subscription.payment_settings.payment_method_options`, `SubscriptionCreateParams.payment_settings.payment_method_options`, and `SubscriptionUpdateParams.payment_settings.payment_method_options`
+
 ## 14.20.0 - 2024-03-07
 * [#2033](https://github.com/stripe/stripe-node/pull/2033) Update generated code
   * Add support for `documents` on `AccountSession.components` and `AccountSessionCreateParams.components`
