@@ -742,6 +742,16 @@ describe('Generated tests', function() {
     expect(cashBalance).not.to.be.null;
   });
 
+  it('test_customers_cash_balance_transactions_get', async function() {
+    const customerCashBalanceTransactions = await stripe.customers.listCashBalanceTransactions(
+      'cus_123',
+      {
+        limit: 3,
+      }
+    );
+    expect(customerCashBalanceTransactions).not.to.be.null;
+  });
+
   it('test_customers_delete', async function() {
     const deleted = await stripe.customers.del('cus_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
@@ -1514,6 +1524,46 @@ describe('Generated tests', function() {
   it('test_issuing_disputes_submit_post', async function() {
     const dispute = await stripe.issuing.disputes.submit('idp_xxxxxxxxxxxxx');
     expect(dispute).not.to.be.null;
+  });
+
+  it('test_issuing_personalization_designs_get', async function() {
+    const personalizationDesigns = await stripe.issuing.personalizationDesigns.list();
+    expect(personalizationDesigns).not.to.be.null;
+  });
+
+  it('test_issuing_personalization_designs_get_2', async function() {
+    const personalizationDesign = await stripe.issuing.personalizationDesigns.retrieve(
+      'pd_xyz'
+    );
+    expect(personalizationDesign).not.to.be.null;
+  });
+
+  it('test_issuing_personalization_designs_post', async function() {
+    const personalizationDesign = await stripe.issuing.personalizationDesigns.create(
+      {
+        physical_bundle: 'pb_xyz',
+      }
+    );
+    expect(personalizationDesign).not.to.be.null;
+  });
+
+  it('test_issuing_personalization_designs_post_2', async function() {
+    const personalizationDesign = await stripe.issuing.personalizationDesigns.update(
+      'pd_xyz'
+    );
+    expect(personalizationDesign).not.to.be.null;
+  });
+
+  it('test_issuing_physical_bundles_get', async function() {
+    const physicalBundles = await stripe.issuing.physicalBundles.list();
+    expect(physicalBundles).not.to.be.null;
+  });
+
+  it('test_issuing_physical_bundles_get_2', async function() {
+    const physicalBundle = await stripe.issuing.physicalBundles.retrieve(
+      'pb_xyz'
+    );
+    expect(physicalBundle).not.to.be.null;
   });
 
   it('test_issuing_transactions_get', async function() {
@@ -3091,6 +3141,32 @@ describe('Generated tests', function() {
   it('test_test_helpers_issuing_cards_shipping_ship_post', async function() {
     const card = await stripe.testHelpers.issuing.cards.shipCard('card_123');
     expect(card).not.to.be.null;
+  });
+
+  it('test_test_helpers_issuing_personalization_designs_activate_post', async function() {
+    const personalizationDesign = await stripe.testHelpers.issuing.personalizationDesigns.activate(
+      'pd_xyz'
+    );
+    expect(personalizationDesign).not.to.be.null;
+  });
+
+  it('test_test_helpers_issuing_personalization_designs_deactivate_post', async function() {
+    const personalizationDesign = await stripe.testHelpers.issuing.personalizationDesigns.deactivate(
+      'pd_xyz'
+    );
+    expect(personalizationDesign).not.to.be.null;
+  });
+
+  it('test_test_helpers_issuing_personalization_designs_reject_post', async function() {
+    const personalizationDesign = await stripe.testHelpers.issuing.personalizationDesigns.reject(
+      'pd_xyz',
+      {
+        rejection_reasons: {
+          card_logo: ['geographic_location'],
+        },
+      }
+    );
+    expect(personalizationDesign).not.to.be.null;
   });
 
   it('test_test_helpers_issuing_transactions_create_force_capture_post', async function() {

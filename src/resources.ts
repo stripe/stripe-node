@@ -25,6 +25,9 @@ import {OutboundPayments as TestHelpersTreasuryOutboundPayments} from './resourc
 import {OutboundPayments as TreasuryOutboundPayments} from './resources/Treasury/OutboundPayments.js';
 import {OutboundTransfers as TestHelpersTreasuryOutboundTransfers} from './resources/TestHelpers/Treasury/OutboundTransfers.js';
 import {OutboundTransfers as TreasuryOutboundTransfers} from './resources/Treasury/OutboundTransfers.js';
+import {PersonalizationDesigns as TestHelpersIssuingPersonalizationDesigns} from './resources/TestHelpers/Issuing/PersonalizationDesigns.js';
+import {PersonalizationDesigns as IssuingPersonalizationDesigns} from './resources/Issuing/PersonalizationDesigns.js';
+import {PhysicalBundles as IssuingPhysicalBundles} from './resources/Issuing/PhysicalBundles.js';
 import {Products as ClimateProducts} from './resources/Climate/Products.js';
 import {Readers as TestHelpersTerminalReaders} from './resources/TestHelpers/Terminal/Readers.js';
 import {Readers as TerminalReaders} from './resources/Terminal/Readers.js';
@@ -133,6 +136,8 @@ export const Issuing = resourceNamespace('issuing', {
   Cardholders: IssuingCardholders,
   Cards: IssuingCards,
   Disputes: IssuingDisputes,
+  PersonalizationDesigns: IssuingPersonalizationDesigns,
+  PhysicalBundles: IssuingPhysicalBundles,
   Tokens: IssuingTokens,
   Transactions: IssuingTransactions,
 });
@@ -167,6 +172,7 @@ export const TestHelpers = resourceNamespace('testHelpers', {
   Issuing: resourceNamespace('issuing', {
     Authorizations: TestHelpersIssuingAuthorizations,
     Cards: TestHelpersIssuingCards,
+    PersonalizationDesigns: TestHelpersIssuingPersonalizationDesigns,
     Transactions: TestHelpersIssuingTransactions,
   }),
   Terminal: resourceNamespace('terminal', {

@@ -405,6 +405,11 @@ declare module 'stripe' {
           konbini: PaymentMethodOptions.Konbini | null;
 
           /**
+           * This sub-hash contains details about the SEPA Direct Debit payment method options to pass to invoices created by the subscription.
+           */
+          sepa_debit: PaymentMethodOptions.SepaDebit | null;
+
+          /**
            * This sub-hash contains details about the ACH direct debit payment method options to pass to invoices created by the subscription.
            */
           us_bank_account: PaymentMethodOptions.UsBankAccount | null;
@@ -532,6 +537,8 @@ declare module 'stripe' {
           }
 
           interface Konbini {}
+
+          interface SepaDebit {}
 
           interface UsBankAccount {
             financial_connections?: UsBankAccount.FinancialConnections;

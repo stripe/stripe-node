@@ -26,6 +26,9 @@ declare module 'stripe' {
          */
         account_onboarding?: Components.AccountOnboarding;
 
+        /**
+         * Configuration for the documents embedded component.
+         */
         documents?: Components.Documents;
 
         /**
