@@ -134,6 +134,11 @@ declare module 'stripe' {
       link?: PaymentMethodConfigurationCreateParams.Link;
 
       /**
+       * Stripe users in Europe and the United States can accept Multibanco payments from customers in Portugal using [Sources](https://stripe.com/docs/sources)—a single integration path for creating payments using any supported method.
+       */
+      multibanco?: PaymentMethodConfigurationCreateParams.Multibanco;
+
+      /**
        * Configuration name.
        */
       name?: string;
@@ -695,6 +700,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Multibanco {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Multibanco.DisplayPreference;
+      }
+
+      namespace Multibanco {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Oxxo {
         /**
          * Whether or not the payment method should be displayed.
@@ -1038,6 +1063,11 @@ declare module 'stripe' {
        * [Link](https://stripe.com/docs/payments/link) is a payment method network. With Link, users save their payment details once, then reuse that information to pay with one click for any business on the network.
        */
       link?: PaymentMethodConfigurationUpdateParams.Link;
+
+      /**
+       * Stripe users in Europe and the United States can accept Multibanco payments from customers in Portugal using [Sources](https://stripe.com/docs/sources)—a single integration path for creating payments using any supported method.
+       */
+      multibanco?: PaymentMethodConfigurationUpdateParams.Multibanco;
 
       /**
        * Configuration name.
@@ -1584,6 +1614,26 @@ declare module 'stripe' {
       }
 
       namespace Link {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Multibanco {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Multibanco.DisplayPreference;
+      }
+
+      namespace Multibanco {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

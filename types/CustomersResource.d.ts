@@ -799,6 +799,7 @@ declare module 'stripe' {
         | 'klarna'
         | 'konbini'
         | 'link'
+        | 'multibanco'
         | 'oxxo'
         | 'p24'
         | 'paynow'

@@ -28,6 +28,9 @@ declare module 'stripe' {
 
         capital_financing_promotion?: Components.CapitalFinancingPromotion;
 
+        /**
+         * Configuration for the documents embedded component.
+         */
         documents?: Components.Documents;
 
         /**

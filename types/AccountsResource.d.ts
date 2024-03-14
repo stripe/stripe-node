@@ -876,7 +876,7 @@ declare module 'stripe' {
 
         interface Dashboard {
           /**
-           * Whether this account should have access to the full Stripe dashboard (`full`) or no dashboard (`none`).
+           * Whether this account should have access to the full Stripe Dashboard (`full`), to the Express Dashboard (`express`), or to no dashboard (`none`). Defaults to `full`.
            */
           type?: Dashboard.Type;
         }

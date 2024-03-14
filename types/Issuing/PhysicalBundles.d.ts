@@ -51,12 +51,19 @@ declare module 'stripe' {
            * The policy for how to use carrier letter text in a card design with this physical bundle.
            */
           carrier_text: Features.CarrierText;
+
+          /**
+           * The policy for how to use a second line on a card with this physical bundle.
+           */
+          second_line: Features.SecondLine;
         }
 
         namespace Features {
           type CardLogo = 'optional' | 'required' | 'unsupported';
 
           type CarrierText = 'optional' | 'required' | 'unsupported';
+
+          type SecondLine = 'optional' | 'required' | 'unsupported';
         }
 
         type Status = 'active' | 'inactive' | 'review';

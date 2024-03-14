@@ -59,6 +59,11 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
+       * The meter tracking the usage of a metered price
+       */
+      meter?: string;
+
+      /**
        * A brief description of the plan, hidden from customers.
        */
       nickname?: string;

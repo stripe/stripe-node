@@ -16,7 +16,7 @@ declare module 'stripe' {
       /**
        * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
        */
-      application_fee_percent?: number;
+      application_fee_percent?: Stripe.Emptyable<number>;
 
       /**
        * Automatic tax settings for this subscription. We recommend you only include this parameter when the existing value is being changed.
@@ -722,6 +722,11 @@ declare module 'stripe' {
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
           /**
+           * This sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
+
+          /**
            * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
            */
           us_bank_account?: Stripe.Emptyable<
@@ -859,6 +864,8 @@ declare module 'stripe' {
           }
 
           interface Konbini {}
+
+          interface SepaDebit {}
 
           interface UsBankAccount {
             /**
@@ -1017,7 +1024,7 @@ declare module 'stripe' {
       /**
        * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
        */
-      application_fee_percent?: number;
+      application_fee_percent?: Stripe.Emptyable<number>;
 
       /**
        * Automatic tax settings for this subscription. We recommend you only include this parameter when the existing value is being changed.
@@ -1725,6 +1732,11 @@ declare module 'stripe' {
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
           /**
+           * This sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
+
+          /**
            * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
            */
           us_bank_account?: Stripe.Emptyable<
@@ -1862,6 +1874,8 @@ declare module 'stripe' {
           }
 
           interface Konbini {}
+
+          interface SepaDebit {}
 
           interface UsBankAccount {
             /**

@@ -11,6 +11,7 @@ import {Cards as GiftCardsCards} from './resources/GiftCards/Cards.js';
 import {Cards as IssuingCards} from './resources/Issuing/Cards.js';
 import {Configurations as BillingPortalConfigurations} from './resources/BillingPortal/Configurations.js';
 import {Configurations as TerminalConfigurations} from './resources/Terminal/Configurations.js';
+import {ConfirmationTokens as TestHelpersConfirmationTokens} from './resources/TestHelpers/ConfirmationTokens.js';
 import {ConnectionTokens as TerminalConnectionTokens} from './resources/Terminal/ConnectionTokens.js';
 import {CreditReversals as TreasuryCreditReversals} from './resources/Treasury/CreditReversals.js';
 import {CreditUnderwritingRecords as IssuingCreditUnderwritingRecords} from './resources/Issuing/CreditUnderwritingRecords.js';
@@ -27,6 +28,9 @@ import {Forms as TaxForms} from './resources/Tax/Forms.js';
 import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {Locations as TerminalLocations} from './resources/Terminal/Locations.js';
+import {MeterEventAdjustments as BillingMeterEventAdjustments} from './resources/Billing/MeterEventAdjustments.js';
+import {MeterEvents as BillingMeterEvents} from './resources/Billing/MeterEvents.js';
+import {Meters as BillingMeters} from './resources/Billing/Meters.js';
 import {Orders as ClimateOrders} from './resources/Climate/Orders.js';
 import {OutboundPayments as TestHelpersTreasuryOutboundPayments} from './resources/TestHelpers/Treasury/OutboundPayments.js';
 import {OutboundPayments as TreasuryOutboundPayments} from './resources/Treasury/OutboundPayments.js';
@@ -123,6 +127,11 @@ export {Topups} from './resources/Topups.js';
 export {Transfers} from './resources/Transfers.js';
 export {WebhookEndpoints} from './resources/WebhookEndpoints.js';
 export const Apps = resourceNamespace('apps', {Secrets: AppsSecrets});
+export const Billing = resourceNamespace('billing', {
+  MeterEventAdjustments: BillingMeterEventAdjustments,
+  MeterEvents: BillingMeterEvents,
+  Meters: BillingMeters,
+});
 export const BillingPortal = resourceNamespace('billingPortal', {
   Configurations: BillingPortalConfigurations,
   Sessions: BillingPortalSessions,
@@ -193,6 +202,7 @@ export const Terminal = resourceNamespace('terminal', {
   Readers: TerminalReaders,
 });
 export const TestHelpers = resourceNamespace('testHelpers', {
+  ConfirmationTokens: TestHelpersConfirmationTokens,
   Customers: TestHelpersCustomers,
   Refunds: TestHelpersRefunds,
   TestClocks: TestHelpersTestClocks,
