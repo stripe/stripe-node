@@ -81,6 +81,11 @@ declare module 'stripe' {
        * Shipping information collected on this ConfirmationToken.
        */
       shipping: ConfirmationToken.Shipping | null;
+
+      /**
+       * Indicates whether the Stripe SDK is used to handle confirmation flow. Defaults to `true` on ConfirmationToken.
+       */
+      use_stripe_sdk: boolean;
     }
 
     namespace ConfirmationToken {
