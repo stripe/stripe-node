@@ -184,6 +184,11 @@ declare module 'stripe' {
            * Set if the ReceivedDebit is also viewable as an [Issuing Dispute](https://stripe.com/docs/api#issuing_disputes) object.
            */
           issuing_transaction: string | null;
+
+          /**
+           * Set if the ReceivedDebit was created due to a [Payout](https://stripe.com/docs/api#payouts) object.
+           */
+          payout: string | null;
         }
 
         type Network = 'ach' | 'card' | 'stripe';

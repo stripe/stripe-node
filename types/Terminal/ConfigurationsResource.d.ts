@@ -15,6 +15,11 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
+         * Name of the configuration
+         */
+        name?: string;
+
+        /**
          * Configurations for collecting transactions offline.
          */
         offline?: Stripe.Emptyable<ConfigurationCreateParams.Offline>;
@@ -384,6 +389,11 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+
+        /**
+         * Name of the configuration
+         */
+        name?: string;
 
         /**
          * Configurations for collecting transactions offline.
