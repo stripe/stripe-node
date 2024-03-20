@@ -38,17 +38,12 @@ declare module 'stripe' {
       /**
        * Data used for generating a Mandate.
        */
-      mandate_data?: ConfirmationToken.MandateData;
+      mandate_data?: ConfirmationToken.MandateData | null;
 
       /**
        * ID of the PaymentIntent that this ConfirmationToken was used to confirm, or null if this ConfirmationToken has not yet been used.
        */
       payment_intent: string | null;
-
-      /**
-       * ID of an existing PaymentMethod.
-       */
-      payment_method?: string | Stripe.PaymentMethod | null;
 
       /**
        * Payment-method-specific configuration for this ConfirmationToken.
