@@ -19,6 +19,11 @@ declare module 'stripe' {
         object: 'entitlements.feature';
 
         /**
+         * Inactive features cannot be attached to new products and will not be returned from the features list endpoint.
+         */
+        active: boolean;
+
+        /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
