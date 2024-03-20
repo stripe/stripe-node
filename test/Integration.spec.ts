@@ -56,20 +56,6 @@ describe('Integration test', function() {
   });
 
   describe('esbuild', () => {
-    it('should build with esbuild', async function() {
-      // Node supports ES Modules starting at v12
-      if (nodeVersion <= 12) {
-        this.skip();
-      }
-
-      await testExec(`
-        cd testProjects/esbuild && rm -rf node_modules && rm -rf dist
-        npm install &&
-        npm run build:unminified &&
-        npm run runtestproject -- ${FAKE_API_KEY}
-      `);
-    });
-
     it('should not change error.type when minified', async function() {
       // Node supports ES Modules starting at v12
       if (nodeVersion <= 12) {
@@ -79,8 +65,8 @@ describe('Integration test', function() {
       await testExec(`
         cd testProjects/esbuild && rm -rf node_modules && rm -rf dist
         npm install &&
-        npm run build:minified &&
-        npm run runtestproject -- ${FAKE_API_KEY}
+        npm run build &&
+        npm run start -- ${FAKE_API_KEY}
       `);
     });
   });

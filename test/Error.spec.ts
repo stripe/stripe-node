@@ -58,7 +58,7 @@ describe('Error', () => {
       expect(e).to.have.property('statusCode', 400);
     });
 
-    it('respects subclasses overriding type in constructor', () => {
+    it('respects subclasses overriding `.type` in constructor', () => {
       class Foo extends Error.StripeError {
         constructor(raw: any) {
           super(raw, 'Foo');
@@ -68,9 +68,10 @@ describe('Error', () => {
       expect(err).to.have.property('type', 'Foo');
     });
 
-    it('StripeError constructor defaults to `type: "StripeError"`', () => {
-      const err = new Error.StripeError({message: 'hi'});
-      expect(err).to.have.property('type', 'StripeError');
+    it('defaults setting `.type` to subclass name', () => {
+      class Foo extends Error.StripeError {}
+      const err = new Foo({message: 'hi'});
+      expect(err).to.have.property('type', 'Foo');
     });
   });
 });

@@ -49,9 +49,9 @@ export class StripeError extends Error {
   readonly setup_intent?: any;
   readonly source?: any;
 
-  constructor(raw: StripeRawError = {}, type = 'StripeError') {
+  constructor(raw: StripeRawError = {}, type: string | null = null) {
     super(raw.message);
-    this.type = type;
+    this.type = type || this.constructor.name;
 
     this.raw = raw;
     this.rawType = raw.type;
