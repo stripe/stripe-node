@@ -10,6 +10,7 @@ import {Cards as TestHelpersIssuingCards} from './resources/TestHelpers/Issuing/
 import {Cards as IssuingCards} from './resources/Issuing/Cards.js';
 import {Configurations as BillingPortalConfigurations} from './resources/BillingPortal/Configurations.js';
 import {Configurations as TerminalConfigurations} from './resources/Terminal/Configurations.js';
+import {ConfirmationTokens as TestHelpersConfirmationTokens} from './resources/TestHelpers/ConfirmationTokens.js';
 import {ConnectionTokens as TerminalConnectionTokens} from './resources/Terminal/ConnectionTokens.js';
 import {CreditReversals as TreasuryCreditReversals} from './resources/Treasury/CreditReversals.js';
 import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Customers.js';
@@ -67,6 +68,7 @@ export {ApplicationFees} from './resources/ApplicationFees.js';
 export {Balance} from './resources/Balance.js';
 export {BalanceTransactions} from './resources/BalanceTransactions.js';
 export {Charges} from './resources/Charges.js';
+export {ConfirmationTokens} from './resources/ConfirmationTokens.js';
 export {CountrySpecs} from './resources/CountrySpecs.js';
 export {Coupons} from './resources/Coupons.js';
 export {CreditNotes} from './resources/CreditNotes.js';
@@ -166,6 +168,7 @@ export const Terminal = resourceNamespace('terminal', {
   Readers: TerminalReaders,
 });
 export const TestHelpers = resourceNamespace('testHelpers', {
+  ConfirmationTokens: TestHelpersConfirmationTokens,
   Customers: TestHelpersCustomers,
   Refunds: TestHelpersRefunds,
   TestClocks: TestHelpersTestClocks,

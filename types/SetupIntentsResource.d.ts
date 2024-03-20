@@ -21,6 +21,13 @@ declare module 'stripe' {
       confirm?: boolean;
 
       /**
+       * ID of the ConfirmationToken used to confirm this SetupIntent.
+       *
+       * If the provided ConfirmationToken contains properties that are also being provided in this request, such as `payment_method`, then the values in this request will take precedence.
+       */
+      confirmation_token?: string;
+
+      /**
        * ID of the Customer this SetupIntent belongs to, if one exists.
        *
        * If present, the SetupIntent's payment method will be attached to the Customer on successful setup. Payment methods attached to other Customers cannot be used with this SetupIntent.
@@ -2212,6 +2219,13 @@ declare module 'stripe' {
     }
 
     interface SetupIntentConfirmParams {
+      /**
+       * ID of the ConfirmationToken used to confirm this SetupIntent.
+       *
+       * If the provided ConfirmationToken contains properties that are also being provided in this request, such as `payment_method`, then the values in this request will take precedence.
+       */
+      confirmation_token?: string;
+
       /**
        * Specifies which fields in the response should be expanded.
        */
