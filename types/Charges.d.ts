@@ -1997,6 +1997,11 @@ declare module 'stripe' {
           last4: string | null;
 
           /**
+           * Reference number to locate ACH payments with customer's bank.
+           */
+          payment_reference?: string | null;
+
+          /**
            * Routing number of the bank account.
            */
           routing_number: string | null;
