@@ -20,6 +20,11 @@ declare module 'stripe' {
         replacements: Array<RequestCreateParams.Replacement>;
 
         /**
+         * The request body and headers to be sent to the destination endpoint.
+         */
+        request: RequestCreateParams.Request;
+
+        /**
          * The destination URL for the forwarded request. Must be supported by the config.
          */
         url: string;
@@ -28,11 +33,6 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
-
-        /**
-         * The request body and headers to be sent to the destination endpoint.
-         */
-        request?: RequestCreateParams.Request;
       }
 
       namespace RequestCreateParams {
