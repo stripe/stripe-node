@@ -66,7 +66,7 @@ describe('Integration test', function() {
         cd testProjects/esbuild && rm -rf node_modules && rm -rf dist
         npm install &&
         npm run build &&
-        npm run start -- ${FAKE_API_KEY}
+        npm run start
       `);
     });
   });
