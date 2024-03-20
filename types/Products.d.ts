@@ -69,7 +69,7 @@ declare module 'stripe' {
       description: string | null;
 
       /**
-       * A list of up to 15 features for this product. These are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
+       * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
        */
       features: Array<Product.Feature>;
 
@@ -137,7 +137,7 @@ declare module 'stripe' {
     namespace Product {
       interface Feature {
         /**
-         * The feature's name. Up to 80 characters long.
+         * The marketing feature name. Up to 80 characters long.
          */
         name?: string;
       }
