@@ -1965,6 +1965,11 @@ declare module 'stripe' {
           last4: string | null;
 
           /**
+           * ID of the mandate used to make this payment.
+           */
+          mandate?: string | Stripe.Mandate;
+
+          /**
            * Reference number to locate ACH payments with customer's bank.
            */
           payment_reference?: string | null;
