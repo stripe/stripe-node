@@ -38,6 +38,7 @@
 ///<reference path='./CustomerSessionsResource.d.ts' />
 ///<reference path='./CustomersResource.d.ts' />
 ///<reference path='./DisputesResource.d.ts' />
+///<reference path='./Entitlements/ActiveEntitlementsResource.d.ts' />
 ///<reference path='./Entitlements/FeaturesResource.d.ts' />
 ///<reference path='./EphemeralKeysResource.d.ts' />
 ///<reference path='./EventsResource.d.ts' />
@@ -170,13 +171,13 @@
 ///<reference path='./CreditNotes.d.ts' />
 ///<reference path='./CustomerBalanceTransactions.d.ts' />
 ///<reference path='./CustomerCashBalanceTransactions.d.ts' />
-///<reference path='./CustomerEntitlementSummaries.d.ts' />
-///<reference path='./CustomerEntitlements.d.ts' />
 ///<reference path='./CustomerSessions.d.ts' />
 ///<reference path='./CustomerSources.d.ts' />
 ///<reference path='./Customers.d.ts' />
 ///<reference path='./Discounts.d.ts' />
 ///<reference path='./Disputes.d.ts' />
+///<reference path='./Entitlements/ActiveEntitlementSummaries.d.ts' />
+///<reference path='./Entitlements/ActiveEntitlements.d.ts' />
 ///<reference path='./Entitlements/Features.d.ts' />
 ///<reference path='./EphemeralKeys.d.ts' />
 ///<reference path='./Events.d.ts' />
@@ -385,6 +386,7 @@ declare module 'stripe' {
       suppliers: Stripe.Climate.SuppliersResource;
     };
     entitlements: {
+      activeEntitlements: Stripe.Entitlements.ActiveEntitlementsResource;
       features: Stripe.Entitlements.FeaturesResource;
     };
     financialConnections: {
