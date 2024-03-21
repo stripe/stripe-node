@@ -365,6 +365,11 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
+         * If this is a `mobilepay` PaymentMethod, this hash contains details about the MobilePay payment method.
+         */
+        mobilepay?: PaymentMethodData.Mobilepay;
+
+        /**
          * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
          */
         oxxo?: PaymentMethodData.Oxxo;
@@ -667,6 +672,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface Mobilepay {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -763,6 +770,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mobilepay'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -929,6 +937,11 @@ declare module 'stripe' {
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
          */
         link?: Stripe.Emptyable<PaymentMethodOptions.Link>;
+
+        /**
+         * If this is a `MobilePay` PaymentMethod, this sub-hash contains details about the MobilePay payment method options.
+         */
+        mobilepay?: Stripe.Emptyable<PaymentMethodOptions.Mobilepay>;
 
         /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
@@ -1858,6 +1871,28 @@ declare module 'stripe' {
 
         namespace Link {
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Mobilepay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           *
+           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Oxxo {
@@ -2528,6 +2563,11 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
+         * If this is a `mobilepay` PaymentMethod, this hash contains details about the MobilePay payment method.
+         */
+        mobilepay?: PaymentMethodData.Mobilepay;
+
+        /**
          * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
          */
         oxxo?: PaymentMethodData.Oxxo;
@@ -2830,6 +2870,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface Mobilepay {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -2926,6 +2968,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mobilepay'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -3092,6 +3135,11 @@ declare module 'stripe' {
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
          */
         link?: Stripe.Emptyable<PaymentMethodOptions.Link>;
+
+        /**
+         * If this is a `MobilePay` PaymentMethod, this sub-hash contains details about the MobilePay payment method options.
+         */
+        mobilepay?: Stripe.Emptyable<PaymentMethodOptions.Mobilepay>;
 
         /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
@@ -4021,6 +4069,28 @@ declare module 'stripe' {
 
         namespace Link {
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Mobilepay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           *
+           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Oxxo {
@@ -4836,6 +4906,11 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
+         * If this is a `mobilepay` PaymentMethod, this hash contains details about the MobilePay payment method.
+         */
+        mobilepay?: PaymentMethodData.Mobilepay;
+
+        /**
          * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
          */
         oxxo?: PaymentMethodData.Oxxo;
@@ -5138,6 +5213,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface Mobilepay {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -5234,6 +5311,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mobilepay'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -5400,6 +5478,11 @@ declare module 'stripe' {
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
          */
         link?: Stripe.Emptyable<PaymentMethodOptions.Link>;
+
+        /**
+         * If this is a `MobilePay` PaymentMethod, this sub-hash contains details about the MobilePay payment method options.
+         */
+        mobilepay?: Stripe.Emptyable<PaymentMethodOptions.Mobilepay>;
 
         /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
@@ -6329,6 +6412,28 @@ declare module 'stripe' {
 
         namespace Link {
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Mobilepay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           *
+           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Oxxo {

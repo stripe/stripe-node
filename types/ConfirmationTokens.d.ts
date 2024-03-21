@@ -161,6 +161,8 @@ declare module 'stripe' {
 
         link?: PaymentMethodPreview.Link;
 
+        mobilepay?: PaymentMethodPreview.Mobilepay;
+
         oxxo?: PaymentMethodPreview.Oxxo;
 
         p24?: PaymentMethodPreview.P24;
@@ -875,6 +877,8 @@ declare module 'stripe' {
           persistent_token?: string;
         }
 
+        interface Mobilepay {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -1013,6 +1017,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mobilepay'
           | 'oxxo'
           | 'p24'
           | 'paynow'

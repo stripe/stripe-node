@@ -295,6 +295,11 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
+         * If this is a `mobilepay` PaymentMethod, this hash contains details about the MobilePay payment method.
+         */
+        mobilepay?: PaymentMethodData.Mobilepay;
+
+        /**
          * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
          */
         oxxo?: PaymentMethodData.Oxxo;
@@ -597,6 +602,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface Mobilepay {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -693,6 +700,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mobilepay'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -1335,6 +1343,11 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
+         * If this is a `mobilepay` PaymentMethod, this hash contains details about the MobilePay payment method.
+         */
+        mobilepay?: PaymentMethodData.Mobilepay;
+
+        /**
          * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
          */
         oxxo?: PaymentMethodData.Oxxo;
@@ -1637,6 +1650,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface Mobilepay {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -1733,6 +1748,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mobilepay'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -2462,6 +2478,11 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
+         * If this is a `mobilepay` PaymentMethod, this hash contains details about the MobilePay payment method.
+         */
+        mobilepay?: PaymentMethodData.Mobilepay;
+
+        /**
          * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
          */
         oxxo?: PaymentMethodData.Oxxo;
@@ -2764,6 +2785,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface Mobilepay {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -2860,6 +2883,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mobilepay'
           | 'oxxo'
           | 'p24'
           | 'paynow'
