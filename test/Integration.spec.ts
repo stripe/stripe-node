@@ -55,6 +55,22 @@ describe('Integration test', function() {
     await runTestProject('mjs-ts');
   });
 
+  describe('esbuild', () => {
+    it('should not change error.type when minified', async function() {
+      // Node supports ES Modules starting at v12
+      if (nodeVersion <= 12) {
+        this.skip();
+      }
+
+      await testExec(`
+        cd testProjects/esbuild && rm -rf node_modules && rm -rf dist
+        npm install &&
+        npm run build &&
+        npm run start
+      `);
+    });
+  });
+
   const runTestCloudflareProject = (projectName: string): Promise<void> => {
     if (process.versions.node < '16.13') {
       console.log('Wrangler requires at least node.js v16.13.0, skipping test');
