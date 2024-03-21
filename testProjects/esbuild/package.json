@@ -1,0 +1,17 @@
+{
+  "name": "mjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "stripe": "file:../../"
+  },
+  "scripts": {
+    "clean": "rm -rf node_modules && rm -rf dist",
+    "build": "esbuild index.js --bundle --platform=node --minify --target=es2020 --outdir=dist",
+    "start": "node dist/index.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.2"
+  }
+}
