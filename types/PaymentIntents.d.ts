@@ -423,6 +423,10 @@ declare module 'stripe' {
           | 'expired_card'
           | 'financial_connections_account_inactive'
           | 'financial_connections_no_successful_transaction_refresh'
+          | 'forwarding_api_inactive'
+          | 'forwarding_api_invalid_parameter'
+          | 'forwarding_api_upstream_connection_error'
+          | 'forwarding_api_upstream_connection_timeout'
           | 'idempotency_key_in_use'
           | 'incorrect_address'
           | 'incorrect_cvc'
@@ -1285,6 +1289,8 @@ declare module 'stripe' {
 
         link?: PaymentMethodOptions.Link;
 
+        mobilepay?: PaymentMethodOptions.Mobilepay;
+
         oxxo?: PaymentMethodOptions.Oxxo;
 
         p24?: PaymentMethodOptions.P24;
@@ -1947,6 +1953,22 @@ declare module 'stripe' {
 
         namespace Link {
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Mobilepay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Oxxo {
