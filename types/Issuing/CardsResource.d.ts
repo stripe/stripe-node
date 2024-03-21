@@ -32,6 +32,11 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
+         * The personalization design object belonging to this card.
+         */
+        personalization_design?: string;
+
+        /**
          * The desired PIN for this card.
          */
         pin?: CardCreateParams.Pin;
@@ -1119,6 +1124,8 @@ declare module 'stripe' {
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
+        personalization_design?: string;
+
         /**
          * The desired new PIN for this card.
          */
@@ -2115,6 +2122,8 @@ declare module 'stripe' {
          * Only return cards that have the given last four digits.
          */
         last4?: string;
+
+        personalization_design?: string;
 
         /**
          * Only return cards that have the given status. One of `active`, `inactive`, or `canceled`.

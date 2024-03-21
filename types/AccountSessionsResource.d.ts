@@ -27,6 +27,11 @@ declare module 'stripe' {
         account_onboarding?: Components.AccountOnboarding;
 
         /**
+         * Configuration for the documents embedded component.
+         */
+        documents?: Components.Documents;
+
+        /**
          * Configuration for the payment details embedded component.
          */
         payment_details?: Components.PaymentDetails;
@@ -56,6 +61,22 @@ declare module 'stripe' {
         }
 
         namespace AccountOnboarding {
+          interface Features {}
+        }
+
+        interface Documents {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: Documents.Features;
+        }
+
+        namespace Documents {
           interface Features {}
         }
 
