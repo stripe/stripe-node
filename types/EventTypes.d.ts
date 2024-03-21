@@ -64,7 +64,6 @@ declare module 'stripe' {
       | CustomerDiscountCreatedEvent
       | CustomerDiscountDeletedEvent
       | CustomerDiscountUpdatedEvent
-      | CustomerEntitlementSummaryUpdatedEvent
       | CustomerSourceCreatedEvent
       | CustomerSourceDeletedEvent
       | CustomerSourceExpiringEvent
@@ -85,6 +84,7 @@ declare module 'stripe' {
       | CustomerTaxIdUpdatedEvent
       | CustomerUpdatedEvent
       | CustomerCashBalanceTransactionCreatedEvent
+      | EntitlementsActiveEntitlementSummaryUpdatedEvent
       | FileCreatedEvent
       | FinancialConnectionsAccountCreatedEvent
       | FinancialConnectionsAccountDeactivatedEvent
@@ -1245,22 +1245,6 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a customer's entitlements change.
-     */
-    interface CustomerEntitlementSummaryUpdatedEvent extends EventBase {
-      type: 'customer.entitlement_summary.updated';
-      data: CustomerEntitlementSummaryUpdatedEvent.Data;
-    }
-
-    namespace CustomerEntitlementSummaryUpdatedEvent {
-      interface Data extends Stripe.Event.Data {
-        object: Stripe.CustomerEntitlementSummary;
-
-        previous_attributes?: Partial<Stripe.CustomerEntitlementSummary>;
-      }
-    }
-
-    /**
      * Occurs whenever a new source is created for a customer.
      */
     interface CustomerSourceCreatedEvent extends EventBase {
@@ -1577,6 +1561,25 @@ declare module 'stripe' {
         object: Stripe.CustomerCashBalanceTransaction;
 
         previous_attributes?: Partial<Stripe.CustomerCashBalanceTransaction>;
+      }
+    }
+
+    /**
+     * Occurs whenever a customer's entitlements change.
+     */
+    interface EntitlementsActiveEntitlementSummaryUpdatedEvent
+      extends EventBase {
+      type: 'entitlements.active_entitlement_summary.updated';
+      data: EntitlementsActiveEntitlementSummaryUpdatedEvent.Data;
+    }
+
+    namespace EntitlementsActiveEntitlementSummaryUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Entitlements.ActiveEntitlementSummary;
+
+        previous_attributes?: Partial<
+          Stripe.Entitlements.ActiveEntitlementSummary
+        >;
       }
     }
 

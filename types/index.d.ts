@@ -38,6 +38,7 @@
 ///<reference path='./CustomerSessionsResource.d.ts' />
 ///<reference path='./CustomersResource.d.ts' />
 ///<reference path='./DisputesResource.d.ts' />
+///<reference path='./Entitlements/ActiveEntitlementsResource.d.ts' />
 ///<reference path='./Entitlements/FeaturesResource.d.ts' />
 ///<reference path='./EphemeralKeysResource.d.ts' />
 ///<reference path='./EventsResource.d.ts' />
@@ -47,6 +48,7 @@
 ///<reference path='./FinancialConnections/AccountsResource.d.ts' />
 ///<reference path='./FinancialConnections/SessionsResource.d.ts' />
 ///<reference path='./FinancialConnections/TransactionsResource.d.ts' />
+///<reference path='./Forwarding/RequestsResource.d.ts' />
 ///<reference path='./GiftCards/CardsResource.d.ts' />
 ///<reference path='./GiftCards/TransactionsResource.d.ts' />
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
@@ -169,13 +171,13 @@
 ///<reference path='./CreditNotes.d.ts' />
 ///<reference path='./CustomerBalanceTransactions.d.ts' />
 ///<reference path='./CustomerCashBalanceTransactions.d.ts' />
-///<reference path='./CustomerEntitlementSummaries.d.ts' />
-///<reference path='./CustomerEntitlements.d.ts' />
 ///<reference path='./CustomerSessions.d.ts' />
 ///<reference path='./CustomerSources.d.ts' />
 ///<reference path='./Customers.d.ts' />
 ///<reference path='./Discounts.d.ts' />
 ///<reference path='./Disputes.d.ts' />
+///<reference path='./Entitlements/ActiveEntitlementSummaries.d.ts' />
+///<reference path='./Entitlements/ActiveEntitlements.d.ts' />
 ///<reference path='./Entitlements/Features.d.ts' />
 ///<reference path='./EphemeralKeys.d.ts' />
 ///<reference path='./Events.d.ts' />
@@ -190,6 +192,7 @@
 ///<reference path='./FinancialConnections/Accounts.d.ts' />
 ///<reference path='./FinancialConnections/Sessions.d.ts' />
 ///<reference path='./FinancialConnections/Transactions.d.ts' />
+///<reference path='./Forwarding/Requests.d.ts' />
 ///<reference path='./FundingInstructions.d.ts' />
 ///<reference path='./GiftCards/Cards.d.ts' />
 ///<reference path='./GiftCards/Transactions.d.ts' />
@@ -223,6 +226,7 @@
 ///<reference path='./Plans.d.ts' />
 ///<reference path='./PlatformTaxFees.d.ts' />
 ///<reference path='./Prices.d.ts' />
+///<reference path='./ProductFeatures.d.ts' />
 ///<reference path='./Products.d.ts' />
 ///<reference path='./PromotionCodes.d.ts' />
 ///<reference path='./QuoteLines.d.ts' />
@@ -382,12 +386,16 @@ declare module 'stripe' {
       suppliers: Stripe.Climate.SuppliersResource;
     };
     entitlements: {
+      activeEntitlements: Stripe.Entitlements.ActiveEntitlementsResource;
       features: Stripe.Entitlements.FeaturesResource;
     };
     financialConnections: {
       accounts: Stripe.FinancialConnections.AccountsResource;
       sessions: Stripe.FinancialConnections.SessionsResource;
       transactions: Stripe.FinancialConnections.TransactionsResource;
+    };
+    forwarding: {
+      requests: Stripe.Forwarding.RequestsResource;
     };
     giftCards: {
       cards: Stripe.GiftCards.CardsResource;

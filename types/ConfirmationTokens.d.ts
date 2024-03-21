@@ -38,17 +38,12 @@ declare module 'stripe' {
       /**
        * Data used for generating a Mandate.
        */
-      mandate_data?: ConfirmationToken.MandateData;
+      mandate_data?: ConfirmationToken.MandateData | null;
 
       /**
        * ID of the PaymentIntent that this ConfirmationToken was used to confirm, or null if this ConfirmationToken has not yet been used.
        */
       payment_intent: string | null;
-
-      /**
-       * ID of an existing PaymentMethod.
-       */
-      payment_method?: string | Stripe.PaymentMethod | null;
 
       /**
        * Payment-method-specific configuration for this ConfirmationToken.
@@ -81,6 +76,11 @@ declare module 'stripe' {
        * Shipping information collected on this ConfirmationToken.
        */
       shipping: ConfirmationToken.Shipping | null;
+
+      /**
+       * Indicates whether the Stripe SDK is used to handle confirmation flow. Defaults to `true` on ConfirmationToken.
+       */
+      use_stripe_sdk: boolean;
     }
 
     namespace ConfirmationToken {
@@ -181,6 +181,8 @@ declare module 'stripe' {
         konbini?: PaymentMethodPreview.Konbini;
 
         link?: PaymentMethodPreview.Link;
+
+        mobilepay?: PaymentMethodPreview.Mobilepay;
 
         multibanco?: PaymentMethodPreview.Multibanco;
 
@@ -902,6 +904,8 @@ declare module 'stripe' {
           persistent_token?: string;
         }
 
+        interface Mobilepay {}
+
         interface Multibanco {}
 
         interface Oxxo {}
@@ -1072,6 +1076,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mobilepay'
           | 'multibanco'
           | 'oxxo'
           | 'p24'

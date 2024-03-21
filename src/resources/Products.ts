@@ -12,6 +12,19 @@ export const Products = StripeResource.extend({
     methodType: 'list',
   }),
   del: stripeMethod({method: 'DELETE', fullPath: '/v1/products/{id}'}),
+  createFeature: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/products/{product}/features',
+  }),
+  deleteFeature: stripeMethod({
+    method: 'DELETE',
+    fullPath: '/v1/products/{product}/features/{id}',
+  }),
+  listFeatures: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/products/{product}/features',
+    methodType: 'list',
+  }),
   search: stripeMethod({
     method: 'GET',
     fullPath: '/v1/products/search',

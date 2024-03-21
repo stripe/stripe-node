@@ -758,13 +758,6 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface CustomerListEntitlementsParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     interface CustomerListPaymentMethodsParams extends PaginationParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -799,6 +792,7 @@ declare module 'stripe' {
         | 'klarna'
         | 'konbini'
         | 'link'
+        | 'mobilepay'
         | 'multibanco'
         | 'oxxo'
         | 'p24'
@@ -851,13 +845,6 @@ declare module 'stripe' {
     }
 
     interface CustomerRetrieveCashBalanceTransactionParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    interface CustomerRetrieveEntitlementSummaryParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -1230,19 +1217,6 @@ declare module 'stripe' {
       ): ApiListPromise<Stripe.CustomerCashBalanceTransaction>;
 
       /**
-       * Retrieve a list of entitlements for a customer
-       */
-      listEntitlements(
-        id: string,
-        params?: CustomerListEntitlementsParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.CustomerEntitlement>;
-      listEntitlements(
-        id: string,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.CustomerEntitlement>;
-
-      /**
        * Returns a list of PaymentMethods for a given Customer
        */
       listPaymentMethods(
@@ -1323,19 +1297,6 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.CustomerCashBalanceTransaction>>;
-
-      /**
-       * Retrieve the entitlement summary for a customer
-       */
-      retrieveEntitlementSummary(
-        id: string,
-        params?: CustomerRetrieveEntitlementSummaryParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.CustomerEntitlementSummary>>;
-      retrieveEntitlementSummary(
-        id: string,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.CustomerEntitlementSummary>>;
 
       /**
        * Retrieves a PaymentMethod object for a given Customer.

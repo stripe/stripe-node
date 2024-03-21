@@ -29,7 +29,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * A list of up to 15 features for this product. Entries using `name` are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
+       * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
        */
       features?: Array<ProductCreateParams.Feature>;
 
@@ -228,13 +228,10 @@ declare module 'stripe' {
       }
 
       interface Feature {
-        /**
-         * The ID of the [Feature](docs/api/entitlements/feature) object. This property is mutually-exclusive with `name`; either one must be specified, but not both.
-         */
         feature?: string;
 
         /**
-         * The feature's name. Up to 80 characters long.
+         * The marketing feature name. Up to 80 characters long.
          */
         name: string;
       }
@@ -324,7 +321,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * A list of up to 15 features for this product. Entries using `name` are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
+       * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
        */
       features?: Stripe.Emptyable<Array<ProductUpdateParams.Feature>>;
 
@@ -381,13 +378,10 @@ declare module 'stripe' {
 
     namespace ProductUpdateParams {
       interface Feature {
-        /**
-         * The ID of the [Feature](docs/api/entitlements/feature) object. This property is mutually-exclusive with `name`; either one must be specified, but not both.
-         */
         feature?: string;
 
         /**
-         * The feature's name. Up to 80 characters long.
+         * The marketing feature name. Up to 80 characters long.
          */
         name: string;
       }
@@ -457,6 +451,27 @@ declare module 'stripe' {
     }
 
     interface ProductDeleteParams {}
+
+    interface ProductCreateFeatureParams {
+      /**
+       * The ID of the [Feature](docs/api/entitlements/feature) object attached to this product.
+       */
+      entitlement_feature: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface ProductDeleteFeatureParams {}
+
+    interface ProductListFeaturesParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
 
     interface ProductSearchParams {
       /**
@@ -532,6 +547,43 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedProduct>>;
+
+      /**
+       * Creates a product_feature, which represents a feature attachment to a product
+       */
+      createFeature(
+        id: string,
+        params: ProductCreateFeatureParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.ProductFeature>>;
+
+      /**
+       * Deletes the feature attachment to a product
+       */
+      deleteFeature(
+        productId: string,
+        id: string,
+        params?: ProductDeleteFeatureParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.DeletedProductFeature>>;
+      deleteFeature(
+        productId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.DeletedProductFeature>>;
+
+      /**
+       * Retrieve a list of features for a product
+       */
+      listFeatures(
+        id: string,
+        params?: ProductListFeaturesParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.ProductFeature>;
+      listFeatures(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.ProductFeature>;
 
       /**
        * Search for products you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).

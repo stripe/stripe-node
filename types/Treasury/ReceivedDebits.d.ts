@@ -191,6 +191,11 @@ declare module 'stripe' {
           issuing_transaction: string | null;
 
           /**
+           * Set if the ReceivedDebit was created due to a [Payout](https://stripe.com/docs/api#payouts) object.
+           */
+          payout: string | null;
+
+          /**
            * The ReceivedCredit that Capital withheld from
            */
           received_credit_capital_withholding?: string | null;

@@ -50,11 +50,6 @@ export const Customers = StripeResource.extend({
     fullPath: '/v1/customers/{customer}/cash_balance_transactions',
     methodType: 'list',
   }),
-  listEntitlements: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/customers/{customer}/entitlements',
-    methodType: 'list',
-  }),
   listPaymentMethods: stripeMethod({
     method: 'GET',
     fullPath: '/v1/customers/{customer}/payment_methods',
@@ -82,10 +77,6 @@ export const Customers = StripeResource.extend({
     method: 'GET',
     fullPath:
       '/v1/customers/{customer}/cash_balance_transactions/{transaction}',
-  }),
-  retrieveEntitlementSummary: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/customers/{customer}/entitlement_summary',
   }),
   retrievePaymentMethod: stripeMethod({
     method: 'GET',

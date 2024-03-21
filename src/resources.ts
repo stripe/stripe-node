@@ -2,6 +2,7 @@
 
 import {resourceNamespace} from './ResourceNamespace.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
+import {ActiveEntitlements as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
@@ -50,6 +51,7 @@ import {Refunds as TestHelpersRefunds} from './resources/TestHelpers/Refunds.js'
 import {Registrations as TaxRegistrations} from './resources/Tax/Registrations.js';
 import {ReportRuns as ReportingReportRuns} from './resources/Reporting/ReportRuns.js';
 import {ReportTypes as ReportingReportTypes} from './resources/Reporting/ReportTypes.js';
+import {Requests as ForwardingRequests} from './resources/Forwarding/Requests.js';
 import {ScheduledQueryRuns as SigmaScheduledQueryRuns} from './resources/Sigma/ScheduledQueryRuns.js';
 import {Secrets as AppsSecrets} from './resources/Apps/Secrets.js';
 import {Sessions as BillingPortalSessions} from './resources/BillingPortal/Sessions.js';
@@ -150,12 +152,16 @@ export const Climate = resourceNamespace('climate', {
   Suppliers: ClimateSuppliers,
 });
 export const Entitlements = resourceNamespace('entitlements', {
+  ActiveEntitlements: EntitlementsActiveEntitlements,
   Features: EntitlementsFeatures,
 });
 export const FinancialConnections = resourceNamespace('financialConnections', {
   Accounts: FinancialConnectionsAccounts,
   Sessions: FinancialConnectionsSessions,
   Transactions: FinancialConnectionsTransactions,
+});
+export const Forwarding = resourceNamespace('forwarding', {
+  Requests: ForwardingRequests,
 });
 export const GiftCards = resourceNamespace('giftCards', {
   Cards: GiftCardsCards,

@@ -894,6 +894,10 @@ declare module 'stripe' {
           | 'expired_card'
           | 'financial_connections_account_inactive'
           | 'financial_connections_no_successful_transaction_refresh'
+          | 'forwarding_api_inactive'
+          | 'forwarding_api_invalid_parameter'
+          | 'forwarding_api_upstream_connection_error'
+          | 'forwarding_api_upstream_connection_timeout'
           | 'gift_card_balance_insufficient'
           | 'gift_card_code_exists'
           | 'gift_card_inactive'
@@ -1399,7 +1403,7 @@ declare module 'stripe' {
         metadata: Stripe.Metadata | null;
 
         /**
-         * If specified, payment collection for this subscription will be paused.
+         * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/billing/subscriptions/pause-payment).
          */
         pause_collection?: SubscriptionDetails.PauseCollection | null;
       }

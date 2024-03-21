@@ -1937,7 +1937,7 @@ declare module 'stripe' {
       automatic_tax?: InvoiceCreatePreviewParams.AutomaticTax;
 
       /**
-       * The code of the coupon to apply. If `subscription` or `subscription_items` is provided, the invoice returned will preview updating or creating a subscription with that coupon. Otherwise, it will preview applying that coupon to the customer for the next upcoming invoice from among the customer's subscriptions. The invoice can be previewed without a coupon by passing this value as an empty string.
+       * The identifier of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       coupon?: string;
 
@@ -1957,7 +1957,7 @@ declare module 'stripe' {
       customer_details?: InvoiceCreatePreviewParams.CustomerDetails;
 
       /**
-       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This only works for coupons directly applied to the invoice. To apply a coupon to a subscription, you must use the `coupon` parameter instead. Pass an empty string to avoid inheriting any discounts. To preview the upcoming invoice for a subscription that hasn't been created, use `coupon` instead.
+       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This works for both coupons directly applied to an invoice and coupons applied to a subscription. Pass an empty string to avoid inheriting any discounts.
        */
       discounts?: Stripe.Emptyable<Array<InvoiceCreatePreviewParams.Discount>>;
 
@@ -3231,7 +3231,7 @@ declare module 'stripe' {
           on_behalf_of?: string;
 
           /**
-           * If specified, payment collection for this subscription will be paused.
+           * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/billing/subscriptions/pause-payment).
            */
           pause_collection?: Phase.PauseCollection;
 
@@ -4330,7 +4330,7 @@ declare module 'stripe' {
       automatic_tax?: InvoiceListUpcomingLinesParams.AutomaticTax;
 
       /**
-       * The code of the coupon to apply. If `subscription` or `subscription_items` is provided, the invoice returned will preview updating or creating a subscription with that coupon. Otherwise, it will preview applying that coupon to the customer for the next upcoming invoice from among the customer's subscriptions. The invoice can be previewed without a coupon by passing this value as an empty string.
+       * The identifier of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       coupon?: string;
 
@@ -4350,7 +4350,7 @@ declare module 'stripe' {
       customer_details?: InvoiceListUpcomingLinesParams.CustomerDetails;
 
       /**
-       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This only works for coupons directly applied to the invoice. To apply a coupon to a subscription, you must use the `coupon` parameter instead. Pass an empty string to avoid inheriting any discounts. To preview the upcoming invoice for a subscription that hasn't been created, use `coupon` instead.
+       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This works for both coupons directly applied to an invoice and coupons applied to a subscription. Pass an empty string to avoid inheriting any discounts.
        */
       discounts?: Stripe.Emptyable<
         Array<InvoiceListUpcomingLinesParams.Discount>
@@ -5628,7 +5628,7 @@ declare module 'stripe' {
           on_behalf_of?: string;
 
           /**
-           * If specified, payment collection for this subscription will be paused.
+           * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/billing/subscriptions/pause-payment).
            */
           pause_collection?: Phase.PauseCollection;
 
@@ -6791,7 +6791,7 @@ declare module 'stripe' {
       automatic_tax?: InvoiceRetrieveUpcomingParams.AutomaticTax;
 
       /**
-       * The code of the coupon to apply. If `subscription` or `subscription_items` is provided, the invoice returned will preview updating or creating a subscription with that coupon. Otherwise, it will preview applying that coupon to the customer for the next upcoming invoice from among the customer's subscriptions. The invoice can be previewed without a coupon by passing this value as an empty string.
+       * The identifier of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       coupon?: string;
 
@@ -6811,7 +6811,7 @@ declare module 'stripe' {
       customer_details?: InvoiceRetrieveUpcomingParams.CustomerDetails;
 
       /**
-       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This only works for coupons directly applied to the invoice. To apply a coupon to a subscription, you must use the `coupon` parameter instead. Pass an empty string to avoid inheriting any discounts. To preview the upcoming invoice for a subscription that hasn't been created, use `coupon` instead.
+       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This works for both coupons directly applied to an invoice and coupons applied to a subscription. Pass an empty string to avoid inheriting any discounts.
        */
       discounts?: Stripe.Emptyable<
         Array<InvoiceRetrieveUpcomingParams.Discount>
@@ -8089,7 +8089,7 @@ declare module 'stripe' {
           on_behalf_of?: string;
 
           /**
-           * If specified, payment collection for this subscription will be paused.
+           * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/billing/subscriptions/pause-payment).
            */
           pause_collection?: Phase.PauseCollection;
 
