@@ -10,6 +10,7 @@ import {Cards as TestHelpersIssuingCards} from './resources/TestHelpers/Issuing/
 import {Cards as IssuingCards} from './resources/Issuing/Cards.js';
 import {Configurations as BillingPortalConfigurations} from './resources/BillingPortal/Configurations.js';
 import {Configurations as TerminalConfigurations} from './resources/Terminal/Configurations.js';
+import {ConfirmationTokens as TestHelpersConfirmationTokens} from './resources/TestHelpers/ConfirmationTokens.js';
 import {ConnectionTokens as TerminalConnectionTokens} from './resources/Terminal/ConnectionTokens.js';
 import {CreditReversals as TreasuryCreditReversals} from './resources/Treasury/CreditReversals.js';
 import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Customers.js';
@@ -39,6 +40,7 @@ import {Refunds as TestHelpersRefunds} from './resources/TestHelpers/Refunds.js'
 import {Registrations as TaxRegistrations} from './resources/Tax/Registrations.js';
 import {ReportRuns as ReportingReportRuns} from './resources/Reporting/ReportRuns.js';
 import {ReportTypes as ReportingReportTypes} from './resources/Reporting/ReportTypes.js';
+import {Requests as ForwardingRequests} from './resources/Forwarding/Requests.js';
 import {ScheduledQueryRuns as SigmaScheduledQueryRuns} from './resources/Sigma/ScheduledQueryRuns.js';
 import {Secrets as AppsSecrets} from './resources/Apps/Secrets.js';
 import {Sessions as BillingPortalSessions} from './resources/BillingPortal/Sessions.js';
@@ -67,6 +69,7 @@ export {ApplicationFees} from './resources/ApplicationFees.js';
 export {Balance} from './resources/Balance.js';
 export {BalanceTransactions} from './resources/BalanceTransactions.js';
 export {Charges} from './resources/Charges.js';
+export {ConfirmationTokens} from './resources/ConfirmationTokens.js';
 export {CountrySpecs} from './resources/CountrySpecs.js';
 export {Coupons} from './resources/Coupons.js';
 export {CreditNotes} from './resources/CreditNotes.js';
@@ -127,6 +130,9 @@ export const FinancialConnections = resourceNamespace('financialConnections', {
   Sessions: FinancialConnectionsSessions,
   Transactions: FinancialConnectionsTransactions,
 });
+export const Forwarding = resourceNamespace('forwarding', {
+  Requests: ForwardingRequests,
+});
 export const Identity = resourceNamespace('identity', {
   VerificationReports: IdentityVerificationReports,
   VerificationSessions: IdentityVerificationSessions,
@@ -166,6 +172,7 @@ export const Terminal = resourceNamespace('terminal', {
   Readers: TerminalReaders,
 });
 export const TestHelpers = resourceNamespace('testHelpers', {
+  ConfirmationTokens: TestHelpersConfirmationTokens,
   Customers: TestHelpersCustomers,
   Refunds: TestHelpersRefunds,
   TestClocks: TestHelpersTestClocks,
