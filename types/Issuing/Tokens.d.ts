@@ -28,7 +28,7 @@ declare module 'stripe' {
         created: number;
 
         /**
-         * The hashed ID derived from the device ID from the card network associated with the token
+         * The hashed ID derived from the device ID from the card network associated with the token.
          */
         device_fingerprint: string | null;
 
