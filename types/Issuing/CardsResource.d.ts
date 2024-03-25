@@ -52,6 +52,11 @@ declare module 'stripe' {
         replacement_reason?: CardCreateParams.ReplacementReason;
 
         /**
+         * The second line to print on the card.
+         */
+        second_line?: Stripe.Emptyable<string>;
+
+        /**
          * The address where the card will be shipped.
          */
         shipping?: CardCreateParams.Shipping;
