@@ -224,6 +224,11 @@ declare module 'stripe' {
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
 
         /**
+         * The status of the AmazonPay capability of the account, or whether the account can directly process AmazonPay payments.
+         */
+        amazon_pay_payments?: Capabilities.AmazonPayPayments;
+
+        /**
          * The status of the BECS Direct Debit (AU) payments capability of the account, or whether the account can directly process BECS Direct Debit (AU) charges.
          */
         au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
@@ -425,6 +430,8 @@ declare module 'stripe' {
         type AffirmPayments = 'active' | 'inactive' | 'pending';
 
         type AfterpayClearpayPayments = 'active' | 'inactive' | 'pending';
+
+        type AmazonPayPayments = 'active' | 'inactive' | 'pending';
 
         type AuBecsDebitPayments = 'active' | 'inactive' | 'pending';
 

@@ -203,6 +203,11 @@ declare module 'stripe' {
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
 
         /**
+         * The amazon_pay_payments capability.
+         */
+        amazon_pay_payments?: Capabilities.AmazonPayPayments;
+
+        /**
          * The au_becs_debit_payments capability.
          */
         au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
@@ -414,6 +419,13 @@ declare module 'stripe' {
         }
 
         interface AfterpayClearpayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface AmazonPayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1726,6 +1738,11 @@ declare module 'stripe' {
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
 
         /**
+         * The amazon_pay_payments capability.
+         */
+        amazon_pay_payments?: Capabilities.AmazonPayPayments;
+
+        /**
          * The au_becs_debit_payments capability.
          */
         au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
@@ -1937,6 +1954,13 @@ declare module 'stripe' {
         }
 
         interface AfterpayClearpayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface AmazonPayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
