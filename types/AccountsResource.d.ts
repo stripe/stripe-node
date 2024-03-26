@@ -29,7 +29,7 @@ declare module 'stripe' {
       company?: AccountCreateParams.Company;
 
       /**
-       * The configuration of the account when `type` is not provided.
+       * A hash of configuration describing the account controller's attributes.
        */
       controller?: AccountCreateParams.Controller;
 
