@@ -329,6 +329,11 @@ declare module 'stripe' {
         link_payments?: Capabilities.LinkPayments;
 
         /**
+         * The status of the MobilepPay capability of the account, or whether the account can directly process MobilePay charges.
+         */
+        mobilepay_payments?: Capabilities.MobilepayPayments;
+
+        /**
          * The status of the OXXO payments capability of the account, or whether the account can directly process OXXO charges.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -447,6 +452,8 @@ declare module 'stripe' {
         type LegacyPayments = 'active' | 'inactive' | 'pending';
 
         type LinkPayments = 'active' | 'inactive' | 'pending';
+
+        type MobilepayPayments = 'active' | 'inactive' | 'pending';
 
         type OxxoPayments = 'active' | 'inactive' | 'pending';
 
