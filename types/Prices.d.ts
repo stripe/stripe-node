@@ -256,6 +256,11 @@ declare module 'stripe' {
         interval_count: number;
 
         /**
+         * The meter tracking the usage of a metered price
+         */
+        meter?: string | null;
+
+        /**
          * Default number of trial days when subscribing a customer to this price using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
          */
         trial_period_days: number | null;
