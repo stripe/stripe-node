@@ -414,6 +414,8 @@ declare module 'stripe' {
 
         link?: PaymentMethodDetails.Link;
 
+        mobilepay?: PaymentMethodDetails.Mobilepay;
+
         multibanco?: PaymentMethodDetails.Multibanco;
 
         oxxo?: PaymentMethodDetails.Oxxo;
@@ -1635,6 +1637,39 @@ declare module 'stripe' {
           country: string | null;
         }
 
+        interface Mobilepay {
+          card: Mobilepay.Card | null;
+        }
+
+        namespace Mobilepay {
+          interface Card {
+            /**
+             * Brand of the card used in the transaction
+             */
+            brand: string | null;
+
+            /**
+             * Two-letter ISO code representing the country of the card
+             */
+            country: string | null;
+
+            /**
+             * Two digit number representing the card's expiration month
+             */
+            exp_month: number | null;
+
+            /**
+             * Two digit number representing the card's expiration year
+             */
+            exp_year: number | null;
+
+            /**
+             * The last 4 digits of the card
+             */
+            last4: string | null;
+          }
+        }
+
         interface Multibanco {
           /**
            * Entity number associated with this Multibanco payment.
@@ -1928,6 +1963,11 @@ declare module 'stripe' {
            * Last four digits of the bank account number.
            */
           last4: string | null;
+
+          /**
+           * Reference number to locate ACH payments with customer's bank.
+           */
+          payment_reference?: string | null;
 
           /**
            * Routing number of the bank account.

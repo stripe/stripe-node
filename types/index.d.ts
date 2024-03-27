@@ -24,6 +24,7 @@
 ///<reference path='./Climate/OrdersResource.d.ts' />
 ///<reference path='./Climate/ProductsResource.d.ts' />
 ///<reference path='./Climate/SuppliersResource.d.ts' />
+///<reference path='./ConfirmationTokensResource.d.ts' />
 ///<reference path='./CountrySpecsResource.d.ts' />
 ///<reference path='./CouponsResource.d.ts' />
 ///<reference path='./CreditNotesResource.d.ts' />
@@ -38,6 +39,7 @@
 ///<reference path='./FinancialConnections/AccountsResource.d.ts' />
 ///<reference path='./FinancialConnections/SessionsResource.d.ts' />
 ///<reference path='./FinancialConnections/TransactionsResource.d.ts' />
+///<reference path='./Forwarding/RequestsResource.d.ts' />
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
 ///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
@@ -88,6 +90,7 @@
 ///<reference path='./Terminal/ConnectionTokensResource.d.ts' />
 ///<reference path='./Terminal/LocationsResource.d.ts' />
 ///<reference path='./Terminal/ReadersResource.d.ts' />
+///<reference path='./TestHelpers/ConfirmationTokensResource.d.ts' />
 ///<reference path='./TestHelpers/CustomersResource.d.ts' />
 ///<reference path='./TestHelpers/Issuing/AuthorizationsResource.d.ts' />
 ///<reference path='./TestHelpers/Issuing/CardsResource.d.ts' />
@@ -136,6 +139,7 @@
 ///<reference path='./Climate/Orders.d.ts' />
 ///<reference path='./Climate/Products.d.ts' />
 ///<reference path='./Climate/Suppliers.d.ts' />
+///<reference path='./ConfirmationTokens.d.ts' />
 ///<reference path='./ConnectCollectionTransfers.d.ts' />
 ///<reference path='./CountrySpecs.d.ts' />
 ///<reference path='./Coupons.d.ts' />
@@ -160,6 +164,7 @@
 ///<reference path='./FinancialConnections/Accounts.d.ts' />
 ///<reference path='./FinancialConnections/Sessions.d.ts' />
 ///<reference path='./FinancialConnections/Transactions.d.ts' />
+///<reference path='./Forwarding/Requests.d.ts' />
 ///<reference path='./FundingInstructions.d.ts' />
 ///<reference path='./Identity/VerificationReports.d.ts' />
 ///<reference path='./Identity/VerificationSessions.d.ts' />
@@ -269,6 +274,7 @@ declare module 'stripe' {
     balance: Stripe.BalanceResource;
     balanceTransactions: Stripe.BalanceTransactionsResource;
     charges: Stripe.ChargesResource;
+    confirmationTokens: Stripe.ConfirmationTokensResource;
     countrySpecs: Stripe.CountrySpecsResource;
     coupons: Stripe.CouponsResource;
     creditNotes: Stripe.CreditNotesResource;
@@ -330,6 +336,9 @@ declare module 'stripe' {
       sessions: Stripe.FinancialConnections.SessionsResource;
       transactions: Stripe.FinancialConnections.TransactionsResource;
     };
+    forwarding: {
+      requests: Stripe.Forwarding.RequestsResource;
+    };
     identity: {
       verificationReports: Stripe.Identity.VerificationReportsResource;
       verificationSessions: Stripe.Identity.VerificationSessionsResource;
@@ -369,6 +378,7 @@ declare module 'stripe' {
       readers: Stripe.Terminal.ReadersResource;
     };
     testHelpers: {
+      confirmationTokens: Stripe.TestHelpers.ConfirmationTokensResource;
       customers: Stripe.TestHelpers.CustomersResource;
       refunds: Stripe.TestHelpers.RefundsResource;
       testClocks: Stripe.TestHelpers.TestClocksResource;

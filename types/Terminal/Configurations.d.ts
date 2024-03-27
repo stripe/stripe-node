@@ -34,6 +34,11 @@ declare module 'stripe' {
          */
         livemode: boolean;
 
+        /**
+         * String indicating the name of the Configuration object, set by the user
+         */
+        name: string | null;
+
         offline?: Configuration.Offline;
 
         tipping?: Configuration.Tipping;
