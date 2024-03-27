@@ -1230,7 +1230,7 @@ declare module 'stripe' {
             authorization_response_code: string | null;
 
             /**
-             * How the cardholder verified ownership of the card.
+             * Describes the method used by the cardholder to verify ownership of the card. One of the following: `approval`, `failure`, `none`, `offline_pin`, `offline_pin_and_signature`, `online_pin`, or `signature`.
              */
             cardholder_verification_method: string | null;
 
@@ -1587,7 +1587,7 @@ declare module 'stripe' {
             authorization_response_code: string | null;
 
             /**
-             * How the cardholder verified ownership of the card.
+             * Describes the method used by the cardholder to verify ownership of the card. One of the following: `approval`, `failure`, `none`, `offline_pin`, `offline_pin_and_signature`, `online_pin`, or `signature`.
              */
             cardholder_verification_method: string | null;
 
