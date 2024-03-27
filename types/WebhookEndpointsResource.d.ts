@@ -369,15 +369,7 @@ declare module 'stripe' {
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created'
-        | 'invoiceitem.updated'
-        | 'order.created'
-        | 'recipient.created'
-        | 'recipient.deleted'
-        | 'recipient.updated'
-        | 'sku.created'
-        | 'sku.deleted'
-        | 'sku.updated';
+        | 'treasury.received_debit.created';
     }
 
     interface WebhookEndpointRetrieveParams {
@@ -647,15 +639,7 @@ declare module 'stripe' {
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created'
-        | 'invoiceitem.updated'
-        | 'order.created'
-        | 'recipient.created'
-        | 'recipient.deleted'
-        | 'recipient.updated'
-        | 'sku.created'
-        | 'sku.deleted'
-        | 'sku.updated';
+        | 'treasury.received_debit.created';
     }
 
     interface WebhookEndpointListParams extends PaginationParams {

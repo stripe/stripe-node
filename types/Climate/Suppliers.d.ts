@@ -74,8 +74,7 @@ declare module 'stripe' {
         type RemovalPathway =
           | 'biomass_carbon_removal_and_storage'
           | 'direct_air_capture'
-          | 'enhanced_weathering'
-          | 'various';
+          | 'enhanced_weathering';
       }
     }
   }
