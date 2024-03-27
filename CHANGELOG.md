@@ -46,8 +46,6 @@
 ## 14.18.0 - 2024-02-22
 * [#2022](https://github.com/stripe/stripe-node/pull/2022) Update generated code
   * Add support for `client_reference_id` on `Identity.VerificationReportListParams`, `Identity.VerificationReport`, `Identity.VerificationSessionCreateParams`, `Identity.VerificationSessionListParams`, and `Identity.VerificationSession`
-  * Remove support for value `include_and_require` from enum `InvoiceCreateParams.pending_invoice_items_behavior`
-  * Remove support for value `service_tax` from enums `TaxRate.tax_type`, `TaxRateCreateParams.tax_type`, and `TaxRateUpdateParams.tax_type`
   * Add support for `created` on `Treasury.OutboundPaymentListParams`
 * [#2025](https://github.com/stripe/stripe-node/pull/2025) Standardize parameter interface names
   - `CapabilityListParams` renamed to `AccountListCapabilitiesParams`
