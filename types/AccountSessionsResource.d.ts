@@ -34,6 +34,26 @@ declare module 'stripe' {
         documents?: Components.Documents;
 
         /**
+         * Configuration for the financial account component.
+         */
+        financial_account?: Components.FinancialAccount;
+
+        /**
+         * Configuration for the financial account transactions component.
+         */
+        financial_account_transactions?: Components.FinancialAccountTransactions;
+
+        /**
+         * Configuration for the issuing card component.
+         */
+        issuing_card?: Components.IssuingCard;
+
+        /**
+         * Configuration for the issuing cards list component.
+         */
+        issuing_cards_list?: Components.IssuingCardsList;
+
+        /**
          * Configuration for the payment details embedded component.
          */
         payment_details?: Components.PaymentDetails;
@@ -98,6 +118,84 @@ declare module 'stripe' {
           interface Features {}
         }
 
+        interface FinancialAccount {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features?: FinancialAccount.Features;
+        }
+
+        namespace FinancialAccount {
+          interface Features {
+            /**
+             * Whether to allow money movement features.
+             */
+            money_movement?: boolean;
+          }
+        }
+
+        interface FinancialAccountTransactions {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features?: FinancialAccountTransactions.Features;
+        }
+
+        namespace FinancialAccountTransactions {
+          interface Features {
+            /**
+             * Whether to allow card spend dispute features.
+             */
+            card_spend_dispute_management?: boolean;
+          }
+        }
+
+        interface IssuingCard {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: IssuingCard.Features;
+        }
+
+        namespace IssuingCard {
+          interface Features {}
+        }
+
+        interface IssuingCardsList {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: IssuingCardsList.Features;
+        }
+
+        namespace IssuingCardsList {
+          interface Features {
+            /**
+             * Whether to allow card management features.
+             */
+            card_management?: boolean;
+
+            /**
+             * Whether to allow cardholder management features.
+             */
+            cardholder_management?: boolean;
+          }
+        }
+
         interface PaymentDetails {
           /**
            * Whether the embedded component is enabled.
@@ -116,6 +214,11 @@ declare module 'stripe' {
              * Whether to allow capturing and cancelling payment intents. This is `true` by default.
              */
             capture_payments?: boolean;
+
+            /**
+             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             */
+            destination_on_behalf_of_charge_management?: boolean;
 
             /**
              * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
@@ -147,6 +250,11 @@ declare module 'stripe' {
              * Whether to allow capturing and cancelling payment intents. This is `true` by default.
              */
             capture_payments?: boolean;
+
+            /**
+             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             */
+            destination_on_behalf_of_charge_management?: boolean;
 
             /**
              * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.

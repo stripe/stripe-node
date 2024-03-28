@@ -1,5 +1,18 @@
 # Changelog
 
+## 14.23.0 - 2024-03-28
+* [#2046](https://github.com/stripe/stripe-node/pull/2046) Update generated code
+  * Add support for new resources `Billing.MeterEventAdjustment`, `Billing.MeterEvent`, and `Billing.Meter`
+  * Add support for `create`, `deactivate`, `list`, `reactivate`, `retrieve`, and `update` methods on resource `Meter`
+  * Add support for `create` method on resources `MeterEventAdjustment` and `MeterEvent`
+  * Add support for `amazon_pay_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+  * Add support for new value `verification_failed_representative_authority` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `BankAccount.future_requirements.errors[].code`, and `BankAccount.requirements.errors[].code`
+  * Add support for `destination_on_behalf_of_charge_management` on `AccountSession.components.payment_details.features`, `AccountSession.components.payments.features`, `AccountSessionCreateParams.components.payment_details.features`, and `AccountSessionCreateParams.components.payments.features`
+  * Add support for `mandate` on `Charge.payment_method_details.us_bank_account`, `Treasury.InboundTransfer.origin_payment_method_details.us_bank_account`, `Treasury.OutboundPayment.destination_payment_method_details.us_bank_account`, and `Treasury.OutboundTransfer.destination_payment_method_details.us_bank_account`
+  * Add support for `second_line` on `Issuing.CardCreateParams`
+  * Add support for `meter` on `PlanCreateParams`, `Plan`, `Price.recurring`, `PriceCreateParams.recurring`, and `PriceListParams.recurring`
+* [#2045](https://github.com/stripe/stripe-node/pull/2045) esbuild test project fixes
+
 ## 14.23.0-beta.1 - 2024-03-21
 * [#2039](https://github.com/stripe/stripe-node/pull/2039) Update generated code for beta
   * Add support for new resources `Entitlements.ActiveEntitlementSummary` and `Entitlements.ActiveEntitlement`
@@ -16,6 +29,23 @@
   * Remove support for value `customer.entitlement_summary.updated` from enum `Event.type`
   * Add support for new value `entitlements.active_entitlement_summary.updated` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
   * Remove support for value `customer.entitlement_summary.updated` from enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
+## 14.22.0 - 2024-03-21
+* [#2040](https://github.com/stripe/stripe-node/pull/2040) Update generated code
+  * Add support for new resources `ConfirmationToken` and `Forwarding.Request`
+  * Add support for `retrieve` method on resource `ConfirmationToken`
+  * Add support for `create`, `list`, and `retrieve` methods on resource `Request`
+  * Add support for `mobilepay_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+  * Add support for new values `forwarding_api_inactive`, `forwarding_api_invalid_parameter`, `forwarding_api_upstream_connection_error`, and `forwarding_api_upstream_connection_timeout` on enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`
+  * Add support for `mobilepay` on `Charge.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, `PaymentMethod`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentCreateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_data`
+  * Add support for `payment_reference` on `Charge.payment_method_details.us_bank_account`
+  * Add support for new value `mobilepay` on enums `CustomerListPaymentMethodsParams.type`, `PaymentMethodCreateParams.type`, and `PaymentMethodListParams.type`
+  * Add support for `confirmation_token` on `PaymentIntentConfirmParams`, `PaymentIntentCreateParams`, `SetupIntentConfirmParams`, and `SetupIntentCreateParams`
+  * Add support for new value `mobilepay` on enums `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `SetupIntentConfirmParams.payment_method_data.type`, `SetupIntentCreateParams.payment_method_data.type`, and `SetupIntentUpdateParams.payment_method_data.type`
+  * Add support for new value `mobilepay` on enum `PaymentMethod.type`
+  * Add support for `name` on `Terminal.ConfigurationCreateParams`, `Terminal.ConfigurationUpdateParams`, and `Terminal.Configuration`
+  * Add support for `payout` on `Treasury.ReceivedDebit.linked_flows`
+* [#2043](https://github.com/stripe/stripe-node/pull/2043) Don't mutate error.type during minification
 
 ## 14.22.0-beta.1 - 2024-03-14
 * [#2036](https://github.com/stripe/stripe-node/pull/2036) Update generated code for beta
@@ -75,8 +105,6 @@
 ## 14.18.0 - 2024-02-22
 * [#2022](https://github.com/stripe/stripe-node/pull/2022) Update generated code
   * Add support for `client_reference_id` on `Identity.VerificationReportListParams`, `Identity.VerificationReport`, `Identity.VerificationSessionCreateParams`, `Identity.VerificationSessionListParams`, and `Identity.VerificationSession`
-  * Remove support for value `include_and_require` from enum `InvoiceCreateParams.pending_invoice_items_behavior`
-  * Remove support for value `service_tax` from enums `TaxRate.tax_type`, `TaxRateCreateParams.tax_type`, and `TaxRateUpdateParams.tax_type`
   * Add support for `created` on `Treasury.OutboundPaymentListParams`
 * [#2025](https://github.com/stripe/stripe-node/pull/2025) Standardize parameter interface names
   - `CapabilityListParams` renamed to `AccountListCapabilitiesParams`
