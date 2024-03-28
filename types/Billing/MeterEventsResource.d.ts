@@ -27,7 +27,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * A unique identifier for the event. If not provided, one will be generated.
+         * A unique identifier for the event. If not provided, one will be generated. We recommend using a globally unique identifier for this. We'll enforce uniqueness within a rolling 24 hour period.
          */
         identifier?: string;
       }
