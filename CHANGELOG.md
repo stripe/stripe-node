@@ -1,5 +1,10 @@
 # Changelog
 
+## 14.24.0-beta.1 - 2024-03-28
+* [#2047](https://github.com/stripe/stripe-node/pull/2047) Update generated code for beta
+  * Add support for `financial_account_transactions`, `financial_account`, `issuing_card`, and `issuing_cards_list` on `AccountSessionCreateParams.components`
+  * Remove support for `subscription_billing_cycle_anchor`, `subscription_cancel_at_period_end`, `subscription_cancel_at`, `subscription_cancel_now`, `subscription_default_tax_rates`, `subscription_items`, `subscription_prebilling`, `subscription_proration_behavior`, `subscription_proration_date`, `subscription_resume_at`, `subscription_start_date`, and `subscription_trial_end` on `InvoiceCreatePreviewParams`
+
 ## 14.23.0 - 2024-03-28
 * [#2046](https://github.com/stripe/stripe-node/pull/2046) Update generated code
   * Add support for new resources `Billing.MeterEventAdjustment`, `Billing.MeterEvent`, and `Billing.Meter`
