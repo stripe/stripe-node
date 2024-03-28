@@ -1,5 +1,18 @@
 # Changelog
 
+## 14.23.0 - 2024-03-28
+* [#2046](https://github.com/stripe/stripe-node/pull/2046) Update generated code
+  * Add support for new resources `Billing.MeterEventAdjustment`, `Billing.MeterEvent`, and `Billing.Meter`
+  * Add support for `create`, `deactivate`, `list`, `reactivate`, `retrieve`, and `update` methods on resource `Meter`
+  * Add support for `create` method on resources `MeterEventAdjustment` and `MeterEvent`
+  * Add support for `amazon_pay_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+  * Add support for new value `verification_failed_representative_authority` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `BankAccount.future_requirements.errors[].code`, and `BankAccount.requirements.errors[].code`
+  * Add support for `destination_on_behalf_of_charge_management` on `AccountSession.components.payment_details.features`, `AccountSession.components.payments.features`, `AccountSessionCreateParams.components.payment_details.features`, and `AccountSessionCreateParams.components.payments.features`
+  * Add support for `mandate` on `Charge.payment_method_details.us_bank_account`, `Treasury.InboundTransfer.origin_payment_method_details.us_bank_account`, `Treasury.OutboundPayment.destination_payment_method_details.us_bank_account`, and `Treasury.OutboundTransfer.destination_payment_method_details.us_bank_account`
+  * Add support for `second_line` on `Issuing.CardCreateParams`
+  * Add support for `meter` on `PlanCreateParams`, `Plan`, `Price.recurring`, `PriceCreateParams.recurring`, and `PriceListParams.recurring`
+* [#2045](https://github.com/stripe/stripe-node/pull/2045) esbuild test project fixes
+
 ## 14.22.0 - 2024-03-21
 * [#2040](https://github.com/stripe/stripe-node/pull/2040) Update generated code
   * Add support for new resources `ConfirmationToken` and `Forwarding.Request`
@@ -93,7 +106,7 @@
   - `TransferReversalUpdateParams` renamed to `TransferUpdateReversalParams`
   - `UsageRecordCreateParams` renamed to `SubscriptionItemCreateUsageRecordParams`
   - `UsageRecordSummaryListParams` renamed to `SubscriptionItemListUsageRecordSummariesParams`
-  
+
   Old names will still work but are deprecated and will be removed in future versions.
 * [#2021](https://github.com/stripe/stripe-node/pull/2021) Add TaxIds API
   * Add support for `create`, `del`, `list`, and `retrieve` methods on resource `TaxId`
