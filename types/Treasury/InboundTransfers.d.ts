@@ -187,6 +187,11 @@ declare module 'stripe' {
             last4: string | null;
 
             /**
+             * ID of the mandate used to make this payment.
+             */
+            mandate?: string | Stripe.Mandate;
+
+            /**
              * The network rails used. See the [docs](https://stripe.com/docs/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
              */
             network: 'ach';
