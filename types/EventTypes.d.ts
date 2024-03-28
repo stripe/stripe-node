@@ -97,8 +97,8 @@ declare module 'stripe' {
       | InvoiceUpcomingEvent
       | InvoiceUpdatedEvent
       | InvoiceVoidedEvent
-      | InvoiceitemCreatedEvent
-      | InvoiceitemDeletedEvent
+      | InvoiceItemCreatedEvent
+      | InvoiceItemDeletedEvent
       | IssuingAuthorizationCreatedEvent
       | IssuingAuthorizationRequestEvent
       | IssuingAuthorizationUpdatedEvent
@@ -1740,12 +1740,12 @@ declare module 'stripe' {
     /**
      * Occurs whenever an invoice item is created.
      */
-    interface InvoiceitemCreatedEvent extends EventBase {
+    interface InvoiceItemCreatedEvent extends EventBase {
       type: 'invoiceitem.created';
-      data: InvoiceitemCreatedEvent.Data;
+      data: InvoiceItemCreatedEvent.Data;
     }
 
-    namespace InvoiceitemCreatedEvent {
+    namespace InvoiceItemCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.InvoiceItem;
 
@@ -1756,12 +1756,12 @@ declare module 'stripe' {
     /**
      * Occurs whenever an invoice item is deleted.
      */
-    interface InvoiceitemDeletedEvent extends EventBase {
+    interface InvoiceItemDeletedEvent extends EventBase {
       type: 'invoiceitem.deleted';
-      data: InvoiceitemDeletedEvent.Data;
+      data: InvoiceItemDeletedEvent.Data;
     }
 
-    namespace InvoiceitemDeletedEvent {
+    namespace InvoiceItemDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.InvoiceItem;
 
