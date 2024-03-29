@@ -101,6 +101,11 @@ declare module 'stripe' {
             capture_payments: boolean;
 
             /**
+             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             */
+            destination_on_behalf_of_charge_management?: boolean;
+
+            /**
              * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
              */
             dispute_management: boolean;
@@ -127,6 +132,11 @@ declare module 'stripe' {
              * Whether to allow capturing and cancelling payment intents. This is `true` by default.
              */
             capture_payments: boolean;
+
+            /**
+             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             */
+            destination_on_behalf_of_charge_management?: boolean;
 
             /**
              * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.

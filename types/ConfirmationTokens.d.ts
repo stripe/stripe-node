@@ -7,7 +7,9 @@ declare module 'stripe' {
      * to your server for confirming a PaymentIntent or SetupIntent. If the confirmation
      * is successful, values present on the ConfirmationToken are written onto the Intent.
      *
-     * To learn more or request access, visit the related guided: [Finalize payments on the server using Confirmation Tokens](https://stripe.com/docs/payments/finalize-payments-on-the-server-confirmation-tokens).
+     * To learn more about how to use ConfirmationToken, visit the related guides:
+     * - [Finalize payments on the server](https://stripe.com/docs/payments/finalize-payments-on-the-server)
+     * - [Build two-step confirmation](https://stripe.com/docs/payments/build-a-two-step-confirmation).
      */
     interface ConfirmationToken {
       /**

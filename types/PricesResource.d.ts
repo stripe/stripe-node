@@ -262,6 +262,11 @@ declare module 'stripe' {
         interval_count?: number;
 
         /**
+         * The meter tracking the usage of a metered price
+         */
+        meter?: string;
+
+        /**
          * Default number of trial days when subscribing a customer to this price using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
          */
         trial_period_days?: number;
@@ -515,6 +520,11 @@ declare module 'stripe' {
          * Filter by billing frequency. Either `day`, `week`, `month` or `year`.
          */
         interval?: Recurring.Interval;
+
+        /**
+         * Filter by the price's meter.
+         */
+        meter?: string;
 
         /**
          * Filter by the usage type for this price. Can be either `metered` or `licensed`.

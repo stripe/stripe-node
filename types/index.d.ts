@@ -17,6 +17,9 @@
 ///<reference path='./Apps/SecretsResource.d.ts' />
 ///<reference path='./BalanceResource.d.ts' />
 ///<reference path='./BalanceTransactionsResource.d.ts' />
+///<reference path='./Billing/MeterEventAdjustmentsResource.d.ts' />
+///<reference path='./Billing/MeterEventsResource.d.ts' />
+///<reference path='./Billing/MetersResource.d.ts' />
 ///<reference path='./BillingPortal/ConfigurationsResource.d.ts' />
 ///<reference path='./BillingPortal/SessionsResource.d.ts' />
 ///<reference path='./ChargesResource.d.ts' />
@@ -129,6 +132,10 @@
 ///<reference path='./BalanceTransactionSources.d.ts' />
 ///<reference path='./BalanceTransactions.d.ts' />
 ///<reference path='./BankAccounts.d.ts' />
+///<reference path='./Billing/MeterEventAdjustments.d.ts' />
+///<reference path='./Billing/MeterEventSummaries.d.ts' />
+///<reference path='./Billing/MeterEvents.d.ts' />
+///<reference path='./Billing/Meters.d.ts' />
 ///<reference path='./BillingPortal/Configurations.d.ts' />
 ///<reference path='./BillingPortal/Sessions.d.ts' />
 ///<reference path='./Capabilities.d.ts' />
@@ -318,6 +325,11 @@ declare module 'stripe' {
     webhookEndpoints: Stripe.WebhookEndpointsResource;
     apps: {
       secrets: Stripe.Apps.SecretsResource;
+    };
+    billing: {
+      meters: Stripe.Billing.MetersResource;
+      meterEvents: Stripe.Billing.MeterEventsResource;
+      meterEventAdjustments: Stripe.Billing.MeterEventAdjustmentsResource;
     };
     billingPortal: {
       configurations: Stripe.BillingPortal.ConfigurationsResource;

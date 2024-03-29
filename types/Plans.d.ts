@@ -104,6 +104,11 @@ declare module 'stripe' {
       metadata: Stripe.Metadata | null;
 
       /**
+       * The meter tracking the usage of a metered price
+       */
+      meter?: string | null;
+
+      /**
        * A brief description of the plan, hidden from customers.
        */
       nickname: string | null;
