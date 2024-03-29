@@ -95,8 +95,6 @@ declare module 'stripe' {
 
           subscription_cancel: Features.SubscriptionCancel;
 
-          subscription_pause: Features.SubscriptionPause;
-
           subscription_update: Features.SubscriptionUpdate;
         }
 
@@ -187,13 +185,6 @@ declare module 'stripe' {
               | 'always_invoice'
               | 'create_prorations'
               | 'none';
-          }
-
-          interface SubscriptionPause {
-            /**
-             * Whether the feature is enabled.
-             */
-            enabled: boolean;
           }
 
           interface SubscriptionUpdate {
