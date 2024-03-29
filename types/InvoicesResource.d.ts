@@ -233,12 +233,12 @@ declare module 'stripe' {
 
       interface CustomField {
         /**
-         * The name of the custom field. This may be up to 30 characters.
+         * The name of the custom field. This may be up to 40 characters.
          */
         name: string;
 
         /**
-         * The value of the custom field. This may be up to 30 characters.
+         * The value of the custom field. This may be up to 140 characters.
          */
         value: string;
       }
@@ -1017,12 +1017,12 @@ declare module 'stripe' {
 
       interface CustomField {
         /**
-         * The name of the custom field. This may be up to 30 characters.
+         * The name of the custom field. This may be up to 40 characters.
          */
         name: string;
 
         /**
-         * The value of the custom field. This may be up to 30 characters.
+         * The value of the custom field. This may be up to 140 characters.
          */
         value: string;
       }
@@ -9608,7 +9608,7 @@ declare module 'stripe' {
        *
        * Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
        *
-       * You can preview the effects of updating a subscription, including a preview of what proration will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass a proration_date parameter when doing the actual subscription update. The value passed in should be the same as the subscription_proration_date returned on the upcoming invoice resource. The recommended way to get only the prorations being previewed is to consider only proration line items where period[start] is equal to the subscription_proration_date on the upcoming invoice resource.
+       * You can preview the effects of updating a subscription, including a preview of what proration will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass the subscription_details.proration_date parameter when doing the actual subscription update. The recommended way to get only the prorations being previewed is to consider only proration line items where period[start] is equal to the subscription_details.proration_date value passed in the request.
        */
       createPreview(
         params?: InvoiceCreatePreviewParams,
@@ -9723,7 +9723,7 @@ declare module 'stripe' {
        *
        * Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
        *
-       * You can preview the effects of updating a subscription, including a preview of what proration will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass a proration_date parameter when doing the actual subscription update. The value passed in should be the same as the subscription_proration_date returned on the upcoming invoice resource. The recommended way to get only the prorations being previewed is to consider only proration line items where period[start] is equal to the subscription_proration_date on the upcoming invoice resource.
+       * You can preview the effects of updating a subscription, including a preview of what proration will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass the subscription_proration_date parameter when doing the actual subscription update. The recommended way to get only the prorations being previewed is to consider only proration line items where period[start] is equal to the subscription_proration_date value passed in the request.
        */
       retrieveUpcoming(
         params?: InvoiceRetrieveUpcomingParams,

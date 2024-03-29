@@ -154,12 +154,12 @@ declare module 'stripe' {
       namespace InvoiceSettings {
         interface CustomField {
           /**
-           * The name of the custom field. This may be up to 30 characters.
+           * The name of the custom field. This may be up to 40 characters.
            */
           name: string;
 
           /**
-           * The value of the custom field. This may be up to 30 characters.
+           * The value of the custom field. This may be up to 140 characters.
            */
           value: string;
         }
@@ -453,12 +453,12 @@ declare module 'stripe' {
       namespace InvoiceSettings {
         interface CustomField {
           /**
-           * The name of the custom field. This may be up to 30 characters.
+           * The name of the custom field. This may be up to 40 characters.
            */
           name: string;
 
           /**
-           * The value of the custom field. This may be up to 30 characters.
+           * The value of the custom field. This may be up to 140 characters.
            */
           value: string;
         }
