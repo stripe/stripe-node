@@ -25,6 +25,28 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
       }
 
+      interface FeatureUpdateParams {
+        /**
+         * Inactive features cannot be attached to new products and will not be returned from the features list endpoint.
+         */
+        active?: boolean;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
+         * The feature's name, for your own purpose, not meant to be displayable to the customer.
+         */
+        name?: string;
+      }
+
       interface FeatureListParams extends PaginationParams {
         /**
          * Specifies which fields in the response should be expanded.
@@ -38,6 +60,15 @@ declare module 'stripe' {
          */
         create(
           params: FeatureCreateParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Entitlements.Feature>>;
+
+        /**
+         * Update a feature's metadata or permanently deactivate it.
+         */
+        update(
+          id: string,
+          params?: FeatureUpdateParams,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Entitlements.Feature>>;
 
