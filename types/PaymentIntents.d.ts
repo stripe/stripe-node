@@ -1108,14 +1108,14 @@ declare module 'stripe' {
           /**
            * The URL to the hosted Swish instructions page, which allows customers to view the QR code.
            */
-          hosted_instructions_url?: string;
+          hosted_instructions_url: string;
 
           /**
            * The url for mobile redirect based auth (for internal use only and not typically available in standard API requests).
            */
-          mobile_auth_url?: string;
+          mobile_auth_url: string;
 
-          qr_code?: SwishHandleRedirectOrDisplayQrCode.QrCode;
+          qr_code: SwishHandleRedirectOrDisplayQrCode.QrCode;
         }
 
         namespace SwishHandleRedirectOrDisplayQrCode {
@@ -1123,17 +1123,17 @@ declare module 'stripe' {
             /**
              * The raw data string used to generate QR code, it should be used together with QR code library.
              */
-            data?: string;
+            data: string;
 
             /**
              * The image_url_png string used to render QR code
              */
-            image_url_png?: string;
+            image_url_png: string;
 
             /**
              * The image_url_svg string used to render QR code
              */
-            image_url_svg?: string;
+            image_url_svg: string;
           }
         }
 
@@ -2125,7 +2125,7 @@ declare module 'stripe' {
           /**
            * The order ID displayed in the Swish app after the payment is authorized.
            */
-          reference?: string | null;
+          reference: string | null;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
