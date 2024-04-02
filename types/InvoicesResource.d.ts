@@ -69,7 +69,7 @@ declare module 'stripe' {
       description?: string;
 
       /**
-       * The coupons to redeem into discounts for the invoice. If not specified, inherits the discount from the invoice's customer. Pass an empty string to avoid inheriting any discounts.
+       * The coupons and promotion codes to redeem into discounts for the invoice. If not specified, inherits the discount from the invoice's customer. Pass an empty string to avoid inheriting any discounts.
        */
       discounts?: Stripe.Emptyable<Array<InvoiceCreateParams.Discount>>;
 
@@ -221,6 +221,11 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       interface FromInvoice {
@@ -925,6 +930,11 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       interface Issuer {
@@ -2762,7 +2772,7 @@ declare module 'stripe' {
       discountable?: boolean;
 
       /**
-       * The coupons & existing discounts which apply to the line item. Item discounts are applied before invoice discounts. Pass an empty string to remove previously-defined discounts.
+       * The coupons, promotion codes & existing discounts which apply to the line item. Item discounts are applied before invoice discounts. Pass an empty string to remove previously-defined discounts.
        */
       discounts?: Stripe.Emptyable<Array<InvoiceUpdateLineItemParams.Discount>>;
 
@@ -2820,6 +2830,11 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       interface Period {
