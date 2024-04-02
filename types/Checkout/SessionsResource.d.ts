@@ -1652,7 +1652,7 @@ declare module 'stripe' {
             /**
              * The order reference that will be displayed to customers in the Swish application. Defaults to the `id` of the Payment Intent.
              */
-            reference?: Stripe.Emptyable<string>;
+            reference?: string;
           }
 
           interface UsBankAccount {
