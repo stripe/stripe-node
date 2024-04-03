@@ -573,6 +573,8 @@ declare module 'stripe' {
 
         card?: PaymentMethodOptions.Card;
 
+        card_present?: PaymentMethodOptions.CardPresent;
+
         link?: PaymentMethodOptions.Link;
 
         paypal?: PaymentMethodOptions.Paypal;
@@ -735,6 +737,8 @@ declare module 'stripe' {
             | 'challenge'
             | 'challenge_only';
         }
+
+        interface CardPresent {}
 
         interface Link {
           /**
