@@ -102,6 +102,8 @@ declare module 'stripe' {
 
       requirements?: Account.Requirements;
 
+      risk_controls?: Account.RiskControls;
+
       /**
        * Options for customizing how the account functions within Stripe.
        */
@@ -1122,6 +1124,22 @@ declare module 'stripe' {
             | 'verification_missing_executives'
             | 'verification_missing_owners'
             | 'verification_requires_additional_memorandum_of_associations';
+        }
+      }
+
+      interface RiskControls {
+        charges: RiskControls.Charges;
+
+        payouts: RiskControls.Payouts;
+      }
+
+      namespace RiskControls {
+        interface Charges {
+          pause_requested: boolean;
+        }
+
+        interface Payouts {
+          pause_requested: boolean;
         }
       }
 

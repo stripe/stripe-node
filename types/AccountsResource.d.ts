@@ -76,6 +76,11 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
+       * A hash to configure risk controls on the account. Please see [this page for more details](https://stripe.com/docs/connect/pausing-payments-or-payouts-on-connected-accounts).
+       */
+      risk_controls?: AccountCreateParams.RiskControls;
+
+      /**
        * Options for customizing how the account functions within Stripe.
        */
       settings?: AccountCreateParams.Settings;
@@ -1238,6 +1243,36 @@ declare module 'stripe' {
         }
       }
 
+      interface RiskControls {
+        /**
+         * Represents the risk control status of charges. Please see [this page for more details](https://stripe.com/docs/connect/pausing-payments-or-payouts-on-connected-accounts).
+         */
+        charges?: RiskControls.Charges;
+
+        /**
+         * Represents the risk control status of payouts. Please see [this page for more details](https://stripe.com/docs/connect/pausing-payments-or-payouts-on-connected-accounts).
+         */
+        payouts?: RiskControls.Payouts;
+      }
+
+      namespace RiskControls {
+        interface Charges {
+          /**
+           * To request to pause a risk control, pass `true`. To request to unpause a risk control, pass `false`.
+           * There can be a delay before the risk control is paused or unpaused.
+           */
+          pause_requested?: boolean;
+        }
+
+        interface Payouts {
+          /**
+           * To request to pause a risk control, pass `true`. To request to unpause a risk control, pass `false`.
+           * There can be a delay before the risk control is paused or unpaused.
+           */
+          pause_requested?: boolean;
+        }
+      }
+
       interface Settings {
         /**
          * Settings specific to Bacs Direct Debit.
@@ -1576,6 +1611,11 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+      /**
+       * A hash to configure risk controls on the account. Please see [this page for more details](https://stripe.com/docs/connect/pausing-payments-or-payouts-on-connected-accounts).
+       */
+      risk_controls?: AccountUpdateParams.RiskControls;
 
       /**
        * Options for customizing how the account functions within Stripe.
@@ -2734,6 +2774,36 @@ declare module 'stripe' {
              */
             front?: string;
           }
+        }
+      }
+
+      interface RiskControls {
+        /**
+         * Represents the risk control status of charges. Please see [this page for more details](https://stripe.com/docs/connect/pausing-payments-or-payouts-on-connected-accounts).
+         */
+        charges?: RiskControls.Charges;
+
+        /**
+         * Represents the risk control status of payouts. Please see [this page for more details](https://stripe.com/docs/connect/pausing-payments-or-payouts-on-connected-accounts).
+         */
+        payouts?: RiskControls.Payouts;
+      }
+
+      namespace RiskControls {
+        interface Charges {
+          /**
+           * To request to pause a risk control, pass `true`. To request to unpause a risk control, pass `false`.
+           * There can be a delay before the risk control is paused or unpaused.
+           */
+          pause_requested?: boolean;
+        }
+
+        interface Payouts {
+          /**
+           * To request to pause a risk control, pass `true`. To request to unpause a risk control, pass `false`.
+           * There can be a delay before the risk control is paused or unpaused.
+           */
+          pause_requested?: boolean;
         }
       }
 
