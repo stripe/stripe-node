@@ -1509,7 +1509,7 @@ declare module 'stripe' {
       customer_details?: InvoiceListUpcomingLinesParams.CustomerDetails;
 
       /**
-       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This works for both coupons directly applied to an invoice and coupons applied to a subscription. Pass an empty string to avoid inheriting any discounts.
+       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the subscription or customer. This works for both coupons directly applied to an invoice and coupons applied to a subscription. Pass an empty string to avoid inheriting any discounts.
        */
       discounts?: Stripe.Emptyable<
         Array<InvoiceListUpcomingLinesParams.Discount>
@@ -2176,7 +2176,7 @@ declare module 'stripe' {
       customer_details?: InvoiceRetrieveUpcomingParams.CustomerDetails;
 
       /**
-       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This works for both coupons directly applied to an invoice and coupons applied to a subscription. Pass an empty string to avoid inheriting any discounts.
+       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the subscription or customer. This works for both coupons directly applied to an invoice and coupons applied to a subscription. Pass an empty string to avoid inheriting any discounts.
        */
       discounts?: Stripe.Emptyable<
         Array<InvoiceRetrieveUpcomingParams.Discount>
