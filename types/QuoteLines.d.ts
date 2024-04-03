@@ -67,7 +67,7 @@ declare module 'stripe' {
         /**
          * Details for the `add_discount` type.
          */
-        add_discount?: Action.AddDiscount | null;
+        add_discount: Action.AddDiscount | null;
 
         /**
          * Details for the `add_item` type.
@@ -84,7 +84,7 @@ declare module 'stripe' {
         /**
          * Details for the `remove_discount` type.
          */
-        remove_discount?: Action.RemoveDiscount | null;
+        remove_discount: Action.RemoveDiscount | null;
 
         /**
          * Details for the `remove_item` type.
@@ -99,7 +99,7 @@ declare module 'stripe' {
         /**
          * Details for the `set_discounts` type.
          */
-        set_discounts?: Array<Action.SetDiscount> | null;
+        set_discounts: Array<Action.SetDiscount> | null;
 
         /**
          * Details for the `set_items` type.
@@ -160,7 +160,7 @@ declare module 'stripe' {
           /**
            * The discounts applied to the subscription item. Subscription item discounts are applied before subscription discounts. Use `expand[]=discounts` to expand each discount.
            */
-          discounts?: Array<AddItem.Discount> | null;
+          discounts: Array<AddItem.Discount>;
 
           /**
            * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an item. Metadata on this item will update the underlying subscription item's `metadata` when the phase is entered.
@@ -325,7 +325,7 @@ declare module 'stripe' {
           /**
            * The discounts applied to the subscription item. Subscription item discounts are applied before subscription discounts. Use `expand[]=discounts` to expand each discount.
            */
-          discounts?: Array<SetItem.Discount> | null;
+          discounts: Array<SetItem.Discount>;
 
           /**
            * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an item. Metadata on this item will update the underlying subscription item's `metadata` when the phase is entered.

@@ -1952,7 +1952,7 @@ declare module 'stripe' {
       automatic_tax?: InvoiceCreatePreviewParams.AutomaticTax;
 
       /**
-       * The identifier of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
+       * The ID of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       coupon?: string;
 
@@ -3124,7 +3124,7 @@ declare module 'stripe' {
           collection_method?: Phase.CollectionMethod;
 
           /**
-           * The identifier of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
+           * The ID of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
            */
           coupon?: string;
 
@@ -4088,7 +4088,7 @@ declare module 'stripe' {
       automatic_tax?: InvoiceListUpcomingLinesParams.AutomaticTax;
 
       /**
-       * The identifier of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
+       * The ID of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       coupon?: string;
 
@@ -5326,7 +5326,7 @@ declare module 'stripe' {
           collection_method?: Phase.CollectionMethod;
 
           /**
-           * The identifier of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
+           * The ID of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
            */
           coupon?: string;
 
@@ -6549,7 +6549,7 @@ declare module 'stripe' {
       automatic_tax?: InvoiceRetrieveUpcomingParams.AutomaticTax;
 
       /**
-       * The identifier of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
+       * The ID of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       coupon?: string;
 
@@ -7787,7 +7787,7 @@ declare module 'stripe' {
           collection_method?: Phase.CollectionMethod;
 
           /**
-           * The identifier of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
+           * The ID of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
            */
           coupon?: string;
 
