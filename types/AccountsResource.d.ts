@@ -875,7 +875,7 @@ declare module 'stripe' {
 
       interface Controller {
         /**
-         * The documentation for the application hash.
+         * A hash of configuration describing the Connect application that controls the account.
          */
         application?: Controller.Application;
 
@@ -905,7 +905,7 @@ declare module 'stripe' {
 
         interface Dashboard {
           /**
-           * Whether this account should have access to the full Stripe Dashboard (`full`), to the Express Dashboard (`express`), or to no dashboard (`none`). Defaults to `full`.
+           * Whether this account should have access to the full Stripe Dashboard (`full`), to the Express Dashboard (`express`), or to no Stripe-hosted dashboard (`none`). Defaults to `full`.
            */
           type?: Dashboard.Type;
         }
