@@ -73,7 +73,7 @@ declare module 'stripe' {
       preferred_locales?: Array<string>;
 
       /**
-       * The API ID of a promotion code to apply to the customer. The customer will have a discount applied on all recurring payments. Charges you create through the API will not have the discount.
+       * The ID of a promotion code to apply to the customer. The customer will have a discount applied on all recurring payments. Charges you create through the API will not have the discount.
        */
       promotion_code?: string;
 
@@ -382,7 +382,7 @@ declare module 'stripe' {
       preferred_locales?: Array<string>;
 
       /**
-       * The API ID of a promotion code to apply to the customer. The customer will have a discount applied on all recurring payments. Charges you create through the API will not have the discount.
+       * The ID of a promotion code to apply to the customer. The customer will have a discount applied on all recurring payments. Charges you create through the API will not have the discount.
        */
       promotion_code?: string;
 

@@ -49,7 +49,7 @@ declare module 'stripe' {
       /**
        * The discounts applied to the invoice line item. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
        */
-      discounts: Array<string | Stripe.Discount> | null;
+      discounts: Array<string | Stripe.Discount>;
 
       /**
        * The ID of the invoice that contains this line item.

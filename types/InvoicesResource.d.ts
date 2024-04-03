@@ -1489,7 +1489,7 @@ declare module 'stripe' {
       automatic_tax?: InvoiceListUpcomingLinesParams.AutomaticTax;
 
       /**
-       * The code of the coupon to apply. If `subscription` or `subscription_items` is provided, the invoice returned will preview updating or creating a subscription with that coupon. Otherwise, it will preview applying that coupon to the customer for the next upcoming invoice from among the customer's subscriptions. The invoice can be previewed without a coupon by passing this value as an empty string.
+       * The ID of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       coupon?: string;
 
@@ -1509,7 +1509,7 @@ declare module 'stripe' {
       customer_details?: InvoiceListUpcomingLinesParams.CustomerDetails;
 
       /**
-       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This only works for coupons directly applied to the invoice. To apply a coupon to a subscription, you must use the `coupon` parameter instead. Pass an empty string to avoid inheriting any discounts. To preview the upcoming invoice for a subscription that hasn't been created, use `coupon` instead.
+       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This works for both coupons directly applied to an invoice and coupons applied to a subscription. Pass an empty string to avoid inheriting any discounts.
        */
       discounts?: Stripe.Emptyable<
         Array<InvoiceListUpcomingLinesParams.Discount>
@@ -1979,6 +1979,11 @@ declare module 'stripe' {
         deleted?: boolean;
 
         /**
+         * The coupons to redeem into discounts for the subscription item.
+         */
+        discounts?: Stripe.Emptyable<Array<SubscriptionItem.Discount>>;
+
+        /**
          * Subscription item to update.
          */
         id?: string;
@@ -2020,6 +2025,23 @@ declare module 'stripe' {
            * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
            */
           usage_gte: number;
+        }
+
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
         }
 
         interface PriceData {
@@ -2134,7 +2156,7 @@ declare module 'stripe' {
       automatic_tax?: InvoiceRetrieveUpcomingParams.AutomaticTax;
 
       /**
-       * The code of the coupon to apply. If `subscription` or `subscription_items` is provided, the invoice returned will preview updating or creating a subscription with that coupon. Otherwise, it will preview applying that coupon to the customer for the next upcoming invoice from among the customer's subscriptions. The invoice can be previewed without a coupon by passing this value as an empty string.
+       * The ID of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       coupon?: string;
 
@@ -2154,7 +2176,7 @@ declare module 'stripe' {
       customer_details?: InvoiceRetrieveUpcomingParams.CustomerDetails;
 
       /**
-       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This only works for coupons directly applied to the invoice. To apply a coupon to a subscription, you must use the `coupon` parameter instead. Pass an empty string to avoid inheriting any discounts. To preview the upcoming invoice for a subscription that hasn't been created, use `coupon` instead.
+       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This works for both coupons directly applied to an invoice and coupons applied to a subscription. Pass an empty string to avoid inheriting any discounts.
        */
       discounts?: Stripe.Emptyable<
         Array<InvoiceRetrieveUpcomingParams.Discount>
@@ -2624,6 +2646,11 @@ declare module 'stripe' {
         deleted?: boolean;
 
         /**
+         * The coupons to redeem into discounts for the subscription item.
+         */
+        discounts?: Stripe.Emptyable<Array<SubscriptionItem.Discount>>;
+
+        /**
          * Subscription item to update.
          */
         id?: string;
@@ -2665,6 +2692,23 @@ declare module 'stripe' {
            * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
            */
           usage_gte: number;
+        }
+
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
         }
 
         interface PriceData {

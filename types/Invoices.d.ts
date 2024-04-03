@@ -246,9 +246,7 @@ declare module 'stripe' {
       /**
        * The discounts applied to the invoice. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
        */
-      discounts: Array<
-        string | Stripe.Discount | Stripe.DeletedDiscount
-      > | null;
+      discounts: Array<string | Stripe.Discount | Stripe.DeletedDiscount>;
 
       /**
        * The date on which payment for this invoice is due. This value will be `null` for invoices where `collection_method=charge_automatically`.
