@@ -16,6 +16,13 @@ declare module 'stripe' {
       >;
 
       /**
+       * The coupons to redeem into discounts for the subscription item.
+       */
+      discounts?: Stripe.Emptyable<
+        Array<SubscriptionItemCreateParams.Discount>
+      >;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -78,6 +85,23 @@ declare module 'stripe' {
          * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
          */
         usage_gte: number;
+      }
+
+      interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       type PaymentBehavior =
@@ -157,6 +181,13 @@ declare module 'stripe' {
       >;
 
       /**
+       * The coupons to redeem into discounts for the subscription item.
+       */
+      discounts?: Stripe.Emptyable<
+        Array<SubscriptionItemUpdateParams.Discount>
+      >;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -224,6 +255,23 @@ declare module 'stripe' {
          * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
          */
         usage_gte: number;
+      }
+
+      interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       type PaymentBehavior =

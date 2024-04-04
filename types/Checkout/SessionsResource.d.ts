@@ -589,12 +589,12 @@ declare module 'stripe' {
           namespace InvoiceData {
             interface CustomField {
               /**
-               * The name of the custom field. This may be up to 30 characters.
+               * The name of the custom field. This may be up to 40 characters.
                */
               name: string;
 
               /**
-               * The value of the custom field. This may be up to 30 characters.
+               * The value of the custom field. This may be up to 140 characters.
                */
               value: string;
             }
@@ -1642,7 +1642,7 @@ declare module 'stripe' {
             /**
              * The order reference that will be displayed to customers in the Swish application. Defaults to the `id` of the Payment Intent.
              */
-            reference?: Stripe.Emptyable<string>;
+            reference?: string;
           }
 
           interface UsBankAccount {
