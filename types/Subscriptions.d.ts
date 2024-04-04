@@ -132,7 +132,7 @@ declare module 'stripe' {
       /**
        * The discounts applied to the subscription. Subscription item discounts are applied before subscription discounts. Use `expand[]=discounts` to expand each discount.
        */
-      discounts?: Array<string | Stripe.Discount> | null;
+      discounts: Array<string | Stripe.Discount>;
 
       /**
        * If the subscription has ended, the date the subscription ended.

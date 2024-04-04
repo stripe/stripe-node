@@ -95,9 +95,9 @@ declare module 'stripe' {
 
           subscription_cancel: Features.SubscriptionCancel;
 
-          subscription_pause: Features.SubscriptionPause;
-
           subscription_update: Features.SubscriptionUpdate;
+
+          subscription_pause: Features.SubscriptionPause;
         }
 
         namespace Features {

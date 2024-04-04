@@ -29,7 +29,7 @@ declare module 'stripe' {
       discountable?: boolean;
 
       /**
-       * The coupons to redeem into discounts for the invoice item or invoice line item.
+       * The coupons and promotion codes to redeem into discounts for the invoice item or invoice line item.
        */
       discounts?: Stripe.Emptyable<Array<InvoiceItemCreateParams.Discount>>;
 
@@ -120,6 +120,11 @@ declare module 'stripe' {
          * Details to determine how long the discount should be applied for.
          */
         discount_end?: Discount.DiscountEnd;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       namespace Discount {
@@ -231,7 +236,7 @@ declare module 'stripe' {
       discountable?: boolean;
 
       /**
-       * The coupons & existing discounts which apply to the invoice item or invoice line item. Item discounts are applied before invoice discounts. Pass an empty string to remove previously-defined discounts.
+       * The coupons, promotion codes & existing discounts which apply to the invoice item or invoice line item. Item discounts are applied before invoice discounts. Pass an empty string to remove previously-defined discounts.
        */
       discounts?: Stripe.Emptyable<Array<InvoiceItemUpdateParams.Discount>>;
 
@@ -312,6 +317,11 @@ declare module 'stripe' {
          * Details to determine how long the discount should be applied for.
          */
         discount_end?: Discount.DiscountEnd;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       namespace Discount {

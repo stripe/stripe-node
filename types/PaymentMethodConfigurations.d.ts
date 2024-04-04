@@ -136,6 +136,8 @@ declare module 'stripe' {
       us_bank_account?: PaymentMethodConfiguration.UsBankAccount;
 
       wechat_pay?: PaymentMethodConfiguration.WechatPay;
+
+      zip?: PaymentMethodConfiguration.Zip;
     }
 
     namespace PaymentMethodConfiguration {
@@ -1441,6 +1443,40 @@ declare module 'stripe' {
       }
 
       namespace WechatPay {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
+      interface Zip {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: Zip.DisplayPreference;
+      }
+
+      namespace Zip {
         interface DisplayPreference {
           /**
            * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.

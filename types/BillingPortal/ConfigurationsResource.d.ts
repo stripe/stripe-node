@@ -75,14 +75,14 @@ declare module 'stripe' {
           subscription_cancel?: Features.SubscriptionCancel;
 
           /**
-           * Information about pausing subscriptions in the portal.
-           */
-          subscription_pause?: Features.SubscriptionPause;
-
-          /**
            * Information about updating subscriptions in the portal.
            */
           subscription_update?: Features.SubscriptionUpdate;
+
+          /**
+           * Information about pausing subscriptions in the portal.
+           */
+          subscription_pause?: Features.SubscriptionPause;
         }
 
         namespace Features {
@@ -183,7 +183,7 @@ declare module 'stripe' {
             /**
              * Whether the feature is enabled.
              */
-            enabled?: boolean;
+            enabled: boolean;
           }
 
           interface SubscriptionUpdate {
@@ -324,14 +324,14 @@ declare module 'stripe' {
           subscription_cancel?: Features.SubscriptionCancel;
 
           /**
-           * Information about pausing subscriptions in the portal.
-           */
-          subscription_pause?: Features.SubscriptionPause;
-
-          /**
            * Information about updating subscriptions in the portal.
            */
           subscription_update?: Features.SubscriptionUpdate;
+
+          /**
+           * Information about pausing subscriptions in the portal.
+           */
+          subscription_pause?: Features.SubscriptionPause;
         }
 
         namespace Features {
@@ -432,7 +432,7 @@ declare module 'stripe' {
             /**
              * Whether the feature is enabled.
              */
-            enabled?: boolean;
+            enabled: boolean;
           }
 
           interface SubscriptionUpdate {

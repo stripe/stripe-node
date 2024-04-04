@@ -174,6 +174,11 @@ declare module 'stripe' {
          * Details to determine how long the discount should be applied for.
          */
         discount_end?: Discount.DiscountEnd;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       namespace Discount {
@@ -382,6 +387,11 @@ declare module 'stripe' {
              * The index, starting at 0, at which to position the new discount. When not supplied, Stripe defaults to appending the discount to the end of the `discounts` array.
              */
             index?: number;
+
+            /**
+             * The promotion code to redeem.
+             */
+            promotion_code?: string;
           }
 
           namespace AddDiscount {
@@ -894,6 +904,11 @@ declare module 'stripe' {
            * Details to determine how long the discount should be applied for.
            */
           discount_end?: Discount.DiscountEnd;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
         }
 
         namespace Discount {
@@ -1164,6 +1179,11 @@ declare module 'stripe' {
              * Details to determine how long the discount should be applied for.
              */
             discount_end?: Discount.DiscountEnd;
+
+            /**
+             * ID of the promotion code to create a new discount for.
+             */
+            promotion_code?: string;
           }
 
           namespace Discount {
@@ -1834,6 +1854,11 @@ declare module 'stripe' {
          * Details to determine how long the discount should be applied for.
          */
         discount_end?: Discount.DiscountEnd;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       namespace Discount {
@@ -2035,6 +2060,11 @@ declare module 'stripe' {
              * The index, starting at 0, at which to position the new discount. When not supplied, Stripe defaults to appending the discount to the end of the `discounts` array.
              */
             index?: number;
+
+            /**
+             * The promotion code to redeem.
+             */
+            promotion_code?: string;
           }
 
           namespace AddDiscount {
@@ -2557,6 +2587,11 @@ declare module 'stripe' {
            * Details to determine how long the discount should be applied for.
            */
           discount_end?: Discount.DiscountEnd;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
         }
 
         namespace Discount {
@@ -2827,6 +2862,11 @@ declare module 'stripe' {
              * Details to determine how long the discount should be applied for.
              */
             discount_end?: Discount.DiscountEnd;
+
+            /**
+             * ID of the promotion code to create a new discount for.
+             */
+            promotion_code?: string;
           }
 
           namespace Discount {

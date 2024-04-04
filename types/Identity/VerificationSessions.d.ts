@@ -71,6 +71,11 @@ declare module 'stripe' {
         options: VerificationSession.Options | null;
 
         /**
+         * Details provided about the user being verified. These details may be shown to the user.
+         */
+        provided_details?: VerificationSession.ProvidedDetails | null;
+
+        /**
          * Redaction status of this VerificationSession. If the VerificationSession is not redacted, this field will be null.
          */
         redaction: VerificationSession.Redaction | null;
@@ -89,6 +94,11 @@ declare module 'stripe' {
          * The short-lived URL that you use to redirect a user to Stripe to submit their identity information. This URL expires after 48 hours and can only be used once. Don't store it, log it, send it in emails or expose it to anyone other than the user. Refer to our docs on [verifying identity documents](https://stripe.com/docs/identity/verify-identity-documents?platform=web&type=redirect) to learn how to redirect users to Stripe.
          */
         url: string | null;
+
+        /**
+         * The configuration token of a Verification Flow from the dashboard.
+         */
+        verification_flow?: string;
 
         /**
          * The user's verified data.
@@ -118,9 +128,13 @@ declare module 'stripe' {
             | 'document_expired'
             | 'document_type_not_supported'
             | 'document_unverified_other'
+            | 'email_unverified_other'
+            | 'email_verification_declined'
             | 'id_number_insufficient_document_data'
             | 'id_number_mismatch'
             | 'id_number_unverified_other'
+            | 'phone_unverified_other'
+            | 'phone_verification_declined'
             | 'selfie_document_missing_photo'
             | 'selfie_face_mismatch'
             | 'selfie_manipulated'
@@ -131,7 +145,11 @@ declare module 'stripe' {
         interface Options {
           document?: Options.Document;
 
+          email?: Options.Email;
+
           id_number?: Options.IdNumber;
+
+          phone?: Options.Phone;
         }
 
         namespace Options {
@@ -161,7 +179,33 @@ declare module 'stripe' {
             type AllowedType = 'driving_license' | 'id_card' | 'passport';
           }
 
+          interface Email {
+            /**
+             * Request one time password verification of `provided_details.email`.
+             */
+            require_verification?: boolean;
+          }
+
           interface IdNumber {}
+
+          interface Phone {
+            /**
+             * Request one time password verification of `provided_details.phone`.
+             */
+            require_verification?: boolean;
+          }
+        }
+
+        interface ProvidedDetails {
+          /**
+           * Email of user being verified
+           */
+          email?: string;
+
+          /**
+           * Phone number of user being verified
+           */
+          phone?: string;
         }
 
         interface Redaction {
@@ -177,7 +221,7 @@ declare module 'stripe' {
 
         type Status = 'canceled' | 'processing' | 'requires_input' | 'verified';
 
-        type Type = 'document' | 'id_number';
+        type Type = 'document' | 'id_number' | 'verification_flow';
 
         interface VerifiedOutputs {
           /**
@@ -189,6 +233,11 @@ declare module 'stripe' {
            * The user's verified date of birth.
            */
           dob: VerifiedOutputs.Dob | null;
+
+          /**
+           * The user's verified email address
+           */
+          email?: string | null;
 
           /**
            * The user's verified first name.
@@ -209,6 +258,11 @@ declare module 'stripe' {
            * The user's verified last name.
            */
           last_name: string | null;
+
+          /**
+           * The user's verified phone number
+           */
+          phone?: string | null;
         }
 
         namespace VerifiedOutputs {

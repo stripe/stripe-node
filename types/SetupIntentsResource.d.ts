@@ -804,6 +804,11 @@ declare module 'stripe' {
         card?: PaymentMethodOptions.Card;
 
         /**
+         * If this is a `card_present` PaymentMethod, this sub-hash contains details about the card-present payment method options.
+         */
+        card_present?: PaymentMethodOptions.CardPresent;
+
+        /**
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
          */
         link?: PaymentMethodOptions.Link;
@@ -1083,6 +1088,8 @@ declare module 'stripe' {
             type Version = '1.0.2' | '2.1.0' | '2.2.0';
           }
         }
+
+        interface CardPresent {}
 
         interface Link {
           /**
@@ -1996,6 +2003,11 @@ declare module 'stripe' {
         card?: PaymentMethodOptions.Card;
 
         /**
+         * If this is a `card_present` PaymentMethod, this sub-hash contains details about the card-present payment method options.
+         */
+        card_present?: PaymentMethodOptions.CardPresent;
+
+        /**
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
          */
         link?: PaymentMethodOptions.Link;
@@ -2275,6 +2287,8 @@ declare module 'stripe' {
             type Version = '1.0.2' | '2.1.0' | '2.2.0';
           }
         }
+
+        interface CardPresent {}
 
         interface Link {
           /**
@@ -3275,6 +3289,11 @@ declare module 'stripe' {
         card?: PaymentMethodOptions.Card;
 
         /**
+         * If this is a `card_present` PaymentMethod, this sub-hash contains details about the card-present payment method options.
+         */
+        card_present?: PaymentMethodOptions.CardPresent;
+
+        /**
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
          */
         link?: PaymentMethodOptions.Link;
@@ -3554,6 +3573,8 @@ declare module 'stripe' {
             type Version = '1.0.2' | '2.1.0' | '2.2.0';
           }
         }
+
+        interface CardPresent {}
 
         interface Link {
           /**
