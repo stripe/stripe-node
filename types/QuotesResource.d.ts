@@ -147,6 +147,11 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       interface FromQuote {
@@ -229,6 +234,11 @@ declare module 'stripe' {
            * ID of an existing discount on the object (or one of its ancestors) to reuse.
            */
           discount?: string;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
         }
 
         interface PriceData {
@@ -466,6 +476,11 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       interface InvoiceSettings {
@@ -541,6 +556,11 @@ declare module 'stripe' {
            * ID of an existing discount on the object (or one of its ancestors) to reuse.
            */
           discount?: string;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
         }
 
         interface PriceData {
