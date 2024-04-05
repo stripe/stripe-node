@@ -12,6 +12,13 @@ declare module 'stripe' {
          */
         object: 'billing.meter_event_adjustment';
 
+        cancel: MeterEventAdjustment.Cancel;
+
+        /**
+         * The name of the meter event. Corresponds with the `event_name` field on a meter.
+         */
+        event_name: string;
+
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
@@ -21,9 +28,21 @@ declare module 'stripe' {
          * The meter event adjustment's status.
          */
         status: MeterEventAdjustment.Status;
+
+        /**
+         * Specifies whether to cancel a single event or a range of events for a time period.
+         */
+        type: 'cancel';
       }
 
       namespace MeterEventAdjustment {
+        interface Cancel {
+          /**
+           * Unique identifier for the event.
+           */
+          identifier: string;
+        }
+
         type Status = 'complete' | 'pending';
       }
     }
