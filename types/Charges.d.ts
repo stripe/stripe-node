@@ -1972,7 +1972,7 @@ declare module 'stripe' {
           /**
            * Reference number to locate ACH payments with customer's bank.
            */
-          payment_reference?: string | null;
+          payment_reference: string | null;
 
           /**
            * Routing number of the bank account.

@@ -192,6 +192,11 @@ declare module 'stripe' {
        * WeChat, owned by Tencent, is China's leading mobile app with over 1 billion monthly active users. Chinese consumers can use WeChat Pay to pay for goods and services inside of businesses' apps and websites. WeChat Pay users buy most frequently in gaming, e-commerce, travel, online education, and food/nutrition. Check this [page](https://stripe.com/docs/payments/wechat-pay) for more details.
        */
       wechat_pay?: PaymentMethodConfigurationCreateParams.WechatPay;
+
+      /**
+       * Zip gives your customers a way to split purchases over a series of payments. Check this [page](https://stripe.com/docs/payments/zip) for more details like country availability.
+       */
+      zip?: PaymentMethodConfigurationCreateParams.Zip;
     }
 
     namespace PaymentMethodConfigurationCreateParams {
@@ -894,6 +899,26 @@ declare module 'stripe' {
           type Preference = 'none' | 'off' | 'on';
         }
       }
+
+      interface Zip {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Zip.DisplayPreference;
+      }
+
+      namespace Zip {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
     }
 
     interface PaymentMethodConfigurationRetrieveParams {
@@ -1093,6 +1118,11 @@ declare module 'stripe' {
        * WeChat, owned by Tencent, is China's leading mobile app with over 1 billion monthly active users. Chinese consumers can use WeChat Pay to pay for goods and services inside of businesses' apps and websites. WeChat Pay users buy most frequently in gaming, e-commerce, travel, online education, and food/nutrition. Check this [page](https://stripe.com/docs/payments/wechat-pay) for more details.
        */
       wechat_pay?: PaymentMethodConfigurationUpdateParams.WechatPay;
+
+      /**
+       * Zip gives your customers a way to split purchases over a series of payments. Check this [page](https://stripe.com/docs/payments/zip) for more details like country availability.
+       */
+      zip?: PaymentMethodConfigurationUpdateParams.Zip;
     }
 
     namespace PaymentMethodConfigurationUpdateParams {
@@ -1784,6 +1814,26 @@ declare module 'stripe' {
       }
 
       namespace WechatPay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Zip {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Zip.DisplayPreference;
+      }
+
+      namespace Zip {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

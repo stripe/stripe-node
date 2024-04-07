@@ -568,6 +568,8 @@ declare module 'stripe' {
 
         card?: PaymentMethodOptions.Card;
 
+        card_present?: PaymentMethodOptions.CardPresent;
+
         link?: PaymentMethodOptions.Link;
 
         paypal?: PaymentMethodOptions.Paypal;
@@ -724,6 +726,8 @@ declare module 'stripe' {
 
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
         }
+
+        interface CardPresent {}
 
         interface Link {
           /**

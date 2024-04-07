@@ -62,6 +62,11 @@ declare module 'stripe' {
        * The subscription that this coupon is applied to, if it is applied to a particular subscription.
        */
       subscription: string | null;
+
+      /**
+       * The subscription item that this coupon is applied to, if it is applied to a particular subscription item.
+       */
+      subscription_item: string | null;
     }
 
     /**
@@ -132,6 +137,11 @@ declare module 'stripe' {
        * The subscription that this coupon is applied to, if it is applied to a particular subscription.
        */
       subscription: string | null;
+
+      /**
+       * The subscription item that this coupon is applied to, if it is applied to a particular subscription item.
+       */
+      subscription_item: string | null;
     }
   }
 }
