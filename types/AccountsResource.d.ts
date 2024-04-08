@@ -883,6 +883,26 @@ declare module 'stripe' {
          * Properties of the account's dashboard.
          */
         dashboard?: Controller.Dashboard;
+
+        /**
+         * A hash of configuration for who pays Stripe fees for product usage on this account.
+         */
+        fees?: Controller.Fees;
+
+        /**
+         * A hash of configuration for products that have negative balance liability, and whether Stripe or a Connect application is responsible for them.
+         */
+        losses?: Controller.Losses;
+
+        /**
+         * A value indicating responsibility for collecting updated information when requirements on the account are due or change. Defaults to `stripe`.
+         */
+        requirement_collection?: Controller.RequirementCollection;
+
+        /**
+         * A hash of configuration for Stripe-hosted dashboards.
+         */
+        stripe_dashboard?: Controller.StripeDashboard;
       }
 
       namespace Controller {
@@ -911,6 +931,41 @@ declare module 'stripe' {
         }
 
         namespace Dashboard {
+          type Type = 'express' | 'full' | 'none';
+        }
+
+        interface Fees {
+          /**
+           * A value indicating the responsible payer of Stripe fees on this account. Defaults to `account`.
+           */
+          payer?: Fees.Payer;
+        }
+
+        namespace Fees {
+          type Payer = 'account' | 'application';
+        }
+
+        interface Losses {
+          /**
+           * A value indicating who is liable when this account can't pay back negative balances resulting from payments. Defaults to `stripe`.
+           */
+          payments?: Losses.Payments;
+        }
+
+        namespace Losses {
+          type Payments = 'application' | 'stripe';
+        }
+
+        type RequirementCollection = 'application' | 'stripe';
+
+        interface StripeDashboard {
+          /**
+           * Whether this account should have access to the full Stripe Dashboard (`full`), to the Express Dashboard (`express`), or to no Stripe-hosted dashboard (`none`). Defaults to `full`.
+           */
+          type?: StripeDashboard.Type;
+        }
+
+        namespace StripeDashboard {
           type Type = 'express' | 'full' | 'none';
         }
       }
