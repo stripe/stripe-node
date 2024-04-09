@@ -2,6 +2,7 @@
 
 import {resourceNamespace} from './ResourceNamespace.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
+import {ActiveEntitlements as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
@@ -17,6 +18,7 @@ import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Custome
 import {DebitReversals as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
 import {Disputes as IssuingDisputes} from './resources/Issuing/Disputes.js';
 import {EarlyFraudWarnings as RadarEarlyFraudWarnings} from './resources/Radar/EarlyFraudWarnings.js';
+import {Features as EntitlementsFeatures} from './resources/Entitlements/Features.js';
 import {FinancialAccounts as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts.js';
 import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
@@ -132,6 +134,10 @@ export const Climate = resourceNamespace('climate', {
   Orders: ClimateOrders,
   Products: ClimateProducts,
   Suppliers: ClimateSuppliers,
+});
+export const Entitlements = resourceNamespace('entitlements', {
+  ActiveEntitlements: EntitlementsActiveEntitlements,
+  Features: EntitlementsFeatures,
 });
 export const FinancialConnections = resourceNamespace('financialConnections', {
   Accounts: FinancialConnectionsAccounts,
