@@ -25,6 +25,13 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
       }
 
+      interface FeatureRetrieveParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
       interface FeatureUpdateParams {
         /**
          * Inactive features cannot be attached to new products and will not be returned from the features list endpoint.
@@ -60,6 +67,19 @@ declare module 'stripe' {
          */
         create(
           params: FeatureCreateParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Entitlements.Feature>>;
+
+        /**
+         * Retrieves a feature
+         */
+        retrieve(
+          id: string,
+          params?: FeatureRetrieveParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Entitlements.Feature>>;
+        retrieve(
+          id: string,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Entitlements.Feature>>;
 

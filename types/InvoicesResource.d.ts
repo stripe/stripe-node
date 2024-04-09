@@ -144,13 +144,6 @@ declare module 'stripe' {
       rendering?: InvoiceCreateParams.Rendering;
 
       /**
-       * This is a legacy field that will be removed soon. For details about `rendering_options`, refer to `rendering` instead. Options for invoice PDF rendering.
-       */
-      rendering_options?: Stripe.Emptyable<
-        InvoiceCreateParams.RenderingOptions
-      >;
-
-      /**
        * Settings for the cost of shipping for this invoice.
        */
       shipping_cost?: InvoiceCreateParams.ShippingCost;
@@ -628,19 +621,6 @@ declare module 'stripe' {
         }
       }
 
-      interface RenderingOptions {
-        /**
-         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
-         */
-        amount_tax_display?: Stripe.Emptyable<
-          RenderingOptions.AmountTaxDisplay
-        >;
-      }
-
-      namespace RenderingOptions {
-        type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
-      }
-
       interface ShippingCost {
         /**
          * The ID of the shipping rate to use for this order.
@@ -936,13 +916,6 @@ declare module 'stripe' {
        * The rendering-related settings that control how the invoice is displayed on customer-facing surfaces such as PDF and Hosted Invoice Page.
        */
       rendering?: InvoiceUpdateParams.Rendering;
-
-      /**
-       * This is a legacy field that will be removed soon. For details about `rendering_options`, refer to `rendering` instead. Options for invoice PDF rendering.
-       */
-      rendering_options?: Stripe.Emptyable<
-        InvoiceUpdateParams.RenderingOptions
-      >;
 
       /**
        * Settings for the cost of shipping for this invoice.
@@ -1398,19 +1371,6 @@ declare module 'stripe' {
         namespace Pdf {
           type PageSize = 'a4' | 'auto' | 'letter';
         }
-      }
-
-      interface RenderingOptions {
-        /**
-         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
-         */
-        amount_tax_display?: Stripe.Emptyable<
-          RenderingOptions.AmountTaxDisplay
-        >;
-      }
-
-      namespace RenderingOptions {
-        type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
       }
 
       interface ShippingCost {

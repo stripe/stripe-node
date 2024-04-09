@@ -141,8 +141,6 @@ declare module 'stripe' {
 
     namespace Product {
       interface Feature {
-        feature?: string | Stripe.Entitlements.Feature;
-
         /**
          * The marketing feature name. Up to 80 characters long.
          */

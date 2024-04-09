@@ -228,8 +228,6 @@ declare module 'stripe' {
       }
 
       interface Feature {
-        feature?: string;
-
         /**
          * The marketing feature name. Up to 80 characters long.
          */
@@ -378,8 +376,6 @@ declare module 'stripe' {
 
     namespace ProductUpdateParams {
       interface Feature {
-        feature?: string;
-
         /**
          * The marketing feature name. Up to 80 characters long.
          */
@@ -467,6 +463,13 @@ declare module 'stripe' {
     interface ProductDeleteFeatureParams {}
 
     interface ProductListFeaturesParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface ProductRetrieveFeatureParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -584,6 +587,21 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): ApiListPromise<Stripe.ProductFeature>;
+
+      /**
+       * Retrieves a product_feature, which represents a feature attachment to a product
+       */
+      retrieveFeature(
+        productId: string,
+        id: string,
+        params?: ProductRetrieveFeatureParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.ProductFeature>>;
+      retrieveFeature(
+        productId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.ProductFeature>>;
 
       /**
        * Search for products you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).

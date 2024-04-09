@@ -28,7 +28,7 @@ declare module 'stripe' {
       namespace MeterEventAdjustmentCreateParams {
         interface Cancel {
           /**
-           * Unique identifier for the event.
+           * Unique identifier for the event. You can only cancel events within 24 hours of Stripe receiving them.
            */
           identifier: string;
         }

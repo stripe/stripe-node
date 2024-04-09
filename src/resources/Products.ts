@@ -25,6 +25,10 @@ export const Products = StripeResource.extend({
     fullPath: '/v1/products/{product}/features',
     methodType: 'list',
   }),
+  retrieveFeature: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/products/{product}/features/{id}',
+  }),
   search: stripeMethod({
     method: 'GET',
     fullPath: '/v1/products/search',
