@@ -412,6 +412,34 @@ declare module 'stripe' {
 
     interface ProductDeleteParams {}
 
+    interface ProductCreateFeatureParams {
+      /**
+       * The ID of the [Feature](docs/api/entitlements/feature) object attached to this product.
+       */
+      entitlement_feature: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface ProductDeleteFeatureParams {}
+
+    interface ProductListFeaturesParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface ProductRetrieveFeatureParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface ProductSearchParams {
       /**
        * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for products](https://stripe.com/docs/search#query-fields-for-products).
@@ -486,6 +514,58 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedProduct>>;
+
+      /**
+       * Creates a product_feature, which represents a feature attachment to a product
+       */
+      createFeature(
+        id: string,
+        params: ProductCreateFeatureParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.ProductFeature>>;
+
+      /**
+       * Deletes the feature attachment to a product
+       */
+      deleteFeature(
+        productId: string,
+        id: string,
+        params?: ProductDeleteFeatureParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.DeletedProductFeature>>;
+      deleteFeature(
+        productId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.DeletedProductFeature>>;
+
+      /**
+       * Retrieve a list of features for a product
+       */
+      listFeatures(
+        id: string,
+        params?: ProductListFeaturesParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.ProductFeature>;
+      listFeatures(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.ProductFeature>;
+
+      /**
+       * Retrieves a product_feature, which represents a feature attachment to a product
+       */
+      retrieveFeature(
+        productId: string,
+        id: string,
+        params?: ProductRetrieveFeatureParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.ProductFeature>>;
+      retrieveFeature(
+        productId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.ProductFeature>>;
 
       /**
        * Search for products you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
