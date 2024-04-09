@@ -138,6 +138,11 @@ declare module 'stripe' {
           selection?: Input.Selection;
 
           /**
+           * List of toggles to be displayed and customization for the toggles
+           */
+          toggles?: Array<Input.Toggle>;
+
+          /**
            * The type of input to collect
            */
           type: Input.Type;
@@ -191,7 +196,34 @@ declare module 'stripe' {
             }
           }
 
-          type Type = 'selection' | 'signature';
+          interface Toggle {
+            /**
+             * The default value of the toggle
+             */
+            default_value?: Toggle.DefaultValue;
+
+            /**
+             * The description which will be displayed for the toggle
+             */
+            description?: string;
+
+            /**
+             * The title which will be displayed for the toggle
+             */
+            title?: string;
+          }
+
+          namespace Toggle {
+            type DefaultValue = 'disabled' | 'enabled';
+          }
+
+          type Type =
+            | 'email'
+            | 'numeric'
+            | 'phone'
+            | 'selection'
+            | 'signature'
+            | 'text';
         }
       }
 
