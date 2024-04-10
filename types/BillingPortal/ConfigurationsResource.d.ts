@@ -78,11 +78,6 @@ declare module 'stripe' {
            * Information about updating subscriptions in the portal.
            */
           subscription_update?: Features.SubscriptionUpdate;
-
-          /**
-           * Information about pausing subscriptions in the portal.
-           */
-          subscription_pause?: Features.SubscriptionPause;
         }
 
         namespace Features {
@@ -177,13 +172,6 @@ declare module 'stripe' {
               | 'always_invoice'
               | 'create_prorations'
               | 'none';
-          }
-
-          interface SubscriptionPause {
-            /**
-             * Whether the feature is enabled.
-             */
-            enabled: boolean;
           }
 
           interface SubscriptionUpdate {
@@ -327,11 +315,6 @@ declare module 'stripe' {
            * Information about updating subscriptions in the portal.
            */
           subscription_update?: Features.SubscriptionUpdate;
-
-          /**
-           * Information about pausing subscriptions in the portal.
-           */
-          subscription_pause?: Features.SubscriptionPause;
         }
 
         namespace Features {
@@ -426,13 +409,6 @@ declare module 'stripe' {
               | 'always_invoice'
               | 'create_prorations'
               | 'none';
-          }
-
-          interface SubscriptionPause {
-            /**
-             * Whether the feature is enabled.
-             */
-            enabled: boolean;
           }
 
           interface SubscriptionUpdate {

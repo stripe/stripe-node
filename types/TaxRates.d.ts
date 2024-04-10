@@ -112,8 +112,7 @@ declare module 'stripe' {
         | 'qst'
         | 'rst'
         | 'sales_tax'
-        | 'vat'
-        | 'service_tax';
+        | 'vat';
     }
   }
 }
