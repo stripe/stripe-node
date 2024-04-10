@@ -378,11 +378,6 @@ declare module 'stripe' {
       rendering: Invoice.Rendering | null;
 
       /**
-       * This is a legacy field that will be removed soon. For details about `rendering_options`, refer to `rendering` instead. Options for invoice PDF rendering.
-       */
-      rendering_options: Invoice.RenderingOptions | null;
-
-      /**
        * The details of the cost of shipping, including the ShippingRate applied on the invoice.
        */
       shipping_cost: Invoice.ShippingCost | null;
@@ -1185,13 +1180,6 @@ declare module 'stripe' {
         namespace Pdf {
           type PageSize = 'a4' | 'auto' | 'letter';
         }
-      }
-
-      interface RenderingOptions {
-        /**
-         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
-         */
-        amount_tax_display: string | null;
       }
 
       interface ShippingCost {

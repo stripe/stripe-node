@@ -97,8 +97,8 @@ declare module 'stripe' {
       | InvoiceUpcomingEvent
       | InvoiceUpdatedEvent
       | InvoiceVoidedEvent
-      | InvoiceitemCreatedEvent
-      | InvoiceitemDeletedEvent
+      | InvoiceItemCreatedEvent
+      | InvoiceItemDeletedEvent
       | IssuingAuthorizationCreatedEvent
       | IssuingAuthorizationRequestEvent
       | IssuingAuthorizationUpdatedEvent
@@ -228,15 +228,7 @@ declare module 'stripe' {
       | TreasuryReceivedCreditCreatedEvent
       | TreasuryReceivedCreditFailedEvent
       | TreasuryReceivedCreditSucceededEvent
-      | TreasuryReceivedDebitCreatedEvent
-      | InvoiceitemUpdatedEvent
-      | OrderCreatedEvent
-      | RecipientCreatedEvent
-      | RecipientDeletedEvent
-      | RecipientUpdatedEvent
-      | SkuCreatedEvent
-      | SkuDeletedEvent
-      | SkuUpdatedEvent;
+      | TreasuryReceivedDebitCreatedEvent;
 
     /**
      * Occurs whenever a user authorizes an application. Sent to the related application only.
@@ -1748,12 +1740,12 @@ declare module 'stripe' {
     /**
      * Occurs whenever an invoice item is created.
      */
-    interface InvoiceitemCreatedEvent extends EventBase {
+    interface InvoiceItemCreatedEvent extends EventBase {
       type: 'invoiceitem.created';
-      data: InvoiceitemCreatedEvent.Data;
+      data: InvoiceItemCreatedEvent.Data;
     }
 
-    namespace InvoiceitemCreatedEvent {
+    namespace InvoiceItemCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.InvoiceItem;
 
@@ -1764,12 +1756,12 @@ declare module 'stripe' {
     /**
      * Occurs whenever an invoice item is deleted.
      */
-    interface InvoiceitemDeletedEvent extends EventBase {
+    interface InvoiceItemDeletedEvent extends EventBase {
       type: 'invoiceitem.deleted';
-      data: InvoiceitemDeletedEvent.Data;
+      data: InvoiceItemDeletedEvent.Data;
     }
 
-    namespace InvoiceitemDeletedEvent {
+    namespace InvoiceItemDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.InvoiceItem;
 
@@ -3858,102 +3850,6 @@ declare module 'stripe' {
 
         previous_attributes?: Partial<Stripe.Treasury.ReceivedDebit>;
       }
-    }
-
-    /**
-     * The "invoiceitem.updated" event is deprecated and will be removed in the next major version
-     */
-    interface InvoiceitemUpdatedEvent extends EventBase {
-      type: 'invoiceitem.updated';
-      data: InvoiceitemUpdatedEvent.Data;
-    }
-
-    namespace InvoiceitemUpdatedEvent {
-      interface Data extends Stripe.Event.Data {}
-    }
-
-    /**
-     * The "order.created" event is deprecated and will be removed in the next major version
-     */
-    interface OrderCreatedEvent extends EventBase {
-      type: 'order.created';
-      data: OrderCreatedEvent.Data;
-    }
-
-    namespace OrderCreatedEvent {
-      interface Data extends Stripe.Event.Data {}
-    }
-
-    /**
-     * The "recipient.created" event is deprecated and will be removed in the next major version
-     */
-    interface RecipientCreatedEvent extends EventBase {
-      type: 'recipient.created';
-      data: RecipientCreatedEvent.Data;
-    }
-
-    namespace RecipientCreatedEvent {
-      interface Data extends Stripe.Event.Data {}
-    }
-
-    /**
-     * The "recipient.deleted" event is deprecated and will be removed in the next major version
-     */
-    interface RecipientDeletedEvent extends EventBase {
-      type: 'recipient.deleted';
-      data: RecipientDeletedEvent.Data;
-    }
-
-    namespace RecipientDeletedEvent {
-      interface Data extends Stripe.Event.Data {}
-    }
-
-    /**
-     * The "recipient.updated" event is deprecated and will be removed in the next major version
-     */
-    interface RecipientUpdatedEvent extends EventBase {
-      type: 'recipient.updated';
-      data: RecipientUpdatedEvent.Data;
-    }
-
-    namespace RecipientUpdatedEvent {
-      interface Data extends Stripe.Event.Data {}
-    }
-
-    /**
-     * The "sku.created" event is deprecated and will be removed in the next major version
-     */
-    interface SkuCreatedEvent extends EventBase {
-      type: 'sku.created';
-      data: SkuCreatedEvent.Data;
-    }
-
-    namespace SkuCreatedEvent {
-      interface Data extends Stripe.Event.Data {}
-    }
-
-    /**
-     * The "sku.deleted" event is deprecated and will be removed in the next major version
-     */
-    interface SkuDeletedEvent extends EventBase {
-      type: 'sku.deleted';
-      data: SkuDeletedEvent.Data;
-    }
-
-    namespace SkuDeletedEvent {
-      interface Data extends Stripe.Event.Data {}
-    }
-
-    /**
-     * The "sku.updated" event is deprecated and will be removed in the next major version
-     */
-    interface SkuUpdatedEvent extends EventBase {
-      type: 'sku.updated';
-      data: SkuUpdatedEvent.Data;
-    }
-
-    namespace SkuUpdatedEvent {
-      interface Data extends Stripe.Event.Data {}
     }
   }
 }

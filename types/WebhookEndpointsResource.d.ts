@@ -140,7 +140,8 @@ declare module 'stripe' {
         | '2022-08-01'
         | '2022-11-15'
         | '2023-08-16'
-        | '2023-10-16';
+        | '2023-10-16'
+        | '2024-04-10';
 
       type EnabledEvent =
         | '*'
@@ -369,15 +370,7 @@ declare module 'stripe' {
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created'
-        | 'invoiceitem.updated'
-        | 'order.created'
-        | 'recipient.created'
-        | 'recipient.deleted'
-        | 'recipient.updated'
-        | 'sku.created'
-        | 'sku.deleted'
-        | 'sku.updated';
+        | 'treasury.received_debit.created';
     }
 
     interface WebhookEndpointRetrieveParams {
@@ -647,15 +640,7 @@ declare module 'stripe' {
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created'
-        | 'invoiceitem.updated'
-        | 'order.created'
-        | 'recipient.created'
-        | 'recipient.deleted'
-        | 'recipient.updated'
-        | 'sku.created'
-        | 'sku.deleted'
-        | 'sku.updated';
+        | 'treasury.received_debit.created';
     }
 
     interface WebhookEndpointListParams extends PaginationParams {
