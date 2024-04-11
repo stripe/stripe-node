@@ -5,24 +5,24 @@ declare module 'stripe' {
     namespace Billing {
       interface MeterEventAdjustmentCreateParams {
         /**
-         * Specifies which event to cancel.
-         */
-        cancel: MeterEventAdjustmentCreateParams.Cancel;
-
-        /**
          * The name of the meter event. Corresponds with the `event_name` field on a meter.
          */
         event_name: string;
 
         /**
+         * Specifies whether to cancel a single event or a range of events for a time period. Time period cancellation is not supported yet.
+         */
+        type: 'cancel';
+
+        /**
+         * Specifies which event to cancel.
+         */
+        cancel?: MeterEventAdjustmentCreateParams.Cancel;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
-
-        /**
-         * Specifies whether to cancel a single event or a range of events for a time period.
-         */
-        type?: 'cancel';
       }
 
       namespace MeterEventAdjustmentCreateParams {
@@ -30,7 +30,7 @@ declare module 'stripe' {
           /**
            * Unique identifier for the event. You can only cancel events within 24 hours of Stripe receiving them.
            */
-          identifier: string;
+          identifier?: string;
         }
       }
 
