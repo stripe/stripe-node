@@ -880,6 +880,8 @@ declare module 'stripe' {
 
           alipay?: PaymentMethodOptions.Alipay;
 
+          amazon_pay?: PaymentMethodOptions.AmazonPay;
+
           au_becs_debit?: PaymentMethodOptions.AuBecsDebit;
 
           bacs_debit?: PaymentMethodOptions.BacsDebit;
@@ -1030,6 +1032,8 @@ declare module 'stripe' {
              */
             setup_future_usage?: 'none';
           }
+
+          interface AmazonPay {}
 
           interface AuBecsDebit {
             /**

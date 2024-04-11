@@ -378,6 +378,8 @@ declare module 'stripe' {
 
         alipay?: PaymentMethodDetails.Alipay;
 
+        amazon_pay?: PaymentMethodDetails.AmazonPay;
+
         au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
 
         bacs_debit?: PaymentMethodDetails.BacsDebit;
@@ -579,6 +581,8 @@ declare module 'stripe' {
            */
           transaction_id: string | null;
         }
+
+        interface AmazonPay {}
 
         interface AuBecsDebit {
           /**
