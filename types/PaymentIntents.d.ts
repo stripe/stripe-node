@@ -2556,7 +2556,12 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
-        interface RevolutPay {}
+        interface RevolutPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+        }
 
         interface SepaDebit {
           mandate_options?: SepaDebit.MandateOptions;
