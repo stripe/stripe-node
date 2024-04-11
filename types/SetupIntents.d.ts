@@ -311,6 +311,10 @@ declare module 'stripe' {
           | 'bank_account_unverified'
           | 'bank_account_verification_failed'
           | 'billing_invalid_mandate'
+          | 'billing_policy_remote_function_response_invalid'
+          | 'billing_policy_remote_function_timeout'
+          | 'billing_policy_remote_function_unexpected_status_code'
+          | 'billing_policy_remote_function_unreachable'
           | 'bitcoin_upgrade_required'
           | 'capture_charge_authorization_expired'
           | 'capture_unauthorized_payment'
@@ -566,6 +570,8 @@ declare module 'stripe' {
       interface PaymentMethodOptions {
         acss_debit?: PaymentMethodOptions.AcssDebit;
 
+        amazon_pay?: PaymentMethodOptions.AmazonPay;
+
         card?: PaymentMethodOptions.Card;
 
         card_present?: PaymentMethodOptions.CardPresent;
@@ -634,6 +640,8 @@ declare module 'stripe' {
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
+
+        interface AmazonPay {}
 
         interface Card {
           /**
@@ -787,7 +795,7 @@ declare module 'stripe' {
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'transactions';
+            type Prefetch = 'balances' | 'ownership' | 'transactions';
           }
 
           interface MandateOptions {

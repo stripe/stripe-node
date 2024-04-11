@@ -125,6 +125,8 @@ declare module 'stripe' {
 
         alipay?: PaymentMethodPreview.Alipay;
 
+        amazon_pay?: PaymentMethodPreview.AmazonPay;
+
         au_becs_debit?: PaymentMethodPreview.AuBecsDebit;
 
         bacs_debit?: PaymentMethodPreview.BacsDebit;
@@ -230,6 +232,8 @@ declare module 'stripe' {
         interface AfterpayClearpay {}
 
         interface Alipay {}
+
+        interface AmazonPay {}
 
         interface AuBecsDebit {
           /**
@@ -1001,6 +1005,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'

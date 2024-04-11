@@ -205,6 +205,11 @@ declare module 'stripe' {
         alipay?: PaymentMethodData.Alipay;
 
         /**
+         * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+         */
+        amazon_pay?: PaymentMethodData.AmazonPay;
+
+        /**
          * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
          */
         au_becs_debit?: PaymentMethodData.AuBecsDebit;
@@ -398,6 +403,8 @@ declare module 'stripe' {
         interface AfterpayClearpay {}
 
         interface Alipay {}
+
+        interface AmazonPay {}
 
         interface AuBecsDebit {
           /**
@@ -685,6 +692,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
@@ -758,6 +766,11 @@ declare module 'stripe' {
          * If this is a `acss_debit` SetupIntent, this sub-hash contains details about the ACSS Debit payment method options.
          */
         acss_debit?: PaymentMethodOptions.AcssDebit;
+
+        /**
+         * If this is a `amazon_pay` SetupIntent, this sub-hash contains details about the AmazonPay payment method options.
+         */
+        amazon_pay?: PaymentMethodOptions.AmazonPay;
 
         /**
          * Configuration for any card setup attempted on this SetupIntent.
@@ -850,6 +863,8 @@ declare module 'stripe' {
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
+
+        interface AmazonPay {}
 
         interface Card {
           /**
@@ -1119,7 +1134,7 @@ declare module 'stripe' {
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'transactions';
+            type Prefetch = 'balances' | 'ownership' | 'transactions';
           }
 
           interface MandateOptions {
@@ -1260,6 +1275,11 @@ declare module 'stripe' {
         alipay?: PaymentMethodData.Alipay;
 
         /**
+         * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+         */
+        amazon_pay?: PaymentMethodData.AmazonPay;
+
+        /**
          * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
          */
         au_becs_debit?: PaymentMethodData.AuBecsDebit;
@@ -1453,6 +1473,8 @@ declare module 'stripe' {
         interface AfterpayClearpay {}
 
         interface Alipay {}
+
+        interface AmazonPay {}
 
         interface AuBecsDebit {
           /**
@@ -1740,6 +1762,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
@@ -1813,6 +1836,11 @@ declare module 'stripe' {
          * If this is a `acss_debit` SetupIntent, this sub-hash contains details about the ACSS Debit payment method options.
          */
         acss_debit?: PaymentMethodOptions.AcssDebit;
+
+        /**
+         * If this is a `amazon_pay` SetupIntent, this sub-hash contains details about the AmazonPay payment method options.
+         */
+        amazon_pay?: PaymentMethodOptions.AmazonPay;
 
         /**
          * Configuration for any card setup attempted on this SetupIntent.
@@ -1905,6 +1933,8 @@ declare module 'stripe' {
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
+
+        interface AmazonPay {}
 
         interface Card {
           /**
@@ -2174,7 +2204,7 @@ declare module 'stripe' {
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'transactions';
+            type Prefetch = 'balances' | 'ownership' | 'transactions';
           }
 
           interface MandateOptions {
@@ -2402,6 +2432,11 @@ declare module 'stripe' {
         alipay?: PaymentMethodData.Alipay;
 
         /**
+         * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+         */
+        amazon_pay?: PaymentMethodData.AmazonPay;
+
+        /**
          * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
          */
         au_becs_debit?: PaymentMethodData.AuBecsDebit;
@@ -2595,6 +2630,8 @@ declare module 'stripe' {
         interface AfterpayClearpay {}
 
         interface Alipay {}
+
+        interface AmazonPay {}
 
         interface AuBecsDebit {
           /**
@@ -2882,6 +2919,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
@@ -2955,6 +2993,11 @@ declare module 'stripe' {
          * If this is a `acss_debit` SetupIntent, this sub-hash contains details about the ACSS Debit payment method options.
          */
         acss_debit?: PaymentMethodOptions.AcssDebit;
+
+        /**
+         * If this is a `amazon_pay` SetupIntent, this sub-hash contains details about the AmazonPay payment method options.
+         */
+        amazon_pay?: PaymentMethodOptions.AmazonPay;
 
         /**
          * Configuration for any card setup attempted on this SetupIntent.
@@ -3047,6 +3090,8 @@ declare module 'stripe' {
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
+
+        interface AmazonPay {}
 
         interface Card {
           /**
@@ -3316,7 +3361,7 @@ declare module 'stripe' {
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'transactions';
+            type Prefetch = 'balances' | 'ownership' | 'transactions';
           }
 
           interface MandateOptions {

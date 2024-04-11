@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Billing {
       /**
-       * A billing meter event adjustment represents the status of a meter event adjustment.
+       * A billing meter event adjustment is a resource that allows you to cancel a meter event. For example, you might create a billing meter event adjustment to cancel a meter event that was created in error or attached to the wrong customer.
        */
       interface MeterEventAdjustment {
         /**
@@ -12,7 +12,10 @@ declare module 'stripe' {
          */
         object: 'billing.meter_event_adjustment';
 
-        cancel: MeterEventAdjustment.Cancel;
+        /**
+         * Specifies which event to cancel.
+         */
+        cancel: MeterEventAdjustment.Cancel | null;
 
         /**
          * The name of the meter event. Corresponds with the `event_name` field on a meter.
@@ -30,7 +33,7 @@ declare module 'stripe' {
         status: MeterEventAdjustment.Status;
 
         /**
-         * Specifies whether to cancel a single event or a range of events for a time period.
+         * Specifies whether to cancel a single event or a range of events for a time period. Time period cancellation is not supported yet.
          */
         type: 'cancel';
       }
@@ -40,7 +43,7 @@ declare module 'stripe' {
           /**
            * Unique identifier for the event.
            */
-          identifier: string;
+          identifier: string | null;
         }
 
         type Status = 'complete' | 'pending';

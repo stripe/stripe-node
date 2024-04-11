@@ -24,6 +24,11 @@ declare module 'stripe' {
       alipay?: PaymentMethodConfigurationCreateParams.Alipay;
 
       /**
+       * Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
+       */
+      amazon_pay?: PaymentMethodConfigurationCreateParams.AmazonPay;
+
+      /**
        * Stripe users can accept [Apple Pay](https://stripe.com/payments/apple-pay) in iOS applications in iOS 9 and later, and on the web in Safari starting with iOS 10 or macOS Sierra. There are no additional fees to process Apple Pay payments, and the [pricing](https://stripe.com/pricing) is the same as other card transactions. Check this [page](https://stripe.com/docs/apple-pay) for more details.
        */
       apple_pay?: PaymentMethodConfigurationCreateParams.ApplePay;
@@ -268,6 +273,26 @@ declare module 'stripe' {
       }
 
       namespace Alipay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface AmazonPay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: AmazonPay.DisplayPreference;
+      }
+
+      namespace AmazonPay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -955,6 +980,11 @@ declare module 'stripe' {
       alipay?: PaymentMethodConfigurationUpdateParams.Alipay;
 
       /**
+       * Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
+       */
+      amazon_pay?: PaymentMethodConfigurationUpdateParams.AmazonPay;
+
+      /**
        * Stripe users can accept [Apple Pay](https://stripe.com/payments/apple-pay) in iOS applications in iOS 9 and later, and on the web in Safari starting with iOS 10 or macOS Sierra. There are no additional fees to process Apple Pay payments, and the [pricing](https://stripe.com/pricing) is the same as other card transactions. Check this [page](https://stripe.com/docs/apple-pay) for more details.
        */
       apple_pay?: PaymentMethodConfigurationUpdateParams.ApplePay;
@@ -1194,6 +1224,26 @@ declare module 'stripe' {
       }
 
       namespace Alipay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface AmazonPay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: AmazonPay.DisplayPreference;
+      }
+
+      namespace AmazonPay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

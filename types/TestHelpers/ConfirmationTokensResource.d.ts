@@ -60,6 +60,11 @@ declare module 'stripe' {
           alipay?: PaymentMethodData.Alipay;
 
           /**
+           * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+           */
+          amazon_pay?: PaymentMethodData.AmazonPay;
+
+          /**
            * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
            */
           au_becs_debit?: PaymentMethodData.AuBecsDebit;
@@ -253,6 +258,8 @@ declare module 'stripe' {
           interface AfterpayClearpay {}
 
           interface Alipay {}
+
+          interface AmazonPay {}
 
           interface AuBecsDebit {
             /**
@@ -540,6 +547,7 @@ declare module 'stripe' {
             | 'affirm'
             | 'afterpay_clearpay'
             | 'alipay'
+            | 'amazon_pay'
             | 'au_becs_debit'
             | 'bacs_debit'
             | 'bancontact'

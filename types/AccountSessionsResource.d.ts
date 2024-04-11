@@ -22,6 +22,11 @@ declare module 'stripe' {
     namespace AccountSessionCreateParams {
       interface Components {
         /**
+         * Configuration for the account management embedded component.
+         */
+        account_management?: Components.AccountManagement;
+
+        /**
          * Configuration for the account onboarding embedded component.
          */
         account_onboarding?: Components.AccountOnboarding;
@@ -30,6 +35,11 @@ declare module 'stripe' {
          * Configuration for the documents embedded component.
          */
         documents?: Components.Documents;
+
+        /**
+         * Configuration for the notification banner embedded component.
+         */
+        notification_banner?: Components.NotificationBanner;
 
         /**
          * Configuration for the payment details embedded component.
@@ -48,6 +58,27 @@ declare module 'stripe' {
       }
 
       namespace Components {
+        interface AccountManagement {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: AccountManagement.Features;
+        }
+
+        namespace AccountManagement {
+          interface Features {
+            /**
+             * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for custom accounts (or accounts where the platform is compliance owner). Otherwise, bank account collection is determined by compliance requirements.
+             */
+            external_account_collection?: boolean;
+          }
+        }
+
         interface AccountOnboarding {
           /**
            * Whether the embedded component is enabled.
@@ -61,7 +92,12 @@ declare module 'stripe' {
         }
 
         namespace AccountOnboarding {
-          interface Features {}
+          interface Features {
+            /**
+             * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for custom accounts (or accounts where the platform is compliance owner). Otherwise, bank account collection is determined by compliance requirements.
+             */
+            external_account_collection?: boolean;
+          }
         }
 
         interface Documents {
@@ -78,6 +114,27 @@ declare module 'stripe' {
 
         namespace Documents {
           interface Features {}
+        }
+
+        interface NotificationBanner {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: NotificationBanner.Features;
+        }
+
+        namespace NotificationBanner {
+          interface Features {
+            /**
+             * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for custom accounts (or accounts where the platform is compliance owner). Otherwise, bank account collection is determined by compliance requirements.
+             */
+            external_account_collection?: boolean;
+          }
         }
 
         interface PaymentDetails {

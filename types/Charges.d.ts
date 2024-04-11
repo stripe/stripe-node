@@ -40,12 +40,12 @@ declare module 'stripe' {
       application: string | Stripe.Application | null;
 
       /**
-       * The application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees) for details.
+       * The application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collect-fees) for details.
        */
       application_fee: string | Stripe.ApplicationFee | null;
 
       /**
-       * The amount of the application fee (if any) requested for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees) for details.
+       * The amount of the application fee (if any) requested for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collect-fees) for details.
        */
       application_fee_amount: number | null;
 
@@ -378,6 +378,8 @@ declare module 'stripe' {
 
         alipay?: PaymentMethodDetails.Alipay;
 
+        amazon_pay?: PaymentMethodDetails.AmazonPay;
+
         au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
 
         bacs_debit?: PaymentMethodDetails.BacsDebit;
@@ -579,6 +581,8 @@ declare module 'stripe' {
            */
           transaction_id: string | null;
         }
+
+        interface AmazonPay {}
 
         interface AuBecsDebit {
           /**

@@ -275,6 +275,11 @@ declare module 'stripe' {
         alipay?: PaymentMethodData.Alipay;
 
         /**
+         * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+         */
+        amazon_pay?: PaymentMethodData.AmazonPay;
+
+        /**
          * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
          */
         au_becs_debit?: PaymentMethodData.AuBecsDebit;
@@ -468,6 +473,8 @@ declare module 'stripe' {
         interface AfterpayClearpay {}
 
         interface Alipay {}
+
+        interface AmazonPay {}
 
         interface AuBecsDebit {
           /**
@@ -755,6 +762,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
@@ -845,6 +853,11 @@ declare module 'stripe' {
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
+
+        /**
+         * If this is a `amazon_pay` PaymentMethod, this sub-hash contains details about the Amazon Pay payment method options.
+         */
+        amazon_pay?: Stripe.Emptyable<PaymentMethodOptions.AmazonPay>;
 
         /**
          * If this is a `au_becs_debit` PaymentMethod, this sub-hash contains details about the AU BECS Direct Debit payment method options.
@@ -1138,6 +1151,30 @@ declare module 'stripe' {
         }
 
         namespace Alipay {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface AmazonPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           *
+           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<AmazonPay.SetupFutureUsage>;
+        }
+
+        namespace AmazonPay {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
@@ -2184,7 +2221,7 @@ declare module 'stripe' {
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'transactions';
+            type Prefetch = 'balances' | 'ownership' | 'transactions';
           }
 
           interface MandateOptions {
@@ -2464,6 +2501,11 @@ declare module 'stripe' {
         alipay?: PaymentMethodData.Alipay;
 
         /**
+         * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+         */
+        amazon_pay?: PaymentMethodData.AmazonPay;
+
+        /**
          * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
          */
         au_becs_debit?: PaymentMethodData.AuBecsDebit;
@@ -2657,6 +2699,8 @@ declare module 'stripe' {
         interface AfterpayClearpay {}
 
         interface Alipay {}
+
+        interface AmazonPay {}
 
         interface AuBecsDebit {
           /**
@@ -2944,6 +2988,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
@@ -3034,6 +3079,11 @@ declare module 'stripe' {
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
+
+        /**
+         * If this is a `amazon_pay` PaymentMethod, this sub-hash contains details about the Amazon Pay payment method options.
+         */
+        amazon_pay?: Stripe.Emptyable<PaymentMethodOptions.AmazonPay>;
 
         /**
          * If this is a `au_becs_debit` PaymentMethod, this sub-hash contains details about the AU BECS Direct Debit payment method options.
@@ -3327,6 +3377,30 @@ declare module 'stripe' {
         }
 
         namespace Alipay {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface AmazonPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           *
+           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<AmazonPay.SetupFutureUsage>;
+        }
+
+        namespace AmazonPay {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
@@ -4373,7 +4447,7 @@ declare module 'stripe' {
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'transactions';
+            type Prefetch = 'balances' | 'ownership' | 'transactions';
           }
 
           interface MandateOptions {
@@ -4798,6 +4872,11 @@ declare module 'stripe' {
         alipay?: PaymentMethodData.Alipay;
 
         /**
+         * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+         */
+        amazon_pay?: PaymentMethodData.AmazonPay;
+
+        /**
          * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
          */
         au_becs_debit?: PaymentMethodData.AuBecsDebit;
@@ -4991,6 +5070,8 @@ declare module 'stripe' {
         interface AfterpayClearpay {}
 
         interface Alipay {}
+
+        interface AmazonPay {}
 
         interface AuBecsDebit {
           /**
@@ -5278,6 +5359,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
@@ -5368,6 +5450,11 @@ declare module 'stripe' {
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
+
+        /**
+         * If this is a `amazon_pay` PaymentMethod, this sub-hash contains details about the Amazon Pay payment method options.
+         */
+        amazon_pay?: Stripe.Emptyable<PaymentMethodOptions.AmazonPay>;
 
         /**
          * If this is a `au_becs_debit` PaymentMethod, this sub-hash contains details about the AU BECS Direct Debit payment method options.
@@ -5661,6 +5748,30 @@ declare module 'stripe' {
         }
 
         namespace Alipay {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface AmazonPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           *
+           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<AmazonPay.SetupFutureUsage>;
+        }
+
+        namespace AmazonPay {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
@@ -6707,7 +6818,7 @@ declare module 'stripe' {
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'transactions';
+            type Prefetch = 'balances' | 'ownership' | 'transactions';
           }
 
           interface MandateOptions {
