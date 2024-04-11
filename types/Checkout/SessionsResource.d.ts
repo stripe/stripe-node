@@ -1686,7 +1686,7 @@ declare module 'stripe' {
                 | 'payment_method'
                 | 'transactions';
 
-              type Prefetch = 'balances' | 'transactions';
+              type Prefetch = 'balances' | 'ownership' | 'transactions';
             }
 
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';

@@ -1127,9 +1127,13 @@ declare module 'stripe' {
             }
 
             namespace FinancialConnections {
-              type Permission = 'balances' | 'payment_method' | 'transactions';
+              type Permission =
+                | 'balances'
+                | 'ownership'
+                | 'payment_method'
+                | 'transactions';
 
-              type Prefetch = 'balances' | 'transactions';
+              type Prefetch = 'balances' | 'ownership' | 'transactions';
             }
 
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
