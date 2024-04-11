@@ -575,6 +575,8 @@ declare module 'stripe' {
       interface PaymentMethodOptions {
         acss_debit?: PaymentMethodOptions.AcssDebit;
 
+        amazon_pay?: PaymentMethodOptions.AmazonPay;
+
         card?: PaymentMethodOptions.Card;
 
         card_present?: PaymentMethodOptions.CardPresent;
@@ -645,6 +647,8 @@ declare module 'stripe' {
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
+
+        interface AmazonPay {}
 
         interface Card {
           /**
