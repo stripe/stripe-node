@@ -174,6 +174,21 @@ declare module 'stripe' {
               custom_text: Input.CustomText | null;
 
               /**
+               * Information about a email being collected using a reader
+               */
+              email?: Input.Email;
+
+              /**
+               * Information about a number being collected using a reader
+               */
+              numeric?: Input.Numeric;
+
+              /**
+               * Information about a phone number being collected using a reader
+               */
+              phone?: Input.Phone;
+
+              /**
                * Indicate that this input is required, disabling the skip button.
                */
               required: boolean | null;
@@ -192,6 +207,16 @@ declare module 'stripe' {
                * Indicate that this input was skipped by the user.
                */
               skipped?: boolean;
+
+              /**
+               * Information about text being collected using a reader
+               */
+              text?: Input.Text;
+
+              /**
+               * List of toggles being collected. Values are present if collection is complete.
+               */
+              toggles: Array<Input.Toggle> | null;
 
               /**
                * Type of input being collected.
@@ -220,6 +245,27 @@ declare module 'stripe' {
                  * Customize the default title for this input
                  */
                 title: string | null;
+              }
+
+              interface Email {
+                /**
+                 * The collected email address
+                 */
+                value: string | null;
+              }
+
+              interface Numeric {
+                /**
+                 * The collected number
+                 */
+                value: string | null;
+              }
+
+              interface Phone {
+                /**
+                 * The collected phone number
+                 */
+                value: string | null;
               }
 
               interface Selection {
@@ -257,6 +303,41 @@ declare module 'stripe' {
                  * The File ID of a collected signature image
                  */
                 value: string | null;
+              }
+
+              interface Text {
+                /**
+                 * The collected text value
+                 */
+                value: string | null;
+              }
+
+              interface Toggle {
+                /**
+                 * The toggle's default value
+                 */
+                default_value: Toggle.DefaultValue | null;
+
+                /**
+                 * The toggle's description text
+                 */
+                description: string | null;
+
+                /**
+                 * The toggle's title text
+                 */
+                title: string | null;
+
+                /**
+                 * The toggle's collected value
+                 */
+                value: Toggle.Value | null;
+              }
+
+              namespace Toggle {
+                type DefaultValue = 'disabled' | 'enabled';
+
+                type Value = 'disabled' | 'enabled';
               }
 
               type Type =

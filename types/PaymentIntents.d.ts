@@ -405,6 +405,10 @@ declare module 'stripe' {
           | 'bank_account_unverified'
           | 'bank_account_verification_failed'
           | 'billing_invalid_mandate'
+          | 'billing_policy_remote_function_response_invalid'
+          | 'billing_policy_remote_function_timeout'
+          | 'billing_policy_remote_function_unexpected_status_code'
+          | 'billing_policy_remote_function_unreachable'
           | 'bitcoin_upgrade_required'
           | 'capture_charge_authorization_expired'
           | 'capture_unauthorized_payment'
@@ -1030,6 +1034,11 @@ declare module 'stripe' {
           expires_at: number | null;
 
           /**
+           * The URL for the hosted Multibanco voucher page, which allows customers to view a Multibanco voucher.
+           */
+          hosted_voucher_url: string | null;
+
+          /**
            * Reference number associated with this Multibanco payment.
            */
           reference: string | null;
@@ -1567,6 +1576,8 @@ declare module 'stripe' {
 
         alipay?: PaymentMethodOptions.Alipay;
 
+        amazon_pay?: PaymentMethodOptions.AmazonPay;
+
         au_becs_debit?: PaymentMethodOptions.AuBecsDebit;
 
         bacs_debit?: PaymentMethodOptions.BacsDebit;
@@ -1745,6 +1756,13 @@ declare module 'stripe' {
 
         namespace Alipay {
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface AmazonPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
         }
 
         interface AuBecsDebit {
@@ -2538,7 +2556,12 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
-        interface RevolutPay {}
+        interface RevolutPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+        }
 
         interface SepaDebit {
           mandate_options?: SepaDebit.MandateOptions;

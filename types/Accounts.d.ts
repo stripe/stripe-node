@@ -754,10 +754,21 @@ declare module 'stripe' {
 
         dashboard?: Controller.Dashboard;
 
+        fees?: Controller.Fees;
+
         /**
          * `true` if the Connect application retrieving the resource controls the account and can therefore exercise [platform controls](https://stripe.com/docs/connect/platform-controls-for-standard-accounts). Otherwise, this field is null.
          */
         is_controller?: boolean;
+
+        losses?: Controller.Losses;
+
+        /**
+         * A value indicating responsibility for collecting requirements on this account. Only returned when the Connect application retrieving the resource controls the account.
+         */
+        requirement_collection?: Controller.RequirementCollection;
+
+        stripe_dashboard?: Controller.StripeDashboard;
 
         /**
          * The controller type. Can be `application`, if a Connect application controls the account, or `account`, if the account controls itself.
@@ -791,6 +802,46 @@ declare module 'stripe' {
         }
 
         namespace Dashboard {
+          type Type = 'express' | 'full' | 'none';
+        }
+
+        interface Fees {
+          /**
+           * A value indicating the responsible payer of a bundle of Stripe fees for pricing-control eligible products on this account.
+           */
+          payer: Fees.Payer;
+        }
+
+        namespace Fees {
+          type Payer =
+            | 'account'
+            | 'application'
+            | 'application_custom'
+            | 'application_express'
+            | 'application_unified_accounts_beta';
+        }
+
+        interface Losses {
+          /**
+           * A value indicating who is liable when this account can't pay back negative balances from payments.
+           */
+          payments: Losses.Payments;
+        }
+
+        namespace Losses {
+          type Payments = 'application' | 'stripe';
+        }
+
+        type RequirementCollection = 'application' | 'stripe';
+
+        interface StripeDashboard {
+          /**
+           * A value indicating the Stripe dashboard this account has access to independent of the Connect application.
+           */
+          type: StripeDashboard.Type;
+        }
+
+        namespace StripeDashboard {
           type Type = 'express' | 'full' | 'none';
         }
 
@@ -834,7 +885,7 @@ declare module 'stripe' {
         past_due: Array<string> | null;
 
         /**
-         * Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due` or `currently_due`.
+         * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due` or `currently_due`. Fields might appear in `eventually_due` or `currently_due` and in `pending_verification` if verification fails but another verification is still pending.
          */
         pending_verification: Array<string> | null;
       }
@@ -999,7 +1050,7 @@ declare module 'stripe' {
         past_due: Array<string> | null;
 
         /**
-         * Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`.
+         * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`. Fields might appear in `eventually_due`, `currently_due`, or `past_due` and in `pending_verification` if verification fails but another verification is still pending.
          */
         pending_verification: Array<string> | null;
       }
@@ -1402,7 +1453,7 @@ declare module 'stripe' {
         user_agent?: string | null;
       }
 
-      type Type = 'custom' | 'express' | 'standard';
+      type Type = 'custom' | 'express' | 'none' | 'standard';
     }
 
     /**

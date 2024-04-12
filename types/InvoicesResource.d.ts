@@ -144,13 +144,6 @@ declare module 'stripe' {
       rendering?: InvoiceCreateParams.Rendering;
 
       /**
-       * This is a legacy field that will be removed soon. For details about `rendering_options`, refer to `rendering` instead. Options for invoice PDF rendering.
-       */
-      rendering_options?: Stripe.Emptyable<
-        InvoiceCreateParams.RenderingOptions
-      >;
-
-      /**
        * Settings for the cost of shipping for this invoice.
        */
       shipping_cost?: InvoiceCreateParams.ShippingCost;
@@ -594,10 +587,7 @@ declare module 'stripe' {
           | 'wechat_pay';
       }
 
-      type PendingInvoiceItemsBehavior =
-        | 'exclude'
-        | 'include'
-        | 'include_and_require';
+      type PendingInvoiceItemsBehavior = 'exclude' | 'include';
 
       interface Rendering {
         /**
@@ -626,19 +616,6 @@ declare module 'stripe' {
         namespace Pdf {
           type PageSize = 'a4' | 'auto' | 'letter';
         }
-      }
-
-      interface RenderingOptions {
-        /**
-         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
-         */
-        amount_tax_display?: Stripe.Emptyable<
-          RenderingOptions.AmountTaxDisplay
-        >;
-      }
-
-      namespace RenderingOptions {
-        type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
       }
 
       interface ShippingCost {
@@ -936,13 +913,6 @@ declare module 'stripe' {
        * The rendering-related settings that control how the invoice is displayed on customer-facing surfaces such as PDF and Hosted Invoice Page.
        */
       rendering?: InvoiceUpdateParams.Rendering;
-
-      /**
-       * This is a legacy field that will be removed soon. For details about `rendering_options`, refer to `rendering` instead. Options for invoice PDF rendering.
-       */
-      rendering_options?: Stripe.Emptyable<
-        InvoiceUpdateParams.RenderingOptions
-      >;
 
       /**
        * Settings for the cost of shipping for this invoice.
@@ -1398,19 +1368,6 @@ declare module 'stripe' {
         namespace Pdf {
           type PageSize = 'a4' | 'auto' | 'letter';
         }
-      }
-
-      interface RenderingOptions {
-        /**
-         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
-         */
-        amount_tax_display?: Stripe.Emptyable<
-          RenderingOptions.AmountTaxDisplay
-        >;
-      }
-
-      namespace RenderingOptions {
-        type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
       }
 
       interface ShippingCost {
@@ -2109,7 +2066,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `no_voec`, `nz_gst`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
+           * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bh_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `kz_bin`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -2127,6 +2084,7 @@ declare module 'stripe' {
             | 'au_abn'
             | 'au_arn'
             | 'bg_uic'
+            | 'bh_vat'
             | 'bo_tin'
             | 'br_cnpj'
             | 'br_cpf'
@@ -2160,14 +2118,17 @@ declare module 'stripe' {
             | 'jp_trn'
             | 'ke_pin'
             | 'kr_brn'
+            | 'kz_bin'
             | 'li_uid'
             | 'mx_rfc'
             | 'my_frp'
             | 'my_itn'
             | 'my_sst'
+            | 'ng_tin'
             | 'no_vat'
             | 'no_voec'
             | 'nz_gst'
+            | 'om_vat'
             | 'pe_ruc'
             | 'ph_tin'
             | 'ro_tin'
@@ -4311,7 +4272,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `no_voec`, `nz_gst`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
+           * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bh_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `kz_bin`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -4329,6 +4290,7 @@ declare module 'stripe' {
             | 'au_abn'
             | 'au_arn'
             | 'bg_uic'
+            | 'bh_vat'
             | 'bo_tin'
             | 'br_cnpj'
             | 'br_cpf'
@@ -4362,14 +4324,17 @@ declare module 'stripe' {
             | 'jp_trn'
             | 'ke_pin'
             | 'kr_brn'
+            | 'kz_bin'
             | 'li_uid'
             | 'mx_rfc'
             | 'my_frp'
             | 'my_itn'
             | 'my_sst'
+            | 'ng_tin'
             | 'no_vat'
             | 'no_voec'
             | 'nz_gst'
+            | 'om_vat'
             | 'pe_ruc'
             | 'ph_tin'
             | 'ro_tin'
@@ -6772,7 +6737,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `no_voec`, `nz_gst`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
+           * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bh_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `kz_bin`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -6790,6 +6755,7 @@ declare module 'stripe' {
             | 'au_abn'
             | 'au_arn'
             | 'bg_uic'
+            | 'bh_vat'
             | 'bo_tin'
             | 'br_cnpj'
             | 'br_cpf'
@@ -6823,14 +6789,17 @@ declare module 'stripe' {
             | 'jp_trn'
             | 'ke_pin'
             | 'kr_brn'
+            | 'kz_bin'
             | 'li_uid'
             | 'mx_rfc'
             | 'my_frp'
             | 'my_itn'
             | 'my_sst'
+            | 'ng_tin'
             | 'no_vat'
             | 'no_voec'
             | 'nz_gst'
+            | 'om_vat'
             | 'pe_ruc'
             | 'ph_tin'
             | 'ro_tin'
@@ -9528,8 +9497,7 @@ declare module 'stripe' {
             | 'qst'
             | 'rst'
             | 'sales_tax'
-            | 'vat'
-            | 'service_tax';
+            | 'vat';
         }
       }
     }
