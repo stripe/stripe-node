@@ -166,11 +166,6 @@ declare module 'stripe' {
         namespace FinancialAccount {
           interface Features {
             /**
-             * Whether to allow external accounts to be linked for money transfer.
-             */
-            external_account_collection?: boolean;
-
-            /**
              * Whether to allow money movement features.
              */
             money_movement?: boolean;
