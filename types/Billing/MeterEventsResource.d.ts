@@ -17,11 +17,6 @@ declare module 'stripe' {
         };
 
         /**
-         * The time of the event. Measured in seconds since the Unix epoch.
-         */
-        timestamp: number;
-
-        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -30,6 +25,11 @@ declare module 'stripe' {
          * A unique identifier for the event. If not provided, one will be generated. We recommend using a globally unique identifier for this. We'll enforce uniqueness within a rolling 24 hour period.
          */
         identifier?: string;
+
+        /**
+         * The time of the event. Measured in seconds since the Unix epoch. Defaults to current timestamp if not specified.
+         */
+        timestamp?: number;
       }
 
       class MeterEventsResource {
