@@ -161,6 +161,7 @@
 ///<reference path='./Customers.d.ts' />
 ///<reference path='./Discounts.d.ts' />
 ///<reference path='./Disputes.d.ts' />
+///<reference path='./Entitlements/ActiveEntitlementSummaries.d.ts' />
 ///<reference path='./Entitlements/ActiveEntitlements.d.ts' />
 ///<reference path='./Entitlements/Features.d.ts' />
 ///<reference path='./EphemeralKeys.d.ts' />

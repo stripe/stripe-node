@@ -70,6 +70,7 @@ declare module 'stripe' {
       | CustomerTaxIdUpdatedEvent
       | CustomerUpdatedEvent
       | CustomerCashBalanceTransactionCreatedEvent
+      | EntitlementsActiveEntitlementSummaryUpdatedEvent
       | FileCreatedEvent
       | FinancialConnectionsAccountCreatedEvent
       | FinancialConnectionsAccountDeactivatedEvent
@@ -1299,6 +1300,25 @@ declare module 'stripe' {
         object: Stripe.CustomerCashBalanceTransaction;
 
         previous_attributes?: Partial<Stripe.CustomerCashBalanceTransaction>;
+      }
+    }
+
+    /**
+     * Occurs whenever a customer's entitlements change.
+     */
+    interface EntitlementsActiveEntitlementSummaryUpdatedEvent
+      extends EventBase {
+      type: 'entitlements.active_entitlement_summary.updated';
+      data: EntitlementsActiveEntitlementSummaryUpdatedEvent.Data;
+    }
+
+    namespace EntitlementsActiveEntitlementSummaryUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Entitlements.ActiveEntitlementSummary;
+
+        previous_attributes?: Partial<
+          Stripe.Entitlements.ActiveEntitlementSummary
+        >;
       }
     }
 
