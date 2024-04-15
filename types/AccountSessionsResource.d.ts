@@ -32,6 +32,11 @@ declare module 'stripe' {
         account_onboarding?: Components.AccountOnboarding;
 
         /**
+         * Configuration for the balances embedded component.
+         */
+        balances?: Components.Balances;
+
+        /**
          * Configuration for the documents embedded component.
          */
         documents?: Components.Documents;
@@ -55,6 +60,11 @@ declare module 'stripe' {
          * Configuration for the payouts embedded component.
          */
         payouts?: Components.Payouts;
+
+        /**
+         * Configuration for the payouts list embedded component.
+         */
+        payouts_list?: Components.PayoutsList;
       }
 
       namespace Components {
@@ -97,6 +107,37 @@ declare module 'stripe' {
              * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for custom accounts (or accounts where the platform is compliance owner). Otherwise, bank account collection is determined by compliance requirements.
              */
             external_account_collection?: boolean;
+          }
+        }
+
+        interface Balances {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: Balances.Features;
+        }
+
+        namespace Balances {
+          interface Features {
+            /**
+             * Whether to allow payout schedule to be changed. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             */
+            edit_payout_schedule?: boolean;
+
+            /**
+             * Whether to allow creation of instant payouts. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             */
+            instant_payouts?: boolean;
+
+            /**
+             * Whether to allow creation of standard payouts. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             */
+            standard_payouts?: boolean;
           }
         }
 
@@ -238,6 +279,22 @@ declare module 'stripe' {
              */
             standard_payouts?: boolean;
           }
+        }
+
+        interface PayoutsList {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: PayoutsList.Features;
+        }
+
+        namespace PayoutsList {
+          interface Features {}
         }
       }
     }
