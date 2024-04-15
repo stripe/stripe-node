@@ -415,10 +415,7 @@ declare module 'stripe' {
       }
 
       interface PaymentMethodDetails {
-        /**
-         * Card specific dispute details.
-         */
-        card: PaymentMethodDetails.Card | null;
+        card?: PaymentMethodDetails.Card;
 
         /**
          * Payment method type.
