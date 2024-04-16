@@ -189,6 +189,11 @@ declare module 'stripe' {
       sofort?: PaymentMethodConfigurationCreateParams.Sofort;
 
       /**
+       * Swish is a [real-time](https://stripe.com/docs/payments/real-time) payment method popular in Sweden. It allows customers to [authenticate and approve](https://stripe.com/docs/payments/payment-methods#customer-actions) payments using the Swish mobile app and the Swedish BankID mobile app. Check this [page](https://stripe.com/docs/payments/swish) for more details.
+       */
+      swish?: PaymentMethodConfigurationCreateParams.Swish;
+
+      /**
        * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-debit) for more details.
        */
       us_bank_account?: PaymentMethodConfigurationCreateParams.UsBankAccount;
@@ -885,6 +890,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Swish {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Swish.DisplayPreference;
+      }
+
+      namespace Swish {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface UsBankAccount {
         /**
          * Whether or not the payment method should be displayed.
@@ -1138,6 +1163,11 @@ declare module 'stripe' {
        * Stripe users in Europe and the United States can use the [Payment Intents API](https://stripe.com/docs/payments/payment-intents)—a single integration path for creating payments using any supported method—to accept [Sofort](https://www.sofort.com/) payments from customers. Check this [page](https://stripe.com/docs/payments/sofort) for more details.
        */
       sofort?: PaymentMethodConfigurationUpdateParams.Sofort;
+
+      /**
+       * Swish is a [real-time](https://stripe.com/docs/payments/real-time) payment method popular in Sweden. It allows customers to [authenticate and approve](https://stripe.com/docs/payments/payment-methods#customer-actions) payments using the Swish mobile app and the Swedish BankID mobile app. Check this [page](https://stripe.com/docs/payments/swish) for more details.
+       */
+      swish?: PaymentMethodConfigurationUpdateParams.Swish;
 
       /**
        * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-debit) for more details.
@@ -1824,6 +1854,26 @@ declare module 'stripe' {
       }
 
       namespace Sofort {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Swish {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Swish.DisplayPreference;
+      }
+
+      namespace Swish {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

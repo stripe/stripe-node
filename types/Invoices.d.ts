@@ -749,13 +749,13 @@ declare module 'stripe' {
          *
          * Create a SetupIntent when you're ready to collect your customer's payment credentials.
          * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
-         * The SetupIntent transitions through multiple [statuses](https://stripe.com/docs/payments/intents#intent-statuses) as it guides
+         * The SetupIntent transitions through multiple [statuses](https://docs.stripe.com/payments/intents#intent-statuses) as it guides
          * you through the setup process.
          *
          * Successful SetupIntents result in payment credentials that are optimized for future payments.
          * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
-         * [Strong Customer Authentication](https://stripe.com/docs/strong-customer-authentication) during payment method collection
-         * to streamline later [off-session payments](https://stripe.com/docs/payments/setup-intents).
+         * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
+         * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
          * If you use the SetupIntent with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer),
          * it automatically attaches the resulting payment method to that Customer after successful setup.
          * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
@@ -763,7 +763,7 @@ declare module 'stripe' {
          *
          * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
          *
-         * Related guide: [Setup Intents API](https://stripe.com/docs/payments/setup-intents)
+         * Related guide: [Setup Intents API](https://docs.stripe.com/payments/setup-intents)
          */
         setup_intent?: Stripe.SetupIntent;
 
