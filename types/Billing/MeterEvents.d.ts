@@ -34,7 +34,7 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * The payload of the event.
+         * The payload of the event. This contains the fields corresponding to a meter's `customer_mapping.event_payload_key` (default is `stripe_customer_id`) and `value_settings.event_payload_key` (default is `value`). Read more about the [payload](https://stripe.com/docs/billing/subscriptions/usage-based/recording-usage#payload-key-overrides).
          */
         payload: {
           [key: string]: string;

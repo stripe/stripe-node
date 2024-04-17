@@ -32,12 +32,12 @@ declare module 'stripe' {
         display_name: string;
 
         /**
-         * The name of the usage event to record usage for. Corresponds with the `event_name` field on usage events.
+         * The name of the meter event to record usage for. Corresponds with the `event_name` field on meter events.
          */
         event_name: string;
 
         /**
-         * The time window to pre-aggregate usage events for, if any.
+         * The time window to pre-aggregate meter events for, if any.
          */
         event_time_window: Meter.EventTimeWindow | null;
 
@@ -64,7 +64,7 @@ declare module 'stripe' {
       namespace Meter {
         interface CustomerMapping {
           /**
-           * The key in the usage event payload to use for mapping the event to a customer.
+           * The key in the meter event payload to use for mapping the event to a customer.
            */
           event_payload_key: string;
 
@@ -98,7 +98,7 @@ declare module 'stripe' {
 
         interface ValueSettings {
           /**
-           * The key in the usage event payload to use as the value for this meter.
+           * The key in the meter event payload to use as the value for this meter.
            */
           event_payload_key: string;
         }
