@@ -297,7 +297,7 @@ declare module 'stripe' {
             type: string;
 
             /**
-             * The units for `volume_decimal`. One of `us_gallon` or `liter`.
+             * The units for `volume_decimal`. One of `liter`, `us_gallon`, or `other`.
              */
             unit: string;
 
