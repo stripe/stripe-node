@@ -205,6 +205,11 @@ declare module 'stripe' {
         alipay?: PaymentMethodData.Alipay;
 
         /**
+         * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow. The field defaults to `unspecified`.
+         */
+        allow_redisplay?: PaymentMethodData.AllowRedisplay;
+
+        /**
          * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
          */
         amazon_pay?: PaymentMethodData.AmazonPay;
@@ -418,6 +423,8 @@ declare module 'stripe' {
         interface AfterpayClearpay {}
 
         interface Alipay {}
+
+        type AllowRedisplay = 'always' | 'limited' | 'unspecified';
 
         interface AmazonPay {}
 
@@ -1419,6 +1426,11 @@ declare module 'stripe' {
         alipay?: PaymentMethodData.Alipay;
 
         /**
+         * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow. The field defaults to `unspecified`.
+         */
+        allow_redisplay?: PaymentMethodData.AllowRedisplay;
+
+        /**
          * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
          */
         amazon_pay?: PaymentMethodData.AmazonPay;
@@ -1632,6 +1644,8 @@ declare module 'stripe' {
         interface AfterpayClearpay {}
 
         interface Alipay {}
+
+        type AllowRedisplay = 'always' | 'limited' | 'unspecified';
 
         interface AmazonPay {}
 
@@ -2720,6 +2734,11 @@ declare module 'stripe' {
         alipay?: PaymentMethodData.Alipay;
 
         /**
+         * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow. The field defaults to `unspecified`.
+         */
+        allow_redisplay?: PaymentMethodData.AllowRedisplay;
+
+        /**
          * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
          */
         amazon_pay?: PaymentMethodData.AmazonPay;
@@ -2933,6 +2952,8 @@ declare module 'stripe' {
         interface AfterpayClearpay {}
 
         interface Alipay {}
+
+        type AllowRedisplay = 'always' | 'limited' | 'unspecified';
 
         interface AmazonPay {}
 
