@@ -163,6 +163,11 @@ declare module 'stripe' {
         payment_method_configuration?: string;
 
         /**
+         * This parameter allows you to set some attributes on the payment method created during a Checkout session.
+         */
+        payment_method_data?: SessionCreateParams.PaymentMethodData;
+
+        /**
          * Payment-method-specific configuration.
          */
         payment_method_options?: SessionCreateParams.PaymentMethodOptions;
@@ -201,6 +206,11 @@ declare module 'stripe' {
          * and redirect-based payment methods are enabled on the session.
          */
         return_url?: string;
+
+        /**
+         * Controls saved payment method settings for the session. Only available in `payment` and `subscription` mode.
+         */
+        saved_payment_method_options?: SessionCreateParams.SavedPaymentMethodOptions;
 
         /**
          * A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
@@ -946,6 +956,17 @@ declare module 'stripe' {
         }
 
         type PaymentMethodCollection = 'always' | 'if_required';
+
+        interface PaymentMethodData {
+          /**
+           * Allow redisplay will be set on the payment method on confirmation and indicates whether this payment method can be shown again to the customer in a checkout flow. Only set this field if you wish to override the allow_redisplay value determined by Checkout.
+           */
+          allow_redisplay?: PaymentMethodData.AllowRedisplay;
+        }
+
+        namespace PaymentMethodData {
+          type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+        }
 
         interface PaymentMethodOptions {
           /**
@@ -1784,6 +1805,26 @@ declare module 'stripe' {
         }
 
         type RedirectOnCompletion = 'always' | 'if_required' | 'never';
+
+        interface SavedPaymentMethodOptions {
+          /**
+           * Controls which payment methods are eligible to be redisplayed to returning customers. Corresponds to `allow_redisplay` on the payment method.
+           */
+          allow_redisplay_filters?: Array<
+            SavedPaymentMethodOptions.AllowRedisplayFilter
+          >;
+
+          /**
+           * Enable customers to choose if they wish to save their payment method for future use.
+           */
+          payment_method_save?: SavedPaymentMethodOptions.PaymentMethodSave;
+        }
+
+        namespace SavedPaymentMethodOptions {
+          type AllowRedisplayFilter = 'always' | 'limited' | 'unspecified';
+
+          type PaymentMethodSave = 'disabled' | 'enabled';
+        }
 
         interface SetupIntentData {
           /**
