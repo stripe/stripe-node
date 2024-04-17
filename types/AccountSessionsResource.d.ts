@@ -39,6 +39,11 @@ declare module 'stripe' {
         capital_financing_promotion?: Components.CapitalFinancingPromotion;
 
         /**
+         * Configuration for the capital overview embedded component.
+         */
+        capital_overview?: Components.CapitalOverview;
+
+        /**
          * Configuration for the documents embedded component.
          */
         documents?: Components.Documents;
@@ -186,6 +191,22 @@ declare module 'stripe' {
         }
 
         namespace CapitalFinancingPromotion {
+          interface Features {}
+        }
+
+        interface CapitalOverview {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: CapitalOverview.Features;
+        }
+
+        namespace CapitalOverview {
           interface Features {}
         }
 
