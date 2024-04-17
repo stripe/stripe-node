@@ -635,7 +635,7 @@ declare module 'stripe' {
               type?: Fuel.Type;
 
               /**
-               * The units for `volume_decimal`. One of `us_gallon` or `liter`.
+               * The units for `volume_decimal`. One of `liter`, `us_gallon`, or `other`.
                */
               unit?: Fuel.Unit;
 
@@ -658,7 +658,7 @@ declare module 'stripe' {
                 | 'unleaded_regular'
                 | 'unleaded_super';
 
-              type Unit = 'liter' | 'us_gallon';
+              type Unit = 'liter' | 'other' | 'us_gallon';
             }
 
             interface Lodging {
