@@ -229,6 +229,11 @@ declare module 'stripe' {
         return_url?: string;
 
         /**
+         * Controls saved payment method settings for the session. Only available in `payment` and `subscription` mode.
+         */
+        saved_payment_method_options: Session.SavedPaymentMethodOptions | null;
+
+        /**
          * The ID of the SetupIntent for Checkout Sessions in `setup` mode.
          */
         setup_intent: string | Stripe.SetupIntent | null;
@@ -1506,6 +1511,26 @@ declare module 'stripe' {
         }
 
         type RedirectOnCompletion = 'always' | 'if_required' | 'never';
+
+        interface SavedPaymentMethodOptions {
+          /**
+           * Controls which payment methods are eligible to be redisplayed to returning customers. Corresponds to `allow_redisplay` on the payment method.
+           */
+          allow_redisplay_filters: Array<
+            SavedPaymentMethodOptions.AllowRedisplayFilter
+          > | null;
+
+          /**
+           * Enable customers to choose if they wish to save their payment method for future use.
+           */
+          payment_method_save: SavedPaymentMethodOptions.PaymentMethodSave | null;
+        }
+
+        namespace SavedPaymentMethodOptions {
+          type AllowRedisplayFilter = 'always' | 'limited' | 'unspecified';
+
+          type PaymentMethodSave = 'disabled' | 'enabled';
+        }
 
         interface ShippingAddressCollection {
           /**
