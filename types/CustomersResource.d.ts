@@ -768,6 +768,11 @@ declare module 'stripe' {
 
     interface CustomerListPaymentMethodsParams extends PaginationParams {
       /**
+       * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow. The field defaults to `unspecified`.
+       */
+      allow_redisplay?: CustomerListPaymentMethodsParams.AllowRedisplay;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -779,6 +784,8 @@ declare module 'stripe' {
     }
 
     namespace CustomerListPaymentMethodsParams {
+      type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
       type Type =
         | 'acss_debit'
         | 'affirm'
