@@ -1420,6 +1420,1089 @@ declare module 'stripe' {
 
     interface InvoiceDeleteParams {}
 
+    interface InvoiceCreatePreviewParams {
+      /**
+       * Settings for automatic tax lookup for this invoice preview.
+       */
+      automatic_tax?: InvoiceCreatePreviewParams.AutomaticTax;
+
+      /**
+       * The ID of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
+       */
+      coupon?: string;
+
+      /**
+       * The currency to preview this invoice in. Defaults to that of `customer` if not specified.
+       */
+      currency?: string;
+
+      /**
+       * The identifier of the customer whose upcoming invoice you'd like to retrieve. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
+       */
+      customer?: string;
+
+      /**
+       * Details about the customer you want to invoice or overrides for an existing customer. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
+       */
+      customer_details?: InvoiceCreatePreviewParams.CustomerDetails;
+
+      /**
+       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the subscription or customer. This works for both coupons directly applied to an invoice and coupons applied to a subscription. Pass an empty string to avoid inheriting any discounts.
+       */
+      discounts?: Stripe.Emptyable<Array<InvoiceCreatePreviewParams.Discount>>;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * List of invoice items to add or update in the upcoming invoice preview.
+       */
+      invoice_items?: Array<InvoiceCreatePreviewParams.InvoiceItem>;
+
+      /**
+       * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+       */
+      issuer?: InvoiceCreatePreviewParams.Issuer;
+
+      /**
+       * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+       */
+      on_behalf_of?: Stripe.Emptyable<string>;
+
+      /**
+       * The identifier of the schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
+       */
+      schedule?: string;
+
+      /**
+       * The schedule creation or modification params to apply as a preview. Cannot be used with `subscription` or `subscription_` prefixed fields.
+       */
+      schedule_details?: InvoiceCreatePreviewParams.ScheduleDetails;
+
+      /**
+       * The identifier of the subscription for which you'd like to retrieve the upcoming invoice. If not provided, but a `subscription_items` is provided, you will preview creating a subscription with those items. If neither `subscription` nor `subscription_items` is provided, you will retrieve the next upcoming invoice from among the customer's subscriptions.
+       */
+      subscription?: string;
+
+      /**
+       * The subscription creation or modification params to apply as a preview. Cannot be used with `schedule` or `schedule_details` fields.
+       */
+      subscription_details?: InvoiceCreatePreviewParams.SubscriptionDetails;
+    }
+
+    namespace InvoiceCreatePreviewParams {
+      interface AutomaticTax {
+        /**
+         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
+         */
+        enabled: boolean;
+
+        /**
+         * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+         */
+        liability?: AutomaticTax.Liability;
+      }
+
+      namespace AutomaticTax {
+        interface Liability {
+          /**
+           * The connected account being referenced when `type` is `account`.
+           */
+          account?: string;
+
+          /**
+           * Type of the account referenced in the request.
+           */
+          type: Liability.Type;
+        }
+
+        namespace Liability {
+          type Type = 'account' | 'self';
+        }
+      }
+
+      interface CustomerDetails {
+        /**
+         * The customer's address.
+         */
+        address?: Stripe.Emptyable<Stripe.AddressParam>;
+
+        /**
+         * The customer's shipping information. Appears on invoices emailed to this customer.
+         */
+        shipping?: Stripe.Emptyable<CustomerDetails.Shipping>;
+
+        /**
+         * Tax details about the customer.
+         */
+        tax?: CustomerDetails.Tax;
+
+        /**
+         * The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
+         */
+        tax_exempt?: Stripe.Emptyable<CustomerDetails.TaxExempt>;
+
+        /**
+         * The customer's tax IDs.
+         */
+        tax_ids?: Array<CustomerDetails.TaxId>;
+      }
+
+      namespace CustomerDetails {
+        interface Shipping {
+          /**
+           * Customer shipping address.
+           */
+          address: Stripe.AddressParam;
+
+          /**
+           * Customer name.
+           */
+          name: string;
+
+          /**
+           * Customer phone (including extension).
+           */
+          phone?: string;
+        }
+
+        interface Tax {
+          /**
+           * A recent IP address of the customer used for tax reporting and tax location inference. Stripe recommends updating the IP address when a new PaymentMethod is attached or the address field on the customer is updated. We recommend against updating this field more frequently since it could result in unexpected tax location/reporting outcomes.
+           */
+          ip_address?: Stripe.Emptyable<string>;
+        }
+
+        type TaxExempt = 'exempt' | 'none' | 'reverse';
+
+        interface TaxId {
+          /**
+           * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bh_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `kz_bin`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
+           */
+          type: TaxId.Type;
+
+          /**
+           * Value of the tax ID.
+           */
+          value: string;
+        }
+
+        namespace TaxId {
+          type Type =
+            | 'ad_nrt'
+            | 'ae_trn'
+            | 'ar_cuit'
+            | 'au_abn'
+            | 'au_arn'
+            | 'bg_uic'
+            | 'bh_vat'
+            | 'bo_tin'
+            | 'br_cnpj'
+            | 'br_cpf'
+            | 'ca_bn'
+            | 'ca_gst_hst'
+            | 'ca_pst_bc'
+            | 'ca_pst_mb'
+            | 'ca_pst_sk'
+            | 'ca_qst'
+            | 'ch_vat'
+            | 'cl_tin'
+            | 'cn_tin'
+            | 'co_nit'
+            | 'cr_tin'
+            | 'do_rcn'
+            | 'ec_ruc'
+            | 'eg_tin'
+            | 'es_cif'
+            | 'eu_oss_vat'
+            | 'eu_vat'
+            | 'gb_vat'
+            | 'ge_vat'
+            | 'hk_br'
+            | 'hu_tin'
+            | 'id_npwp'
+            | 'il_vat'
+            | 'in_gst'
+            | 'is_vat'
+            | 'jp_cn'
+            | 'jp_rn'
+            | 'jp_trn'
+            | 'ke_pin'
+            | 'kr_brn'
+            | 'kz_bin'
+            | 'li_uid'
+            | 'mx_rfc'
+            | 'my_frp'
+            | 'my_itn'
+            | 'my_sst'
+            | 'ng_tin'
+            | 'no_vat'
+            | 'no_voec'
+            | 'nz_gst'
+            | 'om_vat'
+            | 'pe_ruc'
+            | 'ph_tin'
+            | 'ro_tin'
+            | 'rs_pib'
+            | 'ru_inn'
+            | 'ru_kpp'
+            | 'sa_vat'
+            | 'sg_gst'
+            | 'sg_uen'
+            | 'si_tin'
+            | 'sv_nit'
+            | 'th_vat'
+            | 'tr_tin'
+            | 'tw_vat'
+            | 'ua_vat'
+            | 'us_ein'
+            | 'uy_ruc'
+            | 've_rif'
+            | 'vn_tin'
+            | 'za_vat';
+        }
+      }
+
+      interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
+      }
+
+      interface InvoiceItem {
+        /**
+         * The integer amount in cents (or local equivalent) of previewed invoice item.
+         */
+        amount?: number;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Only applicable to new invoice items.
+         */
+        currency?: string;
+
+        /**
+         * An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
+         */
+        description?: string;
+
+        /**
+         * Explicitly controls whether discounts apply to this invoice item. Defaults to true, except for negative invoice items.
+         */
+        discountable?: boolean;
+
+        /**
+         * The coupons to redeem into discounts for the invoice item in the preview.
+         */
+        discounts?: Stripe.Emptyable<Array<InvoiceItem.Discount>>;
+
+        /**
+         * The ID of the invoice item to update in preview. If not specified, a new invoice item will be added to the preview of the upcoming invoice.
+         */
+        invoiceitem?: string;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+         */
+        period?: InvoiceItem.Period;
+
+        /**
+         * The ID of the price object.
+         */
+        price?: string;
+
+        /**
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+         */
+        price_data?: InvoiceItem.PriceData;
+
+        /**
+         * Non-negative integer. The quantity of units for the invoice item.
+         */
+        quantity?: number;
+
+        /**
+         * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         */
+        tax_behavior?: InvoiceItem.TaxBehavior;
+
+        /**
+         * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+         */
+        tax_code?: Stripe.Emptyable<string>;
+
+        /**
+         * The tax rates that apply to the item. When set, any `default_tax_rates` do not apply to this item.
+         */
+        tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * The integer unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
+         */
+        unit_amount?: number;
+
+        /**
+         * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
+      }
+
+      namespace InvoiceItem {
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
+        }
+
+        interface Period {
+          /**
+           * The end of the period, which must be greater than or equal to the start. This value is inclusive.
+           */
+          end: number;
+
+          /**
+           * The start of the period. This value is inclusive.
+           */
+          start: number;
+        }
+
+        interface PriceData {
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * The ID of the product that this price will belong to.
+           */
+          product: string;
+
+          /**
+           * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           */
+          tax_behavior?: PriceData.TaxBehavior;
+
+          /**
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+           */
+          unit_amount?: number;
+
+          /**
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           */
+          unit_amount_decimal?: string;
+        }
+
+        namespace PriceData {
+          type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        }
+
+        type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      }
+
+      interface Issuer {
+        /**
+         * The connected account being referenced when `type` is `account`.
+         */
+        account?: string;
+
+        /**
+         * Type of the account referenced in the request.
+         */
+        type: Issuer.Type;
+      }
+
+      namespace Issuer {
+        type Type = 'account' | 'self';
+      }
+
+      interface ScheduleDetails {
+        /**
+         * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running. `cancel` will end the subscription schedule and cancel the underlying subscription.
+         */
+        end_behavior?: ScheduleDetails.EndBehavior;
+
+        /**
+         * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
+         */
+        phases?: Array<ScheduleDetails.Phase>;
+
+        /**
+         * In cases where the `schedule_details` params update the currently active phase, specifies if and how to prorate at the time of the request.
+         */
+        proration_behavior?: ScheduleDetails.ProrationBehavior;
+      }
+
+      namespace ScheduleDetails {
+        type EndBehavior = 'cancel' | 'release';
+
+        interface Phase {
+          /**
+           * A list of prices and quantities that will generate invoice items appended to the next invoice for this phase. You may pass up to 20 items.
+           */
+          add_invoice_items?: Array<Phase.AddInvoiceItem>;
+
+          /**
+           * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
+           */
+          application_fee_percent?: number;
+
+          /**
+           * Automatic tax settings for this phase.
+           */
+          automatic_tax?: Phase.AutomaticTax;
+
+          /**
+           * Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+           */
+          billing_cycle_anchor?: Phase.BillingCycleAnchor;
+
+          /**
+           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+           */
+          billing_thresholds?: Stripe.Emptyable<Phase.BillingThresholds>;
+
+          /**
+           * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
+           */
+          collection_method?: Phase.CollectionMethod;
+
+          /**
+           * The ID of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
+           */
+          coupon?: string;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency?: string;
+
+          /**
+           * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
+           */
+          default_payment_method?: string;
+
+          /**
+           * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
+           */
+          default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+          /**
+           * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
+           */
+          description?: Stripe.Emptyable<string>;
+
+          /**
+           * The coupons to redeem into discounts for the schedule phase. If not specified, inherits the discount from the subscription's customer. Pass an empty string to avoid inheriting any discounts.
+           */
+          discounts?: Stripe.Emptyable<Array<Phase.Discount>>;
+
+          /**
+           * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
+           */
+          end_date?: number | 'now';
+
+          /**
+           * All invoices will be billed using the specified settings.
+           */
+          invoice_settings?: Phase.InvoiceSettings;
+
+          /**
+           * List of configuration items, each with an attached price, to apply during this phase of the subscription schedule.
+           */
+          items: Array<Phase.Item>;
+
+          /**
+           * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
+           */
+          iterations?: number;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual keys in the subscription's `metadata` can be unset by posting an empty value to them in the phase's `metadata`. To unset all keys in the subscription's `metadata`, update the subscription directly or unset every key individually from the phase's `metadata`.
+           */
+          metadata?: Stripe.MetadataParam;
+
+          /**
+           * The account on behalf of which to charge, for each of the associated subscription's invoices.
+           */
+          on_behalf_of?: string;
+
+          /**
+           * Whether the subscription schedule will create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase. The default value is `create_prorations`. This setting controls prorations when a phase is started asynchronously and it is persisted as a field on the phase. It's different from the request-level [proration_behavior](https://stripe.com/docs/api/subscription_schedules/update#update_subscription_schedule-proration_behavior) parameter which controls what happens if the update request affects the billing configuration of the current phase.
+           */
+          proration_behavior?: Phase.ProrationBehavior;
+
+          /**
+           * The date at which this phase of the subscription schedule starts or `now`. Must be set on the first phase.
+           */
+          start_date?: number | 'now';
+
+          /**
+           * The data with which to automatically create a Transfer for each of the associated subscription's invoices.
+           */
+          transfer_data?: Phase.TransferData;
+
+          /**
+           * If set to true the entire phase is counted as a trial and the customer will not be charged for any fees.
+           */
+          trial?: boolean;
+
+          /**
+           * Sets the phase to trialing from the start date to this date. Must be before the phase end date, can not be combined with `trial`
+           */
+          trial_end?: number | 'now';
+        }
+
+        namespace Phase {
+          interface AddInvoiceItem {
+            /**
+             * The coupons to redeem into discounts for the item.
+             */
+            discounts?: Array<AddInvoiceItem.Discount>;
+
+            /**
+             * The ID of the price object.
+             */
+            price?: string;
+
+            /**
+             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+             */
+            price_data?: AddInvoiceItem.PriceData;
+
+            /**
+             * Quantity for this item. Defaults to 1.
+             */
+            quantity?: number;
+
+            /**
+             * The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
+             */
+            tax_rates?: Stripe.Emptyable<Array<string>>;
+          }
+
+          namespace AddInvoiceItem {
+            interface Discount {
+              /**
+               * ID of the coupon to create a new discount for.
+               */
+              coupon?: string;
+
+              /**
+               * ID of an existing discount on the object (or one of its ancestors) to reuse.
+               */
+              discount?: string;
+
+              /**
+               * ID of the promotion code to create a new discount for.
+               */
+              promotion_code?: string;
+            }
+
+            interface PriceData {
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+
+              /**
+               * The ID of the product that this price will belong to.
+               */
+              product: string;
+
+              /**
+               * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+               */
+              tax_behavior?: PriceData.TaxBehavior;
+
+              /**
+               * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+               */
+              unit_amount?: number;
+
+              /**
+               * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+               */
+              unit_amount_decimal?: string;
+            }
+
+            namespace PriceData {
+              type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+            }
+          }
+
+          interface AutomaticTax {
+            /**
+             * Enabled automatic tax calculation which will automatically compute tax rates on all invoices generated by the subscription.
+             */
+            enabled: boolean;
+
+            /**
+             * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+             */
+            liability?: AutomaticTax.Liability;
+          }
+
+          namespace AutomaticTax {
+            interface Liability {
+              /**
+               * The connected account being referenced when `type` is `account`.
+               */
+              account?: string;
+
+              /**
+               * Type of the account referenced in the request.
+               */
+              type: Liability.Type;
+            }
+
+            namespace Liability {
+              type Type = 'account' | 'self';
+            }
+          }
+
+          type BillingCycleAnchor = 'automatic' | 'phase_start';
+
+          interface BillingThresholds {
+            /**
+             * Monetary threshold that triggers the subscription to advance to a new billing period
+             */
+            amount_gte?: number;
+
+            /**
+             * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+             */
+            reset_billing_cycle_anchor?: boolean;
+          }
+
+          type CollectionMethod = 'charge_automatically' | 'send_invoice';
+
+          interface Discount {
+            /**
+             * ID of the coupon to create a new discount for.
+             */
+            coupon?: string;
+
+            /**
+             * ID of an existing discount on the object (or one of its ancestors) to reuse.
+             */
+            discount?: string;
+
+            /**
+             * ID of the promotion code to create a new discount for.
+             */
+            promotion_code?: string;
+          }
+
+          interface InvoiceSettings {
+            /**
+             * The account tax IDs associated with this phase of the subscription schedule. Will be set on invoices generated by this phase of the subscription schedule.
+             */
+            account_tax_ids?: Stripe.Emptyable<Array<string>>;
+
+            /**
+             * Number of days within which a customer must pay invoices generated by this subscription schedule. This value will be `null` for subscription schedules where `billing=charge_automatically`.
+             */
+            days_until_due?: number;
+
+            /**
+             * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+             */
+            issuer?: InvoiceSettings.Issuer;
+          }
+
+          namespace InvoiceSettings {
+            interface Issuer {
+              /**
+               * The connected account being referenced when `type` is `account`.
+               */
+              account?: string;
+
+              /**
+               * Type of the account referenced in the request.
+               */
+              type: Issuer.Type;
+            }
+
+            namespace Issuer {
+              type Type = 'account' | 'self';
+            }
+          }
+
+          interface Item {
+            /**
+             * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+             */
+            billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
+            /**
+             * The coupons to redeem into discounts for the subscription item.
+             */
+            discounts?: Stripe.Emptyable<Array<Item.Discount>>;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a configuration item. Metadata on a configuration item will update the underlying subscription item's `metadata` when the phase is entered, adding new keys and replacing existing keys. Individual keys in the subscription item's `metadata` can be unset by posting an empty value to them in the configuration item's `metadata`. To unset all keys in the subscription item's `metadata`, update the subscription item directly or unset every key individually from the configuration item's `metadata`.
+             */
+            metadata?: Stripe.MetadataParam;
+
+            /**
+             * The plan ID to subscribe to. You may specify the same ID in `plan` and `price`.
+             */
+            plan?: string;
+
+            /**
+             * The ID of the price object.
+             */
+            price?: string;
+
+            /**
+             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+             */
+            price_data?: Item.PriceData;
+
+            /**
+             * Quantity for the given price. Can be set only if the price's `usage_type` is `licensed` and not `metered`.
+             */
+            quantity?: number;
+
+            /**
+             * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+             */
+            tax_rates?: Stripe.Emptyable<Array<string>>;
+          }
+
+          namespace Item {
+            interface BillingThresholds {
+              /**
+               * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+               */
+              usage_gte: number;
+            }
+
+            interface Discount {
+              /**
+               * ID of the coupon to create a new discount for.
+               */
+              coupon?: string;
+
+              /**
+               * ID of an existing discount on the object (or one of its ancestors) to reuse.
+               */
+              discount?: string;
+
+              /**
+               * ID of the promotion code to create a new discount for.
+               */
+              promotion_code?: string;
+            }
+
+            interface PriceData {
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+
+              /**
+               * The ID of the product that this price will belong to.
+               */
+              product: string;
+
+              /**
+               * The recurring components of a price such as `interval` and `interval_count`.
+               */
+              recurring: PriceData.Recurring;
+
+              /**
+               * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+               */
+              tax_behavior?: PriceData.TaxBehavior;
+
+              /**
+               * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+               */
+              unit_amount?: number;
+
+              /**
+               * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+               */
+              unit_amount_decimal?: string;
+            }
+
+            namespace PriceData {
+              interface Recurring {
+                /**
+                 * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+                 */
+                interval: Recurring.Interval;
+
+                /**
+                 * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
+                 */
+                interval_count?: number;
+              }
+
+              namespace Recurring {
+                type Interval = 'day' | 'month' | 'week' | 'year';
+              }
+
+              type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+            }
+          }
+
+          type ProrationBehavior =
+            | 'always_invoice'
+            | 'create_prorations'
+            | 'none';
+
+          interface TransferData {
+            /**
+             * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
+             */
+            amount_percent?: number;
+
+            /**
+             * ID of an existing, connected Stripe account.
+             */
+            destination: string;
+          }
+        }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
+      }
+
+      interface SubscriptionDetails {
+        /**
+         * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+         */
+        billing_cycle_anchor?: SubscriptionDetails.BillingCycleAnchor | number;
+
+        /**
+         * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
+         */
+        cancel_at?: Stripe.Emptyable<number>;
+
+        /**
+         * Boolean indicating whether this subscription should cancel at the end of the current period.
+         */
+        cancel_at_period_end?: boolean;
+
+        /**
+         * This simulates the subscription being canceled or expired immediately.
+         */
+        cancel_now?: boolean;
+
+        /**
+         * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
+         */
+        default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * A list of up to 20 subscription items, each with an attached price.
+         */
+        items?: Array<SubscriptionDetails.Item>;
+
+        /**
+         * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+         */
+        proration_behavior?: SubscriptionDetails.ProrationBehavior;
+
+        /**
+         * If previewing an update to a subscription, and doing proration, `subscription_details.proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_details.items`, or `subscription_details.trial_end` are required. Also, `subscription_details.proration_behavior` cannot be set to 'none'.
+         */
+        proration_date?: number;
+
+        /**
+         * For paused subscriptions, setting `subscription_details.resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed.
+         */
+        resume_at?: 'now';
+
+        /**
+         * Date a subscription is intended to start (can be future or past).
+         */
+        start_date?: number;
+
+        /**
+         * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_details.items` or `subscription` is required.
+         */
+        trial_end?: 'now' | number;
+      }
+
+      namespace SubscriptionDetails {
+        type BillingCycleAnchor = 'now' | 'unchanged';
+
+        interface Item {
+          /**
+           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+           */
+          billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
+          /**
+           * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
+           */
+          clear_usage?: boolean;
+
+          /**
+           * A flag that, if set to `true`, will delete the specified item.
+           */
+          deleted?: boolean;
+
+          /**
+           * The coupons to redeem into discounts for the subscription item.
+           */
+          discounts?: Stripe.Emptyable<Array<Item.Discount>>;
+
+          /**
+           * Subscription item to update.
+           */
+          id?: string;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+          /**
+           * Plan ID for this item, as a string.
+           */
+          plan?: string;
+
+          /**
+           * The ID of the price object. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+           */
+          price?: string;
+
+          /**
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+           */
+          price_data?: Item.PriceData;
+
+          /**
+           * Quantity for this item.
+           */
+          quantity?: number;
+
+          /**
+           * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+           */
+          tax_rates?: Stripe.Emptyable<Array<string>>;
+        }
+
+        namespace Item {
+          interface BillingThresholds {
+            /**
+             * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+             */
+            usage_gte: number;
+          }
+
+          interface Discount {
+            /**
+             * ID of the coupon to create a new discount for.
+             */
+            coupon?: string;
+
+            /**
+             * ID of an existing discount on the object (or one of its ancestors) to reuse.
+             */
+            discount?: string;
+
+            /**
+             * ID of the promotion code to create a new discount for.
+             */
+            promotion_code?: string;
+          }
+
+          interface PriceData {
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * The ID of the product that this price will belong to.
+             */
+            product: string;
+
+            /**
+             * The recurring components of a price such as `interval` and `interval_count`.
+             */
+            recurring: PriceData.Recurring;
+
+            /**
+             * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             */
+            tax_behavior?: PriceData.TaxBehavior;
+
+            /**
+             * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+             */
+            unit_amount?: number;
+
+            /**
+             * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             */
+            unit_amount_decimal?: string;
+          }
+
+          namespace PriceData {
+            interface Recurring {
+              /**
+               * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Recurring.Interval;
+
+              /**
+               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
+               */
+              interval_count?: number;
+            }
+
+            namespace Recurring {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          }
+        }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
+      }
+    }
+
     interface InvoiceFinalizeInvoiceParams {
       /**
        * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
@@ -1498,66 +2581,76 @@ declare module 'stripe' {
       schedule?: string;
 
       /**
+       * The schedule creation or modification params to apply as a preview. Cannot be used with `subscription` or `subscription_` prefixed fields.
+       */
+      schedule_details?: InvoiceListUpcomingLinesParams.ScheduleDetails;
+
+      /**
        * The identifier of the subscription for which you'd like to retrieve the upcoming invoice. If not provided, but a `subscription_items` is provided, you will preview creating a subscription with those items. If neither `subscription` nor `subscription_items` is provided, you will retrieve the next upcoming invoice from among the customer's subscriptions.
        */
       subscription?: string;
 
       /**
-       * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+       * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`. This field has been deprecated and will be removed in a future API version. Use `subscription_details.billing_cycle_anchor` instead.
        */
       subscription_billing_cycle_anchor?:
         | InvoiceListUpcomingLinesParams.SubscriptionBillingCycleAnchor
         | number;
 
       /**
-       * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
+       * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period. This field has been deprecated and will be removed in a future API version. Use `subscription_details.cancel_at` instead.
        */
       subscription_cancel_at?: Stripe.Emptyable<number>;
 
       /**
-       * Boolean indicating whether this subscription should cancel at the end of the current period.
+       * Boolean indicating whether this subscription should cancel at the end of the current period. This field has been deprecated and will be removed in a future API version. Use `subscription_details.cancel_at_period_end` instead.
        */
       subscription_cancel_at_period_end?: boolean;
 
       /**
-       * This simulates the subscription being canceled or expired immediately.
+       * This simulates the subscription being canceled or expired immediately. This field has been deprecated and will be removed in a future API version. Use `subscription_details.cancel_now` instead.
        */
       subscription_cancel_now?: boolean;
 
       /**
-       * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
+       * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set. This field has been deprecated and will be removed in a future API version. Use `subscription_details.default_tax_rates` instead.
        */
       subscription_default_tax_rates?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * A list of up to 20 subscription items, each with an attached price.
+       * The subscription creation or modification params to apply as a preview. Cannot be used with `schedule` or `schedule_details` fields.
+       */
+      subscription_details?: InvoiceListUpcomingLinesParams.SubscriptionDetails;
+
+      /**
+       * A list of up to 20 subscription items, each with an attached price. This field has been deprecated and will be removed in a future API version. Use `subscription_details.items` instead.
        */
       subscription_items?: Array<
         InvoiceListUpcomingLinesParams.SubscriptionItem
       >;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`. This field has been deprecated and will be removed in a future API version. Use `subscription_details.proration_behavior` instead.
        */
       subscription_proration_behavior?: InvoiceListUpcomingLinesParams.SubscriptionProrationBehavior;
 
       /**
-       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
+       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'. This field has been deprecated and will be removed in a future API version. Use `subscription_details.proration_date` instead.
        */
       subscription_proration_date?: number;
 
       /**
-       * For paused subscriptions, setting `subscription_resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed.
+       * For paused subscriptions, setting `subscription_resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed. This field has been deprecated and will be removed in a future API version. Use `subscription_details.resume_at` instead.
        */
       subscription_resume_at?: 'now';
 
       /**
-       * Date a subscription is intended to start (can be future or past).
+       * Date a subscription is intended to start (can be future or past). This field has been deprecated and will be removed in a future API version. Use `subscription_details.start_date` instead.
        */
       subscription_start_date?: number;
 
       /**
-       * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required.
+       * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required. This field has been deprecated and will be removed in a future API version. Use `subscription_details.trial_end` instead.
        */
       subscription_trial_end?: 'now' | number;
 
@@ -1919,7 +3012,665 @@ declare module 'stripe' {
         type Type = 'account' | 'self';
       }
 
+      interface ScheduleDetails {
+        /**
+         * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running. `cancel` will end the subscription schedule and cancel the underlying subscription.
+         */
+        end_behavior?: ScheduleDetails.EndBehavior;
+
+        /**
+         * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
+         */
+        phases?: Array<ScheduleDetails.Phase>;
+
+        /**
+         * In cases where the `schedule_details` params update the currently active phase, specifies if and how to prorate at the time of the request.
+         */
+        proration_behavior?: ScheduleDetails.ProrationBehavior;
+      }
+
+      namespace ScheduleDetails {
+        type EndBehavior = 'cancel' | 'release';
+
+        interface Phase {
+          /**
+           * A list of prices and quantities that will generate invoice items appended to the next invoice for this phase. You may pass up to 20 items.
+           */
+          add_invoice_items?: Array<Phase.AddInvoiceItem>;
+
+          /**
+           * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
+           */
+          application_fee_percent?: number;
+
+          /**
+           * Automatic tax settings for this phase.
+           */
+          automatic_tax?: Phase.AutomaticTax;
+
+          /**
+           * Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+           */
+          billing_cycle_anchor?: Phase.BillingCycleAnchor;
+
+          /**
+           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+           */
+          billing_thresholds?: Stripe.Emptyable<Phase.BillingThresholds>;
+
+          /**
+           * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
+           */
+          collection_method?: Phase.CollectionMethod;
+
+          /**
+           * The ID of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
+           */
+          coupon?: string;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency?: string;
+
+          /**
+           * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
+           */
+          default_payment_method?: string;
+
+          /**
+           * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
+           */
+          default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+          /**
+           * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
+           */
+          description?: Stripe.Emptyable<string>;
+
+          /**
+           * The coupons to redeem into discounts for the schedule phase. If not specified, inherits the discount from the subscription's customer. Pass an empty string to avoid inheriting any discounts.
+           */
+          discounts?: Stripe.Emptyable<Array<Phase.Discount>>;
+
+          /**
+           * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
+           */
+          end_date?: number | 'now';
+
+          /**
+           * All invoices will be billed using the specified settings.
+           */
+          invoice_settings?: Phase.InvoiceSettings;
+
+          /**
+           * List of configuration items, each with an attached price, to apply during this phase of the subscription schedule.
+           */
+          items: Array<Phase.Item>;
+
+          /**
+           * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
+           */
+          iterations?: number;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual keys in the subscription's `metadata` can be unset by posting an empty value to them in the phase's `metadata`. To unset all keys in the subscription's `metadata`, update the subscription directly or unset every key individually from the phase's `metadata`.
+           */
+          metadata?: Stripe.MetadataParam;
+
+          /**
+           * The account on behalf of which to charge, for each of the associated subscription's invoices.
+           */
+          on_behalf_of?: string;
+
+          /**
+           * Whether the subscription schedule will create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase. The default value is `create_prorations`. This setting controls prorations when a phase is started asynchronously and it is persisted as a field on the phase. It's different from the request-level [proration_behavior](https://stripe.com/docs/api/subscription_schedules/update#update_subscription_schedule-proration_behavior) parameter which controls what happens if the update request affects the billing configuration of the current phase.
+           */
+          proration_behavior?: Phase.ProrationBehavior;
+
+          /**
+           * The date at which this phase of the subscription schedule starts or `now`. Must be set on the first phase.
+           */
+          start_date?: number | 'now';
+
+          /**
+           * The data with which to automatically create a Transfer for each of the associated subscription's invoices.
+           */
+          transfer_data?: Phase.TransferData;
+
+          /**
+           * If set to true the entire phase is counted as a trial and the customer will not be charged for any fees.
+           */
+          trial?: boolean;
+
+          /**
+           * Sets the phase to trialing from the start date to this date. Must be before the phase end date, can not be combined with `trial`
+           */
+          trial_end?: number | 'now';
+        }
+
+        namespace Phase {
+          interface AddInvoiceItem {
+            /**
+             * The coupons to redeem into discounts for the item.
+             */
+            discounts?: Array<AddInvoiceItem.Discount>;
+
+            /**
+             * The ID of the price object.
+             */
+            price?: string;
+
+            /**
+             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+             */
+            price_data?: AddInvoiceItem.PriceData;
+
+            /**
+             * Quantity for this item. Defaults to 1.
+             */
+            quantity?: number;
+
+            /**
+             * The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
+             */
+            tax_rates?: Stripe.Emptyable<Array<string>>;
+          }
+
+          namespace AddInvoiceItem {
+            interface Discount {
+              /**
+               * ID of the coupon to create a new discount for.
+               */
+              coupon?: string;
+
+              /**
+               * ID of an existing discount on the object (or one of its ancestors) to reuse.
+               */
+              discount?: string;
+
+              /**
+               * ID of the promotion code to create a new discount for.
+               */
+              promotion_code?: string;
+            }
+
+            interface PriceData {
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+
+              /**
+               * The ID of the product that this price will belong to.
+               */
+              product: string;
+
+              /**
+               * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+               */
+              tax_behavior?: PriceData.TaxBehavior;
+
+              /**
+               * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+               */
+              unit_amount?: number;
+
+              /**
+               * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+               */
+              unit_amount_decimal?: string;
+            }
+
+            namespace PriceData {
+              type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+            }
+          }
+
+          interface AutomaticTax {
+            /**
+             * Enabled automatic tax calculation which will automatically compute tax rates on all invoices generated by the subscription.
+             */
+            enabled: boolean;
+
+            /**
+             * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+             */
+            liability?: AutomaticTax.Liability;
+          }
+
+          namespace AutomaticTax {
+            interface Liability {
+              /**
+               * The connected account being referenced when `type` is `account`.
+               */
+              account?: string;
+
+              /**
+               * Type of the account referenced in the request.
+               */
+              type: Liability.Type;
+            }
+
+            namespace Liability {
+              type Type = 'account' | 'self';
+            }
+          }
+
+          type BillingCycleAnchor = 'automatic' | 'phase_start';
+
+          interface BillingThresholds {
+            /**
+             * Monetary threshold that triggers the subscription to advance to a new billing period
+             */
+            amount_gte?: number;
+
+            /**
+             * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+             */
+            reset_billing_cycle_anchor?: boolean;
+          }
+
+          type CollectionMethod = 'charge_automatically' | 'send_invoice';
+
+          interface Discount {
+            /**
+             * ID of the coupon to create a new discount for.
+             */
+            coupon?: string;
+
+            /**
+             * ID of an existing discount on the object (or one of its ancestors) to reuse.
+             */
+            discount?: string;
+
+            /**
+             * ID of the promotion code to create a new discount for.
+             */
+            promotion_code?: string;
+          }
+
+          interface InvoiceSettings {
+            /**
+             * The account tax IDs associated with this phase of the subscription schedule. Will be set on invoices generated by this phase of the subscription schedule.
+             */
+            account_tax_ids?: Stripe.Emptyable<Array<string>>;
+
+            /**
+             * Number of days within which a customer must pay invoices generated by this subscription schedule. This value will be `null` for subscription schedules where `billing=charge_automatically`.
+             */
+            days_until_due?: number;
+
+            /**
+             * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+             */
+            issuer?: InvoiceSettings.Issuer;
+          }
+
+          namespace InvoiceSettings {
+            interface Issuer {
+              /**
+               * The connected account being referenced when `type` is `account`.
+               */
+              account?: string;
+
+              /**
+               * Type of the account referenced in the request.
+               */
+              type: Issuer.Type;
+            }
+
+            namespace Issuer {
+              type Type = 'account' | 'self';
+            }
+          }
+
+          interface Item {
+            /**
+             * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+             */
+            billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
+            /**
+             * The coupons to redeem into discounts for the subscription item.
+             */
+            discounts?: Stripe.Emptyable<Array<Item.Discount>>;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a configuration item. Metadata on a configuration item will update the underlying subscription item's `metadata` when the phase is entered, adding new keys and replacing existing keys. Individual keys in the subscription item's `metadata` can be unset by posting an empty value to them in the configuration item's `metadata`. To unset all keys in the subscription item's `metadata`, update the subscription item directly or unset every key individually from the configuration item's `metadata`.
+             */
+            metadata?: Stripe.MetadataParam;
+
+            /**
+             * The plan ID to subscribe to. You may specify the same ID in `plan` and `price`.
+             */
+            plan?: string;
+
+            /**
+             * The ID of the price object.
+             */
+            price?: string;
+
+            /**
+             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+             */
+            price_data?: Item.PriceData;
+
+            /**
+             * Quantity for the given price. Can be set only if the price's `usage_type` is `licensed` and not `metered`.
+             */
+            quantity?: number;
+
+            /**
+             * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+             */
+            tax_rates?: Stripe.Emptyable<Array<string>>;
+          }
+
+          namespace Item {
+            interface BillingThresholds {
+              /**
+               * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+               */
+              usage_gte: number;
+            }
+
+            interface Discount {
+              /**
+               * ID of the coupon to create a new discount for.
+               */
+              coupon?: string;
+
+              /**
+               * ID of an existing discount on the object (or one of its ancestors) to reuse.
+               */
+              discount?: string;
+
+              /**
+               * ID of the promotion code to create a new discount for.
+               */
+              promotion_code?: string;
+            }
+
+            interface PriceData {
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+
+              /**
+               * The ID of the product that this price will belong to.
+               */
+              product: string;
+
+              /**
+               * The recurring components of a price such as `interval` and `interval_count`.
+               */
+              recurring: PriceData.Recurring;
+
+              /**
+               * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+               */
+              tax_behavior?: PriceData.TaxBehavior;
+
+              /**
+               * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+               */
+              unit_amount?: number;
+
+              /**
+               * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+               */
+              unit_amount_decimal?: string;
+            }
+
+            namespace PriceData {
+              interface Recurring {
+                /**
+                 * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+                 */
+                interval: Recurring.Interval;
+
+                /**
+                 * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
+                 */
+                interval_count?: number;
+              }
+
+              namespace Recurring {
+                type Interval = 'day' | 'month' | 'week' | 'year';
+              }
+
+              type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+            }
+          }
+
+          type ProrationBehavior =
+            | 'always_invoice'
+            | 'create_prorations'
+            | 'none';
+
+          interface TransferData {
+            /**
+             * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
+             */
+            amount_percent?: number;
+
+            /**
+             * ID of an existing, connected Stripe account.
+             */
+            destination: string;
+          }
+        }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
+      }
+
       type SubscriptionBillingCycleAnchor = 'now' | 'unchanged';
+
+      interface SubscriptionDetails {
+        /**
+         * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+         */
+        billing_cycle_anchor?: SubscriptionDetails.BillingCycleAnchor | number;
+
+        /**
+         * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
+         */
+        cancel_at?: Stripe.Emptyable<number>;
+
+        /**
+         * Boolean indicating whether this subscription should cancel at the end of the current period.
+         */
+        cancel_at_period_end?: boolean;
+
+        /**
+         * This simulates the subscription being canceled or expired immediately.
+         */
+        cancel_now?: boolean;
+
+        /**
+         * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
+         */
+        default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * A list of up to 20 subscription items, each with an attached price.
+         */
+        items?: Array<SubscriptionDetails.Item>;
+
+        /**
+         * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+         */
+        proration_behavior?: SubscriptionDetails.ProrationBehavior;
+
+        /**
+         * If previewing an update to a subscription, and doing proration, `subscription_details.proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_details.items`, or `subscription_details.trial_end` are required. Also, `subscription_details.proration_behavior` cannot be set to 'none'.
+         */
+        proration_date?: number;
+
+        /**
+         * For paused subscriptions, setting `subscription_details.resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed.
+         */
+        resume_at?: 'now';
+
+        /**
+         * Date a subscription is intended to start (can be future or past).
+         */
+        start_date?: number;
+
+        /**
+         * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_details.items` or `subscription` is required.
+         */
+        trial_end?: 'now' | number;
+      }
+
+      namespace SubscriptionDetails {
+        type BillingCycleAnchor = 'now' | 'unchanged';
+
+        interface Item {
+          /**
+           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+           */
+          billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
+          /**
+           * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
+           */
+          clear_usage?: boolean;
+
+          /**
+           * A flag that, if set to `true`, will delete the specified item.
+           */
+          deleted?: boolean;
+
+          /**
+           * The coupons to redeem into discounts for the subscription item.
+           */
+          discounts?: Stripe.Emptyable<Array<Item.Discount>>;
+
+          /**
+           * Subscription item to update.
+           */
+          id?: string;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+          /**
+           * Plan ID for this item, as a string.
+           */
+          plan?: string;
+
+          /**
+           * The ID of the price object. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+           */
+          price?: string;
+
+          /**
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+           */
+          price_data?: Item.PriceData;
+
+          /**
+           * Quantity for this item.
+           */
+          quantity?: number;
+
+          /**
+           * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+           */
+          tax_rates?: Stripe.Emptyable<Array<string>>;
+        }
+
+        namespace Item {
+          interface BillingThresholds {
+            /**
+             * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+             */
+            usage_gte: number;
+          }
+
+          interface Discount {
+            /**
+             * ID of the coupon to create a new discount for.
+             */
+            coupon?: string;
+
+            /**
+             * ID of an existing discount on the object (or one of its ancestors) to reuse.
+             */
+            discount?: string;
+
+            /**
+             * ID of the promotion code to create a new discount for.
+             */
+            promotion_code?: string;
+          }
+
+          interface PriceData {
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * The ID of the product that this price will belong to.
+             */
+            product: string;
+
+            /**
+             * The recurring components of a price such as `interval` and `interval_count`.
+             */
+            recurring: PriceData.Recurring;
+
+            /**
+             * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             */
+            tax_behavior?: PriceData.TaxBehavior;
+
+            /**
+             * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+             */
+            unit_amount?: number;
+
+            /**
+             * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             */
+            unit_amount_decimal?: string;
+          }
+
+          namespace PriceData {
+            interface Recurring {
+              /**
+               * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Recurring.Interval;
+
+              /**
+               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
+               */
+              interval_count?: number;
+            }
+
+            namespace Recurring {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          }
+        }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
+      }
 
       interface SubscriptionItem {
         /**
@@ -2169,66 +3920,76 @@ declare module 'stripe' {
       schedule?: string;
 
       /**
+       * The schedule creation or modification params to apply as a preview. Cannot be used with `subscription` or `subscription_` prefixed fields.
+       */
+      schedule_details?: InvoiceRetrieveUpcomingParams.ScheduleDetails;
+
+      /**
        * The identifier of the subscription for which you'd like to retrieve the upcoming invoice. If not provided, but a `subscription_items` is provided, you will preview creating a subscription with those items. If neither `subscription` nor `subscription_items` is provided, you will retrieve the next upcoming invoice from among the customer's subscriptions.
        */
       subscription?: string;
 
       /**
-       * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+       * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`. This field has been deprecated and will be removed in a future API version. Use `subscription_details.billing_cycle_anchor` instead.
        */
       subscription_billing_cycle_anchor?:
         | InvoiceRetrieveUpcomingParams.SubscriptionBillingCycleAnchor
         | number;
 
       /**
-       * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
+       * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period. This field has been deprecated and will be removed in a future API version. Use `subscription_details.cancel_at` instead.
        */
       subscription_cancel_at?: Stripe.Emptyable<number>;
 
       /**
-       * Boolean indicating whether this subscription should cancel at the end of the current period.
+       * Boolean indicating whether this subscription should cancel at the end of the current period. This field has been deprecated and will be removed in a future API version. Use `subscription_details.cancel_at_period_end` instead.
        */
       subscription_cancel_at_period_end?: boolean;
 
       /**
-       * This simulates the subscription being canceled or expired immediately.
+       * This simulates the subscription being canceled or expired immediately. This field has been deprecated and will be removed in a future API version. Use `subscription_details.cancel_now` instead.
        */
       subscription_cancel_now?: boolean;
 
       /**
-       * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
+       * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set. This field has been deprecated and will be removed in a future API version. Use `subscription_details.default_tax_rates` instead.
        */
       subscription_default_tax_rates?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * A list of up to 20 subscription items, each with an attached price.
+       * The subscription creation or modification params to apply as a preview. Cannot be used with `schedule` or `schedule_details` fields.
+       */
+      subscription_details?: InvoiceRetrieveUpcomingParams.SubscriptionDetails;
+
+      /**
+       * A list of up to 20 subscription items, each with an attached price. This field has been deprecated and will be removed in a future API version. Use `subscription_details.items` instead.
        */
       subscription_items?: Array<
         InvoiceRetrieveUpcomingParams.SubscriptionItem
       >;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`. This field has been deprecated and will be removed in a future API version. Use `subscription_details.proration_behavior` instead.
        */
       subscription_proration_behavior?: InvoiceRetrieveUpcomingParams.SubscriptionProrationBehavior;
 
       /**
-       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
+       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'. This field has been deprecated and will be removed in a future API version. Use `subscription_details.proration_date` instead.
        */
       subscription_proration_date?: number;
 
       /**
-       * For paused subscriptions, setting `subscription_resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed.
+       * For paused subscriptions, setting `subscription_resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed. This field has been deprecated and will be removed in a future API version. Use `subscription_details.resume_at` instead.
        */
       subscription_resume_at?: 'now';
 
       /**
-       * Date a subscription is intended to start (can be future or past).
+       * Date a subscription is intended to start (can be future or past). This field has been deprecated and will be removed in a future API version. Use `subscription_details.start_date` instead.
        */
       subscription_start_date?: number;
 
       /**
-       * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required.
+       * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required. This field has been deprecated and will be removed in a future API version. Use `subscription_details.trial_end` instead.
        */
       subscription_trial_end?: 'now' | number;
 
@@ -2590,7 +4351,665 @@ declare module 'stripe' {
         type Type = 'account' | 'self';
       }
 
+      interface ScheduleDetails {
+        /**
+         * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running. `cancel` will end the subscription schedule and cancel the underlying subscription.
+         */
+        end_behavior?: ScheduleDetails.EndBehavior;
+
+        /**
+         * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
+         */
+        phases?: Array<ScheduleDetails.Phase>;
+
+        /**
+         * In cases where the `schedule_details` params update the currently active phase, specifies if and how to prorate at the time of the request.
+         */
+        proration_behavior?: ScheduleDetails.ProrationBehavior;
+      }
+
+      namespace ScheduleDetails {
+        type EndBehavior = 'cancel' | 'release';
+
+        interface Phase {
+          /**
+           * A list of prices and quantities that will generate invoice items appended to the next invoice for this phase. You may pass up to 20 items.
+           */
+          add_invoice_items?: Array<Phase.AddInvoiceItem>;
+
+          /**
+           * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
+           */
+          application_fee_percent?: number;
+
+          /**
+           * Automatic tax settings for this phase.
+           */
+          automatic_tax?: Phase.AutomaticTax;
+
+          /**
+           * Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+           */
+          billing_cycle_anchor?: Phase.BillingCycleAnchor;
+
+          /**
+           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+           */
+          billing_thresholds?: Stripe.Emptyable<Phase.BillingThresholds>;
+
+          /**
+           * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
+           */
+          collection_method?: Phase.CollectionMethod;
+
+          /**
+           * The ID of the coupon to apply to this phase of the subscription schedule. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
+           */
+          coupon?: string;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency?: string;
+
+          /**
+           * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
+           */
+          default_payment_method?: string;
+
+          /**
+           * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
+           */
+          default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+          /**
+           * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
+           */
+          description?: Stripe.Emptyable<string>;
+
+          /**
+           * The coupons to redeem into discounts for the schedule phase. If not specified, inherits the discount from the subscription's customer. Pass an empty string to avoid inheriting any discounts.
+           */
+          discounts?: Stripe.Emptyable<Array<Phase.Discount>>;
+
+          /**
+           * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
+           */
+          end_date?: number | 'now';
+
+          /**
+           * All invoices will be billed using the specified settings.
+           */
+          invoice_settings?: Phase.InvoiceSettings;
+
+          /**
+           * List of configuration items, each with an attached price, to apply during this phase of the subscription schedule.
+           */
+          items: Array<Phase.Item>;
+
+          /**
+           * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
+           */
+          iterations?: number;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual keys in the subscription's `metadata` can be unset by posting an empty value to them in the phase's `metadata`. To unset all keys in the subscription's `metadata`, update the subscription directly or unset every key individually from the phase's `metadata`.
+           */
+          metadata?: Stripe.MetadataParam;
+
+          /**
+           * The account on behalf of which to charge, for each of the associated subscription's invoices.
+           */
+          on_behalf_of?: string;
+
+          /**
+           * Whether the subscription schedule will create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase. The default value is `create_prorations`. This setting controls prorations when a phase is started asynchronously and it is persisted as a field on the phase. It's different from the request-level [proration_behavior](https://stripe.com/docs/api/subscription_schedules/update#update_subscription_schedule-proration_behavior) parameter which controls what happens if the update request affects the billing configuration of the current phase.
+           */
+          proration_behavior?: Phase.ProrationBehavior;
+
+          /**
+           * The date at which this phase of the subscription schedule starts or `now`. Must be set on the first phase.
+           */
+          start_date?: number | 'now';
+
+          /**
+           * The data with which to automatically create a Transfer for each of the associated subscription's invoices.
+           */
+          transfer_data?: Phase.TransferData;
+
+          /**
+           * If set to true the entire phase is counted as a trial and the customer will not be charged for any fees.
+           */
+          trial?: boolean;
+
+          /**
+           * Sets the phase to trialing from the start date to this date. Must be before the phase end date, can not be combined with `trial`
+           */
+          trial_end?: number | 'now';
+        }
+
+        namespace Phase {
+          interface AddInvoiceItem {
+            /**
+             * The coupons to redeem into discounts for the item.
+             */
+            discounts?: Array<AddInvoiceItem.Discount>;
+
+            /**
+             * The ID of the price object.
+             */
+            price?: string;
+
+            /**
+             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+             */
+            price_data?: AddInvoiceItem.PriceData;
+
+            /**
+             * Quantity for this item. Defaults to 1.
+             */
+            quantity?: number;
+
+            /**
+             * The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
+             */
+            tax_rates?: Stripe.Emptyable<Array<string>>;
+          }
+
+          namespace AddInvoiceItem {
+            interface Discount {
+              /**
+               * ID of the coupon to create a new discount for.
+               */
+              coupon?: string;
+
+              /**
+               * ID of an existing discount on the object (or one of its ancestors) to reuse.
+               */
+              discount?: string;
+
+              /**
+               * ID of the promotion code to create a new discount for.
+               */
+              promotion_code?: string;
+            }
+
+            interface PriceData {
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+
+              /**
+               * The ID of the product that this price will belong to.
+               */
+              product: string;
+
+              /**
+               * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+               */
+              tax_behavior?: PriceData.TaxBehavior;
+
+              /**
+               * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+               */
+              unit_amount?: number;
+
+              /**
+               * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+               */
+              unit_amount_decimal?: string;
+            }
+
+            namespace PriceData {
+              type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+            }
+          }
+
+          interface AutomaticTax {
+            /**
+             * Enabled automatic tax calculation which will automatically compute tax rates on all invoices generated by the subscription.
+             */
+            enabled: boolean;
+
+            /**
+             * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+             */
+            liability?: AutomaticTax.Liability;
+          }
+
+          namespace AutomaticTax {
+            interface Liability {
+              /**
+               * The connected account being referenced when `type` is `account`.
+               */
+              account?: string;
+
+              /**
+               * Type of the account referenced in the request.
+               */
+              type: Liability.Type;
+            }
+
+            namespace Liability {
+              type Type = 'account' | 'self';
+            }
+          }
+
+          type BillingCycleAnchor = 'automatic' | 'phase_start';
+
+          interface BillingThresholds {
+            /**
+             * Monetary threshold that triggers the subscription to advance to a new billing period
+             */
+            amount_gte?: number;
+
+            /**
+             * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+             */
+            reset_billing_cycle_anchor?: boolean;
+          }
+
+          type CollectionMethod = 'charge_automatically' | 'send_invoice';
+
+          interface Discount {
+            /**
+             * ID of the coupon to create a new discount for.
+             */
+            coupon?: string;
+
+            /**
+             * ID of an existing discount on the object (or one of its ancestors) to reuse.
+             */
+            discount?: string;
+
+            /**
+             * ID of the promotion code to create a new discount for.
+             */
+            promotion_code?: string;
+          }
+
+          interface InvoiceSettings {
+            /**
+             * The account tax IDs associated with this phase of the subscription schedule. Will be set on invoices generated by this phase of the subscription schedule.
+             */
+            account_tax_ids?: Stripe.Emptyable<Array<string>>;
+
+            /**
+             * Number of days within which a customer must pay invoices generated by this subscription schedule. This value will be `null` for subscription schedules where `billing=charge_automatically`.
+             */
+            days_until_due?: number;
+
+            /**
+             * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+             */
+            issuer?: InvoiceSettings.Issuer;
+          }
+
+          namespace InvoiceSettings {
+            interface Issuer {
+              /**
+               * The connected account being referenced when `type` is `account`.
+               */
+              account?: string;
+
+              /**
+               * Type of the account referenced in the request.
+               */
+              type: Issuer.Type;
+            }
+
+            namespace Issuer {
+              type Type = 'account' | 'self';
+            }
+          }
+
+          interface Item {
+            /**
+             * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+             */
+            billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
+            /**
+             * The coupons to redeem into discounts for the subscription item.
+             */
+            discounts?: Stripe.Emptyable<Array<Item.Discount>>;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a configuration item. Metadata on a configuration item will update the underlying subscription item's `metadata` when the phase is entered, adding new keys and replacing existing keys. Individual keys in the subscription item's `metadata` can be unset by posting an empty value to them in the configuration item's `metadata`. To unset all keys in the subscription item's `metadata`, update the subscription item directly or unset every key individually from the configuration item's `metadata`.
+             */
+            metadata?: Stripe.MetadataParam;
+
+            /**
+             * The plan ID to subscribe to. You may specify the same ID in `plan` and `price`.
+             */
+            plan?: string;
+
+            /**
+             * The ID of the price object.
+             */
+            price?: string;
+
+            /**
+             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+             */
+            price_data?: Item.PriceData;
+
+            /**
+             * Quantity for the given price. Can be set only if the price's `usage_type` is `licensed` and not `metered`.
+             */
+            quantity?: number;
+
+            /**
+             * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+             */
+            tax_rates?: Stripe.Emptyable<Array<string>>;
+          }
+
+          namespace Item {
+            interface BillingThresholds {
+              /**
+               * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+               */
+              usage_gte: number;
+            }
+
+            interface Discount {
+              /**
+               * ID of the coupon to create a new discount for.
+               */
+              coupon?: string;
+
+              /**
+               * ID of an existing discount on the object (or one of its ancestors) to reuse.
+               */
+              discount?: string;
+
+              /**
+               * ID of the promotion code to create a new discount for.
+               */
+              promotion_code?: string;
+            }
+
+            interface PriceData {
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+
+              /**
+               * The ID of the product that this price will belong to.
+               */
+              product: string;
+
+              /**
+               * The recurring components of a price such as `interval` and `interval_count`.
+               */
+              recurring: PriceData.Recurring;
+
+              /**
+               * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+               */
+              tax_behavior?: PriceData.TaxBehavior;
+
+              /**
+               * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+               */
+              unit_amount?: number;
+
+              /**
+               * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+               */
+              unit_amount_decimal?: string;
+            }
+
+            namespace PriceData {
+              interface Recurring {
+                /**
+                 * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+                 */
+                interval: Recurring.Interval;
+
+                /**
+                 * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
+                 */
+                interval_count?: number;
+              }
+
+              namespace Recurring {
+                type Interval = 'day' | 'month' | 'week' | 'year';
+              }
+
+              type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+            }
+          }
+
+          type ProrationBehavior =
+            | 'always_invoice'
+            | 'create_prorations'
+            | 'none';
+
+          interface TransferData {
+            /**
+             * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
+             */
+            amount_percent?: number;
+
+            /**
+             * ID of an existing, connected Stripe account.
+             */
+            destination: string;
+          }
+        }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
+      }
+
       type SubscriptionBillingCycleAnchor = 'now' | 'unchanged';
+
+      interface SubscriptionDetails {
+        /**
+         * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+         */
+        billing_cycle_anchor?: SubscriptionDetails.BillingCycleAnchor | number;
+
+        /**
+         * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
+         */
+        cancel_at?: Stripe.Emptyable<number>;
+
+        /**
+         * Boolean indicating whether this subscription should cancel at the end of the current period.
+         */
+        cancel_at_period_end?: boolean;
+
+        /**
+         * This simulates the subscription being canceled or expired immediately.
+         */
+        cancel_now?: boolean;
+
+        /**
+         * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
+         */
+        default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * A list of up to 20 subscription items, each with an attached price.
+         */
+        items?: Array<SubscriptionDetails.Item>;
+
+        /**
+         * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+         */
+        proration_behavior?: SubscriptionDetails.ProrationBehavior;
+
+        /**
+         * If previewing an update to a subscription, and doing proration, `subscription_details.proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_details.items`, or `subscription_details.trial_end` are required. Also, `subscription_details.proration_behavior` cannot be set to 'none'.
+         */
+        proration_date?: number;
+
+        /**
+         * For paused subscriptions, setting `subscription_details.resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed.
+         */
+        resume_at?: 'now';
+
+        /**
+         * Date a subscription is intended to start (can be future or past).
+         */
+        start_date?: number;
+
+        /**
+         * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_details.items` or `subscription` is required.
+         */
+        trial_end?: 'now' | number;
+      }
+
+      namespace SubscriptionDetails {
+        type BillingCycleAnchor = 'now' | 'unchanged';
+
+        interface Item {
+          /**
+           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+           */
+          billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
+          /**
+           * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
+           */
+          clear_usage?: boolean;
+
+          /**
+           * A flag that, if set to `true`, will delete the specified item.
+           */
+          deleted?: boolean;
+
+          /**
+           * The coupons to redeem into discounts for the subscription item.
+           */
+          discounts?: Stripe.Emptyable<Array<Item.Discount>>;
+
+          /**
+           * Subscription item to update.
+           */
+          id?: string;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+          /**
+           * Plan ID for this item, as a string.
+           */
+          plan?: string;
+
+          /**
+           * The ID of the price object. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+           */
+          price?: string;
+
+          /**
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+           */
+          price_data?: Item.PriceData;
+
+          /**
+           * Quantity for this item.
+           */
+          quantity?: number;
+
+          /**
+           * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+           */
+          tax_rates?: Stripe.Emptyable<Array<string>>;
+        }
+
+        namespace Item {
+          interface BillingThresholds {
+            /**
+             * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+             */
+            usage_gte: number;
+          }
+
+          interface Discount {
+            /**
+             * ID of the coupon to create a new discount for.
+             */
+            coupon?: string;
+
+            /**
+             * ID of an existing discount on the object (or one of its ancestors) to reuse.
+             */
+            discount?: string;
+
+            /**
+             * ID of the promotion code to create a new discount for.
+             */
+            promotion_code?: string;
+          }
+
+          interface PriceData {
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * The ID of the product that this price will belong to.
+             */
+            product: string;
+
+            /**
+             * The recurring components of a price such as `interval` and `interval_count`.
+             */
+            recurring: PriceData.Recurring;
+
+            /**
+             * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             */
+            tax_behavior?: PriceData.TaxBehavior;
+
+            /**
+             * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+             */
+            unit_amount?: number;
+
+            /**
+             * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             */
+            unit_amount_decimal?: string;
+          }
+
+          namespace PriceData {
+            interface Recurring {
+              /**
+               * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Recurring.Interval;
+
+              /**
+               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
+               */
+              interval_count?: number;
+            }
+
+            namespace Recurring {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          }
+        }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
+      }
 
       interface SubscriptionItem {
         /**
@@ -3068,6 +5487,21 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedInvoice>>;
+
+      /**
+       * At any time, you can preview the upcoming invoice for a customer. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discounts that are applicable to the invoice.
+       *
+       * Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
+       *
+       * You can preview the effects of updating a subscription, including a preview of what proration will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass the subscription_details.proration_date parameter when doing the actual subscription update. The recommended way to get only the prorations being previewed is to consider only proration line items where period[start] is equal to the subscription_details.proration_date value passed in the request.
+       */
+      createPreview(
+        params?: InvoiceCreatePreviewParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Invoice>>;
+      createPreview(
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Invoice>>;
 
       /**
        * Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you'd like to finalize a draft invoice manually, you can do so using this method.

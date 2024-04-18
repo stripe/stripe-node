@@ -12,6 +12,10 @@ export const Invoices = StripeResource.extend({
     methodType: 'list',
   }),
   del: stripeMethod({method: 'DELETE', fullPath: '/v1/invoices/{invoice}'}),
+  createPreview: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/invoices/create_preview',
+  }),
   finalizeInvoice: stripeMethod({
     method: 'POST',
     fullPath: '/v1/invoices/{invoice}/finalize',
