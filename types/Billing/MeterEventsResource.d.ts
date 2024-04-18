@@ -27,7 +27,7 @@ declare module 'stripe' {
         identifier?: string;
 
         /**
-         * The time of the event. Measured in seconds since the Unix epoch. Defaults to current timestamp if not specified.
+         * The time of the event. Measured in seconds since the Unix epoch. Must be within the past 35 calendar days or up to 5 minutes in the future. Defaults to current timestamp if not specified.
          */
         timestamp?: number;
       }
