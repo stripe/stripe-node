@@ -1,5 +1,11 @@
 # Changelog
 
+## 15.4.0-beta.1 - 2024-04-18
+* [#2065](https://github.com/stripe/stripe-node/pull/2065) Update generated code for beta
+  * Add support for `capital_overview`, `tax_registrations`, and `tax_settings` on `AccountSessionCreateParams.components`
+  * Add support for `external_account_collection` on `AccountSessionCreateParams.components.financial_account.features`
+  * Add support for `subscription_trial_from_plan` on `InvoiceUpcomingLinesParams` and `InvoiceUpcomingParams`
+
 ## 15.2.0 - 2024-04-16
 * [#2064](https://github.com/stripe/stripe-node/pull/2064) Update generated code
   * Add support for new resource `Entitlements.ActiveEntitlementSummary`
