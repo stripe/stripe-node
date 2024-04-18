@@ -229,6 +229,11 @@ declare module 'stripe' {
         return_url?: string;
 
         /**
+         * Controls saved payment method settings for the session. Only available in `payment` and `subscription` mode.
+         */
+        saved_payment_method_options: Session.SavedPaymentMethodOptions | null;
+
+        /**
          * The ID of the SetupIntent for Checkout Sessions in `setup` mode.
          */
         setup_intent: string | Stripe.SetupIntent | null;
@@ -912,6 +917,8 @@ declare module 'stripe' {
 
           link?: PaymentMethodOptions.Link;
 
+          mobilepay?: PaymentMethodOptions.Mobilepay;
+
           oxxo?: PaymentMethodOptions.Oxxo;
 
           p24?: PaymentMethodOptions.P24;
@@ -1312,6 +1319,17 @@ declare module 'stripe' {
             type SetupFutureUsage = 'none' | 'off_session';
           }
 
+          interface Mobilepay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
           interface Oxxo {
             /**
              * The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -1484,6 +1502,26 @@ declare module 'stripe' {
         }
 
         type RedirectOnCompletion = 'always' | 'if_required' | 'never';
+
+        interface SavedPaymentMethodOptions {
+          /**
+           * Controls which payment methods are eligible to be redisplayed to returning customers. Corresponds to `allow_redisplay` on the payment method.
+           */
+          allow_redisplay_filters: Array<
+            SavedPaymentMethodOptions.AllowRedisplayFilter
+          > | null;
+
+          /**
+           * Enable customers to choose if they wish to save their payment method for future use.
+           */
+          payment_method_save: SavedPaymentMethodOptions.PaymentMethodSave | null;
+        }
+
+        namespace SavedPaymentMethodOptions {
+          type AllowRedisplayFilter = 'always' | 'limited' | 'unspecified';
+
+          type PaymentMethodSave = 'disabled' | 'enabled';
+        }
 
         interface ShippingAddressCollection {
           /**

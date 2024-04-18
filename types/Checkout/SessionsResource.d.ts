@@ -163,6 +163,11 @@ declare module 'stripe' {
         payment_method_configuration?: string;
 
         /**
+         * This parameter allows you to set some attributes on the payment method created during a Checkout session.
+         */
+        payment_method_data?: SessionCreateParams.PaymentMethodData;
+
+        /**
          * Payment-method-specific configuration.
          */
         payment_method_options?: SessionCreateParams.PaymentMethodOptions;
@@ -201,6 +206,11 @@ declare module 'stripe' {
          * and redirect-based payment methods are enabled on the session.
          */
         return_url?: string;
+
+        /**
+         * Controls saved payment method settings for the session. Only available in `payment` and `subscription` mode.
+         */
+        saved_payment_method_options?: SessionCreateParams.SavedPaymentMethodOptions;
 
         /**
          * A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
@@ -947,6 +957,17 @@ declare module 'stripe' {
 
         type PaymentMethodCollection = 'always' | 'if_required';
 
+        interface PaymentMethodData {
+          /**
+           * Allow redisplay will be set on the payment method on confirmation and indicates whether this payment method can be shown again to the customer in a checkout flow. Only set this field if you wish to override the allow_redisplay value determined by Checkout.
+           */
+          allow_redisplay?: PaymentMethodData.AllowRedisplay;
+        }
+
+        namespace PaymentMethodData {
+          type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+        }
+
         interface PaymentMethodOptions {
           /**
            * contains details about the ACSS Debit payment method options.
@@ -1047,6 +1068,11 @@ declare module 'stripe' {
            * contains details about the Link payment method options.
            */
           link?: PaymentMethodOptions.Link;
+
+          /**
+           * contains details about the Mobilepay payment method options.
+           */
+          mobilepay?: PaymentMethodOptions.Mobilepay;
 
           /**
            * contains details about the OXXO payment method options.
@@ -1507,6 +1533,17 @@ declare module 'stripe' {
             type SetupFutureUsage = 'none' | 'off_session';
           }
 
+          interface Mobilepay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
           interface Oxxo {
             /**
              * The number of calendar days before an OXXO voucher expires. For example, if you create an OXXO voucher on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -1762,6 +1799,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mobilepay'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -1784,6 +1822,26 @@ declare module 'stripe' {
         }
 
         type RedirectOnCompletion = 'always' | 'if_required' | 'never';
+
+        interface SavedPaymentMethodOptions {
+          /**
+           * Controls which payment methods are eligible to be redisplayed to returning customers. Corresponds to `allow_redisplay` on the payment method.
+           */
+          allow_redisplay_filters?: Array<
+            SavedPaymentMethodOptions.AllowRedisplayFilter
+          >;
+
+          /**
+           * Enable customers to choose if they wish to save their payment method for future use.
+           */
+          payment_method_save?: SavedPaymentMethodOptions.PaymentMethodSave;
+        }
+
+        namespace SavedPaymentMethodOptions {
+          type AllowRedisplayFilter = 'always' | 'limited' | 'unspecified';
+
+          type PaymentMethodSave = 'disabled' | 'enabled';
+        }
 
         interface SetupIntentData {
           /**
