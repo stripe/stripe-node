@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/index.js",
   "scripts": {
-    "build": "wrangler publish --dry-run"
+    "build": "wrangler deploy --dry-run"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +13,6 @@
     "stripe": "file:../../"
   },
   "devDependencies": {
-    "wrangler": "^2.9.0"
+    "wrangler": "^3.50.0"
   }
 }
