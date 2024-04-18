@@ -4,9 +4,9 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Forwarding {
       /**
-       * Instructs Stripe to make a request on your behalf using the destination URL and HTTP method in the config.
-       * A config is set up for each destination URL by Stripe at the time of onboarding. Stripe verifies requests with
-       * your credentials in the config, and injects card details from the payment_method into the request.
+       * Instructs Stripe to make a request on your behalf using the destination URL. The destination URL
+       * is activated by Stripe at the time of onboarding. Stripe verifies requests with your credentials
+       * provided during onboarding, and injects card details from the payment_method into the request.
        *
        * Stripe redacts all sensitive fields and headers, including authentication credentials and card numbers,
        * before storing the request and response data in the forwarding Request object, which are subject to a
@@ -31,11 +31,6 @@ declare module 'stripe' {
          * String representing the object's type. Objects of the same type share the same value.
          */
         object: 'forwarding.request';
-
-        /**
-         * The Forwarding Config used when making the forwarded request. The config specifes the HTTP method, merchant credentials, connection settings, and supported destination URLs.
-         */
-        config: string;
 
         /**
          * Time at which the object was created. Measured in seconds since the Unix epoch.

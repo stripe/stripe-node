@@ -19,12 +19,12 @@ declare module 'stripe' {
         object: 'billing.meter_event_summary';
 
         /**
-         * Aggregated value of all the events within start_time (inclusive) and end_time (inclusive). The aggregation strategy is defined on meter via `default_aggregation``.
+         * Aggregated value of all the events within `start_time` (inclusive) and `end_time` (inclusive). The aggregation strategy is defined on meter via `default_aggregation`.
          */
         aggregated_value: number;
 
         /**
-         * End timestamp for this usage summary (inclusive).
+         * End timestamp for this event summary (inclusive).
          */
         end_time: number;
 
@@ -34,12 +34,12 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * The meter associated with this usage summary.
+         * The meter associated with this event summary.
          */
         meter: string;
 
         /**
-         * Start timestamp for this usage summary (inclusive).
+         * Start timestamp for this event summary (inclusive).
          */
         start_time: number;
       }

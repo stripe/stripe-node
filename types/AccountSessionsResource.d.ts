@@ -31,7 +31,17 @@ declare module 'stripe' {
          */
         account_onboarding?: Components.AccountOnboarding;
 
+        /**
+         * Configuration for the balances embedded component.
+         */
+        balances?: Components.Balances;
+
         capital_financing_promotion?: Components.CapitalFinancingPromotion;
+
+        /**
+         * Configuration for the capital overview embedded component.
+         */
+        capital_overview?: Components.CapitalOverview;
 
         /**
          * Configuration for the documents embedded component.
@@ -77,6 +87,21 @@ declare module 'stripe' {
          * Configuration for the payouts embedded component.
          */
         payouts?: Components.Payouts;
+
+        /**
+         * Configuration for the payouts list embedded component.
+         */
+        payouts_list?: Components.PayoutsList;
+
+        /**
+         * Configuration for the tax registrations embedded component.
+         */
+        tax_registrations?: Components.TaxRegistrations;
+
+        /**
+         * Configuration for the tax settings embedded component.
+         */
+        tax_settings?: Components.TaxSettings;
       }
 
       namespace Components {
@@ -122,6 +147,37 @@ declare module 'stripe' {
           }
         }
 
+        interface Balances {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: Balances.Features;
+        }
+
+        namespace Balances {
+          interface Features {
+            /**
+             * Whether to allow payout schedule to be changed. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             */
+            edit_payout_schedule?: boolean;
+
+            /**
+             * Whether to allow creation of instant payouts. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             */
+            instant_payouts?: boolean;
+
+            /**
+             * Whether to allow creation of standard payouts. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             */
+            standard_payouts?: boolean;
+          }
+        }
+
         interface CapitalFinancingPromotion {
           /**
            * Whether the embedded component is enabled.
@@ -135,6 +191,22 @@ declare module 'stripe' {
         }
 
         namespace CapitalFinancingPromotion {
+          interface Features {}
+        }
+
+        interface CapitalOverview {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: CapitalOverview.Features;
+        }
+
+        namespace CapitalOverview {
           interface Features {}
         }
 
@@ -165,6 +237,11 @@ declare module 'stripe' {
 
         namespace FinancialAccount {
           interface Features {
+            /**
+             * Whether to allow external accounts to be linked for money transfer.
+             */
+            external_account_collection?: boolean;
+
             /**
              * Whether to allow money movement features.
              */
@@ -354,6 +431,54 @@ declare module 'stripe' {
              */
             standard_payouts?: boolean;
           }
+        }
+
+        interface PayoutsList {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: PayoutsList.Features;
+        }
+
+        namespace PayoutsList {
+          interface Features {}
+        }
+
+        interface TaxRegistrations {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: TaxRegistrations.Features;
+        }
+
+        namespace TaxRegistrations {
+          interface Features {}
+        }
+
+        interface TaxSettings {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: TaxSettings.Features;
+        }
+
+        namespace TaxSettings {
+          interface Features {}
         }
       }
     }
