@@ -1997,7 +1997,7 @@ declare module 'stripe' {
       }
     }
 
-    interface PaymentMethodConfigurationListParams {
+    interface PaymentMethodConfigurationListParams extends PaginationParams {
       /**
        * The Connect application to filter by.
        */
