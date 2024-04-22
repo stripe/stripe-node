@@ -35,12 +35,12 @@ declare module 'stripe' {
         return_url?: string;
 
         /**
-         * The type of [verification check](https://stripe.com/docs/identity/verification-checks) to be performed.
+         * The type of [verification check](https://stripe.com/docs/identity/verification-checks) to be performed. You must provide a `type` if not passing `verification_flow`.
          */
         type?: VerificationSessionCreateParams.Type;
 
         /**
-         * The ID of a Verification Flow from the Dashboard.
+         * The ID of a Verification Flow from the Dashboard. See https://docs.stripe.com/identity/verification-flows.
          */
         verification_flow?: string;
       }
@@ -51,16 +51,6 @@ declare module 'stripe' {
            * Options that apply to the [document check](https://stripe.com/docs/identity/verification-checks?type=document).
            */
           document?: Stripe.Emptyable<Options.Document>;
-
-          /**
-           * Options that apply to the email check.
-           */
-          email?: Stripe.Emptyable<Options.Email>;
-
-          /**
-           * Options that apply to the phone check.
-           */
-          phone?: Stripe.Emptyable<Options.Phone>;
         }
 
         namespace Options {
@@ -88,20 +78,6 @@ declare module 'stripe' {
 
           namespace Document {
             type AllowedType = 'driving_license' | 'id_card' | 'passport';
-          }
-
-          interface Email {
-            /**
-             * Request one time password verification of `provided_details.email`.
-             */
-            require_verification?: boolean;
-          }
-
-          interface Phone {
-            /**
-             * Request one time password verification of `provided_details.phone`.
-             */
-            require_verification?: boolean;
           }
         }
 
@@ -160,16 +136,6 @@ declare module 'stripe' {
            * Options that apply to the [document check](https://stripe.com/docs/identity/verification-checks?type=document).
            */
           document?: Stripe.Emptyable<Options.Document>;
-
-          /**
-           * Options that apply to the email check.
-           */
-          email?: Stripe.Emptyable<Options.Email>;
-
-          /**
-           * Options that apply to the phone check.
-           */
-          phone?: Stripe.Emptyable<Options.Phone>;
         }
 
         namespace Options {
@@ -197,20 +163,6 @@ declare module 'stripe' {
 
           namespace Document {
             type AllowedType = 'driving_license' | 'id_card' | 'passport';
-          }
-
-          interface Email {
-            /**
-             * Request one time password verification of `provided_details.email`.
-             */
-            require_verification?: boolean;
-          }
-
-          interface Phone {
-            /**
-             * Request one time password verification of `provided_details.phone`.
-             */
-            require_verification?: boolean;
           }
         }
 
