@@ -88,6 +88,10 @@
       "import": "./esm/stripe.esm.worker.js",
       "require": "./cjs/stripe.cjs.worker.js"
     },
+    "workerd": {
+      "import": "./esm/stripe.esm.worker.js",
+      "require": "./cjs/stripe.cjs.worker.js"
+    },
     "default": {
       "import": "./esm/stripe.esm.node.js",
       "require": "./cjs/stripe.cjs.node.js"
