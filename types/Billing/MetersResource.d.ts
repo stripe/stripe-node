@@ -15,7 +15,7 @@ declare module 'stripe' {
         display_name: string;
 
         /**
-         * The name of the usage event to record usage for. Corresponds with the `event_name` field on usage events.
+         * The name of the meter event to record usage for. Corresponds with the `event_name` field on meter events.
          */
         event_name: string;
 
@@ -25,7 +25,7 @@ declare module 'stripe' {
         customer_mapping?: MeterCreateParams.CustomerMapping;
 
         /**
-         * The time window to pre-aggregate usage events for, if any.
+         * The time window to pre-aggregate meter events for, if any.
          */
         event_time_window?: MeterCreateParams.EventTimeWindow;
 
@@ -35,7 +35,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * Fields that specify how to calculate a usage event's value.
+         * Fields that specify how to calculate a meter event's value.
          */
         value_settings?: MeterCreateParams.ValueSettings;
       }
@@ -55,7 +55,7 @@ declare module 'stripe' {
 
         interface DefaultAggregation {
           /**
-           * Specifies how events are aggregated. Allowed values are `count` to count the number of events, `sum` to sum each event's value, or `last` to use the last event's value.
+           * Specifies how events are aggregated. Allowed values are `count` to count the number of events and `sum` to sum each event's value.
            */
           formula: DefaultAggregation.Formula;
         }
@@ -123,12 +123,12 @@ declare module 'stripe' {
         customer: string;
 
         /**
-         * The timestamp from when to stop aggregating usage events (exclusive).
+         * The timestamp from when to stop aggregating meter events (exclusive).
          */
         end_time: number;
 
         /**
-         * The timestamp from when to start aggregating usage events (inclusive).
+         * The timestamp from when to start aggregating meter events (inclusive).
          */
         start_time: number;
 

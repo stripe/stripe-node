@@ -227,6 +227,11 @@ declare module 'stripe' {
           last_attempted_at: number;
 
           /**
+           * Time at which the next ownership refresh can be initiated. This value will be `null` when `status` is `pending`. Measured in seconds since the Unix epoch.
+           */
+          next_refresh_available_at: number | null;
+
+          /**
            * The status of the last refresh attempt.
            */
           status: OwnershipRefresh.Status;

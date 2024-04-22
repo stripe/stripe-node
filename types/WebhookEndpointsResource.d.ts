@@ -140,7 +140,8 @@ declare module 'stripe' {
         | '2022-08-01'
         | '2022-11-15'
         | '2023-08-16'
-        | '2023-10-16';
+        | '2023-10-16'
+        | '2024-04-10';
 
       type EnabledEvent =
         | '*'
@@ -211,6 +212,7 @@ declare module 'stripe' {
         | 'customer.tax_id.updated'
         | 'customer.updated'
         | 'customer_cash_balance_transaction.created'
+        | 'entitlements.active_entitlement_summary.updated'
         | 'file.created'
         | 'financial_connections.account.created'
         | 'financial_connections.account.deactivated'
@@ -369,15 +371,7 @@ declare module 'stripe' {
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created'
-        | 'invoiceitem.updated'
-        | 'order.created'
-        | 'recipient.created'
-        | 'recipient.deleted'
-        | 'recipient.updated'
-        | 'sku.created'
-        | 'sku.deleted'
-        | 'sku.updated';
+        | 'treasury.received_debit.created';
     }
 
     interface WebhookEndpointRetrieveParams {
@@ -489,6 +483,7 @@ declare module 'stripe' {
         | 'customer.tax_id.updated'
         | 'customer.updated'
         | 'customer_cash_balance_transaction.created'
+        | 'entitlements.active_entitlement_summary.updated'
         | 'file.created'
         | 'financial_connections.account.created'
         | 'financial_connections.account.deactivated'
@@ -647,15 +642,7 @@ declare module 'stripe' {
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created'
-        | 'invoiceitem.updated'
-        | 'order.created'
-        | 'recipient.created'
-        | 'recipient.deleted'
-        | 'recipient.updated'
-        | 'sku.created'
-        | 'sku.deleted'
-        | 'sku.updated';
+        | 'treasury.received_debit.created';
     }
 
     interface WebhookEndpointListParams extends PaginationParams {

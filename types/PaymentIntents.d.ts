@@ -347,13 +347,13 @@ declare module 'stripe' {
          *
          * Create a SetupIntent when you're ready to collect your customer's payment credentials.
          * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
-         * The SetupIntent transitions through multiple [statuses](https://stripe.com/docs/payments/intents#intent-statuses) as it guides
+         * The SetupIntent transitions through multiple [statuses](https://docs.stripe.com/payments/intents#intent-statuses) as it guides
          * you through the setup process.
          *
          * Successful SetupIntents result in payment credentials that are optimized for future payments.
          * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
-         * [Strong Customer Authentication](https://stripe.com/docs/strong-customer-authentication) during payment method collection
-         * to streamline later [off-session payments](https://stripe.com/docs/payments/setup-intents).
+         * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
+         * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
          * If you use the SetupIntent with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer),
          * it automatically attaches the resulting payment method to that Customer after successful setup.
          * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
@@ -361,7 +361,7 @@ declare module 'stripe' {
          *
          * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
          *
-         * Related guide: [Setup Intents API](https://stripe.com/docs/payments/setup-intents)
+         * Related guide: [Setup Intents API](https://docs.stripe.com/payments/setup-intents)
          */
         setup_intent?: Stripe.SetupIntent;
 
@@ -398,6 +398,10 @@ declare module 'stripe' {
           | 'bank_account_unverified'
           | 'bank_account_verification_failed'
           | 'billing_invalid_mandate'
+          | 'billing_policy_remote_function_response_invalid'
+          | 'billing_policy_remote_function_timeout'
+          | 'billing_policy_remote_function_unexpected_status_code'
+          | 'billing_policy_remote_function_unreachable'
           | 'bitcoin_upgrade_required'
           | 'capture_charge_authorization_expired'
           | 'capture_unauthorized_payment'
@@ -1253,6 +1257,8 @@ declare module 'stripe' {
 
         alipay?: PaymentMethodOptions.Alipay;
 
+        amazon_pay?: PaymentMethodOptions.AmazonPay;
+
         au_becs_debit?: PaymentMethodOptions.AuBecsDebit;
 
         bacs_debit?: PaymentMethodOptions.BacsDebit;
@@ -1427,6 +1433,13 @@ declare module 'stripe' {
 
         namespace Alipay {
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface AmazonPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
         }
 
         interface AuBecsDebit {
@@ -2071,7 +2084,12 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
-        interface RevolutPay {}
+        interface RevolutPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+        }
 
         interface SepaDebit {
           mandate_options?: SepaDebit.MandateOptions;
@@ -2187,7 +2205,7 @@ declare module 'stripe' {
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'transactions';
+            type Prefetch = 'balances' | 'ownership' | 'transactions';
           }
 
           interface MandateOptions {

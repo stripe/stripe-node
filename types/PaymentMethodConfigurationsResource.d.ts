@@ -24,6 +24,11 @@ declare module 'stripe' {
       alipay?: PaymentMethodConfigurationCreateParams.Alipay;
 
       /**
+       * Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
+       */
+      amazon_pay?: PaymentMethodConfigurationCreateParams.AmazonPay;
+
+      /**
        * Stripe users can accept [Apple Pay](https://stripe.com/payments/apple-pay) in iOS applications in iOS 9 and later, and on the web in Safari starting with iOS 10 or macOS Sierra. There are no additional fees to process Apple Pay payments, and the [pricing](https://stripe.com/pricing) is the same as other card transactions. Check this [page](https://stripe.com/docs/apple-pay) for more details.
        */
       apple_pay?: PaymentMethodConfigurationCreateParams.ApplePay;
@@ -184,6 +189,11 @@ declare module 'stripe' {
       sofort?: PaymentMethodConfigurationCreateParams.Sofort;
 
       /**
+       * Swish is a [real-time](https://stripe.com/docs/payments/real-time) payment method popular in Sweden. It allows customers to [authenticate and approve](https://stripe.com/docs/payments/payment-methods#customer-actions) payments using the Swish mobile app and the Swedish BankID mobile app. Check this [page](https://stripe.com/docs/payments/swish) for more details.
+       */
+      swish?: PaymentMethodConfigurationCreateParams.Swish;
+
+      /**
        * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-debit) for more details.
        */
       us_bank_account?: PaymentMethodConfigurationCreateParams.UsBankAccount;
@@ -268,6 +278,26 @@ declare module 'stripe' {
       }
 
       namespace Alipay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface AmazonPay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: AmazonPay.DisplayPreference;
+      }
+
+      namespace AmazonPay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -860,6 +890,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Swish {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Swish.DisplayPreference;
+      }
+
+      namespace Swish {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface UsBankAccount {
         /**
          * Whether or not the payment method should be displayed.
@@ -953,6 +1003,11 @@ declare module 'stripe' {
        * Alipay is a digital wallet in China that has more than a billion active users worldwide. Alipay users can pay on the web or on a mobile device using login credentials or their Alipay app. Alipay has a low dispute rate and reduces fraud by authenticating payments using the customer's login credentials. Check this [page](https://stripe.com/docs/payments/alipay) for more details.
        */
       alipay?: PaymentMethodConfigurationUpdateParams.Alipay;
+
+      /**
+       * Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
+       */
+      amazon_pay?: PaymentMethodConfigurationUpdateParams.AmazonPay;
 
       /**
        * Stripe users can accept [Apple Pay](https://stripe.com/payments/apple-pay) in iOS applications in iOS 9 and later, and on the web in Safari starting with iOS 10 or macOS Sierra. There are no additional fees to process Apple Pay payments, and the [pricing](https://stripe.com/pricing) is the same as other card transactions. Check this [page](https://stripe.com/docs/apple-pay) for more details.
@@ -1110,6 +1165,11 @@ declare module 'stripe' {
       sofort?: PaymentMethodConfigurationUpdateParams.Sofort;
 
       /**
+       * Swish is a [real-time](https://stripe.com/docs/payments/real-time) payment method popular in Sweden. It allows customers to [authenticate and approve](https://stripe.com/docs/payments/payment-methods#customer-actions) payments using the Swish mobile app and the Swedish BankID mobile app. Check this [page](https://stripe.com/docs/payments/swish) for more details.
+       */
+      swish?: PaymentMethodConfigurationUpdateParams.Swish;
+
+      /**
        * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-debit) for more details.
        */
       us_bank_account?: PaymentMethodConfigurationUpdateParams.UsBankAccount;
@@ -1194,6 +1254,26 @@ declare module 'stripe' {
       }
 
       namespace Alipay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface AmazonPay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: AmazonPay.DisplayPreference;
+      }
+
+      namespace AmazonPay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -1774,6 +1854,26 @@ declare module 'stripe' {
       }
 
       namespace Sofort {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Swish {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Swish.DisplayPreference;
+      }
+
+      namespace Swish {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

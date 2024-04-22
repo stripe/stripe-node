@@ -1,13 +1,13 @@
 import DefaultStripe, {Stripe} from 'stripe';
 
 const stripe = new Stripe(process.argv[2], {
-  apiVersion: '2023-10-16',
+  apiVersion: '2024-04-10',
   host: process.env.STRIPE_MOCK_HOST || 'localhost',
   port: process.env.STRIPE_MOCK_PORT || 12111,
   protocol: 'http',
 });
 const defaultStripe = new DefaultStripe(process.argv[2], {
-  apiVersion: '2023-10-16',
+  apiVersion: '2024-04-10',
   host: process.env.STRIPE_MOCK_HOST || 'localhost',
   port: process.env.STRIPE_MOCK_PORT || 12111,
   protocol: 'http',

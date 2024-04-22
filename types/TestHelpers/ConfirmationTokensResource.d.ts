@@ -60,6 +60,16 @@ declare module 'stripe' {
           alipay?: PaymentMethodData.Alipay;
 
           /**
+           * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow. The field defaults to `unspecified`.
+           */
+          allow_redisplay?: PaymentMethodData.AllowRedisplay;
+
+          /**
+           * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+           */
+          amazon_pay?: PaymentMethodData.AmazonPay;
+
+          /**
            * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
            */
           au_becs_debit?: PaymentMethodData.AuBecsDebit;
@@ -253,6 +263,10 @@ declare module 'stripe' {
           interface AfterpayClearpay {}
 
           interface Alipay {}
+
+          type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+          interface AmazonPay {}
 
           interface AuBecsDebit {
             /**
@@ -540,6 +554,7 @@ declare module 'stripe' {
             | 'affirm'
             | 'afterpay_clearpay'
             | 'alipay'
+            | 'amazon_pay'
             | 'au_becs_debit'
             | 'bacs_debit'
             | 'bancontact'

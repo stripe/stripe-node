@@ -15,7 +15,7 @@ declare module 'stripe' {
      * transfer only if the destination account has enough balance to cover the
      * reversal.
      *
-     * Related guide: [Reversing transfers](https://stripe.com/docs/connect/separate-charges-and-transfers#reversing-transfers)
+     * Related guide: [Reverse transfers](https://stripe.com/docs/connect/separate-charges-and-transfers#reverse-transfers)
      */
     interface TransferReversal {
       /**

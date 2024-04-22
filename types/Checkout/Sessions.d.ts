@@ -229,6 +229,11 @@ declare module 'stripe' {
         return_url?: string;
 
         /**
+         * Controls saved payment method settings for the session. Only available in `payment` and `subscription` mode.
+         */
+        saved_payment_method_options: Session.SavedPaymentMethodOptions | null;
+
+        /**
          * The ID of the SetupIntent for Checkout Sessions in `setup` mode.
          */
         setup_intent: string | Stripe.SetupIntent | null;
@@ -485,7 +490,7 @@ declare module 'stripe' {
 
           interface TaxId {
             /**
-             * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, or `unknown`
+             * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, or `unknown`
              */
             type: TaxId.Type;
 
@@ -503,6 +508,7 @@ declare module 'stripe' {
               | 'au_abn'
               | 'au_arn'
               | 'bg_uic'
+              | 'bh_vat'
               | 'bo_tin'
               | 'br_cnpj'
               | 'br_cpf'
@@ -536,14 +542,17 @@ declare module 'stripe' {
               | 'jp_trn'
               | 'ke_pin'
               | 'kr_brn'
+              | 'kz_bin'
               | 'li_uid'
               | 'mx_rfc'
               | 'my_frp'
               | 'my_itn'
               | 'my_sst'
+              | 'ng_tin'
               | 'no_vat'
               | 'no_voec'
               | 'nz_gst'
+              | 'om_vat'
               | 'pe_ruc'
               | 'ph_tin'
               | 'ro_tin'
@@ -876,6 +885,8 @@ declare module 'stripe' {
 
           alipay?: PaymentMethodOptions.Alipay;
 
+          amazon_pay?: PaymentMethodOptions.AmazonPay;
+
           au_becs_debit?: PaymentMethodOptions.AuBecsDebit;
 
           bacs_debit?: PaymentMethodOptions.BacsDebit;
@@ -905,6 +916,8 @@ declare module 'stripe' {
           konbini?: PaymentMethodOptions.Konbini;
 
           link?: PaymentMethodOptions.Link;
+
+          mobilepay?: PaymentMethodOptions.Mobilepay;
 
           oxxo?: PaymentMethodOptions.Oxxo;
 
@@ -1026,6 +1039,8 @@ declare module 'stripe' {
              */
             setup_future_usage?: 'none';
           }
+
+          interface AmazonPay {}
 
           interface AuBecsDebit {
             /**
@@ -1304,6 +1319,17 @@ declare module 'stripe' {
             type SetupFutureUsage = 'none' | 'off_session';
           }
 
+          interface Mobilepay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
           interface Oxxo {
             /**
              * The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -1457,7 +1483,7 @@ declare module 'stripe' {
                 | 'payment_method'
                 | 'transactions';
 
-              type Prefetch = 'balances' | 'transactions';
+              type Prefetch = 'balances' | 'ownership' | 'transactions';
             }
 
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
@@ -1476,6 +1502,26 @@ declare module 'stripe' {
         }
 
         type RedirectOnCompletion = 'always' | 'if_required' | 'never';
+
+        interface SavedPaymentMethodOptions {
+          /**
+           * Controls which payment methods are eligible to be redisplayed to returning customers. Corresponds to `allow_redisplay` on the payment method.
+           */
+          allow_redisplay_filters: Array<
+            SavedPaymentMethodOptions.AllowRedisplayFilter
+          > | null;
+
+          /**
+           * Enable customers to choose if they wish to save their payment method for future use.
+           */
+          payment_method_save: SavedPaymentMethodOptions.PaymentMethodSave | null;
+        }
+
+        namespace SavedPaymentMethodOptions {
+          type AllowRedisplayFilter = 'always' | 'limited' | 'unspecified';
+
+          type PaymentMethodSave = 'disabled' | 'enabled';
+        }
 
         interface ShippingAddressCollection {
           /**
