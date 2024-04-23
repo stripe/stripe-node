@@ -18,9 +18,9 @@ declare module 'stripe' {
         object: 'entitlements.active_entitlement';
 
         /**
-         * The feature that the customer is entitled to.
+         * The [Feature](https://stripe.com/docs/api/entitlements/feature) that the customer is entitled to.
          */
-        feature: string;
+        feature: string | Stripe.Entitlements.Feature;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
