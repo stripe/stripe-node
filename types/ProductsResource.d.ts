@@ -416,7 +416,7 @@ declare module 'stripe' {
 
     interface ProductCreateFeatureParams {
       /**
-       * The ID of the [Feature](docs/api/entitlements/feature) object attached to this product.
+       * The ID of the [Feature](https://stripe.com/docs/api/entitlements/feature) object attached to this product.
        */
       entitlement_feature: string;
 
