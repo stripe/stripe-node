@@ -1349,7 +1349,7 @@ declare module 'stripe' {
     }
 
     /**
-     * An ad-hoc custom event that is sent based on user configured [Automation](/docs/billing/revenue-recovery/automations#send-custom-webhook-event-action).
+     * An ad-hoc custom event that is sent based on user configured [Automation](/docs/billing/automations#send-custom-webhook-event-action).
      */
     interface CustomerSubscriptionCustomEventEvent extends EventBase {
       type: 'customer.subscription.custom_event';

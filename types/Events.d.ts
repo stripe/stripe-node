@@ -38,7 +38,7 @@ declare module 'stripe' {
 
           /**
            * The trigger name of the automation that triggered this action.
-           *  Please visit [Revenue and retention automations](https://stripe.com/docs/billing/revenue-recovery/automations#choose-a-trigger) for all possible trigger names.
+           *  Please visit [Revenue and retention automations](https://stripe.com/docs/billing/automations#choose-a-trigger) for all possible trigger names.
            */
           trigger: string;
 
@@ -416,7 +416,7 @@ declare module 'stripe' {
       pending_webhooks: number;
 
       /**
-       * Information about the action that causes the event. Only present when the event is triggered by an API request or an [Automation](https://stripe.com/docs/billing/revenue-recovery/automations) action.
+       * Information about the action that causes the event. Only present when the event is triggered by an API request or an [Automation](https://stripe.com/docs/billing/automations) action.
        */
       reason?: Event.Reason | null;
 
