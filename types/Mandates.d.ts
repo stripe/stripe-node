@@ -90,6 +90,8 @@ declare module 'stripe' {
       interface PaymentMethodDetails {
         acss_debit?: PaymentMethodDetails.AcssDebit;
 
+        amazon_pay?: PaymentMethodDetails.AmazonPay;
+
         au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
 
         bacs_debit?: PaymentMethodDetails.BacsDebit;
@@ -103,6 +105,8 @@ declare module 'stripe' {
         paypal?: PaymentMethodDetails.Paypal;
 
         payto?: PaymentMethodDetails.Payto;
+
+        revolut_pay?: PaymentMethodDetails.RevolutPay;
 
         sepa_debit?: PaymentMethodDetails.SepaDebit;
 
@@ -144,6 +148,8 @@ declare module 'stripe' {
 
           type TransactionType = 'business' | 'personal';
         }
+
+        interface AmazonPay {}
 
         interface AuBecsDebit {
           /**
@@ -277,6 +283,8 @@ declare module 'stripe' {
             | 'tax'
             | 'utility';
         }
+
+        interface RevolutPay {}
 
         interface SepaDebit {
           /**

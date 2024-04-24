@@ -92,6 +92,8 @@ declare module 'stripe' {
       interface PaymentMethodDetails {
         acss_debit?: PaymentMethodDetails.AcssDebit;
 
+        amazon_pay?: PaymentMethodDetails.AmazonPay;
+
         au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
 
         bacs_debit?: PaymentMethodDetails.BacsDebit;
@@ -116,6 +118,8 @@ declare module 'stripe' {
 
         payto?: PaymentMethodDetails.Payto;
 
+        revolut_pay?: PaymentMethodDetails.RevolutPay;
+
         sepa_debit?: PaymentMethodDetails.SepaDebit;
 
         sofort?: PaymentMethodDetails.Sofort;
@@ -130,6 +134,8 @@ declare module 'stripe' {
 
       namespace PaymentMethodDetails {
         interface AcssDebit {}
+
+        interface AmazonPay {}
 
         interface AuBecsDebit {}
 
@@ -460,6 +466,8 @@ declare module 'stripe' {
         interface Paypal {}
 
         interface Payto {}
+
+        interface RevolutPay {}
 
         interface SepaDebit {}
 
