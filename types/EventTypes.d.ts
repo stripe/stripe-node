@@ -725,7 +725,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when funds are reinstated to your account after a dispute is closed. This includes [partially refunded payments](/docs/disputes#disputes-on-partially-refunded-payments).
+     * Occurs when funds are reinstated to your account after a dispute is closed. This includes [partially refunded payments](https://docs.stripe.com/disputes#disputes-on-partially-refunded-payments).
      */
     interface ChargeDisputeFundsReinstatedEvent extends EventBase {
       type: 'charge.dispute.funds_reinstated';
@@ -1301,7 +1301,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever collection is paused on a customer's subscription. Only applies when [payment collection](/docs/billing/subscriptions/pause) is paused, not when subscriptions enter `status=paused`.
+     * Occurs whenever collection is paused on a customer's subscription. Only applies when [payment collection](https://docs.stripe.com/billing/subscriptions/pause) is paused, not when subscriptions enter `status=paused`.
      */
     interface CustomerSubscriptionCollectionPausedEvent extends EventBase {
       type: 'customer.subscription.collection_paused';
@@ -1317,7 +1317,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever collection is resumed on a customer's subscription that is currently paused. Only applies when [payment collection](/docs/billing/subscriptions/pause) is resumed, not when subscriptions exit `status=paused`.
+     * Occurs whenever collection is resumed on a customer's subscription that is currently paused. Only applies when [payment collection](https://docs.stripe.com/billing/subscriptions/pause) is resumed, not when subscriptions exit `status=paused`.
      */
     interface CustomerSubscriptionCollectionResumedEvent extends EventBase {
       type: 'customer.subscription.collection_resumed';
@@ -1349,7 +1349,7 @@ declare module 'stripe' {
     }
 
     /**
-     * An ad-hoc custom event that is sent based on user configured [Automation](/docs/billing/automations#send-custom-webhook-event-action).
+     * An ad-hoc custom event that is sent based on user configured [Automation](https://docs.stripe.com/billing/automations#send-custom-webhook-event-action).
      */
     interface CustomerSubscriptionCustomEventEvent extends EventBase {
       type: 'customer.subscription.custom_event';
@@ -1381,7 +1381,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a customer's subscription is paused. Only applies when subscriptions enter `status=paused`, not when [payment collection](/docs/billing/subscriptions/pause) is paused.
+     * Occurs whenever a customer's subscription is paused. Only applies when subscriptions enter `status=paused`, not when [payment collection](https://docs.stripe.com/billing/subscriptions/pause) is paused.
      */
     interface CustomerSubscriptionPausedEvent extends EventBase {
       type: 'customer.subscription.paused';
@@ -1429,7 +1429,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a customer's subscription is no longer paused. Only applies when a `status=paused` subscription is [resumed](/docs/api/subscriptions/resume), not when [payment collection](/docs/billing/subscriptions/pause) is resumed.
+     * Occurs whenever a customer's subscription is no longer paused. Only applies when a `status=paused` subscription is [resumed](https://docs.stripe.com/api/subscriptions/resume), not when [payment collection](https://docs.stripe.com/billing/subscriptions/pause) is resumed.
      */
     interface CustomerSubscriptionResumedEvent extends EventBase {
       type: 'customer.subscription.resumed';
@@ -1836,7 +1836,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a new invoice is created. To learn how webhooks can be used with this event, and how they can affect it, see [Using Webhooks with Subscriptions](/docs/subscriptions/webhooks).
+     * Occurs whenever a new invoice is created. To learn how webhooks can be used with this event, and how they can affect it, see [Using Webhooks with Subscriptions](https://docs.stripe.com/subscriptions/webhooks).
      */
     interface InvoiceCreatedEvent extends EventBase {
       type: 'invoice.created';
@@ -1868,7 +1868,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a draft invoice cannot be finalized. See the invoice’s [last finalization error](/docs/api/invoices/object#invoice_object-last_finalization_error) for details.
+     * Occurs whenever a draft invoice cannot be finalized. See the invoice’s [last finalization error](https://docs.stripe.com/api/invoices/object#invoice_object-last_finalization_error) for details.
      */
     interface InvoiceFinalizationFailedEvent extends EventBase {
       type: 'invoice.finalization_failed';
@@ -2108,7 +2108,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Represents a synchronous request for authorization, see [Using your integration to handle authorization requests](/docs/issuing/purchases/authorizations#authorization-handling).
+     * Represents a synchronous request for authorization, see [Using your integration to handle authorization requests](https://docs.stripe.com/issuing/purchases/authorizations#authorization-handling).
      */
     interface IssuingAuthorizationRequestEvent extends EventBase {
       type: 'issuing_authorization.request';
@@ -2428,7 +2428,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when a PaymentIntent has funds to be captured. Check the `amount_capturable` property on the PaymentIntent to determine the amount that can be captured. You may capture the PaymentIntent with an `amount_to_capture` value up to the specified amount. [Learn more about capturing PaymentIntents.](https://stripe.com/docs/api/payment_intents/capture)
+     * Occurs when a PaymentIntent has funds to be captured. Check the `amount_capturable` property on the PaymentIntent to determine the amount that can be captured. You may capture the PaymentIntent with an `amount_to_capture` value up to the specified amount. [Learn more about capturing PaymentIntents.](https://docs.stripe.com/api/payment_intents/capture)
      */
     interface PaymentIntentAmountCapturableUpdatedEvent extends EventBase {
       type: 'payment_intent.amount_capturable_updated';
@@ -2636,7 +2636,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a payment method is updated via the [PaymentMethod update API](https://stripe.com/docs/api/payment_methods/update).
+     * Occurs whenever a payment method is updated via the [PaymentMethod update API](https://docs.stripe.com/api/payment_methods/update).
      */
     interface PaymentMethodUpdatedEvent extends EventBase {
       type: 'payment_method.updated';
