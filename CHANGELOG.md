@@ -1,5 +1,10 @@
 # Changelog
 
+## 15.5.0-beta.1 - 2024-04-25
+* [#2070](https://github.com/stripe/stripe-node/pull/2070) Update generated code for beta
+  * Add support for `payment_method_settings` on `AccountSessionCreateParams.components`
+  * Add support for `cancel_subscription_schedule` on `QuoteCreateParams.lines[]`, `QuoteLine`, and `QuoteUpdateParams.lines[]`
+
 ## 15.4.0-beta.1 - 2024-04-18
 * [#2065](https://github.com/stripe/stripe-node/pull/2065) Update generated code for beta
   * Add support for `capital_overview`, `tax_registrations`, and `tax_settings` on `AccountSessionCreateParams.components`
