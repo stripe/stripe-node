@@ -864,7 +864,7 @@ declare module 'stripe' {
       namespace Controller {
         interface Fees {
           /**
-           * A value indicating the responsible payer of Stripe fees on this account. Defaults to `account`.
+           * A value indicating the responsible payer of Stripe fees on this account. Defaults to `account`. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior).
            */
           payer?: Fees.Payer;
         }
