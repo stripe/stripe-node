@@ -890,7 +890,7 @@ declare module 'stripe' {
     class TokensResource {
       /**
        * Creates a single-use token that represents a bank account's details.
-       * You can use this token with any API method in place of a bank account dictionary. You can only use this token once. To do so, attach it to a [Custom account](https://stripe.com/docs/api#accounts).
+       * You can use this token with any API method in place of a bank account dictionary. You can only use this token once. To do so, attach it to a [connected account](https://stripe.com/docs/api#accounts) where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is application, which includes Custom accounts.
        */
       create(
         params?: TokenCreateParams,

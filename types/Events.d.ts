@@ -38,7 +38,7 @@ declare module 'stripe' {
 
           /**
            * The trigger name of the automation that triggered this action.
-           *  Please visit [Revenue and retention automations](https://stripe.com/docs/billing/revenue-recovery/automations#choose-a-trigger) for all possible trigger names.
+           *  Please visit [Revenue and retention automations](https://docs.stripe.com/billing/automations#choose-a-trigger) for all possible trigger names.
            */
           trigger: string;
 
@@ -367,10 +367,10 @@ declare module 'stripe' {
      * `Event` objects directly to an endpoint on your server. You can manage
      * webhooks in your
      * [account settings](https://dashboard.stripe.com/account/webhooks). Learn how
-     * to [listen for events](https://stripe.com/docs/webhooks)
+     * to [listen for events](https://docs.stripe.com/webhooks)
      * so that your integration can automatically trigger reactions.
      *
-     * When using [Connect](https://stripe.com/docs/connect), you can also receive event notifications
+     * When using [Connect](https://docs.stripe.com/connect), you can also receive event notifications
      * that occur in connected accounts. For these events, there's an
      * additional `account` attribute in the received `Event` object.
      *
@@ -416,7 +416,7 @@ declare module 'stripe' {
       pending_webhooks: number;
 
       /**
-       * Information about the action that causes the event. Only present when the event is triggered by an API request or an [Automation](https://stripe.com/docs/billing/revenue-recovery/automations) action.
+       * Information about the action that causes the event. Only present when the event is triggered by an API request or an [Automation](https://docs.stripe.com/billing/automations) action.
        */
       reason?: Event.Reason | null;
 

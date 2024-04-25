@@ -79,6 +79,11 @@ declare module 'stripe' {
         payment_details?: Components.PaymentDetails;
 
         /**
+         * Configuration for the payment method settings embedded component.
+         */
+        payment_method_settings?: Components.PaymentMethodSettings;
+
+        /**
          * Configuration for the payments embedded component.
          */
         payments?: Components.Payments;
@@ -364,6 +369,22 @@ declare module 'stripe' {
              */
             refund_management?: boolean;
           }
+        }
+
+        interface PaymentMethodSettings {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: PaymentMethodSettings.Features;
+        }
+
+        namespace PaymentMethodSettings {
+          interface Features {}
         }
 
         interface Payments {

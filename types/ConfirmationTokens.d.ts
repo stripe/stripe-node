@@ -28,7 +28,7 @@ declare module 'stripe' {
       created: number;
 
       /**
-       * Time at which this ConfirmationToken expires and can no longer be used to confirm a PaymentIntent or SetupIntent. This is set to null once this ConfirmationToken has been used.
+       * Time at which this ConfirmationToken expires and can no longer be used to confirm a PaymentIntent or SetupIntent.
        */
       expires_at: number | null;
 

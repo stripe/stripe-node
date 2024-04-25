@@ -32,6 +32,11 @@ declare module 'stripe' {
       billing_cycle_anchor: QuoteLine.BillingCycleAnchor | null;
 
       /**
+       * A point-in-time operation that cancels an existing subscription schedule at the line's starts_at timestamp. Currently only compatible with `quote_acceptance_date` for `starts_at`. When using cancel_subscription_schedule, the subscription schedule on the quote remains unalterable, except for modifications to the metadata, collection_method or invoice_settings.
+       */
+      cancel_subscription_schedule?: QuoteLine.CancelSubscriptionSchedule | null;
+
+      /**
        * Details to identify the end of the time range modified by the proposed change. If not supplied, the quote line is considered a point-in-time operation that only affects the exact timestamp at `starts_at`, and a restricted set of attributes is supported on the quote line.
        */
       ends_at: QuoteLine.EndsAt | null;
@@ -443,6 +448,23 @@ declare module 'stripe' {
       }
 
       type BillingCycleAnchor = 'automatic' | 'line_starts_at';
+
+      interface CancelSubscriptionSchedule {
+        /**
+         * Timestamp helper to cancel the underlying schedule on the accompanying line's start date. Must be set to `line_starts_at`.
+         */
+        cancel_at: 'line_starts_at';
+
+        /**
+         * If the subscription schedule is `active`, indicates if a final invoice will be generated that contains any un-invoiced metered usage and new/pending proration invoice items. Boolean that defaults to `true`.
+         */
+        invoice_now: boolean | null;
+
+        /**
+         * If the subscription schedule is `active`, indicates if the cancellation should be prorated. Boolean that defaults to `true`.
+         */
+        prorate: boolean | null;
+      }
 
       interface EndsAt {
         /**
