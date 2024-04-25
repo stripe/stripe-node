@@ -7,9 +7,14 @@ declare module 'stripe' {
      * properties on the account like its current requirements or if the account is
      * enabled to make live charges or receive payouts.
      *
-     * For Custom accounts, the properties below are always returned. For other accounts, some properties are returned until that
-     * account has started to go through Connect Onboarding. Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions),
-     * some properties are only returned for Custom accounts. Learn about the differences [between accounts](https://stripe.com/docs/connect/accounts).
+     * For accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection)
+     * is `application`, which includes Custom accounts, the properties below are always
+     * returned.
+     *
+     * For accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection)
+     * is `stripe`, which includes Standard and Express accounts, some properties are only returned
+     * until you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions)
+     * to start Connect Onboarding. Learn about the [differences between accounts](https://stripe.com/connect/accounts).
      */
     interface Account {
       /**
@@ -28,7 +33,7 @@ declare module 'stripe' {
       business_profile?: Account.BusinessProfile | null;
 
       /**
-       * The business type. Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property is only returned for Custom accounts.
+       * The business type. After you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions), this property is only returned for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
        */
       business_type?: Account.BusinessType | null;
 
@@ -64,7 +69,7 @@ declare module 'stripe' {
       deleted?: void;
 
       /**
-       * Whether account details have been submitted. Standard accounts cannot receive payouts before this is true.
+       * Whether account details have been submitted. Accounts with Stripe Dashboard access, which includes Standard accounts, cannot receive payouts before this is true.
        */
       details_submitted: boolean;
 
@@ -83,10 +88,9 @@ declare module 'stripe' {
       /**
        * This is an object representing a person associated with a Stripe account.
        *
-       * A platform cannot access a Standard or Express account's persons after the account starts onboarding, such as after generating an account link for the account.
-       * See the [Standard onboarding](https://stripe.com/docs/connect/standard-accounts) or [Express onboarding documentation](https://stripe.com/docs/connect/express-accounts) for information about platform prefilling and account onboarding steps.
+       * A platform cannot access a person for an account where [account.controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`, which includes Standard and Express accounts, after creating an Account Link or Account Session to start Connect onboarding.
        *
-       * Related guide: [Handling identity verification with the API](https://stripe.com/docs/connect/handling-api-verification#person-information)
+       * See the [Standard onboarding](https://stripe.com/connect/standard-accounts) or [Express onboarding](https://stripe.com/connect/express-accounts) documentation for information about prefilling information and account onboarding steps. Learn more about [handling identity verification with the API](https://stripe.com/connect/handling-api-verification#person-information).
        */
       individual?: Stripe.Person;
 
@@ -110,7 +114,7 @@ declare module 'stripe' {
       tos_acceptance?: Account.TosAcceptance;
 
       /**
-       * The Stripe account type. Can be `standard`, `express`, or `custom`.
+       * The Stripe account type. Can be `standard`, `express`, `custom`, or `none`.
        */
       type: Account.Type;
     }
@@ -752,7 +756,7 @@ declare module 'stripe' {
       namespace Controller {
         interface Fees {
           /**
-           * A value indicating the responsible payer of a bundle of Stripe fees for pricing-control eligible products on this account.
+           * A value indicating the responsible payer of a bundle of Stripe fees for pricing-control eligible products on this account. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior).
            */
           payer: Fees.Payer;
         }
@@ -1283,7 +1287,7 @@ declare module 'stripe' {
 
         interface Payouts {
           /**
-           * A Boolean indicating if Stripe should try to reclaim negative balances from an attached bank account. See our [Understanding Connect Account Balances](https://stripe.com/docs/connect/account-balances) documentation for details. Default value is `false` for Custom accounts, otherwise `true`.
+           * A Boolean indicating if Stripe should try to reclaim negative balances from an attached bank account. See [Understanding Connect account balances](https://stripe.com/connect/account-balances) for details. The default value is `false` when [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts, otherwise `true`.
            */
           debit_negative_balances: boolean;
 

@@ -14,17 +14,24 @@ declare module 'stripe' {
       business_profile?: AccountCreateParams.BusinessProfile;
 
       /**
-       * The business type. Once you create an [Account Link](https://docs.stripe.com/api/account_links) or [Account Session](https://docs.stripe.com/api/account_sessions), this property can only be updated for Custom accounts.
+       * The business type. Once you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions), this property can only be updated for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
        */
       business_type?: AccountCreateParams.BusinessType;
 
       /**
-       * Each key of the dictionary represents a capability, and each capability maps to its settings (e.g. whether it has been requested or not). Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
+       * Each key of the dictionary represents a capability, and each capability
+       * maps to its settings (for example, whether it has been requested or not). Each
+       * capability is inactive until you have provided its specific
+       * requirements and Stripe has verified them. An account might have some
+       * of its requested capabilities be active and some be inactive.
+       *
+       * Required when [account.controller.stripe_dashboard.type](https://stripe.com/api/accounts/create#create_account-controller-dashboard-type)
+       * is `none`, which includes Custom accounts.
        */
       capabilities?: AccountCreateParams.Capabilities;
 
       /**
-       * Information about the company or business. This field is available for any `business_type`. Once you create an [Account Link](https://docs.stripe.com/api/account_links) or [Account Session](https://docs.stripe.com/api/account_sessions), this property can only be updated for Custom accounts.
+       * Information about the company or business. This field is available for any `business_type`. Once you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions), this property can only be updated for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
        */
       company?: AccountCreateParams.Company;
 
@@ -49,7 +56,7 @@ declare module 'stripe' {
       documents?: AccountCreateParams.Documents;
 
       /**
-       * The email address of the account holder. This is only to make the account easier to identify to you. Stripe only emails Custom accounts with your consent.
+       * The email address of the account holder. This is only to make the account easier to identify to you. If [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts, Stripe doesn't email the account without your consent.
        */
       email?: string;
 
@@ -59,14 +66,14 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * A card or bank account to attach to the account for receiving [payouts](https://docs.stripe.com/connect/bank-debit-card-payouts) (you won't be able to use it for top-ups). You can provide either a token, like the ones returned by [Stripe.js](https://docs.stripe.com/js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://docs.stripe.com/api#account_create_bank_account) creation.
+       * A card or bank account to attach to the account for receiving [payouts](https://stripe.com/connect/bank-debit-card-payouts) (you won't be able to use it for top-ups). You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://stripe.com/api#account_create_bank_account) creation.
        *
-       * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the [bank account](https://docs.stripe.com/api#account_create_bank_account) or [card creation](https://docs.stripe.com/api#account_create_card) APIs. After you create an [Account Link](https://docs.stripe.com/api/account_links) or [Account Session](https://docs.stripe.com/api/account_sessions), this property can only be updated for Custom accounts.
+       * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the [bank account](https://stripe.com/api#account_create_bank_account) or [card creation](https://stripe.com/api#account_create_card) APIs. After you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions), this property can only be updated for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
        */
       external_account?: string | AccountCreateParams.ExternalAccount;
 
       /**
-       * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`. Once you create an [Account Link](https://docs.stripe.com/api/account_links) or [Account Session](https://docs.stripe.com/api/account_sessions), this property can only be updated for Custom accounts.
+       * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`. Once you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions), this property can only be updated for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
        */
       individual?: AccountCreateParams.Individual;
 
@@ -81,7 +88,7 @@ declare module 'stripe' {
       settings?: AccountCreateParams.Settings;
 
       /**
-       * Details on the account's acceptance of the [Stripe Services Agreement](https://docs.stripe.com/connect/updating-accounts#tos-acceptance) This property can only be updated for Custom accounts.
+       * Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/connect/updating-accounts#tos-acceptance). This property can only be updated for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
        */
       tos_acceptance?: AccountCreateParams.TosAcceptance;
 
@@ -857,7 +864,7 @@ declare module 'stripe' {
       namespace Controller {
         interface Fees {
           /**
-           * A value indicating the responsible payer of Stripe fees on this account. Defaults to `account`.
+           * A value indicating the responsible payer of Stripe fees on this account. Defaults to `account`. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior).
            */
           payer?: Fees.Payer;
         }
@@ -1490,17 +1497,24 @@ declare module 'stripe' {
       business_profile?: AccountUpdateParams.BusinessProfile;
 
       /**
-       * The business type. Once you create an [Account Link](https://docs.stripe.com/api/account_links) or [Account Session](https://docs.stripe.com/api/account_sessions), this property can only be updated for Custom accounts.
+       * The business type. Once you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions), this property can only be updated for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
        */
       business_type?: AccountUpdateParams.BusinessType;
 
       /**
-       * Each key of the dictionary represents a capability, and each capability maps to its settings (e.g. whether it has been requested or not). Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
+       * Each key of the dictionary represents a capability, and each capability
+       * maps to its settings (for example, whether it has been requested or not). Each
+       * capability is inactive until you have provided its specific
+       * requirements and Stripe has verified them. An account might have some
+       * of its requested capabilities be active and some be inactive.
+       *
+       * Required when [account.controller.stripe_dashboard.type](https://stripe.com/api/accounts/create#create_account-controller-dashboard-type)
+       * is `none`, which includes Custom accounts.
        */
       capabilities?: AccountUpdateParams.Capabilities;
 
       /**
-       * Information about the company or business. This field is available for any `business_type`. Once you create an [Account Link](https://docs.stripe.com/api/account_links) or [Account Session](https://docs.stripe.com/api/account_sessions), this property can only be updated for Custom accounts.
+       * Information about the company or business. This field is available for any `business_type`. Once you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions), this property can only be updated for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
        */
       company?: AccountUpdateParams.Company;
 
@@ -1515,7 +1529,7 @@ declare module 'stripe' {
       documents?: AccountUpdateParams.Documents;
 
       /**
-       * The email address of the account holder. This is only to make the account easier to identify to you. Stripe only emails Custom accounts with your consent.
+       * The email address of the account holder. This is only to make the account easier to identify to you. If [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts, Stripe doesn't email the account without your consent.
        */
       email?: string;
 
@@ -1525,9 +1539,9 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * A card or bank account to attach to the account for receiving [payouts](https://docs.stripe.com/connect/bank-debit-card-payouts) (you won't be able to use it for top-ups). You can provide either a token, like the ones returned by [Stripe.js](https://docs.stripe.com/js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://docs.stripe.com/api#account_create_bank_account) creation.
+       * A card or bank account to attach to the account for receiving [payouts](https://stripe.com/connect/bank-debit-card-payouts) (you won't be able to use it for top-ups). You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://stripe.com/api#account_create_bank_account) creation.
        *
-       * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the [bank account](https://docs.stripe.com/api#account_create_bank_account) or [card creation](https://docs.stripe.com/api#account_create_card) APIs. After you create an [Account Link](https://docs.stripe.com/api/account_links) or [Account Session](https://docs.stripe.com/api/account_sessions), this property can only be updated for Custom accounts.
+       * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the [bank account](https://stripe.com/api#account_create_bank_account) or [card creation](https://stripe.com/api#account_create_card) APIs. After you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions), this property can only be updated for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
        */
       external_account?: Stripe.Emptyable<
         | string
@@ -1537,7 +1551,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`. Once you create an [Account Link](https://docs.stripe.com/api/account_links) or [Account Session](https://docs.stripe.com/api/account_sessions), this property can only be updated for Custom accounts.
+       * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`. Once you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions), this property can only be updated for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
        */
       individual?: AccountUpdateParams.Individual;
 
@@ -1552,7 +1566,7 @@ declare module 'stripe' {
       settings?: AccountUpdateParams.Settings;
 
       /**
-       * Details on the account's acceptance of the [Stripe Services Agreement](https://docs.stripe.com/connect/updating-accounts#tos-acceptance) This property can only be updated for Custom accounts.
+       * Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/connect/updating-accounts#tos-acceptance). This property can only be updated for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
        */
       tos_acceptance?: AccountUpdateParams.TosAcceptance;
     }
@@ -3934,12 +3948,16 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Account>>;
 
       /**
-       * Updates a [connected account](https://stripe.com/docs/connect/accounts) by setting the values of the parameters passed. Any parameters not provided are
+       * Updates a [connected account](https://stripe.com/connect/accounts) by setting the values of the parameters passed. Any parameters not provided are
        * left unchanged.
        *
-       * For Custom accounts, you can update any information on the account. For other accounts, you can update all information until that
-       * account has started to go through Connect Onboarding. Once you create an [Account Link or <a href="/docs/api/account_sessions">Account Session](https://stripe.com/docs/api/account_links),
-       * some properties can only be changed or updated for Custom accounts.
+       * For accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection)
+       * is application, which includes Custom accounts, you can update any information on the account.
+       *
+       * For accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection)
+       * is stripe, which includes Standard and Express accounts, you can update all information until you create
+       * an [Account Link or <a href="/api/account_sessions">Account Session](https://stripe.com/api/account_links) to start Connect onboarding,
+       * after which some properties can no longer be updated.
        *
        * To update your own account, use the [Dashboard](https://dashboard.stripe.com/settings/account). Refer to our
        * [Connect](https://stripe.com/docs/connect/updating-accounts) documentation to learn more about updating accounts.
@@ -3960,9 +3978,11 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.Account>;
 
       /**
-       * With [Connect](https://stripe.com/docs/connect), you can delete accounts you manage.
+       * With [Connect](https://stripe.com/connect), you can delete accounts you manage.
        *
-       * Accounts created using test-mode keys can be deleted at any time. Standard accounts created using live-mode keys cannot be deleted. Custom or Express accounts created using live-mode keys can only be deleted once all balances are zero.
+       * Test-mode accounts can be deleted at any time.
+       *
+       * Live-mode accounts where Stripe is responsible for negative account balances cannot be deleted, which includes Standard accounts. Live-mode accounts where your platform is liable for negative account balances, which includes Custom and Express accounts, can be deleted when all [balances](https://stripe.com/api/balance/balanace_object) are zero.
        *
        * If you want to delete your own account, use the [account information tab in your account settings](https://dashboard.stripe.com/settings/account) instead.
        */
@@ -3986,9 +4006,9 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.ExternalAccount>>;
 
       /**
-       * Creates a single-use login link for an Express account to access their Stripe dashboard.
+       * Creates a single-use login link for a connected account to access the Express Dashboard.
        *
-       * You may only create login links for [Express accounts](https://stripe.com/docs/connect/express-accounts) connected to your platform.
+       * You can only create login links for accounts that use the [Express Dashboard](https://stripe.com/connect/express-dashboard) and are connected to your platform.
        */
       createLoginLink(
         id: string,
@@ -4083,9 +4103,9 @@ declare module 'stripe' {
       ): ApiListPromise<Stripe.Person>;
 
       /**
-       * With [Connect](https://stripe.com/docs/connect), you may flag accounts as suspicious.
+       * With [Connect](https://stripe.com/connect), you can reject accounts that you have flagged as suspicious.
        *
-       * Test-mode Custom and Express accounts can be rejected at any time. Accounts created using live-mode keys may only be rejected once all balances are zero.
+       * Only accounts where your platform is liable for negative account balances, which includes Custom and Express accounts, can be rejected. Test-mode accounts can be rejected at any time. Live-mode accounts can only be rejected after all balances are zero.
        */
       reject(
         id: string,
@@ -4165,9 +4185,14 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Capability>>;
 
       /**
-       * Updates the metadata, account holder name, account holder type of a bank account belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts), and optionally sets it as the default for its currency. Other bank account details are not editable by design.
+       * Updates the metadata, account holder name, account holder type of a bank account belonging to
+       * a connected account and optionally sets it as the default for its currency. Other bank account
+       * details are not editable by design.
        *
-       * You can re-enable a disabled bank account by performing an update call without providing any arguments or changes.
+       * You can only update bank accounts when [account.controller.requirement_collection is application, which includes <a href="/connect/custom-accounts">Custom accounts](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection).
+       *
+       * You can re-enable a disabled bank account by performing an update call without providing any
+       * arguments or changes.
        */
       updateExternalAccount(
         accountId: string,

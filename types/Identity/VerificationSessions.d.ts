@@ -73,7 +73,7 @@ declare module 'stripe' {
         /**
          * Details provided about the user being verified. These details may be shown to the user.
          */
-        provided_details?: VerificationSession.ProvidedDetails | null;
+        provided_details: VerificationSession.ProvidedDetails | null;
 
         /**
          * Redaction status of this VerificationSession. If the VerificationSession is not redacted, this field will be null.
@@ -237,7 +237,7 @@ declare module 'stripe' {
           /**
            * The user's verified email address
            */
-          email?: string | null;
+          email: string | null;
 
           /**
            * The user's verified first name.
@@ -262,7 +262,7 @@ declare module 'stripe' {
           /**
            * The user's verified phone number
            */
-          phone?: string | null;
+          phone: string | null;
         }
 
         namespace VerifiedOutputs {
