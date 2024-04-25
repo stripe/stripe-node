@@ -1852,7 +1852,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a draft invoice is deleted.
+     * Occurs whenever a draft invoice is deleted. Note: This event is not sent for [invoice previews](https://docs.stripe.com/api/invoices/create_preview).
      */
     interface InvoiceDeletedEvent extends EventBase {
       type: 'invoice.deleted';
