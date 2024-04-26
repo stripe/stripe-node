@@ -27,7 +27,7 @@ declare module 'stripe' {
         /**
          * List of balance transactions associated with the dispute.
          */
-        balance_transactions: Array<Stripe.BalanceTransaction> | null;
+        balance_transactions?: Array<Stripe.BalanceTransaction> | null;
 
         /**
          * Time at which the object was created. Measured in seconds since the Unix epoch.

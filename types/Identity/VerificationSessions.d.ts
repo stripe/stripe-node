@@ -73,7 +73,7 @@ declare module 'stripe' {
         /**
          * Details provided about the user being verified. These details may be shown to the user.
          */
-        provided_details: VerificationSession.ProvidedDetails | null;
+        provided_details?: VerificationSession.ProvidedDetails | null;
 
         /**
          * Redaction status of this VerificationSession. If the VerificationSession is not redacted, this field will be null.
@@ -103,7 +103,7 @@ declare module 'stripe' {
         /**
          * The user's verified data.
          */
-        verified_outputs: VerificationSession.VerifiedOutputs | null;
+        verified_outputs?: VerificationSession.VerifiedOutputs | null;
       }
 
       namespace VerificationSession {
@@ -232,7 +232,7 @@ declare module 'stripe' {
           /**
            * The user's verified date of birth.
            */
-          dob: VerifiedOutputs.Dob | null;
+          dob?: VerifiedOutputs.Dob | null;
 
           /**
            * The user's verified email address
@@ -247,7 +247,7 @@ declare module 'stripe' {
           /**
            * The user's verified id number.
            */
-          id_number: string | null;
+          id_number?: string | null;
 
           /**
            * The user's verified id number type.

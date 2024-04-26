@@ -36,7 +36,7 @@ declare module 'stripe' {
         /**
          * Code used to redeem this gift card.
          */
-        code: string | null;
+        code?: string | null;
 
         /**
          * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -61,7 +61,7 @@ declare module 'stripe' {
         /**
          * Transactions on this gift card.
          */
-        transactions: ApiList<Stripe.GiftCards.Transaction>;
+        transactions?: ApiList<Stripe.GiftCards.Transaction>;
       }
 
       namespace Card {

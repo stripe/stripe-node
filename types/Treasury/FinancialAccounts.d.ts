@@ -150,7 +150,7 @@ declare module 'stripe' {
             /**
              * The account number.
              */
-            account_number: string | null;
+            account_number?: string | null;
 
             /**
              * The last four characters of the account number.
