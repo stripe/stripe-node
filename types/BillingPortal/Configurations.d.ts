@@ -203,7 +203,7 @@ declare module 'stripe' {
             /**
              * The list of up to 10 products that support subscription updates.
              */
-            products: Array<SubscriptionUpdate.Product> | null;
+            products?: Array<SubscriptionUpdate.Product> | null;
 
             /**
              * Determines how to handle prorations resulting from subscription updates. Valid values are `none`, `create_prorations`, and `always_invoice`. Defaults to a value of `none` if you don't set it during creation.
