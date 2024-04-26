@@ -30,7 +30,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * Details about the address from which the goods are being shippped.
+         * Details about the address from which the goods are being shipped.
          */
         ship_from_details?: CalculationCreateParams.ShipFromDetails;
 

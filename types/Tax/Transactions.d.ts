@@ -64,7 +64,7 @@ declare module 'stripe' {
         /**
          * The details of the ship from location, such as the address.
          */
-        ship_from_details?: Transaction.ShipFromDetails | null;
+        ship_from_details: Transaction.ShipFromDetails | null;
 
         /**
          * The shipping cost details for the transaction.
