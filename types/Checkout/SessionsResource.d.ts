@@ -1075,6 +1075,11 @@ declare module 'stripe' {
           mobilepay?: PaymentMethodOptions.Mobilepay;
 
           /**
+           * contains details about the Multibanco payment method options.
+           */
+          multibanco?: PaymentMethodOptions.Multibanco;
+
+          /**
            * contains details about the OXXO payment method options.
            */
           oxxo?: PaymentMethodOptions.Oxxo;
@@ -1544,6 +1549,17 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface Multibanco {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
           interface Oxxo {
             /**
              * The number of calendar days before an OXXO voucher expires. For example, if you create an OXXO voucher on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -1814,6 +1830,7 @@ declare module 'stripe' {
           | 'konbini'
           | 'link'
           | 'mobilepay'
+          | 'multibanco'
           | 'oxxo'
           | 'p24'
           | 'paynow'
