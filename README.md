@@ -474,8 +474,8 @@ Returns a promise of an array of all items across pages for a list request.
 
 ```js
 const allNewCustomers = await stripe.customers
-  .list({created: {gt: lastMonth}})
-  .autoPagingToArray({limit: 10000});
+  .list({created: {gt: lastMonth}, limit: 100}) // 100 items per page
+  .autoPagingToArray({limit: 10000}); // Stop after 10000 items total
 ```
 
 ### Telemetry
