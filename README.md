@@ -467,7 +467,8 @@ stripe.customers
 
 This is a convenience for cases where you expect the number of items
 to be relatively small; accordingly, you must pass a `limit` option
-to prevent runaway list growth from consuming too much memory.
+to prevent runaway list growth from consuming too much memory. Once the
+`limit` number of items have been fetched, auto-pagination will stop.
 
 Returns a promise of an array of all items across pages for a list request.
 
