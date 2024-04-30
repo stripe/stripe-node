@@ -1642,6 +1642,9 @@ declare module 'stripe' {
         }
 
         interface Mobilepay {
+          /**
+           * Internal card details
+           */
           card: Mobilepay.Card | null;
         }
 
