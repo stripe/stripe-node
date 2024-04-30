@@ -771,6 +771,7 @@ declare module 'stripe' {
 
               /**
                * [Deprecated] This is a legacy parameter that no longer has any function.
+               * @deprecated
                */
               persistent_token?: string;
 
@@ -2060,6 +2061,7 @@ declare module 'stripe' {
 
               /**
                * [Deprecated] This is a legacy parameter that no longer has any function.
+               * @deprecated
                */
               persistent_token?: string;
 
