@@ -13,8 +13,6 @@ declare module 'stripe' {
      *
      * Child configurations have a `parent` that sets default values and controls which settings connected accounts may override. You can specify a parent ID at payment time, and Stripe will automatically resolve the connected account's associated child configuration. Parent configurations are [managed in the dashboard](https://dashboard.stripe.com/settings/payment_methods/connected_accounts) and are not available in this API.
      *
-     * **Note:** The ability to turn off cards is in limited preview. Please [contact us](https://support.stripe.com/contact) if you require this functionality.
-     *
      * Related guides:
      * - [Payment Method Configurations API](https://stripe.com/docs/connect/payment-method-configurations)
      * - [Multiple configurations on dynamic payment methods](https://stripe.com/docs/payments/multiple-payment-method-configs)
