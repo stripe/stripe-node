@@ -111,6 +111,8 @@ declare module 'stripe' {
        */
       radar_options?: PaymentMethod.RadarOptions;
 
+      rechnung?: PaymentMethod.Rechnung;
+
       revolut_pay?: PaymentMethod.RevolutPay;
 
       sepa_debit?: PaymentMethod.SepaDebit;
@@ -915,6 +917,29 @@ declare module 'stripe' {
         session?: string;
       }
 
+      interface Rechnung {
+        dob?: Rechnung.Dob;
+      }
+
+      namespace Rechnung {
+        interface Dob {
+          /**
+           * The day of birth, between 1 and 31.
+           */
+          day: number;
+
+          /**
+           * The month of birth, between 1 and 12.
+           */
+          month: number;
+
+          /**
+           * The four-digit year of birth.
+           */
+          year: number;
+        }
+      }
+
       interface RevolutPay {}
 
       interface SepaDebit {
@@ -1007,6 +1032,7 @@ declare module 'stripe' {
         | 'payto'
         | 'pix'
         | 'promptpay'
+        | 'rechnung'
         | 'revolut_pay'
         | 'sepa_debit'
         | 'sofort'

@@ -375,6 +375,11 @@ declare module 'stripe' {
         promptpay_payments?: Capabilities.PromptpayPayments;
 
         /**
+         * The status of the Rechnung capability of the account, or whether the account can directly process Rechnung payments.
+         */
+        rechnung_payments?: Capabilities.RechnungPayments;
+
+        /**
          * The status of the RevolutPay capability of the account, or whether the account can directly process RevolutPay payments.
          */
         revolut_pay_payments?: Capabilities.RevolutPayPayments;
@@ -494,6 +499,8 @@ declare module 'stripe' {
         type PaytoPayments = 'active' | 'inactive' | 'pending';
 
         type PromptpayPayments = 'active' | 'inactive' | 'pending';
+
+        type RechnungPayments = 'active' | 'inactive' | 'pending';
 
         type RevolutPayPayments = 'active' | 'inactive' | 'pending';
 

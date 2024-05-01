@@ -1077,6 +1077,11 @@ declare module 'stripe' {
         radar_options?: PaymentMethodData.RadarOptions;
 
         /**
+         * If this is a Rechnung PaymentMethod, this hash contains details about the Rechnung payment method.
+         */
+        rechnung?: PaymentMethodData.Rechnung;
+
+        /**
          * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
          */
         revolut_pay?: PaymentMethodData.RevolutPay;
@@ -1428,6 +1433,32 @@ declare module 'stripe' {
           session?: string;
         }
 
+        interface Rechnung {
+          /**
+           * Customer's date of birth
+           */
+          dob: Rechnung.Dob;
+        }
+
+        namespace Rechnung {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
         interface RevolutPay {}
 
         interface SepaDebit {
@@ -1482,6 +1513,7 @@ declare module 'stripe' {
           | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'rechnung'
           | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
@@ -1693,6 +1725,11 @@ declare module 'stripe' {
          * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
          */
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
+
+        /**
+         * If this is a `Rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
+         */
+        rechnung?: Stripe.Emptyable<PaymentMethodOptions.Rechnung>;
 
         /**
          * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Revolut Pay payment method options.
@@ -2903,6 +2940,13 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface Rechnung {
+          /**
+           * A unique identifier that correlates each transaction with the collected risk data.
+           */
+          risk_correlation_id?: string;
         }
 
         interface RevolutPay {
@@ -4208,6 +4252,11 @@ declare module 'stripe' {
         radar_options?: PaymentMethodData.RadarOptions;
 
         /**
+         * If this is a Rechnung PaymentMethod, this hash contains details about the Rechnung payment method.
+         */
+        rechnung?: PaymentMethodData.Rechnung;
+
+        /**
          * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
          */
         revolut_pay?: PaymentMethodData.RevolutPay;
@@ -4559,6 +4608,32 @@ declare module 'stripe' {
           session?: string;
         }
 
+        interface Rechnung {
+          /**
+           * Customer's date of birth
+           */
+          dob: Rechnung.Dob;
+        }
+
+        namespace Rechnung {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
         interface RevolutPay {}
 
         interface SepaDebit {
@@ -4613,6 +4688,7 @@ declare module 'stripe' {
           | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'rechnung'
           | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
@@ -4824,6 +4900,11 @@ declare module 'stripe' {
          * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
          */
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
+
+        /**
+         * If this is a `Rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
+         */
+        rechnung?: Stripe.Emptyable<PaymentMethodOptions.Rechnung>;
 
         /**
          * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Revolut Pay payment method options.
@@ -6034,6 +6115,13 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface Rechnung {
+          /**
+           * A unique identifier that correlates each transaction with the collected risk data.
+           */
+          risk_correlation_id?: string;
         }
 
         interface RevolutPay {
@@ -8101,6 +8189,11 @@ declare module 'stripe' {
         radar_options?: PaymentMethodData.RadarOptions;
 
         /**
+         * If this is a Rechnung PaymentMethod, this hash contains details about the Rechnung payment method.
+         */
+        rechnung?: PaymentMethodData.Rechnung;
+
+        /**
          * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
          */
         revolut_pay?: PaymentMethodData.RevolutPay;
@@ -8452,6 +8545,32 @@ declare module 'stripe' {
           session?: string;
         }
 
+        interface Rechnung {
+          /**
+           * Customer's date of birth
+           */
+          dob: Rechnung.Dob;
+        }
+
+        namespace Rechnung {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
         interface RevolutPay {}
 
         interface SepaDebit {
@@ -8506,6 +8625,7 @@ declare module 'stripe' {
           | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'rechnung'
           | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
@@ -8717,6 +8837,11 @@ declare module 'stripe' {
          * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
          */
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
+
+        /**
+         * If this is a `Rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
+         */
+        rechnung?: Stripe.Emptyable<PaymentMethodOptions.Rechnung>;
 
         /**
          * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Revolut Pay payment method options.
@@ -9927,6 +10052,13 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface Rechnung {
+          /**
+           * A unique identifier that correlates each transaction with the collected risk data.
+           */
+          risk_correlation_id?: string;
         }
 
         interface RevolutPay {

@@ -360,6 +360,11 @@ declare module 'stripe' {
         promptpay_payments?: Capabilities.PromptpayPayments;
 
         /**
+         * The rechnung_payments capability.
+         */
+        rechnung_payments?: Capabilities.RechnungPayments;
+
+        /**
          * The revolut_pay_payments capability.
          */
         revolut_pay_payments?: Capabilities.RevolutPayPayments;
@@ -634,6 +639,13 @@ declare module 'stripe' {
         }
 
         interface PromptpayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface RechnungPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1992,6 +2004,11 @@ declare module 'stripe' {
         promptpay_payments?: Capabilities.PromptpayPayments;
 
         /**
+         * The rechnung_payments capability.
+         */
+        rechnung_payments?: Capabilities.RechnungPayments;
+
+        /**
          * The revolut_pay_payments capability.
          */
         revolut_pay_payments?: Capabilities.RevolutPayPayments;
@@ -2266,6 +2283,13 @@ declare module 'stripe' {
         }
 
         interface PromptpayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface RechnungPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

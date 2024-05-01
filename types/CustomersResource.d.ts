@@ -817,6 +817,7 @@ declare module 'stripe' {
         | 'payto'
         | 'pix'
         | 'promptpay'
+        | 'rechnung'
         | 'revolut_pay'
         | 'sepa_debit'
         | 'sofort'

@@ -434,6 +434,8 @@ declare module 'stripe' {
 
         promptpay?: PaymentMethodDetails.Promptpay;
 
+        rechnung?: PaymentMethodDetails.Rechnung;
+
         revolut_pay?: PaymentMethodDetails.RevolutPay;
 
         sepa_credit_transfer?: PaymentMethodDetails.SepaCreditTransfer;
@@ -1879,6 +1881,8 @@ declare module 'stripe' {
            */
           reference: string | null;
         }
+
+        interface Rechnung {}
 
         interface RevolutPay {}
 

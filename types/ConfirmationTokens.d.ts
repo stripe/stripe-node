@@ -204,6 +204,8 @@ declare module 'stripe' {
 
         promptpay?: PaymentMethodPreview.Promptpay;
 
+        rechnung?: PaymentMethodPreview.Rechnung;
+
         revolut_pay?: PaymentMethodPreview.RevolutPay;
 
         sepa_debit?: PaymentMethodPreview.SepaDebit;
@@ -1001,6 +1003,29 @@ declare module 'stripe' {
 
         interface Promptpay {}
 
+        interface Rechnung {
+          dob?: Rechnung.Dob;
+        }
+
+        namespace Rechnung {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
         interface RevolutPay {}
 
         interface SepaDebit {
@@ -1093,6 +1118,7 @@ declare module 'stripe' {
           | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'rechnung'
           | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
