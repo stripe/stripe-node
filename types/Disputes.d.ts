@@ -417,10 +417,12 @@ declare module 'stripe' {
       interface PaymentMethodDetails {
         card?: PaymentMethodDetails.Card;
 
+        paypal?: PaymentMethodDetails.Paypal;
+
         /**
          * Payment method type.
          */
-        type: 'card';
+        type: PaymentMethodDetails.Type;
       }
 
       namespace PaymentMethodDetails {
@@ -435,6 +437,20 @@ declare module 'stripe' {
            */
           network_reason_code: string | null;
         }
+
+        interface Paypal {
+          /**
+           * The ID of the dispute in PayPal.
+           */
+          case_id: string | null;
+
+          /**
+           * The reason for the dispute as defined by PayPal
+           */
+          reason_code: string | null;
+        }
+
+        type Type = 'card' | 'paypal';
       }
 
       type Status =
