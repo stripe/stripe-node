@@ -1632,6 +1632,8 @@ declare module 'stripe' {
 
         promptpay?: PaymentMethodOptions.Promptpay;
 
+        rechnung?: PaymentMethodOptions.Rechnung;
+
         revolut_pay?: PaymentMethodOptions.RevolutPay;
 
         sepa_debit?: PaymentMethodOptions.SepaDebit;
@@ -2339,6 +2341,7 @@ declare module 'stripe' {
 
           /**
            * [Deprecated] This is a legacy parameter that no longer has any function.
+           * @deprecated
            */
           persistent_token: string | null;
 
@@ -2567,6 +2570,13 @@ declare module 'stripe' {
            * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
            */
           setup_future_usage?: 'none';
+        }
+
+        interface Rechnung {
+          /**
+           * A unique identifier that correlates each transaction with the collected risk data.
+           */
+          risk_correlation_id: string | null;
         }
 
         interface RevolutPay {

@@ -95,7 +95,7 @@ declare module 'stripe' {
           /**
            * Date of birth as it appears in the document.
            */
-          dob: Document.Dob | null;
+          dob?: Document.Dob | null;
 
           /**
            * Details on the verification error. Present when status is `unverified`.
@@ -105,7 +105,7 @@ declare module 'stripe' {
           /**
            * Expiration date of the document.
            */
-          expiration_date: Document.ExpirationDate | null;
+          expiration_date?: Document.ExpirationDate | null;
 
           /**
            * Array of [File](https://stripe.com/docs/api/files) ids containing images for this document.
@@ -135,7 +135,7 @@ declare module 'stripe' {
           /**
            * Document ID number.
            */
-          number: string | null;
+          number?: string | null;
 
           /**
            * Status of this `document` check.
@@ -267,7 +267,7 @@ declare module 'stripe' {
           /**
            * Date of birth.
            */
-          dob: IdNumber.Dob | null;
+          dob?: IdNumber.Dob | null;
 
           /**
            * Details on the verification error. Present when status is `unverified`.
@@ -282,7 +282,7 @@ declare module 'stripe' {
           /**
            * ID number. When `id_number_type` is `us_ssn`, only the last 4 digits are present.
            */
-          id_number: string | null;
+          id_number?: string | null;
 
           /**
            * Type of ID number.

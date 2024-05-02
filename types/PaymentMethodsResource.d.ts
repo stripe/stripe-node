@@ -194,6 +194,11 @@ declare module 'stripe' {
       radar_options?: PaymentMethodCreateParams.RadarOptions;
 
       /**
+       * If this is a Rechnung PaymentMethod, this hash contains details about the Rechnung payment method.
+       */
+      rechnung?: PaymentMethodCreateParams.Rechnung;
+
+      /**
        * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
        */
       revolut_pay?: PaymentMethodCreateParams.RevolutPay;
@@ -592,6 +597,32 @@ declare module 'stripe' {
         session?: string;
       }
 
+      interface Rechnung {
+        /**
+         * Customer's date of birth
+         */
+        dob: Rechnung.Dob;
+      }
+
+      namespace Rechnung {
+        interface Dob {
+          /**
+           * The day of birth, between 1 and 31.
+           */
+          day: number;
+
+          /**
+           * The month of birth, between 1 and 12.
+           */
+          month: number;
+
+          /**
+           * The four-digit year of birth.
+           */
+          year: number;
+        }
+      }
+
       interface RevolutPay {}
 
       interface SepaDebit {
@@ -647,6 +678,7 @@ declare module 'stripe' {
         | 'payto'
         | 'pix'
         | 'promptpay'
+        | 'rechnung'
         | 'revolut_pay'
         | 'sepa_debit'
         | 'sofort'
@@ -738,6 +770,11 @@ declare module 'stripe' {
       payto?: PaymentMethodUpdateParams.Payto;
 
       /**
+       * If this is a Rechnung PaymentMethod, this hash contains details about the Rechnung payment method.
+       */
+      rechnung?: PaymentMethodUpdateParams.Rechnung;
+
+      /**
        * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
        */
       us_bank_account?: PaymentMethodUpdateParams.UsBankAccount;
@@ -817,6 +854,32 @@ declare module 'stripe' {
         pay_id?: string;
       }
 
+      interface Rechnung {
+        /**
+         * Customer's date of birth
+         */
+        dob: Rechnung.Dob;
+      }
+
+      namespace Rechnung {
+        interface Dob {
+          /**
+           * The day of birth, between 1 and 31.
+           */
+          day: number;
+
+          /**
+           * The month of birth, between 1 and 12.
+           */
+          month: number;
+
+          /**
+           * The four-digit year of birth.
+           */
+          year: number;
+        }
+      }
+
       interface UsBankAccount {
         /**
          * Bank account holder type.
@@ -885,6 +948,7 @@ declare module 'stripe' {
         | 'payto'
         | 'pix'
         | 'promptpay'
+        | 'rechnung'
         | 'revolut_pay'
         | 'sepa_debit'
         | 'sofort'

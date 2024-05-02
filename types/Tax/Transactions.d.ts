@@ -39,7 +39,7 @@ declare module 'stripe' {
         /**
          * The tax collected or refunded, by line item.
          */
-        line_items: ApiList<Stripe.Tax.TransactionLineItem> | null;
+        line_items?: ApiList<Stripe.Tax.TransactionLineItem> | null;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -64,7 +64,7 @@ declare module 'stripe' {
         /**
          * The details of the ship from location, such as the address.
          */
-        ship_from_details?: Transaction.ShipFromDetails | null;
+        ship_from_details: Transaction.ShipFromDetails | null;
 
         /**
          * The shipping cost details for the transaction.

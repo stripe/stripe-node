@@ -204,6 +204,8 @@ declare module 'stripe' {
 
         promptpay?: PaymentMethodPreview.Promptpay;
 
+        rechnung?: PaymentMethodPreview.Rechnung;
+
         revolut_pay?: PaymentMethodPreview.RevolutPay;
 
         sepa_debit?: PaymentMethodPreview.SepaDebit;
@@ -874,7 +876,7 @@ declare module 'stripe' {
           /**
            * The customer's date of birth, if provided.
            */
-          dob: Klarna.Dob | null;
+          dob?: Klarna.Dob | null;
         }
 
         namespace Klarna {
@@ -906,6 +908,7 @@ declare module 'stripe' {
 
           /**
            * [Deprecated] This is a legacy parameter that no longer has any function.
+           * @deprecated
            */
           persistent_token?: string;
         }
@@ -1000,6 +1003,29 @@ declare module 'stripe' {
 
         interface Promptpay {}
 
+        interface Rechnung {
+          dob?: Rechnung.Dob;
+        }
+
+        namespace Rechnung {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
         interface RevolutPay {}
 
         interface SepaDebit {
@@ -1092,6 +1118,7 @@ declare module 'stripe' {
           | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'rechnung'
           | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'

@@ -55,7 +55,7 @@ declare module 'stripe' {
         /**
          * Detailed account of taxes relevant to this line item.
          */
-        tax_breakdown: Array<CalculationLineItem.TaxBreakdown> | null;
+        tax_breakdown?: Array<CalculationLineItem.TaxBreakdown> | null;
 
         /**
          * The [tax code](https://stripe.com/docs/tax/tax-categories) ID used for this resource.

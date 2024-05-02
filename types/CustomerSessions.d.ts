@@ -86,22 +86,22 @@ declare module 'stripe' {
         namespace PaymentElement {
           interface Features {
             /**
-             * Controls whether the Payment Element allows the removal of a saved payment method.
+             * Controls whether the Payment Element displays the option to remove a saved payment method.
              */
             payment_method_remove: Features.PaymentMethodRemove;
 
             /**
-             * Controls whether the Payment Element offers to save a new payment method.
+             * Controls whether the Payment Element displays a checkbox offering to save a new payment method.
              */
             payment_method_save: Features.PaymentMethodSave;
 
             /**
-             * Controls whether the Payment Element offers to set a payment method as the default.
+             * Controls whether the Payment Element displays a checkbox offering to set a saved payment method as the default.
              */
             payment_method_set_as_default: Features.PaymentMethodSetAsDefault;
 
             /**
-             * Controls whether the Payment Element allows the updating of a saved payment method.
+             * Controls whether the Payment Element displays the option to update a saved payment method.
              */
             payment_method_update: Features.PaymentMethodUpdate;
           }
