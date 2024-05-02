@@ -39,7 +39,7 @@ declare module 'stripe' {
         /**
          * The tax collected or refunded, by line item.
          */
-        line_items: ApiList<Stripe.Tax.TransactionLineItem> | null;
+        line_items?: ApiList<Stripe.Tax.TransactionLineItem> | null;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -60,6 +60,11 @@ declare module 'stripe' {
          * If `type=reversal`, contains information about what was reversed.
          */
         reversal: Transaction.Reversal | null;
+
+        /**
+         * The details of the ship from location, such as the address.
+         */
+        ship_from_details: Transaction.ShipFromDetails | null;
 
         /**
          * The shipping cost details for the transaction.
@@ -207,6 +212,10 @@ declare module 'stripe' {
            * The `id` of the reversed `Transaction` object.
            */
           original_transaction: string | null;
+        }
+
+        interface ShipFromDetails {
+          address: Stripe.Address;
         }
 
         interface ShippingCost {

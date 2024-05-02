@@ -58,6 +58,11 @@ declare module 'stripe' {
           bg?: CountryOptions.Bg;
 
           /**
+           * Options for the registration in BH.
+           */
+          bh?: CountryOptions.Bh;
+
+          /**
            * Options for the registration in CA.
            */
           ca?: CountryOptions.Ca;
@@ -103,6 +108,11 @@ declare module 'stripe' {
           ee?: CountryOptions.Ee;
 
           /**
+           * Options for the registration in EG.
+           */
+          eg?: CountryOptions.Eg;
+
+          /**
            * Options for the registration in ES.
            */
           es?: CountryOptions.Es;
@@ -121,6 +131,11 @@ declare module 'stripe' {
            * Options for the registration in GB.
            */
           gb?: CountryOptions.Gb;
+
+          /**
+           * Options for the registration in GE.
+           */
+          ge?: CountryOptions.Ge;
 
           /**
            * Options for the registration in GR.
@@ -163,9 +178,19 @@ declare module 'stripe' {
           jp?: CountryOptions.Jp;
 
           /**
+           * Options for the registration in KE.
+           */
+          ke?: CountryOptions.Ke;
+
+          /**
            * Options for the registration in KR.
            */
           kr?: CountryOptions.Kr;
+
+          /**
+           * Options for the registration in KZ.
+           */
+          kz?: CountryOptions.Kz;
 
           /**
            * Options for the registration in LT.
@@ -198,6 +223,11 @@ declare module 'stripe' {
           my?: CountryOptions.My;
 
           /**
+           * Options for the registration in NG.
+           */
+          ng?: CountryOptions.Ng;
+
+          /**
            * Options for the registration in NL.
            */
           nl?: CountryOptions.Nl;
@@ -211,6 +241,11 @@ declare module 'stripe' {
            * Options for the registration in NZ.
            */
           nz?: CountryOptions.Nz;
+
+          /**
+           * Options for the registration in OM.
+           */
+          om?: CountryOptions.Om;
 
           /**
            * Options for the registration in PL.
@@ -372,6 +407,13 @@ declare module 'stripe' {
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+          }
+
+          interface Bh {
+            /**
+             * Type of registration to be created in `country`.
+             */
+            type: 'standard';
           }
 
           interface Ca {
@@ -553,6 +595,13 @@ declare module 'stripe' {
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
           }
 
+          interface Eg {
+            /**
+             * Type of registration to be created in `country`.
+             */
+            type: 'simplified';
+          }
+
           interface Es {
             /**
              * Options for the standard registration.
@@ -639,6 +688,13 @@ declare module 'stripe' {
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          interface Ge {
+            /**
+             * Type of registration to be created in `country`.
+             */
+            type: 'simplified';
           }
 
           interface Gr {
@@ -797,7 +853,21 @@ declare module 'stripe' {
             type: 'standard';
           }
 
+          interface Ke {
+            /**
+             * Type of registration to be created in `country`.
+             */
+            type: 'simplified';
+          }
+
           interface Kr {
+            /**
+             * Type of registration to be created in `country`.
+             */
+            type: 'simplified';
+          }
+
+          interface Kz {
             /**
              * Type of registration to be created in `country`.
              */
@@ -926,6 +996,13 @@ declare module 'stripe' {
             type: 'simplified';
           }
 
+          interface Ng {
+            /**
+             * Type of registration to be created in `country`.
+             */
+            type: 'simplified';
+          }
+
           interface Nl {
             /**
              * Options for the standard registration.
@@ -961,6 +1038,13 @@ declare module 'stripe' {
           }
 
           interface Nz {
+            /**
+             * Type of registration to be created in `country`.
+             */
+            type: 'standard';
+          }
+
+          interface Om {
             /**
              * Type of registration to be created in `country`.
              */

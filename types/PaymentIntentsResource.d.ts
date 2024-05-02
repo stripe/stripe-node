@@ -4755,6 +4755,11 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentConfirmParams.PaymentMethodOptions;
 
       /**
+       * The list of payment method types (for example, a card) that this PaymentIntent can use. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+       */
+      payment_method_types?: Array<string>;
+
+      /**
        * Options to configure Radar. Learn more about [Radar Sessions](https://stripe.com/docs/radar/radar-session).
        */
       radar_options?: PaymentIntentConfirmParams.RadarOptions;

@@ -847,7 +847,7 @@ declare module 'stripe' {
           /**
            * The customer's date of birth, if provided.
            */
-          dob: Klarna.Dob | null;
+          dob?: Klarna.Dob | null;
         }
 
         namespace Klarna {

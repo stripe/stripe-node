@@ -50,7 +50,7 @@ declare module 'stripe' {
         /**
          * Details of the flow associated with the TransactionEntry.
          */
-        flow_details: TransactionEntry.FlowDetails | null;
+        flow_details?: TransactionEntry.FlowDetails | null;
 
         /**
          * Type of the flow associated with the TransactionEntry.

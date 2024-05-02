@@ -191,7 +191,7 @@ declare module 'stripe' {
       /**
        * A list of refunds that have been applied to the charge.
        */
-      refunds: ApiList<Stripe.Refund> | null;
+      refunds?: ApiList<Stripe.Refund> | null;
 
       /**
        * ID of the review associated with this charge if one exists.
@@ -1642,6 +1642,9 @@ declare module 'stripe' {
         }
 
         interface Mobilepay {
+          /**
+           * Internal card details
+           */
           card: Mobilepay.Card | null;
         }
 

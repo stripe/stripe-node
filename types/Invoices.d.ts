@@ -343,12 +343,12 @@ declare module 'stripe' {
       payment_settings: Invoice.PaymentSettings;
 
       /**
-       * End of the usage period during which invoice items were added to this invoice.
+       * End of the usage period during which invoice items were added to this invoice. This looks back one period for a subscription invoice. Use the [line item period](https://stripe.com/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each price.
        */
       period_end: number;
 
       /**
-       * Start of the usage period during which invoice items were added to this invoice.
+       * Start of the usage period during which invoice items were added to this invoice. This looks back one period for a subscription invoice. Use the [line item period](https://stripe.com/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each price.
        */
       period_start: number;
 
@@ -928,6 +928,7 @@ declare module 'stripe' {
           | 'setup_intent_mandate_invalid'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
+          | 'shipping_address_invalid'
           | 'shipping_calculation_failed'
           | 'sku_inactive'
           | 'state_unsupported'

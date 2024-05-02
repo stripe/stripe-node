@@ -53,7 +53,7 @@ declare module 'stripe' {
         /**
          * The plaintext secret value to be stored.
          */
-        payload: string | null;
+        payload?: string | null;
 
         scope: Secret.Scope;
       }

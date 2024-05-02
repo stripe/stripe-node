@@ -184,7 +184,7 @@ declare module 'stripe' {
           /**
            * The expandable object of the source flow.
            */
-          source_flow_details: LinkedFlows.SourceFlowDetails | null;
+          source_flow_details?: LinkedFlows.SourceFlowDetails | null;
 
           /**
            * The type of flow that originated the ReceivedCredit (for example, `outbound_payment`).

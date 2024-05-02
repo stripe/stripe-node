@@ -44,12 +44,17 @@ declare module 'stripe' {
         /**
          * The list of items the customer is purchasing.
          */
-        line_items: ApiList<Stripe.Tax.CalculationLineItem> | null;
+        line_items?: ApiList<Stripe.Tax.CalculationLineItem> | null;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
+
+        /**
+         * The details of the ship from location, such as the address.
+         */
+        ship_from_details: Calculation.ShipFromDetails | null;
 
         /**
          * The shipping cost details for the calculation.
@@ -200,6 +205,10 @@ declare module 'stripe' {
               | 'vn_tin'
               | 'za_vat';
           }
+        }
+
+        interface ShipFromDetails {
+          address: Stripe.Address;
         }
 
         interface ShippingCost {
