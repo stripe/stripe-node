@@ -12,7 +12,7 @@ ci-test:
 
 check-prereqs:
 # tests depend on `deno` being available
-	@command -v python >/dev/null 2>&1 || { echo "Error: deno is not installed." >&2; exit 1; }
+	@command -v deno >/dev/null 2>&1 || { echo "Error: deno is not installed." >&2; exit 1; }
 # stripe mock must be running; check its default port for a listener
 	@lsof -i :12112 >/dev/null 2>&1 || { echo "Error: stripe-mock is not running (on port 12112)." >&2; exit 1; }
 
