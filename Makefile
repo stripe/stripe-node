@@ -1,4 +1,4 @@
-.PHONY: codegen-format update-version test check-prereqs ci-test
+.PHONY: codegen-format update-version test ci-test
 update-version:
 	@echo "$(VERSION)" > VERSION
 	@perl -pi -e 's|"version": "[.\-\d\w]+"|"version": "$(VERSION)"|' package.json
@@ -10,10 +10,4 @@ codegen-format:
 ci-test:
 	yarn && yarn test
 
-check-prereqs:
-# tests depend on `deno` being available
-	@command -v deno >/dev/null 2>&1 || { echo "Error: deno is not installed." >&2; exit 1; }
-# stripe mock must be running; check its default port for a listener
-	@lsof -i :12112 >/dev/null 2>&1 || { echo "Error: stripe-mock is not running (on port 12112)." >&2; exit 1; }
-
-test: check-prereqs ci-test
+test: ci-test
