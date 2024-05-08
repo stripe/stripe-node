@@ -39,7 +39,7 @@ declare module 'stripe' {
           advance_amount: number;
 
           /**
-           * The time at which the funds were paid out the the Connected account's Stripe balance. Given in milliseconds since unix epoch.
+           * The time at which the funds were paid out to the connected account's Stripe balance. Given in milliseconds since unix epoch.
            */
           advance_paid_out_at: number | null;
 

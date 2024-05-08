@@ -85,7 +85,7 @@ declare module 'stripe' {
           expand?: Array<string>;
 
           /**
-           * Optional hash to set the the return code.
+           * Optional hash to set the return code.
            */
           returned_details?: OutboundPaymentReturnOutboundPaymentParams.ReturnedDetails;
         }
