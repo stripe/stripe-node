@@ -1184,6 +1184,11 @@ declare module 'stripe' {
           overcapture_supported: boolean;
 
           /**
+           * EMV tag 5F2D. Preferred languages specified by the integrated circuit chip.
+           */
+          preferred_locales: Array<string> | null;
+
+          /**
            * How card details were read in this transaction.
            */
           read_method: CardPresent.ReadMethod | null;
