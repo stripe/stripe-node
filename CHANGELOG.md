@@ -4,6 +4,18 @@
 * [#2079](https://github.com/stripe/stripe-node/pull/2079) Update generated code for beta
   * No new beta features. Merging changes from the main branch.
 
+## 15.6.0 - 2024-05-09
+* [#2086](https://github.com/stripe/stripe-node/pull/2086) Update generated code
+  * Remove support for `pending_invoice_items_behavior` on `SubscriptionCreateParams`
+* [#2080](https://github.com/stripe/stripe-node/pull/2080) Update generated code
+  * Add support for `update` test helper method on resources `Treasury.OutboundPayment` and `Treasury.OutboundTransfer`
+  * Add support for `allow_redisplay` on `ConfirmationToken.payment_method_preview` and `PaymentMethod`
+  * Add support for new values `treasury.outbound_payment.tracking_details_updated` and `treasury.outbound_transfer.tracking_details_updated` on enum `Event.type`
+  * Add support for `preview_mode` on `InvoiceCreatePreviewParams`, `InvoiceUpcomingLinesParams`, and `InvoiceUpcomingParams`
+  * Add support for `pending_invoice_items_behavior` on `SubscriptionCreateParams`
+  * Add support for `tracking_details` on `Treasury.OutboundPayment` and `Treasury.OutboundTransfer`
+  * Add support for new values `treasury.outbound_payment.tracking_details_updated` and `treasury.outbound_transfer.tracking_details_updated` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+* [#2085](https://github.com/stripe/stripe-node/pull/2085) Remove unnecessary pointer to description in deprecation message
 
 ## 15.6.0-beta.1 - 2024-05-02
 * [#2073](https://github.com/stripe/stripe-node/pull/2073) Update generated code for beta

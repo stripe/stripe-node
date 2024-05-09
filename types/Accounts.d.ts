@@ -1197,10 +1197,16 @@ declare module 'stripe' {
 
       namespace RiskControls {
         interface Charges {
+          /**
+           * Whether a pause of the risk control has been requested.
+           */
           pause_requested: boolean;
         }
 
         interface Payouts {
+          /**
+           * Whether a pause of the risk control has been requested.
+           */
           pause_requested: boolean;
         }
       }
