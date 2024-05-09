@@ -158,11 +158,6 @@ declare module 'stripe' {
       >;
 
       /**
-       * How to handle a customer's pending invoice items if an invoice will be generated. Defaults to `include` if the parameter is omitted.
-       */
-      pending_invoice_items_behavior?: SubscriptionCreateParams.PendingInvoiceItemsBehavior;
-
-      /**
        * If specified, the invoicing for the given billing cycle iterations will be processed now.
        */
       prebilling?: SubscriptionCreateParams.Prebilling;
@@ -963,8 +958,6 @@ declare module 'stripe' {
       namespace PendingInvoiceItemInterval {
         type Interval = 'day' | 'month' | 'week' | 'year';
       }
-
-      type PendingInvoiceItemsBehavior = 'exclude' | 'include';
 
       interface Prebilling {
         /**
