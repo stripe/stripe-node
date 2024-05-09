@@ -1538,7 +1538,7 @@ declare module 'stripe' {
           > | null;
 
           /**
-           * Enable customers to choose if they wish to save their payment method for future use.
+           * Enable customers to choose if they wish to save their payment method for future use. Disabled by default.
            */
           payment_method_save: SavedPaymentMethodOptions.PaymentMethodSave | null;
         }
