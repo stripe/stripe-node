@@ -1,10 +1,23 @@
 # Changelog
 
+## 15.6.0 - 2024-05-09
+* [#2086](https://github.com/stripe/stripe-node/pull/2086) Update generated code
+  * Remove support for `pending_invoice_items_behavior` on `SubscriptionCreateParams`
+* [#2080](https://github.com/stripe/stripe-node/pull/2080) Update generated code
+  * Add support for `update` test helper method on resources `Treasury.OutboundPayment` and `Treasury.OutboundTransfer`
+  * Add support for `allow_redisplay` on `ConfirmationToken.payment_method_preview` and `PaymentMethod`
+  * Add support for new values `treasury.outbound_payment.tracking_details_updated` and `treasury.outbound_transfer.tracking_details_updated` on enum `Event.type`
+  * Add support for `preview_mode` on `InvoiceCreatePreviewParams`, `InvoiceUpcomingLinesParams`, and `InvoiceUpcomingParams`
+  * Add support for `pending_invoice_items_behavior` on `SubscriptionCreateParams`
+  * Add support for `tracking_details` on `Treasury.OutboundPayment` and `Treasury.OutboundTransfer`
+  * Add support for new values `treasury.outbound_payment.tracking_details_updated` and `treasury.outbound_transfer.tracking_details_updated` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+* [#2085](https://github.com/stripe/stripe-node/pull/2085) Remove unnecessary pointer to description in deprecation message
+
 ## 15.5.0 - 2024-05-02
 * [#2072](https://github.com/stripe/stripe-node/pull/2072) Update generated code
   * Add support for new value `shipping_address_invalid` on enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`
-  * Fix properties incorrectly marked as required in the OpenAPI spec. 
-    * Change `Apps.Secret.payload`, `BillingPortal.Configuration.features.subscription_update.products`, `Charge.refunds`, `ConfirmationToken.payment_method_preview.klarna.dob`, `Identity.VerificationReport.document.dob`, `Identity.VerificationReport.document.expiration_date`, `Identity.VerificationReport.document.number`, `Identity.VerificationReport.id_number.dob`, `Identity.VerificationReport.id_number.id_number`, `Identity.VerificationSession.provided_details`, `Identity.VerificationSession.verified_outputs.dob`, `Identity.VerificationSession.verified_outputs.id_number`, `Identity.VerificationSession.verified_outputs`, `Issuing.Dispute.balance_transactions`, `Issuing.Transaction.purchase_details`, `PaymentMethod.klarna.dob`, `Tax.Calculation.line_items`, `Tax.CalculationLineItem.tax_breakdown`, `Tax.Transaction.line_items`, `Treasury.FinancialAccount.financial_addresses[].aba.account_number`, `Treasury.ReceivedCredit.linked_flows.source_flow_details`, `Treasury.Transaction.entries`, `Treasury.Transaction.flow_details`, and `Treasury.TransactionEntry.flow_details` to be optional 
+  * Fix properties incorrectly marked as required in the OpenAPI spec.
+    * Change `Apps.Secret.payload`, `BillingPortal.Configuration.features.subscription_update.products`, `Charge.refunds`, `ConfirmationToken.payment_method_preview.klarna.dob`, `Identity.VerificationReport.document.dob`, `Identity.VerificationReport.document.expiration_date`, `Identity.VerificationReport.document.number`, `Identity.VerificationReport.id_number.dob`, `Identity.VerificationReport.id_number.id_number`, `Identity.VerificationSession.provided_details`, `Identity.VerificationSession.verified_outputs.dob`, `Identity.VerificationSession.verified_outputs.id_number`, `Identity.VerificationSession.verified_outputs`, `Issuing.Dispute.balance_transactions`, `Issuing.Transaction.purchase_details`, `PaymentMethod.klarna.dob`, `Tax.Calculation.line_items`, `Tax.CalculationLineItem.tax_breakdown`, `Tax.Transaction.line_items`, `Treasury.FinancialAccount.financial_addresses[].aba.account_number`, `Treasury.ReceivedCredit.linked_flows.source_flow_details`, `Treasury.Transaction.entries`, `Treasury.Transaction.flow_details`, and `Treasury.TransactionEntry.flow_details` to be optional
   * Add support for `paypal` on `Dispute.payment_method_details`
   * Change type of `Dispute.payment_method_details.type` from `literal('card')` to `enum('card'|'paypal')`
   * Change type of `Entitlements.FeatureUpdateParams.metadata` from `map(string: string)` to `emptyable(map(string: string))`
