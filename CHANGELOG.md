@@ -1,5 +1,10 @@
 # Changelog
 
+## 15.7.0-beta.1 - 2024-05-09
+* [#2079](https://github.com/stripe/stripe-node/pull/2079) Update generated code for beta
+  * No new beta features. Merging changes from the main branch.
+
+
 ## 15.6.0-beta.1 - 2024-05-02
 * [#2073](https://github.com/stripe/stripe-node/pull/2073) Update generated code for beta
   * Add support for `rechnung_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
@@ -15,8 +20,8 @@
 ## 15.5.0 - 2024-05-02
 * [#2072](https://github.com/stripe/stripe-node/pull/2072) Update generated code
   * Add support for new value `shipping_address_invalid` on enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`
-  * Fix properties incorrectly marked as required in the OpenAPI spec. 
-    * Change `Apps.Secret.payload`, `BillingPortal.Configuration.features.subscription_update.products`, `Charge.refunds`, `ConfirmationToken.payment_method_preview.klarna.dob`, `Identity.VerificationReport.document.dob`, `Identity.VerificationReport.document.expiration_date`, `Identity.VerificationReport.document.number`, `Identity.VerificationReport.id_number.dob`, `Identity.VerificationReport.id_number.id_number`, `Identity.VerificationSession.provided_details`, `Identity.VerificationSession.verified_outputs.dob`, `Identity.VerificationSession.verified_outputs.id_number`, `Identity.VerificationSession.verified_outputs`, `Issuing.Dispute.balance_transactions`, `Issuing.Transaction.purchase_details`, `PaymentMethod.klarna.dob`, `Tax.Calculation.line_items`, `Tax.CalculationLineItem.tax_breakdown`, `Tax.Transaction.line_items`, `Treasury.FinancialAccount.financial_addresses[].aba.account_number`, `Treasury.ReceivedCredit.linked_flows.source_flow_details`, `Treasury.Transaction.entries`, `Treasury.Transaction.flow_details`, and `Treasury.TransactionEntry.flow_details` to be optional 
+  * Fix properties incorrectly marked as required in the OpenAPI spec.
+    * Change `Apps.Secret.payload`, `BillingPortal.Configuration.features.subscription_update.products`, `Charge.refunds`, `ConfirmationToken.payment_method_preview.klarna.dob`, `Identity.VerificationReport.document.dob`, `Identity.VerificationReport.document.expiration_date`, `Identity.VerificationReport.document.number`, `Identity.VerificationReport.id_number.dob`, `Identity.VerificationReport.id_number.id_number`, `Identity.VerificationSession.provided_details`, `Identity.VerificationSession.verified_outputs.dob`, `Identity.VerificationSession.verified_outputs.id_number`, `Identity.VerificationSession.verified_outputs`, `Issuing.Dispute.balance_transactions`, `Issuing.Transaction.purchase_details`, `PaymentMethod.klarna.dob`, `Tax.Calculation.line_items`, `Tax.CalculationLineItem.tax_breakdown`, `Tax.Transaction.line_items`, `Treasury.FinancialAccount.financial_addresses[].aba.account_number`, `Treasury.ReceivedCredit.linked_flows.source_flow_details`, `Treasury.Transaction.entries`, `Treasury.Transaction.flow_details`, and `Treasury.TransactionEntry.flow_details` to be optional
   * Add support for `paypal` on `Dispute.payment_method_details`
   * Change type of `Dispute.payment_method_details.type` from `literal('card')` to `enum('card'|'paypal')`
   * Change type of `Entitlements.FeatureUpdateParams.metadata` from `map(string: string)` to `emptyable(map(string: string))`
@@ -254,7 +259,7 @@
   * Add support for `create` method on resources `MeterEventAdjustment` and `MeterEvent`
   * Add support for `create` test helper method on resource `ConfirmationToken`
   * Add support for `add_lines`, `remove_lines`, and `update_lines` methods on resource `Invoice`
-  * Add support for `multibanco` payment method throughout the API. 
+  * Add support for `multibanco` payment method throughout the API.
   * Add support for `second_line` on `Issuing.PhysicalBundle.features`
   * Add support for `multibanco_display_details` on `PaymentIntent.next_action`
   * Add support for `meter` on `PlanCreateParams`, `Plan`, `Price.recurring`, `PriceCreateParams.recurring`, and `PriceListParams.recurring`
