@@ -4,6 +4,62 @@ declare module 'stripe' {
   namespace Stripe {
     namespace TestHelpers {
       namespace Treasury {
+        interface OutboundTransferUpdateParams {
+          /**
+           * Details about network-specific tracking information.
+           */
+          tracking_details: OutboundTransferUpdateParams.TrackingDetails;
+
+          /**
+           * Specifies which fields in the response should be expanded.
+           */
+          expand?: Array<string>;
+        }
+
+        namespace OutboundTransferUpdateParams {
+          interface TrackingDetails {
+            /**
+             * ACH network tracking details.
+             */
+            ach?: TrackingDetails.Ach;
+
+            /**
+             * The US bank account network used to send funds.
+             */
+            type: TrackingDetails.Type;
+
+            /**
+             * US domestic wire network tracking details.
+             */
+            us_domestic_wire?: TrackingDetails.UsDomesticWire;
+          }
+
+          namespace TrackingDetails {
+            interface Ach {
+              /**
+               * ACH trace ID for funds sent over the `ach` network.
+               */
+              trace_id: string;
+            }
+
+            type Type = 'ach' | 'us_domestic_wire';
+
+            interface UsDomesticWire {
+              /**
+               * IMAD for funds sent over the `us_domestic_wire` network.
+               */
+              imad?: string;
+
+              /**
+               * OMAD for funds sent over the `us_domestic_wire` network.
+               */
+              omad?: string;
+            }
+          }
+        }
+      }
+
+      namespace Treasury {
         interface OutboundTransferFailParams {
           /**
            * Specifies which fields in the response should be expanded.
@@ -60,6 +116,15 @@ declare module 'stripe' {
 
       namespace Treasury {
         class OutboundTransfersResource {
+          /**
+           * Updates a test mode created OutboundTransfer with tracking details. The OutboundTransfer must not be cancelable, and cannot be in the canceled or failed states.
+           */
+          update(
+            id: string,
+            params: OutboundTransferUpdateParams,
+            options?: RequestOptions
+          ): Promise<Stripe.Response<Stripe.Treasury.OutboundTransfer>>;
+
           /**
            * Transitions a test mode created OutboundTransfer to the failed status. The OutboundTransfer must already be in the processing state.
            */

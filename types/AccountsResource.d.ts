@@ -1121,12 +1121,12 @@ declare module 'stripe' {
         address?: Stripe.AddressParam;
 
         /**
-         * The Kana variation of the the individual's primary address (Japan only).
+         * The Kana variation of the individual's primary address (Japan only).
          */
         address_kana?: Stripe.JapanAddressParam;
 
         /**
-         * The Kanji variation of the the individual's primary address (Japan only).
+         * The Kanji variation of the individual's primary address (Japan only).
          */
         address_kanji?: Stripe.JapanAddressParam;
 
@@ -1146,7 +1146,7 @@ declare module 'stripe' {
         first_name?: string;
 
         /**
-         * The Kana variation of the the individual's first name (Japan only).
+         * The Kana variation of the individual's first name (Japan only).
          */
         first_name_kana?: string;
 
@@ -2674,12 +2674,12 @@ declare module 'stripe' {
         address?: Stripe.AddressParam;
 
         /**
-         * The Kana variation of the the individual's primary address (Japan only).
+         * The Kana variation of the individual's primary address (Japan only).
          */
         address_kana?: Stripe.JapanAddressParam;
 
         /**
-         * The Kanji variation of the the individual's primary address (Japan only).
+         * The Kanji variation of the individual's primary address (Japan only).
          */
         address_kanji?: Stripe.JapanAddressParam;
 
@@ -2699,7 +2699,7 @@ declare module 'stripe' {
         first_name?: string;
 
         /**
-         * The Kana variation of the the individual's first name (Japan only).
+         * The Kana variation of the individual's first name (Japan only).
          */
         first_name_kana?: string;
 

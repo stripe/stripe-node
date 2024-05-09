@@ -84,7 +84,7 @@ declare module 'stripe' {
       line_items?: Array<QuoteCreateParams.LineItem>;
 
       /**
-       * A list of lines on the quote. These lines describe changes, in the order provided, that will be used to create new subscription schedules or update existing subscription schedules when the quote is accepted.
+       * A list of [quote lines](https://docs.stripe.com/api/quote_lines) on the quote. These lines describe changes, in the order provided, that will be used to create new subscription schedules or update existing subscription schedules when the quote is accepted.
        */
       lines?: Array<QuoteCreateParams.Line>;
 
@@ -1791,7 +1791,7 @@ declare module 'stripe' {
       line_items?: Array<QuoteUpdateParams.LineItem>;
 
       /**
-       * A list of lines on the quote. These lines describe changes, in the order provided, that will be used to create new subscription schedules or update existing subscription schedules when the quote is accepted.
+       * A list of [quote lines](https://docs.stripe.com/api/quote_lines) on the quote. These lines describe changes, in the order provided, that will be used to create new subscription schedules or update existing subscription schedules when the quote is accepted.
        */
       lines?: Array<QuoteUpdateParams.Line>;
 
