@@ -77,6 +77,8 @@ declare module 'stripe' {
 
           merchandise_not_as_described?: Evidence.MerchandiseNotAsDescribed;
 
+          no_valid_authorization?: Evidence.NoValidAuthorization;
+
           not_received?: Evidence.NotReceived;
 
           other?: Evidence.Other;
@@ -259,6 +261,18 @@ declare module 'stripe' {
             type ProductType = 'merchandise' | 'service';
           }
 
+          interface NoValidAuthorization {
+            /**
+             * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
+             */
+            additional_documentation: string | Stripe.File | null;
+
+            /**
+             * Explanation of why the cardholder is disputing this transaction.
+             */
+            explanation: string | null;
+          }
+
           interface Other {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
@@ -290,6 +304,7 @@ declare module 'stripe' {
             | 'duplicate'
             | 'fraudulent'
             | 'merchandise_not_as_described'
+            | 'no_valid_authorization'
             | 'not_received'
             | 'other'
             | 'service_not_as_described';
