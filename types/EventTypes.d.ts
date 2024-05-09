@@ -220,12 +220,14 @@ declare module 'stripe' {
       | TreasuryOutboundPaymentFailedEvent
       | TreasuryOutboundPaymentPostedEvent
       | TreasuryOutboundPaymentReturnedEvent
+      | TreasuryOutboundPaymentTrackingDetailsUpdatedEvent
       | TreasuryOutboundTransferCanceledEvent
       | TreasuryOutboundTransferCreatedEvent
       | TreasuryOutboundTransferExpectedArrivalDateUpdatedEvent
       | TreasuryOutboundTransferFailedEvent
       | TreasuryOutboundTransferPostedEvent
       | TreasuryOutboundTransferReturnedEvent
+      | TreasuryOutboundTransferTrackingDetailsUpdatedEvent
       | TreasuryReceivedCreditCreatedEvent
       | TreasuryReceivedCreditFailedEvent
       | TreasuryReceivedCreditSucceededEvent
@@ -3712,6 +3714,23 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs whenever tracking_details on an OutboundPayment is updated.
+     */
+    interface TreasuryOutboundPaymentTrackingDetailsUpdatedEvent
+      extends EventBase {
+      type: 'treasury.outbound_payment.tracking_details_updated';
+      data: TreasuryOutboundPaymentTrackingDetailsUpdatedEvent.Data;
+    }
+
+    namespace TreasuryOutboundPaymentTrackingDetailsUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Treasury.OutboundPayment;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundPayment>;
+      }
+    }
+
+    /**
      * Occurs whenever an OutboundTransfer is canceled.
      */
     interface TreasuryOutboundTransferCanceledEvent extends EventBase {
@@ -3801,6 +3820,23 @@ declare module 'stripe' {
     }
 
     namespace TreasuryOutboundTransferReturnedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Treasury.OutboundTransfer;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundTransfer>;
+      }
+    }
+
+    /**
+     * Occurs whenever tracking_details on an OutboundTransfer is updated.
+     */
+    interface TreasuryOutboundTransferTrackingDetailsUpdatedEvent
+      extends EventBase {
+      type: 'treasury.outbound_transfer.tracking_details_updated';
+      data: TreasuryOutboundTransferTrackingDetailsUpdatedEvent.Data;
+    }
+
+    namespace TreasuryOutboundTransferTrackingDetailsUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Treasury.OutboundTransfer;
 

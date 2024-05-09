@@ -94,6 +94,11 @@ declare module 'stripe' {
         status_transitions: OutboundTransfer.StatusTransitions;
 
         /**
+         * Details about network-specific tracking information if available.
+         */
+        tracking_details?: OutboundTransfer.TrackingDetails | null;
+
+        /**
          * The Transaction associated with this object.
          */
         transaction: string | Stripe.Treasury.Transaction;
@@ -230,6 +235,40 @@ declare module 'stripe' {
            * Timestamp describing when an OutboundTransfer changed status to `returned`
            */
           returned_at: number | null;
+        }
+
+        interface TrackingDetails {
+          ach?: TrackingDetails.Ach;
+
+          /**
+           * The US bank account network used to send funds.
+           */
+          type: TrackingDetails.Type;
+
+          us_domestic_wire?: TrackingDetails.UsDomesticWire;
+        }
+
+        namespace TrackingDetails {
+          interface Ach {
+            /**
+             * ACH trace ID of the OutboundTransfer for transfers sent over the `ach` network.
+             */
+            trace_id: string;
+          }
+
+          type Type = 'ach' | 'us_domestic_wire';
+
+          interface UsDomesticWire {
+            /**
+             * IMAD of the OutboundTransfer for transfers sent over the `us_domestic_wire` network.
+             */
+            imad: string;
+
+            /**
+             * OMAD of the OutboundTransfer for transfers sent over the `us_domestic_wire` network.
+             */
+            omad: string | null;
+          }
         }
       }
     }

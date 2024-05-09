@@ -4,6 +4,62 @@ declare module 'stripe' {
   namespace Stripe {
     namespace TestHelpers {
       namespace Treasury {
+        interface OutboundPaymentUpdateParams {
+          /**
+           * Details about network-specific tracking information.
+           */
+          tracking_details: OutboundPaymentUpdateParams.TrackingDetails;
+
+          /**
+           * Specifies which fields in the response should be expanded.
+           */
+          expand?: Array<string>;
+        }
+
+        namespace OutboundPaymentUpdateParams {
+          interface TrackingDetails {
+            /**
+             * ACH network tracking details.
+             */
+            ach?: TrackingDetails.Ach;
+
+            /**
+             * The US bank account network used to send funds.
+             */
+            type: TrackingDetails.Type;
+
+            /**
+             * US domestic wire network tracking details.
+             */
+            us_domestic_wire?: TrackingDetails.UsDomesticWire;
+          }
+
+          namespace TrackingDetails {
+            interface Ach {
+              /**
+               * ACH trace ID for funds sent over the `ach` network.
+               */
+              trace_id: string;
+            }
+
+            type Type = 'ach' | 'us_domestic_wire';
+
+            interface UsDomesticWire {
+              /**
+               * IMAD for funds sent over the `us_domestic_wire` network.
+               */
+              imad?: string;
+
+              /**
+               * OMAD for funds sent over the `us_domestic_wire` network.
+               */
+              omad?: string;
+            }
+          }
+        }
+      }
+
+      namespace Treasury {
         interface OutboundPaymentFailParams {
           /**
            * Specifies which fields in the response should be expanded.
@@ -29,7 +85,7 @@ declare module 'stripe' {
           expand?: Array<string>;
 
           /**
-           * Optional hash to set the the return code.
+           * Optional hash to set the return code.
            */
           returned_details?: OutboundPaymentReturnOutboundPaymentParams.ReturnedDetails;
         }
@@ -60,6 +116,15 @@ declare module 'stripe' {
 
       namespace Treasury {
         class OutboundPaymentsResource {
+          /**
+           * Updates a test mode created OutboundPayment with tracking details. The OutboundPayment must not be cancelable, and cannot be in the canceled or failed states.
+           */
+          update(
+            id: string,
+            params: OutboundPaymentUpdateParams,
+            options?: RequestOptions
+          ): Promise<Stripe.Response<Stripe.Treasury.OutboundPayment>>;
+
           /**
            * Transitions a test mode created OutboundPayment to the failed status. The OutboundPayment must already be in the processing state.
            */

@@ -1476,6 +1476,11 @@ declare module 'stripe' {
       on_behalf_of?: Stripe.Emptyable<string>;
 
       /**
+       * Customizes the types of values to include when calculating the invoice. Defaults to `next` if unspecified.
+       */
+      preview_mode?: InvoiceCreatePreviewParams.PreviewMode;
+
+      /**
        * The identifier of the schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
        */
       schedule?: string;
@@ -1847,6 +1852,8 @@ declare module 'stripe' {
       namespace Issuer {
         type Type = 'account' | 'self';
       }
+
+      type PreviewMode = 'next' | 'recurring';
 
       interface ScheduleDetails {
         /**
@@ -2580,6 +2587,11 @@ declare module 'stripe' {
       on_behalf_of?: Stripe.Emptyable<string>;
 
       /**
+       * Customizes the types of values to include when calculating the invoice. Defaults to `next` if unspecified.
+       */
+      preview_mode?: InvoiceListUpcomingLinesParams.PreviewMode;
+
+      /**
        * The identifier of the schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
        */
       schedule?: string;
@@ -3015,6 +3027,8 @@ declare module 'stripe' {
       namespace Issuer {
         type Type = 'account' | 'self';
       }
+
+      type PreviewMode = 'next' | 'recurring';
 
       interface ScheduleDetails {
         /**
@@ -3919,6 +3933,11 @@ declare module 'stripe' {
       on_behalf_of?: Stripe.Emptyable<string>;
 
       /**
+       * Customizes the types of values to include when calculating the invoice. Defaults to `next` if unspecified.
+       */
+      preview_mode?: InvoiceRetrieveUpcomingParams.PreviewMode;
+
+      /**
        * The identifier of the schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
        */
       schedule?: string;
@@ -4354,6 +4373,8 @@ declare module 'stripe' {
       namespace Issuer {
         type Type = 'account' | 'self';
       }
+
+      type PreviewMode = 'next' | 'recurring';
 
       interface ScheduleDetails {
         /**

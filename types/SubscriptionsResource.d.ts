@@ -158,6 +158,11 @@ declare module 'stripe' {
       >;
 
       /**
+       * How to handle a customer's pending invoice items if an invoice will be generated. Defaults to `include` if the parameter is omitted.
+       */
+      pending_invoice_items_behavior?: SubscriptionCreateParams.PendingInvoiceItemsBehavior;
+
+      /**
        * The ID of a promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       promotion_code?: string;
@@ -796,6 +801,8 @@ declare module 'stripe' {
       namespace PendingInvoiceItemInterval {
         type Interval = 'day' | 'month' | 'week' | 'year';
       }
+
+      type PendingInvoiceItemsBehavior = 'exclude' | 'include';
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
 
