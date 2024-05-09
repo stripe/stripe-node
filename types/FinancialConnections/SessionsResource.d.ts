@@ -63,7 +63,7 @@ declare module 'stripe' {
           /**
            * List of countries from which to collect accounts.
            */
-          countries: Array<string>;
+          countries?: Array<string>;
         }
 
         type Permission =
