@@ -56,9 +56,19 @@ declare module 'stripe' {
 
       interface FeatureListParams extends PaginationParams {
         /**
+         * If set, filter results to only include features with the given archive status.
+         */
+        archived?: boolean;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+
+        /**
+         * If set, filter results to only include features with the given lookup_key.
+         */
+        lookup_key?: string;
       }
 
       class FeaturesResource {
