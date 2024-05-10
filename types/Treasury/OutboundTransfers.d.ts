@@ -101,7 +101,7 @@ declare module 'stripe' {
         /**
          * Details about network-specific tracking information if available.
          */
-        tracking_details?: OutboundTransfer.TrackingDetails | null;
+        tracking_details: OutboundTransfer.TrackingDetails | null;
 
         /**
          * The Transaction associated with this object.
