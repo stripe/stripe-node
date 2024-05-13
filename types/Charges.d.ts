@@ -414,8 +414,6 @@ declare module 'stripe' {
 
         konbini?: PaymentMethodDetails.Konbini;
 
-        kr_market?: PaymentMethodDetails.KrMarket;
-
         link?: PaymentMethodDetails.Link;
 
         mobilepay?: PaymentMethodDetails.Mobilepay;
@@ -1639,8 +1637,6 @@ declare module 'stripe' {
             type Chain = 'familymart' | 'lawson' | 'ministop' | 'seicomart';
           }
         }
-
-        interface KrMarket {}
 
         interface Link {
           /**
