@@ -807,6 +807,7 @@ declare module 'stripe' {
         | 'ideal'
         | 'klarna'
         | 'konbini'
+        | 'kr_market'
         | 'link'
         | 'mobilepay'
         | 'multibanco'

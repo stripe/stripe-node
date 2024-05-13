@@ -295,6 +295,11 @@ declare module 'stripe' {
         konbini?: PaymentMethodData.Konbini;
 
         /**
+         * If this is a KrMarket PaymentMethod, this hash contains details about the KrMarket payment method.
+         */
+        kr_market?: PaymentMethodData.KrMarket;
+
+        /**
          * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
          */
         link?: PaymentMethodData.Link;
@@ -634,6 +639,44 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface KrMarket {
+          /**
+           * Underlying payment method that the buyer selected.
+           */
+          underlying_payment_method?: KrMarket.UnderlyingPaymentMethod;
+        }
+
+        namespace KrMarket {
+          type UnderlyingPaymentMethod =
+            | 'bc'
+            | 'citi'
+            | 'hana'
+            | 'hyundai'
+            | 'jeju'
+            | 'jeonbuk'
+            | 'kakaobank'
+            | 'kakaopay'
+            | 'kbank'
+            | 'kdbbank'
+            | 'kookmin'
+            | 'kwangju'
+            | 'lotte'
+            | 'mg'
+            | 'naverpaycard'
+            | 'naverpaypoint'
+            | 'nh'
+            | 'payco'
+            | 'post'
+            | 'samsung'
+            | 'samsungpay'
+            | 'savingsbank'
+            | 'shinhan'
+            | 'shinhyup'
+            | 'suhyup'
+            | 'tossbank'
+            | 'woori';
+        }
+
         interface Link {}
 
         interface Mobilepay {}
@@ -781,6 +824,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'kr_market'
           | 'link'
           | 'mobilepay'
           | 'multibanco'
@@ -1549,6 +1593,11 @@ declare module 'stripe' {
         konbini?: PaymentMethodData.Konbini;
 
         /**
+         * If this is a KrMarket PaymentMethod, this hash contains details about the KrMarket payment method.
+         */
+        kr_market?: PaymentMethodData.KrMarket;
+
+        /**
          * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
          */
         link?: PaymentMethodData.Link;
@@ -1888,6 +1937,44 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface KrMarket {
+          /**
+           * Underlying payment method that the buyer selected.
+           */
+          underlying_payment_method?: KrMarket.UnderlyingPaymentMethod;
+        }
+
+        namespace KrMarket {
+          type UnderlyingPaymentMethod =
+            | 'bc'
+            | 'citi'
+            | 'hana'
+            | 'hyundai'
+            | 'jeju'
+            | 'jeonbuk'
+            | 'kakaobank'
+            | 'kakaopay'
+            | 'kbank'
+            | 'kdbbank'
+            | 'kookmin'
+            | 'kwangju'
+            | 'lotte'
+            | 'mg'
+            | 'naverpaycard'
+            | 'naverpaypoint'
+            | 'nh'
+            | 'payco'
+            | 'post'
+            | 'samsung'
+            | 'samsungpay'
+            | 'savingsbank'
+            | 'shinhan'
+            | 'shinhyup'
+            | 'suhyup'
+            | 'tossbank'
+            | 'woori';
+        }
+
         interface Link {}
 
         interface Mobilepay {}
@@ -2035,6 +2122,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'kr_market'
           | 'link'
           | 'mobilepay'
           | 'multibanco'
@@ -2890,6 +2978,11 @@ declare module 'stripe' {
         konbini?: PaymentMethodData.Konbini;
 
         /**
+         * If this is a KrMarket PaymentMethod, this hash contains details about the KrMarket payment method.
+         */
+        kr_market?: PaymentMethodData.KrMarket;
+
+        /**
          * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
          */
         link?: PaymentMethodData.Link;
@@ -3229,6 +3322,44 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface KrMarket {
+          /**
+           * Underlying payment method that the buyer selected.
+           */
+          underlying_payment_method?: KrMarket.UnderlyingPaymentMethod;
+        }
+
+        namespace KrMarket {
+          type UnderlyingPaymentMethod =
+            | 'bc'
+            | 'citi'
+            | 'hana'
+            | 'hyundai'
+            | 'jeju'
+            | 'jeonbuk'
+            | 'kakaobank'
+            | 'kakaopay'
+            | 'kbank'
+            | 'kdbbank'
+            | 'kookmin'
+            | 'kwangju'
+            | 'lotte'
+            | 'mg'
+            | 'naverpaycard'
+            | 'naverpaypoint'
+            | 'nh'
+            | 'payco'
+            | 'post'
+            | 'samsung'
+            | 'samsungpay'
+            | 'savingsbank'
+            | 'shinhan'
+            | 'shinhyup'
+            | 'suhyup'
+            | 'tossbank'
+            | 'woori';
+        }
+
         interface Link {}
 
         interface Mobilepay {}
@@ -3376,6 +3507,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'kr_market'
           | 'link'
           | 'mobilepay'
           | 'multibanco'

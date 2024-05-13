@@ -1017,6 +1017,11 @@ declare module 'stripe' {
         konbini?: PaymentMethodData.Konbini;
 
         /**
+         * If this is a KrMarket PaymentMethod, this hash contains details about the KrMarket payment method.
+         */
+        kr_market?: PaymentMethodData.KrMarket;
+
+        /**
          * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
          */
         link?: PaymentMethodData.Link;
@@ -1356,6 +1361,44 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface KrMarket {
+          /**
+           * Underlying payment method that the buyer selected.
+           */
+          underlying_payment_method?: KrMarket.UnderlyingPaymentMethod;
+        }
+
+        namespace KrMarket {
+          type UnderlyingPaymentMethod =
+            | 'bc'
+            | 'citi'
+            | 'hana'
+            | 'hyundai'
+            | 'jeju'
+            | 'jeonbuk'
+            | 'kakaobank'
+            | 'kakaopay'
+            | 'kbank'
+            | 'kdbbank'
+            | 'kookmin'
+            | 'kwangju'
+            | 'lotte'
+            | 'mg'
+            | 'naverpaycard'
+            | 'naverpaypoint'
+            | 'nh'
+            | 'payco'
+            | 'post'
+            | 'samsung'
+            | 'samsungpay'
+            | 'savingsbank'
+            | 'shinhan'
+            | 'shinhyup'
+            | 'suhyup'
+            | 'tossbank'
+            | 'woori';
+        }
+
         interface Link {}
 
         interface Mobilepay {}
@@ -1503,6 +1546,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'kr_market'
           | 'link'
           | 'mobilepay'
           | 'multibanco'
@@ -1675,6 +1719,11 @@ declare module 'stripe' {
          * If this is a `konbini` PaymentMethod, this sub-hash contains details about the Konbini payment method options.
          */
         konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+        /**
+         * If this is a `kr_market` PaymentMethod, this sub-hash contains details about the KR Market payment method options.
+         */
+        kr_market?: Stripe.Emptyable<PaymentMethodOptions.KrMarket>;
 
         /**
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
@@ -2637,6 +2686,21 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface KrMarket {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<KrMarket.SetupFutureUsage>;
+        }
+
+        namespace KrMarket {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Link {
@@ -4192,6 +4256,11 @@ declare module 'stripe' {
         konbini?: PaymentMethodData.Konbini;
 
         /**
+         * If this is a KrMarket PaymentMethod, this hash contains details about the KrMarket payment method.
+         */
+        kr_market?: PaymentMethodData.KrMarket;
+
+        /**
          * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
          */
         link?: PaymentMethodData.Link;
@@ -4531,6 +4600,44 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface KrMarket {
+          /**
+           * Underlying payment method that the buyer selected.
+           */
+          underlying_payment_method?: KrMarket.UnderlyingPaymentMethod;
+        }
+
+        namespace KrMarket {
+          type UnderlyingPaymentMethod =
+            | 'bc'
+            | 'citi'
+            | 'hana'
+            | 'hyundai'
+            | 'jeju'
+            | 'jeonbuk'
+            | 'kakaobank'
+            | 'kakaopay'
+            | 'kbank'
+            | 'kdbbank'
+            | 'kookmin'
+            | 'kwangju'
+            | 'lotte'
+            | 'mg'
+            | 'naverpaycard'
+            | 'naverpaypoint'
+            | 'nh'
+            | 'payco'
+            | 'post'
+            | 'samsung'
+            | 'samsungpay'
+            | 'savingsbank'
+            | 'shinhan'
+            | 'shinhyup'
+            | 'suhyup'
+            | 'tossbank'
+            | 'woori';
+        }
+
         interface Link {}
 
         interface Mobilepay {}
@@ -4678,6 +4785,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'kr_market'
           | 'link'
           | 'mobilepay'
           | 'multibanco'
@@ -4850,6 +4958,11 @@ declare module 'stripe' {
          * If this is a `konbini` PaymentMethod, this sub-hash contains details about the Konbini payment method options.
          */
         konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+        /**
+         * If this is a `kr_market` PaymentMethod, this sub-hash contains details about the KR Market payment method options.
+         */
+        kr_market?: Stripe.Emptyable<PaymentMethodOptions.KrMarket>;
 
         /**
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
@@ -5812,6 +5925,21 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface KrMarket {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<KrMarket.SetupFutureUsage>;
+        }
+
+        namespace KrMarket {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Link {
@@ -8129,6 +8257,11 @@ declare module 'stripe' {
         konbini?: PaymentMethodData.Konbini;
 
         /**
+         * If this is a KrMarket PaymentMethod, this hash contains details about the KrMarket payment method.
+         */
+        kr_market?: PaymentMethodData.KrMarket;
+
+        /**
          * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
          */
         link?: PaymentMethodData.Link;
@@ -8468,6 +8601,44 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface KrMarket {
+          /**
+           * Underlying payment method that the buyer selected.
+           */
+          underlying_payment_method?: KrMarket.UnderlyingPaymentMethod;
+        }
+
+        namespace KrMarket {
+          type UnderlyingPaymentMethod =
+            | 'bc'
+            | 'citi'
+            | 'hana'
+            | 'hyundai'
+            | 'jeju'
+            | 'jeonbuk'
+            | 'kakaobank'
+            | 'kakaopay'
+            | 'kbank'
+            | 'kdbbank'
+            | 'kookmin'
+            | 'kwangju'
+            | 'lotte'
+            | 'mg'
+            | 'naverpaycard'
+            | 'naverpaypoint'
+            | 'nh'
+            | 'payco'
+            | 'post'
+            | 'samsung'
+            | 'samsungpay'
+            | 'savingsbank'
+            | 'shinhan'
+            | 'shinhyup'
+            | 'suhyup'
+            | 'tossbank'
+            | 'woori';
+        }
+
         interface Link {}
 
         interface Mobilepay {}
@@ -8615,6 +8786,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'kr_market'
           | 'link'
           | 'mobilepay'
           | 'multibanco'
@@ -8787,6 +8959,11 @@ declare module 'stripe' {
          * If this is a `konbini` PaymentMethod, this sub-hash contains details about the Konbini payment method options.
          */
         konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+        /**
+         * If this is a `kr_market` PaymentMethod, this sub-hash contains details about the KR Market payment method options.
+         */
+        kr_market?: Stripe.Emptyable<PaymentMethodOptions.KrMarket>;
 
         /**
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
@@ -9749,6 +9926,21 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface KrMarket {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<KrMarket.SetupFutureUsage>;
+        }
+
+        namespace KrMarket {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Link {

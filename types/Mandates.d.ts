@@ -100,6 +100,8 @@ declare module 'stripe' {
 
         cashapp?: PaymentMethodDetails.Cashapp;
 
+        kr_market?: PaymentMethodDetails.KrMarket;
+
         link?: PaymentMethodDetails.Link;
 
         paypal?: PaymentMethodDetails.Paypal;
@@ -194,6 +196,8 @@ declare module 'stripe' {
         interface Card {}
 
         interface Cashapp {}
+
+        interface KrMarket {}
 
         interface Link {}
 
