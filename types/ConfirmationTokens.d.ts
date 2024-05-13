@@ -189,8 +189,6 @@ declare module 'stripe' {
 
         konbini?: PaymentMethodPreview.Konbini;
 
-        kr_market?: PaymentMethodPreview.KrMarket;
-
         link?: PaymentMethodPreview.Link;
 
         mobilepay?: PaymentMethodPreview.Mobilepay;
@@ -914,44 +912,6 @@ declare module 'stripe' {
 
         interface Konbini {}
 
-        interface KrMarket {
-          /**
-           * Underlying payment method buyer selected to complete the payment.
-           */
-          underlying_payment_method: KrMarket.UnderlyingPaymentMethod | null;
-        }
-
-        namespace KrMarket {
-          type UnderlyingPaymentMethod =
-            | 'bc'
-            | 'citi'
-            | 'hana'
-            | 'hyundai'
-            | 'jeju'
-            | 'jeonbuk'
-            | 'kakaobank'
-            | 'kakaopay'
-            | 'kbank'
-            | 'kdbbank'
-            | 'kookmin'
-            | 'kwangju'
-            | 'lotte'
-            | 'mg'
-            | 'naverpaycard'
-            | 'naverpaypoint'
-            | 'nh'
-            | 'payco'
-            | 'post'
-            | 'samsung'
-            | 'samsungpay'
-            | 'savingsbank'
-            | 'shinhan'
-            | 'shinhyup'
-            | 'suhyup'
-            | 'tossbank'
-            | 'woori';
-        }
-
         interface Link {
           /**
            * Account owner's email address.
@@ -1160,7 +1120,6 @@ declare module 'stripe' {
           | 'interac_present'
           | 'klarna'
           | 'konbini'
-          | 'kr_market'
           | 'link'
           | 'mobilepay'
           | 'multibanco'

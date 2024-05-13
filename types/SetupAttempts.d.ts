@@ -112,8 +112,6 @@ declare module 'stripe' {
 
         klarna?: PaymentMethodDetails.Klarna;
 
-        kr_market?: PaymentMethodDetails.KrMarket;
-
         link?: PaymentMethodDetails.Link;
 
         paypal?: PaymentMethodDetails.Paypal;
@@ -462,8 +460,6 @@ declare module 'stripe' {
         }
 
         interface Klarna {}
-
-        interface KrMarket {}
 
         interface Link {}
 
