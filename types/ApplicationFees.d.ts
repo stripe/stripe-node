@@ -57,6 +57,11 @@ declare module 'stripe' {
       currency: string;
 
       /**
+       * Polymorphic source of the application fee. Includes the ID of the object the application fee was created from.
+       */
+      fee_source: ApplicationFee.FeeSource | null;
+
+      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
@@ -75,6 +80,29 @@ declare module 'stripe' {
        * A list of refunds that have been applied to the fee.
        */
       refunds: ApiList<Stripe.FeeRefund>;
+    }
+
+    namespace ApplicationFee {
+      interface FeeSource {
+        /**
+         * Charge ID that created this application fee.
+         */
+        charge?: string;
+
+        /**
+         * Payout ID that created this application fee.
+         */
+        payout?: string;
+
+        /**
+         * Type of object that created the application fee, either `charge` or `payout`.
+         */
+        type: FeeSource.Type;
+      }
+
+      namespace FeeSource {
+        type Type = 'charge' | 'payout';
+      }
     }
   }
 }

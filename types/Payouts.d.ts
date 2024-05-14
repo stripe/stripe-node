@@ -29,6 +29,16 @@ declare module 'stripe' {
       amount: number;
 
       /**
+       * The application fee (if any) for the payout. [See the Connect documentation](https://stripe.com/docs/connect/instant-payouts#monetization-and-fees) for details.
+       */
+      application_fee: string | Stripe.ApplicationFee | null;
+
+      /**
+       * The amount of the application fee (if any) requested for the payout. [See the Connect documentation](https://stripe.com/docs/connect/instant-payouts#monetization-and-fees) for details.
+       */
+      application_fee_amount: number | null;
+
+      /**
        * Date that you can expect the payout to arrive in the bank. This factors in delays to account for weekends or bank holidays.
        */
       arrival_date: number;
