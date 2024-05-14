@@ -420,7 +420,7 @@ declare module 'stripe' {
         treasury?: Capabilities.Treasury;
 
         /**
-         * The status of the Twint capability of the account, or whether the account can directly process Twint charges.
+         * The status of the TWINT capability of the account, or whether the account can directly process TWINT charges.
          */
         twint_payments?: Capabilities.TwintPayments;
 
