@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.8.0-beta.1 - 2024-05-16
+* [#2087](https://github.com/stripe/stripe-node/pull/2087) Update generated code for beta
+
+
 ## 15.7.0-beta.1 - 2024-05-09
 * [#2079](https://github.com/stripe/stripe-node/pull/2079) Update generated code for beta
   * No new beta features. Merging changes from the main branch.
