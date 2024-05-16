@@ -127,10 +127,48 @@ declare module 'stripe' {
          */
         currency: string;
 
+        /**
+         * Breakdown of balance by destination.
+         */
+        net_available?: Array<InstantAvailable.NetAvailable>;
+
         source_types?: InstantAvailable.SourceTypes;
       }
 
       namespace InstantAvailable {
+        interface NetAvailable {
+          /**
+           * Net balance amount, subtracting fees from platform-set pricing.
+           */
+          amount: number;
+
+          /**
+           * ID of the external account for this net balance (not expandable).
+           */
+          destination: string;
+
+          source_types?: NetAvailable.SourceTypes;
+        }
+
+        namespace NetAvailable {
+          interface SourceTypes {
+            /**
+             * Amount for bank account.
+             */
+            bank_account?: number;
+
+            /**
+             * Amount for card.
+             */
+            card?: number;
+
+            /**
+             * Amount for FPX.
+             */
+            fpx?: number;
+          }
+        }
+
         interface SourceTypes {
           /**
            * Amount for bank account.

@@ -25,6 +25,11 @@ declare module 'stripe' {
         offline?: Stripe.Emptyable<ConfigurationCreateParams.Offline>;
 
         /**
+         * An object containing device type specific settings for Stripe S700 readers
+         */
+        stripe_s700?: ConfigurationCreateParams.StripeS700;
+
+        /**
          * Tipping configurations for readers supporting on-reader tips
          */
         tipping?: Stripe.Emptyable<ConfigurationCreateParams.Tipping>;
@@ -48,6 +53,13 @@ declare module 'stripe' {
            * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
            */
           enabled: boolean;
+        }
+
+        interface StripeS700 {
+          /**
+           * A File ID representing an image you would like displayed on the reader.
+           */
+          splashscreen?: Stripe.Emptyable<string>;
         }
 
         interface Tipping {
@@ -401,6 +413,11 @@ declare module 'stripe' {
         offline?: Stripe.Emptyable<ConfigurationUpdateParams.Offline>;
 
         /**
+         * An object containing device type specific settings for Stripe S700 readers
+         */
+        stripe_s700?: Stripe.Emptyable<ConfigurationUpdateParams.StripeS700>;
+
+        /**
          * Tipping configurations for readers supporting on-reader tips
          */
         tipping?: Stripe.Emptyable<ConfigurationUpdateParams.Tipping>;
@@ -426,6 +443,13 @@ declare module 'stripe' {
            * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
            */
           enabled: boolean;
+        }
+
+        interface StripeS700 {
+          /**
+           * A File ID representing an image you would like displayed on the reader.
+           */
+          splashscreen?: Stripe.Emptyable<string>;
         }
 
         interface Tipping {
