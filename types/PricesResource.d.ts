@@ -494,7 +494,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Only return the price with these lookup_keys, if any exist.
+       * Only return the price with these lookup_keys, if any exist. You can specify up to 10 lookup_keys.
        */
       lookup_keys?: Array<string>;
 

@@ -104,7 +104,7 @@ declare module 'stripe' {
       shippable: boolean | null;
 
       /**
-       * Extra information about a product which will appear on your customer's credit card statement. In the case that multiple products are billed at once, the first statement descriptor will be used.
+       * Extra information about a product which will appear on your customer's credit card statement. In the case that multiple products are billed at once, the first statement descriptor will be used. Only used for subscription payments.
        */
       statement_descriptor?: string | null;
 

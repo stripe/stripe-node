@@ -60,6 +60,13 @@ declare module 'stripe' {
           >;
 
           /**
+           * Evidence provided when `reason` is 'no_valid_authorization'.
+           */
+          no_valid_authorization?: Stripe.Emptyable<
+            Evidence.NoValidAuthorization
+          >;
+
+          /**
            * Evidence provided when `reason` is 'not_received'.
            */
           not_received?: Stripe.Emptyable<Evidence.NotReceived>;
@@ -254,6 +261,18 @@ declare module 'stripe' {
             type ProductType = 'merchandise' | 'service';
           }
 
+          interface NoValidAuthorization {
+            /**
+             * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
+             */
+            additional_documentation?: Stripe.Emptyable<string>;
+
+            /**
+             * Explanation of why the cardholder is disputing this transaction.
+             */
+            explanation?: Stripe.Emptyable<string>;
+          }
+
           interface Other {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
@@ -285,6 +304,7 @@ declare module 'stripe' {
             | 'duplicate'
             | 'fraudulent'
             | 'merchandise_not_as_described'
+            | 'no_valid_authorization'
             | 'not_received'
             | 'other'
             | 'service_not_as_described';
@@ -379,6 +399,13 @@ declare module 'stripe' {
           >;
 
           /**
+           * Evidence provided when `reason` is 'no_valid_authorization'.
+           */
+          no_valid_authorization?: Stripe.Emptyable<
+            Evidence.NoValidAuthorization
+          >;
+
+          /**
            * Evidence provided when `reason` is 'not_received'.
            */
           not_received?: Stripe.Emptyable<Evidence.NotReceived>;
@@ -573,6 +600,18 @@ declare module 'stripe' {
             type ProductType = 'merchandise' | 'service';
           }
 
+          interface NoValidAuthorization {
+            /**
+             * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
+             */
+            additional_documentation?: Stripe.Emptyable<string>;
+
+            /**
+             * Explanation of why the cardholder is disputing this transaction.
+             */
+            explanation?: Stripe.Emptyable<string>;
+          }
+
           interface Other {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
@@ -604,6 +643,7 @@ declare module 'stripe' {
             | 'duplicate'
             | 'fraudulent'
             | 'merchandise_not_as_described'
+            | 'no_valid_authorization'
             | 'not_received'
             | 'other'
             | 'service_not_as_described';

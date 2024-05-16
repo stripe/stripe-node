@@ -1825,7 +1825,7 @@ declare module 'stripe' {
 
         interface SavedPaymentMethodOptions {
           /**
-           * Controls which payment methods are eligible to be redisplayed to returning customers. Corresponds to `allow_redisplay` on the payment method.
+           * Uses the `allow_redisplay` value of each saved payment method to filter the set presented to a returning customer. By default, only saved payment methods with 'allow_redisplay: ‘always' are shown in Checkout.
            */
           allow_redisplay_filters?: Array<
             SavedPaymentMethodOptions.AllowRedisplayFilter

@@ -250,6 +250,8 @@ declare module 'stripe' {
       interface PaymentMethodDetails {
         card?: PaymentMethodDetails.Card;
 
+        klarna?: PaymentMethodDetails.Klarna;
+
         paypal?: PaymentMethodDetails.Paypal;
 
         /**
@@ -271,6 +273,13 @@ declare module 'stripe' {
           network_reason_code: string | null;
         }
 
+        interface Klarna {
+          /**
+           * The reason for the dispute as defined by Klarna
+           */
+          reason_code: string | null;
+        }
+
         interface Paypal {
           /**
            * The ID of the dispute in PayPal.
@@ -283,7 +292,7 @@ declare module 'stripe' {
           reason_code: string | null;
         }
 
-        type Type = 'card' | 'paypal';
+        type Type = 'card' | 'klarna' | 'paypal';
       }
 
       type Status =
