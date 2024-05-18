@@ -504,7 +504,7 @@ declare module 'stripe' {
 
             interface Trial {
               /**
-               * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+               * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial. Currently only supports at most 1 price ID.
                */
               converts_to?: Array<string>;
 
@@ -656,7 +656,7 @@ declare module 'stripe' {
 
             interface Trial {
               /**
-               * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+               * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial. Currently only supports at most 1 price ID.
                */
               converts_to?: Array<string>;
 
@@ -2199,7 +2199,7 @@ declare module 'stripe' {
 
             interface Trial {
               /**
-               * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+               * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial. Currently only supports at most 1 price ID.
                */
               converts_to?: Array<string>;
 
@@ -2351,7 +2351,7 @@ declare module 'stripe' {
 
             interface Trial {
               /**
-               * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+               * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial. Currently only supports at most 1 price ID.
                */
               converts_to?: Array<string>;
 
