@@ -380,7 +380,7 @@ declare module 'stripe' {
         swish?: PaymentMethodData.Swish;
 
         /**
-         * If this is a Twint PaymentMethod, this hash contains details about the Twint payment method.
+         * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
          */
         twint?: PaymentMethodData.Twint;
 
@@ -1634,7 +1634,7 @@ declare module 'stripe' {
         swish?: PaymentMethodData.Swish;
 
         /**
-         * If this is a Twint PaymentMethod, this hash contains details about the Twint payment method.
+         * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
          */
         twint?: PaymentMethodData.Twint;
 
@@ -2975,7 +2975,7 @@ declare module 'stripe' {
         swish?: PaymentMethodData.Swish;
 
         /**
-         * If this is a Twint PaymentMethod, this hash contains details about the Twint payment method.
+         * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
          */
         twint?: PaymentMethodData.Twint;
 
