@@ -1646,12 +1646,12 @@ declare module 'stripe' {
         period?: Line.Period;
 
         /**
-         * The ID of the price object.
+         * The ID of the price object. One of `price` or `price_data` is required.
          */
         price?: string;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
          */
         price_data?: Line.PriceData;
 
@@ -2259,12 +2259,12 @@ declare module 'stripe' {
         period?: InvoiceItem.Period;
 
         /**
-         * The ID of the price object.
+         * The ID of the price object. One of `price` or `price_data` is required.
          */
         price?: string;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
          */
         price_data?: InvoiceItem.PriceData;
 
@@ -3197,12 +3197,12 @@ declare module 'stripe' {
             discounts?: Array<AddInvoiceItem.Discount>;
 
             /**
-             * The ID of the price object.
+             * The ID of the price object. One of `price` or `price_data` is required.
              */
             price?: string;
 
             /**
-             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
              */
             price_data?: AddInvoiceItem.PriceData;
 
@@ -3864,12 +3864,12 @@ declare module 'stripe' {
           plan?: string;
 
           /**
-           * The ID of the price object. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+           * The ID of the price object. One of `price` or `price_data` is required. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
            */
           price?: string;
 
           /**
-           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
            */
           price_data?: Item.PriceData;
 
@@ -4470,12 +4470,12 @@ declare module 'stripe' {
         period?: InvoiceItem.Period;
 
         /**
-         * The ID of the price object.
+         * The ID of the price object. One of `price` or `price_data` is required.
          */
         price?: string;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
          */
         price_data?: InvoiceItem.PriceData;
 
@@ -5408,12 +5408,12 @@ declare module 'stripe' {
             discounts?: Array<AddInvoiceItem.Discount>;
 
             /**
-             * The ID of the price object.
+             * The ID of the price object. One of `price` or `price_data` is required.
              */
             price?: string;
 
             /**
-             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
              */
             price_data?: AddInvoiceItem.PriceData;
 
@@ -6077,12 +6077,12 @@ declare module 'stripe' {
           plan?: string;
 
           /**
-           * The ID of the price object. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+           * The ID of the price object. One of `price` or `price_data` is required. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
            */
           price?: string;
 
           /**
-           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
            */
           price_data?: Item.PriceData;
 
@@ -6271,12 +6271,12 @@ declare module 'stripe' {
         plan?: string;
 
         /**
-         * The ID of the price object. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+         * The ID of the price object. One of `price` or `price_data` is required. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
          */
         price?: string;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
          */
         price_data?: SubscriptionItem.PriceData;
 
@@ -6940,12 +6940,12 @@ declare module 'stripe' {
         period?: InvoiceItem.Period;
 
         /**
-         * The ID of the price object.
+         * The ID of the price object. One of `price` or `price_data` is required.
          */
         price?: string;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
          */
         price_data?: InvoiceItem.PriceData;
 
@@ -7878,12 +7878,12 @@ declare module 'stripe' {
             discounts?: Array<AddInvoiceItem.Discount>;
 
             /**
-             * The ID of the price object.
+             * The ID of the price object. One of `price` or `price_data` is required.
              */
             price?: string;
 
             /**
-             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
              */
             price_data?: AddInvoiceItem.PriceData;
 
@@ -8547,12 +8547,12 @@ declare module 'stripe' {
           plan?: string;
 
           /**
-           * The ID of the price object. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+           * The ID of the price object. One of `price` or `price_data` is required. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
            */
           price?: string;
 
           /**
-           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
            */
           price_data?: Item.PriceData;
 
@@ -8741,12 +8741,12 @@ declare module 'stripe' {
         plan?: string;
 
         /**
-         * The ID of the price object. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+         * The ID of the price object. One of `price` or `price_data` is required. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
          */
         price?: string;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
          */
         price_data?: SubscriptionItem.PriceData;
 
@@ -8987,12 +8987,12 @@ declare module 'stripe' {
         period?: Line.Period;
 
         /**
-         * The ID of the price object.
+         * The ID of the price object. One of `price` or `price_data` is required.
          */
         price?: string;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
          */
         price_data?: Line.PriceData;
 
@@ -9272,12 +9272,12 @@ declare module 'stripe' {
       period?: InvoiceUpdateLineItemParams.Period;
 
       /**
-       * The ID of the price object.
+       * The ID of the price object. One of `price` or `price_data` is required.
        */
       price?: string;
 
       /**
-       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
        */
       price_data?: InvoiceUpdateLineItemParams.PriceData;
 
