@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.9.0-beta.1 - 2024-05-23
+* [#2093](https://github.com/stripe/stripe-node/pull/2093) Update generated code for beta
+  * Change `CreditNoteCreateParams.refunds[].refund`, `CreditNotePreviewLinesParams.refunds[].refund`, and `CreditNotePreviewParams.refunds[].refund` to be optional
+
 ## 15.8.0-beta.1 - 2024-05-16
 * [#2087](https://github.com/stripe/stripe-node/pull/2087) Update generated code for beta
 
