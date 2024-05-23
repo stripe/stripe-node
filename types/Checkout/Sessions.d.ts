@@ -1573,6 +1573,11 @@ declare module 'stripe' {
           > | null;
 
           /**
+           * Enable customers to choose if they wish to remove their saved payment methods. Disabled by default.
+           */
+          payment_method_remove: SavedPaymentMethodOptions.PaymentMethodRemove | null;
+
+          /**
            * Enable customers to choose if they wish to save their payment method for future use. Disabled by default.
            */
           payment_method_save: SavedPaymentMethodOptions.PaymentMethodSave | null;
@@ -1580,6 +1585,8 @@ declare module 'stripe' {
 
         namespace SavedPaymentMethodOptions {
           type AllowRedisplayFilter = 'always' | 'limited' | 'unspecified';
+
+          type PaymentMethodRemove = 'disabled' | 'enabled';
 
           type PaymentMethodSave = 'disabled' | 'enabled';
         }

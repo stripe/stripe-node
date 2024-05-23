@@ -158,7 +158,7 @@ declare module 'stripe' {
         /**
          * ID of an existing refund to link this credit note to.
          */
-        refund: string;
+        refund?: string;
       }
 
       interface ShippingCost {
@@ -378,7 +378,7 @@ declare module 'stripe' {
         /**
          * ID of an existing refund to link this credit note to.
          */
-        refund: string;
+        refund?: string;
       }
 
       interface ShippingCost {
@@ -545,7 +545,7 @@ declare module 'stripe' {
         /**
          * ID of an existing refund to link this credit note to.
          */
-        refund: string;
+        refund?: string;
       }
 
       interface ShippingCost {

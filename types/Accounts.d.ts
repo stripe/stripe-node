@@ -340,7 +340,7 @@ declare module 'stripe' {
         link_payments?: Capabilities.LinkPayments;
 
         /**
-         * The status of the MobilepPay capability of the account, or whether the account can directly process MobilePay charges.
+         * The status of the MobilePay capability of the account, or whether the account can directly process MobilePay charges.
          */
         mobilepay_payments?: Capabilities.MobilepayPayments;
 
