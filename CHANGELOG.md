@@ -4,6 +4,12 @@
 * [#2093](https://github.com/stripe/stripe-node/pull/2093) Update generated code for beta
   * Change `CreditNoteCreateParams.refunds[].refund`, `CreditNotePreviewLinesParams.refunds[].refund`, and `CreditNotePreviewParams.refunds[].refund` to be optional
 
+## 15.8.0 - 2024-05-23
+* [#2092](https://github.com/stripe/stripe-node/pull/2092) Update generated code
+  * Add support for `external_account_collection` on `AccountSession.components.balances.features`, `AccountSession.components.payouts.features`, `AccountSessionCreateParams.components.balances.features`, and `AccountSessionCreateParams.components.payouts.features`
+  * Add support for new value `terminal_reader_invalid_location_for_payment` on enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`
+  * Add support for `payment_method_remove` on `Checkout.Session.saved_payment_method_options`
+
 ## 15.8.0-beta.1 - 2024-05-16
 * [#2087](https://github.com/stripe/stripe-node/pull/2087) Update generated code for beta
 
