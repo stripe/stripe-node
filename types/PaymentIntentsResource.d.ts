@@ -1829,11 +1829,11 @@ declare module 'stripe' {
 
         interface Affirm {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -1856,11 +1856,11 @@ declare module 'stripe' {
 
         interface AfterpayClearpay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -1901,11 +1901,11 @@ declare module 'stripe' {
 
         interface AmazonPay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -2023,11 +2023,11 @@ declare module 'stripe' {
 
         interface Card {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -2385,11 +2385,11 @@ declare module 'stripe' {
 
         interface Cashapp {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -2551,11 +2551,11 @@ declare module 'stripe' {
 
         interface Klarna {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -2661,11 +2661,11 @@ declare module 'stripe' {
 
         interface Link {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -2693,11 +2693,11 @@ declare module 'stripe' {
 
         interface Mobilepay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -2971,11 +2971,11 @@ declare module 'stripe' {
 
         interface RevolutPay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -5024,11 +5024,11 @@ declare module 'stripe' {
 
         interface Affirm {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -5051,11 +5051,11 @@ declare module 'stripe' {
 
         interface AfterpayClearpay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -5096,11 +5096,11 @@ declare module 'stripe' {
 
         interface AmazonPay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -5218,11 +5218,11 @@ declare module 'stripe' {
 
         interface Card {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -5580,11 +5580,11 @@ declare module 'stripe' {
 
         interface Cashapp {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -5746,11 +5746,11 @@ declare module 'stripe' {
 
         interface Klarna {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -5856,11 +5856,11 @@ declare module 'stripe' {
 
         interface Link {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -5888,11 +5888,11 @@ declare module 'stripe' {
 
         interface Mobilepay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -6166,11 +6166,11 @@ declare module 'stripe' {
 
         interface RevolutPay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -8981,11 +8981,11 @@ declare module 'stripe' {
 
         interface Affirm {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -9008,11 +9008,11 @@ declare module 'stripe' {
 
         interface AfterpayClearpay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -9053,11 +9053,11 @@ declare module 'stripe' {
 
         interface AmazonPay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -9175,11 +9175,11 @@ declare module 'stripe' {
 
         interface Card {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -9537,11 +9537,11 @@ declare module 'stripe' {
 
         interface Cashapp {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -9703,11 +9703,11 @@ declare module 'stripe' {
 
         interface Klarna {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -9813,11 +9813,11 @@ declare module 'stripe' {
 
         interface Link {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -9845,11 +9845,11 @@ declare module 'stripe' {
 
         interface Mobilepay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -10123,11 +10123,11 @@ declare module 'stripe' {
 
         interface RevolutPay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top level behavior of `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
