@@ -2163,7 +2163,7 @@ declare module 'stripe' {
           shipping_rate?: string;
 
           /**
-           * Parameters to be passed to Shipping Rate creation for this shipping option
+           * Parameters to be passed to Shipping Rate creation for this shipping option.
            */
           shipping_rate_data?: ShippingOption.ShippingRateData;
         }
