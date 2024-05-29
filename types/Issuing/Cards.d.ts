@@ -87,7 +87,7 @@ declare module 'stripe' {
         /**
          * The personalization design object belonging to this card.
          */
-        personalization_design?:
+        personalization_design:
           | string
           | Stripe.Issuing.PersonalizationDesign
           | null;

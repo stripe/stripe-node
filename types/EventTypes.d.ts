@@ -112,6 +112,10 @@ declare module 'stripe' {
       | IssuingDisputeFundsReinstatedEvent
       | IssuingDisputeSubmittedEvent
       | IssuingDisputeUpdatedEvent
+      | IssuingPersonalizationDesignActivatedEvent
+      | IssuingPersonalizationDesignDeactivatedEvent
+      | IssuingPersonalizationDesignRejectedEvent
+      | IssuingPersonalizationDesignUpdatedEvent
       | IssuingTokenCreatedEvent
       | IssuingTokenUpdatedEvent
       | IssuingTransactionCreatedEvent
@@ -1980,6 +1984,70 @@ declare module 'stripe' {
         object: Stripe.Issuing.Dispute;
 
         previous_attributes?: Partial<Stripe.Issuing.Dispute>;
+      }
+    }
+
+    /**
+     * Occurs whenever a personalization design is activated following the activation of the physical bundle that belongs to it.
+     */
+    interface IssuingPersonalizationDesignActivatedEvent extends EventBase {
+      type: 'issuing_personalization_design.activated';
+      data: IssuingPersonalizationDesignActivatedEvent.Data;
+    }
+
+    namespace IssuingPersonalizationDesignActivatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.PersonalizationDesign;
+
+        previous_attributes?: Partial<Stripe.Issuing.PersonalizationDesign>;
+      }
+    }
+
+    /**
+     * Occurs whenever a personalization design is deactivated following the deactivation of the physical bundle that belongs to it.
+     */
+    interface IssuingPersonalizationDesignDeactivatedEvent extends EventBase {
+      type: 'issuing_personalization_design.deactivated';
+      data: IssuingPersonalizationDesignDeactivatedEvent.Data;
+    }
+
+    namespace IssuingPersonalizationDesignDeactivatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.PersonalizationDesign;
+
+        previous_attributes?: Partial<Stripe.Issuing.PersonalizationDesign>;
+      }
+    }
+
+    /**
+     * Occurs whenever a personalization design is rejected by design review.
+     */
+    interface IssuingPersonalizationDesignRejectedEvent extends EventBase {
+      type: 'issuing_personalization_design.rejected';
+      data: IssuingPersonalizationDesignRejectedEvent.Data;
+    }
+
+    namespace IssuingPersonalizationDesignRejectedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.PersonalizationDesign;
+
+        previous_attributes?: Partial<Stripe.Issuing.PersonalizationDesign>;
+      }
+    }
+
+    /**
+     * Occurs whenever a personalization design is updated.
+     */
+    interface IssuingPersonalizationDesignUpdatedEvent extends EventBase {
+      type: 'issuing_personalization_design.updated';
+      data: IssuingPersonalizationDesignUpdatedEvent.Data;
+    }
+
+    namespace IssuingPersonalizationDesignUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.PersonalizationDesign;
+
+        previous_attributes?: Partial<Stripe.Issuing.PersonalizationDesign>;
       }
     }
 
