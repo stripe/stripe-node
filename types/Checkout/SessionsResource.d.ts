@@ -422,6 +422,11 @@ declare module 'stripe' {
         namespace CustomField {
           interface Dropdown {
             /**
+             * The value that will pre-fill the field on the payment page.Must match a `value` in the `options` array.
+             */
+            default_value?: string;
+
+            /**
              * The options available for the customer to select. Up to 200 options allowed.
              */
             options: Array<Dropdown.Option>;
@@ -455,6 +460,11 @@ declare module 'stripe' {
 
           interface Numeric {
             /**
+             * The value that will pre-fill the field on the payment page.
+             */
+            default_value?: string;
+
+            /**
              * The maximum character length constraint for the customer's input.
              */
             maximum_length?: number;
@@ -466,6 +476,11 @@ declare module 'stripe' {
           }
 
           interface Text {
+            /**
+             * The value that will pre-fill the field on the payment page.
+             */
+            default_value?: string;
+
             /**
              * The maximum character length constraint for the customer's input.
              */
@@ -2116,7 +2131,7 @@ declare module 'stripe' {
           shipping_rate?: string;
 
           /**
-           * Parameters to be passed to Shipping Rate creation for this shipping option
+           * Parameters to be passed to Shipping Rate creation for this shipping option.
            */
           shipping_rate_data?: ShippingOption.ShippingRateData;
         }
