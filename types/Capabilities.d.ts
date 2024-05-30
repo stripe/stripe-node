@@ -205,7 +205,8 @@ declare module 'stripe' {
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
-            | 'verification_requires_additional_memorandum_of_associations';
+            | 'verification_requires_additional_memorandum_of_associations'
+            | 'verification_requires_additional_proof_of_registration';
         }
       }
 
@@ -374,7 +375,8 @@ declare module 'stripe' {
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
-            | 'verification_requires_additional_memorandum_of_associations';
+            | 'verification_requires_additional_memorandum_of_associations'
+            | 'verification_requires_additional_proof_of_registration';
         }
       }
 
