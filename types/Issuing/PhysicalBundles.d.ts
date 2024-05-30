@@ -17,7 +17,7 @@ declare module 'stripe' {
          */
         object: 'issuing.physical_bundle';
 
-        features?: PhysicalBundle.Features;
+        features: PhysicalBundle.Features;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
