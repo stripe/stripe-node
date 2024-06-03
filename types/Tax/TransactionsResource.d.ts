@@ -144,7 +144,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Tax.Transaction>>;
 
         /**
-         * Creates a Tax Transaction from a calculation.
+         * Creates a Tax Transaction from a calculation, if that calculation hasn't expired. Calculations expire after 90 days.
          */
         createFromCalculation(
           params: TransactionCreateFromCalculationParams,
