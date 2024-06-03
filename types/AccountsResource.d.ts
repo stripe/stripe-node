@@ -275,6 +275,11 @@ declare module 'stripe' {
         fpx_payments?: Capabilities.FpxPayments;
 
         /**
+         * The gb_bank_transfer_payments capability.
+         */
+        gb_bank_transfer_payments?: Capabilities.GbBankTransferPayments;
+
+        /**
          * The giropay_payments capability.
          */
         giropay_payments?: Capabilities.GiropayPayments;
@@ -298,6 +303,11 @@ declare module 'stripe' {
          * The jcb_payments capability.
          */
         jcb_payments?: Capabilities.JcbPayments;
+
+        /**
+         * The jp_bank_transfer_payments capability.
+         */
+        jp_bank_transfer_payments?: Capabilities.JpBankTransferPayments;
 
         /**
          * The klarna_payments capability.
@@ -325,6 +335,11 @@ declare module 'stripe' {
         mobilepay_payments?: Capabilities.MobilepayPayments;
 
         /**
+         * The mx_bank_transfer_payments capability.
+         */
+        mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
+
+        /**
          * The oxxo_payments capability.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -348,6 +363,11 @@ declare module 'stripe' {
          * The revolut_pay_payments capability.
          */
         revolut_pay_payments?: Capabilities.RevolutPayPayments;
+
+        /**
+         * The sepa_bank_transfer_payments capability.
+         */
+        sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
 
         /**
          * The sepa_debit_payments capability.
@@ -388,6 +408,11 @@ declare module 'stripe' {
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
+
+        /**
+         * The us_bank_transfer_payments capability.
+         */
+        us_bank_transfer_payments?: Capabilities.UsBankTransferPayments;
 
         /**
          * The zip_payments capability.
@@ -508,6 +533,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface GbBankTransferPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface GiropayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -537,6 +569,13 @@ declare module 'stripe' {
         }
 
         interface JcbPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface JpBankTransferPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -578,6 +617,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface MxBankTransferPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface OxxoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -607,6 +653,13 @@ declare module 'stripe' {
         }
 
         interface RevolutPayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface SepaBankTransferPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -663,6 +716,13 @@ declare module 'stripe' {
         }
 
         interface UsBankAccountAchPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface UsBankTransferPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1786,6 +1846,11 @@ declare module 'stripe' {
         fpx_payments?: Capabilities.FpxPayments;
 
         /**
+         * The gb_bank_transfer_payments capability.
+         */
+        gb_bank_transfer_payments?: Capabilities.GbBankTransferPayments;
+
+        /**
          * The giropay_payments capability.
          */
         giropay_payments?: Capabilities.GiropayPayments;
@@ -1809,6 +1874,11 @@ declare module 'stripe' {
          * The jcb_payments capability.
          */
         jcb_payments?: Capabilities.JcbPayments;
+
+        /**
+         * The jp_bank_transfer_payments capability.
+         */
+        jp_bank_transfer_payments?: Capabilities.JpBankTransferPayments;
 
         /**
          * The klarna_payments capability.
@@ -1836,6 +1906,11 @@ declare module 'stripe' {
         mobilepay_payments?: Capabilities.MobilepayPayments;
 
         /**
+         * The mx_bank_transfer_payments capability.
+         */
+        mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
+
+        /**
          * The oxxo_payments capability.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -1859,6 +1934,11 @@ declare module 'stripe' {
          * The revolut_pay_payments capability.
          */
         revolut_pay_payments?: Capabilities.RevolutPayPayments;
+
+        /**
+         * The sepa_bank_transfer_payments capability.
+         */
+        sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
 
         /**
          * The sepa_debit_payments capability.
@@ -1899,6 +1979,11 @@ declare module 'stripe' {
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
+
+        /**
+         * The us_bank_transfer_payments capability.
+         */
+        us_bank_transfer_payments?: Capabilities.UsBankTransferPayments;
 
         /**
          * The zip_payments capability.
@@ -2019,6 +2104,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface GbBankTransferPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface GiropayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -2048,6 +2140,13 @@ declare module 'stripe' {
         }
 
         interface JcbPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface JpBankTransferPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2089,6 +2188,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface MxBankTransferPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface OxxoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -2118,6 +2224,13 @@ declare module 'stripe' {
         }
 
         interface RevolutPayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface SepaBankTransferPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2174,6 +2287,13 @@ declare module 'stripe' {
         }
 
         interface UsBankAccountAchPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface UsBankTransferPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
