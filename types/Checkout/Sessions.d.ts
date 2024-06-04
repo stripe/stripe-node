@@ -175,7 +175,7 @@ declare module 'stripe' {
         mode: Session.Mode;
 
         /**
-         * The ID of the PaymentIntent for Checkout Sessions in `payment` mode.
+         * The ID of the PaymentIntent for Checkout Sessions in `payment` mode. You can't confirm or cancel the PaymentIntent for a Checkout Session. To cancel, [expire the Checkout Session](https://stripe.com/docs/api/checkout/sessions/expire) instead.
          */
         payment_intent: string | Stripe.PaymentIntent | null;
 
@@ -234,7 +234,7 @@ declare module 'stripe' {
         saved_payment_method_options: Session.SavedPaymentMethodOptions | null;
 
         /**
-         * The ID of the SetupIntent for Checkout Sessions in `setup` mode.
+         * The ID of the SetupIntent for Checkout Sessions in `setup` mode. You can't confirm or cancel the SetupIntent for a Checkout Session. To cancel, [expire the Checkout Session](https://stripe.com/docs/api/checkout/sessions/expire) instead.
          */
         setup_intent: string | Stripe.SetupIntent | null;
 
