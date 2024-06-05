@@ -18,6 +18,7 @@ declare module 'stripe' {
       | TaxDeductedAtSource
       | Topup
       | Transfer
-      | TransferReversal;
+      | TransferReversal
+      | PlatformTaxFee;
   }
 }
