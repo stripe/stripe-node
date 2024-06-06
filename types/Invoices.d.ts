@@ -1243,6 +1243,7 @@ declare module 'stripe' {
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'swish'
           | 'us_bank_account'
           | 'wechat_pay';
       }
