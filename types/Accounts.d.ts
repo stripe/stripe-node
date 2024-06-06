@@ -293,6 +293,11 @@ declare module 'stripe' {
         fpx_payments?: Capabilities.FpxPayments;
 
         /**
+         * The status of the GB customer_balance payments (GBP currency) capability of the account, or whether the account can directly process GB customer_balance charges.
+         */
+        gb_bank_transfer_payments?: Capabilities.GbBankTransferPayments;
+
+        /**
          * The status of the giropay payments capability of the account, or whether the account can directly process giropay charges.
          */
         giropay_payments?: Capabilities.GiropayPayments;
@@ -316,6 +321,11 @@ declare module 'stripe' {
          * The status of the JCB payments capability of the account, or whether the account (Japan only) can directly process JCB credit card charges in JPY currency.
          */
         jcb_payments?: Capabilities.JcbPayments;
+
+        /**
+         * The status of the Japanese customer_balance payments (JPY currency) capability of the account, or whether the account can directly process Japanese customer_balance charges.
+         */
+        jp_bank_transfer_payments?: Capabilities.JpBankTransferPayments;
 
         /**
          * The status of the Klarna payments capability of the account, or whether the account can directly process Klarna charges.
@@ -343,6 +353,11 @@ declare module 'stripe' {
         mobilepay_payments?: Capabilities.MobilepayPayments;
 
         /**
+         * The status of the Mexican customer_balance payments (MXN currency) capability of the account, or whether the account can directly process Mexican customer_balance charges.
+         */
+        mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
+
+        /**
          * The status of the OXXO payments capability of the account, or whether the account can directly process OXXO charges.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -366,6 +381,11 @@ declare module 'stripe' {
          * The status of the RevolutPay capability of the account, or whether the account can directly process RevolutPay payments.
          */
         revolut_pay_payments?: Capabilities.RevolutPayPayments;
+
+        /**
+         * The status of the SEPA customer_balance payments (EUR currency) capability of the account, or whether the account can directly process SEPA customer_balance charges.
+         */
+        sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
 
         /**
          * The status of the SEPA Direct Debits payments capability of the account, or whether the account can directly process SEPA Direct Debits charges.
@@ -408,6 +428,11 @@ declare module 'stripe' {
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
 
         /**
+         * The status of the US customer_balance payments (USD currency) capability of the account, or whether the account can directly process US customer_balance charges.
+         */
+        us_bank_transfer_payments?: Capabilities.UsBankTransferPayments;
+
+        /**
          * The status of the Zip capability of the account, or whether the account can directly process Zip charges.
          */
         zip_payments?: Capabilities.ZipPayments;
@@ -446,6 +471,8 @@ declare module 'stripe' {
 
         type FpxPayments = 'active' | 'inactive' | 'pending';
 
+        type GbBankTransferPayments = 'active' | 'inactive' | 'pending';
+
         type GiropayPayments = 'active' | 'inactive' | 'pending';
 
         type GrabpayPayments = 'active' | 'inactive' | 'pending';
@@ -455,6 +482,8 @@ declare module 'stripe' {
         type IndiaInternationalPayments = 'active' | 'inactive' | 'pending';
 
         type JcbPayments = 'active' | 'inactive' | 'pending';
+
+        type JpBankTransferPayments = 'active' | 'inactive' | 'pending';
 
         type KlarnaPayments = 'active' | 'inactive' | 'pending';
 
@@ -466,6 +495,8 @@ declare module 'stripe' {
 
         type MobilepayPayments = 'active' | 'inactive' | 'pending';
 
+        type MxBankTransferPayments = 'active' | 'inactive' | 'pending';
+
         type OxxoPayments = 'active' | 'inactive' | 'pending';
 
         type P24Payments = 'active' | 'inactive' | 'pending';
@@ -475,6 +506,8 @@ declare module 'stripe' {
         type PromptpayPayments = 'active' | 'inactive' | 'pending';
 
         type RevolutPayPayments = 'active' | 'inactive' | 'pending';
+
+        type SepaBankTransferPayments = 'active' | 'inactive' | 'pending';
 
         type SepaDebitPayments = 'active' | 'inactive' | 'pending';
 
@@ -491,6 +524,8 @@ declare module 'stripe' {
         type Treasury = 'active' | 'inactive' | 'pending';
 
         type UsBankAccountAchPayments = 'active' | 'inactive' | 'pending';
+
+        type UsBankTransferPayments = 'active' | 'inactive' | 'pending';
 
         type ZipPayments = 'active' | 'inactive' | 'pending';
       }
