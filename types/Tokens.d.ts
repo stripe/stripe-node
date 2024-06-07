@@ -39,8 +39,7 @@ declare module 'stripe' {
        * These bank accounts are payment methods on `Customer` objects.
        *
        * On the other hand [External Accounts](https://stripe.com/api#external_accounts) are transfer
-       * destinations on `Account` objects for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection)
-       * is `application`, which includes [Custom accounts](https://stripe.com/connect/custom-accounts).
+       * destinations on `Account` objects for connected accounts.
        * They can be bank accounts or debit cards as well, and are documented in the links above.
        *
        * Related guide: [Bank debits and transfers](https://stripe.com/payments/bank-debits-transfers)
