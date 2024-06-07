@@ -4,10 +4,18 @@
 
   // Formatting
   "editor.formatOnSave": true,
-  "beautify.ignore": ["**/*.js", "**/*.md"],
+
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 
   // Extension settings
-  "eslint.packageManager": "yarn",
   "npm.packageManager": "yarn",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
