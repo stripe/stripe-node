@@ -95,6 +95,8 @@ declare module 'stripe' {
 
       mobilepay?: PaymentMethod.Mobilepay;
 
+      multibanco?: PaymentMethod.Multibanco;
+
       oxxo?: PaymentMethod.Oxxo;
 
       p24?: PaymentMethod.P24;
@@ -1046,6 +1048,8 @@ declare module 'stripe' {
 
       interface Mobilepay {}
 
+      interface Multibanco {}
+
       interface Oxxo {}
 
       interface P24 {
@@ -1193,6 +1197,7 @@ declare module 'stripe' {
         | 'konbini'
         | 'link'
         | 'mobilepay'
+        | 'multibanco'
         | 'oxxo'
         | 'p24'
         | 'paynow'

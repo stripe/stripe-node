@@ -811,6 +811,7 @@ declare module 'stripe' {
         | 'konbini'
         | 'link'
         | 'mobilepay'
+        | 'multibanco'
         | 'oxxo'
         | 'p24'
         | 'paynow'

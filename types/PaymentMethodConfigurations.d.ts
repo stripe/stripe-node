@@ -101,6 +101,8 @@ declare module 'stripe' {
 
       mobilepay?: PaymentMethodConfiguration.Mobilepay;
 
+      multibanco?: PaymentMethodConfiguration.Multibanco;
+
       /**
        * The configuration's name.
        */
@@ -997,6 +999,40 @@ declare module 'stripe' {
       }
 
       namespace Mobilepay {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
+      interface Multibanco {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: Multibanco.DisplayPreference;
+      }
+
+      namespace Multibanco {
         interface DisplayPreference {
           /**
            * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.

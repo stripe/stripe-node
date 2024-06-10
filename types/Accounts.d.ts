@@ -353,6 +353,11 @@ declare module 'stripe' {
         mobilepay_payments?: Capabilities.MobilepayPayments;
 
         /**
+         * The status of the Multibanco payments capability of the account, or whether the account can directly process Multibanco charges.
+         */
+        multibanco_payments?: Capabilities.MultibancoPayments;
+
+        /**
          * The status of the Mexican customer_balance payments (MXN currency) capability of the account, or whether the account can directly process Mexican customer_balance charges.
          */
         mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
@@ -494,6 +499,8 @@ declare module 'stripe' {
         type LinkPayments = 'active' | 'inactive' | 'pending';
 
         type MobilepayPayments = 'active' | 'inactive' | 'pending';
+
+        type MultibancoPayments = 'active' | 'inactive' | 'pending';
 
         type MxBankTransferPayments = 'active' | 'inactive' | 'pending';
 
