@@ -225,6 +225,11 @@ declare module 'stripe' {
           swish?: PaymentMethodData.Swish;
 
           /**
+           * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
+           */
+          twint?: PaymentMethodData.Twint;
+
+          /**
            * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
            */
           type: PaymentMethodData.Type;
@@ -556,6 +561,8 @@ declare module 'stripe' {
 
           interface Swish {}
 
+          interface Twint {}
+
           type Type =
             | 'acss_debit'
             | 'affirm'
@@ -589,6 +596,7 @@ declare module 'stripe' {
             | 'sepa_debit'
             | 'sofort'
             | 'swish'
+            | 'twint'
             | 'us_bank_account'
             | 'wechat_pay'
             | 'zip';

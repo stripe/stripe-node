@@ -410,6 +410,11 @@ declare module 'stripe' {
         treasury?: Capabilities.Treasury;
 
         /**
+         * The twint_payments capability.
+         */
+        twint_payments?: Capabilities.TwintPayments;
+
+        /**
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
@@ -721,6 +726,13 @@ declare module 'stripe' {
         }
 
         interface Treasury {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TwintPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1993,6 +2005,11 @@ declare module 'stripe' {
         treasury?: Capabilities.Treasury;
 
         /**
+         * The twint_payments capability.
+         */
+        twint_payments?: Capabilities.TwintPayments;
+
+        /**
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
@@ -2304,6 +2321,13 @@ declare module 'stripe' {
         }
 
         interface Treasury {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TwintPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

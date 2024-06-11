@@ -1842,6 +1842,7 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'sofort'
           | 'swish'
+          | 'twint'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
