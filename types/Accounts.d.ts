@@ -353,6 +353,11 @@ declare module 'stripe' {
         mobilepay_payments?: Capabilities.MobilepayPayments;
 
         /**
+         * The status of the Multibanco payments capability of the account, or whether the account can directly process Multibanco charges.
+         */
+        multibanco_payments?: Capabilities.MultibancoPayments;
+
+        /**
          * The status of the Mexican customer_balance payments (MXN currency) capability of the account, or whether the account can directly process Mexican customer_balance charges.
          */
         mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
@@ -421,6 +426,11 @@ declare module 'stripe' {
          * The status of the banking capability, or whether the account can have bank accounts.
          */
         treasury?: Capabilities.Treasury;
+
+        /**
+         * The status of the TWINT capability of the account, or whether the account can directly process TWINT charges.
+         */
+        twint_payments?: Capabilities.TwintPayments;
 
         /**
          * The status of the US bank account ACH payments capability of the account, or whether the account can directly process US bank account charges.
@@ -495,6 +505,8 @@ declare module 'stripe' {
 
         type MobilepayPayments = 'active' | 'inactive' | 'pending';
 
+        type MultibancoPayments = 'active' | 'inactive' | 'pending';
+
         type MxBankTransferPayments = 'active' | 'inactive' | 'pending';
 
         type OxxoPayments = 'active' | 'inactive' | 'pending';
@@ -522,6 +534,8 @@ declare module 'stripe' {
         type Transfers = 'active' | 'inactive' | 'pending';
 
         type Treasury = 'active' | 'inactive' | 'pending';
+
+        type TwintPayments = 'active' | 'inactive' | 'pending';
 
         type UsBankAccountAchPayments = 'active' | 'inactive' | 'pending';
 

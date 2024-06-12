@@ -444,6 +444,8 @@ declare module 'stripe' {
 
         swish?: PaymentMethodDetails.Swish;
 
+        twint?: PaymentMethodDetails.Twint;
+
         /**
          * The type of transaction-specific details of the payment method used in the payment, one of `ach_credit_transfer`, `ach_debit`, `acss_debit`, `alipay`, `au_becs_debit`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `klarna`, `multibanco`, `p24`, `sepa_debit`, `sofort`, `stripe_account`, or `wechat`.
          * An additional hash is included on `payment_method_details` with a name matching this value.
@@ -1949,6 +1951,8 @@ declare module 'stripe' {
            */
           verified_phone_last4: string | null;
         }
+
+        interface Twint {}
 
         interface UsBankAccount {
           /**

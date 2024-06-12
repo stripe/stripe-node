@@ -141,6 +141,8 @@ declare module 'stripe' {
 
         klarna?: DestinationDetails.Klarna;
 
+        multibanco?: DestinationDetails.Multibanco;
+
         mx_bank_transfer?: DestinationDetails.MxBankTransfer;
 
         p24?: DestinationDetails.P24;
@@ -279,6 +281,18 @@ declare module 'stripe' {
         }
 
         interface Klarna {}
+
+        interface Multibanco {
+          /**
+           * The reference assigned to the refund.
+           */
+          reference: string | null;
+
+          /**
+           * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+           */
+          reference_status: string | null;
+        }
 
         interface MxBankTransfer {
           /**
