@@ -39,7 +39,7 @@ declare module 'stripe' {
       tax_code?: string;
 
       /**
-       * The type of calculation to use on the shipping rate.
+       * The type of calculation to use on the shipping rate. Can only be `fixed_amount` for now.
        */
       type?: 'fixed_amount';
     }

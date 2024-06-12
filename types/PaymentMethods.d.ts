@@ -95,8 +95,6 @@ declare module 'stripe' {
 
       mobilepay?: PaymentMethod.Mobilepay;
 
-      multibanco?: PaymentMethod.Multibanco;
-
       oxxo?: PaymentMethod.Oxxo;
 
       p24?: PaymentMethod.P24;
@@ -121,8 +119,6 @@ declare module 'stripe' {
       sofort?: PaymentMethod.Sofort;
 
       swish?: PaymentMethod.Swish;
-
-      twint?: PaymentMethod.Twint;
 
       /**
        * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
@@ -1050,8 +1046,6 @@ declare module 'stripe' {
 
       interface Mobilepay {}
 
-      interface Multibanco {}
-
       interface Oxxo {}
 
       interface P24 {
@@ -1174,8 +1168,6 @@ declare module 'stripe' {
 
       interface Swish {}
 
-      interface Twint {}
-
       type Type =
         | 'acss_debit'
         | 'affirm'
@@ -1201,7 +1193,6 @@ declare module 'stripe' {
         | 'konbini'
         | 'link'
         | 'mobilepay'
-        | 'multibanco'
         | 'oxxo'
         | 'p24'
         | 'paynow'
@@ -1212,7 +1203,6 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'sofort'
         | 'swish'
-        | 'twint'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
