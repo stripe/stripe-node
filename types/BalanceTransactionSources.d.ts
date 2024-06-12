@@ -13,7 +13,6 @@ declare module 'stripe' {
       | Issuing.Dispute
       | Issuing.Transaction
       | Payout
-      | PlatformTaxFee
       | Refund
       | ReserveTransaction
       | TaxDeductedAtSource
