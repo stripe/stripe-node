@@ -202,6 +202,7 @@
 ///<reference path='./Payouts.d.ts' />
 ///<reference path='./Persons.d.ts' />
 ///<reference path='./Plans.d.ts' />
+///<reference path='./PlatformTaxFees.d.ts' />
 ///<reference path='./Prices.d.ts' />
 ///<reference path='./ProductFeatures.d.ts' />
 ///<reference path='./Products.d.ts' />
