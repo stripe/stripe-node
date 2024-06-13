@@ -1775,12 +1775,12 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items.
+       * Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items. Defaults to `true`.
        */
       invoice_now?: boolean;
 
       /**
-       * Will generate a proration invoice item that credits remaining unused time until the subscription period end.
+       * Will generate a proration invoice item that credits remaining unused time until the subscription period end. Defaults to `false`.
        */
       prorate?: boolean;
     }

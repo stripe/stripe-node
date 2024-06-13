@@ -106,7 +106,7 @@ declare module 'stripe' {
       amount?: number;
 
       /**
-       * An arbitrary string which you can attach to a reversal object. It is displayed alongside the reversal in the Dashboard. This will be unset if you POST an empty value.
+       * An arbitrary string which you can attach to a reversal object. This will be unset if you POST an empty value.
        */
       description?: string;
 
