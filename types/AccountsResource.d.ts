@@ -340,6 +340,11 @@ declare module 'stripe' {
         mobilepay_payments?: Capabilities.MobilepayPayments;
 
         /**
+         * The multibanco_payments capability.
+         */
+        multibanco_payments?: Capabilities.MultibancoPayments;
+
+        /**
          * The mx_bank_transfer_payments capability.
          */
         mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
@@ -636,6 +641,13 @@ declare module 'stripe' {
         }
 
         interface MobilepayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface MultibancoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2044,6 +2056,11 @@ declare module 'stripe' {
         mobilepay_payments?: Capabilities.MobilepayPayments;
 
         /**
+         * The multibanco_payments capability.
+         */
+        multibanco_payments?: Capabilities.MultibancoPayments;
+
+        /**
          * The mx_bank_transfer_payments capability.
          */
         mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
@@ -2340,6 +2357,13 @@ declare module 'stripe' {
         }
 
         interface MobilepayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface MultibancoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

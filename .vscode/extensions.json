@@ -1,11 +1,7 @@
 {
   "recommendations": [
-    // JS Language plugins (~required)
-    "dbaeumer.vscode-eslint",
-    "mgmcdermott.vscode-language-babel",
-    "esbenp.prettier-vscode",
-
-    // Highly recommended
-    "EditorConfig.editorconfig"
+    "EditorConfig.editorconfig", // default
+    "dbaeumer.vscode-eslint", // linting
+    "esbenp.prettier-vscode" // formatting
   ]
 }
