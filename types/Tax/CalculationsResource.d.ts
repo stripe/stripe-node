@@ -326,7 +326,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Tax.Calculation>>;
 
         /**
-         * Retrieves the line items of a persisted tax calculation as a collection.
+         * Retrieves the line items of a tax calculation as a collection, if the calculation hasn't expired.
          */
         listLineItems(
           id: string,
