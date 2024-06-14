@@ -4871,10 +4871,7 @@ declare module 'stripe' {
        */
       mandate?: string;
 
-      mandate_data?: Stripe.Emptyable<
-        | PaymentIntentConfirmParams.MandateData1
-        | PaymentIntentConfirmParams.MandateData2
-      >;
+      mandate_data?: Stripe.Emptyable<PaymentIntentConfirmParams.MandateData>;
 
       /**
        * Set to `true` to indicate that the customer isn't in your checkout flow during this payment attempt and can't authenticate. Use this parameter in scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
@@ -4947,14 +4944,14 @@ declare module 'stripe' {
     namespace PaymentIntentConfirmParams {
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
-      interface MandateData1 {
+      interface MandateData {
         /**
          * This hash contains details about the customer acceptance of the Mandate.
          */
-        customer_acceptance: MandateData1.CustomerAcceptance;
+        customer_acceptance?: MandateData.CustomerAcceptance;
       }
 
-      namespace MandateData1 {
+      namespace MandateData {
         interface CustomerAcceptance {
           /**
            * The time at which the customer accepted the Mandate.
@@ -4984,43 +4981,6 @@ declare module 'stripe' {
             /**
              * The IP address from which the Mandate was accepted by the customer.
              */
-            ip_address: string;
-
-            /**
-             * The user agent of the browser from which the Mandate was accepted by the customer.
-             */
-            user_agent: string;
-          }
-
-          type Type = 'offline' | 'online';
-        }
-      }
-
-      interface MandateData2 {
-        /**
-         * This hash contains details about the customer acceptance of the Mandate.
-         */
-        customer_acceptance: MandateData2.CustomerAcceptance;
-      }
-
-      namespace MandateData2 {
-        interface CustomerAcceptance {
-          /**
-           * If this is a Mandate accepted online, this hash contains details about the online acceptance.
-           */
-          online: CustomerAcceptance.Online;
-
-          /**
-           * The type of customer acceptance information included with the Mandate.
-           */
-          type: 'online';
-        }
-
-        namespace CustomerAcceptance {
-          interface Online {
-            /**
-             * The IP address from which the Mandate was accepted by the customer.
-             */
             ip_address?: string;
 
             /**
@@ -5028,6 +4988,8 @@ declare module 'stripe' {
              */
             user_agent?: string;
           }
+
+          type Type = 'offline' | 'online';
         }
       }
 

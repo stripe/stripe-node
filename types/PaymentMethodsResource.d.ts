@@ -66,7 +66,7 @@ declare module 'stripe' {
       /**
        * If this is a `card` PaymentMethod, this hash contains the user's card details. For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex Express Checkout, or legacy Checkout) into the card hash with format `card: {token: "tok_visa"}`. When providing a card number, you must meet the requirements for [PCI compliance](https://stripe.com/docs/security#validating-pci-compliance). We strongly recommend using Stripe.js instead of interacting with this API directly.
        */
-      card?: PaymentMethodCreateParams.Card1 | PaymentMethodCreateParams.Card2;
+      card?: PaymentMethodCreateParams.Card;
 
       /**
        * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
@@ -319,7 +319,7 @@ declare module 'stripe' {
         tax_id: string;
       }
 
-      interface Card1 {
+      interface Card {
         /**
          * The card's CVC. It is highly recommended to always include this value.
          */
@@ -328,25 +328,30 @@ declare module 'stripe' {
         /**
          * Two-digit number representing the card's expiration month.
          */
-        exp_month: number;
+        exp_month?: number;
 
         /**
          * Four-digit number representing the card's expiration year.
          */
-        exp_year: number;
+        exp_year?: number;
 
         /**
          * Contains information about card networks used to process the payment.
          */
-        networks?: Card1.Networks;
+        networks?: Card.Networks;
 
         /**
          * The card number, as a string without any separators.
          */
-        number: string;
+        number?: string;
+
+        /**
+         * For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex Express Checkout, or legacy Checkout) into the card hash with format card: {token: "tok_visa"}.
+         */
+        token?: string;
       }
 
-      namespace Card1 {
+      namespace Card {
         interface Networks {
           /**
            * The customer's preferred card network for co-branded cards. Supports `cartes_bancaires`, `mastercard`, or `visa`. Selection of a network that does not apply to the card will be stored as `invalid_preference` on the card.
@@ -357,13 +362,6 @@ declare module 'stripe' {
         namespace Networks {
           type Preferred = 'cartes_bancaires' | 'mastercard' | 'visa';
         }
-      }
-
-      interface Card2 {
-        /**
-         * For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex Express Checkout, or legacy Checkout) into the card hash with format card: {token: "tok_visa"}.
-         */
-        token: string;
       }
 
       interface Cashapp {}
