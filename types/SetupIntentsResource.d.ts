@@ -2339,10 +2339,7 @@ declare module 'stripe' {
        */
       expand?: Array<string>;
 
-      mandate_data?: Stripe.Emptyable<
-        | SetupIntentConfirmParams.MandateData1
-        | SetupIntentConfirmParams.MandateData2
-      >;
+      mandate_data?: Stripe.Emptyable<SetupIntentConfirmParams.MandateData>;
 
       /**
        * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
@@ -2374,14 +2371,14 @@ declare module 'stripe' {
     }
 
     namespace SetupIntentConfirmParams {
-      interface MandateData1 {
+      interface MandateData {
         /**
          * This hash contains details about the customer acceptance of the Mandate.
          */
-        customer_acceptance: MandateData1.CustomerAcceptance;
+        customer_acceptance?: MandateData.CustomerAcceptance;
       }
 
-      namespace MandateData1 {
+      namespace MandateData {
         interface CustomerAcceptance {
           /**
            * The time at which the customer accepted the Mandate.
@@ -2411,43 +2408,6 @@ declare module 'stripe' {
             /**
              * The IP address from which the Mandate was accepted by the customer.
              */
-            ip_address: string;
-
-            /**
-             * The user agent of the browser from which the Mandate was accepted by the customer.
-             */
-            user_agent: string;
-          }
-
-          type Type = 'offline' | 'online';
-        }
-      }
-
-      interface MandateData2 {
-        /**
-         * This hash contains details about the customer acceptance of the Mandate.
-         */
-        customer_acceptance: MandateData2.CustomerAcceptance;
-      }
-
-      namespace MandateData2 {
-        interface CustomerAcceptance {
-          /**
-           * If this is a Mandate accepted online, this hash contains details about the online acceptance.
-           */
-          online: CustomerAcceptance.Online;
-
-          /**
-           * The type of customer acceptance information included with the Mandate.
-           */
-          type: 'online';
-        }
-
-        namespace CustomerAcceptance {
-          interface Online {
-            /**
-             * The IP address from which the Mandate was accepted by the customer.
-             */
             ip_address?: string;
 
             /**
@@ -2455,6 +2415,8 @@ declare module 'stripe' {
              */
             user_agent?: string;
           }
+
+          type Type = 'offline' | 'online';
         }
       }
 
