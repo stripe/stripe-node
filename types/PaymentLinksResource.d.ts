@@ -1116,6 +1116,11 @@ declare module 'stripe' {
        * When creating a subscription, the specified configuration data will be used. There must be at least one line item with a recurring price to use `subscription_data`.
        */
       subscription_data?: PaymentLinkUpdateParams.SubscriptionData;
+
+      /**
+       * Controls tax ID collection during checkout.
+       */
+      tax_id_collection?: PaymentLinkUpdateParams.TaxIdCollection;
     }
 
     namespace PaymentLinkUpdateParams {
@@ -1857,6 +1862,13 @@ declare module 'stripe' {
             type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
           }
         }
+      }
+
+      interface TaxIdCollection {
+        /**
+         * Set to `true` to enable tax ID collection.
+         */
+        enabled: boolean;
       }
     }
 
