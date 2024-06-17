@@ -1,5 +1,14 @@
 # Changelog
 
+## 15.12.0 - 2024-06-17
+* [#2109](https://github.com/stripe/stripe-node/pull/2109) Update generated code
+  * Add support for new value `mobilepay` on enums `PaymentLink.payment_method_types[]`, `PaymentLinkCreateParams.payment_method_types[]`, and `PaymentLinkUpdateParams.payment_method_types[]`
+  * Add support for `tax_id_collection` on `PaymentLinkUpdateParams`
+* [#2111](https://github.com/stripe/stripe-node/pull/2111) Where params are union of types, merge the types instead of having numbered suffixes in type names
+  * Change type of `PaymentIntentConfirmParams.mandate_data` from `Stripe.Emptyable<PaymentIntentConfirmParams.MandateData1 | PaymentIntentConfirmParams.MandateData2>` to `Stripe.Emptyable<PaymentIntentConfirmParams.MandateData>` where the new MandateData is a union of all the properties of MandateData1 and MandateData2
+  * Change type of `PaymentMethodCreateParams.card` from `PaymentMethodCreateParams.Card1 | PaymentMethodCreateParams.Card2` to `PaymentMethodCreateParams.Card` where the new Card is a union of all the properties of Card1 and Card2
+  * Change type of `SetupIntentConfirmParams.mandate_data` from `Stripe.Emptyable<SetupIntentConfirmParams.MandateData1 | SetupIntentConfirmParams.MandateData2>` to `Stripe.Emptyable<SetupIntentConfirmParams.MandateData>` where the new MandateData is a union of all the properties of MandateData1 and MandateData2
+
 ## 15.11.0 - 2024-06-13
 * [#2102](https://github.com/stripe/stripe-node/pull/2102) Update generated code
   * Add support for `multibanco_payments` and `twint_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
