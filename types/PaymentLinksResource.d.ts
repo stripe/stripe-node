@@ -984,7 +984,7 @@ declare module 'stripe' {
 
       interface TaxIdCollection {
         /**
-         * Set to `true` to enable tax ID collection.
+         * Enable tax ID collection during checkout. Defaults to `false`.
          */
         enabled: boolean;
       }
@@ -1868,7 +1868,7 @@ declare module 'stripe' {
 
       interface TaxIdCollection {
         /**
-         * Set to `true` to enable tax ID collection.
+         * Enable tax ID collection during checkout. Defaults to `false`.
          */
         enabled: boolean;
       }
