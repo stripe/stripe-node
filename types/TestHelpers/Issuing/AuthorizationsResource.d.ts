@@ -630,12 +630,17 @@ declare module 'stripe' {
 
             interface Fuel {
               /**
+               * The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12 decimal places.
+               */
+              quantity_decimal?: string;
+
+              /**
                * The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`, `unleaded_super`, or `other`.
                */
               type?: Fuel.Type;
 
               /**
-               * The units for `volume_decimal`. One of `liter`, `us_gallon`, or `other`.
+               * The units for `quantity_decimal`. One of `charging_minute`, `imperial_gallon`, `kilogram`, `kilowatt_hour`, `liter`, `pound`, `us_gallon`, or `other`.
                */
               unit?: Fuel.Unit;
 
@@ -643,11 +648,6 @@ declare module 'stripe' {
                * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
                */
               unit_cost_decimal?: string;
-
-              /**
-               * The volume of the fuel that was pumped, represented as a decimal string with at most 12 decimal places.
-               */
-              volume_decimal?: string;
             }
 
             namespace Fuel {
@@ -658,7 +658,15 @@ declare module 'stripe' {
                 | 'unleaded_regular'
                 | 'unleaded_super';
 
-              type Unit = 'liter' | 'other' | 'us_gallon';
+              type Unit =
+                | 'charging_minute'
+                | 'imperial_gallon'
+                | 'kilogram'
+                | 'kilowatt_hour'
+                | 'liter'
+                | 'other'
+                | 'pound'
+                | 'us_gallon';
             }
 
             interface Lodging {
