@@ -318,7 +318,7 @@ declare module 'stripe' {
 
       class CalculationsResource {
         /**
-         * Calculates tax based on input and returns a Tax Calculation object.
+         * Calculates tax based on the input and returns a Tax Calculation object.
          */
         create(
           params: CalculationCreateParams,
