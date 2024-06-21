@@ -384,6 +384,11 @@ declare module 'stripe' {
 
           interface PurchaseDetails {
             /**
+             * Fleet-specific information for transactions using Fleet cards.
+             */
+            fleet?: PurchaseDetails.Fleet;
+
+            /**
              * Information about the flight that was purchased with this transaction.
              */
             flight?: PurchaseDetails.Flight;
@@ -410,6 +415,112 @@ declare module 'stripe' {
           }
 
           namespace PurchaseDetails {
+            interface Fleet {
+              /**
+               * Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending on the configuration of your physical fleet cards. Typical points of sale support only numeric entry.
+               */
+              cardholder_prompt_data?: Fleet.CardholderPromptData;
+
+              /**
+               * The type of purchase. One of `fuel_purchase`, `non_fuel_purchase`, or `fuel_and_non_fuel_purchase`.
+               */
+              purchase_type?: Fleet.PurchaseType;
+
+              /**
+               * More information about the total amount. This information is not guaranteed to be accurate as some merchants may provide unreliable data.
+               */
+              reported_breakdown?: Fleet.ReportedBreakdown;
+
+              /**
+               * The type of fuel service. One of `non_fuel_transaction`, `full_service`, or `self_service`.
+               */
+              service_type?: Fleet.ServiceType;
+            }
+
+            namespace Fleet {
+              interface CardholderPromptData {
+                /**
+                 * Driver ID.
+                 */
+                driver_id?: string;
+
+                /**
+                 * Odometer reading.
+                 */
+                odometer?: number;
+
+                /**
+                 * An alphanumeric ID. This field is used when a vehicle ID, driver ID, or generic ID is entered by the cardholder, but the merchant or card network did not specify the prompt type.
+                 */
+                unspecified_id?: string;
+
+                /**
+                 * User ID.
+                 */
+                user_id?: string;
+
+                /**
+                 * Vehicle number.
+                 */
+                vehicle_number?: string;
+              }
+
+              type PurchaseType =
+                | 'fuel_and_non_fuel_purchase'
+                | 'fuel_purchase'
+                | 'non_fuel_purchase';
+
+              interface ReportedBreakdown {
+                /**
+                 * Breakdown of fuel portion of the purchase.
+                 */
+                fuel?: ReportedBreakdown.Fuel;
+
+                /**
+                 * Breakdown of non-fuel portion of the purchase.
+                 */
+                non_fuel?: ReportedBreakdown.NonFuel;
+
+                /**
+                 * Information about tax included in this transaction.
+                 */
+                tax?: ReportedBreakdown.Tax;
+              }
+
+              namespace ReportedBreakdown {
+                interface Fuel {
+                  /**
+                   * Gross fuel amount that should equal Fuel Volume multipled by Fuel Unit Cost, inclusive of taxes.
+                   */
+                  gross_amount_decimal?: string;
+                }
+
+                interface NonFuel {
+                  /**
+                   * Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
+                   */
+                  gross_amount_decimal?: string;
+                }
+
+                interface Tax {
+                  /**
+                   * Amount of state or provincial Sales Tax included in the transaction amount. Null if not reported by merchant or not subject to tax.
+                   */
+                  local_amount_decimal?: string;
+
+                  /**
+                   * Amount of national Sales Tax or VAT included in the transaction amount. Null if not reported by merchant or not subject to tax.
+                   */
+                  national_amount_decimal?: string;
+                }
+              }
+
+              type ServiceType =
+                | 'full_service'
+                | 'non_fuel_transaction'
+                | 'self_service';
+            }
+
             interface Flight {
               /**
                * The time that the flight departed.
@@ -472,6 +583,11 @@ declare module 'stripe' {
             }
 
             interface Fuel {
+              /**
+               * [Conexxus Payment System Product Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel product purchased.
+               */
+              industry_product_code?: string;
+
               /**
                * The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12 decimal places.
                */
@@ -918,6 +1034,11 @@ declare module 'stripe' {
 
           interface PurchaseDetails {
             /**
+             * Fleet-specific information for transactions using Fleet cards.
+             */
+            fleet?: PurchaseDetails.Fleet;
+
+            /**
              * Information about the flight that was purchased with this transaction.
              */
             flight?: PurchaseDetails.Flight;
@@ -944,6 +1065,112 @@ declare module 'stripe' {
           }
 
           namespace PurchaseDetails {
+            interface Fleet {
+              /**
+               * Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending on the configuration of your physical fleet cards. Typical points of sale support only numeric entry.
+               */
+              cardholder_prompt_data?: Fleet.CardholderPromptData;
+
+              /**
+               * The type of purchase. One of `fuel_purchase`, `non_fuel_purchase`, or `fuel_and_non_fuel_purchase`.
+               */
+              purchase_type?: Fleet.PurchaseType;
+
+              /**
+               * More information about the total amount. This information is not guaranteed to be accurate as some merchants may provide unreliable data.
+               */
+              reported_breakdown?: Fleet.ReportedBreakdown;
+
+              /**
+               * The type of fuel service. One of `non_fuel_transaction`, `full_service`, or `self_service`.
+               */
+              service_type?: Fleet.ServiceType;
+            }
+
+            namespace Fleet {
+              interface CardholderPromptData {
+                /**
+                 * Driver ID.
+                 */
+                driver_id?: string;
+
+                /**
+                 * Odometer reading.
+                 */
+                odometer?: number;
+
+                /**
+                 * An alphanumeric ID. This field is used when a vehicle ID, driver ID, or generic ID is entered by the cardholder, but the merchant or card network did not specify the prompt type.
+                 */
+                unspecified_id?: string;
+
+                /**
+                 * User ID.
+                 */
+                user_id?: string;
+
+                /**
+                 * Vehicle number.
+                 */
+                vehicle_number?: string;
+              }
+
+              type PurchaseType =
+                | 'fuel_and_non_fuel_purchase'
+                | 'fuel_purchase'
+                | 'non_fuel_purchase';
+
+              interface ReportedBreakdown {
+                /**
+                 * Breakdown of fuel portion of the purchase.
+                 */
+                fuel?: ReportedBreakdown.Fuel;
+
+                /**
+                 * Breakdown of non-fuel portion of the purchase.
+                 */
+                non_fuel?: ReportedBreakdown.NonFuel;
+
+                /**
+                 * Information about tax included in this transaction.
+                 */
+                tax?: ReportedBreakdown.Tax;
+              }
+
+              namespace ReportedBreakdown {
+                interface Fuel {
+                  /**
+                   * Gross fuel amount that should equal Fuel Volume multipled by Fuel Unit Cost, inclusive of taxes.
+                   */
+                  gross_amount_decimal?: string;
+                }
+
+                interface NonFuel {
+                  /**
+                   * Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
+                   */
+                  gross_amount_decimal?: string;
+                }
+
+                interface Tax {
+                  /**
+                   * Amount of state or provincial Sales Tax included in the transaction amount. Null if not reported by merchant or not subject to tax.
+                   */
+                  local_amount_decimal?: string;
+
+                  /**
+                   * Amount of national Sales Tax or VAT included in the transaction amount. Null if not reported by merchant or not subject to tax.
+                   */
+                  national_amount_decimal?: string;
+                }
+              }
+
+              type ServiceType =
+                | 'full_service'
+                | 'non_fuel_transaction'
+                | 'self_service';
+            }
+
             interface Flight {
               /**
                * The time that the flight departed.
@@ -1006,6 +1233,11 @@ declare module 'stripe' {
             }
 
             interface Fuel {
+              /**
+               * [Conexxus Payment System Product Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel product purchased.
+               */
+              industry_product_code?: string;
+
               /**
                * The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12 decimal places.
                */

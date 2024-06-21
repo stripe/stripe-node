@@ -15,6 +15,11 @@ export const Authorizations = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/test_helpers/issuing/authorizations/{authorization}/expire',
   }),
+  finalizeAmount: stripeMethod({
+    method: 'POST',
+    fullPath:
+      '/v1/test_helpers/issuing/authorizations/{authorization}/finalize_amount',
+  }),
   increment: stripeMethod({
     method: 'POST',
     fullPath:
