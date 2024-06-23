@@ -58,14 +58,14 @@ const strictUriEncode = (str: string): string =>
  * @param visited - Previously visited objects
  * @returns The query string
  */
-export const stringify = (
+export function stringify (
   obj: Record<string, unknown>,
   config = {
     serializeDate: (d: Date): string | number => d.toISOString(),
   },
   prefix?: string,
   visited = new Set()
-): string => {
+): string {
   const str = [];
   if (visited.has(obj)) {
     visited.clear();
