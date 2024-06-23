@@ -1,11 +1,10 @@
-import * as qs from 'qs';
 import {
-  RequestData,
-  UrlInterpolator,
-  RequestArgs,
-  StripeResourceObject,
-  RequestHeaders,
   MultipartRequestData,
+  RequestArgs,
+  RequestData,
+  RequestHeaders,
+  StripeResourceObject,
+  UrlInterpolator,
 } from './Types.js';
 
 const OPTIONS_KEYS = [
@@ -39,16 +38,91 @@ export function isOptionsHash(o: unknown): boolean | unknown {
   );
 }
 
+const has = Function.call.bind(Object.prototype.hasOwnProperty);
+
+// https://github.com/sindresorhus/query-string/blob/main/base.js
+const strictUriEncode = (str: string): string =>
+  encodeURIComponent(str).replace(
+    /[!'()*]/g,
+    (x) =>
+      `%${x
+        .charCodeAt(0)
+        .toString(16)
+        .toUpperCase()}`
+  );
+
+/**
+ * Stringifies an Object into a query string
+ * @param obj - The object to stringify
+ * @param prefix - The parent key when nesting
+ * @param visited - Previously visited objects
+ * @returns The query string
+ */
+export const stringify = (
+  obj: Record<string, unknown>,
+  config = {
+    serializeDate: (d: Date): string | number => d.toISOString(),
+  },
+  prefix?: string,
+  visited = new Set()
+): string => {
+  const str = [];
+  if (visited.has(obj)) {
+    visited.clear();
+    throw new RangeError('Cyclic object value');
+  }
+  visited.add(obj);
+  for (const p in obj) {
+    if (has(obj, p)) {
+      const k = prefix ? prefix + '[' + p + ']' : p;
+      const v = obj[p];
+      if (v === undefined) {
+        continue;
+      } else if (v instanceof Date) {
+        str.push(encodeURIComponent(k) + '=' + config.serializeDate(v));
+      } else if (Array.isArray(v)) {
+        for (let i = 0; i < v.length; i++) {
+          // eslint-disable-next-line max-depth
+          if (typeof v[i] === 'object' && v[i] !== null) {
+            str.push(
+              stringify(
+                v[i] as Record<string, unknown>,
+                config,
+                k + '[' + i + ']',
+                visited
+              )
+            );
+          } else {
+            str.push(
+              encodeURIComponent(k + '[' + i + ']') +
+                '=' +
+                strictUriEncode(v[i])
+            );
+          }
+        }
+      } else if (typeof v === 'object' && v !== null) {
+        str.push(stringify(v as Record<string, unknown>, config, k, visited));
+      } else {
+        str.push(
+          encodeURIComponent(k) + '=' + strictUriEncode((v as string) ?? '')
+        );
+      }
+    }
+  }
+  visited.delete(obj);
+  return str.join('&');
+};
+
 /**
  * Stringifies an Object, accommodating nested objects
  * (forming the conventional key 'parent[child]=value')
  */
 export function stringifyRequestData(data: RequestData | string): string {
+  if (typeof data === 'string') return '';
   return (
-    qs
-      .stringify(data, {
-        serializeDate: (d: Date) => Math.floor(d.getTime() / 1000).toString(),
-      })
+    stringify(data, {
+      serializeDate: (d: Date) => Math.floor(d.getTime() / 1000).toString(),
+    })
       // Don't use strict form encoding by changing the square bracket control
       // characters back to their literals. This is fine by the server, and
       // makes these parameter strings easier to read.

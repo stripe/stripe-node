@@ -1,6 +1,6 @@
 // @ts-nocheck
+import { expect } from 'chai';
 import * as utils from '../src/utils.js';
-import {expect} from 'chai';
 
 describe('utils', () => {
   describe('makeURLInterpolator', () => {
@@ -470,6 +470,164 @@ describe('utils', () => {
         utils.concat([buf1, buf2])
       );
       expect(mergedBufToString).to.equal('foobar');
+    });
+  });
+
+  describe('stringify', function() {
+    it('stringifies a querystring object', function() {
+      expect(utils.stringify({a: 'b'})).to.equal('a=b');
+      expect(utils.stringify({a: 1})).to.equal('a=1');
+      expect(utils.stringify({a: 1, b: 2})).to.equal('a=1&b=2');
+      expect(utils.stringify({a: 'A_Z'})).to.equal('a=A_Z');
+      expect(utils.stringify({a: '€'})).to.equal('a=%E2%82%AC');
+      expect(utils.stringify({a: ''})).to.equal('a=%EE%80%80');
+      expect(utils.stringify({a: 'א'})).to.equal('a=%D7%90');
+      expect(utils.stringify({a: '𐐷'})).to.equal('a=%F0%90%90%B7');
+    });
+
+    it('stringifies falsy values', function() {
+      expect(utils.stringify(undefined), '');
+      expect(utils.stringify(null), '');
+      expect(utils.stringify(false), '');
+      expect(utils.stringify(0), '');
+    });
+    it('encodes dot in key of object when encodeDotInKeys and allowDots is provided', function() {
+      expect(
+        utils.stringify({'name.obj': {first: 'John', last: 'Doe'}})
+      ).to.equal('name.obj%5Bfirst%5D=John&name.obj%5Blast%5D=Doe');
+
+      expect(
+        utils.stringify({
+          'name.obj.subobject': {'first.godly.name': 'John', last: 'Doe'},
+        })
+      ).to.equal(
+        'name.obj.subobject%5Bfirst.godly.name%5D=John&name.obj.subobject%5Blast%5D=Doe'
+      );
+    });
+
+    it('stringifies nested falsy values', function() {
+      expect(utils.stringify({a: {b: {c: null}}})).to.equal('a%5Bb%5D%5Bc%5D=');
+      expect(utils.stringify({a: {b: {c: false}}})).to.equal(
+        'a%5Bb%5D%5Bc%5D=false'
+      );
+    });
+
+    it('stringifies an array value', function() {
+      expect(utils.stringify({a: ['b', 'c', 'd']})).to.equal(
+        'a%5B0%5D=b&a%5B1%5D=c&a%5B2%5D=d'
+      );
+    });
+
+    it('should omit object key/value pair when value is empty array', function() {
+      expect(utils.stringify({a: [], b: 'zz'})).to.equal('b=zz');
+    });
+
+    it('stringify an array with multiple items with a comma inside', function() {
+      expect(utils.stringify({a: ['b,c', 'd']})).to.equal(
+        'a%5B0%5D=b%2Cc&a%5B1%5D=d'
+      );
+    });
+    it('stringifies nested array', function() {
+      expect(utils.stringify({a: {b: ['c', 'd']}})).to.equal(
+        'a%5Bb%5D%5B0%5D=c&a%5Bb%5D%5B1%5D=d'
+      );
+    });
+    it('stringifies comma and empty array values', function() {
+      expect(utils.stringify({a: [',', '', 'c,d%']})).to.equal(
+        'a%5B0%5D=%2C&a%5B1%5D=&a%5B2%5D=c%2Cd%25'
+      );
+    });
+
+    it('stringifies comma and empty non-array values', function() {
+      expect(utils.stringify({a: ',', b: '', c: 'c,d%'})).to.equal(
+        'a=%2C&b=&c=c%2Cd%25'
+      );
+    });
+
+    it('stringifies an object inside an array', function() {
+      expect(utils.stringify({a: [{b: 'c'}]})).to.equal('a%5B0%5D%5Bb%5D=c');
+      expect(utils.stringify({a: [{b: {c: [1]}}]})).to.equal(
+        'a%5B0%5D%5Bb%5D%5Bc%5D%5B0%5D=1'
+      );
+    });
+
+    it('stringifies an array with mixed objects and primitives', function() {
+      expect(utils.stringify({a: [{b: 1}, 2, 3]})).to.equal(
+        'a%5B0%5D%5Bb%5D=1&a%5B1%5D=2&a%5B2%5D=3'
+      );
+    });
+
+    it('stringifies an empty value', function() {
+      expect(utils.stringify({a: ''})).to.equal('a=');
+      expect(utils.stringify({a: null})).to.equal('a=');
+      expect(utils.stringify({a: '', b: ''})).to.equal('a=&b=');
+      expect(utils.stringify({a: null, b: ''})).to.equal('a=&b=');
+      expect(utils.stringify({a: {b: ''}})).to.equal('a%5Bb%5D=');
+      expect(utils.stringify({a: {b: null}})).to.equal('a%5Bb%5D=');
+    });
+
+    it('stringifies a null object', function() {
+      const obj = Object.create(null);
+      obj.a = 'b';
+      expect(utils.stringify(obj)).to.equal('a=b');
+    });
+
+    it('returns an empty string for invalid input', function() {
+      expect(utils.stringify(undefined)).to.equal('');
+      expect(utils.stringify(false)).to.equal('');
+      expect(utils.stringify(null)).to.equal('');
+      expect(utils.stringify('')).to.equal('');
+    });
+
+    it('stringifies an object with a null object as a child', function() {
+      const obj = {a: Object.create(null)};
+      obj.a.b = 'c';
+      expect(utils.stringify(obj)).to.equal('a%5Bb%5D=c');
+    });
+
+    it('drops keys with a value of undefined', function() {
+      expect(utils.stringify({a: undefined})).to.equal('');
+      expect(utils.stringify({a: 'b', c: undefined})).to.equal('a=b');
+      expect(utils.stringify({a: {b: undefined, c: null}})).to.equal(
+        'a%5Bc%5D='
+      );
+      expect(utils.stringify({a: {b: undefined, c: ''}})).to.equal('a%5Bc%5D=');
+    });
+
+    it('url encodes values', function() {
+      expect(utils.stringify({a: 'b c'})).to.equal('a=b%20c');
+      expect(utils.stringify({a: 'b+c'})).to.equal('a=b%2Bc');
+      expect(utils.stringify({a: 'b&c'})).to.equal('a=b%26c');
+      expect(utils.stringify({a: 'b=c'})).to.equal('a=b%3Dc');
+      expect(utils.stringify({a: 'b%c'})).to.equal('a=b%25c');
+    });
+
+    it('stringifies a date', function() {
+      const now = new Date();
+      expect(utils.stringify({a: now})).to.equal(`a=${now.toISOString()}`);
+    });
+
+    it('stringifies the weird object from qs', function() {
+      expect(
+        utils.stringify({'my weird field': '~q1!2"\'w$5&7/z8)?'})
+      ).to.equal('my%20weird%20field=~q1%212%22%27w%245%267%2Fz8%29%3F');
+    });
+
+    it('skips properties that are part of the object prototype', function() {
+      // eslint-disable-next-line no-extend-native
+      Object.prototype.crash = 'test';
+
+      expect(utils.stringify({a: 'b'})).to.equal('a=b');
+      expect(utils.stringify({a: {b: 'c'}})).to.equal('a%5Bb%5D=c');
+
+      delete Object.prototype.crash; // Clean up
+    });
+
+    it('stringifies boolean values', function() {
+      expect(utils.stringify({a: true})).to.equal('a=true');
+      expect(utils.stringify({a: {b: true}})).to.equal('a%5Bb%5D=true');
+      expect(utils.stringify({b: false})).to.equal('b=false');
+      expect(utils.stringify({b: {c: false}})).to.equal('b%5Bc%5D=false');
     });
   });
 });
