@@ -80,6 +80,10 @@
       "import": "./esm/stripe.esm.worker.js",
       "require": "./cjs/stripe.cjs.worker.js"
     },
+    "bun": {
+      "import": "./esm/stripe.esm.worker.js",
+      "require": "./cjs/stripe.cjs.worker.js"
+    },
     "deno": {
       "import": "./esm/stripe.esm.worker.js",
       "require": "./cjs/stripe.cjs.worker.js"
