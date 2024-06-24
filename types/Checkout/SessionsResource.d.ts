@@ -249,7 +249,7 @@ declare module 'stripe' {
         success_url?: string;
 
         /**
-         * Controls tax ID collection settings for the session.
+         * Controls tax ID collection during checkout.
          */
         tax_id_collection?: SessionCreateParams.TaxIdCollection;
 
@@ -2414,7 +2414,7 @@ declare module 'stripe' {
 
         interface TaxIdCollection {
           /**
-           * Set to true to enable Tax ID collection.
+           * Enable tax ID collection during checkout. Defaults to `false`.
            */
           enabled: boolean;
         }

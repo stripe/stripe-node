@@ -67,6 +67,16 @@ declare module 'stripe' {
         currency: string;
 
         /**
+         * Fleet-specific information for authorizations using Fleet cards.
+         */
+        fleet: Authorization.Fleet | null;
+
+        /**
+         * Information about fuel that was purchased with this transaction. Typically this information is received from the merchant after the authorization has been approved and the fuel dispensed.
+         */
+        fuel: Authorization.Fuel | null;
+
+        /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
@@ -150,6 +160,164 @@ declare module 'stripe' {
           | 'keyed_in'
           | 'online'
           | 'swipe';
+
+        interface Fleet {
+          /**
+           * Answers to prompts presented to the cardholder at the point of sale. Prompted fields vary depending on the configuration of your physical fleet cards. Typical points of sale support only numeric entry.
+           */
+          cardholder_prompt_data: Fleet.CardholderPromptData | null;
+
+          /**
+           * The type of purchase.
+           */
+          purchase_type: Fleet.PurchaseType | null;
+
+          /**
+           * More information about the total amount. Typically this information is received from the merchant after the authorization has been approved and the fuel dispensed. This information is not guaranteed to be accurate as some merchants may provide unreliable data.
+           */
+          reported_breakdown: Fleet.ReportedBreakdown | null;
+
+          /**
+           * The type of fuel service.
+           */
+          service_type: Fleet.ServiceType | null;
+        }
+
+        namespace Fleet {
+          interface CardholderPromptData {
+            /**
+             * [Deprecated] An alphanumeric ID, though typical point of sales only support numeric entry. The card program can be configured to prompt for a vehicle ID, driver ID, or generic ID.
+             * @deprecated
+             */
+            alphanumeric_id: string | null;
+
+            /**
+             * Driver ID.
+             */
+            driver_id: string | null;
+
+            /**
+             * Odometer reading.
+             */
+            odometer: number | null;
+
+            /**
+             * An alphanumeric ID. This field is used when a vehicle ID, driver ID, or generic ID is entered by the cardholder, but the merchant or card network did not specify the prompt type.
+             */
+            unspecified_id: string | null;
+
+            /**
+             * User ID.
+             */
+            user_id: string | null;
+
+            /**
+             * Vehicle number.
+             */
+            vehicle_number: string | null;
+          }
+
+          type PurchaseType =
+            | 'fuel_and_non_fuel_purchase'
+            | 'fuel_purchase'
+            | 'non_fuel_purchase';
+
+          interface ReportedBreakdown {
+            /**
+             * Breakdown of fuel portion of the purchase.
+             */
+            fuel: ReportedBreakdown.Fuel | null;
+
+            /**
+             * Breakdown of non-fuel portion of the purchase.
+             */
+            non_fuel: ReportedBreakdown.NonFuel | null;
+
+            /**
+             * Information about tax included in this transaction.
+             */
+            tax: ReportedBreakdown.Tax | null;
+          }
+
+          namespace ReportedBreakdown {
+            interface Fuel {
+              /**
+               * Gross fuel amount that should equal Fuel Quantity multiplied by Fuel Unit Cost, inclusive of taxes.
+               */
+              gross_amount_decimal: string | null;
+            }
+
+            interface NonFuel {
+              /**
+               * Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
+               */
+              gross_amount_decimal: string | null;
+            }
+
+            interface Tax {
+              /**
+               * Amount of state or provincial Sales Tax included in the transaction amount. `null` if not reported by merchant or not subject to tax.
+               */
+              local_amount_decimal: string | null;
+
+              /**
+               * Amount of national Sales Tax or VAT included in the transaction amount. `null` if not reported by merchant or not subject to tax.
+               */
+              national_amount_decimal: string | null;
+            }
+          }
+
+          type ServiceType =
+            | 'full_service'
+            | 'non_fuel_transaction'
+            | 'self_service';
+        }
+
+        interface Fuel {
+          /**
+           * [Conexxus Payment System Product Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel product purchased.
+           */
+          industry_product_code: string | null;
+
+          /**
+           * The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12 decimal places.
+           */
+          quantity_decimal: string | null;
+
+          /**
+           * The type of fuel that was purchased.
+           */
+          type: Fuel.Type | null;
+
+          /**
+           * The units for `quantity_decimal`.
+           */
+          unit: Fuel.Unit | null;
+
+          /**
+           * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
+           */
+          unit_cost_decimal: string | null;
+        }
+
+        namespace Fuel {
+          type Type =
+            | 'diesel'
+            | 'other'
+            | 'unleaded_plus'
+            | 'unleaded_regular'
+            | 'unleaded_super';
+
+          type Unit =
+            | 'charging_minute'
+            | 'imperial_gallon'
+            | 'kilogram'
+            | 'kilowatt_hour'
+            | 'liter'
+            | 'other'
+            | 'pound'
+            | 'us_gallon';
+        }
 
         interface MerchantData {
           /**
@@ -349,11 +517,16 @@ declare module 'stripe' {
           type Reason =
             | 'account_disabled'
             | 'card_active'
+            | 'card_canceled'
+            | 'card_expired'
             | 'card_inactive'
+            | 'cardholder_blocked'
             | 'cardholder_inactive'
             | 'cardholder_verification_required'
+            | 'insecure_authorization_method'
             | 'insufficient_funds'
             | 'not_allowed'
+            | 'pin_blocked'
             | 'spending_controls'
             | 'suspected_fraud'
             | 'verification_failed'
