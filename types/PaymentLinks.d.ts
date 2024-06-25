@@ -568,7 +568,8 @@ declare module 'stripe' {
         | 'sofort'
         | 'swish'
         | 'us_bank_account'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | 'zip';
 
       interface PhoneNumberCollection {
         /**
