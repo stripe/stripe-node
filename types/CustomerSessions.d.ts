@@ -100,11 +100,6 @@ declare module 'stripe' {
             payment_method_save: Features.PaymentMethodSave;
 
             /**
-             * Controls whether the Payment Element displays a checkbox offering to set a saved payment method as the default.
-             */
-            payment_method_set_as_default: Features.PaymentMethodSetAsDefault;
-
-            /**
              * Controls whether the Payment Element displays the option to update a saved payment method.
              */
             payment_method_update: Features.PaymentMethodUpdate;
@@ -114,8 +109,6 @@ declare module 'stripe' {
             type PaymentMethodRemove = 'disabled' | 'enabled';
 
             type PaymentMethodSave = 'disabled' | 'enabled';
-
-            type PaymentMethodSetAsDefault = 'disabled' | 'enabled';
 
             type PaymentMethodUpdate = 'disabled' | 'enabled';
           }

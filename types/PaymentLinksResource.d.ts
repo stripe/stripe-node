@@ -614,6 +614,7 @@ declare module 'stripe' {
         | 'klarna'
         | 'konbini'
         | 'link'
+        | 'mobilepay'
         | 'oxxo'
         | 'p24'
         | 'paynow'
@@ -624,7 +625,8 @@ declare module 'stripe' {
         | 'sofort'
         | 'swish'
         | 'us_bank_account'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | 'zip';
 
       interface PhoneNumberCollection {
         /**
@@ -983,7 +985,7 @@ declare module 'stripe' {
 
       interface TaxIdCollection {
         /**
-         * Set to `true` to enable tax ID collection.
+         * Enable tax ID collection during checkout. Defaults to `false`.
          */
         enabled: boolean;
       }
@@ -1116,6 +1118,11 @@ declare module 'stripe' {
        * When creating a subscription, the specified configuration data will be used. There must be at least one line item with a recurring price to use `subscription_data`.
        */
       subscription_data?: PaymentLinkUpdateParams.SubscriptionData;
+
+      /**
+       * Controls tax ID collection during checkout.
+       */
+      tax_id_collection?: PaymentLinkUpdateParams.TaxIdCollection;
     }
 
     namespace PaymentLinkUpdateParams {
@@ -1518,6 +1525,7 @@ declare module 'stripe' {
         | 'klarna'
         | 'konbini'
         | 'link'
+        | 'mobilepay'
         | 'oxxo'
         | 'p24'
         | 'paynow'
@@ -1528,7 +1536,8 @@ declare module 'stripe' {
         | 'sofort'
         | 'swish'
         | 'us_bank_account'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | 'zip';
 
       interface Restrictions {
         /**
@@ -1857,6 +1866,13 @@ declare module 'stripe' {
             type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
           }
         }
+      }
+
+      interface TaxIdCollection {
+        /**
+         * Enable tax ID collection during checkout. Defaults to `false`.
+         */
+        enabled: boolean;
       }
     }
 

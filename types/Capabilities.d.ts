@@ -63,7 +63,7 @@ declare module 'stripe' {
         /**
          * This is typed as a string for consistency with `requirements.disabled_reason`, but it safe to assume `future_requirements.disabled_reason` is empty because fields in `future_requirements` will never disable the account.
          */
-        disabled_reason: string | null;
+        disabled_reason: FutureRequirements.DisabledReason | null;
 
         /**
          * Fields that are `currently_due` and need to be collected again because validation or verification failed.
@@ -98,6 +98,18 @@ declare module 'stripe' {
            */
           original_fields_due: Array<string>;
         }
+
+        type DisabledReason =
+          | 'other'
+          | 'paused.inactivity'
+          | 'pending.onboarding'
+          | 'pending.review'
+          | 'platform_disabled'
+          | 'platform_paused'
+          | 'rejected.inactivity'
+          | 'rejected.other'
+          | 'rejected.unsupported_business'
+          | 'requirements.fields_needed';
 
         interface Error {
           /**
@@ -227,13 +239,9 @@ declare module 'stripe' {
         currently_due: Array<string>;
 
         /**
-         * If the capability is disabled, this string describes why. [Learn more about handling verification issues](https://stripe.com/docs/connect/handling-api-verification). Can be `requirements.fields_needed`, `pending.onboarding`, `pending.review`, `rejected.other`, `platform_paused`, `rejected.inactivty`, or `rejected.unsupported_business`.
-         *
-         * `rejected.unsupported_business` means that the account's business is not supported by the capability. For example, payment methods may restrict the businesses they support in their terms of service, such as in [Afterpay Clearpay's terms of service](https://stripe.com/afterpay-clearpay/legal#restricted-businesses).
-         *
-         * `rejected.inactivity` means that the capability has been paused for inactivity. This disabled reason currently only applies to the Issuing capability. See [Issuing: Managing Inactive Connects](https://support.stripe.com/questions/issuing-managing-inactive-connect-accounts) for more details.
+         * Description of why the capability is disabled. [Learn more about handling verification issues](https://stripe.com/docs/connect/handling-api-verification).
          */
-        disabled_reason: string | null;
+        disabled_reason: Requirements.DisabledReason | null;
 
         /**
          * Fields that are `currently_due` and need to be collected again because validation or verification failed.
@@ -268,6 +276,18 @@ declare module 'stripe' {
            */
           original_fields_due: Array<string>;
         }
+
+        type DisabledReason =
+          | 'other'
+          | 'paused.inactivity'
+          | 'pending.onboarding'
+          | 'pending.review'
+          | 'platform_disabled'
+          | 'platform_paused'
+          | 'rejected.inactivity'
+          | 'rejected.other'
+          | 'rejected.unsupported_business'
+          | 'requirements.fields_needed';
 
         interface Error {
           /**

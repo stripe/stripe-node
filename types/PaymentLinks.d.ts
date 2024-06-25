@@ -557,6 +557,7 @@ declare module 'stripe' {
         | 'klarna'
         | 'konbini'
         | 'link'
+        | 'mobilepay'
         | 'oxxo'
         | 'p24'
         | 'paynow'
@@ -567,7 +568,8 @@ declare module 'stripe' {
         | 'sofort'
         | 'swish'
         | 'us_bank_account'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | 'zip';
 
       interface PhoneNumberCollection {
         /**
