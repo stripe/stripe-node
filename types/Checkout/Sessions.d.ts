@@ -1516,6 +1516,8 @@ declare module 'stripe' {
 
           namespace UsBankAccount {
             interface FinancialConnections {
+              filters?: FinancialConnections.Filters;
+
               /**
                * The list of permissions to request. The `payment_method` permission must be included.
                */
@@ -1533,6 +1535,17 @@ declare module 'stripe' {
             }
 
             namespace FinancialConnections {
+              interface Filters {
+                /**
+                 * The account subcategories to use to filter for possible accounts to link. Valid subcategories are `checking` and `savings`.
+                 */
+                account_subcategories?: Array<Filters.AccountSubcategory>;
+              }
+
+              namespace Filters {
+                type AccountSubcategory = 'checking' | 'savings';
+              }
+
               type Permission =
                 | 'balances'
                 | 'ownership'
