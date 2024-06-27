@@ -2719,6 +2719,8 @@ declare module 'stripe' {
 
         namespace UsBankAccount {
           interface FinancialConnections {
+            filters?: FinancialConnections.Filters;
+
             manual_entry?: FinancialConnections.ManualEntry;
 
             /**
@@ -2738,6 +2740,17 @@ declare module 'stripe' {
           }
 
           namespace FinancialConnections {
+            interface Filters {
+              /**
+               * The account subcategories to use to filter for possible accounts to link. Valid subcategories are `checking` and `savings`.
+               */
+              account_subcategories?: Array<Filters.AccountSubcategory>;
+            }
+
+            namespace Filters {
+              type AccountSubcategory = 'checking' | 'savings';
+            }
+
             interface ManualEntry {
               /**
                * Settings for configuring manual entry of account details.
