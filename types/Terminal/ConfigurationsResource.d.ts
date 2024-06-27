@@ -25,6 +25,11 @@ declare module 'stripe' {
         offline?: Stripe.Emptyable<ConfigurationCreateParams.Offline>;
 
         /**
+         * Reboot time settings for readers that support customized reboot time configuration.
+         */
+        reboot_window?: ConfigurationCreateParams.RebootWindow;
+
+        /**
          * An object containing device type specific settings for Stripe S700 readers
          */
         stripe_s700?: ConfigurationCreateParams.StripeS700;
@@ -53,6 +58,18 @@ declare module 'stripe' {
            * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
            */
           enabled: boolean;
+        }
+
+        interface RebootWindow {
+          /**
+           * Integer between 0 to 23 that represents the end hour of the reboot time window. The value must be different than the start_hour.
+           */
+          end_hour: number;
+
+          /**
+           * Integer between 0 to 23 that represents the start hour of the reboot time window.
+           */
+          start_hour: number;
         }
 
         interface StripeS700 {
@@ -413,6 +430,13 @@ declare module 'stripe' {
         offline?: Stripe.Emptyable<ConfigurationUpdateParams.Offline>;
 
         /**
+         * Reboot time settings for readers that support customized reboot time configuration.
+         */
+        reboot_window?: Stripe.Emptyable<
+          ConfigurationUpdateParams.RebootWindow
+        >;
+
+        /**
          * An object containing device type specific settings for Stripe S700 readers
          */
         stripe_s700?: Stripe.Emptyable<ConfigurationUpdateParams.StripeS700>;
@@ -443,6 +467,18 @@ declare module 'stripe' {
            * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
            */
           enabled: boolean;
+        }
+
+        interface RebootWindow {
+          /**
+           * Integer between 0 to 23 that represents the end hour of the reboot time window. The value must be different than the start_hour.
+           */
+          end_hour: number;
+
+          /**
+           * Integer between 0 to 23 that represents the start hour of the reboot time window.
+           */
+          start_hour: number;
         }
 
         interface StripeS700 {

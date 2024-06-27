@@ -24,6 +24,11 @@ declare module 'stripe' {
       effective_at?: number;
 
       /**
+       * Type of email to send to the customer, one of `credit_note` or `none` and the default is `credit_note`.
+       */
+      email_type?: CreditNoteCreateParams.EmailType;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -70,6 +75,8 @@ declare module 'stripe' {
     }
 
     namespace CreditNoteCreateParams {
+      type EmailType = 'credit_note' | 'none';
+
       interface Line {
         /**
          * The line item amount to credit. Only valid when `type` is `invoice_line_item`.
@@ -227,6 +234,11 @@ declare module 'stripe' {
       effective_at?: number;
 
       /**
+       * Type of email to send to the customer, one of `credit_note` or `none` and the default is `credit_note`.
+       */
+      email_type?: CreditNoteListPreviewLineItemsParams.EmailType;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -273,6 +285,8 @@ declare module 'stripe' {
     }
 
     namespace CreditNoteListPreviewLineItemsParams {
+      type EmailType = 'credit_note' | 'none';
+
       interface Line {
         /**
          * The line item amount to credit. Only valid when `type` is `invoice_line_item`.
@@ -377,6 +391,11 @@ declare module 'stripe' {
       effective_at?: number;
 
       /**
+       * Type of email to send to the customer, one of `credit_note` or `none` and the default is `credit_note`.
+       */
+      email_type?: CreditNotePreviewParams.EmailType;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -423,6 +442,8 @@ declare module 'stripe' {
     }
 
     namespace CreditNotePreviewParams {
+      type EmailType = 'credit_note' | 'none';
+
       interface Line {
         /**
          * The line item amount to credit. Only valid when `type` is `invoice_line_item`.
