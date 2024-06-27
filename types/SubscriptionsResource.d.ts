@@ -882,6 +882,11 @@ declare module 'stripe' {
           namespace UsBankAccount {
             interface FinancialConnections {
               /**
+               * Provide filters for the linked accounts that the customer can select for the payment method.
+               */
+              filters?: FinancialConnections.Filters;
+
+              /**
                * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
@@ -893,6 +898,17 @@ declare module 'stripe' {
             }
 
             namespace FinancialConnections {
+              interface Filters {
+                /**
+                 * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
+                 */
+                account_subcategories?: Array<Filters.AccountSubcategory>;
+              }
+
+              namespace Filters {
+                type AccountSubcategory = 'checking' | 'savings';
+              }
+
               type Permission =
                 | 'balances'
                 | 'ownership'
@@ -1895,6 +1911,11 @@ declare module 'stripe' {
           namespace UsBankAccount {
             interface FinancialConnections {
               /**
+               * Provide filters for the linked accounts that the customer can select for the payment method.
+               */
+              filters?: FinancialConnections.Filters;
+
+              /**
                * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
@@ -1906,6 +1927,17 @@ declare module 'stripe' {
             }
 
             namespace FinancialConnections {
+              interface Filters {
+                /**
+                 * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
+                 */
+                account_subcategories?: Array<Filters.AccountSubcategory>;
+              }
+
+              namespace Filters {
+                type AccountSubcategory = 'checking' | 'savings';
+              }
+
               type Permission =
                 | 'balances'
                 | 'ownership'
