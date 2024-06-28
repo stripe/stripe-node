@@ -3,8 +3,8 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * A customer session allows you to grant client access to Stripe's frontend SDKs (like StripeJs)
-     * control over a customer.
+     * A Customer Session allows you to grant Stripe's frontend SDKs (like Stripe.js) client-side access
+     * control over a Customer.
      */
     interface CustomerSession {
       /**
@@ -13,14 +13,14 @@ declare module 'stripe' {
       object: 'customer_session';
 
       /**
-       * The client secret of this customer session. Used on the client to set up secure access to the given `customer`.
+       * The client secret of this Customer Session. Used on the client to set up secure access to the given `customer`.
        *
        * The client secret can be used to provide access to `customer` from your frontend. It should not be stored, logged, or exposed to anyone other than the relevant customer. Make sure that you have TLS enabled on any page that includes the client secret.
        */
       client_secret: string;
 
       /**
-       * Configuration for the components supported by this customer session.
+       * Configuration for the components supported by this Customer Session.
        */
       components?: CustomerSession.Components;
 
@@ -30,12 +30,12 @@ declare module 'stripe' {
       created: number;
 
       /**
-       * The customer the customer session was created for.
+       * The Customer the Customer Session was created for.
        */
       customer: string | Stripe.Customer;
 
       /**
-       * The timestamp at which this customer session will expire.
+       * The timestamp at which this Customer Session will expire.
        */
       expires_at: number;
 
@@ -53,7 +53,7 @@ declare module 'stripe' {
         buy_button: Components.BuyButton;
 
         /**
-         * This hash contains whether the payment element is enabled and the features it supports.
+         * This hash contains whether the Payment Element is enabled and the features it supports.
          */
         payment_element?: Components.PaymentElement;
 
@@ -73,12 +73,12 @@ declare module 'stripe' {
 
         interface PaymentElement {
           /**
-           * Whether the payment element is enabled.
+           * Whether the Payment Element is enabled.
            */
           enabled: boolean;
 
           /**
-           * This hash defines whether the payment element supports certain features.
+           * This hash defines whether the Payment Element supports certain features.
            */
           features: PaymentElement.Features | null;
         }
@@ -86,21 +86,21 @@ declare module 'stripe' {
         namespace PaymentElement {
           interface Features {
             /**
-             * Controls whether the Payment Element displays the option to remove a saved payment method."
+             * Controls whether the Payment Element displays the option to remove a saved payment method. This parameter defaults to `disabled`.
              *
              * Allowing buyers to remove their saved payment methods impacts subscriptions that depend on that payment method. Removing the payment method detaches the [`customer` object](https://docs.stripe.com/api/payment_methods/object#payment_method_object-customer) from that [PaymentMethod](https://docs.stripe.com/api/payment_methods).
              */
             payment_method_remove: Features.PaymentMethodRemove;
 
             /**
-             * Controls whether the Payment Element displays a checkbox offering to save a new payment method.
+             * Controls whether the Payment Element displays a checkbox offering to save a new payment method. This parameter defaults to `disabled`.
              *
              * If a customer checks the box, the [`allow_redisplay`](https://docs.stripe.com/api/payment_methods/object#payment_method_object-allow_redisplay) value on the PaymentMethod is set to `'always'` at confirmation time. For PaymentIntents, the [`setup_future_usage`](https://docs.stripe.com/api/payment_intents/object#payment_intent_object-setup_future_usage) value is also set to the value defined in `payment_method_save_usage`.
              */
             payment_method_save: Features.PaymentMethodSave;
 
             /**
-             * Controls whether the Payment Element displays the option to update a saved payment method.
+             * Controls whether the Payment Element displays the option to update a saved payment method. This parameter defaults to `disabled`.
              */
             payment_method_update: Features.PaymentMethodUpdate;
           }
