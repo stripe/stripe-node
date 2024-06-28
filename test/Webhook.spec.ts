@@ -41,6 +41,30 @@ function createWebhooksTestSuite(stripe) {
     });
   });
 
+  describe('.generateTestHeaderStringAsync', () => {
+    it('should throw when no opts are passed', async () => {
+      await expect(
+        stripe.webhooks.generateTestHeaderStringAsync()
+      ).to.be.rejectedWith('Options are required');
+    });
+
+    it('should correctly construct a webhook header', async () => {
+      const header = await stripe.webhooks.generateTestHeaderStringAsync({
+        payload: EVENT_PAYLOAD_STRING,
+        secret: SECRET,
+      });
+
+      expect(header).to.not.be.undefined;
+      expect(header.split(',')).to.have.lengthOf(2);
+      expect(header).to.equal(
+        stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        })
+      );
+    });
+  });
+
   const makeConstructEventTests = (
     constructEventFn: typeof stripe.webhooks.construct
   ) => {

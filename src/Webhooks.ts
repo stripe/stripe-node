@@ -65,6 +65,9 @@ export type WebhookObject = {
     receivedAt: number
   ) => Promise<WebhookEvent>;
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
+  generateTestHeaderStringAsync: (
+    opts: WebhookTestHeaderOptions
+  ) => Promise<string>;
 };
 
 export function createWebhooks(
@@ -160,6 +163,35 @@ export function createWebhooks(
           opts.timestamp + '.' + opts.payload,
           opts.secret
         );
+
+      const generatedHeader = [
+        't=' + opts.timestamp,
+        opts.scheme + '=' + opts.signature,
+      ].join(',');
+
+      return generatedHeader;
+    },
+    generateTestHeaderStringAsync: async function(
+      opts: WebhookTestHeaderOptions
+    ): Promise<string> {
+      if (!opts) {
+        throw new StripeError({
+          message: 'Options are required',
+        });
+      }
+
+      opts.timestamp =
+        Math.floor(opts.timestamp) || Math.floor(Date.now() / 1000);
+      opts.scheme = opts.scheme || signature.EXPECTED_SCHEME;
+
+      opts.cryptoProvider = opts.cryptoProvider || getCryptoProvider();
+
+      opts.signature =
+        opts.signature ||
+        (await opts.cryptoProvider.computeHMACSignatureAsync(
+          opts.timestamp + '.' + opts.payload,
+          opts.secret
+        ));
 
       const generatedHeader = [
         't=' + opts.timestamp,
