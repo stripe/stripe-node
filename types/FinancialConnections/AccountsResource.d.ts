@@ -100,7 +100,7 @@ declare module 'stripe' {
       }
 
       namespace AccountSubscribeParams {
-        type Feature = 'inferred_balances' | 'transactions';
+        type Feature = 'balance' | 'inferred_balances' | 'transactions';
       }
 
       interface AccountUnsubscribeParams {
@@ -116,7 +116,7 @@ declare module 'stripe' {
       }
 
       namespace AccountUnsubscribeParams {
-        type Feature = 'inferred_balances' | 'transactions';
+        type Feature = 'balance' | 'inferred_balances' | 'transactions';
       }
 
       class AccountsResource {

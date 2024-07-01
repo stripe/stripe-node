@@ -3158,6 +3158,11 @@ declare module 'stripe' {
                * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
                */
               account_subcategories?: Array<Filters.AccountSubcategory>;
+
+              /**
+               * ID of the institution to use to filter for selectable accounts.
+               */
+              institution?: string;
             }
 
             namespace Filters {
@@ -6387,6 +6392,11 @@ declare module 'stripe' {
                * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
                */
               account_subcategories?: Array<Filters.AccountSubcategory>;
+
+              /**
+               * ID of the institution to use to filter for selectable accounts.
+               */
+              institution?: string;
             }
 
             namespace Filters {
@@ -10340,6 +10350,11 @@ declare module 'stripe' {
                * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
                */
               account_subcategories?: Array<Filters.AccountSubcategory>;
+
+              /**
+               * ID of the institution to use to filter for selectable accounts.
+               */
+              institution?: string;
             }
 
             namespace Filters {

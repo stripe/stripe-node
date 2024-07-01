@@ -339,6 +339,7 @@ declare module 'stripe' {
           | 'email_invalid'
           | 'expired_card'
           | 'financial_connections_account_inactive'
+          | 'financial_connections_institution_unavailable'
           | 'financial_connections_no_successful_transaction_refresh'
           | 'forwarding_api_inactive'
           | 'forwarding_api_invalid_parameter'
@@ -887,6 +888,11 @@ declare module 'stripe' {
                * The account subcategories to use to filter for possible accounts to link. Valid subcategories are `checking` and `savings`.
                */
               account_subcategories?: Array<Filters.AccountSubcategory>;
+
+              /**
+               * The institution to use to filter for possible accounts to link.
+               */
+              institution?: string;
             }
 
             namespace Filters {
