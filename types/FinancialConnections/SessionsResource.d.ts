@@ -79,6 +79,11 @@ declare module 'stripe' {
            * List of countries from which to collect accounts.
            */
           countries?: Array<string>;
+
+          /**
+           * Stripe ID of the institution with which the customer should be directed to log in.
+           */
+          institution?: string;
         }
 
         namespace Filters {

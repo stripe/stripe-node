@@ -46,6 +46,7 @@
 ///<reference path='./FileLinksResource.d.ts' />
 ///<reference path='./FilesResource.d.ts' />
 ///<reference path='./FinancialConnections/AccountsResource.d.ts' />
+///<reference path='./FinancialConnections/InstitutionsResource.d.ts' />
 ///<reference path='./FinancialConnections/SessionsResource.d.ts' />
 ///<reference path='./FinancialConnections/TransactionsResource.d.ts' />
 ///<reference path='./Forwarding/RequestsResource.d.ts' />
@@ -190,6 +191,7 @@
 ///<reference path='./FinancialConnections/AccountOwners.d.ts' />
 ///<reference path='./FinancialConnections/AccountOwnerships.d.ts' />
 ///<reference path='./FinancialConnections/Accounts.d.ts' />
+///<reference path='./FinancialConnections/Institutions.d.ts' />
 ///<reference path='./FinancialConnections/Sessions.d.ts' />
 ///<reference path='./FinancialConnections/Transactions.d.ts' />
 ///<reference path='./Forwarding/Requests.d.ts' />
@@ -390,6 +392,7 @@ declare module 'stripe' {
     };
     financialConnections: {
       accounts: Stripe.FinancialConnections.AccountsResource;
+      institutions: Stripe.FinancialConnections.InstitutionsResource;
       sessions: Stripe.FinancialConnections.SessionsResource;
       transactions: Stripe.FinancialConnections.TransactionsResource;
     };

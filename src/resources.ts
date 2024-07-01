@@ -28,6 +28,7 @@ import {FinancingTransactions as CapitalFinancingTransactions} from './resources
 import {Forms as TaxForms} from './resources/Tax/Forms.js';
 import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
+import {Institutions as FinancialConnectionsInstitutions} from './resources/FinancialConnections/Institutions.js';
 import {Locations as TerminalLocations} from './resources/Terminal/Locations.js';
 import {MeterEventAdjustments as BillingMeterEventAdjustments} from './resources/Billing/MeterEventAdjustments.js';
 import {MeterEvents as BillingMeterEvents} from './resources/Billing/MeterEvents.js';
@@ -157,6 +158,7 @@ export const Entitlements = resourceNamespace('entitlements', {
 });
 export const FinancialConnections = resourceNamespace('financialConnections', {
   Accounts: FinancialConnectionsAccounts,
+  Institutions: FinancialConnectionsInstitutions,
   Sessions: FinancialConnectionsSessions,
   Transactions: FinancialConnectionsTransactions,
 });

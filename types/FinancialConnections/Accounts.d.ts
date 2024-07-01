@@ -283,7 +283,7 @@ declare module 'stripe' {
           | 'other'
           | 'savings';
 
-        type Subscription = 'inferred_balances' | 'transactions';
+        type Subscription = 'balance' | 'inferred_balances' | 'transactions';
 
         type SupportedPaymentMethodType = 'link' | 'us_bank_account';
 
