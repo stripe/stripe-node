@@ -105,11 +105,6 @@ declare module 'stripe' {
              * When using SetupIntents, directly configure the [`usage`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-usage) value on SetupIntent creation.
              */
             payment_method_save_usage: Features.PaymentMethodSaveUsage | null;
-
-            /**
-             * Controls whether the Payment Element displays the option to update a saved payment method. This parameter defaults to `disabled`.
-             */
-            payment_method_update: Features.PaymentMethodUpdate;
           }
 
           namespace Features {
@@ -118,8 +113,6 @@ declare module 'stripe' {
             type PaymentMethodSave = 'disabled' | 'enabled';
 
             type PaymentMethodSaveUsage = 'off_session' | 'on_session';
-
-            type PaymentMethodUpdate = 'disabled' | 'enabled';
           }
         }
 
