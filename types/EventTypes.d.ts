@@ -1070,7 +1070,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a card or source will expire at the end of the month.
+     * Occurs whenever a card or source will expire at the end of the month. This event only works with legacy integrations using Card or Source objects. If you use the PaymentMethod API, this event won't occur.
      */
     interface CustomerSourceExpiringEvent extends EventBase {
       type: 'customer.source.expiring';
