@@ -879,6 +879,7 @@ declare module 'stripe' {
           | 'parameters_exclusive'
           | 'payment_intent_action_required'
           | 'payment_intent_authentication_failure'
+          | 'payment_intent_fx_quote_invalid'
           | 'payment_intent_incompatible_payment_method'
           | 'payment_intent_invalid_parameter'
           | 'payment_intent_konbini_rejected_confirmation_number'
