@@ -123,12 +123,12 @@ declare module 'stripe' {
         customer: string;
 
         /**
-         * The timestamp from when to stop aggregating meter events (exclusive).
+         * The timestamp from when to stop aggregating meter events (exclusive). Must be aligned with minute boundaries.
          */
         end_time: number;
 
         /**
-         * The timestamp from when to start aggregating meter events (inclusive).
+         * The timestamp from when to start aggregating meter events (inclusive). Must be aligned with minute boundaries.
          */
         start_time: number;
 
