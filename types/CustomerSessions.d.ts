@@ -86,6 +86,25 @@ declare module 'stripe' {
         namespace PaymentElement {
           interface Features {
             /**
+             * A list of [`allow_redisplay`](https://docs.stripe.com/api/payment_methods/object#payment_method_object-allow_redisplay) values that controls which saved payment methods the Payment Element displays by filtering to only show payment methods with an `allow_redisplay` value that is present in this list.
+             *
+             * If not specified, defaults to ["always"]. In order to display all saved payment methods, specify ["always", "limited", "unspecified"].
+             */
+            payment_method_allow_redisplay_filters: Array<
+              Features.PaymentMethodAllowRedisplayFilter
+            >;
+
+            /**
+             * Controls whether or not the Payment Element shows saved payment methods. This parameter defaults to `disabled`.
+             */
+            payment_method_redisplay: Features.PaymentMethodRedisplay;
+
+            /**
+             * Determines the max number of saved payment methods for the Payment Element to display. This parameter defaults to `10`.
+             */
+            payment_method_redisplay_limit: number | null;
+
+            /**
              * Controls whether the Payment Element displays the option to remove a saved payment method. This parameter defaults to `disabled`.
              *
              * Allowing buyers to remove their saved payment methods impacts subscriptions that depend on that payment method. Removing the payment method detaches the [`customer` object](https://docs.stripe.com/api/payment_methods/object#payment_method_object-customer) from that [PaymentMethod](https://docs.stripe.com/api/payment_methods).
@@ -108,6 +127,13 @@ declare module 'stripe' {
           }
 
           namespace Features {
+            type PaymentMethodAllowRedisplayFilter =
+              | 'always'
+              | 'limited'
+              | 'unspecified';
+
+            type PaymentMethodRedisplay = 'disabled' | 'enabled';
+
             type PaymentMethodRemove = 'disabled' | 'enabled';
 
             type PaymentMethodSave = 'disabled' | 'enabled';
