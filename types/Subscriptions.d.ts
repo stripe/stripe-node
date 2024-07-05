@@ -613,6 +613,11 @@ declare module 'stripe' {
                  * The account subcategories to use to filter for possible accounts to link. Valid subcategories are `checking` and `savings`.
                  */
                 account_subcategories?: Array<Filters.AccountSubcategory>;
+
+                /**
+                 * The institution to use to filter for possible accounts to link.
+                 */
+                institution?: string;
               }
 
               namespace Filters {
