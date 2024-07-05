@@ -24,7 +24,7 @@ declare module 'stripe' {
         aggregated_value: number;
 
         /**
-         * End timestamp for this event summary (inclusive).
+         * End timestamp for this event summary (exclusive). Must be aligned with minute boundaries.
          */
         end_time: number;
 
@@ -39,7 +39,7 @@ declare module 'stripe' {
         meter: string;
 
         /**
-         * Start timestamp for this event summary (inclusive).
+         * Start timestamp for this event summary (inclusive). Must be aligned with minute boundaries.
          */
         start_time: number;
       }
