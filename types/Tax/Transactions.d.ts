@@ -52,6 +52,11 @@ declare module 'stripe' {
         metadata: Stripe.Metadata | null;
 
         /**
+         * The Unix timestamp representing when the tax liability is assumed or reduced.
+         */
+        posted_at: number;
+
+        /**
          * A custom unique identifier, such as 'myOrder_123'.
          */
         reference: string;
