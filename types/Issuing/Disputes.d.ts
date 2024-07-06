@@ -27,7 +27,7 @@ declare module 'stripe' {
         /**
          * List of balance transactions associated with the dispute.
          */
-        balance_transactions: Array<Stripe.BalanceTransaction> | null;
+        balance_transactions?: Array<Stripe.BalanceTransaction> | null;
 
         /**
          * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -45,6 +45,11 @@ declare module 'stripe' {
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
+
+        /**
+         * The enum that describes the dispute loss outcome. If the dispute is not lost, this field will be absent. New enum values may be added in the future, so be sure to handle unknown values.
+         */
+        loss_reason?: Dispute.LossReason;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -76,6 +81,8 @@ declare module 'stripe' {
           fraudulent?: Evidence.Fraudulent;
 
           merchandise_not_as_described?: Evidence.MerchandiseNotAsDescribed;
+
+          no_valid_authorization?: Evidence.NoValidAuthorization;
 
           not_received?: Evidence.NotReceived;
 
@@ -259,6 +266,18 @@ declare module 'stripe' {
             type ProductType = 'merchandise' | 'service';
           }
 
+          interface NoValidAuthorization {
+            /**
+             * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
+             */
+            additional_documentation: string | Stripe.File | null;
+
+            /**
+             * Explanation of why the cardholder is disputing this transaction.
+             */
+            explanation: string | null;
+          }
+
           interface Other {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
@@ -290,6 +309,7 @@ declare module 'stripe' {
             | 'duplicate'
             | 'fraudulent'
             | 'merchandise_not_as_described'
+            | 'no_valid_authorization'
             | 'not_received'
             | 'other'
             | 'service_not_as_described';
@@ -321,6 +341,28 @@ declare module 'stripe' {
             received_at: number | null;
           }
         }
+
+        type LossReason =
+          | 'cardholder_authentication_issuer_liability'
+          | 'eci5_token_transaction_with_tavv'
+          | 'excess_disputes_in_timeframe'
+          | 'has_not_met_the_minimum_dispute_amount_requirements'
+          | 'invalid_duplicate_dispute'
+          | 'invalid_incorrect_amount_dispute'
+          | 'invalid_no_authorization'
+          | 'invalid_use_of_disputes'
+          | 'merchandise_delivered_or_shipped'
+          | 'merchandise_or_service_as_described'
+          | 'not_cancelled'
+          | 'other'
+          | 'refund_issued'
+          | 'submitted_beyond_allowable_time_limit'
+          | 'transaction_3ds_required'
+          | 'transaction_approved_after_prior_fraud_dispute'
+          | 'transaction_authorized'
+          | 'transaction_electronically_read'
+          | 'transaction_qualifies_for_visa_easy_payment_service'
+          | 'transaction_unattended';
 
         type Status = 'expired' | 'lost' | 'submitted' | 'unsubmitted' | 'won';
 

@@ -96,7 +96,7 @@ declare module 'stripe' {
         /**
          * Additional purchase information that is optionally provided by the merchant.
          */
-        purchase_details: Transaction.PurchaseDetails | null;
+        purchase_details?: Transaction.PurchaseDetails | null;
 
         /**
          * [Token](https://stripe.com/docs/api/issuing/tokens/object) object used for this transaction. If a network token was not used for this transaction, this field will be null.
@@ -203,6 +203,11 @@ declare module 'stripe' {
 
         interface PurchaseDetails {
           /**
+           * Fleet-specific information for transactions using Fleet cards.
+           */
+          fleet: PurchaseDetails.Fleet | null;
+
+          /**
            * Information about the flight that was purchased with this transaction.
            */
           flight: PurchaseDetails.Flight | null;
@@ -229,6 +234,102 @@ declare module 'stripe' {
         }
 
         namespace PurchaseDetails {
+          interface Fleet {
+            /**
+             * Answers to prompts presented to cardholder at point of sale.
+             */
+            cardholder_prompt_data: Fleet.CardholderPromptData | null;
+
+            /**
+             * The type of purchase. One of `fuel_purchase`, `non_fuel_purchase`, or `fuel_and_non_fuel_purchase`.
+             */
+            purchase_type: string | null;
+
+            /**
+             * More information about the total amount. This information is not guaranteed to be accurate as some merchants may provide unreliable data.
+             */
+            reported_breakdown: Fleet.ReportedBreakdown | null;
+
+            /**
+             * The type of fuel service. One of `non_fuel_transaction`, `full_service`, or `self_service`.
+             */
+            service_type: string | null;
+          }
+
+          namespace Fleet {
+            interface CardholderPromptData {
+              /**
+               * Driver ID.
+               */
+              driver_id: string | null;
+
+              /**
+               * Odometer reading.
+               */
+              odometer: number | null;
+
+              /**
+               * An alphanumeric ID. This field is used when a vehicle ID, driver ID, or generic ID is entered by the cardholder, but the merchant or card network did not specify the prompt type.
+               */
+              unspecified_id: string | null;
+
+              /**
+               * User ID.
+               */
+              user_id: string | null;
+
+              /**
+               * Vehicle number.
+               */
+              vehicle_number: string | null;
+            }
+
+            interface ReportedBreakdown {
+              /**
+               * Breakdown of fuel portion of the purchase.
+               */
+              fuel: ReportedBreakdown.Fuel | null;
+
+              /**
+               * Breakdown of non-fuel portion of the purchase.
+               */
+              non_fuel: ReportedBreakdown.NonFuel | null;
+
+              /**
+               * Information about tax included in this transaction.
+               */
+              tax: ReportedBreakdown.Tax | null;
+            }
+
+            namespace ReportedBreakdown {
+              interface Fuel {
+                /**
+                 * Gross fuel amount that should equal Fuel Volume multipled by Fuel Unit Cost, inclusive of taxes.
+                 */
+                gross_amount_decimal: string | null;
+              }
+
+              interface NonFuel {
+                /**
+                 * Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
+                 */
+                gross_amount_decimal: string | null;
+              }
+
+              interface Tax {
+                /**
+                 * Amount of state or provincial Sales Tax included in the transaction amount. Null if not reported by merchant or not subject to tax.
+                 */
+                local_amount_decimal: string | null;
+
+                /**
+                 * Amount of national Sales Tax or VAT included in the transaction amount. Null if not reported by merchant or not subject to tax.
+                 */
+                national_amount_decimal: string | null;
+              }
+            }
+          }
+
           interface Flight {
             /**
              * The time that the flight departed.
@@ -292,12 +393,22 @@ declare module 'stripe' {
 
           interface Fuel {
             /**
+             * [Conexxus Payment System Product Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel product purchased.
+             */
+            industry_product_code: string | null;
+
+            /**
+             * The quantity of `unit`s of fuel that was dispensed, represented as a decimal string with at most 12 decimal places.
+             */
+            quantity_decimal: string | null;
+
+            /**
              * The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`, `unleaded_super`, or `other`.
              */
             type: string;
 
             /**
-             * The units for `volume_decimal`. One of `us_gallon` or `liter`.
+             * The units for `quantity_decimal`. One of `charging_minute`, `imperial_gallon`, `kilogram`, `kilowatt_hour`, `liter`, `pound`, `us_gallon`, or `other`.
              */
             unit: string;
 
@@ -305,11 +416,6 @@ declare module 'stripe' {
              * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
              */
             unit_cost_decimal: string;
-
-            /**
-             * The volume of the fuel that was pumped, represented as a decimal string with at most 12 decimal places.
-             */
-            volume_decimal: string | null;
           }
 
           interface Lodging {

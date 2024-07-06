@@ -79,9 +79,23 @@ declare module 'stripe' {
 
         interface Filters {
           /**
+           * Restricts the Session to subcategories of accounts that can be linked. Valid subcategories are: `checking`, `savings`, `mortgage`, `line_of_credit`, `credit_card`.
+           */
+          account_subcategories: Array<Filters.AccountSubcategory> | null;
+
+          /**
            * List of countries from which to filter accounts.
            */
           countries: Array<string> | null;
+        }
+
+        namespace Filters {
+          type AccountSubcategory =
+            | 'checking'
+            | 'credit_card'
+            | 'line_of_credit'
+            | 'mortgage'
+            | 'savings';
         }
 
         type Permission =

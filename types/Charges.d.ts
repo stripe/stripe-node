@@ -40,12 +40,12 @@ declare module 'stripe' {
       application: string | Stripe.Application | null;
 
       /**
-       * The application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees) for details.
+       * The application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collect-fees) for details.
        */
       application_fee: string | Stripe.ApplicationFee | null;
 
       /**
-       * The amount of the application fee (if any) requested for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees) for details.
+       * The amount of the application fee (if any) requested for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collect-fees) for details.
        */
       application_fee_amount: number | null;
 
@@ -191,7 +191,7 @@ declare module 'stripe' {
       /**
        * A list of refunds that have been applied to the charge.
        */
-      refunds: ApiList<Stripe.Refund> | null;
+      refunds?: ApiList<Stripe.Refund> | null;
 
       /**
        * ID of the review associated with this charge if one exists.
@@ -378,6 +378,8 @@ declare module 'stripe' {
 
         alipay?: PaymentMethodDetails.Alipay;
 
+        amazon_pay?: PaymentMethodDetails.AmazonPay;
+
         au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
 
         bacs_debit?: PaymentMethodDetails.BacsDebit;
@@ -441,6 +443,8 @@ declare module 'stripe' {
         stripe_account?: PaymentMethodDetails.StripeAccount;
 
         swish?: PaymentMethodDetails.Swish;
+
+        twint?: PaymentMethodDetails.Twint;
 
         /**
          * The type of transaction-specific details of the payment method used in the payment, one of `ach_credit_transfer`, `ach_debit`, `acss_debit`, `alipay`, `au_becs_debit`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `klarna`, `multibanco`, `p24`, `sepa_debit`, `sofort`, `stripe_account`, or `wechat`.
@@ -579,6 +583,8 @@ declare module 'stripe' {
            */
           transaction_id: string | null;
         }
+
+        interface AmazonPay {}
 
         interface AuBecsDebit {
           /**
@@ -1161,6 +1167,11 @@ declare module 'stripe' {
           overcapture_supported: boolean;
 
           /**
+           * EMV tag 5F2D. Preferred languages specified by the integrated circuit chip.
+           */
+          preferred_locales: Array<string> | null;
+
+          /**
            * How card details were read in this transaction.
            */
           read_method: CardPresent.ReadMethod | null;
@@ -1213,7 +1224,7 @@ declare module 'stripe' {
             authorization_response_code: string | null;
 
             /**
-             * How the cardholder verified ownership of the card.
+             * Describes the method used by the cardholder to verify ownership of the card. One of the following: `approval`, `failure`, `none`, `offline_pin`, `offline_pin_and_signature`, `online_pin`, or `signature`.
              */
             cardholder_verification_method: string | null;
 
@@ -1570,7 +1581,7 @@ declare module 'stripe' {
             authorization_response_code: string | null;
 
             /**
-             * How the cardholder verified ownership of the card.
+             * Describes the method used by the cardholder to verify ownership of the card. One of the following: `approval`, `failure`, `none`, `offline_pin`, `offline_pin_and_signature`, `online_pin`, or `signature`.
              */
             cardholder_verification_method: string | null;
 
@@ -1604,7 +1615,7 @@ declare module 'stripe' {
 
           /**
            * Preferred language of the Klarna authorization page that the customer is redirected to.
-           * Can be one of `de-AT`, `en-AT`, `nl-BE`, `fr-BE`, `en-BE`, `de-DE`, `en-DE`, `da-DK`, `en-DK`, `es-ES`, `en-ES`, `fi-FI`, `sv-FI`, `en-FI`, `en-GB`, `en-IE`, `it-IT`, `en-IT`, `nl-NL`, `en-NL`, `nb-NO`, `en-NO`, `sv-SE`, `en-SE`, `en-US`, `es-US`, `fr-FR`, `en-FR`, `cs-CZ`, `en-CZ`, `el-GR`, `en-GR`, `en-AU`, `en-NZ`, `en-CA`, `fr-CA`, `pl-PL`, `en-PL`, `pt-PT`, `en-PT`, `de-CH`, `fr-CH`, `it-CH`, or `en-CH`
+           * Can be one of `de-AT`, `en-AT`, `nl-BE`, `fr-BE`, `en-BE`, `de-DE`, `en-DE`, `da-DK`, `en-DK`, `es-ES`, `en-ES`, `fi-FI`, `sv-FI`, `en-FI`, `en-GB`, `en-IE`, `it-IT`, `en-IT`, `nl-NL`, `en-NL`, `nb-NO`, `en-NO`, `sv-SE`, `en-SE`, `en-US`, `es-US`, `fr-FR`, `en-FR`, `cs-CZ`, `en-CZ`, `ro-RO`, `en-RO`, `el-GR`, `en-GR`, `en-AU`, `en-NZ`, `en-CA`, `fr-CA`, `pl-PL`, `en-PL`, `pt-PT`, `en-PT`, `de-CH`, `fr-CH`, `it-CH`, or `en-CH`
            */
           preferred_locale: string | null;
         }
@@ -1638,6 +1649,9 @@ declare module 'stripe' {
         }
 
         interface Mobilepay {
+          /**
+           * Internal card details
+           */
           card: Mobilepay.Card | null;
         }
 
@@ -1938,6 +1952,8 @@ declare module 'stripe' {
           verified_phone_last4: string | null;
         }
 
+        interface Twint {}
+
         interface UsBankAccount {
           /**
            * Account holder type: individual or company.
@@ -1965,9 +1981,14 @@ declare module 'stripe' {
           last4: string | null;
 
           /**
+           * ID of the mandate used to make this payment.
+           */
+          mandate?: string | Stripe.Mandate;
+
+          /**
            * Reference number to locate ACH payments with customer's bank.
            */
-          payment_reference?: string | null;
+          payment_reference: string | null;
 
           /**
            * Routing number of the bank account.

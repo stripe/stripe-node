@@ -113,6 +113,8 @@ declare module 'stripe' {
 
         alipay?: DestinationDetails.Alipay;
 
+        amazon_pay?: DestinationDetails.AmazonPay;
+
         au_bank_transfer?: DestinationDetails.AuBankTransfer;
 
         blik?: DestinationDetails.Blik;
@@ -138,6 +140,8 @@ declare module 'stripe' {
         jp_bank_transfer?: DestinationDetails.JpBankTransfer;
 
         klarna?: DestinationDetails.Klarna;
+
+        multibanco?: DestinationDetails.Multibanco;
 
         mx_bank_transfer?: DestinationDetails.MxBankTransfer;
 
@@ -175,6 +179,8 @@ declare module 'stripe' {
         interface AfterpayClearpay {}
 
         interface Alipay {}
+
+        interface AmazonPay {}
 
         interface AuBankTransfer {}
 
@@ -275,6 +281,18 @@ declare module 'stripe' {
         }
 
         interface Klarna {}
+
+        interface Multibanco {
+          /**
+           * The reference assigned to the refund.
+           */
+          reference: string | null;
+
+          /**
+           * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+           */
+          reference_status: string | null;
+        }
 
         interface MxBankTransfer {
           /**

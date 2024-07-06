@@ -248,15 +248,16 @@ declare module 'stripe' {
       }
 
       interface PaymentMethodDetails {
-        /**
-         * Card specific dispute details.
-         */
-        card: PaymentMethodDetails.Card | null;
+        card?: PaymentMethodDetails.Card;
+
+        klarna?: PaymentMethodDetails.Klarna;
+
+        paypal?: PaymentMethodDetails.Paypal;
 
         /**
          * Payment method type.
          */
-        type: 'card';
+        type: PaymentMethodDetails.Type;
       }
 
       namespace PaymentMethodDetails {
@@ -271,6 +272,27 @@ declare module 'stripe' {
            */
           network_reason_code: string | null;
         }
+
+        interface Klarna {
+          /**
+           * The reason for the dispute as defined by Klarna
+           */
+          reason_code: string | null;
+        }
+
+        interface Paypal {
+          /**
+           * The ID of the dispute in PayPal.
+           */
+          case_id: string | null;
+
+          /**
+           * The reason for the dispute as defined by PayPal
+           */
+          reason_code: string | null;
+        }
+
+        type Type = 'card' | 'klarna' | 'paypal';
       }
 
       type Status =

@@ -61,9 +61,9 @@ declare module 'stripe' {
         currently_due: Array<string>;
 
         /**
-         * This is typed as a string for consistency with `requirements.disabled_reason`, but it safe to assume `future_requirements.disabled_reason` is empty because fields in `future_requirements` will never disable the account.
+         * This is typed as an enum for consistency with `requirements.disabled_reason`, but it safe to assume `future_requirements.disabled_reason` is null because fields in `future_requirements` will never disable the account.
          */
-        disabled_reason: string | null;
+        disabled_reason: FutureRequirements.DisabledReason | null;
 
         /**
          * Fields that are `currently_due` and need to be collected again because validation or verification failed.
@@ -81,7 +81,7 @@ declare module 'stripe' {
         past_due: Array<string>;
 
         /**
-         * Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due` or `currently_due`.
+         * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due` or `currently_due`. Fields might appear in `eventually_due` or `currently_due` and in `pending_verification` if verification fails but another verification is still pending.
          */
         pending_verification: Array<string>;
       }
@@ -98,6 +98,18 @@ declare module 'stripe' {
            */
           original_fields_due: Array<string>;
         }
+
+        type DisabledReason =
+          | 'other'
+          | 'paused.inactivity'
+          | 'pending.onboarding'
+          | 'pending.review'
+          | 'platform_disabled'
+          | 'platform_paused'
+          | 'rejected.inactivity'
+          | 'rejected.other'
+          | 'rejected.unsupported_business'
+          | 'requirements.fields_needed';
 
         interface Error {
           /**
@@ -198,13 +210,15 @@ declare module 'stripe' {
             | 'verification_failed_keyed_match'
             | 'verification_failed_name_match'
             | 'verification_failed_other'
+            | 'verification_failed_representative_authority'
             | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
-            | 'verification_requires_additional_memorandum_of_associations';
+            | 'verification_requires_additional_memorandum_of_associations'
+            | 'verification_requires_additional_proof_of_registration';
         }
       }
 
@@ -225,15 +239,9 @@ declare module 'stripe' {
         currently_due: Array<string>;
 
         /**
-         * If the capability is disabled, this string describes why. Can be `requirements.past_due`, `requirements.pending_verification`, `listed`, `platform_paused`, `rejected.fraud`, `rejected.listed`, `rejected.terms_of_service`, `rejected.other`, `under_review`, or `other`.
-         *
-         * `rejected.unsupported_business` means that the account's business is not supported by the capability. For example, payment methods may restrict the businesses they support in their terms of service:
-         *
-         * - [Afterpay Clearpay's terms of service](https://stripe.com/afterpay-clearpay/legal#restricted-businesses)
-         *
-         * If you believe that the rejection is in error, please contact support at https://support.stripe.com/contact/ for assistance.
+         * Description of why the capability is disabled. [Learn more about handling verification issues](https://stripe.com/docs/connect/handling-api-verification).
          */
-        disabled_reason: string | null;
+        disabled_reason: Requirements.DisabledReason | null;
 
         /**
          * Fields that are `currently_due` and need to be collected again because validation or verification failed.
@@ -251,7 +259,7 @@ declare module 'stripe' {
         past_due: Array<string>;
 
         /**
-         * Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`.
+         * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`. Fields might appear in `eventually_due`, `currently_due`, or `past_due` and in `pending_verification` if verification fails but another verification is still pending.
          */
         pending_verification: Array<string>;
       }
@@ -268,6 +276,18 @@ declare module 'stripe' {
            */
           original_fields_due: Array<string>;
         }
+
+        type DisabledReason =
+          | 'other'
+          | 'paused.inactivity'
+          | 'pending.onboarding'
+          | 'pending.review'
+          | 'platform_disabled'
+          | 'platform_paused'
+          | 'rejected.inactivity'
+          | 'rejected.other'
+          | 'rejected.unsupported_business'
+          | 'requirements.fields_needed';
 
         interface Error {
           /**
@@ -368,13 +388,15 @@ declare module 'stripe' {
             | 'verification_failed_keyed_match'
             | 'verification_failed_name_match'
             | 'verification_failed_other'
+            | 'verification_failed_representative_authority'
             | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
-            | 'verification_requires_additional_memorandum_of_associations';
+            | 'verification_requires_additional_memorandum_of_associations'
+            | 'verification_requires_additional_proof_of_registration';
         }
       }
 

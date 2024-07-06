@@ -5,11 +5,11 @@ declare module 'stripe' {
     /**
      * These bank accounts are payment methods on `Customer` objects.
      *
-     * On the other hand [External Accounts](https://stripe.com/docs/api#external_accounts) are transfer
-     * destinations on `Account` objects for [Custom accounts](https://stripe.com/docs/connect/custom-accounts).
+     * On the other hand [External Accounts](https://stripe.com/api#external_accounts) are transfer
+     * destinations on `Account` objects for connected accounts.
      * They can be bank accounts or debit cards as well, and are documented in the links above.
      *
-     * Related guide: [Bank debits and transfers](https://stripe.com/docs/payments/bank-debits-transfers)
+     * Related guide: [Bank debits and transfers](https://stripe.com/payments/bank-debits-transfers)
      */
     interface BankAccount {
       /**
@@ -137,7 +137,7 @@ declare module 'stripe' {
         past_due: Array<string> | null;
 
         /**
-         * Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`.
+         * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`. Fields might appear in `eventually_due`, `currently_due`, or `past_due` and in `pending_verification` if verification fails but another verification is still pending.
          */
         pending_verification: Array<string> | null;
       }
@@ -242,13 +242,15 @@ declare module 'stripe' {
             | 'verification_failed_keyed_match'
             | 'verification_failed_name_match'
             | 'verification_failed_other'
+            | 'verification_failed_representative_authority'
             | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
-            | 'verification_requires_additional_memorandum_of_associations';
+            | 'verification_requires_additional_memorandum_of_associations'
+            | 'verification_requires_additional_proof_of_registration';
         }
       }
 
@@ -269,7 +271,7 @@ declare module 'stripe' {
         past_due: Array<string> | null;
 
         /**
-         * Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`.
+         * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`. Fields might appear in `eventually_due`, `currently_due`, or `past_due` and in `pending_verification` if verification fails but another verification is still pending.
          */
         pending_verification: Array<string> | null;
       }
@@ -374,13 +376,15 @@ declare module 'stripe' {
             | 'verification_failed_keyed_match'
             | 'verification_failed_name_match'
             | 'verification_failed_other'
+            | 'verification_failed_representative_authority'
             | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
-            | 'verification_requires_additional_memorandum_of_associations';
+            | 'verification_requires_additional_memorandum_of_associations'
+            | 'verification_requires_additional_proof_of_registration';
         }
       }
     }

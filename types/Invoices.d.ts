@@ -119,7 +119,7 @@ declare module 'stripe' {
       application_fee_amount: number | null;
 
       /**
-       * Number of payment attempts made for this invoice, from the perspective of the payment retry schedule. Any payment attempt counts as the first attempt, and subsequently only automatic retries increment the attempt count. In other words, manual payment attempts after the first attempt do not affect the retry schedule.
+       * Number of payment attempts made for this invoice, from the perspective of the payment retry schedule. Any payment attempt counts as the first attempt, and subsequently only automatic retries increment the attempt count. In other words, manual payment attempts after the first attempt do not affect the retry schedule. If a failure is returned with a non-retryable return code, the invoice can no longer be retried unless a new payment method is obtained. Retries will continue to be scheduled, and attempt_count will continue to increment, but retries will only be executed if a new payment method is obtained.
        */
       attempt_count: number;
 
@@ -246,9 +246,7 @@ declare module 'stripe' {
       /**
        * The discounts applied to the invoice. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
        */
-      discounts: Array<
-        string | Stripe.Discount | Stripe.DeletedDiscount
-      > | null;
+      discounts: Array<string | Stripe.Discount | Stripe.DeletedDiscount>;
 
       /**
        * The date on which payment for this invoice is due. This value will be `null` for invoices where `collection_method=charge_automatically`.
@@ -345,12 +343,12 @@ declare module 'stripe' {
       payment_settings: Invoice.PaymentSettings;
 
       /**
-       * End of the usage period during which invoice items were added to this invoice.
+       * End of the usage period during which invoice items were added to this invoice. This looks back one period for a subscription invoice. Use the [line item period](https://stripe.com/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each price.
        */
       period_end: number;
 
       /**
-       * Start of the usage period during which invoice items were added to this invoice.
+       * Start of the usage period during which invoice items were added to this invoice. This looks back one period for a subscription invoice. Use the [line item period](https://stripe.com/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each price.
        */
       period_start: number;
 
@@ -378,11 +376,6 @@ declare module 'stripe' {
        * The rendering-related settings that control how the invoice is displayed on customer-facing surfaces such as PDF and Hosted Invoice Page.
        */
       rendering: Invoice.Rendering | null;
-
-      /**
-       * This is a legacy field that will be removed soon. For details about `rendering_options`, refer to `rendering` instead. Options for invoice PDF rendering.
-       */
-      rendering_options: Invoice.RenderingOptions | null;
 
       /**
        * The details of the cost of shipping, including the ShippingRate applied on the invoice.
@@ -558,7 +551,7 @@ declare module 'stripe' {
 
       interface CustomerTaxId {
         /**
-         * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, or `unknown`
+         * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, or `unknown`
          */
         type: CustomerTaxId.Type;
 
@@ -576,6 +569,7 @@ declare module 'stripe' {
           | 'au_abn'
           | 'au_arn'
           | 'bg_uic'
+          | 'bh_vat'
           | 'bo_tin'
           | 'br_cnpj'
           | 'br_cpf'
@@ -585,11 +579,13 @@ declare module 'stripe' {
           | 'ca_pst_mb'
           | 'ca_pst_sk'
           | 'ca_qst'
+          | 'ch_uid'
           | 'ch_vat'
           | 'cl_tin'
           | 'cn_tin'
           | 'co_nit'
           | 'cr_tin'
+          | 'de_stn'
           | 'do_rcn'
           | 'ec_ruc'
           | 'eg_tin'
@@ -609,14 +605,17 @@ declare module 'stripe' {
           | 'jp_trn'
           | 'ke_pin'
           | 'kr_brn'
+          | 'kz_bin'
           | 'li_uid'
           | 'mx_rfc'
           | 'my_frp'
           | 'my_itn'
           | 'my_sst'
+          | 'ng_tin'
           | 'no_vat'
           | 'no_voec'
           | 'nz_gst'
+          | 'om_vat'
           | 'pe_ruc'
           | 'ph_tin'
           | 'ro_tin'
@@ -752,13 +751,13 @@ declare module 'stripe' {
          *
          * Create a SetupIntent when you're ready to collect your customer's payment credentials.
          * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
-         * The SetupIntent transitions through multiple [statuses](https://stripe.com/docs/payments/intents#intent-statuses) as it guides
+         * The SetupIntent transitions through multiple [statuses](https://docs.stripe.com/payments/intents#intent-statuses) as it guides
          * you through the setup process.
          *
          * Successful SetupIntents result in payment credentials that are optimized for future payments.
          * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
-         * [Strong Customer Authentication](https://stripe.com/docs/strong-customer-authentication) during payment method collection
-         * to streamline later [off-session payments](https://stripe.com/docs/payments/setup-intents).
+         * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
+         * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
          * If you use the SetupIntent with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer),
          * it automatically attaches the resulting payment method to that Customer after successful setup.
          * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
@@ -766,7 +765,7 @@ declare module 'stripe' {
          *
          * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
          *
-         * Related guide: [Setup Intents API](https://stripe.com/docs/payments/setup-intents)
+         * Related guide: [Setup Intents API](https://docs.stripe.com/payments/setup-intents)
          */
         setup_intent?: Stripe.SetupIntent;
 
@@ -803,6 +802,10 @@ declare module 'stripe' {
           | 'bank_account_unverified'
           | 'bank_account_verification_failed'
           | 'billing_invalid_mandate'
+          | 'billing_policy_remote_function_response_invalid'
+          | 'billing_policy_remote_function_timeout'
+          | 'billing_policy_remote_function_unexpected_status_code'
+          | 'billing_policy_remote_function_unreachable'
           | 'bitcoin_upgrade_required'
           | 'capture_charge_authorization_expired'
           | 'capture_unauthorized_payment'
@@ -876,6 +879,7 @@ declare module 'stripe' {
           | 'parameters_exclusive'
           | 'payment_intent_action_required'
           | 'payment_intent_authentication_failure'
+          | 'payment_intent_fx_quote_invalid'
           | 'payment_intent_incompatible_payment_method'
           | 'payment_intent_invalid_parameter'
           | 'payment_intent_konbini_rejected_confirmation_number'
@@ -927,6 +931,7 @@ declare module 'stripe' {
           | 'setup_intent_mandate_invalid'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
+          | 'shipping_address_invalid'
           | 'shipping_calculation_failed'
           | 'sku_inactive'
           | 'state_unsupported'
@@ -937,6 +942,7 @@ declare module 'stripe' {
           | 'terminal_location_country_unsupported'
           | 'terminal_reader_busy'
           | 'terminal_reader_hardware_fault'
+          | 'terminal_reader_invalid_location_for_payment'
           | 'terminal_reader_offline'
           | 'terminal_reader_timeout'
           | 'testmode_charges_only'
@@ -1114,6 +1120,8 @@ declare module 'stripe' {
 
           namespace UsBankAccount {
             interface FinancialConnections {
+              filters?: FinancialConnections.Filters;
+
               /**
                * The list of permissions to request. The `payment_method` permission must be included.
                */
@@ -1126,9 +1134,24 @@ declare module 'stripe' {
             }
 
             namespace FinancialConnections {
-              type Permission = 'balances' | 'payment_method' | 'transactions';
+              interface Filters {
+                /**
+                 * The account subcategories to use to filter for possible accounts to link. Valid subcategories are `checking` and `savings`.
+                 */
+                account_subcategories?: Array<Filters.AccountSubcategory>;
+              }
 
-              type Prefetch = 'balances' | 'transactions';
+              namespace Filters {
+                type AccountSubcategory = 'checking' | 'savings';
+              }
+
+              type Permission =
+                | 'balances'
+                | 'ownership'
+                | 'payment_method'
+                | 'transactions';
+
+              type Prefetch = 'balances' | 'ownership' | 'transactions';
             }
 
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
@@ -1139,6 +1162,7 @@ declare module 'stripe' {
           | 'ach_credit_transfer'
           | 'ach_debit'
           | 'acss_debit'
+          | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
@@ -1157,9 +1181,11 @@ declare module 'stripe' {
           | 'paynow'
           | 'paypal'
           | 'promptpay'
+          | 'revolut_pay'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'swish'
           | 'us_bank_account'
           | 'wechat_pay';
       }
@@ -1187,13 +1213,6 @@ declare module 'stripe' {
         namespace Pdf {
           type PageSize = 'a4' | 'auto' | 'letter';
         }
-      }
-
-      interface RenderingOptions {
-        /**
-         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
-         */
-        amount_tax_display: string | null;
       }
 
       interface ShippingCost {

@@ -2,6 +2,7 @@
 
 import {resourceNamespace} from './ResourceNamespace.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
+import {ActiveEntitlements as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
@@ -17,10 +18,14 @@ import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Custome
 import {DebitReversals as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
 import {Disputes as IssuingDisputes} from './resources/Issuing/Disputes.js';
 import {EarlyFraudWarnings as RadarEarlyFraudWarnings} from './resources/Radar/EarlyFraudWarnings.js';
+import {Features as EntitlementsFeatures} from './resources/Entitlements/Features.js';
 import {FinancialAccounts as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts.js';
 import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {Locations as TerminalLocations} from './resources/Terminal/Locations.js';
+import {MeterEventAdjustments as BillingMeterEventAdjustments} from './resources/Billing/MeterEventAdjustments.js';
+import {MeterEvents as BillingMeterEvents} from './resources/Billing/MeterEvents.js';
+import {Meters as BillingMeters} from './resources/Billing/Meters.js';
 import {Orders as ClimateOrders} from './resources/Climate/Orders.js';
 import {OutboundPayments as TestHelpersTreasuryOutboundPayments} from './resources/TestHelpers/Treasury/OutboundPayments.js';
 import {OutboundPayments as TreasuryOutboundPayments} from './resources/Treasury/OutboundPayments.js';
@@ -113,6 +118,11 @@ export {Topups} from './resources/Topups.js';
 export {Transfers} from './resources/Transfers.js';
 export {WebhookEndpoints} from './resources/WebhookEndpoints.js';
 export const Apps = resourceNamespace('apps', {Secrets: AppsSecrets});
+export const Billing = resourceNamespace('billing', {
+  MeterEventAdjustments: BillingMeterEventAdjustments,
+  MeterEvents: BillingMeterEvents,
+  Meters: BillingMeters,
+});
 export const BillingPortal = resourceNamespace('billingPortal', {
   Configurations: BillingPortalConfigurations,
   Sessions: BillingPortalSessions,
@@ -124,6 +134,10 @@ export const Climate = resourceNamespace('climate', {
   Orders: ClimateOrders,
   Products: ClimateProducts,
   Suppliers: ClimateSuppliers,
+});
+export const Entitlements = resourceNamespace('entitlements', {
+  ActiveEntitlements: EntitlementsActiveEntitlements,
+  Features: EntitlementsFeatures,
 });
 export const FinancialConnections = resourceNamespace('financialConnections', {
   Accounts: FinancialConnectionsAccounts,

@@ -5,11 +5,6 @@ declare module 'stripe' {
     namespace Identity {
       interface VerificationSessionCreateParams {
         /**
-         * The type of [verification check](https://stripe.com/docs/identity/verification-checks) to be performed.
-         */
-        type: VerificationSessionCreateParams.Type;
-
-        /**
          * A string to reference this user. This can be a customer ID, a session ID, or similar, and can be used to reconcile this verification with your internal systems.
          */
         client_reference_id?: string;
@@ -30,9 +25,24 @@ declare module 'stripe' {
         options?: VerificationSessionCreateParams.Options;
 
         /**
+         * Details provided about the user being verified. These details may be shown to the user.
+         */
+        provided_details?: VerificationSessionCreateParams.ProvidedDetails;
+
+        /**
          * The URL that the user will be redirected to upon completing the verification flow.
          */
         return_url?: string;
+
+        /**
+         * The type of [verification check](https://stripe.com/docs/identity/verification-checks) to be performed. You must provide a `type` if not passing `verification_flow`.
+         */
+        type?: VerificationSessionCreateParams.Type;
+
+        /**
+         * The ID of a Verification Flow from the Dashboard. See https://docs.stripe.com/identity/verification-flows.
+         */
+        verification_flow?: string;
       }
 
       namespace VerificationSessionCreateParams {
@@ -71,6 +81,18 @@ declare module 'stripe' {
           }
         }
 
+        interface ProvidedDetails {
+          /**
+           * Email of user being verified
+           */
+          email?: string;
+
+          /**
+           * Phone number of user being verified
+           */
+          phone?: string;
+        }
+
         type Type = 'document' | 'id_number';
       }
 
@@ -96,6 +118,11 @@ declare module 'stripe' {
          * A set of options for the session's verification checks.
          */
         options?: VerificationSessionUpdateParams.Options;
+
+        /**
+         * Details provided about the user being verified. These details may be shown to the user.
+         */
+        provided_details?: VerificationSessionUpdateParams.ProvidedDetails;
 
         /**
          * The type of [verification check](https://stripe.com/docs/identity/verification-checks) to be performed.
@@ -137,6 +164,18 @@ declare module 'stripe' {
           namespace Document {
             type AllowedType = 'driving_license' | 'id_card' | 'passport';
           }
+        }
+
+        interface ProvidedDetails {
+          /**
+           * Email of user being verified
+           */
+          email?: string;
+
+          /**
+           * Phone number of user being verified
+           */
+          phone?: string;
         }
 
         type Type = 'document' | 'id_number';
@@ -193,7 +232,10 @@ declare module 'stripe' {
          * Related guide: [Verify your users' identity documents](https://stripe.com/docs/identity/verify-identity-documents)
          */
         create(
-          params: VerificationSessionCreateParams,
+          params?: VerificationSessionCreateParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Identity.VerificationSession>>;
+        create(
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Identity.VerificationSession>>;
 

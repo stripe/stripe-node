@@ -45,7 +45,7 @@ declare module 'stripe' {
         /**
          * A list of TransactionEntries that are part of this Transaction. This cannot be expanded in any list endpoints.
          */
-        entries: ApiList<Stripe.Treasury.TransactionEntry> | null;
+        entries?: ApiList<Stripe.Treasury.TransactionEntry> | null;
 
         /**
          * The FinancialAccount associated with this object.
@@ -60,7 +60,7 @@ declare module 'stripe' {
         /**
          * Details of the flow that created the Transaction.
          */
-        flow_details: Transaction.FlowDetails | null;
+        flow_details?: Transaction.FlowDetails | null;
 
         /**
          * Type of the flow that created the Transaction.

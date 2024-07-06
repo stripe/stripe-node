@@ -30,6 +30,11 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
+         * Details about the address from which the goods are being shipped.
+         */
+        ship_from_details?: CalculationCreateParams.ShipFromDetails;
+
+        /**
          * Shipping cost details to be used for the calculation.
          */
         shipping_cost?: CalculationCreateParams.ShippingCost;
@@ -110,7 +115,7 @@ declare module 'stripe' {
 
           interface TaxId {
             /**
-             * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `no_voec`, `nz_gst`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
+             * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bh_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_uid`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `kz_bin`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
              */
             type: TaxId.Type;
 
@@ -128,6 +133,7 @@ declare module 'stripe' {
               | 'au_abn'
               | 'au_arn'
               | 'bg_uic'
+              | 'bh_vat'
               | 'bo_tin'
               | 'br_cnpj'
               | 'br_cpf'
@@ -137,11 +143,13 @@ declare module 'stripe' {
               | 'ca_pst_mb'
               | 'ca_pst_sk'
               | 'ca_qst'
+              | 'ch_uid'
               | 'ch_vat'
               | 'cl_tin'
               | 'cn_tin'
               | 'co_nit'
               | 'cr_tin'
+              | 'de_stn'
               | 'do_rcn'
               | 'ec_ruc'
               | 'eg_tin'
@@ -161,14 +169,17 @@ declare module 'stripe' {
               | 'jp_trn'
               | 'ke_pin'
               | 'kr_brn'
+              | 'kz_bin'
               | 'li_uid'
               | 'mx_rfc'
               | 'my_frp'
               | 'my_itn'
               | 'my_sst'
+              | 'ng_tin'
               | 'no_vat'
               | 'no_voec'
               | 'nz_gst'
+              | 'om_vat'
               | 'pe_ruc'
               | 'ph_tin'
               | 'ro_tin'
@@ -194,7 +205,10 @@ declare module 'stripe' {
 
         interface LineItem {
           /**
-           * A positive integer in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) representing the line item's total price. If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes are calculated on top of this amount.
+           * A positive integer representing the line item's total price in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency).
+           * The minimum amount is $0.0 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts).
+           * The amount value supports up to twelve digits (e.g., a value of 999999999999 for a USD charge of $9,999,999,999.99).
+           * If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes are calculated on top of this amount.
            */
           amount: number;
 
@@ -226,6 +240,47 @@ declare module 'stripe' {
 
         namespace LineItem {
           type TaxBehavior = 'exclusive' | 'inclusive';
+        }
+
+        interface ShipFromDetails {
+          /**
+           * The address from which the goods are being shipped from.
+           */
+          address: ShipFromDetails.Address;
+        }
+
+        namespace ShipFromDetails {
+          interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: Stripe.Emptyable<string>;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: Stripe.Emptyable<string>;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: Stripe.Emptyable<string>;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: Stripe.Emptyable<string>;
+
+            /**
+             * State/province as an [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) subdivision code, without country prefix. Example: "NY" or "TX".
+             */
+            state?: Stripe.Emptyable<string>;
+          }
         }
 
         interface ShippingCost {
@@ -264,7 +319,7 @@ declare module 'stripe' {
 
       class CalculationsResource {
         /**
-         * Calculates tax based on input and returns a Tax Calculation object.
+         * Calculates tax based on the input and returns a Tax Calculation object.
          */
         create(
           params: CalculationCreateParams,
@@ -272,7 +327,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Tax.Calculation>>;
 
         /**
-         * Retrieves the line items of a persisted tax calculation as a collection.
+         * Retrieves the line items of a tax calculation as a collection, if the calculation hasn't expired.
          */
         listLineItems(
           id: string,

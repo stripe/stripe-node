@@ -107,6 +107,11 @@ declare module 'stripe' {
         status_transitions: OutboundPayment.StatusTransitions;
 
         /**
+         * Details about network-specific tracking information if available.
+         */
+        tracking_details: OutboundPayment.TrackingDetails | null;
+
+        /**
          * The Transaction associated with this object.
          */
         transaction: string | Stripe.Treasury.Transaction;
@@ -180,6 +185,11 @@ declare module 'stripe' {
              * Last four digits of the bank account number.
              */
             last4: string | null;
+
+            /**
+             * ID of the mandate used to make this payment.
+             */
+            mandate?: string | Stripe.Mandate;
 
             /**
              * The network rails used. See the [docs](https://stripe.com/docs/treasury/money-movement/timelines) to learn more about money movement timelines for each network type.
@@ -266,6 +276,40 @@ declare module 'stripe' {
            * Timestamp describing when an OutboundPayment changed status to `returned`.
            */
           returned_at: number | null;
+        }
+
+        interface TrackingDetails {
+          ach?: TrackingDetails.Ach;
+
+          /**
+           * The US bank account network used to send funds.
+           */
+          type: TrackingDetails.Type;
+
+          us_domestic_wire?: TrackingDetails.UsDomesticWire;
+        }
+
+        namespace TrackingDetails {
+          interface Ach {
+            /**
+             * ACH trace ID of the OutboundPayment for payments sent over the `ach` network.
+             */
+            trace_id: string;
+          }
+
+          type Type = 'ach' | 'us_domestic_wire';
+
+          interface UsDomesticWire {
+            /**
+             * IMAD of the OutboundPayment for payments sent over the `us_domestic_wire` network.
+             */
+            imad: string;
+
+            /**
+             * OMAD of the OutboundPayment for payments sent over the `us_domestic_wire` network.
+             */
+            omad: string | null;
+          }
         }
       }
     }

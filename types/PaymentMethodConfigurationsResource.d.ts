@@ -24,6 +24,11 @@ declare module 'stripe' {
       alipay?: PaymentMethodConfigurationCreateParams.Alipay;
 
       /**
+       * Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
+       */
+      amazon_pay?: PaymentMethodConfigurationCreateParams.AmazonPay;
+
+      /**
        * Stripe users can accept [Apple Pay](https://stripe.com/payments/apple-pay) in iOS applications in iOS 9 and later, and on the web in Safari starting with iOS 10 or macOS Sierra. There are no additional fees to process Apple Pay payments, and the [pricing](https://stripe.com/pricing) is the same as other card transactions. Check this [page](https://stripe.com/docs/apple-pay) for more details.
        */
       apple_pay?: PaymentMethodConfigurationCreateParams.ApplePay;
@@ -134,6 +139,16 @@ declare module 'stripe' {
       link?: PaymentMethodConfigurationCreateParams.Link;
 
       /**
+       * MobilePay is a [single-use](https://stripe.com/docs/payments/payment-methods#usage) card wallet payment method used in Denmark and Finland. It allows customers to [authenticate and approve](https://stripe.com/docs/payments/payment-methods#customer-actions) payments using the MobilePay app. Check this [page](https://stripe.com/docs/payments/mobilepay) for more details.
+       */
+      mobilepay?: PaymentMethodConfigurationCreateParams.Mobilepay;
+
+      /**
+       * Stripe users in Europe and the United States can accept Multibanco payments from customers in Portugal using [Sources](https://stripe.com/docs/sources)—a single integration path for creating payments using any supported method.
+       */
+      multibanco?: PaymentMethodConfigurationCreateParams.Multibanco;
+
+      /**
        * Configuration name.
        */
       name?: string;
@@ -184,6 +199,11 @@ declare module 'stripe' {
       sofort?: PaymentMethodConfigurationCreateParams.Sofort;
 
       /**
+       * Swish is a [real-time](https://stripe.com/docs/payments/real-time) payment method popular in Sweden. It allows customers to [authenticate and approve](https://stripe.com/docs/payments/payment-methods#customer-actions) payments using the Swish mobile app and the Swedish BankID mobile app. Check this [page](https://stripe.com/docs/payments/swish) for more details.
+       */
+      swish?: PaymentMethodConfigurationCreateParams.Swish;
+
+      /**
        * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-debit) for more details.
        */
       us_bank_account?: PaymentMethodConfigurationCreateParams.UsBankAccount;
@@ -192,6 +212,11 @@ declare module 'stripe' {
        * WeChat, owned by Tencent, is China's leading mobile app with over 1 billion monthly active users. Chinese consumers can use WeChat Pay to pay for goods and services inside of businesses' apps and websites. WeChat Pay users buy most frequently in gaming, e-commerce, travel, online education, and food/nutrition. Check this [page](https://stripe.com/docs/payments/wechat-pay) for more details.
        */
       wechat_pay?: PaymentMethodConfigurationCreateParams.WechatPay;
+
+      /**
+       * Zip gives your customers a way to split purchases over a series of payments. Check this [page](https://stripe.com/docs/payments/zip) for more details like country availability.
+       */
+      zip?: PaymentMethodConfigurationCreateParams.Zip;
     }
 
     namespace PaymentMethodConfigurationCreateParams {
@@ -263,6 +288,26 @@ declare module 'stripe' {
       }
 
       namespace Alipay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface AmazonPay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: AmazonPay.DisplayPreference;
+      }
+
+      namespace AmazonPay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -695,6 +740,46 @@ declare module 'stripe' {
         }
       }
 
+      interface Mobilepay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Mobilepay.DisplayPreference;
+      }
+
+      namespace Mobilepay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Multibanco {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Multibanco.DisplayPreference;
+      }
+
+      namespace Multibanco {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Oxxo {
         /**
          * Whether or not the payment method should be displayed.
@@ -855,6 +940,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Swish {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Swish.DisplayPreference;
+      }
+
+      namespace Swish {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface UsBankAccount {
         /**
          * Whether or not the payment method should be displayed.
@@ -883,6 +988,26 @@ declare module 'stripe' {
       }
 
       namespace WechatPay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Zip {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Zip.DisplayPreference;
+      }
+
+      namespace Zip {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -928,6 +1053,11 @@ declare module 'stripe' {
        * Alipay is a digital wallet in China that has more than a billion active users worldwide. Alipay users can pay on the web or on a mobile device using login credentials or their Alipay app. Alipay has a low dispute rate and reduces fraud by authenticating payments using the customer's login credentials. Check this [page](https://stripe.com/docs/payments/alipay) for more details.
        */
       alipay?: PaymentMethodConfigurationUpdateParams.Alipay;
+
+      /**
+       * Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
+       */
+      amazon_pay?: PaymentMethodConfigurationUpdateParams.AmazonPay;
 
       /**
        * Stripe users can accept [Apple Pay](https://stripe.com/payments/apple-pay) in iOS applications in iOS 9 and later, and on the web in Safari starting with iOS 10 or macOS Sierra. There are no additional fees to process Apple Pay payments, and the [pricing](https://stripe.com/pricing) is the same as other card transactions. Check this [page](https://stripe.com/docs/apple-pay) for more details.
@@ -1040,6 +1170,16 @@ declare module 'stripe' {
       link?: PaymentMethodConfigurationUpdateParams.Link;
 
       /**
+       * MobilePay is a [single-use](https://stripe.com/docs/payments/payment-methods#usage) card wallet payment method used in Denmark and Finland. It allows customers to [authenticate and approve](https://stripe.com/docs/payments/payment-methods#customer-actions) payments using the MobilePay app. Check this [page](https://stripe.com/docs/payments/mobilepay) for more details.
+       */
+      mobilepay?: PaymentMethodConfigurationUpdateParams.Mobilepay;
+
+      /**
+       * Stripe users in Europe and the United States can accept Multibanco payments from customers in Portugal using [Sources](https://stripe.com/docs/sources)—a single integration path for creating payments using any supported method.
+       */
+      multibanco?: PaymentMethodConfigurationUpdateParams.Multibanco;
+
+      /**
        * Configuration name.
        */
       name?: string;
@@ -1085,6 +1225,11 @@ declare module 'stripe' {
       sofort?: PaymentMethodConfigurationUpdateParams.Sofort;
 
       /**
+       * Swish is a [real-time](https://stripe.com/docs/payments/real-time) payment method popular in Sweden. It allows customers to [authenticate and approve](https://stripe.com/docs/payments/payment-methods#customer-actions) payments using the Swish mobile app and the Swedish BankID mobile app. Check this [page](https://stripe.com/docs/payments/swish) for more details.
+       */
+      swish?: PaymentMethodConfigurationUpdateParams.Swish;
+
+      /**
        * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-debit) for more details.
        */
       us_bank_account?: PaymentMethodConfigurationUpdateParams.UsBankAccount;
@@ -1093,6 +1238,11 @@ declare module 'stripe' {
        * WeChat, owned by Tencent, is China's leading mobile app with over 1 billion monthly active users. Chinese consumers can use WeChat Pay to pay for goods and services inside of businesses' apps and websites. WeChat Pay users buy most frequently in gaming, e-commerce, travel, online education, and food/nutrition. Check this [page](https://stripe.com/docs/payments/wechat-pay) for more details.
        */
       wechat_pay?: PaymentMethodConfigurationUpdateParams.WechatPay;
+
+      /**
+       * Zip gives your customers a way to split purchases over a series of payments. Check this [page](https://stripe.com/docs/payments/zip) for more details like country availability.
+       */
+      zip?: PaymentMethodConfigurationUpdateParams.Zip;
     }
 
     namespace PaymentMethodConfigurationUpdateParams {
@@ -1164,6 +1314,26 @@ declare module 'stripe' {
       }
 
       namespace Alipay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface AmazonPay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: AmazonPay.DisplayPreference;
+      }
+
+      namespace AmazonPay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -1596,6 +1766,46 @@ declare module 'stripe' {
         }
       }
 
+      interface Mobilepay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Mobilepay.DisplayPreference;
+      }
+
+      namespace Mobilepay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Multibanco {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Multibanco.DisplayPreference;
+      }
+
+      namespace Multibanco {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Oxxo {
         /**
          * Whether or not the payment method should be displayed.
@@ -1756,6 +1966,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Swish {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Swish.DisplayPreference;
+      }
+
+      namespace Swish {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface UsBankAccount {
         /**
          * Whether or not the payment method should be displayed.
@@ -1795,9 +2025,29 @@ declare module 'stripe' {
           type Preference = 'none' | 'off' | 'on';
         }
       }
+
+      interface Zip {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Zip.DisplayPreference;
+      }
+
+      namespace Zip {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
     }
 
-    interface PaymentMethodConfigurationListParams {
+    interface PaymentMethodConfigurationListParams extends PaginationParams {
       /**
        * The Connect application to filter by.
        */

@@ -28,6 +28,13 @@ declare module 'stripe' {
 
       alipay?: PaymentMethod.Alipay;
 
+      /**
+       * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow. The field defaults to “unspecified”.
+       */
+      allow_redisplay?: PaymentMethod.AllowRedisplay;
+
+      amazon_pay?: PaymentMethod.AmazonPay;
+
       au_becs_debit?: PaymentMethod.AuBecsDebit;
 
       bacs_debit?: PaymentMethod.BacsDebit;
@@ -88,6 +95,8 @@ declare module 'stripe' {
 
       mobilepay?: PaymentMethod.Mobilepay;
 
+      multibanco?: PaymentMethod.Multibanco;
+
       oxxo?: PaymentMethod.Oxxo;
 
       p24?: PaymentMethod.P24;
@@ -112,6 +121,8 @@ declare module 'stripe' {
       sofort?: PaymentMethod.Sofort;
 
       swish?: PaymentMethod.Swish;
+
+      twint?: PaymentMethod.Twint;
 
       /**
        * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
@@ -158,6 +169,10 @@ declare module 'stripe' {
       interface AfterpayClearpay {}
 
       interface Alipay {}
+
+      type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+      interface AmazonPay {}
 
       interface AuBecsDebit {
         /**
@@ -275,6 +290,11 @@ declare module 'stripe' {
         funding: string;
 
         /**
+         * Details of the original PaymentMethod that created this object.
+         */
+        generated_from: Card.GeneratedFrom | null;
+
+        /**
          * Issuer identification number of the card. (For internal use only and not typically available in standard API requests.)
          */
         iin?: string | null;
@@ -321,6 +341,221 @@ declare module 'stripe' {
            * If a CVC was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
            */
           cvc_check: string | null;
+        }
+
+        interface GeneratedFrom {
+          /**
+           * The charge that created this object.
+           */
+          charge: string | null;
+
+          /**
+           * Transaction-specific details of the payment method used in the payment.
+           */
+          payment_method_details: GeneratedFrom.PaymentMethodDetails | null;
+
+          /**
+           * The ID of the SetupAttempt that generated this PaymentMethod, if any.
+           */
+          setup_attempt: string | Stripe.SetupAttempt | null;
+        }
+
+        namespace GeneratedFrom {
+          interface PaymentMethodDetails {
+            card_present?: PaymentMethodDetails.CardPresent;
+
+            /**
+             * The type of payment method transaction-specific details from the transaction that generated this `card` payment method. Always `card_present`.
+             */
+            type: string;
+          }
+
+          namespace PaymentMethodDetails {
+            interface CardPresent {
+              /**
+               * The authorized amount
+               */
+              amount_authorized: number | null;
+
+              /**
+               * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+               */
+              brand: string | null;
+
+              /**
+               * When using manual capture, a future timestamp after which the charge will be automatically refunded if uncaptured.
+               */
+              capture_before?: number;
+
+              /**
+               * The cardholder name as read from the card, in [ISO 7813](https://en.wikipedia.org/wiki/ISO/IEC_7813) format. May include alphanumeric characters, special characters and first/last name separator (`/`). In some cases, the cardholder name may not be available depending on how the issuer has configured the card. Cardholder name is typically not available on swipe or contactless payments, such as those made with Apple Pay and Google Pay.
+               */
+              cardholder_name: string | null;
+
+              /**
+               * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+               */
+              country: string | null;
+
+              /**
+               * A high-level description of the type of cards issued in this range. (For internal use only and not typically available in standard API requests.)
+               */
+              description?: string | null;
+
+              /**
+               * Authorization response cryptogram.
+               */
+              emv_auth_data: string | null;
+
+              /**
+               * Two-digit number representing the card's expiration month.
+               */
+              exp_month: number;
+
+              /**
+               * Four-digit number representing the card's expiration year.
+               */
+              exp_year: number;
+
+              /**
+               * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
+               *
+               * *As of May 1, 2021, card fingerprint in India for Connect changed to allow two fingerprints for the same card---one for India and one for the rest of the world.*
+               */
+              fingerprint: string | null;
+
+              /**
+               * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+               */
+              funding: string | null;
+
+              /**
+               * ID of a card PaymentMethod generated from the card_present PaymentMethod that may be attached to a Customer for future transactions. Only present if it was possible to generate a card PaymentMethod.
+               */
+              generated_card: string | null;
+
+              /**
+               * Issuer identification number of the card. (For internal use only and not typically available in standard API requests.)
+               */
+              iin?: string | null;
+
+              /**
+               * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
+               */
+              incremental_authorization_supported: boolean;
+
+              /**
+               * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
+               */
+              issuer?: string | null;
+
+              /**
+               * The last four digits of the card.
+               */
+              last4: string | null;
+
+              /**
+               * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+               */
+              network: string | null;
+
+              /**
+               * Details about payments collected offline.
+               */
+              offline: CardPresent.Offline | null;
+
+              /**
+               * Defines whether the authorized amount can be over-captured or not
+               */
+              overcapture_supported: boolean;
+
+              /**
+               * EMV tag 5F2D. Preferred languages specified by the integrated circuit chip.
+               */
+              preferred_locales: Array<string> | null;
+
+              /**
+               * How card details were read in this transaction.
+               */
+              read_method: CardPresent.ReadMethod | null;
+
+              /**
+               * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
+               */
+              receipt: CardPresent.Receipt | null;
+            }
+
+            namespace CardPresent {
+              interface Offline {
+                /**
+                 * Time at which the payment was collected while offline
+                 */
+                stored_at: number | null;
+              }
+
+              type ReadMethod =
+                | 'contact_emv'
+                | 'contactless_emv'
+                | 'contactless_magstripe_mode'
+                | 'magnetic_stripe_fallback'
+                | 'magnetic_stripe_track2';
+
+              interface Receipt {
+                /**
+                 * The type of account being debited or credited
+                 */
+                account_type?: Receipt.AccountType;
+
+                /**
+                 * EMV tag 9F26, cryptogram generated by the integrated circuit chip.
+                 */
+                application_cryptogram: string | null;
+
+                /**
+                 * Mnenomic of the Application Identifier.
+                 */
+                application_preferred_name: string | null;
+
+                /**
+                 * Identifier for this transaction.
+                 */
+                authorization_code: string | null;
+
+                /**
+                 * EMV tag 8A. A code returned by the card issuer.
+                 */
+                authorization_response_code: string | null;
+
+                /**
+                 * Describes the method used by the cardholder to verify ownership of the card. One of the following: `approval`, `failure`, `none`, `offline_pin`, `offline_pin_and_signature`, `online_pin`, or `signature`.
+                 */
+                cardholder_verification_method: string | null;
+
+                /**
+                 * EMV tag 84. Similar to the application identifier stored on the integrated circuit chip.
+                 */
+                dedicated_file_name: string | null;
+
+                /**
+                 * The outcome of a series of EMV functions performed by the card reader.
+                 */
+                terminal_verification_results: string | null;
+
+                /**
+                 * An indication of various EMV functions performed during the transaction.
+                 */
+                transaction_status_information: string | null;
+              }
+
+              namespace Receipt {
+                type AccountType =
+                  | 'checking'
+                  | 'credit'
+                  | 'prepaid'
+                  | 'unknown';
+              }
+            }
+          }
         }
 
         interface Networks {
@@ -496,6 +731,11 @@ declare module 'stripe' {
          * Contains information about card networks that can be used to process the payment.
          */
         networks: CardPresent.Networks | null;
+
+        /**
+         * EMV tag 5F2D. Preferred languages specified by the integrated circuit chip.
+         */
+        preferred_locales: Array<string> | null;
 
         /**
          * How card details were read in this transaction.
@@ -771,7 +1011,7 @@ declare module 'stripe' {
         /**
          * The customer's date of birth, if provided.
          */
-        dob: Klarna.Dob | null;
+        dob?: Klarna.Dob | null;
       }
 
       namespace Klarna {
@@ -803,11 +1043,14 @@ declare module 'stripe' {
 
         /**
          * [Deprecated] This is a legacy parameter that no longer has any function.
+         * @deprecated
          */
         persistent_token?: string;
       }
 
       interface Mobilepay {}
+
+      interface Multibanco {}
 
       interface Oxxo {}
 
@@ -931,11 +1174,14 @@ declare module 'stripe' {
 
       interface Swish {}
 
+      interface Twint {}
+
       type Type =
         | 'acss_debit'
         | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
+        | 'amazon_pay'
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
@@ -955,6 +1201,7 @@ declare module 'stripe' {
         | 'konbini'
         | 'link'
         | 'mobilepay'
+        | 'multibanco'
         | 'oxxo'
         | 'p24'
         | 'paynow'
@@ -965,6 +1212,7 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'sofort'
         | 'swish'
+        | 'twint'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';

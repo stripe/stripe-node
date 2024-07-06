@@ -95,8 +95,6 @@ declare module 'stripe' {
 
           subscription_cancel: Features.SubscriptionCancel;
 
-          subscription_pause: Features.SubscriptionPause;
-
           subscription_update: Features.SubscriptionUpdate;
         }
 
@@ -189,13 +187,6 @@ declare module 'stripe' {
               | 'none';
           }
 
-          interface SubscriptionPause {
-            /**
-             * Whether the feature is enabled.
-             */
-            enabled: boolean;
-          }
-
           interface SubscriptionUpdate {
             /**
              * The types of subscription updates that are supported for items listed in the `products` attribute. When empty, subscriptions are not updateable.
@@ -212,7 +203,7 @@ declare module 'stripe' {
             /**
              * The list of up to 10 products that support subscription updates.
              */
-            products: Array<SubscriptionUpdate.Product> | null;
+            products?: Array<SubscriptionUpdate.Product> | null;
 
             /**
              * Determines how to handle prorations resulting from subscription updates. Valid values are `none`, `create_prorations`, and `always_invoice`. Defaults to a value of `none` if you don't set it during creation.

@@ -29,7 +29,7 @@ declare module 'stripe' {
       discountable?: boolean;
 
       /**
-       * The coupons to redeem into discounts for the invoice item or invoice line item.
+       * The coupons and promotion codes to redeem into discounts for the invoice item or invoice line item.
        */
       discounts?: Stripe.Emptyable<Array<InvoiceItemCreateParams.Discount>>;
 
@@ -54,12 +54,12 @@ declare module 'stripe' {
       period?: InvoiceItemCreateParams.Period;
 
       /**
-       * The ID of the price object.
+       * The ID of the price object. One of `price` or `price_data` is required.
        */
       price?: string;
 
       /**
-       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
        */
       price_data?: InvoiceItemCreateParams.PriceData;
 
@@ -69,7 +69,7 @@ declare module 'stripe' {
       quantity?: number;
 
       /**
-       * The ID of a subscription to add this invoice item to. When left blank, the invoice item will be be added to the next upcoming scheduled invoice. When set, scheduled invoices for subscriptions other than the specified subscription will ignore the invoice item. Use this when you want to express that an invoice item has been accrued within the context of a particular subscription.
+       * The ID of a subscription to add this invoice item to. When left blank, the invoice item is added to the next upcoming scheduled invoice. When set, scheduled invoices for subscriptions other than the specified subscription will ignore the invoice item. Use this when you want to express that an invoice item has been accrued within the context of a particular subscription.
        */
       subscription?: string;
 
@@ -110,6 +110,11 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       interface Period {
@@ -182,7 +187,7 @@ declare module 'stripe' {
       discountable?: boolean;
 
       /**
-       * The coupons & existing discounts which apply to the invoice item or invoice line item. Item discounts are applied before invoice discounts. Pass an empty string to remove previously-defined discounts.
+       * The coupons, promotion codes & existing discounts which apply to the invoice item or invoice line item. Item discounts are applied before invoice discounts. Pass an empty string to remove previously-defined discounts.
        */
       discounts?: Stripe.Emptyable<Array<InvoiceItemUpdateParams.Discount>>;
 
@@ -202,12 +207,12 @@ declare module 'stripe' {
       period?: InvoiceItemUpdateParams.Period;
 
       /**
-       * The ID of the price object.
+       * The ID of the price object. One of `price` or `price_data` is required.
        */
       price?: string;
 
       /**
-       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
        */
       price_data?: InvoiceItemUpdateParams.PriceData;
 
@@ -253,6 +258,11 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       interface Period {

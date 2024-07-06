@@ -25,10 +25,9 @@ declare module 'stripe' {
     /**
      * This is an object representing a person associated with a Stripe account.
      *
-     * A platform cannot access a Standard or Express account's persons after the account starts onboarding, such as after generating an account link for the account.
-     * See the [Standard onboarding](https://stripe.com/docs/connect/standard-accounts) or [Express onboarding documentation](https://stripe.com/docs/connect/express-accounts) for information about platform prefilling and account onboarding steps.
+     * A platform cannot access a person for an account where [account.controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`, which includes Standard and Express accounts, after creating an Account Link or Account Session to start Connect onboarding.
      *
-     * Related guide: [Handling identity verification with the API](https://stripe.com/docs/connect/handling-api-verification#person-information)
+     * See the [Standard onboarding](https://stripe.com/connect/standard-accounts) or [Express onboarding](https://stripe.com/connect/express-accounts) documentation for information about prefilling information and account onboarding steps. Learn more about [handling identity verification with the API](https://stripe.com/connect/handling-api-verification#person-information).
      */
     interface Person {
       /**
@@ -316,7 +315,7 @@ declare module 'stripe' {
         past_due: Array<string>;
 
         /**
-         * Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due` or `currently_due`.
+         * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due` or `currently_due`. Fields might appear in `eventually_due` or `currently_due` and in `pending_verification` if verification fails but another verification is still pending.
          */
         pending_verification: Array<string>;
       }
@@ -433,13 +432,15 @@ declare module 'stripe' {
             | 'verification_failed_keyed_match'
             | 'verification_failed_name_match'
             | 'verification_failed_other'
+            | 'verification_failed_representative_authority'
             | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
-            | 'verification_requires_additional_memorandum_of_associations';
+            | 'verification_requires_additional_memorandum_of_associations'
+            | 'verification_requires_additional_proof_of_registration';
         }
       }
 
@@ -509,7 +510,7 @@ declare module 'stripe' {
         past_due: Array<string>;
 
         /**
-         * Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`.
+         * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`. Fields might appear in `eventually_due`, `currently_due`, or `past_due` and in `pending_verification` if verification fails but another verification is still pending.
          */
         pending_verification: Array<string>;
       }
@@ -626,13 +627,15 @@ declare module 'stripe' {
             | 'verification_failed_keyed_match'
             | 'verification_failed_name_match'
             | 'verification_failed_other'
+            | 'verification_failed_representative_authority'
             | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
-            | 'verification_requires_additional_memorandum_of_associations';
+            | 'verification_requires_additional_memorandum_of_associations'
+            | 'verification_requires_additional_proof_of_registration';
         }
       }
 

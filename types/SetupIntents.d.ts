@@ -9,13 +9,13 @@ declare module 'stripe' {
      *
      * Create a SetupIntent when you're ready to collect your customer's payment credentials.
      * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
-     * The SetupIntent transitions through multiple [statuses](https://stripe.com/docs/payments/intents#intent-statuses) as it guides
+     * The SetupIntent transitions through multiple [statuses](https://docs.stripe.com/payments/intents#intent-statuses) as it guides
      * you through the setup process.
      *
      * Successful SetupIntents result in payment credentials that are optimized for future payments.
      * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
-     * [Strong Customer Authentication](https://stripe.com/docs/strong-customer-authentication) during payment method collection
-     * to streamline later [off-session payments](https://stripe.com/docs/payments/setup-intents).
+     * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
+     * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
      * If you use the SetupIntent with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer),
      * it automatically attaches the resulting payment method to that Customer after successful setup.
      * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
@@ -23,7 +23,7 @@ declare module 'stripe' {
      *
      * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
      *
-     * Related guide: [Setup Intents API](https://stripe.com/docs/payments/setup-intents)
+     * Related guide: [Setup Intents API](https://docs.stripe.com/payments/setup-intents)
      */
     interface SetupIntent {
       /**
@@ -260,13 +260,13 @@ declare module 'stripe' {
          *
          * Create a SetupIntent when you're ready to collect your customer's payment credentials.
          * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
-         * The SetupIntent transitions through multiple [statuses](https://stripe.com/docs/payments/intents#intent-statuses) as it guides
+         * The SetupIntent transitions through multiple [statuses](https://docs.stripe.com/payments/intents#intent-statuses) as it guides
          * you through the setup process.
          *
          * Successful SetupIntents result in payment credentials that are optimized for future payments.
          * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
-         * [Strong Customer Authentication](https://stripe.com/docs/strong-customer-authentication) during payment method collection
-         * to streamline later [off-session payments](https://stripe.com/docs/payments/setup-intents).
+         * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
+         * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
          * If you use the SetupIntent with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer),
          * it automatically attaches the resulting payment method to that Customer after successful setup.
          * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
@@ -274,7 +274,7 @@ declare module 'stripe' {
          *
          * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
          *
-         * Related guide: [Setup Intents API](https://stripe.com/docs/payments/setup-intents)
+         * Related guide: [Setup Intents API](https://docs.stripe.com/payments/setup-intents)
          */
         setup_intent?: Stripe.SetupIntent;
 
@@ -311,6 +311,10 @@ declare module 'stripe' {
           | 'bank_account_unverified'
           | 'bank_account_verification_failed'
           | 'billing_invalid_mandate'
+          | 'billing_policy_remote_function_response_invalid'
+          | 'billing_policy_remote_function_timeout'
+          | 'billing_policy_remote_function_unexpected_status_code'
+          | 'billing_policy_remote_function_unreachable'
           | 'bitcoin_upgrade_required'
           | 'capture_charge_authorization_expired'
           | 'capture_unauthorized_payment'
@@ -384,6 +388,7 @@ declare module 'stripe' {
           | 'parameters_exclusive'
           | 'payment_intent_action_required'
           | 'payment_intent_authentication_failure'
+          | 'payment_intent_fx_quote_invalid'
           | 'payment_intent_incompatible_payment_method'
           | 'payment_intent_invalid_parameter'
           | 'payment_intent_konbini_rejected_confirmation_number'
@@ -435,6 +440,7 @@ declare module 'stripe' {
           | 'setup_intent_mandate_invalid'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
+          | 'shipping_address_invalid'
           | 'shipping_calculation_failed'
           | 'sku_inactive'
           | 'state_unsupported'
@@ -445,6 +451,7 @@ declare module 'stripe' {
           | 'terminal_location_country_unsupported'
           | 'terminal_reader_busy'
           | 'terminal_reader_hardware_fault'
+          | 'terminal_reader_invalid_location_for_payment'
           | 'terminal_reader_offline'
           | 'terminal_reader_timeout'
           | 'testmode_charges_only'
@@ -566,7 +573,11 @@ declare module 'stripe' {
       interface PaymentMethodOptions {
         acss_debit?: PaymentMethodOptions.AcssDebit;
 
+        amazon_pay?: PaymentMethodOptions.AmazonPay;
+
         card?: PaymentMethodOptions.Card;
+
+        card_present?: PaymentMethodOptions.CardPresent;
 
         link?: PaymentMethodOptions.Link;
 
@@ -632,6 +643,8 @@ declare module 'stripe' {
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
+
+        interface AmazonPay {}
 
         interface Card {
           /**
@@ -722,16 +735,15 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
-          type RequestThreeDSecure =
-            | 'any'
-            | 'automatic'
-            | 'challenge'
-            | 'challenge_only';
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
         }
+
+        interface CardPresent {}
 
         interface Link {
           /**
            * [Deprecated] This is a legacy parameter that no longer has any function.
+           * @deprecated
            */
           persistent_token: string | null;
         }
@@ -764,6 +776,8 @@ declare module 'stripe' {
 
         namespace UsBankAccount {
           interface FinancialConnections {
+            filters?: FinancialConnections.Filters;
+
             /**
              * The list of permissions to request. The `payment_method` permission must be included.
              */
@@ -781,13 +795,24 @@ declare module 'stripe' {
           }
 
           namespace FinancialConnections {
+            interface Filters {
+              /**
+               * The account subcategories to use to filter for possible accounts to link. Valid subcategories are `checking` and `savings`.
+               */
+              account_subcategories?: Array<Filters.AccountSubcategory>;
+            }
+
+            namespace Filters {
+              type AccountSubcategory = 'checking' | 'savings';
+            }
+
             type Permission =
               | 'balances'
               | 'ownership'
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'transactions';
+            type Prefetch = 'balances' | 'ownership' | 'transactions';
           }
 
           interface MandateOptions {

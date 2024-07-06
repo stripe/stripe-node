@@ -46,18 +46,44 @@ declare module 'stripe' {
 
     namespace AccountSession {
       interface Components {
+        account_management: Components.AccountManagement;
+
         account_onboarding: Components.AccountOnboarding;
 
+        balances: Components.Balances;
+
         documents: Components.Documents;
+
+        notification_banner: Components.NotificationBanner;
 
         payment_details: Components.PaymentDetails;
 
         payments: Components.Payments;
 
         payouts: Components.Payouts;
+
+        payouts_list: Components.PayoutsList;
       }
 
       namespace Components {
+        interface AccountManagement {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: AccountManagement.Features;
+        }
+
+        namespace AccountManagement {
+          interface Features {
+            /**
+             * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for custom accounts (or accounts where the platform is compliance owner). Otherwise, bank account collection is determined by compliance requirements.
+             */
+            external_account_collection: boolean;
+          }
+        }
+
         interface AccountOnboarding {
           /**
            * Whether the embedded component is enabled.
@@ -68,7 +94,45 @@ declare module 'stripe' {
         }
 
         namespace AccountOnboarding {
-          interface Features {}
+          interface Features {
+            /**
+             * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for custom accounts (or accounts where the platform is compliance owner). Otherwise, bank account collection is determined by compliance requirements.
+             */
+            external_account_collection: boolean;
+          }
+        }
+
+        interface Balances {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: Balances.Features;
+        }
+
+        namespace Balances {
+          interface Features {
+            /**
+             * Whether to allow payout schedule to be changed. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             */
+            edit_payout_schedule: boolean;
+
+            /**
+             * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for custom accounts (or accounts where the platform is compliance owner). Otherwise, bank account collection is determined by compliance requirements.
+             */
+            external_account_collection: boolean;
+
+            /**
+             * Whether to allow creation of instant payouts. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             */
+            instant_payouts: boolean;
+
+            /**
+             * Whether to allow creation of standard payouts. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             */
+            standard_payouts: boolean;
+          }
         }
 
         interface Documents {
@@ -82,6 +146,24 @@ declare module 'stripe' {
 
         namespace Documents {
           interface Features {}
+        }
+
+        interface NotificationBanner {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: NotificationBanner.Features;
+        }
+
+        namespace NotificationBanner {
+          interface Features {
+            /**
+             * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for custom accounts (or accounts where the platform is compliance owner). Otherwise, bank account collection is determined by compliance requirements.
+             */
+            external_account_collection: boolean;
+          }
         }
 
         interface PaymentDetails {
@@ -99,6 +181,11 @@ declare module 'stripe' {
              * Whether to allow capturing and cancelling payment intents. This is `true` by default.
              */
             capture_payments: boolean;
+
+            /**
+             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             */
+            destination_on_behalf_of_charge_management: boolean;
 
             /**
              * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
@@ -129,6 +216,11 @@ declare module 'stripe' {
             capture_payments: boolean;
 
             /**
+             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             */
+            destination_on_behalf_of_charge_management: boolean;
+
+            /**
              * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
              */
             dispute_management: boolean;
@@ -157,6 +249,11 @@ declare module 'stripe' {
             edit_payout_schedule: boolean;
 
             /**
+             * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for custom accounts (or accounts where the platform is compliance owner). Otherwise, bank account collection is determined by compliance requirements.
+             */
+            external_account_collection: boolean;
+
+            /**
              * Whether to allow creation of instant payouts. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
              */
             instant_payouts: boolean;
@@ -166,6 +263,19 @@ declare module 'stripe' {
              */
             standard_payouts: boolean;
           }
+        }
+
+        interface PayoutsList {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: PayoutsList.Features;
+        }
+
+        namespace PayoutsList {
+          interface Features {}
         }
       }
     }

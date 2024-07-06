@@ -7,9 +7,14 @@ declare module 'stripe' {
      * properties on the account like its current requirements or if the account is
      * enabled to make live charges or receive payouts.
      *
-     * For Custom accounts, the properties below are always returned. For other accounts, some properties are returned until that
-     * account has started to go through Connect Onboarding. Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions),
-     * some properties are only returned for Custom accounts. Learn about the differences [between accounts](https://stripe.com/docs/connect/accounts).
+     * For accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection)
+     * is `application`, which includes Custom accounts, the properties below are always
+     * returned.
+     *
+     * For accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection)
+     * is `stripe`, which includes Standard and Express accounts, some properties are only returned
+     * until you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions)
+     * to start Connect Onboarding. Learn about the [differences between accounts](https://stripe.com/connect/accounts).
      */
     interface Account {
       /**
@@ -28,7 +33,7 @@ declare module 'stripe' {
       business_profile?: Account.BusinessProfile | null;
 
       /**
-       * The business type. Once you create an [Account Link](https://stripe.com/docs/api/account_links) or [Account Session](https://stripe.com/docs/api/account_sessions), this property is only returned for Custom accounts.
+       * The business type. After you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions), this property is only returned for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
        */
       business_type?: Account.BusinessType | null;
 
@@ -64,7 +69,7 @@ declare module 'stripe' {
       deleted?: void;
 
       /**
-       * Whether account details have been submitted. Standard accounts cannot receive payouts before this is true.
+       * Whether account details have been submitted. Accounts with Stripe Dashboard access, which includes Standard accounts, cannot receive payouts before this is true. Accounts where this is false should be directed to [an onboarding flow](https://stripe.com/connect/onboarding) to finish submitting account details.
        */
       details_submitted: boolean;
 
@@ -83,10 +88,9 @@ declare module 'stripe' {
       /**
        * This is an object representing a person associated with a Stripe account.
        *
-       * A platform cannot access a Standard or Express account's persons after the account starts onboarding, such as after generating an account link for the account.
-       * See the [Standard onboarding](https://stripe.com/docs/connect/standard-accounts) or [Express onboarding documentation](https://stripe.com/docs/connect/express-accounts) for information about platform prefilling and account onboarding steps.
+       * A platform cannot access a person for an account where [account.controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`, which includes Standard and Express accounts, after creating an Account Link or Account Session to start Connect onboarding.
        *
-       * Related guide: [Handling identity verification with the API](https://stripe.com/docs/connect/handling-api-verification#person-information)
+       * See the [Standard onboarding](https://stripe.com/connect/standard-accounts) or [Express onboarding](https://stripe.com/connect/express-accounts) documentation for information about prefilling information and account onboarding steps. Learn more about [handling identity verification with the API](https://stripe.com/connect/handling-api-verification#person-information).
        */
       individual?: Stripe.Person;
 
@@ -110,7 +114,7 @@ declare module 'stripe' {
       tos_acceptance?: Account.TosAcceptance;
 
       /**
-       * The Stripe account type. Can be `standard`, `express`, or `custom`.
+       * The Stripe account type. Can be `standard`, `express`, `custom`, or `none`.
        */
       type: Account.Type;
     }
@@ -173,7 +177,7 @@ declare module 'stripe' {
       namespace BusinessProfile {
         interface AnnualRevenue {
           /**
-           * A non-negative integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * A non-negative integer representing the amount in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           amount: number | null;
 
@@ -190,7 +194,7 @@ declare module 'stripe' {
 
         interface MonthlyEstimatedRevenue {
           /**
-           * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           amount: number;
 
@@ -222,6 +226,11 @@ declare module 'stripe' {
          * The status of the Afterpay Clearpay capability of the account, or whether the account can directly process Afterpay Clearpay charges.
          */
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
+
+        /**
+         * The status of the AmazonPay capability of the account, or whether the account can directly process AmazonPay payments.
+         */
+        amazon_pay_payments?: Capabilities.AmazonPayPayments;
 
         /**
          * The status of the BECS Direct Debit (AU) payments capability of the account, or whether the account can directly process BECS Direct Debit (AU) charges.
@@ -284,6 +293,11 @@ declare module 'stripe' {
         fpx_payments?: Capabilities.FpxPayments;
 
         /**
+         * The status of the GB customer_balance payments (GBP currency) capability of the account, or whether the account can directly process GB customer_balance charges.
+         */
+        gb_bank_transfer_payments?: Capabilities.GbBankTransferPayments;
+
+        /**
          * The status of the giropay payments capability of the account, or whether the account can directly process giropay charges.
          */
         giropay_payments?: Capabilities.GiropayPayments;
@@ -309,6 +323,11 @@ declare module 'stripe' {
         jcb_payments?: Capabilities.JcbPayments;
 
         /**
+         * The status of the Japanese customer_balance payments (JPY currency) capability of the account, or whether the account can directly process Japanese customer_balance charges.
+         */
+        jp_bank_transfer_payments?: Capabilities.JpBankTransferPayments;
+
+        /**
          * The status of the Klarna payments capability of the account, or whether the account can directly process Klarna charges.
          */
         klarna_payments?: Capabilities.KlarnaPayments;
@@ -329,9 +348,19 @@ declare module 'stripe' {
         link_payments?: Capabilities.LinkPayments;
 
         /**
-         * The status of the MobilepPay capability of the account, or whether the account can directly process MobilePay charges.
+         * The status of the MobilePay capability of the account, or whether the account can directly process MobilePay charges.
          */
         mobilepay_payments?: Capabilities.MobilepayPayments;
+
+        /**
+         * The status of the Multibanco payments capability of the account, or whether the account can directly process Multibanco charges.
+         */
+        multibanco_payments?: Capabilities.MultibancoPayments;
+
+        /**
+         * The status of the Mexican customer_balance payments (MXN currency) capability of the account, or whether the account can directly process Mexican customer_balance charges.
+         */
+        mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
 
         /**
          * The status of the OXXO payments capability of the account, or whether the account can directly process OXXO charges.
@@ -357,6 +386,11 @@ declare module 'stripe' {
          * The status of the RevolutPay capability of the account, or whether the account can directly process RevolutPay payments.
          */
         revolut_pay_payments?: Capabilities.RevolutPayPayments;
+
+        /**
+         * The status of the SEPA customer_balance payments (EUR currency) capability of the account, or whether the account can directly process SEPA customer_balance charges.
+         */
+        sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
 
         /**
          * The status of the SEPA Direct Debits payments capability of the account, or whether the account can directly process SEPA Direct Debits charges.
@@ -394,9 +428,19 @@ declare module 'stripe' {
         treasury?: Capabilities.Treasury;
 
         /**
+         * The status of the TWINT capability of the account, or whether the account can directly process TWINT charges.
+         */
+        twint_payments?: Capabilities.TwintPayments;
+
+        /**
          * The status of the US bank account ACH payments capability of the account, or whether the account can directly process US bank account charges.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
+
+        /**
+         * The status of the US customer_balance payments (USD currency) capability of the account, or whether the account can directly process US customer_balance charges.
+         */
+        us_bank_transfer_payments?: Capabilities.UsBankTransferPayments;
 
         /**
          * The status of the Zip capability of the account, or whether the account can directly process Zip charges.
@@ -410,6 +454,8 @@ declare module 'stripe' {
         type AffirmPayments = 'active' | 'inactive' | 'pending';
 
         type AfterpayClearpayPayments = 'active' | 'inactive' | 'pending';
+
+        type AmazonPayPayments = 'active' | 'inactive' | 'pending';
 
         type AuBecsDebitPayments = 'active' | 'inactive' | 'pending';
 
@@ -435,6 +481,8 @@ declare module 'stripe' {
 
         type FpxPayments = 'active' | 'inactive' | 'pending';
 
+        type GbBankTransferPayments = 'active' | 'inactive' | 'pending';
+
         type GiropayPayments = 'active' | 'inactive' | 'pending';
 
         type GrabpayPayments = 'active' | 'inactive' | 'pending';
@@ -444,6 +492,8 @@ declare module 'stripe' {
         type IndiaInternationalPayments = 'active' | 'inactive' | 'pending';
 
         type JcbPayments = 'active' | 'inactive' | 'pending';
+
+        type JpBankTransferPayments = 'active' | 'inactive' | 'pending';
 
         type KlarnaPayments = 'active' | 'inactive' | 'pending';
 
@@ -455,6 +505,10 @@ declare module 'stripe' {
 
         type MobilepayPayments = 'active' | 'inactive' | 'pending';
 
+        type MultibancoPayments = 'active' | 'inactive' | 'pending';
+
+        type MxBankTransferPayments = 'active' | 'inactive' | 'pending';
+
         type OxxoPayments = 'active' | 'inactive' | 'pending';
 
         type P24Payments = 'active' | 'inactive' | 'pending';
@@ -464,6 +518,8 @@ declare module 'stripe' {
         type PromptpayPayments = 'active' | 'inactive' | 'pending';
 
         type RevolutPayPayments = 'active' | 'inactive' | 'pending';
+
+        type SepaBankTransferPayments = 'active' | 'inactive' | 'pending';
 
         type SepaDebitPayments = 'active' | 'inactive' | 'pending';
 
@@ -479,7 +535,11 @@ declare module 'stripe' {
 
         type Treasury = 'active' | 'inactive' | 'pending';
 
+        type TwintPayments = 'active' | 'inactive' | 'pending';
+
         type UsBankAccountAchPayments = 'active' | 'inactive' | 'pending';
+
+        type UsBankTransferPayments = 'active' | 'inactive' | 'pending';
 
         type ZipPayments = 'active' | 'inactive' | 'pending';
       }
@@ -720,10 +780,21 @@ declare module 'stripe' {
       }
 
       interface Controller {
+        fees?: Controller.Fees;
+
         /**
          * `true` if the Connect application retrieving the resource controls the account and can therefore exercise [platform controls](https://stripe.com/docs/connect/platform-controls-for-standard-accounts). Otherwise, this field is null.
          */
         is_controller?: boolean;
+
+        losses?: Controller.Losses;
+
+        /**
+         * A value indicating responsibility for collecting requirements on this account. Only returned when the Connect application retrieving the resource controls the account.
+         */
+        requirement_collection?: Controller.RequirementCollection;
+
+        stripe_dashboard?: Controller.StripeDashboard;
 
         /**
          * The controller type. Can be `application`, if a Connect application controls the account, or `account`, if the account controls itself.
@@ -732,6 +803,45 @@ declare module 'stripe' {
       }
 
       namespace Controller {
+        interface Fees {
+          /**
+           * A value indicating the responsible payer of a bundle of Stripe fees for pricing-control eligible products on this account. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior).
+           */
+          payer: Fees.Payer;
+        }
+
+        namespace Fees {
+          type Payer =
+            | 'account'
+            | 'application'
+            | 'application_custom'
+            | 'application_express';
+        }
+
+        interface Losses {
+          /**
+           * A value indicating who is liable when this account can't pay back negative balances from payments.
+           */
+          payments: Losses.Payments;
+        }
+
+        namespace Losses {
+          type Payments = 'application' | 'stripe';
+        }
+
+        type RequirementCollection = 'application' | 'stripe';
+
+        interface StripeDashboard {
+          /**
+           * A value indicating the Stripe dashboard this account has access to independent of the Connect application.
+           */
+          type: StripeDashboard.Type;
+        }
+
+        namespace StripeDashboard {
+          type Type = 'express' | 'full' | 'none';
+        }
+
         type Type = 'account' | 'application';
       }
 
@@ -772,7 +882,7 @@ declare module 'stripe' {
         past_due: Array<string> | null;
 
         /**
-         * Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due` or `currently_due`.
+         * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due` or `currently_due`. Fields might appear in `eventually_due` or `currently_due` and in `pending_verification` if verification fails but another verification is still pending.
          */
         pending_verification: Array<string> | null;
       }
@@ -889,13 +999,15 @@ declare module 'stripe' {
             | 'verification_failed_keyed_match'
             | 'verification_failed_name_match'
             | 'verification_failed_other'
+            | 'verification_failed_representative_authority'
             | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
-            | 'verification_requires_additional_memorandum_of_associations';
+            | 'verification_requires_additional_memorandum_of_associations'
+            | 'verification_requires_additional_proof_of_registration';
         }
       }
 
@@ -936,7 +1048,7 @@ declare module 'stripe' {
         past_due: Array<string> | null;
 
         /**
-         * Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`.
+         * Fields that might become required depending on the results of verification or review. It's an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`. Fields might appear in `eventually_due`, `currently_due`, or `past_due` and in `pending_verification` if verification fails but another verification is still pending.
          */
         pending_verification: Array<string> | null;
       }
@@ -1053,13 +1165,15 @@ declare module 'stripe' {
             | 'verification_failed_keyed_match'
             | 'verification_failed_name_match'
             | 'verification_failed_other'
+            | 'verification_failed_representative_authority'
             | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
-            | 'verification_requires_additional_memorandum_of_associations';
+            | 'verification_requires_additional_memorandum_of_associations'
+            | 'verification_requires_additional_proof_of_registration';
         }
       }
 
@@ -1224,7 +1338,7 @@ declare module 'stripe' {
 
         interface Payouts {
           /**
-           * A Boolean indicating if Stripe should try to reclaim negative balances from an attached bank account. See our [Understanding Connect Account Balances](https://stripe.com/docs/connect/account-balances) documentation for details. Default value is `false` for Custom accounts, otherwise `true`.
+           * A Boolean indicating if Stripe should try to reclaim negative balances from an attached bank account. See [Understanding Connect account balances](https://stripe.com/connect/account-balances) for details. The default value is `false` when [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts, otherwise `true`.
            */
           debit_negative_balances: boolean;
 
@@ -1313,7 +1427,7 @@ declare module 'stripe' {
         user_agent?: string | null;
       }
 
-      type Type = 'custom' | 'express' | 'standard';
+      type Type = 'custom' | 'express' | 'none' | 'standard';
     }
 
     /**

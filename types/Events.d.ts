@@ -101,6 +101,7 @@ declare module 'stripe' {
         | 'customer.tax_id.updated'
         | 'customer.updated'
         | 'customer_cash_balance_transaction.created'
+        | 'entitlements.active_entitlement_summary.updated'
         | 'file.created'
         | 'financial_connections.account.created'
         | 'financial_connections.account.deactivated'
@@ -142,6 +143,10 @@ declare module 'stripe' {
         | 'issuing_dispute.funds_reinstated'
         | 'issuing_dispute.submitted'
         | 'issuing_dispute.updated'
+        | 'issuing_personalization_design.activated'
+        | 'issuing_personalization_design.deactivated'
+        | 'issuing_personalization_design.rejected'
+        | 'issuing_personalization_design.updated'
         | 'issuing_token.created'
         | 'issuing_token.updated'
         | 'issuing_transaction.created'
@@ -250,24 +255,18 @@ declare module 'stripe' {
         | 'treasury.outbound_payment.failed'
         | 'treasury.outbound_payment.posted'
         | 'treasury.outbound_payment.returned'
+        | 'treasury.outbound_payment.tracking_details_updated'
         | 'treasury.outbound_transfer.canceled'
         | 'treasury.outbound_transfer.created'
         | 'treasury.outbound_transfer.expected_arrival_date_updated'
         | 'treasury.outbound_transfer.failed'
         | 'treasury.outbound_transfer.posted'
         | 'treasury.outbound_transfer.returned'
+        | 'treasury.outbound_transfer.tracking_details_updated'
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created'
-        | 'invoiceitem.updated'
-        | 'order.created'
-        | 'recipient.created'
-        | 'recipient.deleted'
-        | 'recipient.updated'
-        | 'sku.created'
-        | 'sku.deleted'
-        | 'sku.updated';
+        | 'treasury.received_debit.created';
     }
 
     /**
@@ -292,10 +291,10 @@ declare module 'stripe' {
      * `Event` objects directly to an endpoint on your server. You can manage
      * webhooks in your
      * [account settings](https://dashboard.stripe.com/account/webhooks). Learn how
-     * to [listen for events](https://stripe.com/docs/webhooks)
+     * to [listen for events](https://docs.stripe.com/webhooks)
      * so that your integration can automatically trigger reactions.
      *
-     * When using [Connect](https://stripe.com/docs/connect), you can also receive event notifications
+     * When using [Connect](https://docs.stripe.com/connect), you can also receive event notifications
      * that occur in connected accounts. For these events, there's an
      * additional `account` attribute in the received `Event` object.
      *

@@ -175,7 +175,7 @@ declare module 'stripe' {
         mode: Session.Mode;
 
         /**
-         * The ID of the PaymentIntent for Checkout Sessions in `payment` mode.
+         * The ID of the PaymentIntent for Checkout Sessions in `payment` mode. You can't confirm or cancel the PaymentIntent for a Checkout Session. To cancel, [expire the Checkout Session](https://stripe.com/docs/api/checkout/sessions/expire) instead.
          */
         payment_intent: string | Stripe.PaymentIntent | null;
 
@@ -229,7 +229,12 @@ declare module 'stripe' {
         return_url?: string;
 
         /**
-         * The ID of the SetupIntent for Checkout Sessions in `setup` mode.
+         * Controls saved payment method settings for the session. Only available in `payment` and `subscription` mode.
+         */
+        saved_payment_method_options: Session.SavedPaymentMethodOptions | null;
+
+        /**
+         * The ID of the SetupIntent for Checkout Sessions in `setup` mode. You can't confirm or cancel the SetupIntent for a Checkout Session. To cancel, [expire the Checkout Session](https://stripe.com/docs/api/checkout/sessions/expire) instead.
          */
         setup_intent: string | Stripe.SetupIntent | null;
 
@@ -485,7 +490,7 @@ declare module 'stripe' {
 
           interface TaxId {
             /**
-             * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, or `unknown`
+             * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, or `unknown`
              */
             type: TaxId.Type;
 
@@ -503,6 +508,7 @@ declare module 'stripe' {
               | 'au_abn'
               | 'au_arn'
               | 'bg_uic'
+              | 'bh_vat'
               | 'bo_tin'
               | 'br_cnpj'
               | 'br_cpf'
@@ -512,11 +518,13 @@ declare module 'stripe' {
               | 'ca_pst_mb'
               | 'ca_pst_sk'
               | 'ca_qst'
+              | 'ch_uid'
               | 'ch_vat'
               | 'cl_tin'
               | 'cn_tin'
               | 'co_nit'
               | 'cr_tin'
+              | 'de_stn'
               | 'do_rcn'
               | 'ec_ruc'
               | 'eg_tin'
@@ -536,14 +544,17 @@ declare module 'stripe' {
               | 'jp_trn'
               | 'ke_pin'
               | 'kr_brn'
+              | 'kz_bin'
               | 'li_uid'
               | 'mx_rfc'
               | 'my_frp'
               | 'my_itn'
               | 'my_sst'
+              | 'ng_tin'
               | 'no_vat'
               | 'no_voec'
               | 'nz_gst'
+              | 'om_vat'
               | 'pe_ruc'
               | 'ph_tin'
               | 'ro_tin'
@@ -596,6 +607,11 @@ declare module 'stripe' {
         namespace CustomField {
           interface Dropdown {
             /**
+             * The value that will pre-fill on the payment page.
+             */
+            default_value: string | null;
+
+            /**
              * The options available for the customer to select. Up to 200 options allowed.
              */
             options: Array<Dropdown.Option>;
@@ -634,6 +650,11 @@ declare module 'stripe' {
 
           interface Numeric {
             /**
+             * The value that will pre-fill the field on the payment page.
+             */
+            default_value: string | null;
+
+            /**
              * The maximum character length constraint for the customer's input.
              */
             maximum_length: number | null;
@@ -650,6 +671,11 @@ declare module 'stripe' {
           }
 
           interface Text {
+            /**
+             * The value that will pre-fill the field on the payment page.
+             */
+            default_value: string | null;
+
             /**
              * The maximum character length constraint for the customer's input.
              */
@@ -876,6 +902,8 @@ declare module 'stripe' {
 
           alipay?: PaymentMethodOptions.Alipay;
 
+          amazon_pay?: PaymentMethodOptions.AmazonPay;
+
           au_becs_debit?: PaymentMethodOptions.AuBecsDebit;
 
           bacs_debit?: PaymentMethodOptions.BacsDebit;
@@ -905,6 +933,10 @@ declare module 'stripe' {
           konbini?: PaymentMethodOptions.Konbini;
 
           link?: PaymentMethodOptions.Link;
+
+          mobilepay?: PaymentMethodOptions.Mobilepay;
+
+          multibanco?: PaymentMethodOptions.Multibanco;
 
           oxxo?: PaymentMethodOptions.Oxxo;
 
@@ -1025,6 +1057,21 @@ declare module 'stripe' {
              * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+          }
+
+          interface AmazonPay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: AmazonPay.SetupFutureUsage;
+          }
+
+          namespace AmazonPay {
+            type SetupFutureUsage = 'none' | 'off_session';
           }
 
           interface AuBecsDebit {
@@ -1304,6 +1351,28 @@ declare module 'stripe' {
             type SetupFutureUsage = 'none' | 'off_session';
           }
 
+          interface Mobilepay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface Multibanco {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
           interface Oxxo {
             /**
              * The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -1379,7 +1448,20 @@ declare module 'stripe' {
             expires_after_seconds: number | null;
           }
 
-          interface RevolutPay {}
+          interface RevolutPay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: RevolutPay.SetupFutureUsage;
+          }
+
+          namespace RevolutPay {
+            type SetupFutureUsage = 'none' | 'off_session';
+          }
 
           interface SepaDebit {
             /**
@@ -1434,6 +1516,8 @@ declare module 'stripe' {
 
           namespace UsBankAccount {
             interface FinancialConnections {
+              filters?: FinancialConnections.Filters;
+
               /**
                * The list of permissions to request. The `payment_method` permission must be included.
                */
@@ -1451,13 +1535,24 @@ declare module 'stripe' {
             }
 
             namespace FinancialConnections {
+              interface Filters {
+                /**
+                 * The account subcategories to use to filter for possible accounts to link. Valid subcategories are `checking` and `savings`.
+                 */
+                account_subcategories?: Array<Filters.AccountSubcategory>;
+              }
+
+              namespace Filters {
+                type AccountSubcategory = 'checking' | 'savings';
+              }
+
               type Permission =
                 | 'balances'
                 | 'ownership'
                 | 'payment_method'
                 | 'transactions';
 
-              type Prefetch = 'balances' | 'transactions';
+              type Prefetch = 'balances' | 'ownership' | 'transactions';
             }
 
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
@@ -1476,6 +1571,33 @@ declare module 'stripe' {
         }
 
         type RedirectOnCompletion = 'always' | 'if_required' | 'never';
+
+        interface SavedPaymentMethodOptions {
+          /**
+           * Uses the `allow_redisplay` value of each saved payment method to filter the set presented to a returning customer. By default, only saved payment methods with 'allow_redisplay: ‘always' are shown in Checkout.
+           */
+          allow_redisplay_filters: Array<
+            SavedPaymentMethodOptions.AllowRedisplayFilter
+          > | null;
+
+          /**
+           * Enable customers to choose if they wish to remove their saved payment methods. Disabled by default.
+           */
+          payment_method_remove: SavedPaymentMethodOptions.PaymentMethodRemove | null;
+
+          /**
+           * Enable customers to choose if they wish to save their payment method for future use. Disabled by default.
+           */
+          payment_method_save: SavedPaymentMethodOptions.PaymentMethodSave | null;
+        }
+
+        namespace SavedPaymentMethodOptions {
+          type AllowRedisplayFilter = 'always' | 'limited' | 'unspecified';
+
+          type PaymentMethodRemove = 'disabled' | 'enabled';
+
+          type PaymentMethodSave = 'disabled' | 'enabled';
+        }
 
         interface ShippingAddressCollection {
           /**

@@ -43,6 +43,11 @@ declare module 'stripe' {
         document?: VerificationReport.Document;
 
         /**
+         * Result from a email check
+         */
+        email?: VerificationReport.Email;
+
+        /**
          * Result from an id_number check
          */
         id_number?: VerificationReport.IdNumber;
@@ -55,6 +60,11 @@ declare module 'stripe' {
         options?: VerificationReport.Options;
 
         /**
+         * Result from a phone check
+         */
+        phone?: VerificationReport.Phone;
+
+        /**
          * Result from a selfie check
          */
         selfie?: VerificationReport.Selfie;
@@ -63,6 +73,11 @@ declare module 'stripe' {
          * Type of report.
          */
         type: VerificationReport.Type;
+
+        /**
+         * The configuration token of a Verification Flow from the dashboard.
+         */
+        verification_flow?: string;
 
         /**
          * ID of the VerificationSession that created this report.
@@ -80,7 +95,7 @@ declare module 'stripe' {
           /**
            * Date of birth as it appears in the document.
            */
-          dob: Document.Dob | null;
+          dob?: Document.Dob | null;
 
           /**
            * Details on the verification error. Present when status is `unverified`.
@@ -90,7 +105,7 @@ declare module 'stripe' {
           /**
            * Expiration date of the document.
            */
-          expiration_date: Document.ExpirationDate | null;
+          expiration_date?: Document.ExpirationDate | null;
 
           /**
            * Array of [File](https://stripe.com/docs/api/files) ids containing images for this document.
@@ -120,7 +135,7 @@ declare module 'stripe' {
           /**
            * Document ID number.
            */
-          number: string | null;
+          number?: string | null;
 
           /**
            * Status of this `document` check.
@@ -209,11 +224,50 @@ declare module 'stripe' {
           type Type = 'driving_license' | 'id_card' | 'passport';
         }
 
+        interface Email {
+          /**
+           * Email to be verified.
+           */
+          email: string | null;
+
+          /**
+           * Details on the verification error. Present when status is `unverified`.
+           */
+          error: Email.Error | null;
+
+          /**
+           * Status of this `email` check.
+           */
+          status: Email.Status;
+        }
+
+        namespace Email {
+          interface Error {
+            /**
+             * A short machine-readable string giving the reason for the verification failure.
+             */
+            code: Error.Code | null;
+
+            /**
+             * A human-readable message giving the reason for the failure. These messages can be shown to your users.
+             */
+            reason: string | null;
+          }
+
+          namespace Error {
+            type Code =
+              | 'email_unverified_other'
+              | 'email_verification_declined';
+          }
+
+          type Status = 'unverified' | 'verified';
+        }
+
         interface IdNumber {
           /**
            * Date of birth.
            */
-          dob: IdNumber.Dob | null;
+          dob?: IdNumber.Dob | null;
 
           /**
            * Details on the verification error. Present when status is `unverified`.
@@ -228,7 +282,7 @@ declare module 'stripe' {
           /**
            * ID number. When `id_number_type` is `us_ssn`, only the last 4 digits are present.
            */
-          id_number: string | null;
+          id_number?: string | null;
 
           /**
            * Type of ID number.
@@ -324,6 +378,45 @@ declare module 'stripe' {
           interface IdNumber {}
         }
 
+        interface Phone {
+          /**
+           * Details on the verification error. Present when status is `unverified`.
+           */
+          error: Phone.Error | null;
+
+          /**
+           * Phone to be verified.
+           */
+          phone: string | null;
+
+          /**
+           * Status of this `phone` check.
+           */
+          status: Phone.Status;
+        }
+
+        namespace Phone {
+          interface Error {
+            /**
+             * A short machine-readable string giving the reason for the verification failure.
+             */
+            code: Error.Code | null;
+
+            /**
+             * A human-readable message giving the reason for the failure. These messages can be shown to your users.
+             */
+            reason: string | null;
+          }
+
+          namespace Error {
+            type Code =
+              | 'phone_unverified_other'
+              | 'phone_verification_declined';
+          }
+
+          type Status = 'unverified' | 'verified';
+        }
+
         interface Selfie {
           /**
            * ID of the [File](https://stripe.com/docs/api/files) holding the image of the identity document used in this check.
@@ -370,7 +463,7 @@ declare module 'stripe' {
           type Status = 'unverified' | 'verified';
         }
 
-        type Type = 'document' | 'id_number';
+        type Type = 'document' | 'id_number' | 'verification_flow';
       }
     }
   }

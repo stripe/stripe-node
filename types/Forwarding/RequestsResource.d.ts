@@ -5,11 +5,6 @@ declare module 'stripe' {
     namespace Forwarding {
       interface RequestCreateParams {
         /**
-         * The Forwarding Config used when making the forwarded request. The config specifes the HTTP method, merchant credentials, connection settings, and supported destination URLs.
-         */
-        config: string;
-
-        /**
          * The PaymentMethod to insert into the forwarded request. Forwarding previously consumed PaymentMethods is allowed.
          */
         payment_method: string;

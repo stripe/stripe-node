@@ -17,6 +17,9 @@
 ///<reference path='./Apps/SecretsResource.d.ts' />
 ///<reference path='./BalanceResource.d.ts' />
 ///<reference path='./BalanceTransactionsResource.d.ts' />
+///<reference path='./Billing/MeterEventAdjustmentsResource.d.ts' />
+///<reference path='./Billing/MeterEventsResource.d.ts' />
+///<reference path='./Billing/MetersResource.d.ts' />
 ///<reference path='./BillingPortal/ConfigurationsResource.d.ts' />
 ///<reference path='./BillingPortal/SessionsResource.d.ts' />
 ///<reference path='./ChargesResource.d.ts' />
@@ -31,6 +34,8 @@
 ///<reference path='./CustomerSessionsResource.d.ts' />
 ///<reference path='./CustomersResource.d.ts' />
 ///<reference path='./DisputesResource.d.ts' />
+///<reference path='./Entitlements/ActiveEntitlementsResource.d.ts' />
+///<reference path='./Entitlements/FeaturesResource.d.ts' />
 ///<reference path='./EphemeralKeysResource.d.ts' />
 ///<reference path='./EventsResource.d.ts' />
 ///<reference path='./ExchangeRatesResource.d.ts' />
@@ -129,6 +134,10 @@
 ///<reference path='./BalanceTransactionSources.d.ts' />
 ///<reference path='./BalanceTransactions.d.ts' />
 ///<reference path='./BankAccounts.d.ts' />
+///<reference path='./Billing/MeterEventAdjustments.d.ts' />
+///<reference path='./Billing/MeterEventSummaries.d.ts' />
+///<reference path='./Billing/MeterEvents.d.ts' />
+///<reference path='./Billing/Meters.d.ts' />
 ///<reference path='./BillingPortal/Configurations.d.ts' />
 ///<reference path='./BillingPortal/Sessions.d.ts' />
 ///<reference path='./Capabilities.d.ts' />
@@ -152,6 +161,9 @@
 ///<reference path='./Customers.d.ts' />
 ///<reference path='./Discounts.d.ts' />
 ///<reference path='./Disputes.d.ts' />
+///<reference path='./Entitlements/ActiveEntitlementSummaries.d.ts' />
+///<reference path='./Entitlements/ActiveEntitlements.d.ts' />
+///<reference path='./Entitlements/Features.d.ts' />
 ///<reference path='./EphemeralKeys.d.ts' />
 ///<reference path='./Events.d.ts' />
 ///<reference path='./ExchangeRates.d.ts' />
@@ -190,8 +202,8 @@
 ///<reference path='./Payouts.d.ts' />
 ///<reference path='./Persons.d.ts' />
 ///<reference path='./Plans.d.ts' />
-///<reference path='./PlatformTaxFees.d.ts' />
 ///<reference path='./Prices.d.ts' />
+///<reference path='./ProductFeatures.d.ts' />
 ///<reference path='./Products.d.ts' />
 ///<reference path='./PromotionCodes.d.ts' />
 ///<reference path='./Quotes.d.ts' />
@@ -319,6 +331,11 @@ declare module 'stripe' {
     apps: {
       secrets: Stripe.Apps.SecretsResource;
     };
+    billing: {
+      meters: Stripe.Billing.MetersResource;
+      meterEvents: Stripe.Billing.MeterEventsResource;
+      meterEventAdjustments: Stripe.Billing.MeterEventAdjustmentsResource;
+    };
     billingPortal: {
       configurations: Stripe.BillingPortal.ConfigurationsResource;
       sessions: Stripe.BillingPortal.SessionsResource;
@@ -330,6 +347,10 @@ declare module 'stripe' {
       orders: Stripe.Climate.OrdersResource;
       products: Stripe.Climate.ProductsResource;
       suppliers: Stripe.Climate.SuppliersResource;
+    };
+    entitlements: {
+      activeEntitlements: Stripe.Entitlements.ActiveEntitlementsResource;
+      features: Stripe.Entitlements.FeaturesResource;
     };
     financialConnections: {
       accounts: Stripe.FinancialConnections.AccountsResource;

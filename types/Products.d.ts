@@ -69,11 +69,6 @@ declare module 'stripe' {
       description: string | null;
 
       /**
-       * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
-       */
-      features: Array<Product.Feature>;
-
-      /**
        * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
        */
       images: Array<string>;
@@ -82,6 +77,11 @@ declare module 'stripe' {
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
+
+      /**
+       * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
+       */
+      marketing_features: Array<Product.MarketingFeature>;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -104,7 +104,7 @@ declare module 'stripe' {
       shippable: boolean | null;
 
       /**
-       * Extra information about a product which will appear on your customer's credit card statement. In the case that multiple products are billed at once, the first statement descriptor will be used.
+       * Extra information about a product which will appear on your customer's credit card statement. In the case that multiple products are billed at once, the first statement descriptor will be used. Only used for subscription payments.
        */
       statement_descriptor?: string | null;
 
@@ -135,7 +135,7 @@ declare module 'stripe' {
     }
 
     namespace Product {
-      interface Feature {
+      interface MarketingFeature {
         /**
          * The marketing feature name. Up to 80 characters long.
          */

@@ -70,6 +70,7 @@ declare module 'stripe' {
       | CustomerTaxIdUpdatedEvent
       | CustomerUpdatedEvent
       | CustomerCashBalanceTransactionCreatedEvent
+      | EntitlementsActiveEntitlementSummaryUpdatedEvent
       | FileCreatedEvent
       | FinancialConnectionsAccountCreatedEvent
       | FinancialConnectionsAccountDeactivatedEvent
@@ -97,8 +98,8 @@ declare module 'stripe' {
       | InvoiceUpcomingEvent
       | InvoiceUpdatedEvent
       | InvoiceVoidedEvent
-      | InvoiceitemCreatedEvent
-      | InvoiceitemDeletedEvent
+      | InvoiceItemCreatedEvent
+      | InvoiceItemDeletedEvent
       | IssuingAuthorizationCreatedEvent
       | IssuingAuthorizationRequestEvent
       | IssuingAuthorizationUpdatedEvent
@@ -111,6 +112,10 @@ declare module 'stripe' {
       | IssuingDisputeFundsReinstatedEvent
       | IssuingDisputeSubmittedEvent
       | IssuingDisputeUpdatedEvent
+      | IssuingPersonalizationDesignActivatedEvent
+      | IssuingPersonalizationDesignDeactivatedEvent
+      | IssuingPersonalizationDesignRejectedEvent
+      | IssuingPersonalizationDesignUpdatedEvent
       | IssuingTokenCreatedEvent
       | IssuingTokenUpdatedEvent
       | IssuingTransactionCreatedEvent
@@ -219,24 +224,18 @@ declare module 'stripe' {
       | TreasuryOutboundPaymentFailedEvent
       | TreasuryOutboundPaymentPostedEvent
       | TreasuryOutboundPaymentReturnedEvent
+      | TreasuryOutboundPaymentTrackingDetailsUpdatedEvent
       | TreasuryOutboundTransferCanceledEvent
       | TreasuryOutboundTransferCreatedEvent
       | TreasuryOutboundTransferExpectedArrivalDateUpdatedEvent
       | TreasuryOutboundTransferFailedEvent
       | TreasuryOutboundTransferPostedEvent
       | TreasuryOutboundTransferReturnedEvent
+      | TreasuryOutboundTransferTrackingDetailsUpdatedEvent
       | TreasuryReceivedCreditCreatedEvent
       | TreasuryReceivedCreditFailedEvent
       | TreasuryReceivedCreditSucceededEvent
-      | TreasuryReceivedDebitCreatedEvent
-      | InvoiceitemUpdatedEvent
-      | OrderCreatedEvent
-      | RecipientCreatedEvent
-      | RecipientDeletedEvent
-      | RecipientUpdatedEvent
-      | SkuCreatedEvent
-      | SkuDeletedEvent
-      | SkuUpdatedEvent;
+      | TreasuryReceivedDebitCreatedEvent;
 
     /**
      * Occurs whenever a user authorizes an application. Sent to the related application only.
@@ -527,7 +526,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when funds are reinstated to your account after a dispute is closed. This includes [partially refunded payments](/docs/disputes#disputes-on-partially-refunded-payments).
+     * Occurs when funds are reinstated to your account after a dispute is closed. This includes [partially refunded payments](https://docs.stripe.com/disputes#disputes-on-partially-refunded-payments).
      */
     interface ChargeDisputeFundsReinstatedEvent extends EventBase {
       type: 'charge.dispute.funds_reinstated';
@@ -1071,7 +1070,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a card or source will expire at the end of the month.
+     * Occurs whenever a card or source will expire at the end of the month. This event only works with legacy integrations using Card or Source objects. If you use the PaymentMethod API, this event won't occur.
      */
     interface CustomerSourceExpiringEvent extends EventBase {
       type: 'customer.source.expiring';
@@ -1135,7 +1134,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a customer's subscription is paused. Only applies when subscriptions enter `status=paused`, not when [payment collection](/docs/billing/subscriptions/pause) is paused.
+     * Occurs whenever a customer's subscription is paused. Only applies when subscriptions enter `status=paused`, not when [payment collection](https://docs.stripe.com/billing/subscriptions/pause) is paused.
      */
     interface CustomerSubscriptionPausedEvent extends EventBase {
       type: 'customer.subscription.paused';
@@ -1183,7 +1182,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a customer's subscription is no longer paused. Only applies when a `status=paused` subscription is [resumed](/docs/api/subscriptions/resume), not when [payment collection](/docs/billing/subscriptions/pause) is resumed.
+     * Occurs whenever a customer's subscription is no longer paused. Only applies when a `status=paused` subscription is [resumed](https://docs.stripe.com/api/subscriptions/resume), not when [payment collection](https://docs.stripe.com/billing/subscriptions/pause) is resumed.
      */
     interface CustomerSubscriptionResumedEvent extends EventBase {
       type: 'customer.subscription.resumed';
@@ -1307,6 +1306,25 @@ declare module 'stripe' {
         object: Stripe.CustomerCashBalanceTransaction;
 
         previous_attributes?: Partial<Stripe.CustomerCashBalanceTransaction>;
+      }
+    }
+
+    /**
+     * Occurs whenever a customer's entitlements change.
+     */
+    interface EntitlementsActiveEntitlementSummaryUpdatedEvent
+      extends EventBase {
+      type: 'entitlements.active_entitlement_summary.updated';
+      data: EntitlementsActiveEntitlementSummaryUpdatedEvent.Data;
+    }
+
+    namespace EntitlementsActiveEntitlementSummaryUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Entitlements.ActiveEntitlementSummary;
+
+        previous_attributes?: Partial<
+          Stripe.Entitlements.ActiveEntitlementSummary
+        >;
       }
     }
 
@@ -1538,7 +1556,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a new invoice is created. To learn how webhooks can be used with this event, and how they can affect it, see [Using Webhooks with Subscriptions](/docs/subscriptions/webhooks).
+     * Occurs whenever a new invoice is created. To learn how webhooks can be used with this event, and how they can affect it, see [Using Webhooks with Subscriptions](https://docs.stripe.com/subscriptions/webhooks).
      */
     interface InvoiceCreatedEvent extends EventBase {
       type: 'invoice.created';
@@ -1554,7 +1572,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a draft invoice is deleted.
+     * Occurs whenever a draft invoice is deleted. Note: This event is not sent for [invoice previews](https://docs.stripe.com/api/invoices/create_preview).
      */
     interface InvoiceDeletedEvent extends EventBase {
       type: 'invoice.deleted';
@@ -1570,7 +1588,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a draft invoice cannot be finalized. See the invoice’s [last finalization error](/docs/api/invoices/object#invoice_object-last_finalization_error) for details.
+     * Occurs whenever a draft invoice cannot be finalized. See the invoice’s [last finalization error](https://docs.stripe.com/api/invoices/object#invoice_object-last_finalization_error) for details.
      */
     interface InvoiceFinalizationFailedEvent extends EventBase {
       type: 'invoice.finalization_failed';
@@ -1748,12 +1766,12 @@ declare module 'stripe' {
     /**
      * Occurs whenever an invoice item is created.
      */
-    interface InvoiceitemCreatedEvent extends EventBase {
+    interface InvoiceItemCreatedEvent extends EventBase {
       type: 'invoiceitem.created';
-      data: InvoiceitemCreatedEvent.Data;
+      data: InvoiceItemCreatedEvent.Data;
     }
 
-    namespace InvoiceitemCreatedEvent {
+    namespace InvoiceItemCreatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.InvoiceItem;
 
@@ -1764,12 +1782,12 @@ declare module 'stripe' {
     /**
      * Occurs whenever an invoice item is deleted.
      */
-    interface InvoiceitemDeletedEvent extends EventBase {
+    interface InvoiceItemDeletedEvent extends EventBase {
       type: 'invoiceitem.deleted';
-      data: InvoiceitemDeletedEvent.Data;
+      data: InvoiceItemDeletedEvent.Data;
     }
 
-    namespace InvoiceitemDeletedEvent {
+    namespace InvoiceItemDeletedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.InvoiceItem;
 
@@ -1794,7 +1812,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Represents a synchronous request for authorization, see [Using your integration to handle authorization requests](/docs/issuing/purchases/authorizations#authorization-handling).
+     * Represents a synchronous request for authorization, see [Using your integration to handle authorization requests](https://docs.stripe.com/issuing/purchases/authorizations#authorization-handling).
      */
     interface IssuingAuthorizationRequestEvent extends EventBase {
       type: 'issuing_authorization.request';
@@ -1970,6 +1988,70 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs whenever a personalization design is activated following the activation of the physical bundle that belongs to it.
+     */
+    interface IssuingPersonalizationDesignActivatedEvent extends EventBase {
+      type: 'issuing_personalization_design.activated';
+      data: IssuingPersonalizationDesignActivatedEvent.Data;
+    }
+
+    namespace IssuingPersonalizationDesignActivatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.PersonalizationDesign;
+
+        previous_attributes?: Partial<Stripe.Issuing.PersonalizationDesign>;
+      }
+    }
+
+    /**
+     * Occurs whenever a personalization design is deactivated following the deactivation of the physical bundle that belongs to it.
+     */
+    interface IssuingPersonalizationDesignDeactivatedEvent extends EventBase {
+      type: 'issuing_personalization_design.deactivated';
+      data: IssuingPersonalizationDesignDeactivatedEvent.Data;
+    }
+
+    namespace IssuingPersonalizationDesignDeactivatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.PersonalizationDesign;
+
+        previous_attributes?: Partial<Stripe.Issuing.PersonalizationDesign>;
+      }
+    }
+
+    /**
+     * Occurs whenever a personalization design is rejected by design review.
+     */
+    interface IssuingPersonalizationDesignRejectedEvent extends EventBase {
+      type: 'issuing_personalization_design.rejected';
+      data: IssuingPersonalizationDesignRejectedEvent.Data;
+    }
+
+    namespace IssuingPersonalizationDesignRejectedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.PersonalizationDesign;
+
+        previous_attributes?: Partial<Stripe.Issuing.PersonalizationDesign>;
+      }
+    }
+
+    /**
+     * Occurs whenever a personalization design is updated.
+     */
+    interface IssuingPersonalizationDesignUpdatedEvent extends EventBase {
+      type: 'issuing_personalization_design.updated';
+      data: IssuingPersonalizationDesignUpdatedEvent.Data;
+    }
+
+    namespace IssuingPersonalizationDesignUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.PersonalizationDesign;
+
+        previous_attributes?: Partial<Stripe.Issuing.PersonalizationDesign>;
+      }
+    }
+
+    /**
      * Occurs whenever an issuing digital wallet token is created.
      */
     interface IssuingTokenCreatedEvent extends EventBase {
@@ -2050,7 +2132,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when a PaymentIntent has funds to be captured. Check the `amount_capturable` property on the PaymentIntent to determine the amount that can be captured. You may capture the PaymentIntent with an `amount_to_capture` value up to the specified amount. [Learn more about capturing PaymentIntents.](https://stripe.com/docs/api/payment_intents/capture)
+     * Occurs when a PaymentIntent has funds to be captured. Check the `amount_capturable` property on the PaymentIntent to determine the amount that can be captured. You may capture the PaymentIntent with an `amount_to_capture` value up to the specified amount. [Learn more about capturing PaymentIntents.](https://docs.stripe.com/api/payment_intents/capture)
      */
     interface PaymentIntentAmountCapturableUpdatedEvent extends EventBase {
       type: 'payment_intent.amount_capturable_updated';
@@ -2258,7 +2340,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a payment method is updated via the [PaymentMethod update API](https://stripe.com/docs/api/payment_methods/update).
+     * Occurs whenever a payment method is updated via the [PaymentMethod update API](https://docs.stripe.com/api/payment_methods/update).
      */
     interface PaymentMethodUpdatedEvent extends EventBase {
       type: 'payment_method.updated';
@@ -3700,6 +3782,23 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs whenever tracking_details on an OutboundPayment is updated.
+     */
+    interface TreasuryOutboundPaymentTrackingDetailsUpdatedEvent
+      extends EventBase {
+      type: 'treasury.outbound_payment.tracking_details_updated';
+      data: TreasuryOutboundPaymentTrackingDetailsUpdatedEvent.Data;
+    }
+
+    namespace TreasuryOutboundPaymentTrackingDetailsUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Treasury.OutboundPayment;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundPayment>;
+      }
+    }
+
+    /**
      * Occurs whenever an OutboundTransfer is canceled.
      */
     interface TreasuryOutboundTransferCanceledEvent extends EventBase {
@@ -3797,6 +3896,23 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs whenever tracking_details on an OutboundTransfer is updated.
+     */
+    interface TreasuryOutboundTransferTrackingDetailsUpdatedEvent
+      extends EventBase {
+      type: 'treasury.outbound_transfer.tracking_details_updated';
+      data: TreasuryOutboundTransferTrackingDetailsUpdatedEvent.Data;
+    }
+
+    namespace TreasuryOutboundTransferTrackingDetailsUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Treasury.OutboundTransfer;
+
+        previous_attributes?: Partial<Stripe.Treasury.OutboundTransfer>;
+      }
+    }
+
+    /**
      * Occurs whenever a received_credit is created as a result of funds being pushed by another account.
      */
     interface TreasuryReceivedCreditCreatedEvent extends EventBase {
@@ -3858,102 +3974,6 @@ declare module 'stripe' {
 
         previous_attributes?: Partial<Stripe.Treasury.ReceivedDebit>;
       }
-    }
-
-    /**
-     * The "invoiceitem.updated" event is deprecated and will be removed in the next major version
-     */
-    interface InvoiceitemUpdatedEvent extends EventBase {
-      type: 'invoiceitem.updated';
-      data: InvoiceitemUpdatedEvent.Data;
-    }
-
-    namespace InvoiceitemUpdatedEvent {
-      interface Data extends Stripe.Event.Data {}
-    }
-
-    /**
-     * The "order.created" event is deprecated and will be removed in the next major version
-     */
-    interface OrderCreatedEvent extends EventBase {
-      type: 'order.created';
-      data: OrderCreatedEvent.Data;
-    }
-
-    namespace OrderCreatedEvent {
-      interface Data extends Stripe.Event.Data {}
-    }
-
-    /**
-     * The "recipient.created" event is deprecated and will be removed in the next major version
-     */
-    interface RecipientCreatedEvent extends EventBase {
-      type: 'recipient.created';
-      data: RecipientCreatedEvent.Data;
-    }
-
-    namespace RecipientCreatedEvent {
-      interface Data extends Stripe.Event.Data {}
-    }
-
-    /**
-     * The "recipient.deleted" event is deprecated and will be removed in the next major version
-     */
-    interface RecipientDeletedEvent extends EventBase {
-      type: 'recipient.deleted';
-      data: RecipientDeletedEvent.Data;
-    }
-
-    namespace RecipientDeletedEvent {
-      interface Data extends Stripe.Event.Data {}
-    }
-
-    /**
-     * The "recipient.updated" event is deprecated and will be removed in the next major version
-     */
-    interface RecipientUpdatedEvent extends EventBase {
-      type: 'recipient.updated';
-      data: RecipientUpdatedEvent.Data;
-    }
-
-    namespace RecipientUpdatedEvent {
-      interface Data extends Stripe.Event.Data {}
-    }
-
-    /**
-     * The "sku.created" event is deprecated and will be removed in the next major version
-     */
-    interface SkuCreatedEvent extends EventBase {
-      type: 'sku.created';
-      data: SkuCreatedEvent.Data;
-    }
-
-    namespace SkuCreatedEvent {
-      interface Data extends Stripe.Event.Data {}
-    }
-
-    /**
-     * The "sku.deleted" event is deprecated and will be removed in the next major version
-     */
-    interface SkuDeletedEvent extends EventBase {
-      type: 'sku.deleted';
-      data: SkuDeletedEvent.Data;
-    }
-
-    namespace SkuDeletedEvent {
-      interface Data extends Stripe.Event.Data {}
-    }
-
-    /**
-     * The "sku.updated" event is deprecated and will be removed in the next major version
-     */
-    interface SkuUpdatedEvent extends EventBase {
-      type: 'sku.updated';
-      data: SkuUpdatedEvent.Data;
-    }
-
-    namespace SkuUpdatedEvent {
-      interface Data extends Stripe.Event.Data {}
     }
   }
 }

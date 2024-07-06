@@ -140,7 +140,9 @@ declare module 'stripe' {
         | '2022-08-01'
         | '2022-11-15'
         | '2023-08-16'
-        | '2023-10-16';
+        | '2023-10-16'
+        | '2024-04-10'
+        | '2024-06-20';
 
       type EnabledEvent =
         | '*'
@@ -211,6 +213,7 @@ declare module 'stripe' {
         | 'customer.tax_id.updated'
         | 'customer.updated'
         | 'customer_cash_balance_transaction.created'
+        | 'entitlements.active_entitlement_summary.updated'
         | 'file.created'
         | 'financial_connections.account.created'
         | 'financial_connections.account.deactivated'
@@ -252,6 +255,10 @@ declare module 'stripe' {
         | 'issuing_dispute.funds_reinstated'
         | 'issuing_dispute.submitted'
         | 'issuing_dispute.updated'
+        | 'issuing_personalization_design.activated'
+        | 'issuing_personalization_design.deactivated'
+        | 'issuing_personalization_design.rejected'
+        | 'issuing_personalization_design.updated'
         | 'issuing_token.created'
         | 'issuing_token.updated'
         | 'issuing_transaction.created'
@@ -360,24 +367,18 @@ declare module 'stripe' {
         | 'treasury.outbound_payment.failed'
         | 'treasury.outbound_payment.posted'
         | 'treasury.outbound_payment.returned'
+        | 'treasury.outbound_payment.tracking_details_updated'
         | 'treasury.outbound_transfer.canceled'
         | 'treasury.outbound_transfer.created'
         | 'treasury.outbound_transfer.expected_arrival_date_updated'
         | 'treasury.outbound_transfer.failed'
         | 'treasury.outbound_transfer.posted'
         | 'treasury.outbound_transfer.returned'
+        | 'treasury.outbound_transfer.tracking_details_updated'
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created'
-        | 'invoiceitem.updated'
-        | 'order.created'
-        | 'recipient.created'
-        | 'recipient.deleted'
-        | 'recipient.updated'
-        | 'sku.created'
-        | 'sku.deleted'
-        | 'sku.updated';
+        | 'treasury.received_debit.created';
     }
 
     interface WebhookEndpointRetrieveParams {
@@ -489,6 +490,7 @@ declare module 'stripe' {
         | 'customer.tax_id.updated'
         | 'customer.updated'
         | 'customer_cash_balance_transaction.created'
+        | 'entitlements.active_entitlement_summary.updated'
         | 'file.created'
         | 'financial_connections.account.created'
         | 'financial_connections.account.deactivated'
@@ -530,6 +532,10 @@ declare module 'stripe' {
         | 'issuing_dispute.funds_reinstated'
         | 'issuing_dispute.submitted'
         | 'issuing_dispute.updated'
+        | 'issuing_personalization_design.activated'
+        | 'issuing_personalization_design.deactivated'
+        | 'issuing_personalization_design.rejected'
+        | 'issuing_personalization_design.updated'
         | 'issuing_token.created'
         | 'issuing_token.updated'
         | 'issuing_transaction.created'
@@ -638,24 +644,18 @@ declare module 'stripe' {
         | 'treasury.outbound_payment.failed'
         | 'treasury.outbound_payment.posted'
         | 'treasury.outbound_payment.returned'
+        | 'treasury.outbound_payment.tracking_details_updated'
         | 'treasury.outbound_transfer.canceled'
         | 'treasury.outbound_transfer.created'
         | 'treasury.outbound_transfer.expected_arrival_date_updated'
         | 'treasury.outbound_transfer.failed'
         | 'treasury.outbound_transfer.posted'
         | 'treasury.outbound_transfer.returned'
+        | 'treasury.outbound_transfer.tracking_details_updated'
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created'
-        | 'invoiceitem.updated'
-        | 'order.created'
-        | 'recipient.created'
-        | 'recipient.deleted'
-        | 'recipient.updated'
-        | 'sku.created'
-        | 'sku.deleted'
-        | 'sku.updated';
+        | 'treasury.received_debit.created';
     }
 
     interface WebhookEndpointListParams extends PaginationParams {

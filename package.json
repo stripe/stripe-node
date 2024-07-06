@@ -1,6 +1,6 @@
 {
   "name": "stripe",
-  "version": "14.22.0",
+  "version": "16.2.0",
   "description": "Stripe API wrapper",
   "keywords": [
     "stripe",
@@ -80,11 +80,19 @@
       "import": "./esm/stripe.esm.worker.js",
       "require": "./cjs/stripe.cjs.worker.js"
     },
+    "bun": {
+      "import": "./esm/stripe.esm.worker.js",
+      "require": "./cjs/stripe.cjs.worker.js"
+    },
     "deno": {
       "import": "./esm/stripe.esm.worker.js",
       "require": "./cjs/stripe.cjs.worker.js"
     },
     "worker": {
+      "import": "./esm/stripe.esm.worker.js",
+      "require": "./cjs/stripe.cjs.worker.js"
+    },
+    "workerd": {
       "import": "./esm/stripe.esm.worker.js",
       "require": "./cjs/stripe.cjs.worker.js"
     },

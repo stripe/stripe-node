@@ -275,6 +275,16 @@ declare module 'stripe' {
         alipay?: PaymentMethodData.Alipay;
 
         /**
+         * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow. The field defaults to `unspecified`.
+         */
+        allow_redisplay?: PaymentMethodData.AllowRedisplay;
+
+        /**
+         * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+         */
+        amazon_pay?: PaymentMethodData.AmazonPay;
+
+        /**
          * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
          */
         au_becs_debit?: PaymentMethodData.AuBecsDebit;
@@ -370,6 +380,11 @@ declare module 'stripe' {
         mobilepay?: PaymentMethodData.Mobilepay;
 
         /**
+         * If this is a `multibanco` PaymentMethod, this hash contains details about the Multibanco payment method.
+         */
+        multibanco?: PaymentMethodData.Multibanco;
+
+        /**
          * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
          */
         oxxo?: PaymentMethodData.Oxxo;
@@ -425,6 +440,11 @@ declare module 'stripe' {
         swish?: PaymentMethodData.Swish;
 
         /**
+         * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
+         */
+        twint?: PaymentMethodData.Twint;
+
+        /**
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
          */
         type: PaymentMethodData.Type;
@@ -468,6 +488,10 @@ declare module 'stripe' {
         interface AfterpayClearpay {}
 
         interface Alipay {}
+
+        type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+        interface AmazonPay {}
 
         interface AuBecsDebit {
           /**
@@ -674,6 +698,8 @@ declare module 'stripe' {
 
         interface Mobilepay {}
 
+        interface Multibanco {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -750,11 +776,14 @@ declare module 'stripe' {
 
         interface Swish {}
 
+        interface Twint {}
+
         type Type =
           | 'acss_debit'
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
@@ -771,6 +800,7 @@ declare module 'stripe' {
           | 'konbini'
           | 'link'
           | 'mobilepay'
+          | 'multibanco'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -781,6 +811,7 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'sofort'
           | 'swish'
+          | 'twint'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
@@ -845,6 +876,11 @@ declare module 'stripe' {
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
+
+        /**
+         * If this is a `amazon_pay` PaymentMethod, this sub-hash contains details about the Amazon Pay payment method options.
+         */
+        amazon_pay?: Stripe.Emptyable<PaymentMethodOptions.AmazonPay>;
 
         /**
          * If this is a `au_becs_debit` PaymentMethod, this sub-hash contains details about the AU BECS Direct Debit payment method options.
@@ -944,6 +980,11 @@ declare module 'stripe' {
         mobilepay?: Stripe.Emptyable<PaymentMethodOptions.Mobilepay>;
 
         /**
+         * If this is a `multibanco` PaymentMethod, this sub-hash contains details about the Multibanco payment method options.
+         */
+        multibanco?: Stripe.Emptyable<PaymentMethodOptions.Multibanco>;
+
+        /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
          */
         oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
@@ -992,6 +1033,11 @@ declare module 'stripe' {
          * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
          */
         swish?: Stripe.Emptyable<PaymentMethodOptions.Swish>;
+
+        /**
+         * If this is a `twint` PaymentMethod, this sub-hash contains details about the TWINT payment method options.
+         */
+        twint?: Stripe.Emptyable<PaymentMethodOptions.Twint>;
 
         /**
          * If this is a `us_bank_account` PaymentMethod, this sub-hash contains details about the US bank account payment method options.
@@ -1071,11 +1117,11 @@ declare module 'stripe' {
 
         interface Affirm {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -1098,11 +1144,11 @@ declare module 'stripe' {
 
         interface AfterpayClearpay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -1138,6 +1184,30 @@ declare module 'stripe' {
         }
 
         namespace Alipay {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface AmazonPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<AmazonPay.SetupFutureUsage>;
+        }
+
+        namespace AmazonPay {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
@@ -1241,11 +1311,11 @@ declare module 'stripe' {
 
         interface Card {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -1559,22 +1629,31 @@ declare module 'stripe' {
           request_incremental_authorization_support?: boolean;
 
           /**
-           * This field was released by mistake and will be removed in the next major version
+           * Network routing priority on co-branded EMV cards supporting domestic debit and international card schemes.
            */
-          request_incremental_authorization?: CardPresent.RequestIncrementalAuthorization;
+          routing?: CardPresent.Routing;
         }
 
         namespace CardPresent {
-          type RequestIncrementalAuthorization = 'if_available' | 'never';
+          interface Routing {
+            /**
+             * Routing requested priority
+             */
+            requested_priority?: Routing.RequestedPriority;
+          }
+
+          namespace Routing {
+            type RequestedPriority = 'domestic' | 'international';
+          }
         }
 
         interface Cashapp {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -1736,11 +1815,11 @@ declare module 'stripe' {
 
         interface Klarna {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -1789,6 +1868,7 @@ declare module 'stripe' {
             | 'en-NZ'
             | 'en-PL'
             | 'en-PT'
+            | 'en-RO'
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
@@ -1805,6 +1885,7 @@ declare module 'stripe' {
             | 'nl-NL'
             | 'pl-PL'
             | 'pt-PT'
+            | 'ro-RO'
             | 'sv-FI'
             | 'sv-SE';
         }
@@ -1844,16 +1925,17 @@ declare module 'stripe' {
 
         interface Link {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
            * [Deprecated] This is a legacy parameter that no longer has any function.
+           * @deprecated
            */
           persistent_token?: string;
 
@@ -1875,14 +1957,27 @@ declare module 'stripe' {
 
         interface Mobilepay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Multibanco {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -2042,6 +2137,15 @@ declare module 'stripe' {
 
         interface RevolutPay {
           /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -2128,6 +2232,19 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Twint {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface UsBankAccount {
           /**
            * Additional fields for Financial Connections Session creation
@@ -2171,6 +2288,11 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
+             * Provide filters for the linked accounts that the customer can select for the payment method
+             */
+            filters?: FinancialConnections.Filters;
+
+            /**
              * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
@@ -2187,13 +2309,24 @@ declare module 'stripe' {
           }
 
           namespace FinancialConnections {
+            interface Filters {
+              /**
+               * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
+               */
+              account_subcategories?: Array<Filters.AccountSubcategory>;
+            }
+
+            namespace Filters {
+              type AccountSubcategory = 'checking' | 'savings';
+            }
+
             type Permission =
               | 'balances'
               | 'ownership'
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'transactions';
+            type Prefetch = 'balances' | 'ownership' | 'transactions';
           }
 
           interface MandateOptions {
@@ -2473,6 +2606,16 @@ declare module 'stripe' {
         alipay?: PaymentMethodData.Alipay;
 
         /**
+         * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow. The field defaults to `unspecified`.
+         */
+        allow_redisplay?: PaymentMethodData.AllowRedisplay;
+
+        /**
+         * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+         */
+        amazon_pay?: PaymentMethodData.AmazonPay;
+
+        /**
          * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
          */
         au_becs_debit?: PaymentMethodData.AuBecsDebit;
@@ -2568,6 +2711,11 @@ declare module 'stripe' {
         mobilepay?: PaymentMethodData.Mobilepay;
 
         /**
+         * If this is a `multibanco` PaymentMethod, this hash contains details about the Multibanco payment method.
+         */
+        multibanco?: PaymentMethodData.Multibanco;
+
+        /**
          * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
          */
         oxxo?: PaymentMethodData.Oxxo;
@@ -2623,6 +2771,11 @@ declare module 'stripe' {
         swish?: PaymentMethodData.Swish;
 
         /**
+         * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
+         */
+        twint?: PaymentMethodData.Twint;
+
+        /**
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
          */
         type: PaymentMethodData.Type;
@@ -2666,6 +2819,10 @@ declare module 'stripe' {
         interface AfterpayClearpay {}
 
         interface Alipay {}
+
+        type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+        interface AmazonPay {}
 
         interface AuBecsDebit {
           /**
@@ -2872,6 +3029,8 @@ declare module 'stripe' {
 
         interface Mobilepay {}
 
+        interface Multibanco {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -2948,11 +3107,14 @@ declare module 'stripe' {
 
         interface Swish {}
 
+        interface Twint {}
+
         type Type =
           | 'acss_debit'
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
@@ -2969,6 +3131,7 @@ declare module 'stripe' {
           | 'konbini'
           | 'link'
           | 'mobilepay'
+          | 'multibanco'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -2979,6 +3142,7 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'sofort'
           | 'swish'
+          | 'twint'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
@@ -3043,6 +3207,11 @@ declare module 'stripe' {
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
+
+        /**
+         * If this is a `amazon_pay` PaymentMethod, this sub-hash contains details about the Amazon Pay payment method options.
+         */
+        amazon_pay?: Stripe.Emptyable<PaymentMethodOptions.AmazonPay>;
 
         /**
          * If this is a `au_becs_debit` PaymentMethod, this sub-hash contains details about the AU BECS Direct Debit payment method options.
@@ -3142,6 +3311,11 @@ declare module 'stripe' {
         mobilepay?: Stripe.Emptyable<PaymentMethodOptions.Mobilepay>;
 
         /**
+         * If this is a `multibanco` PaymentMethod, this sub-hash contains details about the Multibanco payment method options.
+         */
+        multibanco?: Stripe.Emptyable<PaymentMethodOptions.Multibanco>;
+
+        /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
          */
         oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
@@ -3190,6 +3364,11 @@ declare module 'stripe' {
          * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
          */
         swish?: Stripe.Emptyable<PaymentMethodOptions.Swish>;
+
+        /**
+         * If this is a `twint` PaymentMethod, this sub-hash contains details about the TWINT payment method options.
+         */
+        twint?: Stripe.Emptyable<PaymentMethodOptions.Twint>;
 
         /**
          * If this is a `us_bank_account` PaymentMethod, this sub-hash contains details about the US bank account payment method options.
@@ -3269,11 +3448,11 @@ declare module 'stripe' {
 
         interface Affirm {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -3296,11 +3475,11 @@ declare module 'stripe' {
 
         interface AfterpayClearpay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -3336,6 +3515,30 @@ declare module 'stripe' {
         }
 
         namespace Alipay {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface AmazonPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<AmazonPay.SetupFutureUsage>;
+        }
+
+        namespace AmazonPay {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
@@ -3439,11 +3642,11 @@ declare module 'stripe' {
 
         interface Card {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -3757,22 +3960,31 @@ declare module 'stripe' {
           request_incremental_authorization_support?: boolean;
 
           /**
-           * This field was released by mistake and will be removed in the next major version
+           * Network routing priority on co-branded EMV cards supporting domestic debit and international card schemes.
            */
-          request_incremental_authorization?: CardPresent.RequestIncrementalAuthorization;
+          routing?: CardPresent.Routing;
         }
 
         namespace CardPresent {
-          type RequestIncrementalAuthorization = 'if_available' | 'never';
+          interface Routing {
+            /**
+             * Routing requested priority
+             */
+            requested_priority?: Routing.RequestedPriority;
+          }
+
+          namespace Routing {
+            type RequestedPriority = 'domestic' | 'international';
+          }
         }
 
         interface Cashapp {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -3934,11 +4146,11 @@ declare module 'stripe' {
 
         interface Klarna {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -3987,6 +4199,7 @@ declare module 'stripe' {
             | 'en-NZ'
             | 'en-PL'
             | 'en-PT'
+            | 'en-RO'
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
@@ -4003,6 +4216,7 @@ declare module 'stripe' {
             | 'nl-NL'
             | 'pl-PL'
             | 'pt-PT'
+            | 'ro-RO'
             | 'sv-FI'
             | 'sv-SE';
         }
@@ -4042,16 +4256,17 @@ declare module 'stripe' {
 
         interface Link {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
            * [Deprecated] This is a legacy parameter that no longer has any function.
+           * @deprecated
            */
           persistent_token?: string;
 
@@ -4073,14 +4288,27 @@ declare module 'stripe' {
 
         interface Mobilepay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Multibanco {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -4240,6 +4468,15 @@ declare module 'stripe' {
 
         interface RevolutPay {
           /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -4326,6 +4563,19 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Twint {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface UsBankAccount {
           /**
            * Additional fields for Financial Connections Session creation
@@ -4369,6 +4619,11 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
+             * Provide filters for the linked accounts that the customer can select for the payment method
+             */
+            filters?: FinancialConnections.Filters;
+
+            /**
              * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
@@ -4385,13 +4640,24 @@ declare module 'stripe' {
           }
 
           namespace FinancialConnections {
+            interface Filters {
+              /**
+               * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
+               */
+              account_subcategories?: Array<Filters.AccountSubcategory>;
+            }
+
+            namespace Filters {
+              type AccountSubcategory = 'checking' | 'savings';
+            }
+
             type Permission =
               | 'balances'
               | 'ownership'
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'transactions';
+            type Prefetch = 'balances' | 'ownership' | 'transactions';
           }
 
           interface MandateOptions {
@@ -4637,10 +4903,7 @@ declare module 'stripe' {
        */
       mandate?: string;
 
-      mandate_data?: Stripe.Emptyable<
-        | PaymentIntentConfirmParams.MandateData1
-        | PaymentIntentConfirmParams.MandateData2
-      >;
+      mandate_data?: Stripe.Emptyable<PaymentIntentConfirmParams.MandateData>;
 
       /**
        * Set to `true` to indicate that the customer isn't in your checkout flow during this payment attempt and can't authenticate. Use this parameter in scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
@@ -4663,6 +4926,11 @@ declare module 'stripe' {
        * Payment method-specific configuration for this PaymentIntent.
        */
       payment_method_options?: PaymentIntentConfirmParams.PaymentMethodOptions;
+
+      /**
+       * The list of payment method types (for example, a card) that this PaymentIntent can use. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+       */
+      payment_method_types?: Array<string>;
 
       /**
        * Options to configure Radar. Learn more about [Radar Sessions](https://stripe.com/docs/radar/radar-session).
@@ -4708,14 +4976,14 @@ declare module 'stripe' {
     namespace PaymentIntentConfirmParams {
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
-      interface MandateData1 {
+      interface MandateData {
         /**
          * This hash contains details about the customer acceptance of the Mandate.
          */
-        customer_acceptance: MandateData1.CustomerAcceptance;
+        customer_acceptance?: MandateData.CustomerAcceptance;
       }
 
-      namespace MandateData1 {
+      namespace MandateData {
         interface CustomerAcceptance {
           /**
            * The time at which the customer accepted the Mandate.
@@ -4745,43 +5013,6 @@ declare module 'stripe' {
             /**
              * The IP address from which the Mandate was accepted by the customer.
              */
-            ip_address: string;
-
-            /**
-             * The user agent of the browser from which the Mandate was accepted by the customer.
-             */
-            user_agent: string;
-          }
-
-          type Type = 'offline' | 'online';
-        }
-      }
-
-      interface MandateData2 {
-        /**
-         * This hash contains details about the customer acceptance of the Mandate.
-         */
-        customer_acceptance: MandateData2.CustomerAcceptance;
-      }
-
-      namespace MandateData2 {
-        interface CustomerAcceptance {
-          /**
-           * If this is a Mandate accepted online, this hash contains details about the online acceptance.
-           */
-          online: CustomerAcceptance.Online;
-
-          /**
-           * The type of customer acceptance information included with the Mandate.
-           */
-          type: 'online';
-        }
-
-        namespace CustomerAcceptance {
-          interface Online {
-            /**
-             * The IP address from which the Mandate was accepted by the customer.
-             */
             ip_address?: string;
 
             /**
@@ -4789,6 +5020,8 @@ declare module 'stripe' {
              */
             user_agent?: string;
           }
+
+          type Type = 'offline' | 'online';
         }
       }
 
@@ -4814,6 +5047,16 @@ declare module 'stripe' {
          * If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
          */
         alipay?: PaymentMethodData.Alipay;
+
+        /**
+         * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow. The field defaults to `unspecified`.
+         */
+        allow_redisplay?: PaymentMethodData.AllowRedisplay;
+
+        /**
+         * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+         */
+        amazon_pay?: PaymentMethodData.AmazonPay;
 
         /**
          * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
@@ -4911,6 +5154,11 @@ declare module 'stripe' {
         mobilepay?: PaymentMethodData.Mobilepay;
 
         /**
+         * If this is a `multibanco` PaymentMethod, this hash contains details about the Multibanco payment method.
+         */
+        multibanco?: PaymentMethodData.Multibanco;
+
+        /**
          * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
          */
         oxxo?: PaymentMethodData.Oxxo;
@@ -4966,6 +5214,11 @@ declare module 'stripe' {
         swish?: PaymentMethodData.Swish;
 
         /**
+         * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
+         */
+        twint?: PaymentMethodData.Twint;
+
+        /**
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
          */
         type: PaymentMethodData.Type;
@@ -5009,6 +5262,10 @@ declare module 'stripe' {
         interface AfterpayClearpay {}
 
         interface Alipay {}
+
+        type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+        interface AmazonPay {}
 
         interface AuBecsDebit {
           /**
@@ -5215,6 +5472,8 @@ declare module 'stripe' {
 
         interface Mobilepay {}
 
+        interface Multibanco {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -5291,11 +5550,14 @@ declare module 'stripe' {
 
         interface Swish {}
 
+        interface Twint {}
+
         type Type =
           | 'acss_debit'
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
@@ -5312,6 +5574,7 @@ declare module 'stripe' {
           | 'konbini'
           | 'link'
           | 'mobilepay'
+          | 'multibanco'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -5322,6 +5585,7 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'sofort'
           | 'swish'
+          | 'twint'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
@@ -5386,6 +5650,11 @@ declare module 'stripe' {
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
+
+        /**
+         * If this is a `amazon_pay` PaymentMethod, this sub-hash contains details about the Amazon Pay payment method options.
+         */
+        amazon_pay?: Stripe.Emptyable<PaymentMethodOptions.AmazonPay>;
 
         /**
          * If this is a `au_becs_debit` PaymentMethod, this sub-hash contains details about the AU BECS Direct Debit payment method options.
@@ -5485,6 +5754,11 @@ declare module 'stripe' {
         mobilepay?: Stripe.Emptyable<PaymentMethodOptions.Mobilepay>;
 
         /**
+         * If this is a `multibanco` PaymentMethod, this sub-hash contains details about the Multibanco payment method options.
+         */
+        multibanco?: Stripe.Emptyable<PaymentMethodOptions.Multibanco>;
+
+        /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
          */
         oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
@@ -5533,6 +5807,11 @@ declare module 'stripe' {
          * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
          */
         swish?: Stripe.Emptyable<PaymentMethodOptions.Swish>;
+
+        /**
+         * If this is a `twint` PaymentMethod, this sub-hash contains details about the TWINT payment method options.
+         */
+        twint?: Stripe.Emptyable<PaymentMethodOptions.Twint>;
 
         /**
          * If this is a `us_bank_account` PaymentMethod, this sub-hash contains details about the US bank account payment method options.
@@ -5612,11 +5891,11 @@ declare module 'stripe' {
 
         interface Affirm {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -5639,11 +5918,11 @@ declare module 'stripe' {
 
         interface AfterpayClearpay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -5679,6 +5958,30 @@ declare module 'stripe' {
         }
 
         namespace Alipay {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface AmazonPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<AmazonPay.SetupFutureUsage>;
+        }
+
+        namespace AmazonPay {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
@@ -5782,11 +6085,11 @@ declare module 'stripe' {
 
         interface Card {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -6100,22 +6403,31 @@ declare module 'stripe' {
           request_incremental_authorization_support?: boolean;
 
           /**
-           * This field was released by mistake and will be removed in the next major version
+           * Network routing priority on co-branded EMV cards supporting domestic debit and international card schemes.
            */
-          request_incremental_authorization?: CardPresent.RequestIncrementalAuthorization;
+          routing?: CardPresent.Routing;
         }
 
         namespace CardPresent {
-          type RequestIncrementalAuthorization = 'if_available' | 'never';
+          interface Routing {
+            /**
+             * Routing requested priority
+             */
+            requested_priority?: Routing.RequestedPriority;
+          }
+
+          namespace Routing {
+            type RequestedPriority = 'domestic' | 'international';
+          }
         }
 
         interface Cashapp {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -6277,11 +6589,11 @@ declare module 'stripe' {
 
         interface Klarna {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
@@ -6330,6 +6642,7 @@ declare module 'stripe' {
             | 'en-NZ'
             | 'en-PL'
             | 'en-PT'
+            | 'en-RO'
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
@@ -6346,6 +6659,7 @@ declare module 'stripe' {
             | 'nl-NL'
             | 'pl-PL'
             | 'pt-PT'
+            | 'ro-RO'
             | 'sv-FI'
             | 'sv-SE';
         }
@@ -6385,16 +6699,17 @@ declare module 'stripe' {
 
         interface Link {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
            * [Deprecated] This is a legacy parameter that no longer has any function.
+           * @deprecated
            */
           persistent_token?: string;
 
@@ -6416,14 +6731,27 @@ declare module 'stripe' {
 
         interface Mobilepay {
           /**
-           * Controls when the funds will be captured from the customer's account.
+           * Controls when the funds are captured from the customer's account.
            *
-           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
            *
-           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Multibanco {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -6583,6 +6911,15 @@ declare module 'stripe' {
 
         interface RevolutPay {
           /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -6669,6 +7006,19 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Twint {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface UsBankAccount {
           /**
            * Additional fields for Financial Connections Session creation
@@ -6712,6 +7062,11 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
+             * Provide filters for the linked accounts that the customer can select for the payment method
+             */
+            filters?: FinancialConnections.Filters;
+
+            /**
              * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
@@ -6728,13 +7083,24 @@ declare module 'stripe' {
           }
 
           namespace FinancialConnections {
+            interface Filters {
+              /**
+               * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
+               */
+              account_subcategories?: Array<Filters.AccountSubcategory>;
+            }
+
+            namespace Filters {
+              type AccountSubcategory = 'checking' | 'savings';
+            }
+
             type Permission =
               | 'balances'
               | 'ownership'
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'transactions';
+            type Prefetch = 'balances' | 'ownership' | 'transactions';
           }
 
           interface MandateOptions {

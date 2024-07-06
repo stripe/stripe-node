@@ -347,13 +347,13 @@ declare module 'stripe' {
          *
          * Create a SetupIntent when you're ready to collect your customer's payment credentials.
          * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
-         * The SetupIntent transitions through multiple [statuses](https://stripe.com/docs/payments/intents#intent-statuses) as it guides
+         * The SetupIntent transitions through multiple [statuses](https://docs.stripe.com/payments/intents#intent-statuses) as it guides
          * you through the setup process.
          *
          * Successful SetupIntents result in payment credentials that are optimized for future payments.
          * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
-         * [Strong Customer Authentication](https://stripe.com/docs/strong-customer-authentication) during payment method collection
-         * to streamline later [off-session payments](https://stripe.com/docs/payments/setup-intents).
+         * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
+         * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
          * If you use the SetupIntent with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer),
          * it automatically attaches the resulting payment method to that Customer after successful setup.
          * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
@@ -361,7 +361,7 @@ declare module 'stripe' {
          *
          * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
          *
-         * Related guide: [Setup Intents API](https://stripe.com/docs/payments/setup-intents)
+         * Related guide: [Setup Intents API](https://docs.stripe.com/payments/setup-intents)
          */
         setup_intent?: Stripe.SetupIntent;
 
@@ -398,6 +398,10 @@ declare module 'stripe' {
           | 'bank_account_unverified'
           | 'bank_account_verification_failed'
           | 'billing_invalid_mandate'
+          | 'billing_policy_remote_function_response_invalid'
+          | 'billing_policy_remote_function_timeout'
+          | 'billing_policy_remote_function_unexpected_status_code'
+          | 'billing_policy_remote_function_unreachable'
           | 'bitcoin_upgrade_required'
           | 'capture_charge_authorization_expired'
           | 'capture_unauthorized_payment'
@@ -471,6 +475,7 @@ declare module 'stripe' {
           | 'parameters_exclusive'
           | 'payment_intent_action_required'
           | 'payment_intent_authentication_failure'
+          | 'payment_intent_fx_quote_invalid'
           | 'payment_intent_incompatible_payment_method'
           | 'payment_intent_invalid_parameter'
           | 'payment_intent_konbini_rejected_confirmation_number'
@@ -522,6 +527,7 @@ declare module 'stripe' {
           | 'setup_intent_mandate_invalid'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
+          | 'shipping_address_invalid'
           | 'shipping_calculation_failed'
           | 'sku_inactive'
           | 'state_unsupported'
@@ -532,6 +538,7 @@ declare module 'stripe' {
           | 'terminal_location_country_unsupported'
           | 'terminal_reader_busy'
           | 'terminal_reader_hardware_fault'
+          | 'terminal_reader_invalid_location_for_payment'
           | 'terminal_reader_offline'
           | 'terminal_reader_timeout'
           | 'testmode_charges_only'
@@ -562,6 +569,8 @@ declare module 'stripe' {
         display_bank_transfer_instructions?: NextAction.DisplayBankTransferInstructions;
 
         konbini_display_details?: NextAction.KonbiniDisplayDetails;
+
+        multibanco_display_details?: NextAction.MultibancoDisplayDetails;
 
         oxxo_display_details?: NextAction.OxxoDisplayDetails;
 
@@ -1004,6 +1013,28 @@ declare module 'stripe' {
           }
         }
 
+        interface MultibancoDisplayDetails {
+          /**
+           * Entity number associated with this Multibanco payment.
+           */
+          entity: string | null;
+
+          /**
+           * The timestamp at which the Multibanco voucher expires.
+           */
+          expires_at: number | null;
+
+          /**
+           * The URL for the hosted Multibanco voucher page, which allows customers to view a Multibanco voucher.
+           */
+          hosted_voucher_url: string | null;
+
+          /**
+           * Reference number associated with this Multibanco payment.
+           */
+          reference: string | null;
+        }
+
         interface OxxoDisplayDetails {
           /**
            * The timestamp after which the OXXO voucher expires.
@@ -1108,14 +1139,14 @@ declare module 'stripe' {
           /**
            * The URL to the hosted Swish instructions page, which allows customers to view the QR code.
            */
-          hosted_instructions_url?: string;
+          hosted_instructions_url: string;
 
           /**
            * The url for mobile redirect based auth (for internal use only and not typically available in standard API requests).
            */
-          mobile_auth_url?: string;
+          mobile_auth_url: string;
 
-          qr_code?: SwishHandleRedirectOrDisplayQrCode.QrCode;
+          qr_code: SwishHandleRedirectOrDisplayQrCode.QrCode;
         }
 
         namespace SwishHandleRedirectOrDisplayQrCode {
@@ -1123,17 +1154,17 @@ declare module 'stripe' {
             /**
              * The raw data string used to generate QR code, it should be used together with QR code library.
              */
-            data?: string;
+            data: string;
 
             /**
              * The image_url_png string used to render QR code
              */
-            image_url_png?: string;
+            image_url_png: string;
 
             /**
              * The image_url_svg string used to render QR code
              */
-            image_url_svg?: string;
+            image_url_svg: string;
           }
         }
 
@@ -1253,6 +1284,8 @@ declare module 'stripe' {
 
         alipay?: PaymentMethodOptions.Alipay;
 
+        amazon_pay?: PaymentMethodOptions.AmazonPay;
+
         au_becs_debit?: PaymentMethodOptions.AuBecsDebit;
 
         bacs_debit?: PaymentMethodOptions.BacsDebit;
@@ -1291,6 +1324,8 @@ declare module 'stripe' {
 
         mobilepay?: PaymentMethodOptions.Mobilepay;
 
+        multibanco?: PaymentMethodOptions.Multibanco;
+
         oxxo?: PaymentMethodOptions.Oxxo;
 
         p24?: PaymentMethodOptions.P24;
@@ -1310,6 +1345,8 @@ declare module 'stripe' {
         sofort?: PaymentMethodOptions.Sofort;
 
         swish?: PaymentMethodOptions.Swish;
+
+        twint?: PaymentMethodOptions.Twint;
 
         us_bank_account?: PaymentMethodOptions.UsBankAccount;
 
@@ -1426,6 +1463,26 @@ declare module 'stripe' {
         }
 
         namespace Alipay {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface AmazonPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: AmazonPay.SetupFutureUsage;
+        }
+
+        namespace AmazonPay {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
@@ -1730,6 +1787,21 @@ declare module 'stripe' {
            * Request ability to [increment](https://stripe.com/docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
            */
           request_incremental_authorization_support: boolean | null;
+
+          routing?: CardPresent.Routing;
+        }
+
+        namespace CardPresent {
+          interface Routing {
+            /**
+             * Requested routing priority
+             */
+            requested_priority: Routing.RequestedPriority | null;
+          }
+
+          namespace Routing {
+            type RequestedPriority = 'domestic' | 'international';
+          }
         }
 
         interface Cashapp {
@@ -1938,6 +2010,7 @@ declare module 'stripe' {
 
           /**
            * [Deprecated] This is a legacy parameter that no longer has any function.
+           * @deprecated
            */
           persistent_token: string | null;
 
@@ -1961,6 +2034,17 @@ declare module 'stripe' {
            */
           capture_method?: 'manual';
 
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Multibanco {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -2071,7 +2155,25 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
-        interface RevolutPay {}
+        interface RevolutPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: RevolutPay.SetupFutureUsage;
+        }
+
+        namespace RevolutPay {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
 
         interface SepaDebit {
           mandate_options?: SepaDebit.MandateOptions;
@@ -2125,8 +2227,19 @@ declare module 'stripe' {
           /**
            * The order ID displayed in the Swish app after the payment is authorized.
            */
-          reference?: string | null;
+          reference: string | null;
 
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Twint {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -2164,6 +2277,8 @@ declare module 'stripe' {
 
         namespace UsBankAccount {
           interface FinancialConnections {
+            filters?: FinancialConnections.Filters;
+
             /**
              * The list of permissions to request. The `payment_method` permission must be included.
              */
@@ -2181,13 +2296,24 @@ declare module 'stripe' {
           }
 
           namespace FinancialConnections {
+            interface Filters {
+              /**
+               * The account subcategories to use to filter for possible accounts to link. Valid subcategories are `checking` and `savings`.
+               */
+              account_subcategories?: Array<Filters.AccountSubcategory>;
+            }
+
+            namespace Filters {
+              type AccountSubcategory = 'checking' | 'savings';
+            }
+
             type Permission =
               | 'balances'
               | 'ownership'
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'transactions';
+            type Prefetch = 'balances' | 'ownership' | 'transactions';
           }
 
           interface MandateOptions {

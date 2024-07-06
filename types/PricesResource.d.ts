@@ -91,7 +91,7 @@ declare module 'stripe' {
       transform_quantity?: PriceCreateParams.TransformQuantity;
 
       /**
-       * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge. One of `unit_amount` or `custom_unit_amount` is required, unless `billing_scheme=tiered`.
+       * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge. One of `unit_amount`, `unit_amount_decimal`, or `custom_unit_amount` is required, unless `billing_scheme=tiered`.
        */
       unit_amount?: number;
 
@@ -260,6 +260,11 @@ declare module 'stripe' {
          * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
          */
         interval_count?: number;
+
+        /**
+         * The meter tracking the usage of a metered price
+         */
+        meter?: string;
 
         /**
          * Default number of trial days when subscribing a customer to this price using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
@@ -489,7 +494,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Only return the price with these lookup_keys, if any exist.
+       * Only return the price with these lookup_keys, if any exist. You can specify up to 10 lookup_keys.
        */
       lookup_keys?: Array<string>;
 
@@ -515,6 +520,11 @@ declare module 'stripe' {
          * Filter by billing frequency. Either `day`, `week`, `month` or `year`.
          */
         interval?: Recurring.Interval;
+
+        /**
+         * Filter by the price's meter.
+         */
+        meter?: string;
 
         /**
          * Filter by the usage type for this price. Can be either `metered` or `licensed`.

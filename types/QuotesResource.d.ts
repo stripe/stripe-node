@@ -147,6 +147,11 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       interface FromQuote {
@@ -193,6 +198,11 @@ declare module 'stripe' {
 
       interface LineItem {
         /**
+         * The discounts applied to this line item.
+         */
+        discounts?: Stripe.Emptyable<Array<LineItem.Discount>>;
+
+        /**
          * The ID of the price object. One of `price` or `price_data` is required.
          */
         price?: string;
@@ -214,6 +224,23 @@ declare module 'stripe' {
       }
 
       namespace LineItem {
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
+        }
+
         interface PriceData {
           /**
            * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -449,6 +476,11 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+
+        /**
+         * ID of the promotion code to create a new discount for.
+         */
+        promotion_code?: string;
       }
 
       interface InvoiceSettings {
@@ -483,6 +515,11 @@ declare module 'stripe' {
 
       interface LineItem {
         /**
+         * The discounts applied to this line item.
+         */
+        discounts?: Stripe.Emptyable<Array<LineItem.Discount>>;
+
+        /**
          * The ID of an existing line item on the quote.
          */
         id?: string;
@@ -509,6 +546,23 @@ declare module 'stripe' {
       }
 
       namespace LineItem {
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
+        }
+
         interface PriceData {
           /**
            * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).

@@ -24,6 +24,16 @@ declare module 'stripe' {
       alipay?: PaymentMethodCreateParams.Alipay;
 
       /**
+       * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow. The field defaults to `unspecified`.
+       */
+      allow_redisplay?: PaymentMethodCreateParams.AllowRedisplay;
+
+      /**
+       * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
+       */
+      amazon_pay?: PaymentMethodCreateParams.AmazonPay;
+
+      /**
        * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
        */
       au_becs_debit?: PaymentMethodCreateParams.AuBecsDebit;
@@ -56,7 +66,7 @@ declare module 'stripe' {
       /**
        * If this is a `card` PaymentMethod, this hash contains the user's card details. For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex Express Checkout, or legacy Checkout) into the card hash with format `card: {token: "tok_visa"}`. When providing a card number, you must meet the requirements for [PCI compliance](https://stripe.com/docs/security#validating-pci-compliance). We strongly recommend using Stripe.js instead of interacting with this API directly.
        */
-      card?: PaymentMethodCreateParams.Card1 | PaymentMethodCreateParams.Card2;
+      card?: PaymentMethodCreateParams.Card;
 
       /**
        * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
@@ -134,6 +144,11 @@ declare module 'stripe' {
       mobilepay?: PaymentMethodCreateParams.Mobilepay;
 
       /**
+       * If this is a `multibanco` PaymentMethod, this hash contains details about the Multibanco payment method.
+       */
+      multibanco?: PaymentMethodCreateParams.Multibanco;
+
+      /**
        * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
        */
       oxxo?: PaymentMethodCreateParams.Oxxo;
@@ -194,6 +209,11 @@ declare module 'stripe' {
       swish?: PaymentMethodCreateParams.Swish;
 
       /**
+       * If this is a TWINT PaymentMethod, this hash contains details about the TWINT payment method.
+       */
+      twint?: PaymentMethodCreateParams.Twint;
+
+      /**
        * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
        */
       type?: PaymentMethodCreateParams.Type;
@@ -237,6 +257,10 @@ declare module 'stripe' {
       interface AfterpayClearpay {}
 
       interface Alipay {}
+
+      type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+      interface AmazonPay {}
 
       interface AuBecsDebit {
         /**
@@ -295,7 +319,7 @@ declare module 'stripe' {
         tax_id: string;
       }
 
-      interface Card1 {
+      interface Card {
         /**
          * The card's CVC. It is highly recommended to always include this value.
          */
@@ -304,25 +328,30 @@ declare module 'stripe' {
         /**
          * Two-digit number representing the card's expiration month.
          */
-        exp_month: number;
+        exp_month?: number;
 
         /**
          * Four-digit number representing the card's expiration year.
          */
-        exp_year: number;
+        exp_year?: number;
 
         /**
          * Contains information about card networks used to process the payment.
          */
-        networks?: Card1.Networks;
+        networks?: Card.Networks;
 
         /**
          * The card number, as a string without any separators.
          */
-        number: string;
+        number?: string;
+
+        /**
+         * For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex Express Checkout, or legacy Checkout) into the card hash with format card: {token: "tok_visa"}.
+         */
+        token?: string;
       }
 
-      namespace Card1 {
+      namespace Card {
         interface Networks {
           /**
            * The customer's preferred card network for co-branded cards. Supports `cartes_bancaires`, `mastercard`, or `visa`. Selection of a network that does not apply to the card will be stored as `invalid_preference` on the card.
@@ -333,13 +362,6 @@ declare module 'stripe' {
         namespace Networks {
           type Preferred = 'cartes_bancaires' | 'mastercard' | 'visa';
         }
-      }
-
-      interface Card2 {
-        /**
-         * For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex Express Checkout, or legacy Checkout) into the card hash with format card: {token: "tok_visa"}.
-         */
-        token: string;
       }
 
       interface Cashapp {}
@@ -490,6 +512,8 @@ declare module 'stripe' {
 
       interface Mobilepay {}
 
+      interface Multibanco {}
+
       interface Oxxo {}
 
       interface P24 {
@@ -566,11 +590,14 @@ declare module 'stripe' {
 
       interface Swish {}
 
+      interface Twint {}
+
       type Type =
         | 'acss_debit'
         | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
+        | 'amazon_pay'
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
@@ -588,6 +615,7 @@ declare module 'stripe' {
         | 'konbini'
         | 'link'
         | 'mobilepay'
+        | 'multibanco'
         | 'oxxo'
         | 'p24'
         | 'paynow'
@@ -598,6 +626,7 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'sofort'
         | 'swish'
+        | 'twint'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
@@ -649,6 +678,11 @@ declare module 'stripe' {
 
     interface PaymentMethodUpdateParams {
       /**
+       * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow. The field defaults to `unspecified`.
+       */
+      allow_redisplay?: PaymentMethodUpdateParams.AllowRedisplay;
+
+      /**
        * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
        */
       billing_details?: PaymentMethodUpdateParams.BillingDetails;
@@ -680,6 +714,8 @@ declare module 'stripe' {
     }
 
     namespace PaymentMethodUpdateParams {
+      type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
       interface BillingDetails {
         /**
          * Billing address.
@@ -776,6 +812,7 @@ declare module 'stripe' {
         | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
+        | 'amazon_pay'
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
@@ -793,6 +830,7 @@ declare module 'stripe' {
         | 'konbini'
         | 'link'
         | 'mobilepay'
+        | 'multibanco'
         | 'oxxo'
         | 'p24'
         | 'paynow'
@@ -803,6 +841,7 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'sofort'
         | 'swish'
+        | 'twint'
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
