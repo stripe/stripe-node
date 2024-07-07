@@ -132,4 +132,6 @@ describe('Integration test', function() {
 
     runWebhookTest('nestjs');
   });
+
+  it('Webhook sample Hono', () => runWebhookTest('hono'));
 });
