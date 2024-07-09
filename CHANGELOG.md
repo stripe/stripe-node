@@ -9,6 +9,12 @@
   * Add support for `payment_method_allow_redisplay_filters`, `payment_method_redisplay_limit`, `payment_method_redisplay`, and `payment_method_save_usage` on `CustomerSession.components.payment_element.features` and `CustomerSessionCreateParams.components.payment_element.features`
   * Add support for new value `balance` on enums `FinancialConnections.Account.subscriptions[]`, `FinancialConnections.AccountSubscribeParams.features[]`, and `FinancialConnections.AccountUnsubscribeParams.features[]`
 
+## 16.2.0 - 2024-07-05
+* [#2125](https://github.com/stripe/stripe-node/pull/2125) Update generated code
+  * Add support for `add_lines`, `remove_lines`, and `update_lines` methods on resource `Invoice`
+  * Add support for new value `payment_intent_fx_quote_invalid` on enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`
+  * Add support for `posted_at` on `Tax.TransactionCreateFromCalculationParams` and `Tax.Transaction`
+
 ## 16.2.0-beta.1 - 2024-06-27
 * [#2110](https://github.com/stripe/stripe-node/pull/2110) Update generated code for beta
   * Remove support for `payment_method_set_as_default` on `CustomerSession.components.payment_element.features` and `CustomerSessionCreateParams.components.payment_element.features`

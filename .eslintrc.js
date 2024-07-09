@@ -39,7 +39,7 @@ module.exports = {
     'func-style': ['error', 'declaration', {allowArrowFunctions: true}],
     'generator-star-spacing': 'error',
     'global-require': 'off',
-    'guard-for-in': 'off',
+    'guard-for-in': 'error',
     'handle-callback-err': 'off',
     'id-blacklist': 'error',
     'id-length': 'off',
