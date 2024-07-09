@@ -16,6 +16,9 @@ function ResourceNamespace(
   >
 ): void {
   for (const name in resources) {
+    if (!Object.prototype.hasOwnProperty.call(resources, name)) {
+      continue;
+    }
     const camelCaseName = name[0].toLowerCase() + name.substring(1);
 
     const resource = new resources[name](stripe);
