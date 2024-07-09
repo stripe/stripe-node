@@ -1,0 +1,3 @@
+[tools]
+# used in unit tests
+deno = "1"
