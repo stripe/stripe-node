@@ -55,7 +55,7 @@ declare module 'stripe' {
         /**
          * This hash contains whether the Payment Element is enabled and the features it supports.
          */
-        payment_element?: Components.PaymentElement;
+        payment_element: Components.PaymentElement;
 
         /**
          * This hash contains whether the pricing table is enabled.
