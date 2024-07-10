@@ -82,7 +82,7 @@ declare module 'stripe' {
         namespace Details {
           interface CurrentRepaymentInterval {
             /**
-             * The time at which the minimum payment amount will be due. If not met through withholding, the Connected account's linked bank account will be debited.
+             * The time at which the minimum payment amount will be due. If not met through withholding, the Connected account's linked bank account or account balance will be debited.
              * Given in seconds since unix epoch.
              */
             due_at: number;
