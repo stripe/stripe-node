@@ -1,5 +1,17 @@
 # Changelog
 
+## 16.3.0 - 2024-07-11
+* [#2130](https://github.com/stripe/stripe-node/pull/2130) Update generated code
+  * Remove support for values `billing_policy_remote_function_response_invalid`, `billing_policy_remote_function_timeout`, `billing_policy_remote_function_unexpected_status_code`, `billing_policy_remote_function_unreachable`, and `payment_intent_fx_quote_invalid` from enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`
+  * Add support for `payment_method_options` on `ConfirmationToken`
+  * Add support for `payment_element` on `CustomerSession.components` and `CustomerSessionCreateParams.components`
+  * Add support for `address_validation` on `Issuing.Card.shipping` and `Issuing.CardCreateParams.shipping`
+  * Add support for `shipping` on `Issuing.CardUpdateParams`
+  * Change `Plan.meter` and `Price.recurring.meter` to be required
+* [#2133](https://github.com/stripe/stripe-node/pull/2133) update node versions in CI
+* [#2132](https://github.com/stripe/stripe-node/pull/2132) check `hasOwnProperty` when using `for..in`
+* [#2048](https://github.com/stripe/stripe-node/pull/2048) Add generateTestHeaderStringAsync function to Webhooks.ts
+
 ## 16.2.0 - 2024-07-05
 * [#2125](https://github.com/stripe/stripe-node/pull/2125) Update generated code
   * Add support for `add_lines`, `remove_lines`, and `update_lines` methods on resource `Invoice`
