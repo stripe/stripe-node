@@ -1,5 +1,11 @@
 # Changelog
 
+## 16.4.0-beta.1 - 2024-07-11
+* [#2128](https://github.com/stripe/stripe-node/pull/2128) Update generated code for beta
+  * Change `ConfirmationToken.payment_method_options` and `CustomerSession.components.payment_element` to be required
+  * Add support for new value `not_qualified` on enum `Dispute.evidence_details.enhanced_eligibility.visa_compelling_evidence_3.status`
+* [#2134](https://github.com/stripe/stripe-node/pull/2134) Fix merge conflicts
+
 ## 16.3.0-beta.1 - 2024-07-05
 * [#2126](https://github.com/stripe/stripe-node/pull/2126) Update generated code for beta
   * ⚠️ Remove support for `payment_method_update` on `CustomerSession.components.payment_element.features` and `CustomerSessionCreateParams.components.payment_element.features`. Users are expected to completely migrate from using `payment_method_update`.
