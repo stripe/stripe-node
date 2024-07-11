@@ -1,8 +1,8 @@
 import {
   MultipartRequestData,
+  RequestData,
   RequestHeaders,
   StripeResourceObject,
-  RequestData,
 } from './Types.js';
 import {flattenAndStringify, stringifyRequestData} from './utils.js';
 
@@ -46,6 +46,10 @@ const multipartDataGenerator = (
   const flattenedData = flattenAndStringify(data);
 
   for (const k in flattenedData) {
+    if (!Object.prototype.hasOwnProperty.call(flattenedData, k)) {
+      continue;
+    }
+
     const v = flattenedData[k];
     push(`--${segno}`);
     if (Object.prototype.hasOwnProperty.call(v, 'data')) {

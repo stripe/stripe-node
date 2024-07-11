@@ -1,18 +1,18 @@
 import * as _Error from './Error.js';
+import {RequestSender} from './RequestSender.js';
+import {StripeResource} from './StripeResource.js';
+import {AppInfo, StripeObject, UserProvidedConfig} from './Types.js';
+import {WebhookObject, createWebhooks} from './Webhooks.js';
 import * as apiVersion from './apiVersion.js';
-import * as resources from './resources.js';
+import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
+import {PlatformFunctions} from './platform/PlatformFunctions.js';
+import * as resources from './resources.js';
 import {
   determineProcessUserAgentProperties,
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
-import {CryptoProvider} from './crypto/CryptoProvider.js';
-import {PlatformFunctions} from './platform/PlatformFunctions.js';
-import {RequestSender} from './RequestSender.js';
-import {StripeResource} from './StripeResource.js';
-import {WebhookObject, createWebhooks} from './Webhooks.js';
-import {StripeObject, AppInfo, UserProvidedConfig} from './Types.js';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -363,6 +363,9 @@ export function createStripe(
       this._platformFunctions.getUname().then((uname: string | null) => {
         const userAgent: Record<string, string> = {};
         for (const field in seed) {
+          if (!Object.prototype.hasOwnProperty.call(seed, field)) {
+            continue;
+          }
           userAgent[field] = encodeURIComponent(seed[field] ?? 'null');
         }
 
@@ -417,6 +420,10 @@ export function createStripe(
      */
     _prepResources(): void {
       for (const name in resources) {
+        if (!Object.prototype.hasOwnProperty.call(resources, name)) {
+          continue;
+        }
+
         // @ts-ignore
         this[pascalToCamelCase(name)] = new resources[name](this);
       }

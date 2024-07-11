@@ -55,7 +55,10 @@ jobs:
         os:
           - "ubuntu-latest"
         node:
-          - "19"
+          # should include even numbers >= 12
+          # see: https://nodejs.org/en/about/previous-releases
+          - "22"
+          - "20"
           - "18"
           - "16"
           - "14"
