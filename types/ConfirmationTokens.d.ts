@@ -48,6 +48,11 @@ declare module 'stripe' {
       payment_intent: string | null;
 
       /**
+       * Payment-method-specific configuration for this ConfirmationToken.
+       */
+      payment_method_options: ConfirmationToken.PaymentMethodOptions | null;
+
+      /**
        * Payment details collected by the Payment Element, used to create a PaymentMethod when a PaymentIntent or SetupIntent is confirmed with this ConfirmationToken.
        */
       payment_method_preview: ConfirmationToken.PaymentMethodPreview | null;
@@ -113,6 +118,22 @@ declare module 'stripe' {
              */
             user_agent: string | null;
           }
+        }
+      }
+
+      interface PaymentMethodOptions {
+        /**
+         * This hash contains the card payment method options.
+         */
+        card: PaymentMethodOptions.Card | null;
+      }
+
+      namespace PaymentMethodOptions {
+        interface Card {
+          /**
+           * The `cvc_update` Token collected from the Payment Element.
+           */
+          cvc_token: string | null;
         }
       }
 

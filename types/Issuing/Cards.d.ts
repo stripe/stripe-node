@@ -139,6 +139,11 @@ declare module 'stripe' {
           address: Stripe.Address;
 
           /**
+           * Address validation details for the shipment.
+           */
+          address_validation?: Shipping.AddressValidation | null;
+
+          /**
            * The delivery company that shipped a card.
            */
           carrier: Shipping.Carrier | null;
@@ -195,6 +200,35 @@ declare module 'stripe' {
         }
 
         namespace Shipping {
+          interface AddressValidation {
+            /**
+             * The address validation capabilities to use.
+             */
+            mode: AddressValidation.Mode;
+
+            /**
+             * The normalized shipping address.
+             */
+            normalized_address: Stripe.Address | null;
+
+            /**
+             * The validation result for the shipping address.
+             */
+            result: AddressValidation.Result | null;
+          }
+
+          namespace AddressValidation {
+            type Mode =
+              | 'disabled'
+              | 'normalization_only'
+              | 'validation_and_normalization';
+
+            type Result =
+              | 'indeterminate'
+              | 'likely_deliverable'
+              | 'likely_undeliverable';
+          }
+
           type Carrier = 'dhl' | 'fedex' | 'royal_mail' | 'usps';
 
           interface Customs {

@@ -106,7 +106,7 @@ declare module 'stripe' {
       /**
        * The meter tracking the usage of a metered price
        */
-      meter?: string | null;
+      meter: string | null;
 
       /**
        * A brief description of the plan, hidden from customers.

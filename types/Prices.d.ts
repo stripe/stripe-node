@@ -258,7 +258,7 @@ declare module 'stripe' {
         /**
          * The meter tracking the usage of a metered price
          */
-        meter?: string | null;
+        meter: string | null;
 
         /**
          * Default number of trial days when subscribing a customer to this price using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
