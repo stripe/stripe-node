@@ -50,7 +50,7 @@ declare module 'stripe' {
       /**
        * Payment-method-specific configuration for this ConfirmationToken.
        */
-      payment_method_options?: ConfirmationToken.PaymentMethodOptions | null;
+      payment_method_options: ConfirmationToken.PaymentMethodOptions | null;
 
       /**
        * Payment details collected by the Payment Element, used to create a PaymentMethod when a PaymentIntent or SetupIntent is confirmed with this ConfirmationToken.
