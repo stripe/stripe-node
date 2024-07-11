@@ -406,6 +406,7 @@ declare module 'stripe' {
 
             type Status =
               | 'accepted'
+              | 'not_qualified'
               | 'partner_rejected'
               | 'qualified'
               | 'requires_action'
