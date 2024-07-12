@@ -687,7 +687,7 @@ declare module 'stripe' {
         >;
 
         /**
-         * Either `off`, or `on_subscription`. With `on_subscription` Stripe updates `subscription.default_payment_method` when a subscription payment succeeds.
+         * Configure whether Stripe updates `subscription.default_payment_method` when payment succeeds. Defaults to `off` if unspecified.
          */
         save_default_payment_method?: PaymentSettings.SaveDefaultPaymentMethod;
       }
@@ -1721,7 +1721,7 @@ declare module 'stripe' {
         >;
 
         /**
-         * Either `off`, or `on_subscription`. With `on_subscription` Stripe updates `subscription.default_payment_method` when a subscription payment succeeds.
+         * Configure whether Stripe updates `subscription.default_payment_method` when payment succeeds. Defaults to `off` if unspecified.
          */
         save_default_payment_method?: PaymentSettings.SaveDefaultPaymentMethod;
       }
