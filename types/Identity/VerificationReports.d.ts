@@ -14,7 +14,7 @@ declare module 'stripe' {
        * API. To configure and create VerificationReports, use the
        * [VerificationSession](https://stripe.com/docs/api/identity/verification_sessions) API.
        *
-       * Related guides: [Accessing verification results](https://stripe.com/docs/identity/verification-sessions#results).
+       * Related guide: [Accessing verification results](https://stripe.com/docs/identity/verification-sessions#results).
        */
       interface VerificationReport {
         /**
