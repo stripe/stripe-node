@@ -1260,6 +1260,8 @@ declare module 'stripe' {
 
         branding: Settings.Branding;
 
+        capital?: Settings.Capital;
+
         card_issuing?: Settings.CardIssuing;
 
         card_payments: Settings.CardPayments;
@@ -1312,6 +1314,22 @@ declare module 'stripe' {
            * A CSS hex color value representing the secondary branding color for this account
            */
           secondary_color: string | null;
+        }
+
+        interface Capital {
+          /**
+           * Per-currency mapping of user-selected destination accounts used to pay out loans.
+           */
+          payout_destination?: {
+            [key: string]: string;
+          };
+
+          /**
+           * Per-currency mapping of all destination accounts eligible to receive loan payouts.
+           */
+          payout_destination_selector?: {
+            [key: string]: Array<string>;
+          };
         }
 
         interface CardIssuing {

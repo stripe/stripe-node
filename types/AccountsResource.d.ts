@@ -1431,6 +1431,11 @@ declare module 'stripe' {
         branding?: Settings.Branding;
 
         /**
+         * Settings specific to the account's use of the Capital product.
+         */
+        capital?: Settings.Capital;
+
+        /**
          * Settings specific to the account's use of the Card Issuing product.
          */
         card_issuing?: Settings.CardIssuing;
@@ -1489,6 +1494,22 @@ declare module 'stripe' {
            * A CSS hex color value representing the secondary branding color for this account.
            */
           secondary_color?: string;
+        }
+
+        interface Capital {
+          /**
+           * Per-currency mapping of user-selected destination accounts used to pay out loans.
+           */
+          payout_destination?: {
+            [key: string]: string;
+          };
+
+          /**
+           * Per-currency mapping of all destination accounts eligible to receive Capital financing payouts.
+           */
+          payout_destination_selector?: {
+            [key: string]: Array<string>;
+          };
         }
 
         interface CardIssuing {
@@ -3056,6 +3077,11 @@ declare module 'stripe' {
         branding?: Settings.Branding;
 
         /**
+         * Settings specific to the account's use of the Capital product.
+         */
+        capital?: Settings.Capital;
+
+        /**
          * Settings specific to the account's use of the Card Issuing product.
          */
         card_issuing?: Settings.CardIssuing;
@@ -3119,6 +3145,22 @@ declare module 'stripe' {
            * A CSS hex color value representing the secondary branding color for this account.
            */
           secondary_color?: string;
+        }
+
+        interface Capital {
+          /**
+           * Per-currency mapping of user-selected destination accounts used to pay out loans.
+           */
+          payout_destination?: {
+            [key: string]: string;
+          };
+
+          /**
+           * Per-currency mapping of all destination accounts eligible to receive Capital financing payouts.
+           */
+          payout_destination_selector?: {
+            [key: string]: Array<string>;
+          };
         }
 
         interface CardIssuing {
