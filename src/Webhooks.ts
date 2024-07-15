@@ -65,6 +65,9 @@ export type WebhookObject = {
     receivedAt: number
   ) => Promise<WebhookEvent>;
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
+  generateTestHeaderStringAsync: (
+    opts: WebhookTestHeaderOptions
+  ) => Promise<string>;
 };
 
 export function createWebhooks(
@@ -142,31 +145,30 @@ export function createWebhooks(
      * @property {CryptoProvider} cryptoProvider - Crypto provider to use for computing the signature if none was provided. Defaults to NodeCryptoProvider.
      */
     generateTestHeaderString: function(opts: WebhookTestHeaderOptions): string {
-      if (!opts) {
-        throw new StripeError({
-          message: 'Options are required',
-        });
-      }
+      const preparedOpts = prepareOptions(opts);
 
-      opts.timestamp =
-        Math.floor(opts.timestamp) || Math.floor(Date.now() / 1000);
-      opts.scheme = opts.scheme || signature.EXPECTED_SCHEME;
-
-      opts.cryptoProvider = opts.cryptoProvider || getCryptoProvider();
-
-      opts.signature =
-        opts.signature ||
-        opts.cryptoProvider.computeHMACSignature(
-          opts.timestamp + '.' + opts.payload,
-          opts.secret
+      const signature =
+        preparedOpts.signature ||
+        preparedOpts.cryptoProvider.computeHMACSignature(
+          preparedOpts.payloadString,
+          preparedOpts.secret
         );
 
-      const generatedHeader = [
-        't=' + opts.timestamp,
-        opts.scheme + '=' + opts.signature,
-      ].join(',');
+      return preparedOpts.generateHeaderString(signature);
+    },
+    generateTestHeaderStringAsync: async function(
+      opts: WebhookTestHeaderOptions
+    ) {
+      const preparedOpts = prepareOptions(opts);
 
-      return generatedHeader;
+      const signature =
+        preparedOpts.signature ||
+        (await preparedOpts.cryptoProvider.computeHMACSignatureAsync(
+          preparedOpts.payloadString,
+          preparedOpts.secret
+        ));
+
+      return preparedOpts.generateHeaderString(signature);
     },
   };
 
@@ -441,6 +443,38 @@ export function createWebhooks(
       webhooksCryptoProviderInstance = platformFunctions.createDefaultCryptoProvider();
     }
     return webhooksCryptoProviderInstance!;
+  }
+
+  function prepareOptions(
+    opts: WebhookTestHeaderOptions
+  ): WebhookTestHeaderOptions & {
+    payloadString: string;
+    generateHeaderString: (signature: string) => string;
+  } {
+    if (!opts) {
+      throw new StripeError({
+        message: 'Options are required',
+      });
+    }
+
+    const timestamp =
+      Math.floor(opts.timestamp) || Math.floor(Date.now() / 1000);
+    const scheme = opts.scheme || signature.EXPECTED_SCHEME;
+    const cryptoProvider = opts.cryptoProvider || getCryptoProvider();
+    const payloadString = `${timestamp}.${opts.payload}`;
+
+    const generateHeaderString = (signature: string): string => {
+      return `t=${timestamp},${scheme}=${signature}`;
+    };
+
+    return {
+      ...opts,
+      timestamp,
+      scheme,
+      cryptoProvider,
+      payloadString,
+      generateHeaderString,
+    };
   }
 
   Webhook.signature = signature;
