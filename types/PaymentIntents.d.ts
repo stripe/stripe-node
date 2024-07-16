@@ -53,6 +53,8 @@ declare module 'stripe' {
        */
       application_fee_amount: number | null;
 
+      async_workflows?: PaymentIntent.AsyncWorkflows;
+
       /**
        * Settings to configure compatible payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods)
        */
@@ -248,6 +250,25 @@ declare module 'stripe' {
            * Portion of the amount that corresponds to a tip.
            */
           amount?: number;
+        }
+      }
+
+      interface AsyncWorkflows {
+        inputs?: AsyncWorkflows.Inputs;
+      }
+
+      namespace AsyncWorkflows {
+        interface Inputs {
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: string;
+          }
         }
       }
 

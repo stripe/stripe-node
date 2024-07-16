@@ -19,6 +19,11 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      async_workflows?: PaymentIntentCreateParams.AsyncWorkflows;
+
+      /**
        * When you enable this parameter, this PaymentIntent accepts payment methods that you enable in the Dashboard and that are compatible with this PaymentIntent's other parameters.
        */
       automatic_payment_methods?: PaymentIntentCreateParams.AutomaticPaymentMethods;
@@ -190,6 +195,31 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentCreateParams {
+      interface AsyncWorkflows {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: AsyncWorkflows.Inputs;
+      }
+
+      namespace AsyncWorkflows {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
+
       interface AutomaticPaymentMethods {
         /**
          * Controls whether this PaymentIntent will accept redirect-based payment methods.
@@ -3343,6 +3373,11 @@ declare module 'stripe' {
       application_fee_amount?: Stripe.Emptyable<number>;
 
       /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      async_workflows?: PaymentIntentUpdateParams.AsyncWorkflows;
+
+      /**
        * Controls when the funds will be captured from the customer's account.
        */
       capture_method?: PaymentIntentUpdateParams.CaptureMethod;
@@ -3460,6 +3495,31 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentUpdateParams {
+      interface AsyncWorkflows {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: AsyncWorkflows.Inputs;
+      }
+
+      namespace AsyncWorkflows {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
+
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       interface MandateData {
@@ -6602,6 +6662,11 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      async_workflows?: PaymentIntentCaptureParams.AsyncWorkflows;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -6641,6 +6706,31 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentCaptureParams {
+      interface AsyncWorkflows {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: AsyncWorkflows.Inputs;
+      }
+
+      namespace AsyncWorkflows {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
+
       interface PaymentDetails {
         /**
          * Car rental details for this PaymentIntent.
@@ -7298,6 +7388,11 @@ declare module 'stripe' {
       application_fee_amount?: Stripe.Emptyable<number>;
 
       /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      async_workflows?: PaymentIntentConfirmParams.AsyncWorkflows;
+
+      /**
        * Controls when the funds will be captured from the customer's account.
        */
       capture_method?: PaymentIntentConfirmParams.CaptureMethod;
@@ -7402,6 +7497,31 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentConfirmParams {
+      interface AsyncWorkflows {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: AsyncWorkflows.Inputs;
+      }
+
+      namespace AsyncWorkflows {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
+
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       interface MandateData {
@@ -10500,6 +10620,11 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      async_workflows?: PaymentIntentDecrementAuthorizationParams.AsyncWorkflows;
+
+      /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
       description?: string;
@@ -10522,6 +10647,31 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentDecrementAuthorizationParams {
+      interface AsyncWorkflows {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: AsyncWorkflows.Inputs;
+      }
+
+      namespace AsyncWorkflows {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
+
       interface TransferData {
         /**
          * The amount that will be transferred automatically when a charge succeeds.
@@ -10540,6 +10690,11 @@ declare module 'stripe' {
        * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: number;
+
+      /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      async_workflows?: PaymentIntentIncrementAuthorizationParams.AsyncWorkflows;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -10569,6 +10724,31 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentIncrementAuthorizationParams {
+      interface AsyncWorkflows {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: AsyncWorkflows.Inputs;
+      }
+
+      namespace AsyncWorkflows {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
+
       interface TransferData {
         /**
          * The amount that will be transferred automatically when a charge succeeds.
