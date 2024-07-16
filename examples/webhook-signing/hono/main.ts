@@ -52,7 +52,7 @@ app.post('/webhook', async (context) => {
 
 export default app;
 
-const port = 8741;
+const port = 8787;
 console.log(`Webhook endpoint available at http://localhost:${port}/webhook`);
 
 serve({

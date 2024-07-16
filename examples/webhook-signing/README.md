@@ -6,6 +6,7 @@ Available examples:
 - [`express`](./express) - Express 4
 - [`koa`](./koa) - Koa 2
 - [`nextjs`](./nextjs) - NextJS 13
+- [`hono`](.hono) - Hono
 
 ### Requirements
 

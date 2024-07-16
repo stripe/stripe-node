@@ -113,6 +113,8 @@ describe('Integration test', function() {
 
   it('Webhook sample koa', () => runWebhookTest('koa'));
 
+  it('Webhook sample Hono', () => runWebhookTest('hono'));
+
   it('Webhook sample nextjs', function() {
     // Next.js supports Node.js >=16
     if (nodeVersion < 16) {
@@ -132,6 +134,4 @@ describe('Integration test', function() {
 
     runWebhookTest('nestjs');
   });
-
-  it('Webhook sample Hono', () => runWebhookTest('hono'));
 });
