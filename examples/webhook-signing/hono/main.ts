@@ -23,7 +23,7 @@ app.post('/webhook', async (context) => {
       webhookSecret
     );
 
-    console.log('Success condtructing event:', event.id);
+    console.log('Success constructing event:', event.id);
 
     switch (event.type) {
       case 'payment_intent.created': {
