@@ -410,7 +410,7 @@ declare module 'stripe' {
         payment_method_types: Array<PaymentSettings.PaymentMethodType> | null;
 
         /**
-         * Either `off`, or `on_subscription`. With `on_subscription` Stripe updates `subscription.default_payment_method` when a subscription payment succeeds.
+         * Configure whether Stripe updates `subscription.default_payment_method` when payment succeeds. Defaults to `off`.
          */
         save_default_payment_method: PaymentSettings.SaveDefaultPaymentMethod | null;
       }
@@ -646,6 +646,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'konbini'
           | 'link'
+          | 'multibanco'
           | 'p24'
           | 'paynow'
           | 'paypal'

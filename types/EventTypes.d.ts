@@ -110,6 +110,7 @@ declare module 'stripe' {
       | IssuingDisputeClosedEvent
       | IssuingDisputeCreatedEvent
       | IssuingDisputeFundsReinstatedEvent
+      | IssuingDisputeFundsRescindedEvent
       | IssuingDisputeSubmittedEvent
       | IssuingDisputeUpdatedEvent
       | IssuingPersonalizationDesignActivatedEvent
@@ -1948,6 +1949,22 @@ declare module 'stripe' {
     }
 
     namespace IssuingDisputeFundsReinstatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.Dispute;
+
+        previous_attributes?: Partial<Stripe.Issuing.Dispute>;
+      }
+    }
+
+    /**
+     * Occurs whenever funds are deducted from your account for an Issuing dispute.
+     */
+    interface IssuingDisputeFundsRescindedEvent extends EventBase {
+      type: 'issuing_dispute.funds_rescinded';
+      data: IssuingDisputeFundsRescindedEvent.Data;
+    }
+
+    namespace IssuingDisputeFundsRescindedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Dispute;
 

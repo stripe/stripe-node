@@ -1172,6 +1172,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'konbini'
           | 'link'
+          | 'multibanco'
           | 'p24'
           | 'paynow'
           | 'paypal'
