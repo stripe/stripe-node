@@ -179,6 +179,11 @@ declare module 'stripe' {
       paypal?: PaymentMethodConfigurationCreateParams.Paypal;
 
       /**
+       * PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables customers in Australia to pay by providing their bank account details. Customers must accept a mandate authorizing you to debit their account. Check this [page](https://docs.stripe.com/payments/payto) for more details.
+       */
+      payto?: PaymentMethodConfigurationCreateParams.Payto;
+
+      /**
        * PromptPay is a Thailand-based payment method that allows customers to make a payment using their preferred app from participating banks. Check this [page](https://stripe.com/docs/payments/promptpay) for more details.
        */
       promptpay?: PaymentMethodConfigurationCreateParams.Promptpay;
@@ -860,6 +865,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Payto {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Payto.DisplayPreference;
+      }
+
+      namespace Payto {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Promptpay {
         /**
          * Whether or not the payment method should be displayed.
@@ -1203,6 +1228,11 @@ declare module 'stripe' {
        * PayPal, a digital wallet popular with customers in Europe, allows your customers worldwide to pay using their PayPal account. Check this [page](https://stripe.com/docs/payments/paypal) for more details.
        */
       paypal?: PaymentMethodConfigurationUpdateParams.Paypal;
+
+      /**
+       * PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables customers in Australia to pay by providing their bank account details. Customers must accept a mandate authorizing you to debit their account. Check this [page](https://docs.stripe.com/payments/payto) for more details.
+       */
+      payto?: PaymentMethodConfigurationUpdateParams.Payto;
 
       /**
        * PromptPay is a Thailand-based payment method that allows customers to make a payment using their preferred app from participating banks. Check this [page](https://stripe.com/docs/payments/promptpay) for more details.
@@ -1874,6 +1904,26 @@ declare module 'stripe' {
       }
 
       namespace Paypal {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Payto {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Payto.DisplayPreference;
+      }
+
+      namespace Payto {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
