@@ -268,9 +268,18 @@ declare module 'stripe' {
           brand: string;
 
           /**
+           * The type of dispute opened. Different case types may have varying fees and financial impact.
+           */
+          case_type: Card.CaseType;
+
+          /**
            * The card network's specific dispute reason code, which maps to one of Stripe's primary dispute categories to simplify response guidance. The [Network code map](https://stripe.com/docs/disputes/categories#network-code-map) lists all available dispute reason codes by network.
            */
           network_reason_code: string | null;
+        }
+
+        namespace Card {
+          type CaseType = 'chargeback' | 'inquiry';
         }
 
         interface Klarna {
