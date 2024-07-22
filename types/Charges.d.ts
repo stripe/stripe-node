@@ -682,7 +682,12 @@ declare module 'stripe' {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
         }
 
-        interface Blik {}
+        interface Blik {
+          /**
+           * A unique and immutable identifier assigned by BLIK to every buyer.
+           */
+          buyer_id: string | null;
+        }
 
         interface Boleto {
           /**
