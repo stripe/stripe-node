@@ -132,7 +132,7 @@ declare module 'stripe' {
         estimated_worker_count: number | null;
 
         /**
-         * [The merchant category code for the account](https://stripe.com/docs/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
+         * [The merchant category code for the account](https://stripe.com/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
          */
         mcc: string | null;
 
@@ -177,7 +177,7 @@ declare module 'stripe' {
       namespace BusinessProfile {
         interface AnnualRevenue {
           /**
-           * A non-negative integer representing the amount in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+           * A non-negative integer representing the amount in the [smallest currency unit](https://stripe.com/currencies#zero-decimal).
            */
           amount: number | null;
 
@@ -194,7 +194,7 @@ declare module 'stripe' {
 
         interface MonthlyEstimatedRevenue {
           /**
-           * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+           * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/currencies#zero-decimal).
            */
           amount: number;
 
