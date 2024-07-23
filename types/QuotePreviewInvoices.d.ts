@@ -371,9 +371,6 @@ declare module 'stripe' {
 
       status_transitions: QuotePreviewInvoice.StatusTransitions;
 
-      /**
-       * The subscription that this invoice was prepared for, if any.
-       */
       subscription: string | Stripe.Subscription | null;
 
       /**
