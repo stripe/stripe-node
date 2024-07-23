@@ -204,6 +204,11 @@ declare module 'stripe' {
       swish?: PaymentMethodConfigurationCreateParams.Swish;
 
       /**
+       * Twint is a payment method popular in Switzerland. It allows customers to pay using their mobile phone. Check this [page](https://docs.stripe.com/payments/twint) for more details.
+       */
+      twint?: PaymentMethodConfigurationCreateParams.Twint;
+
+      /**
        * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-debit) for more details.
        */
       us_bank_account?: PaymentMethodConfigurationCreateParams.UsBankAccount;
@@ -960,6 +965,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Twint {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Twint.DisplayPreference;
+      }
+
+      namespace Twint {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface UsBankAccount {
         /**
          * Whether or not the payment method should be displayed.
@@ -1228,6 +1253,11 @@ declare module 'stripe' {
        * Swish is a [real-time](https://stripe.com/docs/payments/real-time) payment method popular in Sweden. It allows customers to [authenticate and approve](https://stripe.com/docs/payments/payment-methods#customer-actions) payments using the Swish mobile app and the Swedish BankID mobile app. Check this [page](https://stripe.com/docs/payments/swish) for more details.
        */
       swish?: PaymentMethodConfigurationUpdateParams.Swish;
+
+      /**
+       * Twint is a payment method popular in Switzerland. It allows customers to pay using their mobile phone. Check this [page](https://docs.stripe.com/payments/twint) for more details.
+       */
+      twint?: PaymentMethodConfigurationUpdateParams.Twint;
 
       /**
        * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-debit) for more details.
@@ -1974,6 +2004,26 @@ declare module 'stripe' {
       }
 
       namespace Swish {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Twint {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Twint.DisplayPreference;
+      }
+
+      namespace Twint {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
