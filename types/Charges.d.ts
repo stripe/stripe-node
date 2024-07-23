@@ -553,7 +553,12 @@ declare module 'stripe' {
           transit_number: string | null;
         }
 
-        interface Affirm {}
+        interface Affirm {
+          /**
+           * The Affirm transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
+        }
 
         interface AfterpayClearpay {
           /**
