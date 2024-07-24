@@ -141,7 +141,8 @@ declare module 'stripe' {
         | '2022-11-15'
         | '2023-08-16'
         | '2023-10-16'
-        | '2024-04-10';
+        | '2024-04-10'
+        | '2024-06-20';
 
       type EnabledEvent =
         | '*'
@@ -252,6 +253,7 @@ declare module 'stripe' {
         | 'issuing_dispute.closed'
         | 'issuing_dispute.created'
         | 'issuing_dispute.funds_reinstated'
+        | 'issuing_dispute.funds_rescinded'
         | 'issuing_dispute.submitted'
         | 'issuing_dispute.updated'
         | 'issuing_personalization_design.activated'
@@ -529,6 +531,7 @@ declare module 'stripe' {
         | 'issuing_dispute.closed'
         | 'issuing_dispute.created'
         | 'issuing_dispute.funds_reinstated'
+        | 'issuing_dispute.funds_rescinded'
         | 'issuing_dispute.submitted'
         | 'issuing_dispute.updated'
         | 'issuing_personalization_design.activated'

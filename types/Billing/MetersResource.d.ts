@@ -123,12 +123,12 @@ declare module 'stripe' {
         customer: string;
 
         /**
-         * The timestamp from when to stop aggregating meter events (exclusive).
+         * The timestamp from when to stop aggregating meter events (exclusive). Must be aligned with minute boundaries.
          */
         end_time: number;
 
         /**
-         * The timestamp from when to start aggregating meter events (inclusive).
+         * The timestamp from when to start aggregating meter events (inclusive). Must be aligned with minute boundaries.
          */
         start_time: number;
 
@@ -138,9 +138,13 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * Specifies what granularity to use when generating event summaries. If not specified, a single event summary would be returned for the specified time range.
+         * Specifies what granularity to use when generating event summaries. If not specified, a single event summary would be returned for the specified time range. For hourly granularity, start and end times must align with hour boundaries (e.g., 00:00, 01:00, ..., 23:00). For daily granularity, start and end times must align with UTC day boundaries (00:00 UTC).
          */
-        value_grouping_window?: 'hour';
+        value_grouping_window?: MeterListEventSummariesParams.ValueGroupingWindow;
+      }
+
+      namespace MeterListEventSummariesParams {
+        type ValueGroupingWindow = 'day' | 'hour';
       }
 
       interface MeterReactivateParams {

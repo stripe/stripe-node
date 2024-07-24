@@ -454,6 +454,11 @@ declare module 'stripe' {
           namespace UsBankAccount {
             interface FinancialConnections {
               /**
+               * Provide filters for the linked accounts that the customer can select for the payment method.
+               */
+              filters?: FinancialConnections.Filters;
+
+              /**
                * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
@@ -465,6 +470,17 @@ declare module 'stripe' {
             }
 
             namespace FinancialConnections {
+              interface Filters {
+                /**
+                 * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
+                 */
+                account_subcategories?: Array<Filters.AccountSubcategory>;
+              }
+
+              namespace Filters {
+                type AccountSubcategory = 'checking' | 'savings';
+              }
+
               type Permission =
                 | 'balances'
                 | 'ownership'
@@ -497,6 +513,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'konbini'
           | 'link'
+          | 'multibanco'
           | 'p24'
           | 'paynow'
           | 'paypal'
@@ -1131,6 +1148,11 @@ declare module 'stripe' {
           namespace UsBankAccount {
             interface FinancialConnections {
               /**
+               * Provide filters for the linked accounts that the customer can select for the payment method.
+               */
+              filters?: FinancialConnections.Filters;
+
+              /**
                * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
@@ -1142,6 +1164,17 @@ declare module 'stripe' {
             }
 
             namespace FinancialConnections {
+              interface Filters {
+                /**
+                 * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
+                 */
+                account_subcategories?: Array<Filters.AccountSubcategory>;
+              }
+
+              namespace Filters {
+                type AccountSubcategory = 'checking' | 'savings';
+              }
+
               type Permission =
                 | 'balances'
                 | 'ownership'
@@ -1174,6 +1207,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'konbini'
           | 'link'
+          | 'multibanco'
           | 'p24'
           | 'paynow'
           | 'paypal'
@@ -1426,6 +1460,262 @@ declare module 'stripe' {
 
     interface InvoiceDeleteParams {}
 
+    interface InvoiceAddLinesParams {
+      /**
+       * The line items to add.
+       */
+      lines: Array<InvoiceAddLinesParams.Line>;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      invoice_metadata?: Stripe.Emptyable<{
+        [key: string]: string;
+      }>;
+    }
+
+    namespace InvoiceAddLinesParams {
+      interface Line {
+        /**
+         * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. If you want to apply a credit to the customer's account, pass a negative amount.
+         */
+        amount?: number;
+
+        /**
+         * An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
+         */
+        description?: string;
+
+        /**
+         * Controls whether discounts apply to this line item. Defaults to false for prorations or negative line items, and true for all other line items. Cannot be set to true for prorations.
+         */
+        discountable?: boolean;
+
+        /**
+         * The coupons, promotion codes & existing discounts which apply to the line item. Item discounts are applied before invoice discounts. Pass an empty string to remove previously-defined discounts.
+         */
+        discounts?: Stripe.Emptyable<Array<Line.Discount>>;
+
+        /**
+         * ID of an unassigned invoice item to assign to this invoice. If not provided, a new item will be created.
+         */
+        invoice_item?: string;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+         */
+        period?: Line.Period;
+
+        /**
+         * The ID of the price object. One of `price` or `price_data` is required.
+         */
+        price?: string;
+
+        /**
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+         */
+        price_data?: Line.PriceData;
+
+        /**
+         * Non-negative integer. The quantity of units for the line item.
+         */
+        quantity?: number;
+
+        /**
+         * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://stripe.com/docs/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://stripe.com/docs/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
+         */
+        tax_amounts?: Stripe.Emptyable<Array<Line.TaxAmount>>;
+
+        /**
+         * The tax rates which apply to the line item. When set, the `default_tax_rates` on the invoice do not apply to this line item. Pass an empty string to remove previously-defined tax rates.
+         */
+        tax_rates?: Stripe.Emptyable<Array<string>>;
+      }
+
+      namespace Line {
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
+        }
+
+        interface Period {
+          /**
+           * The end of the period, which must be greater than or equal to the start. This value is inclusive.
+           */
+          end: number;
+
+          /**
+           * The start of the period. This value is inclusive.
+           */
+          start: number;
+        }
+
+        interface PriceData {
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * The ID of the product that this price will belong to. One of `product` or `product_data` is required.
+           */
+          product?: string;
+
+          /**
+           * Data used to generate a new product object inline. One of `product` or `product_data` is required.
+           */
+          product_data?: PriceData.ProductData;
+
+          /**
+           * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           */
+          tax_behavior?: PriceData.TaxBehavior;
+
+          /**
+           * A non-negative integer in cents (or local equivalent) representing how much to charge. One of `unit_amount` or `unit_amount_decimal` is required.
+           */
+          unit_amount?: number;
+
+          /**
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           */
+          unit_amount_decimal?: string;
+        }
+
+        namespace PriceData {
+          interface ProductData {
+            /**
+             * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
+             */
+            description?: string;
+
+            /**
+             * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
+             */
+            images?: Array<string>;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             */
+            metadata?: Stripe.MetadataParam;
+
+            /**
+             * The product's name, meant to be displayable to the customer.
+             */
+            name: string;
+
+            /**
+             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+             */
+            tax_code?: string;
+          }
+
+          type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        }
+
+        interface TaxAmount {
+          /**
+           * The amount, in cents (or local equivalent), of the tax.
+           */
+          amount: number;
+
+          /**
+           * Data to find or create a TaxRate object.
+           *
+           * Stripe automatically creates or reuses a TaxRate object for each tax amount. If the `tax_rate_data` exactly matches a previous value, Stripe will reuse the TaxRate object. TaxRate objects created automatically by Stripe are immediately archived, do not appear in the line item's `tax_rates`, and cannot be directly added to invoices, payments, or line items.
+           */
+          tax_rate_data: TaxAmount.TaxRateData;
+
+          /**
+           * The amount on which tax is calculated, in cents (or local equivalent).
+           */
+          taxable_amount: number;
+        }
+
+        namespace TaxAmount {
+          interface TaxRateData {
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * An arbitrary string attached to the tax rate for your internal use only. It will not be visible to your customers.
+             */
+            description?: string;
+
+            /**
+             * The display name of the tax rate, which will be shown to users.
+             */
+            display_name: string;
+
+            /**
+             * This specifies if the tax rate is inclusive or exclusive.
+             */
+            inclusive: boolean;
+
+            /**
+             * The jurisdiction for the tax rate. You can use this label field for tax reporting purposes. It also appears on your customer's invoice.
+             */
+            jurisdiction?: string;
+
+            /**
+             * The statutory tax rate percent. This field accepts decimal values between 0 and 100 inclusive with at most 4 decimal places. To accommodate fixed-amount taxes, set the percentage to zero. Stripe will not display zero percentages on the invoice unless the `amount` of the tax is also zero.
+             */
+            percentage: number;
+
+            /**
+             * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
+             */
+            state?: string;
+
+            /**
+             * The high-level tax type, such as `vat` or `sales_tax`.
+             */
+            tax_type?: TaxRateData.TaxType;
+          }
+
+          namespace TaxRateData {
+            type TaxType =
+              | 'amusement_tax'
+              | 'communications_tax'
+              | 'gst'
+              | 'hst'
+              | 'igst'
+              | 'jct'
+              | 'lease_tax'
+              | 'pst'
+              | 'qst'
+              | 'rst'
+              | 'sales_tax'
+              | 'vat';
+          }
+        }
+      }
+    }
+
     interface InvoiceCreatePreviewParams {
       /**
        * Settings for automatic tax lookup for this invoice preview.
@@ -1590,7 +1880,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bh_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `kz_bin`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
+           * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bh_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_uid`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `kz_bin`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -1618,6 +1908,7 @@ declare module 'stripe' {
             | 'ca_pst_mb'
             | 'ca_pst_sk'
             | 'ca_qst'
+            | 'ch_uid'
             | 'ch_vat'
             | 'cl_tin'
             | 'cn_tin'
@@ -2766,7 +3057,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bh_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `kz_bin`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
+           * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bh_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_uid`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `kz_bin`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -2794,6 +3085,7 @@ declare module 'stripe' {
             | 'ca_pst_mb'
             | 'ca_pst_sk'
             | 'ca_qst'
+            | 'ch_uid'
             | 'ch_vat'
             | 'cl_tin'
             | 'cn_tin'
@@ -3883,6 +4175,43 @@ declare module 'stripe' {
       source?: string;
     }
 
+    interface InvoiceRemoveLinesParams {
+      /**
+       * The line items to remove.
+       */
+      lines: Array<InvoiceRemoveLinesParams.Line>;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      invoice_metadata?: Stripe.Emptyable<{
+        [key: string]: string;
+      }>;
+    }
+
+    namespace InvoiceRemoveLinesParams {
+      interface Line {
+        /**
+         * Either `delete` or `unassign`. Deleted line items are permanently deleted. Unassigned line items can be reassigned to an invoice.
+         */
+        behavior: Line.Behavior;
+
+        /**
+         * ID of an existing line item to remove from this invoice.
+         */
+        id: string;
+      }
+
+      namespace Line {
+        type Behavior = 'delete' | 'unassign';
+      }
+    }
+
     interface InvoiceRetrieveUpcomingParams {
       /**
        * Settings for automatic tax lookup for this invoice preview.
@@ -4113,7 +4442,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bh_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `kz_bin`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
+           * Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bh_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_uid`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `kz_bin`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -4141,6 +4470,7 @@ declare module 'stripe' {
             | 'ca_pst_mb'
             | 'ca_pst_sk'
             | 'ca_qst'
+            | 'ch_uid'
             | 'ch_vat'
             | 'cl_tin'
             | 'cn_tin'
@@ -5213,6 +5543,262 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
+    interface InvoiceUpdateLinesParams {
+      /**
+       * The line items to update.
+       */
+      lines: Array<InvoiceUpdateLinesParams.Line>;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
+       */
+      invoice_metadata?: Stripe.Emptyable<{
+        [key: string]: string;
+      }>;
+    }
+
+    namespace InvoiceUpdateLinesParams {
+      interface Line {
+        /**
+         * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. If you want to apply a credit to the customer's account, pass a negative amount.
+         */
+        amount?: number;
+
+        /**
+         * An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
+         */
+        description?: string;
+
+        /**
+         * Controls whether discounts apply to this line item. Defaults to false for prorations or negative line items, and true for all other line items. Cannot be set to true for prorations.
+         */
+        discountable?: boolean;
+
+        /**
+         * The coupons, promotion codes & existing discounts which apply to the line item. Item discounts are applied before invoice discounts. Pass an empty string to remove previously-defined discounts.
+         */
+        discounts?: Stripe.Emptyable<Array<Line.Discount>>;
+
+        /**
+         * ID of an existing line item on the invoice.
+         */
+        id: string;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
+         */
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+         */
+        period?: Line.Period;
+
+        /**
+         * The ID of the price object. One of `price` or `price_data` is required.
+         */
+        price?: string;
+
+        /**
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+         */
+        price_data?: Line.PriceData;
+
+        /**
+         * Non-negative integer. The quantity of units for the line item.
+         */
+        quantity?: number;
+
+        /**
+         * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://stripe.com/docs/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://stripe.com/docs/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
+         */
+        tax_amounts?: Stripe.Emptyable<Array<Line.TaxAmount>>;
+
+        /**
+         * The tax rates which apply to the line item. When set, the `default_tax_rates` on the invoice do not apply to this line item. Pass an empty string to remove previously-defined tax rates.
+         */
+        tax_rates?: Stripe.Emptyable<Array<string>>;
+      }
+
+      namespace Line {
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+
+          /**
+           * ID of the promotion code to create a new discount for.
+           */
+          promotion_code?: string;
+        }
+
+        interface Period {
+          /**
+           * The end of the period, which must be greater than or equal to the start. This value is inclusive.
+           */
+          end: number;
+
+          /**
+           * The start of the period. This value is inclusive.
+           */
+          start: number;
+        }
+
+        interface PriceData {
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * The ID of the product that this price will belong to. One of `product` or `product_data` is required.
+           */
+          product?: string;
+
+          /**
+           * Data used to generate a new product object inline. One of `product` or `product_data` is required.
+           */
+          product_data?: PriceData.ProductData;
+
+          /**
+           * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           */
+          tax_behavior?: PriceData.TaxBehavior;
+
+          /**
+           * A non-negative integer in cents (or local equivalent) representing how much to charge. One of `unit_amount` or `unit_amount_decimal` is required.
+           */
+          unit_amount?: number;
+
+          /**
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           */
+          unit_amount_decimal?: string;
+        }
+
+        namespace PriceData {
+          interface ProductData {
+            /**
+             * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
+             */
+            description?: string;
+
+            /**
+             * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
+             */
+            images?: Array<string>;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             */
+            metadata?: Stripe.MetadataParam;
+
+            /**
+             * The product's name, meant to be displayable to the customer.
+             */
+            name: string;
+
+            /**
+             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+             */
+            tax_code?: string;
+          }
+
+          type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        }
+
+        interface TaxAmount {
+          /**
+           * The amount, in cents (or local equivalent), of the tax.
+           */
+          amount: number;
+
+          /**
+           * Data to find or create a TaxRate object.
+           *
+           * Stripe automatically creates or reuses a TaxRate object for each tax amount. If the `tax_rate_data` exactly matches a previous value, Stripe will reuse the TaxRate object. TaxRate objects created automatically by Stripe are immediately archived, do not appear in the line item's `tax_rates`, and cannot be directly added to invoices, payments, or line items.
+           */
+          tax_rate_data: TaxAmount.TaxRateData;
+
+          /**
+           * The amount on which tax is calculated, in cents (or local equivalent).
+           */
+          taxable_amount: number;
+        }
+
+        namespace TaxAmount {
+          interface TaxRateData {
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * An arbitrary string attached to the tax rate for your internal use only. It will not be visible to your customers.
+             */
+            description?: string;
+
+            /**
+             * The display name of the tax rate, which will be shown to users.
+             */
+            display_name: string;
+
+            /**
+             * This specifies if the tax rate is inclusive or exclusive.
+             */
+            inclusive: boolean;
+
+            /**
+             * The jurisdiction for the tax rate. You can use this label field for tax reporting purposes. It also appears on your customer's invoice.
+             */
+            jurisdiction?: string;
+
+            /**
+             * The statutory tax rate percent. This field accepts decimal values between 0 and 100 inclusive with at most 4 decimal places. To accommodate fixed-amount taxes, set the percentage to zero. Stripe will not display zero percentages on the invoice unless the `amount` of the tax is also zero.
+             */
+            percentage: number;
+
+            /**
+             * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
+             */
+            state?: string;
+
+            /**
+             * The high-level tax type, such as `vat` or `sales_tax`.
+             */
+            tax_type?: TaxRateData.TaxType;
+          }
+
+          namespace TaxRateData {
+            type TaxType =
+              | 'amusement_tax'
+              | 'communications_tax'
+              | 'gst'
+              | 'hst'
+              | 'igst'
+              | 'jct'
+              | 'lease_tax'
+              | 'pst'
+              | 'qst'
+              | 'rst'
+              | 'sales_tax'
+              | 'vat';
+          }
+        }
+      }
+    }
+
     interface InvoiceUpdateLineItemParams {
       /**
        * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. If you want to apply a credit to the customer's account, pass a negative amount.
@@ -5240,7 +5826,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For `type=recurring` line items, the incoming metadata specified on the request is directly used to set this value, in contrast to `type=invoiceitem` line items, where any existing metadata on the invoice line is merged with the incoming data.
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
@@ -5519,6 +6105,15 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.DeletedInvoice>>;
 
       /**
+       * Adds multiple line items to an invoice. This is only possible when an invoice is still a draft.
+       */
+      addLines(
+        id: string,
+        params: InvoiceAddLinesParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Invoice>>;
+
+      /**
        * At any time, you can preview the upcoming invoice for a customer. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discounts that are applicable to the invoice.
        *
        * Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
@@ -5599,6 +6194,15 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Invoice>>;
 
       /**
+       * Removes multiple line items from an invoice. This is only possible when an invoice is still a draft.
+       */
+      removeLines(
+        id: string,
+        params: InvoiceRemoveLinesParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Invoice>>;
+
+      /**
        * At any time, you can preview the upcoming invoice for a customer. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discounts that are applicable to the invoice.
        *
        * Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
@@ -5638,6 +6242,15 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Invoice>>;
       sendInvoice(
         id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Invoice>>;
+
+      /**
+       * Updates multiple line items on an invoice. This is only possible when an invoice is still a draft.
+       */
+      updateLines(
+        id: string,
+        params: InvoiceUpdateLinesParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Invoice>>;
 

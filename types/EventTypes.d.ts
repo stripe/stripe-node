@@ -110,6 +110,7 @@ declare module 'stripe' {
       | IssuingDisputeClosedEvent
       | IssuingDisputeCreatedEvent
       | IssuingDisputeFundsReinstatedEvent
+      | IssuingDisputeFundsRescindedEvent
       | IssuingDisputeSubmittedEvent
       | IssuingDisputeUpdatedEvent
       | IssuingPersonalizationDesignActivatedEvent
@@ -1070,7 +1071,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a card or source will expire at the end of the month.
+     * Occurs whenever a card or source will expire at the end of the month. This event only works with legacy integrations using Card or Source objects. If you use the PaymentMethod API, this event won't occur.
      */
     interface CustomerSourceExpiringEvent extends EventBase {
       type: 'customer.source.expiring';
@@ -1948,6 +1949,22 @@ declare module 'stripe' {
     }
 
     namespace IssuingDisputeFundsReinstatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.Dispute;
+
+        previous_attributes?: Partial<Stripe.Issuing.Dispute>;
+      }
+    }
+
+    /**
+     * Occurs whenever funds are deducted from your account for an Issuing dispute.
+     */
+    interface IssuingDisputeFundsRescindedEvent extends EventBase {
+      type: 'issuing_dispute.funds_rescinded';
+      data: IssuingDisputeFundsRescindedEvent.Data;
+    }
+
+    namespace IssuingDisputeFundsRescindedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Dispute;
 

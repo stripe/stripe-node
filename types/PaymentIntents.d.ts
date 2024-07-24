@@ -398,10 +398,6 @@ declare module 'stripe' {
           | 'bank_account_unverified'
           | 'bank_account_verification_failed'
           | 'billing_invalid_mandate'
-          | 'billing_policy_remote_function_response_invalid'
-          | 'billing_policy_remote_function_timeout'
-          | 'billing_policy_remote_function_unexpected_status_code'
-          | 'billing_policy_remote_function_unreachable'
           | 'bitcoin_upgrade_required'
           | 'capture_charge_authorization_expired'
           | 'capture_unauthorized_payment'
@@ -2276,6 +2272,8 @@ declare module 'stripe' {
 
         namespace UsBankAccount {
           interface FinancialConnections {
+            filters?: FinancialConnections.Filters;
+
             /**
              * The list of permissions to request. The `payment_method` permission must be included.
              */
@@ -2293,6 +2291,17 @@ declare module 'stripe' {
           }
 
           namespace FinancialConnections {
+            interface Filters {
+              /**
+               * The account subcategories to use to filter for possible accounts to link. Valid subcategories are `checking` and `savings`.
+               */
+              account_subcategories?: Array<Filters.AccountSubcategory>;
+            }
+
+            namespace Filters {
+              type AccountSubcategory = 'checking' | 'savings';
+            }
+
             type Permission =
               | 'balances'
               | 'ownership'

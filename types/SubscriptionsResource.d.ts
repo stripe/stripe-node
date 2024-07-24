@@ -529,7 +529,7 @@ declare module 'stripe' {
         >;
 
         /**
-         * Either `off`, or `on_subscription`. With `on_subscription` Stripe updates `subscription.default_payment_method` when a subscription payment succeeds.
+         * Configure whether Stripe updates `subscription.default_payment_method` when payment succeeds. Defaults to `off` if unspecified.
          */
         save_default_payment_method?: PaymentSettings.SaveDefaultPaymentMethod;
       }
@@ -724,6 +724,11 @@ declare module 'stripe' {
           namespace UsBankAccount {
             interface FinancialConnections {
               /**
+               * Provide filters for the linked accounts that the customer can select for the payment method.
+               */
+              filters?: FinancialConnections.Filters;
+
+              /**
                * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
@@ -735,6 +740,17 @@ declare module 'stripe' {
             }
 
             namespace FinancialConnections {
+              interface Filters {
+                /**
+                 * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
+                 */
+                account_subcategories?: Array<Filters.AccountSubcategory>;
+              }
+
+              namespace Filters {
+                type AccountSubcategory = 'checking' | 'savings';
+              }
+
               type Permission =
                 | 'balances'
                 | 'ownership'
@@ -767,6 +783,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'konbini'
           | 'link'
+          | 'multibanco'
           | 'p24'
           | 'paynow'
           | 'paypal'
@@ -1385,7 +1402,7 @@ declare module 'stripe' {
         >;
 
         /**
-         * Either `off`, or `on_subscription`. With `on_subscription` Stripe updates `subscription.default_payment_method` when a subscription payment succeeds.
+         * Configure whether Stripe updates `subscription.default_payment_method` when payment succeeds. Defaults to `off` if unspecified.
          */
         save_default_payment_method?: PaymentSettings.SaveDefaultPaymentMethod;
       }
@@ -1580,6 +1597,11 @@ declare module 'stripe' {
           namespace UsBankAccount {
             interface FinancialConnections {
               /**
+               * Provide filters for the linked accounts that the customer can select for the payment method.
+               */
+              filters?: FinancialConnections.Filters;
+
+              /**
                * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
@@ -1591,6 +1613,17 @@ declare module 'stripe' {
             }
 
             namespace FinancialConnections {
+              interface Filters {
+                /**
+                 * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
+                 */
+                account_subcategories?: Array<Filters.AccountSubcategory>;
+              }
+
+              namespace Filters {
+                type AccountSubcategory = 'checking' | 'savings';
+              }
+
               type Permission =
                 | 'balances'
                 | 'ownership'
@@ -1623,6 +1656,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'konbini'
           | 'link'
+          | 'multibanco'
           | 'p24'
           | 'paynow'
           | 'paypal'
@@ -1894,7 +1928,7 @@ declare module 'stripe' {
       /**
        * Updates an existing subscription to match the specified parameters.
        * When changing prices or quantities, we optionally prorate the price we charge next month to make up for any price changes.
-       * To preview how the proration is calculated, use the [upcoming invoice](https://stripe.com/docs/api/invoices/upcoming) endpoint.
+       * To preview how the proration is calculated, use the [create preview](https://stripe.com/docs/api/invoices/create_preview) endpoint.
        *
        * By default, we prorate subscription changes. For example, if a customer signs up on May 1 for a 100 price, they'll be billed 100 immediately. If on May 15 they switch to a 200 price, then on June 1 they'll be billed 250 (200 for a renewal of her subscription, plus a 50 prorating adjustment for half of the previous month's 100 difference). Similarly, a downgrade generates a credit that is applied to the next invoice. We also prorate when you make quantity changes.
        *
@@ -1902,11 +1936,11 @@ declare module 'stripe' {
        *
        *
        * The billing interval is changed (for example, from monthly to yearly).
-       * The subscription moves from free to paid, or paid to free.
+       * The subscription moves from free to paid.
        * A trial starts or ends.
        *
        *
-       * In these cases, we apply a credit for the unused time on the previous price, immediately charge the customer using the new price, and reset the billing date.
+       * In these cases, we apply a credit for the unused time on the previous price, immediately charge the customer using the new price, and reset the billing date. Learn about how [Stripe immediately attempts payment for subscription changes](https://stripe.com/billing/subscriptions/upgrade-downgrade#immediate-payment).
        *
        * If you want to charge for an upgrade immediately, pass proration_behavior as always_invoice to create prorations, automatically invoice the customer for those proration adjustments, and attempt to collect payment. If you pass create_prorations, the prorations are created but not automatically invoiced. If you want to bill the customer for the prorations before the subscription's renewal date, you need to manually [invoice the customer](https://stripe.com/docs/api/invoices/create).
        *

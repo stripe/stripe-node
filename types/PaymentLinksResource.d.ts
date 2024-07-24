@@ -615,6 +615,7 @@ declare module 'stripe' {
         | 'konbini'
         | 'link'
         | 'mobilepay'
+        | 'multibanco'
         | 'oxxo'
         | 'p24'
         | 'paynow'
@@ -624,8 +625,10 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'sofort'
         | 'swish'
+        | 'twint'
         | 'us_bank_account'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | 'zip';
 
       interface PhoneNumberCollection {
         /**
@@ -984,7 +987,7 @@ declare module 'stripe' {
 
       interface TaxIdCollection {
         /**
-         * Set to `true` to enable tax ID collection.
+         * Enable tax ID collection during checkout. Defaults to `false`.
          */
         enabled: boolean;
       }
@@ -1525,6 +1528,7 @@ declare module 'stripe' {
         | 'konbini'
         | 'link'
         | 'mobilepay'
+        | 'multibanco'
         | 'oxxo'
         | 'p24'
         | 'paynow'
@@ -1534,8 +1538,10 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'sofort'
         | 'swish'
+        | 'twint'
         | 'us_bank_account'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | 'zip';
 
       interface Restrictions {
         /**
@@ -1868,7 +1874,7 @@ declare module 'stripe' {
 
       interface TaxIdCollection {
         /**
-         * Set to `true` to enable tax ID collection.
+         * Enable tax ID collection during checkout. Defaults to `false`.
          */
         enabled: boolean;
       }

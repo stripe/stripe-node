@@ -48,6 +48,11 @@ declare module 'stripe' {
       payment_intent: string | null;
 
       /**
+       * Payment-method-specific configuration for this ConfirmationToken.
+       */
+      payment_method_options: ConfirmationToken.PaymentMethodOptions | null;
+
+      /**
        * Payment details collected by the Payment Element, used to create a PaymentMethod when a PaymentIntent or SetupIntent is confirmed with this ConfirmationToken.
        */
       payment_method_preview: ConfirmationToken.PaymentMethodPreview | null;
@@ -116,6 +121,22 @@ declare module 'stripe' {
         }
       }
 
+      interface PaymentMethodOptions {
+        /**
+         * This hash contains the card payment method options.
+         */
+        card: PaymentMethodOptions.Card | null;
+      }
+
+      namespace PaymentMethodOptions {
+        interface Card {
+          /**
+           * The `cvc_update` Token collected from the Payment Element.
+           */
+          cvc_token: string | null;
+        }
+      }
+
       interface PaymentMethodPreview {
         acss_debit?: PaymentMethodPreview.AcssDebit;
 
@@ -149,6 +170,11 @@ declare module 'stripe' {
         card_present?: PaymentMethodPreview.CardPresent;
 
         cashapp?: PaymentMethodPreview.Cashapp;
+
+        /**
+         * The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
+         */
+        customer: string | Stripe.Customer | null;
 
         customer_balance?: PaymentMethodPreview.CustomerBalance;
 

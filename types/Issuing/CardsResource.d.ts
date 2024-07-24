@@ -89,6 +89,11 @@ declare module 'stripe' {
           address: Shipping.Address;
 
           /**
+           * Address validation settings.
+           */
+          address_validation?: Shipping.AddressValidation;
+
+          /**
            * Customs information for the shipment.
            */
           customs?: Shipping.Customs;
@@ -150,6 +155,20 @@ declare module 'stripe' {
              * State, county, province, or region.
              */
             state?: string;
+          }
+
+          interface AddressValidation {
+            /**
+             * The address validation capabilities to use.
+             */
+            mode: AddressValidation.Mode;
+          }
+
+          namespace AddressValidation {
+            type Mode =
+              | 'disabled'
+              | 'normalization_only'
+              | 'validation_and_normalization';
           }
 
           interface Customs {
@@ -1147,6 +1166,11 @@ declare module 'stripe' {
         pin?: CardUpdateParams.Pin;
 
         /**
+         * Updated shipping information for the card.
+         */
+        shipping?: CardUpdateParams.Shipping;
+
+        /**
          * Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
          */
         spending_controls?: CardUpdateParams.SpendingControls;
@@ -1165,6 +1189,107 @@ declare module 'stripe' {
            * The card's desired new PIN, encrypted under Stripe's public key.
            */
           encrypted_number?: string;
+        }
+
+        interface Shipping {
+          /**
+           * The address that the card is shipped to.
+           */
+          address: Shipping.Address;
+
+          /**
+           * Address validation settings.
+           */
+          address_validation?: Shipping.AddressValidation;
+
+          /**
+           * Customs information for the shipment.
+           */
+          customs?: Shipping.Customs;
+
+          /**
+           * The name printed on the shipping label when shipping the card.
+           */
+          name: string;
+
+          /**
+           * Phone number of the recipient of the shipment.
+           */
+          phone_number?: string;
+
+          /**
+           * Whether a signature is required for card delivery.
+           */
+          require_signature?: boolean;
+
+          /**
+           * Shipment service.
+           */
+          service?: Shipping.Service;
+
+          /**
+           * Packaging options.
+           */
+          type?: Shipping.Type;
+        }
+
+        namespace Shipping {
+          interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+          }
+
+          interface AddressValidation {
+            /**
+             * The address validation capabilities to use.
+             */
+            mode: AddressValidation.Mode;
+          }
+
+          namespace AddressValidation {
+            type Mode =
+              | 'disabled'
+              | 'normalization_only'
+              | 'validation_and_normalization';
+          }
+
+          interface Customs {
+            /**
+             * The Economic Operators Registration and Identification (EORI) number to use for Customs. Required for bulk shipments to Europe.
+             */
+            eori_number?: string;
+          }
+
+          type Service = 'express' | 'priority' | 'standard';
+
+          type Type = 'bulk' | 'individual';
         }
 
         interface SpendingControls {
