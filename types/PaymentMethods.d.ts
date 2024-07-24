@@ -383,6 +383,11 @@ declare module 'stripe' {
               brand: string | null;
 
               /**
+               * The [product code](https://stripe.com/docs/card-product-codes) that identifies the specific program or product associated with a card.
+               */
+              brand_product: string | null;
+
+              /**
                * When using manual capture, a future timestamp after which the charge will be automatically refunded if uncaptured.
                */
               capture_before?: number;
@@ -458,6 +463,14 @@ declare module 'stripe' {
                * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
                */
               network: string | null;
+
+              /**
+               * This is used by the financial networks to identify a transaction.
+               * Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data.
+               * The first three digits of the Trace ID is the Financial Network Code, the next 6 digits is the Banknet Reference Number, and the last 4 digits represent the date (MM/DD).
+               * This field will be available for successful Visa, Mastercard, or American Express transactions and always null for other card brands.
+               */
+              network_transaction_id: string | null;
 
               /**
                * Details about payments collected offline.
@@ -674,6 +687,11 @@ declare module 'stripe' {
          * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
          */
         brand: string | null;
+
+        /**
+         * The [product code](https://stripe.com/docs/card-product-codes) that identifies the specific program or product associated with a card.
+         */
+        brand_product: string | null;
 
         /**
          * The cardholder name as read from the card, in [ISO 7813](https://en.wikipedia.org/wiki/ISO/IEC_7813) format. May include alphanumeric characters, special characters and first/last name separator (`/`). In some cases, the cardholder name may not be available depending on how the issuer has configured the card. Cardholder name is typically not available on swipe or contactless payments, such as those made with Apple Pay and Google Pay.
