@@ -15,6 +15,7 @@ declare module 'stripe' {
       | ApplicationFeeRefundUpdatedEvent
       | ApplicationFeeRefundedEvent
       | BalanceAvailableEvent
+      | BillingAlertTriggeredEvent
       | BillingPortalConfigurationCreatedEvent
       | BillingPortalConfigurationUpdatedEvent
       | BillingPortalSessionCreatedEvent
@@ -454,6 +455,22 @@ declare module 'stripe' {
         object: Stripe.Balance;
 
         previous_attributes?: Partial<Stripe.Balance>;
+      }
+    }
+
+    /**
+     * Occurs whenever your custom alert threshold is met.
+     */
+    interface BillingAlertTriggeredEvent extends EventBase {
+      type: 'billing.alert.triggered';
+      data: BillingAlertTriggeredEvent.Data;
+    }
+
+    namespace BillingAlertTriggeredEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.AlertTriggered;
+
+        previous_attributes?: Partial<Stripe.Billing.AlertTriggered>;
       }
     }
 
