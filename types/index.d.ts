@@ -18,6 +18,7 @@
 ///<reference path='./Apps/SecretsResource.d.ts' />
 ///<reference path='./BalanceResource.d.ts' />
 ///<reference path='./BalanceTransactionsResource.d.ts' />
+///<reference path='./Billing/AlertsResource.d.ts' />
 ///<reference path='./Billing/MeterEventAdjustmentsResource.d.ts' />
 ///<reference path='./Billing/MeterEventsResource.d.ts' />
 ///<reference path='./Billing/MetersResource.d.ts' />
@@ -95,6 +96,7 @@
 ///<reference path='./SubscriptionItemsResource.d.ts' />
 ///<reference path='./SubscriptionSchedulesResource.d.ts' />
 ///<reference path='./SubscriptionsResource.d.ts' />
+///<reference path='./Tax/AssociationsResource.d.ts' />
 ///<reference path='./Tax/CalculationsResource.d.ts' />
 ///<reference path='./Tax/FormsResource.d.ts' />
 ///<reference path='./Tax/RegistrationsResource.d.ts' />
@@ -147,6 +149,8 @@
 ///<reference path='./BalanceTransactionSources.d.ts' />
 ///<reference path='./BalanceTransactions.d.ts' />
 ///<reference path='./BankAccounts.d.ts' />
+///<reference path='./Billing/AlertTriggereds.d.ts' />
+///<reference path='./Billing/Alerts.d.ts' />
 ///<reference path='./Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./Billing/MeterEventSummaries.d.ts' />
 ///<reference path='./Billing/MeterEvents.d.ts' />
@@ -253,6 +257,7 @@
 ///<reference path='./SubscriptionItems.d.ts' />
 ///<reference path='./SubscriptionSchedules.d.ts' />
 ///<reference path='./Subscriptions.d.ts' />
+///<reference path='./Tax/Associations.d.ts' />
 ///<reference path='./Tax/CalculationLineItems.d.ts' />
 ///<reference path='./Tax/Calculations.d.ts' />
 ///<reference path='./Tax/Forms.d.ts' />
@@ -365,6 +370,7 @@ declare module 'stripe' {
       secrets: Stripe.Apps.SecretsResource;
     };
     billing: {
+      alerts: Stripe.Billing.AlertsResource;
       meters: Stripe.Billing.MetersResource;
       meterEvents: Stripe.Billing.MeterEventsResource;
       meterEventAdjustments: Stripe.Billing.MeterEventAdjustmentsResource;
@@ -431,6 +437,7 @@ declare module 'stripe' {
       scheduledQueryRuns: Stripe.Sigma.ScheduledQueryRunsResource;
     };
     tax: {
+      associations: Stripe.Tax.AssociationsResource;
       calculations: Stripe.Tax.CalculationsResource;
       forms: Stripe.Tax.FormsResource;
       registrations: Stripe.Tax.RegistrationsResource;

@@ -371,9 +371,6 @@ declare module 'stripe' {
 
       status_transitions: QuotePreviewInvoice.StatusTransitions;
 
-      /**
-       * The subscription that this invoice was prepared for, if any.
-       */
       subscription: string | Stripe.Subscription | null;
 
       /**
@@ -1229,6 +1226,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'konbini'
           | 'link'
+          | 'multibanco'
           | 'p24'
           | 'paynow'
           | 'paypal'

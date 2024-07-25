@@ -179,6 +179,11 @@ declare module 'stripe' {
       paypal?: PaymentMethodConfigurationCreateParams.Paypal;
 
       /**
+       * PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables customers in Australia to pay by providing their bank account details. Customers must accept a mandate authorizing you to debit their account. Check this [page](https://docs.stripe.com/payments/payto) for more details.
+       */
+      payto?: PaymentMethodConfigurationCreateParams.Payto;
+
+      /**
        * PromptPay is a Thailand-based payment method that allows customers to make a payment using their preferred app from participating banks. Check this [page](https://stripe.com/docs/payments/promptpay) for more details.
        */
       promptpay?: PaymentMethodConfigurationCreateParams.Promptpay;
@@ -202,6 +207,11 @@ declare module 'stripe' {
        * Swish is a [real-time](https://stripe.com/docs/payments/real-time) payment method popular in Sweden. It allows customers to [authenticate and approve](https://stripe.com/docs/payments/payment-methods#customer-actions) payments using the Swish mobile app and the Swedish BankID mobile app. Check this [page](https://stripe.com/docs/payments/swish) for more details.
        */
       swish?: PaymentMethodConfigurationCreateParams.Swish;
+
+      /**
+       * Twint is a payment method popular in Switzerland. It allows customers to pay using their mobile phone. Check this [page](https://docs.stripe.com/payments/twint) for more details.
+       */
+      twint?: PaymentMethodConfigurationCreateParams.Twint;
 
       /**
        * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-debit) for more details.
@@ -860,6 +870,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Payto {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Payto.DisplayPreference;
+      }
+
+      namespace Payto {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Promptpay {
         /**
          * Whether or not the payment method should be displayed.
@@ -948,6 +978,26 @@ declare module 'stripe' {
       }
 
       namespace Swish {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Twint {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Twint.DisplayPreference;
+      }
+
+      namespace Twint {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -1205,6 +1255,11 @@ declare module 'stripe' {
       paypal?: PaymentMethodConfigurationUpdateParams.Paypal;
 
       /**
+       * PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables customers in Australia to pay by providing their bank account details. Customers must accept a mandate authorizing you to debit their account. Check this [page](https://docs.stripe.com/payments/payto) for more details.
+       */
+      payto?: PaymentMethodConfigurationUpdateParams.Payto;
+
+      /**
        * PromptPay is a Thailand-based payment method that allows customers to make a payment using their preferred app from participating banks. Check this [page](https://stripe.com/docs/payments/promptpay) for more details.
        */
       promptpay?: PaymentMethodConfigurationUpdateParams.Promptpay;
@@ -1228,6 +1283,11 @@ declare module 'stripe' {
        * Swish is a [real-time](https://stripe.com/docs/payments/real-time) payment method popular in Sweden. It allows customers to [authenticate and approve](https://stripe.com/docs/payments/payment-methods#customer-actions) payments using the Swish mobile app and the Swedish BankID mobile app. Check this [page](https://stripe.com/docs/payments/swish) for more details.
        */
       swish?: PaymentMethodConfigurationUpdateParams.Swish;
+
+      /**
+       * Twint is a payment method popular in Switzerland. It allows customers to pay using their mobile phone. Check this [page](https://docs.stripe.com/payments/twint) for more details.
+       */
+      twint?: PaymentMethodConfigurationUpdateParams.Twint;
 
       /**
        * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-debit) for more details.
@@ -1886,6 +1946,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Payto {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Payto.DisplayPreference;
+      }
+
+      namespace Payto {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Promptpay {
         /**
          * Whether or not the payment method should be displayed.
@@ -1974,6 +2054,26 @@ declare module 'stripe' {
       }
 
       namespace Swish {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Twint {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Twint.DisplayPreference;
+      }
+
+      namespace Twint {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

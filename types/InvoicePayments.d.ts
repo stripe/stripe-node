@@ -32,11 +32,6 @@ declare module 'stripe' {
       amount_requested: number;
 
       /**
-       * ID of the successful charge for this payment. This field is null when the payment is `open` or `canceled`.
-       */
-      charge: string | Stripe.Charge | null;
-
-      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created: number;
@@ -61,10 +56,7 @@ declare module 'stripe' {
        */
       livemode: boolean;
 
-      /**
-       * ID of the PaymentIntent associated with this payment. Note: This property is only populated for invoices finalized on or after March 15th, 2019.
-       */
-      payment_intent: string | Stripe.PaymentIntent | null;
+      payment: InvoicePayment.Payment;
 
       /**
        * The status of the payment, one of `open`, `paid`, or `canceled`.
@@ -75,6 +67,61 @@ declare module 'stripe' {
     }
 
     namespace InvoicePayment {
+      interface Payment {
+        /**
+         * ID of the successful charge for this payment when `type` is `charge`.
+         */
+        charge?: string | Stripe.Charge;
+
+        out_of_band_payment?: Payment.OutOfBandPayment;
+
+        /**
+         * ID of the PaymentIntent associated with this payment when `type` is `payment_intent`. Note: This property is only populated for invoices finalized on or after March 15th, 2019.
+         */
+        payment_intent?: string | Stripe.PaymentIntent;
+
+        /**
+         * Type of payment object associated with this invoice payment.
+         */
+        type: Payment.Type;
+      }
+
+      namespace Payment {
+        interface OutOfBandPayment {
+          /**
+           * Amount paid on this out of band payment, in cents (or local equivalent)
+           */
+          amount: number;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           */
+          metadata: Stripe.Metadata | null;
+
+          /**
+           * The type of money movement for this out of band payment record.
+           */
+          money_movement_type: string;
+
+          /**
+           * The timestamp when this out of band payment was paid.
+           */
+          paid_at: number | null;
+
+          /**
+           * The reference for this out of band payment record.
+           */
+          payment_reference: string | null;
+        }
+
+        type Type = 'charge' | 'out_of_band_payment' | 'payment_intent';
+      }
+
       interface StatusTransitions {
         /**
          * The time that the payment was canceled.

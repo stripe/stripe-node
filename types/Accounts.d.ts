@@ -134,7 +134,7 @@ declare module 'stripe' {
         estimated_worker_count: number | null;
 
         /**
-         * [The merchant category code for the account](https://stripe.com/docs/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
+         * [The merchant category code for the account](https://stripe.com/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
          */
         mcc: string | null;
 
@@ -179,7 +179,7 @@ declare module 'stripe' {
       namespace BusinessProfile {
         interface AnnualRevenue {
           /**
-           * A non-negative integer representing the amount in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+           * A non-negative integer representing the amount in the [smallest currency unit](https://stripe.com/currencies#zero-decimal).
            */
           amount: number | null;
 
@@ -196,7 +196,7 @@ declare module 'stripe' {
 
         interface MonthlyEstimatedRevenue {
           /**
-           * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+           * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/currencies#zero-decimal).
            */
           amount: number;
 
@@ -1260,6 +1260,8 @@ declare module 'stripe' {
 
         branding: Settings.Branding;
 
+        capital?: Settings.Capital;
+
         card_issuing?: Settings.CardIssuing;
 
         card_payments: Settings.CardPayments;
@@ -1312,6 +1314,22 @@ declare module 'stripe' {
            * A CSS hex color value representing the secondary branding color for this account
            */
           secondary_color: string | null;
+        }
+
+        interface Capital {
+          /**
+           * Per-currency mapping of user-selected destination accounts used to pay out loans.
+           */
+          payout_destination?: {
+            [key: string]: string;
+          };
+
+          /**
+           * Per-currency mapping of all destination accounts eligible to receive loan payouts.
+           */
+          payout_destination_selector?: {
+            [key: string]: Array<string>;
+          };
         }
 
         interface CardIssuing {

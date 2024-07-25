@@ -1,10 +1,47 @@
 # Changelog
 
+## 16.5.0 - 2024-07-25
+* [#2143](https://github.com/stripe/stripe-node/pull/2143) Update generated code
+  * Add support for `tax_registrations` and `tax_settings` on `AccountSession.components` and `AccountSessionCreateParams.components`
+* [#2140](https://github.com/stripe/stripe-node/pull/2140) Update generated code
+  * Add support for `update` method on resource `Checkout.Session`
+  * Add support for `transaction_id` on `Charge.payment_method_details.affirm`
+  * Add support for `buyer_id` on `Charge.payment_method_details.blik`
+  * Add support for `authorization_code` on `Charge.payment_method_details.card`
+  * Add support for `brand_product` on `Charge.payment_method_details.card_present`, `ConfirmationToken.payment_method_preview.card.generated_from.payment_method_details.card_present`, `ConfirmationToken.payment_method_preview.card_present`, `PaymentMethod.card.generated_from.payment_method_details.card_present`, and `PaymentMethod.card_present`
+  * Add support for `network_transaction_id` on `Charge.payment_method_details.card_present`, `Charge.payment_method_details.interac_present`, `ConfirmationToken.payment_method_preview.card.generated_from.payment_method_details.card_present`, and `PaymentMethod.card.generated_from.payment_method_details.card_present`
+  * Add support for `case_type` on `Dispute.payment_method_details.card`
+  * Add support for new values `invoice.overdue` and `invoice.will_be_due` on enum `Event.type`
+  * Add support for `twint` on `PaymentMethodConfigurationCreateParams`, `PaymentMethodConfigurationUpdateParams`, and `PaymentMethodConfiguration`
+  * Add support for new values `invoice.overdue` and `invoice.will_be_due` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
+## 16.4.0 - 2024-07-18
+* [#2138](https://github.com/stripe/stripe-node/pull/2138) Update generated code
+  * Add support for `customer` on `ConfirmationToken.payment_method_preview`
+  * Add support for new value `issuing_dispute.funds_rescinded` on enum `Event.type`
+  * Add support for new value `multibanco` on enums `Invoice.payment_settings.payment_method_types[]`, `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Subscription.payment_settings.payment_method_types[]`, `SubscriptionCreateParams.payment_settings.payment_method_types[]`, and `SubscriptionUpdateParams.payment_settings.payment_method_types[]`
+  * Add support for new value `stripe_s700` on enums `Terminal.Reader.device_type` and `Terminal.ReaderListParams.device_type`
+  * Add support for new value `issuing_dispute.funds_rescinded` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+* [#2136](https://github.com/stripe/stripe-node/pull/2136) Update changelog
+
 ## 16.4.0-beta.1 - 2024-07-11
 * [#2128](https://github.com/stripe/stripe-node/pull/2128) Update generated code for beta
   * Change `ConfirmationToken.payment_method_options` and `CustomerSession.components.payment_element` to be required
   * Add support for new value `not_qualified` on enum `Dispute.evidence_details.enhanced_eligibility.visa_compelling_evidence_3.status`
 * [#2134](https://github.com/stripe/stripe-node/pull/2134) Fix merge conflicts
+
+## 16.3.0 - 2024-07-11
+* [#2130](https://github.com/stripe/stripe-node/pull/2130) Update generated code
+  * ⚠️ Remove support for values `billing_policy_remote_function_response_invalid`, `billing_policy_remote_function_timeout`, `billing_policy_remote_function_unexpected_status_code`, and `billing_policy_remote_function_unreachable` from enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`. 
+  * ⚠️ Remove support for value `payment_intent_fx_quote_invalid` from enum `StripeError.code`. The was mistakenly released last week.
+  * Add support for `payment_method_options` on `ConfirmationToken`
+  * Add support for `payment_element` on `CustomerSession.components` and `CustomerSessionCreateParams.components`
+  * Add support for `address_validation` on `Issuing.Card.shipping` and `Issuing.CardCreateParams.shipping`
+  * Add support for `shipping` on `Issuing.CardUpdateParams`
+  * Change `Plan.meter` and `Price.recurring.meter` to be required
+* [#2133](https://github.com/stripe/stripe-node/pull/2133) update node versions in CI
+* [#2132](https://github.com/stripe/stripe-node/pull/2132) check `hasOwnProperty` when using `for..in`
+* [#2048](https://github.com/stripe/stripe-node/pull/2048) Add generateTestHeaderStringAsync function to Webhooks.ts
 
 ## 16.3.0-beta.1 - 2024-07-05
 * [#2126](https://github.com/stripe/stripe-node/pull/2126) Update generated code for beta

@@ -15,6 +15,7 @@ declare module 'stripe' {
       | ApplicationFeeRefundUpdatedEvent
       | ApplicationFeeRefundedEvent
       | BalanceAvailableEvent
+      | BillingAlertTriggeredEvent
       | BillingPortalConfigurationCreatedEvent
       | BillingPortalConfigurationUpdatedEvent
       | BillingPortalSessionCreatedEvent
@@ -106,6 +107,7 @@ declare module 'stripe' {
       | InvoiceFinalizationFailedEvent
       | InvoiceFinalizedEvent
       | InvoiceMarkedUncollectibleEvent
+      | InvoiceOverdueEvent
       | InvoicePaidEvent
       | InvoicePaymentOverpaidEvent
       | InvoicePaymentActionRequiredEvent
@@ -115,6 +117,7 @@ declare module 'stripe' {
       | InvoiceUpcomingEvent
       | InvoiceUpdatedEvent
       | InvoiceVoidedEvent
+      | InvoiceWillBeDueEvent
       | InvoiceItemCreatedEvent
       | InvoiceItemDeletedEvent
       | IssuingAuthorizationCreatedEvent
@@ -127,6 +130,7 @@ declare module 'stripe' {
       | IssuingDisputeClosedEvent
       | IssuingDisputeCreatedEvent
       | IssuingDisputeFundsReinstatedEvent
+      | IssuingDisputeFundsRescindedEvent
       | IssuingDisputeSubmittedEvent
       | IssuingDisputeUpdatedEvent
       | IssuingPersonalizationDesignActivatedEvent
@@ -451,6 +455,22 @@ declare module 'stripe' {
         object: Stripe.Balance;
 
         previous_attributes?: Partial<Stripe.Balance>;
+      }
+    }
+
+    /**
+     * Occurs whenever your custom alert threshold is met.
+     */
+    interface BillingAlertTriggeredEvent extends EventBase {
+      type: 'billing.alert.triggered';
+      data: BillingAlertTriggeredEvent.Data;
+    }
+
+    namespace BillingAlertTriggeredEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.AlertTriggered;
+
+        previous_attributes?: Partial<Stripe.Billing.AlertTriggered>;
       }
     }
 
@@ -1918,6 +1938,22 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs X number of days after an invoice becomes due&mdash;where X is determined by Automations
+     */
+    interface InvoiceOverdueEvent extends EventBase {
+      type: 'invoice.overdue';
+      data: InvoiceOverdueEvent.Data;
+    }
+
+    namespace InvoiceOverdueEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
+      }
+    }
+
+    /**
      * Occurs whenever an invoice payment attempt succeeds or an invoice is marked as paid out-of-band.
      */
     interface InvoicePaidEvent extends EventBase {
@@ -2054,6 +2090,22 @@ declare module 'stripe' {
     }
 
     namespace InvoiceVoidedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
+      }
+    }
+
+    /**
+     * Occurs X number of days before an invoice becomes due&mdash;where X is determined by Automations
+     */
+    interface InvoiceWillBeDueEvent extends EventBase {
+      type: 'invoice.will_be_due';
+      data: InvoiceWillBeDueEvent.Data;
+    }
+
+    namespace InvoiceWillBeDueEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
 
@@ -2246,6 +2298,22 @@ declare module 'stripe' {
     }
 
     namespace IssuingDisputeFundsReinstatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.Dispute;
+
+        previous_attributes?: Partial<Stripe.Issuing.Dispute>;
+      }
+    }
+
+    /**
+     * Occurs whenever funds are deducted from your account for an Issuing dispute.
+     */
+    interface IssuingDisputeFundsRescindedEvent extends EventBase {
+      type: 'issuing_dispute.funds_rescinded';
+      data: IssuingDisputeFundsRescindedEvent.Data;
+    }
+
+    namespace IssuingDisputeFundsRescindedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Dispute;
 
