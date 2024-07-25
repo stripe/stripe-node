@@ -2429,6 +2429,18 @@ declare module 'stripe' {
         expand?: Array<string>;
       }
 
+      interface SessionUpdateParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+      }
+
       interface SessionListParams extends PaginationParams {
         /**
          * Only return Checkout Sessions that were created during the given date interval.
@@ -2518,6 +2530,15 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
         retrieve(
           id: string,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
+
+        /**
+         * Updates a Session object.
+         */
+        update(
+          id: string,
+          params?: SessionUpdateParams,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 

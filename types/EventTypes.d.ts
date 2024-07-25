@@ -90,6 +90,7 @@ declare module 'stripe' {
       | InvoiceFinalizationFailedEvent
       | InvoiceFinalizedEvent
       | InvoiceMarkedUncollectibleEvent
+      | InvoiceOverdueEvent
       | InvoicePaidEvent
       | InvoicePaymentActionRequiredEvent
       | InvoicePaymentFailedEvent
@@ -98,6 +99,7 @@ declare module 'stripe' {
       | InvoiceUpcomingEvent
       | InvoiceUpdatedEvent
       | InvoiceVoidedEvent
+      | InvoiceWillBeDueEvent
       | InvoiceItemCreatedEvent
       | InvoiceItemDeletedEvent
       | IssuingAuthorizationCreatedEvent
@@ -1637,6 +1639,22 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs X number of days after an invoice becomes due&mdash;where X is determined by Automations
+     */
+    interface InvoiceOverdueEvent extends EventBase {
+      type: 'invoice.overdue';
+      data: InvoiceOverdueEvent.Data;
+    }
+
+    namespace InvoiceOverdueEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
+      }
+    }
+
+    /**
      * Occurs whenever an invoice payment attempt succeeds or an invoice is marked as paid out-of-band.
      */
     interface InvoicePaidEvent extends EventBase {
@@ -1757,6 +1775,22 @@ declare module 'stripe' {
     }
 
     namespace InvoiceVoidedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
+      }
+    }
+
+    /**
+     * Occurs X number of days before an invoice becomes due&mdash;where X is determined by Automations
+     */
+    interface InvoiceWillBeDueEvent extends EventBase {
+      type: 'invoice.will_be_due';
+      data: InvoiceWillBeDueEvent.Data;
+    }
+
+    namespace InvoiceWillBeDueEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
 

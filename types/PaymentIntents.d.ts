@@ -122,7 +122,7 @@ declare module 'stripe' {
       last_payment_error: PaymentIntent.LastPaymentError | null;
 
       /**
-       * The latest charge created by this PaymentIntent.
+       * ID of the latest [Charge object](https://stripe.com/docs/api/charges) created by this PaymentIntent. This property is `null` until PaymentIntent confirmation is attempted.
        */
       latest_charge: string | Stripe.Charge | null;
 
