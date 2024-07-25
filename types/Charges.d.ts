@@ -708,11 +708,6 @@ declare module 'stripe' {
           amount_authorized: number | null;
 
           /**
-           * Authorization code on the charge.
-           */
-          authorization_code?: string | null;
-
-          /**
            * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           brand: string | null;
