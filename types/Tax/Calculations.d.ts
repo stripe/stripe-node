@@ -20,7 +20,7 @@ declare module 'stripe' {
         object: 'tax.calculation';
 
         /**
-         * Total after taxes.
+         * Total amount after taxes in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
          */
         amount_total: number;
 
