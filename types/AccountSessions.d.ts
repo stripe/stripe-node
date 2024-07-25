@@ -65,6 +65,10 @@ declare module 'stripe' {
         payouts: Components.Payouts;
 
         payouts_list: Components.PayoutsList;
+
+        tax_registrations: Components.TaxRegistrations;
+
+        tax_settings: Components.TaxSettings;
       }
 
       namespace Components {
@@ -290,6 +294,32 @@ declare module 'stripe' {
         }
 
         namespace PayoutsList {
+          interface Features {}
+        }
+
+        interface TaxRegistrations {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: TaxRegistrations.Features;
+        }
+
+        namespace TaxRegistrations {
+          interface Features {}
+        }
+
+        interface TaxSettings {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: TaxSettings.Features;
+        }
+
+        namespace TaxSettings {
           interface Features {}
         }
       }
