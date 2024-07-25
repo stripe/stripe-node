@@ -23,7 +23,7 @@ declare module 'stripe' {
         as_of: number;
 
         /**
-         * The balances owed to (or by) the account holder.
+         * The balances owed to (or by) the account holder, before subtracting any outbound pending transactions or adding any inbound pending transactions.
          *
          * Each key is a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
          *
