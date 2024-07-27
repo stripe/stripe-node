@@ -1,4 +1,4 @@
-import * as qs from 'qs';
+import * as pq from 'picoquery';
 import {
   RequestData,
   UrlInterpolator,
@@ -45,9 +45,16 @@ export function isOptionsHash(o: unknown): boolean | unknown {
  */
 export function stringifyRequestData(data: RequestData | string): string {
   return (
-    qs
+    pq
       .stringify(data, {
-        serializeDate: (d: Date) => Math.floor(d.getTime() / 1000).toString(),
+        nesting: true,
+        nestingSyntax: 'index',
+        valueSerializer: (val, key) => {
+          if (val instanceof Date) {
+            return Math.floor(val.getTime() / 1000).toString();
+          }
+          return pq.defaultValueSerializer(val, key);
+        },
       })
       // Don't use strict form encoding by changing the square bracket control
       // characters back to their literals. This is fine by the server, and

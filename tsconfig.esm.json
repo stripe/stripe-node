@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "./esm",
     "module": "es2022",
+    "moduleResolution": "node",
   },
   "exclude": ["./src/stripe.cjs.node.ts", "./src/stripe.cjs.worker.ts"],
 }
