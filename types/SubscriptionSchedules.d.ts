@@ -65,6 +65,11 @@ declare module 'stripe' {
       end_behavior: SubscriptionSchedule.EndBehavior;
 
       /**
+       * Details of the most recent price migration that failed for the subscription schedule.
+       */
+      last_price_migration_error?: SubscriptionSchedule.LastPriceMigrationError | null;
+
+      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
@@ -266,6 +271,37 @@ declare module 'stripe' {
       }
 
       type EndBehavior = 'cancel' | 'none' | 'release' | 'renew';
+
+      interface LastPriceMigrationError {
+        /**
+         * The time at which the price migration encountered an error.
+         */
+        errored_at: number;
+
+        /**
+         * The involved price pairs in each failed transition.
+         */
+        failed_transitions: Array<LastPriceMigrationError.FailedTransition>;
+
+        /**
+         * The type of error encountered by the price migration.
+         */
+        type: 'price_uniqueness_violation';
+      }
+
+      namespace LastPriceMigrationError {
+        interface FailedTransition {
+          /**
+           * The original price to be migrated.
+           */
+          source_price: string;
+
+          /**
+           * The intended resulting price of the migration.
+           */
+          target_price: string;
+        }
+      }
 
       interface Phase {
         /**

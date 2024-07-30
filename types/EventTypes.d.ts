@@ -77,6 +77,7 @@ declare module 'stripe' {
       | CustomerSubscriptionPausedEvent
       | CustomerSubscriptionPendingUpdateAppliedEvent
       | CustomerSubscriptionPendingUpdateExpiredEvent
+      | CustomerSubscriptionPriceMigrationFailedEvent
       | CustomerSubscriptionResumedEvent
       | CustomerSubscriptionTrialWillEndEvent
       | CustomerSubscriptionUpdatedEvent
@@ -213,6 +214,7 @@ declare module 'stripe' {
       | SubscriptionScheduleCompletedEvent
       | SubscriptionScheduleCreatedEvent
       | SubscriptionScheduleExpiringEvent
+      | SubscriptionSchedulePriceMigrationFailedEvent
       | SubscriptionScheduleReleasedEvent
       | SubscriptionScheduleUpdatedEvent
       | TaxFormUpdatedEvent
@@ -1443,6 +1445,22 @@ declare module 'stripe' {
     }
 
     namespace CustomerSubscriptionPendingUpdateExpiredEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Subscription;
+
+        previous_attributes?: Partial<Stripe.Subscription>;
+      }
+    }
+
+    /**
+     * Occurs whenever a price migration failed to transition prices on a subscription.
+     */
+    interface CustomerSubscriptionPriceMigrationFailedEvent extends EventBase {
+      type: 'customer.subscription.price_migration_failed';
+      data: CustomerSubscriptionPriceMigrationFailedEvent.Data;
+    }
+
+    namespace CustomerSubscriptionPriceMigrationFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Subscription;
 
@@ -3626,6 +3644,22 @@ declare module 'stripe' {
     }
 
     namespace SubscriptionScheduleExpiringEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.SubscriptionSchedule;
+
+        previous_attributes?: Partial<Stripe.SubscriptionSchedule>;
+      }
+    }
+
+    /**
+     * Occurs whenever a price migration failed to transition prices on a subscription schedule.
+     */
+    interface SubscriptionSchedulePriceMigrationFailedEvent extends EventBase {
+      type: 'subscription_schedule.price_migration_failed';
+      data: SubscriptionSchedulePriceMigrationFailedEvent.Data;
+    }
+
+    namespace SubscriptionSchedulePriceMigrationFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.SubscriptionSchedule;
 
