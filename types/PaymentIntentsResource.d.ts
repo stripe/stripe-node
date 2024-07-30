@@ -3423,9 +3423,6 @@ declare module 'stripe' {
         PaymentIntentUpdateParams.PaymentDetails
       >;
 
-      /**
-       * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.
-       */
       payment_method?: string;
 
       /**
