@@ -1935,6 +1935,62 @@ declare module 'stripe' {
       }
     }
 
+    interface InvoiceAttachPaymentParams {
+      /**
+       * The portion of the `amount` on the PaymentIntent or out of band payment to apply to this invoice. It defaults to the entire amount.
+       */
+      amount_requested?: number;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * The out of band payment to attach to the invoice.
+       */
+      out_of_band_payment?: InvoiceAttachPaymentParams.OutOfBandPayment;
+
+      /**
+       * The ID of the PaymentIntent to attach to the invoice.
+       */
+      payment_intent?: string;
+    }
+
+    namespace InvoiceAttachPaymentParams {
+      interface OutOfBandPayment {
+        /**
+         * The amount that was paid out of band.
+         */
+        amount: number;
+
+        /**
+         * The currency that was paid out of band.
+         */
+        currency: string;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * The type of money movement for this out of band payment record.
+         */
+        money_movement_type: string;
+
+        /**
+         * The timestamp when this out of band payment was paid.
+         */
+        paid_at?: number;
+
+        /**
+         * The reference for this out of band payment record.
+         */
+        payment_reference?: string;
+      }
+    }
+
     interface InvoiceAttachPaymentIntentParams {
       /**
        * The ID of the PaymentIntent to attach to the invoice.
@@ -9642,6 +9698,31 @@ declare module 'stripe' {
       addLines(
         id: string,
         params: InvoiceAddLinesParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Invoice>>;
+
+      /**
+       * Attaches a PaymentIntent or an Out of Band Payment to the invoice, adding it to the list of payments.
+       *
+       * For Out of Band Payment, the payment is credited to the invoice immediately, increasing the amount_paid
+       * of the invoice and subsequently transitioning the status of the invoice to paid if necessary.
+       *
+       * For the PaymentIntent, when the PaymentIntent's status changes to succeeded, the payment is credited
+       * to the invoice, increasing its amount_paid. When the invoice is fully paid, the
+       * invoice's status becomes paid.
+       *
+       * If the PaymentIntent's status is already succeeded when it's attached, it's
+       * credited to the invoice immediately.
+       *
+       * See: [Create an invoice payment](https://stripe.com/docs/invoicing/payments/create) to learn more.
+       */
+      attachPayment(
+        id: string,
+        params?: InvoiceAttachPaymentParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Invoice>>;
+      attachPayment(
+        id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Invoice>>;
 
