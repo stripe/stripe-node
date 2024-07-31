@@ -634,6 +634,11 @@ declare module 'stripe' {
             line_invalid?: string;
 
             /**
+             * The IDs of the lines that are invalid if the stale reason type is `lines_invalid`.
+             */
+            lines_invalid?: Array<LastReason.LinesInvalid>;
+
+            /**
              * The user supplied mark stale reason.
              */
             marked_stale?: string | null;
@@ -669,6 +674,18 @@ declare module 'stripe' {
           }
 
           namespace LastReason {
+            interface LinesInvalid {
+              /**
+               * The timestamp at which the lines were marked as invalid.
+               */
+              invalid_at: number;
+
+              /**
+               * The list of lines that became invalid at the given timestamp.
+               */
+              lines: Array<string>;
+            }
+
             interface SubscriptionChanged {
               /**
                * The subscription's state before the quote was marked as stale.
@@ -687,6 +704,7 @@ declare module 'stripe' {
               | 'accept_failed_validations'
               | 'bill_on_acceptance_invalid'
               | 'line_invalid'
+              | 'lines_invalid'
               | 'marked_stale'
               | 'subscription_canceled'
               | 'subscription_changed'
