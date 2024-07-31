@@ -95,7 +95,7 @@ declare module 'stripe' {
         currency: string | null;
 
         /**
-         * Currency conversion details for automatic currency conversion sessions
+         * Currency conversion details for [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing) sessions
          */
         currency_conversion: Session.CurrencyConversion | null;
 
