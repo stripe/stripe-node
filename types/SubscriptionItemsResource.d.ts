@@ -198,7 +198,7 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
-       * Indicates if a customer is on or off-session while an invoice payment is attempted.
+       * Indicates if a customer is on or off-session while an invoice payment is attempted. Defaults to `false` (on-session).
        */
       off_session?: boolean;
 
