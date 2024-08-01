@@ -62,7 +62,7 @@ declare module 'stripe' {
       billing_details: Charge.BillingDetails;
 
       /**
-       * The full statement descriptor that is passed to card networks, and that is displayed on your customers' credit card and bank statements. Allows you to see what the statement descriptor looks like after the static and dynamic portions are combined.
+       * The full statement descriptor that is passed to card networks, and that is displayed on your customers' credit card and bank statements. Allows you to see what the statement descriptor looks like after the static and dynamic portions are combined. This only works for card payments.
        */
       calculated_statement_descriptor: string | null;
 
@@ -702,11 +702,6 @@ declare module 'stripe' {
            * The authorized amount.
            */
           amount_authorized: number | null;
-
-          /**
-           * Authorization code on the charge.
-           */
-          authorization_code?: string | null;
 
           /**
            * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.

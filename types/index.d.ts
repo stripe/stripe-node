@@ -134,6 +134,8 @@
 ///<reference path='./BalanceTransactionSources.d.ts' />
 ///<reference path='./BalanceTransactions.d.ts' />
 ///<reference path='./BankAccounts.d.ts' />
+///<reference path='./Billing/AlertTriggereds.d.ts' />
+///<reference path='./Billing/Alerts.d.ts' />
 ///<reference path='./Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./Billing/MeterEventSummaries.d.ts' />
 ///<reference path='./Billing/MeterEvents.d.ts' />
