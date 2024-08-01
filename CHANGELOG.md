@@ -1,5 +1,13 @@
 # Changelog
 
+## 16.6.0 - 2024-08-01
+* [#2144](https://github.com/stripe/stripe-node/pull/2144) Update generated code
+  * Add support for new resources `Billing.AlertTriggered` and `Billing.Alert`
+  * Add support for new value `charge_exceeds_transaction_limit` on enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`
+  * ⚠️ Remove support for `authorization_code` on `Charge.payment_method_details.card`. This was accidentally released last week.
+  * Add support for new value `billing.alert.triggered` on enum `Event.type`
+  * Add support for new value `billing.alert.triggered` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
 ## 16.5.0 - 2024-07-25
 * [#2143](https://github.com/stripe/stripe-node/pull/2143) Update generated code
   * Add support for `tax_registrations` and `tax_settings` on `AccountSession.components` and `AccountSessionCreateParams.components`
