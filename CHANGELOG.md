@@ -1,5 +1,14 @@
 # Changelog
 
+## 16.7.0-beta.1 - 2024-08-01
+* [#2145](https://github.com/stripe/stripe-node/pull/2145) Update generated code for beta
+  * Add support for `attach_payment` method on resource `Invoice`
+  * Add support for `app_install` and `app_viewport` on `AccountSessionCreateParams.components`
+  * Remove support for `partner_rejected_details` on `Dispute.evidence_details.enhanced_eligibility.visa_compelling_evidence_3`
+  * Add support for `lines_invalid` on `Quote.status_details.stale.last_reason`
+  * Add support for new value `lines_invalid` on enum `Quote.status_details.stale.last_reason.type`
+  * Add support for `last_price_migration_error` on `SubscriptionSchedule` and `Subscription`
+
 ## 16.6.0-beta.1 - 2024-07-25
 * [#2137](https://github.com/stripe/stripe-node/pull/2137) Update generated code for beta
   * Add support for new resources `Billing.AlertTriggered`, `Billing.Alert`, and `Tax.Association`
