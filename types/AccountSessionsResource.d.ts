@@ -32,6 +32,16 @@ declare module 'stripe' {
         account_onboarding?: Components.AccountOnboarding;
 
         /**
+         * Configuration for the app install component.
+         */
+        app_install?: Components.AppInstall;
+
+        /**
+         * Configuration for the app viewport component.
+         */
+        app_viewport?: Components.AppViewport;
+
+        /**
          * Configuration for the balances embedded component.
          */
         balances?: Components.Balances;
@@ -149,6 +159,48 @@ declare module 'stripe' {
              * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for custom accounts (or accounts where the platform is compliance owner). Otherwise, bank account collection is determined by compliance requirements.
              */
             external_account_collection?: boolean;
+          }
+        }
+
+        interface AppInstall {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: AppInstall.Features;
+        }
+
+        namespace AppInstall {
+          interface Features {
+            /**
+             * List of apps allowed to be enabled for this account session.
+             */
+            allowed_apps?: Stripe.Emptyable<Array<string>>;
+          }
+        }
+
+        interface AppViewport {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: AppViewport.Features;
+        }
+
+        namespace AppViewport {
+          interface Features {
+            /**
+             * List of apps allowed to be enabled for this account session.
+             */
+            allowed_apps?: Stripe.Emptyable<Array<string>>;
           }
         }
 

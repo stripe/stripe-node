@@ -147,6 +147,11 @@ declare module 'stripe' {
       items: ApiList<Stripe.SubscriptionItem>;
 
       /**
+       * Details of the most recent price migration that failed for the subscription.
+       */
+      last_price_migration_error?: Subscription.LastPriceMigrationError | null;
+
+      /**
        * The most recent invoice this subscription has generated.
        */
       latest_invoice: string | Stripe.Invoice | null;
@@ -384,6 +389,37 @@ declare module 'stripe' {
 
         namespace Issuer {
           type Type = 'account' | 'self';
+        }
+      }
+
+      interface LastPriceMigrationError {
+        /**
+         * The time at which the price migration encountered an error.
+         */
+        errored_at: number;
+
+        /**
+         * The involved price pairs in each failed transition.
+         */
+        failed_transitions: Array<LastPriceMigrationError.FailedTransition>;
+
+        /**
+         * The type of error encountered by the price migration.
+         */
+        type: 'price_uniqueness_violation';
+      }
+
+      namespace LastPriceMigrationError {
+        interface FailedTransition {
+          /**
+           * The original price to be migrated.
+           */
+          source_price: string;
+
+          /**
+           * The intended resulting price of the migration.
+           */
+          target_price: string;
         }
       }
 

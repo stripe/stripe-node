@@ -376,11 +376,6 @@ declare module 'stripe' {
         namespace EnhancedEligibility {
           interface VisaCompellingEvidence3 {
             /**
-             * Rejection reason for evidence submitted as Visa Compelling Evidence 3.0 to Visa and rejected by Visa.
-             */
-            partner_rejected_details: VisaCompellingEvidence3.PartnerRejectedDetails | null;
-
-            /**
              * List of actions required to qualify dispute for Visa Compelling Evidence 3.0 evidence submission.
              */
             required_actions: Array<VisaCompellingEvidence3.RequiredAction>;
@@ -392,11 +387,6 @@ declare module 'stripe' {
           }
 
           namespace VisaCompellingEvidence3 {
-            type PartnerRejectedDetails =
-              | 'fraudulent_prior_transaction'
-              | 'other'
-              | 'visa_internal_error';
-
             type RequiredAction =
               | 'missing_customer_identifiers'
               | 'missing_disputed_transaction_description'
