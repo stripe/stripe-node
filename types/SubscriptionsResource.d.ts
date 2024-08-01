@@ -51,7 +51,7 @@ declare module 'stripe' {
       cancel_at?: number;
 
       /**
-       * Boolean indicating whether this subscription should cancel at the end of the current period.
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
        */
       cancel_at_period_end?: boolean;
 
@@ -1074,7 +1074,7 @@ declare module 'stripe' {
       cancel_at?: Stripe.Emptyable<number>;
 
       /**
-       * Boolean indicating whether this subscription should cancel at the end of the current period.
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
        */
       cancel_at_period_end?: boolean;
 
