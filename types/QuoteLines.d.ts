@@ -34,7 +34,7 @@ declare module 'stripe' {
       /**
        * A point-in-time operation that cancels an existing subscription schedule at the line's starts_at timestamp. Currently only compatible with `quote_acceptance_date` for `starts_at`. When using cancel_subscription_schedule, the subscription schedule on the quote remains unalterable, except for modifications to the metadata, collection_method or invoice_settings.
        */
-      cancel_subscription_schedule?: QuoteLine.CancelSubscriptionSchedule | null;
+      cancel_subscription_schedule: QuoteLine.CancelSubscriptionSchedule | null;
 
       /**
        * Details to identify the end of the time range modified by the proposed change. If not supplied, the quote line is considered a point-in-time operation that only affects the exact timestamp at `starts_at`, and a restricted set of attributes is supported on the quote line.
