@@ -158,7 +158,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * The ID of a promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
+       * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       promotion_code?: string;
 
@@ -1001,7 +1001,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription.
+       * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       promotion_code?: string;
 
