@@ -18,6 +18,314 @@ describe('utils', () => {
     });
   });
 
+  describe('strictUriEncode', () => {
+    it('should encode a string without special characters', () => {
+      const str = 'hello';
+      const result = utils.strictUriEncode(str);
+      expect(result).to.equal('hello');
+    });
+
+    it('should encode a string with spaces', () => {
+      const str = 'hello world';
+      const result = utils.strictUriEncode(str);
+      expect(result).to.equal('hello%20world');
+    });
+
+    it('should encode a string with special characters', () => {
+      const str = "hello!world'()*";
+      const result = utils.strictUriEncode(str);
+      expect(result).to.equal('hello%21world%27%28%29%2A');
+    });
+
+    it('should encode a string with mixed characters', () => {
+      const str = "hello world! It's a test.";
+      const result = utils.strictUriEncode(str);
+      expect(result).to.equal('hello%20world%21%20It%27s%20a%20test.');
+    });
+
+    it('should encode an empty string', () => {
+      const str = '';
+      const result = utils.strictUriEncode(str);
+      expect(result).to.equal('');
+    });
+  });
+
+  describe('serializeDate', () => {
+    it('should serialize a date to a string using the provided configuration', () => {
+      const date = new Date('2023-01-01T00:00:00Z');
+      const config = {
+        serializeDate: (d: Date) => d.toISOString(),
+      };
+
+      const result = utils.serializeDate(date, config);
+
+      expect(result).to.equal('2023-01-01T00:00:00.000Z');
+    });
+
+    it('should serialize a date to a number using the provided configuration', () => {
+      const date = new Date('2023-01-01T00:00:00Z');
+      const config = {
+        serializeDate: (d: Date) => d.getTime(),
+      };
+
+      const result = utils.serializeDate(date, config);
+
+      expect(result).to.equal(date.getTime().toString());
+    });
+
+    it('should handle custom serialization logic', () => {
+      const date = new Date('2023-01-01T00:00:00Z');
+      const config = {
+        serializeDate: (d: Date) => `Year: ${d.getUTCFullYear()}`,
+      };
+
+      const result = utils.serializeDate(date, config);
+
+      expect(result).to.equal('Year: 2023');
+    });
+  });
+
+  describe('serializeArray', () => {
+    const serializeDate = (d: Date) =>
+      Math.floor(d.getTime() / 1000).toString();
+    const config = {serializeDate};
+
+    it('should serialize an empty array', () => {
+      const arr: unknown[] = [];
+      const result = utils.serializeArray(arr, 'key', config, new Set());
+      expect(result).to.equal('');
+    });
+
+    it('should serialize an array of strings', () => {
+      const arr = ['value1', 'value2'];
+      const result = utils.serializeArray(arr, 'key', config, new Set());
+      // i.e key[0]=value1&key[1]=value2
+      expect(result).to.equal('key%5B0%5D=value1&key%5B1%5D=value2');
+    });
+
+    it('should serialize an array of numbers', () => {
+      const arr = [1, 2, 3];
+      const result = utils.serializeArray(arr, 'key', config, new Set());
+      // i.e key[0]=1&key[1]=2&key[2]=3
+      expect(result).to.equal('key%5B0%5D=1&key%5B1%5D=2&key%5B2%5D=3');
+    });
+
+    it('should serialize an array of dates', () => {
+      const arr = [
+        new Date('2023-01-01T00:00:00Z'),
+        new Date('2023-01-02T00:00:00Z'),
+      ];
+      const result = utils.serializeArray(arr, 'key', config, new Set());
+
+      expect(result).to.equal(
+        `key%5B0%5D=${serializeDate(arr[0] as Date)}&key%5B1%5D=${serializeDate(
+          arr[1] as Date
+        )}`
+      );
+    });
+
+    it('should serialize an array with mixed types', () => {
+      const arr = ['value', 123, new Date('2023-01-01T00:00:00Z')];
+      const result = utils.serializeArray(arr, 'key', config, new Set());
+
+      expect(result).to.equal(
+        `key%5B0%5D=value&key%5B1%5D=123&key%5B2%5D=${serializeDate(
+          arr[2] as Date
+        )}`
+      );
+    });
+  });
+
+  describe('serializeObject', () => {
+    const serializeDate = (d: Date) =>
+      Math.floor(d.getTime() / 1000).toString();
+    const config = {serializeDate};
+
+    it('should serialize an empty object', () => {
+      const obj = {};
+      const result = utils.serializeObject(obj, '', config, new Set());
+      expect(result).to.equal('');
+    });
+
+    it('should serialize an object with string properties', () => {
+      const obj = {key1: 'value1', key2: 'value2'};
+      const result = utils.serializeObject(obj, '', config, new Set());
+      expect(result).to.equal('key1=value1&key2=value2');
+    });
+
+    it('should serialize an object with number properties', () => {
+      const obj = {key1: 1, key2: 2};
+      const result = utils.serializeObject(obj, '', config, new Set());
+      expect(result).to.equal('key1=1&key2=2');
+    });
+
+    it('should serialize an object with date properties', () => {
+      const obj = {
+        key1: new Date('2023-01-01T00:00:00Z'),
+        key2: new Date('2023-01-02T00:00:00Z'),
+      };
+      const result = utils.serializeObject(obj, '', config, new Set());
+      expect(result).to.equal(
+        `key1=${serializeDate(obj.key1)}&key2=${serializeDate(obj.key2)}`
+      );
+    });
+
+    it('should serialize an object with mixed properties', () => {
+      const obj = {
+        key1: 'value',
+        key2: 123,
+        key3: new Date('2023-01-01T00:00:00Z'),
+      };
+      const result = utils.serializeObject(obj, '', config, new Set());
+      expect(result).to.equal(
+        `key1=value&key2=123&key3=${serializeDate(obj.key3)}`
+      );
+    });
+
+    it('should serialize a nested object', () => {
+      const obj = {
+        key1: {subKey1: 'subValue1', subKey2: 'subValue2'},
+        key2: 'value2',
+      };
+      const result = utils.serializeObject(obj, '', config, new Set());
+      expect(result).to.equal(
+        'key1%5BsubKey1%5D=subValue1&key1%5BsubKey2%5D=subValue2&key2=value2'
+      );
+    });
+
+    it('should skip properties which does not belong to object', () => {
+      const obj = {
+        key1: 'value1',
+        key2: 'value2',
+      };
+
+      const prototype = Object.getPrototypeOf(obj);
+
+      prototype.newPrototypeProperty = 'newProp';
+
+      const result = utils.serializeObject(obj, '', config, new Set());
+
+      expect(result).to.equal('key1=value1&key2=value2');
+    });
+
+    it('should skip undefined properties', () => {
+      const obj = {key1: undefined};
+
+      const result = utils.serializeObject(obj, '', config, new Set());
+      expect(result).to.equal('');
+    });
+  });
+
+  describe('serializeElement', () => {
+    const serializeDate = (d: Date) =>
+      Math.floor(d.getTime() / 1000).toString();
+    const config = {serializeDate};
+
+    it('should serialize a null value', () => {
+      const result = utils.serializeElement('key', null, config, new Set());
+      expect(result).to.equal('key=');
+    });
+
+    it('should serialize a date value', () => {
+      const date = new Date('2023-01-01T00:00:00Z');
+      const result = utils.serializeElement('key', date, config, new Set());
+      expect(result).to.equal(`key=${serializeDate(date)}`);
+    });
+
+    it('should serialize an array value', () => {
+      const arr = ['value1', 'value2'];
+      const result = utils.serializeElement('key', arr, config, new Set());
+      expect(result).to.equal('key%5B0%5D=value1&key%5B1%5D=value2');
+    });
+
+    it('should serialize an object value', () => {
+      const obj = {subKey: 'subValue'};
+      const result = utils.serializeElement('key', obj, config, new Set());
+      expect(result).to.equal('key%5BsubKey%5D=subValue');
+    });
+
+    it('should serialize a string value', () => {
+      const result = utils.serializeElement('key', 'value', config, new Set());
+      expect(result).to.equal('key=value');
+    });
+
+    it('should serialize a number value', () => {
+      const result = utils.serializeElement('key', 123, config, new Set());
+      expect(result).to.equal('key=123');
+    });
+
+    it('should serialize a boolean value', () => {
+      const result = utils.serializeElement('key', true, config, new Set());
+      expect(result).to.equal('key=true');
+    });
+  });
+
+  describe('stringify', () => {
+    const serializeDate = (d: Date) => d.toISOString();
+    const config = {serializeDate};
+
+    it('should stringify an empty object', () => {
+      const obj = {};
+      const result = utils.stringify(obj, config);
+      expect(result).to.equal('');
+    });
+
+    it('should stringify an object with string properties', () => {
+      const obj = {key1: 'value1', key2: 'value2'};
+      const result = utils.stringify(obj, config);
+      expect(result).to.equal('key1=value1&key2=value2');
+    });
+
+    it('should stringify an object with number properties', () => {
+      const obj = {key1: 1, key2: 2};
+      const result = utils.stringify(obj, config);
+      expect(result).to.equal('key1=1&key2=2');
+    });
+
+    it('should stringify an object with date properties', () => {
+      const obj = {
+        key1: new Date('2023-01-01T00:00:00Z'),
+        key2: new Date('2023-01-02T00:00:00Z'),
+      };
+      const result = utils.stringify(obj, config);
+      expect(result).to.equal(
+        `key1=${serializeDate(obj.key1)}&key2=${serializeDate(obj.key2)}`
+      );
+    });
+
+    it('should stringify an object with mixed properties', () => {
+      const obj = {
+        key1: 'value',
+        key2: 123,
+        key3: new Date('2023-01-01T00:00:00Z'),
+      };
+      const result = utils.stringify(obj, config);
+      expect(result).to.equal(
+        `key1=value&key2=123&key3=${serializeDate(obj.key3)}`
+      );
+    });
+
+    it('should stringify a nested object', () => {
+      const obj = {
+        key1: {subKey1: 'subValue1', subKey2: 'subValue2'},
+        key2: 'value2',
+      };
+      const result = utils.stringify(obj, config);
+      expect(result).to.equal(
+        'key1%5BsubKey1%5D=subValue1&key1%5BsubKey2%5D=subValue2&key2=value2'
+      );
+    });
+
+    it('should throw an error for cyclic objects', () => {
+      const obj: any = {key1: 'value1'};
+      obj.key2 = obj; // Create cyclic reference
+      expect(() => utils.stringify(obj, config)).to.throw(
+        RangeError,
+        'Cyclic object value'
+      );
+    });
+  });
+
   describe('extractUrlParams', () => {
     it('works with multiple params', () => {
       expect(
@@ -109,6 +417,10 @@ describe('utils', () => {
           'nested[a%20n%20o%20t%20h%20e%20r]=',
         ].join('&')
       );
+    });
+
+    it('Handles string data', () => {
+      expect(utils.stringifyRequestData('')).to.equal('');
     });
   });
 
