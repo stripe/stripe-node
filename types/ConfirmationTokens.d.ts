@@ -849,6 +849,11 @@ declare module 'stripe' {
           networks: CardPresent.Networks | null;
 
           /**
+           * Details about payment methods collected offline.
+           */
+          offline: CardPresent.Offline | null;
+
+          /**
            * EMV tag 5F2D. Preferred languages specified by the integrated circuit chip.
            */
           preferred_locales: Array<string> | null;
@@ -870,6 +875,13 @@ declare module 'stripe' {
              * The preferred network for the card.
              */
             preferred: string | null;
+          }
+
+          interface Offline {
+            /**
+             * Time at which the payment was collected while offline
+             */
+            stored_at: number | null;
           }
 
           type ReadMethod =
