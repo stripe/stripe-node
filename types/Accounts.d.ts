@@ -1316,22 +1316,22 @@ declare module 'stripe' {
           statement_descriptor: string | null;
 
           /**
-           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only)
+           * The Kana variation of `statement_descriptor` used for charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
            */
           statement_descriptor_kana: string | null;
 
           /**
-           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only)
+           * The Kanji variation of `statement_descriptor` used for charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
            */
           statement_descriptor_kanji: string | null;
 
           /**
-           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kana` specified on the charge. `statement_descriptor_prefix_kana` is useful for maximizing descriptor space for the dynamic portion.
+           * The Kana variation of `statement_descriptor_prefix` used for card charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
            */
           statement_descriptor_prefix_kana: string | null;
 
           /**
-           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kanji` specified on the charge. `statement_descriptor_prefix_kanji` is useful for maximizing descriptor space for the dynamic portion.
+           * The Kanji variation of `statement_descriptor_prefix` used for card charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
            */
           statement_descriptor_prefix_kanji: string | null;
         }
