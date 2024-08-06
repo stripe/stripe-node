@@ -210,7 +210,7 @@ declare module 'stripe' {
           radar_options?: PaymentMethodData.RadarOptions;
 
           /**
-           * If this is a Rechnung PaymentMethod, this hash contains details about the Rechnung payment method.
+           * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
            */
           rechnung?: PaymentMethodData.Rechnung;
 

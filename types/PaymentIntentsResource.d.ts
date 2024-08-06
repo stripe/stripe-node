@@ -1109,7 +1109,7 @@ declare module 'stripe' {
         radar_options?: PaymentMethodData.RadarOptions;
 
         /**
-         * If this is a Rechnung PaymentMethod, this hash contains details about the Rechnung payment method.
+         * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
          */
         rechnung?: PaymentMethodData.Rechnung;
 
@@ -1759,7 +1759,7 @@ declare module 'stripe' {
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
 
         /**
-         * If this is a `Rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
+         * If this is a `rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
          */
         rechnung?: Stripe.Emptyable<PaymentMethodOptions.Rechnung>;
 
@@ -3060,12 +3060,7 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
-        interface Rechnung {
-          /**
-           * A unique identifier that correlates each transaction with the collected risk data.
-           */
-          risk_correlation_id?: string;
-        }
+        interface Rechnung {}
 
         interface RevolutPay {
           /**
@@ -4449,7 +4444,7 @@ declare module 'stripe' {
         radar_options?: PaymentMethodData.RadarOptions;
 
         /**
-         * If this is a Rechnung PaymentMethod, this hash contains details about the Rechnung payment method.
+         * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
          */
         rechnung?: PaymentMethodData.Rechnung;
 
@@ -5099,7 +5094,7 @@ declare module 'stripe' {
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
 
         /**
-         * If this is a `Rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
+         * If this is a `rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
          */
         rechnung?: Stripe.Emptyable<PaymentMethodOptions.Rechnung>;
 
@@ -6400,12 +6395,7 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
-        interface Rechnung {
-          /**
-           * A unique identifier that correlates each transaction with the collected risk data.
-           */
-          risk_correlation_id?: string;
-        }
+        interface Rechnung {}
 
         interface RevolutPay {
           /**
@@ -8546,7 +8536,7 @@ declare module 'stripe' {
         radar_options?: PaymentMethodData.RadarOptions;
 
         /**
-         * If this is a Rechnung PaymentMethod, this hash contains details about the Rechnung payment method.
+         * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
          */
         rechnung?: PaymentMethodData.Rechnung;
 
@@ -9196,7 +9186,7 @@ declare module 'stripe' {
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
 
         /**
-         * If this is a `Rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
+         * If this is a `rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
          */
         rechnung?: Stripe.Emptyable<PaymentMethodOptions.Rechnung>;
 
@@ -10497,12 +10487,7 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
-        interface Rechnung {
-          /**
-           * A unique identifier that correlates each transaction with the collected risk data.
-           */
-          risk_correlation_id?: string;
-        }
+        interface Rechnung {}
 
         interface RevolutPay {
           /**

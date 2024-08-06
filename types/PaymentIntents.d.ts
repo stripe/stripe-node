@@ -2672,12 +2672,7 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
-        interface Rechnung {
-          /**
-           * A unique identifier that correlates each transaction with the collected risk data.
-           */
-          risk_correlation_id: string | null;
-        }
+        interface Rechnung {}
 
         interface RevolutPay {
           /**
