@@ -911,7 +911,7 @@ declare module 'stripe' {
       payment_intent?: string;
 
       /**
-       * Only return charges for this transfer group.
+       * Only return charges for this transfer group, limited to 100.
        */
       transfer_group?: string;
     }
