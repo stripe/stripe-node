@@ -380,15 +380,15 @@ declare module 'stripe' {
             namespace Installments {
               interface Plan {
                 /**
-                 * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+                 * For `fixed_count` installment plans, this is required. It represents the number of installment payments your customer will make to their credit card.
                  */
-                count: number;
+                count?: number;
 
                 /**
-                 * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
+                 * For `fixed_count` installment plans, this is required. It represents the interval between installment payments your customer will make to their credit card.
                  * One of `month`.
                  */
-                interval: 'month';
+                interval?: 'month';
 
                 /**
                  * Type of installment plan, one of `fixed_count`.
@@ -1074,15 +1074,15 @@ declare module 'stripe' {
             namespace Installments {
               interface Plan {
                 /**
-                 * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+                 * For `fixed_count` installment plans, this is required. It represents the number of installment payments your customer will make to their credit card.
                  */
-                count: number;
+                count?: number;
 
                 /**
-                 * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
+                 * For `fixed_count` installment plans, this is required. It represents the interval between installment payments your customer will make to their credit card.
                  * One of `month`.
                  */
-                interval: 'month';
+                interval?: 'month';
 
                 /**
                  * Type of installment plan, one of `fixed_count`.
