@@ -1,4 +1,3 @@
-import * as qs from 'qs';
 import {
   RequestData,
   UrlInterpolator,
@@ -44,17 +43,52 @@ export function isOptionsHash(o: unknown): boolean | unknown {
  * (forming the conventional key 'parent[child]=value')
  */
 export function stringifyRequestData(data: RequestData | string): string {
+  if (typeof data === 'string') return data;
+
   return (
-    qs
-      .stringify(data, {
-        serializeDate: (d: Date) => Math.floor(d.getTime() / 1000).toString(),
-      })
+    stringify(data, {
+      serializeDate: (d: Date) => Math.floor(d.getTime() / 1000).toString(),
+    })
       // Don't use strict form encoding by changing the square bracket control
       // characters back to their literals. This is fine by the server, and
       // makes these parameter strings easier to read.
       .replace(/%5B/g, '[')
       .replace(/%5D/g, ']')
   );
+}
+
+/**
+ * Stringifies an object into a query string
+ * @param obj - The object to stringify
+ * @param config - Configuration object for custom serialization rules
+ * @param prefix - The parent key when nesting
+ * @param visited - Set of previously visited objects to avoid cyclic references
+ * @returns The query string
+ */
+export function stringify(
+  obj: RequestData,
+  config = {
+    serializeDate: (d: Date): string | number => d.toISOString(),
+  },
+  prefix?: string,
+  visited = new Set()
+): string {
+  if (visited.has(obj)) {
+    // Clear visited set and throw an error if a cyclic reference is detected
+    visited.clear();
+    throw new RangeError('Cyclic object value');
+  }
+
+  // Add the current object to the visited set
+  visited.add(obj);
+
+  // Serialize the object
+  const result = serializeObject(obj, prefix || '', config, visited);
+
+  // Remove the current object from the visited set
+  visited.delete(obj);
+
+  return result;
 }
 
 /**
@@ -379,3 +413,106 @@ export function concat(arrays: Array<Uint8Array>): Uint8Array {
 
   return merged;
 }
+
+// --- start: required functions for stringify ---
+
+// Suggestion:
+// These are internal functions that are required for the `stringify` function.
+// Hence, we can make changes to only export them in 'test' environment for unit testing.
+
+// Custom implementation of strictUriEncode package
+export function strictUriEncode(str: string): string {
+  return encodeURIComponent(str).replace(
+    /[!'()*]/g,
+    (char) =>
+      '%' +
+      char
+        .charCodeAt(0)
+        .toString(16)
+        .toUpperCase()
+  );
+}
+
+// Serializes a Date object based on the provided configuration
+export function serializeDate(
+  d: Date,
+  config: {serializeDate: (d: Date) => string | number}
+): string {
+  return config.serializeDate(d).toString();
+}
+
+// Serializes an array into a query string
+export function serializeArray(
+  arr: unknown[],
+  key: string,
+  config: {serializeDate: (d: Date) => string | number},
+  visited: Set<unknown>
+): string {
+  const str = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    const serializedElement = serializeElement(
+      key + '[' + i + ']',
+      arr[i],
+      config,
+      visited
+    );
+    str.push(serializedElement);
+  }
+
+  return str.join('&');
+}
+
+// Serializes an object into a query string
+export function serializeObject(
+  obj: RequestData,
+  key: string,
+  config: {serializeDate: (d: Date) => string | number},
+  visited: Set<unknown>
+): string {
+  const str = [];
+
+  for (const propertyName in obj) {
+    if (!Object.prototype.hasOwnProperty.call(obj, propertyName)) continue;
+
+    const k = key ? key + '[' + propertyName + ']' : propertyName;
+
+    const v = obj[propertyName];
+
+    if (v === undefined) continue;
+
+    const serializedElement = serializeElement(k, v, config, visited);
+
+    str.push(serializedElement);
+  }
+
+  return str.join('&');
+}
+
+// Helper function to serialize different types of elements
+export function serializeElement(
+  key: string,
+  value: unknown,
+  config: {serializeDate: (d: Date) => string | number},
+  visited: Set<unknown>
+): string {
+  if (value === null) {
+    return encodeURIComponent(key) + '=';
+  }
+
+  if (value instanceof Date) {
+    return encodeURIComponent(key) + '=' + serializeDate(value, config);
+  }
+
+  if (Array.isArray(value)) {
+    return serializeArray(value, key, config, visited);
+  }
+
+  if (typeof value === 'object' && value !== null) {
+    return stringify(value as RequestData, config, key, visited);
+  }
+
+  return encodeURIComponent(key) + '=' + strictUriEncode(String(value));
+}
+
+// --- end: required functions for stringify ---
