@@ -51,7 +51,7 @@ declare module 'stripe' {
       cancel_at?: number;
 
       /**
-       * Boolean indicating whether this subscription should cancel at the end of the current period.
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
        */
       cancel_at_period_end?: boolean;
 
@@ -163,7 +163,7 @@ declare module 'stripe' {
       prebilling?: SubscriptionCreateParams.Prebilling;
 
       /**
-       * The ID of a promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
+       * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       promotion_code?: string;
 
@@ -818,6 +818,7 @@ declare module 'stripe' {
               | 'diners'
               | 'discover'
               | 'eftpos_au'
+              | 'girocard'
               | 'interac'
               | 'jcb'
               | 'mastercard'
@@ -1074,7 +1075,7 @@ declare module 'stripe' {
       cancel_at?: Stripe.Emptyable<number>;
 
       /**
-       * Boolean indicating whether this subscription should cancel at the end of the current period.
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
        */
       cancel_at_period_end?: boolean;
 
@@ -1189,7 +1190,7 @@ declare module 'stripe' {
       prebilling?: SubscriptionUpdateParams.Prebilling;
 
       /**
-       * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription.
+       * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       promotion_code?: string;
 
@@ -1853,6 +1854,7 @@ declare module 'stripe' {
               | 'diners'
               | 'discover'
               | 'eftpos_au'
+              | 'girocard'
               | 'interac'
               | 'jcb'
               | 'mastercard'

@@ -363,6 +363,7 @@ declare module 'stripe' {
           | 'invalid_cvc'
           | 'invalid_expiry_month'
           | 'invalid_expiry_year'
+          | 'invalid_mandate_reference_prefix_format'
           | 'invalid_number'
           | 'invalid_source_usage'
           | 'invalid_tax_location'
@@ -576,6 +577,8 @@ declare module 'stripe' {
 
         amazon_pay?: PaymentMethodOptions.AmazonPay;
 
+        bacs_debit?: PaymentMethodOptions.BacsDebit;
+
         card?: PaymentMethodOptions.Card;
 
         card_present?: PaymentMethodOptions.CardPresent;
@@ -648,6 +651,14 @@ declare module 'stripe' {
         }
 
         interface AmazonPay {}
+
+        interface BacsDebit {
+          mandate_options?: BacsDebit.MandateOptions;
+        }
+
+        namespace BacsDebit {
+          interface MandateOptions {}
+        }
 
         interface Card {
           /**
@@ -731,6 +742,7 @@ declare module 'stripe' {
             | 'diners'
             | 'discover'
             | 'eftpos_au'
+            | 'girocard'
             | 'interac'
             | 'jcb'
             | 'mastercard'

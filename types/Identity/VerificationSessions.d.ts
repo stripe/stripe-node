@@ -81,6 +81,11 @@ declare module 'stripe' {
         redaction: VerificationSession.Redaction | null;
 
         /**
+         * Token referencing a Customer resource.
+         */
+        related_customer: string | null;
+
+        /**
          * Status of this VerificationSession. [Learn more about the lifecycle of sessions](https://stripe.com/docs/identity/how-sessions-work).
          */
         status: VerificationSession.Status;

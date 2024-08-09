@@ -175,7 +175,10 @@ declare module 'stripe' {
 
     namespace Person {
       interface AdditionalTosAcceptances {
-        account: AdditionalTosAcceptances.Account;
+        /**
+         * Details on the legal guardian's acceptance of the main Stripe service agreement.
+         */
+        account: AdditionalTosAcceptances.Account | null;
       }
 
       namespace AdditionalTosAcceptances {

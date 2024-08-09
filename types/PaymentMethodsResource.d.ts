@@ -194,7 +194,7 @@ declare module 'stripe' {
       radar_options?: PaymentMethodCreateParams.RadarOptions;
 
       /**
-       * If this is a Rechnung PaymentMethod, this hash contains details about the Rechnung payment method.
+       * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
        */
       rechnung?: PaymentMethodCreateParams.Rechnung;
 
@@ -768,7 +768,7 @@ declare module 'stripe' {
       payto?: PaymentMethodUpdateParams.Payto;
 
       /**
-       * If this is a Rechnung PaymentMethod, this hash contains details about the Rechnung payment method.
+       * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
        */
       rechnung?: PaymentMethodUpdateParams.Rechnung;
 

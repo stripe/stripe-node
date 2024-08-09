@@ -308,6 +308,13 @@ declare module 'stripe' {
         }
       }
 
+      interface CalculationRetrieveParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
       interface CalculationListLineItemsParams extends PaginationParams {
         /**
          * Specifies which fields in the response should be expanded.
@@ -321,6 +328,19 @@ declare module 'stripe' {
          */
         create(
           params: CalculationCreateParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Tax.Calculation>>;
+
+        /**
+         * Retrieves a Tax Calculation object, if the calculation hasn't expired.
+         */
+        retrieve(
+          id: string,
+          params?: CalculationRetrieveParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Tax.Calculation>>;
+        retrieve(
+          id: string,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Tax.Calculation>>;
 
