@@ -796,6 +796,11 @@ declare module 'stripe' {
         amazon_pay?: PaymentMethodOptions.AmazonPay;
 
         /**
+         * If this is a `bacs_debit` SetupIntent, this sub-hash contains details about the Bacs Debit payment method options.
+         */
+        bacs_debit?: PaymentMethodOptions.BacsDebit;
+
+        /**
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
@@ -888,6 +893,17 @@ declare module 'stripe' {
         }
 
         interface AmazonPay {}
+
+        interface BacsDebit {
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: BacsDebit.MandateOptions;
+        }
+
+        namespace BacsDebit {
+          interface MandateOptions {}
+        }
 
         interface Card {
           /**
@@ -1907,6 +1923,11 @@ declare module 'stripe' {
         amazon_pay?: PaymentMethodOptions.AmazonPay;
 
         /**
+         * If this is a `bacs_debit` SetupIntent, this sub-hash contains details about the Bacs Debit payment method options.
+         */
+        bacs_debit?: PaymentMethodOptions.BacsDebit;
+
+        /**
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
@@ -1999,6 +2020,17 @@ declare module 'stripe' {
         }
 
         interface AmazonPay {}
+
+        interface BacsDebit {
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: BacsDebit.MandateOptions;
+        }
+
+        namespace BacsDebit {
+          interface MandateOptions {}
+        }
 
         interface Card {
           /**
@@ -3067,6 +3099,11 @@ declare module 'stripe' {
         amazon_pay?: PaymentMethodOptions.AmazonPay;
 
         /**
+         * If this is a `bacs_debit` SetupIntent, this sub-hash contains details about the Bacs Debit payment method options.
+         */
+        bacs_debit?: PaymentMethodOptions.BacsDebit;
+
+        /**
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
@@ -3159,6 +3196,17 @@ declare module 'stripe' {
         }
 
         interface AmazonPay {}
+
+        interface BacsDebit {
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: BacsDebit.MandateOptions;
+        }
+
+        namespace BacsDebit {
+          interface MandateOptions {}
+        }
 
         interface Card {
           /**
