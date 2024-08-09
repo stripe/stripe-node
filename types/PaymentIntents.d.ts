@@ -1513,6 +1513,8 @@ declare module 'stripe' {
         }
 
         interface BacsDebit {
+          mandate_options?: BacsDebit.MandateOptions;
+
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -1526,6 +1528,8 @@ declare module 'stripe' {
         }
 
         namespace BacsDebit {
+          interface MandateOptions {}
+
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
