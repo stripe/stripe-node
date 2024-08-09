@@ -563,6 +563,7 @@ declare module 'stripe' {
         | 'p24'
         | 'paynow'
         | 'paypal'
+        | 'payto'
         | 'pix'
         | 'promptpay'
         | 'sepa_debit'
