@@ -577,6 +577,8 @@ declare module 'stripe' {
 
         amazon_pay?: PaymentMethodOptions.AmazonPay;
 
+        bacs_debit?: PaymentMethodOptions.BacsDebit;
+
         card?: PaymentMethodOptions.Card;
 
         card_present?: PaymentMethodOptions.CardPresent;
@@ -649,6 +651,14 @@ declare module 'stripe' {
         }
 
         interface AmazonPay {}
+
+        interface BacsDebit {
+          mandate_options?: BacsDebit.MandateOptions;
+        }
+
+        namespace BacsDebit {
+          interface MandateOptions {}
+        }
 
         interface Card {
           /**
