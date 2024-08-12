@@ -355,7 +355,7 @@ declare module 'stripe' {
         radar_options?: PaymentMethodData.RadarOptions;
 
         /**
-         * If this is a Rechnung PaymentMethod, this hash contains details about the Rechnung payment method.
+         * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
          */
         rechnung?: PaymentMethodData.Rechnung;
 
@@ -851,6 +851,11 @@ declare module 'stripe' {
         amazon_pay?: PaymentMethodOptions.AmazonPay;
 
         /**
+         * If this is a `bacs_debit` SetupIntent, this sub-hash contains details about the Bacs Debit payment method options.
+         */
+        bacs_debit?: PaymentMethodOptions.BacsDebit;
+
+        /**
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
@@ -949,6 +954,17 @@ declare module 'stripe' {
 
         interface AmazonPay {}
 
+        interface BacsDebit {
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: BacsDebit.MandateOptions;
+        }
+
+        namespace BacsDebit {
+          interface MandateOptions {}
+        }
+
         interface Card {
           /**
            * Configuration options for setting up an eMandate for cards issued in India.
@@ -1044,6 +1060,7 @@ declare module 'stripe' {
             | 'diners'
             | 'discover'
             | 'eftpos_au'
+            | 'girocard'
             | 'interac'
             | 'jcb'
             | 'mastercard'
@@ -1630,7 +1647,7 @@ declare module 'stripe' {
         radar_options?: PaymentMethodData.RadarOptions;
 
         /**
-         * If this is a Rechnung PaymentMethod, this hash contains details about the Rechnung payment method.
+         * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
          */
         rechnung?: PaymentMethodData.Rechnung;
 
@@ -2126,6 +2143,11 @@ declare module 'stripe' {
         amazon_pay?: PaymentMethodOptions.AmazonPay;
 
         /**
+         * If this is a `bacs_debit` SetupIntent, this sub-hash contains details about the Bacs Debit payment method options.
+         */
+        bacs_debit?: PaymentMethodOptions.BacsDebit;
+
+        /**
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
@@ -2224,6 +2246,17 @@ declare module 'stripe' {
 
         interface AmazonPay {}
 
+        interface BacsDebit {
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: BacsDebit.MandateOptions;
+        }
+
+        namespace BacsDebit {
+          interface MandateOptions {}
+        }
+
         interface Card {
           /**
            * Configuration options for setting up an eMandate for cards issued in India.
@@ -2319,6 +2352,7 @@ declare module 'stripe' {
             | 'diners'
             | 'discover'
             | 'eftpos_au'
+            | 'girocard'
             | 'interac'
             | 'jcb'
             | 'mastercard'
@@ -2954,7 +2988,7 @@ declare module 'stripe' {
         radar_options?: PaymentMethodData.RadarOptions;
 
         /**
-         * If this is a Rechnung PaymentMethod, this hash contains details about the Rechnung payment method.
+         * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
          */
         rechnung?: PaymentMethodData.Rechnung;
 
@@ -3450,6 +3484,11 @@ declare module 'stripe' {
         amazon_pay?: PaymentMethodOptions.AmazonPay;
 
         /**
+         * If this is a `bacs_debit` SetupIntent, this sub-hash contains details about the Bacs Debit payment method options.
+         */
+        bacs_debit?: PaymentMethodOptions.BacsDebit;
+
+        /**
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
@@ -3548,6 +3587,17 @@ declare module 'stripe' {
 
         interface AmazonPay {}
 
+        interface BacsDebit {
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: BacsDebit.MandateOptions;
+        }
+
+        namespace BacsDebit {
+          interface MandateOptions {}
+        }
+
         interface Card {
           /**
            * Configuration options for setting up an eMandate for cards issued in India.
@@ -3643,6 +3693,7 @@ declare module 'stripe' {
             | 'diners'
             | 'discover'
             | 'eftpos_au'
+            | 'girocard'
             | 'interac'
             | 'jcb'
             | 'mastercard'

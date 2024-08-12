@@ -52,6 +52,10 @@ declare module 'stripe' {
 
         balances: Components.Balances;
 
+        capital_financing?: Components.CapitalFinancing | null;
+
+        capital_financing_application?: Components.CapitalFinancingApplication | null;
+
         capital_financing_promotion?: Components.CapitalFinancingPromotion | null;
 
         documents: Components.Documents;
@@ -139,6 +143,32 @@ declare module 'stripe' {
              */
             standard_payouts: boolean;
           }
+        }
+
+        interface CapitalFinancing {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: CapitalFinancing.Features;
+        }
+
+        namespace CapitalFinancing {
+          interface Features {}
+        }
+
+        interface CapitalFinancingApplication {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: CapitalFinancingApplication.Features;
+        }
+
+        namespace CapitalFinancingApplication {
+          interface Features {}
         }
 
         interface CapitalFinancingPromotion {
