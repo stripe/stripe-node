@@ -70,7 +70,7 @@ declare module 'stripe' {
         client_reference_id: string | null;
 
         /**
-         * Client secret to be used when initializing Stripe.js embedded checkout.
+         * The client secret of the Session. Use this with [initCustomCheckout](https://stripe.com/docs/js/custom_checkout/init) on your front end.
          */
         client_secret: string | null;
 
@@ -224,7 +224,7 @@ declare module 'stripe' {
         redirect_on_completion?: Session.RedirectOnCompletion;
 
         /**
-         * Applies to Checkout Sessions with `ui_mode: embedded`. The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site.
+         * Applies to Checkout Sessions with `ui_mode: embedded` or `ui_mode: custom`. The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site.
          */
         return_url?: string;
 
@@ -2232,7 +2232,7 @@ declare module 'stripe' {
           }
         }
 
-        type UiMode = 'embedded' | 'hosted';
+        type UiMode = 'custom' | 'embedded' | 'hosted';
       }
     }
   }
