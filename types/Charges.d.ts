@@ -209,7 +209,7 @@ declare module 'stripe' {
       source: Stripe.CustomerSource | null;
 
       /**
-       * The transfer ID which created this charge. Only present if the charge came from another Stripe account. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
+       * The transfer ID which created this charge. Only present if the charge came from another Stripe account. [See the Connect documentation](https://docs.stripe.com/connect/destination-charges) for details.
        */
       source_transfer: string | Stripe.Transfer | null;
 
@@ -219,7 +219,7 @@ declare module 'stripe' {
       statement_descriptor: string | null;
 
       /**
-       * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.corp.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement. If the account has no prefix value, the suffix is concatenated to the account's statement descriptor.
+       * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement. If the account has no prefix value, the suffix is concatenated to the account's statement descriptor.
        */
       statement_descriptor_suffix: string | null;
 
