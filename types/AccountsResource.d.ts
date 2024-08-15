@@ -3490,7 +3490,7 @@ declare module 'stripe' {
 
     interface AccountCreatePersonParams {
       /**
-       * Details on the legal guardian's acceptance of the required Stripe agreements.
+       * Details on the legal guardian's or authorizer's acceptance of the required Stripe agreements.
        */
       additional_tos_acceptances?: AccountCreatePersonParams.AdditionalTosAcceptances;
 
@@ -4020,7 +4020,7 @@ declare module 'stripe' {
 
     interface AccountUpdatePersonParams {
       /**
-       * Details on the legal guardian's acceptance of the required Stripe agreements.
+       * Details on the legal guardian's or authorizer's acceptance of the required Stripe agreements.
        */
       additional_tos_acceptances?: AccountUpdatePersonParams.AdditionalTosAcceptances;
 

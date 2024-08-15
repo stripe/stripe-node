@@ -595,6 +595,8 @@ declare module 'stripe' {
                  * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
                  */
                 receipt: CardPresent.Receipt | null;
+
+                wallet?: CardPresent.Wallet;
               }
 
               namespace CardPresent {
@@ -669,6 +671,21 @@ declare module 'stripe' {
                     | 'checking'
                     | 'credit'
                     | 'prepaid'
+                    | 'unknown';
+                }
+
+                interface Wallet {
+                  /**
+                   * The type of mobile wallet, one of `apple_pay`, `google_pay`, `samsung_pay`, or `unknown`.
+                   */
+                  type: Wallet.Type;
+                }
+
+                namespace Wallet {
+                  type Type =
+                    | 'apple_pay'
+                    | 'google_pay'
+                    | 'samsung_pay'
                     | 'unknown';
                 }
               }
@@ -868,6 +885,8 @@ declare module 'stripe' {
            * How card details were read in this transaction.
            */
           read_method: CardPresent.ReadMethod | null;
+
+          wallet?: CardPresent.Wallet;
         }
 
         namespace CardPresent {
@@ -901,6 +920,17 @@ declare module 'stripe' {
             | 'contactless_magstripe_mode'
             | 'magnetic_stripe_fallback'
             | 'magnetic_stripe_track2';
+
+          interface Wallet {
+            /**
+             * The type of mobile wallet, one of `apple_pay`, `google_pay`, `samsung_pay`, or `unknown`.
+             */
+            type: Wallet.Type;
+          }
+
+          namespace Wallet {
+            type Type = 'apple_pay' | 'google_pay' | 'samsung_pay' | 'unknown';
+          }
         }
 
         interface Cashapp {

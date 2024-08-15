@@ -188,6 +188,13 @@ declare module 'stripe' {
         payment_method_types?: Array<SessionCreateParams.PaymentMethodType>;
 
         /**
+         * This property is used to set up permissions for various actions (e.g., update) on the CheckoutSession object.
+         *
+         * For specific permissions, please refer to their dedicated subsections, such as `permissions.update.shipping_details`.
+         */
+        permissions?: SessionCreateParams.Permissions;
+
+        /**
          * Controls phone number collection settings for the session.
          *
          * We recommend that you review your privacy policy and check with your legal contacts
@@ -2012,6 +2019,30 @@ declare module 'stripe' {
           | 'wechat_pay'
           | 'zip';
 
+        interface Permissions {
+          /**
+           * Permissions for updating the Checkout Session.
+           */
+          update?: Permissions.Update;
+        }
+
+        namespace Permissions {
+          interface Update {
+            /**
+             * Determines which entity is allowed to update the shipping details.
+             *
+             * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
+             *
+             * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+             */
+            shipping_details?: Update.ShippingDetails;
+          }
+
+          namespace Update {
+            type ShippingDetails = 'client_only' | 'server_only';
+          }
+        }
+
         interface PhoneNumberCollection {
           /**
            * Set to `true` to enable phone number collection.
@@ -2596,6 +2627,11 @@ declare module 'stripe' {
 
       interface SessionUpdateParams {
         /**
+         * Information about the customer collected within the Checkout Session.
+         */
+        collected_information?: SessionUpdateParams.CollectedInformation;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -2604,6 +2640,208 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * The shipping rate options to apply to this Session. Up to a maximum of 5.
+         */
+        shipping_options?: Stripe.Emptyable<
+          Array<SessionUpdateParams.ShippingOption>
+        >;
+      }
+
+      namespace SessionUpdateParams {
+        interface CollectedInformation {
+          /**
+           * The shipping details to apply to this Session.
+           */
+          shipping_details?: CollectedInformation.ShippingDetails;
+        }
+
+        namespace CollectedInformation {
+          interface ShippingDetails {
+            /**
+             * The address of the customer
+             */
+            address: ShippingDetails.Address;
+
+            /**
+             * The name of customer
+             */
+            name: string;
+          }
+
+          namespace ShippingDetails {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
+        }
+
+        interface ShippingOption {
+          /**
+           * The ID of the Shipping Rate to use for this shipping option.
+           */
+          shipping_rate?: string;
+
+          /**
+           * Parameters to be passed to Shipping Rate creation for this shipping option.
+           */
+          shipping_rate_data?: ShippingOption.ShippingRateData;
+        }
+
+        namespace ShippingOption {
+          interface ShippingRateData {
+            /**
+             * The estimated range for how long shipping will take, meant to be displayable to the customer. This will appear on CheckoutSessions.
+             */
+            delivery_estimate?: ShippingRateData.DeliveryEstimate;
+
+            /**
+             * The name of the shipping rate, meant to be displayable to the customer. This will appear on CheckoutSessions.
+             */
+            display_name: string;
+
+            /**
+             * Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
+             */
+            fixed_amount?: ShippingRateData.FixedAmount;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             */
+            metadata?: Stripe.MetadataParam;
+
+            /**
+             * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+             */
+            tax_behavior?: ShippingRateData.TaxBehavior;
+
+            /**
+             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+             */
+            tax_code?: string;
+
+            /**
+             * The type of calculation to use on the shipping rate.
+             */
+            type?: 'fixed_amount';
+          }
+
+          namespace ShippingRateData {
+            interface DeliveryEstimate {
+              /**
+               * The upper bound of the estimated range. If empty, represents no upper bound i.e., infinite.
+               */
+              maximum?: DeliveryEstimate.Maximum;
+
+              /**
+               * The lower bound of the estimated range. If empty, represents no lower bound.
+               */
+              minimum?: DeliveryEstimate.Minimum;
+            }
+
+            namespace DeliveryEstimate {
+              interface Maximum {
+                /**
+                 * A unit of time.
+                 */
+                unit: Maximum.Unit;
+
+                /**
+                 * Must be greater than 0.
+                 */
+                value: number;
+              }
+
+              namespace Maximum {
+                type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+              }
+
+              interface Minimum {
+                /**
+                 * A unit of time.
+                 */
+                unit: Minimum.Unit;
+
+                /**
+                 * Must be greater than 0.
+                 */
+                value: number;
+              }
+
+              namespace Minimum {
+                type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+              }
+            }
+
+            interface FixedAmount {
+              /**
+               * A non-negative integer in cents representing how much to charge.
+               */
+              amount: number;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+
+              /**
+               * Shipping rates defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency_options?: {
+                [key: string]: FixedAmount.CurrencyOptions;
+              };
+            }
+
+            namespace FixedAmount {
+              interface CurrencyOptions {
+                /**
+                 * A non-negative integer in cents representing how much to charge.
+                 */
+                amount: number;
+
+                /**
+                 * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+                 */
+                tax_behavior?: CurrencyOptions.TaxBehavior;
+              }
+
+              namespace CurrencyOptions {
+                type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+              }
+            }
+
+            type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          }
+        }
       }
 
       interface SessionListParams extends PaginationParams {
