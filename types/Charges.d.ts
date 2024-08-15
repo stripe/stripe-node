@@ -1205,6 +1205,8 @@ declare module 'stripe' {
            * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
            */
           receipt: CardPresent.Receipt | null;
+
+          wallet?: CardPresent.Wallet;
         }
 
         namespace CardPresent {
@@ -1276,6 +1278,17 @@ declare module 'stripe' {
 
           namespace Receipt {
             type AccountType = 'checking' | 'credit' | 'prepaid' | 'unknown';
+          }
+
+          interface Wallet {
+            /**
+             * The type of mobile wallet, one of `apple_pay`, `google_pay`, `samsung_pay`, or `unknown`.
+             */
+            type: Wallet.Type;
+          }
+
+          namespace Wallet {
+            type Type = 'apple_pay' | 'google_pay' | 'samsung_pay' | 'unknown';
           }
         }
 
