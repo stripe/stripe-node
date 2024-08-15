@@ -301,9 +301,14 @@ declare module 'stripe' {
 
           interface UsDomesticWire {
             /**
+             * CHIPS System Sequence Number (SSN) of the OutboundPayment for payments sent over the `us_domestic_wire` network.
+             */
+            chips: string | null;
+
+            /**
              * IMAD of the OutboundPayment for payments sent over the `us_domestic_wire` network.
              */
-            imad: string;
+            imad: string | null;
 
             /**
              * OMAD of the OutboundPayment for payments sent over the `us_domestic_wire` network.

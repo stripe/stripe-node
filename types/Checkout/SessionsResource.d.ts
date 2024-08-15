@@ -25,7 +25,7 @@ declare module 'stripe' {
         billing_address_collection?: SessionCreateParams.BillingAddressCollection;
 
         /**
-         * If set, Checkout displays a back button and customers will be directed to this URL if they decide to cancel payment and return to your website.
+         * If set, Checkout displays a back button and customers will be directed to this URL if they decide to cancel payment and return to your website. This parameter is not allowed if ui_mode is `embedded`.
          */
         cancel_url?: string;
 

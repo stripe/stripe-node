@@ -260,9 +260,14 @@ declare module 'stripe' {
 
           interface UsDomesticWire {
             /**
+             * CHIPS System Sequence Number (SSN) of the OutboundTransfer for transfers sent over the `us_domestic_wire` network.
+             */
+            chips: string | null;
+
+            /**
              * IMAD of the OutboundTransfer for transfers sent over the `us_domestic_wire` network.
              */
-            imad: string;
+            imad: string | null;
 
             /**
              * OMAD of the OutboundTransfer for transfers sent over the `us_domestic_wire` network.
