@@ -75,6 +75,11 @@ declare module 'stripe' {
         client_secret: string | null;
 
         /**
+         * Information about the customer collected within the Checkout Session.
+         */
+        collected_information?: Session.CollectedInformation | null;
+
+        /**
          * Results of `consent_collection` for this session.
          */
         consent: Session.Consent | null;
@@ -210,6 +215,13 @@ declare module 'stripe' {
          * You can use this value to decide when to fulfill your customer's order.
          */
         payment_status: Session.PaymentStatus;
+
+        /**
+         * This property is used to set up permissions for various actions (e.g., update) on the CheckoutSession object.
+         *
+         * For specific permissions, please refer to their dedicated subsections, such as `permissions.update.shipping_details`.
+         */
+        permissions?: Session.Permissions | null;
 
         phone_number_collection?: Session.PhoneNumberCollection;
 
@@ -372,6 +384,39 @@ declare module 'stripe' {
         }
 
         type BillingAddressCollection = 'auto' | 'required';
+
+        interface CollectedInformation {
+          /**
+           * Shipping information for this Checkout Session.
+           */
+          shipping_details: CollectedInformation.ShippingDetails | null;
+        }
+
+        namespace CollectedInformation {
+          interface ShippingDetails {
+            address?: Stripe.Address;
+
+            /**
+             * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+             */
+            carrier?: string | null;
+
+            /**
+             * Recipient name.
+             */
+            name?: string;
+
+            /**
+             * Recipient phone (including extension).
+             */
+            phone?: string | null;
+
+            /**
+             * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+             */
+            tracking_number?: string | null;
+          }
+        }
 
         interface Consent {
           /**
@@ -1734,6 +1779,30 @@ declare module 'stripe' {
         }
 
         type PaymentStatus = 'no_payment_required' | 'paid' | 'unpaid';
+
+        interface Permissions {
+          /**
+           * Permissions for updating the Checkout Session.
+           */
+          update: Permissions.Update | null;
+        }
+
+        namespace Permissions {
+          interface Update {
+            /**
+             * Determines which entity is allowed to update the shipping details.
+             *
+             * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
+             *
+             * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+             */
+            shipping_details: Update.ShippingDetails | null;
+          }
+
+          namespace Update {
+            type ShippingDetails = 'client_only' | 'server_only';
+          }
+        }
 
         interface PhoneNumberCollection {
           /**

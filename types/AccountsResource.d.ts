@@ -1063,7 +1063,7 @@ declare module 'stripe' {
 
       interface Documents {
         /**
-         * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the account's primary active bank account that displays the last 4 digits of the account number, either a statement or a voided check.
+         * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the account's primary active bank account that displays the last 4 digits of the account number, either a statement or a check.
          */
         bank_account_ownership_verification?: Documents.BankAccountOwnershipVerification;
 
@@ -2746,7 +2746,7 @@ declare module 'stripe' {
 
       interface Documents {
         /**
-         * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the account's primary active bank account that displays the last 4 digits of the account number, either a statement or a voided check.
+         * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the account's primary active bank account that displays the last 4 digits of the account number, either a statement or a check.
          */
         bank_account_ownership_verification?: Documents.BankAccountOwnershipVerification;
 
@@ -3490,7 +3490,7 @@ declare module 'stripe' {
 
     interface AccountCreatePersonParams {
       /**
-       * Details on the legal guardian's acceptance of the required Stripe agreements.
+       * Details on the legal guardian's or authorizer's acceptance of the required Stripe agreements.
        */
       additional_tos_acceptances?: AccountCreatePersonParams.AdditionalTosAcceptances;
 
@@ -4003,7 +4003,7 @@ declare module 'stripe' {
 
       interface Documents {
         /**
-         * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the bank account that displays the last 4 digits of the account number, either a statement or a voided check.
+         * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the bank account that displays the last 4 digits of the account number, either a statement or a check.
          */
         bank_account_ownership_verification?: Documents.BankAccountOwnershipVerification;
       }
@@ -4020,7 +4020,7 @@ declare module 'stripe' {
 
     interface AccountUpdatePersonParams {
       /**
-       * Details on the legal guardian's acceptance of the required Stripe agreements.
+       * Details on the legal guardian's or authorizer's acceptance of the required Stripe agreements.
        */
       additional_tos_acceptances?: AccountUpdatePersonParams.AdditionalTosAcceptances;
 
