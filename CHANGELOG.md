@@ -1,5 +1,12 @@
 # Changelog
 
+## 16.9.0-beta.1 - 2024-08-15
+* [#2157](https://github.com/stripe/stripe-node/pull/2157) Update generated code for beta
+  * Add support for `capital_financing_application` and `capital_financing` on `AccountSessionCreateParams.components`
+  * Add support for `permissions` on `Checkout.SessionCreateParams` and `Checkout.Session`
+  * Add support for `collected_information` on `Checkout.SessionUpdateParams` and `Checkout.Session`
+  * Add support for `shipping_options` on `Checkout.SessionUpdateParams`
+
 ## 16.8.0-beta.1 - 2024-08-12
 * [#2148](https://github.com/stripe/stripe-node/pull/2148) Update generated code for beta
   * Add support for `capital_financing_application` and `capital_financing` on `AccountSession.components`
