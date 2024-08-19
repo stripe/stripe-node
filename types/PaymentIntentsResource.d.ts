@@ -50,7 +50,7 @@ declare module 'stripe' {
        *
        * Payment methods attached to other Customers cannot be used with this PaymentIntent.
        *
-       * If [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Customer after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.corp.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Customer instead.
+       * If [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Customer after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Customer instead.
        */
       customer?: string;
 
@@ -160,7 +160,7 @@ declare module 'stripe' {
       statement_descriptor?: string;
 
       /**
-       * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.corp.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
+       * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
        */
       statement_descriptor_suffix?: string;
 
@@ -1244,6 +1244,11 @@ declare module 'stripe' {
 
         interface BacsDebit {
           /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: BacsDebit.MandateOptions;
+
+          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -1258,6 +1263,8 @@ declare module 'stripe' {
         }
 
         namespace BacsDebit {
+          interface MandateOptions {}
+
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
@@ -2568,7 +2575,7 @@ declare module 'stripe' {
        *
        * Payment methods attached to other Customers cannot be used with this PaymentIntent.
        *
-       * If [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Customer after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.corp.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Customer instead.
+       * If [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Customer after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Customer instead.
        */
       customer?: string;
 
@@ -2645,7 +2652,7 @@ declare module 'stripe' {
       statement_descriptor?: string;
 
       /**
-       * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.corp.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
+       * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
        */
       statement_descriptor_suffix?: string;
 
@@ -3652,6 +3659,11 @@ declare module 'stripe' {
 
         interface BacsDebit {
           /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: BacsDebit.MandateOptions;
+
+          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -3666,6 +3678,8 @@ declare module 'stripe' {
         }
 
         namespace BacsDebit {
+          interface MandateOptions {}
+
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
@@ -5009,7 +5023,7 @@ declare module 'stripe' {
       statement_descriptor?: string;
 
       /**
-       * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.corp.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
+       * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
        */
       statement_descriptor_suffix?: string;
 
@@ -6172,6 +6186,11 @@ declare module 'stripe' {
 
         interface BacsDebit {
           /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: BacsDebit.MandateOptions;
+
+          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -6186,6 +6205,8 @@ declare module 'stripe' {
         }
 
         namespace BacsDebit {
+          interface MandateOptions {}
+
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
