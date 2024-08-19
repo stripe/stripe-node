@@ -90,7 +90,7 @@ declare module 'stripe' {
         serial_number: string;
 
         /**
-         * The networking status of the reader.
+         * The networking status of the reader. We do not recommend using this field in flows that may block taking payments.
          */
         status: Reader.Status | null;
       }

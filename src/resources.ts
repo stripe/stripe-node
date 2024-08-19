@@ -3,6 +3,7 @@
 import {resourceNamespace} from './ResourceNamespace.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
 import {ActiveEntitlements as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
+import {Alerts as BillingAlerts} from './resources/Billing/Alerts.js';
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
@@ -119,6 +120,7 @@ export {Transfers} from './resources/Transfers.js';
 export {WebhookEndpoints} from './resources/WebhookEndpoints.js';
 export const Apps = resourceNamespace('apps', {Secrets: AppsSecrets});
 export const Billing = resourceNamespace('billing', {
+  Alerts: BillingAlerts,
   MeterEventAdjustments: BillingMeterEventAdjustments,
   MeterEvents: BillingMeterEvents,
   Meters: BillingMeters,
