@@ -94,7 +94,9 @@ declare module 'stripe' {
       /**
        * Generates a header to be used for webhook mocking
        */
-      generateTestHeaderStringAsync(opts: WebhookTestHeaderOptions): Promise<string>;
+      generateTestHeaderStringAsync(
+        opts: WebhookTestHeaderOptions
+      ): Promise<string>;
 
       signature: Signature;
     }
@@ -104,7 +106,7 @@ declare module 'stripe' {
        * JSON stringified payload object, containing the 'id' and 'object' parameters.
        */
       payload: string;
-            
+
       /**
        * Timestamp of the header. Defaults to Date.now().
        */
