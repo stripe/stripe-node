@@ -46,6 +46,11 @@ declare module 'stripe' {
 
             interface UsDomesticWire {
               /**
+               * CHIPS System Sequence Number (SSN) for funds sent over the `us_domestic_wire` network.
+               */
+              chips?: string;
+
+              /**
                * IMAD for funds sent over the `us_domestic_wire` network.
                */
               imad?: string;

@@ -30,6 +30,11 @@ declare module 'stripe' {
         provided_details?: VerificationSessionCreateParams.ProvidedDetails;
 
         /**
+         * Token referencing a Customer resource.
+         */
+        related_customer?: string;
+
+        /**
          * The URL that the user will be redirected to upon completing the verification flow.
          */
         return_url?: string;
@@ -196,6 +201,8 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+
+        related_customer?: string;
 
         /**
          * Only return VerificationSessions with this status. [Learn more about the lifecycle of sessions](https://stripe.com/docs/identity/how-sessions-work).

@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     interface TransferCreateParams {
       /**
-       * 3-letter [ISO code for currency](https://stripe.com/docs/payouts).
+       * Three-letter [ISO code for currency](https://www.iso.org/iso-4217-currency-codes.html) in lowercase. Must be a [supported currency](https://docs.stripe.com/currencies).
        */
       currency: string;
 
