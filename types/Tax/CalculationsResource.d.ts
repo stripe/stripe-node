@@ -205,9 +205,7 @@ declare module 'stripe' {
 
         interface LineItem {
           /**
-           * A positive integer representing the line item's total price in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency).
-           * The minimum amount is $0.0 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts).
-           * The amount value supports up to twelve digits (e.g., a value of 999999999999 for a USD charge of $9,999,999,999.99).
+           * A positive integer representing the line item's total price in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
            * If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes are calculated on top of this amount.
            */
           amount: number;
@@ -310,6 +308,13 @@ declare module 'stripe' {
         }
       }
 
+      interface CalculationRetrieveParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
       interface CalculationListLineItemsParams extends PaginationParams {
         /**
          * Specifies which fields in the response should be expanded.
@@ -323,6 +328,19 @@ declare module 'stripe' {
          */
         create(
           params: CalculationCreateParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Tax.Calculation>>;
+
+        /**
+         * Retrieves a Tax Calculation object, if the calculation hasn't expired.
+         */
+        retrieve(
+          id: string,
+          params?: CalculationRetrieveParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Tax.Calculation>>;
+        retrieve(
+          id: string,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Tax.Calculation>>;
 

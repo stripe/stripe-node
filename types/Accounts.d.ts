@@ -132,7 +132,7 @@ declare module 'stripe' {
         estimated_worker_count: number | null;
 
         /**
-         * [The merchant category code for the account](https://stripe.com/docs/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
+         * [The merchant category code for the account](https://stripe.com/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
          */
         mcc: string | null;
 
@@ -177,7 +177,7 @@ declare module 'stripe' {
       namespace BusinessProfile {
         interface AnnualRevenue {
           /**
-           * A non-negative integer representing the amount in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+           * A non-negative integer representing the amount in the [smallest currency unit](https://stripe.com/currencies#zero-decimal).
            */
           amount: number | null;
 
@@ -194,7 +194,7 @@ declare module 'stripe' {
 
         interface MonthlyEstimatedRevenue {
           /**
-           * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+           * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/currencies#zero-decimal).
            */
           amount: number;
 
@@ -1316,22 +1316,22 @@ declare module 'stripe' {
           statement_descriptor: string | null;
 
           /**
-           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only)
+           * The Kana variation of `statement_descriptor` used for charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
            */
           statement_descriptor_kana: string | null;
 
           /**
-           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only)
+           * The Kanji variation of `statement_descriptor` used for charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
            */
           statement_descriptor_kanji: string | null;
 
           /**
-           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kana` specified on the charge. `statement_descriptor_prefix_kana` is useful for maximizing descriptor space for the dynamic portion.
+           * The Kana variation of `statement_descriptor_prefix` used for card charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
            */
           statement_descriptor_prefix_kana: string | null;
 
           /**
-           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kanji` specified on the charge. `statement_descriptor_prefix_kanji` is useful for maximizing descriptor space for the dynamic portion.
+           * The Kanji variation of `statement_descriptor_prefix` used for card charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
            */
           statement_descriptor_prefix_kanji: string | null;
         }

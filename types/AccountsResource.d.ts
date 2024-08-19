@@ -111,7 +111,7 @@ declare module 'stripe' {
         estimated_worker_count?: number;
 
         /**
-         * [The merchant category code for the account](https://docs.stripe.com/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
+         * [The merchant category code for the account](https://stripe.com/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
          */
         mcc?: string;
 
@@ -159,7 +159,7 @@ declare module 'stripe' {
       namespace BusinessProfile {
         interface AnnualRevenue {
           /**
-           * A non-negative integer representing the amount in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+           * A non-negative integer representing the amount in the [smallest currency unit](https://stripe.com/currencies#zero-decimal).
            */
           amount: number;
 
@@ -176,7 +176,7 @@ declare module 'stripe' {
 
         interface MonthlyEstimatedRevenue {
           /**
-           * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+           * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/currencies#zero-decimal).
            */
           amount: number;
 
@@ -778,12 +778,12 @@ declare module 'stripe' {
         address_kanji?: Stripe.JapanAddressParam;
 
         /**
-         * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://docs.stripe.com/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
+         * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://stripe.com/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
          */
         directors_provided?: boolean;
 
         /**
-         * Whether the company's executives have been provided. Set this Boolean to `true` after creating all the company's executives with [the Persons API](https://docs.stripe.com/api/persons) for accounts with a `relationship.executive` requirement.
+         * Whether the company's executives have been provided. Set this Boolean to `true` after creating all the company's executives with [the Persons API](https://stripe.com/api/persons) for accounts with a `relationship.executive` requirement.
          */
         executives_provided?: boolean;
 
@@ -813,7 +813,7 @@ declare module 'stripe' {
         name_kanji?: string;
 
         /**
-         * Whether the company's owners have been provided. Set this Boolean to `true` after creating all the company's owners with [the Persons API](https://docs.stripe.com/api/persons) for accounts with a `relationship.owner` requirement.
+         * Whether the company's owners have been provided. Set this Boolean to `true` after creating all the company's owners with [the Persons API](https://stripe.com/api/persons) for accounts with a `relationship.owner` requirement.
          */
         owners_provided?: boolean;
 
@@ -833,7 +833,7 @@ declare module 'stripe' {
         registration_number?: string;
 
         /**
-         * The category identifying the legal structure of the company or legal entity. See [Business structure](https://docs.stripe.com/connect/identity-verification#business-structure) for more details. Pass an empty string to unset this value.
+         * The category identifying the legal structure of the company or legal entity. See [Business structure](https://stripe.com/connect/identity-verification#business-structure) for more details. Pass an empty string to unset this value.
          */
         structure?: Stripe.Emptyable<Company.Structure>;
 
@@ -984,7 +984,7 @@ declare module 'stripe' {
 
       interface Documents {
         /**
-         * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the account's primary active bank account that displays the last 4 digits of the account number, either a statement or a voided check.
+         * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the account's primary active bank account that displays the last 4 digits of the account number, either a statement or a check.
          */
         bank_account_ownership_verification?: Documents.BankAccountOwnershipVerification;
 
@@ -1159,12 +1159,12 @@ declare module 'stripe' {
         gender?: string;
 
         /**
-         * The government-issued ID number of the individual, as appropriate for the representative's country. (Examples are a Social Security Number in the U.S., or a Social Insurance Number in Canada). Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://docs.stripe.com/js/tokens/create_token?type=pii).
+         * The government-issued ID number of the individual, as appropriate for the representative's country. (Examples are a Social Security Number in the U.S., or a Social Insurance Number in Canada). Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://stripe.com/js/tokens/create_token?type=pii).
          */
         id_number?: string;
 
         /**
-         * The government-issued secondary ID number of the individual, as appropriate for the representative's country, will be used for enhanced verification checks. In Thailand, this would be the laser code found on the back of an ID card. Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://docs.stripe.com/js/tokens/create_token?type=pii).
+         * The government-issued secondary ID number of the individual, as appropriate for the representative's country, will be used for enhanced verification checks. In Thailand, this would be the laser code found on the back of an ID card. Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://stripe.com/js/tokens/create_token?type=pii).
          */
         id_number_secondary?: string;
 
@@ -1379,7 +1379,7 @@ declare module 'stripe' {
 
         interface CardIssuing {
           /**
-           * Details on the account's acceptance of the [Stripe Issuing Terms and Disclosures](https://docs.stripe.com/issuing/connect/tos_acceptance).
+           * Details on the account's acceptance of the [Stripe Issuing Terms and Disclosures](https://stripe.com/issuing/connect/tos_acceptance).
            */
           tos_acceptance?: CardIssuing.TosAcceptance;
         }
@@ -1441,29 +1441,29 @@ declare module 'stripe' {
 
         interface Payments {
           /**
-           * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge.
+           * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a `statement_descriptor_prefix`, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the `statement_descriptor` text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the [account settings documentation](https://docs.stripe.com/get-started/account/statement-descriptors).
            */
           statement_descriptor?: string;
 
           /**
-           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only).
+           * The Kana variation of `statement_descriptor` used for charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
            */
           statement_descriptor_kana?: string;
 
           /**
-           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only).
+           * The Kanji variation of `statement_descriptor` used for charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
            */
           statement_descriptor_kanji?: string;
         }
 
         interface Payouts {
           /**
-           * A Boolean indicating whether Stripe should try to reclaim negative balances from an attached bank account. For details, see [Understanding Connect Account Balances](https://docs.stripe.com/connect/account-balances).
+           * A Boolean indicating whether Stripe should try to reclaim negative balances from an attached bank account. For details, see [Understanding Connect Account Balances](https://stripe.com/connect/account-balances).
            */
           debit_negative_balances?: boolean;
 
           /**
-           * Details on when funds from charges are available, and when they are paid out to an external account. For details, see our [Setting Bank and Debit Card Payouts](https://docs.stripe.com/connect/bank-transfers#payout-information) documentation.
+           * Details on when funds from charges are available, and when they are paid out to an external account. For details, see our [Setting Bank and Debit Card Payouts](https://stripe.com/connect/bank-transfers#payout-information) documentation.
            */
           schedule?: Payouts.Schedule;
 
@@ -1476,7 +1476,7 @@ declare module 'stripe' {
         namespace Payouts {
           interface Schedule {
             /**
-             * The number of days charge funds are held before being paid out. May also be set to `minimum`, representing the lowest available value for the account country. Default is `minimum`. The `delay_days` parameter remains at the last configured value if `interval` is `manual`. [Learn more about controlling payout delay days](https://docs.stripe.com/connect/manage-payout-schedule).
+             * The number of days charge funds are held before being paid out. May also be set to `minimum`, representing the lowest available value for the account country. Default is `minimum`. The `delay_days` parameter remains at the last configured value if `interval` is `manual`. [Learn more about controlling payout delay days](https://stripe.com/connect/manage-payout-schedule).
              */
             delay_days?: 'minimum' | number;
 
@@ -1706,7 +1706,7 @@ declare module 'stripe' {
         estimated_worker_count?: number;
 
         /**
-         * [The merchant category code for the account](https://docs.stripe.com/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
+         * [The merchant category code for the account](https://stripe.com/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
          */
         mcc?: string;
 
@@ -1754,7 +1754,7 @@ declare module 'stripe' {
       namespace BusinessProfile {
         interface AnnualRevenue {
           /**
-           * A non-negative integer representing the amount in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+           * A non-negative integer representing the amount in the [smallest currency unit](https://stripe.com/currencies#zero-decimal).
            */
           amount: number;
 
@@ -1771,7 +1771,7 @@ declare module 'stripe' {
 
         interface MonthlyEstimatedRevenue {
           /**
-           * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
+           * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/currencies#zero-decimal).
            */
           amount: number;
 
@@ -2416,12 +2416,12 @@ declare module 'stripe' {
         address_kanji?: Stripe.JapanAddressParam;
 
         /**
-         * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://docs.stripe.com/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
+         * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://stripe.com/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
          */
         directors_provided?: boolean;
 
         /**
-         * Whether the company's executives have been provided. Set this Boolean to `true` after creating all the company's executives with [the Persons API](https://docs.stripe.com/api/persons) for accounts with a `relationship.executive` requirement.
+         * Whether the company's executives have been provided. Set this Boolean to `true` after creating all the company's executives with [the Persons API](https://stripe.com/api/persons) for accounts with a `relationship.executive` requirement.
          */
         executives_provided?: boolean;
 
@@ -2451,7 +2451,7 @@ declare module 'stripe' {
         name_kanji?: string;
 
         /**
-         * Whether the company's owners have been provided. Set this Boolean to `true` after creating all the company's owners with [the Persons API](https://docs.stripe.com/api/persons) for accounts with a `relationship.owner` requirement.
+         * Whether the company's owners have been provided. Set this Boolean to `true` after creating all the company's owners with [the Persons API](https://stripe.com/api/persons) for accounts with a `relationship.owner` requirement.
          */
         owners_provided?: boolean;
 
@@ -2471,7 +2471,7 @@ declare module 'stripe' {
         registration_number?: string;
 
         /**
-         * The category identifying the legal structure of the company or legal entity. See [Business structure](https://docs.stripe.com/connect/identity-verification#business-structure) for more details. Pass an empty string to unset this value.
+         * The category identifying the legal structure of the company or legal entity. See [Business structure](https://stripe.com/connect/identity-verification#business-structure) for more details. Pass an empty string to unset this value.
          */
         structure?: Stripe.Emptyable<Company.Structure>;
 
@@ -2563,7 +2563,7 @@ declare module 'stripe' {
 
       interface Documents {
         /**
-         * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the account's primary active bank account that displays the last 4 digits of the account number, either a statement or a voided check.
+         * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the account's primary active bank account that displays the last 4 digits of the account number, either a statement or a check.
          */
         bank_account_ownership_verification?: Documents.BankAccountOwnershipVerification;
 
@@ -2701,12 +2701,12 @@ declare module 'stripe' {
         gender?: string;
 
         /**
-         * The government-issued ID number of the individual, as appropriate for the representative's country. (Examples are a Social Security Number in the U.S., or a Social Insurance Number in Canada). Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://docs.stripe.com/js/tokens/create_token?type=pii).
+         * The government-issued ID number of the individual, as appropriate for the representative's country. (Examples are a Social Security Number in the U.S., or a Social Insurance Number in Canada). Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://stripe.com/js/tokens/create_token?type=pii).
          */
         id_number?: string;
 
         /**
-         * The government-issued secondary ID number of the individual, as appropriate for the representative's country, will be used for enhanced verification checks. In Thailand, this would be the laser code found on the back of an ID card. Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://docs.stripe.com/js/tokens/create_token?type=pii).
+         * The government-issued secondary ID number of the individual, as appropriate for the representative's country, will be used for enhanced verification checks. In Thailand, this would be the laser code found on the back of an ID card. Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://stripe.com/js/tokens/create_token?type=pii).
          */
         id_number_secondary?: string;
 
@@ -2926,7 +2926,7 @@ declare module 'stripe' {
 
         interface CardIssuing {
           /**
-           * Details on the account's acceptance of the [Stripe Issuing Terms and Disclosures](https://docs.stripe.com/issuing/connect/tos_acceptance).
+           * Details on the account's acceptance of the [Stripe Issuing Terms and Disclosures](https://stripe.com/issuing/connect/tos_acceptance).
            */
           tos_acceptance?: CardIssuing.TosAcceptance;
         }
@@ -2995,29 +2995,29 @@ declare module 'stripe' {
 
         interface Payments {
           /**
-           * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge.
+           * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a `statement_descriptor_prefix`, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the `statement_descriptor` text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the [account settings documentation](https://docs.stripe.com/get-started/account/statement-descriptors).
            */
           statement_descriptor?: string;
 
           /**
-           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only).
+           * The Kana variation of `statement_descriptor` used for charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
            */
           statement_descriptor_kana?: string;
 
           /**
-           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only).
+           * The Kanji variation of `statement_descriptor` used for charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
            */
           statement_descriptor_kanji?: string;
         }
 
         interface Payouts {
           /**
-           * A Boolean indicating whether Stripe should try to reclaim negative balances from an attached bank account. For details, see [Understanding Connect Account Balances](https://docs.stripe.com/connect/account-balances).
+           * A Boolean indicating whether Stripe should try to reclaim negative balances from an attached bank account. For details, see [Understanding Connect Account Balances](https://stripe.com/connect/account-balances).
            */
           debit_negative_balances?: boolean;
 
           /**
-           * Details on when funds from charges are available, and when they are paid out to an external account. For details, see our [Setting Bank and Debit Card Payouts](https://docs.stripe.com/connect/bank-transfers#payout-information) documentation.
+           * Details on when funds from charges are available, and when they are paid out to an external account. For details, see our [Setting Bank and Debit Card Payouts](https://stripe.com/connect/bank-transfers#payout-information) documentation.
            */
           schedule?: Payouts.Schedule;
 
@@ -3030,7 +3030,7 @@ declare module 'stripe' {
         namespace Payouts {
           interface Schedule {
             /**
-             * The number of days charge funds are held before being paid out. May also be set to `minimum`, representing the lowest available value for the account country. Default is `minimum`. The `delay_days` parameter remains at the last configured value if `interval` is `manual`. [Learn more about controlling payout delay days](https://docs.stripe.com/connect/manage-payout-schedule).
+             * The number of days charge funds are held before being paid out. May also be set to `minimum`, representing the lowest available value for the account country. Default is `minimum`. The `delay_days` parameter remains at the last configured value if `interval` is `manual`. [Learn more about controlling payout delay days](https://stripe.com/connect/manage-payout-schedule).
              */
             delay_days?: 'minimum' | number;
 
@@ -3244,7 +3244,7 @@ declare module 'stripe' {
 
     interface AccountCreatePersonParams {
       /**
-       * Details on the legal guardian's acceptance of the required Stripe agreements.
+       * Details on the legal guardian's or authorizer's acceptance of the required Stripe agreements.
        */
       additional_tos_acceptances?: AccountCreatePersonParams.AdditionalTosAcceptances;
 
@@ -3757,7 +3757,7 @@ declare module 'stripe' {
 
       interface Documents {
         /**
-         * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the bank account that displays the last 4 digits of the account number, either a statement or a voided check.
+         * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the bank account that displays the last 4 digits of the account number, either a statement or a check.
          */
         bank_account_ownership_verification?: Documents.BankAccountOwnershipVerification;
       }
@@ -3774,7 +3774,7 @@ declare module 'stripe' {
 
     interface AccountUpdatePersonParams {
       /**
-       * Details on the legal guardian's acceptance of the required Stripe agreements.
+       * Details on the legal guardian's or authorizer's acceptance of the required Stripe agreements.
        */
       additional_tos_acceptances?: AccountUpdatePersonParams.AdditionalTosAcceptances;
 
@@ -4150,7 +4150,7 @@ declare module 'stripe' {
        *
        * Test-mode accounts can be deleted at any time.
        *
-       * Live-mode accounts where Stripe is responsible for negative account balances cannot be deleted, which includes Standard accounts. Live-mode accounts where your platform is liable for negative account balances, which includes Custom and Express accounts, can be deleted when all [balances](https://stripe.com/api/balance/balanace_object) are zero.
+       * Live-mode accounts where Stripe is responsible for negative account balances cannot be deleted, which includes Standard accounts. Live-mode accounts where your platform is liable for negative account balances, which includes Custom and Express accounts, can be deleted when all [balances](https://stripe.com/api/balance/balance_object) are zero.
        *
        * If you want to delete your own account, use the [account information tab in your account settings](https://dashboard.stripe.com/settings/account) instead.
        */

@@ -51,7 +51,7 @@ declare module 'stripe' {
       cancel_at?: number;
 
       /**
-       * Boolean indicating whether this subscription should cancel at the end of the current period.
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
        */
       cancel_at_period_end?: boolean;
 
@@ -121,7 +121,7 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
-       * Indicates if a customer is on or off-session while an invoice payment is attempted.
+       * Indicates if a customer is on or off-session while an invoice payment is attempted. Defaults to `false` (on-session).
        */
       off_session?: boolean;
 
@@ -158,7 +158,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * The ID of a promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
+       * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       promotion_code?: string;
 
@@ -529,7 +529,7 @@ declare module 'stripe' {
         >;
 
         /**
-         * Either `off`, or `on_subscription`. With `on_subscription` Stripe updates `subscription.default_payment_method` when a subscription payment succeeds.
+         * Configure whether Stripe updates `subscription.default_payment_method` when payment succeeds. Defaults to `off` if unspecified.
          */
         save_default_payment_method?: PaymentSettings.SaveDefaultPaymentMethod;
       }
@@ -660,6 +660,7 @@ declare module 'stripe' {
               | 'diners'
               | 'discover'
               | 'eftpos_au'
+              | 'girocard'
               | 'interac'
               | 'jcb'
               | 'mastercard'
@@ -783,6 +784,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'konbini'
           | 'link'
+          | 'multibanco'
           | 'p24'
           | 'paynow'
           | 'paypal'
@@ -890,7 +892,7 @@ declare module 'stripe' {
       cancel_at?: Stripe.Emptyable<number>;
 
       /**
-       * Boolean indicating whether this subscription should cancel at the end of the current period.
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
        */
       cancel_at_period_end?: boolean;
 
@@ -960,7 +962,7 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
-       * Indicates if a customer is on or off-session while an invoice payment is attempted.
+       * Indicates if a customer is on or off-session while an invoice payment is attempted. Defaults to `false` (on-session).
        */
       off_session?: boolean;
 
@@ -1000,7 +1002,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription.
+       * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       promotion_code?: string;
 
@@ -1401,7 +1403,7 @@ declare module 'stripe' {
         >;
 
         /**
-         * Either `off`, or `on_subscription`. With `on_subscription` Stripe updates `subscription.default_payment_method` when a subscription payment succeeds.
+         * Configure whether Stripe updates `subscription.default_payment_method` when payment succeeds. Defaults to `off` if unspecified.
          */
         save_default_payment_method?: PaymentSettings.SaveDefaultPaymentMethod;
       }
@@ -1532,6 +1534,7 @@ declare module 'stripe' {
               | 'diners'
               | 'discover'
               | 'eftpos_au'
+              | 'girocard'
               | 'interac'
               | 'jcb'
               | 'mastercard'
@@ -1655,6 +1658,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'konbini'
           | 'link'
+          | 'multibanco'
           | 'p24'
           | 'paynow'
           | 'paypal'

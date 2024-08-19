@@ -310,10 +310,7 @@ export function flattenAndStringify(
   const result: Record<string, string | Uint8Array> = {};
 
   const step = (obj: MultipartRequestData, prevKey: string | null): void => {
-    Object.keys(obj).forEach((key) => {
-      // @ts-ignore
-      const value = obj[key];
-
+    Object.entries(obj).forEach(([key, value]) => {
       const newKey = prevKey ? `${prevKey}[${key}]` : key;
 
       if (isObject(value)) {

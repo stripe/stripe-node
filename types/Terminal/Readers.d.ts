@@ -55,7 +55,7 @@ declare module 'stripe' {
         device_sw_version: string | null;
 
         /**
-         * Type of reader, one of `bbpos_wisepad3`, `stripe_m2`, `bbpos_chipper2x`, `bbpos_wisepos_e`, `verifone_P400`, `simulated_wisepos_e`, or `mobile_phone_reader`.
+         * Type of reader, one of `bbpos_wisepad3`, `stripe_m2`, `stripe_s700`, `bbpos_chipper2x`, `bbpos_wisepos_e`, `verifone_P400`, `simulated_wisepos_e`, or `mobile_phone_reader`.
          */
         device_type: Reader.DeviceType;
 
@@ -90,7 +90,7 @@ declare module 'stripe' {
         serial_number: string;
 
         /**
-         * The networking status of the reader.
+         * The networking status of the reader. We do not recommend using this field in flows that may block taking payments.
          */
         status: Reader.Status | null;
       }
@@ -334,6 +334,7 @@ declare module 'stripe' {
           | 'mobile_phone_reader'
           | 'simulated_wisepos_e'
           | 'stripe_m2'
+          | 'stripe_s700'
           | 'verifone_P400';
 
         type Status = 'offline' | 'online';

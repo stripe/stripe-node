@@ -151,7 +151,7 @@ declare module 'stripe' {
           credit?: Balance.Credit;
 
           /**
-           * The balances owed to (or by) the account holder.
+           * The balances owed to (or by) the account holder, before subtracting any outbound pending transactions or adding any inbound pending transactions.
            *
            * Each key is a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
            *
@@ -170,7 +170,7 @@ declare module 'stripe' {
         namespace Balance {
           interface Cash {
             /**
-             * The funds available to the account holder. Typically this is the current balance less any holds.
+             * The funds available to the account holder. Typically this is the current balance after subtracting any outbound pending transactions and adding any inbound pending transactions.
              *
              * Each key is a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
              *

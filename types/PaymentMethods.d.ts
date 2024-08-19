@@ -383,6 +383,11 @@ declare module 'stripe' {
               brand: string | null;
 
               /**
+               * The [product code](https://stripe.com/docs/card-product-codes) that identifies the specific program or product associated with a card.
+               */
+              brand_product: string | null;
+
+              /**
                * When using manual capture, a future timestamp after which the charge will be automatically refunded if uncaptured.
                */
               capture_before?: number;
@@ -460,6 +465,11 @@ declare module 'stripe' {
               network: string | null;
 
               /**
+               * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. The first three digits of the Trace ID is the Financial Network Code, the next 6 digits is the Banknet Reference Number, and the last 4 digits represent the date (MM/DD). This field will be available for successful Visa, Mastercard, or American Express transactions and always null for other card brands.
+               */
+              network_transaction_id: string | null;
+
+              /**
                * Details about payments collected offline.
                */
               offline: CardPresent.Offline | null;
@@ -483,6 +493,8 @@ declare module 'stripe' {
                * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
                */
               receipt: CardPresent.Receipt | null;
+
+              wallet?: CardPresent.Wallet;
             }
 
             namespace CardPresent {
@@ -491,6 +503,11 @@ declare module 'stripe' {
                  * Time at which the payment was collected while offline
                  */
                 stored_at: number | null;
+
+                /**
+                 * The method used to process this payment method offline. Only deferred is allowed.
+                 */
+                type: 'deferred' | null;
               }
 
               type ReadMethod =
@@ -552,6 +569,21 @@ declare module 'stripe' {
                   | 'checking'
                   | 'credit'
                   | 'prepaid'
+                  | 'unknown';
+              }
+
+              interface Wallet {
+                /**
+                 * The type of mobile wallet, one of `apple_pay`, `google_pay`, `samsung_pay`, or `unknown`.
+                 */
+                type: Wallet.Type;
+              }
+
+              namespace Wallet {
+                type Type =
+                  | 'apple_pay'
+                  | 'google_pay'
+                  | 'samsung_pay'
                   | 'unknown';
               }
             }
@@ -676,6 +708,11 @@ declare module 'stripe' {
         brand: string | null;
 
         /**
+         * The [product code](https://stripe.com/docs/card-product-codes) that identifies the specific program or product associated with a card.
+         */
+        brand_product: string | null;
+
+        /**
          * The cardholder name as read from the card, in [ISO 7813](https://en.wikipedia.org/wiki/ISO/IEC_7813) format. May include alphanumeric characters, special characters and first/last name separator (`/`). In some cases, the cardholder name may not be available depending on how the issuer has configured the card. Cardholder name is typically not available on swipe or contactless payments, such as those made with Apple Pay and Google Pay.
          */
         cardholder_name: string | null;
@@ -733,6 +770,11 @@ declare module 'stripe' {
         networks: CardPresent.Networks | null;
 
         /**
+         * Details about payment methods collected offline.
+         */
+        offline: CardPresent.Offline | null;
+
+        /**
          * EMV tag 5F2D. Preferred languages specified by the integrated circuit chip.
          */
         preferred_locales: Array<string> | null;
@@ -741,6 +783,8 @@ declare module 'stripe' {
          * How card details were read in this transaction.
          */
         read_method: CardPresent.ReadMethod | null;
+
+        wallet?: CardPresent.Wallet;
       }
 
       namespace CardPresent {
@@ -756,12 +800,35 @@ declare module 'stripe' {
           preferred: string | null;
         }
 
+        interface Offline {
+          /**
+           * Time at which the payment was collected while offline
+           */
+          stored_at: number | null;
+
+          /**
+           * The method used to process this payment method offline. Only deferred is allowed.
+           */
+          type: 'deferred' | null;
+        }
+
         type ReadMethod =
           | 'contact_emv'
           | 'contactless_emv'
           | 'contactless_magstripe_mode'
           | 'magnetic_stripe_fallback'
           | 'magnetic_stripe_track2';
+
+        interface Wallet {
+          /**
+           * The type of mobile wallet, one of `apple_pay`, `google_pay`, `samsung_pay`, or `unknown`.
+           */
+          type: Wallet.Type;
+        }
+
+        namespace Wallet {
+          type Type = 'apple_pay' | 'google_pay' | 'samsung_pay' | 'unknown';
+        }
       }
 
       interface Cashapp {
