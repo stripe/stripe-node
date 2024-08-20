@@ -579,7 +579,7 @@ declare module 'stripe' {
         statement_descriptor?: string;
 
         /**
-         * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.corp.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
+         * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
          */
         statement_descriptor_suffix?: string;
 
@@ -1501,7 +1501,7 @@ declare module 'stripe' {
         statement_descriptor?: Stripe.Emptyable<string>;
 
         /**
-         * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.corp.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
+         * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
          */
         statement_descriptor_suffix?: Stripe.Emptyable<string>;
 
