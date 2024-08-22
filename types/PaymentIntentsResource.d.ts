@@ -1056,6 +1056,11 @@ declare module 'stripe' {
         link?: PaymentMethodData.Link;
 
         /**
+         * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+         */
+        mb_way?: PaymentMethodData.MbWay;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -1392,6 +1397,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface MbWay {}
+
         interface Mobilepay {}
 
         interface Multibanco {}
@@ -1538,6 +1545,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'oxxo'
@@ -1714,6 +1722,11 @@ declare module 'stripe' {
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
          */
         link?: Stripe.Emptyable<PaymentMethodOptions.Link>;
+
+        /**
+         * If this is a `mb_way` PaymentMethod, this sub-hash contains details about the MB WAY payment method options.
+         */
+        mb_way?: Stripe.Emptyable<PaymentMethodOptions.MbWay>;
 
         /**
          * If this is a `MobilePay` PaymentMethod, this sub-hash contains details about the MobilePay payment method options.
@@ -2778,6 +2791,21 @@ declare module 'stripe' {
 
         namespace Link {
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface MbWay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Mobilepay {
@@ -4400,6 +4428,11 @@ declare module 'stripe' {
         link?: PaymentMethodData.Link;
 
         /**
+         * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+         */
+        mb_way?: PaymentMethodData.MbWay;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -4736,6 +4769,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface MbWay {}
+
         interface Mobilepay {}
 
         interface Multibanco {}
@@ -4882,6 +4917,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'oxxo'
@@ -5058,6 +5094,11 @@ declare module 'stripe' {
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
          */
         link?: Stripe.Emptyable<PaymentMethodOptions.Link>;
+
+        /**
+         * If this is a `mb_way` PaymentMethod, this sub-hash contains details about the MB WAY payment method options.
+         */
+        mb_way?: Stripe.Emptyable<PaymentMethodOptions.MbWay>;
 
         /**
          * If this is a `MobilePay` PaymentMethod, this sub-hash contains details about the MobilePay payment method options.
@@ -6122,6 +6163,21 @@ declare module 'stripe' {
 
         namespace Link {
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface MbWay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Mobilepay {
@@ -8501,6 +8557,11 @@ declare module 'stripe' {
         link?: PaymentMethodData.Link;
 
         /**
+         * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+         */
+        mb_way?: PaymentMethodData.MbWay;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -8837,6 +8898,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface MbWay {}
+
         interface Mobilepay {}
 
         interface Multibanco {}
@@ -8983,6 +9046,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'oxxo'
@@ -9159,6 +9223,11 @@ declare module 'stripe' {
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
          */
         link?: Stripe.Emptyable<PaymentMethodOptions.Link>;
+
+        /**
+         * If this is a `mb_way` PaymentMethod, this sub-hash contains details about the MB WAY payment method options.
+         */
+        mb_way?: Stripe.Emptyable<PaymentMethodOptions.MbWay>;
 
         /**
          * If this is a `MobilePay` PaymentMethod, this sub-hash contains details about the MobilePay payment method options.
@@ -10223,6 +10292,21 @@ declare module 'stripe' {
 
         namespace Link {
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface MbWay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Mobilepay {

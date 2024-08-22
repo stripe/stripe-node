@@ -196,6 +196,8 @@ declare module 'stripe' {
 
         link?: PaymentMethodPreview.Link;
 
+        mb_way?: PaymentMethodPreview.MbWay;
+
         mobilepay?: PaymentMethodPreview.Mobilepay;
 
         multibanco?: PaymentMethodPreview.Multibanco;
@@ -1217,6 +1219,8 @@ declare module 'stripe' {
           persistent_token?: string;
         }
 
+        interface MbWay {}
+
         interface Mobilepay {}
 
         interface Multibanco {}
@@ -1413,6 +1417,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'oxxo'

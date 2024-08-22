@@ -418,6 +418,8 @@ declare module 'stripe' {
 
         link?: PaymentMethodDetails.Link;
 
+        mb_way?: PaymentMethodDetails.MbWay;
+
         mobilepay?: PaymentMethodDetails.Mobilepay;
 
         multibanco?: PaymentMethodDetails.Multibanco;
@@ -1714,6 +1716,8 @@ declare module 'stripe' {
            */
           country: string | null;
         }
+
+        interface MbWay {}
 
         interface Mobilepay {
           /**
