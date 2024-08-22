@@ -350,6 +350,11 @@ declare module 'stripe' {
         link_payments?: Capabilities.LinkPayments;
 
         /**
+         * The status of the MB WAY payments capability of the account, or whether the account can directly process MB WAY charges.
+         */
+        mb_way_payments?: Capabilities.MbWayPayments;
+
+        /**
          * The status of the MobilePay capability of the account, or whether the account can directly process MobilePay charges.
          */
         mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -519,6 +524,8 @@ declare module 'stripe' {
         type LegacyPayments = 'active' | 'inactive' | 'pending';
 
         type LinkPayments = 'active' | 'inactive' | 'pending';
+
+        type MbWayPayments = 'active' | 'inactive' | 'pending';
 
         type MobilepayPayments = 'active' | 'inactive' | 'pending';
 

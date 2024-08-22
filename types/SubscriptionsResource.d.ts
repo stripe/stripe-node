@@ -305,7 +305,7 @@ declare module 'stripe' {
           tax_behavior?: PriceData.TaxBehavior;
 
           /**
-           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge or a negative integer representing the amount to credit to the customer.
            */
           unit_amount?: number;
 
@@ -1332,7 +1332,7 @@ declare module 'stripe' {
           tax_behavior?: PriceData.TaxBehavior;
 
           /**
-           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge or a negative integer representing the amount to credit to the customer.
            */
           unit_amount?: number;
 

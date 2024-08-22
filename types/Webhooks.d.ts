@@ -89,40 +89,49 @@ declare module 'stripe' {
       /**
        * Generates a header to be used for webhook mocking
        */
-      generateTestHeaderString(opts: {
-        /**
-         * JSON stringified payload object, containing the 'id' and 'object' parameters.
-         */
-        payload: string;
+      generateTestHeaderString(opts: WebhookTestHeaderOptions): string;
 
-        /**
-         * Timestamp of the header. Defaults to Date.now().
-         */
-        timestamp?: number;
-
-        /**
-         * Stripe webhook secret, e.g., 'whsec_...'.
-         */
-        secret: string;
-
-        /**
-         * Version of API to hit. Defaults to 'v1'.
-         */
-        scheme?: string;
-
-        /**
-         * Computed webhook signature.
-         */
-        signature?: string;
-
-        /**
-         * Optional CryptoProvider to use for computing HMAC signatures, if no
-         * signature is given.
-         */
-        cryptoProvider?: CryptoProvider;
-      }): string;
+      /**
+       * Generates a header to be used for webhook mocking
+       */
+      generateTestHeaderStringAsync(
+        opts: WebhookTestHeaderOptions
+      ): Promise<string>;
 
       signature: Signature;
+    }
+
+    export interface WebhookTestHeaderOptions {
+      /**
+       * JSON stringified payload object, containing the 'id' and 'object' parameters.
+       */
+      payload: string;
+
+      /**
+       * Timestamp of the header. Defaults to Date.now().
+       */
+      timestamp?: number;
+
+      /**
+       * Stripe webhook secret, e.g., 'whsec_...'.
+       */
+      secret: string;
+
+      /**
+       * Version of API to hit. Defaults to 'v1'.
+       */
+      scheme?: string;
+
+      /**
+       * Computed webhook signature.
+       */
+      signature?: string;
+
+      /**
+       * Optional CryptoProvider to use for computing HMAC signatures, if no
+       * signature is given.
+       */
+      cryptoProvider?: CryptoProvider;
     }
 
     export class Signature {

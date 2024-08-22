@@ -300,6 +300,11 @@ declare module 'stripe' {
         link?: PaymentMethodData.Link;
 
         /**
+         * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+         */
+        mb_way?: PaymentMethodData.MbWay;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -636,6 +641,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface MbWay {}
+
         interface Mobilepay {}
 
         interface Multibanco {}
@@ -782,6 +789,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'oxxo'
@@ -1592,6 +1600,11 @@ declare module 'stripe' {
         link?: PaymentMethodData.Link;
 
         /**
+         * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+         */
+        mb_way?: PaymentMethodData.MbWay;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -1928,6 +1941,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface MbWay {}
+
         interface Mobilepay {}
 
         interface Multibanco {}
@@ -2074,6 +2089,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'oxxo'
@@ -2933,6 +2949,11 @@ declare module 'stripe' {
         link?: PaymentMethodData.Link;
 
         /**
+         * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+         */
+        mb_way?: PaymentMethodData.MbWay;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -3269,6 +3290,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface MbWay {}
+
         interface Mobilepay {}
 
         interface Multibanco {}
@@ -3415,6 +3438,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'oxxo'

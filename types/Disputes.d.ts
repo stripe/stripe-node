@@ -394,13 +394,7 @@ declare module 'stripe' {
               | 'missing_prior_undisputed_transaction_description'
               | 'missing_prior_undisputed_transactions';
 
-            type Status =
-              | 'accepted'
-              | 'not_qualified'
-              | 'partner_rejected'
-              | 'qualified'
-              | 'requires_action'
-              | 'submitted';
+            type Status = 'not_qualified' | 'qualified' | 'requires_action';
           }
         }
       }
