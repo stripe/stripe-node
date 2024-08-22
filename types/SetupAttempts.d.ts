@@ -380,6 +380,11 @@ declare module 'stripe' {
              * Time at which the payment was collected while offline
              */
             stored_at: number | null;
+
+            /**
+             * The method used to process this payment method offline. Only deferred is allowed.
+             */
+            type: 'deferred' | null;
           }
         }
 
@@ -689,6 +694,7 @@ declare module 'stripe' {
           | 'invalid_cvc'
           | 'invalid_expiry_month'
           | 'invalid_expiry_year'
+          | 'invalid_mandate_reference_prefix_format'
           | 'invalid_number'
           | 'invalid_source_usage'
           | 'invalid_tax_location'

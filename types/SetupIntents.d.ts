@@ -125,7 +125,7 @@ declare module 'stripe' {
       on_behalf_of: string | Stripe.Account | null;
 
       /**
-       * ID of the payment method used with this SetupIntent. If the payment method is `card_present` and isn't a digital wallet, then the [generated_card](https://docs.corp.stripe.com/api/setup_attempts/object#setup_attempt_object-payment_method_details-card_present-generated_card) associated with the `latest_attempt` is attached to the Customer instead.
+       * ID of the payment method used with this SetupIntent. If the payment method is `card_present` and isn't a digital wallet, then the [generated_card](https://docs.stripe.com/api/setup_attempts/object#setup_attempt_object-payment_method_details-card_present-generated_card) associated with the `latest_attempt` is attached to the Customer instead.
        */
       payment_method: string | Stripe.PaymentMethod | null;
 
@@ -359,6 +359,7 @@ declare module 'stripe' {
           | 'invalid_cvc'
           | 'invalid_expiry_month'
           | 'invalid_expiry_year'
+          | 'invalid_mandate_reference_prefix_format'
           | 'invalid_number'
           | 'invalid_source_usage'
           | 'invalid_tax_location'
@@ -571,6 +572,8 @@ declare module 'stripe' {
 
         amazon_pay?: PaymentMethodOptions.AmazonPay;
 
+        bacs_debit?: PaymentMethodOptions.BacsDebit;
+
         card?: PaymentMethodOptions.Card;
 
         card_present?: PaymentMethodOptions.CardPresent;
@@ -641,6 +644,14 @@ declare module 'stripe' {
         }
 
         interface AmazonPay {}
+
+        interface BacsDebit {
+          mandate_options?: BacsDebit.MandateOptions;
+        }
+
+        namespace BacsDebit {
+          interface MandateOptions {}
+        }
 
         interface Card {
           /**
@@ -724,6 +735,7 @@ declare module 'stripe' {
             | 'diners'
             | 'discover'
             | 'eftpos_au'
+            | 'girocard'
             | 'interac'
             | 'jcb'
             | 'mastercard'

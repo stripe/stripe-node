@@ -6,18 +6,16 @@
   "editor.formatOnSave": true,
 
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-
   "javascript.updateImportsOnFileMove.enabled": "always",
-  "[javascript]": {
+  "[typescript][javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
   // Extension settings
   "npm.packageManager": "yarn",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "explicit",
+    // eslint handles import sorting, don't let VSCode fight it
+    "source.organizeImports": "never"
   }
 }

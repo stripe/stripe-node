@@ -17,6 +17,7 @@
 ///<reference path='./Apps/SecretsResource.d.ts' />
 ///<reference path='./BalanceResource.d.ts' />
 ///<reference path='./BalanceTransactionsResource.d.ts' />
+///<reference path='./Billing/AlertsResource.d.ts' />
 ///<reference path='./Billing/MeterEventAdjustmentsResource.d.ts' />
 ///<reference path='./Billing/MeterEventsResource.d.ts' />
 ///<reference path='./Billing/MetersResource.d.ts' />
@@ -334,6 +335,7 @@ declare module 'stripe' {
       secrets: Stripe.Apps.SecretsResource;
     };
     billing: {
+      alerts: Stripe.Billing.AlertsResource;
       meters: Stripe.Billing.MetersResource;
       meterEvents: Stripe.Billing.MeterEventsResource;
       meterEventAdjustments: Stripe.Billing.MeterEventAdjustmentsResource;
