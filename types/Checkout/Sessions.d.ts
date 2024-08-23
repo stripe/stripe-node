@@ -387,6 +387,16 @@ declare module 'stripe' {
 
         interface CollectedInformation {
           /**
+           * Customer's email for this Checkout Session
+           */
+          email: string | null;
+
+          /**
+           * Customer's phone number for this Checkout Session
+           */
+          phone: string | null;
+
+          /**
            * Shipping information for this Checkout Session.
            */
           shipping_details: CollectedInformation.ShippingDetails | null;
