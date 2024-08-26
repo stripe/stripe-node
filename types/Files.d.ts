@@ -80,6 +80,7 @@ declare module 'stripe' {
         | 'finance_report_run'
         | 'identity_document'
         | 'identity_document_downloadable'
+        | 'issuing_regulatory_reporting'
         | 'pci_document'
         | 'selfie'
         | 'sigma_scheduled_query'
