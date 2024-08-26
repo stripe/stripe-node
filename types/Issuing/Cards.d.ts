@@ -141,7 +141,7 @@ declare module 'stripe' {
           /**
            * Address validation details for the shipment.
            */
-          address_validation?: Shipping.AddressValidation | null;
+          address_validation: Shipping.AddressValidation | null;
 
           /**
            * The delivery company that shipped a card.
