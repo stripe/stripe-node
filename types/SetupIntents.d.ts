@@ -452,6 +452,7 @@ declare module 'stripe' {
           | 'taxes_calculation_failed'
           | 'terminal_location_country_unsupported'
           | 'terminal_reader_busy'
+          | 'terminal_reader_collected_data_invalid'
           | 'terminal_reader_hardware_fault'
           | 'terminal_reader_invalid_location_for_payment'
           | 'terminal_reader_offline'
