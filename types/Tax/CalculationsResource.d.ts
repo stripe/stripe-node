@@ -299,7 +299,7 @@ declare module 'stripe' {
           tax_behavior?: ShippingCost.TaxBehavior;
 
           /**
-           * The [tax code](https://stripe.com/docs/tax/tax-categories) used to calculate tax on shipping. If not provided, the default shipping tax code from your [Tax Settings](https://stripe.com/settings/tax) is used.
+           * The [tax code](https://stripe.com/docs/tax/tax-categories) used to calculate tax on shipping. If not provided, the default shipping tax code from your [Tax Settings](https://dashboard.stripe.com/settings/tax) is used.
            */
           tax_code?: string;
         }
