@@ -776,11 +776,6 @@ declare module 'stripe' {
       payto?: PaymentMethodUpdateParams.Payto;
 
       /**
-       * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
-       */
-      rechnung?: PaymentMethodUpdateParams.Rechnung;
-
-      /**
        * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
        */
       us_bank_account?: PaymentMethodUpdateParams.UsBankAccount;
@@ -858,32 +853,6 @@ declare module 'stripe' {
          * The PayID alias for the bank account.
          */
         pay_id?: string;
-      }
-
-      interface Rechnung {
-        /**
-         * Customer's date of birth
-         */
-        dob: Rechnung.Dob;
-      }
-
-      namespace Rechnung {
-        interface Dob {
-          /**
-           * The day of birth, between 1 and 31.
-           */
-          day: number;
-
-          /**
-           * The month of birth, between 1 and 12.
-           */
-          month: number;
-
-          /**
-           * The four-digit year of birth.
-           */
-          year: number;
-        }
       }
 
       interface UsBankAccount {
