@@ -62,7 +62,7 @@ declare module 'stripe' {
         metadata: Stripe.Metadata | null;
 
         /**
-         * File containing regulatory reporting data for the decision. Required if you are subject to this [reporting requirement](https://docs.stripe.com/issuing/credit/report-required-regulatory-data-for-credit-decisions).
+         * File containing regulatory reporting data for the decision. Required if you are subject to this [reporting requirement](https://stripe.com/docs/issuing/credit/report-required-regulatory-data-for-credit-decisions).
          */
         regulatory_reporting_file: string | null;
 
