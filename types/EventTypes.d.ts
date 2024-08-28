@@ -16,6 +16,7 @@ declare module 'stripe' {
       | ApplicationFeeRefundedEvent
       | BalanceAvailableEvent
       | BillingAlertTriggeredEvent
+      | BillingMeterErrorReportTriggeredEvent
       | BillingPortalConfigurationCreatedEvent
       | BillingPortalConfigurationUpdatedEvent
       | BillingPortalSessionCreatedEvent
@@ -473,6 +474,22 @@ declare module 'stripe' {
         object: Stripe.Billing.AlertTriggered;
 
         previous_attributes?: Partial<Stripe.Billing.AlertTriggered>;
+      }
+    }
+
+    /**
+     * Notifies of errors on a billing meter
+     */
+    interface BillingMeterErrorReportTriggeredEvent extends EventBase {
+      type: 'billing.meter_error_report.triggered';
+      data: BillingMeterErrorReportTriggeredEvent.Data;
+    }
+
+    namespace BillingMeterErrorReportTriggeredEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.MeterErrorReport;
+
+        previous_attributes?: Partial<Stripe.Billing.MeterErrorReport>;
       }
     }
 
