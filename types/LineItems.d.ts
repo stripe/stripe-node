@@ -44,7 +44,7 @@ declare module 'stripe' {
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users. Defaults to product name.
        */
-      description: string;
+      description?: string;
 
       /**
        * The discounts applied to the line item.

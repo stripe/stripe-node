@@ -73,10 +73,25 @@ declare module 'stripe' {
          * The status of the Test Clock.
          */
         status: TestClock.Status;
+
+        status_details?: TestClock.StatusDetails;
       }
 
       namespace TestClock {
         type Status = 'advancing' | 'internal_failure' | 'ready';
+
+        interface StatusDetails {
+          advancing?: StatusDetails.Advancing;
+        }
+
+        namespace StatusDetails {
+          interface Advancing {
+            /**
+             * The `frozen_time` that the Test Clock is advancing towards.
+             */
+            target_frozen_time: number;
+          }
+        }
       }
     }
   }
