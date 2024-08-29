@@ -137,6 +137,7 @@
 ///<reference path='./BankAccounts.d.ts' />
 ///<reference path='./Billing/AlertTriggereds.d.ts' />
 ///<reference path='./Billing/Alerts.d.ts' />
+///<reference path='./Billing/MeterErrorReports.d.ts' />
 ///<reference path='./Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./Billing/MeterEventSummaries.d.ts' />
 ///<reference path='./Billing/MeterEvents.d.ts' />
