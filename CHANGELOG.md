@@ -1,5 +1,15 @@
 # Changelog
 
+## 16.9.0 - 2024-08-29
+* [#2163](https://github.com/stripe/stripe-node/pull/2163) Generate SDK for OpenAPI spec version 1230
+  * Change `AccountLinkCreateParams.collection_options.fields` and `LineItem.description` to be optional
+  * Add support for new value `hr_oib` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, `Tax.Calculation.customer_details.tax_ids[].type`, `Tax.Transaction.customer_details.tax_ids[].type`, and `TaxId.type`
+  * Add support for new value `hr_oib` on enums `CustomerCreateParams.tax_id_data[].type`, `InvoiceCreatePreviewParams.customer_details.tax_ids[].type`, `InvoiceUpcomingLinesParams.customer_details.tax_ids[].type`, `InvoiceUpcomingParams.customer_details.tax_ids[].type`, `Tax.CalculationCreateParams.customer_details.tax_ids[].type`, and `TaxIdCreateParams.type`
+  * Add support for new value `issuing_regulatory_reporting` on enums `File.purpose` and `FileListParams.purpose`
+  * Add support for new value `issuing_regulatory_reporting` on enum `FileCreateParams.purpose`
+  * Change `Issuing.Card.shipping.address_validation` to be required
+  * Add support for `status_details` on `TestHelpers.TestClock`
+
 ## 16.8.0 - 2024-08-15
 * [#2155](https://github.com/stripe/stripe-node/pull/2155) Update generated code
   * Add support for `authorization_code` on `Charge.payment_method_details.card`
@@ -55,7 +65,7 @@
 
 ## 16.3.0 - 2024-07-11
 * [#2130](https://github.com/stripe/stripe-node/pull/2130) Update generated code
-  * ⚠️ Remove support for values `billing_policy_remote_function_response_invalid`, `billing_policy_remote_function_timeout`, `billing_policy_remote_function_unexpected_status_code`, and `billing_policy_remote_function_unreachable` from enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`. 
+  * ⚠️ Remove support for values `billing_policy_remote_function_response_invalid`, `billing_policy_remote_function_timeout`, `billing_policy_remote_function_unexpected_status_code`, and `billing_policy_remote_function_unreachable` from enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`.
   * ⚠️ Remove support for value `payment_intent_fx_quote_invalid` from enum `StripeError.code`. The was mistakenly released last week.
   * Add support for `payment_method_options` on `ConfirmationToken`
   * Add support for `payment_element` on `CustomerSession.components` and `CustomerSessionCreateParams.components`
