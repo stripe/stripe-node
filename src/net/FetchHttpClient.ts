@@ -1,4 +1,5 @@
 import {RequestHeaders, RequestData, ResponseHeaders} from '../Types.js';
+import {parseHeadersForFetch} from '../utils.js';
 import {
   HttpClient,
   HttpClientInterface,
@@ -139,10 +140,8 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
       url.toString(),
       {
         method,
-        // @ts-ignore
-        headers,
-        // @ts-ignore
-        body,
+        headers: parseHeadersForFetch(headers),
+        body: typeof body === 'object' ? JSON.stringify(body) : body,
       },
       timeout
     );

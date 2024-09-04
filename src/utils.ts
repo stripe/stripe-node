@@ -74,8 +74,7 @@ export const makeURLInterpolator = ((): ((s: string) => UrlInterpolator) => {
     const cleanString = str.replace(/["\n\r\u2028\u2029]/g, ($0) => rc[$0]);
     return (outputs: Record<string, unknown>): string => {
       return cleanString.replace(/\{([\s\S]+?)\}/g, ($0, $1) =>
-        // @ts-ignore
-        encodeURIComponent(outputs[$1] || '')
+        encodeURIComponent(typeof outputs[$1] === 'string' ? outputs[$1] : '')
       );
     };
   };
@@ -375,4 +374,28 @@ export function concat(arrays: Array<Uint8Array>): Uint8Array {
   });
 
   return merged;
+}
+
+export function parseHttpHeaderAsString<K extends keyof RequestHeaders>(
+  header: RequestHeaders[K]
+): string {
+  if (Array.isArray(header)) {
+    return header.join(', ');
+  }
+  return String(header);
+}
+
+export function parseHttpHeaderAsNumber<K extends keyof RequestHeaders>(
+  header: RequestHeaders[K]
+): number {
+  const number = Array.isArray(header) ? header[0] : header;
+  return Number(number);
+}
+
+export function parseHeadersForFetch(headers: RequestHeaders): Headers {
+  const parsedHeaders = new Headers();
+  Object.entries(headers).forEach(([key, value]) => {
+    parsedHeaders.set(key, parseHttpHeaderAsString(value));
+  });
+  return parsedHeaders;
 }
