@@ -7,7 +7,7 @@ declare module 'stripe' {
         /**
          * The type of alert to create.
          */
-        alert_type: AlertCreateParams.AlertType;
+        alert_type: 'usage_threshold';
 
         /**
          * The title of the alert.
@@ -25,50 +25,17 @@ declare module 'stripe' {
         filter?: AlertCreateParams.Filter;
 
         /**
-         * The configuration of the spend threshold.
-         */
-        spend_threshold_config?: AlertCreateParams.SpendThresholdConfig;
-
-        /**
          * The configuration of the usage threshold.
          */
         usage_threshold_config?: AlertCreateParams.UsageThresholdConfig;
       }
 
       namespace AlertCreateParams {
-        type AlertType = 'spend_threshold' | 'usage_threshold';
-
         interface Filter {
           /**
            * Limit the scope to this alert only to this customer.
            */
           customer?: string;
-        }
-
-        interface SpendThresholdConfig {
-          /**
-           * Whether the spend should be aggregated across items in a subscription or whether each subscription item is considered alone.
-           */
-          aggregation: SpendThresholdConfig.Aggregation;
-
-          /**
-           * Currency for which this spend alert is configured. This alert will only trigger for subscriptions matching this currency.
-           */
-          currency: string;
-
-          /**
-           * Defines at which value the alert will fire.
-           */
-          gte: number;
-
-          /**
-           * Whether the alert should only fire only once, or once per billing cycle.
-           */
-          recurrence: 'one_time';
-        }
-
-        namespace SpendThresholdConfig {
-          type Aggregation = 'subscription' | 'subscription_item';
         }
 
         interface UsageThresholdConfig {
@@ -100,7 +67,7 @@ declare module 'stripe' {
         /**
          * Filter results to only include this type of alert.
          */
-        alert_type?: AlertListParams.AlertType;
+        alert_type?: 'usage_threshold';
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -111,10 +78,6 @@ declare module 'stripe' {
          * Filter results to only include alerts with the given meter.
          */
         meter?: string;
-      }
-
-      namespace AlertListParams {
-        type AlertType = 'spend_threshold' | 'usage_threshold';
       }
 
       interface AlertActivateParams {
