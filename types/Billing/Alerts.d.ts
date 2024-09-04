@@ -20,7 +20,7 @@ declare module 'stripe' {
         /**
          * Defines the type of the alert.
          */
-        alert_type: Alert.AlertType;
+        alert_type: 'usage_threshold';
 
         /**
          * Limits the scope of the alert to a specific [customer](https://stripe.com/docs/api/customers).
@@ -31,11 +31,6 @@ declare module 'stripe' {
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
-
-        /**
-         * Encapsulates configuration of the spend to monitoring spend on a [Subscription](https://stripe.com/docs/api/subscriptions/object) or [Subscription item](https://stripe.com/docs/api/subscription_items/object).
-         */
-        spend_threshold_config?: Alert.SpendThresholdConfig | null;
 
         /**
          * Status of the alert. This can be active, inactive or archived.
@@ -54,39 +49,11 @@ declare module 'stripe' {
       }
 
       namespace Alert {
-        type AlertType = 'spend_threshold' | 'usage_threshold';
-
         interface Filter {
           /**
            * Limit the scope of the alert to this customer ID
            */
           customer: string | Stripe.Customer | null;
-        }
-
-        interface SpendThresholdConfig {
-          /**
-           * Defines if the alert will fire on spend aggregated across a subscription, or on individual subscription items.
-           */
-          aggregation: SpendThresholdConfig.Aggregation;
-
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency: string;
-
-          /**
-           * The value at which this alert will trigger.
-           */
-          gte: number;
-
-          /**
-           * Defines how the alert will behave.
-           */
-          recurrence: 'one_time';
-        }
-
-        namespace SpendThresholdConfig {
-          type Aggregation = 'subscription' | 'subscription_item';
         }
 
         type Status = 'active' | 'archived' | 'inactive';
