@@ -219,7 +219,7 @@ declare module 'stripe' {
         recovered_from: string | null;
 
         /**
-         * This parameter applies to `ui_mode: embedded`. Learn more about the [redirect behavior](https://stripe.com/docs/payments/checkout/custom-redirect-behavior) of embedded sessions. Defaults to `always`.
+         * This parameter applies to `ui_mode: embedded`. Learn more about the [redirect behavior](https://stripe.com/docs/payments/checkout/custom-success-page?payment-ui=embedded-form) of embedded sessions. Defaults to `always`.
          */
         redirect_on_completion?: Session.RedirectOnCompletion;
 
