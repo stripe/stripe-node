@@ -1,5 +1,10 @@
 # Changelog
 
+## 16.10.0 - 2024-09-05
+* [#2158](https://github.com/stripe/stripe-node/pull/2158) Update generated code
+  * Add support for `subscription_item` and `subscription` on `Billing.AlertCreateParams.filter`
+  * Change `Terminal.ReaderProcessSetupIntentParams.customer_consent_collected` to be optional
+
 ## 16.9.0 - 2024-08-29
 * [#2163](https://github.com/stripe/stripe-node/pull/2163) Generate SDK for OpenAPI spec version 1230
   * Change `AccountLinkCreateParams.collection_options.fields` and `LineItem.description` to be optional
