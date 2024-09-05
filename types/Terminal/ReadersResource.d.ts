@@ -151,14 +151,14 @@ declare module 'stripe' {
 
       interface ReaderProcessSetupIntentParams {
         /**
-         * Customer Consent Collected
-         */
-        customer_consent_collected: boolean;
-
-        /**
          * SetupIntent ID
          */
         setup_intent: string;
+
+        /**
+         * Customer Consent Collected
+         */
+        customer_consent_collected?: boolean;
 
         /**
          * Specifies which fields in the response should be expanded.

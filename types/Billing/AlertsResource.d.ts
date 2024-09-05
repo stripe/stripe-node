@@ -36,6 +36,16 @@ declare module 'stripe' {
            * Limit the scope to this alert only to this customer.
            */
           customer?: string;
+
+          /**
+           * Limit the scope of this rated usage alert to this subscription.
+           */
+          subscription?: string;
+
+          /**
+           * Limit the scope of this rated usage alert to this subscription item.
+           */
+          subscription_item?: string;
         }
 
         interface UsageThresholdConfig {
