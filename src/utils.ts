@@ -62,8 +62,8 @@ export function stringifyRequestData(
         addToParams(`${key}[${i}]`, v);
       });
     } else if (typeof value === 'object' && value !== null) {
-      Object.keys(value).forEach((k) => {
-        addToParams(`${key}[${k}]`, value[k]);
+      Object.entries(value).forEach(([k, v]) => {
+        addToParams(`${key}[${k}]`, v);
       });
     } else if (value === null) {
       params.append(key, '');
@@ -72,8 +72,8 @@ export function stringifyRequestData(
     }
   }
 
-  Object.keys(data).forEach((key) => {
-    addToParams(key, data[key]);
+  Object.entries(data).forEach(([key, value]) => {
+    addToParams(key, value);
   });
 
   return params
