@@ -44,6 +44,7 @@ import {PersonalizationDesigns as TestHelpersIssuingPersonalizationDesigns} from
 import {PersonalizationDesigns as IssuingPersonalizationDesigns} from './resources/Issuing/PersonalizationDesigns.js';
 import {PhysicalBundles as IssuingPhysicalBundles} from './resources/Issuing/PhysicalBundles.js';
 import {Products as ClimateProducts} from './resources/Climate/Products.js';
+import {ReaderCollectedData as TerminalReaderCollectedData} from './resources/Terminal/ReaderCollectedData.js';
 import {Readers as TestHelpersTerminalReaders} from './resources/TestHelpers/Terminal/Readers.js';
 import {Readers as TerminalReaders} from './resources/Terminal/Readers.js';
 import {ReceivedCredits as TestHelpersTreasuryReceivedCredits} from './resources/TestHelpers/Treasury/ReceivedCredits.js';
@@ -211,6 +212,7 @@ export const Terminal = resourceNamespace('terminal', {
   Configurations: TerminalConfigurations,
   ConnectionTokens: TerminalConnectionTokens,
   Locations: TerminalLocations,
+  ReaderCollectedData: TerminalReaderCollectedData,
   Readers: TerminalReaders,
 });
 export const TestHelpers = resourceNamespace('testHelpers', {

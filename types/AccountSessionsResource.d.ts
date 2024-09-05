@@ -121,6 +121,8 @@ declare module 'stripe' {
          */
         payouts_list?: Components.PayoutsList;
 
+        recipients?: Components.Recipients;
+
         /**
          * Configuration for the tax registrations embedded component.
          */
@@ -574,6 +576,22 @@ declare module 'stripe' {
         }
 
         namespace PayoutsList {
+          interface Features {}
+        }
+
+        interface Recipients {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: Recipients.Features;
+        }
+
+        namespace Recipients {
           interface Features {}
         }
 

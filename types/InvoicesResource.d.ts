@@ -2045,7 +2045,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * List of invoice items to add or update in the upcoming invoice preview.
+       * List of invoice items to add or update in the upcoming invoice preview (up to 250).
        */
       invoice_items?: Array<InvoiceCreatePreviewParams.InvoiceItem>;
 
@@ -4190,7 +4190,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * List of invoice items to add or update in the upcoming invoice preview.
+       * List of invoice items to add or update in the upcoming invoice preview (up to 250).
        */
       invoice_items?: Array<InvoiceListUpcomingLinesParams.InvoiceItem>;
 
@@ -6663,7 +6663,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * List of invoice items to add or update in the upcoming invoice preview.
+       * List of invoice items to add or update in the upcoming invoice preview (up to 250).
        */
       invoice_items?: Array<InvoiceRetrieveUpcomingParams.InvoiceItem>;
 

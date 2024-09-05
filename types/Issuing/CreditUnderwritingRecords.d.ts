@@ -62,6 +62,11 @@ declare module 'stripe' {
         metadata: Stripe.Metadata | null;
 
         /**
+         * File containing regulatory reporting data for the decision. Required if you are subject to this [reporting requirement](https://stripe.com/docs/issuing/credit/report-required-regulatory-data-for-credit-decisions).
+         */
+        regulatory_reporting_file: string | null;
+
+        /**
          * If an exception to the usual underwriting criteria was made for this application, details about the exception must be provided. Exceptions should only be granted in rare circumstances, in consultation with Stripe Compliance.
          */
         underwriting_exception: CreditUnderwritingRecord.UnderwritingException | null;

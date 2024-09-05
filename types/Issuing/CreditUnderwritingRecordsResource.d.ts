@@ -49,6 +49,11 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
+         * File containing regulatory reporting data for the decision. Required if you are subject to this [reporting requirement](https://stripe.com/docs/issuing/credit/report-required-regulatory-data-for-credit-decisions). Optional if previously provided and no changes are needed.
+         */
+        regulatory_reporting_file?: string;
+
+        /**
          * If an exception to the usual underwriting criteria was made for this decision, details about the exception must be provided. Exceptions should only be granted in rare circumstances, in consultation with Stripe Compliance.
          */
         underwriting_exception?: CreditUnderwritingRecordCorrectParams.UnderwritingException;
@@ -513,6 +518,11 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
+         * File containing regulatory reporting data for the decision. Required if you are subject to this [reporting requirement](https://stripe.com/docs/issuing/credit/report-required-regulatory-data-for-credit-decisions).
+         */
+        regulatory_reporting_file?: string;
+
+        /**
          * If an exception to the usual underwriting criteria was made for this decision, details about the exception must be provided. Exceptions should only be granted in rare circumstances, in consultation with Stripe Compliance.
          */
         underwriting_exception?: CreditUnderwritingRecordCreateFromProactiveReviewParams.UnderwritingException;
@@ -801,6 +811,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
+
+        /**
+         * File containing regulatory reporting data for the decision. Required if you are subject to this [reporting requirement](https://stripe.com/docs/issuing/credit/report-required-regulatory-data-for-credit-decisions).
+         */
+        regulatory_reporting_file?: string;
 
         /**
          * If an exception to the usual underwriting criteria was made for this decision, details about the exception must be provided. Exceptions should only be granted in rare circumstances, in consultation with Stripe Compliance.
