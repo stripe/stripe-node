@@ -73,14 +73,21 @@ export const makeURLInterpolator = ((): ((s: string) => UrlInterpolator) => {
   return (str: string): UrlInterpolator => {
     const cleanString = str.replace(/["\n\r\u2028\u2029]/g, ($0) => rc[$0]);
     return (outputs: Record<string, unknown>): string => {
-      return cleanString.replace(/\{([\s\S]+?)\}/g, ($0, $1) =>
-        encodeURIComponent(
-          typeof outputs[$1] === 'string' ? (outputs[$1] as string) : ''
-        )
-      );
+      return cleanString.replace(/\{([\s\S]+?)\}/g, ($0, $1) => {
+        const output = outputs[$1];
+        if (isValidEncodeUriComponentType(output))
+          return encodeURIComponent(output);
+        return '';
+      });
     };
   };
 })();
+
+function isValidEncodeUriComponentType(
+  value: unknown
+): value is number | string | boolean {
+  return ['number', 'string', 'boolean'].includes(typeof value);
+}
 
 export function extractUrlParams(path: string): Array<string> {
   const params = path.match(/\{\w+\}/g);
