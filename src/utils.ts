@@ -74,7 +74,9 @@ export const makeURLInterpolator = ((): ((s: string) => UrlInterpolator) => {
     const cleanString = str.replace(/["\n\r\u2028\u2029]/g, ($0) => rc[$0]);
     return (outputs: Record<string, unknown>): string => {
       return cleanString.replace(/\{([\s\S]+?)\}/g, ($0, $1) =>
-        encodeURIComponent(typeof outputs[$1] === 'string' ? outputs[$1] : '')
+        encodeURIComponent(
+          typeof outputs[$1] === 'string' ? (outputs[$1] as string) : ''
+        )
       );
     };
   };
