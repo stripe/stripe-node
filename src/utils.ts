@@ -401,10 +401,10 @@ export function parseHttpHeaderAsNumber<K extends keyof RequestHeaders>(
   return Number(number);
 }
 
-export function parseHeadersForFetch(headers: RequestHeaders): Headers {
-  const parsedHeaders = new Headers();
-  Object.entries(headers).forEach(([key, value]) => {
-    parsedHeaders.set(key, parseHttpHeaderAsString(value));
+export function parseHeadersForFetch(
+  headers: RequestHeaders
+): [string, string][] {
+  return Object.entries(headers).map(([key, value]) => {
+    return [key, parseHttpHeaderAsString(value)];
   });
-  return parsedHeaders;
 }
