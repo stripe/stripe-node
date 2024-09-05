@@ -1,4 +1,3 @@
-import * as qs from 'qs';
 import {
   RequestData,
   UrlInterpolator,
@@ -43,18 +42,45 @@ export function isOptionsHash(o: unknown): boolean | unknown {
  * Stringifies an Object, accommodating nested objects
  * (forming the conventional key 'parent[child]=value')
  */
-export function stringifyRequestData(data: RequestData | string): string {
-  return (
-    qs
-      .stringify(data, {
-        serializeDate: (d: Date) => Math.floor(d.getTime() / 1000).toString(),
-      })
-      // Don't use strict form encoding by changing the square bracket control
-      // characters back to their literals. This is fine by the server, and
-      // makes these parameter strings easier to read.
-      .replace(/%5B/g, '[')
-      .replace(/%5D/g, ']')
-  );
+export function stringifyRequestData(
+  data: Record<string, any> | string
+): string {
+  if (typeof data === 'string') {
+    return data;
+  }
+
+  const params = new URLSearchParams();
+
+  const serializeDate = (d: Date): string =>
+    Math.floor(d.getTime() / 1000).toString();
+
+  function addToParams(key: string, value: any): void {
+    if (value instanceof Date) {
+      params.append(key, serializeDate(value));
+    } else if (Array.isArray(value)) {
+      value.forEach((v, i) => {
+        addToParams(`${key}[${i}]`, v);
+      });
+    } else if (typeof value === 'object' && value !== null) {
+      Object.keys(value).forEach((k) => {
+        addToParams(`${key}[${k}]`, value[k]);
+      });
+    } else if (value === null) {
+      params.append(key, '');
+    } else {
+      params.append(key, value);
+    }
+  }
+
+  Object.keys(data).forEach((key) => {
+    addToParams(key, data[key]);
+  });
+
+  return params
+    .toString()
+    .replace(/\+/g, '%20')
+    .replace(/%5B/g, '[')
+    .replace(/%5D/g, ']');
 }
 
 /**
