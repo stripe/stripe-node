@@ -7,11 +7,6 @@ export const QuotePhases = StripeResource.extend({
     method: 'GET',
     fullPath: '/v1/quote_phases/{quote_phase}',
   }),
-  list: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/quote_phases',
-    methodType: 'list',
-  }),
   listLineItems: stripeMethod({
     method: 'GET',
     fullPath: '/v1/quote_phases/{quote_phase}/line_items',
