@@ -171,6 +171,11 @@ declare module 'stripe' {
           amount_tax_display?: Stripe.Emptyable<
             RenderingOptions.AmountTaxDisplay
           >;
+
+          /**
+           * ID of the invoice rendering template to use for future invoices.
+           */
+          template?: string;
         }
 
         namespace RenderingOptions {
@@ -477,6 +482,11 @@ declare module 'stripe' {
           amount_tax_display?: Stripe.Emptyable<
             RenderingOptions.AmountTaxDisplay
           >;
+
+          /**
+           * ID of the invoice rendering template to use for future invoices.
+           */
+          template?: string;
         }
 
         namespace RenderingOptions {
