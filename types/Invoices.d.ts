@@ -1199,6 +1199,16 @@ declare module 'stripe' {
          * Invoice pdf rendering options
          */
         pdf: Rendering.Pdf | null;
+
+        /**
+         * ID of the rendering template that the invoice is formatted by.
+         */
+        template: string | null;
+
+        /**
+         * Version of the rendering template that the invoice is using.
+         */
+        template_version: number | null;
       }
 
       namespace Rendering {

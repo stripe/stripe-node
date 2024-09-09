@@ -539,6 +539,16 @@ declare module 'stripe' {
          * Invoice pdf rendering options
          */
         pdf?: Rendering.Pdf;
+
+        /**
+         * ID of the invoice rendering template to use for this invoice.
+         */
+        template?: string;
+
+        /**
+         * The specific version of invoice rendering template to use for this invoice.
+         */
+        template_version?: Stripe.Emptyable<number>;
       }
 
       namespace Rendering {
@@ -1231,6 +1241,16 @@ declare module 'stripe' {
          * Invoice pdf rendering options
          */
         pdf?: Rendering.Pdf;
+
+        /**
+         * ID of the invoice rendering template to use for this invoice.
+         */
+        template?: string;
+
+        /**
+         * The specific version of invoice rendering template to use for this invoice.
+         */
+        template_version?: Stripe.Emptyable<number>;
       }
 
       namespace Rendering {
