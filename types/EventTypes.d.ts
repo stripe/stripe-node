@@ -135,10 +135,14 @@ declare module 'stripe' {
       | IssuingDisputeFundsRescindedEvent
       | IssuingDisputeSubmittedEvent
       | IssuingDisputeUpdatedEvent
+      | IssuingDisputeSettlementDetailCreatedEvent
+      | IssuingDisputeSettlementDetailUpdatedEvent
       | IssuingPersonalizationDesignActivatedEvent
       | IssuingPersonalizationDesignDeactivatedEvent
       | IssuingPersonalizationDesignRejectedEvent
       | IssuingPersonalizationDesignUpdatedEvent
+      | IssuingSettlementCreatedEvent
+      | IssuingSettlementUpdatedEvent
       | IssuingTokenCreatedEvent
       | IssuingTokenUpdatedEvent
       | IssuingTransactionCreatedEvent
@@ -2389,6 +2393,38 @@ declare module 'stripe' {
     }
 
     /**
+     * Emitted when the DisputeSettlementDetail object is created
+     */
+    interface IssuingDisputeSettlementDetailCreatedEvent extends EventBase {
+      type: 'issuing_dispute_settlement_detail.created';
+      data: IssuingDisputeSettlementDetailCreatedEvent.Data;
+    }
+
+    namespace IssuingDisputeSettlementDetailCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.DisputeSettlementDetail;
+
+        previous_attributes?: Partial<Stripe.Issuing.DisputeSettlementDetail>;
+      }
+    }
+
+    /**
+     * Emitted when the DisputeSettlementDetail object is updated
+     */
+    interface IssuingDisputeSettlementDetailUpdatedEvent extends EventBase {
+      type: 'issuing_dispute_settlement_detail.updated';
+      data: IssuingDisputeSettlementDetailUpdatedEvent.Data;
+    }
+
+    namespace IssuingDisputeSettlementDetailUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.DisputeSettlementDetail;
+
+        previous_attributes?: Partial<Stripe.Issuing.DisputeSettlementDetail>;
+      }
+    }
+
+    /**
      * Occurs whenever a personalization design is activated following the activation of the physical bundle that belongs to it.
      */
     interface IssuingPersonalizationDesignActivatedEvent extends EventBase {
@@ -2449,6 +2485,38 @@ declare module 'stripe' {
         object: Stripe.Issuing.PersonalizationDesign;
 
         previous_attributes?: Partial<Stripe.Issuing.PersonalizationDesign>;
+      }
+    }
+
+    /**
+     * Occurs whenever an issuing settlement is created.
+     */
+    interface IssuingSettlementCreatedEvent extends EventBase {
+      type: 'issuing_settlement.created';
+      data: IssuingSettlementCreatedEvent.Data;
+    }
+
+    namespace IssuingSettlementCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.Settlement;
+
+        previous_attributes?: Partial<Stripe.Issuing.Settlement>;
+      }
+    }
+
+    /**
+     * Occurs whenever an issuing settlement is updated.
+     */
+    interface IssuingSettlementUpdatedEvent extends EventBase {
+      type: 'issuing_settlement.updated';
+      data: IssuingSettlementUpdatedEvent.Data;
+    }
+
+    namespace IssuingSettlementUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.Settlement;
+
+        previous_attributes?: Partial<Stripe.Issuing.Settlement>;
       }
     }
 
