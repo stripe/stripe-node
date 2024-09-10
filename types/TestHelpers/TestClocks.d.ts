@@ -74,7 +74,7 @@ declare module 'stripe' {
          */
         status: TestClock.Status;
 
-        status_details?: TestClock.StatusDetails;
+        status_details: TestClock.StatusDetails;
       }
 
       namespace TestClock {
