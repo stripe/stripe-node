@@ -10,7 +10,7 @@ describe('Review Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/reviews/prv_123',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -23,7 +23,7 @@ describe('Review Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/reviews',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });

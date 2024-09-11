@@ -11,7 +11,7 @@ describe('Setup Attempts Resource', () => {
         method: 'GET',
         url: '/v1/setup_attempts?setup_intent=si_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

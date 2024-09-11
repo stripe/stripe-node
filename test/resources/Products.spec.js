@@ -10,7 +10,7 @@ describe('Product Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/products/productIdFoo123',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -46,7 +46,7 @@ describe('Product Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/products?limit=3',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -59,7 +59,7 @@ describe('Product Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/products?shippable=true',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -86,7 +86,7 @@ describe('Product Resource', () => {
         method: 'DELETE',
         url: '/v1/products/productIdFoo3242',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

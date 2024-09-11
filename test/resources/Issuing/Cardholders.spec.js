@@ -14,7 +14,7 @@ describe('Issuing', () => {
           method: 'GET',
           url: '/v1/issuing/cardholders/ich_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -71,7 +71,7 @@ describe('Issuing', () => {
           method: 'GET',
           url: '/v1/issuing/cardholders',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
