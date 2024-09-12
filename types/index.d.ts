@@ -49,6 +49,7 @@
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
 ///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
+///<reference path='./InvoiceRenderingTemplatesResource.d.ts' />
 ///<reference path='./InvoicesResource.d.ts' />
 ///<reference path='./Issuing/AuthorizationsResource.d.ts' />
 ///<reference path='./Issuing/CardholdersResource.d.ts' />
@@ -185,6 +186,7 @@
 ///<reference path='./Identity/VerificationSessions.d.ts' />
 ///<reference path='./InvoiceItems.d.ts' />
 ///<reference path='./InvoiceLineItems.d.ts' />
+///<reference path='./InvoiceRenderingTemplates.d.ts' />
 ///<reference path='./Invoices.d.ts' />
 ///<reference path='./Issuing/Authorizations.d.ts' />
 ///<reference path='./Issuing/Cardholders.d.ts' />
@@ -302,6 +304,7 @@ declare module 'stripe' {
     fileLinks: Stripe.FileLinksResource;
     files: Stripe.FilesResource;
     invoiceItems: Stripe.InvoiceItemsResource;
+    invoiceRenderingTemplates: Stripe.InvoiceRenderingTemplatesResource;
     invoices: Stripe.InvoicesResource;
     mandates: Stripe.MandatesResource;
     paymentIntents: Stripe.PaymentIntentsResource;

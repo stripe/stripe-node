@@ -2026,6 +2026,15 @@ declare module 'stripe' {
            * Indicates whether tax ID collection is enabled for the session
            */
           enabled: boolean;
+
+          /**
+           * Indicates whether a tax ID is required on the payment page
+           */
+          required: TaxIdCollection.Required;
+        }
+
+        namespace TaxIdCollection {
+          type Required = 'if_supported' | 'never';
         }
 
         interface TotalDetails {

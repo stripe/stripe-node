@@ -113,12 +113,12 @@ declare module 'stripe' {
       /**
        * The amount of tax calculated per tax rate for this line item
        */
-      tax_amounts?: Array<InvoiceLineItem.TaxAmount>;
+      tax_amounts: Array<InvoiceLineItem.TaxAmount>;
 
       /**
        * The tax rates which apply to the line item.
        */
-      tax_rates?: Array<Stripe.TaxRate>;
+      tax_rates: Array<Stripe.TaxRate>;
 
       /**
        * A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
