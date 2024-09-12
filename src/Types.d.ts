@@ -61,7 +61,7 @@ export type RequestOptions = {
 export type RequestOpts = {
   requestMethod: string;
   requestPath: string;
-  bodyData: RequestData;
+  bodyData: RequestData | null;
   queryData: RequestData;
   auth: string | null;
   headers: RequestHeaders;
@@ -155,7 +155,7 @@ export type RequestSender = {
     method: string,
     host: string | null,
     path: string,
-    data: RequestData,
+    data: RequestData | null,
     auth: string | null,
     options: RequestOptions,
     usage: Array<string>,

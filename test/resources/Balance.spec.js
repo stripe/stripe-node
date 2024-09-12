@@ -10,7 +10,7 @@ describe('Balance Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/balance',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -21,7 +21,7 @@ describe('Balance Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/balance',
-        data: {},
+        data: null,
         auth: 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11',
         headers: {},
         settings: {},

@@ -10,7 +10,7 @@ describe('CountrySpecs Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/country_specs',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -24,7 +24,7 @@ describe('CountrySpecs Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: `/v1/country_specs/${country}`,
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });

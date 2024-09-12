@@ -87,7 +87,7 @@ describe('EphemeralKey Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
         url: '/v1/ephemeral_keys/ephkey_123',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });

@@ -29,7 +29,7 @@ describe('Setup Intents Resource', () => {
         method: 'GET',
         url: '/v1/setup_intents',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -42,7 +42,7 @@ describe('Setup Intents Resource', () => {
         method: 'GET',
         url: `/v1/setup_intents/${SETUP_INTENT_TEST_ID}`,
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

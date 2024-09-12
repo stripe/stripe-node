@@ -14,7 +14,7 @@ describe('Reporting', () => {
           method: 'GET',
           url: '/v1/reporting/report_runs/frr_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -50,7 +50,7 @@ describe('Reporting', () => {
           method: 'GET',
           url: '/v1/reporting/report_runs',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });

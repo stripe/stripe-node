@@ -15,7 +15,7 @@ describe('Files Resource', () => {
         method: 'GET',
         url: '/v1/files/fil_12345',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -26,7 +26,7 @@ describe('Files Resource', () => {
         method: 'GET',
         url: '/v1/files/fil_12345',
         headers: {},
-        data: {},
+        data: null,
         auth: TEST_AUTH_KEY,
         settings: {},
       });
@@ -40,7 +40,7 @@ describe('Files Resource', () => {
         method: 'GET',
         url: '/v1/files',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
