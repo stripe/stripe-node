@@ -1,5 +1,16 @@
 # Changelog
 
+## 16.11.0 - 2024-09-12
+* [#2171](https://github.com/stripe/stripe-node/pull/2171) Update generated code
+  * Add support for new resource `InvoiceRenderingTemplate`
+  * Add support for `archive`, `list`, `retrieve`, and `unarchive` methods on resource `InvoiceRenderingTemplate`
+  * Add support for `required` on `Checkout.Session.tax_id_collection`, `Checkout.SessionCreateParams.tax_id_collection`, `PaymentLink.tax_id_collection`, `PaymentLinkCreateParams.tax_id_collection`, and `PaymentLinkUpdateParams.tax_id_collection`
+  * Add support for `template` on `Customer.invoice_settings.rendering_options`, `CustomerCreateParams.invoice_settings.rendering_options`, `CustomerUpdateParams.invoice_settings.rendering_options`, `Invoice.rendering`, `InvoiceCreateParams.rendering`, and `InvoiceUpdateParams.rendering`
+  * Add support for `template_version` on `Invoice.rendering`, `InvoiceCreateParams.rendering`, and `InvoiceUpdateParams.rendering`
+  * Add support for new value `submitted` on enum `Issuing.Card.shipping.status`
+  * Change `TestHelpers.TestClock.status_details` to be required
+* [#2172](https://github.com/stripe/stripe-node/pull/2172) Null out empty data sent to GET/DELETE APIs
+
 ## 16.10.0 - 2024-09-05
 * [#2158](https://github.com/stripe/stripe-node/pull/2158) Update generated code
   * Add support for `subscription_item` and `subscription` on `Billing.AlertCreateParams.filter`
