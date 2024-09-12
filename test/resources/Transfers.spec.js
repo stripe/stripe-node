@@ -11,7 +11,7 @@ describe('Transfers Resource', () => {
         method: 'GET',
         url: '/v1/transfers/transferId1',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -56,7 +56,7 @@ describe('Transfers Resource', () => {
         method: 'GET',
         url: '/v1/transfers',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

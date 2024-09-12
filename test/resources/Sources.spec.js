@@ -11,7 +11,7 @@ describe('Sources Resource', () => {
         method: 'GET',
         url: '/v1/sources/sourceId1',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -70,7 +70,7 @@ describe('Sources Resource', () => {
         method: 'GET',
         url: '/v1/sources/src_foo/source_transactions',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

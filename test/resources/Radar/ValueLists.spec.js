@@ -14,7 +14,7 @@ describe('Radar', () => {
           method: 'GET',
           url: '/v1/radar/value_lists/rsl_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -46,7 +46,7 @@ describe('Radar', () => {
           method: 'GET',
           url: '/v1/radar/value_lists',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -59,7 +59,7 @@ describe('Radar', () => {
           method: 'DELETE',
           url: '/v1/radar/value_lists/rsl_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });

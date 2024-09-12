@@ -14,7 +14,7 @@ describe('Terminal', () => {
           method: 'GET',
           url: '/v1/terminal/locations/loc_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -58,7 +58,7 @@ describe('Terminal', () => {
           method: 'DELETE',
           url: '/v1/terminal/locations/loc_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -88,7 +88,7 @@ describe('Terminal', () => {
           method: 'GET',
           url: '/v1/terminal/locations',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });

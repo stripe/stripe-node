@@ -11,7 +11,7 @@ describe('Invoices Resource', () => {
         method: 'GET',
         url: '/v1/invoices/in_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -37,7 +37,7 @@ describe('Invoices Resource', () => {
         method: 'GET',
         url: '/v1/invoices?count=25',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -63,7 +63,7 @@ describe('Invoices Resource', () => {
         method: 'DELETE',
         url: '/v1/invoices/in_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -76,7 +76,7 @@ describe('Invoices Resource', () => {
         method: 'GET',
         url: '/v1/invoices/in_123/lines',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -89,7 +89,7 @@ describe('Invoices Resource', () => {
         method: 'GET',
         url: '/v1/invoices/upcoming/lines',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -107,7 +107,7 @@ describe('Invoices Resource', () => {
         url:
           '/v1/invoices/upcoming?customer=cus_abc&subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -126,7 +126,7 @@ describe('Invoices Resource', () => {
         url:
           '/v1/invoices/upcoming/lines?customer=cus_abc&subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga&limit=5',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

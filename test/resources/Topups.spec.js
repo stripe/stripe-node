@@ -10,7 +10,7 @@ describe('Topup Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/topups/tu_123',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -48,7 +48,7 @@ describe('Topup Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/topups',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });

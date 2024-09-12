@@ -10,7 +10,7 @@ describe('ExchangeRates Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/exchange_rates',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -24,7 +24,7 @@ describe('ExchangeRates Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: `/v1/exchange_rates/${currency}`,
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });

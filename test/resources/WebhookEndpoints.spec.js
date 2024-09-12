@@ -11,7 +11,7 @@ describe('WebhookEndpoints Resource', () => {
         method: 'GET',
         url: '/v1/webhook_endpoints/we_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -24,7 +24,7 @@ describe('WebhookEndpoints Resource', () => {
         method: 'DELETE',
         url: '/v1/webhook_endpoints/we_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -74,7 +74,7 @@ describe('WebhookEndpoints Resource', () => {
         method: 'GET',
         url: '/v1/webhook_endpoints',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
