@@ -11,7 +11,7 @@ describe('Events Resource', () => {
         method: 'GET',
         url: '/v1/events/eventIdBaz',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -24,7 +24,7 @@ describe('Events Resource', () => {
         method: 'GET',
         url: '/v1/events?count=25',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

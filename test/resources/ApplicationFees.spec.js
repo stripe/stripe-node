@@ -10,7 +10,7 @@ describe('ApplicationFee Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/application_fees',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -50,7 +50,7 @@ describe('ApplicationFee Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/application_fees/appFeeIdExample3242/refunds',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -65,7 +65,7 @@ describe('ApplicationFee Resource', () => {
         method: 'GET',
         url:
           '/v1/application_fees/appFeeIdExample3242/refunds/refundIdExample2312',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });

@@ -179,7 +179,7 @@ StripeResource.prototype = {
     }
 
     const dataInQuery = spec.method === 'GET' || spec.method === 'DELETE';
-    const bodyData = dataInQuery ? {} : data;
+    const bodyData = dataInQuery ? null : data;
     const queryData = dataInQuery ? data : {};
 
     return {

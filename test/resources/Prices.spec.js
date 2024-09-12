@@ -11,7 +11,7 @@ describe('Plans Resource', () => {
         method: 'GET',
         url: '/v1/prices/price_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -70,7 +70,7 @@ describe('Plans Resource', () => {
         method: 'GET',
         url: '/v1/prices',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

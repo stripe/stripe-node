@@ -10,7 +10,7 @@ describe('Charge Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/charges/chargeIdFoo123',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -52,7 +52,7 @@ describe('Charge Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/charges',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });

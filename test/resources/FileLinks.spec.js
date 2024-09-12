@@ -11,7 +11,7 @@ describe('FileLinks Resource', () => {
         method: 'GET',
         url: '/v1/file_links/link_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -50,7 +50,7 @@ describe('FileLinks Resource', () => {
         method: 'GET',
         url: '/v1/file_links',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

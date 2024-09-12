@@ -10,7 +10,7 @@ describe('Dispute Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/disputes/dp_123',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -23,7 +23,7 @@ describe('Dispute Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/disputes',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });

@@ -11,7 +11,7 @@ describe('Sigma', () => {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/sigma/scheduled_query_runs/sqr_123',
-          data: {},
+          data: null,
           headers: {},
           settings: {},
         });
@@ -24,7 +24,7 @@ describe('Sigma', () => {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/sigma/scheduled_query_runs',
-          data: {},
+          data: null,
           headers: {},
           settings: {},
         });

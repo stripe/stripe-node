@@ -13,7 +13,7 @@ describe('Payouts Resource', () => {
         method: 'GET',
         url: `/v1/payouts/${PAYOUT_TEST_ID}`,
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -70,7 +70,7 @@ describe('Payouts Resource', () => {
         method: 'GET',
         url: '/v1/payouts',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
