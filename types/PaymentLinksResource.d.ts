@@ -992,15 +992,6 @@ declare module 'stripe' {
          * Enable tax ID collection during checkout. Defaults to `false`.
          */
         enabled: boolean;
-
-        /**
-         * Describes whether a tax ID is required during checkout. Defaults to `never`.
-         */
-        required?: TaxIdCollection.Required;
-      }
-
-      namespace TaxIdCollection {
-        type Required = 'if_supported' | 'never';
       }
 
       interface TransferData {
@@ -1890,15 +1881,6 @@ declare module 'stripe' {
          * Enable tax ID collection during checkout. Defaults to `false`.
          */
         enabled: boolean;
-
-        /**
-         * Describes whether a tax ID is required during checkout. Defaults to `never`.
-         */
-        required?: TaxIdCollection.Required;
-      }
-
-      namespace TaxIdCollection {
-        type Required = 'if_supported' | 'never';
       }
     }
 
