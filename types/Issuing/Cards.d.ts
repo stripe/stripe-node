@@ -246,8 +246,7 @@ declare module 'stripe' {
             | 'failure'
             | 'pending'
             | 'returned'
-            | 'shipped'
-            | 'submitted';
+            | 'shipped';
 
           type Type = 'bulk' | 'individual';
         }
