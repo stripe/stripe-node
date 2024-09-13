@@ -10,6 +10,17 @@
   * Add support for `settlement` on `Issuing.TransactionListParams` and `Issuing.Transaction`
   * Add support for new values `issuing_dispute_settlement_detail.created`, `issuing_dispute_settlement_detail.updated`, `issuing_settlement.created`, and `issuing_settlement.updated` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
 
+## 16.11.0 - 2024-09-12
+* [#2171](https://github.com/stripe/stripe-node/pull/2171) Update generated code
+  * Add support for new resource `InvoiceRenderingTemplate`
+  * Add support for `archive`, `list`, `retrieve`, and `unarchive` methods on resource `InvoiceRenderingTemplate`
+  * Add support for `required` on `Checkout.Session.tax_id_collection`, `Checkout.SessionCreateParams.tax_id_collection`, `PaymentLink.tax_id_collection`, `PaymentLinkCreateParams.tax_id_collection`, and `PaymentLinkUpdateParams.tax_id_collection`
+  * Add support for `template` on `Customer.invoice_settings.rendering_options`, `CustomerCreateParams.invoice_settings.rendering_options`, `CustomerUpdateParams.invoice_settings.rendering_options`, `Invoice.rendering`, `InvoiceCreateParams.rendering`, and `InvoiceUpdateParams.rendering`
+  * Add support for `template_version` on `Invoice.rendering`, `InvoiceCreateParams.rendering`, and `InvoiceUpdateParams.rendering`
+  * Add support for new value `submitted` on enum `Issuing.Card.shipping.status`
+  * Change `TestHelpers.TestClock.status_details` to be required
+* [#2172](https://github.com/stripe/stripe-node/pull/2172) Null out empty data sent to GET/DELETE APIs
+
 ## 16.11.0-beta.1 - 2024-09-05
 * [#2162](https://github.com/stripe/stripe-node/pull/2162) Update generated code for beta
   * Add support for new resources `Billing.MeterErrorReport` and `Terminal.ReaderCollectedData`
