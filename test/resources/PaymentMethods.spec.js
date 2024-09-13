@@ -11,7 +11,7 @@ describe('PaymentMethods Resource', () => {
         method: 'GET',
         url: '/v1/payment_methods/pm_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -44,7 +44,7 @@ describe('PaymentMethods Resource', () => {
         method: 'GET',
         url: '/v1/payment_methods?customer=cus_123&type=card',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

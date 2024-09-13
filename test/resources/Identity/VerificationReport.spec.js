@@ -11,7 +11,7 @@ describe('Identity', () => {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/identity/verification_reports/vr_123',
-          data: {},
+          data: null,
           headers: {},
           settings: {},
         });
@@ -24,7 +24,7 @@ describe('Identity', () => {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/identity/verification_reports',
-          data: {},
+          data: null,
           headers: {},
           settings: {},
         });

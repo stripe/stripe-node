@@ -44,6 +44,11 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
+         * Only return transactions that are associated with the given settlement.
+         */
+        settlement?: string;
+
+        /**
          * Only return transactions that have the given type. One of `capture` or `refund`.
          */
         type?: TransactionListParams.Type;

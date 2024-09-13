@@ -9,18 +9,6 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface QuotePhaseListParams extends PaginationParams {
-      /**
-       * The ID of the quote whose phases will be retrieved.
-       */
-      quote: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     interface QuotePhaseListLineItemsParams extends PaginationParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -41,14 +29,6 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.QuotePhase>>;
-
-      /**
-       * Returns a list of quote phases.
-       */
-      list(
-        params: QuotePhaseListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.QuotePhase>;
 
       /**
        * When retrieving a quote phase, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.

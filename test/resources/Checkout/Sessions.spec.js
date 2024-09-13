@@ -45,7 +45,7 @@ describe('Checkout', () => {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/checkout/sessions/cs_123',
-          data: {},
+          data: null,
           headers: {},
           settings: {},
         });
@@ -59,7 +59,7 @@ describe('Checkout', () => {
           method: 'GET',
           url: '/v1/checkout/sessions/cs_123/line_items',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });

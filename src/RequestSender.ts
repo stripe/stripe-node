@@ -508,7 +508,7 @@ export class RequestSender {
     method: string,
     host: string | null,
     path: string,
-    data: RequestData,
+    data: RequestData | null,
     auth: string | null,
     options: RequestOptions = {},
     usage: Array<string> = [],

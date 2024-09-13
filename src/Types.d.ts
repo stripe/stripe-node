@@ -63,7 +63,7 @@ export type RequestOptions = {
 export type RequestOpts = {
   requestMethod: string;
   requestPath: string;
-  bodyData: RequestData;
+  bodyData: RequestData | null;
   queryData: RequestData;
   auth: string | null;
   headers: RequestHeaders;
@@ -170,7 +170,7 @@ export type RequestSender = {
     method: string,
     host: string | null,
     path: string,
-    data: RequestData,
+    data: RequestData | null,
     auth: string | null,
     options: RequestOptions,
     usage: Array<string>,
@@ -226,7 +226,7 @@ export type StripeResourceObject = {
 };
 export type RequestDataProcessor = (
   method: string,
-  data: RequestData,
+  data: RequestData | null,
   headers: RequestHeaders | undefined,
   prepareAndMakeRequest: (error: Error | null, data: string) => void
 ) => void;

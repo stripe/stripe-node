@@ -20,6 +20,7 @@ import {CreditReversals as TreasuryCreditReversals} from './resources/Treasury/C
 import {CreditUnderwritingRecords as IssuingCreditUnderwritingRecords} from './resources/Issuing/CreditUnderwritingRecords.js';
 import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Customers.js';
 import {DebitReversals as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
+import {DisputeSettlementDetails as IssuingDisputeSettlementDetails} from './resources/Issuing/DisputeSettlementDetails.js';
 import {Disputes as IssuingDisputes} from './resources/Issuing/Disputes.js';
 import {EarlyFraudWarnings as RadarEarlyFraudWarnings} from './resources/Radar/EarlyFraudWarnings.js';
 import {Features as EntitlementsFeatures} from './resources/Entitlements/Features.js';
@@ -99,6 +100,7 @@ export {ExchangeRates} from './resources/ExchangeRates.js';
 export {FileLinks} from './resources/FileLinks.js';
 export {Files} from './resources/Files.js';
 export {InvoiceItems} from './resources/InvoiceItems.js';
+export {InvoiceRenderingTemplates} from './resources/InvoiceRenderingTemplates.js';
 export {Invoices} from './resources/Invoices.js';
 export {Mandates} from './resources/Mandates.js';
 export {Margins} from './resources/Margins.js';
@@ -182,6 +184,7 @@ export const Issuing = resourceNamespace('issuing', {
   Cardholders: IssuingCardholders,
   Cards: IssuingCards,
   CreditUnderwritingRecords: IssuingCreditUnderwritingRecords,
+  DisputeSettlementDetails: IssuingDisputeSettlementDetails,
   Disputes: IssuingDisputes,
   PersonalizationDesigns: IssuingPersonalizationDesigns,
   PhysicalBundles: IssuingPhysicalBundles,

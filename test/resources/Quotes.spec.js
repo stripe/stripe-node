@@ -31,7 +31,7 @@ describe('Quotes Resource', () => {
         method: 'GET',
         url: '/v1/quotes',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -44,7 +44,7 @@ describe('Quotes Resource', () => {
         method: 'GET',
         url: `/v1/quotes/${QUOTE_TEST_ID}`,
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -111,7 +111,7 @@ describe('Quotes Resource', () => {
         method: 'GET',
         url: `/v1/quotes/${QUOTE_TEST_ID}/line_items`,
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -124,7 +124,7 @@ describe('Quotes Resource', () => {
         method: 'GET',
         url: `/v1/quotes/${QUOTE_TEST_ID}/computed_upfront_line_items`,
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

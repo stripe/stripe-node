@@ -30,7 +30,7 @@ describe('Refund Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/refunds/re_123',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -43,7 +43,7 @@ describe('Refund Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/refunds',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });

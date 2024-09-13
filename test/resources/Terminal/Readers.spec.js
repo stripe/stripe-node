@@ -14,7 +14,7 @@ describe('Terminal', () => {
           method: 'GET',
           url: '/v1/terminal/readers/rdr_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -46,7 +46,7 @@ describe('Terminal', () => {
           method: 'DELETE',
           url: '/v1/terminal/readers/rdr_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -76,7 +76,7 @@ describe('Terminal', () => {
           method: 'GET',
           url: '/v1/terminal/readers',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });

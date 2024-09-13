@@ -44,7 +44,7 @@ describe('Subscription Schedule Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/subscription_schedules',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -73,7 +73,7 @@ describe('Subscription Schedule Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/subscription_schedules/sub_sched_123',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });

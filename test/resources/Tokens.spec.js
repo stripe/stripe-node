@@ -26,7 +26,7 @@ describe('Tokens Resource', () => {
         method: 'GET',
         url: '/v1/tokens/tokenId1',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

@@ -11,7 +11,7 @@ describe('CreditNotes Resource', () => {
         method: 'GET',
         url: '/v1/credit_notes/cn_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -42,7 +42,7 @@ describe('CreditNotes Resource', () => {
         method: 'GET',
         url: '/v1/credit_notes?count=25',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -55,7 +55,7 @@ describe('CreditNotes Resource', () => {
         method: 'GET',
         url: '/v1/credit_notes/cn_123/lines',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -68,7 +68,7 @@ describe('CreditNotes Resource', () => {
         method: 'GET',
         url: '/v1/credit_notes/preview/lines',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -98,7 +98,7 @@ describe('CreditNotes Resource', () => {
         method: 'GET',
         url: '/v1/credit_notes/preview?amount=100&invoice=in_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

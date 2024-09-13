@@ -11,7 +11,7 @@ describe('InvoiceItems Resource', () => {
         method: 'GET',
         url: '/v1/invoiceitems/invoiceItemIdTesting123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -54,7 +54,7 @@ describe('InvoiceItems Resource', () => {
         method: 'DELETE',
         url: '/v1/invoiceitems/invoiceItemId2',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -67,7 +67,7 @@ describe('InvoiceItems Resource', () => {
         method: 'GET',
         url: '/v1/invoiceitems',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

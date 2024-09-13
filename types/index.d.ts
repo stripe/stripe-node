@@ -56,11 +56,13 @@
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
 ///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
+///<reference path='./InvoiceRenderingTemplatesResource.d.ts' />
 ///<reference path='./InvoicesResource.d.ts' />
 ///<reference path='./Issuing/AuthorizationsResource.d.ts' />
 ///<reference path='./Issuing/CardholdersResource.d.ts' />
 ///<reference path='./Issuing/CardsResource.d.ts' />
 ///<reference path='./Issuing/CreditUnderwritingRecordsResource.d.ts' />
+///<reference path='./Issuing/DisputeSettlementDetailsResource.d.ts' />
 ///<reference path='./Issuing/DisputesResource.d.ts' />
 ///<reference path='./Issuing/PersonalizationDesignsResource.d.ts' />
 ///<reference path='./Issuing/PhysicalBundlesResource.d.ts' />
@@ -209,14 +211,17 @@
 ///<reference path='./InvoiceItems.d.ts' />
 ///<reference path='./InvoiceLineItems.d.ts' />
 ///<reference path='./InvoicePayments.d.ts' />
+///<reference path='./InvoiceRenderingTemplates.d.ts' />
 ///<reference path='./Invoices.d.ts' />
 ///<reference path='./Issuing/Authorizations.d.ts' />
 ///<reference path='./Issuing/Cardholders.d.ts' />
 ///<reference path='./Issuing/Cards.d.ts' />
 ///<reference path='./Issuing/CreditUnderwritingRecords.d.ts' />
+///<reference path='./Issuing/DisputeSettlementDetails.d.ts' />
 ///<reference path='./Issuing/Disputes.d.ts' />
 ///<reference path='./Issuing/PersonalizationDesigns.d.ts' />
 ///<reference path='./Issuing/PhysicalBundles.d.ts' />
+///<reference path='./Issuing/Settlements.d.ts' />
 ///<reference path='./Issuing/Tokens.d.ts' />
 ///<reference path='./Issuing/Transactions.d.ts' />
 ///<reference path='./LineItems.d.ts' />
@@ -337,6 +342,7 @@ declare module 'stripe' {
     fileLinks: Stripe.FileLinksResource;
     files: Stripe.FilesResource;
     invoiceItems: Stripe.InvoiceItemsResource;
+    invoiceRenderingTemplates: Stripe.InvoiceRenderingTemplatesResource;
     invoices: Stripe.InvoicesResource;
     mandates: Stripe.MandatesResource;
     margins: Stripe.MarginsResource;
@@ -422,6 +428,7 @@ declare module 'stripe' {
       cardholders: Stripe.Issuing.CardholdersResource;
       creditUnderwritingRecords: Stripe.Issuing.CreditUnderwritingRecordsResource;
       disputes: Stripe.Issuing.DisputesResource;
+      disputeSettlementDetails: Stripe.Issuing.DisputeSettlementDetailsResource;
       personalizationDesigns: Stripe.Issuing.PersonalizationDesignsResource;
       physicalBundles: Stripe.Issuing.PhysicalBundlesResource;
       tokens: Stripe.Issuing.TokensResource;

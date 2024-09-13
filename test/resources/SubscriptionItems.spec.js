@@ -11,7 +11,7 @@ describe('SubscriptionItems Resource', () => {
         method: 'GET',
         url: '/v1/subscription_items/test_sub_item',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -24,7 +24,7 @@ describe('SubscriptionItems Resource', () => {
         method: 'DELETE',
         url: '/v1/subscription_items/test_sub_item',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -77,7 +77,7 @@ describe('SubscriptionItems Resource', () => {
         method: 'GET',
         url: '/v1/subscription_items?limit=3&subscription=test_sub',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -109,7 +109,7 @@ describe('SubscriptionItems Resource', () => {
         method: 'GET',
         url: '/v1/subscription_items/si_123/usage_record_summaries',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

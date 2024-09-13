@@ -2013,6 +2013,7 @@ declare module 'stripe' {
           | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'rechnung'
           | 'revolut_pay'
           | 'sepa_debit'
           | 'sofort'
@@ -2616,6 +2617,15 @@ declare module 'stripe' {
            * Enable tax ID collection during checkout. Defaults to `false`.
            */
           enabled: boolean;
+
+          /**
+           * Describes whether a tax ID is required during checkout. Defaults to `never`.
+           */
+          required?: TaxIdCollection.Required;
+        }
+
+        namespace TaxIdCollection {
+          type Required = 'if_supported' | 'never';
         }
 
         type UiMode = 'custom' | 'embedded' | 'hosted';

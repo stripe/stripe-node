@@ -10,7 +10,7 @@ declare module 'stripe' {
         address: LocationCreateParams.Address;
 
         /**
-         * A name for the location.
+         * A name for the location. Maximum length is 1000 characters.
          */
         display_name: string;
 

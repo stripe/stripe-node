@@ -14,7 +14,7 @@ describe('Issuing', () => {
           method: 'GET',
           url: '/v1/issuing/cards/ic_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -69,7 +69,7 @@ describe('Issuing', () => {
           method: 'GET',
           url: '/v1/issuing/cards',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
