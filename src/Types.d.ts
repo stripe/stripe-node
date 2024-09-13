@@ -226,7 +226,7 @@ export type StripeResourceObject = {
 };
 export type RequestDataProcessor = (
   method: string,
-  data: RequestData,
+  data: RequestData | null,
   headers: RequestHeaders | undefined,
   prepareAndMakeRequest: (error: Error | null, data: string) => void
 ) => void;
