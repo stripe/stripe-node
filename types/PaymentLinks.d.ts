@@ -567,6 +567,7 @@ declare module 'stripe' {
         | 'payto'
         | 'pix'
         | 'promptpay'
+        | 'rechnung'
         | 'sepa_debit'
         | 'sofort'
         | 'swish'
@@ -935,6 +936,12 @@ declare module 'stripe' {
          * Indicates whether tax ID collection is enabled for the session.
          */
         enabled: boolean;
+
+        required: TaxIdCollection.Required;
+      }
+
+      namespace TaxIdCollection {
+        type Required = 'if_supported' | 'never';
       }
 
       interface TransferData {
