@@ -1258,6 +1258,11 @@ declare module 'stripe' {
             state: string;
 
             /**
+             * Options for the state sales tax registration.
+             */
+            state_sales_tax?: Us.StateSalesTax;
+
+            /**
              * Type of registration to be created in the US.
              */
             type: Us.Type;
@@ -1276,6 +1281,34 @@ declare module 'stripe' {
                * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction. Supported FIPS codes are: `14000` (Chicago).
                */
               jurisdiction: string;
+            }
+
+            interface StateSalesTax {
+              /**
+               * Elections for the state sales tax registration.
+               */
+              elections: Array<StateSalesTax.Election>;
+            }
+
+            namespace StateSalesTax {
+              interface Election {
+                /**
+                 * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction. Supported FIPS codes are: `003` (Allegheny County) and `60000` (Philadelphia City).
+                 */
+                jurisdiction?: string;
+
+                /**
+                 * The type of the election for the state sales tax registration.
+                 */
+                type: Election.Type;
+              }
+
+              namespace Election {
+                type Type =
+                  | 'local_use_tax'
+                  | 'simplified_sellers_use_tax'
+                  | 'single_local_use_tax';
+              }
             }
 
             type Type =

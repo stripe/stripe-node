@@ -1658,6 +1658,11 @@ declare module 'stripe' {
 
         interface Klarna {
           /**
+           * The payer details for this transaction.
+           */
+          payer_details: Klarna.PayerDetails | null;
+
+          /**
            * The Klarna payment method used for this transaction.
            * Can be one of `pay_later`, `pay_now`, `pay_with_financing`, or `pay_in_installments`
            */
@@ -1668,6 +1673,24 @@ declare module 'stripe' {
            * Can be one of `de-AT`, `en-AT`, `nl-BE`, `fr-BE`, `en-BE`, `de-DE`, `en-DE`, `da-DK`, `en-DK`, `es-ES`, `en-ES`, `fi-FI`, `sv-FI`, `en-FI`, `en-GB`, `en-IE`, `it-IT`, `en-IT`, `nl-NL`, `en-NL`, `nb-NO`, `en-NO`, `sv-SE`, `en-SE`, `en-US`, `es-US`, `fr-FR`, `en-FR`, `cs-CZ`, `en-CZ`, `ro-RO`, `en-RO`, `el-GR`, `en-GR`, `en-AU`, `en-NZ`, `en-CA`, `fr-CA`, `pl-PL`, `en-PL`, `pt-PT`, `en-PT`, `de-CH`, `fr-CH`, `it-CH`, or `en-CH`
            */
           preferred_locale: string | null;
+        }
+
+        namespace Klarna {
+          interface PayerDetails {
+            /**
+             * The payer's address
+             */
+            address: PayerDetails.Address | null;
+          }
+
+          namespace PayerDetails {
+            interface Address {
+              /**
+               * The payer address country
+               */
+              country: string | null;
+            }
+          }
         }
 
         interface Konbini {
