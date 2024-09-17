@@ -248,6 +248,8 @@ declare module 'stripe' {
       }
 
       interface PaymentMethodDetails {
+        amazon_pay?: PaymentMethodDetails.AmazonPay;
+
         card?: PaymentMethodDetails.Card;
 
         klarna?: PaymentMethodDetails.Klarna;
@@ -261,6 +263,17 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodDetails {
+        interface AmazonPay {
+          /**
+           * The AmazonPay dispute type, chargeback or claim
+           */
+          dispute_type: AmazonPay.DisputeType | null;
+        }
+
+        namespace AmazonPay {
+          type DisputeType = 'chargeback' | 'claim';
+        }
+
         interface Card {
           /**
            * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
@@ -301,7 +314,7 @@ declare module 'stripe' {
           reason_code: string | null;
         }
 
-        type Type = 'card' | 'klarna' | 'paypal';
+        type Type = 'amazon_pay' | 'card' | 'klarna' | 'paypal';
       }
 
       type Status =
