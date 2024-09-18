@@ -1,5 +1,13 @@
 # Changelog
 
+## 16.13.0-beta.1 - 2024-09-18
+* [#2178](https://github.com/stripe/stripe-node/pull/2178) Update generated code for beta
+  * Remove support for resource `QuotePhase`
+  * Remove support for `list_line_items` and `retrieve` methods on resource `QuotePhase`
+  * Add support for `send_money` and `transfer_balance` on `AccountSessionCreateParams.components.financial_account.features`
+  * Add support for new value `rechnung` on enums `PaymentLink.payment_method_types[]`, `PaymentLinkCreateParams.payment_method_types[]`, and `PaymentLinkUpdateParams.payment_method_types[]`
+  * Change `Quote.subscription_data_overrides[].end_behavior` to be optional
+
 ## 16.12.0 - 2024-09-18
 * [#2177](https://github.com/stripe/stripe-node/pull/2177) Update generated code
   * Add support for new value `international_transaction` on enum `Treasury.ReceivedDebit.failure_code`

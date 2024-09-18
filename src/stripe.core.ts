@@ -55,7 +55,7 @@ export function createStripe(
   platformFunctions: PlatformFunctions,
   requestSender: RequestSenderFactory = defaultRequestSenderFactory
 ): typeof Stripe {
-  Stripe.PACKAGE_VERSION = '16.12.0-beta.1';
+  Stripe.PACKAGE_VERSION = '16.13.0-beta.1';
   Stripe.USER_AGENT = {
     bindings_version: Stripe.PACKAGE_VERSION,
     lang: 'node',
