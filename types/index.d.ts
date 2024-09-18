@@ -81,7 +81,6 @@
 ///<reference path='./PricesResource.d.ts' />
 ///<reference path='./ProductsResource.d.ts' />
 ///<reference path='./PromotionCodesResource.d.ts' />
-///<reference path='./QuotePhasesResource.d.ts' />
 ///<reference path='./QuotesResource.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarningsResource.d.ts' />
 ///<reference path='./Radar/ValueListItemsResource.d.ts' />
@@ -242,7 +241,6 @@
 ///<reference path='./Products.d.ts' />
 ///<reference path='./PromotionCodes.d.ts' />
 ///<reference path='./QuoteLines.d.ts' />
-///<reference path='./QuotePhases.d.ts' />
 ///<reference path='./QuotePreviewInvoices.d.ts' />
 ///<reference path='./QuotePreviewSubscriptionSchedules.d.ts' />
 ///<reference path='./Quotes.d.ts' />
@@ -357,7 +355,6 @@ declare module 'stripe' {
     prices: Stripe.PricesResource;
     products: Stripe.ProductsResource;
     promotionCodes: Stripe.PromotionCodesResource;
-    quotePhases: Stripe.QuotePhasesResource;
     quotes: Stripe.QuotesResource;
     refunds: Stripe.RefundsResource;
     reviews: Stripe.ReviewsResource;

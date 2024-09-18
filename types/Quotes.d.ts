@@ -947,7 +947,7 @@ declare module 'stripe' {
         /**
          * Behavior of the subscription schedule and underlying subscription when it ends.
          */
-        end_behavior: SubscriptionDataOverride.EndBehavior | null;
+        end_behavior?: SubscriptionDataOverride.EndBehavior | null;
 
         /**
          * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the quote is accepted.

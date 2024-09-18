@@ -116,7 +116,6 @@ export {Plans} from './resources/Plans.js';
 export {Prices} from './resources/Prices.js';
 export {Products} from './resources/Products.js';
 export {PromotionCodes} from './resources/PromotionCodes.js';
-export {QuotePhases} from './resources/QuotePhases.js';
 export {Quotes} from './resources/Quotes.js';
 export {Refunds} from './resources/Refunds.js';
 export {Reviews} from './resources/Reviews.js';

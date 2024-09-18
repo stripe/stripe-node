@@ -355,6 +355,16 @@ declare module 'stripe' {
              * Whether to allow money movement features.
              */
             money_movement?: boolean;
+
+            /**
+             * Whether to allow sending money.
+             */
+            send_money?: boolean;
+
+            /**
+             * Whether to allow transferring balance.
+             */
+            transfer_balance?: boolean;
           }
         }
 
