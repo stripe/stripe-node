@@ -118,6 +118,11 @@ declare module 'stripe' {
       automatic_tax: QuotePreviewInvoice.AutomaticTax;
 
       /**
+       * The time when this invoice is currently scheduled to be automatically finalized. The field will be `null` if the invoice is not scheduled to finalize in the future. If the invoice is not in the draft state, this field will always be `null` - see `finalized_at` for the time when an already-finalized invoice was finalized.
+       */
+      automatically_finalizes_at: number | null;
+
+      /**
        * Indicates the reason why the invoice was created.
        *
        * * `manual`: Unrelated to a subscription, for example, created via the invoice editor.
