@@ -141,6 +141,11 @@ declare module 'stripe' {
       automatic_tax: Invoice.AutomaticTax;
 
       /**
+       * The time when this invoice is currently scheduled to be automatically finalized. The field will be `null` if the invoice is not scheduled to finalize in the future. If the invoice is not in the draft state, this field will always be `null` - see `finalized_at` for the time when an already-finalized invoice was finalized.
+       */
+      automatically_finalizes_at: number | null;
+
+      /**
        * Indicates the reason why the invoice was created.
        *
        * * `manual`: Unrelated to a subscription, for example, created via the invoice editor.
@@ -1012,6 +1017,7 @@ declare module 'stripe' {
           | 'terminal_reader_busy'
           | 'terminal_reader_collected_data_invalid'
           | 'terminal_reader_hardware_fault'
+          | 'terminal_reader_invalid_location_for_activation'
           | 'terminal_reader_invalid_location_for_payment'
           | 'terminal_reader_offline'
           | 'terminal_reader_timeout'

@@ -567,6 +567,7 @@ declare module 'stripe' {
         | 'payto'
         | 'pix'
         | 'promptpay'
+        | 'rechnung'
         | 'sepa_debit'
         | 'sofort'
         | 'swish'

@@ -1,5 +1,17 @@
 # Changelog
 
+## 16.12.0 - 2024-09-18
+* [#2177](https://github.com/stripe/stripe-node/pull/2177) Update generated code
+  * Add support for new value `international_transaction` on enum `Treasury.ReceivedDebit.failure_code`
+* [#2175](https://github.com/stripe/stripe-node/pull/2175) Update generated code
+  * Add support for new value `verification_supportability` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `BankAccount.future_requirements.errors[].code`, and `BankAccount.requirements.errors[].code`
+  * Add support for new value `terminal_reader_invalid_location_for_activation` on enums `Invoice.last_finalization_error.code`, `PaymentIntent.last_payment_error.code`, `SetupAttempt.setup_error.code`, `SetupIntent.last_setup_error.code`, and `StripeError.code`
+  * Add support for `payer_details` on `Charge.payment_method_details.klarna`
+  * Add support for `amazon_pay` on `Dispute.payment_method_details`
+  * Add support for new value `amazon_pay` on enum `Dispute.payment_method_details.type`
+  * Add support for `automatically_finalizes_at` on `Invoice`
+  * Add support for `state_sales_tax` on `Tax.Registration.country_options.us` and `Tax.RegistrationCreateParams.country_options.us`
+
 ## 16.12.0-beta.1 - 2024-09-13
 * [#2170](https://github.com/stripe/stripe-node/pull/2170) Update generated code for beta
   * Add support for new resources `Issuing.DisputeSettlementDetail` and `Issuing.Settlement`
@@ -9,6 +21,16 @@
   * Add support for new values `issuing_dispute_settlement_detail.created`, `issuing_dispute_settlement_detail.updated`, `issuing_settlement.created`, and `issuing_settlement.updated` on enum `Event.type`
   * Add support for `settlement` on `Issuing.TransactionListParams` and `Issuing.Transaction`
   * Add support for new values `issuing_dispute_settlement_detail.created`, `issuing_dispute_settlement_detail.updated`, `issuing_settlement.created`, and `issuing_settlement.updated` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
+## 16.11.0 - 2024-09-12
+* [#2171](https://github.com/stripe/stripe-node/pull/2171) Update generated code
+  * Add support for new resource `InvoiceRenderingTemplate`
+  * Add support for `archive`, `list`, `retrieve`, and `unarchive` methods on resource `InvoiceRenderingTemplate`
+  * Add support for `required` on `Checkout.Session.tax_id_collection`, `Checkout.SessionCreateParams.tax_id_collection`, `PaymentLink.tax_id_collection`, `PaymentLinkCreateParams.tax_id_collection`, and `PaymentLinkUpdateParams.tax_id_collection`
+  * Add support for `template` on `Customer.invoice_settings.rendering_options`, `CustomerCreateParams.invoice_settings.rendering_options`, `CustomerUpdateParams.invoice_settings.rendering_options`, `Invoice.rendering`, `InvoiceCreateParams.rendering`, and `InvoiceUpdateParams.rendering`
+  * Add support for `template_version` on `Invoice.rendering`, `InvoiceCreateParams.rendering`, and `InvoiceUpdateParams.rendering`
+  * Add support for new value `submitted` on enum `Issuing.Card.shipping.status`
+  * Change `TestHelpers.TestClock.status_details` to be required
 
 ## 16.11.0-beta.1 - 2024-09-05
 * [#2162](https://github.com/stripe/stripe-node/pull/2162) Update generated code for beta
