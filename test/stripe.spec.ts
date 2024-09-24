@@ -643,7 +643,7 @@ describe('Stripe Module', function() {
         });
       });
       it('is respected', (callback) => {
-        stripeClient.v2.accounts.create((err) => {
+        stripeClient.v2.billing.meterEventSession.create((err) => {
           closeServer();
           if (err) {
             return callback(err);
@@ -653,7 +653,7 @@ describe('Stripe Module', function() {
         });
       });
       it('can still be overridden per-request', (callback) => {
-        stripeClient.v2.accounts.create(
+        stripeClient.v2.billing.meterEventSession.create(
           {name: 'llama'},
           {stripeContext: 'ctx_456'},
           (err) => {

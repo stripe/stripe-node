@@ -34,13 +34,12 @@ describe('Error', () => {
       ).to.be.instanceOf(Error.StripeCardError);
       expect(
         Error.generateV2({
-          type: 'insufficient_funds',
-          code: 'outbound_payment_insufficient_funds',
+          code: 'invalid_fields',
         })
-      ).to.be.instanceOf(Error.InsufficientFundsError);
-      expect(Error.generateV2({type: 'blocked_by_stripe'})).to.be.instanceOf(
-        Error.BlockedByStripeError
-      );
+      ).to.be.instanceOf(Error.StripeInvalidRequestError);
+      expect(
+        Error.generateV2({type: 'temporary_session_expired'})
+      ).to.be.instanceOf(Error.TemporarySessionExpiredError);
 
       expect(Error.generateV2({code: 'invalid_fields'})).to.be.instanceOf(
         Error.StripeInvalidRequestError

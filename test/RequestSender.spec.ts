@@ -11,6 +11,7 @@ import {
   StripePermissionError,
   StripeRateLimitError,
   StripeUnknownError,
+  TemporarySessionExpiredError,
 } from '../src/Error.js';
 import {RequestSender} from '../src/RequestSender.js';
 import {ApiVersion, PreviewVersion} from '../src/apiVersion.js';
@@ -320,7 +321,7 @@ describe('RequestSender', () => {
       it('encodes the body in POST requests as JSON for v2', (done) => {
         const options = {
           host: stripe.getConstant('DEFAULT_HOST'),
-          path: '/v2/accounts',
+          path: '/v2/billing/meter_event_session',
           data: {
             name: 'llama',
           },
@@ -340,16 +341,19 @@ describe('RequestSender', () => {
           .post(options.path, options.body)
           .reply(200, '{}');
 
-        realStripe.v2.accounts.create(options.data, (err, response) => {
-          done(err);
-          scope.done();
-        });
+        realStripe.v2.billing.meterEventSession.create(
+          options.data,
+          (err, response) => {
+            done(err);
+            scope.done();
+          }
+        );
       });
 
       it('encodes null values in the body in POST correctly for v2', (done) => {
         const options = {
           host: stripe.getConstant('DEFAULT_HOST'),
-          path: '/v2/accounts',
+          path: '/v2/billing/meter_event_session',
           data: {
             name: null,
           },
@@ -369,23 +373,26 @@ describe('RequestSender', () => {
           .post(options.path, options.body)
           .reply(200, '{}');
 
-        realStripe.v2.accounts.create(options.data, (err, response) => {
-          done(err);
-          scope.done();
-        });
+        realStripe.v2.billing.meterEventSession.create(
+          options.data,
+          (err, response) => {
+            done(err);
+            scope.done();
+          }
+        );
       });
 
       it('encodes data for GET requests as query params for v2', (done) => {
         const host = stripe.getConstant('DEFAULT_HOST');
         const scope = nock(`https://${host}`)
           .get(
-            `/v2/accounts/acc_123?include=defaults&include=configuration`,
+            `/v2/core/events/event_123?include=defaults&include=configuration`,
             ''
           )
           .reply(200, '{}');
 
-        realStripe.v2.accounts.retrieve(
-          'acc_123',
+        realStripe.v2.core.events.retrieve(
+          'event_123',
           {include: ['defaults', 'configuration']},
           (err, response) => {
             done(err);
@@ -426,7 +433,7 @@ describe('RequestSender', () => {
       it('encodes Date objects in POST requests as JSON for v2', (done) => {
         const options = {
           host: stripe.getConstant('DEFAULT_HOST'),
-          path: '/v2/accounts',
+          path: '/v2/billing/meter_event_session',
           data: {
             created: new Date('2009-02-13T23:31:30Z'),
           },
@@ -446,10 +453,13 @@ describe('RequestSender', () => {
           .post(options.path, options.body)
           .reply(200, '{}');
 
-        realStripe.v2.accounts.create(options.data, (err, response) => {
-          done(err);
-          scope.done();
-        });
+        realStripe.v2.billing.meterEventSession.create(
+          options.data,
+          (err, response) => {
+            done(err);
+            scope.done();
+          }
+        );
       });
 
       it('allows overriding host', (done) => {
@@ -479,19 +489,6 @@ describe('RequestSender', () => {
           .reply(200, '{}');
 
         realStripe.subscriptions.list((err, response) => {
-          done(err);
-          scope.done();
-        });
-      });
-      it('sends current v2 version when apiMode is v2', (done) => {
-        const host = stripe.getConstant('DEFAULT_HOST');
-        const scope = nock(`https://${host}`, {
-          reqheaders: {'Stripe-Version': PreviewVersion},
-        })
-          .get('/v2/accounts')
-          .reply(200, '{}');
-
-        realStripe.v2.accounts.list((err, response) => {
           done(err);
           scope.done();
         });
@@ -675,18 +672,18 @@ describe('RequestSender', () => {
 
       it('throws a v2 StripeError based on the underlying error "code" if apiMode is v2', (done) => {
         const error = {
-          type: 'insufficient_funds',
+          type: 'temporary_session_expired',
           message: 'you messed up',
         };
 
         nock(`https://${options.host}`)
-          .post('/v2/accounts', {})
+          .post('/v2/billing/meter_event_session', {})
           .reply(400, {
             error,
           });
 
-        realStripe.v2.accounts.create({}, (err) => {
-          expect(err).to.be.an.instanceOf(InsufficientFundsError);
+        realStripe.v2.billing.meterEventSession.create({}, (err) => {
+          expect(err).to.be.an.instanceOf(TemporarySessionExpiredError);
           expect(err.message).to.equal('you messed up');
           done();
         });
@@ -694,7 +691,7 @@ describe('RequestSender', () => {
 
       it('throws a v1 StripeError if apiMode is NOT v2', (done) => {
         const error = {
-          type: 'insufficient_funds',
+          type: 'temporary_session_expired',
           message: 'you messed up',
         };
 
@@ -707,7 +704,7 @@ describe('RequestSender', () => {
         realStripe.customers.create({}, (err) => {
           expect(err).to.be.an.instanceOf(StripeError);
           expect(err).to.be.an.instanceOf(StripeUnknownError);
-          expect(err).not.to.be.an.instanceOf(InsufficientFundsError);
+          expect(err).not.to.be.an.instanceOf(TemporarySessionExpiredError);
           expect(err.message).to.equal('you messed up');
           expect(err.raw.message).to.equal('you messed up');
           done();
