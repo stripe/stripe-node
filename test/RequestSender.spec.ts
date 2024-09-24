@@ -1,21 +1,25 @@
 // @ts-nocheck
 import {expect} from 'chai';
+import nock = require('nock');
+
 import {
+  InsufficientFundsError,
   StripeAuthenticationError,
   StripeConnectionError,
   StripeError,
   StripeIdempotencyError,
   StripePermissionError,
   StripeRateLimitError,
+  StripeUnknownError,
 } from '../src/Error.js';
-import {HttpClientResponse} from '../src/net/HttpClient.js';
 import {RequestSender} from '../src/RequestSender.js';
+import {ApiVersion, PreviewVersion} from '../src/apiVersion.js';
+import {HttpClientResponse} from '../src/net/HttpClient.js';
 import {
   FAKE_API_KEY,
   getSpyableStripe,
   getTestServerStripe,
 } from './testUtils.js';
-import nock = require('nock');
 
 const stripe = getSpyableStripe();
 
@@ -23,21 +27,45 @@ describe('RequestSender', () => {
   const sender = new RequestSender(stripe, 0);
 
   describe('_makeHeaders', () => {
-    it('sets the Authorization header with Bearer auth using the global API key', () => {
-      const headers = sender._makeHeaders(null, 0, null);
-      expect(headers.Authorization).to.equal(`Bearer ${FAKE_API_KEY}`);
-    });
-    it('sets the Authorization header with Bearer auth using the specified API key', () => {
-      const headers = sender._makeHeaders('anotherFakeAuthToken', 0, null);
-      expect(headers.Authorization).to.equal('Bearer anotherFakeAuthToken');
-    });
     it('sets the Stripe-Version header if an API version is provided', () => {
-      const headers = sender._makeHeaders(null, 0, '1970-01-01');
+      const headers = sender._makeHeaders({apiVersion: '1970-01-01'});
       expect(headers['Stripe-Version']).to.equal('1970-01-01');
     });
     it('does not the set the Stripe-Version header if no API version is provided', () => {
-      const headers = sender._makeHeaders(null, 0, null);
+      const headers = sender._makeHeaders({});
       expect(headers).to.not.include.keys('Stripe-Version');
+    });
+    describe('idempotency keys', () => {
+      it('only creates creates an idempotency key if a v1 request wil retry', () => {
+        const headers = sender._makeHeaders({
+          method: 'POST',
+          userSuppliedSettings: {maxNetworkRetries: 3},
+          apiMode: 'v1',
+        });
+        expect(headers['Idempotency-Key']).matches(/^stripe-node-retry/);
+      });
+      // should probably always create an IK; until then, codify the behavior
+      it("skips idempotency genration for v1 reqeust if we're not retrying the request", () => {
+        const headers = sender._makeHeaders({
+          method: 'POST',
+          userSuppliedSettings: {maxNetworkRetries: 0},
+          apiMode: 'v1',
+        });
+        expect(headers['Idempotency-Key']).equals(undefined);
+      });
+      it('always creates an idempotency key for v2 POST requests', () => {
+        const headers = sender._makeHeaders({method: 'POST', apiMode: 'v2'});
+        expect(headers['Idempotency-Key']).matches(/^stripe-node-retry/);
+      });
+      it('always creates an idempotency key for v2 DELETE requests', () => {
+        const headers = sender._makeHeaders({method: 'DELETE', apiMode: 'v2'});
+        expect(headers['Idempotency-Key']).matches(/^stripe-node-retry/);
+      });
+      it('generates a new key every time', () => {
+        expect(sender._defaultIdempotencyKey('POST', {}, 'v2')).not.to.equal(
+          sender._defaultIdempotencyKey('POST', {}, 'v2')
+        );
+      });
     });
   });
 
@@ -90,7 +118,7 @@ describe('RequestSender', () => {
 
   describe('Parameter encoding', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
-    const realStripe = require('../src/stripe.cjs.node.js')('sk_test_xyz');
+    const realStripe = require('../src/stripe.cjs.node.js')(FAKE_API_KEY);
 
     afterEach(() => {
       nock.cleanAll();
@@ -268,9 +296,12 @@ describe('RequestSender', () => {
 
         const scope = nock(
           `https://${options.host}`,
-          // Content-Length should be present for POST.
+          // Content-Length and Content-Type should be present for POST.
           {
-            reqheaders: {'Content-Length': options.body.length},
+            reqheaders: {
+              'Content-Length': options.body.length,
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
           }
         )
           .post(options.path, options.body)
@@ -279,6 +310,83 @@ describe('RequestSender', () => {
         realStripe.subscriptions.update(
           'sub_123',
           options.data,
+          (err, response) => {
+            done(err);
+            scope.done();
+          }
+        );
+      });
+
+      it('encodes the body in POST requests as JSON for v2', (done) => {
+        const options = {
+          host: stripe.getConstant('DEFAULT_HOST'),
+          path: '/v2/accounts',
+          data: {
+            name: 'llama',
+          },
+          body: '{"name":"llama"}',
+        };
+
+        const scope = nock(
+          `https://${options.host}`,
+          // Content-Length and Content-Type should be present for POST.
+          {
+            reqheaders: {
+              'Content-Length': options.body.length,
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+          .post(options.path, options.body)
+          .reply(200, '{}');
+
+        realStripe.v2.accounts.create(options.data, (err, response) => {
+          done(err);
+          scope.done();
+        });
+      });
+
+      it('encodes null values in the body in POST correctly for v2', (done) => {
+        const options = {
+          host: stripe.getConstant('DEFAULT_HOST'),
+          path: '/v2/accounts',
+          data: {
+            name: null,
+          },
+          body: '{"name":null}',
+        };
+
+        const scope = nock(
+          `https://${options.host}`,
+          // Content-Length and Content-Type should be present for POST.
+          {
+            reqheaders: {
+              'Content-Length': options.body.length,
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+          .post(options.path, options.body)
+          .reply(200, '{}');
+
+        realStripe.v2.accounts.create(options.data, (err, response) => {
+          done(err);
+          scope.done();
+        });
+      });
+
+      it('encodes data for GET requests as query params for v2', (done) => {
+        const host = stripe.getConstant('DEFAULT_HOST');
+        const scope = nock(`https://${host}`)
+          .get(
+            `/v2/accounts/acc_123?include=defaults&include=configuration`,
+            ''
+          )
+          .reply(200, '{}');
+
+        realStripe.v2.accounts.retrieve(
+          'acc_123',
+          {include: ['defaults', 'configuration']},
           (err, response) => {
             done(err);
             scope.done();
@@ -315,6 +423,35 @@ describe('RequestSender', () => {
         );
       });
 
+      it('encodes Date objects in POST requests as JSON for v2', (done) => {
+        const options = {
+          host: stripe.getConstant('DEFAULT_HOST'),
+          path: '/v2/accounts',
+          data: {
+            created: new Date('2009-02-13T23:31:30Z'),
+          },
+          body: '{"created":"1234567890"}',
+        };
+
+        const scope = nock(
+          `https://${options.host}`,
+          // Content-Length and Content-Type should be present for POST.
+          {
+            reqheaders: {
+              'Content-Length': options.body.length,
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+          .post(options.path, options.body)
+          .reply(200, '{}');
+
+        realStripe.v2.accounts.create(options.data, (err, response) => {
+          done(err);
+          scope.done();
+        });
+      });
+
       it('allows overriding host', (done) => {
         const scope = nock('https://myhost')
           .get('/v1/accounts/acct_123')
@@ -331,6 +468,33 @@ describe('RequestSender', () => {
             scope.done();
           }
         );
+      });
+
+      it('sends current v1 version when apiMode is v1', (done) => {
+        const host = stripe.getConstant('DEFAULT_HOST');
+        const scope = nock(`https://${host}`, {
+          reqheaders: {'Stripe-Version': ApiVersion},
+        })
+          .get('/v1/subscriptions')
+          .reply(200, '{}');
+
+        realStripe.subscriptions.list((err, response) => {
+          done(err);
+          scope.done();
+        });
+      });
+      it('sends current v2 version when apiMode is v2', (done) => {
+        const host = stripe.getConstant('DEFAULT_HOST');
+        const scope = nock(`https://${host}`, {
+          reqheaders: {'Stripe-Version': PreviewVersion},
+        })
+          .get('/v2/accounts')
+          .reply(200, '{}');
+
+        realStripe.v2.accounts.list((err, response) => {
+          done(err);
+          scope.done();
+        });
       });
     });
   });
@@ -505,6 +669,47 @@ describe('RequestSender', () => {
 
         realStripe.charges.create(options.data, (err) => {
           expect(err).to.be.an.instanceOf(StripeIdempotencyError);
+          done();
+        });
+      });
+
+      it('throws a v2 StripeError based on the underlying error "code" if apiMode is v2', (done) => {
+        const error = {
+          type: 'insufficient_funds',
+          message: 'you messed up',
+        };
+
+        nock(`https://${options.host}`)
+          .post('/v2/accounts', {})
+          .reply(400, {
+            error,
+          });
+
+        realStripe.v2.accounts.create({}, (err) => {
+          expect(err).to.be.an.instanceOf(InsufficientFundsError);
+          expect(err.message).to.equal('you messed up');
+          done();
+        });
+      });
+
+      it('throws a v1 StripeError if apiMode is NOT v2', (done) => {
+        const error = {
+          type: 'insufficient_funds',
+          message: 'you messed up',
+        };
+
+        nock(`https://${options.host}`)
+          .post('/v1/customers', {})
+          .reply(400, {
+            error,
+          });
+
+        realStripe.customers.create({}, (err) => {
+          expect(err).to.be.an.instanceOf(StripeError);
+          expect(err).to.be.an.instanceOf(StripeUnknownError);
+          expect(err).not.to.be.an.instanceOf(InsufficientFundsError);
+          expect(err.message).to.equal('you messed up');
+          expect(err.raw.message).to.equal('you messed up');
           done();
         });
       });

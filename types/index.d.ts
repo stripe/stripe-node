@@ -124,6 +124,14 @@
 ///<reference path='./Treasury/ReceivedDebitsResource.d.ts' />
 ///<reference path='./Treasury/TransactionEntriesResource.d.ts' />
 ///<reference path='./Treasury/TransactionsResource.d.ts' />
+///<reference path='./V2/Billing/MeterEventAdjustmentsResource.d.ts' />
+///<reference path='./V2/Billing/MeterEventSessionResource.d.ts' />
+///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
+///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
+///<reference path='./V2/BillingResource.d.ts' />
+///<reference path='./V2/Core/EventsResource.d.ts' />
+///<reference path='./V2/CoreResource.d.ts' />
+///<reference path='./V2Resource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./AccountSessions.d.ts' />
@@ -262,6 +270,11 @@
 ///<reference path='./Treasury/Transactions.d.ts' />
 ///<reference path='./UsageRecordSummaries.d.ts' />
 ///<reference path='./UsageRecords.d.ts' />
+///<reference path='./V2/Billing/MeterEventAdjustmentV2S.d.ts' />
+///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
+///<reference path='./V2/Billing/MeterEventV2S.d.ts' />
+///<reference path='./V2/EventDestinations.d.ts' />
+///<reference path='./V2/Events.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
@@ -333,6 +346,7 @@ declare module 'stripe' {
     tokens: Stripe.TokensResource;
     topups: Stripe.TopupsResource;
     transfers: Stripe.TransfersResource;
+    v2: Stripe.V2Resource;
     webhookEndpoints: Stripe.WebhookEndpointsResource;
     apps: {
       secrets: Stripe.Apps.SecretsResource;

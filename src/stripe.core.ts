@@ -1,14 +1,22 @@
 import * as _Error from './Error.js';
 import {RequestSender} from './RequestSender.js';
 import {StripeResource} from './StripeResource.js';
-import {AppInfo, StripeObject, UserProvidedConfig} from './Types.js';
-import {WebhookObject, createWebhooks} from './Webhooks.js';
-import * as apiVersion from './apiVersion.js';
+import {
+  AppInfo,
+  RequestAuthenticator,
+  RequestHeaders,
+  StripeObject,
+  StripeRequest,
+  UserProvidedConfig,
+} from './Types.js';
+import {WebhookObject, WebhookEvent, createWebhooks} from './Webhooks.js';
+import {ApiVersion} from './apiVersion.js';
 import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import * as resources from './resources.js';
 import {
+  createApiKeyAuthenticator,
   determineProcessUserAgentProperties,
   pascalToCamelCase,
   validateInteger,
@@ -17,15 +25,16 @@ import {
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
 const DEFAULT_BASE_PATH = '/v1/';
-const DEFAULT_API_VERSION = apiVersion.ApiVersion;
+const DEFAULT_API_VERSION = ApiVersion;
 
 const DEFAULT_TIMEOUT = 80000;
 
-const MAX_NETWORK_RETRY_DELAY_SEC = 2;
+const MAX_NETWORK_RETRY_DELAY_SEC = 5;
 const INITIAL_NETWORK_RETRY_DELAY_SEC = 0.5;
 
 const APP_INFO_PROPERTIES = ['name', 'version', 'url', 'partner_id'];
 const ALLOWED_CONFIG_PROPERTIES = [
+  'authenticator',
   'apiVersion',
   'typescript',
   'maxNetworkRetries',
@@ -38,6 +47,7 @@ const ALLOWED_CONFIG_PROPERTIES = [
   'telemetry',
   'appInfo',
   'stripeAccount',
+  'stripeContext',
 ];
 
 type RequestSenderFactory = (stripe: StripeObject) => RequestSender;
@@ -49,7 +59,7 @@ export function createStripe(
   platformFunctions: PlatformFunctions,
   requestSender: RequestSenderFactory = defaultRequestSenderFactory
 ): typeof Stripe {
-  Stripe.PACKAGE_VERSION = '16.12.0';
+  Stripe.PACKAGE_VERSION = '0.56.0';
   Stripe.USER_AGENT = {
     bindings_version: Stripe.PACKAGE_VERSION,
     lang: 'node',
@@ -107,7 +117,6 @@ export function createStripe(
     const agent = props.httpAgent || null;
 
     this._api = {
-      auth: null,
       host: props.host || DEFAULT_HOST,
       port: props.port || DEFAULT_PORT,
       protocol: props.protocol || 'https',
@@ -117,7 +126,7 @@ export function createStripe(
       maxNetworkRetries: validateInteger(
         'maxNetworkRetries',
         props.maxNetworkRetries,
-        1
+        2
       ),
       agent: agent,
       httpClient:
@@ -127,6 +136,7 @@ export function createStripe(
           : this._platformFunctions.createDefaultHttpClient()),
       dev: false,
       stripeAccount: props.stripeAccount || null,
+      stripeContext: props.stripeContext || null,
     };
 
     const typescript = props.typescript || false;
@@ -143,7 +153,7 @@ export function createStripe(
     }
 
     this._prepResources();
-    this._setApiKey(key);
+    this._setAuthenticator(key, props.authenticator);
 
     this.errors = _Error;
 
@@ -191,6 +201,110 @@ export function createStripe(
   Stripe.createSubtleCryptoProvider =
     platformFunctions.createSubtleCryptoProvider;
 
+  Stripe.createRequestSigningAuthenticator = (
+    keyId: string,
+    sign: (signatureBase: Uint8Array) => Promise<Uint8Array>,
+    crypto: CryptoProvider = Stripe.createNodeCryptoProvider()
+  ): RequestAuthenticator => {
+    const authorizationHeaderName = 'Authorization';
+    const stripeContextHeaderName = 'Stripe-Context';
+    const stripeAccountHeaderName = 'Stripe-Account';
+    const contentDigestHeaderName = 'Content-Digest';
+    const signatureInputHeaderName = 'Signature-Input';
+    const signatureHeaderName = 'Signature';
+    const coveredHeaderNames = [
+      'Content-Type',
+      contentDigestHeaderName,
+      stripeContextHeaderName,
+      stripeAccountHeaderName,
+      authorizationHeaderName,
+    ].map((h) => h.toLowerCase());
+
+    const coveredHeaderNamesGet = [
+      stripeContextHeaderName,
+      stripeAccountHeaderName,
+      authorizationHeaderName,
+    ].map((h) => h.toLowerCase());
+
+    const formatCoveredHeaders = (headers: Array<string>): string => {
+      return `(${headers.map((h) => `"${h}"`).join(' ')})`;
+    };
+    const coveredHeaderFormatted = formatCoveredHeaders(coveredHeaderNames);
+    const coveredHeaderGetFormatted = formatCoveredHeaders(
+      coveredHeaderNamesGet
+    );
+
+    const getSignatureInput = (method: string, created: number): string => {
+      const coveredHeaderNames =
+        method == 'GET' ? coveredHeaderGetFormatted : coveredHeaderFormatted;
+      return `${coveredHeaderNames};created=${created}`;
+    };
+
+    const encoder = new TextEncoder();
+
+    const initializedCrypto = crypto ?? Stripe.createNodeCryptoProvider();
+
+    const calculateDigestHeader = async (content: string): Promise<string> => {
+      const digest = await initializedCrypto.computeSHA256Async(
+        encoder.encode(content)
+      );
+      return `sha-256=:${Buffer.from(digest).toString('base64')}:`;
+    };
+
+    const calculateSignatureBase = (
+      request: StripeRequest,
+      created: number
+    ): string => {
+      const stringifyHeaderValues = (
+        value: string | number | string[] | null
+      ): string => {
+        if (value == null) {
+          return '';
+        }
+        return (value instanceof Array ? value : [value]).join(',');
+      };
+
+      const headerNames =
+        request.method == 'GET' ? coveredHeaderNamesGet : coveredHeaderNames;
+      const lowercaseHeaders: RequestHeaders = {};
+      const keys = Object.keys(request.headers);
+      keys.forEach((k) => {
+        lowercaseHeaders[k.toLowerCase()] = request.headers[k];
+      });
+
+      const inputs = headerNames
+        .map(
+          (header) =>
+            `"${header}": ${stringifyHeaderValues(lowercaseHeaders[header])}`
+        )
+        .join('\n');
+
+      const signatureInput = getSignatureInput(request.method, created);
+
+      return `${inputs}\n"@signature-params": ${signatureInput}`;
+    };
+
+    return async (request): Promise<void> => {
+      if (request.method != 'GET') {
+        request.headers[contentDigestHeaderName] = await calculateDigestHeader(
+          request.body ?? ''
+        );
+      }
+
+      const created = Math.floor(Date.now() / 1000);
+
+      request.headers[authorizationHeaderName] = 'STRIPE-V2-SIG ' + keyId;
+      request.headers[signatureInputHeaderName] =
+        'sig1=' + getSignatureInput(request.method, created);
+
+      const signatureBase = calculateSignatureBase(request, created);
+      const signature = await sign(encoder.encode(signatureBase));
+
+      request.headers[signatureHeaderName] =
+        'sig1=:' + Buffer.from(signature).toString('base64') + ':';
+    };
+  };
+
   Stripe.prototype = {
     // Properties are set in the constructor above
     _appInfo: undefined!,
@@ -211,10 +325,21 @@ export function createStripe(
     /**
      * @private
      */
-    _setApiKey(key: string): void {
-      if (key) {
-        this._setApiField('auth', `Bearer ${key}`);
+    _setAuthenticator(
+      key: string,
+      authenticator: RequestAuthenticator | undefined
+    ): void {
+      if (key && authenticator) {
+        throw new Error("Can't specify both apiKey and authenticator");
       }
+
+      if (!key && !authenticator) {
+        throw new Error('Neither apiKey nor config.authenticator provided');
+      }
+
+      this._authenticator = key
+        ? createApiKeyAuthenticator(key)
+        : authenticator;
     },
 
     /**
@@ -468,6 +593,43 @@ export function createStripe(
       }
 
       return config;
+    },
+
+    parseThinEvent(
+      payload,
+      header,
+      secret,
+      tolerance,
+      cryptoProvider,
+      receivedAt
+    ): WebhookEvent {
+      // parses and validates the event payload all in one go
+      return this.webhooks.constructEvent(
+        payload,
+        header,
+        secret,
+        tolerance,
+        cryptoProvider,
+        receivedAt
+      );
+    },
+
+    parseSnapshotEvent(
+      payload,
+      header,
+      secret,
+      tolerance,
+      cryptoProvider,
+      receivedAt
+    ): WebhookEvent {
+      return this.webhooks.constructEvent(
+        payload,
+        header,
+        secret,
+        tolerance,
+        cryptoProvider,
+        receivedAt
+      );
     },
   } as StripeObject;
 

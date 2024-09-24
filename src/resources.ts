@@ -118,6 +118,7 @@ export {TaxRates} from './resources/TaxRates.js';
 export {Tokens} from './resources/Tokens.js';
 export {Topups} from './resources/Topups.js';
 export {Transfers} from './resources/Transfers.js';
+export {V2} from './resources/V2.js';
 export {WebhookEndpoints} from './resources/WebhookEndpoints.js';
 export const Apps = resourceNamespace('apps', {Secrets: AppsSecrets});
 export const Billing = resourceNamespace('billing', {

@@ -23,6 +23,30 @@ describe('Error', () => {
       ).to.be.instanceOf(Error.StripeUnknownError);
     });
 
+    it('Generates specific instance of v2 errors depending on error-type', () => {
+      // Falls back to V1 parsing logic if code is absent
+      expect(Error.generateV2({type: 'card_error'})).to.be.instanceOf(
+        Error.StripeCardError
+      );
+      // Falls back to V1 parsing logic if code is unrecognized
+      expect(
+        Error.generateV2({type: 'card_error', code: 'no_such_error'})
+      ).to.be.instanceOf(Error.StripeCardError);
+      expect(
+        Error.generateV2({
+          type: 'insufficient_funds',
+          code: 'outbound_payment_insufficient_funds',
+        })
+      ).to.be.instanceOf(Error.InsufficientFundsError);
+      expect(Error.generateV2({type: 'blocked_by_stripe'})).to.be.instanceOf(
+        Error.BlockedByStripeError
+      );
+
+      expect(Error.generateV2({code: 'invalid_fields'})).to.be.instanceOf(
+        Error.StripeInvalidRequestError
+      );
+    });
+
     it('copies whitelisted properties', () => {
       const e = new Error.StripeError({
         charge: 'foo',

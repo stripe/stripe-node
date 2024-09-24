@@ -4,14 +4,16 @@
 'use strict';
 
 import {expect} from 'chai';
+import {StripeSignatureVerificationError} from '../src/Error.js';
 import {ApiVersion} from '../src/apiVersion.js';
 import {createStripe} from '../src/stripe.core.js';
+import {createApiKeyAuthenticator} from '../src/utils.js';
 import {
+  FAKE_API_KEY,
   getMockPlatformFunctions,
   getRandomString,
-  getTestServerStripe,
   getStripeMockClient,
-  FAKE_API_KEY,
+  getTestServerStripe,
 } from './testUtils.js';
 import Stripe = require('../src/stripe.cjs.node.js');
 import crypto = require('crypto');
@@ -65,7 +67,7 @@ describe('Stripe Module', function() {
       }).to.not.throw();
     });
 
-    it('should perform a no-op if null, undefined or empty values are passed', () => {
+    it('API should use the default version when undefined or empty values are passed', () => {
       const cases = [null, undefined, '', {}];
 
       cases.forEach((item) => {
@@ -108,7 +110,32 @@ describe('Stripe Module', function() {
 
   describe('setApiKey', () => {
     it('uses Bearer auth', () => {
-      expect(stripe.getApiField('auth')).to.equal(`Bearer ${FAKE_API_KEY}`);
+      expect(stripe._authenticator._apiKey).to.equal(`${FAKE_API_KEY}`);
+    });
+
+    it('should throw if no api key or authenticator provided', () => {
+      expect(() => new Stripe(null)).to.throw(
+        'Neither apiKey nor config.authenticator provided'
+      );
+    });
+  });
+
+  describe('authenticator', () => {
+    it('should throw an error when specifying both key and authenticator', () => {
+      expect(() => {
+        return new Stripe('key', {
+          authenticator: createApiKeyAuthenticator('...'),
+        });
+      }).to.throw("Can't specify both apiKey and authenticator");
+    });
+
+    it('can create client using authenticator', () => {
+      const authenticator = createApiKeyAuthenticator('...');
+      const stripe = new Stripe(null, {
+        authenticator: authenticator,
+      });
+
+      expect(stripe._authenticator).to.equal(authenticator);
     });
   });
 
@@ -529,6 +556,117 @@ describe('Stripe Module', function() {
         );
       });
     });
+    describe('gets removed', () => {
+      let headers;
+      let stripeClient;
+      let closeServer;
+      beforeEach((callback) => {
+        getTestServerStripe(
+          {},
+          (req, res) => {
+            headers = req.headers;
+            res.writeHeader(200);
+            res.write('{}');
+            res.end();
+          },
+          (err, client, close) => {
+            if (err) {
+              return callback(err);
+            }
+            stripeClient = client;
+            closeServer = close;
+            return callback();
+          }
+        );
+      });
+      afterEach(() => closeServer());
+
+      it('if explicitly undefined', (callback) => {
+        stripeClient.customers.create({stripeAccount: undefined}, (err) => {
+          closeServer();
+          if (err) {
+            return callback(err);
+          }
+          expect(Object.keys(headers)).not.to.include('stripe-account');
+          return callback();
+        });
+      });
+
+      it('if explicitly null', (callback) => {
+        stripeClient.customers.create({stripeAccount: null}, (err) => {
+          closeServer();
+          if (err) {
+            return callback(err);
+          }
+          expect(Object.keys(headers)).not.to.include('stripe-account');
+          return callback();
+        });
+      });
+    });
+  });
+
+  describe('context', () => {
+    describe('when passed in via the config object', () => {
+      let headers;
+      let stripeClient;
+      let closeServer;
+      beforeEach((callback) => {
+        getTestServerStripe(
+          {
+            stripeContext: 'ctx_123',
+          },
+          (req, res) => {
+            headers = req.headers;
+            res.writeHeader(200);
+            res.write('{}');
+            res.end();
+          },
+          (err, client, close) => {
+            if (err) {
+              return callback(err);
+            }
+            stripeClient = client;
+            closeServer = close;
+            return callback();
+          }
+        );
+      });
+      afterEach(() => closeServer());
+      it('is not sent on v1 call', (callback) => {
+        stripeClient.customers.create((err) => {
+          closeServer();
+          if (err) {
+            return callback(err);
+          }
+          expect(headers['stripe-context']).to.equal(undefined);
+          return callback();
+        });
+      });
+      it('is respected', (callback) => {
+        stripeClient.v2.accounts.create((err) => {
+          closeServer();
+          if (err) {
+            return callback(err);
+          }
+          expect(headers['stripe-context']).to.equal('ctx_123');
+          return callback();
+        });
+      });
+      it('can still be overridden per-request', (callback) => {
+        stripeClient.v2.accounts.create(
+          {name: 'llama'},
+          {stripeContext: 'ctx_456'},
+          (err) => {
+            closeServer();
+            if (err) {
+              return callback(err);
+            }
+            expect(headers['stripe-context']).to.equal('ctx_456');
+            return callback();
+          }
+        );
+      });
+    });
   });
 
   describe('setMaxNetworkRetries', () => {
@@ -545,12 +683,12 @@ describe('Stripe Module', function() {
     });
 
     describe('when passed in via the config object', () => {
-      it('should default to 1 if a non-integer is passed', () => {
+      it('should default to 2 if a non-integer is passed', () => {
         const newStripe = Stripe(FAKE_API_KEY, {
           maxNetworkRetries: 'foo',
         });
 
-        expect(newStripe.getMaxNetworkRetries()).to.equal(1);
+        expect(newStripe.getMaxNetworkRetries()).to.equal(2);
 
         expect(() => {
           Stripe(FAKE_API_KEY, {
@@ -572,7 +710,7 @@ describe('Stripe Module', function() {
       it('should use the default', () => {
         const newStripe = Stripe(FAKE_API_KEY);
 
-        expect(newStripe.getMaxNetworkRetries()).to.equal(1);
+        expect(newStripe.getMaxNetworkRetries()).to.equal(2);
       });
     });
   });
@@ -582,6 +720,149 @@ describe('Stripe Module', function() {
       const newStripe = Stripe(FAKE_API_KEY);
 
       expect(newStripe.VERSION).to.equal(Stripe.PACKAGE_VERSION);
+    });
+  });
+
+  describe('createRequestSigningAuthenticator', () => {
+    let oldDate;
+    beforeEach(() => {
+      oldDate = Date.now;
+      Date.now = (): number => 123456789000;
+    });
+
+    afterEach(() => {
+      Date.now = oldDate;
+    });
+
+    it('authenticator applies signature for POST requests', async () => {
+      const signatureBases = [];
+      const authenticator = Stripe.createRequestSigningAuthenticator(
+        'keyid',
+        (signatureBase) => {
+          signatureBases.push(signatureBase);
+          return Promise.resolve(new Uint8Array([1, 2, 3, 4, 5]));
+        }
+      );
+
+      const request = {
+        method: 'POST',
+        body: '{"string":"String!"}',
+        headers: {'Content-Type': 'application/json'},
+      };
+
+      await authenticator(request);
+
+      expect(new TextDecoder().decode(signatureBases[0])).to.equal(
+        '"content-type": application/json\n' +
+          '"content-digest": sha-256=:HA3i38j+04ac71IzPtG1JK8o4q9sPK0fYPmJHmci5bg=:\n' +
+          '"stripe-context": \n' +
+          '"stripe-account": \n' +
+          '"authorization": STRIPE-V2-SIG keyid\n' +
+          '"@signature-params": ("content-type" "content-digest" "stripe-context" "stripe-account" "authorization");created=123456789'
+      );
+      expect(request.headers['Signature-Input']).to.equal(
+        'sig1=("content-type" "content-digest" "stripe-context" "stripe-account" "authorization");' +
+          'created=123456789'
+      );
+      expect(request.headers.Signature).to.equal('sig1=:AQIDBAU=:');
+      expect(request.headers['Content-Digest']).to.equal(
+        'sha-256=:HA3i38j+04ac71IzPtG1JK8o4q9sPK0fYPmJHmci5bg=:'
+      );
+      expect(request.headers.Authorization).to.equal('STRIPE-V2-SIG keyid');
+      expect(request.headers['Content-Type']).to.equal('application/json');
+    });
+
+    it(`authenticator applies signature for DELETE requests`, async () => {
+      const signatureBases = [];
+      const authenticator = Stripe.createRequestSigningAuthenticator(
+        'keyid',
+        (signatureBase) => {
+          signatureBases.push(signatureBase);
+          return Promise.resolve(new Uint8Array([1, 2, 3, 4, 5]));
+        }
+      );
+
+      const request = {
+        method: 'DELETE',
+        body: null,
+        headers: {'Content-Type': 'application/json'},
+      };
+
+      await authenticator(request);
+
+      expect(new TextDecoder().decode(signatureBases[0])).to.equal(
+        '"content-type": application/json\n' +
+          '"content-digest": sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=:\n' +
+          '"stripe-context": \n' +
+          '"stripe-account": \n' +
+          '"authorization": STRIPE-V2-SIG keyid\n' +
+          '"@signature-params": ("content-type" "content-digest" "stripe-context" "stripe-account" "authorization");created=123456789'
+      );
+      expect(request.headers['Signature-Input']).to.equal(
+        'sig1=("content-type" "content-digest" "stripe-context" "stripe-account" "authorization");' +
+          'created=123456789'
+      );
+      expect(request.headers.Signature).to.equal('sig1=:AQIDBAU=:');
+      expect(request.headers['Content-Digest']).to.equal(
+        'sha-256=:47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=:'
+      );
+      expect(request.headers.Authorization).to.equal('STRIPE-V2-SIG keyid');
+      expect(request.headers['Content-Type']).to.equal('application/json');
+    });
+
+    it('authenticator applies signature for GET requests', async () => {
+      const signatureBases = [];
+      const authenticator = Stripe.createRequestSigningAuthenticator(
+        'keyid',
+        (signatureBase) => {
+          signatureBases.push(signatureBase);
+          return Promise.resolve(new Uint8Array([1, 2, 3, 4, 5]));
+        }
+      );
+
+      const request = {
+        method: 'GET',
+        headers: {},
+      };
+
+      await authenticator(request);
+
+      expect(new TextDecoder().decode(signatureBases[0])).to.equal(
+        '"stripe-context": \n' +
+          '"stripe-account": \n' +
+          '"authorization": STRIPE-V2-SIG keyid\n' +
+          '"@signature-params": ("stripe-context" "stripe-account" "authorization");created=123456789'
+      );
+      expect(request.headers['Signature-Input']).to.equal(
+        'sig1=("stripe-context" "stripe-account" "authorization");' +
+          'created=123456789'
+      );
+      expect(request.headers.Signature).to.equal('sig1=:AQIDBAU=:');
+      expect(request.headers['Content-Digest']).to.equal(undefined);
+      expect(request.headers.Authorization).to.equal('STRIPE-V2-SIG keyid');
+    });
+  });
+
+  describe('parseThinEvent', () => {
+    const secret = 'whsec_test_secret';
+
+    it('can parse event from JSON payload', () => {
+      const payload = JSON.stringify({event_type: 'account.created'});
+      const header = stripe.webhooks.generateTestHeaderString({
+        payload,
+        secret,
+      });
+      const event = stripe.parseThinEvent(payload, header, secret);
+
+      expect(event.event_type).to.equal('account.created');
+    });
+
+    it('throws an error for invalid signatures', () => {
+      const payload = JSON.stringify({event_type: 'account.created'});
+
+      expect(() => {
+        stripe.parseThinEvent(payload, 'bad sigheader', secret);
+      }).to.throw(StripeSignatureVerificationError);
     });
   });
 });

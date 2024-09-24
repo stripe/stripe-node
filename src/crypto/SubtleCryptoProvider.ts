@@ -63,6 +63,11 @@ export class SubtleCryptoProvider extends CryptoProvider {
 
     return signatureHexCodes.join('');
   }
+
+  /** @override */
+  async computeSHA256Async(data: Uint8Array): Promise<Uint8Array> {
+    return new Uint8Array(await this.subtleCrypto.digest('SHA-256', data));
+  }
 }
 
 // Cached mapping of byte to hex representation. We do this once to avoid re-

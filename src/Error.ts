@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+/* eslint-disable no-warning-comments */
 
 import {RawErrorType, StripeRawError} from './Types.js';
 
@@ -23,12 +24,32 @@ export const generate = (rawStripeError: StripeRawError): StripeError => {
   }
 };
 
+// eslint-disable-next-line complexity
+export const generateV2 = (rawStripeError: StripeRawError): StripeError => {
+  switch (rawStripeError.type) {
+    // switchCases: The beginning of the section generated from our OpenAPI spec
+    case 'temporary_session_expired':
+      return new TemporarySessionExpiredError(rawStripeError);
+    // switchCases: The end of the section generated from our OpenAPI spec
+  }
+
+  // Special handling for requests with missing required fields in V2 APIs.
+  // invalid_field response in V2 APIs returns the field 'code' instead of 'type'.
+  switch (rawStripeError.code) {
+    case 'invalid_fields':
+      return new StripeInvalidRequestError(rawStripeError);
+  }
+
+  return generate(rawStripeError);
+};
+
 /**
  * StripeError is the base error from which all other more specific Stripe errors derive.
  * Specifically for errors returned from Stripe's REST API.
  */
 export class StripeError extends Error {
   readonly message: string;
+  readonly userMessage?: string;
   readonly type: string;
   readonly raw: unknown;
   readonly rawType?: RawErrorType;
@@ -64,7 +85,7 @@ export class StripeError extends Error {
     this.statusCode = raw.statusCode;
     // @ts-ignore
     this.message = raw.message;
-
+    this.userMessage = raw.user_message;
     this.charge = raw.charge;
     this.decline_code = raw.decline_code;
     this.payment_intent = raw.payment_intent;
@@ -205,3 +226,11 @@ export class StripeUnknownError extends StripeError {
     super(raw, 'StripeUnknownError');
   }
 }
+
+// classDefinitions: The beginning of the section generated from our OpenAPI spec
+export class TemporarySessionExpiredError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'TemporarySessionExpiredError');
+  }
+}
+// classDefinitions: The end of the section generated from our OpenAPI spec
