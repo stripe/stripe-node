@@ -39,12 +39,12 @@ declare module 'stripe' {
       namespace Billing {
         class MeterEventsResource {
           /**
-           * Creates a meter event. Validates the event synchronously.
+           * Creates a meter event. Events are validated synchronously, but are processed asynchronously. Supports up to 1,000 events per second in livemode. For higher rate-limits, please use meter event streams instead.
            */
           create(
             params: MeterEventCreateParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.Billing.MeterEventV2>>;
+          ): Promise<Stripe.Response<Stripe.V2.Billing.MeterEvent>>;
         }
       }
     }

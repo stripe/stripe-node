@@ -48,7 +48,7 @@ declare module 'stripe' {
       namespace Billing {
         class MeterEventStreamResource {
           /**
-           * Sends a meter event for asynchronous processing. Supports higher rate limits. Requires a meter event session for authentication.
+           * Creates meter events. Events are processed asynchronously, including validation. Requires a meter event session for authentication. Supports up to 10,000 requests per second in livemode. For even higher rate-limits, contact sales.
            * @throws Stripe.TemporarySessionExpiredError
            */
           create(

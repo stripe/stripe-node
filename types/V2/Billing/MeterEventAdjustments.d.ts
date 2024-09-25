@@ -5,9 +5,9 @@ declare module 'stripe' {
     namespace V2 {
       namespace Billing {
         /**
-         * The MeterEventAdjustmentV2 object.
+         * The MeterEventAdjustment object.
          */
-        interface MeterEventAdjustmentV2 {
+        interface MeterEventAdjustment {
           /**
            * The unique id of this meter event adjustment.
            */
@@ -16,12 +16,12 @@ declare module 'stripe' {
           /**
            * String representing the object's type. Objects of the same type share the same value of the object field.
            */
-          object: 'v2.billing.meter_event_adjustment';
+          object: 'billing.meter_event_adjustment';
 
           /**
            * Specifies which event to cancel.
            */
-          cancel: MeterEventAdjustmentV2.Cancel;
+          cancel: MeterEventAdjustment.Cancel;
 
           /**
            * The time the adjustment was created.
@@ -39,17 +39,17 @@ declare module 'stripe' {
           livemode: boolean;
 
           /**
-           * The meter event adjustment's status.
+           * Open Enum. The meter event adjustment's status.
            */
-          status: MeterEventAdjustmentV2.Status;
+          status: MeterEventAdjustment.Status;
 
           /**
-           * Specifies whether to cancel a single event or a range of events for a time period. Time period cancellation is not supported yet.
+           * Open Enum. Specifies whether to cancel a single event or a range of events for a time period. Time period cancellation is not supported yet.
            */
           type: 'cancel';
         }
 
-        namespace MeterEventAdjustmentV2 {
+        namespace MeterEventAdjustment {
           interface Cancel {
             /**
              * Unique identifier for the event. You can only cancel events within 24 hours of Stripe receiving them.

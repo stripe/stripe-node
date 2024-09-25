@@ -7,11 +7,11 @@ declare module 'stripe' {
         /**
          * Fix me empty_doc_string.
          */
-        interface MeterEventV2 {
+        interface MeterEvent {
           /**
            * String representing the object's type. Objects of the same type share the same value of the object field.
            */
-          object: 'v2.billing.meter_event';
+          object: 'billing.meter_event';
 
           /**
            * The creation time of this meter event.

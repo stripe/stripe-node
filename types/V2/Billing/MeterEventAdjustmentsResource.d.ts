@@ -39,7 +39,7 @@ declare module 'stripe' {
           create(
             params: MeterEventAdjustmentCreateParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.Billing.MeterEventAdjustmentV2>>;
+          ): Promise<Stripe.Response<Stripe.V2.Billing.MeterEventAdjustment>>;
         }
       }
     }
