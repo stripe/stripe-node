@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 
+import {HttpClientResponseError} from './RequestSender.js';
 import {RawErrorType, StripeRawError} from './Types.js';
 
 export const generate = (rawStripeError: StripeRawError): StripeError => {
@@ -38,7 +39,7 @@ export class StripeError extends Error {
   readonly code?: string;
   readonly doc_url?: string;
   readonly param?: string;
-  readonly detail?: string | Error;
+  readonly detail?: string | Error | HttpClientResponseError;
   readonly statusCode?: number;
   readonly charge?: string;
   readonly decline_code?: string;
@@ -62,8 +63,7 @@ export class StripeError extends Error {
     this.headers = raw.headers;
     this.requestId = raw.requestId;
     this.statusCode = raw.statusCode;
-    // @ts-ignore
-    this.message = raw.message;
+    this.message = raw.message ?? '';
 
     this.charge = raw.charge;
     this.decline_code = raw.decline_code;

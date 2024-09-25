@@ -11,6 +11,8 @@ describe('utils', () => {
 
       expect(template({foo: '', baz: ''})).to.equal('/some/url//?ok=1');
 
+      expect(template({foo: 0, baz: 't'})).to.equal('/some/url/0/t?ok=1');
+
       expect(
         // Test encoding:
         template({foo: 'FOO', baz: '__::baz::__'})

@@ -242,8 +242,7 @@ export function createStripe(
 
           return accum;
         },
-        // @ts-ignore
-        undefined
+        {}
       );
     },
 

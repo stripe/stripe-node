@@ -9,6 +9,8 @@ import {
 import {
   emitWarning,
   normalizeHeaders,
+  parseHttpHeaderAsNumber,
+  parseHttpHeaderAsString,
   removeNullish,
   stringifyRequestData,
 } from './utils.js';
@@ -480,11 +482,10 @@ export class RequestSender {
 
       const requestStartTime = Date.now();
 
-      // @ts-ignore
       const requestEvent: RequestEvent = removeNullish({
         api_version: apiVersion,
-        account: headers['Stripe-Account'],
-        idempotency_key: headers['Idempotency-Key'],
+        account: parseHttpHeaderAsString(headers['Stripe-Account']),
+        idempotency_key: parseHttpHeaderAsString(headers['Idempotency-Key']),
         method,
         path,
         request_start_time: requestStartTime,
@@ -503,8 +504,7 @@ export class RequestSender {
               apiVersion,
               headers,
               requestRetries,
-              // @ts-ignore
-              res.getHeaders()['retry-after']
+              parseHttpHeaderAsNumber(res.getHeaders()['retry-after'])
             );
           } else if (options.streaming && res.getStatusCode() < 400) {
             return this._streamingResponseHandler(
@@ -542,7 +542,6 @@ export class RequestSender {
                   : RequestSender._generateConnectionErrorMessage(
                       requestRetries
                     ),
-                // @ts-ignore
                 detail: error,
               })
             );

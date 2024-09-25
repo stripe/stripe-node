@@ -47,7 +47,7 @@ type WebhookSignatureObject = {
 };
 export type WebhookObject = {
   DEFAULT_TOLERANCE: number;
-  signature: WebhookSignatureObject;
+  signature: WebhookSignatureObject | null;
   constructEvent: (
     payload: WebhookPayload,
     header: WebhookHeader,
@@ -75,7 +75,6 @@ export function createWebhooks(
 ): WebhookObject {
   const Webhook: WebhookObject = {
     DEFAULT_TOLERANCE: 300, // 5 minutes
-    // @ts-ignore
     signature: null,
     constructEvent(
       payload: WebhookPayload,
@@ -86,7 +85,7 @@ export function createWebhooks(
       receivedAt: number
     ): WebhookEvent {
       try {
-        this.signature.verifyHeader(
+        this.signature?.verifyHeader(
           payload,
           header,
           secret,
@@ -117,7 +116,7 @@ export function createWebhooks(
       cryptoProvider: CryptoProvider,
       receivedAt: number
     ): Promise<WebhookEvent> {
-      await this.signature.verifyHeaderAsync(
+      await this.signature?.verifyHeaderAsync(
         payload,
         header,
         secret,
@@ -394,7 +393,6 @@ export function createWebhooks(
       ) - details.timestamp;
 
     if (tolerance > 0 && timestampAge > tolerance) {
-      // @ts-ignore
       throw new StripeSignatureVerificationError(header, payload, {
         message: 'Timestamp outside the tolerance zone',
       });

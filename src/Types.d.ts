@@ -5,6 +5,7 @@ import {
   HttpClientResponseInterface,
 } from './net/HttpClient.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
+import {HttpClientResponseError} from './RequestSender.js';
 
 export type AppInfo = {name?: string} & Record<string, unknown>;
 export type BufferedFile = {
@@ -50,7 +51,7 @@ export type RequestEvent = {
   method?: string;
   path?: string;
   request_start_time: number;
-  usage: Array<string>;
+  usage?: Array<string>;
 };
 export type RequestHeaders = Record<string, string | number | string[]>;
 export type RequestOptions = {
@@ -173,7 +174,7 @@ export type StripeRawError = {
   doc_url?: string;
   decline_code?: string;
   param?: string;
-  detail?: string | Error;
+  detail?: string | Error | HttpClientResponseError;
   charge?: string;
   payment_method_type?: string;
   payment_intent?: any;
