@@ -4,8 +4,7 @@ declare module 'stripe' {
   namespace Stripe.V2 {
     export type Event =
       | Stripe.Events.V1BillingMeterErrorReportTriggeredEvent
-      | Stripe.Events.V1BillingMeterNoMeterFoundEvent
-      | Stripe.Events.V2CoreEventDestinationPingEvent;
+      | Stripe.Events.V1BillingMeterNoMeterFoundEvent;
   }
 
   namespace Stripe.Events {
@@ -210,15 +209,6 @@ declare module 'stripe' {
           }
         }
       }
-    }
-
-    /**
-     * A ping event used to test the connection to an event destination.
-     */
-    export interface V2CoreEventDestinationPingEvent extends V2.EventBase {
-      type: 'v2.core.event_destination.ping';
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.EventDestination>;
     }
   }
 }

@@ -43,7 +43,7 @@ declare module 'stripe' {
         /**
          * String representing the object's type. Objects of the same type share the same value of the object field.
          */
-        object: 'event';
+        object: 'v2.core.event';
 
         /**
          * Authentication context needed to fetch the event or related object.
