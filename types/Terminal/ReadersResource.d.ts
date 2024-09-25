@@ -124,6 +124,11 @@ declare module 'stripe' {
       namespace ReaderProcessPaymentIntentParams {
         interface ProcessConfig {
           /**
+           * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow.
+           */
+          allow_redisplay?: ProcessConfig.AllowRedisplay;
+
+          /**
            * Enables cancel button on transaction screens.
            */
           enable_customer_cancellation?: boolean;
@@ -140,6 +145,8 @@ declare module 'stripe' {
         }
 
         namespace ProcessConfig {
+          type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
           interface Tipping {
             /**
              * Amount used to calculate tip suggestions on tipping selection screen for this transaction. Must be a positive integer in the smallest currency unit (e.g., 100 cents to represent $1.00 or 100 to represent ¥100, a zero-decimal currency).
@@ -151,14 +158,14 @@ declare module 'stripe' {
 
       interface ReaderProcessSetupIntentParams {
         /**
+         * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow.
+         */
+        allow_redisplay: ReaderProcessSetupIntentParams.AllowRedisplay;
+
+        /**
          * SetupIntent ID
          */
         setup_intent: string;
-
-        /**
-         * Customer Consent Collected
-         */
-        customer_consent_collected?: boolean;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -172,6 +179,8 @@ declare module 'stripe' {
       }
 
       namespace ReaderProcessSetupIntentParams {
+        type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
         interface ProcessConfig {
           /**
            * Enables cancel button on transaction screens.

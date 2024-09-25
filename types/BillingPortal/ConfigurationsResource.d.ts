@@ -178,7 +178,7 @@ declare module 'stripe' {
             /**
              * The types of subscription updates that are supported. When empty, subscriptions are not updateable.
              */
-            default_allowed_updates: Stripe.Emptyable<
+            default_allowed_updates?: Stripe.Emptyable<
               Array<SubscriptionUpdate.DefaultAllowedUpdate>
             >;
 
@@ -190,7 +190,7 @@ declare module 'stripe' {
             /**
              * The list of up to 10 products that support subscription updates.
              */
-            products: Stripe.Emptyable<Array<SubscriptionUpdate.Product>>;
+            products?: Stripe.Emptyable<Array<SubscriptionUpdate.Product>>;
 
             /**
              * Determines how to handle prorations resulting from subscription updates. Valid values are `none`, `create_prorations`, and `always_invoice`.

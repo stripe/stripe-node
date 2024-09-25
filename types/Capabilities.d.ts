@@ -38,7 +38,7 @@ declare module 'stripe' {
       requirements?: Capability.Requirements;
 
       /**
-       * The status of the capability. Can be `active`, `inactive`, `pending`, or `unrequested`.
+       * The status of the capability.
        */
       status: Capability.Status;
     }

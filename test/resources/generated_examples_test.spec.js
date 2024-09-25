@@ -2993,7 +2993,7 @@ describe('Generated tests', function() {
       'tmr_xxxxxxxxxxxxx',
       {
         setup_intent: 'seti_xxxxxxxxxxxxx',
-        customer_consent_collected: true,
+        allow_redisplay: 'always',
       }
     );
     expect(reader).not.to.be.null;

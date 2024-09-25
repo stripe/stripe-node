@@ -18,6 +18,9 @@
 ///<reference path='./BalanceResource.d.ts' />
 ///<reference path='./BalanceTransactionsResource.d.ts' />
 ///<reference path='./Billing/AlertsResource.d.ts' />
+///<reference path='./Billing/CreditBalanceSummaryResource.d.ts' />
+///<reference path='./Billing/CreditBalanceTransactionsResource.d.ts' />
+///<reference path='./Billing/CreditGrantsResource.d.ts' />
 ///<reference path='./Billing/MeterEventAdjustmentsResource.d.ts' />
 ///<reference path='./Billing/MeterEventsResource.d.ts' />
 ///<reference path='./Billing/MetersResource.d.ts' />
@@ -138,6 +141,9 @@
 ///<reference path='./BankAccounts.d.ts' />
 ///<reference path='./Billing/AlertTriggereds.d.ts' />
 ///<reference path='./Billing/Alerts.d.ts' />
+///<reference path='./Billing/CreditBalanceSummary.d.ts' />
+///<reference path='./Billing/CreditBalanceTransactions.d.ts' />
+///<reference path='./Billing/CreditGrants.d.ts' />
 ///<reference path='./Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./Billing/MeterEventSummaries.d.ts' />
 ///<reference path='./Billing/MeterEvents.d.ts' />
@@ -199,6 +205,7 @@
 ///<reference path='./LineItems.d.ts' />
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
+///<reference path='./Margins.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
 ///<reference path='./PaymentMethodConfigurations.d.ts' />
@@ -339,6 +346,9 @@ declare module 'stripe' {
     };
     billing: {
       alerts: Stripe.Billing.AlertsResource;
+      creditBalanceSummary: Stripe.Billing.CreditBalanceSummaryResource;
+      creditBalanceTransactions: Stripe.Billing.CreditBalanceTransactionsResource;
+      creditGrants: Stripe.Billing.CreditGrantsResource;
       meters: Stripe.Billing.MetersResource;
       meterEvents: Stripe.Billing.MeterEventsResource;
       meterEventAdjustments: Stripe.Billing.MeterEventAdjustmentsResource;

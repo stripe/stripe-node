@@ -20,35 +20,18 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * Filters to limit the scope of an alert.
-         */
-        filter?: AlertCreateParams.Filter;
-
-        /**
          * The configuration of the usage threshold.
          */
-        usage_threshold_config?: AlertCreateParams.UsageThresholdConfig;
+        usage_threshold?: AlertCreateParams.UsageThreshold;
       }
 
       namespace AlertCreateParams {
-        interface Filter {
+        interface UsageThreshold {
           /**
-           * Limit the scope to this alert only to this customer.
+           * The filters allows limiting the scope of this usage alert. You can only specify up to one filter at this time.
            */
-          customer?: string;
+          filters?: Array<UsageThreshold.Filter>;
 
-          /**
-           * Limit the scope of this rated usage alert to this subscription.
-           */
-          subscription?: string;
-
-          /**
-           * Limit the scope of this rated usage alert to this subscription item.
-           */
-          subscription_item?: string;
-        }
-
-        interface UsageThresholdConfig {
           /**
            * Defines at which value the alert will fire.
            */
@@ -63,6 +46,20 @@ declare module 'stripe' {
            * Whether the alert should only fire only once, or once per billing cycle.
            */
           recurrence: 'one_time';
+        }
+
+        namespace UsageThreshold {
+          interface Filter {
+            /**
+             * Limit the scope to this usage alert only to this customer.
+             */
+            customer?: string;
+
+            /**
+             * What type of filter is being applied to this usage alert.
+             */
+            type: 'customer';
+          }
         }
       }
 
