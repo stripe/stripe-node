@@ -1,13 +1,7 @@
 import * as _Error from './Error.js';
 import {RequestSender} from './RequestSender.js';
 import {StripeResource} from './StripeResource.js';
-import {
-  AppInfo,
-  StripeObject,
-  RequestData,
-  RequestOptions,
-  UserProvidedConfig,
-} from './Types.js';
+import {AppInfo, StripeObject, UserProvidedConfig} from './Types.js';
 import {WebhookObject, createWebhooks} from './Webhooks.js';
 import * as apiVersion from './apiVersion.js';
 import {CryptoProvider} from './crypto/CryptoProvider.js';
@@ -213,15 +207,6 @@ export function createStripe(
     _enableTelemetry: null!,
     _requestSender: null!,
     _platformFunctions: null!,
-
-    rawRequest(
-      method: string,
-      path: string,
-      params?: RequestData,
-      options?: RequestOptions
-    ): Promise<any> {
-      return this._requestSender._rawRequest(method, path, params, options);
-    },
 
     /**
      * @private
