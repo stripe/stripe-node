@@ -4,7 +4,7 @@ const stripe = require('../testUtils.js').getSpyableStripe();
 
 const expect = require('chai').expect;
 const URL = require('url');
-const qs = require('qs');
+const qs = require('node:querystring');
 
 describe('OAuth', () => {
   describe('authorize', () => {
