@@ -149,20 +149,8 @@ export type StripeObject = {
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
   _clientId?: string;
   _platformFunctions: PlatformFunctions;
-  rawRequest: (
-    method: string,
-    path: string,
-    data: RequestData,
-    options: RequestOptions
-  ) => Promise<any>;
 };
 export type RequestSender = {
-  _rawRequest(
-    method: string,
-    path: string,
-    params?: RequestData,
-    options?: RequestOptions
-  ): Promise<any>;
   _request(
     method: string,
     host: string | null,
@@ -223,7 +211,7 @@ export type StripeResourceObject = {
 };
 export type RequestDataProcessor = (
   method: string,
-  data: RequestData | null,
+  data: RequestData,
   headers: RequestHeaders | undefined,
   prepareAndMakeRequest: (error: Error | null, data: string) => void
 ) => void;

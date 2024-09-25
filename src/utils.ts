@@ -16,7 +16,6 @@ const OPTIONS_KEYS = [
   'maxNetworkRetries',
   'timeout',
   'host',
-  'additionalHeaders',
 ];
 
 type Settings = {
@@ -29,7 +28,7 @@ type Options = {
   host: string | null;
   settings: Settings;
   streaming?: boolean;
-  headers: RequestHeaders;
+  headers: Record<string, unknown>;
 };
 
 export function isOptionsHash(o: unknown): boolean | unknown {
@@ -159,13 +158,13 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
         opts.auth = params.apiKey as string;
       }
       if (params.idempotencyKey) {
-        opts.headers['Idempotency-Key'] = params.idempotencyKey as string;
+        opts.headers['Idempotency-Key'] = params.idempotencyKey;
       }
       if (params.stripeAccount) {
-        opts.headers['Stripe-Account'] = params.stripeAccount as string;
+        opts.headers['Stripe-Account'] = params.stripeAccount;
       }
       if (params.apiVersion) {
-        opts.headers['Stripe-Version'] = params.apiVersion as string;
+        opts.headers['Stripe-Version'] = params.apiVersion;
       }
       if (Number.isInteger(params.maxNetworkRetries)) {
         opts.settings.maxNetworkRetries = params.maxNetworkRetries as number;
@@ -175,11 +174,6 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
       }
       if (params.host) {
         opts.host = params.host as string;
-      }
-      if (params.additionalHeaders) {
-        opts.headers = params.additionalHeaders as {
-          [headerName: string]: string;
-        };
       }
     }
   }
