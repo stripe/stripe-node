@@ -517,6 +517,40 @@ const stripe = new Stripe('sk_test_...', {
 });
 ```
 
+### Custom requests
+
+If you would like to send a request to an undocumented API (for example you are in a private beta), or if you prefer to bypass the method definitions in the library and specify your request details directly, you can use the `rawRequest` method on the StripeClient object.
+
+```javascript
+const client = new Stripe('sk_test_...');
+
+client.rawRequest(
+    'POST',
+    '/v1/beta_endpoint',
+    { param: 123 },
+    { apiVersion: '2022-11-15; feature_beta=v3' }
+  )
+  .then((response) => /* handle response */ )
+  .catch((error) => console.error(error));
+```
+
+Or using ES modules and `async`/`await`:
+
+```javascript
+import Stripe from 'stripe';
+const stripe = new Stripe('sk_test_...');
+
+const response = await stripe.rawRequest(
+  'POST',
+  '/v1/beta_endpoint',
+  { param: 123 },
+  { apiVersion: '2022-11-15; feature_beta=v3' }
+);
+
+// handle response
+```
+
+
 ## Support
 
 New features and bug fixes are released on the latest major version of the `stripe` package. If you are on an older major version, we recommend that you upgrade to the latest in order to use the new features and bug fixes including those for security vulnerabilities. Older major versions of the package will continue to be available for use, but will not be receiving any updates.
