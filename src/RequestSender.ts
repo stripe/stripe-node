@@ -22,7 +22,6 @@ import {
   StripeObject,
   StripeRequest,
 } from './Types.js';
-import {PreviewVersion} from './apiVersion.js';
 import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
 import {
   emitWarning,
@@ -620,10 +619,7 @@ export class RequestSender {
       requestData = data;
 
       this._stripe.getClientUserAgent((clientUserAgent: string) => {
-        const apiVersion =
-          apiMode == 'v2'
-            ? PreviewVersion
-            : this._stripe.getApiField('version');
+        const apiVersion = this._stripe.getApiField('version');
         const headers = this._makeHeaders({
           contentType:
             apiMode == 'v2'

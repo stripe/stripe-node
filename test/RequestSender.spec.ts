@@ -3,7 +3,6 @@ import {expect} from 'chai';
 import nock = require('nock');
 
 import {
-  InsufficientFundsError,
   StripeAuthenticationError,
   StripeConnectionError,
   StripeError,
@@ -14,7 +13,7 @@ import {
   TemporarySessionExpiredError,
 } from '../src/Error.js';
 import {RequestSender} from '../src/RequestSender.js';
-import {ApiVersion, PreviewVersion} from '../src/apiVersion.js';
+import {ApiVersion} from '../src/apiVersion.js';
 import {HttpClientResponse} from '../src/net/HttpClient.js';
 import {
   FAKE_API_KEY,
