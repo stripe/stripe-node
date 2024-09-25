@@ -459,6 +459,25 @@ declare module 'stripe' {
       event: 'response',
       handler: (event: Stripe.ResponseEvent) => void
     ): void;
+
+    /**
+     * Allows for sending "raw" requests to the Stripe API, which can be used for
+     * testing new API endpoints or performing requests that the library does
+     * not support yet.
+     *
+     * This is an experimental interface and is not yet stable.
+     *
+     * @param method - HTTP request method, 'GET', 'POST', or 'DELETE'
+     * @param path - The path of the request, e.g. '/v1/beta_endpoint'
+     * @param params - The parameters to include in the request body.
+     * @param options - Additional request options.
+     */
+    rawRequest(
+      method: string,
+      path: string,
+      params?: {[key: string]: unknown},
+      options?: Stripe.RawRequestOptions
+    ): Promise<Stripe.Response<unknown>>;
   }
 
   export default Stripe;
