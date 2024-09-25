@@ -29,11 +29,11 @@ declare module 'stripe' {
             id: string,
             params?: EventRetrieveParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.Event>>;
+          ): Promise<Stripe.Response<Event>>;
           retrieve(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.Event>>;
+          ): Promise<Stripe.Response<Event>>;
 
           /**
            * List events, going back up to 30 days.
@@ -41,7 +41,7 @@ declare module 'stripe' {
           list(
             params: EventListParams,
             options?: RequestOptions
-          ): V2.ApiListPromise<Stripe.V2.Event>;
+          ): ApiListPromise<Event>;
         }
       }
     }
