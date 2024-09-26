@@ -27,7 +27,7 @@ app.post(
       }
       res.sendStatus(200);
     } catch (err) {
-      console.log(`Webhook Error: ${err.message}`);
+      console.log(`Webhook Error: ${err.stack}`);
       res.status(400).send(`Webhook Error: ${err.message}`);
     }
   }
