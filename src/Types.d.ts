@@ -185,8 +185,20 @@ export type StripeObject = {
     key: string,
     authenticator: RequestAuthenticator | undefined
   ) => void;
+  rawRequest: (
+    method: string,
+    path: string,
+    data: RequestData,
+    options: RequestOptions
+  ) => Promise<any>;
 };
 export type RequestSender = {
+  _rawRequest(
+    method: string,
+    path: string,
+    params?: RequestData,
+    options?: RequestOptions
+  ): Promise<any>;
   _request(
     method: string,
     host: string | null,

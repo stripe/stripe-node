@@ -8,6 +8,8 @@ import {
   StripeObject,
   StripeRequest,
   UserProvidedConfig,
+  RequestData,
+  RequestOptions,
 } from './Types.js';
 import {WebhookObject, WebhookEvent, createWebhooks} from './Webhooks.js';
 import {ApiVersion} from './apiVersion.js';
@@ -321,6 +323,15 @@ export function createStripe(
     _enableTelemetry: null!,
     _requestSender: null!,
     _platformFunctions: null!,
+
+    rawRequest(
+      method: string,
+      path: string,
+      params?: RequestData,
+      options?: RequestOptions
+    ): Promise<any> {
+      return this._requestSender._rawRequest(method, path, params, options);
+    },
 
     /**
      * @private
