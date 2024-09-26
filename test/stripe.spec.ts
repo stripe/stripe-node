@@ -909,48 +909,47 @@ describe('Stripe Module', function() {
       );
     });
 
-    // Uncomment this after merging v2 infra changes
-    // it('should make request with specified encoding JSON', (done) => {
-    //   return getTestServerStripe(
-    //     {},
-    //     (req, res) => {
-    //       expect(req.headers['content-type']).to.equal('application/json');
-    //       expect(req.headers['stripe-version']).to.equal(PreviewVersion);
-    //       expect(req.headers.foo).to.equal('bar');
-    //       const requestBody = [];
-    //       req.on('data', (chunks) => {
-    //         requestBody.push(chunks);
-    //       });
-    //       req.on('end', () => {
-    //         const body = Buffer.concat(requestBody).toString();
-    //         expect(body).to.equal(
-    //           '{"description":"test customer","created":"1234567890"}'
-    //         );
-    //       });
-    //       res.write(JSON.stringify(returnedCustomer));
-    //       res.end();
-    //     },
-    //     async (err, stripe, closeServer) => {
-    //       if (err) return done(err);
-    //       try {
-    //         const result = await stripe.rawRequest(
-    //           'POST',
-    //           '/v1/customers',
-    //           {
-    //             description: 'test customer',
-    //             created: new Date('2009-02-13T23:31:30Z'),
-    //           },
-    //           {additionalHeaders: {foo: 'bar'}}
-    //         );
-    //         expect(result).to.deep.equal(returnedCustomer);
-    //         closeServer();
-    //         done();
-    //       } catch (err) {
-    //         return done(err);
-    //       }
-    //     }
-    //   );
-    // });
+    it('should make request with specified encoding JSON', (done) => {
+      return getTestServerStripe(
+        {},
+        (req, res) => {
+          expect(req.headers['content-type']).to.equal('application/json');
+          expect(req.headers['stripe-version']).to.equal(ApiVersion);
+          expect(req.headers.foo).to.equal('bar');
+          const requestBody = [];
+          req.on('data', (chunks) => {
+            requestBody.push(chunks);
+          });
+          req.on('end', () => {
+            const body = Buffer.concat(requestBody).toString();
+            expect(body).to.equal(
+              '{"description":"test meter event","created":"1234567890"}'
+            );
+          });
+          res.write(JSON.stringify(returnedCustomer));
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          try {
+            const result = await stripe.rawRequest(
+              'POST',
+              '/v2/billing/meter_events',
+              {
+                description: 'test meter event',
+                created: new Date('2009-02-13T23:31:30Z'),
+              },
+              {additionalHeaders: {foo: 'bar'}}
+            );
+            expect(result).to.deep.equal(returnedCustomer);
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
 
     it('defaults to form encoding request if not specified', (done) => {
       return getTestServerStripe(
