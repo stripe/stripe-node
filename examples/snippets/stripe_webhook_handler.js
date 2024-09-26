@@ -6,7 +6,8 @@ const app = express();
 const apiKey = process.env.STRIPE_API_KEY;
 const webhookSecret = process.env.WEBHOOK_SECRET;
 
-const client = new Stripe();
+const client = new Stripe(apiKey);
+
 app.post(
   '/webhook',
   express.raw({type: 'application/json'}),
