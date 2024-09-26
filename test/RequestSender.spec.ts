@@ -479,7 +479,7 @@ describe('RequestSender', () => {
         );
       });
 
-      it('sends current v1 version when apiMode is v1', (done) => {
+      it('sends with APIVersion in header', (done) => {
         const host = stripe.getConstant('DEFAULT_HOST');
         const scope = nock(`https://${host}`, {
           reqheaders: {'Stripe-Version': ApiVersion},
@@ -669,7 +669,7 @@ describe('RequestSender', () => {
         });
       });
 
-      it('throws a v2 StripeError based on the underlying error "code" if apiMode is v2', (done) => {
+      it('throws a v2 StripeError based on the underlying error "code" for v2 APIs', (done) => {
         const error = {
           type: 'temporary_session_expired',
           message: 'you messed up',
@@ -688,7 +688,7 @@ describe('RequestSender', () => {
         });
       });
 
-      it('throws a v1 StripeError if apiMode is NOT v2', (done) => {
+      it('throws a v1 StripeError for v1 APIs', (done) => {
         const error = {
           type: 'temporary_session_expired',
           message: 'you messed up',
