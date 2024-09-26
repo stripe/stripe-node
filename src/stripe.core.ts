@@ -4,9 +4,7 @@ import {StripeResource} from './StripeResource.js';
 import {
   AppInfo,
   RequestAuthenticator,
-  RequestHeaders,
   StripeObject,
-  StripeRequest,
   UserProvidedConfig,
 } from './Types.js';
 import {WebhookObject, WebhookEvent, createWebhooks} from './Webhooks.js';
@@ -200,110 +198,6 @@ export function createStripe(
    */
   Stripe.createSubtleCryptoProvider =
     platformFunctions.createSubtleCryptoProvider;
-
-  Stripe.createRequestSigningAuthenticator = (
-    keyId: string,
-    sign: (signatureBase: Uint8Array) => Promise<Uint8Array>,
-    crypto: CryptoProvider = Stripe.createNodeCryptoProvider()
-  ): RequestAuthenticator => {
-    const authorizationHeaderName = 'Authorization';
-    const stripeContextHeaderName = 'Stripe-Context';
-    const stripeAccountHeaderName = 'Stripe-Account';
-    const contentDigestHeaderName = 'Content-Digest';
-    const signatureInputHeaderName = 'Signature-Input';
-    const signatureHeaderName = 'Signature';
-    const coveredHeaderNames = [
-      'Content-Type',
-      contentDigestHeaderName,
-      stripeContextHeaderName,
-      stripeAccountHeaderName,
-      authorizationHeaderName,
-    ].map((h) => h.toLowerCase());
-
-    const coveredHeaderNamesGet = [
-      stripeContextHeaderName,
-      stripeAccountHeaderName,
-      authorizationHeaderName,
-    ].map((h) => h.toLowerCase());
-
-    const formatCoveredHeaders = (headers: Array<string>): string => {
-      return `(${headers.map((h) => `"${h}"`).join(' ')})`;
-    };
-    const coveredHeaderFormatted = formatCoveredHeaders(coveredHeaderNames);
-    const coveredHeaderGetFormatted = formatCoveredHeaders(
-      coveredHeaderNamesGet
-    );
-
-    const getSignatureInput = (method: string, created: number): string => {
-      const coveredHeaderNames =
-        method == 'GET' ? coveredHeaderGetFormatted : coveredHeaderFormatted;
-      return `${coveredHeaderNames};created=${created}`;
-    };
-
-    const encoder = new TextEncoder();
-
-    const initializedCrypto = crypto ?? Stripe.createNodeCryptoProvider();
-
-    const calculateDigestHeader = async (content: string): Promise<string> => {
-      const digest = await initializedCrypto.computeSHA256Async(
-        encoder.encode(content)
-      );
-      return `sha-256=:${Buffer.from(digest).toString('base64')}:`;
-    };
-
-    const calculateSignatureBase = (
-      request: StripeRequest,
-      created: number
-    ): string => {
-      const stringifyHeaderValues = (
-        value: string | number | string[] | null
-      ): string => {
-        if (value == null) {
-          return '';
-        }
-        return (value instanceof Array ? value : [value]).join(',');
-      };
-
-      const headerNames =
-        request.method == 'GET' ? coveredHeaderNamesGet : coveredHeaderNames;
-      const lowercaseHeaders: RequestHeaders = {};
-      const keys = Object.keys(request.headers);
-      keys.forEach((k) => {
-        lowercaseHeaders[k.toLowerCase()] = request.headers[k];
-      });
-
-      const inputs = headerNames
-        .map(
-          (header) =>
-            `"${header}": ${stringifyHeaderValues(lowercaseHeaders[header])}`
-        )
-        .join('\n');
-
-      const signatureInput = getSignatureInput(request.method, created);
-
-      return `${inputs}\n"@signature-params": ${signatureInput}`;
-    };
-
-    return async (request): Promise<void> => {
-      if (request.method != 'GET') {
-        request.headers[contentDigestHeaderName] = await calculateDigestHeader(
-          request.body ?? ''
-        );
-      }
-
-      const created = Math.floor(Date.now() / 1000);
-
-      request.headers[authorizationHeaderName] = 'STRIPE-V2-SIG ' + keyId;
-      request.headers[signatureInputHeaderName] =
-        'sig1=' + getSignatureInput(request.method, created);
-
-      const signatureBase = calculateSignatureBase(request, created);
-      const signature = await sign(encoder.encode(signatureBase));
-
-      request.headers[signatureHeaderName] =
-        'sig1=:' + Buffer.from(signature).toString('base64') + ':';
-    };
-  };
 
   Stripe.prototype = {
     // Properties are set in the constructor above
