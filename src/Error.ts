@@ -3,7 +3,9 @@
 
 import {RawErrorType, StripeRawError} from './Types.js';
 
-export const generate = (rawStripeError: StripeRawError): StripeError => {
+export const generateV1Error = (
+  rawStripeError: StripeRawError
+): StripeError => {
   switch (rawStripeError.type) {
     case 'card_error':
       return new StripeCardError(rawStripeError);
@@ -25,7 +27,9 @@ export const generate = (rawStripeError: StripeRawError): StripeError => {
 };
 
 // eslint-disable-next-line complexity
-export const generateV2 = (rawStripeError: StripeRawError): StripeError => {
+export const generateV2Error = (
+  rawStripeError: StripeRawError
+): StripeError => {
   switch (rawStripeError.type) {
     // switchCases: The beginning of the section generated from our OpenAPI spec
     case 'temporary_session_expired':
@@ -40,7 +44,7 @@ export const generateV2 = (rawStripeError: StripeRawError): StripeError => {
       return new StripeInvalidRequestError(rawStripeError);
   }
 
-  return generate(rawStripeError);
+  return generateV1Error(rawStripeError);
 };
 
 /**
@@ -98,7 +102,7 @@ export class StripeError extends Error {
   /**
    * Helper factory which takes raw stripe errors and outputs wrapping instances
    */
-  static generate = generate;
+  static generate = generateV1Error;
 }
 
 // Specific Stripe Error types:

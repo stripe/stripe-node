@@ -1,4 +1,3 @@
-import * as Errors from './Error.js';
 import {
   StripeAPIError,
   StripeAuthenticationError,
@@ -6,6 +5,8 @@ import {
   StripeError,
   StripePermissionError,
   StripeRateLimitError,
+  generateV1Error,
+  generateV2Error,
 } from './Error.js';
 import {
   StripeObject,
@@ -179,9 +180,9 @@ export class RequestSender {
               } else if (statusCode === 429) {
                 err = new StripeRateLimitError(jsonResponse.error);
               } else if (apiMode === 'v2') {
-                err = Errors.generateV2(jsonResponse.error);
+                err = generateV2Error(jsonResponse.error);
               } else {
-                err = Errors.generate(jsonResponse.error);
+                err = generateV1Error(jsonResponse.error);
               }
 
               throw err;
