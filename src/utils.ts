@@ -21,6 +21,7 @@ const OPTIONS_KEYS = [
   'host',
   'authenticator',
   'stripeContext',
+  'additionalHeaders',
 ];
 
 type Settings = {
@@ -33,7 +34,7 @@ type Options = {
   host: string | null;
   settings: Settings;
   streaming?: boolean;
-  headers: Record<string, unknown>;
+  headers: RequestHeaders;
 };
 
 export function isOptionsHash(o: unknown): boolean | unknown {
@@ -166,10 +167,10 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
         opts.authenticator = createApiKeyAuthenticator(params.apiKey as string);
       }
       if (params.idempotencyKey) {
-        opts.headers['Idempotency-Key'] = params.idempotencyKey;
+        opts.headers['Idempotency-Key'] = params.idempotencyKey as string;
       }
       if (params.stripeAccount) {
-        opts.headers['Stripe-Account'] = params.stripeAccount;
+        opts.headers['Stripe-Account'] = params.stripeAccount as string;
       }
       if (params.stripeContext) {
         if (opts.headers['Stripe-Account']) {
@@ -177,10 +178,10 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
             "Can't specify both stripeAccount and stripeContext."
           );
         }
-        opts.headers['Stripe-Context'] = params.stripeContext;
+        opts.headers['Stripe-Context'] = params.stripeContext as string;
       }
       if (params.apiVersion) {
-        opts.headers['Stripe-Version'] = params.apiVersion;
+        opts.headers['Stripe-Version'] = params.apiVersion as string;
       }
       if (Number.isInteger(params.maxNetworkRetries)) {
         opts.settings.maxNetworkRetries = params.maxNetworkRetries as number;
@@ -202,6 +203,11 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
           );
         }
         opts.authenticator = params.authenticator as RequestAuthenticator;
+      }
+      if (params.additionalHeaders) {
+        opts.headers = params.additionalHeaders as {
+          [headerName: string]: string;
+        };
       }
     }
   }

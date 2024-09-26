@@ -8,19 +8,21 @@ import {
   StripeRateLimitError,
 } from './Error.js';
 import {
-  ApiMode,
-  RequestAuthenticator,
+  StripeObject,
+  RequestHeaders,
+  RequestEvent,
+  ResponseEvent,
   RequestCallback,
   RequestCallbackReturn,
   RequestData,
   RequestDataProcessor,
-  RequestEvent,
-  RequestHeaders,
   RequestOptions,
   RequestSettings,
-  ResponseEvent,
-  StripeObject,
   StripeRequest,
+  RequestOpts,
+  RequestArgs,
+  RequestAuthenticator,
+  ApiMode,
 } from './Types.js';
 import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
 import {
@@ -30,6 +32,8 @@ import {
   queryStringifyRequestData,
   removeNullish,
   getAPIMode,
+  getOptionsFromArgs,
+  getDataFromArgs,
 } from './utils.js';
 
 export type HttpClientResponseError = {code: string};
@@ -457,11 +461,87 @@ export class RequestSender {
     }
   }
 
+  _rawRequest(
+    method: string,
+    path: string,
+    params?: RequestData,
+    options?: RequestOptions
+  ): Promise<any> {
+    const requestPromise = new Promise<any>((resolve, reject) => {
+      let opts: RequestOpts;
+      try {
+        const requestMethod = method.toUpperCase();
+        if (
+          requestMethod !== 'POST' &&
+          params &&
+          Object.keys(params).length !== 0
+        ) {
+          throw new Error(
+            'rawRequest only supports params on POST requests. Please pass null and add your parameters to path.'
+          );
+        }
+        const args: RequestArgs = [].slice.call([params, options]);
+
+        // Pull request data and options (headers, auth) from args.
+        const dataFromArgs = getDataFromArgs(args);
+        const data = Object.assign({}, dataFromArgs);
+        const calculatedOptions = getOptionsFromArgs(args);
+
+        const headers = calculatedOptions.headers;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const authenticator: RequestAuthenticator = calculatedOptions.authenticator!;
+        opts = {
+          requestMethod,
+          requestPath: path,
+          bodyData: data,
+          queryData: {},
+          authenticator,
+          headers,
+          host: null,
+          streaming: false,
+          settings: {},
+          usage: ['raw_request'],
+        };
+      } catch (err) {
+        reject(err);
+        return;
+      }
+
+      function requestCallback(
+        err: any,
+        response: HttpClientResponseInterface
+      ): void {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(response);
+        }
+      }
+
+      const {headers, settings} = opts;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const authenticator: RequestAuthenticator = opts.authenticator!;
+
+      this._request(
+        opts.requestMethod,
+        opts.host,
+        path,
+        opts.bodyData,
+        authenticator,
+        {headers, settings, streaming: opts.streaming},
+        opts.usage,
+        requestCallback
+      );
+    });
+
+    return requestPromise;
+  }
+
   _request(
     method: string,
     host: string | null,
     path: string,
-    data: RequestData,
+    data: RequestData | null,
     authenticator: RequestAuthenticator,
     options: RequestOptions,
     usage: Array<string> = [],
@@ -469,7 +549,7 @@ export class RequestSender {
     requestDataProcessor: RequestDataProcessor | null = null
   ): void {
     let requestData: string;
-    authenticator = authenticator ?? this._stripe._authenticator;
+    authenticator = authenticator ?? this._stripe._authenticator ?? null;
     const apiMode: ApiMode = getAPIMode(path);
     const retryRequest = (
       requestFn: typeof makeRequest,
@@ -603,7 +683,7 @@ export class RequestSender {
               }
             });
         })
-        .catch((e) => {
+        .catch((e: any) => {
           throw new StripeError({
             message: 'Unable to authenticate the request',
             exception: e,
