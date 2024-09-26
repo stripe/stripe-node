@@ -690,7 +690,7 @@ declare module 'stripe' {
         namespace LineItem {
           interface AdjustableQuantity {
             /**
-             * Set to true if the quantity can be adjusted to any non-negative integer. By default customers will be able to remove the line item by setting the quantity to 0.
+             * Set to true if the quantity can be adjusted to any non-negative integer.
              */
             enabled: boolean;
 
