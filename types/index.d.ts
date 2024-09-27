@@ -8,6 +8,7 @@
 ///<reference path='./EventTypes.d.ts' />
 ///<reference path='./UpcomingInvoices.d.ts' />
 ///<reference path='./Deprecations.d.ts' />
+///<reference path='./V2/Events.d.ts' />
 // Imports: The beginning of the section generated from our OpenAPI spec
 ///<reference path='./AccountLinksResource.d.ts' />
 ///<reference path='./AccountSessionsResource.d.ts' />
@@ -273,7 +274,6 @@
 ///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
-///<reference path='./V2/Events.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
