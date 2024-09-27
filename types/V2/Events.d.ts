@@ -1,4 +1,4 @@
-// This is a manually maintained file
+// File generated from our OpenAPI spec
 
 declare module 'stripe' {
   namespace Stripe {
@@ -28,28 +28,6 @@ declare module 'stripe' {
              */
             idempotency_key: string;
           }
-        }
-
-        interface RelatedObject {
-          /**
-           * Object containing the reference to API resource relevant to the event.
-           */
-          related_object: {
-            /**
-             * Unique identifier for the object relevant to the event.
-             */
-            id: string;
-
-            /**
-             * Type of the object relevant to the event.
-             */
-            type: string;
-
-            /**
-             * URL to retrieve the resource.
-             */
-            url: string;
-          };
         }
       }
 
