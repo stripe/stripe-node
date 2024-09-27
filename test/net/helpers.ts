@@ -101,7 +101,7 @@ export const createHttpClientTestSuite = (createHttpClientFn, extraTestsFn) => {
       });
 
       it('sends request data (POST)', (done) => {
-        const expectedData = utils.stringifyRequestData({id: 'test'});
+        const expectedData = utils.queryStringifyRequestData({id: 'test'});
 
         nock('http://stripe.com')
           .post('/test')

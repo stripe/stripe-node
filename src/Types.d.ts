@@ -7,6 +7,7 @@ import {
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 
 export type AppInfo = {name?: string} & Record<string, unknown>;
+export type ApiMode = 'v1' | 'v2';
 export type BufferedFile = {
   name: string;
   type: string;
@@ -27,6 +28,7 @@ export type MethodSpec = {
   usage?: Array<string>;
 };
 export type MultipartRequestData = RequestData | StreamingFile | BufferedFile;
+// rawErrorTypeEnum: The beginning of the section generated from our OpenAPI spec
 export type RawErrorType =
   | 'card_error'
   | 'invalid_request_error'
@@ -34,8 +36,20 @@ export type RawErrorType =
   | 'idempotency_error'
   | 'rate_limit_error'
   | 'authentication_error'
-  | 'invalid_grant';
+  | 'invalid_grant'
+  | 'temporary_session_expired';
+// rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
 export type RequestArgs = Array<any>;
+export type StripeRequest = {
+  host: string;
+  port: string;
+  path: string;
+  method: string;
+  headers: RequestHeaders;
+  body: string;
+  protocol: string;
+};
+export type RequestAuthenticator = (request: StripeRequest) => Promise<void>;
 export type RequestCallback = (
   this: void,
   error: Error | null,
@@ -54,16 +68,16 @@ export type RequestEvent = {
 };
 export type RequestHeaders = Record<string, string | number | string[]>;
 export type RequestOptions = {
-  settings?: RequestSettings;
-  streaming?: boolean;
-  headers?: RequestHeaders;
+  settings: RequestSettings;
+  streaming: boolean;
+  headers: RequestHeaders;
 };
 export type RequestOpts = {
+  authenticator: RequestAuthenticator | null;
   requestMethod: string;
   requestPath: string;
   bodyData: RequestData | null;
   queryData: RequestData;
-  auth: string | null;
   headers: RequestHeaders;
   host: string | null;
   streaming: boolean;
@@ -124,13 +138,11 @@ export type StripeObject = {
   webhooks: any;
   _prepResources: () => void;
   _setAppInfo: (appInfo: AppInfo) => void;
-  _setApiKey: (apiKey: string) => void;
   _prevRequestMetrics: Array<{
     request_id: string;
     request_duration_ms: number;
   }>;
   _api: {
-    auth: string | null;
     host: string;
     port: string | number;
     protocol: string;
@@ -139,24 +151,42 @@ export type StripeObject = {
     timeout: number;
     maxNetworkRetries: number;
     agent: string;
-    httpClient: any;
+    httpClient: HttpClientInterface;
     dev: boolean;
     stripeAccount: string | null;
+    stripeContext: string | null;
   };
+  _authenticator?: RequestAuthenticator;
   _emitter: EventEmitter;
   _enableTelemetry: boolean;
   _requestSender: RequestSender;
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
   _clientId?: string;
   _platformFunctions: PlatformFunctions;
+  _setAuthenticator: (
+    key: string,
+    authenticator: RequestAuthenticator | undefined
+  ) => void;
+  rawRequest: (
+    method: string,
+    path: string,
+    data: RequestData,
+    options: RequestOptions
+  ) => Promise<any>;
 };
 export type RequestSender = {
+  _rawRequest(
+    method: string,
+    path: string,
+    params?: RequestData,
+    options?: RequestOptions
+  ): Promise<any>;
   _request(
     method: string,
     host: string | null,
     path: string,
     data: RequestData | null,
-    auth: string | null,
+    authenticator: RequestAuthenticator | null,
     options: RequestOptions,
     usage: Array<string>,
     callback: RequestCallback,
@@ -165,6 +195,7 @@ export type RequestSender = {
 };
 export type StripeRawError = {
   message?: string;
+  user_message?: string;
   type?: RawErrorType;
   headers?: {[header: string]: string};
   statusCode?: number;
@@ -211,12 +242,13 @@ export type StripeResourceObject = {
 };
 export type RequestDataProcessor = (
   method: string,
-  data: RequestData,
+  data: RequestData | null,
   headers: RequestHeaders | undefined,
   prepareAndMakeRequest: (error: Error | null, data: string) => void
 ) => void;
 export type UrlInterpolator = (params: Record<string, unknown>) => string;
 export type UserProvidedConfig = {
+  authenticator?: RequestAuthenticator;
   apiVersion?: string;
   protocol?: string;
   host?: string;
@@ -226,6 +258,7 @@ export type UserProvidedConfig = {
   maxNetworkRetries?: number;
   httpClient?: HttpClientInterface;
   stripeAccount?: string;
+  stripeContext?: string;
   typescript?: boolean;
   telemetry?: boolean;
   appInfo?: AppInfo;

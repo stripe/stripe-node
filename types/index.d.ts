@@ -8,6 +8,8 @@
 ///<reference path='./EventTypes.d.ts' />
 ///<reference path='./UpcomingInvoices.d.ts' />
 ///<reference path='./Deprecations.d.ts' />
+///<reference path='./ThinEvent.d.ts' />
+///<reference path='./crypto/crypto.d.ts' />
 // Imports: The beginning of the section generated from our OpenAPI spec
 ///<reference path='./AccountLinksResource.d.ts' />
 ///<reference path='./AccountSessionsResource.d.ts' />
@@ -127,6 +129,14 @@
 ///<reference path='./Treasury/ReceivedDebitsResource.d.ts' />
 ///<reference path='./Treasury/TransactionEntriesResource.d.ts' />
 ///<reference path='./Treasury/TransactionsResource.d.ts' />
+///<reference path='./V2/Billing/MeterEventAdjustmentsResource.d.ts' />
+///<reference path='./V2/Billing/MeterEventSessionResource.d.ts' />
+///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
+///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
+///<reference path='./V2/BillingResource.d.ts' />
+///<reference path='./V2/Core/EventsResource.d.ts' />
+///<reference path='./V2/CoreResource.d.ts' />
+///<reference path='./V2Resource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./AccountSessions.d.ts' />
@@ -269,6 +279,10 @@
 ///<reference path='./Treasury/Transactions.d.ts' />
 ///<reference path='./UsageRecordSummaries.d.ts' />
 ///<reference path='./UsageRecords.d.ts' />
+///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
+///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
+///<reference path='./V2/Billing/MeterEvents.d.ts' />
+///<reference path='./V2/Events.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
@@ -340,6 +354,7 @@ declare module 'stripe' {
     tokens: Stripe.TokensResource;
     topups: Stripe.TopupsResource;
     transfers: Stripe.TransfersResource;
+    v2: Stripe.V2Resource;
     webhookEndpoints: Stripe.WebhookEndpointsResource;
     apps: {
       secrets: Stripe.Apps.SecretsResource;
@@ -469,6 +484,109 @@ declare module 'stripe' {
       event: 'response',
       handler: (event: Stripe.ResponseEvent) => void
     ): void;
+
+    /**
+     * Allows for sending "raw" requests to the Stripe API, which can be used for
+     * testing new API endpoints or performing requests that the library does
+     * not support yet.
+     *
+     * This is an experimental interface and is not yet stable.
+     *
+     * @param method - HTTP request method, 'GET', 'POST', or 'DELETE'
+     * @param path - The path of the request, e.g. '/v1/beta_endpoint'
+     * @param params - The parameters to include in the request body.
+     * @param options - Additional request options.
+     */
+    rawRequest(
+      method: string,
+      path: string,
+      params?: {[key: string]: unknown},
+      options?: Stripe.RawRequestOptions
+    ): Promise<Stripe.Response<unknown>>;
+
+    /**
+     * Parses webhook event payload into a ThinEvent and verifies webhook signature.
+     * To get more information on the event, pass the id from the returned object to
+     * `stripe.v2.core.events.retrieve()`
+     *
+     * @throws Stripe.errors.StripeSignatureVerificationError
+     */
+    parseThinEvent: (
+      /**
+       * Raw text body payload received from Stripe.
+       */
+      payload: string | Buffer,
+      /**
+       * Value of the `stripe-signature` header from Stripe.
+       * Typically a string.
+       *
+       * Note that this is typed to accept an array of strings
+       * so that it works seamlessly with express's types,
+       * but will throw if an array is passed in practice
+       * since express should never return this header as an array,
+       * only a string.
+       */
+      header: string | Buffer | Array<string>,
+      /**
+       * Your Webhook Signing Secret for this endpoint (e.g., 'whsec_...').
+       * You can get this [in your dashboard](https://dashboard.stripe.com/webhooks).
+       */
+      secret: string,
+      /**
+       * Seconds of tolerance on timestamps.
+       */
+      tolerance?: number,
+      /**
+       * Optional CryptoProvider to use for computing HMAC signatures.
+       */
+      cryptoProvider?: Stripe.CryptoProvider,
+
+      /**
+       * Optional: timestamp to use when checking signature validity. Defaults to Date.now().
+       */
+      receivedAt?: number
+    ) => Stripe.ThinEvent;
+
+    /**
+     * Parses webhook event payload into a SnapshotEvent and verifies webhook signature.
+     *
+     * @throws Stripe.errors.StripeSignatureVerificationError
+     */
+    parseSnapshotEvent: (
+      /**
+       * Raw text body payload received from Stripe.
+       */
+      payload: string | Buffer,
+      /**
+       * Value of the `stripe-signature` header from Stripe.
+       * Typically a string.
+       *
+       * Note that this is typed to accept an array of strings
+       * so that it works seamlessly with express's types,
+       * but will throw if an array is passed in practice
+       * since express should never return this header as an array,
+       * only a string.
+       */
+      header: string | Buffer | Array<string>,
+      /**
+       * Your Webhook Signing Secret for this endpoint (e.g., 'whsec_...').
+       * You can get this [in your dashboard](https://dashboard.stripe.com/webhooks).
+       */
+      secret: string,
+      /**
+       * Seconds of tolerance on timestamps.
+       */
+      tolerance?: number,
+      /**
+       * Optional CryptoProvider to use for computing HMAC signatures.
+       */
+      cryptoProvider?: Stripe.CryptoProvider,
+
+      /**
+       * Optional: timestamp to use when checking signature validity. Defaults to Date.now().
+       */
+      receivedAt?: number
+    ) => Stripe.Event;
   }
 
   export default Stripe;

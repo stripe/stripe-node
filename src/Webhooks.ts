@@ -25,7 +25,7 @@ type WebhookTestHeaderOptions = {
   cryptoProvider: CryptoProvider;
 };
 
-type WebhookEvent = Record<string, unknown>;
+export type WebhookEvent = Record<string, unknown>;
 type WebhookPayload = string | Uint8Array;
 type WebhookSignatureObject = {
   verifyHeader: (

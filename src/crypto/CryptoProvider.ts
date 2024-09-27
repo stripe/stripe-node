@@ -29,6 +29,13 @@ export class CryptoProvider {
   computeHMACSignatureAsync(payload: string, secret: string): Promise<string> {
     throw new Error('computeHMACSignatureAsync not implemented.');
   }
+
+  /**
+   * Computes a SHA-256 hash of the data.
+   */
+  computeSHA256Async(data: Uint8Array): Promise<Uint8Array> {
+    throw new Error('computeSHA256 not implemented.');
+  }
 }
 
 /**
