@@ -1,6 +1,6 @@
 // This is a manually maintained file
 
-declare module '@stripe/stripe' {
+declare module 'stripe' {
   namespace Stripe {
     /**
      * The Event object as recieved from StripeClient.parseThinEvent.
