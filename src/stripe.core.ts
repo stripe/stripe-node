@@ -501,12 +501,12 @@ export function createStripe(
     },
 
     parseThinEvent(
-      payload,
-      header,
-      secret,
-      tolerance,
-      cryptoProvider,
-      receivedAt
+      payload: string | Uint8Array,
+      header: string | Uint8Array,
+      secret: string,
+      tolerance?: number,
+      cryptoProvider?: CryptoProvider,
+      receivedAt?: number
     ): WebhookEvent {
       // parses and validates the event payload all in one go
       return this.webhooks.constructEvent(
@@ -520,12 +520,12 @@ export function createStripe(
     },
 
     parseSnapshotEvent(
-      payload,
-      header,
-      secret,
-      tolerance,
-      cryptoProvider,
-      receivedAt
+      payload: string | Uint8Array,
+      header: string | Uint8Array,
+      secret: string,
+      tolerance?: number,
+      cryptoProvider?: CryptoProvider,
+      receivedAt?: number
     ): WebhookEvent {
       return this.webhooks.constructEvent(
         payload,

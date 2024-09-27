@@ -1,12 +1,10 @@
 /* eslint-disable camelcase */
 import {EventEmitter} from 'events';
-import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {
   HttpClientInterface,
   HttpClientResponseInterface,
 } from './net/HttpClient.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
-import {WebhookEvent} from './Webhooks.js';
 
 export type AppInfo = {name?: string} & Record<string, unknown>;
 export type ApiMode = 'v1' | 'v2';
@@ -138,22 +136,6 @@ export type StripeObject = {
   StripeResource: StripeResourceConstructor;
   errors: any;
   webhooks: any;
-  parseThinEvent: (
-    payload: string | Uint8Array,
-    header: string | Uint8Array,
-    secret: string,
-    tolerance?: number,
-    cryptoProvider?: CryptoProvider,
-    receivedAt?: number
-  ) => WebhookEvent;
-  parseSnapshotEvent: (
-    payload: string | Uint8Array,
-    header: string | Uint8Array,
-    secret: string,
-    tolerance?: number,
-    cryptoProvider?: CryptoProvider,
-    receivedAt?: number
-  ) => WebhookEvent;
   _prepResources: () => void;
   _setAppInfo: (appInfo: AppInfo) => void;
   _prevRequestMetrics: Array<{
