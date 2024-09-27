@@ -727,14 +727,21 @@ describe('Stripe Module', function() {
     const secret = 'whsec_test_secret';
 
     it('can parse event from JSON payload', () => {
-      const payload = JSON.stringify({event_type: 'account.created'});
+      const jsonPayload = {
+        type: 'account.created',
+        data: 'hello',
+        related_object: {id: '123', url: 'hello_again'},
+      };
+      const payload = JSON.stringify(jsonPayload);
       const header = stripe.webhooks.generateTestHeaderString({
         payload,
         secret,
       });
       const event = stripe.parseThinEvent(payload, header, secret);
 
-      expect(event.event_type).to.equal('account.created');
+      expect(event.type).to.equal(jsonPayload.type);
+      expect(event.data).to.equal(jsonPayload.data);
+      expect(event.related_object.id).to.equal(jsonPayload.related_object.id);
     });
 
     it('throws an error for invalid signatures', () => {
