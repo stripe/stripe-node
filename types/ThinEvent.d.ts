@@ -3,26 +3,24 @@
 declare module 'stripe' {
   namespace Stripe {
     namespace Event {
+      /**
+       * Object containing the reference to API resource relevant to the event.
+       */
       interface RelatedObject {
         /**
-         * Object containing the reference to API resource relevant to the event.
+         * Unique identifier for the object relevant to the event.
          */
-        related_object: {
-          /**
-           * Unique identifier for the object relevant to the event.
-           */
-          id: string;
+        id: string;
 
-          /**
-           * Type of the object relevant to the event.
-           */
-          type: string;
+        /**
+         * Type of the object relevant to the event.
+         */
+        type: string;
 
-          /**
-           * URL to retrieve the resource.
-           */
-          url: string;
-        };
+        /**
+         * URL to retrieve the resource.
+         */
+        url: string;
       }
     }
     /**
@@ -32,7 +30,7 @@ declare module 'stripe' {
       /**
        * Object containing the reference to API resource relevant to the event.
        */
-      related_object: Event.RelatedObject;
+      related_object: Event.RelatedObject | null;
     }
   }
 }

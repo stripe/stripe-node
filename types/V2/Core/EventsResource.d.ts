@@ -1,5 +1,7 @@
 // File generated from our OpenAPI spec
 
+/// <reference path="../EventTypes.d.ts" />
+
 declare module 'stripe' {
   namespace Stripe {
     namespace V2 {
