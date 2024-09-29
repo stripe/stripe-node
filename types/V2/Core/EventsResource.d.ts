@@ -1,5 +1,7 @@
 // File generated from our OpenAPI spec
 
+/// <reference path='../EventTypes.d.ts' />
+
 declare module 'stripe' {
   namespace Stripe {
     namespace V2 {
@@ -29,11 +31,11 @@ declare module 'stripe' {
             id: string,
             params?: EventRetrieveParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Event>>;
+          ): Promise<Stripe.Response<Stripe.V2.Event>>;
           retrieve(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Event>>;
+          ): Promise<Stripe.Response<Stripe.V2.Event>>;
 
           /**
            * List events, going back up to 30 days.
@@ -41,7 +43,7 @@ declare module 'stripe' {
           list(
             params: EventListParams,
             options?: RequestOptions
-          ): ApiListPromise<Event>;
+          ): ApiListPromise<Stripe.V2.Event>;
         }
       }
     }
