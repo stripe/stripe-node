@@ -175,12 +175,7 @@ class V2ListIterator<T> implements AsyncIterator<T> {
     const nextPageUrl = await this.nextPageUrl;
     if (!nextPageUrl) return null;
     this.spec.fullPath = nextPageUrl;
-    const page = await this.stripeResource._makeRequest(
-      // this.requestArgs,
-      [],
-      this.spec,
-      {}
-    );
+    const page = await this.stripeResource._makeRequest([], this.spec, {});
     this.nextPageUrl = Promise.resolve(page.next_page_url);
     this.currentPageIterator = Promise.resolve(page.data[Symbol.iterator]());
     return this.currentPageIterator;
