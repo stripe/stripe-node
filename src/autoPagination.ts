@@ -176,7 +176,8 @@ class V2ListIterator<T> implements AsyncIterator<T> {
     if (!nextPageUrl) return null;
     this.spec.fullPath = nextPageUrl;
     const page = await this.stripeResource._makeRequest(
-      this.requestArgs,
+      // this.requestArgs,
+      [],
       this.spec,
       {}
     );
