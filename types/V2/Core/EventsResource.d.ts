@@ -16,8 +16,14 @@ declare module 'stripe' {
            */
           object_id: string;
 
+          /**
+           * The page size.
+           */
           limit?: number;
 
+          /**
+           * The requested page number.
+           */
           page?: string;
         }
       }

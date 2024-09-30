@@ -9,7 +9,7 @@ declare module 'stripe' {
 
   namespace Stripe.Events {
     /**
-     * This event occurs when an async usage event error report is generated.
+     * This event occurs when there are invalid async usage events for a given meter.
      */
     export interface V1BillingMeterErrorReportTriggeredEvent
       extends V2.EventBase {
@@ -112,7 +112,7 @@ declare module 'stripe' {
     }
 
     /**
-     * This event occurs when an async usage event is missing a meter.
+     * This event occurs when async usage events have missing or invalid meter ids.
      */
     export interface V1BillingMeterNoMeterFoundEvent extends V2.EventBase {
       type: 'v1.billing.meter.no_meter_found';

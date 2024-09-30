@@ -6,7 +6,7 @@ declare module 'stripe' {
       namespace Event {
         interface Reason {
           /**
-           * Open Enum. Event reason type.
+           * Event reason type.
            */
           type: 'request';
 
