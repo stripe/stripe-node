@@ -546,47 +546,6 @@ declare module 'stripe' {
        */
       receivedAt?: number
     ) => Stripe.ThinEvent;
-
-    /**
-     * Parses webhook event payload into a SnapshotEvent and verifies webhook signature.
-     *
-     * @throws Stripe.errors.StripeSignatureVerificationError
-     */
-    parseSnapshotEvent: (
-      /**
-       * Raw text body payload received from Stripe.
-       */
-      payload: string | Buffer,
-      /**
-       * Value of the `stripe-signature` header from Stripe.
-       * Typically a string.
-       *
-       * Note that this is typed to accept an array of strings
-       * so that it works seamlessly with express's types,
-       * but will throw if an array is passed in practice
-       * since express should never return this header as an array,
-       * only a string.
-       */
-      header: string | Buffer | Array<string>,
-      /**
-       * Your Webhook Signing Secret for this endpoint (e.g., 'whsec_...').
-       * You can get this [in your dashboard](https://dashboard.stripe.com/webhooks).
-       */
-      secret: string,
-      /**
-       * Seconds of tolerance on timestamps.
-       */
-      tolerance?: number,
-      /**
-       * Optional CryptoProvider to use for computing HMAC signatures.
-       */
-      cryptoProvider?: Stripe.CryptoProvider,
-
-      /**
-       * Optional: timestamp to use when checking signature validity. Defaults to Date.now().
-       */
-      receivedAt?: number
-    ) => Stripe.Event;
   }
 
   export default Stripe;

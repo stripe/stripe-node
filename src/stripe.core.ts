@@ -518,24 +518,6 @@ export function createStripe(
         receivedAt
       );
     },
-
-    parseSnapshotEvent(
-      payload: string | Uint8Array,
-      header: string | Uint8Array,
-      secret: string,
-      tolerance?: number,
-      cryptoProvider?: CryptoProvider,
-      receivedAt?: number
-    ): WebhookEvent {
-      return this.webhooks.constructEvent(
-        payload,
-        header,
-        secret,
-        tolerance,
-        cryptoProvider,
-        receivedAt
-      );
-    },
   } as StripeObject;
 
   return Stripe;
