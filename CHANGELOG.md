@@ -1,5 +1,51 @@
 # Changelog
 
+## 17.0.0 - 2024-10-01
+* [#2192](https://github.com/stripe/stripe-node/pull/2192) Support for APIs in the new API version 2024-09-30.acacia
+  
+  This release changes the pinned API version to `2024-09-30.acacia`. Please read the [API Upgrade Guide](https://stripe.com/docs/upgrades#2024-09-30.acacia) and carefully review the API changes before upgrading.
+  
+  ### ⚠️ Breaking changes  due to changes in the Stripe API
+  - Rename `usage_threshold_config` to `usage_threshold` on `Billing.AlertCreateParams` and `Billing.Alert`
+  - Remove support for `filter` on `Billing.AlertCreateParams` and `Billing.Alert`. Use the filters on the `usage_threshold` instead
+  - Remove support for `customer_consent_collected` on `Terminal.ReaderProcessSetupIntentParams`. 
+  
+  ### ⚠️ Other Breaking changes in the SDK 
+  - Adjusted default values around reties for HTTP requests. You can use the old defaults by setting them explicitly. New values are:
+      - max retries: `1` -> `2`
+      - max timeout (seconds): `2` -> `5`
+  
+  
+  ### Additions
+  * Add support for `custom_unit_amount` on `ProductCreateParams.default_price_data`
+  * Add support for `allow_redisplay` on `Terminal.ReaderProcessPaymentIntentParams.process_config` and `Terminal.ReaderProcessSetupIntentParams`
+  * Add support for new value `international_transaction` on enum `Treasury.ReceivedCredit.failure_code`
+  * Add support for new value `2024-09-30.acacia` on enum `WebhookEndpointCreateParams.api_version`
+  * Add support for new Usage Billing APIs `Billing.MeterEvent`, `Billing.MeterEventAdjustments`, `Billing.MeterEventSession`, `Billing.MeterEventStream` and the new Events API `Core.Events` in the [v2 namespace ](https://docs.corp.stripe.com/api-v2-overview)
+  * Add method `parseThinEvent()` on the `Stripe` class to parse [thin events](https://docs.corp.stripe.com/event-destinations#events-overview). 
+  * Add method [rawRequest()](https://github.com/stripe/stripe-node/tree/master?tab=readme-ov-file#custom-requests) on the `Stripe` class that takes a HTTP method type, url and relevant parameters to make requests to the Stripe API that are not yet supported in the SDK.
+  
+  ### Changes
+  * Change `BillingPortal.ConfigurationCreateParams.features.subscription_update.default_allowed_updates` and `BillingPortal.ConfigurationCreateParams.features.subscription_update.products` to be optional
+* [#2195](https://github.com/stripe/stripe-node/pull/2195) Remove parseSnapshotEvent
+* [#2188](https://github.com/stripe/stripe-node/pull/2188) Revert "Add raw_request (#2185)"
+* [#2185](https://github.com/stripe/stripe-node/pull/2185) Add raw_request
+  Adds the ability to make raw requests to the Stripe API, by providing an HTTP method and url.
+  
+  Example:
+  ```node
+  import Stripe from 'stripe';
+  const stripe = new Stripe('sk_test_...');
+  
+  const response = await stripe.rawRequest(
+    'POST',
+    '/v1/beta_endpoint',
+    { param: 123 },
+    { apiVersion: '2022-11-15; feature_beta=v3' }
+  );
+  
+  ```
+
 ## 16.12.0 - 2024-09-18
 * [#2177](https://github.com/stripe/stripe-node/pull/2177) Update generated code
   * Add support for new value `international_transaction` on enum `Treasury.ReceivedDebit.failure_code`
