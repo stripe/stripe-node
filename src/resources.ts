@@ -14,6 +14,9 @@ import {Configurations as BillingPortalConfigurations} from './resources/Billing
 import {Configurations as TerminalConfigurations} from './resources/Terminal/Configurations.js';
 import {ConfirmationTokens as TestHelpersConfirmationTokens} from './resources/TestHelpers/ConfirmationTokens.js';
 import {ConnectionTokens as TerminalConnectionTokens} from './resources/Terminal/ConnectionTokens.js';
+import {CreditBalanceSummary as BillingCreditBalanceSummary} from './resources/Billing/CreditBalanceSummary.js';
+import {CreditBalanceTransactions as BillingCreditBalanceTransactions} from './resources/Billing/CreditBalanceTransactions.js';
+import {CreditGrants as BillingCreditGrants} from './resources/Billing/CreditGrants.js';
 import {CreditReversals as TreasuryCreditReversals} from './resources/Treasury/CreditReversals.js';
 import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Customers.js';
 import {DebitReversals as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
@@ -118,10 +121,14 @@ export {TaxRates} from './resources/TaxRates.js';
 export {Tokens} from './resources/Tokens.js';
 export {Topups} from './resources/Topups.js';
 export {Transfers} from './resources/Transfers.js';
+export {V2} from './resources/V2.js';
 export {WebhookEndpoints} from './resources/WebhookEndpoints.js';
 export const Apps = resourceNamespace('apps', {Secrets: AppsSecrets});
 export const Billing = resourceNamespace('billing', {
   Alerts: BillingAlerts,
+  CreditBalanceSummary: BillingCreditBalanceSummary,
+  CreditBalanceTransactions: BillingCreditBalanceTransactions,
+  CreditGrants: BillingCreditGrants,
   MeterEventAdjustments: BillingMeterEventAdjustments,
   MeterEvents: BillingMeterEvents,
   Meters: BillingMeters,

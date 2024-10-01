@@ -4,14 +4,16 @@
 'use strict';
 
 import {expect} from 'chai';
+import {StripeSignatureVerificationError} from '../src/Error.js';
 import {ApiVersion} from '../src/apiVersion.js';
 import {createStripe} from '../src/stripe.core.js';
+import {createApiKeyAuthenticator} from '../src/utils.js';
 import {
+  FAKE_API_KEY,
   getMockPlatformFunctions,
   getRandomString,
-  getTestServerStripe,
   getStripeMockClient,
-  FAKE_API_KEY,
+  getTestServerStripe,
 } from './testUtils.js';
 import Stripe = require('../src/stripe.cjs.node.js');
 import crypto = require('crypto');
@@ -65,7 +67,7 @@ describe('Stripe Module', function() {
       }).to.not.throw();
     });
 
-    it('should perform a no-op if null, undefined or empty values are passed', () => {
+    it('API should use the default version when undefined or empty values are passed', () => {
       const cases = [null, undefined, '', {}];
 
       cases.forEach((item) => {
@@ -108,7 +110,32 @@ describe('Stripe Module', function() {
 
   describe('setApiKey', () => {
     it('uses Bearer auth', () => {
-      expect(stripe.getApiField('auth')).to.equal(`Bearer ${FAKE_API_KEY}`);
+      expect(stripe._authenticator._apiKey).to.equal(`${FAKE_API_KEY}`);
+    });
+
+    it('should throw if no api key or authenticator provided', () => {
+      expect(() => new Stripe(null)).to.throw(
+        'Neither apiKey nor config.authenticator provided'
+      );
+    });
+  });
+
+  describe('authenticator', () => {
+    it('should throw an error when specifying both key and authenticator', () => {
+      expect(() => {
+        return new Stripe('key', {
+          authenticator: createApiKeyAuthenticator('...'),
+        });
+      }).to.throw("Can't specify both apiKey and authenticator");
+    });
+
+    it('can create client using authenticator', () => {
+      const authenticator = createApiKeyAuthenticator('...');
+      const stripe = new Stripe(null, {
+        authenticator: authenticator,
+      });
+
+      expect(stripe._authenticator).to.equal(authenticator);
     });
   });
 
@@ -529,6 +556,117 @@ describe('Stripe Module', function() {
         );
       });
     });
+    describe('gets removed', () => {
+      let headers;
+      let stripeClient;
+      let closeServer;
+      beforeEach((callback) => {
+        getTestServerStripe(
+          {},
+          (req, res) => {
+            headers = req.headers;
+            res.writeHeader(200);
+            res.write('{}');
+            res.end();
+          },
+          (err, client, close) => {
+            if (err) {
+              return callback(err);
+            }
+            stripeClient = client;
+            closeServer = close;
+            return callback();
+          }
+        );
+      });
+      afterEach(() => closeServer());
+
+      it('if explicitly undefined', (callback) => {
+        stripeClient.customers.create({stripeAccount: undefined}, (err) => {
+          closeServer();
+          if (err) {
+            return callback(err);
+          }
+          expect(Object.keys(headers)).not.to.include('stripe-account');
+          return callback();
+        });
+      });
+
+      it('if explicitly null', (callback) => {
+        stripeClient.customers.create({stripeAccount: null}, (err) => {
+          closeServer();
+          if (err) {
+            return callback(err);
+          }
+          expect(Object.keys(headers)).not.to.include('stripe-account');
+          return callback();
+        });
+      });
+    });
+  });
+
+  describe('context', () => {
+    describe('when passed in via the config object', () => {
+      let headers;
+      let stripeClient;
+      let closeServer;
+      beforeEach((callback) => {
+        getTestServerStripe(
+          {
+            stripeContext: 'ctx_123',
+          },
+          (req, res) => {
+            headers = req.headers;
+            res.writeHeader(200);
+            res.write('{}');
+            res.end();
+          },
+          (err, client, close) => {
+            if (err) {
+              return callback(err);
+            }
+            stripeClient = client;
+            closeServer = close;
+            return callback();
+          }
+        );
+      });
+      afterEach(() => closeServer());
+      it('is not sent on v1 call', (callback) => {
+        stripeClient.customers.create((err) => {
+          closeServer();
+          if (err) {
+            return callback(err);
+          }
+          expect(headers['stripe-context']).to.equal(undefined);
+          return callback();
+        });
+      });
+      it('is respected', (callback) => {
+        stripeClient.v2.billing.meterEventSession.create((err) => {
+          closeServer();
+          if (err) {
+            return callback(err);
+          }
+          expect(headers['stripe-context']).to.equal('ctx_123');
+          return callback();
+        });
+      });
+      it('can still be overridden per-request', (callback) => {
+        stripeClient.v2.billing.meterEventSession.create(
+          {name: 'llama'},
+          {stripeContext: 'ctx_456'},
+          (err) => {
+            closeServer();
+            if (err) {
+              return callback(err);
+            }
+            expect(headers['stripe-context']).to.equal('ctx_456');
+            return callback();
+          }
+        );
+      });
+    });
   });
 
   describe('setMaxNetworkRetries', () => {
@@ -545,12 +683,12 @@ describe('Stripe Module', function() {
     });
 
     describe('when passed in via the config object', () => {
-      it('should default to 1 if a non-integer is passed', () => {
+      it('should default to 2 if a non-integer is passed', () => {
         const newStripe = Stripe(FAKE_API_KEY, {
           maxNetworkRetries: 'foo',
         });
 
-        expect(newStripe.getMaxNetworkRetries()).to.equal(1);
+        expect(newStripe.getMaxNetworkRetries()).to.equal(2);
 
         expect(() => {
           Stripe(FAKE_API_KEY, {
@@ -572,7 +710,7 @@ describe('Stripe Module', function() {
       it('should use the default', () => {
         const newStripe = Stripe(FAKE_API_KEY);
 
-        expect(newStripe.getMaxNetworkRetries()).to.equal(1);
+        expect(newStripe.getMaxNetworkRetries()).to.equal(2);
       });
     });
   });
@@ -582,6 +720,245 @@ describe('Stripe Module', function() {
       const newStripe = Stripe(FAKE_API_KEY);
 
       expect(newStripe.VERSION).to.equal(Stripe.PACKAGE_VERSION);
+    });
+  });
+
+  describe('parseThinEvent', () => {
+    const secret = 'whsec_test_secret';
+
+    it('can parse event from JSON payload', () => {
+      const jsonPayload = {
+        type: 'account.created',
+        data: 'hello',
+        related_object: {id: '123', url: 'hello_again'},
+      };
+      const payload = JSON.stringify(jsonPayload);
+      const header = stripe.webhooks.generateTestHeaderString({
+        payload,
+        secret,
+      });
+      const event = stripe.parseThinEvent(payload, header, secret);
+
+      expect(event.type).to.equal(jsonPayload.type);
+      expect(event.data).to.equal(jsonPayload.data);
+      expect(event.related_object.id).to.equal(jsonPayload.related_object.id);
+    });
+
+    it('throws an error for invalid signatures', () => {
+      const payload = JSON.stringify({event_type: 'account.created'});
+
+      expect(() => {
+        stripe.parseThinEvent(payload, 'bad sigheader', secret);
+      }).to.throw(StripeSignatureVerificationError);
+    });
+  });
+
+  describe('rawRequest', () => {
+    const returnedCustomer = {
+      id: 'cus_123',
+    };
+
+    it('should make request with specified encoding FORM', (done) => {
+      return getTestServerStripe(
+        {},
+        (req, res) => {
+          expect(req.headers['content-type']).to.equal(
+            'application/x-www-form-urlencoded'
+          );
+          expect(req.headers['stripe-version']).to.equal(ApiVersion);
+          const requestBody = [];
+          req.on('data', (chunks) => {
+            requestBody.push(chunks);
+          });
+          req.on('end', () => {
+            const body = Buffer.concat(requestBody).toString();
+            expect(body).to.equal('description=test%20customer');
+          });
+          res.write(JSON.stringify(returnedCustomer));
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          try {
+            const result = await stripe.rawRequest(
+              'POST',
+              '/v1/customers',
+              {description: 'test customer'},
+              {}
+            );
+            expect(result).to.deep.equal(returnedCustomer);
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
+    it('should make request with specified encoding JSON', (done) => {
+      return getTestServerStripe(
+        {},
+        (req, res) => {
+          expect(req.headers['content-type']).to.equal('application/json');
+          expect(req.headers['stripe-version']).to.equal(ApiVersion);
+          expect(req.headers.foo).to.equal('bar');
+          const requestBody = [];
+          req.on('data', (chunks) => {
+            requestBody.push(chunks);
+          });
+          req.on('end', () => {
+            const body = Buffer.concat(requestBody).toString();
+            expect(body).to.equal(
+              '{"description":"test meter event","created":"1234567890"}'
+            );
+          });
+          res.write(JSON.stringify(returnedCustomer));
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          try {
+            const result = await stripe.rawRequest(
+              'POST',
+              '/v2/billing/meter_events',
+              {
+                description: 'test meter event',
+                created: new Date('2009-02-13T23:31:30Z'),
+              },
+              {additionalHeaders: {foo: 'bar'}}
+            );
+            expect(result).to.deep.equal(returnedCustomer);
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
+    it('defaults to form encoding request if not specified', (done) => {
+      return getTestServerStripe(
+        {},
+        (req, res) => {
+          expect(req.headers['content-type']).to.equal(
+            'application/x-www-form-urlencoded'
+          );
+          const requestBody = [];
+          req.on('data', (chunks) => {
+            requestBody.push(chunks);
+          });
+          req.on('end', () => {
+            const body = Buffer.concat(requestBody).toString();
+            expect(body).to.equal(
+              'description=test%20customer&created=1234567890'
+            );
+          });
+          res.write(JSON.stringify(returnedCustomer));
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          try {
+            const result = await stripe.rawRequest('POST', '/v1/customers', {
+              description: 'test customer',
+              created: new Date('2009-02-13T23:31:30Z'),
+            });
+            expect(result).to.deep.equal(returnedCustomer);
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
+    it('should make request with specified additional headers', (done) => {
+      return getTestServerStripe(
+        {},
+        (req, res) => {
+          console.log(req.headers);
+          expect(req.headers.foo).to.equal('bar');
+          res.write(JSON.stringify(returnedCustomer));
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          try {
+            const result = await stripe.rawRequest(
+              'GET',
+              '/v1/customers/cus_123',
+              {},
+              {additionalHeaders: {foo: 'bar'}}
+            );
+            expect(result).to.deep.equal(returnedCustomer);
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
+    it('should make request successfully', async () => {
+      const response = await stripe.rawRequest('GET', '/v1/customers', {});
+
+      expect(response).to.have.property('object', 'list');
+    });
+
+    it("should include 'raw_request' in usage telemetry", (done) => {
+      let telemetryHeader;
+      let shouldStayOpen = true;
+      return getTestServerStripe(
+        {},
+        (req, res) => {
+          telemetryHeader = req.headers['x-stripe-client-telemetry'];
+          res.setHeader('Request-Id', `req_1`);
+          res.writeHeader(200);
+          res.write('{}');
+          res.end();
+          const ret = {shouldStayOpen};
+          shouldStayOpen = false;
+          return ret;
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          try {
+            await stripe.rawRequest(
+              'POST',
+              '/v1/customers',
+              {description: 'test customer'},
+              {}
+            );
+            expect(telemetryHeader).to.equal(undefined);
+            await stripe.rawRequest(
+              'POST',
+              '/v1/customers',
+              {description: 'test customer'},
+              {}
+            );
+            expect(
+              JSON.parse(telemetryHeader).last_request_metrics.usage
+            ).to.deep.equal(['raw_request']);
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
+    it('should throw error when passing in params to non-POST request', async () => {
+      await expect(
+        stripe.rawRequest('GET', '/v1/customers/cus_123', {foo: 'bar'})
+      ).to.be.rejectedWith(
+        Error,
+        /rawRequest only supports params on POST requests. Please pass null and add your parameters to path./
+      );
     });
   });
 });

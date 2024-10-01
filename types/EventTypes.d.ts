@@ -240,7 +240,9 @@ declare module 'stripe' {
       | TreasuryReceivedCreditFailedEvent
       | TreasuryReceivedCreditSucceededEvent
       | TreasuryReceivedDebitCreatedEvent;
+  }
 
+  namespace Stripe {
     /**
      * Occurs whenever a user authorizes an application. Sent to the related application only.
      */

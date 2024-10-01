@@ -567,6 +567,19 @@ describe('Generated tests', function() {
     expect(session).not.to.be.null;
   });
 
+  it('test_core_events_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/events/ll_123',
+        response:
+          '{"context":"context","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"object":"v2.core.event","reason":{"type":"request","request":{"id":"obj_123","idempotency_key":"idempotency_key"}},"type":"type"}',
+      },
+    ]);
+    const event = await stripe.v2.core.events.retrieve('ll_123');
+    expect(event).not.to.be.null;
+  });
+
   it('test_country_specs_get', async function() {
     const countrySpecs = await stripe.countrySpecs.list({
       limit: 3,
@@ -2983,17 +2996,6 @@ describe('Generated tests', function() {
       'tmr_xxxxxxxxxxxxx',
       {
         payment_intent: 'pi_xxxxxxxxxxxxx',
-      }
-    );
-    expect(reader).not.to.be.null;
-  });
-
-  it('test_terminal_readers_process_setup_intent_post', async function() {
-    const reader = await stripe.terminal.readers.processSetupIntent(
-      'tmr_xxxxxxxxxxxxx',
-      {
-        setup_intent: 'seti_xxxxxxxxxxxxx',
-        customer_consent_collected: true,
       }
     );
     expect(reader).not.to.be.null;

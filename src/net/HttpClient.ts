@@ -10,7 +10,7 @@ export interface HttpClientInterface {
     path: string,
     method: string,
     headers: RequestHeaders,
-    requestData: RequestData,
+    requestData: string,
     protocol: string,
     timeout: number
   ) => Promise<HttpClientResponseInterface>;
@@ -48,7 +48,7 @@ export class HttpClient implements HttpClientInterface {
     path: string,
     method: string,
     headers: RequestHeaders,
-    requestData: RequestData,
+    requestData: string,
     protocol: string,
     timeout: number
   ): Promise<HttpClientResponseInterface> {
