@@ -43,7 +43,7 @@ export class NodeHttpClient extends HttpClient {
     path: string,
     method: string,
     headers: RequestHeaders,
-    requestData: RequestData,
+    requestData: string,
     protocol: string,
     timeout: number
   ): Promise<HttpClientResponseInterface> {

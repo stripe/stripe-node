@@ -124,6 +124,11 @@ declare module 'stripe' {
         recipients?: Components.Recipients;
 
         /**
+         * Configuration for the reporting chart embedded component.
+         */
+        reporting_chart?: Components.ReportingChart;
+
+        /**
          * Configuration for the tax registrations embedded component.
          */
         tax_registrations?: Components.TaxRegistrations;
@@ -602,6 +607,22 @@ declare module 'stripe' {
         }
 
         namespace Recipients {
+          interface Features {}
+        }
+
+        interface ReportingChart {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: ReportingChart.Features;
+        }
+
+        namespace ReportingChart {
           interface Features {}
         }
 

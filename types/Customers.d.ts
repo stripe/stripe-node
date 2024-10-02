@@ -3,9 +3,8 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * This object represents a customer of your business. Use it to create recurring charges and track payments that belong to the same customer.
-     *
-     * Related guide: [Save a card during payment](https://stripe.com/docs/payments/save-during-payment)
+     * This object represents a customer of your business. Use it to [create recurring charges](https://stripe.com/docs/invoicing/customer), [save payment](https://stripe.com/docs/payments/save-during-payment) and contact information,
+     * and track payments that belong to the same customer.
      */
     interface Customer {
       /**

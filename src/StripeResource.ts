@@ -4,6 +4,7 @@ import {
   makeURLInterpolator,
   protoExtend,
   queryStringifyRequestData,
+  getAPIMode,
 } from './utils.js';
 import {stripeMethod} from './StripeMethod.js';
 import {
@@ -187,7 +188,7 @@ StripeResource.prototype = {
       requestPath,
       bodyData,
       queryData,
-      auth: options.auth,
+      authenticator: options.authenticator ?? null,
       headers,
       host: host ?? null,
       streaming,
@@ -229,7 +230,7 @@ StripeResource.prototype = {
       const path = [
         opts.requestPath,
         emptyQuery ? '' : '?',
-        queryStringifyRequestData(opts.queryData),
+        queryStringifyRequestData(opts.queryData, getAPIMode(opts.requestPath)),
       ].join('');
 
       const {headers, settings} = opts;
@@ -239,8 +240,12 @@ StripeResource.prototype = {
         opts.host,
         path,
         opts.bodyData,
-        opts.auth,
-        {headers, settings, streaming: opts.streaming},
+        opts.authenticator,
+        {
+          headers,
+          settings,
+          streaming: opts.streaming,
+        },
         opts.usage,
         requestCallback,
         this.requestDataProcessor?.bind(this)

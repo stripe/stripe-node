@@ -1,0 +1,13 @@
+{
+  "name": "snippets",
+  "version": "1.0.0",
+  "description": "example Stripe SDK code snippets",
+  "main": "index.js",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.0",
+    "stripe": "file:../../",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  }
+}

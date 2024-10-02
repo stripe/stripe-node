@@ -519,12 +519,12 @@ const stripe = new Stripe('sk_test_...', {
 
 ### Custom requests
 
-If you would like to send a request to an undocumented API (for example you are in a private beta), or if you prefer to bypass the method definitions in the library and specify your request details directly, you can use the `rawRequest` method on the Stripe object.
+If you would like to send a request to an undocumented API (for example you are in a private beta), or if you prefer to bypass the method definitions in the library and specify your request details directly, you can use the `rawRequest` method on the StripeClient object.
 
 ```javascript
-const stripe = require('stripe')('sk_test_...');
+const client = new Stripe('sk_test_...');
 
-stripe.rawRequest(
+client.rawRequest(
     'POST',
     '/v1/beta_endpoint',
     { param: 123 },

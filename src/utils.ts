@@ -6,8 +6,9 @@ import {
   StripeResourceObject,
   RequestHeaders,
   MultipartRequestData,
-  RequestCallback,
-  APIMode,
+  RequestAuthenticator,
+  StripeRequest,
+  ApiMode,
 } from './Types.js';
 
 const OPTIONS_KEYS = [
@@ -18,7 +19,8 @@ const OPTIONS_KEYS = [
   'maxNetworkRetries',
   'timeout',
   'host',
-  'apiMode',
+  'authenticator',
+  'stripeContext',
   'additionalHeaders',
 ];
 
@@ -28,12 +30,11 @@ type Settings = {
 };
 
 type Options = {
-  auth: string | null;
+  authenticator?: RequestAuthenticator | null;
   host: string | null;
   settings: Settings;
   streaming?: boolean;
   headers: RequestHeaders;
-  apiMode?: APIMode;
 };
 
 export function isOptionsHash(o: unknown): boolean | unknown {
@@ -48,11 +49,15 @@ export function isOptionsHash(o: unknown): boolean | unknown {
  * Stringifies an Object, accommodating nested objects
  * (forming the conventional key 'parent[child]=value')
  */
-export function queryStringifyRequestData(data: RequestData | string): string {
+export function queryStringifyRequestData(
+  data: RequestData | string,
+  apiMode?: ApiMode
+): string {
   return (
     qs
       .stringify(data, {
         serializeDate: (d: Date) => Math.floor(d.getTime() / 1000).toString(),
+        arrayFormat: apiMode == 'v2' ? 'repeat' : 'indices',
       })
       // Don't use strict form encoding by changing the square bracket control
       // characters back to their literals. This is fine by the server, and
@@ -137,7 +142,6 @@ export function getDataFromArgs(args: RequestArgs): RequestData {
  */
 export function getOptionsFromArgs(args: RequestArgs): Options {
   const opts: Options = {
-    auth: null,
     host: null,
     headers: {},
     settings: {},
@@ -145,7 +149,7 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
   if (args.length > 0) {
     const arg = args[args.length - 1];
     if (typeof arg === 'string') {
-      opts.auth = args.pop() as string;
+      opts.authenticator = createApiKeyAuthenticator(args.pop() as string);
     } else if (isOptionsHash(arg)) {
       const params = {...(args.pop() as Record<string, unknown>)};
 
@@ -160,13 +164,21 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
       }
 
       if (params.apiKey) {
-        opts.auth = params.apiKey as string;
+        opts.authenticator = createApiKeyAuthenticator(params.apiKey as string);
       }
       if (params.idempotencyKey) {
         opts.headers['Idempotency-Key'] = params.idempotencyKey as string;
       }
       if (params.stripeAccount) {
         opts.headers['Stripe-Account'] = params.stripeAccount as string;
+      }
+      if (params.stripeContext) {
+        if (opts.headers['Stripe-Account']) {
+          throw new Error(
+            "Can't specify both stripeAccount and stripeContext."
+          );
+        }
+        opts.headers['Stripe-Context'] = params.stripeContext as string;
       }
       if (params.apiVersion) {
         opts.headers['Stripe-Version'] = params.apiVersion as string;
@@ -180,14 +192,17 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
       if (params.host) {
         opts.host = params.host as string;
       }
-      if (params.apiMode) {
-        if (params.apiMode !== 'standard' && params.apiMode !== 'preview') {
+      if (params.authenticator) {
+        if (params.apiKey) {
+          throw new Error("Can't specify both apiKey and authenticator.");
+        }
+        if (typeof params.authenticator !== 'function') {
           throw new Error(
-            `Invalid apiMode: ${params.apiMode}. Must be one of 'standard' or 'preview'`
+            'The authenticator must be a function ' +
+              'receiving a request as the first parameter.'
           );
         }
-
-        opts.apiMode = params.apiMode as APIMode;
+        opts.authenticator = params.authenticator as RequestAuthenticator;
       }
       if (params.additionalHeaders) {
         opts.headers = params.additionalHeaders as {
@@ -380,6 +395,20 @@ export function determineProcessUserAgentProperties(): Record<string, string> {
       };
 }
 
+export function createApiKeyAuthenticator(
+  apiKey: string
+): RequestAuthenticator {
+  const authenticator = (request: StripeRequest): Promise<void> => {
+    request.headers.Authorization = 'Bearer ' + apiKey;
+    return Promise.resolve();
+  };
+
+  // For testing
+  authenticator._apiKey = apiKey;
+
+  return authenticator;
+}
+
 /**
  * Joins an array of Uint8Arrays into a single Uint8Array
  */
@@ -412,4 +441,14 @@ function dateTimeReplacer(this: any, key: string, value: any): string {
  */
 export function jsonStringifyRequestData(data: RequestData | string): string {
   return JSON.stringify(data, dateTimeReplacer);
+}
+
+/**
+ * Inspects the given path to determine if the endpoint is for v1 or v2 API
+ */
+export function getAPIMode(path?: string): ApiMode {
+  if (!path) {
+    return 'v1';
+  }
+  return path.startsWith('/v2') ? 'v2' : 'v1';
 }
