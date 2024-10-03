@@ -1420,11 +1420,6 @@ declare module 'stripe' {
         discount?: string | Stripe.Discount | Stripe.DeletedDiscount;
 
         /**
-         * The margin that was applied to get this pretax credit amount.
-         */
-        margin?: string | Stripe.Margin;
-
-        /**
          * Type of the pretax credit amount referenced.
          */
         type: TotalPretaxCreditAmount.Type;
