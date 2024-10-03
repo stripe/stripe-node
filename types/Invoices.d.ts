@@ -481,6 +481,10 @@ declare module 'stripe' {
        */
       total_margin_amounts?: Array<Invoice.TotalMarginAmount> | null;
 
+      total_pretax_credit_amounts?: Array<
+        Invoice.TotalPretaxCreditAmount
+      > | null;
+
       /**
        * The aggregate amounts calculated per tax rate for all line items.
        */
@@ -1510,6 +1514,40 @@ declare module 'stripe' {
          * The margin that was applied to get this margin amount.
          */
         margin: string | Stripe.Margin;
+      }
+
+      interface TotalPretaxCreditAmount {
+        /**
+         * The amount, in cents (or local equivalent), of the pretax credit amount.
+         */
+        amount: number;
+
+        /**
+         * The credit balance transaction that was applied to get this pretax credit amount.
+         */
+        credit_balance_transaction?:
+          | string
+          | Stripe.Billing.CreditBalanceTransaction
+          | null;
+
+        /**
+         * The discount that was applied to get this pretax credit amount.
+         */
+        discount?: string | Stripe.Discount | Stripe.DeletedDiscount;
+
+        /**
+         * The margin that was applied to get this pretax credit amount.
+         */
+        margin?: string | Stripe.Margin;
+
+        /**
+         * Type of the pretax credit amount referenced.
+         */
+        type: TotalPretaxCreditAmount.Type;
+      }
+
+      namespace TotalPretaxCreditAmount {
+        type Type = 'credit_balance_transaction' | 'discount' | 'margin';
       }
 
       interface TotalTaxAmount {

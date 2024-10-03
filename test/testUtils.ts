@@ -8,6 +8,7 @@ import {NodePlatformFunctions} from '../src/platform/NodePlatformFunctions.js';
 import {RequestSender} from '../src/RequestSender.js';
 import {createStripe} from '../src/stripe.core.js';
 import {
+  RequestAuthenticator,
   RequestCallback,
   RequestData,
   RequestDataProcessor,
@@ -70,7 +71,7 @@ export const getStripeMockClient = (): StripeClient => {
       path: string,
       method: string,
       headers: RequestHeaders,
-      requestData: RequestData,
+      requestData: string,
       _protocol: string,
       timeout: number
     ): Promise<HttpClientResponseInterface> {
@@ -115,8 +116,8 @@ export const getMockStripe = (
       host: string | null,
       path: string,
       data: RequestData,
-      auth: string | null,
-      options: RequestOptions = {},
+      authenticator: RequestAuthenticator,
+      options: RequestOptions = {} as any,
       usage: Array<string>,
       callback: RequestCallback,
       requestDataProcessor: RequestDataProcessor | null = null
@@ -126,7 +127,7 @@ export const getMockStripe = (
         host,
         path,
         data,
-        auth,
+        authenticator,
         options,
         usage,
         callback,
@@ -170,8 +171,8 @@ export const getSpyableStripe = (
       host: string | null,
       path: string,
       data: RequestData,
-      auth: string | null,
-      options: RequestOptions = {},
+      authenticator: RequestAuthenticator,
+      options: RequestOptions = {} as any,
       usage: Array<string> = [],
       callback: RequestCallback,
       requestDataProcessor: RequestDataProcessor | null = null
@@ -183,6 +184,7 @@ export const getSpyableStripe = (
         headers: RequestHeaders;
         settings: RequestSettings;
         auth?: string;
+        authenticator?: RequestAuthenticator;
         host?: string;
         usage?: Array<string>;
       };
@@ -196,8 +198,13 @@ export const getSpyableStripe = (
       if (usage && usage.length > 1) {
         req.usage = usage;
       }
-      if (auth) {
-        req.auth = auth;
+      if (authenticator) {
+        // Extract API key from the api-key authenticator
+        if ((authenticator as any)._apiKey) {
+          req.auth = (authenticator as any)._apiKey;
+        } else {
+          req.authenticator = authenticator;
+        }
       }
       if (host) {
         req.host = host;
@@ -222,7 +229,7 @@ export const getSpyableStripe = (
         host,
         path,
         data,
-        auth,
+        authenticator,
         options,
         usage,
         callback,

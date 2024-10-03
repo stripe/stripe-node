@@ -765,11 +765,6 @@ declare module 'stripe' {
         end_behavior?: SubscriptionData.EndBehavior | null;
 
         /**
-         * The id of the subscription schedule that will be updated when the quote is accepted.
-         */
-        from_schedule?: string | Stripe.SubscriptionSchedule | null;
-
-        /**
          * The id of the subscription that will be updated when the quote is accepted.
          */
         from_subscription?: string | Stripe.Subscription | null;

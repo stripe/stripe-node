@@ -23,6 +23,29 @@ describe('Error', () => {
       ).to.be.instanceOf(Error.StripeUnknownError);
     });
 
+    it('Generates specific instance of v2 errors depending on error-type', () => {
+      // Falls back to V1 parsing logic if code is absent
+      expect(Error.generateV2Error({type: 'card_error'})).to.be.instanceOf(
+        Error.StripeCardError
+      );
+      // Falls back to V1 parsing logic if code is unrecognized
+      expect(
+        Error.generateV2Error({type: 'card_error', code: 'no_such_error'})
+      ).to.be.instanceOf(Error.StripeCardError);
+      expect(
+        Error.generateV2Error({
+          code: 'invalid_fields',
+        })
+      ).to.be.instanceOf(Error.StripeInvalidRequestError);
+      expect(
+        Error.generateV2Error({type: 'temporary_session_expired'})
+      ).to.be.instanceOf(Error.TemporarySessionExpiredError);
+
+      expect(Error.generateV2Error({code: 'invalid_fields'})).to.be.instanceOf(
+        Error.StripeInvalidRequestError
+      );
+    });
+
     it('copies whitelisted properties', () => {
       const e = new Error.StripeError({
         charge: 'foo',

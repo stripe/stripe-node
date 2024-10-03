@@ -23,11 +23,6 @@ declare module 'stripe' {
         alert_type: 'usage_threshold';
 
         /**
-         * Limits the scope of the alert to a specific [customer](https://stripe.com/docs/api/customers).
-         */
-        filter: Alert.Filter | null;
-
-        /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
@@ -45,20 +40,18 @@ declare module 'stripe' {
         /**
          * Encapsulates configuration of the alert to monitor usage on a specific [Billing Meter](https://stripe.com/docs/api/billing/meter).
          */
-        usage_threshold_config: Alert.UsageThresholdConfig | null;
+        usage_threshold: Alert.UsageThreshold | null;
       }
 
       namespace Alert {
-        interface Filter {
-          /**
-           * Limit the scope of the alert to this customer ID
-           */
-          customer: string | Stripe.Customer | null;
-        }
-
         type Status = 'active' | 'archived' | 'inactive';
 
-        interface UsageThresholdConfig {
+        interface UsageThreshold {
+          /**
+           * The filters allow limiting the scope of this usage alert. You can only specify up to one filter at this time.
+           */
+          filters: Array<UsageThreshold.Filter> | null;
+
           /**
            * The value at which this alert will trigger.
            */
@@ -73,6 +66,17 @@ declare module 'stripe' {
            * Defines how the alert will behave.
            */
           recurrence: 'one_time';
+        }
+
+        namespace UsageThreshold {
+          interface Filter {
+            /**
+             * Limit the scope of the alert to this customer ID
+             */
+            customer: string | Stripe.Customer | null;
+
+            type: 'customer';
+          }
         }
       }
     }
