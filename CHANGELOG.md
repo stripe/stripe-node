@@ -27,24 +27,6 @@
   
   ### Changes
   * Change `BillingPortal.ConfigurationCreateParams.features.subscription_update.default_allowed_updates` and `BillingPortal.ConfigurationCreateParams.features.subscription_update.products` to be optional
-* [#2195](https://github.com/stripe/stripe-node/pull/2195) Remove parseSnapshotEvent
-* [#2188](https://github.com/stripe/stripe-node/pull/2188) Revert "Add raw_request (#2185)"
-* [#2185](https://github.com/stripe/stripe-node/pull/2185) Add raw_request
-  Adds the ability to make raw requests to the Stripe API, by providing an HTTP method and url.
-  
-  Example:
-  ```node
-  import Stripe from 'stripe';
-  const stripe = new Stripe('sk_test_...');
-  
-  const response = await stripe.rawRequest(
-    'POST',
-    '/v1/beta_endpoint',
-    { param: 123 },
-    { apiVersion: '2022-11-15; feature_beta=v3' }
-  );
-  
-  ```
 
 ## 16.12.0 - 2024-09-18
 * [#2177](https://github.com/stripe/stripe-node/pull/2177) Update generated code
