@@ -19,7 +19,8 @@ assert(Stripe.createNodeCryptoProvider);
 assert(Stripe.createSubtleCryptoProvider);
 
 assert(Stripe.errors);
-assert(Stripe.errors.generate)
+assert(Stripe.errors.generateV1Error);
+assert(Stripe.errors.generateV2Error);
 assert(Stripe.errors.StripeError);
 assert(Stripe.errors.StripeCardError);
 assert(Stripe.errors.StripeInvalidRequestError);

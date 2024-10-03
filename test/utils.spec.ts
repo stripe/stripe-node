@@ -110,6 +110,17 @@ describe('utils', () => {
         ].join('&')
       );
     });
+
+    it('Handles v2 arrays', () => {
+      expect(
+        utils.queryStringifyRequestData(
+          {
+            include: ['a', 'b'],
+          },
+          'v2'
+        )
+      ).to.equal('include=a&include=b');
+    });
   });
 
   describe('jsonStringifyRequestData', () => {
@@ -208,7 +219,6 @@ describe('utils', () => {
   describe('getOptsFromArgs', () => {
     it('handles an empty list', () => {
       expect(utils.getOptionsFromArgs([])).to.deep.equal({
-        auth: null,
         host: null,
         headers: {},
         settings: {},
@@ -218,7 +228,6 @@ describe('utils', () => {
     it('handles an list with no object', () => {
       const args = [1, 3];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: null,
         host: null,
         headers: {},
         settings: {},
@@ -229,7 +238,6 @@ describe('utils', () => {
     it('ignores a non-options object', () => {
       const args = [{foo: 'bar'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: null,
         host: null,
         headers: {},
         settings: {},
@@ -239,30 +247,33 @@ describe('utils', () => {
 
     it('parses an api key', () => {
       const args = ['sk_test_iiiiiiiiiiiiiiiiiiiiiiii'];
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+      const options = utils.getOptionsFromArgs(args);
+      expect(options).to.deep.contain({
         host: null,
         headers: {},
         settings: {},
       });
       expect(args.length).to.equal(0);
+      expect(options.authenticator._apiKey).to.equal(
+        'sk_test_iiiiiiiiiiiiiiiiiiiiiiii'
+      );
     });
 
     it('assumes any string is an api key', () => {
       const args = ['yolo'];
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: 'yolo',
+      const options = utils.getOptionsFromArgs(args);
+      expect(options).to.deep.contain({
         host: null,
         headers: {},
         settings: {},
       });
       expect(args.length).to.equal(0);
+      expect(options.authenticator._apiKey).to.equal('yolo');
     });
 
     it('parses an idempotency key', () => {
       const args = [{foo: 'bar'}, {idempotencyKey: 'foo'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: null,
         host: null,
         headers: {'Idempotency-Key': 'foo'},
         settings: {},
@@ -273,7 +284,6 @@ describe('utils', () => {
     it('parses an api version', () => {
       const args = [{foo: 'bar'}, {apiVersion: '2003-03-30'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: null,
         host: null,
         headers: {'Stripe-Version': '2003-03-30'},
         settings: {},
@@ -290,8 +300,8 @@ describe('utils', () => {
           apiVersion: '2010-01-10',
         },
       ];
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+      const options = utils.getOptionsFromArgs(args);
+      expect(options).to.deep.contains({
         host: null,
         headers: {
           'Idempotency-Key': 'foo',
@@ -300,6 +310,9 @@ describe('utils', () => {
         settings: {},
       });
       expect(args.length).to.equal(1);
+      expect(options.authenticator._apiKey).to.equal(
+        'sk_test_iiiiiiiiiiiiiiiiiiiiiiii'
+      );
     });
 
     it('parses an idempotency key and api key and api version', () => {
@@ -310,8 +323,8 @@ describe('utils', () => {
           apiVersion: 'hunter2',
         },
       ];
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+      const options = utils.getOptionsFromArgs(args);
+      expect(options).to.deep.contains({
         host: null,
         headers: {
           'Idempotency-Key': 'foo',
@@ -320,6 +333,9 @@ describe('utils', () => {
         settings: {},
       });
       expect(args.length).to.equal(0);
+      expect(options.authenticator._apiKey).to.equal(
+        'sk_test_iiiiiiiiiiiiiiiiiiiiiiii'
+      );
     });
 
     it('parses additional per-request settings', () => {
@@ -331,7 +347,6 @@ describe('utils', () => {
       ];
 
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: null,
         host: null,
         headers: {},
         settings: {

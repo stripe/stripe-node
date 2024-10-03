@@ -3,18 +3,20 @@ import {RequestSender} from './RequestSender.js';
 import {StripeResource} from './StripeResource.js';
 import {
   AppInfo,
-  RequestData,
-  RequestOptions,
+  RequestAuthenticator,
   StripeObject,
   UserProvidedConfig,
+  RequestData,
+  RequestOptions,
 } from './Types.js';
-import {WebhookObject, createWebhooks} from './Webhooks.js';
+import {WebhookObject, WebhookEvent, createWebhooks} from './Webhooks.js';
 import {ApiVersion} from './apiVersion.js';
 import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import * as resources from './resources.js';
 import {
+  createApiKeyAuthenticator,
   determineProcessUserAgentProperties,
   pascalToCamelCase,
   validateInteger,
@@ -27,11 +29,12 @@ const DEFAULT_API_VERSION = ApiVersion;
 
 const DEFAULT_TIMEOUT = 80000;
 
-const MAX_NETWORK_RETRY_DELAY_SEC = 2;
+const MAX_NETWORK_RETRY_DELAY_SEC = 5;
 const INITIAL_NETWORK_RETRY_DELAY_SEC = 0.5;
 
 const APP_INFO_PROPERTIES = ['name', 'version', 'url', 'partner_id'];
 const ALLOWED_CONFIG_PROPERTIES = [
+  'authenticator',
   'apiVersion',
   'typescript',
   'maxNetworkRetries',
@@ -44,6 +47,7 @@ const ALLOWED_CONFIG_PROPERTIES = [
   'telemetry',
   'appInfo',
   'stripeAccount',
+  'stripeContext',
 ];
 
 type RequestSenderFactory = (stripe: StripeObject) => RequestSender;
@@ -113,7 +117,6 @@ export function createStripe(
     const agent = props.httpAgent || null;
 
     this._api = {
-      auth: null,
       host: props.host || DEFAULT_HOST,
       port: props.port || DEFAULT_PORT,
       protocol: props.protocol || 'https',
@@ -123,7 +126,7 @@ export function createStripe(
       maxNetworkRetries: validateInteger(
         'maxNetworkRetries',
         props.maxNetworkRetries,
-        1
+        2
       ),
       agent: agent,
       httpClient:
@@ -133,6 +136,7 @@ export function createStripe(
           : this._platformFunctions.createDefaultHttpClient()),
       dev: false,
       stripeAccount: props.stripeAccount || null,
+      stripeContext: props.stripeContext || null,
     };
 
     const typescript = props.typescript || false;
@@ -149,7 +153,7 @@ export function createStripe(
     }
 
     this._prepResources();
-    this._setApiKey(key);
+    this._setAuthenticator(key, props.authenticator);
 
     this.errors = _Error;
 
@@ -226,10 +230,21 @@ export function createStripe(
     /**
      * @private
      */
-    _setApiKey(key: string): void {
-      if (key) {
-        this._setApiField('auth', `Bearer ${key}`);
+    _setAuthenticator(
+      key: string,
+      authenticator: RequestAuthenticator | undefined
+    ): void {
+      if (key && authenticator) {
+        throw new Error("Can't specify both apiKey and authenticator");
       }
+
+      if (!key && !authenticator) {
+        throw new Error('Neither apiKey nor config.authenticator provided');
+      }
+
+      this._authenticator = key
+        ? createApiKeyAuthenticator(key)
+        : authenticator;
     },
 
     /**
@@ -483,6 +498,25 @@ export function createStripe(
       }
 
       return config;
+    },
+
+    parseThinEvent(
+      payload: string | Uint8Array,
+      header: string | Uint8Array,
+      secret: string,
+      tolerance?: number,
+      cryptoProvider?: CryptoProvider,
+      receivedAt?: number
+    ): WebhookEvent {
+      // parses and validates the event payload all in one go
+      return this.webhooks.constructEvent(
+        payload,
+        header,
+        secret,
+        tolerance,
+        cryptoProvider,
+        receivedAt
+      );
     },
   } as StripeObject;
 

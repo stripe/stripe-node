@@ -88,7 +88,11 @@ declare module 'stripe' {
       }
 
       namespace ReceivedCredit {
-        type FailureCode = 'account_closed' | 'account_frozen' | 'other';
+        type FailureCode =
+          | 'account_closed'
+          | 'account_frozen'
+          | 'international_transaction'
+          | 'other';
 
         interface InitiatingPaymentMethodDetails {
           /**

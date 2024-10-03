@@ -197,7 +197,7 @@ const stripe = Stripe('sk_test_...', {
 | `host`              | `'api.stripe.com'` | Host that requests are made to.                                                                                                                                                                                                                   |
 | `port`              | 443                | Port that requests are made to.                                                                                                                                                                                                                   |
 | `protocol`          | `'https'`          | `'https'` or `'http'`. `http` is never appropriate for sending requests to Stripe servers, and we strongly discourage `http`, even in local testing scenarios, as this can result in your credentials being transmitted over an insecure channel. |
-| `telemetry`         | `true`             | Allow Stripe to send [telemetry](#telemetry).                                                                                                                                                                             |
+| `telemetry`         | `true`             | Allow Stripe to send [telemetry](#telemetry).                                                                                                                                                                                                     |
 
 > **Note**
 > Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
@@ -543,8 +543,8 @@ const stripe = new Stripe('sk_test_...');
 const response = await stripe.rawRequest(
   'POST',
   '/v1/beta_endpoint',
-  { param: 123 },
-  { apiVersion: '2022-11-15; feature_beta=v3' }
+  {param: 123},
+  {apiVersion: '2022-11-15; feature_beta=v3'}
 );
 
 // handle response
