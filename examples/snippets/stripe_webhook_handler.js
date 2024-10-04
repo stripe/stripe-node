@@ -20,11 +20,10 @@ app.post(
       // Fetch the event data to understand the failure
       const event = await client.v2.core.events.retrieve(thinEvent.id);
       if (event.type == 'v1.billing.meter.error_report_triggered') {
-        const meter = await client.billing.meters.retrieve(
-          event.related_object.id
-        );
+        const meter = await event.fetchRelatedObject();
         const meterId = meter.id;
         console.log(`Success! ${meterId}`);
+
         // Record the failures and alert your team
         // Add your logic here
       }
