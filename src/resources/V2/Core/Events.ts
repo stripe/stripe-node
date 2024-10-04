@@ -2,7 +2,7 @@
 import {StripeResource} from '../../../StripeResource.js';
 
 const stripeMethod = StripeResource.method;
-const RelatedObjectResource = StripeResource.extend({
+const RelatedObjects = StripeResource.extend({
   fetchRelatedObject(pulledEvent: any) {
     return stripeMethod({
       method: 'GET',
@@ -18,7 +18,7 @@ const RelatedObjectResource = StripeResource.extend({
 export const Events = StripeResource.extend({
   constructor: function(...args: any) {
     StripeResource.apply(this, args);
-    this.relatedResource = new RelatedObjectResource(...args);
+    this.relatedResource = new RelatedObjects(...args);
   },
   retrieve(...args: any[]) {
     const transformResponseData = (response: any): any => {
