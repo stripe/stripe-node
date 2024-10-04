@@ -1,13 +1,13 @@
 ## Setup
 
-1. From the stripe-node root folder, run `yarn build` to build the modules.
+1. From the stripe-node root folder, run `yarn build` or `yarn build-dev` to build the modules. `yarn build-dev` produces source maps for each of the SDK .ts files. This is optional but very useful when troubleshooting SDK behavior.
 2. Then, from this snippets folder, run `yarn` to install node dependencies for the example snippets. This will reference the local Stripe SDK modules created in step 1.
 
 If on step 2 you see an error `Error: unsure how to copy this: /Users/jar/stripe/sdks/node/.git/fsmonitor--daemon.ipc`:
 run `rm /path/to/node/sdk/.git/fsmonitor--daemon.ipc && yarn`
 This file is used by a file monitor built into git. Removing it temporarily does not seem to affect its operation, and this one liner will let `yarn` succeed.
 
-Note that if you modify the stripe-node code, you must delete your snippets `node_modules` folder and rerun these steps.
+Note that if you modify the stripe-node code, rerun step 1 and then run `yarn upgrade stripe` from this folder to pull in the new built package.
 
 ## Running an example
 
