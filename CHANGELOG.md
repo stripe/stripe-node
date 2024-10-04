@@ -1,10 +1,14 @@
 # Changelog
 
 ## 17.2.0-beta.1 - 2024-10-03
-* [#2200](https://github.com/stripe/stripe-node/pull/2200) Updates beta branch with changes in master 
+* [#2200](https://github.com/stripe/stripe-node/pull/2200) Updates beta branch with changes in master
   * Add support for `reporting_chart` on `AccountSessionCreateParams.components`
   * Remove support for `from_schedule` on `Quote.subscription_data`
   * Add support for `allow_redisplay` on `Terminal.ReaderCollectPaymentMethodParams.collect_config`
+
+## 17.1.0 - 2024-10-03
+* [#2199](https://github.com/stripe/stripe-node/pull/2199) Update generated code
+  * Remove the support for resource `Margin` that was accidentally made public in the last release
 
 ## 17.0.0 - 2024-10-01
 * [#2192](https://github.com/stripe/stripe-node/pull/2192) Support for APIs in the new API version 2024-09-30.acacia
