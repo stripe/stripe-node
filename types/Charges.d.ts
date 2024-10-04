@@ -412,9 +412,13 @@ declare module 'stripe' {
 
         interac_present?: PaymentMethodDetails.InteracPresent;
 
+        kakao_pay?: PaymentMethodDetails.KakaoPay;
+
         klarna?: PaymentMethodDetails.Klarna;
 
         konbini?: PaymentMethodDetails.Konbini;
+
+        kr_card?: PaymentMethodDetails.KrCard;
 
         link?: PaymentMethodDetails.Link;
 
@@ -424,9 +428,13 @@ declare module 'stripe' {
 
         multibanco?: PaymentMethodDetails.Multibanco;
 
+        naver_pay?: PaymentMethodDetails.NaverPay;
+
         oxxo?: PaymentMethodDetails.Oxxo;
 
         p24?: PaymentMethodDetails.P24;
+
+        payco?: PaymentMethodDetails.Payco;
 
         paynow?: PaymentMethodDetails.Paynow;
 
@@ -441,6 +449,8 @@ declare module 'stripe' {
         rechnung?: PaymentMethodDetails.Rechnung;
 
         revolut_pay?: PaymentMethodDetails.RevolutPay;
+
+        samsung_pay?: PaymentMethodDetails.SamsungPay;
 
         sepa_credit_transfer?: PaymentMethodDetails.SepaCreditTransfer;
 
@@ -1675,6 +1685,13 @@ declare module 'stripe' {
           }
         }
 
+        interface KakaoPay {
+          /**
+           * A unique identifier for the buyer as determined by the local payment processor.
+           */
+          buyer_id: string | null;
+        }
+
         interface Klarna {
           /**
            * The payer details for this transaction.
@@ -1730,6 +1747,49 @@ declare module 'stripe' {
           namespace Store {
             type Chain = 'familymart' | 'lawson' | 'ministop' | 'seicomart';
           }
+        }
+
+        interface KrCard {
+          /**
+           * The local credit or debit card brand.
+           */
+          brand: KrCard.Brand | null;
+
+          /**
+           * A unique identifier for the buyer as determined by the local payment processor.
+           */
+          buyer_id: string | null;
+
+          /**
+           * The last four digits of the card. This may not be present for American Express cards.
+           */
+          last4: string | null;
+        }
+
+        namespace KrCard {
+          type Brand =
+            | 'bc'
+            | 'citi'
+            | 'hana'
+            | 'hyundai'
+            | 'jeju'
+            | 'jeonbuk'
+            | 'kakaobank'
+            | 'kbank'
+            | 'kdbbank'
+            | 'kookmin'
+            | 'kwangju'
+            | 'lotte'
+            | 'mg'
+            | 'nh'
+            | 'post'
+            | 'samsung'
+            | 'savingsbank'
+            | 'shinhan'
+            | 'shinhyup'
+            | 'suhyup'
+            | 'tossbank'
+            | 'woori';
         }
 
         interface Link {
@@ -1790,6 +1850,13 @@ declare module 'stripe' {
           reference: string | null;
         }
 
+        interface NaverPay {
+          /**
+           * A unique identifier for the buyer as determined by the local payment processor.
+           */
+          buyer_id: string | null;
+        }
+
         interface Oxxo {
           /**
            * OXXO reference number
@@ -1844,6 +1911,13 @@ declare module 'stripe' {
             | 'toyota_bank'
             | 'velobank'
             | 'volkswagen_bank';
+        }
+
+        interface Payco {
+          /**
+           * A unique identifier for the buyer as determined by the local payment processor.
+           */
+          buyer_id: string | null;
         }
 
         interface Paynow {
@@ -1967,6 +2041,13 @@ declare module 'stripe' {
         interface Rechnung {}
 
         interface RevolutPay {}
+
+        interface SamsungPay {
+          /**
+           * A unique identifier for the buyer as determined by the local payment processor.
+           */
+          buyer_id: string | null;
+        }
 
         interface SepaCreditTransfer {
           /**

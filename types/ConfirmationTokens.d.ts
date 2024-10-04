@@ -190,9 +190,13 @@ declare module 'stripe' {
 
         interac_present?: PaymentMethodPreview.InteracPresent;
 
+        kakao_pay?: PaymentMethodPreview.KakaoPay;
+
         klarna?: PaymentMethodPreview.Klarna;
 
         konbini?: PaymentMethodPreview.Konbini;
+
+        kr_card?: PaymentMethodPreview.KrCard;
 
         link?: PaymentMethodPreview.Link;
 
@@ -202,9 +206,13 @@ declare module 'stripe' {
 
         multibanco?: PaymentMethodPreview.Multibanco;
 
+        naver_pay?: PaymentMethodPreview.NaverPay;
+
         oxxo?: PaymentMethodPreview.Oxxo;
 
         p24?: PaymentMethodPreview.P24;
+
+        payco?: PaymentMethodPreview.Payco;
 
         paynow?: PaymentMethodPreview.Paynow;
 
@@ -219,6 +227,8 @@ declare module 'stripe' {
         rechnung?: PaymentMethodPreview.Rechnung;
 
         revolut_pay?: PaymentMethodPreview.RevolutPay;
+
+        samsung_pay?: PaymentMethodPreview.SamsungPay;
 
         sepa_debit?: PaymentMethodPreview.SepaDebit;
 
@@ -1178,6 +1188,8 @@ declare module 'stripe' {
             | 'magnetic_stripe_track2';
         }
 
+        interface KakaoPay {}
+
         interface Klarna {
           /**
            * The customer's date of birth, if provided.
@@ -1206,6 +1218,44 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface KrCard {
+          /**
+           * The local credit or debit card brand.
+           */
+          brand: KrCard.Brand | null;
+
+          /**
+           * The last four digits of the card. This may not be present for American Express cards.
+           */
+          last4: string | null;
+        }
+
+        namespace KrCard {
+          type Brand =
+            | 'bc'
+            | 'citi'
+            | 'hana'
+            | 'hyundai'
+            | 'jeju'
+            | 'jeonbuk'
+            | 'kakaobank'
+            | 'kbank'
+            | 'kdbbank'
+            | 'kookmin'
+            | 'kwangju'
+            | 'lotte'
+            | 'mg'
+            | 'nh'
+            | 'post'
+            | 'samsung'
+            | 'savingsbank'
+            | 'shinhan'
+            | 'shinhyup'
+            | 'suhyup'
+            | 'tossbank'
+            | 'woori';
+        }
+
         interface Link {
           /**
            * Account owner's email address.
@@ -1224,6 +1274,17 @@ declare module 'stripe' {
         interface Mobilepay {}
 
         interface Multibanco {}
+
+        interface NaverPay {
+          /**
+           * Whether to fund this transaction with Naver Pay points or a card.
+           */
+          funding: NaverPay.Funding;
+        }
+
+        namespace NaverPay {
+          type Funding = 'card' | 'points';
+        }
 
         interface Oxxo {}
 
@@ -1263,6 +1324,8 @@ declare module 'stripe' {
             | 'velobank'
             | 'volkswagen_bank';
         }
+
+        interface Payco {}
 
         interface Paynow {}
 
@@ -1335,6 +1398,8 @@ declare module 'stripe' {
         }
 
         interface RevolutPay {}
+
+        interface SamsungPay {}
 
         interface SepaDebit {
           /**
@@ -1414,14 +1479,18 @@ declare module 'stripe' {
           | 'grabpay'
           | 'ideal'
           | 'interac_present'
+          | 'kakao_pay'
           | 'klarna'
           | 'konbini'
+          | 'kr_card'
           | 'link'
           | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
+          | 'naver_pay'
           | 'oxxo'
           | 'p24'
+          | 'payco'
           | 'paynow'
           | 'paypal'
           | 'payto'
@@ -1429,6 +1498,7 @@ declare module 'stripe' {
           | 'promptpay'
           | 'rechnung'
           | 'revolut_pay'
+          | 'samsung_pay'
           | 'sepa_debit'
           | 'sofort'
           | 'swish'

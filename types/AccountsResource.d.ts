@@ -1245,7 +1245,7 @@ declare module 'stripe' {
         full_name_aliases?: Stripe.Emptyable<Array<string>>;
 
         /**
-         * The individual's gender (International regulations require either "male" or "female").
+         * The individual's gender
          */
         gender?: string;
 
@@ -2903,7 +2903,7 @@ declare module 'stripe' {
         full_name_aliases?: Stripe.Emptyable<Array<string>>;
 
         /**
-         * The individual's gender (International regulations require either "male" or "female").
+         * The individual's gender
          */
         gender?: string;
 

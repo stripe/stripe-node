@@ -20,7 +20,7 @@ declare module 'stripe' {
         category: CreditGrantCreateParams.Category;
 
         /**
-         * Id of the customer to whom the credit should be granted.
+         * ID of the customer to whom the credit should be granted.
          */
         customer: string;
 
@@ -45,7 +45,7 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * A descriptive name shown in dashboard and on invoices.
+         * A descriptive name shown in dashboard.
          */
         name?: string;
       }

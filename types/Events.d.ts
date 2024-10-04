@@ -279,6 +279,7 @@ declare module 'stripe' {
         | 'radar.early_fraud_warning.created'
         | 'radar.early_fraud_warning.updated'
         | 'refund.created'
+        | 'refund.failed'
         | 'refund.updated'
         | 'reporting.report_run.failed'
         | 'reporting.report_run.succeeded'

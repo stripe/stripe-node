@@ -90,6 +90,9 @@ declare module 'stripe' {
        */
       plan: Stripe.Plan | null;
 
+      /**
+       * Contains pretax credit amounts (ex: discount, credit grants, etc) that apply to this line item.
+       */
       pretax_credit_amounts?: Array<InvoiceLineItem.PretaxCreditAmount> | null;
 
       /**

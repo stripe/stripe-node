@@ -40,7 +40,7 @@ declare module 'stripe' {
       capabilities?: Account.Capabilities;
 
       /**
-       * Whether the account can create live charges.
+       * Whether the account can process charges.
        */
       charges_enabled: boolean;
 
@@ -100,7 +100,7 @@ declare module 'stripe' {
       metadata?: Stripe.Metadata;
 
       /**
-       * Whether Stripe can send payouts to this account.
+       * Whether the funds in this account can be paid out.
        */
       payouts_enabled: boolean;
 

@@ -537,6 +537,7 @@ declare module 'stripe' {
           | 'payment_method_unexpected_state'
           | 'payment_method_unsupported_type'
           | 'payout_reconciliation_not_ready'
+          | 'payout_statement_descriptor_profanity'
           | 'payouts_limit_exceeded'
           | 'payouts_not_allowed'
           | 'platform_account_required'
@@ -1635,9 +1636,13 @@ declare module 'stripe' {
 
         interac_present?: PaymentMethodOptions.InteracPresent;
 
+        kakao_pay?: PaymentMethodOptions.KakaoPay;
+
         klarna?: PaymentMethodOptions.Klarna;
 
         konbini?: PaymentMethodOptions.Konbini;
+
+        kr_card?: PaymentMethodOptions.KrCard;
 
         link?: PaymentMethodOptions.Link;
 
@@ -1647,9 +1652,13 @@ declare module 'stripe' {
 
         multibanco?: PaymentMethodOptions.Multibanco;
 
+        naver_pay?: PaymentMethodOptions.NaverPay;
+
         oxxo?: PaymentMethodOptions.Oxxo;
 
         p24?: PaymentMethodOptions.P24;
+
+        payco?: PaymentMethodOptions.Payco;
 
         paynow?: PaymentMethodOptions.Paynow;
 
@@ -1664,6 +1673,8 @@ declare module 'stripe' {
         rechnung?: PaymentMethodOptions.Rechnung;
 
         revolut_pay?: PaymentMethodOptions.RevolutPay;
+
+        samsung_pay?: PaymentMethodOptions.SamsungPay;
 
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
@@ -2368,6 +2379,13 @@ declare module 'stripe' {
 
         interface InteracPresent {}
 
+        interface KakaoPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+        }
+
         interface Klarna {
           /**
            * Controls when the funds will be captured from the customer's account.
@@ -2422,6 +2440,28 @@ declare module 'stripe' {
            * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
            */
           setup_future_usage?: 'none';
+        }
+
+        interface KrCard {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           */
+          setup_future_usage?: KrCard.SetupFutureUsage;
+        }
+
+        namespace KrCard {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Link {
@@ -2496,6 +2536,13 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface NaverPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+        }
+
         interface Oxxo {
           /**
            * The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -2527,6 +2574,13 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Payco {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+        }
+
         interface Paynow {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -2545,6 +2599,11 @@ declare module 'stripe' {
            * Controls when the funds will be captured from the customer's account.
            */
           capture_method?: 'manual';
+
+          /**
+           * The line items purchased by the customer.
+           */
+          line_items?: Array<Paypal.LineItem>;
 
           /**
            * Preferred locale of the PayPal checkout page that the customer is redirected to.
@@ -2579,6 +2638,65 @@ declare module 'stripe' {
         }
 
         namespace Paypal {
+          interface LineItem {
+            /**
+             * Type of the line item.
+             */
+            category?: LineItem.Category;
+
+            /**
+             * Description of the line item.
+             */
+            description?: string;
+
+            /**
+             * Descriptive name of the line item.
+             */
+            name: string;
+
+            /**
+             * Quantity of the line item. Cannot be a negative number.
+             */
+            quantity: number;
+
+            /**
+             * Client facing stock keeping unit, article number or similar.
+             */
+            sku?: string;
+
+            /**
+             * The Stripe account ID of the connected account that sells the item. This is only needed when using [Separate Charges and Transfers](https://docs.stripe.com/connect/separate-charges-and-transfers).
+             */
+            sold_by?: string;
+
+            tax?: LineItem.Tax;
+
+            /**
+             * Price for a single unit of the line item in minor units. Cannot be a negative number.
+             */
+            unit_amount: number;
+          }
+
+          namespace LineItem {
+            type Category = 'digital_goods' | 'donation' | 'physical_goods';
+
+            interface Tax {
+              /**
+               * The tax for a single unit of the line item in minor units. Cannot be a negative number.
+               */
+              amount: number;
+
+              /**
+               * The tax behavior for the line item.
+               */
+              behavior: Tax.Behavior;
+            }
+
+            namespace Tax {
+              type Behavior = 'exclusive' | 'inclusive';
+            }
+          }
+
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
@@ -2718,6 +2836,13 @@ declare module 'stripe' {
 
         namespace RevolutPay {
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface SamsungPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
         }
 
         interface SepaDebit {

@@ -32,7 +32,7 @@ declare module 'stripe' {
         created: number;
 
         /**
-         * Id of the customer to whom the credit was granted.
+         * ID of the customer to whom the credit was granted.
          */
         customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
@@ -57,7 +57,7 @@ declare module 'stripe' {
         metadata: Stripe.Metadata;
 
         /**
-         * A descriptive name shown in dashboard and on invoices.
+         * A descriptive name shown in dashboard.
          */
         name: string | null;
 
