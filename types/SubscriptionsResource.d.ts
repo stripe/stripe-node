@@ -2162,7 +2162,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items. Defaults to `true`.
+       * Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items. Defaults to `false`.
        */
       invoice_now?: boolean;
 
