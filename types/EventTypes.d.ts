@@ -195,6 +195,7 @@ declare module 'stripe' {
       | RadarEarlyFraudWarningCreatedEvent
       | RadarEarlyFraudWarningUpdatedEvent
       | RefundCreatedEvent
+      | RefundFailedEvent
       | RefundUpdatedEvent
       | ReportingReportRunFailedEvent
       | ReportingReportRunSucceededEvent
@@ -3339,7 +3340,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a refund from a customer's cash balance is created.
+     * Occurs whenever a refund is created.
      */
     interface RefundCreatedEvent extends EventBase {
       type: 'refund.created';
@@ -3355,7 +3356,23 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a refund from a customer's cash balance is updated.
+     * Occurs whenever a refund has failed.
+     */
+    interface RefundFailedEvent extends EventBase {
+      type: 'refund.failed';
+      data: RefundFailedEvent.Data;
+    }
+
+    namespace RefundFailedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Refund;
+
+        previous_attributes?: Partial<Stripe.Refund>;
+      }
+    }
+
+    /**
+     * Occurs whenever a refund is updated.
      */
     interface RefundUpdatedEvent extends EventBase {
       type: 'refund.updated';

@@ -214,7 +214,7 @@ declare module 'stripe' {
       twint?: PaymentMethodConfigurationCreateParams.Twint;
 
       /**
-       * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-debit) for more details.
+       * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-direct-debit) for more details.
        */
       us_bank_account?: PaymentMethodConfigurationCreateParams.UsBankAccount;
 
@@ -1290,7 +1290,7 @@ declare module 'stripe' {
       twint?: PaymentMethodConfigurationUpdateParams.Twint;
 
       /**
-       * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-debit) for more details.
+       * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-direct-debit) for more details.
        */
       us_bank_account?: PaymentMethodConfigurationUpdateParams.UsBankAccount;
 
