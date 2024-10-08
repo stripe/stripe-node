@@ -110,6 +110,8 @@ declare module 'stripe' {
 
         ideal?: PaymentMethodDetails.Ideal;
 
+        kakao_pay?: PaymentMethodDetails.KakaoPay;
+
         klarna?: PaymentMethodDetails.Klarna;
 
         kr_card?: PaymentMethodDetails.KrCard;
@@ -465,6 +467,8 @@ declare module 'stripe' {
             | 'SNSBNL2A'
             | 'TRIONL2U';
         }
+
+        interface KakaoPay {}
 
         interface Klarna {}
 
