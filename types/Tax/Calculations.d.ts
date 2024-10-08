@@ -358,6 +358,7 @@ declare module 'stripe' {
                 | 'lease_tax'
                 | 'pst'
                 | 'qst'
+                | 'retail_delivery_fee'
                 | 'rst'
                 | 'sales_tax'
                 | 'vat';
@@ -414,9 +415,19 @@ declare module 'stripe' {
             country: string | null;
 
             /**
+             * The amount of the tax rate when the `rate_type` is `flat_amount`. Tax rates with `rate_type` `percentage` can vary based on the transaction, resulting in this field being `null`. This field exposes the amount and currency of the flat tax rate.
+             */
+            flat_amount?: TaxRateDetails.FlatAmount | null;
+
+            /**
              * The tax rate percentage as a string. For example, 8.5% is represented as `"8.5"`.
              */
             percentage_decimal: string;
+
+            /**
+             * Indicates the type of tax rate applied to the taxable amount. This value can be `null` when no tax applies to the location.
+             */
+            rate_type?: TaxRateDetails.RateType | null;
 
             /**
              * State, county, province, or region.
@@ -430,6 +441,20 @@ declare module 'stripe' {
           }
 
           namespace TaxRateDetails {
+            interface FlatAmount {
+              /**
+               * Amount of the tax when the `rate_type` is `flat_amount`. This positive integer represents how much to charge in the smallest currency unit (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
+               */
+              amount: number;
+
+              /**
+               * Three-letter ISO currency code, in lowercase.
+               */
+              currency: string;
+            }
+
+            type RateType = 'flat_amount' | 'percentage';
+
             type TaxType =
               | 'amusement_tax'
               | 'communications_tax'
@@ -440,6 +465,7 @@ declare module 'stripe' {
               | 'lease_tax'
               | 'pst'
               | 'qst'
+              | 'retail_delivery_fee'
               | 'rst'
               | 'sales_tax'
               | 'vat';
