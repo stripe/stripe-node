@@ -455,6 +455,21 @@ declare module 'stripe' {
         treasury?: Capabilities.Treasury;
 
         /**
+         * The status of the treasury_evolve capability of the account.
+         */
+        treasury_evolve?: Capabilities.TreasuryEvolve;
+
+        /**
+         * The status of the treasury_fifth_third capability of the account.
+         */
+        treasury_fifth_third?: Capabilities.TreasuryFifthThird;
+
+        /**
+         * The status of the treasury_goldman_sachs capability of the account.
+         */
+        treasury_goldman_sachs?: Capabilities.TreasuryGoldmanSachs;
+
+        /**
          * The status of the TWINT capability of the account, or whether the account can directly process TWINT charges.
          */
         twint_payments?: Capabilities.TwintPayments;
@@ -569,6 +584,12 @@ declare module 'stripe' {
         type Transfers = 'active' | 'inactive' | 'pending';
 
         type Treasury = 'active' | 'inactive' | 'pending';
+
+        type TreasuryEvolve = 'active' | 'inactive' | 'pending';
+
+        type TreasuryFifthThird = 'active' | 'inactive' | 'pending';
+
+        type TreasuryGoldmanSachs = 'active' | 'inactive' | 'pending';
 
         type TwintPayments = 'active' | 'inactive' | 'pending';
 

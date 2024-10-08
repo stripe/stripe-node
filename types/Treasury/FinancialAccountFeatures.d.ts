@@ -176,6 +176,11 @@ declare module 'stripe' {
         namespace FinancialAddresses {
           interface Aba {
             /**
+             * Requested bank partner for this Financial Account
+             */
+            bank?: Aba.Bank;
+
+            /**
              * Whether the FinancialAccount should have the Feature.
              */
             requested: boolean;
@@ -192,6 +197,8 @@ declare module 'stripe' {
           }
 
           namespace Aba {
+            type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
+
             type Status = 'active' | 'pending' | 'restricted';
 
             interface StatusDetail {

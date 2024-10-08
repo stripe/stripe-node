@@ -440,6 +440,21 @@ declare module 'stripe' {
         treasury?: Capabilities.Treasury;
 
         /**
+         * The treasury_evolve capability.
+         */
+        treasury_evolve?: Capabilities.TreasuryEvolve;
+
+        /**
+         * The treasury_fifth_third capability.
+         */
+        treasury_fifth_third?: Capabilities.TreasuryFifthThird;
+
+        /**
+         * The treasury_goldman_sachs capability.
+         */
+        treasury_goldman_sachs?: Capabilities.TreasuryGoldmanSachs;
+
+        /**
          * The twint_payments capability.
          */
         twint_payments?: Capabilities.TwintPayments;
@@ -784,6 +799,27 @@ declare module 'stripe' {
         }
 
         interface Treasury {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TreasuryEvolve {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TreasuryFifthThird {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TreasuryGoldmanSachs {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2201,6 +2237,21 @@ declare module 'stripe' {
         treasury?: Capabilities.Treasury;
 
         /**
+         * The treasury_evolve capability.
+         */
+        treasury_evolve?: Capabilities.TreasuryEvolve;
+
+        /**
+         * The treasury_fifth_third capability.
+         */
+        treasury_fifth_third?: Capabilities.TreasuryFifthThird;
+
+        /**
+         * The treasury_goldman_sachs capability.
+         */
+        treasury_goldman_sachs?: Capabilities.TreasuryGoldmanSachs;
+
+        /**
          * The twint_payments capability.
          */
         twint_payments?: Capabilities.TwintPayments;
@@ -2545,6 +2596,27 @@ declare module 'stripe' {
         }
 
         interface Treasury {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TreasuryEvolve {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TreasuryFifthThird {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TreasuryGoldmanSachs {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
