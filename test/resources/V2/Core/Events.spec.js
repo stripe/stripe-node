@@ -51,7 +51,7 @@ const v2EventPayloadWithRelatedObject = `
   }
 `;
 
-describe('Events Resource', () => {
+describe('V2 Core Events Resource', () => {
   describe('retrieve', () => {
     it('Sends the correct request', () => {
       stripe.v2.core.events.retrieve('eventIdBaz');
@@ -88,6 +88,26 @@ describe('Events Resource', () => {
       const event = await mockStripe.v2.core.events.retrieve('ll_123');
       expect(event).ok;
       expect(event.fetchRelatedObject).ok;
+    });
+
+    it('Can call fetchRelatedObject', async () => {
+      const mockStripe = testUtils.createMockClient([
+        {
+          method: 'GET',
+          path: '/v2/core/events/ll_123',
+          response: v2EventPayloadWithRelatedObject,
+        },
+        {
+          method: 'GET',
+          path: '/v1/things/obj_123',
+          response: '{"id": "obj_123"}',
+        },
+      ]);
+      const event = await mockStripe.v2.core.events.retrieve('ll_123');
+      expect(event).ok;
+      expect(event.fetchRelatedObject).ok;
+      const obj = await event.fetchRelatedObject();
+      expect(obj.id).to.equal('obj_123');
     });
   });
 

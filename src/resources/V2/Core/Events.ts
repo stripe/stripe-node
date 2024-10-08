@@ -4,9 +4,6 @@ import {StripeResource} from '../../../StripeResource.js';
 const stripeMethod = StripeResource.method;
 
 export const Events = StripeResource.extend({
-  constructor: function(...args: any) {
-    StripeResource.apply(this, args);
-  },
   retrieve(...args: any[]) {
     const transformResponseData = (response: any): any => {
       return this.addFetchRelatedObjectIfNeeded(response);
@@ -33,6 +30,15 @@ export const Events = StripeResource.extend({
     }).apply(this, args);
   },
 
+  /**
+   * @private
+   *
+   * For internal use in stripe-node.
+   *
+   * @param pulledEvent The retrieved event object
+   * @returns The retrieved event object with a fetchRelatedObject method,
+   * if pulledEvent.related_object is valid (non-null and has a url)
+   */
   addFetchRelatedObjectIfNeeded(pulledEvent: any) {
     if (!pulledEvent.related_object || !pulledEvent.related_object.url) {
       return pulledEvent;
