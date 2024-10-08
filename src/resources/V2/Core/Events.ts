@@ -40,6 +40,11 @@ export const Events = StripeResource.extend({
     return {
       ...pulledEvent,
       fetchRelatedObject: (): Promise<null | any> =>
+        // call stripeMethod with 'this' resource to fetch
+        // the related object. 'this' is needed to construct
+        // and send the request, but the method spec controls
+        // the url endpoint and method, so it doesn't matter
+        // that 'this' is an Events resource object here
         stripeMethod({
           method: 'GET',
           fullPath: pulledEvent.related_object.url,
