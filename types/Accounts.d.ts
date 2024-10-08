@@ -86,6 +86,11 @@ declare module 'stripe' {
       future_requirements?: Account.FutureRequirements;
 
       /**
+       * The groups associated with the account.
+       */
+      groups?: Account.Groups | null;
+
+      /**
        * This is an object representing a person associated with a Stripe account.
        *
        * A platform cannot access a person for an account where [account.controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`, which includes Standard and Express accounts, after creating an Account Link or Account Session to start Connect onboarding.
@@ -1073,6 +1078,13 @@ declare module 'stripe' {
             | 'verification_requires_additional_proof_of_registration'
             | 'verification_supportability';
         }
+      }
+
+      interface Groups {
+        /**
+         * The group the account is in to determine their payments pricing, and null if the account is on customized pricing. [See the Platform pricing tool documentation](https://stripe.com/docs/connect/platform-pricing-tools) for details.
+         */
+        payments_pricing: string | null;
       }
 
       interface Requirements {

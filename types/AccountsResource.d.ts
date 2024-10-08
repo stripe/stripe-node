@@ -73,6 +73,11 @@ declare module 'stripe' {
       external_account?: string | AccountCreateParams.ExternalAccount;
 
       /**
+       * A hash of account group type to tokens. These are account groups this account should be added to
+       */
+      groups?: AccountCreateParams.Groups;
+
+      /**
        * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`. Once you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions), this property can only be updated for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
        */
       individual?: AccountCreateParams.Individual;
@@ -1198,6 +1203,13 @@ declare module 'stripe' {
         account_number: string;
       }
 
+      interface Groups {
+        /**
+         * The group the account is in to determine their payments pricing, and null if the account is on customized pricing. [See the Platform pricing tool documentation](https://stripe.com/docs/connect/platform-pricing-tools) for details.
+         */
+        payments_pricing?: Stripe.Emptyable<string>;
+      }
+
       interface Individual {
         /**
          * The individual's primary address.
@@ -1787,6 +1799,11 @@ declare module 'stripe' {
         | AccountUpdateParams.Card
         | AccountUpdateParams.CardToken
       >;
+
+      /**
+       * A hash of account group type to tokens. These are account groups this account should be added to
+       */
+      groups?: AccountUpdateParams.Groups;
 
       /**
        * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`. Once you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions), this property can only be updated for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
@@ -2854,6 +2871,13 @@ declare module 'stripe' {
            */
           files?: Array<string>;
         }
+      }
+
+      interface Groups {
+        /**
+         * The group the account is in to determine their payments pricing, and null if the account is on customized pricing. [See the Platform pricing tool documentation](https://stripe.com/docs/connect/platform-pricing-tools) for details.
+         */
+        payments_pricing?: Stripe.Emptyable<string>;
       }
 
       interface Individual {
