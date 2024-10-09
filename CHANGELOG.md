@@ -1,4 +1,8 @@
 # Changelog
+## 17.2.0 - 2024-10-09
+* [#2201](https://github.com/stripe/stripe-node/pull/2201) Add fetchRelatedObject to V2 Events if needed
+  * `fetchRelatedObject` is added to events retrieved using `stripe.v2.core.events` and can be used to easily fetch the Stripe object related to a retrieved event
+
 ## 17.1.0 - 2024-10-03
 * [#2199](https://github.com/stripe/stripe-node/pull/2199) Update generated code
   * Remove the support for resource `Margin` that was accidentally made public in the last release
