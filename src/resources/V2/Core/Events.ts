@@ -2,24 +2,8 @@
 import {StripeResource} from '../../../StripeResource.js';
 
 const stripeMethod = StripeResource.method;
-const RelatedObjects = StripeResource.extend({
-  fetchRelatedObject(pulledEvent: any) {
-    return stripeMethod({
-      method: 'GET',
-      fullPath: pulledEvent.related_object.url,
-    }).apply(this, [
-      {
-        stripeAccount: pulledEvent.context,
-      },
-    ]);
-  },
-});
 
 export const Events = StripeResource.extend({
-  constructor: function(...args: any) {
-    StripeResource.apply(this, args);
-    this.relatedResource = new RelatedObjects(...args);
-  },
   retrieve(...args: any[]) {
     const transformResponseData = (response: any): any => {
       return this.addFetchRelatedObjectIfNeeded(response);
@@ -46,6 +30,15 @@ export const Events = StripeResource.extend({
     }).apply(this, args);
   },
 
+  /**
+   * @private
+   *
+   * For internal use in stripe-node.
+   *
+   * @param pulledEvent The retrieved event object
+   * @returns The retrieved event object with a fetchRelatedObject method,
+   * if pulledEvent.related_object is valid (non-null and has a url)
+   */
   addFetchRelatedObjectIfNeeded(pulledEvent: any) {
     if (!pulledEvent.related_object || !pulledEvent.related_object.url) {
       return pulledEvent;
@@ -53,7 +46,19 @@ export const Events = StripeResource.extend({
     return {
       ...pulledEvent,
       fetchRelatedObject: (): Promise<null | any> =>
-        this.relatedResource.fetchRelatedObject(pulledEvent),
+        // call stripeMethod with 'this' resource to fetch
+        // the related object. 'this' is needed to construct
+        // and send the request, but the method spec controls
+        // the url endpoint and method, so it doesn't matter
+        // that 'this' is an Events resource object here
+        stripeMethod({
+          method: 'GET',
+          fullPath: pulledEvent.related_object.url,
+        }).apply(this, [
+          {
+            stripeAccount: pulledEvent.context,
+          },
+        ]),
     };
   },
 });
