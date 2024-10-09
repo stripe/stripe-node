@@ -5,14 +5,14 @@ declare module 'stripe' {
     namespace BillingPortal {
       interface ConfigurationCreateParams {
         /**
-         * The business information shown to customers in the portal.
-         */
-        business_profile: ConfigurationCreateParams.BusinessProfile;
-
-        /**
          * Information about the features available in the portal.
          */
         features: ConfigurationCreateParams.Features;
+
+        /**
+         * The business information shown to customers in the portal.
+         */
+        business_profile?: ConfigurationCreateParams.BusinessProfile;
 
         /**
          * The default URL to redirect customers to when they click on the portal's link to return to your website. This can be [overriden](https://stripe.com/docs/api/customer_portal/sessions/create#create_portal_session-return_url) when creating the session.
