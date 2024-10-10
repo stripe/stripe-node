@@ -53,7 +53,7 @@ declare module 'stripe' {
       /**
        * The amount of the tax rate when the `rate_type` is `flat_amount`. Tax rates with `rate_type` `percentage` can vary based on the transaction, resulting in this field being `null`. This field exposes the amount and currency of the flat tax rate.
        */
-      flat_amount?: TaxRate.FlatAmount | null;
+      flat_amount: TaxRate.FlatAmount | null;
 
       /**
        * This specifies if the tax rate is inclusive or exclusive.
@@ -88,7 +88,7 @@ declare module 'stripe' {
       /**
        * Indicates the type of tax rate applied to the taxable amount. This value can be `null` when no tax applies to the location.
        */
-      rate_type?: TaxRate.RateType | null;
+      rate_type: TaxRate.RateType | null;
 
       /**
        * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
