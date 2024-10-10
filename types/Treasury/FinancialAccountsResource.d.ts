@@ -98,9 +98,18 @@ declare module 'stripe' {
           namespace FinancialAddresses {
             interface Aba {
               /**
+               * Requested bank partner
+               */
+              bank?: Aba.Bank;
+
+              /**
                * Whether the FinancialAccount should have the Feature.
                */
               requested: boolean;
+            }
+
+            namespace Aba {
+              type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
             }
           }
 
@@ -300,9 +309,18 @@ declare module 'stripe' {
           namespace FinancialAddresses {
             interface Aba {
               /**
+               * Requested bank partner
+               */
+              bank?: Aba.Bank;
+
+              /**
                * Whether the FinancialAccount should have the Feature.
                */
               requested: boolean;
+            }
+
+            namespace Aba {
+              type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
             }
           }
 
@@ -491,9 +509,18 @@ declare module 'stripe' {
         namespace FinancialAddresses {
           interface Aba {
             /**
+             * Requested bank partner
+             */
+            bank?: Aba.Bank;
+
+            /**
              * Whether the FinancialAccount should have the Feature.
              */
             requested: boolean;
+          }
+
+          namespace Aba {
+            type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
           }
         }
 

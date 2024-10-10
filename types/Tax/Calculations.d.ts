@@ -417,7 +417,7 @@ declare module 'stripe' {
             /**
              * The amount of the tax rate when the `rate_type` is `flat_amount`. Tax rates with `rate_type` `percentage` can vary based on the transaction, resulting in this field being `null`. This field exposes the amount and currency of the flat tax rate.
              */
-            flat_amount?: TaxRateDetails.FlatAmount | null;
+            flat_amount: TaxRateDetails.FlatAmount | null;
 
             /**
              * The tax rate percentage as a string. For example, 8.5% is represented as `"8.5"`.
@@ -427,7 +427,7 @@ declare module 'stripe' {
             /**
              * Indicates the type of tax rate applied to the taxable amount. This value can be `null` when no tax applies to the location.
              */
-            rate_type?: TaxRateDetails.RateType | null;
+            rate_type: TaxRateDetails.RateType | null;
 
             /**
              * State, county, province, or region.

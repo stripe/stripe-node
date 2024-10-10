@@ -158,7 +158,7 @@ export const createMockClient = (
       throw new Error(`Unable to find a mock request for ${method} ${path}`);
     }
 
-    callback(null, Promise.resolve(JSON.parse(request.response)));
+    callback(null, JSON.parse(request.response));
   });
 };
 

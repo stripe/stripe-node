@@ -16,8 +16,10 @@ declare module 'stripe' {
       type: 'v1.billing.meter.error_report_triggered';
       // Retrieves data specific to this event.
       data: V1BillingMeterErrorReportTriggeredEvent.Data;
-      // Retrieves the object associated with the event.
+      // Object containing the reference to API resource relevant to the event.
       related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<Billing.Meter>;
     }
 
     namespace V1BillingMeterErrorReportTriggeredEvent {
