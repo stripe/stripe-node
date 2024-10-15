@@ -695,6 +695,7 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'jp_credit_transfer'
           | 'konbini'
           | 'link'
           | 'multibanco'
