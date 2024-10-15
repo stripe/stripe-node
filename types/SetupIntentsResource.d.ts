@@ -609,7 +609,7 @@ declare module 'stripe' {
 
         interface Ideal {
           /**
-           * The customer's bank.
+           * The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
            */
           bank?: Ideal.Bank;
         }
@@ -1958,7 +1958,7 @@ declare module 'stripe' {
 
         interface Ideal {
           /**
-           * The customer's bank.
+           * The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
            */
           bank?: Ideal.Bank;
         }
@@ -3356,7 +3356,7 @@ declare module 'stripe' {
 
         interface Ideal {
           /**
-           * The customer's bank.
+           * The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
            */
           bank?: Ideal.Bank;
         }
