@@ -23,12 +23,12 @@ declare module 'stripe' {
       namespace CreditBalanceSummaryRetrieveParams {
         interface Filter {
           /**
-           * The credit applicability scope for which to fetch balance summary.
+           * The billing credit applicability scope for which to fetch credit balance summary.
            */
           applicability_scope?: Filter.ApplicabilityScope;
 
           /**
-           * The credit grant for which to fetch balance summary.
+           * The credit grant for which to fetch credit balance summary.
            */
           credit_grant?: string;
 

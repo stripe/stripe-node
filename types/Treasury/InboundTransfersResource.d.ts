@@ -80,6 +80,18 @@ declare module 'stripe' {
         expand?: Array<string>;
       }
 
+      interface InboundTransferConfirmParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * Represents the number of seconds after an Inbound Transfer has been committed to our banking partners that the user delays funds availability into the financial account. The maximum allowed delay is 5 days.
+         */
+        funds_availability_delay?: number;
+      }
+
       class InboundTransfersResource {
         /**
          * Creates an InboundTransfer.
@@ -119,6 +131,19 @@ declare module 'stripe' {
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Treasury.InboundTransfer>>;
         cancel(
+          id: string,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Treasury.InboundTransfer>>;
+
+        /**
+         * Confirm an InboundTransfer.
+         */
+        confirm(
+          id: string,
+          params?: InboundTransferConfirmParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Treasury.InboundTransfer>>;
+        confirm(
           id: string,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Treasury.InboundTransfer>>;

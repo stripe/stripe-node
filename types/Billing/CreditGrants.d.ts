@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Billing {
       /**
-       * A credit grant is a resource that records a grant of some credit to a customer.
+       * A credit grant is a resource that records a grant of billing credits to a customer.
        */
       interface CreditGrant {
         /**
@@ -32,17 +32,17 @@ declare module 'stripe' {
         created: number;
 
         /**
-         * ID of the customer to whom the credit was granted.
+         * ID of the customer to whom the billing credits are granted.
          */
         customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
         /**
-         * The time when the credit becomes effective i.e when it is eligible to be used.
+         * The time when the billing credits become effective i.e when they are eligible to be used.
          */
         effective_at: number | null;
 
         /**
-         * The time when the credit will expire. If not present, the credit will never expire.
+         * The time when the billing credits will expire. If not present, the billing credits will never expire.
          */
         expires_at: number | null;
 
@@ -85,7 +85,7 @@ declare module 'stripe' {
           monetary: Amount.Monetary | null;
 
           /**
-           * The type of this amount. We currently only support `monetary` credits.
+           * The type of this amount. We currently only support `monetary` billing credits.
            */
           type: 'monetary';
         }

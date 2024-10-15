@@ -20,4 +20,8 @@ export const InboundTransfers = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/treasury/inbound_transfers/{inbound_transfer}/cancel',
   }),
+  confirm: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/treasury/inbound_transfers/{inbound_transfer}/confirm',
+  }),
 });

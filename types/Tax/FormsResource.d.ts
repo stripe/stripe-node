@@ -35,12 +35,29 @@ declare module 'stripe' {
           account?: string;
 
           /**
-           * Specifies the payee type. Always `account`.
+           * The external reference to the payee whose forms will be retrieved.
            */
-          type?: 'account';
+          external_reference?: string;
+
+          /**
+           * Specifies the payee type. Either `account` or `external_reference`.
+           */
+          type?: Payee.Type;
         }
 
-        type Type = 'us_1099_k' | 'us_1099_misc' | 'us_1099_nec';
+        namespace Payee {
+          type Type = 'account' | 'external_reference';
+        }
+
+        type Type =
+          | 'au_serr'
+          | 'ca_mrdp'
+          | 'eu_dac7'
+          | 'gb_mrdp'
+          | 'nz_mrdp'
+          | 'us_1099_k'
+          | 'us_1099_misc'
+          | 'us_1099_nec';
       }
 
       interface FormPdfParams {

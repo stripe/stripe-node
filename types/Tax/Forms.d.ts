@@ -100,12 +100,29 @@ declare module 'stripe' {
           account: string | Stripe.Account | null;
 
           /**
-           * Always `account`.
+           * The external reference to this payee.
            */
-          type: 'account';
+          external_reference: string | null;
+
+          /**
+           * Either `account` or `external_reference`.
+           */
+          type: Payee.Type;
         }
 
-        type Type = 'us_1099_k' | 'us_1099_misc' | 'us_1099_nec';
+        namespace Payee {
+          type Type = 'account' | 'external_reference';
+        }
+
+        type Type =
+          | 'au_serr'
+          | 'ca_mrdp'
+          | 'eu_dac7'
+          | 'gb_mrdp'
+          | 'nz_mrdp'
+          | 'us_1099_k'
+          | 'us_1099_misc'
+          | 'us_1099_nec';
 
         interface Us1099K {
           /**
