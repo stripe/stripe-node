@@ -33,6 +33,8 @@ declare module 'stripe' {
        */
       allow_redisplay?: PaymentMethod.AllowRedisplay;
 
+      alma?: PaymentMethod.Alma;
+
       amazon_pay?: PaymentMethod.AmazonPay;
 
       au_becs_debit?: PaymentMethod.AuBecsDebit;
@@ -187,6 +189,8 @@ declare module 'stripe' {
       interface Alipay {}
 
       type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+      interface Alma {}
 
       interface AmazonPay {}
 
@@ -1372,6 +1376,7 @@ declare module 'stripe' {
         | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
+        | 'alma'
         | 'amazon_pay'
         | 'au_becs_debit'
         | 'bacs_debit'

@@ -210,6 +210,11 @@ declare module 'stripe' {
         allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
         /**
+         * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+         */
+        alma?: PaymentMethodData.Alma;
+
+        /**
          * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
          */
         amazon_pay?: PaymentMethodData.AmazonPay;
@@ -460,6 +465,8 @@ declare module 'stripe' {
         interface Alipay {}
 
         type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+        interface Alma {}
 
         interface AmazonPay {}
 
@@ -817,6 +824,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'alma'
           | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
@@ -1559,6 +1567,11 @@ declare module 'stripe' {
         allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
         /**
+         * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+         */
+        alma?: PaymentMethodData.Alma;
+
+        /**
          * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
          */
         amazon_pay?: PaymentMethodData.AmazonPay;
@@ -1809,6 +1822,8 @@ declare module 'stripe' {
         interface Alipay {}
 
         type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+        interface Alma {}
 
         interface AmazonPay {}
 
@@ -2166,6 +2181,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'alma'
           | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
@@ -2957,6 +2973,11 @@ declare module 'stripe' {
         allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
         /**
+         * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+         */
+        alma?: PaymentMethodData.Alma;
+
+        /**
          * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
          */
         amazon_pay?: PaymentMethodData.AmazonPay;
@@ -3207,6 +3228,8 @@ declare module 'stripe' {
         interface Alipay {}
 
         type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+        interface Alma {}
 
         interface AmazonPay {}
 
@@ -3564,6 +3587,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'alma'
           | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'

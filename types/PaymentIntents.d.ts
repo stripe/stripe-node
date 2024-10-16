@@ -1604,6 +1604,8 @@ declare module 'stripe' {
 
         alipay?: PaymentMethodOptions.Alipay;
 
+        alma?: PaymentMethodOptions.Alma;
+
         amazon_pay?: PaymentMethodOptions.AmazonPay;
 
         au_becs_debit?: PaymentMethodOptions.AuBecsDebit;
@@ -1808,6 +1810,13 @@ declare module 'stripe' {
 
         namespace Alipay {
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Alma {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
         }
 
         interface AmazonPay {

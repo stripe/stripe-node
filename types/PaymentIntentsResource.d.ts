@@ -966,6 +966,11 @@ declare module 'stripe' {
         allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
         /**
+         * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+         */
+        alma?: PaymentMethodData.Alma;
+
+        /**
          * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
          */
         amazon_pay?: PaymentMethodData.AmazonPay;
@@ -1216,6 +1221,8 @@ declare module 'stripe' {
         interface Alipay {}
 
         type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+        interface Alma {}
 
         interface AmazonPay {}
 
@@ -1573,6 +1580,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'alma'
           | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
@@ -1674,6 +1682,11 @@ declare module 'stripe' {
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
+
+        /**
+         * If this is a `alma` PaymentMethod, this sub-hash contains details about the Alma payment method options.
+         */
+        alma?: Stripe.Emptyable<PaymentMethodOptions.Alma>;
 
         /**
          * If this is a `amazon_pay` PaymentMethod, this sub-hash contains details about the Amazon Pay payment method options.
@@ -2031,6 +2044,17 @@ declare module 'stripe' {
 
         namespace Alipay {
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Alma {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
         }
 
         interface AmazonPay {
@@ -4564,6 +4588,11 @@ declare module 'stripe' {
         allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
         /**
+         * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+         */
+        alma?: PaymentMethodData.Alma;
+
+        /**
          * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
          */
         amazon_pay?: PaymentMethodData.AmazonPay;
@@ -4814,6 +4843,8 @@ declare module 'stripe' {
         interface Alipay {}
 
         type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+        interface Alma {}
 
         interface AmazonPay {}
 
@@ -5171,6 +5202,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'alma'
           | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
@@ -5272,6 +5304,11 @@ declare module 'stripe' {
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
+
+        /**
+         * If this is a `alma` PaymentMethod, this sub-hash contains details about the Alma payment method options.
+         */
+        alma?: Stripe.Emptyable<PaymentMethodOptions.Alma>;
 
         /**
          * If this is a `amazon_pay` PaymentMethod, this sub-hash contains details about the Amazon Pay payment method options.
@@ -5629,6 +5666,17 @@ declare module 'stripe' {
 
         namespace Alipay {
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Alma {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
         }
 
         interface AmazonPay {
@@ -8917,6 +8965,11 @@ declare module 'stripe' {
         allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
         /**
+         * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+         */
+        alma?: PaymentMethodData.Alma;
+
+        /**
          * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
          */
         amazon_pay?: PaymentMethodData.AmazonPay;
@@ -9167,6 +9220,8 @@ declare module 'stripe' {
         interface Alipay {}
 
         type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+        interface Alma {}
 
         interface AmazonPay {}
 
@@ -9524,6 +9579,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'alma'
           | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
@@ -9625,6 +9681,11 @@ declare module 'stripe' {
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
+
+        /**
+         * If this is a `alma` PaymentMethod, this sub-hash contains details about the Alma payment method options.
+         */
+        alma?: Stripe.Emptyable<PaymentMethodOptions.Alma>;
 
         /**
          * If this is a `amazon_pay` PaymentMethod, this sub-hash contains details about the Amazon Pay payment method options.
@@ -9982,6 +10043,17 @@ declare module 'stripe' {
 
         namespace Alipay {
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Alma {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
         }
 
         interface AmazonPay {
