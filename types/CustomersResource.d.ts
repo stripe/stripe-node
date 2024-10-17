@@ -530,7 +530,7 @@ declare module 'stripe' {
       }
 
       namespace Tax {
-        type ValidateLocation = 'deferred' | 'immediately';
+        type ValidateLocation = 'auto' | 'deferred' | 'immediately';
       }
 
       type TaxExempt = 'exempt' | 'none' | 'reverse';

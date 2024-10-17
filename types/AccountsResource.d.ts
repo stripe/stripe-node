@@ -220,6 +220,11 @@ declare module 'stripe' {
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
 
         /**
+         * The alma_payments capability.
+         */
+        alma_payments?: Capabilities.AlmaPayments;
+
+        /**
          * The amazon_pay_payments capability.
          */
         amazon_pay_payments?: Capabilities.AmazonPayPayments;
@@ -531,6 +536,13 @@ declare module 'stripe' {
         }
 
         interface AfterpayClearpayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface AlmaPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2113,6 +2125,11 @@ declare module 'stripe' {
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
 
         /**
+         * The alma_payments capability.
+         */
+        alma_payments?: Capabilities.AlmaPayments;
+
+        /**
          * The amazon_pay_payments capability.
          */
         amazon_pay_payments?: Capabilities.AmazonPayPayments;
@@ -2424,6 +2441,13 @@ declare module 'stripe' {
         }
 
         interface AfterpayClearpayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface AlmaPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

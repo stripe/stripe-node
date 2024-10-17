@@ -235,6 +235,11 @@ declare module 'stripe' {
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
 
         /**
+         * The status of the Alma capability of the account, or whether the account can directly process Alma payments.
+         */
+        alma_payments?: Capabilities.AlmaPayments;
+
+        /**
          * The status of the AmazonPay capability of the account, or whether the account can directly process AmazonPay payments.
          */
         amazon_pay_payments?: Capabilities.AmazonPayPayments;
@@ -536,6 +541,8 @@ declare module 'stripe' {
         type AffirmPayments = 'active' | 'inactive' | 'pending';
 
         type AfterpayClearpayPayments = 'active' | 'inactive' | 'pending';
+
+        type AlmaPayments = 'active' | 'inactive' | 'pending';
 
         type AmazonPayPayments = 'active' | 'inactive' | 'pending';
 
