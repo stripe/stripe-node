@@ -24,6 +24,11 @@ declare module 'stripe' {
       alipay?: PaymentMethodConfigurationCreateParams.Alipay;
 
       /**
+       * Alma is a Buy Now, Pay Later payment method that offers customers the ability to pay in 2, 3, or 4 installments.
+       */
+      alma?: PaymentMethodConfigurationCreateParams.Alma;
+
+      /**
        * Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
        */
       amazon_pay?: PaymentMethodConfigurationCreateParams.AmazonPay;
@@ -298,6 +303,26 @@ declare module 'stripe' {
       }
 
       namespace Alipay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Alma {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Alma.DisplayPreference;
+      }
+
+      namespace Alma {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -1105,6 +1130,11 @@ declare module 'stripe' {
       alipay?: PaymentMethodConfigurationUpdateParams.Alipay;
 
       /**
+       * Alma is a Buy Now, Pay Later payment method that offers customers the ability to pay in 2, 3, or 4 installments.
+       */
+      alma?: PaymentMethodConfigurationUpdateParams.Alma;
+
+      /**
        * Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
        */
       amazon_pay?: PaymentMethodConfigurationUpdateParams.AmazonPay;
@@ -1374,6 +1404,26 @@ declare module 'stripe' {
       }
 
       namespace Alipay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Alma {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Alma.DisplayPreference;
+      }
+
+      namespace Alma {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

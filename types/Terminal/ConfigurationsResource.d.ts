@@ -136,6 +136,11 @@ declare module 'stripe' {
           nzd?: Tipping.Nzd;
 
           /**
+           * Tipping configuration for PLN
+           */
+          pln?: Tipping.Pln;
+
+          /**
            * Tipping configuration for SEK
            */
           sek?: Tipping.Sek;
@@ -323,6 +328,23 @@ declare module 'stripe' {
           }
 
           interface Nzd {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts?: Array<number>;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages?: Array<number>;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
+          interface Pln {
             /**
              * Fixed amounts displayed when collecting a tip
              */
@@ -545,6 +567,11 @@ declare module 'stripe' {
           nzd?: Tipping.Nzd;
 
           /**
+           * Tipping configuration for PLN
+           */
+          pln?: Tipping.Pln;
+
+          /**
            * Tipping configuration for SEK
            */
           sek?: Tipping.Sek;
@@ -732,6 +759,23 @@ declare module 'stripe' {
           }
 
           interface Nzd {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts?: Array<number>;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages?: Array<number>;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
+          interface Pln {
             /**
              * Fixed amounts displayed when collecting a tip
              */

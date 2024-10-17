@@ -51,6 +51,9 @@ declare module 'stripe' {
        */
       livemode: boolean;
 
+      /**
+       * The pretax credit amounts (ex: discount, credit grants, etc) for this line item.
+       */
       pretax_credit_amounts?: Array<CreditNoteLineItem.PretaxCreditAmount>;
 
       /**

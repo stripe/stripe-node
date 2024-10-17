@@ -23,22 +23,22 @@ declare module 'stripe' {
         created: number;
 
         /**
-         * Credit details for this balance transaction. Only present if type is `credit`.
+         * Credit details for this credit balance transaction. Only present if type is `credit`.
          */
         credit: CreditBalanceTransaction.Credit | null;
 
         /**
-         * The credit grant associated with this balance transaction.
+         * The credit grant associated with this credit balance transaction.
          */
         credit_grant: string | Stripe.Billing.CreditGrant;
 
         /**
-         * Debit details for this balance transaction. Only present if type is `debit`.
+         * Debit details for this credit balance transaction. Only present if type is `debit`.
          */
         debit: CreditBalanceTransaction.Debit | null;
 
         /**
-         * The effective time of this balance transaction.
+         * The effective time of this credit balance transaction.
          */
         effective_at: number;
 
@@ -53,7 +53,7 @@ declare module 'stripe' {
         test_clock: string | Stripe.TestHelpers.TestClock | null;
 
         /**
-         * The type of balance transaction (credit or debit).
+         * The type of credit balance transaction (credit or debit).
          */
         type: CreditBalanceTransaction.Type | null;
       }
@@ -76,7 +76,7 @@ declare module 'stripe' {
             monetary: Amount.Monetary | null;
 
             /**
-             * The type of this amount. We currently only support `monetary` credits.
+             * The type of this amount. We currently only support `monetary` billing credits.
              */
             type: 'monetary';
           }
@@ -100,7 +100,7 @@ declare module 'stripe' {
           amount: Debit.Amount;
 
           /**
-           * Details of how the credits were applied to an invoice. Only present if `type` is `credits_applied`.
+           * Details of how the billing credits were applied to an invoice. Only present if `type` is `credits_applied`.
            */
           credits_applied: Debit.CreditsApplied | null;
 
@@ -118,7 +118,7 @@ declare module 'stripe' {
             monetary: Amount.Monetary | null;
 
             /**
-             * The type of this amount. We currently only support `monetary` credits.
+             * The type of this amount. We currently only support `monetary` billing credits.
              */
             type: 'monetary';
           }
@@ -139,12 +139,12 @@ declare module 'stripe' {
 
           interface CreditsApplied {
             /**
-             * The invoice to which the credits were applied.
+             * The invoice to which the billing credits were applied.
              */
             invoice: string | Stripe.Invoice;
 
             /**
-             * The invoice line item to which the credits were applied.
+             * The invoice line item to which the billing credits were applied.
              */
             invoice_line_item: string;
           }

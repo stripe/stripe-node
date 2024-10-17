@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Billing {
       /**
-       * Indicates the credit balance for credits granted to a customer.
+       * Indicates the billing credit balance for billing credits granted to a customer.
        */
       interface CreditBalanceSummary {
         /**
@@ -13,7 +13,7 @@ declare module 'stripe' {
         object: 'billing.credit_balance_summary';
 
         /**
-         * The credit balances. One entry per credit grant currency. If a customer only has credit grants in a single currency, then this will have a single balance entry.
+         * The billing credit balances. One entry per credit grant currency. If a customer only has credit grants in a single currency, then this will have a single balance entry.
          */
         balances: Array<CreditBalanceSummary.Balance>;
 
@@ -43,7 +43,7 @@ declare module 'stripe' {
             monetary: AvailableBalance.Monetary | null;
 
             /**
-             * The type of this amount. We currently only support `monetary` credits.
+             * The type of this amount. We currently only support `monetary` billing credits.
              */
             type: 'monetary';
           }
@@ -69,7 +69,7 @@ declare module 'stripe' {
             monetary: LedgerBalance.Monetary | null;
 
             /**
-             * The type of this amount. We currently only support `monetary` credits.
+             * The type of this amount. We currently only support `monetary` billing credits.
              */
             type: 'monetary';
           }

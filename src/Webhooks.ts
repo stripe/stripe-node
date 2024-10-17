@@ -358,7 +358,7 @@ export function createWebhooks(
 
     const docsLocation =
       '\nLearn more about webhook signing and explore webhook integration examples for various frameworks at ' +
-      'https://github.com/stripe/stripe-node#webhook-signing';
+      'https://docs.stripe.com/webhooks/signature';
 
     const whitespaceMessage = secretContainsWhitespace
       ? '\n\nNote: The provided signing secret contains whitespace. This often indicates an extra newline or space is in the value'

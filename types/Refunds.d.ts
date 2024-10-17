@@ -113,6 +113,8 @@ declare module 'stripe' {
 
         alipay?: DestinationDetails.Alipay;
 
+        alma?: DestinationDetails.Alma;
+
         amazon_pay?: DestinationDetails.AmazonPay;
 
         au_bank_transfer?: DestinationDetails.AuBankTransfer;
@@ -179,6 +181,8 @@ declare module 'stripe' {
         interface AfterpayClearpay {}
 
         interface Alipay {}
+
+        interface Alma {}
 
         interface AmazonPay {}
 

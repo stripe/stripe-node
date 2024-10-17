@@ -949,10 +949,15 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'jp_credit_transfer'
+          | 'kakao_pay'
           | 'konbini'
+          | 'kr_card'
           | 'link'
           | 'multibanco'
+          | 'naver_pay'
           | 'p24'
+          | 'payco'
           | 'paynow'
           | 'paypal'
           | 'promptpay'
@@ -1985,10 +1990,15 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'jp_credit_transfer'
+          | 'kakao_pay'
           | 'konbini'
+          | 'kr_card'
           | 'link'
           | 'multibanco'
+          | 'naver_pay'
           | 'p24'
+          | 'payco'
           | 'paynow'
           | 'paypal'
           | 'promptpay'
@@ -2202,7 +2212,7 @@ declare module 'stripe' {
 
     interface SubscriptionResumeParams {
       /**
-       * Either `now` or `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time (in UTC). Setting the value to `unchanged` advances the subscription's billing cycle anchor to the period that surrounds the current time. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+       * The billing cycle anchor that applies when the subscription is resumed. Either `now` or `unchanged`. The default is `now`. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
        */
       billing_cycle_anchor?: SubscriptionResumeParams.BillingCycleAnchor;
 

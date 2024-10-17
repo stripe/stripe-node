@@ -110,6 +110,9 @@ declare module 'stripe' {
 
       pre_payment_amount?: number;
 
+      /**
+       * The pretax credit amounts (ex: discount, credit grants, etc) for all line items.
+       */
       pretax_credit_amounts?: Array<CreditNote.PretaxCreditAmount>;
 
       /**
