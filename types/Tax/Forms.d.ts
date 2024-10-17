@@ -19,6 +19,10 @@ declare module 'stripe' {
          */
         object: 'tax.form';
 
+        au_serr?: Form.AuSerr;
+
+        ca_mrdp?: Form.CaMrdp;
+
         /**
          * The form that corrects this form, if any.
          */
@@ -29,15 +33,21 @@ declare module 'stripe' {
          */
         created: number;
 
+        eu_dac7?: Form.EuDac7;
+
         /**
          * A list of tax filing statuses. Note that a filing status will only be included if the form has been filed directly with the jurisdiction's tax authority.
          */
         filing_statuses: Array<Form.FilingStatus>;
 
+        gb_mrdp?: Form.GbMrdp;
+
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
+
+        nz_mrdp?: Form.NzMrdp;
 
         payee: Form.Payee;
 
@@ -54,6 +64,42 @@ declare module 'stripe' {
       }
 
       namespace Form {
+        interface AuSerr {
+          /**
+           * End date of the period represented by the information reported on the tax form.
+           */
+          reporting_period_end_date: string;
+
+          /**
+           * Start date of the period represented by the information reported on the tax form.
+           */
+          reporting_period_start_date: string;
+        }
+
+        interface CaMrdp {
+          /**
+           * End date of the period represented by the information reported on the tax form.
+           */
+          reporting_period_end_date: string;
+
+          /**
+           * Start date of the period represented by the information reported on the tax form.
+           */
+          reporting_period_start_date: string;
+        }
+
+        interface EuDac7 {
+          /**
+           * End date of the period represented by the information reported on the tax form.
+           */
+          reporting_period_end_date: string;
+
+          /**
+           * Start date of the period represented by the information reported on the tax form.
+           */
+          reporting_period_start_date: string;
+        }
+
         interface FilingStatus {
           /**
            * Time when the filing status was updated.
@@ -91,6 +137,30 @@ declare module 'stripe' {
           }
 
           type Value = 'accepted' | 'filed' | 'rejected';
+        }
+
+        interface GbMrdp {
+          /**
+           * End date of the period represented by the information reported on the tax form.
+           */
+          reporting_period_end_date: string;
+
+          /**
+           * Start date of the period represented by the information reported on the tax form.
+           */
+          reporting_period_start_date: string;
+        }
+
+        interface NzMrdp {
+          /**
+           * End date of the period represented by the information reported on the tax form.
+           */
+          reporting_period_end_date: string;
+
+          /**
+           * Start date of the period represented by the information reported on the tax form.
+           */
+          reporting_period_start_date: string;
         }
 
         interface Payee {
