@@ -186,6 +186,8 @@ declare module 'stripe' {
 
         giropay?: PaymentMethodPreview.Giropay;
 
+        gopay?: PaymentMethodPreview.Gopay;
+
         grabpay?: PaymentMethodPreview.Grabpay;
 
         ideal?: PaymentMethodPreview.Ideal;
@@ -226,6 +228,8 @@ declare module 'stripe' {
 
         promptpay?: PaymentMethodPreview.Promptpay;
 
+        qris?: PaymentMethodPreview.Qris;
+
         rechnung?: PaymentMethodPreview.Rechnung;
 
         revolut_pay?: PaymentMethodPreview.RevolutPay;
@@ -233,6 +237,8 @@ declare module 'stripe' {
         samsung_pay?: PaymentMethodPreview.SamsungPay;
 
         sepa_debit?: PaymentMethodPreview.SepaDebit;
+
+        shopeepay?: PaymentMethodPreview.Shopeepay;
 
         sofort?: PaymentMethodPreview.Sofort;
 
@@ -1044,6 +1050,8 @@ declare module 'stripe' {
 
         interface Giropay {}
 
+        interface Gopay {}
+
         interface Grabpay {}
 
         interface Ideal {
@@ -1378,6 +1386,8 @@ declare module 'stripe' {
 
         interface Promptpay {}
 
+        interface Qris {}
+
         interface Rechnung {
           dob?: Rechnung.Dob;
         }
@@ -1451,6 +1461,8 @@ declare module 'stripe' {
           }
         }
 
+        interface Shopeepay {}
+
         interface Sofort {
           /**
            * Two-letter ISO code representing the country the bank account is located in.
@@ -1481,6 +1493,7 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'gopay'
           | 'grabpay'
           | 'ideal'
           | 'interac_present'
@@ -1501,10 +1514,12 @@ declare module 'stripe' {
           | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'qris'
           | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
           | 'sepa_debit'
+          | 'shopeepay'
           | 'sofort'
           | 'swish'
           | 'twint'

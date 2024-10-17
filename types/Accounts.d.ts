@@ -310,6 +310,11 @@ declare module 'stripe' {
         giropay_payments?: Capabilities.GiropayPayments;
 
         /**
+         * The status of the Gopay capability of the account, or whether the account can directly process Gopay payments.
+         */
+        gopay_payments?: Capabilities.GopayPayments;
+
+        /**
          * The status of the GrabPay payments capability of the account, or whether the account can directly process GrabPay charges.
          */
         grabpay_payments?: Capabilities.GrabpayPayments;
@@ -425,6 +430,11 @@ declare module 'stripe' {
         promptpay_payments?: Capabilities.PromptpayPayments;
 
         /**
+         * The status of the Qris capability of the account, or whether the account can directly process Qris payments.
+         */
+        qris_payments?: Capabilities.QrisPayments;
+
+        /**
          * The status of the Rechnung capability of the account, or whether the account can directly process Rechnung payments.
          */
         rechnung_payments?: Capabilities.RechnungPayments;
@@ -448,6 +458,11 @@ declare module 'stripe' {
          * The status of the SEPA Direct Debits payments capability of the account, or whether the account can directly process SEPA Direct Debits charges.
          */
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+        /**
+         * The status of the ShopeePay capability of the account, or whether the account can directly process ShopeePay payments.
+         */
+        shopeepay_payments?: Capabilities.ShopeepayPayments;
 
         /**
          * The status of the Sofort payments capability of the account, or whether the account can directly process Sofort charges.
@@ -552,6 +567,8 @@ declare module 'stripe' {
 
         type GiropayPayments = 'active' | 'inactive' | 'pending';
 
+        type GopayPayments = 'active' | 'inactive' | 'pending';
+
         type GrabpayPayments = 'active' | 'inactive' | 'pending';
 
         type IdealPayments = 'active' | 'inactive' | 'pending';
@@ -598,6 +615,8 @@ declare module 'stripe' {
 
         type PromptpayPayments = 'active' | 'inactive' | 'pending';
 
+        type QrisPayments = 'active' | 'inactive' | 'pending';
+
         type RechnungPayments = 'active' | 'inactive' | 'pending';
 
         type RevolutPayPayments = 'active' | 'inactive' | 'pending';
@@ -607,6 +626,8 @@ declare module 'stripe' {
         type SepaBankTransferPayments = 'active' | 'inactive' | 'pending';
 
         type SepaDebitPayments = 'active' | 'inactive' | 'pending';
+
+        type ShopeepayPayments = 'active' | 'inactive' | 'pending';
 
         type SofortPayments = 'active' | 'inactive' | 'pending';
 

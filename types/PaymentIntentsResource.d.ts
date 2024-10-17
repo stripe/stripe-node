@@ -1031,6 +1031,11 @@ declare module 'stripe' {
         giropay?: PaymentMethodData.Giropay;
 
         /**
+         * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+         */
+        gopay?: PaymentMethodData.Gopay;
+
+        /**
          * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
          */
         grabpay?: PaymentMethodData.Grabpay;
@@ -1136,6 +1141,11 @@ declare module 'stripe' {
         promptpay?: PaymentMethodData.Promptpay;
 
         /**
+         * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+         */
+        qris?: PaymentMethodData.Qris;
+
+        /**
          * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
@@ -1159,6 +1169,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
+
+        /**
+         * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+         */
+        shopeepay?: PaymentMethodData.Shopeepay;
 
         /**
          * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
@@ -1368,6 +1383,8 @@ declare module 'stripe' {
 
         interface Giropay {}
 
+        interface Gopay {}
+
         interface Grabpay {}
 
         interface Ideal {
@@ -1516,6 +1533,8 @@ declare module 'stripe' {
 
         interface Promptpay {}
 
+        interface Qris {}
+
         interface RadarOptions {
           /**
            * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
@@ -1560,6 +1579,8 @@ declare module 'stripe' {
           iban: string;
         }
 
+        interface Shopeepay {}
+
         interface Sofort {
           /**
            * Two-letter ISO code representing the country the bank account is located in.
@@ -1592,6 +1613,7 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'gopay'
           | 'grabpay'
           | 'ideal'
           | 'kakao_pay'
@@ -1611,10 +1633,12 @@ declare module 'stripe' {
           | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'qris'
           | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
           | 'sepa_debit'
+          | 'shopeepay'
           | 'sofort'
           | 'swish'
           | 'twint'
@@ -1756,6 +1780,11 @@ declare module 'stripe' {
         giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
 
         /**
+         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the GoPay payment method options.
+         */
+        gopay?: Stripe.Emptyable<PaymentMethodOptions.Gopay>;
+
+        /**
          * If this is a `grabpay` PaymentMethod, this sub-hash contains details about the Grabpay payment method options.
          */
         grabpay?: Stripe.Emptyable<PaymentMethodOptions.Grabpay>;
@@ -1856,6 +1885,11 @@ declare module 'stripe' {
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
 
         /**
+         * If this is a `qris` PaymentMethod, this sub-hash contains details about the QRIS payment method options.
+         */
+        qris?: Stripe.Emptyable<PaymentMethodOptions.Qris>;
+
+        /**
          * If this is a `rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
          */
         rechnung?: Stripe.Emptyable<PaymentMethodOptions.Rechnung>;
@@ -1874,6 +1908,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
+
+        /**
+         * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
+         */
+        shopeepay?: Stripe.Emptyable<PaymentMethodOptions.Shopeepay>;
 
         /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
@@ -2707,6 +2746,21 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Gopay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface Grabpay {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -3336,6 +3390,21 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Qris {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface Rechnung {}
 
         interface RevolutPay {
@@ -3399,6 +3468,21 @@ declare module 'stripe' {
           interface MandateOptions {}
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
+        interface Shopeepay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Sofort {
@@ -4653,6 +4737,11 @@ declare module 'stripe' {
         giropay?: PaymentMethodData.Giropay;
 
         /**
+         * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+         */
+        gopay?: PaymentMethodData.Gopay;
+
+        /**
          * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
          */
         grabpay?: PaymentMethodData.Grabpay;
@@ -4758,6 +4847,11 @@ declare module 'stripe' {
         promptpay?: PaymentMethodData.Promptpay;
 
         /**
+         * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+         */
+        qris?: PaymentMethodData.Qris;
+
+        /**
          * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
@@ -4781,6 +4875,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
+
+        /**
+         * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+         */
+        shopeepay?: PaymentMethodData.Shopeepay;
 
         /**
          * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
@@ -4990,6 +5089,8 @@ declare module 'stripe' {
 
         interface Giropay {}
 
+        interface Gopay {}
+
         interface Grabpay {}
 
         interface Ideal {
@@ -5138,6 +5239,8 @@ declare module 'stripe' {
 
         interface Promptpay {}
 
+        interface Qris {}
+
         interface RadarOptions {
           /**
            * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
@@ -5182,6 +5285,8 @@ declare module 'stripe' {
           iban: string;
         }
 
+        interface Shopeepay {}
+
         interface Sofort {
           /**
            * Two-letter ISO code representing the country the bank account is located in.
@@ -5214,6 +5319,7 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'gopay'
           | 'grabpay'
           | 'ideal'
           | 'kakao_pay'
@@ -5233,10 +5339,12 @@ declare module 'stripe' {
           | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'qris'
           | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
           | 'sepa_debit'
+          | 'shopeepay'
           | 'sofort'
           | 'swish'
           | 'twint'
@@ -5378,6 +5486,11 @@ declare module 'stripe' {
         giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
 
         /**
+         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the GoPay payment method options.
+         */
+        gopay?: Stripe.Emptyable<PaymentMethodOptions.Gopay>;
+
+        /**
          * If this is a `grabpay` PaymentMethod, this sub-hash contains details about the Grabpay payment method options.
          */
         grabpay?: Stripe.Emptyable<PaymentMethodOptions.Grabpay>;
@@ -5478,6 +5591,11 @@ declare module 'stripe' {
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
 
         /**
+         * If this is a `qris` PaymentMethod, this sub-hash contains details about the QRIS payment method options.
+         */
+        qris?: Stripe.Emptyable<PaymentMethodOptions.Qris>;
+
+        /**
          * If this is a `rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
          */
         rechnung?: Stripe.Emptyable<PaymentMethodOptions.Rechnung>;
@@ -5496,6 +5614,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
+
+        /**
+         * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
+         */
+        shopeepay?: Stripe.Emptyable<PaymentMethodOptions.Shopeepay>;
 
         /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
@@ -6329,6 +6452,21 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Gopay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface Grabpay {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -6958,6 +7096,21 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Qris {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface Rechnung {}
 
         interface RevolutPay {
@@ -7021,6 +7174,21 @@ declare module 'stripe' {
           interface MandateOptions {}
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
+        interface Shopeepay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Sofort {
@@ -9030,6 +9198,11 @@ declare module 'stripe' {
         giropay?: PaymentMethodData.Giropay;
 
         /**
+         * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+         */
+        gopay?: PaymentMethodData.Gopay;
+
+        /**
          * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
          */
         grabpay?: PaymentMethodData.Grabpay;
@@ -9135,6 +9308,11 @@ declare module 'stripe' {
         promptpay?: PaymentMethodData.Promptpay;
 
         /**
+         * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+         */
+        qris?: PaymentMethodData.Qris;
+
+        /**
          * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
@@ -9158,6 +9336,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
+
+        /**
+         * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+         */
+        shopeepay?: PaymentMethodData.Shopeepay;
 
         /**
          * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
@@ -9367,6 +9550,8 @@ declare module 'stripe' {
 
         interface Giropay {}
 
+        interface Gopay {}
+
         interface Grabpay {}
 
         interface Ideal {
@@ -9515,6 +9700,8 @@ declare module 'stripe' {
 
         interface Promptpay {}
 
+        interface Qris {}
+
         interface RadarOptions {
           /**
            * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
@@ -9559,6 +9746,8 @@ declare module 'stripe' {
           iban: string;
         }
 
+        interface Shopeepay {}
+
         interface Sofort {
           /**
            * Two-letter ISO code representing the country the bank account is located in.
@@ -9591,6 +9780,7 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'gopay'
           | 'grabpay'
           | 'ideal'
           | 'kakao_pay'
@@ -9610,10 +9800,12 @@ declare module 'stripe' {
           | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'qris'
           | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
           | 'sepa_debit'
+          | 'shopeepay'
           | 'sofort'
           | 'swish'
           | 'twint'
@@ -9755,6 +9947,11 @@ declare module 'stripe' {
         giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
 
         /**
+         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the GoPay payment method options.
+         */
+        gopay?: Stripe.Emptyable<PaymentMethodOptions.Gopay>;
+
+        /**
          * If this is a `grabpay` PaymentMethod, this sub-hash contains details about the Grabpay payment method options.
          */
         grabpay?: Stripe.Emptyable<PaymentMethodOptions.Grabpay>;
@@ -9855,6 +10052,11 @@ declare module 'stripe' {
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
 
         /**
+         * If this is a `qris` PaymentMethod, this sub-hash contains details about the QRIS payment method options.
+         */
+        qris?: Stripe.Emptyable<PaymentMethodOptions.Qris>;
+
+        /**
          * If this is a `rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
          */
         rechnung?: Stripe.Emptyable<PaymentMethodOptions.Rechnung>;
@@ -9873,6 +10075,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
+
+        /**
+         * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
+         */
+        shopeepay?: Stripe.Emptyable<PaymentMethodOptions.Shopeepay>;
 
         /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
@@ -10706,6 +10913,21 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Gopay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface Grabpay {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -11335,6 +11557,21 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Qris {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface Rechnung {}
 
         interface RevolutPay {
@@ -11398,6 +11635,21 @@ declare module 'stripe' {
           interface MandateOptions {}
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
+        interface Shopeepay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Sofort {

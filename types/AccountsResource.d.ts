@@ -295,6 +295,11 @@ declare module 'stripe' {
         giropay_payments?: Capabilities.GiropayPayments;
 
         /**
+         * The gopay_payments capability.
+         */
+        gopay_payments?: Capabilities.GopayPayments;
+
+        /**
          * The grabpay_payments capability.
          */
         grabpay_payments?: Capabilities.GrabpayPayments;
@@ -410,6 +415,11 @@ declare module 'stripe' {
         promptpay_payments?: Capabilities.PromptpayPayments;
 
         /**
+         * The qris_payments capability.
+         */
+        qris_payments?: Capabilities.QrisPayments;
+
+        /**
          * The rechnung_payments capability.
          */
         rechnung_payments?: Capabilities.RechnungPayments;
@@ -433,6 +443,11 @@ declare module 'stripe' {
          * The sepa_debit_payments capability.
          */
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+        /**
+         * The shopeepay_payments capability.
+         */
+        shopeepay_payments?: Capabilities.ShopeepayPayments;
 
         /**
          * The sofort_payments capability.
@@ -627,6 +642,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface GopayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface GrabpayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -788,6 +810,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface QrisPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface RechnungPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -817,6 +846,13 @@ declare module 'stripe' {
         }
 
         interface SepaDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface ShopeepayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2152,6 +2188,11 @@ declare module 'stripe' {
         giropay_payments?: Capabilities.GiropayPayments;
 
         /**
+         * The gopay_payments capability.
+         */
+        gopay_payments?: Capabilities.GopayPayments;
+
+        /**
          * The grabpay_payments capability.
          */
         grabpay_payments?: Capabilities.GrabpayPayments;
@@ -2267,6 +2308,11 @@ declare module 'stripe' {
         promptpay_payments?: Capabilities.PromptpayPayments;
 
         /**
+         * The qris_payments capability.
+         */
+        qris_payments?: Capabilities.QrisPayments;
+
+        /**
          * The rechnung_payments capability.
          */
         rechnung_payments?: Capabilities.RechnungPayments;
@@ -2290,6 +2336,11 @@ declare module 'stripe' {
          * The sepa_debit_payments capability.
          */
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+        /**
+         * The shopeepay_payments capability.
+         */
+        shopeepay_payments?: Capabilities.ShopeepayPayments;
 
         /**
          * The sofort_payments capability.
@@ -2484,6 +2535,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface GopayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface GrabpayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -2645,6 +2703,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface QrisPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface RechnungPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -2674,6 +2739,13 @@ declare module 'stripe' {
         }
 
         interface SepaDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface ShopeepayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
