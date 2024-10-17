@@ -542,6 +542,7 @@ declare module 'stripe' {
         | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
+        | 'alma'
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
