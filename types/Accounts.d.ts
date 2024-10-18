@@ -235,6 +235,11 @@ declare module 'stripe' {
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
 
         /**
+         * The status of the Alma capability of the account, or whether the account can directly process Alma payments.
+         */
+        alma_payments?: Capabilities.AlmaPayments;
+
+        /**
          * The status of the AmazonPay capability of the account, or whether the account can directly process AmazonPay payments.
          */
         amazon_pay_payments?: Capabilities.AmazonPayPayments;
@@ -310,6 +315,11 @@ declare module 'stripe' {
         giropay_payments?: Capabilities.GiropayPayments;
 
         /**
+         * The status of the Gopay capability of the account, or whether the account can directly process Gopay payments.
+         */
+        gopay_payments?: Capabilities.GopayPayments;
+
+        /**
          * The status of the GrabPay payments capability of the account, or whether the account can directly process GrabPay charges.
          */
         grabpay_payments?: Capabilities.GrabpayPayments;
@@ -335,6 +345,11 @@ declare module 'stripe' {
         jp_bank_transfer_payments?: Capabilities.JpBankTransferPayments;
 
         /**
+         * The status of the KakaoPay capability of the account, or whether the account can directly process KakaoPay payments.
+         */
+        kakao_pay_payments?: Capabilities.KakaoPayPayments;
+
+        /**
          * The status of the Klarna payments capability of the account, or whether the account can directly process Klarna charges.
          */
         klarna_payments?: Capabilities.KlarnaPayments;
@@ -343,6 +358,11 @@ declare module 'stripe' {
          * The status of the konbini payments capability of the account, or whether the account can directly process konbini charges.
          */
         konbini_payments?: Capabilities.KonbiniPayments;
+
+        /**
+         * The status of the KrCard capability of the account, or whether the account can directly process KrCard payments.
+         */
+        kr_card_payments?: Capabilities.KrCardPayments;
 
         /**
          * The status of the legacy payments capability of the account.
@@ -375,6 +395,11 @@ declare module 'stripe' {
         mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
 
         /**
+         * The status of the NaverPay capability of the account, or whether the account can directly process NaverPay payments.
+         */
+        naver_pay_payments?: Capabilities.NaverPayPayments;
+
+        /**
          * The status of the OXXO payments capability of the account, or whether the account can directly process OXXO charges.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -383,6 +408,11 @@ declare module 'stripe' {
          * The status of the P24 payments capability of the account, or whether the account can directly process P24 charges.
          */
         p24_payments?: Capabilities.P24Payments;
+
+        /**
+         * The status of the Payco capability of the account, or whether the account can directly process Payco payments.
+         */
+        payco_payments?: Capabilities.PaycoPayments;
 
         /**
          * The status of the paynow payments capability of the account, or whether the account can directly process paynow charges.
@@ -405,6 +435,11 @@ declare module 'stripe' {
         promptpay_payments?: Capabilities.PromptpayPayments;
 
         /**
+         * The status of the Qris capability of the account, or whether the account can directly process Qris payments.
+         */
+        qris_payments?: Capabilities.QrisPayments;
+
+        /**
          * The status of the Rechnung capability of the account, or whether the account can directly process Rechnung payments.
          */
         rechnung_payments?: Capabilities.RechnungPayments;
@@ -415,6 +450,11 @@ declare module 'stripe' {
         revolut_pay_payments?: Capabilities.RevolutPayPayments;
 
         /**
+         * The status of the SamsungPay capability of the account, or whether the account can directly process SamsungPay payments.
+         */
+        samsung_pay_payments?: Capabilities.SamsungPayPayments;
+
+        /**
          * The status of the SEPA customer_balance payments (EUR currency) capability of the account, or whether the account can directly process SEPA customer_balance charges.
          */
         sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
@@ -423,6 +463,11 @@ declare module 'stripe' {
          * The status of the SEPA Direct Debits payments capability of the account, or whether the account can directly process SEPA Direct Debits charges.
          */
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+        /**
+         * The status of the ShopeePay capability of the account, or whether the account can directly process ShopeePay payments.
+         */
+        shopeepay_payments?: Capabilities.ShopeepayPayments;
 
         /**
          * The status of the Sofort payments capability of the account, or whether the account can directly process Sofort charges.
@@ -455,6 +500,21 @@ declare module 'stripe' {
         treasury?: Capabilities.Treasury;
 
         /**
+         * The status of the treasury_evolve capability of the account.
+         */
+        treasury_evolve?: Capabilities.TreasuryEvolve;
+
+        /**
+         * The status of the treasury_fifth_third capability of the account.
+         */
+        treasury_fifth_third?: Capabilities.TreasuryFifthThird;
+
+        /**
+         * The status of the treasury_goldman_sachs capability of the account.
+         */
+        treasury_goldman_sachs?: Capabilities.TreasuryGoldmanSachs;
+
+        /**
          * The status of the TWINT capability of the account, or whether the account can directly process TWINT charges.
          */
         twint_payments?: Capabilities.TwintPayments;
@@ -481,6 +541,8 @@ declare module 'stripe' {
         type AffirmPayments = 'active' | 'inactive' | 'pending';
 
         type AfterpayClearpayPayments = 'active' | 'inactive' | 'pending';
+
+        type AlmaPayments = 'active' | 'inactive' | 'pending';
 
         type AmazonPayPayments = 'active' | 'inactive' | 'pending';
 
@@ -512,6 +574,8 @@ declare module 'stripe' {
 
         type GiropayPayments = 'active' | 'inactive' | 'pending';
 
+        type GopayPayments = 'active' | 'inactive' | 'pending';
+
         type GrabpayPayments = 'active' | 'inactive' | 'pending';
 
         type IdealPayments = 'active' | 'inactive' | 'pending';
@@ -522,9 +586,13 @@ declare module 'stripe' {
 
         type JpBankTransferPayments = 'active' | 'inactive' | 'pending';
 
+        type KakaoPayPayments = 'active' | 'inactive' | 'pending';
+
         type KlarnaPayments = 'active' | 'inactive' | 'pending';
 
         type KonbiniPayments = 'active' | 'inactive' | 'pending';
+
+        type KrCardPayments = 'active' | 'inactive' | 'pending';
 
         type LegacyPayments = 'active' | 'inactive' | 'pending';
 
@@ -538,9 +606,13 @@ declare module 'stripe' {
 
         type MxBankTransferPayments = 'active' | 'inactive' | 'pending';
 
+        type NaverPayPayments = 'active' | 'inactive' | 'pending';
+
         type OxxoPayments = 'active' | 'inactive' | 'pending';
 
         type P24Payments = 'active' | 'inactive' | 'pending';
+
+        type PaycoPayments = 'active' | 'inactive' | 'pending';
 
         type PaynowPayments = 'active' | 'inactive' | 'pending';
 
@@ -550,13 +622,19 @@ declare module 'stripe' {
 
         type PromptpayPayments = 'active' | 'inactive' | 'pending';
 
+        type QrisPayments = 'active' | 'inactive' | 'pending';
+
         type RechnungPayments = 'active' | 'inactive' | 'pending';
 
         type RevolutPayPayments = 'active' | 'inactive' | 'pending';
 
+        type SamsungPayPayments = 'active' | 'inactive' | 'pending';
+
         type SepaBankTransferPayments = 'active' | 'inactive' | 'pending';
 
         type SepaDebitPayments = 'active' | 'inactive' | 'pending';
+
+        type ShopeepayPayments = 'active' | 'inactive' | 'pending';
 
         type SofortPayments = 'active' | 'inactive' | 'pending';
 
@@ -569,6 +647,12 @@ declare module 'stripe' {
         type Transfers = 'active' | 'inactive' | 'pending';
 
         type Treasury = 'active' | 'inactive' | 'pending';
+
+        type TreasuryEvolve = 'active' | 'inactive' | 'pending';
+
+        type TreasuryFifthThird = 'active' | 'inactive' | 'pending';
+
+        type TreasuryGoldmanSachs = 'active' | 'inactive' | 'pending';
 
         type TwintPayments = 'active' | 'inactive' | 'pending';
 

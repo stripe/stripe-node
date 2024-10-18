@@ -11,7 +11,7 @@ declare module 'stripe' {
           /**
            * String representing the object's type. Objects of the same type share the same value of the object field.
            */
-          object: 'billing.meter_event';
+          object: 'v2.billing.meter_event';
 
           /**
            * The creation time of this meter event.

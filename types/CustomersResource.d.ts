@@ -530,7 +530,7 @@ declare module 'stripe' {
       }
 
       namespace Tax {
-        type ValidateLocation = 'deferred' | 'immediately';
+        type ValidateLocation = 'auto' | 'deferred' | 'immediately';
       }
 
       type TaxExempt = 'exempt' | 'none' | 'reverse';
@@ -819,6 +819,7 @@ declare module 'stripe' {
         | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
+        | 'alma'
         | 'amazon_pay'
         | 'au_becs_debit'
         | 'bacs_debit'
@@ -831,6 +832,7 @@ declare module 'stripe' {
         | 'eps'
         | 'fpx'
         | 'giropay'
+        | 'gopay'
         | 'grabpay'
         | 'ideal'
         | 'kakao_pay'
@@ -850,10 +852,12 @@ declare module 'stripe' {
         | 'payto'
         | 'pix'
         | 'promptpay'
+        | 'qris'
         | 'rechnung'
         | 'revolut_pay'
         | 'samsung_pay'
         | 'sepa_debit'
+        | 'shopeepay'
         | 'sofort'
         | 'swish'
         | 'twint'

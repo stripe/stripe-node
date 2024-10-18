@@ -22,6 +22,11 @@ declare module 'stripe' {
       /**
        * Indicates the status of a specific payment method on a payment method domain.
        */
+      amazon_pay: PaymentMethodDomain.AmazonPay;
+
+      /**
+       * Indicates the status of a specific payment method on a payment method domain.
+       */
       apple_pay: PaymentMethodDomain.ApplePay;
 
       /**
@@ -61,6 +66,29 @@ declare module 'stripe' {
     }
 
     namespace PaymentMethodDomain {
+      interface AmazonPay {
+        /**
+         * The status of the payment method on the domain.
+         */
+        status: AmazonPay.Status;
+
+        /**
+         * Contains additional details about the status of a payment method for a specific payment method domain.
+         */
+        status_details?: AmazonPay.StatusDetails;
+      }
+
+      namespace AmazonPay {
+        type Status = 'active' | 'inactive';
+
+        interface StatusDetails {
+          /**
+           * The error message associated with the status of the payment method on the domain.
+           */
+          error_message: string;
+        }
+      }
+
       interface ApplePay {
         /**
          * The status of the payment method on the domain.

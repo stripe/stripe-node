@@ -65,6 +65,11 @@ declare module 'stripe' {
           allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
           /**
+           * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+           */
+          alma?: PaymentMethodData.Alma;
+
+          /**
            * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
            */
           amazon_pay?: PaymentMethodData.AmazonPay;
@@ -123,6 +128,11 @@ declare module 'stripe' {
            * If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
            */
           giropay?: PaymentMethodData.Giropay;
+
+          /**
+           * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+           */
+          gopay?: PaymentMethodData.Gopay;
 
           /**
            * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
@@ -230,6 +240,11 @@ declare module 'stripe' {
           promptpay?: PaymentMethodData.Promptpay;
 
           /**
+           * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+           */
+          qris?: PaymentMethodData.Qris;
+
+          /**
            * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
            */
           radar_options?: PaymentMethodData.RadarOptions;
@@ -253,6 +268,11 @@ declare module 'stripe' {
            * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
            */
           sepa_debit?: PaymentMethodData.SepaDebit;
+
+          /**
+           * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+           */
+          shopeepay?: PaymentMethodData.Shopeepay;
 
           /**
            * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
@@ -315,6 +335,8 @@ declare module 'stripe' {
           interface Alipay {}
 
           type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+          interface Alma {}
 
           interface AmazonPay {}
 
@@ -460,11 +482,13 @@ declare module 'stripe' {
 
           interface Giropay {}
 
+          interface Gopay {}
+
           interface Grabpay {}
 
           interface Ideal {
             /**
-             * The customer's bank.
+             * The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
              */
             bank?: Ideal.Bank;
           }
@@ -608,6 +632,8 @@ declare module 'stripe' {
 
           interface Promptpay {}
 
+          interface Qris {}
+
           interface RadarOptions {
             /**
              * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
@@ -652,6 +678,8 @@ declare module 'stripe' {
             iban: string;
           }
 
+          interface Shopeepay {}
+
           interface Sofort {
             /**
              * Two-letter ISO code representing the country the bank account is located in.
@@ -672,6 +700,7 @@ declare module 'stripe' {
             | 'affirm'
             | 'afterpay_clearpay'
             | 'alipay'
+            | 'alma'
             | 'amazon_pay'
             | 'au_becs_debit'
             | 'bacs_debit'
@@ -683,6 +712,7 @@ declare module 'stripe' {
             | 'eps'
             | 'fpx'
             | 'giropay'
+            | 'gopay'
             | 'grabpay'
             | 'ideal'
             | 'kakao_pay'
@@ -702,10 +732,12 @@ declare module 'stripe' {
             | 'payto'
             | 'pix'
             | 'promptpay'
+            | 'qris'
             | 'rechnung'
             | 'revolut_pay'
             | 'samsung_pay'
             | 'sepa_debit'
+            | 'shopeepay'
             | 'sofort'
             | 'swish'
             | 'twint'

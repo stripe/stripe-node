@@ -52,7 +52,7 @@ declare module 'stripe' {
         replacement_reason?: CardCreateParams.ReplacementReason;
 
         /**
-         * The second line to print on the card.
+         * The second line to print on the card. Max length: 24 characters.
          */
         second_line?: Stripe.Emptyable<string>;
 
