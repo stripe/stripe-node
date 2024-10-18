@@ -16,7 +16,7 @@ declare module 'stripe' {
           /**
            * String representing the object's type. Objects of the same type share the same value of the object field.
            */
-          object: 'billing.meter_event_adjustment';
+          object: 'v2.billing.meter_event_adjustment';
 
           /**
            * Specifies which event to cancel.
