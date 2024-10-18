@@ -4,7 +4,10 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Billing {
       /**
-       * A credit grant is a resource that records a grant of some credit to a customer.
+       * A credit grant is an API resource that documents the allocation of some billing credits to a customer.
+       *
+       * Related guide: [Billing credits](https://docs.stripe.com/billing/subscriptions/usage-based/billing-credits)
+       * end
        */
       interface CreditGrant {
         /**
@@ -22,7 +25,7 @@ declare module 'stripe' {
         applicability_config: CreditGrant.ApplicabilityConfig;
 
         /**
-         * The category of this credit grant.
+         * The category of this credit grant. This is for tracking purposes and will not be displayed to the customer.
          */
         category: CreditGrant.Category;
 
@@ -32,17 +35,17 @@ declare module 'stripe' {
         created: number;
 
         /**
-         * Id of the customer to whom the credit was granted.
+         * ID of the customer to whom the billing credits are granted.
          */
         customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
         /**
-         * The time when the credit becomes effective i.e when it is eligible to be used.
+         * The time when the billing credits become effective i.e when they are eligible to be used.
          */
         effective_at: number | null;
 
         /**
-         * The time when the credit will expire. If not present, the credit will never expire.
+         * The time when the billing credits will expire. If not present, the billing credits will never expire.
          */
         expires_at: number | null;
 
@@ -57,7 +60,7 @@ declare module 'stripe' {
         metadata: Stripe.Metadata;
 
         /**
-         * A descriptive name shown in dashboard and on invoices.
+         * A descriptive name shown in dashboard.
          */
         name: string | null;
 
@@ -85,7 +88,7 @@ declare module 'stripe' {
           monetary: Amount.Monetary | null;
 
           /**
-           * The type of this amount. We currently only support `monetary` credits.
+           * The type of this amount. We currently only support `monetary` billing credits.
            */
           type: 'monetary';
         }
@@ -111,7 +114,7 @@ declare module 'stripe' {
         namespace ApplicabilityConfig {
           interface Scope {
             /**
-             * The price type to which credit grants can apply to. We currently only support `metered` price type.
+             * The price type to which credit grants can apply to. We currently only support `metered` price type. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them.
              */
             price_type: 'metered';
           }

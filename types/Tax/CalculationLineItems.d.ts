@@ -169,6 +169,7 @@ declare module 'stripe' {
               | 'lease_tax'
               | 'pst'
               | 'qst'
+              | 'retail_delivery_fee'
               | 'rst'
               | 'sales_tax'
               | 'vat';

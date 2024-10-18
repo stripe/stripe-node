@@ -40,7 +40,7 @@ declare module 'stripe' {
       capabilities?: Account.Capabilities;
 
       /**
-       * Whether the account can create live charges.
+       * Whether the account can process charges.
        */
       charges_enabled: boolean;
 
@@ -86,6 +86,11 @@ declare module 'stripe' {
       future_requirements?: Account.FutureRequirements;
 
       /**
+       * The groups associated with the account.
+       */
+      groups?: Account.Groups | null;
+
+      /**
        * This is an object representing a person associated with a Stripe account.
        *
        * A platform cannot access a person for an account where [account.controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`, which includes Standard and Express accounts, after creating an Account Link or Account Session to start Connect onboarding.
@@ -100,7 +105,7 @@ declare module 'stripe' {
       metadata?: Stripe.Metadata;
 
       /**
-       * Whether Stripe can send payouts to this account.
+       * Whether the funds in this account can be paid out.
        */
       payouts_enabled: boolean;
 
@@ -228,6 +233,11 @@ declare module 'stripe' {
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
 
         /**
+         * The status of the Alma capability of the account, or whether the account can directly process Alma payments.
+         */
+        alma_payments?: Capabilities.AlmaPayments;
+
+        /**
          * The status of the AmazonPay capability of the account, or whether the account can directly process AmazonPay payments.
          */
         amazon_pay_payments?: Capabilities.AmazonPayPayments;
@@ -328,6 +338,11 @@ declare module 'stripe' {
         jp_bank_transfer_payments?: Capabilities.JpBankTransferPayments;
 
         /**
+         * The status of the KakaoPay capability of the account, or whether the account can directly process KakaoPay payments.
+         */
+        kakao_pay_payments?: Capabilities.KakaoPayPayments;
+
+        /**
          * The status of the Klarna payments capability of the account, or whether the account can directly process Klarna charges.
          */
         klarna_payments?: Capabilities.KlarnaPayments;
@@ -336,6 +351,11 @@ declare module 'stripe' {
          * The status of the konbini payments capability of the account, or whether the account can directly process konbini charges.
          */
         konbini_payments?: Capabilities.KonbiniPayments;
+
+        /**
+         * The status of the KrCard capability of the account, or whether the account can directly process KrCard payments.
+         */
+        kr_card_payments?: Capabilities.KrCardPayments;
 
         /**
          * The status of the legacy payments capability of the account.
@@ -363,6 +383,11 @@ declare module 'stripe' {
         mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
 
         /**
+         * The status of the NaverPay capability of the account, or whether the account can directly process NaverPay payments.
+         */
+        naver_pay_payments?: Capabilities.NaverPayPayments;
+
+        /**
          * The status of the OXXO payments capability of the account, or whether the account can directly process OXXO charges.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -371,6 +396,11 @@ declare module 'stripe' {
          * The status of the P24 payments capability of the account, or whether the account can directly process P24 charges.
          */
         p24_payments?: Capabilities.P24Payments;
+
+        /**
+         * The status of the Payco capability of the account, or whether the account can directly process Payco payments.
+         */
+        payco_payments?: Capabilities.PaycoPayments;
 
         /**
          * The status of the paynow payments capability of the account, or whether the account can directly process paynow charges.
@@ -386,6 +416,11 @@ declare module 'stripe' {
          * The status of the RevolutPay capability of the account, or whether the account can directly process RevolutPay payments.
          */
         revolut_pay_payments?: Capabilities.RevolutPayPayments;
+
+        /**
+         * The status of the SamsungPay capability of the account, or whether the account can directly process SamsungPay payments.
+         */
+        samsung_pay_payments?: Capabilities.SamsungPayPayments;
 
         /**
          * The status of the SEPA customer_balance payments (EUR currency) capability of the account, or whether the account can directly process SEPA customer_balance charges.
@@ -455,6 +490,8 @@ declare module 'stripe' {
 
         type AfterpayClearpayPayments = 'active' | 'inactive' | 'pending';
 
+        type AlmaPayments = 'active' | 'inactive' | 'pending';
+
         type AmazonPayPayments = 'active' | 'inactive' | 'pending';
 
         type AuBecsDebitPayments = 'active' | 'inactive' | 'pending';
@@ -495,9 +532,13 @@ declare module 'stripe' {
 
         type JpBankTransferPayments = 'active' | 'inactive' | 'pending';
 
+        type KakaoPayPayments = 'active' | 'inactive' | 'pending';
+
         type KlarnaPayments = 'active' | 'inactive' | 'pending';
 
         type KonbiniPayments = 'active' | 'inactive' | 'pending';
+
+        type KrCardPayments = 'active' | 'inactive' | 'pending';
 
         type LegacyPayments = 'active' | 'inactive' | 'pending';
 
@@ -509,15 +550,21 @@ declare module 'stripe' {
 
         type MxBankTransferPayments = 'active' | 'inactive' | 'pending';
 
+        type NaverPayPayments = 'active' | 'inactive' | 'pending';
+
         type OxxoPayments = 'active' | 'inactive' | 'pending';
 
         type P24Payments = 'active' | 'inactive' | 'pending';
+
+        type PaycoPayments = 'active' | 'inactive' | 'pending';
 
         type PaynowPayments = 'active' | 'inactive' | 'pending';
 
         type PromptpayPayments = 'active' | 'inactive' | 'pending';
 
         type RevolutPayPayments = 'active' | 'inactive' | 'pending';
+
+        type SamsungPayPayments = 'active' | 'inactive' | 'pending';
 
         type SepaBankTransferPayments = 'active' | 'inactive' | 'pending';
 
@@ -1010,6 +1057,13 @@ declare module 'stripe' {
             | 'verification_requires_additional_proof_of_registration'
             | 'verification_supportability';
         }
+      }
+
+      interface Groups {
+        /**
+         * The group the account is in to determine their payments pricing, and null if the account is on customized pricing. [See the Platform pricing tool documentation](https://stripe.com/docs/connect/platform-pricing-tools) for details.
+         */
+        payments_pricing: string | null;
       }
 
       interface Requirements {

@@ -65,6 +65,11 @@ declare module 'stripe' {
           allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
           /**
+           * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+           */
+          alma?: PaymentMethodData.Alma;
+
+          /**
            * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
            */
           amazon_pay?: PaymentMethodData.AmazonPay;
@@ -140,6 +145,11 @@ declare module 'stripe' {
           interac_present?: PaymentMethodData.InteracPresent;
 
           /**
+           * If this is a `kakao_pay` PaymentMethod, this hash contains details about the Kakao Pay payment method.
+           */
+          kakao_pay?: PaymentMethodData.KakaoPay;
+
+          /**
            * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
            */
           klarna?: PaymentMethodData.Klarna;
@@ -148,6 +158,11 @@ declare module 'stripe' {
            * If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
            */
           konbini?: PaymentMethodData.Konbini;
+
+          /**
+           * If this is a `kr_card` PaymentMethod, this hash contains details about the Korean Card payment method.
+           */
+          kr_card?: PaymentMethodData.KrCard;
 
           /**
            * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
@@ -170,6 +185,11 @@ declare module 'stripe' {
           multibanco?: PaymentMethodData.Multibanco;
 
           /**
+           * If this is a `naver_pay` PaymentMethod, this hash contains details about the Naver Pay payment method.
+           */
+          naver_pay?: PaymentMethodData.NaverPay;
+
+          /**
            * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
            */
           oxxo?: PaymentMethodData.Oxxo;
@@ -178,6 +198,11 @@ declare module 'stripe' {
            * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
            */
           p24?: PaymentMethodData.P24;
+
+          /**
+           * If this is a `payco` PaymentMethod, this hash contains details about the PAYCO payment method.
+           */
+          payco?: PaymentMethodData.Payco;
 
           /**
            * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
@@ -208,6 +233,11 @@ declare module 'stripe' {
            * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
            */
           revolut_pay?: PaymentMethodData.RevolutPay;
+
+          /**
+           * If this is a `samsung_pay` PaymentMethod, this hash contains details about the SamsungPay payment method.
+           */
+          samsung_pay?: PaymentMethodData.SamsungPay;
 
           /**
            * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -275,6 +305,8 @@ declare module 'stripe' {
           interface Alipay {}
 
           type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+          interface Alma {}
 
           interface AmazonPay {}
 
@@ -424,7 +456,7 @@ declare module 'stripe' {
 
           interface Ideal {
             /**
-             * The customer's bank.
+             * The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
              */
             bank?: Ideal.Bank;
           }
@@ -450,6 +482,8 @@ declare module 'stripe' {
           }
 
           interface InteracPresent {}
+
+          interface KakaoPay {}
 
           interface Klarna {
             /**
@@ -479,11 +513,24 @@ declare module 'stripe' {
 
           interface Konbini {}
 
+          interface KrCard {}
+
           interface Link {}
 
           interface Mobilepay {}
 
           interface Multibanco {}
+
+          interface NaverPay {
+            /**
+             * Whether to use Naver Pay points or a card to fund this transaction. If not provided, this defaults to `card`.
+             */
+            funding?: NaverPay.Funding;
+          }
+
+          namespace NaverPay {
+            type Funding = 'card' | 'points';
+          }
 
           interface Oxxo {}
 
@@ -524,6 +571,8 @@ declare module 'stripe' {
               | 'volkswagen_bank';
           }
 
+          interface Payco {}
+
           interface Paynow {}
 
           interface Paypal {}
@@ -540,6 +589,8 @@ declare module 'stripe' {
           }
 
           interface RevolutPay {}
+
+          interface SamsungPay {}
 
           interface SepaDebit {
             /**
@@ -568,6 +619,7 @@ declare module 'stripe' {
             | 'affirm'
             | 'afterpay_clearpay'
             | 'alipay'
+            | 'alma'
             | 'amazon_pay'
             | 'au_becs_debit'
             | 'bacs_debit'
@@ -581,18 +633,23 @@ declare module 'stripe' {
             | 'giropay'
             | 'grabpay'
             | 'ideal'
+            | 'kakao_pay'
             | 'klarna'
             | 'konbini'
+            | 'kr_card'
             | 'link'
             | 'mobilepay'
             | 'multibanco'
+            | 'naver_pay'
             | 'oxxo'
             | 'p24'
+            | 'payco'
             | 'paynow'
             | 'paypal'
             | 'pix'
             | 'promptpay'
             | 'revolut_pay'
+            | 'samsung_pay'
             | 'sepa_debit'
             | 'sofort'
             | 'swish'

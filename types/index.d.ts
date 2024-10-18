@@ -215,7 +215,6 @@
 ///<reference path='./LineItems.d.ts' />
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
-///<reference path='./Margins.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
 ///<reference path='./PaymentMethodConfigurations.d.ts' />

@@ -68,6 +68,8 @@ declare module 'stripe' {
 
           bh?: CountryOptions.Bh;
 
+          by?: CountryOptions.By;
+
           ca?: CountryOptions.Ca;
 
           ch?: CountryOptions.Ch;
@@ -76,6 +78,8 @@ declare module 'stripe' {
 
           co?: CountryOptions.Co;
 
+          cr?: CountryOptions.Cr;
+
           cy?: CountryOptions.Cy;
 
           cz?: CountryOptions.Cz;
@@ -83,6 +87,8 @@ declare module 'stripe' {
           de?: CountryOptions.De;
 
           dk?: CountryOptions.Dk;
+
+          ec?: CountryOptions.Ec;
 
           ee?: CountryOptions.Ee;
 
@@ -126,6 +132,10 @@ declare module 'stripe' {
 
           lv?: CountryOptions.Lv;
 
+          ma?: CountryOptions.Ma;
+
+          md?: CountryOptions.Md;
+
           mt?: CountryOptions.Mt;
 
           mx?: CountryOptions.Mx;
@@ -148,6 +158,10 @@ declare module 'stripe' {
 
           ro?: CountryOptions.Ro;
 
+          rs?: CountryOptions.Rs;
+
+          ru?: CountryOptions.Ru;
+
           sa?: CountryOptions.Sa;
 
           se?: CountryOptions.Se;
@@ -162,7 +176,11 @@ declare module 'stripe' {
 
           tr?: CountryOptions.Tr;
 
+          tz?: CountryOptions.Tz;
+
           us?: CountryOptions.Us;
+
+          uz?: CountryOptions.Uz;
 
           vn?: CountryOptions.Vn;
 
@@ -263,6 +281,13 @@ declare module 'stripe' {
             type: 'standard';
           }
 
+          interface By {
+            /**
+             * Type of registration in `country`.
+             */
+            type: 'simplified';
+          }
+
           interface Ca {
             province_standard?: Ca.ProvinceStandard;
 
@@ -298,6 +323,13 @@ declare module 'stripe' {
           }
 
           interface Co {
+            /**
+             * Type of registration in `country`.
+             */
+            type: 'simplified';
+          }
+
+          interface Cr {
             /**
              * Type of registration in `country`.
              */
@@ -398,6 +430,13 @@ declare module 'stripe' {
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+          }
+
+          interface Ec {
+            /**
+             * Type of registration in `country`.
+             */
+            type: 'simplified';
           }
 
           interface Ee {
@@ -751,6 +790,20 @@ declare module 'stripe' {
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
           }
 
+          interface Ma {
+            /**
+             * Type of registration in `country`.
+             */
+            type: 'simplified';
+          }
+
+          interface Md {
+            /**
+             * Type of registration in `country`.
+             */
+            type: 'simplified';
+          }
+
           interface Mt {
             standard?: Mt.Standard;
 
@@ -913,6 +966,20 @@ declare module 'stripe' {
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
           }
 
+          interface Rs {
+            /**
+             * Type of registration in `country`.
+             */
+            type: 'standard';
+          }
+
+          interface Ru {
+            /**
+             * Type of registration in `country`.
+             */
+            type: 'simplified';
+          }
+
           interface Sa {
             /**
              * Type of registration in `country`.
@@ -1013,6 +1080,13 @@ declare module 'stripe' {
             type: 'simplified';
           }
 
+          interface Tz {
+            /**
+             * Type of registration in `country`.
+             */
+            type: 'simplified';
+          }
+
           interface Us {
             local_amusement_tax?: Us.LocalAmusementTax;
 
@@ -1078,7 +1152,15 @@ declare module 'stripe' {
               | 'local_amusement_tax'
               | 'local_lease_tax'
               | 'state_communications_tax'
+              | 'state_retail_delivery_fee'
               | 'state_sales_tax';
+          }
+
+          interface Uz {
+            /**
+             * Type of registration in `country`.
+             */
+            type: 'simplified';
           }
 
           interface Vn {

@@ -110,7 +110,11 @@ declare module 'stripe' {
 
         ideal?: PaymentMethodDetails.Ideal;
 
+        kakao_pay?: PaymentMethodDetails.KakaoPay;
+
         klarna?: PaymentMethodDetails.Klarna;
+
+        kr_card?: PaymentMethodDetails.KrCard;
 
         link?: PaymentMethodDetails.Link;
 
@@ -462,7 +466,11 @@ declare module 'stripe' {
             | 'TRIONL2U';
         }
 
+        interface KakaoPay {}
+
         interface Klarna {}
+
+        interface KrCard {}
 
         interface Link {}
 
@@ -749,6 +757,7 @@ declare module 'stripe' {
           | 'payment_method_unexpected_state'
           | 'payment_method_unsupported_type'
           | 'payout_reconciliation_not_ready'
+          | 'payout_statement_descriptor_profanity'
           | 'payouts_limit_exceeded'
           | 'payouts_not_allowed'
           | 'platform_account_required'
