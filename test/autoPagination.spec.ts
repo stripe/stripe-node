@@ -745,7 +745,7 @@ describe('auto pagination', () => {
       });
     });
   });
-  describe('V2 list pagination', () => {
+  describe('V2 list pagination with next_page_url', () => {
     const mockPaginationV2List = (pages, initialArgs) => {
       let i = 1;
       const paramsLog = [];
@@ -838,6 +838,101 @@ describe('auto pagination', () => {
           '?limit=10&page=wobble',
           '?limit=10&page=weeble',
           '?limit=10&page=blubble',
+        ],
+      });
+    });
+  });
+
+  describe('V2 list pagination with next_page', () => {
+    const mockPaginationV2List = (pages, initialArgs) => {
+      let i = 1;
+      const paramsLog = [];
+      const spec = {
+        method: 'GET',
+        fullPath: '/v2/items',
+        methodType: 'list',
+      };
+
+      const mockStripe = getMockStripe(
+        {},
+        (_1, _2, path, _4, _5, _6, _7, callback) => {
+          paramsLog.push(path.slice(path.indexOf('?')));
+          callback(
+            null,
+            Promise.resolve({
+              data: pages[i].ids.map((id) => ({id})),
+              next_page: pages[i].next_page,
+            })
+          );
+          i += 1;
+        }
+      );
+      const resource = new StripeResource(mockStripe);
+
+      const paginator = makeAutoPaginationMethods(
+        resource,
+        initialArgs || {},
+        spec,
+        Promise.resolve({
+          data: pages[0].ids.map((id) => ({id})),
+          next_page: pages[0].next_page,
+        })
+      );
+      return {paginator, paramsLog};
+    };
+
+    const testCaseV2List = testCase(mockPaginationV2List);
+    it('paginates forwards through a page', () => {
+      return testCaseV2List({
+        pages: [{ids: [1, 2], next_page: 'foo'}, {ids: [3, 4]}],
+        limit: 10,
+        expectedIds: [1, 2, 3, 4],
+        expectedParamsLog: ['?page=foo'],
+      });
+    });
+
+    it('paginates forwards through uneven-sized pages', () => {
+      return testCaseV2List({
+        pages: [
+          {ids: [1, 2], next_page: 'foo'},
+          {ids: [3, 4], next_page: 'bar'},
+          {ids: [5]},
+        ],
+        limit: 10,
+        expectedIds: [1, 2, 3, 4, 5],
+        expectedParamsLog: ['?page=foo', '?page=bar'],
+      });
+    });
+
+    it('respects limit even when paginating', () => {
+      return testCaseV2List({
+        pages: [
+          {ids: [1, 2], next_page: 'a'},
+          {ids: [3, 4], next_page: 'b'},
+          {ids: [5, 6]},
+        ],
+        limit: 5,
+        expectedIds: [1, 2, 3, 4, 5],
+        expectedParamsLog: ['?page=a', '?page=b'],
+      });
+    });
+
+    it('paginates through multiple full pages', () => {
+      return testCaseV2List({
+        pages: [
+          {ids: [1, 2], next_page: 'wibble'},
+          {ids: [3, 4], next_page: 'wobble'},
+          {ids: [5, 6], next_page: 'weeble'},
+          {ids: [7, 8], next_page: 'blubble'},
+          {ids: [9, 10]},
+        ],
+        limit: 10,
+        expectedIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        expectedParamsLog: [
+          '?page=wibble',
+          '?page=wobble',
+          '?page=weeble',
+          '?page=blubble',
         ],
       });
     });

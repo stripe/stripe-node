@@ -147,6 +147,7 @@ class V1SearchIterator<T> extends V1Iterator<T> {
 
 class V2ListIterator<T> implements AsyncIterator<T> {
   private currentPageIterator: Promise<Iterator<T>>;
+  private nextPage: Promise<string | null>;
   private nextPageUrl: Promise<string | null>;
   private requestArgs: RequestArgs;
   private spec: MethodSpec;
@@ -162,6 +163,11 @@ class V2ListIterator<T> implements AsyncIterator<T> {
       return page.data[Symbol.iterator]();
     })();
 
+    this.nextPage = (async (): Promise<string | null> => {
+      const page = await firstPagePromise;
+      return page.next_page || null;
+    })();
+
     this.nextPageUrl = (async (): Promise<string | null> => {
       const page = await firstPagePromise;
       return page.next_page_url || null;
@@ -173,10 +179,18 @@ class V2ListIterator<T> implements AsyncIterator<T> {
   }
   private async turnPage(): Promise<Iterator<T> | null> {
     const nextPageUrl = await this.nextPageUrl;
-    if (!nextPageUrl) return null;
-    this.spec.fullPath = nextPageUrl;
-    const page = await this.stripeResource._makeRequest([], this.spec, {});
+    const nextPage = await this.nextPage;
+    if (!nextPageUrl && !nextPage) return null;
+    let params;
+    if (nextPageUrl) {
+      this.spec.fullPath = nextPageUrl;
+      params = {};
+    } else {
+      params = {page: nextPage};
+    }
+    const page = await this.stripeResource._makeRequest([], this.spec, params);
     this.nextPageUrl = Promise.resolve(page.next_page_url);
+    this.nextPage = Promise.resolve(page.next_page);
     this.currentPageIterator = Promise.resolve(page.data[Symbol.iterator]());
     return this.currentPageIterator;
   }
