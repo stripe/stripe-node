@@ -1,4 +1,10 @@
 # Changelog
+## 17.2.1 - 2024-10-18
+* [#2210](https://github.com/stripe/stripe-node/pull/2210) update object tags for meter-related classes
+  
+  - fixes a bug where the `object` property of the `MeterEvent`, `MeterEventAdjustment`, and `MeterEventSession` didn't match the server.
+* [#2208](https://github.com/stripe/stripe-node/pull/2208) Update signature verification docs link
+
 ## 17.2.0 - 2024-10-09
 * [#2201](https://github.com/stripe/stripe-node/pull/2201) Add fetchRelatedObject to V2 Events if needed
   * `fetchRelatedObject` is added to events retrieved using `stripe.v2.core.events` and can be used to easily fetch the Stripe object related to a retrieved event
