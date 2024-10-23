@@ -388,10 +388,7 @@ declare module 'stripe' {
       }
 
       interface NextAction {
-        /**
-         * Contains the refund details.
-         */
-        display_details: NextAction.DisplayDetails | null;
+        display_details?: NextAction.DisplayDetails;
 
         /**
          * Type of the next action to perform.

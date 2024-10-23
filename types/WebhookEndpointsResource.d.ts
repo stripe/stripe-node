@@ -143,7 +143,8 @@ declare module 'stripe' {
         | '2023-10-16'
         | '2024-04-10'
         | '2024-06-20'
-        | '2024-09-30.acacia';
+        | '2024-09-30.acacia'
+        | '2024-10-28.acacia';
 
       type EnabledEvent =
         | '*'
