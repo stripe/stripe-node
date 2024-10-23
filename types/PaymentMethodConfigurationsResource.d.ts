@@ -119,6 +119,11 @@ declare module 'stripe' {
       grabpay?: PaymentMethodConfigurationCreateParams.Grabpay;
 
       /**
+       * Stripe users in Indonesia can receive bank transfers from customers in Indonesia. Bank transfers are a popular B2C and B2B payment method in Indonesia.
+       */
+      id_bank_transfer?: PaymentMethodConfigurationCreateParams.IdBankTransfer;
+
+      /**
        * iDEAL is a Netherlands-based payment method that allows customers to complete transactions online using their bank credentials. All major Dutch banks are members of Currence, the scheme that operates iDEAL, making it the most popular online payment method in the Netherlands with a share of online transactions close to 55%. Check this [page](https://stripe.com/docs/payments/ideal) for more details.
        */
       ideal?: PaymentMethodConfigurationCreateParams.Ideal;
@@ -663,6 +668,26 @@ declare module 'stripe' {
       }
 
       namespace Grabpay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface IdBankTransfer {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: IdBankTransfer.DisplayPreference;
+      }
+
+      namespace IdBankTransfer {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -1225,6 +1250,11 @@ declare module 'stripe' {
       grabpay?: PaymentMethodConfigurationUpdateParams.Grabpay;
 
       /**
+       * Stripe users in Indonesia can receive bank transfers from customers in Indonesia. Bank transfers are a popular B2C and B2B payment method in Indonesia.
+       */
+      id_bank_transfer?: PaymentMethodConfigurationUpdateParams.IdBankTransfer;
+
+      /**
        * iDEAL is a Netherlands-based payment method that allows customers to complete transactions online using their bank credentials. All major Dutch banks are members of Currence, the scheme that operates iDEAL, making it the most popular online payment method in the Netherlands with a share of online transactions close to 55%. Check this [page](https://stripe.com/docs/payments/ideal) for more details.
        */
       ideal?: PaymentMethodConfigurationUpdateParams.Ideal;
@@ -1764,6 +1794,26 @@ declare module 'stripe' {
       }
 
       namespace Grabpay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface IdBankTransfer {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: IdBankTransfer.DisplayPreference;
+      }
+
+      namespace IdBankTransfer {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

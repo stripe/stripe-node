@@ -81,6 +81,8 @@ declare module 'stripe' {
 
       grabpay?: PaymentMethodConfiguration.Grabpay;
 
+      id_bank_transfer?: PaymentMethodConfiguration.IdBankTransfer;
+
       ideal?: PaymentMethodConfiguration.Ideal;
 
       /**
@@ -835,6 +837,40 @@ declare module 'stripe' {
       }
 
       namespace Grabpay {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
+      interface IdBankTransfer {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: IdBankTransfer.DisplayPreference;
+      }
+
+      namespace IdBankTransfer {
         interface DisplayPreference {
           /**
            * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.

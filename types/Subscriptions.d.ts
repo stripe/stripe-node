@@ -479,6 +479,11 @@ declare module 'stripe' {
           customer_balance: PaymentMethodOptions.CustomerBalance | null;
 
           /**
+           * This sub-hash contains details about the Indonesia bank transfer payment method options to pass to invoices created by the subscription.
+           */
+          id_bank_transfer?: PaymentMethodOptions.IdBankTransfer | null;
+
+          /**
            * This sub-hash contains details about the Konbini payment method options to pass to invoices created by the subscription.
            */
           konbini: PaymentMethodOptions.Konbini | null;
@@ -616,6 +621,8 @@ declare module 'stripe' {
             }
           }
 
+          interface IdBankTransfer {}
+
           interface Konbini {}
 
           interface SepaDebit {}
@@ -694,6 +701,7 @@ declare module 'stripe' {
           | 'fpx'
           | 'giropay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'

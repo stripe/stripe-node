@@ -369,6 +369,13 @@ declare module 'stripe' {
           >;
 
           /**
+           * If paying by `id_bank_transfer`, this sub-hash contains details about the Indonesia bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          id_bank_transfer?: Stripe.Emptyable<
+            PaymentMethodOptions.IdBankTransfer
+          >;
+
+          /**
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
@@ -511,6 +518,8 @@ declare module 'stripe' {
             }
           }
 
+          interface IdBankTransfer {}
+
           interface Konbini {}
 
           interface SepaDebit {}
@@ -595,6 +604,7 @@ declare module 'stripe' {
           | 'fpx'
           | 'giropay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'
@@ -1163,6 +1173,13 @@ declare module 'stripe' {
           >;
 
           /**
+           * If paying by `id_bank_transfer`, this sub-hash contains details about the Indonesia bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          id_bank_transfer?: Stripe.Emptyable<
+            PaymentMethodOptions.IdBankTransfer
+          >;
+
+          /**
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
@@ -1305,6 +1322,8 @@ declare module 'stripe' {
             }
           }
 
+          interface IdBankTransfer {}
+
           interface Konbini {}
 
           interface SepaDebit {}
@@ -1389,6 +1408,7 @@ declare module 'stripe' {
           | 'fpx'
           | 'giropay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'
