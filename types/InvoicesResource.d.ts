@@ -24,6 +24,11 @@ declare module 'stripe' {
       automatic_tax?: InvoiceCreateParams.AutomaticTax;
 
       /**
+       * The time when this invoice should be scheduled to finalize. The invoice will be finalized at this time if it is still in draft state.
+       */
+      automatically_finalizes_at?: number;
+
+      /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions. Defaults to `charge_automatically`.
        */
       collection_method?: InvoiceCreateParams.CollectionMethod;
@@ -768,6 +773,11 @@ declare module 'stripe' {
        * Settings for automatic tax lookup for this invoice.
        */
       automatic_tax?: InvoiceUpdateParams.AutomaticTax;
+
+      /**
+       * The time when this invoice should be scheduled to finalize. The invoice will be finalized at this time if it is still in draft state. To turn off automatic finalization, set `auto_advance` to false.
+       */
+      automatically_finalizes_at?: number;
 
       /**
        * Either `charge_automatically` or `send_invoice`. This field can be updated only on `draft` invoices.
