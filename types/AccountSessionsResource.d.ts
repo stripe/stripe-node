@@ -121,6 +121,9 @@ declare module 'stripe' {
          */
         payouts_list?: Components.PayoutsList;
 
+        /**
+         * Configuration for the recipients component.
+         */
         recipients?: Components.Recipients;
 
         /**
@@ -361,6 +364,9 @@ declare module 'stripe' {
            */
           enabled: boolean;
 
+          /**
+           * The list of features enabled in the embedded component.
+           */
           features?: FinancialAccount.Features;
         }
 
@@ -640,14 +646,16 @@ declare module 'stripe' {
            */
           enabled: boolean;
 
-          /**
-           * The list of features enabled in the embedded component.
-           */
           features?: Recipients.Features;
         }
 
         namespace Recipients {
-          interface Features {}
+          interface Features {
+            /**
+             * Whether to allow sending money.
+             */
+            send_money?: boolean;
+          }
         }
 
         interface ReportingChart {

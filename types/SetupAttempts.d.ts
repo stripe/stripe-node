@@ -108,6 +108,8 @@ declare module 'stripe' {
 
         cashapp?: PaymentMethodDetails.Cashapp;
 
+        id_bank_transfer?: PaymentMethodDetails.IdBankTransfer;
+
         ideal?: PaymentMethodDetails.Ideal;
 
         kakao_pay?: PaymentMethodDetails.KakaoPay;
@@ -395,6 +397,32 @@ declare module 'stripe' {
         }
 
         interface Cashapp {}
+
+        interface IdBankTransfer {
+          /**
+           * Bank where the account is located.
+           */
+          bank: IdBankTransfer.Bank | null;
+
+          /**
+           * Local bank code of the bank.
+           */
+          bank_code: string | null;
+
+          /**
+           * Name of the bank associated with the bank account.
+           */
+          bank_name: string | null;
+
+          /**
+           * Merchant name and billing details name, for the customer to check for the correct merchant when performing the bank transfer.
+           */
+          display_name: string | null;
+        }
+
+        namespace IdBankTransfer {
+          type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+        }
 
         interface Ideal {
           /**
@@ -765,7 +793,6 @@ declare module 'stripe' {
           | 'payment_method_unexpected_state'
           | 'payment_method_unsupported_type'
           | 'payout_reconciliation_not_ready'
-          | 'payout_statement_descriptor_profanity'
           | 'payouts_limit_exceeded'
           | 'payouts_not_allowed'
           | 'platform_account_required'

@@ -46,6 +46,10 @@ export const PaymentIntents = StripeResource.extend({
     fullPath: '/v1/payment_intents/search',
     methodType: 'search',
   }),
+  triggerAction: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/test/payment_intents/{intent}/trigger_action',
+  }),
   verifyMicrodeposits: stripeMethod({
     method: 'POST',
     fullPath: '/v1/payment_intents/{intent}/verify_microdeposits',

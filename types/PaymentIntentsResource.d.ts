@@ -1041,6 +1041,11 @@ declare module 'stripe' {
         grabpay?: PaymentMethodData.Grabpay;
 
         /**
+         * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+         */
+        id_bank_transfer?: PaymentMethodData.IdBankTransfer;
+
+        /**
          * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
          */
         ideal?: PaymentMethodData.Ideal;
@@ -1387,6 +1392,17 @@ declare module 'stripe' {
 
         interface Grabpay {}
 
+        interface IdBankTransfer {
+          /**
+           * Bank where the account is held.
+           */
+          bank?: IdBankTransfer.Bank;
+        }
+
+        namespace IdBankTransfer {
+          type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+        }
+
         interface Ideal {
           /**
            * The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
@@ -1615,6 +1631,7 @@ declare module 'stripe' {
           | 'giropay'
           | 'gopay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'kakao_pay'
           | 'klarna'
@@ -1788,6 +1805,13 @@ declare module 'stripe' {
          * If this is a `grabpay` PaymentMethod, this sub-hash contains details about the Grabpay payment method options.
          */
         grabpay?: Stripe.Emptyable<PaymentMethodOptions.Grabpay>;
+
+        /**
+         * If this is a `id_bank_transfer` PaymentMethod, this sub-hash contains details about the Indonesia Bank Transfer payment method options.
+         */
+        id_bank_transfer?: Stripe.Emptyable<
+          PaymentMethodOptions.IdBankTransfer
+        >;
 
         /**
          * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
@@ -2762,6 +2786,31 @@ declare module 'stripe' {
         }
 
         interface Grabpay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface IdBankTransfer {
+          /**
+           * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from 5 minutes from now until 31 days from now. If unset, it defaults to 3 days from now.
+           */
+          expires_after?: number;
+
+          /**
+           * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from now until 30 days from now. If unset, it defaults to 1 days from now.
+           */
+          expires_at?: number;
+
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -4747,6 +4796,11 @@ declare module 'stripe' {
         grabpay?: PaymentMethodData.Grabpay;
 
         /**
+         * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+         */
+        id_bank_transfer?: PaymentMethodData.IdBankTransfer;
+
+        /**
          * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
          */
         ideal?: PaymentMethodData.Ideal;
@@ -5093,6 +5147,17 @@ declare module 'stripe' {
 
         interface Grabpay {}
 
+        interface IdBankTransfer {
+          /**
+           * Bank where the account is held.
+           */
+          bank?: IdBankTransfer.Bank;
+        }
+
+        namespace IdBankTransfer {
+          type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+        }
+
         interface Ideal {
           /**
            * The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
@@ -5321,6 +5386,7 @@ declare module 'stripe' {
           | 'giropay'
           | 'gopay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'kakao_pay'
           | 'klarna'
@@ -5494,6 +5560,13 @@ declare module 'stripe' {
          * If this is a `grabpay` PaymentMethod, this sub-hash contains details about the Grabpay payment method options.
          */
         grabpay?: Stripe.Emptyable<PaymentMethodOptions.Grabpay>;
+
+        /**
+         * If this is a `id_bank_transfer` PaymentMethod, this sub-hash contains details about the Indonesia Bank Transfer payment method options.
+         */
+        id_bank_transfer?: Stripe.Emptyable<
+          PaymentMethodOptions.IdBankTransfer
+        >;
 
         /**
          * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
@@ -6468,6 +6541,31 @@ declare module 'stripe' {
         }
 
         interface Grabpay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface IdBankTransfer {
+          /**
+           * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from 5 minutes from now until 31 days from now. If unset, it defaults to 3 days from now.
+           */
+          expires_after?: number;
+
+          /**
+           * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from now until 30 days from now. If unset, it defaults to 1 days from now.
+           */
+          expires_at?: number;
+
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -9208,6 +9306,11 @@ declare module 'stripe' {
         grabpay?: PaymentMethodData.Grabpay;
 
         /**
+         * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+         */
+        id_bank_transfer?: PaymentMethodData.IdBankTransfer;
+
+        /**
          * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
          */
         ideal?: PaymentMethodData.Ideal;
@@ -9554,6 +9657,17 @@ declare module 'stripe' {
 
         interface Grabpay {}
 
+        interface IdBankTransfer {
+          /**
+           * Bank where the account is held.
+           */
+          bank?: IdBankTransfer.Bank;
+        }
+
+        namespace IdBankTransfer {
+          type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+        }
+
         interface Ideal {
           /**
            * The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
@@ -9782,6 +9896,7 @@ declare module 'stripe' {
           | 'giropay'
           | 'gopay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'kakao_pay'
           | 'klarna'
@@ -9955,6 +10070,13 @@ declare module 'stripe' {
          * If this is a `grabpay` PaymentMethod, this sub-hash contains details about the Grabpay payment method options.
          */
         grabpay?: Stripe.Emptyable<PaymentMethodOptions.Grabpay>;
+
+        /**
+         * If this is a `id_bank_transfer` PaymentMethod, this sub-hash contains details about the Indonesia Bank Transfer payment method options.
+         */
+        id_bank_transfer?: Stripe.Emptyable<
+          PaymentMethodOptions.IdBankTransfer
+        >;
 
         /**
          * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
@@ -10929,6 +11051,31 @@ declare module 'stripe' {
         }
 
         interface Grabpay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface IdBankTransfer {
+          /**
+           * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from 5 minutes from now until 31 days from now. If unset, it defaults to 3 days from now.
+           */
+          expires_after?: number;
+
+          /**
+           * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from now until 30 days from now. If unset, it defaults to 1 days from now.
+           */
+          expires_at?: number;
+
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -12109,6 +12256,38 @@ declare module 'stripe' {
       page?: string;
     }
 
+    interface PaymentIntentTriggerActionParams {
+      /**
+       * The type of action to be simulated.
+       */
+      type: PaymentIntentTriggerActionParams.Type;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * True to simulate success, false to simulate failure.
+       */
+      scan_qr_code?: PaymentIntentTriggerActionParams.ScanQrCode;
+    }
+
+    namespace PaymentIntentTriggerActionParams {
+      interface ScanQrCode {
+        /**
+         * Whether the QR Code scan's payment should succeed or fail.
+         */
+        result?: ScanQrCode.Result;
+      }
+
+      namespace ScanQrCode {
+        type Result = 'failure' | 'success';
+      }
+
+      type Type = 'expire' | 'fund';
+    }
+
     interface PaymentIntentVerifyMicrodepositsParams {
       /**
        * Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank account.
@@ -12335,6 +12514,15 @@ declare module 'stripe' {
         params: PaymentIntentSearchParams,
         options?: RequestOptions
       ): ApiSearchResultPromise<Stripe.PaymentIntent>;
+
+      /**
+       * Trigger an external action on a PaymentIntent.
+       */
+      triggerAction(
+        id: string,
+        params: PaymentIntentTriggerActionParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
 
       /**
        * Verifies microdeposits on a PaymentIntent object.

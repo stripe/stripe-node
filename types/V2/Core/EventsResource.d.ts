@@ -22,7 +22,7 @@ declare module 'stripe' {
           limit?: number;
 
           /**
-           * The requested page number.
+           * The requested page.
            */
           page?: string;
         }
