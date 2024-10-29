@@ -1,3 +1,15 @@
+/**
+ * thinevent_webhook_handler.js - receive and process thin events like the
+ * v1.billing.meter.error_report_triggered event.
+ * In this example, we:
+ *   - create a Stripe client object called client
+ *   - use client.parseThinEvent to parse the received thin event webhook body
+ *   - call client.v2.core.events.retrieve to retrieve the full event object
+ *   - if it is a v1.billing.meter.error_report_triggered event type, call
+ *     event.fetchRelatedObject to retrieve the Billing Meter object associated
+ *     with the event.
+ */
+
 const express = require('express');
 const {Stripe} = require('stripe');
 
@@ -20,11 +32,10 @@ app.post(
       // Fetch the event data to understand the failure
       const event = await client.v2.core.events.retrieve(thinEvent.id);
       if (event.type == 'v1.billing.meter.error_report_triggered') {
-        const meter = await client.billing.meters.retrieve(
-          event.related_object.id
-        );
+        const meter = await event.fetchRelatedObject();
         const meterId = meter.id;
         console.log(`Success! ${meterId}`);
+
         // Record the failures and alert your team
         // Add your logic here
       }
