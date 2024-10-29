@@ -1069,6 +1069,11 @@ declare module 'stripe' {
           ideal?: PaymentMethodOptions.Ideal;
 
           /**
+           * contains details about the Kakao Pay payment method options.
+           */
+          kakao_pay?: PaymentMethodOptions.KakaoPay;
+
+          /**
            * contains details about the Klarna payment method options.
            */
           klarna?: PaymentMethodOptions.Klarna;
@@ -1077,6 +1082,11 @@ declare module 'stripe' {
            * contains details about the Konbini payment method options.
            */
           konbini?: PaymentMethodOptions.Konbini;
+
+          /**
+           * contains details about the Korean card payment method options.
+           */
+          kr_card?: PaymentMethodOptions.KrCard;
 
           /**
            * contains details about the Link payment method options.
@@ -1094,6 +1104,11 @@ declare module 'stripe' {
           multibanco?: PaymentMethodOptions.Multibanco;
 
           /**
+           * contains details about the Kakao Pay payment method options.
+           */
+          naver_pay?: PaymentMethodOptions.NaverPay;
+
+          /**
            * contains details about the OXXO payment method options.
            */
           oxxo?: PaymentMethodOptions.Oxxo;
@@ -1102,6 +1117,11 @@ declare module 'stripe' {
            * contains details about the P24 payment method options.
            */
           p24?: PaymentMethodOptions.P24;
+
+          /**
+           * contains details about the PAYCO payment method options.
+           */
+          payco?: PaymentMethodOptions.Payco;
 
           /**
            * contains details about the PayNow payment method options.
@@ -1122,6 +1142,11 @@ declare module 'stripe' {
            * contains details about the RevolutPay payment method options.
            */
           revolut_pay?: PaymentMethodOptions.RevolutPay;
+
+          /**
+           * contains details about the Samsung Pay payment method options.
+           */
+          samsung_pay?: PaymentMethodOptions.SamsungPay;
 
           /**
            * contains details about the Sepa Debit payment method options.
@@ -1544,6 +1569,23 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface KakaoPay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: KakaoPay.SetupFutureUsage;
+          }
+
+          namespace KakaoPay {
+            type SetupFutureUsage = 'none' | 'off_session';
+          }
+
           interface Klarna {
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -1573,6 +1615,23 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+          }
+
+          interface KrCard {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: KrCard.SetupFutureUsage;
+          }
+
+          namespace KrCard {
+            type SetupFutureUsage = 'none' | 'off_session';
           }
 
           interface Link {
@@ -1618,6 +1677,23 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface NaverPay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: NaverPay.SetupFutureUsage;
+          }
+
+          namespace NaverPay {
+            type SetupFutureUsage = 'none' | 'off_session';
+          }
+
           interface Oxxo {
             /**
              * The number of calendar days before an OXXO voucher expires. For example, if you create an OXXO voucher on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -1653,6 +1729,8 @@ declare module 'stripe' {
              */
             tos_shown_and_accepted?: boolean;
           }
+
+          interface Payco {}
 
           interface Paynow {
             /**
@@ -1752,6 +1830,8 @@ declare module 'stripe' {
           namespace RevolutPay {
             type SetupFutureUsage = 'none' | 'off_session';
           }
+
+          interface SamsungPay {}
 
           interface SepaDebit {
             /**
@@ -1874,6 +1954,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'alma'
           | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
@@ -1888,18 +1969,23 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'kakao_pay'
           | 'klarna'
           | 'konbini'
+          | 'kr_card'
           | 'link'
           | 'mobilepay'
           | 'multibanco'
+          | 'naver_pay'
           | 'oxxo'
           | 'p24'
+          | 'payco'
           | 'paynow'
           | 'paypal'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
+          | 'samsung_pay'
           | 'sepa_debit'
           | 'sofort'
           | 'swish'

@@ -143,7 +143,8 @@ declare module 'stripe' {
         | '2023-10-16'
         | '2024-04-10'
         | '2024-06-20'
-        | '2024-09-30.acacia';
+        | '2024-09-30.acacia'
+        | '2024-10-28.acacia';
 
       type EnabledEvent =
         | '*'
@@ -267,6 +268,7 @@ declare module 'stripe' {
         | 'issuing_token.created'
         | 'issuing_token.updated'
         | 'issuing_transaction.created'
+        | 'issuing_transaction.purchase_details_receipt_updated'
         | 'issuing_transaction.updated'
         | 'mandate.updated'
         | 'payment_intent.amount_capturable_updated'
@@ -310,6 +312,7 @@ declare module 'stripe' {
         | 'radar.early_fraud_warning.created'
         | 'radar.early_fraud_warning.updated'
         | 'refund.created'
+        | 'refund.failed'
         | 'refund.updated'
         | 'reporting.report_run.failed'
         | 'reporting.report_run.succeeded'
@@ -548,6 +551,7 @@ declare module 'stripe' {
         | 'issuing_token.created'
         | 'issuing_token.updated'
         | 'issuing_transaction.created'
+        | 'issuing_transaction.purchase_details_receipt_updated'
         | 'issuing_transaction.updated'
         | 'mandate.updated'
         | 'payment_intent.amount_capturable_updated'
@@ -591,6 +595,7 @@ declare module 'stripe' {
         | 'radar.early_fraud_warning.created'
         | 'radar.early_fraud_warning.updated'
         | 'refund.created'
+        | 'refund.failed'
         | 'refund.updated'
         | 'reporting.report_run.failed'
         | 'reporting.report_run.succeeded'

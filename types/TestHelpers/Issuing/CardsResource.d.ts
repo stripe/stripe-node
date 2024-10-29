@@ -40,6 +40,15 @@ declare module 'stripe' {
       }
 
       namespace Issuing {
+        interface CardSubmitCardParams {
+          /**
+           * Specifies which fields in the response should be expanded.
+           */
+          expand?: Array<string>;
+        }
+      }
+
+      namespace Issuing {
         class CardsResource {
           /**
            * Updates the shipping status of the specified Issuing Card object to delivered.
@@ -89,6 +98,19 @@ declare module 'stripe' {
             options?: RequestOptions
           ): Promise<Stripe.Response<Stripe.Issuing.Card>>;
           shipCard(
+            id: string,
+            options?: RequestOptions
+          ): Promise<Stripe.Response<Stripe.Issuing.Card>>;
+
+          /**
+           * Updates the shipping status of the specified Issuing Card object to submitted. This method requires Stripe Version ‘2024-09-30.acacia' or later.
+           */
+          submitCard(
+            id: string,
+            params?: CardSubmitCardParams,
+            options?: RequestOptions
+          ): Promise<Stripe.Response<Stripe.Issuing.Card>>;
+          submitCard(
             id: string,
             options?: RequestOptions
           ): Promise<Stripe.Response<Stripe.Issuing.Card>>;

@@ -3,7 +3,7 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The UsageRecordSummary object.
+     * A usage record summary represents an aggregated view of how much usage was accrued for a subscription item within a subscription billing period.
      */
     interface UsageRecordSummary {
       /**

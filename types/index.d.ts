@@ -134,6 +134,7 @@
 ///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
 ///<reference path='./V2/BillingResource.d.ts' />
+///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
 ///<reference path='./V2/Core/EventsResource.d.ts' />
 ///<reference path='./V2/CoreResource.d.ts' />
 ///<reference path='./V2Resource.d.ts' />
@@ -281,6 +282,7 @@
 ///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
+///<reference path='./V2/EventDestinations.d.ts' />
 ///<reference path='./V2/Events.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
