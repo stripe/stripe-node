@@ -119,6 +119,11 @@ declare module 'stripe' {
       grabpay?: PaymentMethodCreateParams.Grabpay;
 
       /**
+       * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+       */
+      id_bank_transfer?: PaymentMethodCreateParams.IdBankTransfer;
+
+      /**
        * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
        */
       ideal?: PaymentMethodCreateParams.Ideal;
@@ -515,6 +520,17 @@ declare module 'stripe' {
 
       interface Grabpay {}
 
+      interface IdBankTransfer {
+        /**
+         * Bank where the account is held.
+         */
+        bank?: IdBankTransfer.Bank;
+      }
+
+      namespace IdBankTransfer {
+        type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+      }
+
       interface Ideal {
         /**
          * The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
@@ -744,6 +760,7 @@ declare module 'stripe' {
         | 'giropay'
         | 'gopay'
         | 'grabpay'
+        | 'id_bank_transfer'
         | 'ideal'
         | 'kakao_pay'
         | 'klarna'
@@ -1009,6 +1026,7 @@ declare module 'stripe' {
         | 'giropay'
         | 'gopay'
         | 'grabpay'
+        | 'id_bank_transfer'
         | 'ideal'
         | 'kakao_pay'
         | 'klarna'

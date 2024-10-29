@@ -310,6 +310,16 @@ declare module 'stripe' {
         grabpay_payments?: Capabilities.GrabpayPayments;
 
         /**
+         * The id_bank_transfer_payments capability.
+         */
+        id_bank_transfer_payments?: Capabilities.IdBankTransferPayments;
+
+        /**
+         * The id_bank_transfer_payments_bca capability.
+         */
+        id_bank_transfer_payments_bca?: Capabilities.IdBankTransferPaymentsBca;
+
+        /**
          * The ideal_payments capability.
          */
         ideal_payments?: Capabilities.IdealPayments;
@@ -662,6 +672,20 @@ declare module 'stripe' {
         }
 
         interface GrabpayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface IdBankTransferPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface IdBankTransferPaymentsBca {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1594,6 +1618,11 @@ declare module 'stripe' {
         bacs_debit_payments?: Settings.BacsDebitPayments;
 
         /**
+         * Settings specific to bank BCA onboarding for Indonesia bank transfers payments method.
+         */
+        bank_bca_onboarding?: Settings.BankBcaOnboarding;
+
+        /**
          * Settings used to apply the account's branding to email receipts, invoices, Checkout, and other products.
          */
         branding?: Settings.Branding;
@@ -1640,6 +1669,18 @@ declare module 'stripe' {
            * The Bacs Direct Debit Display Name for this account. For payments made with Bacs Direct Debit, this name appears on the mandate as the statement descriptor. Mobile banking apps display it as the name of the business. To use custom branding, set the Bacs Direct Debit Display Name during or right after creation. Custom branding incurs an additional monthly fee for the platform. If you don't set the display name before requesting Bacs capability, it's automatically set as "Stripe" and the account is onboarded to Stripe branding, which is free.
            */
           display_name?: string;
+        }
+
+        interface BankBcaOnboarding {
+          /**
+           * Bank BCA business account holder name
+           */
+          account_holder_name?: string;
+
+          /**
+           * Bank BCA business account number
+           */
+          business_account_number?: string;
         }
 
         interface Branding {
@@ -2215,6 +2256,16 @@ declare module 'stripe' {
         grabpay_payments?: Capabilities.GrabpayPayments;
 
         /**
+         * The id_bank_transfer_payments capability.
+         */
+        id_bank_transfer_payments?: Capabilities.IdBankTransferPayments;
+
+        /**
+         * The id_bank_transfer_payments_bca capability.
+         */
+        id_bank_transfer_payments_bca?: Capabilities.IdBankTransferPaymentsBca;
+
+        /**
          * The ideal_payments capability.
          */
         ideal_payments?: Capabilities.IdealPayments;
@@ -2567,6 +2618,20 @@ declare module 'stripe' {
         }
 
         interface GrabpayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface IdBankTransferPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface IdBankTransferPaymentsBca {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -3408,6 +3473,11 @@ declare module 'stripe' {
         bacs_debit_payments?: Settings.BacsDebitPayments;
 
         /**
+         * Settings specific to bank BCA onboarding for Indonesia bank transfers payments method.
+         */
+        bank_bca_onboarding?: Settings.BankBcaOnboarding;
+
+        /**
          * Settings used to apply the account's branding to email receipts, invoices, Checkout, and other products.
          */
         branding?: Settings.Branding;
@@ -3459,6 +3529,18 @@ declare module 'stripe' {
            * The Bacs Direct Debit Display Name for this account. For payments made with Bacs Direct Debit, this name appears on the mandate as the statement descriptor. Mobile banking apps display it as the name of the business. To use custom branding, set the Bacs Direct Debit Display Name during or right after creation. Custom branding incurs an additional monthly fee for the platform. If you don't set the display name before requesting Bacs capability, it's automatically set as "Stripe" and the account is onboarded to Stripe branding, which is free.
            */
           display_name?: string;
+        }
+
+        interface BankBcaOnboarding {
+          /**
+           * Bank BCA business account holder name
+           */
+          account_holder_name?: string;
+
+          /**
+           * Bank BCA business account number
+           */
+          business_account_number?: string;
         }
 
         interface Branding {
@@ -4756,7 +4838,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.ExternalAccount>>;
 
       /**
-       * Creates a single-use login link for a connected account to access the Express Dashboard.
+       * Creates a login link for a connected account to access the Express Dashboard.
        *
        * You can only create login links for accounts that use the [Express Dashboard](https://stripe.com/connect/express-dashboard) and are connected to your platform.
        */

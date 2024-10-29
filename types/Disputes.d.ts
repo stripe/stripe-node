@@ -48,7 +48,7 @@ declare module 'stripe' {
       /**
        * List of eligibility types that are included in `enhanced_evidence`.
        */
-      enhanced_eligibility_types?: Array<'visa_compelling_evidence_3'>;
+      enhanced_eligibility_types: Array<'visa_compelling_evidence_3'>;
 
       evidence: Dispute.Evidence;
 
@@ -159,7 +159,7 @@ declare module 'stripe' {
          */
         duplicate_charge_id: string | null;
 
-        enhanced_evidence?: Evidence.EnhancedEvidence;
+        enhanced_evidence: Evidence.EnhancedEvidence;
 
         /**
          * A description of the product or service that was sold.
@@ -350,7 +350,7 @@ declare module 'stripe' {
          */
         due_by: number | null;
 
-        enhanced_eligibility?: EvidenceDetails.EnhancedEligibility;
+        enhanced_eligibility: EvidenceDetails.EnhancedEligibility;
 
         /**
          * Whether evidence has been staged for this dispute.

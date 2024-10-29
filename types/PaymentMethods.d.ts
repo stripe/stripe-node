@@ -77,6 +77,8 @@ declare module 'stripe' {
 
       grabpay?: PaymentMethod.Grabpay;
 
+      id_bank_transfer?: PaymentMethod.IdBankTransfer;
+
       ideal?: PaymentMethod.Ideal;
 
       interac_present?: PaymentMethod.InteracPresent;
@@ -956,6 +958,20 @@ declare module 'stripe' {
 
       interface Grabpay {}
 
+      interface IdBankTransfer {
+        bank: IdBankTransfer.Bank | null;
+
+        bank_code: string | null;
+
+        bank_name: string | null;
+
+        display_name: string | null;
+      }
+
+      namespace IdBankTransfer {
+        type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+      }
+
       interface Ideal {
         /**
          * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
@@ -1404,6 +1420,7 @@ declare module 'stripe' {
         | 'giropay'
         | 'gopay'
         | 'grabpay'
+        | 'id_bank_transfer'
         | 'ideal'
         | 'interac_present'
         | 'kakao_pay'

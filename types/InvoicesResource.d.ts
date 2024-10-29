@@ -29,6 +29,11 @@ declare module 'stripe' {
       automatic_tax?: InvoiceCreateParams.AutomaticTax;
 
       /**
+       * The time when this invoice should be scheduled to finalize. The invoice will be finalized at this time if it is still in draft state.
+       */
+      automatically_finalizes_at?: number;
+
+      /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions. Defaults to `charge_automatically`.
        */
       collection_method?: InvoiceCreateParams.CollectionMethod;
@@ -369,6 +374,13 @@ declare module 'stripe' {
           >;
 
           /**
+           * If paying by `id_bank_transfer`, this sub-hash contains details about the Indonesia bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          id_bank_transfer?: Stripe.Emptyable<
+            PaymentMethodOptions.IdBankTransfer
+          >;
+
+          /**
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
@@ -511,6 +523,8 @@ declare module 'stripe' {
             }
           }
 
+          interface IdBankTransfer {}
+
           interface Konbini {}
 
           interface SepaDebit {}
@@ -595,6 +609,7 @@ declare module 'stripe' {
           | 'fpx'
           | 'giropay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'
@@ -858,6 +873,11 @@ declare module 'stripe' {
        * Settings for automatic tax lookup for this invoice.
        */
       automatic_tax?: InvoiceUpdateParams.AutomaticTax;
+
+      /**
+       * The time when this invoice should be scheduled to finalize. The invoice will be finalized at this time if it is still in draft state. To turn off automatic finalization, set `auto_advance` to false.
+       */
+      automatically_finalizes_at?: number;
 
       /**
        * Either `charge_automatically` or `send_invoice`. This field can be updated only on `draft` invoices.
@@ -1163,6 +1183,13 @@ declare module 'stripe' {
           >;
 
           /**
+           * If paying by `id_bank_transfer`, this sub-hash contains details about the Indonesia bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          id_bank_transfer?: Stripe.Emptyable<
+            PaymentMethodOptions.IdBankTransfer
+          >;
+
+          /**
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
@@ -1305,6 +1332,8 @@ declare module 'stripe' {
             }
           }
 
+          interface IdBankTransfer {}
+
           interface Konbini {}
 
           interface SepaDebit {}
@@ -1389,6 +1418,7 @@ declare module 'stripe' {
           | 'fpx'
           | 'giropay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'

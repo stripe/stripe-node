@@ -968,7 +968,6 @@ declare module 'stripe' {
           | 'payment_method_unexpected_state'
           | 'payment_method_unsupported_type'
           | 'payout_reconciliation_not_ready'
-          | 'payout_statement_descriptor_profanity'
           | 'payouts_limit_exceeded'
           | 'payouts_not_allowed'
           | 'platform_account_required'
@@ -1063,6 +1062,11 @@ declare module 'stripe' {
            * If paying by `customer_balance`, this sub-hash contains details about the Bank transfer payment method options to pass to the invoice's PaymentIntent.
            */
           customer_balance: PaymentMethodOptions.CustomerBalance | null;
+
+          /**
+           * If paying by `id_bank_transfer`, this sub-hash contains details about the Indonesia bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          id_bank_transfer?: PaymentMethodOptions.IdBankTransfer | null;
 
           /**
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
@@ -1169,6 +1173,8 @@ declare module 'stripe' {
             }
           }
 
+          interface IdBankTransfer {}
+
           interface Konbini {}
 
           interface SepaDebit {}
@@ -1247,6 +1253,7 @@ declare module 'stripe' {
           | 'fpx'
           | 'giropay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'
