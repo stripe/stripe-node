@@ -230,6 +230,7 @@ declare module 'stripe' {
         | 'issuing_token.created'
         | 'issuing_token.updated'
         | 'issuing_transaction.created'
+        | 'issuing_transaction.purchase_details_receipt_updated'
         | 'issuing_transaction.updated'
         | 'mandate.updated'
         | 'payment_intent.amount_capturable_updated'

@@ -114,9 +114,19 @@ declare module 'stripe' {
       google_pay?: PaymentMethodConfigurationCreateParams.GooglePay;
 
       /**
+       * GoPay is a [single use](https://stripe.com/docs/payments/payment-methods#usage) digital wallet payment method popular in Indonesia. When paying with GoPay, customers authenticate and approve payments using the Gojek app. Desktop checkout is performed by scanning a QR code. When checking out on mobile, customers are redirected to the Gojek app to confirm payment.
+       */
+      gopay?: PaymentMethodConfigurationCreateParams.Gopay;
+
+      /**
        * GrabPay is a payment method developed by [Grab](https://www.grab.com/sg/consumer/finance/pay/). GrabPay is a digital wallet - customers maintain a balance in their wallets that they pay out with. Check this [page](https://stripe.com/docs/payments/grabpay) for more details.
        */
       grabpay?: PaymentMethodConfigurationCreateParams.Grabpay;
+
+      /**
+       * Stripe users in Indonesia can receive bank transfers from customers in Indonesia. Bank transfers are a popular B2C and B2B payment method in Indonesia.
+       */
+      id_bank_transfer?: PaymentMethodConfigurationCreateParams.IdBankTransfer;
 
       /**
        * iDEAL is a Netherlands-based payment method that allows customers to complete transactions online using their bank credentials. All major Dutch banks are members of Currence, the scheme that operates iDEAL, making it the most popular online payment method in the Netherlands with a share of online transactions close to 55%. Check this [page](https://stripe.com/docs/payments/ideal) for more details.
@@ -194,6 +204,11 @@ declare module 'stripe' {
       promptpay?: PaymentMethodConfigurationCreateParams.Promptpay;
 
       /**
+       * QRIS is a [real-time](https://docs.stripe.com/payments/real-time) payment method popular in Indonesia. When paying with QRIS, customers authenticate and approve payments by scanning a QR code in their preferred digital wallet app.
+       */
+      qris?: PaymentMethodConfigurationCreateParams.Qris;
+
+      /**
        * Revolut Pay, developed by Revolut, a global finance app, is a digital wallet payment method. Revolut Pay uses the customer's stored balance or cards to fund the payment, and offers the option for non-Revolut customers to save their details after their first purchase.
        */
       revolut_pay?: PaymentMethodConfigurationCreateParams.RevolutPay;
@@ -202,6 +217,11 @@ declare module 'stripe' {
        * The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is an initiative of the European Union to simplify payments within and across member countries. SEPA established and enforced banking standards to allow for the direct debiting of every EUR-denominated bank account within the SEPA region, check this [page](https://stripe.com/docs/payments/sepa-debit) for more details.
        */
       sepa_debit?: PaymentMethodConfigurationCreateParams.SepaDebit;
+
+      /**
+       * ShopeePay is a [single use](https://stripe.com/docs/payments/payment-methods#usage) digital wallet payment method popular in Indonesia. When paying with GoPay, customers authenticate and approve payments using the Shopee app. Desktop checkout is performed by scanning a QR code. When checking out on mobile, customers are redirected to the Shopee app to confirm payment.
+       */
+      shopeepay?: PaymentMethodConfigurationCreateParams.Shopeepay;
 
       /**
        * Stripe users in Europe and the United States can use the [Payment Intents API](https://stripe.com/docs/payments/payment-intents)—a single integration path for creating payments using any supported method—to accept [Sofort](https://www.sofort.com/) payments from customers. Check this [page](https://stripe.com/docs/payments/sofort) for more details.
@@ -655,6 +675,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Gopay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Gopay.DisplayPreference;
+      }
+
+      namespace Gopay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Grabpay {
         /**
          * Whether or not the payment method should be displayed.
@@ -663,6 +703,26 @@ declare module 'stripe' {
       }
 
       namespace Grabpay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface IdBankTransfer {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: IdBankTransfer.DisplayPreference;
+      }
+
+      namespace IdBankTransfer {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -935,6 +995,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Qris {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Qris.DisplayPreference;
+      }
+
+      namespace Qris {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface RevolutPay {
         /**
          * Whether or not the payment method should be displayed.
@@ -963,6 +1043,26 @@ declare module 'stripe' {
       }
 
       namespace SepaDebit {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Shopeepay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Shopeepay.DisplayPreference;
+      }
+
+      namespace Shopeepay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -1220,9 +1320,19 @@ declare module 'stripe' {
       google_pay?: PaymentMethodConfigurationUpdateParams.GooglePay;
 
       /**
+       * GoPay is a [single use](https://stripe.com/docs/payments/payment-methods#usage) digital wallet payment method popular in Indonesia. When paying with GoPay, customers authenticate and approve payments using the Gojek app. Desktop checkout is performed by scanning a QR code. When checking out on mobile, customers are redirected to the Gojek app to confirm payment.
+       */
+      gopay?: PaymentMethodConfigurationUpdateParams.Gopay;
+
+      /**
        * GrabPay is a payment method developed by [Grab](https://www.grab.com/sg/consumer/finance/pay/). GrabPay is a digital wallet - customers maintain a balance in their wallets that they pay out with. Check this [page](https://stripe.com/docs/payments/grabpay) for more details.
        */
       grabpay?: PaymentMethodConfigurationUpdateParams.Grabpay;
+
+      /**
+       * Stripe users in Indonesia can receive bank transfers from customers in Indonesia. Bank transfers are a popular B2C and B2B payment method in Indonesia.
+       */
+      id_bank_transfer?: PaymentMethodConfigurationUpdateParams.IdBankTransfer;
 
       /**
        * iDEAL is a Netherlands-based payment method that allows customers to complete transactions online using their bank credentials. All major Dutch banks are members of Currence, the scheme that operates iDEAL, making it the most popular online payment method in the Netherlands with a share of online transactions close to 55%. Check this [page](https://stripe.com/docs/payments/ideal) for more details.
@@ -1295,6 +1405,11 @@ declare module 'stripe' {
       promptpay?: PaymentMethodConfigurationUpdateParams.Promptpay;
 
       /**
+       * QRIS is a [real-time](https://docs.stripe.com/payments/real-time) payment method popular in Indonesia. When paying with QRIS, customers authenticate and approve payments by scanning a QR code in their preferred digital wallet app.
+       */
+      qris?: PaymentMethodConfigurationUpdateParams.Qris;
+
+      /**
        * Revolut Pay, developed by Revolut, a global finance app, is a digital wallet payment method. Revolut Pay uses the customer's stored balance or cards to fund the payment, and offers the option for non-Revolut customers to save their details after their first purchase.
        */
       revolut_pay?: PaymentMethodConfigurationUpdateParams.RevolutPay;
@@ -1303,6 +1418,11 @@ declare module 'stripe' {
        * The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is an initiative of the European Union to simplify payments within and across member countries. SEPA established and enforced banking standards to allow for the direct debiting of every EUR-denominated bank account within the SEPA region, check this [page](https://stripe.com/docs/payments/sepa-debit) for more details.
        */
       sepa_debit?: PaymentMethodConfigurationUpdateParams.SepaDebit;
+
+      /**
+       * ShopeePay is a [single use](https://stripe.com/docs/payments/payment-methods#usage) digital wallet payment method popular in Indonesia. When paying with GoPay, customers authenticate and approve payments using the Shopee app. Desktop checkout is performed by scanning a QR code. When checking out on mobile, customers are redirected to the Shopee app to confirm payment.
+       */
+      shopeepay?: PaymentMethodConfigurationUpdateParams.Shopeepay;
 
       /**
        * Stripe users in Europe and the United States can use the [Payment Intents API](https://stripe.com/docs/payments/payment-intents)—a single integration path for creating payments using any supported method—to accept [Sofort](https://www.sofort.com/) payments from customers. Check this [page](https://stripe.com/docs/payments/sofort) for more details.
@@ -1756,6 +1876,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Gopay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Gopay.DisplayPreference;
+      }
+
+      namespace Gopay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Grabpay {
         /**
          * Whether or not the payment method should be displayed.
@@ -1764,6 +1904,26 @@ declare module 'stripe' {
       }
 
       namespace Grabpay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface IdBankTransfer {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: IdBankTransfer.DisplayPreference;
+      }
+
+      namespace IdBankTransfer {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -2036,6 +2196,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Qris {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Qris.DisplayPreference;
+      }
+
+      namespace Qris {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface RevolutPay {
         /**
          * Whether or not the payment method should be displayed.
@@ -2064,6 +2244,26 @@ declare module 'stripe' {
       }
 
       namespace SepaDebit {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Shopeepay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Shopeepay.DisplayPreference;
+      }
+
+      namespace Shopeepay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

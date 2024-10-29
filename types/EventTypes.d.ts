@@ -146,6 +146,7 @@ declare module 'stripe' {
       | IssuingTokenCreatedEvent
       | IssuingTokenUpdatedEvent
       | IssuingTransactionCreatedEvent
+      | IssuingTransactionPurchaseDetailsReceiptUpdatedEvent
       | IssuingTransactionUpdatedEvent
       | MandateUpdatedEvent
       | PaymentIntentAmountCapturableUpdatedEvent
@@ -2564,6 +2565,23 @@ declare module 'stripe' {
     }
 
     namespace IssuingTransactionCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.Transaction;
+
+        previous_attributes?: Partial<Stripe.Issuing.Transaction>;
+      }
+    }
+
+    /**
+     * Occurs whenever an issuing transaction is updated with receipt data.
+     */
+    interface IssuingTransactionPurchaseDetailsReceiptUpdatedEvent
+      extends EventBase {
+      type: 'issuing_transaction.purchase_details_receipt_updated';
+      data: IssuingTransactionPurchaseDetailsReceiptUpdatedEvent.Data;
+    }
+
+    namespace IssuingTransactionPurchaseDetailsReceiptUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Transaction;
 

@@ -325,6 +325,16 @@ declare module 'stripe' {
         grabpay_payments?: Capabilities.GrabpayPayments;
 
         /**
+         * The status of the Indonesia Bank Transfer payments capability of the account, or whether the account can directly process Indonesia Bank Transfer charges.
+         */
+        id_bank_transfer_payments?: Capabilities.IdBankTransferPayments;
+
+        /**
+         * The status of Bank BCA onboarding of the account.
+         */
+        id_bank_transfer_payments_bca?: Capabilities.IdBankTransferPaymentsBca;
+
+        /**
          * The status of the iDEAL payments capability of the account, or whether the account can directly process iDEAL charges.
          */
         ideal_payments?: Capabilities.IdealPayments;
@@ -577,6 +587,10 @@ declare module 'stripe' {
         type GopayPayments = 'active' | 'inactive' | 'pending';
 
         type GrabpayPayments = 'active' | 'inactive' | 'pending';
+
+        type IdBankTransferPayments = 'active' | 'inactive' | 'pending';
+
+        type IdBankTransferPaymentsBca = 'active' | 'inactive' | 'pending';
 
         type IdealPayments = 'active' | 'inactive' | 'pending';
 
@@ -1363,6 +1377,8 @@ declare module 'stripe' {
       interface Settings {
         bacs_debit_payments?: Settings.BacsDebitPayments;
 
+        bank_bca_onboarding?: Settings.BankBcaOnboarding;
+
         branding: Settings.Branding;
 
         capital?: Settings.Capital;
@@ -1397,6 +1413,18 @@ declare module 'stripe' {
            * The Bacs Direct Debit Service user number for this account. For payments made with Bacs Direct Debit, this number is a unique identifier of the account with our banking partners.
            */
           service_user_number: string | null;
+        }
+
+        interface BankBcaOnboarding {
+          /**
+           * Bank BCA business account holder name.
+           */
+          account_holder_name?: string;
+
+          /**
+           * Bank BCA business account number.
+           */
+          business_account_number?: string;
         }
 
         interface Branding {
