@@ -75,7 +75,7 @@ declare module 'stripe' {
         type: VerificationReport.Type;
 
         /**
-         * The configuration token of a Verification Flow from the dashboard.
+         * The configuration token of a verification flow from the dashboard.
          */
         verification_flow?: string;
 

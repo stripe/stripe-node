@@ -1274,6 +1274,7 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'custom'
           | 'customer_balance'
           | 'eps'
           | 'fpx'

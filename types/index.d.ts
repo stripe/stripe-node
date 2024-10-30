@@ -69,6 +69,7 @@
 ///<reference path='./Issuing/CreditUnderwritingRecordsResource.d.ts' />
 ///<reference path='./Issuing/DisputeSettlementDetailsResource.d.ts' />
 ///<reference path='./Issuing/DisputesResource.d.ts' />
+///<reference path='./Issuing/FraudLiabilityDebitsResource.d.ts' />
 ///<reference path='./Issuing/PersonalizationDesignsResource.d.ts' />
 ///<reference path='./Issuing/PhysicalBundlesResource.d.ts' />
 ///<reference path='./Issuing/TokensResource.d.ts' />
@@ -235,6 +236,7 @@
 ///<reference path='./Issuing/CreditUnderwritingRecords.d.ts' />
 ///<reference path='./Issuing/DisputeSettlementDetails.d.ts' />
 ///<reference path='./Issuing/Disputes.d.ts' />
+///<reference path='./Issuing/FraudLiabilityDebits.d.ts' />
 ///<reference path='./Issuing/PersonalizationDesigns.d.ts' />
 ///<reference path='./Issuing/PhysicalBundles.d.ts' />
 ///<reference path='./Issuing/Settlements.d.ts' />
@@ -250,6 +252,7 @@
 ///<reference path='./PaymentMethodConfigurations.d.ts' />
 ///<reference path='./PaymentMethodDomains.d.ts' />
 ///<reference path='./PaymentMethods.d.ts' />
+///<reference path='./PaymentRecords.d.ts' />
 ///<reference path='./Payouts.d.ts' />
 ///<reference path='./Persons.d.ts' />
 ///<reference path='./Plans.d.ts' />
@@ -452,6 +455,7 @@ declare module 'stripe' {
       creditUnderwritingRecords: Stripe.Issuing.CreditUnderwritingRecordsResource;
       disputes: Stripe.Issuing.DisputesResource;
       disputeSettlementDetails: Stripe.Issuing.DisputeSettlementDetailsResource;
+      fraudLiabilityDebits: Stripe.Issuing.FraudLiabilityDebitsResource;
       personalizationDesigns: Stripe.Issuing.PersonalizationDesignsResource;
       physicalBundles: Stripe.Issuing.PhysicalBundlesResource;
       tokens: Stripe.Issuing.TokensResource;

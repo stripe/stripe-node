@@ -73,12 +73,15 @@ declare module 'stripe' {
          */
         charge?: string | Stripe.Charge;
 
-        out_of_band_payment?: Payment.OutOfBandPayment;
-
         /**
          * ID of the PaymentIntent associated with this payment when `type` is `payment_intent`. Note: This property is only populated for invoices finalized on or after March 15th, 2019.
          */
         payment_intent?: string | Stripe.PaymentIntent;
+
+        /**
+         * ID of the PaymentRecord associated with this payment when `type` is `payment_record`.
+         */
+        payment_record?: string | Stripe.PaymentRecord;
 
         /**
          * Type of payment object associated with this invoice payment.
@@ -87,39 +90,11 @@ declare module 'stripe' {
       }
 
       namespace Payment {
-        interface OutOfBandPayment {
-          /**
-           * Amount paid on this out of band payment, in cents (or local equivalent)
-           */
-          amount: number;
-
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency: string;
-
-          /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-           */
-          metadata: Stripe.Metadata | null;
-
-          /**
-           * The type of money movement for this out of band payment record.
-           */
-          money_movement_type: string;
-
-          /**
-           * The timestamp when this out of band payment was paid.
-           */
-          paid_at: number | null;
-
-          /**
-           * The reference for this out of band payment record.
-           */
-          payment_reference: string | null;
-        }
-
-        type Type = 'charge' | 'out_of_band_payment' | 'payment_intent';
+        type Type =
+          | 'charge'
+          | 'out_of_band_payment'
+          | 'payment_intent'
+          | 'payment_record';
       }
 
       interface StatusTransitions {

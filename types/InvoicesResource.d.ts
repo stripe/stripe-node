@@ -604,6 +604,7 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'custom'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -1413,6 +1414,7 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'custom'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -2008,18 +2010,23 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * The out of band payment to attach to the invoice.
-       */
-      out_of_band_payment?: InvoiceAttachPaymentParams.OutOfBandPayment;
-
-      /**
        * The ID of the PaymentIntent to attach to the invoice.
        */
       payment_intent?: string;
+
+      /**
+       * The ID of the PaymentRecord to detach from the invoice.
+       */
+      payment_record?: string;
+
+      /**
+       * The PaymentRecord data for attaching an out of band payment to the invoice.
+       */
+      payment_record_data?: InvoiceAttachPaymentParams.PaymentRecordData;
     }
 
     namespace InvoiceAttachPaymentParams {
-      interface OutOfBandPayment {
+      interface PaymentRecordData {
         /**
          * The amount that was paid out of band.
          */

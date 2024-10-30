@@ -32,6 +32,7 @@ import {FinancingOffers as CapitalFinancingOffers} from './resources/Capital/Fin
 import {FinancingSummary as CapitalFinancingSummary} from './resources/Capital/FinancingSummary.js';
 import {FinancingTransactions as CapitalFinancingTransactions} from './resources/Capital/FinancingTransactions.js';
 import {Forms as TaxForms} from './resources/Tax/Forms.js';
+import {FraudLiabilityDebits as IssuingFraudLiabilityDebits} from './resources/Issuing/FraudLiabilityDebits.js';
 import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {Institutions as FinancialConnectionsInstitutions} from './resources/FinancialConnections/Institutions.js';
@@ -192,6 +193,7 @@ export const Issuing = resourceNamespace('issuing', {
   CreditUnderwritingRecords: IssuingCreditUnderwritingRecords,
   DisputeSettlementDetails: IssuingDisputeSettlementDetails,
   Disputes: IssuingDisputes,
+  FraudLiabilityDebits: IssuingFraudLiabilityDebits,
   PersonalizationDesigns: IssuingPersonalizationDesigns,
   PhysicalBundles: IssuingPhysicalBundles,
   Tokens: IssuingTokens,

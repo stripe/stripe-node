@@ -45,7 +45,7 @@ declare module 'stripe' {
         type?: VerificationSessionCreateParams.Type;
 
         /**
-         * The ID of a Verification Flow from the Dashboard. See https://docs.stripe.com/identity/verification-flows.
+         * The ID of a verification flow from the Dashboard. See https://docs.stripe.com/identity/verification-flows.
          */
         verification_flow?: string;
       }

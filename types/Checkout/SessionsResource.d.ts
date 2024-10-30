@@ -1111,7 +1111,7 @@ declare module 'stripe' {
           multibanco?: PaymentMethodOptions.Multibanco;
 
           /**
-           * contains details about the Kakao Pay payment method options.
+           * contains details about the Naver Pay payment method options.
            */
           naver_pay?: PaymentMethodOptions.NaverPay;
 
@@ -1331,6 +1331,11 @@ declare module 'stripe' {
 
           interface BacsDebit {
             /**
+             * Additional fields for Mandate creation
+             */
+            mandate_options?: BacsDebit.MandateOptions;
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -1343,6 +1348,8 @@ declare module 'stripe' {
           }
 
           namespace BacsDebit {
+            interface MandateOptions {}
+
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
           }
 
@@ -1583,6 +1590,11 @@ declare module 'stripe' {
 
           interface KakaoPay {
             /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -1630,6 +1642,11 @@ declare module 'stripe' {
           }
 
           interface KrCard {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -1691,6 +1708,11 @@ declare module 'stripe' {
 
           interface NaverPay {
             /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -1742,7 +1764,12 @@ declare module 'stripe' {
             tos_shown_and_accepted?: boolean;
           }
 
-          interface Payco {}
+          interface Payco {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+          }
 
           interface Paynow {
             /**
@@ -1939,7 +1966,12 @@ declare module 'stripe' {
             type SetupFutureUsage = 'none' | 'off_session';
           }
 
-          interface SamsungPay {}
+          interface SamsungPay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+          }
 
           interface SepaDebit {
             /**
