@@ -20,12 +20,12 @@ declare module 'stripe' {
         category: CreditGrantCreateParams.Category;
 
         /**
-         * Id of the customer to whom the credit should be granted.
+         * ID of the customer to whom the billing credits should be granted.
          */
         customer: string;
 
         /**
-         * The time when the credit becomes effective i.e when it is eligible to be used. Defaults to the current timestamp if not specified.
+         * The time when the billing credits become effective i.e when they are eligible to be used. Defaults to the current timestamp if not specified.
          */
         effective_at?: number;
 
@@ -35,7 +35,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * The time when the credit will expire. If not specified, the credit will never expire.
+         * The time when the billing credits will expire. If not specified, the billing credits will never expire.
          */
         expires_at?: number;
 
@@ -45,7 +45,7 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * A descriptive name shown in dashboard and on invoices.
+         * A descriptive name shown in dashboard.
          */
         name?: string;
       }
@@ -58,7 +58,7 @@ declare module 'stripe' {
           monetary?: Amount.Monetary;
 
           /**
-           * Specify the type of this amount. We currently only support `monetary` credits.
+           * Specify the type of this amount. We currently only support `monetary` billing credits.
            */
           type: 'monetary';
         }
@@ -110,7 +110,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * The time when the credit created by this credit grant will expire. If set to empty, the credit will never expire.
+         * The time when the billing credits created by this credit grant will expire. If set to empty, the billing credits will never expire.
          */
         expires_at?: Stripe.Emptyable<number>;
 

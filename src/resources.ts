@@ -22,6 +22,7 @@ import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Custome
 import {DebitReversals as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
 import {Disputes as IssuingDisputes} from './resources/Issuing/Disputes.js';
 import {EarlyFraudWarnings as RadarEarlyFraudWarnings} from './resources/Radar/EarlyFraudWarnings.js';
+import {EventDestinations as V2CoreEventDestinations} from './resources/V2/Core/EventDestinations.js';
 import {Events as V2CoreEvents} from './resources/V2/Core/Events.js';
 import {Features as EntitlementsFeatures} from './resources/Entitlements/Features.js';
 import {FinancialAccounts as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts.js';
@@ -240,5 +241,8 @@ export const V2 = resourceNamespace('v2', {
     MeterEventStream: V2BillingMeterEventStream,
     MeterEvents: V2BillingMeterEvents,
   }),
-  Core: resourceNamespace('core', {Events: V2CoreEvents}),
+  Core: resourceNamespace('core', {
+    EventDestinations: V2CoreEventDestinations,
+    Events: V2CoreEvents,
+  }),
 });

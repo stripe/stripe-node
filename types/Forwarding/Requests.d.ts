@@ -43,6 +43,11 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         */
+        metadata?: Stripe.Metadata | null;
+
+        /**
          * The PaymentMethod to insert into the forwarded request. Forwarding previously consumed PaymentMethods is allowed.
          */
         payment_method: string;

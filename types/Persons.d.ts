@@ -102,7 +102,7 @@ declare module 'stripe' {
       future_requirements?: Person.FutureRequirements | null;
 
       /**
-       * The person's gender (International regulations require either "male" or "female").
+       * The person's gender.
        */
       gender?: string | null;
 

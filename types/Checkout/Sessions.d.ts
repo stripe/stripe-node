@@ -490,7 +490,7 @@ declare module 'stripe' {
 
           interface TaxId {
             /**
-             * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, or `unknown`
+             * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, or `unknown`
              */
             type: TaxId.Type;
 
@@ -512,6 +512,7 @@ declare module 'stripe' {
               | 'bo_tin'
               | 'br_cnpj'
               | 'br_cpf'
+              | 'by_tin'
               | 'ca_bn'
               | 'ca_gst_hst'
               | 'ca_pst_bc'
@@ -547,6 +548,8 @@ declare module 'stripe' {
               | 'kr_brn'
               | 'kz_bin'
               | 'li_uid'
+              | 'ma_vat'
+              | 'md_vat'
               | 'mx_rfc'
               | 'my_frp'
               | 'my_itn'
@@ -570,10 +573,13 @@ declare module 'stripe' {
               | 'th_vat'
               | 'tr_tin'
               | 'tw_vat'
+              | 'tz_vat'
               | 'ua_vat'
               | 'unknown'
               | 'us_ein'
               | 'uy_ruc'
+              | 'uz_tin'
+              | 'uz_vat'
               | 've_rif'
               | 'vn_tin'
               | 'za_vat';
@@ -929,9 +935,13 @@ declare module 'stripe' {
 
           ideal?: PaymentMethodOptions.Ideal;
 
+          kakao_pay?: PaymentMethodOptions.KakaoPay;
+
           klarna?: PaymentMethodOptions.Klarna;
 
           konbini?: PaymentMethodOptions.Konbini;
+
+          kr_card?: PaymentMethodOptions.KrCard;
 
           link?: PaymentMethodOptions.Link;
 
@@ -939,9 +949,13 @@ declare module 'stripe' {
 
           multibanco?: PaymentMethodOptions.Multibanco;
 
+          naver_pay?: PaymentMethodOptions.NaverPay;
+
           oxxo?: PaymentMethodOptions.Oxxo;
 
           p24?: PaymentMethodOptions.P24;
+
+          payco?: PaymentMethodOptions.Payco;
 
           paynow?: PaymentMethodOptions.Paynow;
 
@@ -950,6 +964,8 @@ declare module 'stripe' {
           pix?: PaymentMethodOptions.Pix;
 
           revolut_pay?: PaymentMethodOptions.RevolutPay;
+
+          samsung_pay?: PaymentMethodOptions.SamsungPay;
 
           sepa_debit?: PaymentMethodOptions.SepaDebit;
 
@@ -1340,6 +1356,28 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface KakaoPay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: KakaoPay.SetupFutureUsage;
+          }
+
+          namespace KakaoPay {
+            type SetupFutureUsage = 'none' | 'off_session';
+          }
+
           interface Klarna {
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -1373,6 +1411,28 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+          }
+
+          interface KrCard {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: KrCard.SetupFutureUsage;
+          }
+
+          namespace KrCard {
+            type SetupFutureUsage = 'none' | 'off_session';
           }
 
           interface Link {
@@ -1418,6 +1478,13 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface NaverPay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+          }
+
           interface Oxxo {
             /**
              * The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -1447,6 +1514,13 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+          }
+
+          interface Payco {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
           }
 
           interface Paynow {
@@ -1516,6 +1590,13 @@ declare module 'stripe' {
 
           namespace RevolutPay {
             type SetupFutureUsage = 'none' | 'off_session';
+          }
+
+          interface SamsungPay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
           }
 
           interface SepaDebit {

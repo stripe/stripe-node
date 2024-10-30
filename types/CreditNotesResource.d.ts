@@ -79,7 +79,7 @@ declare module 'stripe' {
 
       interface Line {
         /**
-         * The line item amount to credit. Only valid when `type` is `invoice_line_item`.
+         * The line item amount to credit. Only valid when `type` is `invoice_line_item`. If invoice is set up with `automatic_tax[enabled]=true`, this amount is tax exclusive
          */
         amount?: number;
 
@@ -289,7 +289,7 @@ declare module 'stripe' {
 
       interface Line {
         /**
-         * The line item amount to credit. Only valid when `type` is `invoice_line_item`.
+         * The line item amount to credit. Only valid when `type` is `invoice_line_item`. If invoice is set up with `automatic_tax[enabled]=true`, this amount is tax exclusive
          */
         amount?: number;
 
@@ -446,7 +446,7 @@ declare module 'stripe' {
 
       interface Line {
         /**
-         * The line item amount to credit. Only valid when `type` is `invoice_line_item`.
+         * The line item amount to credit. Only valid when `type` is `invoice_line_item`. If invoice is set up with `automatic_tax[enabled]=true`, this amount is tax exclusive
          */
         amount?: number;
 
