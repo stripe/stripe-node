@@ -1,6 +1,6 @@
 # Changelog
 ## 17.3.0 - 2024-10-29
-* [#2204](https://github.com/stripe/stripe-node/pull/2204) Update generated code
+* [#2204](https://github.com/stripe/stripe-node/pull/2204) This release changes the pinned API version to `2024-10-28.acacia`.
   * Add support for new resource `V2.EventDestinations`
   * Add support for `create`, `retrieve`, `update`, `list`, `del`, `disable`, `enable` and `ping` methods on resource `V2.EventDestinations`
   * Add support for `submit_card` test helper method on resource `Issuing.Card`
