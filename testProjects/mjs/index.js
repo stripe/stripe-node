@@ -120,7 +120,7 @@ async function exampleMonkeyPatchFunction() {
 
 exampleFunction({
   // The required parameter currency is missing
-  currency: 'usd',
+  currency: 'usd', 
   amount: 2000,
   confirm: true,
   payment_method: 'pm_card_visa',
