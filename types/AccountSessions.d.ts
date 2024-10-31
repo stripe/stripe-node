@@ -90,7 +90,7 @@ declare module 'stripe' {
             /**
              * Disables Stripe user authentication for this embedded component. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts. The default value for this feature is `false` when `external_account_collection` is enabled and `true` otherwise.
              */
-            disable_stripe_user_authentication?: boolean;
+            disable_stripe_user_authentication: boolean;
 
             /**
              * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts. Otherwise, bank account collection is determined by compliance requirements. The default value for this feature is `true`.
@@ -113,7 +113,7 @@ declare module 'stripe' {
             /**
              * Disables Stripe user authentication for this embedded component. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts. The default value for this feature is `false` when `external_account_collection` is enabled and `true` otherwise.
              */
-            disable_stripe_user_authentication?: boolean;
+            disable_stripe_user_authentication: boolean;
 
             /**
              * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts. Otherwise, bank account collection is determined by compliance requirements. The default value for this feature is `true`.
@@ -136,7 +136,7 @@ declare module 'stripe' {
             /**
              * Disables Stripe user authentication for this embedded component. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts. The default value for this feature is `false` when `external_account_collection` is enabled and `true` otherwise.
              */
-            disable_stripe_user_authentication?: boolean;
+            disable_stripe_user_authentication: boolean;
 
             /**
              * Whether to allow payout schedule to be changed. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
@@ -226,7 +226,7 @@ declare module 'stripe' {
             /**
              * Disables Stripe user authentication for this embedded component. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts. The default value for this feature is `false` when `external_account_collection` is enabled and `true` otherwise.
              */
-            disable_stripe_user_authentication?: boolean;
+            disable_stripe_user_authentication: boolean;
 
             /**
              * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts. Otherwise, bank account collection is determined by compliance requirements. The default value for this feature is `true`.
@@ -315,7 +315,7 @@ declare module 'stripe' {
             /**
              * Disables Stripe user authentication for this embedded component. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts. The default value for this feature is `false` when `external_account_collection` is enabled and `true` otherwise.
              */
-            disable_stripe_user_authentication?: boolean;
+            disable_stripe_user_authentication: boolean;
 
             /**
              * Whether to allow payout schedule to be changed. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
