@@ -580,6 +580,7 @@ declare module 'stripe' {
               | 'girocard'
               | 'interac'
               | 'jcb'
+              | 'link'
               | 'mastercard'
               | 'unionpay'
               | 'unknown'

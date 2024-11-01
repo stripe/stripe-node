@@ -156,7 +156,7 @@ declare module 'stripe' {
       payment_method: string | Stripe.PaymentMethod | null;
 
       /**
-       * Information about the payment method configuration used for this PaymentIntent.
+       * Information about the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) used for this PaymentIntent.
        */
       payment_method_configuration_details: PaymentIntent.PaymentMethodConfigurationDetails | null;
 
@@ -2145,6 +2145,7 @@ declare module 'stripe' {
             | 'girocard'
             | 'interac'
             | 'jcb'
+            | 'link'
             | 'mastercard'
             | 'unionpay'
             | 'unknown'

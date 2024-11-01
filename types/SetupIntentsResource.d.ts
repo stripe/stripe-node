@@ -72,7 +72,7 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
-       * The ID of the payment method configuration to use with this SetupIntent.
+       * The ID of the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) to use with this SetupIntent.
        */
       payment_method_configuration?: string;
 
@@ -1169,6 +1169,7 @@ declare module 'stripe' {
             | 'girocard'
             | 'interac'
             | 'jcb'
+            | 'link'
             | 'mastercard'
             | 'unionpay'
             | 'unknown'
@@ -1557,7 +1558,7 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
-       * The ID of the payment method configuration to use with this SetupIntent.
+       * The ID of the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) to use with this SetupIntent.
        */
       payment_method_configuration?: string;
 
@@ -2567,6 +2568,7 @@ declare module 'stripe' {
             | 'girocard'
             | 'interac'
             | 'jcb'
+            | 'link'
             | 'mastercard'
             | 'unionpay'
             | 'unknown'
@@ -4014,6 +4016,7 @@ declare module 'stripe' {
             | 'girocard'
             | 'interac'
             | 'jcb'
+            | 'link'
             | 'mastercard'
             | 'unionpay'
             | 'unknown'

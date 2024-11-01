@@ -112,7 +112,7 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
-       * The ID of the payment method configuration to use with this PaymentIntent.
+       * The ID of the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) to use with this PaymentIntent.
        */
       payment_method_configuration?: string;
 
@@ -2468,6 +2468,7 @@ declare module 'stripe' {
             | 'girocard'
             | 'interac'
             | 'jcb'
+            | 'link'
             | 'mastercard'
             | 'unionpay'
             | 'unknown'
@@ -3920,7 +3921,7 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
-       * The ID of the payment method configuration to use with this PaymentIntent.
+       * The ID of the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) to use with this PaymentIntent.
        */
       payment_method_configuration?: string;
 
@@ -6223,6 +6224,7 @@ declare module 'stripe' {
             | 'girocard'
             | 'interac'
             | 'jcb'
+            | 'link'
             | 'mastercard'
             | 'unionpay'
             | 'unknown'
@@ -10733,6 +10735,7 @@ declare module 'stripe' {
             | 'girocard'
             | 'interac'
             | 'jcb'
+            | 'link'
             | 'mastercard'
             | 'unionpay'
             | 'unknown'
@@ -12189,6 +12192,11 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
+       * Payment method-specific configuration for this PaymentIntent.
+       */
+      payment_method_options?: PaymentIntentIncrementAuthorizationParams.PaymentMethodOptions;
+
+      /**
        * Text that appears on the customer's statement as the statement descriptor for a non-card or card charge. This value overrides the account's default statement descriptor. For information about requirements, including the 22-character limit, see [the Statement Descriptor docs](https://docs.stripe.com/get-started/account/statement-descriptors).
        */
       statement_descriptor?: string;
@@ -12224,6 +12232,17 @@ declare module 'stripe' {
             calculation: Stripe.Emptyable<string>;
           }
         }
+      }
+
+      interface PaymentMethodOptions {
+        /**
+         * Configuration for any card payments attempted on this PaymentIntent.
+         */
+        card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
+      }
+
+      namespace PaymentMethodOptions {
+        interface Card {}
       }
 
       interface TransferData {
