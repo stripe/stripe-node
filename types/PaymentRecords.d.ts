@@ -3,7 +3,10 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * A PaymentRecord represents a payment that happened on or off Stripe.
+     * A Payment Record is a resource that allows you to represent payments that occur on- or off-Stripe.
+     * For example, you can create a Payment Record to model a payment made on a different payment processor,
+     * in order to mark an Invoice as paid and a Subscription as active. Payment Records consist of one or
+     * more Payment Attempt Records, which represent individual attempts made on a payment network.
      */
     interface PaymentRecord {
       /**
@@ -17,27 +20,27 @@ declare module 'stripe' {
       object: 'payment_record';
 
       /**
-       * Amount object
+       * A representation of an amount of money, consisting of an amount and a currency.
        */
       amount_canceled: PaymentRecord.AmountCanceled;
 
       /**
-       * Amount object
+       * A representation of an amount of money, consisting of an amount and a currency.
        */
       amount_failed: PaymentRecord.AmountFailed;
 
       /**
-       * Amount object
+       * A representation of an amount of money, consisting of an amount and a currency.
        */
       amount_guaranteed: PaymentRecord.AmountGuaranteed;
 
       /**
-       * Amount object
+       * A representation of an amount of money, consisting of an amount and a currency.
        */
       amount_refunded: PaymentRecord.AmountRefunded;
 
       /**
-       * Amount object
+       * A representation of an amount of money, consisting of an amount and a currency.
        */
       amount_requested: PaymentRecord.AmountRequested;
 
@@ -52,7 +55,7 @@ declare module 'stripe' {
       customer_details: PaymentRecord.CustomerDetails | null;
 
       /**
-       * Whether the customer was present during the transaction.
+       * Indicates whether the customer was present in your checkout flow during this payment.
        */
       customer_presence: PaymentRecord.CustomerPresence | null;
 
@@ -62,7 +65,7 @@ declare module 'stripe' {
       description: string | null;
 
       /**
-       * ID of the latest PaymentAttemptRecord attached to this PaymentRecord.
+       * ID of the latest Payment Attempt Record attached to this Payment Record.
        */
       latest_payment_attempt_record: string;
 
@@ -77,12 +80,12 @@ declare module 'stripe' {
       metadata: Stripe.Metadata | null;
 
       /**
-       * Information about the method used to make this payment.
+       * Information about the Payment Method debited for this payment.
        */
       payment_method_details: PaymentRecord.PaymentMethodDetails | null;
 
       /**
-       * An opaque string for manual reconciliation of this payment, for example a check number.
+       * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
        */
       payment_reference: string | null;
 
@@ -155,7 +158,7 @@ declare module 'stripe' {
 
       interface CustomerDetails {
         /**
-         * ID of the Stripe customer for this payment.
+         * ID of the Stripe Customer associated with this payment.
          */
         customer: string | null;
 
@@ -194,7 +197,7 @@ declare module 'stripe' {
         payment_method: string | null;
 
         /**
-         * The type of payment method used for this payment attempt.
+         * The type of Payment Method used for this payment attempt.
          */
         type: 'custom';
       }
@@ -202,7 +205,7 @@ declare module 'stripe' {
       namespace PaymentMethodDetails {
         interface BillingDetails {
           /**
-           * Address data
+           * A representation of a physical address.
            */
           address: Stripe.Address;
 
@@ -229,7 +232,7 @@ declare module 'stripe' {
           display_name: string;
 
           /**
-           * The Custom Payment Method Type associated with this payment.
+           * The custom payment method type associated with this payment.
            */
           type: string | null;
         }
@@ -237,17 +240,17 @@ declare module 'stripe' {
 
       interface ShippingDetails {
         /**
-         * Address data
+         * A representation of a physical address.
          */
         address: Stripe.Address;
 
         /**
-         * The recipient's name.
+         * The shipping recipient's name.
          */
         name: string | null;
 
         /**
-         * The recipient's phone number.
+         * The shipping recipient's phone number.
          */
         phone: string | null;
       }

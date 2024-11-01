@@ -1395,6 +1395,31 @@ declare module 'stripe' {
             installments?: Card.Installments;
 
             /**
+             * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/payments/extended-authorization) for this CheckoutSession.
+             */
+            request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+            /**
+             * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/payments/extended-authorization) for this CheckoutSession.
+             */
+            request_extended_authorization?: Card.RequestExtendedAuthorization;
+
+            /**
+             * Request ability to [increment the authorization](https://stripe.com/payments/incremental-authorization) for this CheckoutSession.
+             */
+            request_incremental_authorization?: Card.RequestIncrementalAuthorization;
+
+            /**
+             * Request ability to make [multiple captures](https://stripe.com/payments/multicapture) for this CheckoutSession.
+             */
+            request_multicapture?: Card.RequestMulticapture;
+
+            /**
+             * Request ability to [overcapture](https://stripe.com/payments/overcapture) for this CheckoutSession.
+             */
+            request_overcapture?: Card.RequestOvercapture;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
@@ -1429,6 +1454,16 @@ declare module 'stripe' {
                */
               enabled?: boolean;
             }
+
+            type RequestDecrementalAuthorization = 'if_available' | 'never';
+
+            type RequestExtendedAuthorization = 'if_available' | 'never';
+
+            type RequestIncrementalAuthorization = 'if_available' | 'never';
+
+            type RequestMulticapture = 'if_available' | 'never';
+
+            type RequestOvercapture = 'if_available' | 'never';
 
             type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
