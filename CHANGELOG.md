@@ -11,6 +11,9 @@
   * Change `Dispute.enhanced_eligibility_types`, `Dispute.evidence.enhanced_evidence`, and `Dispute.evidence_details.enhanced_eligibility` to be required
   * Add support for `gopay`, `qris`, and `shopeepay` on `PaymentMethodConfigurationCreateParams`, `PaymentMethodConfigurationUpdateParams`, and `PaymentMethodConfiguration`
 
+## 17.3.1 - 2024-11-01
+* [#2218](https://github.com/stripe/stripe-node/pull/2218) Fixed a bug where `latestapiversion` was not updated to `2024-10-28.acacia` in the last release.
+
 ## 17.3.0 - 2024-10-29
 * [#2204](https://github.com/stripe/stripe-node/pull/2204) This release changes the pinned API version to `2024-10-28.acacia`.
   * Add support for new resource `V2.EventDestinations`
@@ -76,7 +79,7 @@
 
 ## 17.2.1 - 2024-10-18
 * [#2210](https://github.com/stripe/stripe-node/pull/2210) update object tags for meter-related classes
-  
+
   - fixes a bug where the `object` property of the `MeterEvent`, `MeterEventAdjustment`, and `MeterEventSession` didn't match the server.
 * [#2208](https://github.com/stripe/stripe-node/pull/2208) Update signature verification docs link
 
