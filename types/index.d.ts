@@ -77,11 +77,13 @@
 ///<reference path='./MandatesResource.d.ts' />
 ///<reference path='./MarginsResource.d.ts' />
 ///<reference path='./OrdersResource.d.ts' />
+///<reference path='./PaymentAttemptRecordsResource.d.ts' />
 ///<reference path='./PaymentIntentsResource.d.ts' />
 ///<reference path='./PaymentLinksResource.d.ts' />
 ///<reference path='./PaymentMethodConfigurationsResource.d.ts' />
 ///<reference path='./PaymentMethodDomainsResource.d.ts' />
 ///<reference path='./PaymentMethodsResource.d.ts' />
+///<reference path='./PaymentRecordsResource.d.ts' />
 ///<reference path='./PayoutsResource.d.ts' />
 ///<reference path='./PlansResource.d.ts' />
 ///<reference path='./PricesResource.d.ts' />
@@ -244,6 +246,7 @@
 ///<reference path='./Mandates.d.ts' />
 ///<reference path='./Margins.d.ts' />
 ///<reference path='./Orders.d.ts' />
+///<reference path='./PaymentAttemptRecords.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
 ///<reference path='./PaymentMethodConfigurations.d.ts' />
@@ -367,11 +370,13 @@ declare module 'stripe' {
     mandates: Stripe.MandatesResource;
     margins: Stripe.MarginsResource;
     orders: Stripe.OrdersResource;
+    paymentAttemptRecords: Stripe.PaymentAttemptRecordsResource;
     paymentIntents: Stripe.PaymentIntentsResource;
     paymentLinks: Stripe.PaymentLinksResource;
     paymentMethodConfigurations: Stripe.PaymentMethodConfigurationsResource;
     paymentMethodDomains: Stripe.PaymentMethodDomainsResource;
     paymentMethods: Stripe.PaymentMethodsResource;
+    paymentRecords: Stripe.PaymentRecordsResource;
     payouts: Stripe.PayoutsResource;
     plans: Stripe.PlansResource;
     prices: Stripe.PricesResource;
