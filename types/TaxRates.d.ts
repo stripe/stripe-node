@@ -137,6 +137,7 @@ declare module 'stripe' {
         | 'retail_delivery_fee'
         | 'rst'
         | 'sales_tax'
+        | 'service_tax'
         | 'vat';
     }
   }
