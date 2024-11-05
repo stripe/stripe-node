@@ -156,7 +156,7 @@ declare module 'stripe' {
           /**
            * The billing address associated with the method of payment.
            */
-          address?: BillingDetails.Address;
+          address?: Stripe.AddressParam;
 
           /**
            * The billing email associated with the method of payment.
@@ -174,45 +174,16 @@ declare module 'stripe' {
           phone?: string;
         }
 
-        namespace BillingDetails {
-          interface Address {
-            /**
-             * City, district, suburb, town, or village.
-             */
-            city?: string;
-
-            /**
-             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-             */
-            country: string;
-
-            /**
-             * Address line 1 (e.g., street, PO Box, or company name).
-             */
-            line1?: string;
-
-            /**
-             * Address line 2 (e.g., apartment, suite, unit, or building).
-             */
-            line2?: string;
-
-            /**
-             * ZIP or postal code.
-             */
-            postal_code?: string;
-
-            /**
-             * State, county, province, or region.
-             */
-            state?: string;
-          }
-        }
-
         interface Custom {
           /**
            * Display name for the custom (user-defined) payment method type used to make this payment.
            */
-          display_name: string;
+          display_name?: string;
+
+          /**
+           * The custom payment method type associated with this payment.
+           */
+          type?: string;
         }
       }
 
@@ -220,7 +191,7 @@ declare module 'stripe' {
         /**
          * The physical shipping address.
          */
-        address?: ShippingDetails.Address;
+        address?: Stripe.AddressParam;
 
         /**
          * The shipping recipient's name.
@@ -231,40 +202,6 @@ declare module 'stripe' {
          * The shipping recipient's phone number.
          */
         phone?: string;
-      }
-
-      namespace ShippingDetails {
-        interface Address {
-          /**
-           * City, district, suburb, town, or village.
-           */
-          city?: string;
-
-          /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-           */
-          country: string;
-
-          /**
-           * Address line 1 (e.g., street, PO Box, or company name).
-           */
-          line1?: string;
-
-          /**
-           * Address line 2 (e.g., apartment, suite, unit, or building).
-           */
-          line2?: string;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string;
-
-          /**
-           * State, county, province, or region.
-           */
-          state?: string;
-        }
       }
     }
 
@@ -359,7 +296,7 @@ declare module 'stripe' {
           /**
            * The billing address associated with the method of payment.
            */
-          address?: BillingDetails.Address;
+          address?: Stripe.AddressParam;
 
           /**
            * The billing email associated with the method of payment.
@@ -377,45 +314,16 @@ declare module 'stripe' {
           phone?: string;
         }
 
-        namespace BillingDetails {
-          interface Address {
-            /**
-             * City, district, suburb, town, or village.
-             */
-            city?: string;
-
-            /**
-             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-             */
-            country: string;
-
-            /**
-             * Address line 1 (e.g., street, PO Box, or company name).
-             */
-            line1?: string;
-
-            /**
-             * Address line 2 (e.g., apartment, suite, unit, or building).
-             */
-            line2?: string;
-
-            /**
-             * ZIP or postal code.
-             */
-            postal_code?: string;
-
-            /**
-             * State, county, province, or region.
-             */
-            state?: string;
-          }
-        }
-
         interface Custom {
           /**
            * Display name for the custom (user-defined) payment method type used to make this payment.
            */
-          display_name: string;
+          display_name?: string;
+
+          /**
+           * The custom payment method type associated with this payment.
+           */
+          type?: string;
         }
       }
 
@@ -423,7 +331,7 @@ declare module 'stripe' {
         /**
          * The physical shipping address.
          */
-        address?: ShippingDetails.Address;
+        address?: Stripe.AddressParam;
 
         /**
          * The shipping recipient's name.
@@ -434,40 +342,6 @@ declare module 'stripe' {
          * The shipping recipient's phone number.
          */
         phone?: string;
-      }
-
-      namespace ShippingDetails {
-        interface Address {
-          /**
-           * City, district, suburb, town, or village.
-           */
-          city?: string;
-
-          /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-           */
-          country: string;
-
-          /**
-           * Address line 1 (e.g., street, PO Box, or company name).
-           */
-          line1?: string;
-
-          /**
-           * Address line 2 (e.g., apartment, suite, unit, or building).
-           */
-          line2?: string;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string;
-
-          /**
-           * State, county, province, or region.
-           */
-          state?: string;
-        }
       }
     }
 
