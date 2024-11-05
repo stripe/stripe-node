@@ -133,11 +133,8 @@
 ///<reference path='./V2/Billing/MeterEventSessionResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
-///<reference path='./V2/BillingResource.d.ts' />
 ///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
 ///<reference path='./V2/Core/EventsResource.d.ts' />
-///<reference path='./V2/CoreResource.d.ts' />
-///<reference path='./V2Resource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./AccountSessions.d.ts' />
@@ -355,7 +352,6 @@ declare module 'stripe' {
     tokens: Stripe.TokensResource;
     topups: Stripe.TopupsResource;
     transfers: Stripe.TransfersResource;
-    v2: Stripe.V2Resource;
     webhookEndpoints: Stripe.WebhookEndpointsResource;
     apps: {
       secrets: Stripe.Apps.SecretsResource;
@@ -464,6 +460,18 @@ declare module 'stripe' {
       receivedDebits: Stripe.Treasury.ReceivedDebitsResource;
       transactions: Stripe.Treasury.TransactionsResource;
       transactionEntries: Stripe.Treasury.TransactionEntriesResource;
+    };
+    v2: {
+      billing: {
+        meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
+        meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
+        meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
+        meterEvents: Stripe.V2.Billing.MeterEventsResource;
+      };
+      core: {
+        eventDestinations: Stripe.V2.Core.EventDestinationsResource;
+        events: Stripe.V2.Core.EventsResource;
+      };
     };
     // Fields: The end of the section generated from our OpenAPI spec
     webhooks: Stripe.Webhooks;

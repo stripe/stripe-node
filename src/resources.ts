@@ -22,13 +22,19 @@ import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Custome
 import {DebitReversals as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
 import {Disputes as IssuingDisputes} from './resources/Issuing/Disputes.js';
 import {EarlyFraudWarnings as RadarEarlyFraudWarnings} from './resources/Radar/EarlyFraudWarnings.js';
+import {EventDestinations as V2CoreEventDestinations} from './resources/V2/Core/EventDestinations.js';
+import {Events as V2CoreEvents} from './resources/V2/Core/Events.js';
 import {Features as EntitlementsFeatures} from './resources/Entitlements/Features.js';
 import {FinancialAccounts as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts.js';
 import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {Locations as TerminalLocations} from './resources/Terminal/Locations.js';
 import {MeterEventAdjustments as BillingMeterEventAdjustments} from './resources/Billing/MeterEventAdjustments.js';
+import {MeterEventAdjustments as V2BillingMeterEventAdjustments} from './resources/V2/Billing/MeterEventAdjustments.js';
+import {MeterEventSession as V2BillingMeterEventSession} from './resources/V2/Billing/MeterEventSession.js';
+import {MeterEventStream as V2BillingMeterEventStream} from './resources/V2/Billing/MeterEventStream.js';
 import {MeterEvents as BillingMeterEvents} from './resources/Billing/MeterEvents.js';
+import {MeterEvents as V2BillingMeterEvents} from './resources/V2/Billing/MeterEvents.js';
 import {Meters as BillingMeters} from './resources/Billing/Meters.js';
 import {Orders as ClimateOrders} from './resources/Climate/Orders.js';
 import {OutboundPayments as TestHelpersTreasuryOutboundPayments} from './resources/TestHelpers/Treasury/OutboundPayments.js';
@@ -121,7 +127,6 @@ export {TaxRates} from './resources/TaxRates.js';
 export {Tokens} from './resources/Tokens.js';
 export {Topups} from './resources/Topups.js';
 export {Transfers} from './resources/Transfers.js';
-export {V2} from './resources/V2.js';
 export {WebhookEndpoints} from './resources/WebhookEndpoints.js';
 export const Apps = resourceNamespace('apps', {Secrets: AppsSecrets});
 export const Billing = resourceNamespace('billing', {
@@ -228,4 +233,16 @@ export const Treasury = resourceNamespace('treasury', {
   ReceivedDebits: TreasuryReceivedDebits,
   TransactionEntries: TreasuryTransactionEntries,
   Transactions: TreasuryTransactions,
+});
+export const V2 = resourceNamespace('v2', {
+  Billing: resourceNamespace('billing', {
+    MeterEventAdjustments: V2BillingMeterEventAdjustments,
+    MeterEventSession: V2BillingMeterEventSession,
+    MeterEventStream: V2BillingMeterEventStream,
+    MeterEvents: V2BillingMeterEvents,
+  }),
+  Core: resourceNamespace('core', {
+    EventDestinations: V2CoreEventDestinations,
+    Events: V2CoreEvents,
+  }),
 });
