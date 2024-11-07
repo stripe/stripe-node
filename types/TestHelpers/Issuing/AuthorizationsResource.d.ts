@@ -1189,6 +1189,20 @@ declare module 'stripe' {
       }
 
       namespace Issuing {
+        interface AuthorizationRespondParams {
+          /**
+           * Whether to simulate the user confirming that the transaction was legitimate (true) or telling Stripe that it was fraudulent (false).
+           */
+          confirmed: boolean;
+
+          /**
+           * Specifies which fields in the response should be expanded.
+           */
+          expand?: Array<string>;
+        }
+      }
+
+      namespace Issuing {
         interface AuthorizationReverseParams {
           /**
            * Specifies which fields in the response should be expanded.
@@ -1253,6 +1267,15 @@ declare module 'stripe' {
           increment(
             id: string,
             params: AuthorizationIncrementParams,
+            options?: RequestOptions
+          ): Promise<Stripe.Response<Stripe.Issuing.Authorization>>;
+
+          /**
+           * Respond to a fraud challenge on a testmode Issuing authorization, simulating either a confirmation of fraud or a correction of legitimacy.
+           */
+          respond(
+            id: string,
+            params: AuthorizationRespondParams,
             options?: RequestOptions
           ): Promise<Stripe.Response<Stripe.Issuing.Authorization>>;
 
