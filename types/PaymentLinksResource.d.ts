@@ -665,7 +665,7 @@ declare module 'stripe' {
       interface ShippingAddressCollection {
         /**
          * An array of two-letter ISO country codes representing which countries Checkout should provide as options for
-         * shipping locations. Unsupported country codes: `AS, CX, CC, CU, HM, IR, KP, MH, FM, NF, MP, PW, SD, SY, UM, VI`.
+         * shipping locations.
          */
         allowed_countries: Array<ShippingAddressCollection.AllowedCountry>;
       }
@@ -1135,6 +1135,11 @@ declare module 'stripe' {
       >;
 
       /**
+       * Describes the type of transaction being performed in order to customize relevant text on the page, such as the submit button. Changing this value will also affect the hostname in the [url](https://stripe.com/docs/api/payment_links/payment_links/object#url) property (example: `donate.stripe.com`).
+       */
+      submit_type?: PaymentLinkUpdateParams.SubmitType;
+
+      /**
        * When creating a subscription, the specified configuration data will be used. There must be at least one line item with a recurring price to use `subscription_data`.
        */
       subscription_data?: PaymentLinkUpdateParams.SubscriptionData;
@@ -1589,7 +1594,7 @@ declare module 'stripe' {
       interface ShippingAddressCollection {
         /**
          * An array of two-letter ISO country codes representing which countries Checkout should provide as options for
-         * shipping locations. Unsupported country codes: `AS, CX, CC, CU, HM, IR, KP, MH, FM, NF, MP, PW, SD, SY, UM, VI`.
+         * shipping locations.
          */
         allowed_countries: Array<ShippingAddressCollection.AllowedCountry>;
       }
@@ -1834,6 +1839,8 @@ declare module 'stripe' {
           | 'ZW'
           | 'ZZ';
       }
+
+      type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
 
       interface SubscriptionData {
         /**

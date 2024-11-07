@@ -69,6 +69,7 @@
 ///<reference path='./Issuing/CreditUnderwritingRecordsResource.d.ts' />
 ///<reference path='./Issuing/DisputeSettlementDetailsResource.d.ts' />
 ///<reference path='./Issuing/DisputesResource.d.ts' />
+///<reference path='./Issuing/FraudLiabilityDebitsResource.d.ts' />
 ///<reference path='./Issuing/PersonalizationDesignsResource.d.ts' />
 ///<reference path='./Issuing/PhysicalBundlesResource.d.ts' />
 ///<reference path='./Issuing/TokensResource.d.ts' />
@@ -76,11 +77,13 @@
 ///<reference path='./MandatesResource.d.ts' />
 ///<reference path='./MarginsResource.d.ts' />
 ///<reference path='./OrdersResource.d.ts' />
+///<reference path='./PaymentAttemptRecordsResource.d.ts' />
 ///<reference path='./PaymentIntentsResource.d.ts' />
 ///<reference path='./PaymentLinksResource.d.ts' />
 ///<reference path='./PaymentMethodConfigurationsResource.d.ts' />
 ///<reference path='./PaymentMethodDomainsResource.d.ts' />
 ///<reference path='./PaymentMethodsResource.d.ts' />
+///<reference path='./PaymentRecordsResource.d.ts' />
 ///<reference path='./PayoutsResource.d.ts' />
 ///<reference path='./PlansResource.d.ts' />
 ///<reference path='./PricesResource.d.ts' />
@@ -147,11 +150,8 @@
 ///<reference path='./V2/Billing/MeterEventSessionResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
-///<reference path='./V2/BillingResource.d.ts' />
 ///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
 ///<reference path='./V2/Core/EventsResource.d.ts' />
-///<reference path='./V2/CoreResource.d.ts' />
-///<reference path='./V2Resource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./AccountNotices.d.ts' />
@@ -235,6 +235,7 @@
 ///<reference path='./Issuing/CreditUnderwritingRecords.d.ts' />
 ///<reference path='./Issuing/DisputeSettlementDetails.d.ts' />
 ///<reference path='./Issuing/Disputes.d.ts' />
+///<reference path='./Issuing/FraudLiabilityDebits.d.ts' />
 ///<reference path='./Issuing/PersonalizationDesigns.d.ts' />
 ///<reference path='./Issuing/PhysicalBundles.d.ts' />
 ///<reference path='./Issuing/Settlements.d.ts' />
@@ -245,11 +246,13 @@
 ///<reference path='./Mandates.d.ts' />
 ///<reference path='./Margins.d.ts' />
 ///<reference path='./Orders.d.ts' />
+///<reference path='./PaymentAttemptRecords.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
 ///<reference path='./PaymentMethodConfigurations.d.ts' />
 ///<reference path='./PaymentMethodDomains.d.ts' />
 ///<reference path='./PaymentMethods.d.ts' />
+///<reference path='./PaymentRecords.d.ts' />
 ///<reference path='./Payouts.d.ts' />
 ///<reference path='./Persons.d.ts' />
 ///<reference path='./Plans.d.ts' />
@@ -367,11 +370,13 @@ declare module 'stripe' {
     mandates: Stripe.MandatesResource;
     margins: Stripe.MarginsResource;
     orders: Stripe.OrdersResource;
+    paymentAttemptRecords: Stripe.PaymentAttemptRecordsResource;
     paymentIntents: Stripe.PaymentIntentsResource;
     paymentLinks: Stripe.PaymentLinksResource;
     paymentMethodConfigurations: Stripe.PaymentMethodConfigurationsResource;
     paymentMethodDomains: Stripe.PaymentMethodDomainsResource;
     paymentMethods: Stripe.PaymentMethodsResource;
+    paymentRecords: Stripe.PaymentRecordsResource;
     payouts: Stripe.PayoutsResource;
     plans: Stripe.PlansResource;
     prices: Stripe.PricesResource;
@@ -393,7 +398,6 @@ declare module 'stripe' {
     tokens: Stripe.TokensResource;
     topups: Stripe.TopupsResource;
     transfers: Stripe.TransfersResource;
-    v2: Stripe.V2Resource;
     webhookEndpoints: Stripe.WebhookEndpointsResource;
     apps: {
       secrets: Stripe.Apps.SecretsResource;
@@ -452,6 +456,7 @@ declare module 'stripe' {
       creditUnderwritingRecords: Stripe.Issuing.CreditUnderwritingRecordsResource;
       disputes: Stripe.Issuing.DisputesResource;
       disputeSettlementDetails: Stripe.Issuing.DisputeSettlementDetailsResource;
+      fraudLiabilityDebits: Stripe.Issuing.FraudLiabilityDebitsResource;
       personalizationDesigns: Stripe.Issuing.PersonalizationDesignsResource;
       physicalBundles: Stripe.Issuing.PhysicalBundlesResource;
       tokens: Stripe.Issuing.TokensResource;
@@ -517,6 +522,18 @@ declare module 'stripe' {
       receivedDebits: Stripe.Treasury.ReceivedDebitsResource;
       transactions: Stripe.Treasury.TransactionsResource;
       transactionEntries: Stripe.Treasury.TransactionEntriesResource;
+    };
+    v2: {
+      billing: {
+        meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
+        meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
+        meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
+        meterEvents: Stripe.V2.Billing.MeterEventsResource;
+      };
+      core: {
+        eventDestinations: Stripe.V2.Core.EventDestinationsResource;
+        events: Stripe.V2.Core.EventsResource;
+      };
     };
     // Fields: The end of the section generated from our OpenAPI spec
     webhooks: Stripe.Webhooks;

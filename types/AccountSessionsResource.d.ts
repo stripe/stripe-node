@@ -383,11 +383,6 @@ declare module 'stripe' {
             external_account_collection?: boolean;
 
             /**
-             * Whether to allow money movement features.
-             */
-            money_movement?: boolean;
-
-            /**
              * Whether to allow sending money.
              */
             send_money?: boolean;
@@ -405,6 +400,9 @@ declare module 'stripe' {
            */
           enabled: boolean;
 
+          /**
+           * The list of features enabled in the embedded component.
+           */
           features?: FinancialAccountTransactions.Features;
         }
 
@@ -430,7 +428,27 @@ declare module 'stripe' {
         }
 
         namespace IssuingCard {
-          interface Features {}
+          interface Features {
+            /**
+             * Whether to allow card management features.
+             */
+            card_management?: boolean;
+
+            /**
+             * Whether to allow card spend dispute management features.
+             */
+            card_spend_dispute_management?: boolean;
+
+            /**
+             * Whether to allow cardholder management features.
+             */
+            cardholder_management?: boolean;
+
+            /**
+             * Whether to allow spend control management features.
+             */
+            spend_control_management?: boolean;
+          }
         }
 
         interface IssuingCardsList {
@@ -461,6 +479,11 @@ declare module 'stripe' {
              * Whether to allow cardholder management features.
              */
             cardholder_management?: boolean;
+
+            /**
+             * Disables Stripe user authentication for this embedded component. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts.
+             */
+            disable_stripe_user_authentication?: boolean;
 
             /**
              * Whether to allow spend control management features.

@@ -20,12 +20,12 @@ declare module 'stripe' {
         category: CreditGrantCreateParams.Category;
 
         /**
-         * ID of the customer to whom the billing credits should be granted.
+         * ID of the customer to receive the billing credits.
          */
         customer: string;
 
         /**
-         * The time when the billing credits become effective i.e when they are eligible to be used. Defaults to the current timestamp if not specified.
+         * The time when the billing credits become effective—when they're eligible for use. Defaults to the current timestamp if not specified.
          */
         effective_at?: number;
 
@@ -35,17 +35,17 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * The time when the billing credits will expire. If not specified, the billing credits will never expire.
+         * The time when the billing credits will expire. If not specified, the billing credits don't expire.
          */
         expires_at?: number;
 
         /**
-         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object (ex: cost basis) in a structured format.
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object (for example, cost basis) in a structured format.
          */
         metadata?: Stripe.MetadataParam;
 
         /**
-         * A descriptive name shown in dashboard.
+         * A descriptive name shown in the Dashboard.
          */
         name?: string;
       }
@@ -87,7 +87,7 @@ declare module 'stripe' {
         namespace ApplicabilityConfig {
           interface Scope {
             /**
-             * The price type to which credit grants can apply to. We currently only support `metered` price type.
+             * The price type for which credit grants can apply. We currently only support the `metered` price type.
              */
             price_type: 'metered';
           }
@@ -110,12 +110,12 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * The time when the billing credits created by this credit grant will expire. If set to empty, the billing credits will never expire.
+         * The time when the billing credits created by this credit grant expire. If set to empty, the billing credits never expire.
          */
         expires_at?: Stripe.Emptyable<number>;
 
         /**
-         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object (ex: cost basis) in a structured format.
+         * Set of key-value pairs you can attach to an object. This can be useful for storing additional information about the object (for example, cost basis) in a structured format.
          */
         metadata?: Stripe.MetadataParam;
       }
@@ -178,7 +178,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Billing.CreditGrant>>;
 
         /**
-         * Retrieve a list of credit grants
+         * Retrieve a list of credit grants.
          */
         list(
           params?: CreditGrantListParams,
@@ -189,7 +189,7 @@ declare module 'stripe' {
         ): ApiListPromise<Stripe.Billing.CreditGrant>;
 
         /**
-         * Expires a credit grant
+         * Expires a credit grant.
          */
         expire(
           id: string,
@@ -202,7 +202,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Billing.CreditGrant>>;
 
         /**
-         * Voids a credit grant
+         * Voids a credit grant.
          */
         voidGrant(
           id: string,

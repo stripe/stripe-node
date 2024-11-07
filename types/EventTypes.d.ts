@@ -113,6 +113,7 @@ declare module 'stripe' {
       | InvoicePaidEvent
       | InvoicePaymentOverpaidEvent
       | InvoicePaymentActionRequiredEvent
+      | InvoicePaymentAttemptRequiredEvent
       | InvoicePaymentFailedEvent
       | InvoicePaymentSucceededEvent
       | InvoiceSentEvent
@@ -137,6 +138,7 @@ declare module 'stripe' {
       | IssuingDisputeUpdatedEvent
       | IssuingDisputeSettlementDetailCreatedEvent
       | IssuingDisputeSettlementDetailUpdatedEvent
+      | IssuingFraudLiabilityDebitCreatedEvent
       | IssuingPersonalizationDesignActivatedEvent
       | IssuingPersonalizationDesignDeactivatedEvent
       | IssuingPersonalizationDesignRejectedEvent
@@ -2045,6 +2047,22 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs when an invoice requires a payment using a payment method that cannot be processed by Stripe.
+     */
+    interface InvoicePaymentAttemptRequiredEvent extends EventBase {
+      type: 'invoice.payment_attempt_required';
+      data: InvoicePaymentAttemptRequiredEvent.Data;
+    }
+
+    namespace InvoicePaymentAttemptRequiredEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
+      }
+    }
+
+    /**
      * Occurs whenever an invoice payment attempt fails, due either to a declined payment or to the lack of a stored payment method.
      */
     interface InvoicePaymentFailedEvent extends EventBase {
@@ -2425,6 +2443,22 @@ declare module 'stripe' {
         object: Stripe.Issuing.DisputeSettlementDetail;
 
         previous_attributes?: Partial<Stripe.Issuing.DisputeSettlementDetail>;
+      }
+    }
+
+    /**
+     * Occurs whenever funds are deducted from your account for fraud dispute loss liability.
+     */
+    interface IssuingFraudLiabilityDebitCreatedEvent extends EventBase {
+      type: 'issuing_fraud_liability_debit.created';
+      data: IssuingFraudLiabilityDebitCreatedEvent.Data;
+    }
+
+    namespace IssuingFraudLiabilityDebitCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.FraudLiabilityDebit;
+
+        previous_attributes?: Partial<Stripe.Issuing.FraudLiabilityDebit>;
       }
     }
 
