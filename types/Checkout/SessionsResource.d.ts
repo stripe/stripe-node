@@ -5,6 +5,11 @@ declare module 'stripe' {
     namespace Checkout {
       interface SessionCreateParams {
         /**
+         * Settings for price localization with [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing).
+         */
+        adaptive_pricing?: SessionCreateParams.AdaptivePricing;
+
+        /**
          * Configure actions after a Checkout Session has expired.
          */
         after_expiration?: SessionCreateParams.AfterExpiration;
@@ -267,6 +272,13 @@ declare module 'stripe' {
       }
 
       namespace SessionCreateParams {
+        interface AdaptivePricing {
+          /**
+           * Set to `true` to enable [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing). Defaults to your [dashboard setting](https://dashboard.stripe.com/settings/adaptive-pricing).
+           */
+          enabled?: boolean;
+        }
+
         interface AfterExpiration {
           /**
            * Configure a Checkout Session that can be used to recover an expired session.
@@ -2010,6 +2022,11 @@ declare module 'stripe' {
 
           interface SepaDebit {
             /**
+             * Additional fields for Mandate creation
+             */
+            mandate_options?: SepaDebit.MandateOptions;
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -2022,6 +2039,8 @@ declare module 'stripe' {
           }
 
           namespace SepaDebit {
+            interface MandateOptions {}
+
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
           }
 
@@ -2252,7 +2271,7 @@ declare module 'stripe' {
         interface ShippingAddressCollection {
           /**
            * An array of two-letter ISO country codes representing which countries Checkout should provide as options for
-           * shipping locations. Unsupported country codes: `AS, CX, CC, CU, HM, IR, KP, MH, FM, NF, MP, PW, SD, SY, UM, VI`.
+           * shipping locations.
            */
           allowed_countries: Array<ShippingAddressCollection.AllowedCountry>;
         }

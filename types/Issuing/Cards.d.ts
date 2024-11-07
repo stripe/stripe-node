@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Issuing {
       /**
-       * You can [create physical or virtual cards](https://stripe.com/docs/issuing/cards) that are issued to cardholders.
+       * You can [create physical or virtual cards](https://stripe.com/docs/issuing) that are issued to cardholders.
        */
       interface Card {
         /**

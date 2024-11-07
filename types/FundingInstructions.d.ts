@@ -96,10 +96,24 @@ declare module 'stripe' {
 
         namespace FinancialAddress {
           interface Aba {
+            account_holder_address: Stripe.Address;
+
+            /**
+             * The account holder name
+             */
+            account_holder_name: string;
+
             /**
              * The ABA account number
              */
             account_number: string;
+
+            /**
+             * The account type
+             */
+            account_type: string;
+
+            bank_address: Stripe.Address;
 
             /**
              * The bank name
@@ -179,10 +193,24 @@ declare module 'stripe' {
             | 'zengin';
 
           interface Swift {
+            account_holder_address: Stripe.Address;
+
+            /**
+             * The account holder name
+             */
+            account_holder_name: string;
+
             /**
              * The account number
              */
             account_number: string;
+
+            /**
+             * The account type
+             */
+            account_type: string;
+
+            bank_address: Stripe.Address;
 
             /**
              * The bank name
