@@ -865,7 +865,7 @@ declare module 'stripe' {
         shipping_rate: string | Stripe.ShippingRate;
       }
 
-      type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
+      type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
 
       interface SubscriptionData {
         /**

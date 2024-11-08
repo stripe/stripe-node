@@ -918,7 +918,7 @@ declare module 'stripe' {
         shipping_rate?: string;
       }
 
-      type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
+      type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
 
       interface SubscriptionData {
         /**
@@ -1840,7 +1840,7 @@ declare module 'stripe' {
           | 'ZZ';
       }
 
-      type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
+      type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
 
       interface SubscriptionData {
         /**
