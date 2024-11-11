@@ -3330,7 +3330,7 @@ declare module 'stripe' {
           on_behalf_of?: string;
 
           /**
-           * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/billing/subscriptions/pause-payment).
+           * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/docs/billing/subscriptions/pause-payment).
            */
           pause_collection?: Phase.PauseCollection;
 
@@ -5551,7 +5551,7 @@ declare module 'stripe' {
           on_behalf_of?: string;
 
           /**
-           * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/billing/subscriptions/pause-payment).
+           * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/docs/billing/subscriptions/pause-payment).
            */
           pause_collection?: Phase.PauseCollection;
 
@@ -8031,7 +8031,7 @@ declare module 'stripe' {
           on_behalf_of?: string;
 
           /**
-           * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/billing/subscriptions/pause-payment).
+           * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/docs/billing/subscriptions/pause-payment).
            */
           pause_collection?: Phase.PauseCollection;
 
