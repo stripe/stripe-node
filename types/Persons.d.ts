@@ -452,6 +452,11 @@ declare module 'stripe' {
 
       interface Relationship {
         /**
+         * Whether the person is the authorizer of the account's representative.
+         */
+        authorizer: boolean | null;
+
+        /**
          * Whether the person is a director of the account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
          */
         director: boolean | null;
