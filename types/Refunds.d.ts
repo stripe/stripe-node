@@ -190,6 +190,11 @@ declare module 'stripe' {
 
         interface Blik {
           /**
+           * For refunds declined by the network, a decline code provided by the network which indicates the reason the refund failed.
+           */
+          network_decline_code?: string | null;
+
+          /**
            * The reference assigned to the refund.
            */
           reference: string | null;
@@ -333,6 +338,11 @@ declare module 'stripe' {
         interface Sofort {}
 
         interface Swish {
+          /**
+           * For refunds declined by the network, a decline code provided by the network which indicates the reason the refund failed.
+           */
+          network_decline_code?: string | null;
+
           /**
            * The reference assigned to the refund.
            */

@@ -152,7 +152,7 @@ declare module 'stripe' {
       payment_method: string | Stripe.PaymentMethod | null;
 
       /**
-       * Information about the payment method configuration used for this PaymentIntent.
+       * Information about the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) used for this PaymentIntent.
        */
       payment_method_configuration_details: PaymentIntent.PaymentMethodConfigurationDetails | null;
 
@@ -774,10 +774,24 @@ declare module 'stripe' {
 
           namespace FinancialAddress {
             interface Aba {
+              account_holder_address: Stripe.Address;
+
+              /**
+               * The account holder name
+               */
+              account_holder_name: string;
+
               /**
                * The ABA account number
                */
               account_number: string;
+
+              /**
+               * The account type
+               */
+              account_type: string;
+
+              bank_address: Stripe.Address;
 
               /**
                * The bank name
@@ -857,10 +871,24 @@ declare module 'stripe' {
               | 'zengin';
 
             interface Swift {
+              account_holder_address: Stripe.Address;
+
+              /**
+               * The account holder name
+               */
+              account_holder_name: string;
+
               /**
                * The account number
                */
               account_number: string;
+
+              /**
+               * The account type
+               */
+              account_type: string;
+
+              bank_address: Stripe.Address;
 
               /**
                * The bank name
@@ -1807,6 +1835,7 @@ declare module 'stripe' {
             | 'girocard'
             | 'interac'
             | 'jcb'
+            | 'link'
             | 'mastercard'
             | 'unionpay'
             | 'unknown'
