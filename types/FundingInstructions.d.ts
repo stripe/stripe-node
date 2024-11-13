@@ -127,10 +127,14 @@ declare module 'stripe' {
           }
 
           interface Iban {
+            account_holder_address: Stripe.Address;
+
             /**
              * The name of the person or business that owns the bank account
              */
             account_holder_name: string;
+
+            bank_address: Stripe.Address;
 
             /**
              * The BIC/SWIFT code of the account.
