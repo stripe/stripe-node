@@ -948,6 +948,8 @@ declare module 'stripe' {
               | 'zengin';
 
             interface Zengin {
+              account_holder_address: Stripe.Address;
+
               /**
                * The account holder name
                */
@@ -962,6 +964,8 @@ declare module 'stripe' {
                * The bank account type. In Japan, this can only be `futsu` or `toza`.
                */
               account_type: string | null;
+
+              bank_address: Stripe.Address;
 
               /**
                * The bank code of the account
