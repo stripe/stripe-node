@@ -170,6 +170,15 @@ declare module 'stripe' {
           }
 
           interface Spei {
+            account_holder_address: Stripe.Address;
+
+            /**
+             * The account holder name
+             */
+            account_holder_name: string;
+
+            bank_address: Stripe.Address;
+
             /**
              * The three-digit bank code
              */
