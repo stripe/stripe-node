@@ -153,6 +153,8 @@ declare module 'stripe' {
           }
 
           interface SortCode {
+            account_holder_address: Stripe.Address;
+
             /**
              * The name of the person or business that owns the bank account
              */
@@ -162,6 +164,8 @@ declare module 'stripe' {
              * The account number
              */
             account_number: string;
+
+            bank_address: Stripe.Address;
 
             /**
              * The six-digit sort code
