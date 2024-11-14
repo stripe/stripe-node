@@ -3570,7 +3570,7 @@ declare module 'stripe' {
 
         interface Swish {
           /**
-           * The order ID displayed in the Swish app after the payment is authorized.
+           * A reference for this payment to be displayed in the Swish app.
            */
           reference?: Stripe.Emptyable<string>;
 
@@ -7326,7 +7326,7 @@ declare module 'stripe' {
 
         interface Swish {
           /**
-           * The order ID displayed in the Swish app after the payment is authorized.
+           * A reference for this payment to be displayed in the Swish app.
            */
           reference?: Stripe.Emptyable<string>;
 
@@ -11837,7 +11837,7 @@ declare module 'stripe' {
 
         interface Swish {
           /**
-           * The order ID displayed in the Swish app after the payment is authorized.
+           * A reference for this payment to be displayed in the Swish app.
            */
           reference?: Stripe.Emptyable<string>;
 
