@@ -2455,7 +2455,7 @@ declare module 'stripe' {
 
         type Status = 'complete' | 'expired' | 'open';
 
-        type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
+        type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
 
         interface TaxIdCollection {
           /**

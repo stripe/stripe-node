@@ -2655,7 +2655,7 @@ declare module 'stripe' {
           }
         }
 
-        type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
+        type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
 
         interface SubscriptionData {
           /**
