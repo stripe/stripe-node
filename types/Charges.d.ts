@@ -313,6 +313,16 @@ declare module 'stripe' {
 
       interface Outcome {
         /**
+         * For charges declined by the network, a 2 digit code which indicates the advice returned by the network on how to proceed with an error.
+         */
+        network_advice_code: string | null;
+
+        /**
+         * For charges declined by the network, a brand specific 2, 3, or 4 digit code which indicates the reason the authorization failed.
+         */
+        network_decline_code: string | null;
+
+        /**
          * Possible values are `approved_by_network`, `declined_by_network`, `not_sent_to_network`, and `reversed_after_approval`. The value `reversed_after_approval` indicates the payment was [blocked by Stripe](https://stripe.com/docs/declines#blocked-payments) after bank authorization, and may temporarily appear as "pending" on a cardholder's statement.
          */
         network_status: string | null;
