@@ -619,7 +619,54 @@ declare module 'stripe' {
 
         interface Alma {}
 
-        interface AmazonPay {}
+        interface AmazonPay {
+          funding?: AmazonPay.Funding;
+        }
+
+        namespace AmazonPay {
+          interface Funding {
+            card?: Funding.Card;
+
+            /**
+             * funding type of the underlying payment method.
+             */
+            type: 'card' | null;
+          }
+
+          namespace Funding {
+            interface Card {
+              /**
+               * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+               */
+              brand: string | null;
+
+              /**
+               * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+               */
+              country: string | null;
+
+              /**
+               * Two-digit number representing the card's expiration month.
+               */
+              exp_month: number | null;
+
+              /**
+               * Four-digit number representing the card's expiration year.
+               */
+              exp_year: number | null;
+
+              /**
+               * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+               */
+              funding: string | null;
+
+              /**
+               * The last four digits of the card.
+               */
+              last4: string | null;
+            }
+          }
+        }
 
         interface AuBecsDebit {
           /**
@@ -2087,7 +2134,54 @@ declare module 'stripe' {
 
         interface Rechnung {}
 
-        interface RevolutPay {}
+        interface RevolutPay {
+          funding?: RevolutPay.Funding;
+        }
+
+        namespace RevolutPay {
+          interface Funding {
+            card?: Funding.Card;
+
+            /**
+             * funding type of the underlying payment method.
+             */
+            type: 'card' | null;
+          }
+
+          namespace Funding {
+            interface Card {
+              /**
+               * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+               */
+              brand: string | null;
+
+              /**
+               * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+               */
+              country: string | null;
+
+              /**
+               * Two-digit number representing the card's expiration month.
+               */
+              exp_month: number | null;
+
+              /**
+               * Four-digit number representing the card's expiration year.
+               */
+              exp_year: number | null;
+
+              /**
+               * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+               */
+              funding: string | null;
+
+              /**
+               * The last four digits of the card.
+               */
+              last4: string | null;
+            }
+          }
+        }
 
         interface SamsungPay {
           /**
