@@ -7,7 +7,6 @@ declare module 'stripe' {
        * A credit grant is an API resource that documents the allocation of some billing credits to a customer.
        *
        * Related guide: [Billing credits](https://docs.stripe.com/billing/subscriptions/usage-based/billing-credits)
-       * end
        */
       interface CreditGrant {
         /**
@@ -25,7 +24,7 @@ declare module 'stripe' {
         applicability_config: CreditGrant.ApplicabilityConfig;
 
         /**
-         * The category of this credit grant. This is for tracking purposes and will not be displayed to the customer.
+         * The category of this credit grant. This is for tracking purposes and isn't displayed to the customer.
          */
         category: CreditGrant.Category;
 
@@ -35,17 +34,17 @@ declare module 'stripe' {
         created: number;
 
         /**
-         * ID of the customer to whom the billing credits are granted.
+         * ID of the customer receiving the billing credits.
          */
         customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
         /**
-         * The time when the billing credits become effective i.e when they are eligible to be used.
+         * The time when the billing credits become effective—when they're eligible for use.
          */
         effective_at: number | null;
 
         /**
-         * The time when the billing credits will expire. If not present, the billing credits will never expire.
+         * The time when the billing credits expire. If not present, the billing credits don't expire.
          */
         expires_at: number | null;
 
@@ -114,7 +113,7 @@ declare module 'stripe' {
         namespace ApplicabilityConfig {
           interface Scope {
             /**
-             * The price type to which credit grants can apply to. We currently only support `metered` price type. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them.
+             * The price type for which credit grants can apply. We currently only support the `metered` price type. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them.
              */
             price_type: 'metered';
           }

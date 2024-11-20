@@ -909,9 +909,9 @@ declare module 'stripe' {
         currently_due: Array<string> | null;
 
         /**
-         * This is typed as a string for consistency with `requirements.disabled_reason`.
+         * This is typed as an enum for consistency with `requirements.disabled_reason`.
          */
-        disabled_reason: string | null;
+        disabled_reason: FutureRequirements.DisabledReason | null;
 
         /**
          * Fields that are `currently_due` and need to be collected again because validation or verification failed.
@@ -946,6 +946,23 @@ declare module 'stripe' {
            */
           original_fields_due: Array<string>;
         }
+
+        type DisabledReason =
+          | 'action_required.requested_capabilities'
+          | 'listed'
+          | 'other'
+          | 'platform_paused'
+          | 'rejected.fraud'
+          | 'rejected.incomplete_verification'
+          | 'rejected.listed'
+          | 'rejected.other'
+          | 'rejected.platform_fraud'
+          | 'rejected.platform_other'
+          | 'rejected.platform_terms_of_service'
+          | 'rejected.terms_of_service'
+          | 'requirements.past_due'
+          | 'requirements.pending_verification'
+          | 'under_review';
 
         interface Error {
           /**
@@ -1083,9 +1100,9 @@ declare module 'stripe' {
         currently_due: Array<string> | null;
 
         /**
-         * If the account is disabled, this string describes why. [Learn more about handling verification issues](https://stripe.com/docs/connect/handling-api-verification). Can be `action_required.requested_capabilities`, `requirements.past_due`, `requirements.pending_verification`, `listed`, `platform_paused`, `rejected.fraud`, `rejected.incomplete_verification`, `rejected.listed`, `rejected.other`, `rejected.terms_of_service`, `under_review`, or `other`.
+         * If the account is disabled, this enum describes why. [Learn more about handling verification issues](https://stripe.com/docs/connect/handling-api-verification).
          */
-        disabled_reason: string | null;
+        disabled_reason: Requirements.DisabledReason | null;
 
         /**
          * Fields that are `currently_due` and need to be collected again because validation or verification failed.
@@ -1120,6 +1137,23 @@ declare module 'stripe' {
            */
           original_fields_due: Array<string>;
         }
+
+        type DisabledReason =
+          | 'action_required.requested_capabilities'
+          | 'listed'
+          | 'other'
+          | 'platform_paused'
+          | 'rejected.fraud'
+          | 'rejected.incomplete_verification'
+          | 'rejected.listed'
+          | 'rejected.other'
+          | 'rejected.platform_fraud'
+          | 'rejected.platform_other'
+          | 'rejected.platform_terms_of_service'
+          | 'rejected.terms_of_service'
+          | 'requirements.past_due'
+          | 'requirements.pending_verification'
+          | 'under_review';
 
         interface Error {
           /**

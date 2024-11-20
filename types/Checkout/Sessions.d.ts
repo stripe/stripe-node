@@ -31,6 +31,11 @@ declare module 'stripe' {
         object: 'checkout.session';
 
         /**
+         * Settings for price localization with [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing).
+         */
+        adaptive_pricing: Session.AdaptivePricing | null;
+
+        /**
          * When set, provides configuration for actions to take if this Checkout Session expires.
          */
         after_expiration: Session.AfterExpiration | null;
@@ -301,6 +306,13 @@ declare module 'stripe' {
       }
 
       namespace Session {
+        interface AdaptivePricing {
+          /**
+           * Whether Adaptive Pricing is enabled.
+           */
+          enabled: boolean;
+        }
+
         interface AfterExpiration {
           /**
            * When set, configuration used to recover the Checkout Session on expiry.
@@ -490,7 +502,7 @@ declare module 'stripe' {
 
           interface TaxId {
             /**
-             * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, or `unknown`
+             * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, or `unknown`
              */
             type: TaxId.Type;
 
@@ -548,6 +560,7 @@ declare module 'stripe' {
               | 'kr_brn'
               | 'kz_bin'
               | 'li_uid'
+              | 'li_vat'
               | 'ma_vat'
               | 'md_vat'
               | 'mx_rfc'
@@ -1115,6 +1128,8 @@ declare module 'stripe' {
           }
 
           interface BacsDebit {
+            mandate_options?: BacsDebit.MandateOptions;
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -1128,6 +1143,8 @@ declare module 'stripe' {
           }
 
           namespace BacsDebit {
+            interface MandateOptions {}
+
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
           }
 
@@ -1170,6 +1187,26 @@ declare module 'stripe' {
             installments?: Card.Installments;
 
             /**
+             * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/payments/extended-authorization) for this CheckoutSession.
+             */
+            request_extended_authorization?: Card.RequestExtendedAuthorization;
+
+            /**
+             * Request ability to [increment the authorization](https://stripe.com/payments/incremental-authorization) for this CheckoutSession.
+             */
+            request_incremental_authorization?: Card.RequestIncrementalAuthorization;
+
+            /**
+             * Request ability to make [multiple captures](https://stripe.com/payments/multicapture) for this CheckoutSession.
+             */
+            request_multicapture?: Card.RequestMulticapture;
+
+            /**
+             * Request ability to [overcapture](https://stripe.com/payments/overcapture) for this CheckoutSession.
+             */
+            request_overcapture?: Card.RequestOvercapture;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure: Card.RequestThreeDSecure;
@@ -1203,6 +1240,14 @@ declare module 'stripe' {
                */
               enabled?: boolean;
             }
+
+            type RequestExtendedAuthorization = 'if_available' | 'never';
+
+            type RequestIncrementalAuthorization = 'if_available' | 'never';
+
+            type RequestMulticapture = 'if_available' | 'never';
+
+            type RequestOvercapture = 'if_available' | 'never';
 
             type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
@@ -1600,6 +1645,8 @@ declare module 'stripe' {
           }
 
           interface SepaDebit {
+            mandate_options?: SepaDebit.MandateOptions;
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -1613,6 +1660,8 @@ declare module 'stripe' {
           }
 
           namespace SepaDebit {
+            interface MandateOptions {}
+
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
           }
 
@@ -2100,7 +2149,7 @@ declare module 'stripe' {
 
         type Status = 'complete' | 'expired' | 'open';
 
-        type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
+        type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
 
         interface TaxIdCollection {
           /**

@@ -3638,6 +3638,11 @@ declare module 'stripe' {
 
       interface Relationship {
         /**
+         * Whether the person is the authorizer of the account's representative.
+         */
+        authorizer?: boolean;
+
+        /**
          * Whether the person is a director of the account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
          */
         director?: boolean;
@@ -3753,6 +3758,11 @@ declare module 'stripe' {
 
     namespace AccountListPersonsParams {
       interface Relationship {
+        /**
+         * A filter on the list of people returned based on whether these people are authorizers of the account's representative.
+         */
+        authorizer?: boolean;
+
         /**
          * A filter on the list of people returned based on whether these people are directors of the account's company.
          */
@@ -4167,6 +4177,11 @@ declare module 'stripe' {
       }
 
       interface Relationship {
+        /**
+         * Whether the person is the authorizer of the account's representative.
+         */
+        authorizer?: boolean;
+
         /**
          * Whether the person is a director of the account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
          */
