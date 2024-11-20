@@ -686,6 +686,11 @@ declare module 'stripe' {
           dynamic_tax_rates?: Array<string>;
 
           /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.MetadataParam;
+
+          /**
            * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object. One of `price` or `price_data` is required.
            */
           price?: string;
@@ -2208,6 +2213,15 @@ declare module 'stripe' {
         namespace Permissions {
           interface Update {
             /**
+             * Determines which entity is allowed to update the line items.
+             *
+             * Default is `client_only`. Stripe Checkout client will automatically update the line items. If set to `server_only`, only your server is allowed to update the line items.
+             *
+             * When set to `server_only`, you must add the onLineItemsChange event handler when initializing the Stripe Checkout client and manually update the line items from your server using the Stripe API.
+             */
+            line_items?: Update.LineItems;
+
+            /**
              * Determines which entity is allowed to update the shipping details.
              *
              * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
@@ -2218,6 +2232,8 @@ declare module 'stripe' {
           }
 
           namespace Update {
+            type LineItems = 'client_only' | 'server_only';
+
             type ShippingDetails = 'client_only' | 'server_only';
           }
         }
@@ -2825,6 +2841,23 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
+         * A list of items the customer is purchasing.
+         *
+         * When updating line items, the entire array of line items must be retransmitted.
+         *
+         * To retain an existing line item, specify its `id`.
+         *
+         * To update an existing line item, specify its `id` along with the new values of the fields to be updated.
+         *
+         * To add a new line item, specify a `price` and `quantity`. Recurring prices are not supported yet.
+         *
+         * To remove an existing line item, omit the line item's ID from the retransmitted array.
+         *
+         * To reorder a line item, specify it at the desired position in the retransmitted array.
+         */
+        line_items?: Array<SessionUpdateParams.LineItem>;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
@@ -2890,6 +2923,57 @@ declare module 'stripe' {
                */
               state?: string;
             }
+          }
+        }
+
+        interface LineItem {
+          /**
+           * When set, provides configuration for this item's quantity to be adjusted by the customer during Checkout.
+           */
+          adjustable_quantity?: LineItem.AdjustableQuantity;
+
+          /**
+           * ID of an existing line item.
+           */
+          id?: string;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+          /**
+           * The ID of the [Price](https://stripe.com/docs/api/prices).
+           */
+          price?: string;
+
+          /**
+           * The quantity of the line item being purchased.
+           */
+          quantity?: number;
+
+          /**
+           * The [tax rates](https://stripe.com/docs/api/tax_rates) which apply to this line item.
+           */
+          tax_rates?: Stripe.Emptyable<Array<string>>;
+        }
+
+        namespace LineItem {
+          interface AdjustableQuantity {
+            /**
+             * Set to true if the quantity can be adjusted to any positive integer. Setting to false will remove any previously specified constraints on quantity.
+             */
+            enabled: boolean;
+
+            /**
+             * The maximum quantity the customer can purchase for the Checkout Session. By default this value is 99. You can specify a value up to 999999.
+             */
+            maximum?: number;
+
+            /**
+             * The minimum quantity the customer must purchase for the Checkout Session. By default this value is 0.
+             */
+            minimum?: number;
           }
         }
 
