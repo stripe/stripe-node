@@ -304,7 +304,9 @@ declare module 'stripe' {
 
         interface AutomaticTax {
           /**
-           * Set to true to enable automatic taxes.
+           * Set to `true` to [calculate tax automatically](https://docs.stripe.com/tax) using the customer's location.
+           *
+           * Enabling this parameter causes Checkout to collect any billing address information necessary for tax calculation.
            */
           enabled: boolean;
 

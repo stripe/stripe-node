@@ -188,7 +188,9 @@ declare module 'stripe' {
 
       interface AutomaticTax {
         /**
-         * If `true`, tax will be calculated automatically using the customer's location.
+         * Set to `true` to [calculate tax automatically](https://docs.stripe.com/tax) using the customer's location.
+         *
+         * Enabling this parameter causes the payment link to collect any billing address information necessary for tax calculation.
          */
         enabled: boolean;
 
@@ -1188,7 +1190,9 @@ declare module 'stripe' {
 
       interface AutomaticTax {
         /**
-         * If `true`, tax will be calculated automatically using the customer's location.
+         * Set to `true` to [calculate tax automatically](https://docs.stripe.com/tax) using the customer's location.
+         *
+         * Enabling this parameter causes the payment link to collect any billing address information necessary for tax calculation.
          */
         enabled: boolean;
 
