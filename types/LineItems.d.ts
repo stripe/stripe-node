@@ -16,6 +16,8 @@ declare module 'stripe' {
        */
       object: 'item';
 
+      adjustable_quantity?: LineItem.AdjustableQuantity | null;
+
       /**
        * Total discount amount applied. If no discounts were applied, defaults to 0.
        */
@@ -44,12 +46,19 @@ declare module 'stripe' {
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users. Defaults to product name.
        */
-      description?: string;
+      description: string | null;
 
       /**
        * The discounts applied to the line item.
        */
       discounts?: Array<LineItem.Discount>;
+
+      display?: LineItem.Display;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: Stripe.Metadata | null;
 
       /**
        * The price used to generate the line item.
@@ -75,6 +84,14 @@ declare module 'stripe' {
     }
 
     namespace LineItem {
+      interface AdjustableQuantity {
+        enabled: boolean;
+
+        maximum: number | null;
+
+        minimum: number | null;
+      }
+
       interface Discount {
         /**
          * The amount discounted.
@@ -88,6 +105,14 @@ declare module 'stripe' {
          * Related guide: [Applying discounts to subscriptions](https://stripe.com/docs/billing/subscriptions/discounts)
          */
         discount: Stripe.Discount;
+      }
+
+      interface Display {
+        description: string | null;
+
+        images: Array<string>;
+
+        name: string;
       }
 
       interface Tax {

@@ -313,6 +313,16 @@ declare module 'stripe' {
 
       interface Outcome {
         /**
+         * For charges declined by the network, a 2 digit code which indicates the advice returned by the network on how to proceed with an error.
+         */
+        network_advice_code: string | null;
+
+        /**
+         * For charges declined by the network, a brand specific 2, 3, or 4 digit code which indicates the reason the authorization failed.
+         */
+        network_decline_code: string | null;
+
+        /**
          * Possible values are `approved_by_network`, `declined_by_network`, `not_sent_to_network`, and `reversed_after_approval`. The value `reversed_after_approval` indicates the payment was [blocked by Stripe](https://stripe.com/docs/declines#blocked-payments) after bank authorization, and may temporarily appear as "pending" on a cardholder's statement.
          */
         network_status: string | null;
@@ -619,7 +629,54 @@ declare module 'stripe' {
 
         interface Alma {}
 
-        interface AmazonPay {}
+        interface AmazonPay {
+          funding?: AmazonPay.Funding;
+        }
+
+        namespace AmazonPay {
+          interface Funding {
+            card?: Funding.Card;
+
+            /**
+             * funding type of the underlying payment method.
+             */
+            type: 'card' | null;
+          }
+
+          namespace Funding {
+            interface Card {
+              /**
+               * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+               */
+              brand: string | null;
+
+              /**
+               * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+               */
+              country: string | null;
+
+              /**
+               * Two-digit number representing the card's expiration month.
+               */
+              exp_month: number | null;
+
+              /**
+               * Four-digit number representing the card's expiration year.
+               */
+              exp_year: number | null;
+
+              /**
+               * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+               */
+              funding: string | null;
+
+              /**
+               * The last four digits of the card.
+               */
+              last4: string | null;
+            }
+          }
+        }
 
         interface AuBecsDebit {
           /**
@@ -734,6 +791,11 @@ declare module 'stripe' {
           amount_authorized: number | null;
 
           /**
+           * The latest amount intended to be authorized by this charge.
+           */
+          amount_requested?: number | null;
+
+          /**
            * Authorization code on the charge.
            */
           authorization_code: string | null;
@@ -836,6 +898,8 @@ declare module 'stripe' {
           network_token?: Card.NetworkToken | null;
 
           overcapture?: Card.Overcapture;
+
+          partial_authorization?: Card.PartialAuthorization;
 
           /**
            * Populated if this transaction used 3D Secure authentication.
@@ -958,6 +1022,21 @@ declare module 'stripe' {
 
           namespace Overcapture {
             type Status = 'available' | 'unavailable';
+          }
+
+          interface PartialAuthorization {
+            /**
+             * Indicates whether the transaction requested for partial authorization feature and the authorization outcome.
+             */
+            status: PartialAuthorization.Status;
+          }
+
+          namespace PartialAuthorization {
+            type Status =
+              | 'declined'
+              | 'fully_authorized'
+              | 'not_requested'
+              | 'partially_authorized';
           }
 
           interface ThreeDSecure {
@@ -2087,7 +2166,54 @@ declare module 'stripe' {
 
         interface Rechnung {}
 
-        interface RevolutPay {}
+        interface RevolutPay {
+          funding?: RevolutPay.Funding;
+        }
+
+        namespace RevolutPay {
+          interface Funding {
+            card?: Funding.Card;
+
+            /**
+             * funding type of the underlying payment method.
+             */
+            type: 'card' | null;
+          }
+
+          namespace Funding {
+            interface Card {
+              /**
+               * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+               */
+              brand: string | null;
+
+              /**
+               * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+               */
+              country: string | null;
+
+              /**
+               * Two-digit number representing the card's expiration month.
+               */
+              exp_month: number | null;
+
+              /**
+               * Four-digit number representing the card's expiration year.
+               */
+              exp_year: number | null;
+
+              /**
+               * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+               */
+              funding: string | null;
+
+              /**
+               * The last four digits of the card.
+               */
+              last4: string | null;
+            }
+          }
+        }
 
         interface SamsungPay {
           /**

@@ -110,6 +110,7 @@ declare module 'stripe' {
       | InvoiceFinalizedEvent
       | InvoiceMarkedUncollectibleEvent
       | InvoiceOverdueEvent
+      | InvoiceOverpaidEvent
       | InvoicePaidEvent
       | InvoicePaymentOverpaidEvent
       | InvoicePaymentActionRequiredEvent
@@ -1991,6 +1992,22 @@ declare module 'stripe' {
     }
 
     namespace InvoiceOverdueEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
+      }
+    }
+
+    /**
+     * Occurs when an invoice transitions to paid with a non-zero amount_overpaid.
+     */
+    interface InvoiceOverpaidEvent extends EventBase {
+      type: 'invoice.overpaid';
+      data: InvoiceOverpaidEvent.Data;
+    }
+
+    namespace InvoiceOverpaidEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
 
