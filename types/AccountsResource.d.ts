@@ -235,6 +235,11 @@ declare module 'stripe' {
         au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
 
         /**
+         * The automatic_indirect_tax capability.
+         */
+        automatic_indirect_tax?: Capabilities.AutomaticIndirectTax;
+
+        /**
          * The bacs_debit_payments capability.
          */
         bacs_debit_payments?: Capabilities.BacsDebitPayments;
@@ -567,6 +572,13 @@ declare module 'stripe' {
         }
 
         interface AuBecsDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface AutomaticIndirectTax {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2181,6 +2193,11 @@ declare module 'stripe' {
         au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
 
         /**
+         * The automatic_indirect_tax capability.
+         */
+        automatic_indirect_tax?: Capabilities.AutomaticIndirectTax;
+
+        /**
          * The bacs_debit_payments capability.
          */
         bacs_debit_payments?: Capabilities.BacsDebitPayments;
@@ -2513,6 +2530,13 @@ declare module 'stripe' {
         }
 
         interface AuBecsDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface AutomaticIndirectTax {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
