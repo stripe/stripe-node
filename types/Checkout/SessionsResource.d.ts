@@ -2845,13 +2845,13 @@ declare module 'stripe' {
         /**
          * A list of items the customer is purchasing.
          *
-         * When updating line items, the entire array of line items must be retransmitted.
+         * When updating line items, you must retransmit the entire array of line items.
          *
          * To retain an existing line item, specify its `id`.
          *
-         * To update an existing line item, specify its `id` along with the new values of the fields to be updated.
+         * To update an existing line item, specify its `id` along with the new values of the fields to update.
          *
-         * To add a new line item, specify a `price` and `quantity`. Recurring prices are not supported yet.
+         * To add a new line item, specify a `price` and `quantity`. We don't currently support recurring prices.
          *
          * To remove an existing line item, omit the line item's ID from the retransmitted array.
          *
