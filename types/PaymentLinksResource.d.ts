@@ -1858,6 +1858,11 @@ declare module 'stripe' {
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
+         * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
+         */
+        trial_period_days?: Stripe.Emptyable<number>;
+
+        /**
          * Settings related to subscription trials.
          */
         trial_settings?: Stripe.Emptyable<SubscriptionData.TrialSettings>;

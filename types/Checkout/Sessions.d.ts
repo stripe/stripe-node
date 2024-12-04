@@ -75,7 +75,7 @@ declare module 'stripe' {
         client_reference_id: string | null;
 
         /**
-         * The client secret of the Session. Use this with [initCustomCheckout](https://stripe.com/docs/js/custom_checkout/init) on your front end.
+         * The client secret of the Session. Use this with [initCheckout](https://stripe.com/docs/js/custom_checkout/init) on your front end.
          */
         client_secret: string | null;
 
@@ -1308,7 +1308,12 @@ declare module 'stripe' {
           }
 
           namespace BacsDebit {
-            interface MandateOptions {}
+            interface MandateOptions {
+              /**
+               * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
+               */
+              reference_prefix?: string;
+            }
 
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
           }
@@ -1920,7 +1925,12 @@ declare module 'stripe' {
           }
 
           namespace SepaDebit {
-            interface MandateOptions {}
+            interface MandateOptions {
+              /**
+               * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'STRIPE'.
+               */
+              reference_prefix?: string;
+            }
 
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
           }
