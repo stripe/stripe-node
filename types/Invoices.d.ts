@@ -558,6 +558,11 @@ declare module 'stripe' {
 
       interface AutomaticTax {
         /**
+         * If Stripe disabled automatic tax, this enum describes why.
+         */
+        disabled_reason: AutomaticTax.DisabledReason | null;
+
+        /**
          * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
          */
         enabled: boolean;
@@ -574,6 +579,10 @@ declare module 'stripe' {
       }
 
       namespace AutomaticTax {
+        type DisabledReason =
+          | 'finalization_requires_location_inputs'
+          | 'finalization_system_error';
+
         interface Liability {
           /**
            * The connected account being referenced when `type` is `account`.

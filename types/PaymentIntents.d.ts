@@ -1940,7 +1940,12 @@ declare module 'stripe' {
         }
 
         namespace BacsDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
+             */
+            reference_prefix?: string;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -3008,7 +3013,12 @@ declare module 'stripe' {
         }
 
         namespace SepaDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'STRIPE'.
+             */
+            reference_prefix?: string;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }

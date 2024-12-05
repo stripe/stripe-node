@@ -525,7 +525,7 @@ declare module 'stripe' {
         ip_address?: Stripe.Emptyable<string>;
 
         /**
-         * A flag that indicates when Stripe should validate the customer tax location. Defaults to `deferred`.
+         * A flag that indicates when Stripe should validate the customer tax location. Defaults to `auto`.
          */
         validate_location?: Tax.ValidateLocation;
       }

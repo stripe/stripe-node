@@ -39,7 +39,7 @@ declare module 'stripe' {
         customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
         /**
-         * The time when the billing credits become effective—when they're eligible for use.
+         * The time when the billing credits become effective-when they're eligible for use.
          */
         effective_at: number | null;
 
@@ -113,7 +113,7 @@ declare module 'stripe' {
         namespace ApplicabilityConfig {
           interface Scope {
             /**
-             * The price type for which credit grants can apply. We currently only support the `metered` price type. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them.
+             * The price type that credit grants can apply to. We currently only support the `metered` price type. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them.
              */
             price_type: 'metered';
           }

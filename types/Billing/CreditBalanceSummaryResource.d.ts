@@ -41,7 +41,7 @@ declare module 'stripe' {
         namespace Filter {
           interface ApplicabilityScope {
             /**
-             * The price type for which credit grants can apply. We currently only support the `metered` price type.
+             * The price type that credit grants can apply to. We currently only support the `metered` price type.
              */
             price_type: 'metered';
           }
@@ -52,7 +52,7 @@ declare module 'stripe' {
 
       class CreditBalanceSummaryResource {
         /**
-         * Retrieves the credit balance summary for a customer
+         * Retrieves the credit balance summary for a customer.
          */
         retrieve(
           params: CreditBalanceSummaryRetrieveParams,

@@ -179,6 +179,11 @@ declare module 'stripe' {
       namespace DefaultSettings {
         interface AutomaticTax {
           /**
+           * If Stripe disabled automatic tax, this enum describes why.
+           */
+          disabled_reason: 'requires_location_inputs' | null;
+
+          /**
            * Whether Stripe automatically computes tax on invoices created during this phase.
            */
           enabled: boolean;
@@ -484,6 +489,11 @@ declare module 'stripe' {
         }
 
         interface AutomaticTax {
+          /**
+           * If Stripe disabled automatic tax, this enum describes why.
+           */
+          disabled_reason: 'requires_location_inputs' | null;
+
           /**
            * Whether Stripe automatically computes tax on invoices created during this phase.
            */

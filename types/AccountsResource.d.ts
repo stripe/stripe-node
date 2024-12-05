@@ -73,7 +73,7 @@ declare module 'stripe' {
       external_account?: string | AccountCreateParams.ExternalAccount;
 
       /**
-       * A hash of account group type to tokens. These are account groups this account should be added to
+       * A hash of account group type to tokens. These are account groups this account should be added to.
        */
       groups?: AccountCreateParams.Groups;
 
@@ -233,6 +233,11 @@ declare module 'stripe' {
          * The au_becs_debit_payments capability.
          */
         au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
+
+        /**
+         * The automatic_indirect_tax capability.
+         */
+        automatic_indirect_tax?: Capabilities.AutomaticIndirectTax;
 
         /**
          * The bacs_debit_payments capability.
@@ -567,6 +572,13 @@ declare module 'stripe' {
         }
 
         interface AuBecsDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface AutomaticIndirectTax {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1986,7 +1998,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * A hash of account group type to tokens. These are account groups this account should be added to
+       * A hash of account group type to tokens. These are account groups this account should be added to.
        */
       groups?: AccountUpdateParams.Groups;
 
@@ -2179,6 +2191,11 @@ declare module 'stripe' {
          * The au_becs_debit_payments capability.
          */
         au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
+
+        /**
+         * The automatic_indirect_tax capability.
+         */
+        automatic_indirect_tax?: Capabilities.AutomaticIndirectTax;
 
         /**
          * The bacs_debit_payments capability.
@@ -2513,6 +2530,13 @@ declare module 'stripe' {
         }
 
         interface AuBecsDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface AutomaticIndirectTax {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

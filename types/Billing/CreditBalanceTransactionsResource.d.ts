@@ -29,7 +29,7 @@ declare module 'stripe' {
 
       class CreditBalanceTransactionsResource {
         /**
-         * Retrieves a credit balance transaction
+         * Retrieves a credit balance transaction.
          */
         retrieve(
           id: string,
@@ -42,7 +42,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Billing.CreditBalanceTransaction>>;
 
         /**
-         * Retrieve a list of credit balance transactions
+         * Retrieve a list of credit balance transactions.
          */
         list(
           params: CreditBalanceTransactionListParams,

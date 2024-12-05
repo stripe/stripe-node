@@ -250,6 +250,11 @@ declare module 'stripe' {
         au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
 
         /**
+         * The status of the automatic_indirect_tax capability of the account.
+         */
+        automatic_indirect_tax?: Capabilities.AutomaticIndirectTax;
+
+        /**
          * The status of the Bacs Direct Debits payments capability of the account, or whether the account can directly process Bacs Direct Debits charges.
          */
         bacs_debit_payments?: Capabilities.BacsDebitPayments;
@@ -557,6 +562,8 @@ declare module 'stripe' {
         type AmazonPayPayments = 'active' | 'inactive' | 'pending';
 
         type AuBecsDebitPayments = 'active' | 'inactive' | 'pending';
+
+        type AutomaticIndirectTax = 'active' | 'inactive' | 'pending';
 
         type BacsDebitPayments = 'active' | 'inactive' | 'pending';
 
