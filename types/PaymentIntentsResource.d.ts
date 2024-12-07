@@ -2331,11 +2331,6 @@ declare module 'stripe' {
           request_overcapture?: Card.RequestOvercapture;
 
           /**
-           * Request partial authorization on this PaymentIntent.
-           */
-          request_partial_authorization?: Card.RequestPartialAuthorization;
-
-          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
@@ -2493,8 +2488,6 @@ declare module 'stripe' {
           type RequestMulticapture = 'if_available' | 'never';
 
           type RequestOvercapture = 'if_available' | 'never';
-
-          type RequestPartialAuthorization = 'if_available' | 'never';
 
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
@@ -6104,11 +6097,6 @@ declare module 'stripe' {
           request_overcapture?: Card.RequestOvercapture;
 
           /**
-           * Request partial authorization on this PaymentIntent.
-           */
-          request_partial_authorization?: Card.RequestPartialAuthorization;
-
-          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
@@ -6266,8 +6254,6 @@ declare module 'stripe' {
           type RequestMulticapture = 'if_available' | 'never';
 
           type RequestOvercapture = 'if_available' | 'never';
-
-          type RequestPartialAuthorization = 'if_available' | 'never';
 
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
@@ -10632,11 +10618,6 @@ declare module 'stripe' {
           request_overcapture?: Card.RequestOvercapture;
 
           /**
-           * Request partial authorization on this PaymentIntent.
-           */
-          request_partial_authorization?: Card.RequestPartialAuthorization;
-
-          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
@@ -10794,8 +10775,6 @@ declare module 'stripe' {
           type RequestMulticapture = 'if_available' | 'never';
 
           type RequestOvercapture = 'if_available' | 'never';
-
-          type RequestPartialAuthorization = 'if_available' | 'never';
 
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
@@ -12243,11 +12222,6 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
-       * Payment method-specific configuration for this PaymentIntent.
-       */
-      payment_method_options?: PaymentIntentIncrementAuthorizationParams.PaymentMethodOptions;
-
-      /**
        * Text that appears on the customer's statement as the statement descriptor for a non-card or card charge. This value overrides the account's default statement descriptor. For information about requirements, including the 22-character limit, see [the Statement Descriptor docs](https://docs.stripe.com/get-started/account/statement-descriptors).
        */
       statement_descriptor?: string;
@@ -12282,26 +12256,6 @@ declare module 'stripe' {
              */
             calculation: Stripe.Emptyable<string>;
           }
-        }
-      }
-
-      interface PaymentMethodOptions {
-        /**
-         * Configuration for any card payments attempted on this PaymentIntent.
-         */
-        card?: PaymentMethodOptions.Card;
-      }
-
-      namespace PaymentMethodOptions {
-        interface Card {
-          /**
-           * Request partial authorization on this PaymentIntent.
-           */
-          request_partial_authorization?: Card.RequestPartialAuthorization;
-        }
-
-        namespace Card {
-          type RequestPartialAuthorization = 'if_available' | 'never';
         }
       }
 

@@ -791,11 +791,6 @@ declare module 'stripe' {
           amount_authorized: number | null;
 
           /**
-           * The latest amount intended to be authorized by this charge.
-           */
-          amount_requested?: number | null;
-
-          /**
            * Authorization code on the charge.
            */
           authorization_code: string | null;
@@ -898,8 +893,6 @@ declare module 'stripe' {
           network_token?: Card.NetworkToken | null;
 
           overcapture?: Card.Overcapture;
-
-          partial_authorization?: Card.PartialAuthorization;
 
           /**
            * Populated if this transaction used 3D Secure authentication.
@@ -1022,21 +1015,6 @@ declare module 'stripe' {
 
           namespace Overcapture {
             type Status = 'available' | 'unavailable';
-          }
-
-          interface PartialAuthorization {
-            /**
-             * Indicates whether the transaction requested for partial authorization feature and the authorization outcome.
-             */
-            status: PartialAuthorization.Status;
-          }
-
-          namespace PartialAuthorization {
-            type Status =
-              | 'declined'
-              | 'fully_authorized'
-              | 'not_requested'
-              | 'partially_authorized';
           }
 
           interface ThreeDSecure {
