@@ -73,7 +73,7 @@ declare module 'stripe' {
       external_account?: string | AccountCreateParams.ExternalAccount;
 
       /**
-       * A hash of account group type to tokens. These are account groups this account should be added to
+       * A hash of account group type to tokens. These are account groups this account should be added to.
        */
       groups?: AccountCreateParams.Groups;
 
@@ -1719,7 +1719,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * A hash of account group type to tokens. These are account groups this account should be added to
+       * A hash of account group type to tokens. These are account groups this account should be added to.
        */
       groups?: AccountUpdateParams.Groups;
 

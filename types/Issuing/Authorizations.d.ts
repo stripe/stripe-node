@@ -143,7 +143,7 @@ declare module 'stripe' {
         /**
          * Whether the authorization bypassed fraud risk checks because the cardholder has previously completed a fraud challenge on a similar high-risk authorization from the same merchant.
          */
-        verified_by_fraud_challenge?: boolean | null;
+        verified_by_fraud_challenge: boolean | null;
 
         /**
          * The digital wallet used for this transaction. One of `apple_pay`, `google_pay`, or `samsung_pay`. Will populate as `null` when no digital wallet was utilized.
@@ -399,6 +399,11 @@ declare module 'stripe' {
            * State where the seller is located
            */
           state: string | null;
+
+          /**
+           * The seller's tax identification number. Currently populated for French merchants only.
+           */
+          tax_id?: string | null;
 
           /**
            * An ID assigned by the seller to the location of the sale.

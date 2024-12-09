@@ -188,7 +188,9 @@ declare module 'stripe' {
 
       interface AutomaticTax {
         /**
-         * If `true`, tax will be calculated automatically using the customer's location.
+         * Set to `true` to [calculate tax automatically](https://docs.stripe.com/tax) using the customer's location.
+         *
+         * Enabling this parameter causes the payment link to collect any billing address information necessary for tax calculation.
          */
         enabled: boolean;
 
@@ -1182,7 +1184,9 @@ declare module 'stripe' {
 
       interface AutomaticTax {
         /**
-         * If `true`, tax will be calculated automatically using the customer's location.
+         * Set to `true` to [calculate tax automatically](https://docs.stripe.com/tax) using the customer's location.
+         *
+         * Enabling this parameter causes the payment link to collect any billing address information necessary for tax calculation.
          */
         enabled: boolean;
 
@@ -1840,6 +1844,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Subscriptions](https://stripe.com/docs/api/subscriptions) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
+         */
+        trial_period_days?: Stripe.Emptyable<number>;
 
         /**
          * Settings related to subscription trials.

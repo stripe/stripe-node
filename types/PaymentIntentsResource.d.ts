@@ -1363,7 +1363,12 @@ declare module 'stripe' {
         }
 
         namespace BacsDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
+             */
+            reference_prefix?: Stripe.Emptyable<string>;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -2436,7 +2441,12 @@ declare module 'stripe' {
         }
 
         namespace SepaDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'STRIPE'.
+             */
+            reference_prefix?: Stripe.Emptyable<string>;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -2476,7 +2486,7 @@ declare module 'stripe' {
 
         interface Swish {
           /**
-           * The order ID displayed in the Swish app after the payment is authorized.
+           * A reference for this payment to be displayed in the Swish app.
            */
           reference?: Stripe.Emptyable<string>;
 
@@ -3964,7 +3974,12 @@ declare module 'stripe' {
         }
 
         namespace BacsDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
+             */
+            reference_prefix?: Stripe.Emptyable<string>;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -5037,7 +5052,12 @@ declare module 'stripe' {
         }
 
         namespace SepaDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'STRIPE'.
+             */
+            reference_prefix?: Stripe.Emptyable<string>;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -5077,7 +5097,7 @@ declare module 'stripe' {
 
         interface Swish {
           /**
-           * The order ID displayed in the Swish app after the payment is authorized.
+           * A reference for this payment to be displayed in the Swish app.
            */
           reference?: Stripe.Emptyable<string>;
 
@@ -6675,7 +6695,12 @@ declare module 'stripe' {
         }
 
         namespace BacsDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
+             */
+            reference_prefix?: Stripe.Emptyable<string>;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -7748,7 +7773,12 @@ declare module 'stripe' {
         }
 
         namespace SepaDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'STRIPE'.
+             */
+            reference_prefix?: Stripe.Emptyable<string>;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -7788,7 +7818,7 @@ declare module 'stripe' {
 
         interface Swish {
           /**
-           * The order ID displayed in the Swish app after the payment is authorized.
+           * A reference for this payment to be displayed in the Swish app.
            */
           reference?: Stripe.Emptyable<string>;
 

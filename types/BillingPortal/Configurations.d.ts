@@ -210,7 +210,7 @@ declare module 'stripe' {
              */
             proration_behavior: SubscriptionUpdate.ProrationBehavior;
 
-            schedule_at_period_end?: SubscriptionUpdate.ScheduleAtPeriodEnd;
+            schedule_at_period_end: SubscriptionUpdate.ScheduleAtPeriodEnd;
           }
 
           namespace SubscriptionUpdate {

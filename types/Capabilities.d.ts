@@ -51,7 +51,7 @@ declare module 'stripe' {
         alternatives: Array<FutureRequirements.Alternative> | null;
 
         /**
-         * Date on which `future_requirements` merges with the main `requirements` hash and `future_requirements` becomes empty. After the transition, `currently_due` requirements may immediately become `past_due`, but the account may also be given a grace period depending on the capability's enablement state prior to transitioning.
+         * Date on which `future_requirements` becomes the main `requirements` hash and `future_requirements` becomes empty. After the transition, `currently_due` requirements may immediately become `past_due`, but the account may also be given a grace period depending on the capability's enablement state prior to transitioning.
          */
         current_deadline: number | null;
 

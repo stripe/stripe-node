@@ -36,7 +36,7 @@ declare module 'stripe' {
 
       class MeterEventAdjustmentsResource {
         /**
-         * Creates a billing meter event adjustment
+         * Creates a billing meter event adjustment.
          */
         create(
           params: MeterEventAdjustmentCreateParams,
