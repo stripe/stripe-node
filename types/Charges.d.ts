@@ -895,6 +895,11 @@ declare module 'stripe' {
           overcapture?: Card.Overcapture;
 
           /**
+           * Status of a card based on the card issuer.
+           */
+          regulated_status?: Card.RegulatedStatus | null;
+
+          /**
            * Populated if this transaction used 3D Secure authentication.
            */
           three_d_secure: Card.ThreeDSecure | null;
@@ -1016,6 +1021,8 @@ declare module 'stripe' {
           namespace Overcapture {
             type Status = 'available' | 'unavailable';
           }
+
+          type RegulatedStatus = 'regulated' | 'unregulated';
 
           interface ThreeDSecure {
             /**
