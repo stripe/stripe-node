@@ -401,6 +401,11 @@ declare module 'stripe' {
           state: string | null;
 
           /**
+           * The seller's tax identification number. Currently populated for French merchants only.
+           */
+          tax_id?: string | null;
+
+          /**
            * An ID assigned by the seller to the location of the sale.
            */
           terminal_id: string | null;
@@ -565,6 +570,7 @@ declare module 'stripe' {
             | 'cardholder_verification_required'
             | 'insecure_authorization_method'
             | 'insufficient_funds'
+            | 'network_fallback'
             | 'not_allowed'
             | 'pin_blocked'
             | 'spending_controls'

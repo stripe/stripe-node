@@ -37,11 +37,6 @@ declare module 'stripe' {
       /**
        * A representation of an amount of money, consisting of an amount and a currency.
        */
-      amount_refunded: PaymentRecord.AmountRefunded;
-
-      /**
-       * A representation of an amount of money, consisting of an amount and a currency.
-       */
       amount_requested: PaymentRecord.AmountRequested;
 
       /**
@@ -121,18 +116,6 @@ declare module 'stripe' {
       }
 
       interface AmountGuaranteed {
-        /**
-         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-         */
-        currency: string;
-
-        /**
-         * A positive integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) e.g., 100 cents for $1.00 or 100 for ¥100, a zero-decimal currency).
-         */
-        value: number;
-      }
-
-      interface AmountRefunded {
         /**
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
