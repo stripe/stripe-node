@@ -902,6 +902,11 @@ declare module 'stripe' {
           partial_authorization?: Card.PartialAuthorization;
 
           /**
+           * Status of a card based on the card issuer.
+           */
+          regulated_status?: Card.RegulatedStatus | null;
+
+          /**
            * Populated if this transaction used 3D Secure authentication.
            */
           three_d_secure: Card.ThreeDSecure | null;
@@ -1038,6 +1043,8 @@ declare module 'stripe' {
               | 'not_requested'
               | 'partially_authorized';
           }
+
+          type RegulatedStatus = 'regulated' | 'unregulated';
 
           interface ThreeDSecure {
             /**

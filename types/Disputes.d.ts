@@ -235,6 +235,8 @@ declare module 'stripe' {
       namespace Evidence {
         interface EnhancedEvidence {
           visa_compelling_evidence_3?: EnhancedEvidence.VisaCompellingEvidence3;
+
+          visa_compliance?: EnhancedEvidence.VisaCompliance;
         }
 
         namespace EnhancedEvidence {
@@ -341,6 +343,13 @@ declare module 'stripe' {
               shipping_address: Stripe.Address | null;
             }
           }
+
+          interface VisaCompliance {
+            /**
+             * A field acknowledging the fee incurred when countering a Visa Compliance dispute. If this field is set to true, evidence can be submitted for the compliance dispute, and you may incur a $500 fee if the case is lost.
+             */
+            fee_acknowledged: boolean;
+          }
         }
       }
 
@@ -371,6 +380,8 @@ declare module 'stripe' {
       namespace EvidenceDetails {
         interface EnhancedEligibility {
           visa_compelling_evidence_3?: EnhancedEligibility.VisaCompellingEvidence3;
+
+          visa_compliance?: EnhancedEligibility.VisaCompliance;
         }
 
         namespace EnhancedEligibility {
@@ -395,6 +406,17 @@ declare module 'stripe' {
               | 'missing_prior_undisputed_transactions';
 
             type Status = 'not_qualified' | 'qualified' | 'requires_action';
+          }
+
+          interface VisaCompliance {
+            /**
+             * Visa Compelling Evidence 3.0 eligibility status.
+             */
+            status: VisaCompliance.Status;
+          }
+
+          namespace VisaCompliance {
+            type Status = 'fee_acknowledged' | 'requires_fee_acknowledgement';
           }
         }
       }

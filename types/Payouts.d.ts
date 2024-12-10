@@ -140,7 +140,7 @@ declare module 'stripe' {
       /**
        * A value that generates from the beneficiary's bank that allows users to track payouts with their bank. Banks might call this a "reference number" or something similar.
        */
-      trace_id?: Payout.TraceId | null;
+      trace_id: Payout.TraceId | null;
 
       /**
        * Can be `bank_account` or `card`.
