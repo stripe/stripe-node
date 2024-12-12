@@ -40,7 +40,8 @@ declare module 'stripe' {
           | 'card_cvc'
           | 'card_expiry'
           | 'card_number'
-          | 'cardholder_name';
+          | 'cardholder_name'
+          | 'request_signature';
 
         interface Request {
           /**

@@ -352,6 +352,11 @@ declare module 'stripe' {
 
           interface CollectPaymentMethod {
             /**
+             * Account the payment intent belongs to.
+             */
+            account?: string;
+
+            /**
              * Represents a per-transaction override of a reader configuration
              */
             collect_config?: CollectPaymentMethod.CollectConfig;
@@ -370,6 +375,9 @@ declare module 'stripe' {
              */
             payment_method?: Stripe.PaymentMethod;
 
+            /**
+             * This field will be deprecated. Please use `account` instead.
+             */
             stripe_account?: string;
           }
 
@@ -403,14 +411,27 @@ declare module 'stripe' {
 
           interface ConfirmPaymentIntent {
             /**
+             * Account the payment intent belongs to.
+             */
+            account?: string;
+
+            /**
              * Most recent PaymentIntent processed by the reader.
              */
             payment_intent: string | Stripe.PaymentIntent;
 
+            /**
+             * This field will be deprecated. Please use `account` instead.
+             */
             stripe_account?: string;
           }
 
           interface ProcessPaymentIntent {
+            /**
+             * Account the payment intent belongs to.
+             */
+            account?: string;
+
             /**
              * Most recent PaymentIntent processed by the reader.
              */
@@ -421,6 +442,9 @@ declare module 'stripe' {
              */
             process_config?: ProcessPaymentIntent.ProcessConfig;
 
+            /**
+             * This field will be deprecated. Please use `account` instead.
+             */
             stripe_account?: string;
           }
 
@@ -480,6 +504,11 @@ declare module 'stripe' {
 
           interface RefundPayment {
             /**
+             * Account the payment intent belongs to.
+             */
+            account?: string;
+
+            /**
              * The amount being refunded.
              */
             amount?: number;
@@ -524,6 +553,9 @@ declare module 'stripe' {
              */
             reverse_transfer?: boolean;
 
+            /**
+             * This field will be deprecated. Please use `account` instead.
+             */
             stripe_account?: string;
           }
 

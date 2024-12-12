@@ -63,9 +63,14 @@ declare module 'stripe' {
           amount: Credit.Amount;
 
           /**
+           * Details of the invoice to which the reinstated credits were originally applied. Only present if `type` is `credits_application_invoice_voided`.
+           */
+          credits_application_invoice_voided?: Credit.CreditsApplicationInvoiceVoided | null;
+
+          /**
            * The type of credit transaction.
            */
-          type: 'credits_granted';
+          type: Credit.Type;
         }
 
         namespace Credit {
@@ -94,6 +99,20 @@ declare module 'stripe' {
               value: number;
             }
           }
+
+          interface CreditsApplicationInvoiceVoided {
+            /**
+             * The invoice to which the reinstated billing credits were originally applied.
+             */
+            invoice: string | Stripe.Invoice;
+
+            /**
+             * The invoice line item to which the reinstated billing credits were originally applied.
+             */
+            invoice_line_item: string;
+          }
+
+          type Type = 'credits_application_invoice_voided' | 'credits_granted';
         }
 
         interface Debit {
