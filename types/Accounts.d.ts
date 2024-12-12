@@ -1045,7 +1045,7 @@ declare module 'stripe' {
         errors: Array<FutureRequirements.Error> | null;
 
         /**
-         * Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well.
+         * Fields you must collect when all thresholds are reached. As they become required, they appear in `currently_due` as well.
          */
         eventually_due: Array<string> | null;
 
@@ -1236,7 +1236,7 @@ declare module 'stripe' {
         errors: Array<Requirements.Error> | null;
 
         /**
-         * Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well, and `current_deadline` becomes set.
+         * Fields you must collect when all thresholds are reached. As they become required, they appear in `currently_due` as well, and `current_deadline` becomes set.
          */
         eventually_due: Array<string> | null;
 
