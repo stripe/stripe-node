@@ -427,11 +427,6 @@ declare module 'stripe' {
           networks: Card.Networks | null;
 
           /**
-           * Status of a card based on the card issuer.
-           */
-          regulated_status?: Card.RegulatedStatus | null;
-
-          /**
            * Contains details on how this Card may be used for 3D Secure authentication.
            */
           three_d_secure_usage: Card.ThreeDSecureUsage | null;
@@ -718,8 +713,6 @@ declare module 'stripe' {
              */
             preferred: string | null;
           }
-
-          type RegulatedStatus = 'regulated' | 'unregulated';
 
           interface ThreeDSecureUsage {
             /**

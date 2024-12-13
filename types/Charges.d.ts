@@ -876,17 +876,7 @@ declare module 'stripe' {
            */
           network_token?: Card.NetworkToken | null;
 
-          /**
-           * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. The first three digits of the Trace ID is the Financial Network Code, the next 6 digits is the Banknet Reference Number, and the last 4 digits represent the date (MM/DD). This field will be available for successful Visa, Mastercard, or American Express transactions and always null for other card brands.
-           */
-          network_transaction_id?: string | null;
-
           overcapture?: Card.Overcapture;
-
-          /**
-           * Status of a card based on the card issuer.
-           */
-          regulated_status?: Card.RegulatedStatus | null;
 
           /**
            * Populated if this transaction used 3D Secure authentication.
@@ -999,8 +989,6 @@ declare module 'stripe' {
           namespace Overcapture {
             type Status = 'available' | 'unavailable';
           }
-
-          type RegulatedStatus = 'regulated' | 'unregulated';
 
           interface ThreeDSecure {
             /**
