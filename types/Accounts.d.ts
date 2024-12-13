@@ -131,12 +131,12 @@ declare module 'stripe' {
         /**
          * The applicant's gross annual revenue for its preceding fiscal year.
          */
-        annual_revenue?: BusinessProfile.AnnualRevenue | null;
+        annual_revenue: BusinessProfile.AnnualRevenue | null;
 
         /**
          * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
          */
-        estimated_worker_count?: number | null;
+        estimated_worker_count: number | null;
 
         /**
          * [The merchant category code for the account](https://stripe.com/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
@@ -1045,7 +1045,7 @@ declare module 'stripe' {
         errors: Array<FutureRequirements.Error> | null;
 
         /**
-         * Fields you must collect when all thresholds are reached. As they become required, they appear in `currently_due` as well.
+         * Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well.
          */
         eventually_due: Array<string> | null;
 
@@ -1236,7 +1236,7 @@ declare module 'stripe' {
         errors: Array<Requirements.Error> | null;
 
         /**
-         * Fields you must collect when all thresholds are reached. As they become required, they appear in `currently_due` as well, and `current_deadline` becomes set.
+         * Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well, and `current_deadline` becomes set.
          */
         eventually_due: Array<string> | null;
 

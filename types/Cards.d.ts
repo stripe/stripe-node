@@ -66,11 +66,6 @@ declare module 'stripe' {
       address_zip_check: string | null;
 
       /**
-       * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow. The field defaults to “unspecified”.
-       */
-      allow_redisplay?: Card.AllowRedisplay | null;
-
-      /**
        * A set of available payout methods for this card. Only values from this set should be passed as the `method` when creating a payout.
        */
       available_payout_methods?: Array<Card.AvailablePayoutMethod> | null;
@@ -170,11 +165,6 @@ declare module 'stripe' {
       networks?: Card.Networks;
 
       /**
-       * Status of a card based on the card issuer.
-       */
-      regulated_status?: Card.RegulatedStatus | null;
-
-      /**
        * For external accounts that are cards, possible values are `new` and `errored`. If a payout fails, the status is set to `errored` and [scheduled payouts](https://stripe.com/docs/payouts#payout-schedule) are stopped until account details are updated.
        */
       status?: string | null;
@@ -186,8 +176,6 @@ declare module 'stripe' {
     }
 
     namespace Card {
-      type AllowRedisplay = 'always' | 'limited' | 'unspecified';
-
       type AvailablePayoutMethod = 'instant' | 'standard';
 
       interface Networks {
@@ -196,8 +184,6 @@ declare module 'stripe' {
          */
         preferred: string | null;
       }
-
-      type RegulatedStatus = 'regulated' | 'unregulated';
     }
 
     /**
