@@ -115,10 +115,12 @@ declare module 'stripe' {
         interface DestinationPaymentMethodDetails {
           billing_details: DestinationPaymentMethodDetails.BillingDetails;
 
+          financial_account?: DestinationPaymentMethodDetails.FinancialAccount;
+
           /**
            * The type of the payment method used in the OutboundTransfer.
            */
-          type: 'us_bank_account';
+          type: DestinationPaymentMethodDetails.Type;
 
           us_bank_account?: DestinationPaymentMethodDetails.UsBankAccount;
         }
@@ -137,6 +139,20 @@ declare module 'stripe' {
              */
             name: string | null;
           }
+
+          interface FinancialAccount {
+            /**
+             * Token of the FinancialAccount.
+             */
+            id: string;
+
+            /**
+             * The rails used to send funds.
+             */
+            network: 'stripe';
+          }
+
+          type Type = 'financial_account' | 'us_bank_account';
 
           interface UsBankAccount {
             /**
