@@ -166,6 +166,15 @@ stripe = new Stripe('sk_test_123', {
       const rid: string = acct.lastResponse.requestId;
     }
   }
+
+  const abort = new AbortController();
+
+  await stripe.checkout.sessions.create(
+    {},
+    {
+      signal: abort.signal,
+    }
+  );
 })();
 
 const Foo = Stripe.StripeResource.extend({

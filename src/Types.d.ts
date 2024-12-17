@@ -48,6 +48,7 @@ export type StripeRequest = {
   headers: RequestHeaders;
   body: string;
   protocol: string;
+  signal?: AbortSignal;
 };
 export type RequestAuthenticator = (request: StripeRequest) => Promise<void>;
 export type RequestCallback = (
@@ -84,7 +85,11 @@ export type RequestOpts = {
   settings: RequestSettings;
   usage: Array<string>;
 };
-export type RequestSettings = {timeout?: number; maxNetworkRetries?: number};
+export type RequestSettings = {
+  timeout?: number;
+  signal?: AbortSignal;
+  maxNetworkRetries?: number;
+};
 export type ResponseEvent = {
   api_version?: string;
   account?: string;

@@ -148,6 +148,11 @@ declare module 'stripe' {
       timeout?: number;
 
       /**
+       * Specify an AbortSignal for this request.
+       */
+      signal?: AbortSignal;
+
+      /**
        * Specify the host for this request.
        */
       host?: string;

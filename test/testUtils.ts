@@ -73,7 +73,8 @@ export const getStripeMockClient = (): StripeClient => {
       headers: RequestHeaders,
       requestData: string,
       _protocol: string,
-      timeout: number
+      timeout: number,
+      signal: AbortSignal
     ): Promise<HttpClientResponseInterface> {
       return super.makeRequest(
         process.env.STRIPE_MOCK_HOST || 'localhost',
@@ -83,7 +84,8 @@ export const getStripeMockClient = (): StripeClient => {
         headers,
         requestData,
         'http',
-        timeout
+        timeout,
+        signal
       );
     }
   }
