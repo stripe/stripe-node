@@ -774,6 +774,11 @@ declare module 'stripe' {
 
       interface LastFinalizationError {
         /**
+         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines) if they provide one.
+         */
+        advice_code?: string;
+
+        /**
          * For card errors, the ID of the failed charge.
          */
         charge?: string;
