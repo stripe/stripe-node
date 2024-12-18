@@ -25,7 +25,7 @@ declare module 'stripe' {
         customer: string;
 
         /**
-         * The time when the billing credits become effective—when they're eligible for use. Defaults to the current timestamp if not specified.
+         * The time when the billing credits become effective-when they're eligible for use. It defaults to the current timestamp if not specified.
          */
         effective_at?: number;
 
@@ -35,12 +35,12 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * The time when the billing credits will expire. If not specified, the billing credits don't expire.
+         * The time when the billing credits expire. If not specified, the billing credits don't expire.
          */
         expires_at?: number;
 
         /**
-         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object (for example, cost basis) in a structured format.
+         * Set of key-value pairs that you can attach to an object. You can use this to store additional information about the object (for example, cost basis) in a structured format.
          */
         metadata?: Stripe.MetadataParam;
 
@@ -87,7 +87,7 @@ declare module 'stripe' {
         namespace ApplicabilityConfig {
           interface Scope {
             /**
-             * The price type for which credit grants can apply. We currently only support the `metered` price type.
+             * The price type that credit grants can apply to. We currently only support the `metered` price type.
              */
             price_type: 'metered';
           }
@@ -115,7 +115,7 @@ declare module 'stripe' {
         expires_at?: Stripe.Emptyable<number>;
 
         /**
-         * Set of key-value pairs you can attach to an object. This can be useful for storing additional information about the object (for example, cost basis) in a structured format.
+         * Set of key-value pairs you can attach to an object. You can use this to store additional information about the object (for example, cost basis) in a structured format.
          */
         metadata?: Stripe.MetadataParam;
       }
@@ -148,7 +148,7 @@ declare module 'stripe' {
 
       class CreditGrantsResource {
         /**
-         * Creates a credit grant
+         * Creates a credit grant.
          */
         create(
           params: CreditGrantCreateParams,
@@ -156,7 +156,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Billing.CreditGrant>>;
 
         /**
-         * Retrieves a credit grant
+         * Retrieves a credit grant.
          */
         retrieve(
           id: string,
@@ -169,7 +169,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Billing.CreditGrant>>;
 
         /**
-         * Updates a credit grant
+         * Updates a credit grant.
          */
         update(
           id: string,

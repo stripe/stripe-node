@@ -306,6 +306,16 @@ declare module 'stripe' {
         message?: string;
 
         /**
+         * For card errors resulting from a card issuer decline, a 2 digit code which indicates the advice given to merchant by the card network on how to proceed with an error.
+         */
+        network_advice_code?: string;
+
+        /**
+         * For card errors resulting from a card issuer decline, a brand specific 2, 3, or 4 digit code which indicates the reason the authorization failed.
+         */
+        network_decline_code?: string;
+
+        /**
          * If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
          */
         param?: string;
@@ -805,10 +815,14 @@ declare module 'stripe' {
             }
 
             interface Iban {
+              account_holder_address: Stripe.Address;
+
               /**
                * The name of the person or business that owns the bank account
                */
               account_holder_name: string;
+
+              bank_address: Stripe.Address;
 
               /**
                * The BIC/SWIFT code of the account.
@@ -827,6 +841,8 @@ declare module 'stripe' {
             }
 
             interface SortCode {
+              account_holder_address: Stripe.Address;
+
               /**
                * The name of the person or business that owns the bank account
                */
@@ -837,6 +853,8 @@ declare module 'stripe' {
                */
               account_number: string;
 
+              bank_address: Stripe.Address;
+
               /**
                * The six-digit sort code
                */
@@ -844,6 +862,15 @@ declare module 'stripe' {
             }
 
             interface Spei {
+              account_holder_address: Stripe.Address;
+
+              /**
+               * The account holder name
+               */
+              account_holder_name: string;
+
+              bank_address: Stripe.Address;
+
               /**
                * The three-digit bank code
                */
@@ -910,6 +937,8 @@ declare module 'stripe' {
               | 'zengin';
 
             interface Zengin {
+              account_holder_address: Stripe.Address;
+
               /**
                * The account holder name
                */
@@ -924,6 +953,8 @@ declare module 'stripe' {
                * The bank account type. In Japan, this can only be `futsu` or `toza`.
                */
               account_type: string | null;
+
+              bank_address: Stripe.Address;
 
               /**
                * The bank code of the account
@@ -1578,7 +1609,12 @@ declare module 'stripe' {
         }
 
         namespace BacsDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
+             */
+            reference_prefix?: string;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -2371,7 +2407,12 @@ declare module 'stripe' {
         }
 
         namespace SepaDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'STRIPE'.
+             */
+            reference_prefix?: string;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -2409,7 +2450,7 @@ declare module 'stripe' {
 
         interface Swish {
           /**
-           * The order ID displayed in the Swish app after the payment is authorized.
+           * A reference for this payment to be displayed in the Swish app.
            */
           reference: string | null;
 

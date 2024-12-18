@@ -250,6 +250,11 @@ declare module 'stripe' {
     namespace Subscription {
       interface AutomaticTax {
         /**
+         * If Stripe disabled automatic tax, this enum describes why.
+         */
+        disabled_reason: 'requires_location_inputs' | null;
+
+        /**
          * Whether Stripe automatically computes tax on this subscription.
          */
         enabled: boolean;

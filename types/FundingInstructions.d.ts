@@ -127,10 +127,14 @@ declare module 'stripe' {
           }
 
           interface Iban {
+            account_holder_address: Stripe.Address;
+
             /**
              * The name of the person or business that owns the bank account
              */
             account_holder_name: string;
+
+            bank_address: Stripe.Address;
 
             /**
              * The BIC/SWIFT code of the account.
@@ -149,6 +153,8 @@ declare module 'stripe' {
           }
 
           interface SortCode {
+            account_holder_address: Stripe.Address;
+
             /**
              * The name of the person or business that owns the bank account
              */
@@ -159,6 +165,8 @@ declare module 'stripe' {
              */
             account_number: string;
 
+            bank_address: Stripe.Address;
+
             /**
              * The six-digit sort code
              */
@@ -166,6 +174,15 @@ declare module 'stripe' {
           }
 
           interface Spei {
+            account_holder_address: Stripe.Address;
+
+            /**
+             * The account holder name
+             */
+            account_holder_name: string;
+
+            bank_address: Stripe.Address;
+
             /**
              * The three-digit bank code
              */
@@ -232,6 +249,8 @@ declare module 'stripe' {
             | 'zengin';
 
           interface Zengin {
+            account_holder_address: Stripe.Address;
+
             /**
              * The account holder name
              */
@@ -246,6 +265,8 @@ declare module 'stripe' {
              * The bank account type. In Japan, this can only be `futsu` or `toza`.
              */
             account_type: string | null;
+
+            bank_address: Stripe.Address;
 
             /**
              * The bank code of the account

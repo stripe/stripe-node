@@ -558,6 +558,16 @@ declare module 'stripe' {
         message?: string;
 
         /**
+         * For card errors resulting from a card issuer decline, a 2 digit code which indicates the advice given to merchant by the card network on how to proceed with an error.
+         */
+        network_advice_code?: string;
+
+        /**
+         * For card errors resulting from a card issuer decline, a brand specific 2, 3, or 4 digit code which indicates the reason the authorization failed.
+         */
+        network_decline_code?: string;
+
+        /**
          * If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
          */
         param?: string;
