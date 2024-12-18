@@ -2065,6 +2065,11 @@ declare module 'stripe' {
 
         interface Paypal {
           /**
+           * Two-letter ISO code representing the buyer's country. Values are provided by PayPal directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          country: string | null;
+
+          /**
            * Owner's email. Values are provided by PayPal directly
            * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
