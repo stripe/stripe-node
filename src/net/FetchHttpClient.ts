@@ -76,8 +76,16 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
     fetchFn: typeof fetch
   ): FetchWithTimeout {
     return async (url, init, timeout): Promise<Response> => {
+      let signal = init.signal;
+
       // Use AbortController because AbortSignal.timeout() was added later in Node v17.3.0, v16.14.0
       const abort = new AbortController();
+
+      // fallback to timeout
+      if (!signal) {
+        signal = abort.signal;
+      }
+
       let timeoutId: NodeJS.Timeout | null = setTimeout(() => {
         timeoutId = null;
         abort.abort(HttpClient.makeTimeoutError());
@@ -85,7 +93,7 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
       try {
         return await fetchFn(url, {
           ...init,
-          signal: abort.signal,
+          signal,
         });
       } catch (err) {
         // Some implementations, like node-fetch, do not respect the reason passed to AbortController.abort()
@@ -117,7 +125,8 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
     headers: RequestHeaders,
     requestData: string,
     protocol: string,
-    timeout: number
+    timeout: number,
+    signal?: AbortSignal
   ): Promise<HttpClientResponseInterface> {
     const isInsecureConnection = protocol === 'http';
 
@@ -143,6 +152,7 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
         headers,
         // @ts-ignore
         body,
+        signal,
       },
       timeout
     );

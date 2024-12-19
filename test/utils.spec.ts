@@ -331,6 +331,23 @@ describe('utils', () => {
       });
     });
 
+    it('parses abort signal settings', () => {
+      const abort = new AbortController();
+      const args = [
+        {
+          signal: abort.signal,
+        },
+      ];
+
+      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+        host: null,
+        headers: {},
+        settings: {
+          signal: abort.signal,
+        },
+      });
+    });
+
     it('warns if the hash contains something that does not belong', (done) => {
       const args = [
         {foo: 'bar'},

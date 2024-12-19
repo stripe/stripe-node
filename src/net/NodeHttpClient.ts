@@ -45,7 +45,8 @@ export class NodeHttpClient extends HttpClient {
     headers: RequestHeaders,
     requestData: string,
     protocol: string,
-    timeout: number
+    timeout: number,
+    signal?: AbortSignal
   ): Promise<HttpClientResponseInterface> {
     const isInsecureConnection = protocol === 'http';
 
@@ -64,6 +65,7 @@ export class NodeHttpClient extends HttpClient {
           agent,
           headers,
           ciphers: 'DEFAULT:!aNULL:!eNULL:!LOW:!EXPORT:!SSLv2:!MD5',
+          signal,
         });
 
         req.setTimeout(timeout, () => {

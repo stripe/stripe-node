@@ -18,6 +18,7 @@ const OPTIONS_KEYS = [
   'apiVersion',
   'maxNetworkRetries',
   'timeout',
+  'signal',
   'host',
   'authenticator',
   'stripeContext',
@@ -26,6 +27,7 @@ const OPTIONS_KEYS = [
 
 type Settings = {
   timeout?: number;
+  signal?: AbortSignal;
   maxNetworkRetries?: number;
 };
 
@@ -188,6 +190,9 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
       }
       if (Number.isInteger(params.timeout)) {
         opts.settings.timeout = params.timeout as number;
+      }
+      if (params.signal) {
+        opts.settings.signal = params.signal as AbortSignal;
       }
       if (params.host) {
         opts.host = params.host as string;

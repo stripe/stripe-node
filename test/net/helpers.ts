@@ -55,7 +55,8 @@ export const createHttpClientTestSuite = (createHttpClientFn, extraTestsFn) => {
         options.headers || {},
         options.requestData,
         'http',
-        options.timeout || 1000
+        options.timeout || 1000,
+        options.signal
       );
     };
 
@@ -71,6 +72,21 @@ export const createHttpClientTestSuite = (createHttpClientFn, extraTestsFn) => {
 
         try {
           await sendRequest({timeout: 30});
+          fail();
+        } catch (e) {
+          expect(e.code).to.be.equal('ETIMEDOUT');
+        }
+      });
+
+      it('rejects with a timeout error on abort signal', async () => {
+        setupNock().reply(200, 'hello, world!');
+
+        try {
+          const controller = new AbortController();
+
+          controller.abort();
+
+          await sendRequest({signal: controller.signal});
           fail();
         } catch (e) {
           expect(e.code).to.be.equal('ETIMEDOUT');

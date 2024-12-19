@@ -590,6 +590,7 @@ export class RequestSender {
         headers: Object.assign({}, headers),
         body: requestData,
         protocol: this._stripe.getApiField('protocol'),
+        signal: options.settings.signal,
       };
 
       authenticator(request)
@@ -604,7 +605,8 @@ export class RequestSender {
               request.headers,
               request.body,
               request.protocol,
-              timeout
+              timeout,
+              request.signal
             );
 
           const requestStartTime = Date.now();
