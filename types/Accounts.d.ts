@@ -702,6 +702,8 @@ declare module 'stripe' {
          */
         directors_provided?: boolean;
 
+        directorship_declaration?: Company.DirectorshipDeclaration | null;
+
         /**
          * Whether the company's executives have been provided. This Boolean will be `true` if you've manually indicated that all executives are provided via [the `executives_provided` parameter](https://stripe.com/docs/api/accounts/update#update_account-company-executives_provided), or if Stripe determined that sufficient executives were provided.
          */
@@ -846,6 +848,23 @@ declare module 'stripe' {
            * Town/cho-me.
            */
           town: string | null;
+        }
+
+        interface DirectorshipDeclaration {
+          /**
+           * The Unix timestamp marking when the directorship declaration attestation was made.
+           */
+          date: number | null;
+
+          /**
+           * The IP address from which the directorship declaration attestation was made.
+           */
+          ip: string | null;
+
+          /**
+           * The user-agent string from the browser where the directorship declaration attestation was made.
+           */
+          user_agent: string | null;
         }
 
         interface OwnershipDeclaration {
