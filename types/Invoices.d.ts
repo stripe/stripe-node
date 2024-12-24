@@ -489,7 +489,7 @@ declare module 'stripe' {
       /**
        * Contains pretax credit amounts (ex: discount, credit grants, etc) that apply to this invoice. This is a combined list of total_pretax_credit_amounts across all invoice line items.
        */
-      total_pretax_credit_amounts?: Array<
+      total_pretax_credit_amounts: Array<
         Invoice.TotalPretaxCreditAmount
       > | null;
 
