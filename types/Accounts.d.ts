@@ -744,6 +744,8 @@ declare module 'stripe' {
          */
         ownership_declaration?: Company.OwnershipDeclaration | null;
 
+        ownership_exemption_reason?: Company.OwnershipExemptionReason;
+
         /**
          * The company's phone number (used for verification).
          */
@@ -883,6 +885,10 @@ declare module 'stripe' {
            */
           user_agent: string | null;
         }
+
+        type OwnershipExemptionReason =
+          | 'qualified_entity_exceeds_ownership_threshold'
+          | 'qualifies_as_financial_institution';
 
         type Structure =
           | 'free_zone_establishment'
