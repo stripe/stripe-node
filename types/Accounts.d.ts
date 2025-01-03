@@ -702,6 +702,9 @@ declare module 'stripe' {
          */
         directors_provided?: boolean;
 
+        /**
+         * This hash is used to attest that the director information provided to Stripe is both current and correct.
+         */
         directorship_declaration?: Company.DirectorshipDeclaration | null;
 
         /**
