@@ -313,6 +313,11 @@ declare module 'stripe' {
 
       interface Outcome {
         /**
+         * An enumerated value providing a more detailed explanation on [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines).
+         */
+        advice_code: Outcome.AdviceCode | null;
+
+        /**
          * For charges declined by the network, a 2 digit code which indicates the advice returned by the network on how to proceed with an error.
          */
         network_advice_code: string | null;
@@ -359,6 +364,11 @@ declare module 'stripe' {
       }
 
       namespace Outcome {
+        type AdviceCode =
+          | 'confirm_card_data'
+          | 'do_not_try_again'
+          | 'try_again_later';
+
         interface Rule {
           /**
            * The action taken on the payment.
