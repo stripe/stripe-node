@@ -238,6 +238,8 @@ declare module 'stripe' {
 
         brand?: string | null;
 
+        brand_product?: string | null;
+
         country?: string | null;
 
         cvc_check?: string | null;
@@ -277,6 +279,8 @@ declare module 'stripe' {
         authorization_response_code?: string;
 
         brand?: string | null;
+
+        brand_product?: string | null;
 
         country?: string | null;
 
@@ -701,6 +705,8 @@ declare module 'stripe' {
         authenticated?: boolean | null;
 
         brand?: string | null;
+
+        brand_product?: string | null;
 
         card?: string | null;
 
