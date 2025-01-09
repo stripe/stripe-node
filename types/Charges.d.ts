@@ -919,7 +919,7 @@ declare module 'stripe' {
           /**
            * Status of a card based on the card issuer.
            */
-          regulated_status?: Card.RegulatedStatus | null;
+          regulated_status: Card.RegulatedStatus | null;
 
           /**
            * Populated if this transaction used 3D Secure authentication.

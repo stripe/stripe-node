@@ -443,7 +443,7 @@ declare module 'stripe' {
           /**
            * Status of a card based on the card issuer.
            */
-          regulated_status?: Card.RegulatedStatus | null;
+          regulated_status: Card.RegulatedStatus | null;
 
           /**
            * Contains details on how this Card may be used for 3D Secure authentication.
