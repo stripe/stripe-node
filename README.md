@@ -61,6 +61,39 @@ const customer = await stripe.customers.create({
 console.log(customer.id);
 ```
 
+> [!WARNING]
+> If you're using `v17.x.x` or later and getting an error about a missing API key despite being sure it's available, it's likely you're importing the file that instantiates `Stripe` while the key isn't present (for instance, during a build step).
+> If that's the case, consider instantiating the client lazily:
+>
+> ```ts
+> import Stripe from 'stripe';
+>
+> let _stripe: Stripe | null = null;
+> const getStripe = (): Stripe => {
+>   if (!_stripe) {
+>     _stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+>       // ...
+>     });
+>   }
+>   return _stripe;
+> };
+>
+> const getCustomers = () => getStripe().customers.list();
+> ```
+>
+> Alternatively, you can provide a placeholder for the real key (which will be enough to get the code through a build step):
+>
+> ```ts
+> import Stripe from 'stripe';
+>
+> export const stripe = new Stripe(
+>   process.env.STRIPE_SECRET_KEY || 'api_key_placeholder',
+>   {
+>     // ...
+>   }
+> );
+> ```
+
 ### Usage with TypeScript
 
 As of 8.0.1, Stripe maintains types for the latest [API version][api-versions].

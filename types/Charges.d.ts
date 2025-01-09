@@ -313,6 +313,11 @@ declare module 'stripe' {
 
       interface Outcome {
         /**
+         * An enumerated value providing a more detailed explanation on [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines).
+         */
+        advice_code: Outcome.AdviceCode | null;
+
+        /**
          * For charges declined by the network, a 2 digit code which indicates the advice returned by the network on how to proceed with an error.
          */
         network_advice_code: string | null;
@@ -359,6 +364,11 @@ declare module 'stripe' {
       }
 
       namespace Outcome {
+        type AdviceCode =
+          | 'confirm_card_data'
+          | 'do_not_try_again'
+          | 'try_again_later';
+
         interface Rule {
           /**
            * The action taken on the payment.
@@ -900,7 +910,7 @@ declare module 'stripe' {
           /**
            * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. The first three digits of the Trace ID is the Financial Network Code, the next 6 digits is the Banknet Reference Number, and the last 4 digits represent the date (MM/DD). This field will be available for successful Visa, Mastercard, or American Express transactions and always null for other card brands.
            */
-          network_transaction_id?: string | null;
+          network_transaction_id: string | null;
 
           overcapture?: Card.Overcapture;
 
@@ -909,7 +919,7 @@ declare module 'stripe' {
           /**
            * Status of a card based on the card issuer.
            */
-          regulated_status?: Card.RegulatedStatus | null;
+          regulated_status: Card.RegulatedStatus | null;
 
           /**
            * Populated if this transaction used 3D Secure authentication.
@@ -2064,6 +2074,11 @@ declare module 'stripe' {
         }
 
         interface Paypal {
+          /**
+           * Two-letter ISO code representing the buyer's country. Values are provided by PayPal directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          country: string | null;
+
           /**
            * Owner's email. Values are provided by PayPal directly
            * (if supported) at the time of authorization or settlement. They cannot be set or mutated.

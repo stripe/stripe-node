@@ -2253,6 +2253,8 @@ declare module 'stripe' {
         interface PhoneNumberCollection {
           /**
            * Set to `true` to enable phone number collection.
+           *
+           * Can only be set in `payment` and `subscription` mode.
            */
           enabled: boolean;
         }

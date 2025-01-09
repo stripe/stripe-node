@@ -140,6 +140,10 @@ declare module 'stripe' {
            */
           ownership_declaration_shown_and_signed?: boolean;
 
+          ownership_exemption_reason?: Stripe.Emptyable<
+            Company.OwnershipExemptionReason
+          >;
+
           /**
            * The company's phone number (used for verification).
            */
@@ -193,6 +197,10 @@ declare module 'stripe' {
              */
             user_agent?: string;
           }
+
+          type OwnershipExemptionReason =
+            | 'qualified_entity_exceeds_ownership_threshold'
+            | 'qualifies_as_financial_institution';
 
           type Structure =
             | 'free_zone_establishment'

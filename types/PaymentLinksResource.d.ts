@@ -1125,6 +1125,13 @@ declare module 'stripe' {
       >;
 
       /**
+       * Controls phone number collection settings during checkout.
+       *
+       * We recommend that you review your privacy policy and check with your legal contacts.
+       */
+      phone_number_collection?: PaymentLinkUpdateParams.PhoneNumberCollection;
+
+      /**
        * Settings that restrict the usage of a payment link.
        */
       restrictions?: Stripe.Emptyable<PaymentLinkUpdateParams.Restrictions>;
@@ -1578,6 +1585,13 @@ declare module 'stripe' {
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
+
+      interface PhoneNumberCollection {
+        /**
+         * Set to `true` to enable phone number collection.
+         */
+        enabled: boolean;
+      }
 
       interface Restrictions {
         /**
