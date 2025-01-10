@@ -47,7 +47,7 @@ declare module 'stripe' {
         balance_transactions: Array<Stripe.BalanceTransaction>;
 
         /**
-         * You can [create physical or virtual cards](https://stripe.com/docs/issuing/cards) that are issued to cardholders.
+         * You can [create physical or virtual cards](https://stripe.com/docs/issuing) that are issued to cardholders.
          */
         card: Stripe.Issuing.Card;
 
@@ -70,6 +70,11 @@ declare module 'stripe' {
          * Fleet-specific information for authorizations using Fleet cards.
          */
         fleet: Authorization.Fleet | null;
+
+        /**
+         * Fraud challenges sent to the cardholder, if this authorization was declined for fraud risk reasons.
+         */
+        fraud_challenges?: Array<Authorization.FraudChallenge> | null;
 
         /**
          * Information about fuel that was purchased with this transaction. Typically this information is received from the merchant after the authorization has been approved and the fuel dispensed.
@@ -134,6 +139,11 @@ declare module 'stripe' {
         treasury?: Authorization.Treasury | null;
 
         verification_data: Authorization.VerificationData;
+
+        /**
+         * Whether the authorization bypassed fraud risk checks because the cardholder has previously completed a fraud challenge on a similar high-risk authorization from the same merchant.
+         */
+        verified_by_fraud_challenge: boolean | null;
 
         /**
          * The digital wallet used for this transaction. One of `apple_pay`, `google_pay`, or `samsung_pay`. Will populate as `null` when no digital wallet was utilized.
@@ -273,6 +283,36 @@ declare module 'stripe' {
             | 'self_service';
         }
 
+        interface FraudChallenge {
+          /**
+           * The method by which the fraud challenge was delivered to the cardholder.
+           */
+          channel: 'sms';
+
+          /**
+           * The status of the fraud challenge.
+           */
+          status: FraudChallenge.Status;
+
+          /**
+           * If the challenge is not deliverable, the reason why.
+           */
+          undeliverable_reason: FraudChallenge.UndeliverableReason | null;
+        }
+
+        namespace FraudChallenge {
+          type Status =
+            | 'expired'
+            | 'pending'
+            | 'rejected'
+            | 'undeliverable'
+            | 'verified';
+
+          type UndeliverableReason =
+            | 'no_phone_number'
+            | 'unsupported_phone_number';
+        }
+
         interface Fuel {
           /**
            * [Conexxus Payment System Product Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel product purchased.
@@ -359,6 +399,11 @@ declare module 'stripe' {
            * State where the seller is located
            */
           state: string | null;
+
+          /**
+           * The seller's tax identification number. Currently populated for French merchants only.
+           */
+          tax_id?: string | null;
 
           /**
            * An ID assigned by the seller to the location of the sale.

@@ -5,14 +5,14 @@ declare module 'stripe' {
     namespace BillingPortal {
       interface ConfigurationCreateParams {
         /**
-         * The business information shown to customers in the portal.
-         */
-        business_profile: ConfigurationCreateParams.BusinessProfile;
-
-        /**
          * Information about the features available in the portal.
          */
         features: ConfigurationCreateParams.Features;
+
+        /**
+         * The business information shown to customers in the portal.
+         */
+        business_profile?: ConfigurationCreateParams.BusinessProfile;
 
         /**
          * The default URL to redirect customers to when they click on the portal's link to return to your website. This can be [overriden](https://stripe.com/docs/api/customer_portal/sessions/create#create_portal_session-return_url) when creating the session.
@@ -178,7 +178,7 @@ declare module 'stripe' {
             /**
              * The types of subscription updates that are supported. When empty, subscriptions are not updateable.
              */
-            default_allowed_updates: Stripe.Emptyable<
+            default_allowed_updates?: Stripe.Emptyable<
               Array<SubscriptionUpdate.DefaultAllowedUpdate>
             >;
 
@@ -190,12 +190,17 @@ declare module 'stripe' {
             /**
              * The list of up to 10 products that support subscription updates.
              */
-            products: Stripe.Emptyable<Array<SubscriptionUpdate.Product>>;
+            products?: Stripe.Emptyable<Array<SubscriptionUpdate.Product>>;
 
             /**
              * Determines how to handle prorations resulting from subscription updates. Valid values are `none`, `create_prorations`, and `always_invoice`.
              */
             proration_behavior?: SubscriptionUpdate.ProrationBehavior;
+
+            /**
+             * Setting to control when an update should be scheduled at the end of the period instead of applying immediately.
+             */
+            schedule_at_period_end?: SubscriptionUpdate.ScheduleAtPeriodEnd;
           }
 
           namespace SubscriptionUpdate {
@@ -217,6 +222,26 @@ declare module 'stripe' {
               | 'always_invoice'
               | 'create_prorations'
               | 'none';
+
+            interface ScheduleAtPeriodEnd {
+              /**
+               * List of conditions. When any condition is true, the update will be scheduled at the end of the current period.
+               */
+              conditions?: Array<ScheduleAtPeriodEnd.Condition>;
+            }
+
+            namespace ScheduleAtPeriodEnd {
+              interface Condition {
+                /**
+                 * The type of condition.
+                 */
+                type: Condition.Type;
+              }
+
+              namespace Condition {
+                type Type = 'decreasing_item_amount' | 'shortening_interval';
+              }
+            }
           }
         }
 
@@ -433,6 +458,11 @@ declare module 'stripe' {
              * Determines how to handle prorations resulting from subscription updates. Valid values are `none`, `create_prorations`, and `always_invoice`.
              */
             proration_behavior?: SubscriptionUpdate.ProrationBehavior;
+
+            /**
+             * Setting to control when an update should be scheduled at the end of the period instead of applying immediately.
+             */
+            schedule_at_period_end?: SubscriptionUpdate.ScheduleAtPeriodEnd;
           }
 
           namespace SubscriptionUpdate {
@@ -454,6 +484,28 @@ declare module 'stripe' {
               | 'always_invoice'
               | 'create_prorations'
               | 'none';
+
+            interface ScheduleAtPeriodEnd {
+              /**
+               * List of conditions. When any condition is true, the update will be scheduled at the end of the current period.
+               */
+              conditions?: Stripe.Emptyable<
+                Array<ScheduleAtPeriodEnd.Condition>
+              >;
+            }
+
+            namespace ScheduleAtPeriodEnd {
+              interface Condition {
+                /**
+                 * The type of condition.
+                 */
+                type: Condition.Type;
+              }
+
+              namespace Condition {
+                type Type = 'decreasing_item_amount' | 'shortening_interval';
+              }
+            }
           }
         }
 

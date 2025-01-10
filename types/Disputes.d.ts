@@ -45,6 +45,11 @@ declare module 'stripe' {
        */
       currency: string;
 
+      /**
+       * List of eligibility types that are included in `enhanced_evidence`.
+       */
+      enhanced_eligibility_types: Array<'visa_compelling_evidence_3'>;
+
       evidence: Dispute.Evidence;
 
       evidence_details: Dispute.EvidenceDetails;
@@ -154,6 +159,8 @@ declare module 'stripe' {
          */
         duplicate_charge_id: string | null;
 
+        enhanced_evidence: Evidence.EnhancedEvidence;
+
         /**
          * A description of the product or service that was sold.
          */
@@ -225,11 +232,134 @@ declare module 'stripe' {
         uncategorized_text: string | null;
       }
 
+      namespace Evidence {
+        interface EnhancedEvidence {
+          visa_compelling_evidence_3?: EnhancedEvidence.VisaCompellingEvidence3;
+
+          visa_compliance?: EnhancedEvidence.VisaCompliance;
+        }
+
+        namespace EnhancedEvidence {
+          interface VisaCompellingEvidence3 {
+            /**
+             * Disputed transaction details for Visa Compelling Evidence 3.0 evidence submission.
+             */
+            disputed_transaction: VisaCompellingEvidence3.DisputedTransaction | null;
+
+            /**
+             * List of exactly two prior undisputed transaction objects for Visa Compelling Evidence 3.0 evidence submission.
+             */
+            prior_undisputed_transactions: Array<
+              VisaCompellingEvidence3.PriorUndisputedTransaction
+            >;
+          }
+
+          namespace VisaCompellingEvidence3 {
+            interface DisputedTransaction {
+              /**
+               * User Account ID used to log into business platform. Must be recognizable by the user.
+               */
+              customer_account_id: string | null;
+
+              /**
+               * Unique identifier of the cardholder's device derived from a combination of at least two hardware and software attributes. Must be at least 20 characters.
+               */
+              customer_device_fingerprint: string | null;
+
+              /**
+               * Unique identifier of the cardholder's device such as a device serial number (e.g., International Mobile Equipment Identity [IMEI]). Must be at least 15 characters.
+               */
+              customer_device_id: string | null;
+
+              /**
+               * The email address of the customer.
+               */
+              customer_email_address: string | null;
+
+              /**
+               * The IP address that the customer used when making the purchase.
+               */
+              customer_purchase_ip: string | null;
+
+              /**
+               * Categorization of disputed payment.
+               */
+              merchandise_or_services: DisputedTransaction.MerchandiseOrServices | null;
+
+              /**
+               * A description of the product or service that was sold.
+               */
+              product_description: string | null;
+
+              /**
+               * The address to which a physical product was shipped. All fields are required for Visa Compelling Evidence 3.0 evidence submission.
+               */
+              shipping_address: Stripe.Address | null;
+            }
+
+            namespace DisputedTransaction {
+              type MerchandiseOrServices = 'merchandise' | 'services';
+            }
+
+            interface PriorUndisputedTransaction {
+              /**
+               * Stripe charge ID for the Visa Compelling Evidence 3.0 eligible prior charge.
+               */
+              charge: string;
+
+              /**
+               * User Account ID used to log into business platform. Must be recognizable by the user.
+               */
+              customer_account_id: string | null;
+
+              /**
+               * Unique identifier of the cardholder's device derived from a combination of at least two hardware and software attributes. Must be at least 20 characters.
+               */
+              customer_device_fingerprint: string | null;
+
+              /**
+               * Unique identifier of the cardholder's device such as a device serial number (e.g., International Mobile Equipment Identity [IMEI]). Must be at least 15 characters.
+               */
+              customer_device_id: string | null;
+
+              /**
+               * The email address of the customer.
+               */
+              customer_email_address: string | null;
+
+              /**
+               * The IP address that the customer used when making the purchase.
+               */
+              customer_purchase_ip: string | null;
+
+              /**
+               * A description of the product or service that was sold.
+               */
+              product_description: string | null;
+
+              /**
+               * The address to which a physical product was shipped. All fields are required for Visa Compelling Evidence 3.0 evidence submission.
+               */
+              shipping_address: Stripe.Address | null;
+            }
+          }
+
+          interface VisaCompliance {
+            /**
+             * A field acknowledging the fee incurred when countering a Visa compliance dispute. If this field is set to true, evidence can be submitted for the compliance dispute. Stripe collects a 500 USD (or local equivalent) amount to cover the network costs associated with resolving compliance disputes. Stripe refunds the 500 USD network fee if you win the dispute.
+             */
+            fee_acknowledged: boolean;
+          }
+        }
+      }
+
       interface EvidenceDetails {
         /**
          * Date by which evidence must be submitted in order to successfully challenge dispute. Will be 0 if the customer's bank or credit card company doesn't allow a response for this particular dispute.
          */
         due_by: number | null;
+
+        enhanced_eligibility: EvidenceDetails.EnhancedEligibility;
 
         /**
          * Whether evidence has been staged for this dispute.
@@ -245,6 +375,50 @@ declare module 'stripe' {
          * The number of times evidence has been submitted. Typically, you may only submit evidence once.
          */
         submission_count: number;
+      }
+
+      namespace EvidenceDetails {
+        interface EnhancedEligibility {
+          visa_compelling_evidence_3?: EnhancedEligibility.VisaCompellingEvidence3;
+
+          visa_compliance?: EnhancedEligibility.VisaCompliance;
+        }
+
+        namespace EnhancedEligibility {
+          interface VisaCompellingEvidence3 {
+            /**
+             * List of actions required to qualify dispute for Visa Compelling Evidence 3.0 evidence submission.
+             */
+            required_actions: Array<VisaCompellingEvidence3.RequiredAction>;
+
+            /**
+             * Visa Compelling Evidence 3.0 eligibility status.
+             */
+            status: VisaCompellingEvidence3.Status;
+          }
+
+          namespace VisaCompellingEvidence3 {
+            type RequiredAction =
+              | 'missing_customer_identifiers'
+              | 'missing_disputed_transaction_description'
+              | 'missing_merchandise_or_services'
+              | 'missing_prior_undisputed_transaction_description'
+              | 'missing_prior_undisputed_transactions';
+
+            type Status = 'not_qualified' | 'qualified' | 'requires_action';
+          }
+
+          interface VisaCompliance {
+            /**
+             * Visa compliance eligibility status.
+             */
+            status: VisaCompliance.Status;
+          }
+
+          namespace VisaCompliance {
+            type Status = 'fee_acknowledged' | 'requires_fee_acknowledgement';
+          }
+        }
       }
 
       interface PaymentMethodDetails {
@@ -276,7 +450,7 @@ declare module 'stripe' {
 
         interface Card {
           /**
-           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           brand: string;
 

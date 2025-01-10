@@ -151,6 +151,8 @@ declare module 'stripe' {
          */
         allow_redisplay?: PaymentMethodPreview.AllowRedisplay;
 
+        alma?: PaymentMethodPreview.Alma;
+
         amazon_pay?: PaymentMethodPreview.AmazonPay;
 
         au_becs_debit?: PaymentMethodPreview.AuBecsDebit;
@@ -190,9 +192,13 @@ declare module 'stripe' {
 
         interac_present?: PaymentMethodPreview.InteracPresent;
 
+        kakao_pay?: PaymentMethodPreview.KakaoPay;
+
         klarna?: PaymentMethodPreview.Klarna;
 
         konbini?: PaymentMethodPreview.Konbini;
+
+        kr_card?: PaymentMethodPreview.KrCard;
 
         link?: PaymentMethodPreview.Link;
 
@@ -200,9 +206,13 @@ declare module 'stripe' {
 
         multibanco?: PaymentMethodPreview.Multibanco;
 
+        naver_pay?: PaymentMethodPreview.NaverPay;
+
         oxxo?: PaymentMethodPreview.Oxxo;
 
         p24?: PaymentMethodPreview.P24;
+
+        payco?: PaymentMethodPreview.Payco;
 
         paynow?: PaymentMethodPreview.Paynow;
 
@@ -213,6 +223,8 @@ declare module 'stripe' {
         promptpay?: PaymentMethodPreview.Promptpay;
 
         revolut_pay?: PaymentMethodPreview.RevolutPay;
+
+        samsung_pay?: PaymentMethodPreview.SamsungPay;
 
         sepa_debit?: PaymentMethodPreview.SepaDebit;
 
@@ -269,6 +281,8 @@ declare module 'stripe' {
         interface Alipay {}
 
         type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+        interface Alma {}
 
         interface AmazonPay {}
 
@@ -341,7 +355,7 @@ declare module 'stripe' {
 
         interface Card {
           /**
-           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           brand: string;
 
@@ -413,6 +427,11 @@ declare module 'stripe' {
           networks: Card.Networks | null;
 
           /**
+           * Status of a card based on the card issuer.
+           */
+          regulated_status?: Card.RegulatedStatus | null;
+
+          /**
            * Contains details on how this Card may be used for 3D Secure authentication.
            */
           three_d_secure_usage: Card.ThreeDSecureUsage | null;
@@ -476,7 +495,7 @@ declare module 'stripe' {
                 amount_authorized: number | null;
 
                 /**
-                 * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+                 * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
                  */
                 brand: string | null;
 
@@ -558,7 +577,7 @@ declare module 'stripe' {
                 last4: string | null;
 
                 /**
-                 * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+                 * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
                  */
                 network: string | null;
 
@@ -700,6 +719,8 @@ declare module 'stripe' {
             preferred: string | null;
           }
 
+          type RegulatedStatus = 'regulated' | 'unregulated';
+
           interface ThreeDSecureUsage {
             /**
              * Whether 3D Secure is supported on this card.
@@ -801,7 +822,7 @@ declare module 'stripe' {
 
         interface CardPresent {
           /**
-           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           brand: string | null;
 
@@ -1172,6 +1193,8 @@ declare module 'stripe' {
             | 'magnetic_stripe_track2';
         }
 
+        interface KakaoPay {}
+
         interface Klarna {
           /**
            * The customer's date of birth, if provided.
@@ -1200,6 +1223,44 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface KrCard {
+          /**
+           * The local credit or debit card brand.
+           */
+          brand: KrCard.Brand | null;
+
+          /**
+           * The last four digits of the card. This may not be present for American Express cards.
+           */
+          last4: string | null;
+        }
+
+        namespace KrCard {
+          type Brand =
+            | 'bc'
+            | 'citi'
+            | 'hana'
+            | 'hyundai'
+            | 'jeju'
+            | 'jeonbuk'
+            | 'kakaobank'
+            | 'kbank'
+            | 'kdbbank'
+            | 'kookmin'
+            | 'kwangju'
+            | 'lotte'
+            | 'mg'
+            | 'nh'
+            | 'post'
+            | 'samsung'
+            | 'savingsbank'
+            | 'shinhan'
+            | 'shinhyup'
+            | 'suhyup'
+            | 'tossbank'
+            | 'woori';
+        }
+
         interface Link {
           /**
            * Account owner's email address.
@@ -1216,6 +1277,17 @@ declare module 'stripe' {
         interface Mobilepay {}
 
         interface Multibanco {}
+
+        interface NaverPay {
+          /**
+           * Whether to fund this transaction with Naver Pay points or a card.
+           */
+          funding: NaverPay.Funding;
+        }
+
+        namespace NaverPay {
+          type Funding = 'card' | 'points';
+        }
 
         interface Oxxo {}
 
@@ -1256,6 +1328,8 @@ declare module 'stripe' {
             | 'volkswagen_bank';
         }
 
+        interface Payco {}
+
         interface Paynow {}
 
         interface Paypal {
@@ -1276,6 +1350,8 @@ declare module 'stripe' {
         interface Promptpay {}
 
         interface RevolutPay {}
+
+        interface SamsungPay {}
 
         interface SepaDebit {
           /**
@@ -1339,6 +1415,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'alma'
           | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
@@ -1355,18 +1432,23 @@ declare module 'stripe' {
           | 'grabpay'
           | 'ideal'
           | 'interac_present'
+          | 'kakao_pay'
           | 'klarna'
           | 'konbini'
+          | 'kr_card'
           | 'link'
           | 'mobilepay'
           | 'multibanco'
+          | 'naver_pay'
           | 'oxxo'
           | 'p24'
+          | 'payco'
           | 'paynow'
           | 'paypal'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
+          | 'samsung_pay'
           | 'sepa_debit'
           | 'sofort'
           | 'swish'

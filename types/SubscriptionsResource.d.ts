@@ -522,7 +522,7 @@ declare module 'stripe' {
         payment_method_options?: PaymentSettings.PaymentMethodOptions;
 
         /**
-         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice).
+         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice). Should not be specified with payment_method_configuration
          */
         payment_method_types?: Stripe.Emptyable<
           Array<PaymentSettings.PaymentMethodType>
@@ -663,6 +663,7 @@ declare module 'stripe' {
               | 'girocard'
               | 'interac'
               | 'jcb'
+              | 'link'
               | 'mastercard'
               | 'unionpay'
               | 'unknown'
@@ -782,10 +783,15 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'jp_credit_transfer'
+          | 'kakao_pay'
           | 'konbini'
+          | 'kr_card'
           | 'link'
           | 'multibanco'
+          | 'naver_pay'
           | 'p24'
+          | 'payco'
           | 'paynow'
           | 'paypal'
           | 'promptpay'
@@ -972,7 +978,7 @@ declare module 'stripe' {
       on_behalf_of?: Stripe.Emptyable<string>;
 
       /**
-       * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/billing/subscriptions/pause-payment).
+       * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/docs/billing/subscriptions/pause-payment).
        */
       pause_collection?: Stripe.Emptyable<
         SubscriptionUpdateParams.PauseCollection
@@ -1239,7 +1245,7 @@ declare module 'stripe' {
         billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
 
         /**
-         * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
+         * Delete all usage for a given subscription item. You must pass this when deleting a usage records subscription item. `clear_usage` has no effect if the plan has a billing meter attached.
          */
         clear_usage?: boolean;
 
@@ -1396,7 +1402,7 @@ declare module 'stripe' {
         payment_method_options?: PaymentSettings.PaymentMethodOptions;
 
         /**
-         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice).
+         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice). Should not be specified with payment_method_configuration
          */
         payment_method_types?: Stripe.Emptyable<
           Array<PaymentSettings.PaymentMethodType>
@@ -1537,6 +1543,7 @@ declare module 'stripe' {
               | 'girocard'
               | 'interac'
               | 'jcb'
+              | 'link'
               | 'mastercard'
               | 'unionpay'
               | 'unknown'
@@ -1656,10 +1663,15 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'jp_credit_transfer'
+          | 'kakao_pay'
           | 'konbini'
+          | 'kr_card'
           | 'link'
           | 'multibanco'
+          | 'naver_pay'
           | 'p24'
+          | 'payco'
           | 'paynow'
           | 'paypal'
           | 'promptpay'
@@ -1817,7 +1829,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items. Defaults to `true`.
+       * Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items. Defaults to `false`.
        */
       invoice_now?: boolean;
 
@@ -1857,7 +1869,7 @@ declare module 'stripe' {
 
     interface SubscriptionResumeParams {
       /**
-       * Either `now` or `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time (in UTC). Setting the value to `unchanged` advances the subscription's billing cycle anchor to the period that surrounds the current time. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+       * The billing cycle anchor that applies when the subscription is resumed. Either `now` or `unchanged`. The default is `now`. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
        */
       billing_cycle_anchor?: SubscriptionResumeParams.BillingCycleAnchor;
 
@@ -1948,7 +1960,7 @@ declare module 'stripe' {
        * A trial starts or ends.
        *
        *
-       * In these cases, we apply a credit for the unused time on the previous price, immediately charge the customer using the new price, and reset the billing date. Learn about how [Stripe immediately attempts payment for subscription changes](https://stripe.com/billing/subscriptions/upgrade-downgrade#immediate-payment).
+       * In these cases, we apply a credit for the unused time on the previous price, immediately charge the customer using the new price, and reset the billing date. Learn about how [Stripe immediately attempts payment for subscription changes](https://stripe.com/docs/billing/subscriptions/upgrade-downgrade#immediate-payment).
        *
        * If you want to charge for an upgrade immediately, pass proration_behavior as always_invoice to create prorations, automatically invoice the customer for those proration adjustments, and attempt to collect payment. If you pass create_prorations, the prorations are created but not automatically invoiced. If you want to bill the customer for the prorations before the subscription's renewal date, you need to manually [invoice the customer](https://stripe.com/docs/api/invoices/create).
        *
@@ -1972,11 +1984,11 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.Subscription>;
 
       /**
-       * Cancels a customer's subscription immediately. The customer will not be charged again for the subscription.
+       * Cancels a customer's subscription immediately. The customer won't be charged again for the subscription. After it's canceled, you can no longer update the subscription or its [metadata](https://stripe.com/metadata).
        *
-       * Note, however, that any pending invoice items that you've created will still be charged for at the end of the period, unless manually [deleted](https://stripe.com/docs/api#delete_invoiceitem). If you've set the subscription to cancel at the end of the period, any pending prorations will also be left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations will be removed.
+       * Any pending invoice items that you've created are still charged at the end of the period, unless manually [deleted](https://stripe.com/docs/api#delete_invoiceitem). If you've set the subscription to cancel at the end of the period, any pending prorations are also left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations are removed.
        *
-       * By default, upon subscription cancellation, Stripe will stop automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
+       * By default, upon subscription cancellation, Stripe stops automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
        */
       cancel(
         id: string,

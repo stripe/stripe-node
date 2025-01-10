@@ -5,6 +5,11 @@ declare module 'stripe' {
     namespace Checkout {
       interface SessionCreateParams {
         /**
+         * Settings for price localization with [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing).
+         */
+        adaptive_pricing?: SessionCreateParams.AdaptivePricing;
+
+        /**
          * Configure actions after a Checkout Session has expired.
          */
         after_expiration?: SessionCreateParams.AfterExpiration;
@@ -260,6 +265,13 @@ declare module 'stripe' {
       }
 
       namespace SessionCreateParams {
+        interface AdaptivePricing {
+          /**
+           * Set to `true` to enable [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing). Defaults to your [dashboard setting](https://dashboard.stripe.com/settings/adaptive-pricing).
+           */
+          enabled?: boolean;
+        }
+
         interface AfterExpiration {
           /**
            * Configure a Checkout Session that can be used to recover an expired session.
@@ -285,7 +297,9 @@ declare module 'stripe' {
 
         interface AutomaticTax {
           /**
-           * Set to true to enable automatic taxes.
+           * Set to `true` to [calculate tax automatically](https://docs.stripe.com/tax) using the customer's location.
+           *
+           * Enabling this parameter causes Checkout to collect any billing address information necessary for tax calculation.
            */
           enabled: boolean;
 
@@ -690,7 +704,7 @@ declare module 'stripe' {
         namespace LineItem {
           interface AdjustableQuantity {
             /**
-             * Set to true if the quantity can be adjusted to any non-negative integer. By default customers will be able to remove the line item by setting the quantity to 0.
+             * Set to true if the quantity can be adjusted to any non-negative integer.
              */
             enabled: boolean;
 
@@ -1069,6 +1083,11 @@ declare module 'stripe' {
           ideal?: PaymentMethodOptions.Ideal;
 
           /**
+           * contains details about the Kakao Pay payment method options.
+           */
+          kakao_pay?: PaymentMethodOptions.KakaoPay;
+
+          /**
            * contains details about the Klarna payment method options.
            */
           klarna?: PaymentMethodOptions.Klarna;
@@ -1077,6 +1096,11 @@ declare module 'stripe' {
            * contains details about the Konbini payment method options.
            */
           konbini?: PaymentMethodOptions.Konbini;
+
+          /**
+           * contains details about the Korean card payment method options.
+           */
+          kr_card?: PaymentMethodOptions.KrCard;
 
           /**
            * contains details about the Link payment method options.
@@ -1094,6 +1118,11 @@ declare module 'stripe' {
           multibanco?: PaymentMethodOptions.Multibanco;
 
           /**
+           * contains details about the Naver Pay payment method options.
+           */
+          naver_pay?: PaymentMethodOptions.NaverPay;
+
+          /**
            * contains details about the OXXO payment method options.
            */
           oxxo?: PaymentMethodOptions.Oxxo;
@@ -1102,6 +1131,11 @@ declare module 'stripe' {
            * contains details about the P24 payment method options.
            */
           p24?: PaymentMethodOptions.P24;
+
+          /**
+           * contains details about the PAYCO payment method options.
+           */
+          payco?: PaymentMethodOptions.Payco;
 
           /**
            * contains details about the PayNow payment method options.
@@ -1122,6 +1156,11 @@ declare module 'stripe' {
            * contains details about the RevolutPay payment method options.
            */
           revolut_pay?: PaymentMethodOptions.RevolutPay;
+
+          /**
+           * contains details about the Samsung Pay payment method options.
+           */
+          samsung_pay?: PaymentMethodOptions.SamsungPay;
 
           /**
            * contains details about the Sepa Debit payment method options.
@@ -1294,6 +1333,11 @@ declare module 'stripe' {
 
           interface BacsDebit {
             /**
+             * Additional fields for Mandate creation
+             */
+            mandate_options?: BacsDebit.MandateOptions;
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -1306,6 +1350,13 @@ declare module 'stripe' {
           }
 
           namespace BacsDebit {
+            interface MandateOptions {
+              /**
+               * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
+               */
+              reference_prefix?: Stripe.Emptyable<string>;
+            }
+
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
           }
 
@@ -1351,6 +1402,26 @@ declare module 'stripe' {
             installments?: Card.Installments;
 
             /**
+             * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/payments/extended-authorization) for this CheckoutSession.
+             */
+            request_extended_authorization?: Card.RequestExtendedAuthorization;
+
+            /**
+             * Request ability to [increment the authorization](https://stripe.com/payments/incremental-authorization) for this CheckoutSession.
+             */
+            request_incremental_authorization?: Card.RequestIncrementalAuthorization;
+
+            /**
+             * Request ability to make [multiple captures](https://stripe.com/payments/multicapture) for this CheckoutSession.
+             */
+            request_multicapture?: Card.RequestMulticapture;
+
+            /**
+             * Request ability to [overcapture](https://stripe.com/payments/overcapture) for this CheckoutSession.
+             */
+            request_overcapture?: Card.RequestOvercapture;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
@@ -1385,6 +1456,14 @@ declare module 'stripe' {
                */
               enabled?: boolean;
             }
+
+            type RequestExtendedAuthorization = 'if_available' | 'never';
+
+            type RequestIncrementalAuthorization = 'if_available' | 'never';
+
+            type RequestMulticapture = 'if_available' | 'never';
+
+            type RequestOvercapture = 'if_available' | 'never';
 
             type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
@@ -1544,6 +1623,28 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface KakaoPay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: KakaoPay.SetupFutureUsage;
+          }
+
+          namespace KakaoPay {
+            type SetupFutureUsage = 'none' | 'off_session';
+          }
+
           interface Klarna {
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -1573,6 +1674,28 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+          }
+
+          interface KrCard {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: KrCard.SetupFutureUsage;
+          }
+
+          namespace KrCard {
+            type SetupFutureUsage = 'none' | 'off_session';
           }
 
           interface Link {
@@ -1618,6 +1741,28 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface NaverPay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: NaverPay.SetupFutureUsage;
+          }
+
+          namespace NaverPay {
+            type SetupFutureUsage = 'none' | 'off_session';
+          }
+
           interface Oxxo {
             /**
              * The number of calendar days before an OXXO voucher expires. For example, if you create an OXXO voucher on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -1652,6 +1797,13 @@ declare module 'stripe' {
              * Confirm that the payer has accepted the P24 terms and conditions.
              */
             tos_shown_and_accepted?: boolean;
+          }
+
+          interface Payco {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
           }
 
           interface Paynow {
@@ -1753,7 +1905,19 @@ declare module 'stripe' {
             type SetupFutureUsage = 'none' | 'off_session';
           }
 
+          interface SamsungPay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+          }
+
           interface SepaDebit {
+            /**
+             * Additional fields for Mandate creation
+             */
+            mandate_options?: SepaDebit.MandateOptions;
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -1767,6 +1931,13 @@ declare module 'stripe' {
           }
 
           namespace SepaDebit {
+            interface MandateOptions {
+              /**
+               * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'STRIPE'.
+               */
+              reference_prefix?: Stripe.Emptyable<string>;
+            }
+
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
           }
 
@@ -1874,6 +2045,7 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'alma'
           | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
@@ -1888,18 +2060,23 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'kakao_pay'
           | 'klarna'
           | 'konbini'
+          | 'kr_card'
           | 'link'
           | 'mobilepay'
           | 'multibanco'
+          | 'naver_pay'
           | 'oxxo'
           | 'p24'
+          | 'payco'
           | 'paynow'
           | 'paypal'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
+          | 'samsung_pay'
           | 'sepa_debit'
           | 'sofort'
           | 'swish'
@@ -1957,7 +2134,7 @@ declare module 'stripe' {
         interface ShippingAddressCollection {
           /**
            * An array of two-letter ISO country codes representing which countries Checkout should provide as options for
-           * shipping locations. Unsupported country codes: `AS, CX, CC, CU, HM, IR, KP, MH, FM, NF, MP, PW, SD, SY, UM, VI`.
+           * shipping locations.
            */
           allowed_countries: Array<ShippingAddressCollection.AllowedCountry>;
         }
@@ -2341,7 +2518,7 @@ declare module 'stripe' {
           }
         }
 
-        type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
+        type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
 
         interface SubscriptionData {
           /**

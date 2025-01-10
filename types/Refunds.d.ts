@@ -113,6 +113,8 @@ declare module 'stripe' {
 
         alipay?: DestinationDetails.Alipay;
 
+        alma?: DestinationDetails.Alma;
+
         amazon_pay?: DestinationDetails.AmazonPay;
 
         au_bank_transfer?: DestinationDetails.AuBankTransfer;
@@ -180,11 +182,18 @@ declare module 'stripe' {
 
         interface Alipay {}
 
+        interface Alma {}
+
         interface AmazonPay {}
 
         interface AuBankTransfer {}
 
         interface Blik {
+          /**
+           * For refunds declined by the network, a decline code provided by the network which indicates the reason the refund failed.
+           */
+          network_decline_code?: string | null;
+
           /**
            * The reference assigned to the refund.
            */
@@ -330,6 +339,11 @@ declare module 'stripe' {
 
         interface Swish {
           /**
+           * For refunds declined by the network, a decline code provided by the network which indicates the reason the refund failed.
+           */
+          network_decline_code?: string | null;
+
+          /**
            * The reference assigned to the refund.
            */
           reference: string | null;
@@ -370,10 +384,7 @@ declare module 'stripe' {
       }
 
       interface NextAction {
-        /**
-         * Contains the refund details.
-         */
-        display_details: NextAction.DisplayDetails | null;
+        display_details?: NextAction.DisplayDetails;
 
         /**
          * Type of the next action to perform.

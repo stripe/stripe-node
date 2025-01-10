@@ -123,6 +123,7 @@ declare module 'stripe' {
       | IssuingTokenCreatedEvent
       | IssuingTokenUpdatedEvent
       | IssuingTransactionCreatedEvent
+      | IssuingTransactionPurchaseDetailsReceiptUpdatedEvent
       | IssuingTransactionUpdatedEvent
       | MandateUpdatedEvent
       | PaymentIntentAmountCapturableUpdatedEvent
@@ -166,6 +167,7 @@ declare module 'stripe' {
       | RadarEarlyFraudWarningCreatedEvent
       | RadarEarlyFraudWarningUpdatedEvent
       | RefundCreatedEvent
+      | RefundFailedEvent
       | RefundUpdatedEvent
       | ReportingReportRunFailedEvent
       | ReportingReportRunSucceededEvent
@@ -240,7 +242,9 @@ declare module 'stripe' {
       | TreasuryReceivedCreditFailedEvent
       | TreasuryReceivedCreditSucceededEvent
       | TreasuryReceivedDebitCreatedEvent;
+  }
 
+  namespace Stripe {
     /**
      * Occurs whenever a user authorizes an application. Sent to the related application only.
      */
@@ -642,7 +646,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a refund is updated, on selected payment methods.
+     * Occurs whenever a refund is updated on selected payment methods. For updates on all refunds, listen to `refund.updated` instead.
      */
     interface ChargeRefundUpdatedEvent extends EventBase {
       type: 'charge.refund.updated';
@@ -658,7 +662,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a charge is refunded, including partial refunds.
+     * Occurs whenever a charge is refunded, including partial refunds. Listen to `refund.created` for information about the refund.
      */
     interface ChargeRefundedEvent extends EventBase {
       type: 'charge.refunded';
@@ -2168,6 +2172,23 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs whenever an issuing transaction is updated with receipt data.
+     */
+    interface IssuingTransactionPurchaseDetailsReceiptUpdatedEvent
+      extends EventBase {
+      type: 'issuing_transaction.purchase_details_receipt_updated';
+      data: IssuingTransactionPurchaseDetailsReceiptUpdatedEvent.Data;
+    }
+
+    namespace IssuingTransactionPurchaseDetailsReceiptUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.Transaction;
+
+        previous_attributes?: Partial<Stripe.Issuing.Transaction>;
+      }
+    }
+
+    /**
      * Occurs whenever an issuing transaction is updated.
      */
     interface IssuingTransactionUpdatedEvent extends EventBase {
@@ -2840,7 +2861,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a refund from a customer's cash balance is created.
+     * Occurs whenever a refund is created.
      */
     interface RefundCreatedEvent extends EventBase {
       type: 'refund.created';
@@ -2856,7 +2877,23 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a refund from a customer's cash balance is updated.
+     * Occurs whenever a refund has failed.
+     */
+    interface RefundFailedEvent extends EventBase {
+      type: 'refund.failed';
+      data: RefundFailedEvent.Data;
+    }
+
+    namespace RefundFailedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Refund;
+
+        previous_attributes?: Partial<Stripe.Refund>;
+      }
+    }
+
+    /**
+     * Occurs whenever a refund is updated.
      */
     interface RefundUpdatedEvent extends EventBase {
       type: 'refund.updated';

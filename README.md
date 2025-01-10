@@ -61,6 +61,39 @@ const customer = await stripe.customers.create({
 console.log(customer.id);
 ```
 
+> [!WARNING]
+> If you're using `v17.x.x` or later and getting an error about a missing API key despite being sure it's available, it's likely you're importing the file that instantiates `Stripe` while the key isn't present (for instance, during a build step).
+> If that's the case, consider instantiating the client lazily:
+>
+> ```ts
+> import Stripe from 'stripe';
+>
+> let _stripe: Stripe | null = null;
+> const getStripe = (): Stripe => {
+>   if (!_stripe) {
+>     _stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+>       // ...
+>     });
+>   }
+>   return _stripe;
+> };
+>
+> const getCustomers = () => getStripe().customers.list();
+> ```
+>
+> Alternatively, you can provide a placeholder for the real key (which will be enough to get the code through a build step):
+>
+> ```ts
+> import Stripe from 'stripe';
+>
+> export const stripe = new Stripe(
+>   process.env.STRIPE_SECRET_KEY || 'api_key_placeholder',
+>   {
+>     // ...
+>   }
+> );
+> ```
+
 ### Usage with TypeScript
 
 As of 8.0.1, Stripe maintains types for the latest [API version][api-versions].
@@ -197,7 +230,7 @@ const stripe = Stripe('sk_test_...', {
 | `host`              | `'api.stripe.com'` | Host that requests are made to.                                                                                                                                                                                                                   |
 | `port`              | 443                | Port that requests are made to.                                                                                                                                                                                                                   |
 | `protocol`          | `'https'`          | `'https'` or `'http'`. `http` is never appropriate for sending requests to Stripe servers, and we strongly discourage `http`, even in local testing scenarios, as this can result in your credentials being transmitted over an insecure channel. |
-| `telemetry`         | `true`             | Allow Stripe to send [telemetry](#telemetry).                                                                                                                                                                             |
+| `telemetry`         | `true`             | Allow Stripe to send [telemetry](#telemetry).                                                                                                                                                                                                     |
 
 > **Note**
 > Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
@@ -515,6 +548,39 @@ If your beta feature requires a `Stripe-Version` header to be sent, use the `api
 const stripe = new Stripe('sk_test_...', {
   apiVersion: '2022-08-01; feature_beta=v3',
 });
+```
+
+### Custom requests
+
+If you would like to send a request to an undocumented API (for example you are in a private beta), or if you prefer to bypass the method definitions in the library and specify your request details directly, you can use the `rawRequest` method on the StripeClient object.
+
+```javascript
+const client = new Stripe('sk_test_...');
+
+client.rawRequest(
+    'POST',
+    '/v1/beta_endpoint',
+    { param: 123 },
+    { apiVersion: '2022-11-15; feature_beta=v3' }
+  )
+  .then((response) => /* handle response */ )
+  .catch((error) => console.error(error));
+```
+
+Or using ES modules and `async`/`await`:
+
+```javascript
+import Stripe from 'stripe';
+const stripe = new Stripe('sk_test_...');
+
+const response = await stripe.rawRequest(
+  'POST',
+  '/v1/beta_endpoint',
+  {param: 123},
+  {apiVersion: '2022-11-15; feature_beta=v3'}
+);
+
+// handle response
 ```
 
 ## Support

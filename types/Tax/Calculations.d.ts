@@ -120,7 +120,7 @@ declare module 'stripe' {
 
           interface TaxId {
             /**
-             * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, or `unknown`
+             * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, or `unknown`
              */
             type: TaxId.Type;
 
@@ -134,20 +134,28 @@ declare module 'stripe' {
             type Type =
               | 'ad_nrt'
               | 'ae_trn'
+              | 'al_tin'
+              | 'am_tin'
+              | 'ao_tin'
               | 'ar_cuit'
               | 'au_abn'
               | 'au_arn'
+              | 'ba_tin'
+              | 'bb_tin'
               | 'bg_uic'
               | 'bh_vat'
               | 'bo_tin'
               | 'br_cnpj'
               | 'br_cpf'
+              | 'bs_tin'
+              | 'by_tin'
               | 'ca_bn'
               | 'ca_gst_hst'
               | 'ca_pst_bc'
               | 'ca_pst_mb'
               | 'ca_pst_sk'
               | 'ca_qst'
+              | 'cd_nif'
               | 'ch_uid'
               | 'ch_vat'
               | 'cl_tin'
@@ -163,6 +171,7 @@ declare module 'stripe' {
               | 'eu_vat'
               | 'gb_vat'
               | 'ge_vat'
+              | 'gn_nif'
               | 'hk_br'
               | 'hr_oib'
               | 'hu_tin'
@@ -174,9 +183,16 @@ declare module 'stripe' {
               | 'jp_rn'
               | 'jp_trn'
               | 'ke_pin'
+              | 'kh_tin'
               | 'kr_brn'
               | 'kz_bin'
               | 'li_uid'
+              | 'li_vat'
+              | 'ma_vat'
+              | 'md_vat'
+              | 'me_pib'
+              | 'mk_vat'
+              | 'mr_nif'
               | 'mx_rfc'
               | 'my_frp'
               | 'my_itn'
@@ -184,6 +200,7 @@ declare module 'stripe' {
               | 'ng_tin'
               | 'no_vat'
               | 'no_voec'
+              | 'np_pan'
               | 'nz_gst'
               | 'om_vat'
               | 'pe_ruc'
@@ -196,17 +213,26 @@ declare module 'stripe' {
               | 'sg_gst'
               | 'sg_uen'
               | 'si_tin'
+              | 'sn_ninea'
+              | 'sr_fin'
               | 'sv_nit'
               | 'th_vat'
+              | 'tj_tin'
               | 'tr_tin'
               | 'tw_vat'
+              | 'tz_vat'
               | 'ua_vat'
+              | 'ug_tin'
               | 'unknown'
               | 'us_ein'
               | 'uy_ruc'
+              | 'uz_tin'
+              | 'uz_vat'
               | 've_rif'
               | 'vn_tin'
-              | 'za_vat';
+              | 'za_vat'
+              | 'zm_tin'
+              | 'zw_tin';
           }
         }
 
@@ -352,8 +378,10 @@ declare module 'stripe' {
                 | 'lease_tax'
                 | 'pst'
                 | 'qst'
+                | 'retail_delivery_fee'
                 | 'rst'
                 | 'sales_tax'
+                | 'service_tax'
                 | 'vat';
             }
           }
@@ -408,9 +436,19 @@ declare module 'stripe' {
             country: string | null;
 
             /**
+             * The amount of the tax rate when the `rate_type` is `flat_amount`. Tax rates with `rate_type` `percentage` can vary based on the transaction, resulting in this field being `null`. This field exposes the amount and currency of the flat tax rate.
+             */
+            flat_amount: TaxRateDetails.FlatAmount | null;
+
+            /**
              * The tax rate percentage as a string. For example, 8.5% is represented as `"8.5"`.
              */
             percentage_decimal: string;
+
+            /**
+             * Indicates the type of tax rate applied to the taxable amount. This value can be `null` when no tax applies to the location.
+             */
+            rate_type: TaxRateDetails.RateType | null;
 
             /**
              * State, county, province, or region.
@@ -424,6 +462,20 @@ declare module 'stripe' {
           }
 
           namespace TaxRateDetails {
+            interface FlatAmount {
+              /**
+               * Amount of the tax when the `rate_type` is `flat_amount`. This positive integer represents how much to charge in the smallest currency unit (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
+               */
+              amount: number;
+
+              /**
+               * Three-letter ISO currency code, in lowercase.
+               */
+              currency: string;
+            }
+
+            type RateType = 'flat_amount' | 'percentage';
+
             type TaxType =
               | 'amusement_tax'
               | 'communications_tax'
@@ -434,8 +486,10 @@ declare module 'stripe' {
               | 'lease_tax'
               | 'pst'
               | 'qst'
+              | 'retail_delivery_fee'
               | 'rst'
               | 'sales_tax'
+              | 'service_tax'
               | 'vat';
           }
         }

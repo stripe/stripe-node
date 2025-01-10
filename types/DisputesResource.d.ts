@@ -99,6 +99,11 @@ declare module 'stripe' {
         duplicate_charge_id?: string;
 
         /**
+         * Additional evidence for qualifying evidence programs.
+         */
+        enhanced_evidence?: Stripe.Emptyable<Evidence.EnhancedEvidence>;
+
+        /**
          * A description of the product or service that was sold. Has a maximum character count of 20,000.
          */
         product_description?: string;
@@ -167,6 +172,133 @@ declare module 'stripe' {
          * Any additional evidence or statements. Has a maximum character count of 20,000.
          */
         uncategorized_text?: string;
+      }
+
+      namespace Evidence {
+        interface EnhancedEvidence {
+          /**
+           * Evidence provided for Visa Compelling Evidence 3.0 evidence submission.
+           */
+          visa_compelling_evidence_3?: EnhancedEvidence.VisaCompellingEvidence3;
+
+          /**
+           * Evidence provided for Visa compliance evidence submission.
+           */
+          visa_compliance?: EnhancedEvidence.VisaCompliance;
+        }
+
+        namespace EnhancedEvidence {
+          interface VisaCompellingEvidence3 {
+            /**
+             * Disputed transaction details for Visa Compelling Evidence 3.0 evidence submission.
+             */
+            disputed_transaction?: VisaCompellingEvidence3.DisputedTransaction;
+
+            /**
+             * List of exactly two prior undisputed transaction objects for Visa Compelling Evidence 3.0 evidence submission.
+             */
+            prior_undisputed_transactions?: Array<
+              VisaCompellingEvidence3.PriorUndisputedTransaction
+            >;
+          }
+
+          namespace VisaCompellingEvidence3 {
+            interface DisputedTransaction {
+              /**
+               * User Account ID used to log into business platform. Must be recognizable by the user.
+               */
+              customer_account_id?: Stripe.Emptyable<string>;
+
+              /**
+               * Unique identifier of the cardholder's device derived from a combination of at least two hardware and software attributes. Must be at least 20 characters.
+               */
+              customer_device_fingerprint?: Stripe.Emptyable<string>;
+
+              /**
+               * Unique identifier of the cardholder's device such as a device serial number (e.g., International Mobile Equipment Identity [IMEI]). Must be at least 15 characters.
+               */
+              customer_device_id?: Stripe.Emptyable<string>;
+
+              /**
+               * The email address of the customer.
+               */
+              customer_email_address?: Stripe.Emptyable<string>;
+
+              /**
+               * The IP address that the customer used when making the purchase.
+               */
+              customer_purchase_ip?: Stripe.Emptyable<string>;
+
+              /**
+               * Categorization of disputed payment.
+               */
+              merchandise_or_services?: DisputedTransaction.MerchandiseOrServices;
+
+              /**
+               * A description of the product or service that was sold.
+               */
+              product_description?: Stripe.Emptyable<string>;
+
+              /**
+               * The address to which a physical product was shipped. All fields are required for Visa Compelling Evidence 3.0 evidence submission.
+               */
+              shipping_address?: Stripe.AddressParam;
+            }
+
+            namespace DisputedTransaction {
+              type MerchandiseOrServices = 'merchandise' | 'services';
+            }
+
+            interface PriorUndisputedTransaction {
+              /**
+               * Stripe charge ID for the Visa Compelling Evidence 3.0 eligible prior charge.
+               */
+              charge: string;
+
+              /**
+               * User Account ID used to log into business platform. Must be recognizable by the user.
+               */
+              customer_account_id?: Stripe.Emptyable<string>;
+
+              /**
+               * Unique identifier of the cardholder's device derived from a combination of at least two hardware and software attributes. Must be at least 20 characters.
+               */
+              customer_device_fingerprint?: Stripe.Emptyable<string>;
+
+              /**
+               * Unique identifier of the cardholder's device such as a device serial number (e.g., International Mobile Equipment Identity [IMEI]). Must be at least 15 characters.
+               */
+              customer_device_id?: Stripe.Emptyable<string>;
+
+              /**
+               * The email address of the customer.
+               */
+              customer_email_address?: Stripe.Emptyable<string>;
+
+              /**
+               * The IP address that the customer used when making the purchase.
+               */
+              customer_purchase_ip?: Stripe.Emptyable<string>;
+
+              /**
+               * A description of the product or service that was sold.
+               */
+              product_description?: Stripe.Emptyable<string>;
+
+              /**
+               * The address to which a physical product was shipped. All fields are required for Visa Compelling Evidence 3.0 evidence submission.
+               */
+              shipping_address?: Stripe.AddressParam;
+            }
+          }
+
+          interface VisaCompliance {
+            /**
+             * A field acknowledging the fee incurred when countering a Visa compliance dispute. If this field is set to true, evidence can be submitted for the compliance dispute. Stripe collects a 500 USD (or local equivalent) amount to cover the network costs associated with resolving compliance disputes. Stripe refunds the 500 USD network fee if you win the dispute.
+             */
+            fee_acknowledged?: boolean;
+          }
+        }
       }
     }
 

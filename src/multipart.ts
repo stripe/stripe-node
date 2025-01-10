@@ -4,7 +4,7 @@ import {
   RequestHeaders,
   StripeResourceObject,
 } from './Types.js';
-import {flattenAndStringify, stringifyRequestData} from './utils.js';
+import {flattenAndStringify, queryStringifyRequestData} from './utils.js';
 
 type MultipartCallbackReturn = any;
 type MultipartCallback = (
@@ -87,7 +87,7 @@ export function multipartRequestDataProcessor(
   data = data || {};
 
   if (method !== 'POST') {
-    return callback(null, stringifyRequestData(data));
+    return callback(null, queryStringifyRequestData(data));
   }
 
   this._stripe._platformFunctions

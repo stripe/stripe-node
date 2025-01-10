@@ -40,7 +40,7 @@ declare module 'stripe' {
       capabilities?: Account.Capabilities;
 
       /**
-       * Whether the account can create live charges.
+       * Whether the account can process charges.
        */
       charges_enabled: boolean;
 
@@ -86,6 +86,11 @@ declare module 'stripe' {
       future_requirements?: Account.FutureRequirements;
 
       /**
+       * The groups associated with the account.
+       */
+      groups?: Account.Groups | null;
+
+      /**
        * This is an object representing a person associated with a Stripe account.
        *
        * A platform cannot access a person for an account where [account.controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`, which includes Standard and Express accounts, after creating an Account Link or Account Session to start Connect onboarding.
@@ -100,7 +105,7 @@ declare module 'stripe' {
       metadata?: Stripe.Metadata;
 
       /**
-       * Whether Stripe can send payouts to this account.
+       * Whether the funds in this account can be paid out.
        */
       payouts_enabled: boolean;
 
@@ -124,12 +129,12 @@ declare module 'stripe' {
         /**
          * The applicant's gross annual revenue for its preceding fiscal year.
          */
-        annual_revenue: BusinessProfile.AnnualRevenue | null;
+        annual_revenue?: BusinessProfile.AnnualRevenue | null;
 
         /**
          * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
          */
-        estimated_worker_count: number | null;
+        estimated_worker_count?: number | null;
 
         /**
          * [The merchant category code for the account](https://stripe.com/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
@@ -226,6 +231,11 @@ declare module 'stripe' {
          * The status of the Afterpay Clearpay capability of the account, or whether the account can directly process Afterpay Clearpay charges.
          */
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
+
+        /**
+         * The status of the Alma capability of the account, or whether the account can directly process Alma payments.
+         */
+        alma_payments?: Capabilities.AlmaPayments;
 
         /**
          * The status of the AmazonPay capability of the account, or whether the account can directly process AmazonPay payments.
@@ -328,6 +338,11 @@ declare module 'stripe' {
         jp_bank_transfer_payments?: Capabilities.JpBankTransferPayments;
 
         /**
+         * The status of the KakaoPay capability of the account, or whether the account can directly process KakaoPay payments.
+         */
+        kakao_pay_payments?: Capabilities.KakaoPayPayments;
+
+        /**
          * The status of the Klarna payments capability of the account, or whether the account can directly process Klarna charges.
          */
         klarna_payments?: Capabilities.KlarnaPayments;
@@ -336,6 +351,11 @@ declare module 'stripe' {
          * The status of the konbini payments capability of the account, or whether the account can directly process konbini charges.
          */
         konbini_payments?: Capabilities.KonbiniPayments;
+
+        /**
+         * The status of the KrCard capability of the account, or whether the account can directly process KrCard payments.
+         */
+        kr_card_payments?: Capabilities.KrCardPayments;
 
         /**
          * The status of the legacy payments capability of the account.
@@ -363,6 +383,11 @@ declare module 'stripe' {
         mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
 
         /**
+         * The status of the NaverPay capability of the account, or whether the account can directly process NaverPay payments.
+         */
+        naver_pay_payments?: Capabilities.NaverPayPayments;
+
+        /**
          * The status of the OXXO payments capability of the account, or whether the account can directly process OXXO charges.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -371,6 +396,11 @@ declare module 'stripe' {
          * The status of the P24 payments capability of the account, or whether the account can directly process P24 charges.
          */
         p24_payments?: Capabilities.P24Payments;
+
+        /**
+         * The status of the Payco capability of the account, or whether the account can directly process Payco payments.
+         */
+        payco_payments?: Capabilities.PaycoPayments;
 
         /**
          * The status of the paynow payments capability of the account, or whether the account can directly process paynow charges.
@@ -386,6 +416,11 @@ declare module 'stripe' {
          * The status of the RevolutPay capability of the account, or whether the account can directly process RevolutPay payments.
          */
         revolut_pay_payments?: Capabilities.RevolutPayPayments;
+
+        /**
+         * The status of the SamsungPay capability of the account, or whether the account can directly process SamsungPay payments.
+         */
+        samsung_pay_payments?: Capabilities.SamsungPayPayments;
 
         /**
          * The status of the SEPA customer_balance payments (EUR currency) capability of the account, or whether the account can directly process SEPA customer_balance charges.
@@ -455,6 +490,8 @@ declare module 'stripe' {
 
         type AfterpayClearpayPayments = 'active' | 'inactive' | 'pending';
 
+        type AlmaPayments = 'active' | 'inactive' | 'pending';
+
         type AmazonPayPayments = 'active' | 'inactive' | 'pending';
 
         type AuBecsDebitPayments = 'active' | 'inactive' | 'pending';
@@ -495,9 +532,13 @@ declare module 'stripe' {
 
         type JpBankTransferPayments = 'active' | 'inactive' | 'pending';
 
+        type KakaoPayPayments = 'active' | 'inactive' | 'pending';
+
         type KlarnaPayments = 'active' | 'inactive' | 'pending';
 
         type KonbiniPayments = 'active' | 'inactive' | 'pending';
+
+        type KrCardPayments = 'active' | 'inactive' | 'pending';
 
         type LegacyPayments = 'active' | 'inactive' | 'pending';
 
@@ -509,15 +550,21 @@ declare module 'stripe' {
 
         type MxBankTransferPayments = 'active' | 'inactive' | 'pending';
 
+        type NaverPayPayments = 'active' | 'inactive' | 'pending';
+
         type OxxoPayments = 'active' | 'inactive' | 'pending';
 
         type P24Payments = 'active' | 'inactive' | 'pending';
+
+        type PaycoPayments = 'active' | 'inactive' | 'pending';
 
         type PaynowPayments = 'active' | 'inactive' | 'pending';
 
         type PromptpayPayments = 'active' | 'inactive' | 'pending';
 
         type RevolutPayPayments = 'active' | 'inactive' | 'pending';
+
+        type SamsungPayPayments = 'active' | 'inactive' | 'pending';
 
         type SepaBankTransferPayments = 'active' | 'inactive' | 'pending';
 
@@ -852,7 +899,7 @@ declare module 'stripe' {
         alternatives: Array<FutureRequirements.Alternative> | null;
 
         /**
-         * Date on which `future_requirements` merges with the main `requirements` hash and `future_requirements` becomes empty. After the transition, `currently_due` requirements may immediately become `past_due`, but the account may also be given a grace period depending on its enablement state prior to transitioning.
+         * Date on which `future_requirements` becomes the main `requirements` hash and `future_requirements` becomes empty. After the transition, `currently_due` requirements may immediately become `past_due`, but the account may also be given a grace period depending on its enablement state prior to transitioning.
          */
         current_deadline: number | null;
 
@@ -862,9 +909,9 @@ declare module 'stripe' {
         currently_due: Array<string> | null;
 
         /**
-         * This is typed as a string for consistency with `requirements.disabled_reason`.
+         * This is typed as an enum for consistency with `requirements.disabled_reason`.
          */
-        disabled_reason: string | null;
+        disabled_reason: FutureRequirements.DisabledReason | null;
 
         /**
          * Fields that are `currently_due` and need to be collected again because validation or verification failed.
@@ -872,7 +919,7 @@ declare module 'stripe' {
         errors: Array<FutureRequirements.Error> | null;
 
         /**
-         * Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well.
+         * Fields you must collect when all thresholds are reached. As they become required, they appear in `currently_due` as well.
          */
         eventually_due: Array<string> | null;
 
@@ -899,6 +946,23 @@ declare module 'stripe' {
            */
           original_fields_due: Array<string>;
         }
+
+        type DisabledReason =
+          | 'action_required.requested_capabilities'
+          | 'listed'
+          | 'other'
+          | 'platform_paused'
+          | 'rejected.fraud'
+          | 'rejected.incomplete_verification'
+          | 'rejected.listed'
+          | 'rejected.other'
+          | 'rejected.platform_fraud'
+          | 'rejected.platform_other'
+          | 'rejected.platform_terms_of_service'
+          | 'rejected.terms_of_service'
+          | 'requirements.past_due'
+          | 'requirements.pending_verification'
+          | 'under_review';
 
         interface Error {
           /**
@@ -1012,6 +1076,13 @@ declare module 'stripe' {
         }
       }
 
+      interface Groups {
+        /**
+         * The group the account is in to determine their payments pricing, and null if the account is on customized pricing. [See the Platform pricing tool documentation](https://stripe.com/docs/connect/platform-pricing-tools) for details.
+         */
+        payments_pricing: string | null;
+      }
+
       interface Requirements {
         /**
          * Fields that are due and can be satisfied by providing the corresponding alternative fields instead.
@@ -1029,9 +1100,9 @@ declare module 'stripe' {
         currently_due: Array<string> | null;
 
         /**
-         * If the account is disabled, this string describes why. [Learn more about handling verification issues](https://stripe.com/docs/connect/handling-api-verification). Can be `action_required.requested_capabilities`, `requirements.past_due`, `requirements.pending_verification`, `listed`, `platform_paused`, `rejected.fraud`, `rejected.incomplete_verification`, `rejected.listed`, `rejected.other`, `rejected.terms_of_service`, `under_review`, or `other`.
+         * If the account is disabled, this enum describes why. [Learn more about handling verification issues](https://stripe.com/docs/connect/handling-api-verification).
          */
-        disabled_reason: string | null;
+        disabled_reason: Requirements.DisabledReason | null;
 
         /**
          * Fields that are `currently_due` and need to be collected again because validation or verification failed.
@@ -1039,7 +1110,7 @@ declare module 'stripe' {
         errors: Array<Requirements.Error> | null;
 
         /**
-         * Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well, and `current_deadline` becomes set.
+         * Fields you must collect when all thresholds are reached. As they become required, they appear in `currently_due` as well, and `current_deadline` becomes set.
          */
         eventually_due: Array<string> | null;
 
@@ -1066,6 +1137,23 @@ declare module 'stripe' {
            */
           original_fields_due: Array<string>;
         }
+
+        type DisabledReason =
+          | 'action_required.requested_capabilities'
+          | 'listed'
+          | 'other'
+          | 'platform_paused'
+          | 'rejected.fraud'
+          | 'rejected.incomplete_verification'
+          | 'rejected.listed'
+          | 'rejected.other'
+          | 'rejected.platform_fraud'
+          | 'rejected.platform_other'
+          | 'rejected.platform_terms_of_service'
+          | 'rejected.terms_of_service'
+          | 'requirements.past_due'
+          | 'requirements.pending_verification'
+          | 'under_review';
 
         interface Error {
           /**

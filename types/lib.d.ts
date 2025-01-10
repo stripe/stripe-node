@@ -27,7 +27,7 @@ declare module 'stripe' {
       }): (...args: any[]) => Response<ResponseObject>; //eslint-disable-line @typescript-eslint/no-explicit-any
       static MAX_BUFFERED_REQUEST_METRICS: number;
     }
-    export type LatestApiVersion = '2024-06-20';
+    export type LatestApiVersion = '2024-12-18.acacia';
     export type HttpAgent = Agent;
     export type HttpProtocol = 'http' | 'https';
 
@@ -152,6 +152,13 @@ declare module 'stripe' {
        */
       host?: string;
     }
+
+    export type RawRequestOptions = RequestOptions & {
+      /**
+       * Specify additional request headers. This is an experimental interface and is not yet stable.
+       */
+      additionalHeaders?: {[headerName: string]: string};
+    };
 
     export type Response<T> = T & {
       lastResponse: {

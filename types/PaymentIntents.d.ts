@@ -152,7 +152,7 @@ declare module 'stripe' {
       payment_method: string | Stripe.PaymentMethod | null;
 
       /**
-       * Information about the payment method configuration used for this PaymentIntent.
+       * Information about the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) used for this PaymentIntent.
        */
       payment_method_configuration_details: PaymentIntent.PaymentMethodConfigurationDetails | null;
 
@@ -304,6 +304,16 @@ declare module 'stripe' {
          * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
          */
         message?: string;
+
+        /**
+         * For card errors resulting from a card issuer decline, a 2 digit code which indicates the advice given to merchant by the card network on how to proceed with an error.
+         */
+        network_advice_code?: string;
+
+        /**
+         * For card errors resulting from a card issuer decline, a brand specific 2, 3, or 4 digit code which indicates the reason the authorization failed.
+         */
+        network_decline_code?: string;
 
         /**
          * If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
@@ -774,10 +784,24 @@ declare module 'stripe' {
 
           namespace FinancialAddress {
             interface Aba {
+              account_holder_address: Stripe.Address;
+
+              /**
+               * The account holder name
+               */
+              account_holder_name: string;
+
               /**
                * The ABA account number
                */
               account_number: string;
+
+              /**
+               * The account type
+               */
+              account_type: string;
+
+              bank_address: Stripe.Address;
 
               /**
                * The bank name
@@ -791,10 +815,14 @@ declare module 'stripe' {
             }
 
             interface Iban {
+              account_holder_address: Stripe.Address;
+
               /**
                * The name of the person or business that owns the bank account
                */
               account_holder_name: string;
+
+              bank_address: Stripe.Address;
 
               /**
                * The BIC/SWIFT code of the account.
@@ -813,6 +841,8 @@ declare module 'stripe' {
             }
 
             interface SortCode {
+              account_holder_address: Stripe.Address;
+
               /**
                * The name of the person or business that owns the bank account
                */
@@ -823,6 +853,8 @@ declare module 'stripe' {
                */
               account_number: string;
 
+              bank_address: Stripe.Address;
+
               /**
                * The six-digit sort code
                */
@@ -830,6 +862,15 @@ declare module 'stripe' {
             }
 
             interface Spei {
+              account_holder_address: Stripe.Address;
+
+              /**
+               * The account holder name
+               */
+              account_holder_name: string;
+
+              bank_address: Stripe.Address;
+
               /**
                * The three-digit bank code
                */
@@ -857,10 +898,24 @@ declare module 'stripe' {
               | 'zengin';
 
             interface Swift {
+              account_holder_address: Stripe.Address;
+
+              /**
+               * The account holder name
+               */
+              account_holder_name: string;
+
               /**
                * The account number
                */
               account_number: string;
+
+              /**
+               * The account type
+               */
+              account_type: string;
+
+              bank_address: Stripe.Address;
 
               /**
                * The bank name
@@ -882,6 +937,8 @@ declare module 'stripe' {
               | 'zengin';
 
             interface Zengin {
+              account_holder_address: Stripe.Address;
+
               /**
                * The account holder name
                */
@@ -896,6 +953,8 @@ declare module 'stripe' {
                * The bank account type. In Japan, this can only be `futsu` or `toza`.
                */
               account_type: string | null;
+
+              bank_address: Stripe.Address;
 
               /**
                * The bank code of the account
@@ -1286,6 +1345,8 @@ declare module 'stripe' {
 
         alipay?: PaymentMethodOptions.Alipay;
 
+        alma?: PaymentMethodOptions.Alma;
+
         amazon_pay?: PaymentMethodOptions.AmazonPay;
 
         au_becs_debit?: PaymentMethodOptions.AuBecsDebit;
@@ -1318,9 +1379,13 @@ declare module 'stripe' {
 
         interac_present?: PaymentMethodOptions.InteracPresent;
 
+        kakao_pay?: PaymentMethodOptions.KakaoPay;
+
         klarna?: PaymentMethodOptions.Klarna;
 
         konbini?: PaymentMethodOptions.Konbini;
+
+        kr_card?: PaymentMethodOptions.KrCard;
 
         link?: PaymentMethodOptions.Link;
 
@@ -1328,9 +1393,13 @@ declare module 'stripe' {
 
         multibanco?: PaymentMethodOptions.Multibanco;
 
+        naver_pay?: PaymentMethodOptions.NaverPay;
+
         oxxo?: PaymentMethodOptions.Oxxo;
 
         p24?: PaymentMethodOptions.P24;
+
+        payco?: PaymentMethodOptions.Payco;
 
         paynow?: PaymentMethodOptions.Paynow;
 
@@ -1341,6 +1410,8 @@ declare module 'stripe' {
         promptpay?: PaymentMethodOptions.Promptpay;
 
         revolut_pay?: PaymentMethodOptions.RevolutPay;
+
+        samsung_pay?: PaymentMethodOptions.SamsungPay;
 
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
@@ -1476,6 +1547,13 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface Alma {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+        }
+
         interface AmazonPay {
           /**
            * Controls when the funds will be captured from the customer's account.
@@ -1531,7 +1609,12 @@ declare module 'stripe' {
         }
 
         namespace BacsDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
+             */
+            reference_prefix?: string;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -1788,6 +1871,7 @@ declare module 'stripe' {
             | 'girocard'
             | 'interac'
             | 'jcb'
+            | 'link'
             | 'mastercard'
             | 'unionpay'
             | 'unknown'
@@ -1993,6 +2077,28 @@ declare module 'stripe' {
 
         interface InteracPresent {}
 
+        interface KakaoPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           */
+          setup_future_usage?: KakaoPay.SetupFutureUsage;
+        }
+
+        namespace KakaoPay {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
         interface Klarna {
           /**
            * Controls when the funds will be captured from the customer's account.
@@ -2047,6 +2153,28 @@ declare module 'stripe' {
            * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
            */
           setup_future_usage?: 'none';
+        }
+
+        interface KrCard {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           */
+          setup_future_usage?: KrCard.SetupFutureUsage;
+        }
+
+        namespace KrCard {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Link {
@@ -2108,6 +2236,13 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface NaverPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+        }
+
         interface Oxxo {
           /**
            * The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -2137,6 +2272,13 @@ declare module 'stripe' {
            * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
            */
           setup_future_usage?: 'none';
+        }
+
+        interface Payco {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
         }
 
         interface Paynow {
@@ -2242,6 +2384,13 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface SamsungPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+        }
+
         interface SepaDebit {
           mandate_options?: SepaDebit.MandateOptions;
 
@@ -2258,7 +2407,12 @@ declare module 'stripe' {
         }
 
         namespace SepaDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'STRIPE'.
+             */
+            reference_prefix?: string;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -2296,7 +2450,7 @@ declare module 'stripe' {
 
         interface Swish {
           /**
-           * The order ID displayed in the Swish app after the payment is authorized.
+           * A reference for this payment to be displayed in the Swish app.
            */
           reference: string | null;
 

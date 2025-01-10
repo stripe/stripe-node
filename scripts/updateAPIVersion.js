@@ -8,7 +8,7 @@ const read = (file) => fs.readFileSync(path.resolve(file)).toString();
 const write = (file, str) => fs.writeFileSync(path.resolve(file), str);
 const edit = (file, cb) => write(file, cb(read(file)));
 
-const API_VERSION = '2[0-9][2-9][0-9]-[0-9]{2}-[0-9]{2}';
+const API_VERSION = '2[0-9][2-9][0-9]-[0-9]{2}-[0-9]{2}.[a-z]+';
 
 const main = () => {
   const matches = [
@@ -35,9 +35,6 @@ const main = () => {
           : 'UNEXPECTED'
       );
     });
-
-  replaceAPIVersion('README.md', 'apiVersion: [\'"]API_VERSION[\'"]');
-  replaceAPIVersion('package.json', '"types": "types/API_VERSION/index.d.ts');
 
   replaceAPIVersion(
     'types/lib.d.ts',

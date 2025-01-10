@@ -21,4 +21,14 @@ export class NodeCryptoProvider extends CryptoProvider {
     const signature = await this.computeHMACSignature(payload, secret);
     return signature;
   }
+
+  /** @override */
+  async computeSHA256Async(data: Uint8Array): Promise<Uint8Array> {
+    return new Uint8Array(
+      await crypto
+        .createHash('sha256')
+        .update(data)
+        .digest()
+    );
+  }
 }

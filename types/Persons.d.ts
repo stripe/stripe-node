@@ -102,7 +102,7 @@ declare module 'stripe' {
       future_requirements?: Person.FutureRequirements | null;
 
       /**
-       * The person's gender (International regulations require either "male" or "female").
+       * The person's gender.
        */
       gender?: string | null;
 
@@ -308,7 +308,7 @@ declare module 'stripe' {
         errors: Array<FutureRequirements.Error>;
 
         /**
-         * Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well, and the account's `future_requirements[current_deadline]` becomes set.
+         * Fields you must collect when all thresholds are reached. As they become required, they appear in `currently_due` as well, and the account's `future_requirements[current_deadline]` becomes set.
          */
         eventually_due: Array<string>;
 
@@ -452,6 +452,11 @@ declare module 'stripe' {
 
       interface Relationship {
         /**
+         * Whether the person is the authorizer of the account's representative.
+         */
+        authorizer: boolean | null;
+
+        /**
          * Whether the person is a director of the account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
          */
         director: boolean | null;
@@ -504,7 +509,7 @@ declare module 'stripe' {
         errors: Array<Requirements.Error>;
 
         /**
-         * Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well, and the account's `current_deadline` becomes set.
+         * Fields you must collect when all thresholds are reached. As they become required, they appear in `currently_due` as well, and the account's `current_deadline` becomes set.
          */
         eventually_due: Array<string>;
 

@@ -51,6 +51,11 @@ declare module 'stripe' {
       effective_percentage: number | null;
 
       /**
+       * The amount of the tax rate when the `rate_type` is `flat_amount`. Tax rates with `rate_type` `percentage` can vary based on the transaction, resulting in this field being `null`. This field exposes the amount and currency of the flat tax rate.
+       */
+      flat_amount: TaxRate.FlatAmount | null;
+
+      /**
        * This specifies if the tax rate is inclusive or exclusive.
        */
       inclusive: boolean;
@@ -81,6 +86,11 @@ declare module 'stripe' {
       percentage: number;
 
       /**
+       * Indicates the type of tax rate applied to the taxable amount. This value can be `null` when no tax applies to the location.
+       */
+      rate_type: TaxRate.RateType | null;
+
+      /**
        * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
        */
       state: string | null;
@@ -92,6 +102,18 @@ declare module 'stripe' {
     }
 
     namespace TaxRate {
+      interface FlatAmount {
+        /**
+         * Amount of the tax when the `rate_type` is `flat_amount`. This positive integer represents how much to charge in the smallest currency unit (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
+         */
+        amount: number;
+
+        /**
+         * Three-letter ISO currency code, in lowercase.
+         */
+        currency: string;
+      }
+
       type JurisdictionLevel =
         | 'city'
         | 'country'
@@ -99,6 +121,8 @@ declare module 'stripe' {
         | 'district'
         | 'multiple'
         | 'state';
+
+      type RateType = 'flat_amount' | 'percentage';
 
       type TaxType =
         | 'amusement_tax'
@@ -110,8 +134,10 @@ declare module 'stripe' {
         | 'lease_tax'
         | 'pst'
         | 'qst'
+        | 'retail_delivery_fee'
         | 'rst'
         | 'sales_tax'
+        | 'service_tax'
         | 'vat';
     }
   }

@@ -6,14 +6,14 @@ declare module 'stripe' {
       namespace Issuing {
         interface AuthorizationCreateParams {
           /**
-           * The total amount to attempt to authorize. This amount is in the provided currency, or defaults to the card's currency, and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
-           */
-          amount: number;
-
-          /**
            * Card associated with this authorization.
            */
           card: string;
+
+          /**
+           * The total amount to attempt to authorize. This amount is in the provided currency, or defaults to the card's currency, and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           */
+          amount?: number;
 
           /**
            * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
@@ -49,6 +49,16 @@ declare module 'stripe' {
            * If set `true`, you may provide [amount](https://stripe.com/docs/api/issuing/authorizations/approve#approve_issuing_authorization-amount) to control how much to hold for the authorization.
            */
           is_amount_controllable?: boolean;
+
+          /**
+           * The total amount to attempt to authorize. This amount is in the provided merchant currency, and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           */
+          merchant_amount?: number;
+
+          /**
+           * The currency of the authorization. If not provided, defaults to the currency of the card. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          merchant_currency?: string;
 
           /**
            * Details about the seller (grocery store, e-commerce website, etc.) where the card authorization happened.
@@ -1179,6 +1189,20 @@ declare module 'stripe' {
       }
 
       namespace Issuing {
+        interface AuthorizationRespondParams {
+          /**
+           * Whether to simulate the user confirming that the transaction was legitimate (true) or telling Stripe that it was fraudulent (false).
+           */
+          confirmed: boolean;
+
+          /**
+           * Specifies which fields in the response should be expanded.
+           */
+          expand?: Array<string>;
+        }
+      }
+
+      namespace Issuing {
         interface AuthorizationReverseParams {
           /**
            * Specifies which fields in the response should be expanded.
@@ -1243,6 +1267,15 @@ declare module 'stripe' {
           increment(
             id: string,
             params: AuthorizationIncrementParams,
+            options?: RequestOptions
+          ): Promise<Stripe.Response<Stripe.Issuing.Authorization>>;
+
+          /**
+           * Respond to a fraud challenge on a testmode Issuing authorization, simulating either a confirmation of fraud or a correction of legitimacy.
+           */
+          respond(
+            id: string,
+            params: AuthorizationRespondParams,
             options?: RequestOptions
           ): Promise<Stripe.Response<Stripe.Issuing.Authorization>>;
 

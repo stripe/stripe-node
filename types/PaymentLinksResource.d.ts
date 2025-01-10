@@ -188,7 +188,9 @@ declare module 'stripe' {
 
       interface AutomaticTax {
         /**
-         * If `true`, tax will be calculated automatically using the customer's location.
+         * Set to `true` to [calculate tax automatically](https://docs.stripe.com/tax) using the customer's location.
+         *
+         * Enabling this parameter causes the payment link to collect any billing address information necessary for tax calculation.
          */
         enabled: boolean;
 
@@ -601,6 +603,7 @@ declare module 'stripe' {
         | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
+        | 'alma'
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
@@ -658,7 +661,7 @@ declare module 'stripe' {
       interface ShippingAddressCollection {
         /**
          * An array of two-letter ISO country codes representing which countries Checkout should provide as options for
-         * shipping locations. Unsupported country codes: `AS, CX, CC, CU, HM, IR, KP, MH, FM, NF, MP, PW, SD, SY, UM, VI`.
+         * shipping locations.
          */
         allowed_countries: Array<ShippingAddressCollection.AllowedCountry>;
       }
@@ -911,7 +914,7 @@ declare module 'stripe' {
         shipping_rate?: string;
       }
 
-      type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
+      type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
 
       interface SubscriptionData {
         /**
@@ -1128,6 +1131,11 @@ declare module 'stripe' {
       >;
 
       /**
+       * Describes the type of transaction being performed in order to customize relevant text on the page, such as the submit button. Changing this value will also affect the hostname in the [url](https://stripe.com/docs/api/payment_links/payment_links/object#url) property (example: `donate.stripe.com`).
+       */
+      submit_type?: PaymentLinkUpdateParams.SubmitType;
+
+      /**
        * When creating a subscription, the specified configuration data will be used. There must be at least one line item with a recurring price to use `subscription_data`.
        */
       subscription_data?: PaymentLinkUpdateParams.SubscriptionData;
@@ -1176,7 +1184,9 @@ declare module 'stripe' {
 
       interface AutomaticTax {
         /**
-         * If `true`, tax will be calculated automatically using the customer's location.
+         * Set to `true` to [calculate tax automatically](https://docs.stripe.com/tax) using the customer's location.
+         *
+         * Enabling this parameter causes the payment link to collect any billing address information necessary for tax calculation.
          */
         enabled: boolean;
 
@@ -1525,6 +1535,7 @@ declare module 'stripe' {
         | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
+        | 'alma'
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
@@ -1575,7 +1586,7 @@ declare module 'stripe' {
       interface ShippingAddressCollection {
         /**
          * An array of two-letter ISO country codes representing which countries Checkout should provide as options for
-         * shipping locations. Unsupported country codes: `AS, CX, CC, CU, HM, IR, KP, MH, FM, NF, MP, PW, SD, SY, UM, VI`.
+         * shipping locations.
          */
         allowed_countries: Array<ShippingAddressCollection.AllowedCountry>;
       }
@@ -1821,6 +1832,8 @@ declare module 'stripe' {
           | 'ZZ';
       }
 
+      type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
+
       interface SubscriptionData {
         /**
          * All invoices will be billed using the specified settings.
@@ -1831,6 +1844,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will declaratively set metadata on [Subscriptions](https://stripe.com/docs/api/subscriptions) generated from this payment link. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
+         */
+        trial_period_days?: Stripe.Emptyable<number>;
 
         /**
          * Settings related to subscription trials.

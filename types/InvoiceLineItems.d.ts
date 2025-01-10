@@ -81,6 +81,11 @@ declare module 'stripe' {
       plan: Stripe.Plan | null;
 
       /**
+       * Contains pretax credit amounts (ex: discount, credit grants, etc) that apply to this line item.
+       */
+      pretax_credit_amounts?: Array<InvoiceLineItem.PretaxCreditAmount> | null;
+
+      /**
        * The price of the line item.
        */
       price: Stripe.Price | null;
@@ -154,6 +159,35 @@ declare module 'stripe' {
          * The start of the period. This value is inclusive.
          */
         start: number;
+      }
+
+      interface PretaxCreditAmount {
+        /**
+         * The amount, in cents (or local equivalent), of the pretax credit amount.
+         */
+        amount: number;
+
+        /**
+         * The credit balance transaction that was applied to get this pretax credit amount.
+         */
+        credit_balance_transaction?:
+          | string
+          | Stripe.Billing.CreditBalanceTransaction
+          | null;
+
+        /**
+         * The discount that was applied to get this pretax credit amount.
+         */
+        discount?: string | Stripe.Discount | Stripe.DeletedDiscount;
+
+        /**
+         * Type of the pretax credit amount referenced.
+         */
+        type: PretaxCreditAmount.Type;
+      }
+
+      namespace PretaxCreditAmount {
+        type Type = 'credit_balance_transaction' | 'discount';
       }
 
       interface ProrationDetails {

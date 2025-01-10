@@ -10,7 +10,7 @@ declare module 'stripe' {
         default_aggregation: MeterCreateParams.DefaultAggregation;
 
         /**
-         * The meter's name.
+         * The meter's name. Not visible to the customer.
          */
         display_name: string;
 
@@ -43,7 +43,7 @@ declare module 'stripe' {
       namespace MeterCreateParams {
         interface CustomerMapping {
           /**
-           * The key in the usage event payload to use for mapping the event to a customer.
+           * The key in the meter event payload to use for mapping the event to a customer.
            */
           event_payload_key: string;
 
@@ -83,7 +83,7 @@ declare module 'stripe' {
 
       interface MeterUpdateParams {
         /**
-         * The meter's name.
+         * The meter's name. Not visible to the customer.
          */
         display_name?: string;
 
@@ -156,7 +156,7 @@ declare module 'stripe' {
 
       class MetersResource {
         /**
-         * Creates a billing meter
+         * Creates a billing meter.
          */
         create(
           params: MeterCreateParams,
@@ -164,7 +164,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Billing.Meter>>;
 
         /**
-         * Retrieves a billing meter given an ID
+         * Retrieves a billing meter given an ID.
          */
         retrieve(
           id: string,
@@ -177,7 +177,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Billing.Meter>>;
 
         /**
-         * Updates a billing meter
+         * Updates a billing meter.
          */
         update(
           id: string,
@@ -195,7 +195,7 @@ declare module 'stripe' {
         list(options?: RequestOptions): ApiListPromise<Stripe.Billing.Meter>;
 
         /**
-         * Deactivates a billing meter
+         * When a meter is deactivated, no more meter events will be accepted for this meter. You can't attach a deactivated meter to a price.
          */
         deactivate(
           id: string,
@@ -217,7 +217,7 @@ declare module 'stripe' {
         ): ApiListPromise<Stripe.Billing.MeterEventSummary>;
 
         /**
-         * Reactivates a billing meter
+         * When a meter is reactivated, events for this meter can be accepted and you can attach the meter to a price.
          */
         reactivate(
           id: string,

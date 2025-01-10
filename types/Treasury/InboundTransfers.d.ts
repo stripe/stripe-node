@@ -74,7 +74,7 @@ declare module 'stripe' {
         /**
          * The origin payment method to be debited for an InboundTransfer.
          */
-        origin_payment_method: string;
+        origin_payment_method: string | null;
 
         /**
          * Details about the PaymentMethod for an InboundTransfer.

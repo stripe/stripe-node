@@ -542,6 +542,7 @@ declare module 'stripe' {
         | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
+        | 'alma'
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
@@ -858,7 +859,7 @@ declare module 'stripe' {
         shipping_rate: string | Stripe.ShippingRate;
       }
 
-      type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
+      type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
 
       interface SubscriptionData {
         /**

@@ -75,7 +75,7 @@ declare module 'stripe' {
         restricted_features?: Array<FinancialAccount.RestrictedFeature>;
 
         /**
-         * The enum specifying what state the account is in.
+         * Status of this FinancialAccount.
          */
         status: FinancialAccount.Status;
 
