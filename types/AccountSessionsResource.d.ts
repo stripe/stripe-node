@@ -72,22 +72,22 @@ declare module 'stripe' {
         documents?: Components.Documents;
 
         /**
-         * Configuration for the financial account component.
+         * Configuration for the financial account embedded component.
          */
         financial_account?: Components.FinancialAccount;
 
         /**
-         * Configuration for the financial account transactions component.
+         * Configuration for the financial account transactions embedded component.
          */
         financial_account_transactions?: Components.FinancialAccountTransactions;
 
         /**
-         * Configuration for the issuing card component.
+         * Configuration for the issuing card embedded component.
          */
         issuing_card?: Components.IssuingCard;
 
         /**
-         * Configuration for the issuing cards list component.
+         * Configuration for the issuing cards list embedded component.
          */
         issuing_cards_list?: Components.IssuingCardsList;
 
