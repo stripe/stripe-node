@@ -235,7 +235,7 @@ declare module 'stripe' {
 
         interface InboundTransfers {
           /**
-           * Toggle settings for enabling/disabling an ACH specific feature
+           * Toggle settings for enabling/disabling an inbound ACH specific feature
            */
           ach?: InboundTransfers.Ach;
         }
@@ -360,7 +360,7 @@ declare module 'stripe' {
 
         interface OutboundPayments {
           /**
-           * Toggle settings for enabling/disabling an ACH specific feature
+           * Toggle settings for enabling/disabling an outbound ACH specific feature
            */
           ach?: OutboundPayments.Ach;
 
@@ -490,7 +490,7 @@ declare module 'stripe' {
 
         interface OutboundTransfers {
           /**
-           * Toggle settings for enabling/disabling an ACH specific feature
+           * Toggle settings for enabling/disabling an outbound ACH specific feature
            */
           ach?: OutboundTransfers.Ach;
 

@@ -174,6 +174,11 @@ declare module 'stripe' {
           state: string | null;
 
           /**
+           * The seller's tax identification number. Currently populated for French merchants only.
+           */
+          tax_id?: string | null;
+
+          /**
            * An ID assigned by the seller to the location of the sale.
            */
           terminal_id: string | null;

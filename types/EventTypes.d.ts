@@ -646,7 +646,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a refund is updated, on selected payment methods.
+     * Occurs whenever a refund is updated on selected payment methods. For updates on all refunds, listen to `refund.updated` instead.
      */
     interface ChargeRefundUpdatedEvent extends EventBase {
       type: 'charge.refund.updated';
@@ -662,7 +662,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a charge is refunded, including partial refunds.
+     * Occurs whenever a charge is refunded, including partial refunds. Listen to `refund.created` for information about the refund.
      */
     interface ChargeRefundedEvent extends EventBase {
       type: 'charge.refunded';
