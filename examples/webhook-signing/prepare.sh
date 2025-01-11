@@ -4,5 +4,4 @@ set -eu -o pipefail
 cp -f ../.eslintrc.js .
 cp -f ../tsconfig.json .
 cp -n ../.env.example ./.env || true
-echo "$PATH"
 eslint --quiet .

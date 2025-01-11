@@ -2,8 +2,8 @@ set quiet := true
 
 import? '../sdk-codegen/justfile'
 
-# make locally installed binaries available without a longer specifier
-# export PATH := "./node_modules/.bin:" + env_var('PATH')
+# make locally installed binaries available throughout the tree without a longer specifier
+# this is useful in this file, but also depended on by webhook tests that expect to be able to call `eslint` and (I think) don't set it up correctly themselves.
 export PATH := `pwd` + "/node_modules/.bin:" + env('PATH')
 
 _default:
@@ -21,9 +21,8 @@ types-test: build
     tsc --build types/test
 
 # run full integration tests by installing a bunch of packages and starting servers (slow)
-[positional-arguments]
-integrations-test *args: build
-    RUN_INTEGRATION_TESTS=1 mocha test/Integration.spec.ts "$@"
+integrations-test: build
+    RUN_INTEGRATION_TESTS=1 mocha test/Integration.spec.ts
 
 # run the full test suite; you probably want `test`
 ci-test: install test types-test integrations-test
