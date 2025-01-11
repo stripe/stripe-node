@@ -3,11 +3,10 @@ set quiet := true
 import? '../sdk-codegen/justfile'
 
 # make locally installed binaries available without a longer specifier
-export PATH := "./node_modules/.bin:" + env_var('PATH')
-# export PATH := `pwd` + "/node_modules/.bin:" + env('PATH')
+# export PATH := "./node_modules/.bin:" + env_var('PATH')
+export PATH := `pwd` + "/node_modules/.bin:" + env('PATH')
 
 _default:
-    echo $PATH
     just --list --unsorted
 
 # this uses positional-args so that mixed quoted and unquoted arguments
