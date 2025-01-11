@@ -2,7 +2,6 @@
 
 [![Version](https://img.shields.io/npm/v/stripe.svg)](https://www.npmjs.org/package/stripe)
 [![Build Status](https://github.com/stripe/stripe-node/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/stripe/stripe-node/actions?query=branch%3Amaster)
-[![Coverage Status](https://coveralls.io/repos/github/stripe/stripe-node/badge.svg?branch=master)](https://coveralls.io/github/stripe/stripe-node?branch=master)
 [![Downloads](https://img.shields.io/npm/dm/stripe.svg)](https://www.npmjs.com/package/stripe)
 [![Try on RunKit](https://badge.runkitcdn.com/stripe.svg)](https://runkit.com/npm/stripe)
 
@@ -596,14 +595,14 @@ New features and bug fixes are released on the latest major version of the `stri
 
 ## Development
 
-Run all tests:
+Run all tests (installing the dependencies first, if needed)
 
 ```bash
-$ yarn install
-$ yarn test
+$ just install
+$ just test
 ```
 
-If you do not have `yarn` installed, you can get it with `npm install --global yarn`.
+If you do not have `yarn` installed, consult its [installation instructions](https://classic.yarnpkg.com/lang/en/docs/install/).
 
 The tests also depends on [stripe-mock][stripe-mock], so make sure to fetch and
 run it from a background terminal ([stripe-mock's README][stripe-mock-usage]
@@ -614,16 +613,18 @@ go get -u github.com/stripe/stripe-mock
 stripe-mock
 ```
 
+We use [just](https://github.com/casey/just) for conveniently running development tasks. You can use them directly, or copy the commands out of the `justfile`. To our help docs, run `just`.
+
 Run a single test suite without a coverage report:
 
 ```bash
-$ yarn mocha-only test/Error.spec.ts
+$ just test test/Error.spec.ts
 ```
 
 Run a single test (case sensitive) in watch mode:
 
 ```bash
-$ yarn mocha-only test/Error.spec.ts --grep 'Populates with type' --watch
+$ just test test/Error.spec.ts --grep 'StripeError' --watch
 ```
 
 If you wish, you may run tests using your Stripe _Test_ API key by setting the
@@ -631,7 +632,7 @@ environment variable `STRIPE_TEST_API_KEY` before running the tests:
 
 ```bash
 $ export STRIPE_TEST_API_KEY='sk_test....'
-$ yarn test
+$ just test
 ```
 
 Run prettier:
@@ -639,7 +640,7 @@ Run prettier:
 Add an [editor integration](https://prettier.io/docs/en/editors.html) or:
 
 ```bash
-$ yarn fix
+$ just format
 ```
 
 [api-keys]: https://dashboard.stripe.com/account/apikeys

@@ -17,13 +17,13 @@ on:
       - sdk-release/**
       - feature/**
 
-
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
 
     steps:
+      - uses: extractions/setup-just@v2
       - uses: actions/checkout@v2
 
       - name: Setup node
@@ -41,11 +41,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Build Typescript
-        run: yarn && yarn build
+      - name: Compile JS -> TS
+        run: just install build
 
-      - name: Lint
-        run: yarn lint
+      - name: Verify Linting & Formatting
+        run: just lint-check format-check
 
   test:
     name: Test (${{ matrix.node }})
@@ -53,18 +53,19 @@ jobs:
     strategy:
       matrix:
         os:
-          - "ubuntu-latest"
+          - 'ubuntu-latest'
         node:
           # should include even numbers >= 12
           # see: https://nodejs.org/en/about/previous-releases
-          - "22"
-          - "20"
-          - "18"
-          - "16"
-          - "14"
-          - "12"
+          - '22'
+          - '20'
+          - '18'
+          - '16'
+          - '14'
+          - '12'
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: extractions/setup-just@v2
       - uses: actions/checkout@v2
 
       - name: Setup node
@@ -75,6 +76,7 @@ jobs:
       - name: Print Node.js version
         run: node -v
 
+      # used for one of the integration tests
       - name: Setup Deno
         uses: denoland/setup-deno@v1
         with:
@@ -98,15 +100,7 @@ jobs:
       - uses: stripe/openapi/actions/stripe-mock@master
 
       - name: Test
-        run: make ci-test
-
-      - name: Coveralls
-        run: yarn report && yarn coveralls
-        if: env.COVERALLS_REPO_TOKEN && matrix.node == '18'
-        env:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-          COVERALLS_FLAG_NAME: node-${{ matrix.node }}
+        run: just ci-test
 
   publish:
     name: Publish
@@ -117,6 +111,8 @@ jobs:
     needs: [build, test]
     runs-on: ubuntu-latest
     steps:
+      # just is called in `yarn prepack`, which is called during the `publish` operation
+      - uses: extractions/setup-just@v2
       - uses: actions/checkout@v2
       - run: sudo apt-get install -y oathtool
       - name: Publish to NPM
