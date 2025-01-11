@@ -44,8 +44,11 @@ jobs:
       - name: Compile JS -> TS
         run: just install build
 
-      - name: Verify Linting & Formatting
-        run: just lint-check format-check
+      - name: Verify Linting
+        run: just lint-check
+
+      - name: Verify Formatting
+        run: just format-check
 
   test:
     name: Test (${{ matrix.node }})

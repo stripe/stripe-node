@@ -10,7 +10,6 @@ _default:
 
 # this uses positional-args so that mixed quoted and unquoted arguments
 # (like filtering for a certain test) work the way we expect
-
 # ⭐ run unit tests
 [positional-arguments]
 test *args: build
@@ -59,7 +58,6 @@ prettier *args:
     prettier "{src,examples,scripts,test,types}/**/*.{ts,js}" {{ args }}
 
 # `format` needs to install since other scripts run it cold
-
 # ⭐ format all files
 format: install (prettier "--write --loglevel silent")
     # ensure other files reflect the version in package.json
