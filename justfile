@@ -24,7 +24,7 @@ integrations-test: build
     RUN_INTEGRATION_TESTS=1 mocha test/Integration.spec.ts
 
 # run the full test suite; you probably want `test`
-ci-test: test types-test integrations-test
+ci-test: install test types-test integrations-test
 
 _build mode packageType:
     mkdir -p {{ mode }}
