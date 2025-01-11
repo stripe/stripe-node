@@ -4,8 +4,10 @@ import? '../sdk-codegen/justfile'
 
 # make locally installed binaries available without a longer specifier
 export PATH := "./node_modules/.bin:" + env_var('PATH')
+# export PATH := `pwd` + "/node_modules/.bin:" + env('PATH')
 
 _default:
+    echo $PATH
     just --list --unsorted
 
 # this uses positional-args so that mixed quoted and unquoted arguments
@@ -20,8 +22,9 @@ types-test: build
     tsc --build types/test
 
 # run full integration tests by installing a bunch of packages and starting servers (slow)
-integrations-test: build
-    RUN_INTEGRATION_TESTS=1 mocha test/Integration.spec.ts
+[positional-arguments]
+integrations-test *args: build
+    RUN_INTEGRATION_TESTS=1 mocha test/Integration.spec.ts "$@"
 
 # run the full test suite; you probably want `test`
 ci-test: install test types-test integrations-test
