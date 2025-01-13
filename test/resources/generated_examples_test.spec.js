@@ -3014,6 +3014,17 @@ describe('Generated tests', function() {
     expect(reader).not.to.be.null;
   });
 
+  it('test_terminal_readers_process_setup_intent_post', async function() {
+    const reader = await stripe.terminal.readers.processSetupIntent(
+      'tmr_xxxxxxxxxxxxx',
+      {
+        setup_intent: 'seti_xxxxxxxxxxxxx',
+        allow_redisplay: 'always',
+      }
+    );
+    expect(reader).not.to.be.null;
+  });
+
   it('test_test_helpers_customers_fund_cash_balance_post', async function() {
     const customerCashBalanceTransaction = await stripe.testHelpers.customers.fundCashBalance(
       'cus_123',
