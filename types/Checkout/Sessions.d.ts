@@ -145,6 +145,11 @@ declare module 'stripe' {
         customer_email: string | null;
 
         /**
+         * List of coupons and promotion codes attached to the Checkout Session.
+         */
+        discounts?: Array<Session.Discount> | null;
+
+        /**
          * The timestamp at which the Checkout Session will expire.
          */
         expires_at: number;
@@ -966,6 +971,18 @@ declare module 'stripe' {
              */
             message: string;
           }
+        }
+
+        interface Discount {
+          /**
+           * Coupon attached to the Checkout Session.
+           */
+          coupon: string | Stripe.Coupon | null;
+
+          /**
+           * Promotion code attached to the Checkout Session.
+           */
+          promotion_code: string | Stripe.PromotionCode | null;
         }
 
         interface InvoiceCreation {
