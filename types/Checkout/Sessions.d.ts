@@ -2158,7 +2158,7 @@ declare module 'stripe' {
         interface ShippingAddressCollection {
           /**
            * An array of two-letter ISO country codes representing which countries Checkout should provide as options for
-           * shipping locations. Unsupported country codes: `AS, CX, CC, CU, HM, IR, KP, MH, FM, NF, MP, PW, SD, SY, UM, VI`.
+           * shipping locations. Unsupported country codes: `AS, CX, CC, CU, HM, IR, KP, MH, FM, NF, MP, PW, SY, UM, VI`.
            */
           allowed_countries: Array<ShippingAddressCollection.AllowedCountry>;
         }
@@ -2349,6 +2349,7 @@ declare module 'stripe' {
             | 'SA'
             | 'SB'
             | 'SC'
+            | 'SD'
             | 'SE'
             | 'SG'
             | 'SH'

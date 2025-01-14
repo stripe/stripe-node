@@ -798,6 +798,7 @@ declare module 'stripe' {
           | 'SA'
           | 'SB'
           | 'SC'
+          | 'SD'
           | 'SE'
           | 'SG'
           | 'SH'
