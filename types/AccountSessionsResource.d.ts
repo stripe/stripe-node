@@ -140,6 +140,11 @@ declare module 'stripe' {
          * Configuration for the tax settings embedded component.
          */
         tax_settings?: Components.TaxSettings;
+
+        /**
+         * Configuration for the tax threshold monitoring embedded component.
+         */
+        tax_threshold_monitoring?: Components.TaxThresholdMonitoring;
       }
 
       namespace Components {
@@ -726,6 +731,22 @@ declare module 'stripe' {
         }
 
         namespace TaxSettings {
+          interface Features {}
+        }
+
+        interface TaxThresholdMonitoring {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: TaxThresholdMonitoring.Features;
+        }
+
+        namespace TaxThresholdMonitoring {
           interface Features {}
         }
       }
