@@ -59,6 +59,7 @@
   },
   "license": "MIT",
   "scripts": {
+    "test": "tsc -p tsconfig.cjs.json && mocha",
     "prepack": "just install && just build"
   },
   "exports": {

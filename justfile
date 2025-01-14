@@ -1,4 +1,4 @@
-set quiet := true
+set quiet
 
 import? '../sdk-codegen/justfile'
 
@@ -13,7 +13,7 @@ _default:
 # (like filtering for a certain test) work the way we expect
 # ⭐ run unit tests
 [positional-arguments]
-test *args: build
+test *args: install build
     mocha "$@"
 
 # try to compile the example TS file to make sure exports work

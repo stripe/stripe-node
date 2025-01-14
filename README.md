@@ -595,16 +595,7 @@ New features and bug fixes are released on the latest major version of the `stri
 
 ## Development
 
-Run all tests (installing the dependencies first, if needed)
-
-```bash
-$ just install
-$ just test
-```
-
-If you do not have `yarn` installed, consult its [installation instructions](https://classic.yarnpkg.com/lang/en/docs/install/).
-
-The tests also depends on [stripe-mock][stripe-mock], so make sure to fetch and
+The tests depend on [stripe-mock][stripe-mock], so make sure to fetch and
 run it from a background terminal ([stripe-mock's README][stripe-mock-usage]
 also contains instructions for installing via Homebrew and other methods):
 
@@ -615,24 +606,36 @@ stripe-mock
 
 We use [just](https://github.com/casey/just) for conveniently running development tasks. You can use them directly, or copy the commands out of the `justfile`. To our help docs, run `just`.
 
-Run a single test suite without a coverage report:
+Run all tests (installing the dependencies first, if needed)
 
 ```bash
-$ just test test/Error.spec.ts
+just test
+# or: yarn && yarn test
+```
+
+If you do not have `yarn` installed, consult its [installation instructions](https://classic.yarnpkg.com/lang/en/docs/install/).
+
+Run a single test suite:
+
+```bash
+just test test/Error.spec.ts
+# or: yarn test test/Error.spec.ts
 ```
 
 Run a single test (case sensitive) in watch mode:
 
 ```bash
-$ just test test/Error.spec.ts --grep 'StripeError' --watch
+just test test/Error.spec.ts --grep 'StripeError' --watch
+# or: yarn test test/Error.spec.ts --grep 'StripeError' --watch
 ```
 
 If you wish, you may run tests using your Stripe _Test_ API key by setting the
 environment variable `STRIPE_TEST_API_KEY` before running the tests:
 
 ```bash
-$ export STRIPE_TEST_API_KEY='sk_test....'
-$ just test
+export STRIPE_TEST_API_KEY='sk_test....'
+just test
+# or: yarn test
 ```
 
 Run prettier:
@@ -640,7 +643,8 @@ Run prettier:
 Add an [editor integration](https://prettier.io/docs/en/editors.html) or:
 
 ```bash
-$ just format
+just format
+# or: yarn prettier src/**/*.ts --write
 ```
 
 [api-keys]: https://dashboard.stripe.com/account/apikeys
