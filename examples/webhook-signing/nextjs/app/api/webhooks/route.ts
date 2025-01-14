@@ -1,4 +1,4 @@
-import { buffer, stripe } from "@/lib/stripe";
+import Stripe from 'stripe';
 import { NextRequest } from "next/server";
 
 export const config = {
@@ -8,6 +8,7 @@ export const config = {
 };
 
 export async function POST(req : NextRequest){
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   const sig = req.headers.get("stripe-signature")
   const wh_sec = process.env.STRIPE_WEBHOOK_SECRET
   let event: Stripe.Event;
