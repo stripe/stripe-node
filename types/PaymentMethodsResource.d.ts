@@ -194,6 +194,11 @@ declare module 'stripe' {
       p24?: PaymentMethodCreateParams.P24;
 
       /**
+       * If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment method.
+       */
+      pay_by_bank?: PaymentMethodCreateParams.PayByBank;
+
+      /**
        * If this is a `payco` PaymentMethod, this hash contains details about the PAYCO payment method.
        */
       payco?: PaymentMethodCreateParams.Payco;
@@ -650,6 +655,8 @@ declare module 'stripe' {
           | 'volkswagen_bank';
       }
 
+      interface PayByBank {}
+
       interface Payco {}
 
       interface Paynow {}
@@ -773,6 +780,7 @@ declare module 'stripe' {
         | 'naver_pay'
         | 'oxxo'
         | 'p24'
+        | 'pay_by_bank'
         | 'payco'
         | 'paynow'
         | 'paypal'
@@ -874,6 +882,11 @@ declare module 'stripe' {
       naver_pay?: PaymentMethodUpdateParams.NaverPay;
 
       /**
+       * If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment method.
+       */
+      pay_by_bank?: PaymentMethodUpdateParams.PayByBank;
+
+      /**
        * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
        */
       payto?: PaymentMethodUpdateParams.Payto;
@@ -951,6 +964,8 @@ declare module 'stripe' {
       namespace NaverPay {
         type Funding = 'card' | 'points';
       }
+
+      interface PayByBank {}
 
       interface Payto {
         /**
@@ -1039,6 +1054,7 @@ declare module 'stripe' {
         | 'naver_pay'
         | 'oxxo'
         | 'p24'
+        | 'pay_by_bank'
         | 'payco'
         | 'paynow'
         | 'paypal'

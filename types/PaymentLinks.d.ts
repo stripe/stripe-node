@@ -564,6 +564,7 @@ declare module 'stripe' {
         | 'multibanco'
         | 'oxxo'
         | 'p24'
+        | 'pay_by_bank'
         | 'paynow'
         | 'paypal'
         | 'payto'
