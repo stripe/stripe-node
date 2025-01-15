@@ -596,6 +596,8 @@ New features and bug fixes are released on the latest major version of the `stri
 
 ## Development
 
+[Contribution guidelines for this project](CONTRIBUTING.md)
+
 Run all tests:
 
 ```bash
