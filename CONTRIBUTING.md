@@ -7,7 +7,7 @@ For most pull requests, we request that you identify or create an associated iss
 
 ## Contributor License Agreement
 
-All contributors must sign the Contributor License Agreement (CLA) before we can accept their contribution. If you have not yet signed the agremenet, you will be given an option to do so when you open a pull request. You can then sign by clicking on the badge in the comment from @CLAassistant.
+All contributors must sign the Contributor License Agreement (CLA) before we can accept their contribution. If you have not yet signed the agreement, you will be given an option to do so when you open a pull request. You can then sign by clicking on the badge in the comment from @CLAassistant.
 
 ## Generated code
 
@@ -17,7 +17,7 @@ To identify files with purely generated code, look for the comment `File generat
 
 ## Compatibility with supported language and runtime versions
 
-This project supports a [many different langauge and runtime versions](README.md#requirements) and we are unable to accept any contribution that does not work on _all_ supported versions. If, after discussing the approach in the associated issue, your change must use an API / feature that isn't available in all supported versions, please call this out explicitly in the issue or pull request so we can help figure out the best way forward.
+This project supports [many different langauge and runtime versions](README.md#requirements) and we are unable to accept any contribution that does not work on _all_ supported versions. If, after discussing the approach in the associated issue, your change must use an API / feature that isn't available in all supported versions, please call this out explicitly in the issue or pull request so we can help figure out the best way forward.
 
 ## Set up your dev environment
 
