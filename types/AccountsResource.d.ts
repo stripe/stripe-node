@@ -1335,6 +1335,11 @@ declare module 'stripe' {
          * One or more documents showing the company's proof of registration with the national business registry.
          */
         proof_of_registration?: Documents.ProofOfRegistration;
+
+        /**
+         * One or more documents that demonstrate proof of ultimate beneficial ownership.
+         */
+        proof_of_ultimate_beneficial_ownership?: Documents.ProofOfUltimateBeneficialOwnership;
       }
 
       namespace Documents {
@@ -1381,6 +1386,13 @@ declare module 'stripe' {
         }
 
         interface ProofOfRegistration {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface ProofOfUltimateBeneficialOwnership {
           /**
            * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
            */
@@ -3281,6 +3293,11 @@ declare module 'stripe' {
          * One or more documents showing the company's proof of registration with the national business registry.
          */
         proof_of_registration?: Documents.ProofOfRegistration;
+
+        /**
+         * One or more documents that demonstrate proof of ultimate beneficial ownership.
+         */
+        proof_of_ultimate_beneficial_ownership?: Documents.ProofOfUltimateBeneficialOwnership;
       }
 
       namespace Documents {
@@ -3327,6 +3344,13 @@ declare module 'stripe' {
         }
 
         interface ProofOfRegistration {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface ProofOfUltimateBeneficialOwnership {
           /**
            * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
            */
