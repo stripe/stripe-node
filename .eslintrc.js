@@ -242,17 +242,19 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
   },
-  plugins: ['prettier', 'import'],
-  extends: ['plugin:prettier/recommended'],
+  plugins: ['import'],
+  // disable formatting rules - prettier will handle this itself
+  extends: ['prettier'],
   overrides: [
     {
       files: ['**/*.ts'],
-      plugins: ['@typescript-eslint', 'prettier'],
+      plugins: ['@typescript-eslint'],
       extends: [
         'eslint:recommended',
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:@typescript-eslint/recommended',
-        'plugin:prettier/recommended',
+        // disable formatting rules - prettier will handle this itself
+        'prettier',
       ],
       rules: {
         '@typescript-eslint/no-use-before-define': 0,
