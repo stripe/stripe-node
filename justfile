@@ -1,6 +1,6 @@
 set quiet
 
-import? '../sdk-codegen/justfile'
+import? '../sdk-codegen/utils.just'
 
 # make locally installed binaries available throughout the tree without a longer specifier
 # this is useful in this file, but also depended on by webhook tests that expect to be able to call `eslint` and (I think) don't set it up correctly themselves.
@@ -54,13 +54,12 @@ install:
 
 [no-exit-message]
 [private]
-prettier *args:
+prettier *args: install
     # all the project-relevant JS code
     prettier "{src,examples,scripts,test,types}/**/*.{ts,js}" {{ args }}
 
-# `format` needs to install since other scripts run it cold
 # ⭐ format all files
-format: install (prettier "--write --loglevel silent")
+format: (prettier "--write --loglevel silent")
     # ensure other files reflect the version in package.json
     ./scripts/updateAPIVersion.js
 
