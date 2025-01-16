@@ -27,7 +27,7 @@ integrations-test: build
 # run the full test suite; you probably want `test`
 ci-test: install test types-test integrations-test
 
-_build mode packageType:
+_build mode packageType: install
     mkdir -p {{ mode }}
     tsc -p tsconfig.{{ mode }}.json
     echo '{"type":"{{ packageType }}"}' > {{ mode }}/package.json
@@ -45,7 +45,7 @@ build: build-esm build-cjs
 lint: (lint-check "--fix")
 
 # run style checks without changing anything
-lint-check *args:
+lint-check *args: install
     eslint --ext .js,.ts . {{ args }}
 
 # reinstall dependencies, if needed
