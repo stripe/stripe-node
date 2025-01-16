@@ -595,6 +595,8 @@ New features and bug fixes are released on the latest major version of the `stri
 
 ## Development
 
+[Contribution guidelines for this project](CONTRIBUTING.md)
+
 The tests depend on [stripe-mock][stripe-mock], so make sure to fetch and
 run it from a background terminal ([stripe-mock's README][stripe-mock-usage]
 also contains instructions for installing via Homebrew and other methods):
