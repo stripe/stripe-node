@@ -59,12 +59,15 @@ prettier *args: install
     prettier "{src,examples,scripts,test,types}/**/*.{ts,js}" {{ args }}
 
 # ⭐ format all files
-format: (prettier "--write --loglevel silent")
-    # ensure other files reflect the version in package.json
-    ./scripts/updateAPIVersion.js
+format: (prettier "--write --loglevel silent") _update-api-version
 
 # verify formatting of files (without changes)
 format-check: (prettier "--check")
+
+# propagate automatic changes; should be run after generation
+# in practice, that means it runs after formatting, since that's the only recipe that the generator calls
+_update-api-version:
+    ./scripts/updateAPIVersion.js
 
 # called by tooling
 [private]
