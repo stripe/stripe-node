@@ -380,6 +380,11 @@ declare module 'stripe' {
         p24_payments?: Capabilities.P24Payments;
 
         /**
+         * The pay_by_bank_payments capability.
+         */
+        pay_by_bank_payments?: Capabilities.PayByBankPayments;
+
+        /**
          * The payco_payments capability.
          */
         payco_payments?: Capabilities.PaycoPayments;
@@ -718,6 +723,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface PayByBankPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface PaycoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -860,6 +872,11 @@ declare module 'stripe' {
         directors_provided?: boolean;
 
         /**
+         * This hash is used to attest that the directors information provided to Stripe is both current and correct.
+         */
+        directorship_declaration?: Company.DirectorshipDeclaration;
+
+        /**
          * Whether the company's executives have been provided. Set this Boolean to `true` after creating all the company's executives with [the Persons API](https://stripe.com/api/persons) for accounts with a `relationship.executive` requirement.
          */
         executives_provided?: boolean;
@@ -899,6 +916,10 @@ declare module 'stripe' {
          */
         ownership_declaration?: Company.OwnershipDeclaration;
 
+        ownership_exemption_reason?: Stripe.Emptyable<
+          Company.OwnershipExemptionReason
+        >;
+
         /**
          * The company's phone number (used for verification).
          */
@@ -936,6 +957,23 @@ declare module 'stripe' {
       }
 
       namespace Company {
+        interface DirectorshipDeclaration {
+          /**
+           * The Unix timestamp marking when the directorship declaration attestation was made.
+           */
+          date?: number;
+
+          /**
+           * The IP address from which the directorship declaration attestation was made.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the directorship declaration attestation was made.
+           */
+          user_agent?: string;
+        }
+
         interface OwnershipDeclaration {
           /**
            * The Unix timestamp marking when the beneficial owner attestation was made.
@@ -952,6 +990,10 @@ declare module 'stripe' {
            */
           user_agent?: string;
         }
+
+        type OwnershipExemptionReason =
+          | 'qualified_entity_exceeds_ownership_threshold'
+          | 'qualifies_as_financial_institution';
 
         type Structure =
           | 'free_zone_establishment'
@@ -1094,6 +1136,11 @@ declare module 'stripe' {
          * One or more documents showing the company's proof of registration with the national business registry.
          */
         proof_of_registration?: Documents.ProofOfRegistration;
+
+        /**
+         * One or more documents that demonstrate proof of ultimate beneficial ownership.
+         */
+        proof_of_ultimate_beneficial_ownership?: Documents.ProofOfUltimateBeneficialOwnership;
       }
 
       namespace Documents {
@@ -1140,6 +1187,13 @@ declare module 'stripe' {
         }
 
         interface ProofOfRegistration {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface ProofOfUltimateBeneficialOwnership {
           /**
            * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
            */
@@ -2059,6 +2113,11 @@ declare module 'stripe' {
         p24_payments?: Capabilities.P24Payments;
 
         /**
+         * The pay_by_bank_payments capability.
+         */
+        pay_by_bank_payments?: Capabilities.PayByBankPayments;
+
+        /**
          * The payco_payments capability.
          */
         payco_payments?: Capabilities.PaycoPayments;
@@ -2397,6 +2456,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface PayByBankPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface PaycoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -2582,6 +2648,11 @@ declare module 'stripe' {
         directors_provided?: boolean;
 
         /**
+         * This hash is used to attest that the directors information provided to Stripe is both current and correct.
+         */
+        directorship_declaration?: Company.DirectorshipDeclaration;
+
+        /**
          * Whether the company's executives have been provided. Set this Boolean to `true` after creating all the company's executives with [the Persons API](https://stripe.com/api/persons) for accounts with a `relationship.executive` requirement.
          */
         executives_provided?: boolean;
@@ -2621,6 +2692,10 @@ declare module 'stripe' {
          */
         ownership_declaration?: Company.OwnershipDeclaration;
 
+        ownership_exemption_reason?: Stripe.Emptyable<
+          Company.OwnershipExemptionReason
+        >;
+
         /**
          * The company's phone number (used for verification).
          */
@@ -2658,6 +2733,23 @@ declare module 'stripe' {
       }
 
       namespace Company {
+        interface DirectorshipDeclaration {
+          /**
+           * The Unix timestamp marking when the directorship declaration attestation was made.
+           */
+          date?: number;
+
+          /**
+           * The IP address from which the directorship declaration attestation was made.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the directorship declaration attestation was made.
+           */
+          user_agent?: string;
+        }
+
         interface OwnershipDeclaration {
           /**
            * The Unix timestamp marking when the beneficial owner attestation was made.
@@ -2674,6 +2766,10 @@ declare module 'stripe' {
            */
           user_agent?: string;
         }
+
+        type OwnershipExemptionReason =
+          | 'qualified_entity_exceeds_ownership_threshold'
+          | 'qualifies_as_financial_institution';
 
         type Structure =
           | 'free_zone_establishment'
@@ -2757,6 +2853,11 @@ declare module 'stripe' {
          * One or more documents showing the company's proof of registration with the national business registry.
          */
         proof_of_registration?: Documents.ProofOfRegistration;
+
+        /**
+         * One or more documents that demonstrate proof of ultimate beneficial ownership.
+         */
+        proof_of_ultimate_beneficial_ownership?: Documents.ProofOfUltimateBeneficialOwnership;
       }
 
       namespace Documents {
@@ -2803,6 +2904,13 @@ declare module 'stripe' {
         }
 
         interface ProofOfRegistration {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface ProofOfUltimateBeneficialOwnership {
           /**
            * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
            */

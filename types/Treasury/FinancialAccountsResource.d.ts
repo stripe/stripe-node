@@ -25,6 +25,11 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
+         * The nickname for the FinancialAccount.
+         */
+        nickname?: Stripe.Emptyable<string>;
+
+        /**
          * The set of functionalities that the platform can restrict on the FinancialAccount.
          */
         platform_restrictions?: FinancialAccountCreateParams.PlatformRestrictions;
@@ -217,9 +222,19 @@ declare module 'stripe' {
         features?: FinancialAccountUpdateParams.Features;
 
         /**
+         * A different bank account where funds can be deposited/debited in order to get the closing FA's balance to $0
+         */
+        forwarding_settings?: FinancialAccountUpdateParams.ForwardingSettings;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
+
+        /**
+         * The nickname for the FinancialAccount.
+         */
+        nickname?: Stripe.Emptyable<string>;
 
         /**
          * The set of functionalities that the platform can restrict on the FinancialAccount.
@@ -376,6 +391,27 @@ declare module 'stripe' {
           }
         }
 
+        interface ForwardingSettings {
+          /**
+           * The financial_account id
+           */
+          financial_account?: string;
+
+          /**
+           * The payment_method or bank account id. This needs to be a verified bank account.
+           */
+          payment_method?: string;
+
+          /**
+           * The type of the bank account provided. This can be either "financial_account" or "payment_method"
+           */
+          type: ForwardingSettings.Type;
+        }
+
+        namespace ForwardingSettings {
+          type Type = 'financial_account' | 'payment_method';
+        }
+
         interface PlatformRestrictions {
           /**
            * Restricts all inbound money movement.
@@ -405,6 +441,41 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+      }
+
+      interface FinancialAccountCloseParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * A different bank account where funds can be deposited/debited in order to get the closing FA's balance to $0
+         */
+        forwarding_settings?: FinancialAccountCloseParams.ForwardingSettings;
+      }
+
+      namespace FinancialAccountCloseParams {
+        interface ForwardingSettings {
+          /**
+           * The financial_account id
+           */
+          financial_account?: string;
+
+          /**
+           * The payment_method or bank account id. This needs to be a verified bank account.
+           */
+          payment_method?: string;
+
+          /**
+           * The type of the bank account provided. This can be either "financial_account" or "payment_method"
+           */
+          type: ForwardingSettings.Type;
+        }
+
+        namespace ForwardingSettings {
+          type Type = 'financial_account' | 'payment_method';
+        }
       }
 
       interface FinancialAccountRetrieveFeaturesParams {
@@ -608,6 +679,19 @@ declare module 'stripe' {
         list(
           options?: RequestOptions
         ): ApiListPromise<Stripe.Treasury.FinancialAccount>;
+
+        /**
+         * Closes a FinancialAccount. A FinancialAccount can only be closed if it has a zero balance, has no pending InboundTransfers, and has canceled all attached Issuing cards.
+         */
+        close(
+          id: string,
+          params?: FinancialAccountCloseParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Treasury.FinancialAccount>>;
+        close(
+          id: string,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Treasury.FinancialAccount>>;
 
         /**
          * Retrieves Features information associated with the FinancialAccount.

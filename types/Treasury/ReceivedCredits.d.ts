@@ -213,6 +213,15 @@ declare module 'stripe' {
             outbound_payment?: Stripe.Treasury.OutboundPayment;
 
             /**
+             * Use [OutboundTransfers](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/out-of/outbound-transfers) to transfer funds from a [FinancialAccount](https://stripe.com/docs/api#financial_accounts) to a PaymentMethod belonging to the same entity. To send funds to a different party, use [OutboundPayments](https://stripe.com/docs/api#outbound_payments) instead. You can send funds over ACH rails or through a domestic wire transfer to a user's own external bank account.
+             *
+             * Simulate OutboundTransfer state changes with the `/v1/test_helpers/treasury/outbound_transfers` endpoints. These methods can only be called on test mode objects.
+             *
+             * Related guide: [Moving money with Treasury using OutboundTransfer objects](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/out-of/outbound-transfers)
+             */
+            outbound_transfer?: Stripe.Treasury.OutboundTransfer;
+
+            /**
              * A `Payout` object is created when you receive funds from Stripe, or when you
              * initiate a payout to either a bank account or debit card of a [connected
              * Stripe account](https://stripe.com/docs/connect/bank-debit-card-payouts). You can retrieve individual payouts,
@@ -235,6 +244,7 @@ declare module 'stripe' {
               | 'credit_reversal'
               | 'other'
               | 'outbound_payment'
+              | 'outbound_transfer'
               | 'payout';
           }
         }
