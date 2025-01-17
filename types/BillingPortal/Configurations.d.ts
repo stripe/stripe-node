@@ -181,7 +181,10 @@ declare module 'stripe' {
 
             type Mode = 'at_period_end' | 'immediately';
 
-            type ProrationBehavior = 'create_prorations' | 'none';
+            type ProrationBehavior =
+              | 'always_invoice'
+              | 'create_prorations'
+              | 'none';
           }
 
           interface SubscriptionUpdate {
