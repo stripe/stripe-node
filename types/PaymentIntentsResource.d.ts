@@ -1116,6 +1116,11 @@ declare module 'stripe' {
         p24?: PaymentMethodData.P24;
 
         /**
+         * If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment method.
+         */
+        pay_by_bank?: PaymentMethodData.PayByBank;
+
+        /**
          * If this is a `payco` PaymentMethod, this hash contains details about the PAYCO payment method.
          */
         payco?: PaymentMethodData.Payco;
@@ -1522,6 +1527,8 @@ declare module 'stripe' {
             | 'volkswagen_bank';
         }
 
+        interface PayByBank {}
+
         interface Payco {}
 
         interface Paynow {}
@@ -1644,6 +1651,7 @@ declare module 'stripe' {
           | 'naver_pay'
           | 'oxxo'
           | 'p24'
+          | 'pay_by_bank'
           | 'payco'
           | 'paynow'
           | 'paypal'
@@ -1877,6 +1885,11 @@ declare module 'stripe' {
          * If this is a `p24` PaymentMethod, this sub-hash contains details about the Przelewy24 payment method options.
          */
         p24?: Stripe.Emptyable<PaymentMethodOptions.P24>;
+
+        /**
+         * If this is a `pay_by_bank` PaymentMethod, this sub-hash contains details about the PayByBank payment method options.
+         */
+        pay_by_bank?: Stripe.Emptyable<PaymentMethodOptions.PayByBank>;
 
         /**
          * If this is a `payco` PaymentMethod, this sub-hash contains details about the PAYCO payment method options.
@@ -3163,6 +3176,8 @@ declare module 'stripe' {
            */
           tos_shown_and_accepted?: boolean;
         }
+
+        interface PayByBank {}
 
         interface Payco {
           /**
@@ -4889,6 +4904,11 @@ declare module 'stripe' {
         p24?: PaymentMethodData.P24;
 
         /**
+         * If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment method.
+         */
+        pay_by_bank?: PaymentMethodData.PayByBank;
+
+        /**
          * If this is a `payco` PaymentMethod, this hash contains details about the PAYCO payment method.
          */
         payco?: PaymentMethodData.Payco;
@@ -5295,6 +5315,8 @@ declare module 'stripe' {
             | 'volkswagen_bank';
         }
 
+        interface PayByBank {}
+
         interface Payco {}
 
         interface Paynow {}
@@ -5417,6 +5439,7 @@ declare module 'stripe' {
           | 'naver_pay'
           | 'oxxo'
           | 'p24'
+          | 'pay_by_bank'
           | 'payco'
           | 'paynow'
           | 'paypal'
@@ -5650,6 +5673,11 @@ declare module 'stripe' {
          * If this is a `p24` PaymentMethod, this sub-hash contains details about the Przelewy24 payment method options.
          */
         p24?: Stripe.Emptyable<PaymentMethodOptions.P24>;
+
+        /**
+         * If this is a `pay_by_bank` PaymentMethod, this sub-hash contains details about the PayByBank payment method options.
+         */
+        pay_by_bank?: Stripe.Emptyable<PaymentMethodOptions.PayByBank>;
 
         /**
          * If this is a `payco` PaymentMethod, this sub-hash contains details about the PAYCO payment method options.
@@ -6936,6 +6964,8 @@ declare module 'stripe' {
            */
           tos_shown_and_accepted?: boolean;
         }
+
+        interface PayByBank {}
 
         interface Payco {
           /**
@@ -9417,6 +9447,11 @@ declare module 'stripe' {
         p24?: PaymentMethodData.P24;
 
         /**
+         * If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment method.
+         */
+        pay_by_bank?: PaymentMethodData.PayByBank;
+
+        /**
          * If this is a `payco` PaymentMethod, this hash contains details about the PAYCO payment method.
          */
         payco?: PaymentMethodData.Payco;
@@ -9823,6 +9858,8 @@ declare module 'stripe' {
             | 'volkswagen_bank';
         }
 
+        interface PayByBank {}
+
         interface Payco {}
 
         interface Paynow {}
@@ -9945,6 +9982,7 @@ declare module 'stripe' {
           | 'naver_pay'
           | 'oxxo'
           | 'p24'
+          | 'pay_by_bank'
           | 'payco'
           | 'paynow'
           | 'paypal'
@@ -10178,6 +10216,11 @@ declare module 'stripe' {
          * If this is a `p24` PaymentMethod, this sub-hash contains details about the Przelewy24 payment method options.
          */
         p24?: Stripe.Emptyable<PaymentMethodOptions.P24>;
+
+        /**
+         * If this is a `pay_by_bank` PaymentMethod, this sub-hash contains details about the PayByBank payment method options.
+         */
+        pay_by_bank?: Stripe.Emptyable<PaymentMethodOptions.PayByBank>;
 
         /**
          * If this is a `payco` PaymentMethod, this sub-hash contains details about the PAYCO payment method options.
@@ -11464,6 +11507,8 @@ declare module 'stripe' {
            */
           tos_shown_and_accepted?: boolean;
         }
+
+        interface PayByBank {}
 
         interface Payco {
           /**

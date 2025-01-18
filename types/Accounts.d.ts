@@ -425,6 +425,11 @@ declare module 'stripe' {
         p24_payments?: Capabilities.P24Payments;
 
         /**
+         * The status of the pay_by_bank payments capability of the account, or whether the account can directly process pay_by_bank charges.
+         */
+        pay_by_bank_payments?: Capabilities.PayByBankPayments;
+
+        /**
          * The status of the Payco capability of the account, or whether the account can directly process Payco payments.
          */
         payco_payments?: Capabilities.PaycoPayments;
@@ -632,6 +637,8 @@ declare module 'stripe' {
         type OxxoPayments = 'active' | 'inactive' | 'pending';
 
         type P24Payments = 'active' | 'inactive' | 'pending';
+
+        type PayByBankPayments = 'active' | 'inactive' | 'pending';
 
         type PaycoPayments = 'active' | 'inactive' | 'pending';
 

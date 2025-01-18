@@ -1727,6 +1727,8 @@ declare module 'stripe' {
 
         p24?: PaymentMethodOptions.P24;
 
+        pay_by_bank?: PaymentMethodOptions.PayByBank;
+
         payco?: PaymentMethodOptions.Payco;
 
         paynow?: PaymentMethodOptions.Paynow;
@@ -2717,6 +2719,8 @@ declare module 'stripe' {
            */
           setup_future_usage?: 'none';
         }
+
+        interface PayByBank {}
 
         interface Payco {
           /**

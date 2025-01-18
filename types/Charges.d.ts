@@ -460,6 +460,8 @@ declare module 'stripe' {
 
         p24?: PaymentMethodDetails.P24;
 
+        pay_by_bank?: PaymentMethodDetails.PayByBank;
+
         payco?: PaymentMethodDetails.Payco;
 
         paynow?: PaymentMethodDetails.Paynow;
@@ -2058,6 +2060,8 @@ declare module 'stripe' {
             | 'velobank'
             | 'volkswagen_bank';
         }
+
+        interface PayByBank {}
 
         interface Payco {
           /**

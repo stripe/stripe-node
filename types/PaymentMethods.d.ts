@@ -115,6 +115,8 @@ declare module 'stripe' {
 
       p24?: PaymentMethod.P24;
 
+      pay_by_bank?: PaymentMethod.PayByBank;
+
       payco?: PaymentMethod.Payco;
 
       paynow?: PaymentMethod.Paynow;
@@ -1262,6 +1264,8 @@ declare module 'stripe' {
           | 'volkswagen_bank';
       }
 
+      interface PayByBank {}
+
       interface Payco {}
 
       interface Paynow {}
@@ -1446,6 +1450,7 @@ declare module 'stripe' {
         | 'naver_pay'
         | 'oxxo'
         | 'p24'
+        | 'pay_by_bank'
         | 'payco'
         | 'paynow'
         | 'paypal'

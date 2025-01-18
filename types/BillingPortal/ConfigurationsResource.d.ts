@@ -136,7 +136,7 @@ declare module 'stripe' {
             mode?: SubscriptionCancel.Mode;
 
             /**
-             * Whether to create prorations when canceling subscriptions. Possible values are `none` and `create_prorations`, which is only compatible with `mode=immediately`. No prorations are generated when canceling a subscription at the end of its natural billing period.
+             * Whether to create prorations when canceling subscriptions. Possible values are `none` and `create_prorations`, which is only compatible with `mode=immediately`. Passing `always_invoice` will result in an error. No prorations are generated when canceling a subscription at the end of its natural billing period.
              */
             proration_behavior?: SubscriptionCancel.ProrationBehavior;
           }
@@ -168,7 +168,10 @@ declare module 'stripe' {
 
             type Mode = 'at_period_end' | 'immediately';
 
-            type ProrationBehavior = 'create_prorations' | 'none';
+            type ProrationBehavior =
+              | 'always_invoice'
+              | 'create_prorations'
+              | 'none';
           }
 
           interface SubscriptionUpdate {
@@ -395,7 +398,7 @@ declare module 'stripe' {
             mode?: SubscriptionCancel.Mode;
 
             /**
-             * Whether to create prorations when canceling subscriptions. Possible values are `none` and `create_prorations`, which is only compatible with `mode=immediately`. No prorations are generated when canceling a subscription at the end of its natural billing period.
+             * Whether to create prorations when canceling subscriptions. Possible values are `none` and `create_prorations`, which is only compatible with `mode=immediately`. Passing `always_invoice` will result in an error. No prorations are generated when canceling a subscription at the end of its natural billing period.
              */
             proration_behavior?: SubscriptionCancel.ProrationBehavior;
           }
@@ -427,7 +430,10 @@ declare module 'stripe' {
 
             type Mode = 'at_period_end' | 'immediately';
 
-            type ProrationBehavior = 'create_prorations' | 'none';
+            type ProrationBehavior =
+              | 'always_invoice'
+              | 'create_prorations'
+              | 'none';
           }
 
           interface SubscriptionUpdate {
