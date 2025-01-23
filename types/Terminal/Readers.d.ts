@@ -374,11 +374,6 @@ declare module 'stripe' {
              * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
              */
             payment_method?: Stripe.PaymentMethod;
-
-            /**
-             * This field will be deprecated. Please use `account` instead.
-             */
-            stripe_account?: string;
           }
 
           namespace CollectPaymentMethod {
@@ -419,11 +414,6 @@ declare module 'stripe' {
              * Most recent PaymentIntent processed by the reader.
              */
             payment_intent: string | Stripe.PaymentIntent;
-
-            /**
-             * This field will be deprecated. Please use `account` instead.
-             */
-            stripe_account?: string;
           }
 
           interface ProcessPaymentIntent {
@@ -441,11 +431,6 @@ declare module 'stripe' {
              * Represents a per-transaction override of a reader configuration
              */
             process_config?: ProcessPaymentIntent.ProcessConfig;
-
-            /**
-             * This field will be deprecated. Please use `account` instead.
-             */
-            stripe_account?: string;
           }
 
           namespace ProcessPaymentIntent {
@@ -552,11 +537,6 @@ declare module 'stripe' {
              * Boolean indicating whether the transfer should be reversed when refunding this charge. The transfer will be reversed proportionally to the amount being refunded (either the entire or partial amount). A transfer can be reversed only by the application that created the charge.
              */
             reverse_transfer?: boolean;
-
-            /**
-             * This field will be deprecated. Please use `account` instead.
-             */
-            stripe_account?: string;
           }
 
           namespace RefundPayment {
