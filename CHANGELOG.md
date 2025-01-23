@@ -1,5 +1,10 @@
 # Changelog
 
+## 17.6.0-beta.3 - 2025-01-23
+* [#2253](https://github.com/stripe/stripe-node/pull/2253) Update generated code for beta
+  * Change `Refund.destination_details.blik.network_decline_code` and `Refund.destination_details.swish.network_decline_code` to be required
+  * Remove support for `stripe_account` on `Terminal.Reader.action.collect_payment_method`, `Terminal.Reader.action.confirm_payment_intent`, `Terminal.Reader.action.process_payment_intent`, and `Terminal.Reader.action.refund_payment`
+
 ## 17.6.0-beta.2 - 2025-01-17
 * [#2247](https://github.com/stripe/stripe-node/pull/2247) Update generated code for beta
   * Add support for `pay_by_bank_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
