@@ -725,7 +725,7 @@ declare module 'stripe' {
 
           interface Networks {
             /**
-             * All available networks for the card.
+             * All networks available for selection via [payment_method_options.card.network](https://stripe.com/api/payment_intents/confirm#confirm_payment_intent-payment_method_options-card-network).
              */
             available: Array<string>;
 
@@ -925,7 +925,7 @@ declare module 'stripe' {
         namespace CardPresent {
           interface Networks {
             /**
-             * All available networks for the card.
+             * All networks available for selection via [payment_method_options.card.network](https://stripe.com/api/payment_intents/confirm#confirm_payment_intent-payment_method_options-card-network).
              */
             available: Array<string>;
 
@@ -1207,7 +1207,7 @@ declare module 'stripe' {
         namespace InteracPresent {
           interface Networks {
             /**
-             * All available networks for the card.
+             * All networks available for selection via [payment_method_options.card.network](https://stripe.com/api/payment_intents/confirm#confirm_payment_intent-payment_method_options-card-network).
              */
             available: Array<string>;
 
