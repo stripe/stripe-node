@@ -2016,7 +2016,7 @@ declare module 'stripe' {
       payment_intent?: string;
 
       /**
-       * The ID of the PaymentRecord to detach from the invoice.
+       * The ID of the PaymentRecord to attach to the invoice.
        */
       payment_record?: string;
 
