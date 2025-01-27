@@ -172,7 +172,7 @@ declare module 'stripe' {
       /**
        * Status of a card based on the card issuer.
        */
-      regulated_status?: Card.RegulatedStatus | null;
+      regulated_status: Card.RegulatedStatus | null;
 
       /**
        * For external accounts that are cards, possible values are `new` and `errored`. If a payout fails, the status is set to `errored` and [scheduled payouts](https://stripe.com/docs/payouts#payout-schedule) are stopped until account details are updated.

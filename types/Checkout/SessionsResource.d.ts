@@ -1133,6 +1133,11 @@ declare module 'stripe' {
           p24?: PaymentMethodOptions.P24;
 
           /**
+           * contains details about the Pay By Bank payment method options.
+           */
+          pay_by_bank?: PaymentMethodOptions.PayByBank;
+
+          /**
            * contains details about the PAYCO payment method options.
            */
           payco?: PaymentMethodOptions.Payco;
@@ -1799,6 +1804,8 @@ declare module 'stripe' {
             tos_shown_and_accepted?: boolean;
           }
 
+          interface PayByBank {}
+
           interface Payco {
             /**
              * Controls when the funds will be captured from the customer's account.
@@ -2070,6 +2077,7 @@ declare module 'stripe' {
           | 'naver_pay'
           | 'oxxo'
           | 'p24'
+          | 'pay_by_bank'
           | 'payco'
           | 'paynow'
           | 'paypal'
@@ -2088,6 +2096,8 @@ declare module 'stripe' {
         interface PhoneNumberCollection {
           /**
            * Set to `true` to enable phone number collection.
+           *
+           * Can only be set in `payment` and `subscription` mode.
            */
           enabled: boolean;
         }
@@ -2325,6 +2335,7 @@ declare module 'stripe' {
             | 'SA'
             | 'SB'
             | 'SC'
+            | 'SD'
             | 'SE'
             | 'SG'
             | 'SH'

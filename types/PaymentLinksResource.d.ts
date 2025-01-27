@@ -623,6 +623,7 @@ declare module 'stripe' {
         | 'multibanco'
         | 'oxxo'
         | 'p24'
+        | 'pay_by_bank'
         | 'paynow'
         | 'paypal'
         | 'pix'
@@ -852,6 +853,7 @@ declare module 'stripe' {
           | 'SA'
           | 'SB'
           | 'SC'
+          | 'SD'
           | 'SE'
           | 'SG'
           | 'SH'
@@ -1117,6 +1119,13 @@ declare module 'stripe' {
       payment_method_types?: Stripe.Emptyable<
         Array<PaymentLinkUpdateParams.PaymentMethodType>
       >;
+
+      /**
+       * Controls phone number collection settings during checkout.
+       *
+       * We recommend that you review your privacy policy and check with your legal contacts.
+       */
+      phone_number_collection?: PaymentLinkUpdateParams.PhoneNumberCollection;
 
       /**
        * Settings that restrict the usage of a payment link.
@@ -1555,6 +1564,7 @@ declare module 'stripe' {
         | 'multibanco'
         | 'oxxo'
         | 'p24'
+        | 'pay_by_bank'
         | 'paynow'
         | 'paypal'
         | 'pix'
@@ -1566,6 +1576,13 @@ declare module 'stripe' {
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
+
+      interface PhoneNumberCollection {
+        /**
+         * Set to `true` to enable phone number collection.
+         */
+        enabled: boolean;
+      }
 
       interface Restrictions {
         /**
@@ -1777,6 +1794,7 @@ declare module 'stripe' {
           | 'SA'
           | 'SB'
           | 'SC'
+          | 'SD'
           | 'SE'
           | 'SG'
           | 'SH'

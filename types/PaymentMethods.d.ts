@@ -109,6 +109,8 @@ declare module 'stripe' {
 
       p24?: PaymentMethod.P24;
 
+      pay_by_bank?: PaymentMethod.PayByBank;
+
       payco?: PaymentMethod.Payco;
 
       paynow?: PaymentMethod.Paynow;
@@ -331,7 +333,7 @@ declare module 'stripe' {
         /**
          * Status of a card based on the card issuer.
          */
-        regulated_status?: Card.RegulatedStatus | null;
+        regulated_status: Card.RegulatedStatus | null;
 
         /**
          * Contains details on how this Card may be used for 3D Secure authentication.
@@ -1230,11 +1232,18 @@ declare module 'stripe' {
           | 'volkswagen_bank';
       }
 
+      interface PayByBank {}
+
       interface Payco {}
 
       interface Paynow {}
 
       interface Paypal {
+        /**
+         * Two-letter ISO code representing the buyer's country. Values are provided by PayPal directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+         */
+        country: string | null;
+
         /**
          * Owner's email. Values are provided by PayPal directly
          * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
@@ -1351,6 +1360,7 @@ declare module 'stripe' {
         | 'naver_pay'
         | 'oxxo'
         | 'p24'
+        | 'pay_by_bank'
         | 'payco'
         | 'paynow'
         | 'paypal'

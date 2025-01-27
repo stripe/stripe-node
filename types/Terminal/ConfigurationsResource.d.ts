@@ -121,6 +121,11 @@ declare module 'stripe' {
           hkd?: Tipping.Hkd;
 
           /**
+           * Tipping configuration for JPY
+           */
+          jpy?: Tipping.Jpy;
+
+          /**
            * Tipping configuration for MYR
            */
           myr?: Tipping.Myr;
@@ -277,6 +282,23 @@ declare module 'stripe' {
           }
 
           interface Hkd {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts?: Array<number>;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages?: Array<number>;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
+          interface Jpy {
             /**
              * Fixed amounts displayed when collecting a tip
              */
@@ -552,6 +574,11 @@ declare module 'stripe' {
           hkd?: Tipping.Hkd;
 
           /**
+           * Tipping configuration for JPY
+           */
+          jpy?: Tipping.Jpy;
+
+          /**
            * Tipping configuration for MYR
            */
           myr?: Tipping.Myr;
@@ -708,6 +735,23 @@ declare module 'stripe' {
           }
 
           interface Hkd {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts?: Array<number>;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages?: Array<number>;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
+          interface Jpy {
             /**
              * Fixed amounts displayed when collecting a tip
              */

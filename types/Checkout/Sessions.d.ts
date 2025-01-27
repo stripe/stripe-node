@@ -140,6 +140,11 @@ declare module 'stripe' {
         customer_email: string | null;
 
         /**
+         * List of coupons and promotion codes attached to the Checkout Session.
+         */
+        discounts?: Array<Session.Discount> | null;
+
+        /**
          * The timestamp at which the Checkout Session will expire.
          */
         expires_at: number;
@@ -784,6 +789,18 @@ declare module 'stripe' {
              */
             message: string;
           }
+        }
+
+        interface Discount {
+          /**
+           * Coupon attached to the Checkout Session.
+           */
+          coupon: string | Stripe.Coupon | null;
+
+          /**
+           * Promotion code attached to the Checkout Session.
+           */
+          promotion_code: string | Stripe.PromotionCode | null;
         }
 
         interface InvoiceCreation {
@@ -1822,7 +1839,7 @@ declare module 'stripe' {
         interface ShippingAddressCollection {
           /**
            * An array of two-letter ISO country codes representing which countries Checkout should provide as options for
-           * shipping locations. Unsupported country codes: `AS, CX, CC, CU, HM, IR, KP, MH, FM, NF, MP, PW, SD, SY, UM, VI`.
+           * shipping locations. Unsupported country codes: `AS, CX, CC, CU, HM, IR, KP, MH, FM, NF, MP, PW, SY, UM, VI`.
            */
           allowed_countries: Array<ShippingAddressCollection.AllowedCountry>;
         }
@@ -2013,6 +2030,7 @@ declare module 'stripe' {
             | 'SA'
             | 'SB'
             | 'SC'
+            | 'SD'
             | 'SE'
             | 'SG'
             | 'SH'

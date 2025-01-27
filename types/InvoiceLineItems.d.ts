@@ -83,7 +83,7 @@ declare module 'stripe' {
       /**
        * Contains pretax credit amounts (ex: discount, credit grants, etc) that apply to this line item.
        */
-      pretax_credit_amounts?: Array<InvoiceLineItem.PretaxCreditAmount> | null;
+      pretax_credit_amounts: Array<InvoiceLineItem.PretaxCreditAmount> | null;
 
       /**
        * The price of the line item.

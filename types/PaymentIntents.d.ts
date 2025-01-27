@@ -281,6 +281,11 @@ declare module 'stripe' {
 
       interface LastPaymentError {
         /**
+         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines) if they provide one.
+         */
+        advice_code?: string;
+
+        /**
          * For card errors, the ID of the failed charge.
          */
         charge?: string;
@@ -1399,6 +1404,8 @@ declare module 'stripe' {
 
         p24?: PaymentMethodOptions.P24;
 
+        pay_by_bank?: PaymentMethodOptions.PayByBank;
+
         payco?: PaymentMethodOptions.Payco;
 
         paynow?: PaymentMethodOptions.Paynow;
@@ -2273,6 +2280,8 @@ declare module 'stripe' {
            */
           setup_future_usage?: 'none';
         }
+
+        interface PayByBank {}
 
         interface Payco {
           /**

@@ -54,6 +54,14 @@ declare module 'stripe' {
 
         documents: Components.Documents;
 
+        financial_account: Components.FinancialAccount;
+
+        financial_account_transactions: Components.FinancialAccountTransactions;
+
+        issuing_card: Components.IssuingCard;
+
+        issuing_cards_list: Components.IssuingCardsList;
+
         notification_banner: Components.NotificationBanner;
 
         payment_details: Components.PaymentDetails;
@@ -165,6 +173,128 @@ declare module 'stripe' {
 
         namespace Documents {
           interface Features {}
+        }
+
+        interface FinancialAccount {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: FinancialAccount.Features;
+        }
+
+        namespace FinancialAccount {
+          interface Features {
+            /**
+             * Disables Stripe user authentication for this embedded component. This value can only be true for accounts where `controller.requirement_collection` is `application`. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to true and `disable_stripe_user_authentication` defaults to false.
+             */
+            disable_stripe_user_authentication: boolean;
+
+            /**
+             * Whether to allow external accounts to be linked for money transfer.
+             */
+            external_account_collection: boolean;
+
+            /**
+             * Whether to allow sending money.
+             */
+            send_money: boolean;
+
+            /**
+             * Whether to allow transferring balance.
+             */
+            transfer_balance: boolean;
+          }
+        }
+
+        interface FinancialAccountTransactions {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: FinancialAccountTransactions.Features;
+        }
+
+        namespace FinancialAccountTransactions {
+          interface Features {
+            /**
+             * Whether to allow card spend dispute management features.
+             */
+            card_spend_dispute_management: boolean;
+          }
+        }
+
+        interface IssuingCard {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: IssuingCard.Features;
+        }
+
+        namespace IssuingCard {
+          interface Features {
+            /**
+             * Whether to allow card management features.
+             */
+            card_management: boolean;
+
+            /**
+             * Whether to allow card spend dispute management features.
+             */
+            card_spend_dispute_management: boolean;
+
+            /**
+             * Whether to allow cardholder management features.
+             */
+            cardholder_management: boolean;
+
+            /**
+             * Whether to allow spend control management features.
+             */
+            spend_control_management: boolean;
+          }
+        }
+
+        interface IssuingCardsList {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: IssuingCardsList.Features;
+        }
+
+        namespace IssuingCardsList {
+          interface Features {
+            /**
+             * Whether to allow card management features.
+             */
+            card_management: boolean;
+
+            /**
+             * Whether to allow card spend dispute management features.
+             */
+            card_spend_dispute_management: boolean;
+
+            /**
+             * Whether to allow cardholder management features.
+             */
+            cardholder_management: boolean;
+
+            /**
+             * Disables Stripe user authentication for this embedded component. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts.
+             */
+            disable_stripe_user_authentication: boolean;
+
+            /**
+             * Whether to allow spend control management features.
+             */
+            spend_control_management: boolean;
+          }
         }
 
         interface NotificationBanner {
