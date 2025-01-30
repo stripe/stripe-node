@@ -3680,7 +3680,7 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
-             * Provide filters for the linked accounts that the customer can select for the payment method
+             * Provide filters for the linked accounts that the customer can select for the payment method.
              */
             filters?: FinancialConnections.Filters;
 
@@ -7468,7 +7468,7 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
-             * Provide filters for the linked accounts that the customer can select for the payment method
+             * Provide filters for the linked accounts that the customer can select for the payment method.
              */
             filters?: FinancialConnections.Filters;
 
@@ -12011,7 +12011,7 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
-             * Provide filters for the linked accounts that the customer can select for the payment method
+             * Provide filters for the linked accounts that the customer can select for the payment method.
              */
             filters?: FinancialConnections.Filters;
 
