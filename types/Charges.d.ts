@@ -663,6 +663,11 @@ declare module 'stripe' {
               brand: string | null;
 
               /**
+               * The [product code](https://stripe.com/docs/card-product-codes) that identifies the specific program or product associated with a card. (For internal use only and not typically available in standard API requests.)
+               */
+              brand_product?: string | null;
+
+              /**
                * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
                */
               country: string | null;
@@ -2217,6 +2222,11 @@ declare module 'stripe' {
                * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
                */
               brand: string | null;
+
+              /**
+               * The [product code](https://stripe.com/docs/card-product-codes) that identifies the specific program or product associated with a card. (For internal use only and not typically available in standard API requests.)
+               */
+              brand_product?: string | null;
 
               /**
                * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
