@@ -147,7 +147,7 @@ declare module 'stripe' {
         /**
          * List of coupons and promotion codes attached to the Checkout Session.
          */
-        discounts?: Array<Session.Discount> | null;
+        discounts: Array<Session.Discount> | null;
 
         /**
          * The timestamp at which the Checkout Session will expire.
