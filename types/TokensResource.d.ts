@@ -96,6 +96,11 @@ declare module 'stripe' {
           directors_provided?: boolean;
 
           /**
+           * This hash is used to attest that the directors information provided to Stripe is both current and correct.
+           */
+          directorship_declaration?: Company.DirectorshipDeclaration;
+
+          /**
            * Whether the company's executives have been provided. Set this Boolean to `true` after creating all the company's executives with [the Persons API](https://stripe.com/api/persons) for accounts with a `relationship.executive` requirement.
            */
           executives_provided?: boolean;
@@ -140,6 +145,10 @@ declare module 'stripe' {
            */
           ownership_declaration_shown_and_signed?: boolean;
 
+          ownership_exemption_reason?: Stripe.Emptyable<
+            Company.OwnershipExemptionReason
+          >;
+
           /**
            * The company's phone number (used for verification).
            */
@@ -177,6 +186,23 @@ declare module 'stripe' {
         }
 
         namespace Company {
+          interface DirectorshipDeclaration {
+            /**
+             * The Unix timestamp marking when the directorship declaration attestation was made.
+             */
+            date?: number;
+
+            /**
+             * The IP address from which the directorship declaration attestation was made.
+             */
+            ip?: string;
+
+            /**
+             * The user agent of the browser from which the directorship declaration attestation was made.
+             */
+            user_agent?: string;
+          }
+
           interface OwnershipDeclaration {
             /**
              * The Unix timestamp marking when the beneficial owner attestation was made.
@@ -193,6 +219,10 @@ declare module 'stripe' {
              */
             user_agent?: string;
           }
+
+          type OwnershipExemptionReason =
+            | 'qualified_entity_exceeds_ownership_threshold'
+            | 'qualifies_as_financial_institution';
 
           type Structure =
             | 'free_zone_establishment'

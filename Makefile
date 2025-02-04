@@ -1,3 +1,5 @@
+# NOTE: this file is deprecated and slated for deletion; prefer using the equivalent `just` commands.
+
 .PHONY: codegen-format update-version test ci-test
 update-version:
 	@echo "$(VERSION)" > VERSION

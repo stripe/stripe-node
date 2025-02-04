@@ -1,3 +1,3 @@
 // File generated from our OpenAPI spec
 
-export const ApiVersion = '2024-12-18.acacia';
+export const ApiVersion = '2025-01-27.acacia';

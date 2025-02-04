@@ -109,7 +109,7 @@ declare module 'stripe' {
       /**
        * The pretax credit amounts (ex: discount, credit grants, etc) for all line items.
        */
-      pretax_credit_amounts?: Array<CreditNote.PretaxCreditAmount>;
+      pretax_credit_amounts: Array<CreditNote.PretaxCreditAmount>;
 
       /**
        * Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`

@@ -1,5 +1,10 @@
 #!/usr/bin/env node
 
+/**
+ * Reads the current API version from src/apiVersion.ts and updates all
+ * references to it in the types/ directory.
+ */
+
 /* eslint-disable no-sync,no-nested-ternary */
 const fs = require('fs');
 const path = require('path');
@@ -12,7 +17,7 @@ const API_VERSION = '2[0-9][2-9][0-9]-[0-9]{2}-[0-9]{2}.[a-z]+';
 
 const main = () => {
   const matches = [
-    ...read('src/apiVersion.ts').matchAll(/ApiVersion . '([^']*)'/g),
+    ...read('src/apiVersion.ts').matchAll(/ApiVersion = '([^']*)'/g),
   ];
   if (matches.length !== 1) {
     throw new Error(

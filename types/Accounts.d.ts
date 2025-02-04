@@ -398,6 +398,11 @@ declare module 'stripe' {
         p24_payments?: Capabilities.P24Payments;
 
         /**
+         * The status of the pay_by_bank payments capability of the account, or whether the account can directly process pay_by_bank charges.
+         */
+        pay_by_bank_payments?: Capabilities.PayByBankPayments;
+
+        /**
          * The status of the Payco capability of the account, or whether the account can directly process Payco payments.
          */
         payco_payments?: Capabilities.PaycoPayments;
@@ -556,6 +561,8 @@ declare module 'stripe' {
 
         type P24Payments = 'active' | 'inactive' | 'pending';
 
+        type PayByBankPayments = 'active' | 'inactive' | 'pending';
+
         type PaycoPayments = 'active' | 'inactive' | 'pending';
 
         type PaynowPayments = 'active' | 'inactive' | 'pending';
@@ -610,6 +617,11 @@ declare module 'stripe' {
         directors_provided?: boolean;
 
         /**
+         * This hash is used to attest that the director information provided to Stripe is both current and correct.
+         */
+        directorship_declaration?: Company.DirectorshipDeclaration | null;
+
+        /**
          * Whether the company's executives have been provided. This Boolean will be `true` if you've manually indicated that all executives are provided via [the `executives_provided` parameter](https://stripe.com/docs/api/accounts/update#update_account-company-executives_provided), or if Stripe determined that sufficient executives were provided.
          */
         executives_provided?: boolean;
@@ -648,6 +660,8 @@ declare module 'stripe' {
          * This hash is used to attest that the beneficial owner information provided to Stripe is both current and correct.
          */
         ownership_declaration?: Company.OwnershipDeclaration | null;
+
+        ownership_exemption_reason?: Company.OwnershipExemptionReason;
 
         /**
          * The company's phone number (used for verification).
@@ -755,6 +769,23 @@ declare module 'stripe' {
           town: string | null;
         }
 
+        interface DirectorshipDeclaration {
+          /**
+           * The Unix timestamp marking when the directorship declaration attestation was made.
+           */
+          date: number | null;
+
+          /**
+           * The IP address from which the directorship declaration attestation was made.
+           */
+          ip: string | null;
+
+          /**
+           * The user-agent string from the browser where the directorship declaration attestation was made.
+           */
+          user_agent: string | null;
+        }
+
         interface OwnershipDeclaration {
           /**
            * The Unix timestamp marking when the beneficial owner attestation was made.
@@ -771,6 +802,10 @@ declare module 'stripe' {
            */
           user_agent: string | null;
         }
+
+        type OwnershipExemptionReason =
+          | 'qualified_entity_exceeds_ownership_threshold'
+          | 'qualifies_as_financial_institution';
 
         type Structure =
           | 'free_zone_establishment'

@@ -65,7 +65,7 @@ declare module 'stripe' {
           /**
            * Details of the invoice to which the reinstated credits were originally applied. Only present if `type` is `credits_application_invoice_voided`.
            */
-          credits_application_invoice_voided?: Credit.CreditsApplicationInvoiceVoided | null;
+          credits_application_invoice_voided: Credit.CreditsApplicationInvoiceVoided | null;
 
           /**
            * The type of credit transaction.

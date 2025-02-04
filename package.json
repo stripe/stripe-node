@@ -1,6 +1,6 @@
 {
   "name": "stripe",
-  "version": "17.5.0",
+  "version": "17.6.0",
   "description": "Stripe API wrapper",
   "keywords": [
     "stripe",
@@ -35,7 +35,6 @@
     "@typescript-eslint/parser": "^4.33.0",
     "chai": "^4.3.6",
     "chai-as-promised": "~7.1.1",
-    "coveralls": "^3.1.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-chai-friendly": "^0.7.2",
@@ -60,19 +59,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "yarn build-esm && yarn build-cjs",
-    "build-esm": "mkdir -p esm && tsc -p tsconfig.esm.json && echo '{\"type\":\"module\"}' > esm/package.json",
-    "build-cjs": "mkdir -p cjs && tsc -p tsconfig.cjs.json && echo '{\"type\":\"commonjs\"}' > cjs/package.json",
-    "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage ./esm ./cjs",
-    "prepack": "yarn install && yarn build",
-    "mocha": "nyc mocha",
-    "mocha-only": "mocha",
-    "test": "yarn build && yarn test-typescript && yarn mocha",
-    "test-typescript": "tsc --build types/test",
-    "lint": "eslint --ext .js,.jsx,.ts .",
-    "fix": "yarn lint --fix && ./scripts/updateAPIVersion.js",
-    "report": "nyc -r text -r lcov report",
-    "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test": "tsc -p tsconfig.cjs.json && mocha",
+    "prepack": "just install && just build"
   },
   "exports": {
     "types": "./types/index.d.ts",

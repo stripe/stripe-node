@@ -174,6 +174,11 @@ declare module 'stripe' {
       parent?: string;
 
       /**
+       * Pay by bank is a redirect payment method backed by bank transfers. A customer is redirected to their bank to authorize a bank transfer for a given amount. This removes a lot of the error risks inherent in waiting for the customer to initiate a transfer themselves, and is less expensive than card payments.
+       */
+      pay_by_bank?: PaymentMethodConfigurationCreateParams.PayByBank;
+
+      /**
        * PayNow is a Singapore-based payment method that allows customers to make a payment using their preferred app from participating banks and participating non-bank financial institutions. Check this [page](https://stripe.com/docs/payments/paynow) for more details.
        */
       paynow?: PaymentMethodConfigurationCreateParams.Paynow;
@@ -850,6 +855,26 @@ declare module 'stripe' {
         }
       }
 
+      interface PayByBank {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: PayByBank.DisplayPreference;
+      }
+
+      namespace PayByBank {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Paynow {
         /**
          * Whether or not the payment method should be displayed.
@@ -1248,6 +1273,11 @@ declare module 'stripe' {
        * Przelewy24 is a Poland-based payment method aggregator that allows customers to complete transactions online using bank transfers and other methods. Bank transfers account for 30% of online payments in Poland and Przelewy24 provides a way for customers to pay with over 165 banks. Check this [page](https://stripe.com/docs/payments/p24) for more details.
        */
       p24?: PaymentMethodConfigurationUpdateParams.P24;
+
+      /**
+       * Pay by bank is a redirect payment method backed by bank transfers. A customer is redirected to their bank to authorize a bank transfer for a given amount. This removes a lot of the error risks inherent in waiting for the customer to initiate a transfer themselves, and is less expensive than card payments.
+       */
+      pay_by_bank?: PaymentMethodConfigurationUpdateParams.PayByBank;
 
       /**
        * PayNow is a Singapore-based payment method that allows customers to make a payment using their preferred app from participating banks and participating non-bank financial institutions. Check this [page](https://stripe.com/docs/payments/paynow) for more details.
@@ -1914,6 +1944,26 @@ declare module 'stripe' {
       }
 
       namespace P24 {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface PayByBank {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: PayByBank.DisplayPreference;
+      }
+
+      namespace PayByBank {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

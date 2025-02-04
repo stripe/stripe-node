@@ -464,7 +464,7 @@ declare module 'stripe' {
       /**
        * Contains pretax credit amounts (ex: discount, credit grants, etc) that apply to this invoice. This is a combined list of total_pretax_credit_amounts across all invoice line items.
        */
-      total_pretax_credit_amounts?: Array<
+      total_pretax_credit_amounts: Array<
         Invoice.TotalPretaxCreditAmount
       > | null;
 
@@ -728,6 +728,11 @@ declare module 'stripe' {
       }
 
       interface LastFinalizationError {
+        /**
+         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines) if they provide one.
+         */
+        advice_code?: string;
+
         /**
          * For card errors, the ID of the failed charge.
          */

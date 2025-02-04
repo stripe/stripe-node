@@ -54,7 +54,7 @@ declare module 'stripe' {
       /**
        * The pretax credit amounts (ex: discount, credit grants, etc) for this line item.
        */
-      pretax_credit_amounts?: Array<CreditNoteLineItem.PretaxCreditAmount>;
+      pretax_credit_amounts: Array<CreditNoteLineItem.PretaxCreditAmount>;
 
       /**
        * The number of units of product being credited.
