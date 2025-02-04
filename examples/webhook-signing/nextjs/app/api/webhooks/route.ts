@@ -1,27 +1,26 @@
 import Stripe from 'stripe';
-import { NextRequest } from "next/server";
+import {NextRequest} from 'next/server';
 
 export const config = {
-    api: {
-        bodyParser: false,
-    },
+  api: {
+    bodyParser: false,
+  },
 };
 
-export async function POST(req : NextRequest){
+export async function POST(req: NextRequest) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-  const sig = req.headers.get("stripe-signature")
-  const wh_sec = process.env.STRIPE_WEBHOOK_SECRET
+  const sig = req.headers.get('stripe-signature');
+  const wh_sec = process.env.STRIPE_WEBHOOK_SECRET;
   let event: Stripe.Event;
-  if (!sig){
-      throw new Error("Invalid Signature")
+  if (!sig) {
+    throw new Error('Invalid Signature');
   }
   try {
-      const body = Uint8Array.from(await buffer(req)) as Buffer<ArrayBufferLike>
-      event = stripe.webhooks.constructEvent(body, sig!, wh_sec)
-  }
-  catch (err : any){
-      console.log(`❌ Error message: ${err.message}`);
-      return new Response(`Webhook Error: ${err.message}`, {status : 400})
+    const body = Uint8Array.from(await buffer(req)) as Buffer<ArrayBufferLike>;
+    event = stripe.webhooks.constructEvent(body, sig!, wh_sec);
+  } catch (err) {
+    console.log(`❌ Error message: ${err.message}`);
+    return new Response(`Webhook Error: ${err.message}`, {status: 400});
   }
   console.log('✅ Success:', event.id);
 
@@ -38,25 +37,27 @@ export async function POST(req : NextRequest){
   }
 
   // Return a response to acknowledge receipt of the event
-  return Response.json({received: true}, {status : 200});
+  return Response.json({received: true}, {status: 200});
 }
 
-const buffer = async(req: NextRequest) => {
-    const body = req.body;
-    if (!body) {
-        throw new Error('Request body is null');
-    }
-    const reader = body.getReader();
-    const chunks = [];
-    let done, value;
-    while ({ done, value } = await reader.read(), !done) {
-        chunks.push(value);
-    }
-    const buf = new Uint8Array(chunks.reduce((acc, chunk) => acc + chunk.length, 0));
-    let offset = 0;
-    for (const chunk of chunks) {
-        buf.set(chunk, offset);
-        offset += chunk.length;
-    }
-    return buf;
+const buffer = async (req: NextRequest) => {
+  const body = req.body;
+  if (!body) {
+    throw new Error('Request body is null');
+  }
+  const reader = body.getReader();
+  const chunks = [];
+  let done, value;
+  while ((({done, value} = await reader.read()), !done)) {
+    chunks.push(value);
+  }
+  const buf = new Uint8Array(
+    chunks.reduce((acc, chunk) => acc + chunk.length, 0)
+  );
+  let offset = 0;
+  for (const chunk of chunks) {
+    buf.set(chunk, offset);
+    offset += chunk.length;
+  }
+  return buf;
 };
