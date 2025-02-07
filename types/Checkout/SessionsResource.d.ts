@@ -1454,6 +1454,11 @@ declare module 'stripe' {
             request_three_d_secure?: Card.RequestThreeDSecure;
 
             /**
+             * Restrictions to apply to the card payment method. For example, you can block specific card brands.
+             */
+            restrictions?: Card.Restrictions;
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -1495,6 +1500,21 @@ declare module 'stripe' {
             type RequestOvercapture = 'if_available' | 'never';
 
             type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+
+            interface Restrictions {
+              /**
+               * Specify the card brands to block in the Checkout Session. If a customer enters or selects a card belonging to a blocked brand, they can't complete the Session.
+               */
+              brands_blocked?: Array<Restrictions.BrandsBlocked>;
+            }
+
+            namespace Restrictions {
+              type BrandsBlocked =
+                | 'american_express'
+                | 'discover_global_network'
+                | 'mastercard'
+                | 'visa';
+            }
 
             type SetupFutureUsage = 'off_session' | 'on_session';
           }

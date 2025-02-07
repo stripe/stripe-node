@@ -122,6 +122,11 @@ declare module 'stripe' {
         payouts_list?: Components.PayoutsList;
 
         /**
+         * Configuration for the product tax code selector embedded component.
+         */
+        product_tax_code_selector?: Components.ProductTaxCodeSelector;
+
+        /**
          * Configuration for the recipients component.
          */
         recipients?: Components.Recipients;
@@ -665,6 +670,22 @@ declare module 'stripe' {
         }
 
         namespace PayoutsList {
+          interface Features {}
+        }
+
+        interface ProductTaxCodeSelector {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: ProductTaxCodeSelector.Features;
+        }
+
+        namespace ProductTaxCodeSelector {
           interface Features {}
         }
 

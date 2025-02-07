@@ -32,7 +32,7 @@ declare module 'stripe' {
         limits?: SessionCreateParams.Limits;
 
         /**
-         * Settings for configuring manual entry of account details for this Session.
+         * Customize manual entry behavior
          */
         manual_entry?: SessionCreateParams.ManualEntry;
 

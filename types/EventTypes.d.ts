@@ -681,7 +681,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a replacement for a financing offer has been created.
+     * Occurs whenever a replacement for a financing offer has been created. More details can be [found here](https://docs.stripe.com/capital/replacements).
      */
     interface CapitalFinancingOfferReplacementCreatedEvent extends EventBase {
       type: 'capital.financing_offer.replacement_created';

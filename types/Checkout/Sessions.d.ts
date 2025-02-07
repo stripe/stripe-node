@@ -147,7 +147,7 @@ declare module 'stripe' {
         /**
          * List of coupons and promotion codes attached to the Checkout Session.
          */
-        discounts?: Array<Session.Discount> | null;
+        discounts: Array<Session.Discount> | null;
 
         /**
          * The timestamp at which the Checkout Session will expire.
@@ -406,27 +406,27 @@ declare module 'stripe' {
           /**
            * Customer's business name for this Checkout Session
            */
-          business_name: string | null;
+          business_name?: string | null;
 
           /**
            * Customer's email for this Checkout Session
            */
-          email: string | null;
+          email?: string | null;
 
           /**
            * Customer's phone number for this Checkout Session
            */
-          phone: string | null;
+          phone?: string | null;
 
           /**
            * Shipping information for this Checkout Session.
            */
-          shipping_details: CollectedInformation.ShippingDetails | null;
+          shipping_details?: CollectedInformation.ShippingDetails | null;
 
           /**
            * Customer's tax ids for this Checkout Session.
            */
-          tax_ids: Array<CollectedInformation.TaxId> | null;
+          tax_ids?: Array<CollectedInformation.TaxId> | null;
         }
 
         namespace CollectedInformation {
@@ -1441,6 +1441,8 @@ declare module 'stripe' {
              */
             request_three_d_secure: Card.RequestThreeDSecure;
 
+            restrictions?: Card.Restrictions;
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -1482,6 +1484,21 @@ declare module 'stripe' {
             type RequestOvercapture = 'if_available' | 'never';
 
             type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+
+            interface Restrictions {
+              /**
+               * Specify the card brands to block in the Checkout Session. If a customer enters or selects a card belonging to a blocked brand, they can't complete the Session.
+               */
+              brands_blocked?: Array<Restrictions.BrandsBlocked>;
+            }
+
+            namespace Restrictions {
+              type BrandsBlocked =
+                | 'american_express'
+                | 'discover_global_network'
+                | 'mastercard'
+                | 'visa';
+            }
 
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
           }
@@ -2457,9 +2474,9 @@ declare module 'stripe' {
             amount: number;
 
             /**
-             * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+             * Tax rates can be applied to [invoices](https://stripe.com/invoicing/taxes/tax-rates), [subscriptions](https://stripe.com/billing/taxes/tax-rates) and [Checkout Sessions](https://stripe.com/payments/checkout/use-manual-tax-rates) to collect tax.
              *
-             * Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
+             * Related guide: [Tax rates](https://stripe.com/billing/taxes/tax-rates)
              */
             rate: Stripe.TaxRate;
 
@@ -2605,9 +2622,9 @@ declare module 'stripe' {
               amount: number;
 
               /**
-               * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+               * Tax rates can be applied to [invoices](https://stripe.com/invoicing/taxes/tax-rates), [subscriptions](https://stripe.com/billing/taxes/tax-rates) and [Checkout Sessions](https://stripe.com/payments/checkout/use-manual-tax-rates) to collect tax.
                *
-               * Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
+               * Related guide: [Tax rates](https://stripe.com/billing/taxes/tax-rates)
                */
               rate: Stripe.TaxRate;
 
