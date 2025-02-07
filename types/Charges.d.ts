@@ -497,7 +497,7 @@ declare module 'stripe' {
         twint?: PaymentMethodDetails.Twint;
 
         /**
-         * The type of transaction-specific details of the payment method used in the payment, one of `ach_credit_transfer`, `ach_debit`, `acss_debit`, `alipay`, `au_becs_debit`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `klarna`, `multibanco`, `p24`, `sepa_debit`, `sofort`, `stripe_account`, or `wechat`.
+         * The type of transaction-specific details of the payment method used in the payment. See [PaymentMethod.type](https://stripe.com/docs/api/payment_methods/object#payment_method_object-type) for the full list of possible types.
          * An additional hash is included on `payment_method_details` with a name matching this value.
          * It contains information specific to the payment method.
          */
