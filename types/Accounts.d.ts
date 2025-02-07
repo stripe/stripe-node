@@ -1432,6 +1432,11 @@ declare module 'stripe' {
         charges: RiskControls.Charges;
 
         payouts: RiskControls.Payouts;
+
+        /**
+         * Represents the rejected reason of the account. Empty if account is not rejected, or rejected by Stripe. Please see [this page for more details](https://stripe.com/docs/connect/)
+         */
+        rejected_reason?: RiskControls.RejectedReason;
       }
 
       namespace RiskControls {
@@ -1448,6 +1453,16 @@ declare module 'stripe' {
            */
           pause_requested: boolean;
         }
+
+        type RejectedReason =
+          | 'credit'
+          | 'fraud'
+          | 'fraud_no_intent_to_fulfill'
+          | 'fraud_other'
+          | 'fraud_payment_method_casher'
+          | 'fraud_payment_method_tester'
+          | 'other'
+          | 'terms_of_service';
       }
 
       interface Settings {
