@@ -10,7 +10,7 @@ declare module 'stripe' {
         amount: CreditGrantCreateParams.Amount;
 
         /**
-         * Configuration specifying what this credit grant applies to.
+         * Configuration specifying what this credit grant applies to. We currently only support `metered` prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them.
          */
         applicability_config: CreditGrantCreateParams.ApplicabilityConfig;
 
