@@ -192,7 +192,7 @@ declare module 'stripe' {
           /**
            * For refunds declined by the network, a decline code provided by the network which indicates the reason the refund failed.
            */
-          network_decline_code?: string | null;
+          network_decline_code: string | null;
 
           /**
            * The reference assigned to the refund.
@@ -341,7 +341,7 @@ declare module 'stripe' {
           /**
            * For refunds declined by the network, a decline code provided by the network which indicates the reason the refund failed.
            */
-          network_decline_code?: string | null;
+          network_decline_code: string | null;
 
           /**
            * The reference assigned to the refund.

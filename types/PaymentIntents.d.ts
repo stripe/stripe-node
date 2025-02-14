@@ -1451,6 +1451,11 @@ declare module 'stripe' {
           setup_future_usage?: AcssDebit.SetupFutureUsage;
 
           /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
+
+          /**
            * Bank account verification method.
            */
           verification_method?: AcssDebit.VerificationMethod;
@@ -1594,6 +1599,11 @@ declare module 'stripe' {
            * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
            */
           setup_future_usage?: AuBecsDebit.SetupFutureUsage;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace AuBecsDebit {
@@ -1613,6 +1623,11 @@ declare module 'stripe' {
            * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
            */
           setup_future_usage?: BacsDebit.SetupFutureUsage;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace BacsDebit {
@@ -2413,6 +2428,11 @@ declare module 'stripe' {
            * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
            */
           setup_future_usage?: SepaDebit.SetupFutureUsage;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace SepaDebit {
@@ -2508,6 +2528,11 @@ declare module 'stripe' {
            * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
            */
           setup_future_usage?: UsBankAccount.SetupFutureUsage;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
 
           /**
            * Bank account verification method.
@@ -2677,14 +2702,14 @@ declare module 'stripe' {
 
       interface TransferData {
         /**
-         * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
+         * The amount transferred to the destination account. This transfer will occur automatically after the payment succeeds. If no amount is specified, by default the entire payment amount is transferred to the destination account.
+         *  The amount must be less than or equal to the [amount](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-amount), and must be a positive integer
+         *  representing how much to transfer in the smallest currency unit (e.g., 100 cents to charge $1.00).
          */
         amount?: number;
 
         /**
-         * The account (if any) that the payment is attributed to for tax
-         * reporting, and where funds from the payment are transferred to after
-         * payment success.
+         * The account (if any) that the payment is attributed to for tax reporting, and where funds from the payment are transferred to after payment success.
          */
         destination: string | Stripe.Account;
       }
