@@ -1436,7 +1436,7 @@ declare module 'stripe' {
         /**
          * Represents the rejected reason of the account. Empty if account is not rejected, or rejected by Stripe. Please see [this page for more details](https://stripe.com/docs/connect/)
          */
-        rejected_reason?: RiskControls.RejectedReason | null;
+        rejected_reason?: RiskControls.RejectedReason;
       }
 
       namespace RiskControls {

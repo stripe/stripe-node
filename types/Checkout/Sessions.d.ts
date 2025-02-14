@@ -82,7 +82,7 @@ declare module 'stripe' {
         /**
          * Information about the customer collected within the Checkout Session.
          */
-        collected_information: Session.CollectedInformation | null;
+        collected_information?: Session.CollectedInformation | null;
 
         /**
          * Results of `consent_collection` for this session.
@@ -421,7 +421,7 @@ declare module 'stripe' {
           /**
            * Shipping information for this Checkout Session.
            */
-          shipping_details: CollectedInformation.ShippingDetails | null;
+          shipping_details?: CollectedInformation.ShippingDetails | null;
 
           /**
            * Customer's tax ids for this Checkout Session.
