@@ -30,7 +30,7 @@ declare module 'stripe' {
         provided_details?: VerificationSessionCreateParams.ProvidedDetails;
 
         /**
-         * Token referencing a Customer resource.
+         * Customer ID
          */
         related_customer?: string;
 
