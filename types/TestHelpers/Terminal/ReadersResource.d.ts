@@ -69,6 +69,15 @@ declare module 'stripe' {
       }
 
       namespace Terminal {
+        interface ReaderTimeoutInputCollectionParams {
+          /**
+           * Specifies which fields in the response should be expanded.
+           */
+          expand?: Array<string>;
+        }
+      }
+
+      namespace Terminal {
         class ReadersResource {
           /**
            * Presents a payment method on a simulated reader. Can be used to simulate accepting a payment, saving a card or refunding a transaction.
@@ -92,6 +101,19 @@ declare module 'stripe' {
             options?: RequestOptions
           ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
           succeedInputCollection(
+            id: string,
+            options?: RequestOptions
+          ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+
+          /**
+           * Completes an input collection with a timeout error on a simulated reader.
+           */
+          timeoutInputCollection(
+            id: string,
+            params?: ReaderTimeoutInputCollectionParams,
+            options?: RequestOptions
+          ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+          timeoutInputCollection(
             id: string,
             options?: RequestOptions
           ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
