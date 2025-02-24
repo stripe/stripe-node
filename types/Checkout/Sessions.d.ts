@@ -80,6 +80,11 @@ declare module 'stripe' {
         client_secret: string | null;
 
         /**
+         * Information about the customer collected within the Checkout Session.
+         */
+        collected_information?: Session.CollectedInformation | null;
+
+        /**
          * Results of `consent_collection` for this session.
          */
         consent: Session.Consent | null;
@@ -142,7 +147,7 @@ declare module 'stripe' {
         /**
          * List of coupons and promotion codes attached to the Checkout Session.
          */
-        discounts?: Array<Session.Discount> | null;
+        discounts: Array<Session.Discount> | null;
 
         /**
          * The timestamp at which the Checkout Session will expire.
@@ -389,6 +394,39 @@ declare module 'stripe' {
         }
 
         type BillingAddressCollection = 'auto' | 'required';
+
+        interface CollectedInformation {
+          /**
+           * Shipping information for this Checkout Session.
+           */
+          shipping_details?: CollectedInformation.ShippingDetails | null;
+        }
+
+        namespace CollectedInformation {
+          interface ShippingDetails {
+            address?: Stripe.Address;
+
+            /**
+             * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+             */
+            carrier?: string | null;
+
+            /**
+             * Recipient name.
+             */
+            name?: string;
+
+            /**
+             * Recipient phone (including extension).
+             */
+            phone?: string | null;
+
+            /**
+             * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+             */
+            tracking_number?: string | null;
+          }
+        }
 
         interface Consent {
           /**
@@ -1046,6 +1084,11 @@ declare module 'stripe' {
             setup_future_usage?: AcssDebit.SetupFutureUsage;
 
             /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
+
+            /**
              * Bank account verification method.
              */
             verification_method?: AcssDebit.VerificationMethod;
@@ -1161,6 +1204,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
           }
 
           interface BacsDebit {
@@ -1176,6 +1224,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: BacsDebit.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
           }
 
           namespace BacsDebit {
@@ -1252,6 +1305,8 @@ declare module 'stripe' {
              */
             request_three_d_secure: Card.RequestThreeDSecure;
 
+            restrictions?: Card.Restrictions;
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -1291,6 +1346,21 @@ declare module 'stripe' {
             type RequestOvercapture = 'if_available' | 'never';
 
             type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+
+            interface Restrictions {
+              /**
+               * Specify the card brands to block in the Checkout Session. If a customer enters or selects a card belonging to a blocked brand, they can't complete the Session.
+               */
+              brands_blocked?: Array<Restrictions.BrandsBlocked>;
+            }
+
+            namespace Restrictions {
+              type BrandsBlocked =
+                | 'american_express'
+                | 'discover_global_network'
+                | 'mastercard'
+                | 'visa';
+            }
 
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
           }
@@ -1698,6 +1768,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: SepaDebit.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
           }
 
           namespace SepaDebit {
@@ -1744,6 +1819,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: UsBankAccount.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
 
             /**
              * Bank account verification method.
@@ -2121,9 +2201,9 @@ declare module 'stripe' {
             amount: number;
 
             /**
-             * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+             * Tax rates can be applied to [invoices](https://stripe.com/invoicing/taxes/tax-rates), [subscriptions](https://stripe.com/billing/taxes/tax-rates) and [Checkout Sessions](https://stripe.com/payments/checkout/use-manual-tax-rates) to collect tax.
              *
-             * Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
+             * Related guide: [Tax rates](https://stripe.com/billing/taxes/tax-rates)
              */
             rate: Stripe.TaxRate;
 
@@ -2269,9 +2349,9 @@ declare module 'stripe' {
               amount: number;
 
               /**
-               * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+               * Tax rates can be applied to [invoices](https://stripe.com/invoicing/taxes/tax-rates), [subscriptions](https://stripe.com/billing/taxes/tax-rates) and [Checkout Sessions](https://stripe.com/payments/checkout/use-manual-tax-rates) to collect tax.
                *
-               * Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
+               * Related guide: [Tax rates](https://stripe.com/billing/taxes/tax-rates)
                */
               rate: Stripe.TaxRate;
 

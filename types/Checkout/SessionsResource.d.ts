@@ -1217,6 +1217,11 @@ declare module 'stripe' {
             setup_future_usage?: AcssDebit.SetupFutureUsage;
 
             /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
+
+            /**
              * Verification method for the intent
              */
             verification_method?: AcssDebit.VerificationMethod;
@@ -1334,6 +1339,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
           }
 
           interface BacsDebit {
@@ -1352,6 +1362,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: BacsDebit.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
           }
 
           namespace BacsDebit {
@@ -1432,6 +1447,11 @@ declare module 'stripe' {
             request_three_d_secure?: Card.RequestThreeDSecure;
 
             /**
+             * Restrictions to apply to the card payment method. For example, you can block specific card brands.
+             */
+            restrictions?: Card.Restrictions;
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -1471,6 +1491,21 @@ declare module 'stripe' {
             type RequestOvercapture = 'if_available' | 'never';
 
             type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+
+            interface Restrictions {
+              /**
+               * Specify the card brands to block in the Checkout Session. If a customer enters or selects a card belonging to a blocked brand, they can't complete the Session.
+               */
+              brands_blocked?: Array<Restrictions.BrandsBlocked>;
+            }
+
+            namespace Restrictions {
+              type BrandsBlocked =
+                | 'american_express'
+                | 'discover_global_network'
+                | 'mastercard'
+                | 'visa';
+            }
 
             type SetupFutureUsage = 'off_session' | 'on_session';
           }
@@ -1935,6 +1970,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: SepaDebit.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
           }
 
           namespace SepaDebit {
@@ -1984,6 +2024,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: UsBankAccount.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
 
             /**
              * Verification method for the intent
@@ -2689,6 +2734,11 @@ declare module 'stripe' {
 
       interface SessionUpdateParams {
         /**
+         * Information about the customer collected within the Checkout Session.
+         */
+        collected_information?: SessionUpdateParams.CollectedInformation;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -2697,6 +2747,63 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+      }
+
+      namespace SessionUpdateParams {
+        interface CollectedInformation {
+          /**
+           * The shipping details to apply to this Session.
+           */
+          shipping_details?: CollectedInformation.ShippingDetails;
+        }
+
+        namespace CollectedInformation {
+          interface ShippingDetails {
+            /**
+             * The address of the customer
+             */
+            address: ShippingDetails.Address;
+
+            /**
+             * The name of customer
+             */
+            name: string;
+          }
+
+          namespace ShippingDetails {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
+        }
       }
 
       interface SessionListParams extends PaginationParams {

@@ -6,6 +6,8 @@ declare module 'stripe' {
       /**
        * A billing meter event summary represents an aggregated view of a customer's billing meter events within a specified timeframe. It indicates how much
        * usage was accrued by a customer for that period.
+       *
+       * Note: Meters events are aggregated asynchronously so the meter event summaries provide an eventually consistent view of the reported usage.
        */
       interface MeterEventSummary {
         /**

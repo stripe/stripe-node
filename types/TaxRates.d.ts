@@ -3,9 +3,9 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+     * Tax rates can be applied to [invoices](https://stripe.com/invoicing/taxes/tax-rates), [subscriptions](https://stripe.com/billing/taxes/tax-rates) and [Checkout Sessions](https://stripe.com/payments/checkout/use-manual-tax-rates) to collect tax.
      *
-     * Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
+     * Related guide: [Tax rates](https://stripe.com/billing/taxes/tax-rates)
      */
     interface TaxRate {
       /**
@@ -91,7 +91,7 @@ declare module 'stripe' {
       rate_type: TaxRate.RateType | null;
 
       /**
-       * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
+       * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2), without country prefix. For example, "NY" for New York, United States.
        */
       state: string | null;
 
