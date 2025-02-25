@@ -77,7 +77,7 @@ declare module 'stripe' {
       /**
        * ID of the Payment Record this Payment Attempt Record belongs to.
        */
-      payment_record: string;
+      payment_record: string | null;
 
       /**
        * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.

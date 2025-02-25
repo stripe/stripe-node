@@ -62,7 +62,7 @@ declare module 'stripe' {
       /**
        * ID of the latest Payment Attempt Record attached to this Payment Record.
        */
-      latest_payment_attempt_record: string;
+      latest_payment_attempt_record: string | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
