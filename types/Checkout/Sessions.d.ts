@@ -431,27 +431,12 @@ declare module 'stripe' {
 
         namespace CollectedInformation {
           interface ShippingDetails {
-            address?: Stripe.Address;
+            address: Stripe.Address;
 
             /**
-             * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+             * Customer name.
              */
-            carrier?: string | null;
-
-            /**
-             * Recipient name.
-             */
-            name?: string;
-
-            /**
-             * Recipient phone (including extension).
-             */
-            phone?: string | null;
-
-            /**
-             * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-             */
-            tracking_number?: string | null;
+            name: string;
           }
 
           interface TaxId {
