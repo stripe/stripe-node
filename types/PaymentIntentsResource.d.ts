@@ -2003,6 +2003,11 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<AcssDebit.SetupFutureUsage>;
 
           /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
+
+          /**
            * Bank account verification method.
            */
           verification_method?: AcssDebit.VerificationMethod;
@@ -2172,6 +2177,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<AuBecsDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace AuBecsDebit {
@@ -2196,6 +2206,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<BacsDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace BacsDebit {
@@ -3539,6 +3554,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<SepaDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace SepaDebit {
@@ -3670,6 +3690,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<UsBankAccount.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
 
           /**
            * Bank account verification method.
@@ -5791,6 +5816,11 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<AcssDebit.SetupFutureUsage>;
 
           /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
+
+          /**
            * Bank account verification method.
            */
           verification_method?: AcssDebit.VerificationMethod;
@@ -5960,6 +5990,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<AuBecsDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace AuBecsDebit {
@@ -5984,6 +6019,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<BacsDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace BacsDebit {
@@ -7327,6 +7367,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<SepaDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace SepaDebit {
@@ -7458,6 +7503,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<UsBankAccount.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
 
           /**
            * Bank account verification method.
@@ -10334,6 +10384,11 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<AcssDebit.SetupFutureUsage>;
 
           /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
+
+          /**
            * Bank account verification method.
            */
           verification_method?: AcssDebit.VerificationMethod;
@@ -10503,6 +10558,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<AuBecsDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace AuBecsDebit {
@@ -10527,6 +10587,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<BacsDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace BacsDebit {
@@ -11870,6 +11935,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<SepaDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace SepaDebit {
@@ -12001,6 +12071,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<UsBankAccount.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
 
           /**
            * Bank account verification method.
