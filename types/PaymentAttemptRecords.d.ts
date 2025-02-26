@@ -189,7 +189,7 @@ declare module 'stripe' {
         /**
          * The type of Payment Method used for this payment attempt.
          */
-        type: PaymentMethodDetails.Type;
+        type: string;
       }
 
       namespace PaymentMethodDetails {
@@ -393,8 +393,6 @@ declare module 'stripe' {
            */
           type: string | null;
         }
-
-        type Type = 'card' | 'custom';
       }
 
       interface ShippingDetails {
