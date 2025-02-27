@@ -1069,7 +1069,7 @@ declare module 'stripe' {
               /**
                * The client type that the end customer will pay from
                */
-              client: WechatPay.Client;
+              client?: WechatPay.Client;
 
               /**
                * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -2498,7 +2498,7 @@ declare module 'stripe' {
               /**
                * The client type that the end customer will pay from
                */
-              client: WechatPay.Client;
+              client?: WechatPay.Client;
 
               /**
                * Indicates that you intend to make future payments with this PaymentIntent's payment method.
