@@ -73,6 +73,16 @@ declare module 'stripe' {
         network_settlement_identifier: string;
 
         /**
+         * The total amount of any additional ad-hoc fees accessed by the card network.
+         */
+        other_fees_amount: number;
+
+        /**
+         * The total number of additional ad-hoc fees accessed by the card network.
+         */
+        other_fees_count: number;
+
+        /**
          * One of `international` or `uk_national_net`.
          */
         settlement_service: string;
