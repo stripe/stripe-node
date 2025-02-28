@@ -40,7 +40,7 @@ declare module 'stripe' {
         /**
          * The total interchange received as reimbursement for the transactions.
          */
-        interchange_fees: number;
+        interchange_fees_amount: number;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -55,7 +55,7 @@ declare module 'stripe' {
         /**
          * The total net amount required to settle with the network.
          */
-        net_total: number;
+        net_total_amount: number;
 
         /**
          * The card network for this settlement report. One of ["visa", "maestro"]
@@ -65,7 +65,7 @@ declare module 'stripe' {
         /**
          * The total amount of fees owed to the network.
          */
-        network_fees: number;
+        network_fees_amount: number;
 
         /**
          * The Settlement Identification Number assigned by the network.
@@ -93,14 +93,14 @@ declare module 'stripe' {
         status: Settlement.Status;
 
         /**
+         * The total transaction amount reflected in this settlement.
+         */
+        transaction_amount: number;
+
+        /**
          * The total number of transactions reflected in this settlement.
          */
         transaction_count: number;
-
-        /**
-         * The total transaction amount reflected in this settlement.
-         */
-        transaction_volume: number;
       }
 
       namespace Settlement {
