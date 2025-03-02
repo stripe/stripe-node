@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@nestjs/common": "^11.0.5",
-    "@nestjs/config": "^3.0.0",
+    "@nestjs/config": "^4.0.0",
     "@nestjs/core": "^11.0.5",
     "dotenv": "^16.3.1",
     "@nestjs/platform-express": "^11.0.7",
