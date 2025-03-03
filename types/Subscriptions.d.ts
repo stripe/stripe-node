@@ -172,7 +172,7 @@ declare module 'stripe' {
       next_pending_invoice_item_invoice: number | null;
 
       /**
-       * The account (if any) the charge was made on behalf of for charges associated with this subscription. See the Connect documentation for details.
+       * The account (if any) the charge was made on behalf of for charges associated with this subscription. See the [Connect documentation](https://stripe.com/docs/connect/subscriptions#on-behalf-of) for details.
        */
       on_behalf_of: string | Stripe.Account | null;
 
