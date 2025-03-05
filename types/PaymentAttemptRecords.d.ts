@@ -85,6 +85,11 @@ declare module 'stripe' {
       payment_reference: string | null;
 
       /**
+       * Indicates who reported the payment.
+       */
+      reported_by: PaymentAttemptRecord.ReportedBy;
+
+      /**
        * Shipping information for this payment.
        */
       shipping_details: PaymentAttemptRecord.ShippingDetails | null;
@@ -2023,6 +2028,8 @@ declare module 'stripe' {
 
         interface Zip {}
       }
+
+      type ReportedBy = 'self' | 'stripe';
 
       interface ShippingDetails {
         /**
