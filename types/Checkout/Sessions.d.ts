@@ -271,6 +271,11 @@ declare module 'stripe' {
         shipping_cost: Session.ShippingCost | null;
 
         /**
+         * Shipping information for this Checkout Session.
+         */
+        shipping_details: Session.ShippingDetails | null;
+
+        /**
          * The shipping rate options applied to this Session.
          */
         shipping_options: Array<Session.ShippingOption>;
@@ -2514,6 +2519,30 @@ declare module 'stripe' {
               | 'taxable_basis_reduced'
               | 'zero_rated';
           }
+        }
+
+        interface ShippingDetails {
+          address?: Stripe.Address;
+
+          /**
+           * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+           */
+          carrier?: string | null;
+
+          /**
+           * Recipient name.
+           */
+          name?: string;
+
+          /**
+           * Recipient phone (including extension).
+           */
+          phone?: string | null;
+
+          /**
+           * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+           */
+          tracking_number?: string | null;
         }
 
         interface ShippingOption {
