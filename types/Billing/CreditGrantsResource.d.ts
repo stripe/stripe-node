@@ -10,7 +10,7 @@ declare module 'stripe' {
         amount: CreditGrantCreateParams.Amount;
 
         /**
-         * Configuration specifying what this credit grant applies to.
+         * Configuration specifying what this credit grant applies to. We currently only support `metered` prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them.
          */
         applicability_config: CreditGrantCreateParams.ApplicabilityConfig;
 
@@ -48,6 +48,11 @@ declare module 'stripe' {
          * A descriptive name shown in the Dashboard.
          */
         name?: string;
+
+        /**
+         * The desired priority for applying this credit grant. If not specified, it will be set to the default value of 50. The highest priority is 0 and the lowest is 100.
+         */
+        priority?: number;
       }
 
       namespace CreditGrantCreateParams {
@@ -87,12 +92,12 @@ declare module 'stripe' {
         namespace ApplicabilityConfig {
           interface Scope {
             /**
-             * The price type that credit grants can apply to. We currently only support the `metered` price type.
+             * The price type that credit grants can apply to. We currently only support the `metered` price type. Cannot be used in combination with `prices`.
              */
-            price_type: 'metered';
+            price_type?: 'metered';
 
             /**
-             * A list of prices that the credit grant can apply to. We currently only support the `metered` prices.
+             * A list of prices that the credit grant can apply to. We currently only support the `metered` prices. Cannot be used in combination with `price_type`.
              */
             prices?: Array<Scope.Price>;
           }

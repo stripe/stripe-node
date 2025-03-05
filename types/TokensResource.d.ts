@@ -719,7 +719,7 @@ declare module 'stripe' {
         /**
          * Indicates if the person or any of their representatives, family members, or other closely related persons, declares that they hold or have held an important public job or function, in any jurisdiction.
          */
-        political_exposure?: Person.PoliticalExposure;
+        political_exposure?: string;
 
         /**
          * The person's registered address.
@@ -825,8 +825,6 @@ declare module 'stripe' {
             files?: Array<string>;
           }
         }
-
-        type PoliticalExposure = 'existing' | 'none';
 
         interface Relationship {
           /**
