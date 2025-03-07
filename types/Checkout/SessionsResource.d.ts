@@ -3254,7 +3254,7 @@ declare module 'stripe' {
 
       class SessionsResource {
         /**
-         * Creates a Session object.
+         * Creates a Checkout Session object.
          */
         create(
           params?: SessionCreateParams,
@@ -3265,7 +3265,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 
         /**
-         * Retrieves a Session object.
+         * Retrieves a Checkout Session object.
          */
         retrieve(
           id: string,
@@ -3278,7 +3278,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 
         /**
-         * Updates a Session object.
+         * Updates a Checkout Session object.
          */
         update(
           id: string,
@@ -3296,9 +3296,9 @@ declare module 'stripe' {
         list(options?: RequestOptions): ApiListPromise<Stripe.Checkout.Session>;
 
         /**
-         * A Session can be expired when it is in one of these statuses: open
+         * A Checkout Session can be expired when it is in one of these statuses: open
          *
-         * After it expires, a customer can't complete a Session and customers loading the Session see a message saying the Session is expired.
+         * After it expires, a customer can't complete a Checkout Session and customers loading the Checkout Session see a message saying the Checkout Session is expired.
          */
         expire(
           id: string,
