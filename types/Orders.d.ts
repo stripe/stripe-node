@@ -311,6 +311,11 @@ declare module 'stripe' {
               setup_future_usage?: AcssDebit.SetupFutureUsage;
 
               /**
+               * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+               */
+              target_date?: string;
+
+              /**
                * Bank account verification method.
                */
               verification_method?: AcssDebit.VerificationMethod;
@@ -732,6 +737,11 @@ declare module 'stripe' {
                * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
                */
               setup_future_usage?: SepaDebit.SetupFutureUsage;
+
+              /**
+               * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+               */
+              target_date?: string;
             }
 
             namespace SepaDebit {

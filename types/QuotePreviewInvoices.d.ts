@@ -70,7 +70,7 @@ declare module 'stripe' {
       amount_due: number;
 
       /**
-       * Amount that was overpaid on the invoice. Overpayments are debited to the customer's credit balance.
+       * Amount that was overpaid on the invoice. The amount overpaid is credited to the customer's credit balance.
        */
       amount_overpaid?: number;
 
@@ -381,6 +381,9 @@ declare module 'stripe' {
 
       status_transitions: QuotePreviewInvoice.StatusTransitions;
 
+      /**
+       * The subscription that this invoice was prepared for, if any.
+       */
       subscription: string | Stripe.Subscription | null;
 
       /**
@@ -1039,6 +1042,7 @@ declare module 'stripe' {
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'
           | 'setup_intent_mandate_invalid'
+          | 'setup_intent_mobile_wallet_unsupported'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
           | 'shipping_address_invalid'

@@ -109,16 +109,6 @@ declare module 'stripe' {
       period: InvoiceItem.Period;
 
       /**
-       * If the invoice item is a proration, the plan of the subscription that the proration was computed for.
-       */
-      plan: Stripe.Plan | null;
-
-      /**
-       * The price of the invoice item.
-       */
-      price: Stripe.Price | null;
-
-      /**
        * Whether the invoice item was created automatically as a proration adjustment when the customer switched plans.
        */
       proration: boolean;

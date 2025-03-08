@@ -55,7 +55,7 @@ declare module 'stripe' {
       cancel_at: number | null;
 
       /**
-       * Whether this subscription will (if `status=active`) or did (if `status=canceled`) cancel at the end of the current billing period.
+       * Whether this subscription will (if `status=active`) or did (if `status=canceled`) cancel at the end of the current billing period. This field is deprecated in a new version, please use `cancel_at` instead.
        */
       cancel_at_period_end: boolean;
 
@@ -172,7 +172,7 @@ declare module 'stripe' {
       next_pending_invoice_item_invoice: number | null;
 
       /**
-       * The account (if any) the charge was made on behalf of for charges associated with this subscription. See the Connect documentation for details.
+       * The account (if any) the charge was made on behalf of for charges associated with this subscription. See the [Connect documentation](https://stripe.com/docs/connect/subscriptions#on-behalf-of) for details.
        */
       on_behalf_of: string | Stripe.Account | null;
 

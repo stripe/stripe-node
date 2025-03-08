@@ -82,7 +82,7 @@ declare module 'stripe' {
         /**
          * Information about the customer collected within the Checkout Session.
          */
-        collected_information?: Session.CollectedInformation | null;
+        collected_information: Session.CollectedInformation | null;
 
         /**
          * Results of `consent_collection` for this session.
@@ -271,11 +271,6 @@ declare module 'stripe' {
         shipping_cost: Session.ShippingCost | null;
 
         /**
-         * Shipping information for this Checkout Session.
-         */
-        shipping_details: Session.ShippingDetails | null;
-
-        /**
          * The shipping rate options applied to this Session.
          */
         shipping_options: Array<Session.ShippingOption>;
@@ -421,7 +416,7 @@ declare module 'stripe' {
           /**
            * Shipping information for this Checkout Session.
            */
-          shipping_details?: CollectedInformation.ShippingDetails | null;
+          shipping_details: CollectedInformation.ShippingDetails | null;
 
           /**
            * Customer's tax ids for this Checkout Session.
@@ -431,27 +426,12 @@ declare module 'stripe' {
 
         namespace CollectedInformation {
           interface ShippingDetails {
-            address?: Stripe.Address;
+            address: Stripe.Address;
 
             /**
-             * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+             * Customer name.
              */
-            carrier?: string | null;
-
-            /**
-             * Recipient name.
-             */
-            name?: string;
-
-            /**
-             * Recipient phone (including extension).
-             */
-            phone?: string | null;
-
-            /**
-             * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-             */
-            tracking_number?: string | null;
+            name: string;
           }
 
           interface TaxId {
@@ -1230,6 +1210,11 @@ declare module 'stripe' {
             setup_future_usage?: AcssDebit.SetupFutureUsage;
 
             /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
+
+            /**
              * Bank account verification method.
              */
             verification_method?: AcssDebit.VerificationMethod;
@@ -1345,6 +1330,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
           }
 
           interface BacsDebit {
@@ -1360,6 +1350,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: BacsDebit.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
           }
 
           namespace BacsDebit {
@@ -1994,6 +1989,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: SepaDebit.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
           }
 
           namespace SepaDebit {
@@ -2040,6 +2040,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: UsBankAccount.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
 
             /**
              * Bank account verification method.
@@ -2509,30 +2514,6 @@ declare module 'stripe' {
               | 'taxable_basis_reduced'
               | 'zero_rated';
           }
-        }
-
-        interface ShippingDetails {
-          address?: Stripe.Address;
-
-          /**
-           * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-           */
-          carrier?: string | null;
-
-          /**
-           * Recipient name.
-           */
-          name?: string;
-
-          /**
-           * Recipient phone (including extension).
-           */
-          phone?: string | null;
-
-          /**
-           * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-           */
-          tracking_number?: string | null;
         }
 
         interface ShippingOption {

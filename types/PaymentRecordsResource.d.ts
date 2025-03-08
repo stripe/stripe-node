@@ -26,11 +26,6 @@ declare module 'stripe' {
       payment_method_details: PaymentRecordReportPaymentParams.PaymentMethodDetails;
 
       /**
-       * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
-       */
-      payment_reference: string;
-
-      /**
        * Customer information for this payment.
        */
       customer_details?: PaymentRecordReportPaymentParams.CustomerDetails;
@@ -69,6 +64,11 @@ declare module 'stripe' {
        * The outcome of the reported payment.
        */
       outcome?: PaymentRecordReportPaymentParams.Outcome;
+
+      /**
+       * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+       */
+      payment_reference?: string;
 
       /**
        * Shipping information for this payment.
