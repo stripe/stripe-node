@@ -64,6 +64,11 @@ declare module 'stripe' {
         name: string | null;
 
         /**
+         * The priority for applying this credit grant. The highest priority is 0 and the lowest is 100.
+         */
+        priority?: number | null;
+
+        /**
          * ID of the test clock this credit grant belongs to.
          */
         test_clock: string | Stripe.TestHelpers.TestClock | null;
@@ -113,12 +118,12 @@ declare module 'stripe' {
         namespace ApplicabilityConfig {
           interface Scope {
             /**
-             * The price type that credit grants can apply to. We currently only support the `metered` price type. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them.
+             * The price type that credit grants can apply to. We currently only support the `metered` price type. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `prices`.
              */
             price_type?: 'metered';
 
             /**
-             * The prices that credit grants can apply to. We currently only support `metered` prices. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them.
+             * The prices that credit grants can apply to. We currently only support `metered` prices. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `price_type`.
              */
             prices?: Array<Scope.Price>;
           }

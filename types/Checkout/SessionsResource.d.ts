@@ -240,9 +240,10 @@ declare module 'stripe' {
         shipping_options?: Array<SessionCreateParams.ShippingOption>;
 
         /**
-         * Describes the type of transaction being performed by Checkout in order to customize
-         * relevant text on the page, such as the submit button. `submit_type` can only be
-         * specified on Checkout Sessions in `payment` mode. If blank or `auto`, `pay` is used.
+         * Describes the type of transaction being performed by Checkout in order
+         * to customize relevant text on the page, such as the submit button.
+         *  `submit_type` can only be specified on Checkout Sessions in
+         * `payment` or `subscription` mode. If blank or `auto`, `pay` is used.
          */
         submit_type?: SessionCreateParams.SubmitType;
 
@@ -1234,6 +1235,11 @@ declare module 'stripe' {
             setup_future_usage?: AcssDebit.SetupFutureUsage;
 
             /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
+
+            /**
              * Verification method for the intent
              */
             verification_method?: AcssDebit.VerificationMethod;
@@ -1351,6 +1357,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
           }
 
           interface BacsDebit {
@@ -1369,6 +1380,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: BacsDebit.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
           }
 
           namespace BacsDebit {
@@ -2075,6 +2091,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: SepaDebit.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
           }
 
           namespace SepaDebit {
@@ -2124,6 +2145,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: UsBankAccount.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
 
             /**
              * Verification method for the intent
@@ -2892,7 +2918,7 @@ declare module 'stripe' {
          *
          * To update an existing line item, specify its `id` along with the new values of the fields to update.
          *
-         * To add a new line item, specify a `price` and `quantity`. We don't currently support recurring prices.
+         * To add a new line item, specify a `price` and `quantity`.
          *
          * To remove an existing line item, omit the line item's ID from the retransmitted array.
          *
@@ -3228,7 +3254,7 @@ declare module 'stripe' {
 
       class SessionsResource {
         /**
-         * Creates a Session object.
+         * Creates a Checkout Session object.
          */
         create(
           params?: SessionCreateParams,
@@ -3239,7 +3265,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 
         /**
-         * Retrieves a Session object.
+         * Retrieves a Checkout Session object.
          */
         retrieve(
           id: string,
@@ -3252,7 +3278,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 
         /**
-         * Updates a Session object.
+         * Updates a Checkout Session object.
          */
         update(
           id: string,
@@ -3270,9 +3296,9 @@ declare module 'stripe' {
         list(options?: RequestOptions): ApiListPromise<Stripe.Checkout.Session>;
 
         /**
-         * A Session can be expired when it is in one of these statuses: open
+         * A Checkout Session can be expired when it is in one of these statuses: open
          *
-         * After it expires, a customer can't complete a Session and customers loading the Session see a message saying the Session is expired.
+         * After it expires, a customer can't complete a Checkout Session and customers loading the Checkout Session see a message saying the Checkout Session is expired.
          */
         expire(
           id: string,
