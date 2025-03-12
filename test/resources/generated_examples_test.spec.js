@@ -1382,13 +1382,6 @@ describe('Generated tests', function() {
     expect(invoice).not.to.be.null;
   });
 
-  it('test_invoices_upcoming_get', async function() {
-    const upcomingInvoice = await stripe.invoices.retrieveUpcoming({
-      customer: 'cus_9utnxg47pWjV1e',
-    });
-    expect(upcomingInvoice).not.to.be.null;
-  });
-
   it('test_invoices_void_post', async function() {
     const invoice = await stripe.invoices.voidInvoice('in_xxxxxxxxxxxxx');
     expect(invoice).not.to.be.null;
