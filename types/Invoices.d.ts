@@ -60,7 +60,7 @@ declare module 'stripe' {
       /**
        * Unique identifier for the object. This property is always present unless the invoice is an upcoming invoice. See [Retrieve an upcoming invoice](https://stripe.com/docs/api/invoices/upcoming) for more details.
        */
-      id: string;
+      id?: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
@@ -90,7 +90,7 @@ declare module 'stripe' {
       amount_due: number;
 
       /**
-       * Amount that was overpaid on the invoice. Overpayments are debited to the customer's credit balance.
+       * Amount that was overpaid on the invoice. The amount overpaid is credited to the customer's credit balance.
        */
       amount_overpaid?: number;
 
@@ -257,11 +257,6 @@ declare module 'stripe' {
        * An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
        */
       description: string | null;
-
-      /**
-       * Describes the current discount applied to this invoice, if there is one. Not populated if there are multiple discounts.
-       */
-      discount: Stripe.Discount | null;
 
       /**
        * The discounts applied to the invoice. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
@@ -1065,6 +1060,7 @@ declare module 'stripe' {
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'
           | 'setup_intent_mandate_invalid'
+          | 'setup_intent_mobile_wallet_unsupported'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
           | 'shipping_address_invalid'

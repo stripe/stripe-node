@@ -24,11 +24,6 @@ declare module 'stripe' {
       amount: number;
 
       /**
-       * The integer amount in cents (or local equivalent) representing the amount for this line item, excluding all tax and discounts.
-       */
-      amount_excluding_tax: number | null;
-
-      /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
       currency: string;
@@ -139,11 +134,6 @@ declare module 'stripe' {
        * A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
        */
       type: InvoiceLineItem.Type;
-
-      /**
-       * The amount in cents (or local equivalent) representing the unit amount for this line item, excluding all tax and discounts.
-       */
-      unit_amount_excluding_tax: string | null;
     }
 
     namespace InvoiceLineItem {
