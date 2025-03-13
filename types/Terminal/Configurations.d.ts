@@ -55,7 +55,7 @@ declare module 'stripe' {
       namespace Configuration {
         interface BbposWiseposE {
           /**
-           * A File ID representing an image you would like displayed on the reader.
+           * A File ID representing an image to display on the reader
            */
           splashscreen?: string | Stripe.File;
         }
@@ -81,7 +81,7 @@ declare module 'stripe' {
 
         interface StripeS700 {
           /**
-           * A File ID representing an image you would like displayed on the reader.
+           * A File ID representing an image to display on the reader
            */
           splashscreen?: string | Stripe.File;
         }
@@ -396,7 +396,7 @@ declare module 'stripe' {
 
         interface VerifoneP400 {
           /**
-           * A File ID representing an image you would like displayed on the reader.
+           * A File ID representing an image to display on the reader
            */
           splashscreen?: string | Stripe.File;
         }

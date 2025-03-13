@@ -53,7 +53,7 @@ declare module 'stripe' {
       namespace ConfigurationCreateParams {
         interface BbposWiseposE {
           /**
-           * A File ID representing an image you would like displayed on the reader.
+           * A File ID representing an image to display on the reader
            */
           splashscreen?: Stripe.Emptyable<string>;
         }
@@ -601,7 +601,7 @@ declare module 'stripe' {
       namespace ConfigurationUpdateParams {
         interface BbposWiseposE {
           /**
-           * A File ID representing an image you would like displayed on the reader.
+           * A File ID representing an image to display on the reader
            */
           splashscreen?: Stripe.Emptyable<string>;
         }
