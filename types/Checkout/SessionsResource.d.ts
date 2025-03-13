@@ -3184,6 +3184,63 @@ declare module 'stripe' {
         }
       }
 
+      namespace SessionUpdateParams {
+        interface CollectedInformation {
+          /**
+           * The shipping details to apply to this Session.
+           */
+          shipping_details?: CollectedInformation.ShippingDetails;
+        }
+
+        namespace CollectedInformation {
+          interface ShippingDetails {
+            /**
+             * The address of the customer
+             */
+            address: ShippingDetails.Address;
+
+            /**
+             * The name of customer
+             */
+            name: string;
+          }
+
+          namespace ShippingDetails {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
+        }
+      }
+
       interface SessionListParams extends PaginationParams {
         /**
          * Only return Checkout Sessions that were created during the given date interval.
