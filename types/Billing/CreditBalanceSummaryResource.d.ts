@@ -43,7 +43,21 @@ declare module 'stripe' {
             /**
              * The price type that credit grants can apply to. We currently only support the `metered` price type.
              */
-            price_type: 'metered';
+            price_type?: 'metered';
+
+            /**
+             * A list of prices that the credit grant can apply to. We currently only support the `metered` prices.
+             */
+            prices?: Array<ApplicabilityScope.Price>;
+          }
+
+          namespace ApplicabilityScope {
+            interface Price {
+              /**
+               * The price ID this credit grant should apply to.
+               */
+              id: string;
+            }
           }
 
           type Type = 'applicability_scope' | 'credit_grant';
