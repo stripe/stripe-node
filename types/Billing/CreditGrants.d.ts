@@ -64,6 +64,11 @@ declare module 'stripe' {
         name: string | null;
 
         /**
+         * The priority for applying this credit grant. The highest priority is 0 and the lowest is 100.
+         */
+        priority?: number | null;
+
+        /**
          * ID of the test clock this credit grant belongs to.
          */
         test_clock: string | Stripe.TestHelpers.TestClock | null;
