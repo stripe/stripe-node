@@ -18,6 +18,9 @@ declare module 'stripe' {
        */
       cash_balance?: CustomerCreateParams.CashBalance;
 
+      /**
+       * If you provide a coupon code, the customer will have a discount applied on all recurring charges. Charges you create through the API will not have the discount.
+       */
       coupon?: string;
 
       /**
@@ -358,6 +361,9 @@ declare module 'stripe' {
        */
       cash_balance?: CustomerUpdateParams.CashBalance;
 
+      /**
+       * If you provide a coupon code, the customer will have a discount applied on all recurring charges. Charges you create through the API will not have the discount.
+       */
       coupon?: string;
 
       /**

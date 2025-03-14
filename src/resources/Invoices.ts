@@ -42,11 +42,6 @@ export const Invoices = StripeResource.extend({
     fullPath: '/v1/invoices/{invoice}/payments',
     methodType: 'list',
   }),
-  listUpcomingLines: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/invoices/upcoming/lines',
-    methodType: 'list',
-  }),
   markUncollectible: stripeMethod({
     method: 'POST',
     fullPath: '/v1/invoices/{invoice}/mark_uncollectible',
@@ -60,10 +55,6 @@ export const Invoices = StripeResource.extend({
     method: 'GET',
     fullPath: '/v1/invoices/{invoice}/payments/{invoice_payment}',
   }),
-  retrieveUpcoming: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/invoices/upcoming',
-  }),
   search: stripeMethod({
     method: 'GET',
     fullPath: '/v1/invoices/search',
@@ -72,6 +63,12 @@ export const Invoices = StripeResource.extend({
   sendInvoice: stripeMethod({
     method: 'POST',
     fullPath: '/v1/invoices/{invoice}/send',
+  }),
+  upcoming: stripeMethod({method: 'GET', fullPath: '/v1/invoices/upcoming'}),
+  upcomingLines: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/invoices/upcoming/lines',
+    methodType: 'list',
   }),
   updateLines: stripeMethod({
     method: 'POST',

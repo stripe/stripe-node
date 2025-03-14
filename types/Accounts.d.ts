@@ -1436,7 +1436,7 @@ declare module 'stripe' {
         /**
          * Represents the rejected reason of the account. Empty if account is not rejected, or rejected by Stripe. Please see [this page for more details](https://stripe.com/docs/connect/)
          */
-        rejected_reason?: RiskControls.RejectedReason;
+        rejected_reason?: RiskControls.RejectedReason | null;
       }
 
       namespace RiskControls {
@@ -1629,6 +1629,15 @@ declare module 'stripe' {
            * The list of default Account Tax IDs to automatically include on invoices. Account Tax IDs get added when an invoice is finalized.
            */
           default_account_tax_ids: Array<string | Stripe.TaxId> | null;
+
+          /**
+           * Whether payment methods should be saved when a payment is completed for a one-time invoices on a hosted invoice page.
+           */
+          hosted_payment_method_save?: Invoices.HostedPaymentMethodSave | null;
+        }
+
+        namespace Invoices {
+          type HostedPaymentMethodSave = 'always' | 'never' | 'offer';
         }
 
         interface Payments {

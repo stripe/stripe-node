@@ -151,11 +151,6 @@ declare module 'stripe' {
       subtotal_excluding_tax: number | null;
 
       /**
-       * The aggregate amounts calculated per tax rate for all line items.
-       */
-      tax_amounts: Array<CreditNote.TaxAmount>;
-
-      /**
        * The integer amount in cents (or local equivalent) representing the total amount of the credit note, including tax and all discount.
        */
       total: number;
@@ -308,52 +303,6 @@ declare module 'stripe' {
       }
 
       type Status = 'issued' | 'void';
-
-      interface TaxAmount {
-        /**
-         * The amount, in cents (or local equivalent), of the tax.
-         */
-        amount: number;
-
-        /**
-         * Whether this tax amount is inclusive or exclusive.
-         */
-        inclusive: boolean;
-
-        /**
-         * The tax rate that was applied to get this tax amount.
-         */
-        tax_rate: string | Stripe.TaxRate;
-
-        /**
-         * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
-         */
-        taxability_reason: TaxAmount.TaxabilityReason | null;
-
-        /**
-         * The amount on which tax is calculated, in cents (or local equivalent).
-         */
-        taxable_amount: number | null;
-      }
-
-      namespace TaxAmount {
-        type TaxabilityReason =
-          | 'customer_exempt'
-          | 'not_collecting'
-          | 'not_subject_to_tax'
-          | 'not_supported'
-          | 'portion_product_exempt'
-          | 'portion_reduced_rated'
-          | 'portion_standard_rated'
-          | 'product_exempt'
-          | 'product_exempt_holiday'
-          | 'proportionally_rated'
-          | 'reduced_rated'
-          | 'reverse_charge'
-          | 'standard_rated'
-          | 'taxable_basis_reduced'
-          | 'zero_rated';
-      }
 
       type Type = 'post_payment' | 'pre_payment';
     }
