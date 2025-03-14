@@ -43,7 +43,7 @@ declare module 'stripe' {
             /**
              * The price type that credit grants can apply to. We currently only support the `metered` price type.
              */
-            price_type: 'metered';
+            price_type?: 'metered';
 
             /**
              * A list of prices that the credit grant can apply to. We currently only support the `metered` prices.
