@@ -612,8 +612,7 @@ describe('Generated tests', function() {
   it('test_coupons_post', async function() {
     const coupon = await stripe.coupons.create({
       percent_off: 25.5,
-      duration: 'repeating',
-      duration_in_months: 3,
+      duration: 'once',
     });
     expect(coupon).not.to.be.null;
   });
