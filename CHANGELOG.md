@@ -1,5 +1,14 @@
 # Changelog
 
+## 17.8.0-beta.1 - 2025-03-18
+* [#2271](https://github.com/stripe/stripe-node/pull/2271) Beta SDK updates between Open API versions 1473 and 1505
+  
+  * Add support for `succeed_input_collection` and `timeout_input_collection` test helper methods on resource `Terminal.Reader`
+  * Change type of `Account.risk_controls.rejected_reason` from enum to enum | null
+  * Change `Checkout.Session.collected_information.shipping_details` and `Checkout.Session.collected_information` to be required
+  * Add support for `target_date` on `Order.payment.settings.payment_method_options.acss_debit`, `Order.payment.settings.payment_method_options.sepa_debit`, `OrderCreateParams.payment.settings.payment_method_options.acss_debit`, `OrderCreateParams.payment.settings.payment_method_options.sepa_debit`, `OrderUpdateParams.payment.settings.payment_method_options.acss_debit`, and `OrderUpdateParams.payment.settings.payment_method_options.sepa_debit`
+* [#2272](https://github.com/stripe/stripe-node/pull/2272) Merge master
+
 ## 17.7.0-beta.1 - 2025-02-07
 * [#2254](https://github.com/stripe/stripe-node/pull/2254) Update generated code for beta
   * Add support for `rejected_reason` on `Account.risk_controls`
