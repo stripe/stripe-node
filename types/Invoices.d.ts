@@ -92,7 +92,7 @@ declare module 'stripe' {
       /**
        * Amount that was overpaid on the invoice. The amount overpaid is credited to the customer's credit balance.
        */
-      amount_overpaid?: number;
+      amount_overpaid: number;
 
       /**
        * The amount, in cents (or local equivalent), that was paid.

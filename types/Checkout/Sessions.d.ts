@@ -232,7 +232,7 @@ declare module 'stripe' {
          *
          * For specific permissions, please refer to their dedicated subsections, such as `permissions.update.shipping_details`.
          */
-        permissions?: Session.Permissions | null;
+        permissions: Session.Permissions | null;
 
         phone_number_collection?: Session.PhoneNumberCollection;
 
@@ -2130,7 +2130,16 @@ declare module 'stripe' {
           /**
            * Permissions for updating the Checkout Session.
            */
-          update: Permissions.Update | null;
+          update?: Permissions.Update | null;
+
+          /**
+           * Determines which entity is allowed to update the shipping details.
+           *
+           * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
+           *
+           * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+           */
+          update_shipping_details: Permissions.UpdateShippingDetails | null;
         }
 
         namespace Permissions {
@@ -2159,6 +2168,8 @@ declare module 'stripe' {
 
             type ShippingDetails = 'client_only' | 'server_only';
           }
+
+          type UpdateShippingDetails = 'client_only' | 'server_only';
         }
 
         interface PhoneNumberCollection {
