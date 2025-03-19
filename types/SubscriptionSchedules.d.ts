@@ -337,11 +337,6 @@ declare module 'stripe' {
         collection_method: Phase.CollectionMethod | null;
 
         /**
-         * ID of the coupon to use during this phase of the subscription schedule.
-         */
-        coupon: string | Stripe.Coupon | Stripe.DeletedCoupon | null;
-
-        /**
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
         currency: string;

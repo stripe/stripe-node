@@ -161,6 +161,8 @@ declare module 'stripe' {
 
         bancontact?: PaymentMethodPreview.Bancontact;
 
+        billie?: PaymentMethodPreview.Billie;
+
         billing_details: PaymentMethodPreview.BillingDetails;
 
         blik?: PaymentMethodPreview.Blik;
@@ -239,6 +241,8 @@ declare module 'stripe' {
         revolut_pay?: PaymentMethodPreview.RevolutPay;
 
         samsung_pay?: PaymentMethodPreview.SamsungPay;
+
+        satispay?: PaymentMethodPreview.Satispay;
 
         sepa_debit?: PaymentMethodPreview.SepaDebit;
 
@@ -337,6 +341,8 @@ declare module 'stripe' {
         }
 
         interface Bancontact {}
+
+        interface Billie {}
 
         interface BillingDetails {
           /**
@@ -1314,6 +1320,11 @@ declare module 'stripe' {
 
         interface NaverPay {
           /**
+           * Uniquely identifies this particular Naver Pay account. You can use this attribute to check whether two Naver Pay accounts are the same.
+           */
+          buyer_id?: string | null;
+
+          /**
            * Whether to fund this transaction with Naver Pay points or a card.
            */
           funding: NaverPay.Funding;
@@ -1447,6 +1458,8 @@ declare module 'stripe' {
 
         interface SamsungPay {}
 
+        interface Satispay {}
+
         interface SepaDebit {
           /**
            * Bank code of bank associated with the bank account.
@@ -1516,6 +1529,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'billie'
           | 'blik'
           | 'boleto'
           | 'card'
@@ -1552,6 +1566,7 @@ declare module 'stripe' {
           | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
+          | 'satispay'
           | 'sepa_debit'
           | 'shopeepay'
           | 'sofort'

@@ -55,11 +55,6 @@ declare module 'stripe' {
       cancel_at: number | null;
 
       /**
-       * Whether this subscription will (if `status=active`) or did (if `status=canceled`) cancel at the end of the current billing period.
-       */
-      cancel_at_period_end: boolean;
-
-      /**
        * If the subscription has been canceled, the date of that cancellation. If the subscription was canceled with `cancel_at_period_end`, `canceled_at` will reflect the time of the most recent update request, not the end of the subscription period when the subscription is automatically moved to a canceled state.
        */
       canceled_at: number | null;
@@ -83,16 +78,6 @@ declare module 'stripe' {
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
       currency: string;
-
-      /**
-       * End of the current period that the subscription has been invoiced for. At the end of this period, a new invoice will be created.
-       */
-      current_period_end: number;
-
-      /**
-       * Start of the current period that the subscription has been invoiced for.
-       */
-      current_period_start: number;
 
       /**
        * ID of the customer who owns the subscription.
@@ -123,11 +108,6 @@ declare module 'stripe' {
        * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
        */
       description: string | null;
-
-      /**
-       * Describes the current discount applied to this subscription, if there is one. When billing, a discount applied to a subscription overrides a discount applied on a customer-wide basis. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
-       */
-      discount: Stripe.Discount | null;
 
       /**
        * The discounts applied to the subscription. Subscription item discounts are applied before subscription discounts. Use `expand[]=discounts` to expand each discount.
@@ -172,7 +152,7 @@ declare module 'stripe' {
       next_pending_invoice_item_invoice: number | null;
 
       /**
-       * The account (if any) the charge was made on behalf of for charges associated with this subscription. See the Connect documentation for details.
+       * The account (if any) the charge was made on behalf of for charges associated with this subscription. See the [Connect documentation](https://stripe.com/docs/connect/subscriptions#on-behalf-of) for details.
        */
       on_behalf_of: string | Stripe.Account | null;
 

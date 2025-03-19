@@ -293,6 +293,11 @@ declare module 'stripe' {
       namespace CustomField {
         interface Dropdown {
           /**
+           * The value that will pre-fill on the payment page.
+           */
+          default_value: string | null;
+
+          /**
            * The options available for the customer to select. Up to 200 options allowed.
            */
           options: Array<Dropdown.Option>;
@@ -326,6 +331,11 @@ declare module 'stripe' {
 
         interface Numeric {
           /**
+           * The value that will pre-fill the field on the payment page.
+           */
+          default_value: string | null;
+
+          /**
            * The maximum character length constraint for the customer's input.
            */
           maximum_length: number | null;
@@ -337,6 +347,11 @@ declare module 'stripe' {
         }
 
         interface Text {
+          /**
+           * The value that will pre-fill the field on the payment page.
+           */
+          default_value: string | null;
+
           /**
            * The maximum character length constraint for the customer's input.
            */
@@ -546,6 +561,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'billie'
         | 'blik'
         | 'boleto'
         | 'card'
@@ -572,6 +588,7 @@ declare module 'stripe' {
         | 'promptpay'
         | 'qris'
         | 'rechnung'
+        | 'satispay'
         | 'sepa_debit'
         | 'shopeepay'
         | 'sofort'

@@ -582,7 +582,7 @@ declare module 'stripe' {
             | 'webhook_timeout';
         }
 
-        type Status = 'closed' | 'pending' | 'reversed';
+        type Status = 'closed' | 'expired' | 'pending' | 'reversed';
 
         interface Treasury {
           /**

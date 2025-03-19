@@ -22,11 +22,6 @@ declare module 'stripe' {
       amount: number;
 
       /**
-       * The integer amount in cents (or local equivalent) representing the amount being credited for this line item, excluding all tax and discounts.
-       */
-      amount_excluding_tax: number | null;
-
-      /**
        * Description of the item being credited.
        */
       description: string | null;
@@ -62,11 +57,6 @@ declare module 'stripe' {
       quantity: number | null;
 
       /**
-       * The amount of tax calculated per tax rate for this line item
-       */
-      tax_amounts: Array<CreditNoteLineItem.TaxAmount>;
-
-      /**
        * The tax rates which apply to the line item.
        */
       tax_rates: Array<Stripe.TaxRate>;
@@ -85,11 +75,6 @@ declare module 'stripe' {
        * Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
        */
       unit_amount_decimal: string | null;
-
-      /**
-       * The amount in cents (or local equivalent) representing the unit amount being credited for this line item, excluding all tax and discounts.
-       */
-      unit_amount_excluding_tax: string | null;
     }
 
     namespace CreditNoteLineItem {
@@ -131,52 +116,6 @@ declare module 'stripe' {
 
       namespace PretaxCreditAmount {
         type Type = 'credit_balance_transaction' | 'discount';
-      }
-
-      interface TaxAmount {
-        /**
-         * The amount, in cents (or local equivalent), of the tax.
-         */
-        amount: number;
-
-        /**
-         * Whether this tax amount is inclusive or exclusive.
-         */
-        inclusive: boolean;
-
-        /**
-         * The tax rate that was applied to get this tax amount.
-         */
-        tax_rate: string | Stripe.TaxRate;
-
-        /**
-         * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
-         */
-        taxability_reason: TaxAmount.TaxabilityReason | null;
-
-        /**
-         * The amount on which tax is calculated, in cents (or local equivalent).
-         */
-        taxable_amount: number | null;
-      }
-
-      namespace TaxAmount {
-        type TaxabilityReason =
-          | 'customer_exempt'
-          | 'not_collecting'
-          | 'not_subject_to_tax'
-          | 'not_supported'
-          | 'portion_product_exempt'
-          | 'portion_reduced_rated'
-          | 'portion_standard_rated'
-          | 'product_exempt'
-          | 'product_exempt_holiday'
-          | 'proportionally_rated'
-          | 'reduced_rated'
-          | 'reverse_charge'
-          | 'standard_rated'
-          | 'taxable_basis_reduced'
-          | 'zero_rated';
       }
 
       type Type = 'custom_line_item' | 'invoice_line_item';

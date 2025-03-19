@@ -59,14 +59,14 @@ declare module 'stripe' {
       period?: InvoiceItemCreateParams.Period;
 
       /**
-       * The ID of the price object. One of `price` or `price_data` is required.
-       */
-      price?: string;
-
-      /**
-       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
        */
       price_data?: InvoiceItemCreateParams.PriceData;
+
+      /**
+       * The pricing information for the invoice item.
+       */
+      pricing?: InvoiceItemCreateParams.Pricing;
 
       /**
        * Non-negative integer. The quantity of units for the invoice item.
@@ -94,12 +94,7 @@ declare module 'stripe' {
       tax_rates?: Array<string>;
 
       /**
-       * The integer unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This `unit_amount` will be multiplied by the quantity to get the full amount. Passing in a negative `unit_amount` will reduce the `amount_due` on the invoice.
-       */
-      unit_amount?: number;
-
-      /**
-       * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+       * The decimal unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This `unit_amount_decimal` will be multiplied by the quantity to get the full amount. Passing in a negative `unit_amount_decimal` will reduce the `amount_due` on the invoice. Accepts at most 12 decimal places.
        */
       unit_amount_decimal?: string;
     }
@@ -209,6 +204,13 @@ declare module 'stripe' {
         type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
       }
 
+      interface Pricing {
+        /**
+         * The ID of the price object.
+         */
+        price?: string;
+      }
+
       type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
     }
 
@@ -261,14 +263,14 @@ declare module 'stripe' {
       period?: InvoiceItemUpdateParams.Period;
 
       /**
-       * The ID of the price object. One of `price` or `price_data` is required.
-       */
-      price?: string;
-
-      /**
-       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
        */
       price_data?: InvoiceItemUpdateParams.PriceData;
+
+      /**
+       * The pricing information for the invoice item.
+       */
+      pricing?: InvoiceItemUpdateParams.Pricing;
 
       /**
        * Non-negative integer. The quantity of units for the invoice item.
@@ -291,12 +293,7 @@ declare module 'stripe' {
       tax_rates?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * The integer unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
-       */
-      unit_amount?: number;
-
-      /**
-       * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+       * The decimal unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This `unit_amount_decimal` will be multiplied by the quantity to get the full amount. Passing in a negative `unit_amount_decimal` will reduce the `amount_due` on the invoice. Accepts at most 12 decimal places.
        */
       unit_amount_decimal?: string;
     }
@@ -404,6 +401,13 @@ declare module 'stripe' {
 
       namespace PriceData {
         type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      }
+
+      interface Pricing {
+        /**
+         * The ID of the price object.
+         */
+        price?: string;
       }
 
       type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';

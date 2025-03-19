@@ -410,6 +410,8 @@ declare module 'stripe' {
 
         bancontact?: PaymentMethodDetails.Bancontact;
 
+        billie?: PaymentMethodDetails.Billie;
+
         blik?: PaymentMethodDetails.Blik;
 
         boleto?: PaymentMethodDetails.Boleto;
@@ -481,6 +483,8 @@ declare module 'stripe' {
         revolut_pay?: PaymentMethodDetails.RevolutPay;
 
         samsung_pay?: PaymentMethodDetails.SamsungPay;
+
+        satispay?: PaymentMethodDetails.Satispay;
 
         sepa_credit_transfer?: PaymentMethodDetails.SepaCreditTransfer;
 
@@ -786,6 +790,8 @@ declare module 'stripe' {
         namespace Bancontact {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
         }
+
+        interface Billie {}
 
         interface Blik {
           /**
@@ -2262,6 +2268,8 @@ declare module 'stripe' {
            */
           buyer_id: string | null;
         }
+
+        interface Satispay {}
 
         interface SepaCreditTransfer {
           /**

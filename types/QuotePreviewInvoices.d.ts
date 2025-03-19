@@ -70,7 +70,7 @@ declare module 'stripe' {
       amount_due: number;
 
       /**
-       * Amount that was overpaid on the invoice. Overpayments are debited to the customer's credit balance.
+       * Amount that was overpaid on the invoice. The amount overpaid is credited to the customer's credit balance.
        */
       amount_overpaid?: number;
 
@@ -221,11 +221,6 @@ declare module 'stripe' {
       description: string | null;
 
       /**
-       * Describes the current discount applied to this invoice, if there is one. Not populated if there are multiple discounts.
-       */
-      discount: Stripe.Discount | null;
-
-      /**
        * The discounts applied to the invoice. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
        */
       discounts: Array<string | Stripe.Discount | Stripe.DeletedDiscount>;
@@ -307,11 +302,6 @@ declare module 'stripe' {
        */
       paid_out_of_band: boolean;
 
-      /**
-       * The PaymentIntent associated with this invoice. The PaymentIntent is generated when the invoice is finalized, and can then be used to pay the invoice. Note that voiding an invoice will cancel the PaymentIntent.
-       */
-      payment_intent: string | Stripe.PaymentIntent | null;
-
       payment_settings: QuotePreviewInvoice.PaymentSettings;
 
       /**
@@ -338,11 +328,6 @@ declare module 'stripe' {
        * Total amount of all pre-payment credit notes issued for this invoice.
        */
       pre_payment_credit_notes_amount: number;
-
-      /**
-       * The quote this invoice was generated from.
-       */
-      quote: string | Stripe.Quote | null;
 
       /**
        * This is the transaction number that appears on email receipts sent for this invoice.
@@ -384,16 +369,6 @@ declare module 'stripe' {
       subscription: string | Stripe.Subscription | null;
 
       /**
-       * Details about the subscription that created this invoice.
-       */
-      subscription_details: QuotePreviewInvoice.SubscriptionDetails | null;
-
-      /**
-       * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
-       */
-      subscription_proration_date?: number;
-
-      /**
        * Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level discount or exclusive tax is applied. Item discounts are already incorporated
        */
       subtotal: number;
@@ -402,11 +377,6 @@ declare module 'stripe' {
        * The integer amount in cents (or local equivalent) representing the subtotal of the invoice before any invoice level discount or tax is applied. Item discounts are already incorporated
        */
       subtotal_excluding_tax: number | null;
-
-      /**
-       * The amount of tax on this invoice. This is the sum of all the tax amounts on this invoice.
-       */
-      tax: number | null;
 
       /**
        * ID of the test clock this invoice belongs to.
@@ -445,11 +415,6 @@ declare module 'stripe' {
       total_pretax_credit_amounts: Array<
         QuotePreviewInvoice.TotalPretaxCreditAmount
       > | null;
-
-      /**
-       * The aggregate amounts calculated per tax rate for all line items.
-       */
-      total_tax_amounts: Array<QuotePreviewInvoice.TotalTaxAmount>;
 
       /**
        * The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to for the invoice.
@@ -1039,6 +1004,7 @@ declare module 'stripe' {
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'
           | 'setup_intent_mandate_invalid'
+          | 'setup_intent_mobile_wallet_unsupported'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
           | 'shipping_address_invalid'
@@ -1481,37 +1447,6 @@ declare module 'stripe' {
         voided_at: number | null;
       }
 
-      interface SubscriptionDetails {
-        /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) defined as subscription metadata when an invoice is created. Becomes an immutable snapshot of the subscription metadata at the time of invoice finalization.
-         *  *Note: This attribute is populated only for invoices created on or after June 29, 2023.*
-         */
-        metadata: Stripe.Metadata | null;
-
-        /**
-         * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/docs/billing/subscriptions/pause-payment).
-         */
-        pause_collection?: SubscriptionDetails.PauseCollection | null;
-      }
-
-      namespace SubscriptionDetails {
-        interface PauseCollection {
-          /**
-           * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
-           */
-          behavior: PauseCollection.Behavior;
-
-          /**
-           * The time after which the subscription will resume collecting payments.
-           */
-          resumes_at: number | null;
-        }
-
-        namespace PauseCollection {
-          type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
-        }
-      }
-
       interface ThresholdReason {
         /**
          * The total invoice amount threshold boundary if it triggered the threshold invoice.
@@ -1594,52 +1529,6 @@ declare module 'stripe' {
 
       namespace TotalPretaxCreditAmount {
         type Type = 'credit_balance_transaction' | 'discount' | 'margin';
-      }
-
-      interface TotalTaxAmount {
-        /**
-         * The amount, in cents (or local equivalent), of the tax.
-         */
-        amount: number;
-
-        /**
-         * Whether this tax amount is inclusive or exclusive.
-         */
-        inclusive: boolean;
-
-        /**
-         * The tax rate that was applied to get this tax amount.
-         */
-        tax_rate: string | Stripe.TaxRate;
-
-        /**
-         * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
-         */
-        taxability_reason: TotalTaxAmount.TaxabilityReason | null;
-
-        /**
-         * The amount on which tax is calculated, in cents (or local equivalent).
-         */
-        taxable_amount: number | null;
-      }
-
-      namespace TotalTaxAmount {
-        type TaxabilityReason =
-          | 'customer_exempt'
-          | 'not_collecting'
-          | 'not_subject_to_tax'
-          | 'not_supported'
-          | 'portion_product_exempt'
-          | 'portion_reduced_rated'
-          | 'portion_standard_rated'
-          | 'product_exempt'
-          | 'product_exempt_holiday'
-          | 'proportionally_rated'
-          | 'reduced_rated'
-          | 'reverse_charge'
-          | 'standard_rated'
-          | 'taxable_basis_reduced'
-          | 'zero_rated';
       }
 
       interface TransferData {

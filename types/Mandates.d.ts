@@ -106,6 +106,8 @@ declare module 'stripe' {
 
         link?: PaymentMethodDetails.Link;
 
+        naver_pay?: PaymentMethodDetails.NaverPay;
+
         paypal?: PaymentMethodDetails.Paypal;
 
         payto?: PaymentMethodDetails.Payto;
@@ -204,6 +206,8 @@ declare module 'stripe' {
         interface KrCard {}
 
         interface Link {}
+
+        interface NaverPay {}
 
         interface Paypal {
           /**

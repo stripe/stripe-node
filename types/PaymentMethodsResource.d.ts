@@ -54,6 +54,11 @@ declare module 'stripe' {
       bancontact?: PaymentMethodCreateParams.Bancontact;
 
       /**
+       * If this is a `billie` PaymentMethod, this hash contains details about the billie payment method.
+       */
+      billie?: PaymentMethodCreateParams.Billie;
+
+      /**
        * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
        */
       billing_details?: PaymentMethodCreateParams.BillingDetails;
@@ -259,6 +264,11 @@ declare module 'stripe' {
       samsung_pay?: PaymentMethodCreateParams.SamsungPay;
 
       /**
+       * If this is a Satispay PaymentMethod, this hash contains details about the Satispay payment method.
+       */
+      satispay?: PaymentMethodCreateParams.Satispay;
+
+      /**
        * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
        */
       sepa_debit?: PaymentMethodCreateParams.SepaDebit;
@@ -359,6 +369,8 @@ declare module 'stripe' {
       }
 
       interface Bancontact {}
+
+      interface Billie {}
 
       interface BillingDetails {
         /**
@@ -723,6 +735,8 @@ declare module 'stripe' {
 
       interface SamsungPay {}
 
+      interface Satispay {}
+
       interface SepaDebit {
         /**
          * IBAN of the bank account.
@@ -757,6 +771,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'billie'
         | 'blik'
         | 'boleto'
         | 'card'
@@ -791,6 +806,7 @@ declare module 'stripe' {
         | 'rechnung'
         | 'revolut_pay'
         | 'samsung_pay'
+        | 'satispay'
         | 'sepa_debit'
         | 'shopeepay'
         | 'sofort'
@@ -877,11 +893,6 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
-       * If this is a `naver_pay` PaymentMethod, this hash contains details about the Naver Pay payment method.
-       */
-      naver_pay?: PaymentMethodUpdateParams.NaverPay;
-
-      /**
        * If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment method.
        */
       pay_by_bank?: PaymentMethodUpdateParams.PayByBank;
@@ -954,17 +965,6 @@ declare module 'stripe' {
 
       interface Link {}
 
-      interface NaverPay {
-        /**
-         * Whether to use Naver Pay points or a card to fund this transaction. If not provided, this defaults to `card`.
-         */
-        funding?: NaverPay.Funding;
-      }
-
-      namespace NaverPay {
-        type Funding = 'card' | 'points';
-      }
-
       interface PayByBank {}
 
       interface Payto {
@@ -1031,6 +1031,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'billie'
         | 'blik'
         | 'boleto'
         | 'card'
@@ -1065,6 +1066,7 @@ declare module 'stripe' {
         | 'rechnung'
         | 'revolut_pay'
         | 'samsung_pay'
+        | 'satispay'
         | 'sepa_debit'
         | 'shopeepay'
         | 'sofort'

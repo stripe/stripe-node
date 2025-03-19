@@ -240,9 +240,10 @@ declare module 'stripe' {
         shipping_options?: Array<SessionCreateParams.ShippingOption>;
 
         /**
-         * Describes the type of transaction being performed by Checkout in order to customize
-         * relevant text on the page, such as the submit button. `submit_type` can only be
-         * specified on Checkout Sessions in `payment` mode. If blank or `auto`, `pay` is used.
+         * Describes the type of transaction being performed by Checkout in order
+         * to customize relevant text on the page, such as the submit button.
+         *  `submit_type` can only be specified on Checkout Sessions in
+         * `payment` or `subscription` mode. If blank or `auto`, `pay` is used.
          */
         submit_type?: SessionCreateParams.SubmitType;
 
@@ -738,12 +739,12 @@ declare module 'stripe' {
             currency: string;
 
             /**
-             * The ID of the product that this price will belong to. One of `product` or `product_data` is required.
+             * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to. One of `product` or `product_data` is required.
              */
             product?: string;
 
             /**
-             * Data used to generate a new product object inline. One of `product` or `product_data` is required.
+             * Data used to generate a new [Product](https://docs.stripe.com/api/products) object inline. One of `product` or `product_data` is required.
              */
             product_data?: PriceData.ProductData;
 
@@ -863,7 +864,7 @@ declare module 'stripe' {
 
         interface PaymentIntentData {
           /**
-           * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+           * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
            */
           application_fee_amount?: number;
 
@@ -2226,6 +2227,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'billie'
           | 'blik'
           | 'boleto'
           | 'card'
@@ -2259,6 +2261,7 @@ declare module 'stripe' {
           | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
+          | 'satispay'
           | 'sepa_debit'
           | 'shopeepay'
           | 'sofort'
@@ -2917,7 +2920,7 @@ declare module 'stripe' {
          *
          * To update an existing line item, specify its `id` along with the new values of the fields to update.
          *
-         * To add a new line item, specify a `price` and `quantity`. We don't currently support recurring prices.
+         * To add a new line item, specify a `price` and `quantity`.
          *
          * To remove an existing line item, omit the line item's ID from the retransmitted array.
          *
@@ -3184,63 +3187,6 @@ declare module 'stripe' {
         }
       }
 
-      namespace SessionUpdateParams {
-        interface CollectedInformation {
-          /**
-           * The shipping details to apply to this Session.
-           */
-          shipping_details?: CollectedInformation.ShippingDetails;
-        }
-
-        namespace CollectedInformation {
-          interface ShippingDetails {
-            /**
-             * The address of the customer
-             */
-            address: ShippingDetails.Address;
-
-            /**
-             * The name of customer
-             */
-            name: string;
-          }
-
-          namespace ShippingDetails {
-            interface Address {
-              /**
-               * City, district, suburb, town, or village.
-               */
-              city?: string;
-
-              /**
-               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-               */
-              country: string;
-
-              /**
-               * Address line 1 (e.g., street, PO Box, or company name).
-               */
-              line1: string;
-
-              /**
-               * Address line 2 (e.g., apartment, suite, unit, or building).
-               */
-              line2?: string;
-
-              /**
-               * ZIP or postal code.
-               */
-              postal_code?: string;
-
-              /**
-               * State, county, province, or region.
-               */
-              state?: string;
-            }
-          }
-        }
-      }
-
       interface SessionListParams extends PaginationParams {
         /**
          * Only return Checkout Sessions that were created during the given date interval.
@@ -3310,7 +3256,7 @@ declare module 'stripe' {
 
       class SessionsResource {
         /**
-         * Creates a Session object.
+         * Creates a Checkout Session object.
          */
         create(
           params?: SessionCreateParams,
@@ -3321,7 +3267,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 
         /**
-         * Retrieves a Session object.
+         * Retrieves a Checkout Session object.
          */
         retrieve(
           id: string,
@@ -3334,7 +3280,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 
         /**
-         * Updates a Session object.
+         * Updates a Checkout Session object.
          */
         update(
           id: string,
@@ -3352,9 +3298,9 @@ declare module 'stripe' {
         list(options?: RequestOptions): ApiListPromise<Stripe.Checkout.Session>;
 
         /**
-         * A Session can be expired when it is in one of these statuses: open
+         * A Checkout Session can be expired when it is in one of these statuses: open
          *
-         * After it expires, a customer can't complete a Session and customers loading the Session see a message saying the Session is expired.
+         * After it expires, a customer can't complete a Checkout Session and customers loading the Checkout Session see a message saying the Checkout Session is expired.
          */
         expire(
           id: string,

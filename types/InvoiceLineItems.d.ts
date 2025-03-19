@@ -24,11 +24,6 @@ declare module 'stripe' {
       amount: number;
 
       /**
-       * The integer amount in cents (or local equivalent) representing the amount for this line item, excluding all tax and discounts.
-       */
-      amount_excluding_tax: number | null;
-
-      /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
       currency: string;
@@ -59,11 +54,6 @@ declare module 'stripe' {
       invoice: string | null;
 
       /**
-       * The ID of the [invoice item](https://stripe.com/docs/api/invoiceitems) associated with this line item if any.
-       */
-      invoice_item?: string | Stripe.InvoiceItem;
-
-      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
@@ -86,64 +76,16 @@ declare module 'stripe' {
       period: InvoiceLineItem.Period;
 
       /**
-       * The plan of the subscription, if the line item is a subscription or a proration.
-       */
-      plan: Stripe.Plan | null;
-
-      /**
        * Contains pretax credit amounts (ex: discount, credit grants, etc) that apply to this line item.
        */
       pretax_credit_amounts: Array<InvoiceLineItem.PretaxCreditAmount> | null;
-
-      /**
-       * The price of the line item.
-       */
-      price: Stripe.Price | null;
-
-      /**
-       * Whether this is a proration.
-       */
-      proration: boolean;
-
-      /**
-       * Additional details for proration line items
-       */
-      proration_details: InvoiceLineItem.ProrationDetails | null;
 
       /**
        * The quantity of the subscription, if the line item is a subscription or a proration.
        */
       quantity: number | null;
 
-      /**
-       * The subscription that the invoice item pertains to, if any.
-       */
       subscription: string | Stripe.Subscription | null;
-
-      /**
-       * The subscription item that generated this line item. Left empty if the line item is not an explicit result of a subscription.
-       */
-      subscription_item?: string | Stripe.SubscriptionItem;
-
-      /**
-       * The amount of tax calculated per tax rate for this line item
-       */
-      tax_amounts: Array<InvoiceLineItem.TaxAmount>;
-
-      /**
-       * The tax rates which apply to the line item.
-       */
-      tax_rates: Array<Stripe.TaxRate>;
-
-      /**
-       * A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
-       */
-      type: InvoiceLineItem.Type;
-
-      /**
-       * The amount in cents (or local equivalent) representing the unit amount for this line item, excluding all tax and discounts.
-       */
-      unit_amount_excluding_tax: string | null;
     }
 
     namespace InvoiceLineItem {
@@ -216,75 +158,6 @@ declare module 'stripe' {
       namespace PretaxCreditAmount {
         type Type = 'credit_balance_transaction' | 'discount' | 'margin';
       }
-
-      interface ProrationDetails {
-        /**
-         * For a credit proration `line_item`, the original debit line_items to which the credit proration applies.
-         */
-        credited_items: ProrationDetails.CreditedItems | null;
-      }
-
-      namespace ProrationDetails {
-        interface CreditedItems {
-          /**
-           * Invoice containing the credited invoice line items
-           */
-          invoice: string;
-
-          /**
-           * Credited invoice line items
-           */
-          invoice_line_items: Array<string>;
-        }
-      }
-
-      interface TaxAmount {
-        /**
-         * The amount, in cents (or local equivalent), of the tax.
-         */
-        amount: number;
-
-        /**
-         * Whether this tax amount is inclusive or exclusive.
-         */
-        inclusive: boolean;
-
-        /**
-         * The tax rate that was applied to get this tax amount.
-         */
-        tax_rate: string | Stripe.TaxRate;
-
-        /**
-         * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
-         */
-        taxability_reason: TaxAmount.TaxabilityReason | null;
-
-        /**
-         * The amount on which tax is calculated, in cents (or local equivalent).
-         */
-        taxable_amount: number | null;
-      }
-
-      namespace TaxAmount {
-        type TaxabilityReason =
-          | 'customer_exempt'
-          | 'not_collecting'
-          | 'not_subject_to_tax'
-          | 'not_supported'
-          | 'portion_product_exempt'
-          | 'portion_reduced_rated'
-          | 'portion_standard_rated'
-          | 'product_exempt'
-          | 'product_exempt_holiday'
-          | 'proportionally_rated'
-          | 'reduced_rated'
-          | 'reverse_charge'
-          | 'standard_rated'
-          | 'taxable_basis_reduced'
-          | 'zero_rated';
-      }
-
-      type Type = 'invoiceitem' | 'subscription';
     }
   }
 }

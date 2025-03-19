@@ -75,7 +75,8 @@ declare module 'stripe' {
         client_reference_id: string | null;
 
         /**
-         * The client secret of the Session. Use this with [initCheckout](https://stripe.com/docs/js/custom_checkout/init) on your front end.
+         * The client secret of your Checkout Session. Applies to Checkout Sessions with `ui_mode: embedded` or `ui_mode: custom`. For `ui_mode: embedded`, the client secret is to be used when initializing Stripe.js embedded checkout.
+         *  For `ui_mode: custom`, use the client secret with [initCheckout](https://stripe.com/docs/js/custom_checkout/init) on your front end.
          */
         client_secret: string | null;
 
@@ -271,11 +272,6 @@ declare module 'stripe' {
         shipping_cost: Session.ShippingCost | null;
 
         /**
-         * Shipping information for this Checkout Session.
-         */
-        shipping_details: Session.ShippingDetails | null;
-
-        /**
          * The shipping rate options applied to this Session.
          */
         shipping_options: Array<Session.ShippingOption>;
@@ -316,7 +312,7 @@ declare module 'stripe' {
         ui_mode: Session.UiMode | null;
 
         /**
-         * The URL to the Checkout Session. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://stripe.com/docs/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
+         * The URL to the Checkout Session. Applies to Checkout Sessions with `ui_mode: hosted`. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://stripe.com/docs/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
          * This value is only present when the session is active.
          */
         url: string | null;
@@ -431,27 +427,12 @@ declare module 'stripe' {
 
         namespace CollectedInformation {
           interface ShippingDetails {
-            address?: Stripe.Address;
+            address: Stripe.Address;
 
             /**
-             * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+             * Customer name.
              */
-            carrier?: string | null;
-
-            /**
-             * Recipient name.
-             */
-            name?: string;
-
-            /**
-             * Recipient phone (including extension).
-             */
-            phone?: string | null;
-
-            /**
-             * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-             */
-            tracking_number?: string | null;
+            name: string;
           }
 
           interface TaxId {
@@ -2534,30 +2515,6 @@ declare module 'stripe' {
               | 'taxable_basis_reduced'
               | 'zero_rated';
           }
-        }
-
-        interface ShippingDetails {
-          address?: Stripe.Address;
-
-          /**
-           * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-           */
-          carrier?: string | null;
-
-          /**
-           * Recipient name.
-           */
-          name?: string;
-
-          /**
-           * Recipient phone (including extension).
-           */
-          phone?: string | null;
-
-          /**
-           * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-           */
-          tracking_number?: string | null;
         }
 
         interface ShippingOption {

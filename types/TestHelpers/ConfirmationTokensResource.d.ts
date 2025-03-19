@@ -90,6 +90,11 @@ declare module 'stripe' {
           bancontact?: PaymentMethodData.Bancontact;
 
           /**
+           * If this is a `billie` PaymentMethod, this hash contains details about the billie payment method.
+           */
+          billie?: PaymentMethodData.Billie;
+
+          /**
            * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
            */
           billing_details?: PaymentMethodData.BillingDetails;
@@ -275,6 +280,11 @@ declare module 'stripe' {
           samsung_pay?: PaymentMethodData.SamsungPay;
 
           /**
+           * If this is a Satispay PaymentMethod, this hash contains details about the Satispay payment method.
+           */
+          satispay?: PaymentMethodData.Satispay;
+
+          /**
            * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
            */
           sepa_debit?: PaymentMethodData.SepaDebit;
@@ -375,6 +385,8 @@ declare module 'stripe' {
           }
 
           interface Bancontact {}
+
+          interface Billie {}
 
           interface BillingDetails {
             /**
@@ -694,6 +706,8 @@ declare module 'stripe' {
 
           interface SamsungPay {}
 
+          interface Satispay {}
+
           interface SepaDebit {
             /**
              * IBAN of the bank account.
@@ -728,6 +742,7 @@ declare module 'stripe' {
             | 'au_becs_debit'
             | 'bacs_debit'
             | 'bancontact'
+            | 'billie'
             | 'blik'
             | 'boleto'
             | 'cashapp'
@@ -761,6 +776,7 @@ declare module 'stripe' {
             | 'rechnung'
             | 'revolut_pay'
             | 'samsung_pay'
+            | 'satispay'
             | 'sepa_debit'
             | 'shopeepay'
             | 'sofort'

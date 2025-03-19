@@ -255,6 +255,11 @@ declare module 'stripe' {
         bank_transfer_payments?: Capabilities.BankTransferPayments;
 
         /**
+         * The billie_payments capability.
+         */
+        billie_payments?: Capabilities.BilliePayments;
+
+        /**
          * The blik_payments capability.
          */
         blik_payments?: Capabilities.BlikPayments;
@@ -460,6 +465,11 @@ declare module 'stripe' {
         samsung_pay_payments?: Capabilities.SamsungPayPayments;
 
         /**
+         * The satispay_payments capability.
+         */
+        satispay_payments?: Capabilities.SatispayPayments;
+
+        /**
          * The sepa_bank_transfer_payments capability.
          */
         sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
@@ -605,6 +615,13 @@ declare module 'stripe' {
         }
 
         interface BankTransferPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface BilliePayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -898,6 +915,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface SatispayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface SepaBankTransferPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -1077,6 +1101,9 @@ declare module 'stripe' {
          */
         ownership_declaration?: Company.OwnershipDeclaration;
 
+        /**
+         * This value is used to determine if a business is exempt from providing ultimate beneficial owners. See [this support article](https://support.stripe.com/questions/exemption-from-providing-ownership-details) and [changelog](https://docs.stripe.com/changelog/acacia/2025-01-27/ownership-exemption-reason-accounts-api) for more details.
+         */
         ownership_exemption_reason?: Stripe.Emptyable<
           Company.OwnershipExemptionReason
         >;
@@ -1709,6 +1736,11 @@ declare module 'stripe' {
         card_payments?: Settings.CardPayments;
 
         /**
+         * Settings specific to the account's use of Invoices.
+         */
+        invoices?: Settings.Invoices;
+
+        /**
          * Settings that apply across payment methods for charging on the account.
          */
         payments?: Settings.Payments;
@@ -1847,6 +1879,17 @@ declare module 'stripe' {
              */
             cvc_failure?: boolean;
           }
+        }
+
+        interface Invoices {
+          /**
+           * Whether payment methods should be saved when a payment is completed for a one-time invoices on a hosted invoice page.
+           */
+          hosted_payment_method_save?: Invoices.HostedPaymentMethodSave;
+        }
+
+        namespace Invoices {
+          type HostedPaymentMethodSave = 'always' | 'never' | 'offer';
         }
 
         interface Payments {
@@ -2267,6 +2310,11 @@ declare module 'stripe' {
         bank_transfer_payments?: Capabilities.BankTransferPayments;
 
         /**
+         * The billie_payments capability.
+         */
+        billie_payments?: Capabilities.BilliePayments;
+
+        /**
          * The blik_payments capability.
          */
         blik_payments?: Capabilities.BlikPayments;
@@ -2472,6 +2520,11 @@ declare module 'stripe' {
         samsung_pay_payments?: Capabilities.SamsungPayPayments;
 
         /**
+         * The satispay_payments capability.
+         */
+        satispay_payments?: Capabilities.SatispayPayments;
+
+        /**
          * The sepa_bank_transfer_payments capability.
          */
         sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
@@ -2617,6 +2670,13 @@ declare module 'stripe' {
         }
 
         interface BankTransferPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface BilliePayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2910,6 +2970,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface SatispayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface SepaBankTransferPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -3132,6 +3199,9 @@ declare module 'stripe' {
          */
         ownership_declaration?: Company.OwnershipDeclaration;
 
+        /**
+         * This value is used to determine if a business is exempt from providing ultimate beneficial owners. See [this support article](https://support.stripe.com/questions/exemption-from-providing-ownership-details) and [changelog](https://docs.stripe.com/changelog/acacia/2025-01-27/ownership-exemption-reason-accounts-api) for more details.
+         */
         ownership_exemption_reason?: Stripe.Emptyable<
           Company.OwnershipExemptionReason
         >;
@@ -3780,6 +3850,15 @@ declare module 'stripe' {
            * The list of default Account Tax IDs to automatically include on invoices. Account Tax IDs get added when an invoice is finalized.
            */
           default_account_tax_ids?: Stripe.Emptyable<Array<string>>;
+
+          /**
+           * Whether payment methods should be saved when a payment is completed for a one-time invoices on a hosted invoice page.
+           */
+          hosted_payment_method_save?: Invoices.HostedPaymentMethodSave;
+        }
+
+        namespace Invoices {
+          type HostedPaymentMethodSave = 'always' | 'never' | 'offer';
         }
 
         interface Payments {
@@ -3926,7 +4005,7 @@ declare module 'stripe' {
 
     interface AccountCreateExternalAccountParams {
       /**
-       * Please refer to full [documentation](https://stripe.com/docs/api) instead.
+       * A token, like the ones returned by [Stripe.js](https://stripe.com/docs/js) or a dictionary containing a user's external account details (with the options shown below). Please refer to full [documentation](https://stripe.com/docs/api/external_accounts) instead.
        */
       external_account:
         | string

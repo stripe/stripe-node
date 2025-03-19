@@ -270,6 +270,11 @@ declare module 'stripe' {
         bank_transfer_payments?: Capabilities.BankTransferPayments;
 
         /**
+         * The status of the Billie capability of the account, or whether the account can directly process Billie payments.
+         */
+        billie_payments?: Capabilities.BilliePayments;
+
+        /**
          * The status of the blik payments capability of the account, or whether the account can directly process blik charges.
          */
         blik_payments?: Capabilities.BlikPayments;
@@ -475,6 +480,11 @@ declare module 'stripe' {
         samsung_pay_payments?: Capabilities.SamsungPayPayments;
 
         /**
+         * The status of the Satispay capability of the account, or whether the account can directly process Satispay payments.
+         */
+        satispay_payments?: Capabilities.SatispayPayments;
+
+        /**
          * The status of the SEPA customer_balance payments (EUR currency) capability of the account, or whether the account can directly process SEPA customer_balance charges.
          */
         sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
@@ -576,6 +586,8 @@ declare module 'stripe' {
 
         type BankTransferPayments = 'active' | 'inactive' | 'pending';
 
+        type BilliePayments = 'active' | 'inactive' | 'pending';
+
         type BlikPayments = 'active' | 'inactive' | 'pending';
 
         type BoletoPayments = 'active' | 'inactive' | 'pending';
@@ -657,6 +669,8 @@ declare module 'stripe' {
         type RevolutPayPayments = 'active' | 'inactive' | 'pending';
 
         type SamsungPayPayments = 'active' | 'inactive' | 'pending';
+
+        type SatispayPayments = 'active' | 'inactive' | 'pending';
 
         type SepaBankTransferPayments = 'active' | 'inactive' | 'pending';
 
@@ -754,6 +768,9 @@ declare module 'stripe' {
          */
         ownership_declaration?: Company.OwnershipDeclaration | null;
 
+        /**
+         * This value is used to determine if a business is exempt from providing ultimate beneficial owners. See [this support article](https://support.stripe.com/questions/exemption-from-providing-ownership-details) and [changelog](https://docs.stripe.com/changelog/acacia/2025-01-27/ownership-exemption-reason-accounts-api) for more details.
+         */
         ownership_exemption_reason?: Company.OwnershipExemptionReason;
 
         /**
@@ -1629,6 +1646,15 @@ declare module 'stripe' {
            * The list of default Account Tax IDs to automatically include on invoices. Account Tax IDs get added when an invoice is finalized.
            */
           default_account_tax_ids: Array<string | Stripe.TaxId> | null;
+
+          /**
+           * Whether payment methods should be saved when a payment is completed for a one-time invoices on a hosted invoice page.
+           */
+          hosted_payment_method_save?: Invoices.HostedPaymentMethodSave | null;
+        }
+
+        namespace Invoices {
+          type HostedPaymentMethodSave = 'always' | 'never' | 'offer';
         }
 
         interface Payments {

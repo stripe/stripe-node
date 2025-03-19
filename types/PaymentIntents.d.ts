@@ -49,7 +49,7 @@ declare module 'stripe' {
       application: string | Stripe.Application | null;
 
       /**
-       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount: number | null;
 
@@ -166,7 +166,7 @@ declare module 'stripe' {
       payment_method_options: PaymentIntent.PaymentMethodOptions | null;
 
       /**
-       * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use.
+       * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use. A comprehensive list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
        */
       payment_method_types: Array<string>;
 
@@ -574,6 +574,7 @@ declare module 'stripe' {
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'
           | 'setup_intent_mandate_invalid'
+          | 'setup_intent_mobile_wallet_unsupported'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
           | 'shipping_address_invalid'
@@ -2702,6 +2703,21 @@ declare module 'stripe' {
            * Controls when the funds will be captured from the customer's account.
            */
           capture_method?: 'manual';
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           */
+          setup_future_usage?: NaverPay.SetupFutureUsage;
+        }
+
+        namespace NaverPay {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Oxxo {
