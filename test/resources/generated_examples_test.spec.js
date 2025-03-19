@@ -1300,7 +1300,6 @@ describe('Generated tests', function() {
   it('test_invoiceitems_post', async function() {
     const invoiceItem = await stripe.invoiceItems.create({
       customer: 'cus_xxxxxxxxxxxxx',
-      price: 'price_xxxxxxxxxxxxx',
     });
     expect(invoiceItem).not.to.be.null;
   });
