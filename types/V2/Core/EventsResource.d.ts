@@ -45,11 +45,6 @@ declare module 'stripe' {
            * Primary object ID used to retrieve related events.
            */
           object_id?: string;
-
-          /**
-           * The requested page.
-           */
-          page?: string;
         }
       }
 
