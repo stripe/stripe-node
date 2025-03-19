@@ -121,14 +121,9 @@ declare module 'stripe' {
       reason: CreditNote.Reason | null;
 
       /**
-       * Refund related to this credit note.
-       */
-      refund: string | Stripe.Refund | null;
-
-      /**
        * Refunds related to this credit note.
        */
-      refunds?: Array<CreditNote.Refund>;
+      refunds: Array<CreditNote.Refund>;
 
       /**
        * The details of the cost of shipping, including the ShippingRate applied to the invoice.
@@ -159,6 +154,11 @@ declare module 'stripe' {
        * The integer amount in cents (or local equivalent) representing the total amount of the credit note, excluding tax, but including discounts.
        */
       total_excluding_tax: number | null;
+
+      /**
+       * The aggregate tax information for all line items.
+       */
+      total_taxes: Array<CreditNote.TotalTax> | null;
 
       /**
        * Type of this credit note, one of `pre_payment` or `post_payment`. A `pre_payment` credit note means it was issued when the invoice was open. A `post_payment` credit note means it was issued when the invoice was paid.
@@ -303,6 +303,64 @@ declare module 'stripe' {
       }
 
       type Status = 'issued' | 'void';
+
+      interface TotalTax {
+        /**
+         * The amount of the tax, in cents (or local equivalent).
+         */
+        amount: number;
+
+        /**
+         * Whether this tax is inclusive or exclusive.
+         */
+        tax_behavior: TotalTax.TaxBehavior;
+
+        /**
+         * Additional details about the tax rate. Only present when `type` is `tax_rate_details`.
+         */
+        tax_rate_details: TotalTax.TaxRateDetails | null;
+
+        /**
+         * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+         */
+        taxability_reason: TotalTax.TaxabilityReason;
+
+        /**
+         * The amount on which tax is calculated, in cents (or local equivalent).
+         */
+        taxable_amount: number | null;
+
+        /**
+         * The type of tax information.
+         */
+        type: 'tax_rate_details';
+      }
+
+      namespace TotalTax {
+        type TaxabilityReason =
+          | 'customer_exempt'
+          | 'not_available'
+          | 'not_collecting'
+          | 'not_subject_to_tax'
+          | 'not_supported'
+          | 'portion_product_exempt'
+          | 'portion_reduced_rated'
+          | 'portion_standard_rated'
+          | 'product_exempt'
+          | 'product_exempt_holiday'
+          | 'proportionally_rated'
+          | 'reduced_rated'
+          | 'reverse_charge'
+          | 'standard_rated'
+          | 'taxable_basis_reduced'
+          | 'zero_rated';
+
+        type TaxBehavior = 'exclusive' | 'inclusive';
+
+        interface TaxRateDetails {
+          tax_rate: string;
+        }
+      }
 
       type Type = 'post_payment' | 'pre_payment';
     }

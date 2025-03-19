@@ -163,6 +163,8 @@ declare module 'stripe' {
        */
       payment_method_details: Charge.PaymentMethodDetails | null;
 
+      presentment_details?: Charge.PresentmentDetails;
+
       /**
        * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
        */
@@ -2466,6 +2468,18 @@ declare module 'stripe' {
         }
 
         interface Zip {}
+      }
+
+      interface PresentmentDetails {
+        /**
+         * Amount intended to be collected by this payment, denominated in presentment_currency.
+         */
+        presentment_amount: number;
+
+        /**
+         * Currency presented to the customer during payment.
+         */
+        presentment_currency: string;
       }
 
       interface RadarOptions {

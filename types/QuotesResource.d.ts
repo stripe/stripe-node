@@ -974,7 +974,7 @@ declare module 'stripe' {
           currency: string;
 
           /**
-           * The ID of the product that this price will belong to.
+           * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
            */
           product: string;
 
@@ -2388,7 +2388,7 @@ declare module 'stripe' {
           currency: string;
 
           /**
-           * The ID of the product that this price will belong to.
+           * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
            */
           product: string;
 

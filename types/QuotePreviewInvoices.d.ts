@@ -417,9 +417,9 @@ declare module 'stripe' {
       > | null;
 
       /**
-       * The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to for the invoice.
+       * The aggregate tax information of all line items.
        */
-      transfer_data: QuotePreviewInvoice.TransferData | null;
+      total_taxes: Array<QuotePreviewInvoice.TotalTax> | null;
 
       /**
        * Invoices are automatically paid or sent 1 hour after webhooks are delivered, or until all webhook delivery attempts have [been exhausted](https://stripe.com/docs/billing/webhooks#understand). This field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had no webhooks to deliver, this will be set while the invoice is being created.
@@ -1273,6 +1273,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'
+          | 'klarna'
           | 'konbini'
           | 'kr_card'
           | 'link'
@@ -1531,16 +1532,62 @@ declare module 'stripe' {
         type Type = 'credit_balance_transaction' | 'discount' | 'margin';
       }
 
-      interface TransferData {
+      interface TotalTax {
         /**
-         * The amount in cents (or local equivalent) that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
+         * The amount of the tax, in cents (or local equivalent).
          */
-        amount: number | null;
+        amount: number;
 
         /**
-         * The account where funds from the payment will be transferred to upon payment success.
+         * Whether this tax is inclusive or exclusive.
          */
-        destination: string | Stripe.Account;
+        tax_behavior: TotalTax.TaxBehavior;
+
+        /**
+         * Additional details about the tax rate. Only present when `type` is `tax_rate_details`.
+         */
+        tax_rate_details: TotalTax.TaxRateDetails | null;
+
+        /**
+         * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+         */
+        taxability_reason: TotalTax.TaxabilityReason;
+
+        /**
+         * The amount on which tax is calculated, in cents (or local equivalent).
+         */
+        taxable_amount: number | null;
+
+        /**
+         * The type of tax information.
+         */
+        type: 'tax_rate_details';
+      }
+
+      namespace TotalTax {
+        type TaxabilityReason =
+          | 'customer_exempt'
+          | 'not_available'
+          | 'not_collecting'
+          | 'not_subject_to_tax'
+          | 'not_supported'
+          | 'portion_product_exempt'
+          | 'portion_reduced_rated'
+          | 'portion_standard_rated'
+          | 'product_exempt'
+          | 'product_exempt_holiday'
+          | 'proportionally_rated'
+          | 'reduced_rated'
+          | 'reverse_charge'
+          | 'standard_rated'
+          | 'taxable_basis_reduced'
+          | 'zero_rated';
+
+        type TaxBehavior = 'exclusive' | 'inclusive';
+
+        interface TaxRateDetails {
+          tax_rate: string;
+        }
       }
     }
   }

@@ -16,6 +16,9 @@ declare module 'stripe' {
       | ApplicationFeeRefundedEvent
       | BalanceAvailableEvent
       | BillingAlertTriggeredEvent
+      | BillingCreditBalanceTransactionCreatedEvent
+      | BillingCreditGrantCreatedEvent
+      | BillingCreditGrantUpdatedEvent
       | BillingMeterErrorReportTriggeredEvent
       | BillingPortalConfigurationCreatedEvent
       | BillingPortalConfigurationUpdatedEvent
@@ -485,6 +488,54 @@ declare module 'stripe' {
         object: Stripe.Billing.AlertTriggered;
 
         previous_attributes?: Partial<Stripe.Billing.AlertTriggered>;
+      }
+    }
+
+    /**
+     * Occurs when a credit balance transaction is created
+     */
+    interface BillingCreditBalanceTransactionCreatedEvent extends EventBase {
+      type: 'billing.credit_balance_transaction.created';
+      data: BillingCreditBalanceTransactionCreatedEvent.Data;
+    }
+
+    namespace BillingCreditBalanceTransactionCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.CreditBalanceTransaction;
+
+        previous_attributes?: Partial<Stripe.Billing.CreditBalanceTransaction>;
+      }
+    }
+
+    /**
+     * Occurs when a credit grant is created
+     */
+    interface BillingCreditGrantCreatedEvent extends EventBase {
+      type: 'billing.credit_grant.created';
+      data: BillingCreditGrantCreatedEvent.Data;
+    }
+
+    namespace BillingCreditGrantCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.CreditGrant;
+
+        previous_attributes?: Partial<Stripe.Billing.CreditGrant>;
+      }
+    }
+
+    /**
+     * Occurs when a credit grant is updated
+     */
+    interface BillingCreditGrantUpdatedEvent extends EventBase {
+      type: 'billing.credit_grant.updated';
+      data: BillingCreditGrantUpdatedEvent.Data;
+    }
+
+    namespace BillingCreditGrantUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.CreditGrant;
+
+        previous_attributes?: Partial<Stripe.Billing.CreditGrant>;
       }
     }
 

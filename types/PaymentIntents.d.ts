@@ -170,6 +170,8 @@ declare module 'stripe' {
        */
       payment_method_types: Array<string>;
 
+      presentment_details?: PaymentIntent.PresentmentDetails;
+
       /**
        * If present, this property tells you about the processing state of the payment.
        */
@@ -3292,6 +3294,18 @@ declare module 'stripe' {
            */
           setup_future_usage?: 'none';
         }
+      }
+
+      interface PresentmentDetails {
+        /**
+         * Amount intended to be collected by this payment, denominated in presentment_currency.
+         */
+        presentment_amount: number;
+
+        /**
+         * Currency presented to the customer during payment.
+         */
+        presentment_currency: string;
       }
 
       interface Processing {

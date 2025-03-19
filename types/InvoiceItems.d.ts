@@ -106,6 +106,8 @@ declare module 'stripe' {
        */
       metadata: Stripe.Metadata | null;
 
+      parent: InvoiceItem.Parent | null;
+
       period: InvoiceItem.Period;
 
       /**
@@ -130,6 +132,28 @@ declare module 'stripe' {
     }
 
     namespace InvoiceItem {
+      interface Parent {
+        rate_card_subscription_details: Parent.RateCardSubscriptionDetails | null;
+
+        subscription_details: Parent.SubscriptionDetails | null;
+
+        type: Parent.Type;
+      }
+
+      namespace Parent {
+        interface RateCardSubscriptionDetails {
+          rate_card_subscription: string;
+        }
+
+        interface SubscriptionDetails {
+          subscription: string;
+
+          subscription_item?: string;
+        }
+
+        type Type = 'rate_card_subscription_details' | 'subscription_details';
+      }
+
       interface Period {
         /**
          * The end of the period, which must be greater than or equal to the start. This value is inclusive.

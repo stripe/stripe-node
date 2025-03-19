@@ -86,6 +86,11 @@ declare module 'stripe' {
       quantity: number | null;
 
       subscription: string | Stripe.Subscription | null;
+
+      /**
+       * The tax information of the line item.
+       */
+      taxes: Array<InvoiceLineItem.Tax> | null;
     }
 
     namespace InvoiceLineItem {
@@ -157,6 +162,64 @@ declare module 'stripe' {
 
       namespace PretaxCreditAmount {
         type Type = 'credit_balance_transaction' | 'discount' | 'margin';
+      }
+
+      interface Tax {
+        /**
+         * The amount of the tax, in cents (or local equivalent).
+         */
+        amount: number;
+
+        /**
+         * Whether this tax is inclusive or exclusive.
+         */
+        tax_behavior: Tax.TaxBehavior;
+
+        /**
+         * Additional details about the tax rate. Only present when `type` is `tax_rate_details`.
+         */
+        tax_rate_details: Tax.TaxRateDetails | null;
+
+        /**
+         * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+         */
+        taxability_reason: Tax.TaxabilityReason;
+
+        /**
+         * The amount on which tax is calculated, in cents (or local equivalent).
+         */
+        taxable_amount: number | null;
+
+        /**
+         * The type of tax information.
+         */
+        type: 'tax_rate_details';
+      }
+
+      namespace Tax {
+        type TaxabilityReason =
+          | 'customer_exempt'
+          | 'not_available'
+          | 'not_collecting'
+          | 'not_subject_to_tax'
+          | 'not_supported'
+          | 'portion_product_exempt'
+          | 'portion_reduced_rated'
+          | 'portion_standard_rated'
+          | 'product_exempt'
+          | 'product_exempt_holiday'
+          | 'proportionally_rated'
+          | 'reduced_rated'
+          | 'reverse_charge'
+          | 'standard_rated'
+          | 'taxable_basis_reduced'
+          | 'zero_rated';
+
+        type TaxBehavior = 'exclusive' | 'inclusive';
+
+        interface TaxRateDetails {
+          tax_rate: string;
+        }
       }
     }
   }

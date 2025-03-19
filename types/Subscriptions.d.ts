@@ -692,6 +692,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'
+          | 'klarna'
           | 'konbini'
           | 'kr_card'
           | 'link'

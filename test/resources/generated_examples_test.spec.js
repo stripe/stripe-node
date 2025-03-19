@@ -2543,27 +2543,6 @@ describe('Generated tests', function() {
     expect(subscriptionItem).not.to.be.null;
   });
 
-  it('test_subscription_items_usage_record_summaries_get', async function() {
-    const usageRecordSummaries = await stripe.subscriptionItems.listUsageRecordSummaries(
-      'si_xxxxxxxxxxxxx',
-      {
-        limit: 3,
-      }
-    );
-    expect(usageRecordSummaries).not.to.be.null;
-  });
-
-  it('test_subscription_items_usage_records_post', async function() {
-    const usageRecord = await stripe.subscriptionItems.createUsageRecord(
-      'si_xxxxxxxxxxxxx',
-      {
-        quantity: 100,
-        timestamp: 1571252444,
-      }
-    );
-    expect(usageRecord).not.to.be.null;
-  });
-
   it('test_subscription_schedules_cancel_post', async function() {
     const subscriptionSchedule = await stripe.subscriptionSchedules.cancel(
       'sub_sched_xxxxxxxxxxxxx'

@@ -236,6 +236,8 @@ declare module 'stripe' {
 
         phone_number_collection?: Session.PhoneNumberCollection;
 
+        presentment_details?: Session.PresentmentDetails;
+
         /**
          * The ID of the original expired Checkout Session that triggered the recovery flow.
          */
@@ -2164,6 +2166,18 @@ declare module 'stripe' {
            * Indicates whether phone number collection is enabled for the session
            */
           enabled: boolean;
+        }
+
+        interface PresentmentDetails {
+          /**
+           * Amount intended to be collected by this payment, denominated in presentment_currency.
+           */
+          presentment_amount: number;
+
+          /**
+           * Currency presented to the customer during payment.
+           */
+          presentment_currency: string;
         }
 
         type RedirectOnCompletion = 'always' | 'if_required' | 'never';

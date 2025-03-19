@@ -51,7 +51,7 @@ declare module 'stripe' {
       nickname?: string;
 
       /**
-       * The ID of the product that this price will belong to.
+       * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
        */
       product?: string;
 
@@ -587,7 +587,7 @@ declare module 'stripe' {
 
     class PricesResource {
       /**
-       * Creates a new price for an existing product. The price can be recurring or one-time.
+       * Creates a new [Price for an existing <a href="https://docs.stripe.com/api/products">Product](https://docs.stripe.com/api/prices). The Price can be recurring or one-time.
        */
       create(
         params: PriceCreateParams,
