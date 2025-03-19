@@ -3505,7 +3505,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a review is closed. The review's `reason` field indicates why: `approved`, `disputed`, `refunded`, or `refunded_as_fraud`.
+     * Occurs whenever a review is closed. The review's `reason` field indicates why: `approved`, `disputed`, `refunded`, `refunded_as_fraud`, or `canceled`.
      */
     interface ReviewClosedEvent extends EventBase {
       type: 'review.closed';
