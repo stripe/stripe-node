@@ -43,6 +43,16 @@ declare module 'stripe' {
       created: number;
 
       /**
+       * The end time of this subscription item's current billing period.
+       */
+      current_period_end: number;
+
+      /**
+       * The start time of this subscription item's current billing period.
+       */
+      current_period_start: number;
+
+      /**
        * Always true for a deleted object
        */
       deleted?: void;
