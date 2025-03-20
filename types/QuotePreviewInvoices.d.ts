@@ -103,11 +103,6 @@ declare module 'stripe' {
         | Stripe.DeletedApplication
         | null;
 
-      /**
-       * The fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account when the invoice is paid.
-       */
-      application_fee_amount: number | null;
-
       applies_to: QuotePreviewInvoice.AppliesTo;
 
       /**
