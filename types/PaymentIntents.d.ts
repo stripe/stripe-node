@@ -114,11 +114,6 @@ declare module 'stripe' {
       description: string | null;
 
       /**
-       * ID of the invoice that created this PaymentIntent, if it exists.
-       */
-      invoice: string | Stripe.Invoice | null;
-
-      /**
        * The payment error encountered in the previous PaymentIntent confirmation. It will be cleared if the PaymentIntent is later updated for any reason.
        */
       last_payment_error: PaymentIntent.LastPaymentError | null;
