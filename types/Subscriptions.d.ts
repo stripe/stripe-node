@@ -45,11 +45,6 @@ declare module 'stripe' {
       billing_cycle_anchor_config: Subscription.BillingCycleAnchorConfig | null;
 
       /**
-       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
-       */
-      billing_thresholds: Subscription.BillingThresholds | null;
-
-      /**
        * A date in the future at which the subscription will automatically get canceled
        */
       cancel_at: number | null;
@@ -298,18 +293,6 @@ declare module 'stripe' {
          * The second of the minute of the billing_cycle_anchor.
          */
         second: number | null;
-      }
-
-      interface BillingThresholds {
-        /**
-         * Monetary threshold that triggers the subscription to create an invoice
-         */
-        amount_gte: number | null;
-
-        /**
-         * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged. This value may not be `true` if the subscription contains items with plans that have `aggregate_usage=last_ever`.
-         */
-        reset_billing_cycle_anchor: boolean | null;
       }
 
       interface CancellationDetails {

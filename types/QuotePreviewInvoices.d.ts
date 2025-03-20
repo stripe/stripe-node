@@ -302,6 +302,8 @@ declare module 'stripe' {
        */
       paid_out_of_band: boolean;
 
+      parent: QuotePreviewInvoice.Parent | null;
+
       payment_settings: QuotePreviewInvoice.PaymentSettings;
 
       /**
@@ -1037,6 +1039,40 @@ declare module 'stripe' {
           | 'card_error'
           | 'idempotency_error'
           | 'invalid_request_error';
+      }
+
+      interface Parent {
+        quote_details: Parent.QuoteDetails | null;
+
+        subscription_details: Parent.SubscriptionDetails | null;
+
+        type: Parent.Type;
+      }
+
+      namespace Parent {
+        interface QuoteDetails {
+          quote: string;
+        }
+
+        interface SubscriptionDetails {
+          metadata: Stripe.Metadata | null;
+
+          pause_collection: SubscriptionDetails.PauseCollection | null;
+
+          subscription: string;
+
+          subscription_proration_date?: number;
+        }
+
+        namespace SubscriptionDetails {
+          interface PauseCollection {
+            behavior: string | null;
+
+            resumes_at: number | null;
+          }
+        }
+
+        type Type = 'quote_details' | 'subscription_details';
       }
 
       interface PaymentSettings {

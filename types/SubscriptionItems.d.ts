@@ -38,11 +38,6 @@ declare module 'stripe' {
       object: 'subscription_item';
 
       /**
-       * Define thresholds at which an invoice will be sent, and the related subscription advanced to a new billing period
-       */
-      billing_thresholds: SubscriptionItem.BillingThresholds | null;
-
-      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created: number;
@@ -106,13 +101,6 @@ declare module 'stripe' {
     }
 
     namespace SubscriptionItem {
-      interface BillingThresholds {
-        /**
-         * Usage threshold that triggers the subscription to create an invoice
-         */
-        usage_gte: number | null;
-      }
-
       interface Trial {
         /**
          * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.

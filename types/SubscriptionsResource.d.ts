@@ -39,13 +39,6 @@ declare module 'stripe' {
       billing_cycle_anchor_config?: SubscriptionCreateParams.BillingCycleAnchorConfig;
 
       /**
-       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
-       */
-      billing_thresholds?: Stripe.Emptyable<
-        SubscriptionCreateParams.BillingThresholds
-      >;
-
-      /**
        * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
        */
       cancel_at?: number | 'min_period_end';
@@ -362,18 +355,6 @@ declare module 'stripe' {
         second?: number;
       }
 
-      interface BillingThresholds {
-        /**
-         * Monetary threshold that triggers the subscription to advance to a new billing period
-         */
-        amount_gte?: number;
-
-        /**
-         * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
-         */
-        reset_billing_cycle_anchor?: boolean;
-      }
-
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
       interface Discount {
@@ -469,11 +450,6 @@ declare module 'stripe' {
 
       interface Item {
         /**
-         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
-         */
-        billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
-
-        /**
          * The coupons to redeem into discounts for the subscription item.
          */
         discounts?: Stripe.Emptyable<Array<Item.Discount>>;
@@ -515,13 +491,6 @@ declare module 'stripe' {
       }
 
       namespace Item {
-        interface BillingThresholds {
-          /**
-           * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
-           */
-          usage_gte: number;
-        }
-
         interface Discount {
           /**
            * ID of the coupon to create a new discount for.
@@ -1066,13 +1035,6 @@ declare module 'stripe' {
       billing_cycle_anchor?: SubscriptionUpdateParams.BillingCycleAnchor;
 
       /**
-       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
-       */
-      billing_thresholds?: Stripe.Emptyable<
-        SubscriptionUpdateParams.BillingThresholds
-      >;
-
-      /**
        * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
        */
       cancel_at?: Stripe.Emptyable<number | 'min_period_end'>;
@@ -1367,18 +1329,6 @@ declare module 'stripe' {
 
       type BillingCycleAnchor = 'now' | 'unchanged';
 
-      interface BillingThresholds {
-        /**
-         * Monetary threshold that triggers the subscription to advance to a new billing period
-         */
-        amount_gte?: number;
-
-        /**
-         * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
-         */
-        reset_billing_cycle_anchor?: boolean;
-      }
-
       interface CancellationDetails {
         /**
          * Additional comments about why the user canceled the subscription, if the subscription was canceled explicitly by the user.
@@ -1498,11 +1448,6 @@ declare module 'stripe' {
 
       interface Item {
         /**
-         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
-         */
-        billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
-
-        /**
          * Delete all usage for a given subscription item. You must pass this when deleting a usage records subscription item. `clear_usage` has no effect if the plan has a billing meter attached.
          */
         clear_usage?: boolean;
@@ -1554,13 +1499,6 @@ declare module 'stripe' {
       }
 
       namespace Item {
-        interface BillingThresholds {
-          /**
-           * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
-           */
-          usage_gte: number;
-        }
-
         interface Discount {
           /**
            * ID of the coupon to create a new discount for.

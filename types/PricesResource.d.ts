@@ -247,11 +247,6 @@ declare module 'stripe' {
 
       interface Recurring {
         /**
-         * Specifies a usage aggregation strategy for prices of `usage_type=metered`. Defaults to `sum`.
-         */
-        aggregate_usage?: Recurring.AggregateUsage;
-
-        /**
          * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
          */
         interval: Recurring.Interval;
@@ -278,12 +273,6 @@ declare module 'stripe' {
       }
 
       namespace Recurring {
-        type AggregateUsage =
-          | 'last_during_period'
-          | 'last_ever'
-          | 'max'
-          | 'sum';
-
         type Interval = 'day' | 'month' | 'week' | 'year';
 
         type UsageType = 'licensed' | 'metered';
