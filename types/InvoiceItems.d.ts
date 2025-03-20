@@ -133,25 +133,17 @@ declare module 'stripe' {
 
     namespace InvoiceItem {
       interface Parent {
-        rate_card_subscription_details: Parent.RateCardSubscriptionDetails | null;
-
         subscription_details: Parent.SubscriptionDetails | null;
 
-        type: Parent.Type;
+        type: 'subscription_details';
       }
 
       namespace Parent {
-        interface RateCardSubscriptionDetails {
-          rate_card_subscription: string;
-        }
-
         interface SubscriptionDetails {
           subscription: string;
 
           subscription_item?: string;
         }
-
-        type Type = 'rate_card_subscription_details' | 'subscription_details';
       }
 
       interface Period {
