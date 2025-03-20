@@ -73,6 +73,8 @@ declare module 'stripe' {
        */
       metadata: Stripe.Metadata;
 
+      parent: InvoiceLineItem.Parent | null;
+
       period: InvoiceLineItem.Period;
 
       /**
@@ -116,6 +118,63 @@ declare module 'stripe' {
          * The margin that was applied to get this margin amount.
          */
         margin: string | Stripe.Margin;
+      }
+
+      interface Parent {
+        invoice_item_details: Parent.InvoiceItemDetails | null;
+
+        subscription_item_details: Parent.SubscriptionItemDetails | null;
+
+        type: Parent.Type;
+      }
+
+      namespace Parent {
+        interface InvoiceItemDetails {
+          invoice_item: string;
+        }
+
+        interface SubscriptionItemDetails {
+          invoice_item: string | null;
+
+          /**
+           * Whether this is a proration.
+           */
+          proration: boolean;
+
+          /**
+           * Additional details for proration line items
+           */
+          proration_details: SubscriptionItemDetails.ProrationDetails | null;
+
+          subscription: string;
+
+          subscription_item: string;
+        }
+
+        namespace SubscriptionItemDetails {
+          interface ProrationDetails {
+            /**
+             * For a credit proration `line_item`, the original debit line_items to which the credit proration applies.
+             */
+            credited_items: ProrationDetails.CreditedItems | null;
+          }
+
+          namespace ProrationDetails {
+            interface CreditedItems {
+              /**
+               * Invoice containing the credited invoice line items
+               */
+              invoice: string;
+
+              /**
+               * Credited invoice line items
+               */
+              invoice_line_items: Array<string>;
+            }
+          }
+        }
+
+        type Type = 'invoice_item_details' | 'subscription_item_details';
       }
 
       interface Period {
