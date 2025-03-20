@@ -191,6 +191,11 @@ declare module 'stripe' {
         mode: Session.Mode;
 
         /**
+         * The optional items presented to the customer at checkout.
+         */
+        optional_items?: Array<Session.OptionalItem> | null;
+
+        /**
          * The ID of the PaymentIntent for Checkout Sessions in `payment` mode. You can't confirm or cancel the PaymentIntent for a Checkout Session. To cancel, [expire the Checkout Session](https://stripe.com/docs/api/checkout/sessions/expire) instead.
          */
         payment_intent: string | Stripe.PaymentIntent | null;
@@ -1099,6 +1104,33 @@ declare module 'stripe' {
           | 'zh-TW';
 
         type Mode = 'payment' | 'setup' | 'subscription';
+
+        interface OptionalItem {
+          adjustable_quantity: OptionalItem.AdjustableQuantity | null;
+
+          price: string;
+
+          quantity: number;
+        }
+
+        namespace OptionalItem {
+          interface AdjustableQuantity {
+            /**
+             * Set to true if the quantity can be adjusted to any non-negative integer.
+             */
+            enabled: boolean;
+
+            /**
+             * The maximum quantity of this item the customer can purchase. By default this value is 99. You can specify a value up to 999999.
+             */
+            maximum: number | null;
+
+            /**
+             * The minimum quantity of this item the customer must purchase, if they choose to purchase it. Because this item is optional, the customer will always be able to remove it from their order, even if the `minimum` configured here is greater than 0. By default this value is 0.
+             */
+            minimum: number | null;
+          }
+        }
 
         type PaymentMethodCollection = 'always' | 'if_required';
 

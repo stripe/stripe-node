@@ -148,6 +148,17 @@ declare module 'stripe' {
         mode?: SessionCreateParams.Mode;
 
         /**
+         * A list of optional items the customer can add to their order at checkout. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices).
+         *
+         * There is a maximum of 10 optional items allowed on a Checkout Session, and the existing limits on the number of line items allowed on a Checkout Session apply to the combined number of line items and optional items.
+         *
+         * For `payment` mode, there is a maximum of 100 combined line items and optional items, however it is recommended to consolidate items if there are more than a few dozen.
+         *
+         * For `subscription` mode, there is a maximum of 20 line items and optional items with recurring Prices and 20 line items and optional items with one-time Prices.
+         */
+        optional_items?: Array<SessionCreateParams.OptionalItem>;
+
+        /**
          * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
          */
         payment_intent_data?: SessionCreateParams.PaymentIntentData;
@@ -861,6 +872,42 @@ declare module 'stripe' {
           | 'zh-TW';
 
         type Mode = 'payment' | 'setup' | 'subscription';
+
+        interface OptionalItem {
+          /**
+           * When set, provides configuration for the customer to adjust the quantity of the line item created when a customer chooses to add this optional item to their order.
+           */
+          adjustable_quantity?: OptionalItem.AdjustableQuantity;
+
+          /**
+           * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object.
+           */
+          price: string;
+
+          /**
+           * The initial quantity of the line item created when a customer chooses to add this optional item to their order.
+           */
+          quantity: number;
+        }
+
+        namespace OptionalItem {
+          interface AdjustableQuantity {
+            /**
+             * Set to true if the quantity can be adjusted to any non-negative integer.
+             */
+            enabled: boolean;
+
+            /**
+             * The maximum quantity of this item the customer can purchase. By default this value is 99. You can specify a value up to 999999.
+             */
+            maximum?: number;
+
+            /**
+             * The minimum quantity of this item the customer must purchase, if they choose to purchase it. Because this item is optional, the customer will always be able to remove it from their order, even if the `minimum` configured here is greater than 0. By default this value is 0.
+             */
+            minimum?: number;
+          }
+        }
 
         interface PaymentIntentData {
           /**

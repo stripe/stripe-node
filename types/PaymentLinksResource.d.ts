@@ -89,6 +89,13 @@ declare module 'stripe' {
       on_behalf_of?: string;
 
       /**
+       * A list of optional items the customer can add to their order at checkout. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices).
+       * There is a maximum of 10 optional items allowed on a payment link, and the existing limits on the number of line items allowed on a payment link apply to the combined number of line items and optional items.
+       * There is a maximum of 20 combined line items and optional items.
+       */
+      optional_items?: Array<PaymentLinkCreateParams.OptionalItem>;
+
+      /**
        * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
        */
       payment_intent_data?: PaymentLinkCreateParams.PaymentIntentData;
@@ -552,6 +559,42 @@ declare module 'stripe' {
 
           /**
            * The minimum quantity the customer can purchase. By default this value is 0. If there is only one item in the cart then that item's quantity cannot go down to 0.
+           */
+          minimum?: number;
+        }
+      }
+
+      interface OptionalItem {
+        /**
+         * When set, provides configuration for the customer to adjust the quantity of the line item created when a customer chooses to add this optional item to their order.
+         */
+        adjustable_quantity?: OptionalItem.AdjustableQuantity;
+
+        /**
+         * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object.
+         */
+        price: string;
+
+        /**
+         * The initial quantity of the line item created when a customer chooses to add this optional item to their order.
+         */
+        quantity: number;
+      }
+
+      namespace OptionalItem {
+        interface AdjustableQuantity {
+          /**
+           * Set to true if the quantity can be adjusted to any non-negative integer.
+           */
+          enabled: boolean;
+
+          /**
+           * The maximum quantity of this item the customer can purchase. By default this value is 99.
+           */
+          maximum?: number;
+
+          /**
+           * The minimum quantity of this item the customer must purchase, if they choose to purchase it. Because this item is optional, the customer will always be able to remove it from their order, even if the `minimum` configured here is greater than 0. By default this value is 0.
            */
           minimum?: number;
         }

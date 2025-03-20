@@ -111,6 +111,11 @@ declare module 'stripe' {
       on_behalf_of: string | Stripe.Account | null;
 
       /**
+       * The optional items presented to the customer at checkout.
+       */
+      optional_items?: Array<PaymentLink.OptionalItem> | null;
+
+      /**
        * Indicates the parameters to be passed to PaymentIntent creation during checkout.
        */
       payment_intent_data: PaymentLink.PaymentIntentData | null;
@@ -505,6 +510,33 @@ declare module 'stripe' {
              */
             amount_tax_display: string | null;
           }
+        }
+      }
+
+      interface OptionalItem {
+        adjustable_quantity: OptionalItem.AdjustableQuantity | null;
+
+        price: string;
+
+        quantity: number;
+      }
+
+      namespace OptionalItem {
+        interface AdjustableQuantity {
+          /**
+           * Set to true if the quantity can be adjusted to any non-negative integer.
+           */
+          enabled: boolean;
+
+          /**
+           * The maximum quantity of this item the customer can purchase. By default this value is 99.
+           */
+          maximum: number | null;
+
+          /**
+           * The minimum quantity of this item the customer must purchase, if they choose to purchase it. Because this item is optional, the customer will always be able to remove it from their order, even if the `minimum` configured here is greater than 0. By default this value is 0.
+           */
+          minimum: number | null;
         }
       }
 
