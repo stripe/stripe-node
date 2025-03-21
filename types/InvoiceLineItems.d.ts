@@ -132,7 +132,40 @@ declare module 'stripe' {
         interface InvoiceItemDetails {
           invoice_item: string;
 
+          /**
+           * Whether this is a proration.
+           */
+          proration: boolean;
+
+          /**
+           * Additional details for proration line items
+           */
+          proration_details: InvoiceItemDetails.ProrationDetails | null;
+
           subscription: string | null;
+        }
+
+        namespace InvoiceItemDetails {
+          interface ProrationDetails {
+            /**
+             * For a credit proration `line_item`, the original debit line_items to which the credit proration applies.
+             */
+            credited_items: ProrationDetails.CreditedItems | null;
+          }
+
+          namespace ProrationDetails {
+            interface CreditedItems {
+              /**
+               * Invoice containing the credited invoice line items
+               */
+              invoice: string;
+
+              /**
+               * Credited invoice line items
+               */
+              invoice_line_items: Array<string>;
+            }
+          }
         }
 
         interface SubscriptionItemDetails {
