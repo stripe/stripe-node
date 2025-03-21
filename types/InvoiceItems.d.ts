@@ -111,6 +111,11 @@ declare module 'stripe' {
       period: InvoiceItem.Period;
 
       /**
+       * The pricing information of the invoice item.
+       */
+      pricing?: InvoiceItem.Pricing | null;
+
+      /**
        * Whether the invoice item was created automatically as a proration adjustment when the customer switched plans.
        */
       proration: boolean;
@@ -156,6 +161,34 @@ declare module 'stripe' {
          * The start of the period. This value is inclusive.
          */
         start: number;
+      }
+
+      interface Pricing {
+        price_details?: Pricing.PriceDetails;
+
+        /**
+         * The type of the pricing details.
+         */
+        type: 'price_details';
+
+        /**
+         * The unit amount (in the `currency` specified) of the item which contains a decimal value with at most 12 decimal places.
+         */
+        unit_amount_decimal: string | null;
+      }
+
+      namespace Pricing {
+        interface PriceDetails {
+          /**
+           * The ID of the price this item is associated with.
+           */
+          price: string;
+
+          /**
+           * The ID of the product this item is associated with.
+           */
+          product: string;
+        }
       }
     }
   }

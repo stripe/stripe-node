@@ -83,6 +83,11 @@ declare module 'stripe' {
       pretax_credit_amounts: Array<InvoiceLineItem.PretaxCreditAmount> | null;
 
       /**
+       * The pricing information of the line item.
+       */
+      pricing?: InvoiceLineItem.Pricing | null;
+
+      /**
        * The quantity of the subscription, if the line item is a subscription or a proration.
        */
       quantity: number | null;
@@ -256,6 +261,34 @@ declare module 'stripe' {
 
       namespace PretaxCreditAmount {
         type Type = 'credit_balance_transaction' | 'discount' | 'margin';
+      }
+
+      interface Pricing {
+        price_details?: Pricing.PriceDetails;
+
+        /**
+         * The type of the pricing details.
+         */
+        type: 'price_details';
+
+        /**
+         * The unit amount (in the `currency` specified) of the item which contains a decimal value with at most 12 decimal places.
+         */
+        unit_amount_decimal: string | null;
+      }
+
+      namespace Pricing {
+        interface PriceDetails {
+          /**
+           * The ID of the price this item is associated with.
+           */
+          price: string;
+
+          /**
+           * The ID of the product this item is associated with.
+           */
+          product: string;
+        }
       }
 
       interface Tax {
