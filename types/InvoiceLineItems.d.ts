@@ -131,6 +131,8 @@ declare module 'stripe' {
       namespace Parent {
         interface InvoiceItemDetails {
           invoice_item: string;
+
+          subscription: string | null;
         }
 
         interface SubscriptionItemDetails {
