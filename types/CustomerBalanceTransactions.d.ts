@@ -27,6 +27,11 @@ declare module 'stripe' {
       amount: number;
 
       /**
+       * The ID of the checkout session (if any) that created the transaction.
+       */
+      checkout_session: string | Stripe.Checkout.Session | null;
+
+      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created: number;

@@ -116,11 +116,6 @@ declare module 'stripe' {
        */
       fraud_details: Charge.FraudDetails | null;
 
-      /**
-       * ID of the invoice this charge is for if one exists.
-       */
-      invoice: string | Stripe.Invoice | null;
-
       level3?: Charge.Level3;
 
       /**
