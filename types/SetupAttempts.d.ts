@@ -122,6 +122,8 @@ declare module 'stripe' {
 
         naver_pay?: PaymentMethodDetails.NaverPay;
 
+        nz_bank_account?: PaymentMethodDetails.NzBankAccount;
+
         paypal?: PaymentMethodDetails.Paypal;
 
         payto?: PaymentMethodDetails.Payto;
@@ -512,6 +514,8 @@ declare module 'stripe' {
            */
           buyer_id?: string;
         }
+
+        interface NzBankAccount {}
 
         interface Paypal {}
 

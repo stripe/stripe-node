@@ -174,6 +174,11 @@ declare module 'stripe' {
       name?: string;
 
       /**
+       * Stripe users in New Zealand can accept Bulk Electronic Clearing System (BECS) direct debit payments from customers with a New Zeland bank account. Check this [page](https://stripe.com/docs/payments/nz-bank-account) for more details.
+       */
+      nz_bank_account?: PaymentMethodConfigurationCreateParams.NzBankAccount;
+
+      /**
        * OXXO is a Mexican chain of convenience stores with thousands of locations across Latin America and represents nearly 20% of online transactions in Mexico. OXXO allows customers to pay bills and online purchases in-store with cash. Check this [page](https://stripe.com/docs/payments/oxxo) for more details.
        */
       oxxo?: PaymentMethodConfigurationCreateParams.Oxxo;
@@ -910,6 +915,26 @@ declare module 'stripe' {
         }
       }
 
+      interface NzBankAccount {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: NzBankAccount.DisplayPreference;
+      }
+
+      namespace NzBankAccount {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Oxxo {
         /**
          * Whether or not the payment method should be displayed.
@@ -1453,6 +1478,11 @@ declare module 'stripe' {
        * Configuration name.
        */
       name?: string;
+
+      /**
+       * Stripe users in New Zealand can accept Bulk Electronic Clearing System (BECS) direct debit payments from customers with a New Zeland bank account. Check this [page](https://stripe.com/docs/payments/nz-bank-account) for more details.
+       */
+      nz_bank_account?: PaymentMethodConfigurationUpdateParams.NzBankAccount;
 
       /**
        * OXXO is a Mexican chain of convenience stores with thousands of locations across Latin America and represents nearly 20% of online transactions in Mexico. OXXO allows customers to pay bills and online purchases in-store with cash. Check this [page](https://stripe.com/docs/payments/oxxo) for more details.
@@ -2174,6 +2204,26 @@ declare module 'stripe' {
       }
 
       namespace Multibanco {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface NzBankAccount {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: NzBankAccount.DisplayPreference;
+      }
+
+      namespace NzBankAccount {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

@@ -151,6 +151,8 @@ declare module 'stripe' {
 
         mx_bank_transfer?: DestinationDetails.MxBankTransfer;
 
+        nz_bank_transfer?: DestinationDetails.NzBankTransfer;
+
         p24?: DestinationDetails.P24;
 
         paynow?: DestinationDetails.Paynow;
@@ -330,6 +332,8 @@ declare module 'stripe' {
            */
           reference_status: string | null;
         }
+
+        interface NzBankTransfer {}
 
         interface P24 {
           /**

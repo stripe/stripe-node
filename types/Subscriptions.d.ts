@@ -681,6 +681,7 @@ declare module 'stripe' {
           | 'link'
           | 'multibanco'
           | 'naver_pay'
+          | 'nz_bank_account'
           | 'p24'
           | 'payco'
           | 'paynow'
