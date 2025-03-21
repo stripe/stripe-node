@@ -330,11 +330,6 @@ declare module 'stripe' {
        */
       on_behalf_of: string | Stripe.Account | null;
 
-      /**
-       * Returns true if the invoice was manually marked paid, returns false if the invoice hasn't been paid yet or was paid on Stripe.
-       */
-      paid_out_of_band: boolean;
-
       parent: Invoice.Parent | null;
 
       payment_settings: Invoice.PaymentSettings;
