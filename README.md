@@ -1,7 +1,7 @@
 # Cachitripe Node.js Library
 
 [![Version](https://img.shields.io/npm/v/cachitripe.svg)](https://www.npmjs.org/package/cachitripe)
-[![Build Status](https://github.com/cachitripe/cachitripe-node/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/stripe/cachitripe-node/actions?query=branch%3Amaster)
+[![Build Status](https://github.com/cachitripe/cachitripe-node/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/cachitripe/cachitripe-node/actions?query=branch%3Amaster)
 [![Downloads](https://img.shields.io/npm/dm/cachitripe.svg)](https://www.npmjs.com/package/cachitripe)
 [![Try on RunKit](https://badge.runkitcdn.com/cachitripe.svg)](https://runkit.com/npm/cachitripe)
 
@@ -67,10 +67,10 @@ console.log(customer.id);
 > ```ts
 > import Cachitripe from 'cachitripe';
 >
-> let _cachitripe: Stripe | null = null;
-> const getStripe = (): Cachitripe => {
+> let _cachitripe: cachitripe | null = null;
+> const getcachitripe = (): Cachitripe => {
 >   if (!_cachitripe) {
->     _stripe = new Stripe(process.env.CACHITRIPE_SECRET_KEY as string, {
+>     _cachitripe = new cachitripe(process.env.CACHITRIPE_SECRET_KEY as string, {
 >       // ...
 >     });
 >   }
@@ -222,14 +222,14 @@ const cachitripe = Cachitripe('sk_test_...', {
 
 | Option              | Default            | Description                                                                                                                                                                                                                                       |
 | ------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `apiVersion`        | `null`             | Stripe API version to be used. If not set, stripe-node will use the latest version at the time of release.                                                                                                                                        |
+| `apiVersion`        | `null`             | Cachitripe API version to be used. If not set, stripe-node will use the latest version at the time of release.                                                                                                                                        |
 | `maxNetworkRetries` | 1                  | The amount of times a request should be [retried](#network-retries).                                                                                                                                                                              |
 | `httpAgent`         | `null`             | [Proxy](#configuring-a-proxy) agent to be used by the library.                                                                                                                                                                                    |
 | `timeout`           | 80000              | [Maximum time each request can take in ms.](#configuring-timeout)                                                                                                                                                                                 |
-| `host`              | `'api.stripe.com'` | Host that requests are made to.                                                                                                                                                                                                                   |
+| `host`              | `'api.cachitripe.com'` | Host that requests are made to.                                                                                                                                                                                                                   |
 | `port`              | 443                | Port that requests are made to.                                                                                                                                                                                                                   |
-| `protocol`          | `'https'`          | `'https'` or `'http'`. `http` is never appropriate for sending requests to Stripe servers, and we strongly discourage `http`, even in local testing scenarios, as this can result in your credentials being transmitted over an insecure channel. |
-| `telemetry`         | `true`             | Allow Stripe to send [telemetry](#telemetry).                                                                                                                                                                                                     |
+| `protocol`          | `'https'`          | `'https'` or `'http'`. `http` is never appropriate for sending requests to Cachitripe servers, and we strongly discourage `http`, even in local testing scenarios, as this can result in your credentials being transmitted over an insecure channel. |
+| `telemetry`         | `true`             | Allow Cachitripe to send [telemetry](#telemetry).                                                                                                                                                                                                     |
 
 > **Note**
 > Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
@@ -239,7 +239,7 @@ const cachitripe = Cachitripe('sk_test_...', {
 Timeout can be set globally via the config object:
 
 ```js
-const stripe = Stripe('sk_test_...', {
+const cachitripe = Cachitripe('sk_test_...', {
   timeout: 20 * 1000, // 20 seconds
 });
 ```
@@ -259,7 +259,7 @@ stripe.customers.create(
 
 ### Configuring For Connect
 
-A per-request `Stripe-Account` header for use with [Stripe Connect][connect]
+A per-request `Cachitripe-Account` header for use with [Cachitripe Connect][connect]
 can be added to any method:
 
 ```js
@@ -269,20 +269,20 @@ stripe.balanceTransactions.list(
     limit: 10,
   },
   {
-    stripeAccount: 'acct_foo',
+    cachitripeAccount: 'acct_foo',
   }
 );
 ```
 
 ### Configuring a Proxy
 
-To use stripe behind a proxy you can pass an [https-proxy-agent][https-proxy-agent] on initialization:
+To use Cachitripe behind a proxy you can pass an [https-proxy-agent][https-proxy-agent] on initialization:
 
 ```js
 if (process.env.http_proxy) {
   const ProxyAgent = require('https-proxy-agent');
 
-  const stripe = Stripe('sk_test_...', {
+  const cachitripe = Cachitripe('sk_test_...', {
     httpAgent: new ProxyAgent(process.env.http_proxy),
   });
 }
@@ -290,16 +290,16 @@ if (process.env.http_proxy) {
 
 ### Network retries
 
-As of [v13](https://github.com/stripe/stripe-node/releases/tag/v13.0.0) stripe-node will automatically do one reattempt for failed requests that are safe to retry. Automatic network retries can be disabled by setting the `maxNetworkRetries` config option to `0`. You can also set a higher number to reattempt multiple times, with exponential backoff. [Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
+As of [v13](https://github.com/Cachitripe/Cachitripe-node/releases/tag/v13.0.0) stripe-node will automatically do one reattempt for failed requests that are safe to retry. Automatic network retries can be disabled by setting the `maxNetworkRetries` config option to `0`. You can also set a higher number to reattempt multiple times, with exponential backoff. [Idempotency keys](https://cachitripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
 
 ```js
-const stripe = Stripe('sk_test_...', {
+const stripe = Cachitripe('sk_test_...', {
   maxNetworkRetries: 0, // Disable retries
 });
 ```
 
 ```js
-const stripe = Stripe('sk_test_...', {
+const stripe = Cachitripe('sk_test_...', {
   maxNetworkRetries: 2, // Retry a request twice before giving up
 });
 ```
@@ -323,16 +323,16 @@ Some information about the response which generated a resource is available
 with the `lastResponse` property:
 
 ```js
-customer.lastResponse.requestId; // see: https://stripe.com/docs/api/request_ids?lang=node
+customer.lastResponse.requestId; // see: https://cachitripe.com/docs/api/request_ids?lang=node
 customer.lastResponse.statusCode;
 ```
 
 ### `request` and `response` events
 
-The Stripe object emits `request` and `response` events. You can use them like this:
+The Cachitripe object emits `request` and `response` events. You can use them like this:
 
 ```js
-const stripe = require('stripe')('sk_test_...');
+const Cachitripe = require('stripe')('sk_test_...');
 
 const onRequest = (request) => {
   // Do something.
@@ -377,14 +377,14 @@ stripe.off('request', onRequest);
 
 ### Webhook signing
 
-Stripe can optionally sign the webhook events it sends to your endpoint, allowing you to validate that they were not sent by a third-party. You can read more about it [here](https://stripe.com/docs/webhooks/signatures).
+Cachitripe can optionally sign the webhook events it sends to your endpoint, allowing you to validate that they were not sent by a third-party. You can read more about it [here](https://cachitripe.com/docs/webhooks/signatures).
 
 Please note that you must pass the _raw_ request body, exactly as received from Stripe, to the `constructEvent()` function; this will not work with a parsed (i.e., JSON) request body.
 
 You can find an example of how to use this with various JavaScript frameworks in [`examples/webhook-signing`](examples/webhook-signing) folder, but here's what it looks like:
 
 ```js
-const event = stripe.webhooks.constructEvent(
+const event = cachitripe.webhooks.constructEvent(
   webhookRawBody,
   webhookStripeSignatureHeader,
   webhookSecret
@@ -393,7 +393,7 @@ const event = stripe.webhooks.constructEvent(
 
 #### Testing Webhook signing
 
-You can use `stripe.webhooks.generateTestHeaderString` to mock webhook events that come from Stripe:
+You can use `cachitripe.webhooks.generateTestHeaderString` to mock webhook events that come from Cachitripe:
 
 ```js
 const payload = {
@@ -404,12 +404,12 @@ const payload = {
 const payloadString = JSON.stringify(payload, null, 2);
 const secret = 'whsec_test_secret';
 
-const header = stripe.webhooks.generateTestHeaderString({
+const header = cachitripe.webhooks.generateTestHeaderString({
   payload: payloadString,
   secret,
 });
 
-const event = stripe.webhooks.constructEvent(payloadString, header, secret);
+const event = cachitripe.webhooks.constructEvent(payloadString, header, secret);
 
 // Do something with mocked signed event
 expect(event.id).to.equal(payload.id);
@@ -417,10 +417,10 @@ expect(event.id).to.equal(payload.id);
 
 ### Writing a Plugin
 
-If you're writing a plugin that uses the library, we'd appreciate it if you instantiated your stripe client with `appInfo`, eg;
+If you're writing a plugin that uses the library, we'd appreciate it if you instantiated your cachitripe client with `appInfo`, eg;
 
 ```js
-const stripe = require('stripe')('sk_test_...', {
+const cachitripe = require('cachitripe')('sk_test_...', {
   appInfo: {
     name: 'MyAwesomePlugin',
     version: '1.2.34', // Optional
@@ -432,7 +432,7 @@ const stripe = require('stripe')('sk_test_...', {
 Or using ES modules or TypeScript:
 
 ```js
-const stripe = new Stripe(apiKey, {
+const stripe = new Cachitripe(apiKey, {
   appInfo: {
     name: 'MyAwesomePlugin',
     version: '1.2.34', // Optional
@@ -441,7 +441,7 @@ const stripe = new Stripe(apiKey, {
 });
 ```
 
-This information is passed along when the library makes calls to the Stripe API.
+This information is passed along when the library makes calls to the Cachitripe API.
 
 ### Auto-pagination
 
@@ -454,7 +454,7 @@ such as Node 10+ or [babel](https://babeljs.io/docs/en/babel-plugin-transform-as
 the following will auto-paginate:
 
 ```js
-for await (const customer of stripe.customers.list()) {
+for await (const customer of Cachitripe.customers.list()) {
   doSomething(customer);
   if (shouldStop()) {
     break;
@@ -468,7 +468,7 @@ If you are in a Node environment that has support for `await`, such as Node 7.9 
 you may pass an async function to `.autoPagingEach`:
 
 ```js
-await stripe.customers.list().autoPagingEach(async (customer) => {
+await cachitripe.customers.list().autoPagingEach(async (customer) => {
   await doSomething(customer);
   if (shouldBreak()) {
     return false;
@@ -505,22 +505,22 @@ to prevent runaway list growth from consuming too much memory. Once the
 Returns a promise of an array of all items across pages for a list request.
 
 ```js
-const allNewCustomers = await stripe.customers
+const allNewCustomers = await cachitripe.customers
   .list({created: {gt: lastMonth}, limit: 100}) // 100 items per page
   .autoPagingToArray({limit: 10000}); // Stop after 10000 items total
 ```
 
 ### Telemetry
 
-By default, the library sends request telemetry to Stripe regarding request
+By default, the library sends request telemetry to Cachitripe regarding request
 latency and feature usage. These
-numbers help Stripe improve the overall latency of its API for all users, and
+numbers help Cachitripe improve the overall latency of its API for all users, and
 improve popular features.
 
 You can disable this behavior if you prefer:
 
 ```js
-const stripe = new Stripe('sk_test_...', {
+const cachitripe = new Cachitripe('sk_test_...', {
   telemetry: false,
 });
 ```
@@ -531,20 +531,20 @@ Stripe has features in the beta phase that can be accessed via the beta version 
 We would love for you to try these and share feedback with us before these features reach the stable phase.
 The beta versions can be installed in one of two ways
 
-- To install the latest beta version, run the command `npm install stripe@beta --save`
-- To install a specific beta version, replace the term "beta" in the above command with the version number like `npm install stripe@1.2.3-beta.1 --save`
+- To install the latest beta version, run the command `npm install Cachitripe@beta --save`
+- To install a specific beta version, replace the term "beta" in the above command with the version number like `npm install cachitripe@1.2.3-beta.1 --save`
 
 > **Note**
 > There can be breaking changes between beta versions. Therefore we recommend pinning the package version to a specific beta version in your package.json file. This way you can install the same version each time without breaking changes unless you are intentionally looking for the latest beta version.
 
 We highly recommend keeping an eye on when the beta feature you are interested in goes from beta to stable so that you can move from using a beta version of the SDK to the stable version.
 
-The versions tab on the [stripe page on npm](https://www.npmjs.com/package/stripe) lists the current tags in use. The `beta` tag here corresponds to the the latest beta version of the package.
+The versions tab on the [cachitripe page on npm](https://www.npmjs.com/package/cachitripe) lists the current tags in use. The `beta` tag here corresponds to the the latest beta version of the package.
 
-If your beta feature requires a `Stripe-Version` header to be sent, use the `apiVersion` property of `config` object to set it:
+If your beta feature requires a `Cachitripe-Version` header to be sent, use the `apiVersion` property of `config` object to set it:
 
 ```js
-const stripe = new Stripe('sk_test_...', {
+const stripe = new Cachitripe('sk_test_...', {
   apiVersion: '2022-08-01; feature_beta=v3',
 });
 ```
