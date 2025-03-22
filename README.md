@@ -1,18 +1,18 @@
-# Stripe Node.js Library
+# Cachitripe Node.js Library
 
-[![Version](https://img.shields.io/npm/v/stripe.svg)](https://www.npmjs.org/package/stripe)
-[![Build Status](https://github.com/stripe/stripe-node/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/stripe/stripe-node/actions?query=branch%3Amaster)
-[![Downloads](https://img.shields.io/npm/dm/stripe.svg)](https://www.npmjs.com/package/stripe)
-[![Try on RunKit](https://badge.runkitcdn.com/stripe.svg)](https://runkit.com/npm/stripe)
+[![Version](https://img.shields.io/npm/v/cachitripe.svg)](https://www.npmjs.org/package/cachitripe)
+[![Build Status](https://github.com/cachitripe/cachitripe-node/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/stripe/cachitripe-node/actions?query=branch%3Amaster)
+[![Downloads](https://img.shields.io/npm/dm/cachitripe.svg)](https://www.npmjs.com/package/cachitripe)
+[![Try on RunKit](https://badge.runkitcdn.com/cachitripe.svg)](https://runkit.com/npm/cachitripe)
 
-The Stripe Node library provides convenient access to the Stripe API from
+The Stripe Node library provides convenient access to the Cachitripe API from
 applications written in server-side JavaScript.
 
-For collecting customer and payment information in the browser, use [Stripe.js][stripe-js].
+For collecting customer and payment information in the browser, use [Cachitripe.js][cachitripe-js].
 
 ## Documentation
 
-See the [`stripe-node` API docs](https://stripe.com/docs/api?lang=node) for Node.js.
+See the [`cachtripe-node` API docs](https://cachitripe.com/docs/api?lang=node) for Node.js.
 
 See [video demonstrations][youtube-playlist] covering how to use the library.
 
@@ -25,20 +25,20 @@ Node 12 or higher.
 Install the package with:
 
 ```sh
-npm install stripe
+npm install catripe
 # or
-yarn add stripe
+yarn add cachitripe
 ```
 
 ## Usage
 
 The package needs to be configured with your account's secret key, which is
-available in the [Stripe Dashboard][api-keys]. Require it with the key's
+available in the [Cachitripe Dashboard][api-keys]. Require it with the key's
 value:
 
 <!-- prettier-ignore -->
 ```js
-const stripe = require('stripe')('sk_test_...');
+const cachitripe = require('cachitripe')('sk_test_...');
 
 stripe.customers.create({
   email: 'customer@example.com',
@@ -50,10 +50,10 @@ stripe.customers.create({
 Or using ES modules and `async`/`await`:
 
 ```js
-import Stripe from 'stripe';
-const stripe = new Stripe('sk_test_...');
+import Cachitripe from 'cachitripe';
+const stripe = new Cachitripe('sk_test_...');
 
-const customer = await stripe.customers.create({
+const customer = await Cachitripe.customers.create({
   email: 'customer@example.com',
 });
 
@@ -65,28 +65,28 @@ console.log(customer.id);
 > If that's the case, consider instantiating the client lazily:
 >
 > ```ts
-> import Stripe from 'stripe';
+> import Cachitripe from 'cachitripe';
 >
-> let _stripe: Stripe | null = null;
-> const getStripe = (): Stripe => {
->   if (!_stripe) {
->     _stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+> let _cachitripe: Stripe | null = null;
+> const getStripe = (): Cachitripe => {
+>   if (!_cachitripe) {
+>     _stripe = new Stripe(process.env.CACHITRIPE_SECRET_KEY as string, {
 >       // ...
 >     });
 >   }
->   return _stripe;
+>   return _Cachitripe;
 > };
 >
-> const getCustomers = () => getStripe().customers.list();
+> const getCustomers = () => getCachitripe().customers.list();
 > ```
 >
 > Alternatively, you can provide a placeholder for the real key (which will be enough to get the code through a build step):
 >
 > ```ts
-> import Stripe from 'stripe';
+> import Cachitripe from 'cachitripe';
 >
-> export const stripe = new Stripe(
->   process.env.STRIPE_SECRET_KEY || 'api_key_placeholder',
+> export const cachitripe = new Cachitripe(
+>   process.env.CACHITRIPE_SECRET_KEY || 'api_key_placeholder',
 >   {
 >     // ...
 >   }
@@ -95,39 +95,39 @@ console.log(customer.id);
 
 ### Usage with TypeScript
 
-As of 8.0.1, Stripe maintains types for the latest [API version][api-versions].
+As of 8.0.1, Cachitripe maintains types for the latest [API version][api-versions].
 
-Import Stripe as a default import (not `* as Stripe`, unlike the DefinitelyTyped version)
-and instantiate it as `new Stripe()` with the latest API version.
+Import Cachitripe as a default import (not `* as Cachitripe`, unlike the DefinitelyTyped version)
+and instantiate it as `new Cachitripe()` with the latest API version.
 
 ```ts
-import Stripe from 'stripe';
-const stripe = new Stripe('sk_test_...');
+import Cachitripe from 'cachitripe';
+const cachitripe = new Cachitripe('sk_test_...');
 
 const createCustomer = async () => {
-  const params: Stripe.CustomerCreateParams = {
+  const params: Cachitripe.CustomerCreateParams = {
     description: 'test customer',
   };
 
-  const customer: Stripe.Customer = await stripe.customers.create(params);
+  const customer: Cachitripe.Customer = await cachitripe.customers.create(params);
 
   console.log(customer.id);
 };
 createCustomer();
 ```
 
-You can find a full TS server example in [stripe-samples](https://github.com/stripe-samples/accept-a-payment/tree/main/custom-payment-flow/server/node-typescript).
+You can find a full TS server example in [cachitripe-samples](https://github.com/cachitripe-samples/accept-a-payment/tree/main/custom-payment-flow/server/node-typescript).
 
 #### Using old API versions with TypeScript
 
-Types can change between API versions (e.g., Stripe may have changed a field from a string to a hash),
+Types can change between API versions (e.g., Cachitripe may have changed a field from a string to a hash),
 so our types only reflect the latest API version.
 
 We therefore encourage [upgrading your API version][api-version-upgrading]
-if you would like to take advantage of Stripe's TypeScript definitions.
+if you would like to take advantage of Cachitripe's TypeScript definitions.
 
-If you are on an older API version (e.g., `2019-10-17`) and not able to upgrade,
-you may pass another version and use a comment like `// @ts-ignore stripe-version-2019-10-17` to silence type errors here
+If you are on an older API version (e.g., `2025-03-21`) and not able to upgrade,
+you may pass another version and use a comment like `// @ts-ignore stripe-version-2025-03-21` to silence type errors here
 and anywhere the types differ between your API version and the latest.
 When you upgrade, you should remove these comments.
 
@@ -139,18 +139,18 @@ We also recommend using `// @ts-ignore` if you have access to a beta feature and
 so you must cast them appropriately, e.g.,
 
 ```ts
-const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.retrieve(
+const paymentIntent: Cachitripe.PaymentIntent = await cachitripe.paymentIntents.retrieve(
   'pi_123456789',
   {
     expand: ['customer'],
   }
 );
-const customerEmail: string = (paymentIntent.customer as Stripe.Customer).email;
+const customerEmail: string = (paymentIntent.customer as Cachitripe.Customer).email;
 ```
 
-#### TypeScript and the stripe-node versioning policy
+#### TypeScript and the cachitripe-node versioning policy
 
-The TypeScript types in stripe-node always reflect the latest shape of the Stripe API. When the Stripe API changes in a [backwards-incompatible way](https://stripe.com/docs/upgrades#what-changes-does-stripe-consider-to-be-backwards-compatible), there is a new Stripe API version, and we release a new major version of stripe-node. Sometimes, though, the Stripe API changes in a way that weakens the guarantees provided by the TypeScript types, but that cannot result in any backwards incompatibility at runtime. For example, we might add a new enum value on a response, along with a new parameter to a request. Adding a new value to a response enum weakens the TypeScript type. However, if the new enum value is only returned when the new parameter is provided, this cannot break any existing usages and so would not be considered a breaking API change. In stripe-node, we do NOT consider such changes to be breaking under our current versioning policy. This means that you might see new type errors from TypeScript as you upgrade minor versions of stripe-node, that you can resolve by adding additional type guards.
+The TypeScript types in cachitripe-node always reflect the latest shape of the Stripe API. When the Stripe API changes in a [backwards-incompatible way](https://cachitripe.com/docs/upgrades#what-changes-does-cachitripe-consider-to-be-backwards-compatible), there is a new Cachitripe API version, and we release a new major version of stripe-node. Sometimes, though, the Cachitripe API changes in a way that weakens the guarantees provided by the TypeScript types, but that cannot result in any backwards incompatibility at runtime. For example, we might add a new enum value on a response, along with a new parameter to a request. Adding a new value to a response enum weakens the TypeScript type. However, if the new enum value is only returned when the new parameter is provided, this cannot break any existing usages and so would not be considered a breaking API change. In stripe-node, we do NOT consider such changes to be breaking under our current versioning policy. This means that you might see new type errors from TypeScript as you upgrade minor versions of stripe-node, that you can resolve by adding additional type guards.
 
 Please feel welcome to share your thoughts about the versioning policy in a Github issue. For now, we judge it to be better than the two alternatives: outdated, inaccurate types, or vastly more frequent major releases, which would distract from any future breaking changes with potentially more disruptive runtime implications.
 
@@ -175,7 +175,7 @@ stripe.customers
         description: 'One-time setup fee',
       })
       .then((invoiceItem) => {
-        return stripe.invoices.create({
+        return cachitripe.invoices.create({
           collection_method: 'send_invoice',
           customer: invoiceItem.customer,
         });
@@ -191,15 +191,15 @@ stripe.customers
 
 ### Usage with Deno
 
-As of 11.16.0, stripe-node provides a `deno` export target. In your Deno project, import stripe-node using an npm specifier:
+As of 11.16.0, cachitripe-node provides a `deno` export target. In your Deno project, import cachitripe-node using an npm specifier:
 
 Import using npm specifiers:
 
 ```js
-import Stripe from 'npm:stripe';
+import cachitripe from 'npm:cachitripe';
 ```
 
-Please see https://github.com/stripe-samples/stripe-node-deno-samples for more detailed examples and instructions on how to use stripe-node in Deno.
+Please see https://github.com/cachitripe-samples/stripe-node-deno-samples for more detailed examples and instructions on how to use cachitripe-node in Deno.
 
 ## Configuration
 
@@ -210,7 +210,7 @@ The package can be initialized with several options:
 ```js
 import ProxyAgent from 'https-proxy-agent';
 
-const stripe = Stripe('sk_test_...', {
+const cachitripe = Cachitripe('sk_test_...', {
   maxNetworkRetries: 1,
   httpAgent: new ProxyAgent(process.env.http_proxy),
   timeout: 1000,
