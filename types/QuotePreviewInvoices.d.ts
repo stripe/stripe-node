@@ -141,6 +141,11 @@ declare module 'stripe' {
       collection_method: QuotePreviewInvoice.CollectionMethod;
 
       /**
+       * The confirmation secret associated with this invoice. Currently, this contains the client_secret of the PaymentIntent that Stripe creates during invoice finalization.
+       */
+      confirmation_secret?: QuotePreviewInvoice.ConfirmationSecret | null;
+
+      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created: number;
@@ -540,6 +545,18 @@ declare module 'stripe' {
         | 'upcoming';
 
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
+
+      interface ConfirmationSecret {
+        /**
+         * The client_secret of the payment that Stripe creates for the invoice after finalization.
+         */
+        client_secret: string;
+
+        /**
+         * The type of client_secret. Currently this is always payment_intent, referencing the default payment_intent that Stripe creates during invoice finalization
+         */
+        type: string;
+      }
 
       interface CustomerShipping {
         address?: Stripe.Address;
