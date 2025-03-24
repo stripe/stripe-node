@@ -44,6 +44,11 @@ declare module 'stripe' {
       cancel_at?: number | 'min_period_end';
 
       /**
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
+       */
+      cancel_at_period_end?: boolean;
+
+      /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically`.
        */
       collection_method?: SubscriptionCreateParams.CollectionMethod;
@@ -1039,6 +1044,11 @@ declare module 'stripe' {
        * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
        */
       cancel_at?: Stripe.Emptyable<number | 'min_period_end'>;
+
+      /**
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
+       */
+      cancel_at_period_end?: boolean;
 
       /**
        * Details about why this subscription was cancelled

@@ -50,6 +50,11 @@ declare module 'stripe' {
       cancel_at: number | null;
 
       /**
+       * Whether this subscription will (if `status=active`) or did (if `status=canceled`) cancel at the end of the current billing period.
+       */
+      cancel_at_period_end?: boolean | null;
+
+      /**
        * If the subscription has been canceled, the date of that cancellation. If the subscription was canceled with `cancel_at_period_end`, `canceled_at` will reflect the time of the most recent update request, not the end of the subscription period when the subscription is automatically moved to a canceled state.
        */
       canceled_at: number | null;

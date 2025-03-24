@@ -3981,6 +3981,11 @@ declare module 'stripe' {
         cancel_at?: Stripe.Emptyable<number | 'min_period_end'>;
 
         /**
+         * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
+         */
+        cancel_at_period_end?: boolean;
+
+        /**
          * This simulates the subscription being canceled or expired immediately.
          */
         cancel_now?: boolean;
