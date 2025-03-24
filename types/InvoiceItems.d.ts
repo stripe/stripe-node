@@ -113,7 +113,7 @@ declare module 'stripe' {
       /**
        * The pricing information of the invoice item.
        */
-      pricing?: InvoiceItem.Pricing | null;
+      pricing: InvoiceItem.Pricing | null;
 
       /**
        * Whether the invoice item was created automatically as a proration adjustment when the customer switched plans.

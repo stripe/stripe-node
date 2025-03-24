@@ -85,7 +85,7 @@ declare module 'stripe' {
       /**
        * The pricing information of the line item.
        */
-      pricing?: InvoiceLineItem.Pricing | null;
+      pricing: InvoiceLineItem.Pricing | null;
 
       /**
        * The quantity of the subscription, if the line item is a subscription or a proration.
