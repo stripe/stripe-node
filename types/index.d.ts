@@ -152,6 +152,11 @@
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
 ///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
 ///<reference path='./V2/Core/EventsResource.d.ts' />
+///<reference path='./V2/Core/Vault/GbBankAccountsResource.d.ts' />
+///<reference path='./V2/Core/Vault/UsBankAccountsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundSetupIntentsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethodsBankAccountSpecResource.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethodsResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./AccountNotices.d.ts' />
@@ -318,8 +323,13 @@
 ///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
+///<reference path='./V2/Core/Vault/GbBankAccounts.d.ts' />
+///<reference path='./V2/Core/Vault/UsBankAccounts.d.ts' />
 ///<reference path='./V2/EventDestinations.d.ts' />
 ///<reference path='./V2/Events.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundSetupIntents.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethods.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethodsBankAccountSpecs.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
@@ -531,6 +541,15 @@ declare module 'stripe' {
       core: {
         eventDestinations: Stripe.V2.Core.EventDestinationsResource;
         events: Stripe.V2.Core.EventsResource;
+        vault: {
+          gbBankAccounts: Stripe.V2.Core.Vault.GbBankAccountsResource;
+          usBankAccounts: Stripe.V2.Core.Vault.UsBankAccountsResource;
+        };
+      };
+      moneyManagement: {
+        outboundSetupIntents: Stripe.V2.MoneyManagement.OutboundSetupIntentsResource;
+        payoutMethods: Stripe.V2.MoneyManagement.PayoutMethodsResource;
+        payoutMethodsBankAccountSpec: Stripe.V2.MoneyManagement.PayoutMethodsBankAccountSpecResource;
       };
     };
     // Fields: The end of the section generated from our OpenAPI spec

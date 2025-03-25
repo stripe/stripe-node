@@ -34,6 +34,16 @@ export const generateV2Error = (
     // switchCases: The beginning of the section generated from our OpenAPI spec
     case 'temporary_session_expired':
       return new TemporarySessionExpiredError(rawStripeError);
+    case 'blocked_by_stripe':
+      return new BlockedByStripeError(rawStripeError);
+    case 'invalid_payout_method':
+      return new InvalidPayoutMethodError(rawStripeError);
+    case 'quota_exceeded':
+      return new QuotaExceededError(rawStripeError);
+    case 'controlled_by_dashboard':
+      return new ControlledByDashboardError(rawStripeError);
+    case 'invalid_payment_method':
+      return new InvalidPaymentMethodError(rawStripeError);
     // switchCases: The end of the section generated from our OpenAPI spec
   }
 
@@ -235,6 +245,34 @@ export class StripeUnknownError extends StripeError {
 export class TemporarySessionExpiredError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'TemporarySessionExpiredError');
+  }
+}
+export class BlockedByStripeError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'BlockedByStripeError');
+  }
+}
+export class InvalidPayoutMethodError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'InvalidPayoutMethodError');
+  }
+}
+export class QuotaExceededError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'QuotaExceededError');
+  }
+}
+export class ControlledByDashboardError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'ControlledByDashboardError');
+  }
+}
+export class InvalidPaymentMethodError extends StripeError {
+  invalid_param: any /* TODO: support nested types in errors */;
+  constructor(rawStripeError: StripeRawError) {
+    super(rawStripeError, 'InvalidPaymentMethodError');
+    // @ts-ignore
+    this.invalid_param = this.raw.invalid_param;
   }
 }
 // classDefinitions: The end of the section generated from our OpenAPI spec

@@ -9,7 +9,12 @@ declare module 'stripe' {
       | 'rate_limit_error'
       | 'authentication_error'
       | 'invalid_grant'
-      | 'temporary_session_expired';
+      | 'temporary_session_expired'
+      | 'blocked_by_stripe'
+      | 'invalid_payout_method'
+      | 'quota_exceeded'
+      | 'controlled_by_dashboard'
+      | 'invalid_payment_method';
     // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
 
     export type StripeRawError = {
@@ -124,7 +129,12 @@ declare module 'stripe' {
           | 'StripeSignatureVerificationError'
           | 'StripeIdempotencyError'
           | 'StripeInvalidGrantError'
-          | 'TemporarySessionExpiredError';
+          | 'TemporarySessionExpiredError'
+          | 'BlockedByStripeError'
+          | 'InvalidPayoutMethodError'
+          | 'QuotaExceededError'
+          | 'ControlledByDashboardError'
+          | 'InvalidPaymentMethodError';
         // errorClassNameEnum: The end of the section generated from our OpenAPI spec
 
         /**
@@ -273,6 +283,27 @@ declare module 'stripe' {
       export class TemporarySessionExpiredError extends StripeError {
         readonly type: 'TemporarySessionExpiredError';
         readonly rawType: 'temporary_session_expired';
+      }
+      export class BlockedByStripeError extends StripeError {
+        readonly type: 'BlockedByStripeError';
+        readonly rawType: 'blocked_by_stripe';
+      }
+      export class InvalidPayoutMethodError extends StripeError {
+        readonly type: 'InvalidPayoutMethodError';
+        readonly rawType: 'invalid_payout_method';
+      }
+      export class QuotaExceededError extends StripeError {
+        readonly type: 'QuotaExceededError';
+        readonly rawType: 'quota_exceeded';
+      }
+      export class ControlledByDashboardError extends StripeError {
+        readonly type: 'ControlledByDashboardError';
+        readonly rawType: 'controlled_by_dashboard';
+      }
+      export class InvalidPaymentMethodError extends StripeError {
+        readonly type: 'InvalidPaymentMethodError';
+        readonly rawType: 'invalid_payment_method';
+        invalid_param: any /* TODO: support nested types in errors */;
       }
       // errorClassDefinitions: The end of the section generated from our OpenAPI spec
     }

@@ -4127,6 +4127,286 @@ describe('Generated tests', function() {
     expect(event).not.to.be.null;
   });
 
+  it('test_v2_core_vault_gb_bank_account_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path:
+          '/v2/core/vault/gb_bank_accounts/id_123/acknowledge_confirmation_of_payee',
+        response:
+          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","confirmation_of_payee":{"result":{"created":"1970-01-12T21:42:34.472Z","match_result":"unavailable","matched":{"business_type":null,"name":null},"message":"message","provided":{"business_type":"personal","name":"name"}},"status":"awaiting_acknowledgement"},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.gb_bank_account","sort_code":"sort_code"}',
+      },
+    ]);
+    const gbBankAccount = await stripe.v2.core.vault.gbBankAccounts.acknowledgeConfirmationOfPayee(
+      'id_123'
+    );
+    expect(gbBankAccount).not.to.be.null;
+  });
+
+  it('test_v2_core_vault_gb_bank_account_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/vault/gb_bank_accounts/id_123/archive',
+        response:
+          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","confirmation_of_payee":{"result":{"created":"1970-01-12T21:42:34.472Z","match_result":"unavailable","matched":{"business_type":null,"name":null},"message":"message","provided":{"business_type":"personal","name":"name"}},"status":"awaiting_acknowledgement"},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.gb_bank_account","sort_code":"sort_code"}',
+      },
+    ]);
+    const gbBankAccount = await stripe.v2.core.vault.gbBankAccounts.archive(
+      'id_123'
+    );
+    expect(gbBankAccount).not.to.be.null;
+  });
+
+  it('test_v2_core_vault_gb_bank_account_post_3', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/vault/gb_bank_accounts',
+        response:
+          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","confirmation_of_payee":{"result":{"created":"1970-01-12T21:42:34.472Z","match_result":"unavailable","matched":{"business_type":null,"name":null},"message":"message","provided":{"business_type":"personal","name":"name"}},"status":"awaiting_acknowledgement"},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.gb_bank_account","sort_code":"sort_code"}',
+      },
+    ]);
+    const gbBankAccount = await stripe.v2.core.vault.gbBankAccounts.create({
+      account_number: 'account_number',
+      sort_code: 'sort_code',
+    });
+    expect(gbBankAccount).not.to.be.null;
+  });
+
+  it('test_v2_core_vault_gb_bank_account_post_4', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path:
+          '/v2/core/vault/gb_bank_accounts/id_123/initiate_confirmation_of_payee',
+        response:
+          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","confirmation_of_payee":{"result":{"created":"1970-01-12T21:42:34.472Z","match_result":"unavailable","matched":{"business_type":null,"name":null},"message":"message","provided":{"business_type":"personal","name":"name"}},"status":"awaiting_acknowledgement"},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.gb_bank_account","sort_code":"sort_code"}',
+      },
+    ]);
+    const gbBankAccount = await stripe.v2.core.vault.gbBankAccounts.initiateConfirmationOfPayee(
+      'id_123'
+    );
+    expect(gbBankAccount).not.to.be.null;
+  });
+
+  it('test_v2_core_vault_gb_bank_account_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/vault/gb_bank_accounts/id_123',
+        response:
+          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","confirmation_of_payee":{"result":{"created":"1970-01-12T21:42:34.472Z","match_result":"unavailable","matched":{"business_type":null,"name":null},"message":"message","provided":{"business_type":"personal","name":"name"}},"status":"awaiting_acknowledgement"},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.gb_bank_account","sort_code":"sort_code"}',
+      },
+    ]);
+    const gbBankAccount = await stripe.v2.core.vault.gbBankAccounts.retrieve(
+      'id_123'
+    );
+    expect(gbBankAccount).not.to.be.null;
+  });
+
+  it('test_v2_core_vault_us_bank_account_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/vault/us_bank_accounts/id_123/archive',
+        response:
+          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","created":"1970-01-12T21:42:34.472Z","fedwire_routing_number":null,"id":"obj_123","last4":"last4","object":"v2.core.vault.us_bank_account","routing_number":null}',
+      },
+    ]);
+    const usBankAccount = await stripe.v2.core.vault.usBankAccounts.archive(
+      'id_123'
+    );
+    expect(usBankAccount).not.to.be.null;
+  });
+
+  it('test_v2_core_vault_us_bank_account_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/vault/us_bank_accounts',
+        response:
+          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","created":"1970-01-12T21:42:34.472Z","fedwire_routing_number":null,"id":"obj_123","last4":"last4","object":"v2.core.vault.us_bank_account","routing_number":null}',
+      },
+    ]);
+    const usBankAccount = await stripe.v2.core.vault.usBankAccounts.create({
+      account_number: 'account_number',
+    });
+    expect(usBankAccount).not.to.be.null;
+  });
+
+  it('test_v2_core_vault_us_bank_account_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/vault/us_bank_accounts/id_123',
+        response:
+          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","created":"1970-01-12T21:42:34.472Z","fedwire_routing_number":null,"id":"obj_123","last4":"last4","object":"v2.core.vault.us_bank_account","routing_number":null}',
+      },
+    ]);
+    const usBankAccount = await stripe.v2.core.vault.usBankAccounts.retrieve(
+      'id_123'
+    );
+    expect(usBankAccount).not.to.be.null;
+  });
+
+  it('test_v2_core_vault_us_bank_account_post_3', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/vault/us_bank_accounts/id_123',
+        response:
+          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","created":"1970-01-12T21:42:34.472Z","fedwire_routing_number":null,"id":"obj_123","last4":"last4","object":"v2.core.vault.us_bank_account","routing_number":null}',
+      },
+    ]);
+    const usBankAccount = await stripe.v2.core.vault.usBankAccounts.update(
+      'id_123'
+    );
+    expect(usBankAccount).not.to.be.null;
+  });
+
+  it('test_v2_money_management_outbound_setup_intent_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/money_management/outbound_setup_intents/id_123/cancel',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","next_action":null,"object":"v2.money_management.outbound_setup_intent","payout_method":{"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","latest_outbound_setup_intent":null,"object":"v2.money_management.payout_method","type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"},"bank_account":null,"card":null},"status":"requires_payout_method","usage_intent":"payment"}',
+      },
+    ]);
+    const outboundSetupIntent = await stripe.v2.moneyManagement.outboundSetupIntents.cancel(
+      'id_123'
+    );
+    expect(outboundSetupIntent).not.to.be.null;
+  });
+
+  it('test_v2_money_management_outbound_setup_intent_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/money_management/outbound_setup_intents',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","next_action":null,"object":"v2.money_management.outbound_setup_intent","payout_method":{"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","latest_outbound_setup_intent":null,"object":"v2.money_management.payout_method","type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"},"bank_account":null,"card":null},"status":"requires_payout_method","usage_intent":"payment"}',
+      },
+    ]);
+    const outboundSetupIntent = await stripe.v2.moneyManagement.outboundSetupIntents.create();
+    expect(outboundSetupIntent).not.to.be.null;
+  });
+
+  it('test_v2_money_management_outbound_setup_intent_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/money_management/outbound_setup_intents',
+        response:
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","next_action":null,"object":"v2.money_management.outbound_setup_intent","payout_method":{"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","latest_outbound_setup_intent":null,"object":"v2.money_management.payout_method","type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"},"bank_account":null,"card":null},"status":"requires_payout_method","usage_intent":"payment"}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const outboundSetupIntents = await stripe.v2.moneyManagement.outboundSetupIntents.list();
+    expect(outboundSetupIntents).not.to.be.null;
+  });
+
+  it('test_v2_money_management_outbound_setup_intent_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/money_management/outbound_setup_intents/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","next_action":null,"object":"v2.money_management.outbound_setup_intent","payout_method":{"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","latest_outbound_setup_intent":null,"object":"v2.money_management.payout_method","type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"},"bank_account":null,"card":null},"status":"requires_payout_method","usage_intent":"payment"}',
+      },
+    ]);
+    const outboundSetupIntent = await stripe.v2.moneyManagement.outboundSetupIntents.retrieve(
+      'id_123'
+    );
+    expect(outboundSetupIntent).not.to.be.null;
+  });
+
+  it('test_v2_money_management_outbound_setup_intent_post_3', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/money_management/outbound_setup_intents/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","next_action":null,"object":"v2.money_management.outbound_setup_intent","payout_method":{"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","latest_outbound_setup_intent":null,"object":"v2.money_management.payout_method","type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"},"bank_account":null,"card":null},"status":"requires_payout_method","usage_intent":"payment"}',
+      },
+    ]);
+    const outboundSetupIntent = await stripe.v2.moneyManagement.outboundSetupIntents.update(
+      'id_123'
+    );
+    expect(outboundSetupIntent).not.to.be.null;
+  });
+
+  it('test_v2_money_management_payout_method_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/money_management/payout_methods/id_123/archive',
+        response:
+          '{"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","latest_outbound_setup_intent":null,"object":"v2.money_management.payout_method","type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"},"bank_account":null,"card":null}',
+      },
+    ]);
+    const payoutMethod = await stripe.v2.moneyManagement.payoutMethods.archive(
+      'id_123'
+    );
+    expect(payoutMethod).not.to.be.null;
+  });
+
+  it('test_v2_money_management_payout_method_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/money_management/payout_methods',
+        response:
+          '{"data":[{"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","latest_outbound_setup_intent":null,"object":"v2.money_management.payout_method","type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"},"bank_account":null,"card":null}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const payoutMethods = await stripe.v2.moneyManagement.payoutMethods.list();
+    expect(payoutMethods).not.to.be.null;
+  });
+
+  it('test_v2_money_management_payout_method_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/money_management/payout_methods/id_123',
+        response:
+          '{"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","latest_outbound_setup_intent":null,"object":"v2.money_management.payout_method","type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"},"bank_account":null,"card":null}',
+      },
+    ]);
+    const payoutMethod = await stripe.v2.moneyManagement.payoutMethods.retrieve(
+      'id_123'
+    );
+    expect(payoutMethod).not.to.be.null;
+  });
+
+  it('test_v2_money_management_payout_method_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/money_management/payout_methods/id_123/unarchive',
+        response:
+          '{"available_payout_speeds":["standard"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","latest_outbound_setup_intent":null,"object":"v2.money_management.payout_method","type":"bank_account","usage_status":{"payments":"requires_action","transfers":"invalid"},"bank_account":null,"card":null}',
+      },
+    ]);
+    const payoutMethod = await stripe.v2.moneyManagement.payoutMethods.unarchive(
+      'id_123'
+    );
+    expect(payoutMethod).not.to.be.null;
+  });
+
+  it('test_v2_money_management_payout_methods_bank_account_spec_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/money_management/payout_methods_bank_account_spec',
+        response:
+          '{"countries":{"undefined":{"fields":[{"local_name":"local_name","local_name_human":"local_name_human","max_length":1111390753,"min_length":711577229,"placeholder":"placeholder","stripe_name":"stripe_name","validation_regex":"validation_regex"}]}},"object":"v2.money_management.payout_methods_bank_account_spec"}',
+      },
+    ]);
+    const payoutMethodsBankAccountSpec = await stripe.v2.moneyManagement.payoutMethodsBankAccountSpec.retrieve();
+    expect(payoutMethodsBankAccountSpec).not.to.be.null;
+  });
+
   it('test_temporary_session_expired_error', async function() {
     const {TemporarySessionExpiredError} = require('../../src/Error.js');
 
@@ -4153,6 +4433,115 @@ describe('Generated tests', function() {
 
       (err) => {
         expect(err).to.be.instanceOf(TemporarySessionExpiredError);
+      }
+    );
+  });
+
+  it('test_blocked_by_stripe_error', async function() {
+    const {BlockedByStripeError} = require('../../src/Error.js');
+
+    nock('https://api.stripe.com')
+      .post('/v2/core/vault/us_bank_accounts')
+      .reply(400, {
+        error: {
+          type: 'blocked_by_stripe',
+          code: 'blocked_payout_method_bank_account',
+        },
+      });
+
+    const usBankAccount = await realStripe.v2.core.vault.usBankAccounts.create(
+      {
+        account_number: 'account_number',
+      },
+
+      (err) => {
+        expect(err).to.be.instanceOf(BlockedByStripeError);
+      }
+    );
+  });
+
+  it('test_invalid_payout_method_error', async function() {
+    const {InvalidPayoutMethodError} = require('../../src/Error.js');
+
+    nock('https://api.stripe.com')
+      .post('/v2/money_management/outbound_setup_intents')
+      .reply(400, {
+        error: {
+          type: 'invalid_payout_method',
+          code: 'invalid_payout_method',
+        },
+      });
+
+    const outboundSetupIntent = await realStripe.v2.moneyManagement.outboundSetupIntents.create(
+      (err) => {
+        expect(err).to.be.instanceOf(InvalidPayoutMethodError);
+      }
+    );
+  });
+
+  it('test_quota_exceeded_error', async function() {
+    const {QuotaExceededError} = require('../../src/Error.js');
+
+    nock('https://api.stripe.com')
+      .post('/v2/core/vault/us_bank_accounts')
+      .reply(400, {
+        error: {
+          type: 'quota_exceeded',
+          code: 'limit_payout_method_bank_account',
+        },
+      });
+
+    const usBankAccount = await realStripe.v2.core.vault.usBankAccounts.create(
+      {
+        account_number: 'account_number',
+      },
+
+      (err) => {
+        expect(err).to.be.instanceOf(QuotaExceededError);
+      }
+    );
+  });
+
+  it('test_controlled_by_dashboard_error', async function() {
+    const {ControlledByDashboardError} = require('../../src/Error.js');
+
+    nock('https://api.stripe.com')
+      .post('/v2/core/vault/us_bank_accounts/id_123/archive')
+      .reply(400, {
+        error: {
+          type: 'controlled_by_dashboard',
+          code: 'bank_account_cannot_be_archived',
+        },
+      });
+
+    const usBankAccount = await realStripe.v2.core.vault.usBankAccounts.archive(
+      'id_123',
+
+      (err) => {
+        expect(err).to.be.instanceOf(ControlledByDashboardError);
+      }
+    );
+  });
+
+  it('test_invalid_payment_method_error', async function() {
+    const {InvalidPaymentMethodError} = require('../../src/Error.js');
+
+    nock('https://api.stripe.com')
+      .post('/v2/core/vault/us_bank_accounts')
+      .reply(400, {
+        error: {
+          type: 'invalid_payment_method',
+          code: 'invalid_us_bank_account',
+        },
+      });
+
+    const usBankAccount = await realStripe.v2.core.vault.usBankAccounts.create(
+      {
+        account_number: 'account_number',
+      },
+
+      (err) => {
+        expect(err).to.be.instanceOf(InvalidPaymentMethodError);
       }
     );
   });
