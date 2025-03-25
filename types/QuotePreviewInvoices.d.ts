@@ -1060,7 +1060,7 @@ declare module 'stripe' {
         interface SubscriptionDetails {
           metadata: Stripe.Metadata | null;
 
-          pause_collection: SubscriptionDetails.PauseCollection | null;
+          pause_collection?: SubscriptionDetails.PauseCollection | null;
 
           subscription: string;
 
