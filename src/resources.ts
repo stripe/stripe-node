@@ -2,6 +2,7 @@
 
 import {resourceNamespace} from './ResourceNamespace.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
+import {Accounts as V2CoreAccounts} from './resources/V2/Core/Accounts.js';
 import {ActiveEntitlements as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
 import {Alerts as BillingAlerts} from './resources/Billing/Alerts.js';
 import {Associations as TaxAssociations} from './resources/Tax/Associations.js';
@@ -30,6 +31,9 @@ import {EventDestinations as V2CoreEventDestinations} from './resources/V2/Core/
 import {Events as V2CoreEvents} from './resources/V2/Core/Events.js';
 import {Features as EntitlementsFeatures} from './resources/Entitlements/Features.js';
 import {FinancialAccounts as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts.js';
+import {FinancialAccounts as V2MoneyManagementFinancialAccounts} from './resources/V2/MoneyManagement/FinancialAccounts.js';
+import {FinancialAddresses as V2MoneyManagementFinancialAddresses} from './resources/V2/MoneyManagement/FinancialAddresses.js';
+import {FinancialAddresses as V2TestHelpersFinancialAddresses} from './resources/V2/TestHelpers/FinancialAddresses.js';
 import {FinancingOffers as CapitalFinancingOffers} from './resources/Capital/FinancingOffers.js';
 import {FinancingSummary as CapitalFinancingSummary} from './resources/Capital/FinancingSummary.js';
 import {FinancingTransactions as CapitalFinancingTransactions} from './resources/Capital/FinancingTransactions.js';
@@ -38,6 +42,7 @@ import {FraudLiabilityDebits as IssuingFraudLiabilityDebits} from './resources/I
 import {GbBankAccounts as V2CoreVaultGbBankAccounts} from './resources/V2/Core/Vault/GbBankAccounts.js';
 import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
+import {InboundTransfers as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
 import {Institutions as FinancialConnectionsInstitutions} from './resources/FinancialConnections/Institutions.js';
 import {Locations as TerminalLocations} from './resources/Terminal/Locations.js';
 import {MeterEventAdjustments as BillingMeterEventAdjustments} from './resources/Billing/MeterEventAdjustments.js';
@@ -50,9 +55,11 @@ import {Meters as BillingMeters} from './resources/Billing/Meters.js';
 import {Orders as ClimateOrders} from './resources/Climate/Orders.js';
 import {OutboundPayments as TestHelpersTreasuryOutboundPayments} from './resources/TestHelpers/Treasury/OutboundPayments.js';
 import {OutboundPayments as TreasuryOutboundPayments} from './resources/Treasury/OutboundPayments.js';
+import {OutboundPayments as V2MoneyManagementOutboundPayments} from './resources/V2/MoneyManagement/OutboundPayments.js';
 import {OutboundSetupIntents as V2MoneyManagementOutboundSetupIntents} from './resources/V2/MoneyManagement/OutboundSetupIntents.js';
 import {OutboundTransfers as TestHelpersTreasuryOutboundTransfers} from './resources/TestHelpers/Treasury/OutboundTransfers.js';
 import {OutboundTransfers as TreasuryOutboundTransfers} from './resources/Treasury/OutboundTransfers.js';
+import {OutboundTransfers as V2MoneyManagementOutboundTransfers} from './resources/V2/MoneyManagement/OutboundTransfers.js';
 import {PayoutMethods as V2MoneyManagementPayoutMethods} from './resources/V2/MoneyManagement/PayoutMethods.js';
 import {PayoutMethodsBankAccountSpec as V2MoneyManagementPayoutMethodsBankAccountSpec} from './resources/V2/MoneyManagement/PayoutMethodsBankAccountSpec.js';
 import {PersonalizationDesigns as TestHelpersIssuingPersonalizationDesigns} from './resources/TestHelpers/Issuing/PersonalizationDesigns.js';
@@ -64,8 +71,10 @@ import {Readers as TestHelpersTerminalReaders} from './resources/TestHelpers/Ter
 import {Readers as TerminalReaders} from './resources/Terminal/Readers.js';
 import {ReceivedCredits as TestHelpersTreasuryReceivedCredits} from './resources/TestHelpers/Treasury/ReceivedCredits.js';
 import {ReceivedCredits as TreasuryReceivedCredits} from './resources/Treasury/ReceivedCredits.js';
+import {ReceivedCredits as V2MoneyManagementReceivedCredits} from './resources/V2/MoneyManagement/ReceivedCredits.js';
 import {ReceivedDebits as TestHelpersTreasuryReceivedDebits} from './resources/TestHelpers/Treasury/ReceivedDebits.js';
 import {ReceivedDebits as TreasuryReceivedDebits} from './resources/Treasury/ReceivedDebits.js';
+import {ReceivedDebits as V2MoneyManagementReceivedDebits} from './resources/V2/MoneyManagement/ReceivedDebits.js';
 import {Refunds as TestHelpersRefunds} from './resources/TestHelpers/Refunds.js';
 import {Registrations as TaxRegistrations} from './resources/Tax/Registrations.js';
 import {ReportRuns as ReportingReportRuns} from './resources/Reporting/ReportRuns.js';
@@ -280,6 +289,7 @@ export const V2 = resourceNamespace('v2', {
     MeterEvents: V2BillingMeterEvents,
   }),
   Core: resourceNamespace('core', {
+    Accounts: V2CoreAccounts,
     EventDestinations: V2CoreEventDestinations,
     Events: V2CoreEvents,
     Vault: resourceNamespace('vault', {
@@ -288,8 +298,18 @@ export const V2 = resourceNamespace('v2', {
     }),
   }),
   MoneyManagement: resourceNamespace('moneyManagement', {
+    FinancialAccounts: V2MoneyManagementFinancialAccounts,
+    FinancialAddresses: V2MoneyManagementFinancialAddresses,
+    InboundTransfers: V2MoneyManagementInboundTransfers,
+    OutboundPayments: V2MoneyManagementOutboundPayments,
     OutboundSetupIntents: V2MoneyManagementOutboundSetupIntents,
+    OutboundTransfers: V2MoneyManagementOutboundTransfers,
     PayoutMethods: V2MoneyManagementPayoutMethods,
     PayoutMethodsBankAccountSpec: V2MoneyManagementPayoutMethodsBankAccountSpec,
+    ReceivedCredits: V2MoneyManagementReceivedCredits,
+    ReceivedDebits: V2MoneyManagementReceivedDebits,
+  }),
+  TestHelper: resourceNamespace('testHelper', {
+    FinancialAddresses: V2TestHelpersFinancialAddresses,
   }),
 });

@@ -10,9 +10,15 @@ declare module 'stripe' {
       | 'authentication_error'
       | 'invalid_grant'
       | 'temporary_session_expired'
+      | 'financial_account_not_open'
       | 'blocked_by_stripe'
-      | 'invalid_payout_method'
+      | 'already_canceled'
+      | 'not_cancelable'
+      | 'insufficient_funds'
       | 'quota_exceeded'
+      | 'recipient_not_notifiable'
+      | 'feature_not_enabled'
+      | 'invalid_payout_method'
       | 'controlled_by_dashboard'
       | 'invalid_payment_method';
     // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
@@ -130,9 +136,15 @@ declare module 'stripe' {
           | 'StripeIdempotencyError'
           | 'StripeInvalidGrantError'
           | 'TemporarySessionExpiredError'
+          | 'FinancialAccountNotOpenError'
           | 'BlockedByStripeError'
-          | 'InvalidPayoutMethodError'
+          | 'AlreadyCanceledError'
+          | 'NotCancelableError'
+          | 'InsufficientFundsError'
           | 'QuotaExceededError'
+          | 'RecipientNotNotifiableError'
+          | 'FeatureNotEnabledError'
+          | 'InvalidPayoutMethodError'
           | 'ControlledByDashboardError'
           | 'InvalidPaymentMethodError';
         // errorClassNameEnum: The end of the section generated from our OpenAPI spec
@@ -284,17 +296,41 @@ declare module 'stripe' {
         readonly type: 'TemporarySessionExpiredError';
         readonly rawType: 'temporary_session_expired';
       }
+      export class FinancialAccountNotOpenError extends StripeError {
+        readonly type: 'FinancialAccountNotOpenError';
+        readonly rawType: 'financial_account_not_open';
+      }
       export class BlockedByStripeError extends StripeError {
         readonly type: 'BlockedByStripeError';
         readonly rawType: 'blocked_by_stripe';
       }
-      export class InvalidPayoutMethodError extends StripeError {
-        readonly type: 'InvalidPayoutMethodError';
-        readonly rawType: 'invalid_payout_method';
+      export class AlreadyCanceledError extends StripeError {
+        readonly type: 'AlreadyCanceledError';
+        readonly rawType: 'already_canceled';
+      }
+      export class NotCancelableError extends StripeError {
+        readonly type: 'NotCancelableError';
+        readonly rawType: 'not_cancelable';
+      }
+      export class InsufficientFundsError extends StripeError {
+        readonly type: 'InsufficientFundsError';
+        readonly rawType: 'insufficient_funds';
       }
       export class QuotaExceededError extends StripeError {
         readonly type: 'QuotaExceededError';
         readonly rawType: 'quota_exceeded';
+      }
+      export class RecipientNotNotifiableError extends StripeError {
+        readonly type: 'RecipientNotNotifiableError';
+        readonly rawType: 'recipient_not_notifiable';
+      }
+      export class FeatureNotEnabledError extends StripeError {
+        readonly type: 'FeatureNotEnabledError';
+        readonly rawType: 'feature_not_enabled';
+      }
+      export class InvalidPayoutMethodError extends StripeError {
+        readonly type: 'InvalidPayoutMethodError';
+        readonly rawType: 'invalid_payout_method';
       }
       export class ControlledByDashboardError extends StripeError {
         readonly type: 'ControlledByDashboardError';
