@@ -95,6 +95,11 @@ declare module 'stripe' {
       subscription: string | Stripe.Subscription | null;
 
       /**
+       * The tax calculation identifiers of the line item.
+       */
+      tax_calculation_reference?: InvoiceLineItem.TaxCalculationReference | null;
+
+      /**
        * The tax information of the line item.
        */
       taxes: Array<InvoiceLineItem.Tax> | null;
@@ -347,6 +352,18 @@ declare module 'stripe' {
         interface TaxRateDetails {
           tax_rate: string;
         }
+      }
+
+      interface TaxCalculationReference {
+        /**
+         * The calculation identifier for tax calculation response.
+         */
+        calculation_id: string | null;
+
+        /**
+         * The calculation identifier for tax calculation response line item.
+         */
+        calculation_item_id: string | null;
       }
     }
   }
