@@ -1186,7 +1186,7 @@ declare module 'stripe' {
         samsung_pay?: PaymentMethodData.SamsungPay;
 
         /**
-         * If this is a Satispay PaymentMethod, this hash contains details about the Satispay payment method.
+         * If this is a `satispay` PaymentMethod, this hash contains details about the satispay payment method.
          */
         satispay?: PaymentMethodData.Satispay;
 
@@ -5094,7 +5094,7 @@ declare module 'stripe' {
         samsung_pay?: PaymentMethodData.SamsungPay;
 
         /**
-         * If this is a Satispay PaymentMethod, this hash contains details about the Satispay payment method.
+         * If this is a `satispay` PaymentMethod, this hash contains details about the satispay payment method.
          */
         satispay?: PaymentMethodData.Satispay;
 
@@ -9757,7 +9757,7 @@ declare module 'stripe' {
         samsung_pay?: PaymentMethodData.SamsungPay;
 
         /**
-         * If this is a Satispay PaymentMethod, this hash contains details about the Satispay payment method.
+         * If this is a `satispay` PaymentMethod, this hash contains details about the satispay payment method.
          */
         satispay?: PaymentMethodData.Satispay;
 
