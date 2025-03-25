@@ -101,17 +101,14 @@ declare module 'stripe' {
        */
       metadata: Stripe.Metadata | null;
 
+      parent: InvoiceItem.Parent | null;
+
       period: InvoiceItem.Period;
 
       /**
-       * If the invoice item is a proration, the plan of the subscription that the proration was computed for.
+       * The pricing information of the invoice item.
        */
-      plan: Stripe.Plan | null;
-
-      /**
-       * The price of the invoice item.
-       */
-      price: Stripe.Price | null;
+      pricing: InvoiceItem.Pricing | null;
 
       /**
        * Whether the invoice item was created automatically as a proration adjustment when the customer switched plans.
@@ -124,16 +121,6 @@ declare module 'stripe' {
       quantity: number;
 
       /**
-       * The subscription that this invoice item has been created for, if any.
-       */
-      subscription: string | Stripe.Subscription | null;
-
-      /**
-       * The subscription item that this invoice item has been created for, if any.
-       */
-      subscription_item?: string;
-
-      /**
        * The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
        */
       tax_rates: Array<Stripe.TaxRate> | null;
@@ -142,19 +129,23 @@ declare module 'stripe' {
        * ID of the test clock this invoice item belongs to.
        */
       test_clock: string | Stripe.TestHelpers.TestClock | null;
-
-      /**
-       * Unit amount (in the `currency` specified) of the invoice item.
-       */
-      unit_amount: number | null;
-
-      /**
-       * Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
-       */
-      unit_amount_decimal: string | null;
     }
 
     namespace InvoiceItem {
+      interface Parent {
+        subscription_details: Parent.SubscriptionDetails | null;
+
+        type: 'subscription_details';
+      }
+
+      namespace Parent {
+        interface SubscriptionDetails {
+          subscription: string;
+
+          subscription_item?: string;
+        }
+      }
+
       interface Period {
         /**
          * The end of the period, which must be greater than or equal to the start. This value is inclusive.
@@ -165,6 +156,34 @@ declare module 'stripe' {
          * The start of the period. This value is inclusive.
          */
         start: number;
+      }
+
+      interface Pricing {
+        price_details?: Pricing.PriceDetails;
+
+        /**
+         * The type of the pricing details.
+         */
+        type: 'price_details';
+
+        /**
+         * The unit amount (in the `currency` specified) of the item which contains a decimal value with at most 12 decimal places.
+         */
+        unit_amount_decimal: string | null;
+      }
+
+      namespace Pricing {
+        interface PriceDetails {
+          /**
+           * The ID of the price this item is associated with.
+           */
+          price: string;
+
+          /**
+           * The ID of the product this item is associated with.
+           */
+          product: string;
+        }
       }
     }
   }

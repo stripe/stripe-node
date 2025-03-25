@@ -47,12 +47,6 @@ export const Invoices = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/invoices/{invoice}/send',
   }),
-  upcoming: stripeMethod({method: 'GET', fullPath: '/v1/invoices/upcoming'}),
-  upcomingLines: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/invoices/upcoming/lines',
-    methodType: 'list',
-  }),
   updateLines: stripeMethod({
     method: 'POST',
     fullPath: '/v1/invoices/{invoice}/update_lines',
