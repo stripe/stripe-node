@@ -1011,19 +1011,9 @@ declare module 'stripe' {
         interface SubscriptionDetails {
           metadata: Stripe.Metadata | null;
 
-          pause_collection: SubscriptionDetails.PauseCollection | null;
-
           subscription: string;
 
           subscription_proration_date?: number;
-        }
-
-        namespace SubscriptionDetails {
-          interface PauseCollection {
-            behavior: string | null;
-
-            resumes_at: number | null;
-          }
         }
 
         type Type = 'quote_details' | 'subscription_details';
