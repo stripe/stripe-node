@@ -1215,6 +1215,11 @@ declare module 'stripe' {
         sofort?: PaymentMethodData.Sofort;
 
         /**
+         * This hash contains details about the Stripe balance payment method.
+         */
+        stripe_balance?: PaymentMethodData.StripeBalance;
+
+        /**
          * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
          */
         swish?: PaymentMethodData.Swish;
@@ -1672,6 +1677,22 @@ declare module 'stripe' {
           type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
         }
 
+        interface StripeBalance {
+          /**
+           * The connected account ID whose Stripe balance to use as the source of payment
+           */
+          account?: string;
+
+          /**
+           * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
+           */
+          source_type?: StripeBalance.SourceType;
+        }
+
+        namespace StripeBalance {
+          type SourceType = 'bank_account' | 'card' | 'fpx';
+        }
+
         interface Swish {}
 
         interface Twint {}
@@ -1725,6 +1746,7 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'shopeepay'
           | 'sofort'
+          | 'stripe_balance'
           | 'swish'
           | 'twint'
           | 'us_bank_account'
@@ -2020,6 +2042,11 @@ declare module 'stripe' {
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
         sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
+
+        /**
+         * If this is a `stripe_balance` PaymentMethod, this sub-hash contains details about the Stripe Balance payment method options.
+         */
+        stripe_balance?: Stripe.Emptyable<PaymentMethodOptions.StripeBalance>;
 
         /**
          * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
@@ -3721,6 +3748,25 @@ declare module 'stripe' {
             | 'nl'
             | 'pl';
 
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface StripeBalance {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<StripeBalance.SetupFutureUsage>;
+        }
+
+        namespace StripeBalance {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
@@ -5132,6 +5178,11 @@ declare module 'stripe' {
         sofort?: PaymentMethodData.Sofort;
 
         /**
+         * This hash contains details about the Stripe balance payment method.
+         */
+        stripe_balance?: PaymentMethodData.StripeBalance;
+
+        /**
          * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
          */
         swish?: PaymentMethodData.Swish;
@@ -5589,6 +5640,22 @@ declare module 'stripe' {
           type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
         }
 
+        interface StripeBalance {
+          /**
+           * The connected account ID whose Stripe balance to use as the source of payment
+           */
+          account?: string;
+
+          /**
+           * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
+           */
+          source_type?: StripeBalance.SourceType;
+        }
+
+        namespace StripeBalance {
+          type SourceType = 'bank_account' | 'card' | 'fpx';
+        }
+
         interface Swish {}
 
         interface Twint {}
@@ -5642,6 +5709,7 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'shopeepay'
           | 'sofort'
+          | 'stripe_balance'
           | 'swish'
           | 'twint'
           | 'us_bank_account'
@@ -5937,6 +6005,11 @@ declare module 'stripe' {
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
         sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
+
+        /**
+         * If this is a `stripe_balance` PaymentMethod, this sub-hash contains details about the Stripe Balance payment method options.
+         */
+        stripe_balance?: Stripe.Emptyable<PaymentMethodOptions.StripeBalance>;
 
         /**
          * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
@@ -7638,6 +7711,25 @@ declare module 'stripe' {
             | 'nl'
             | 'pl';
 
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface StripeBalance {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<StripeBalance.SetupFutureUsage>;
+        }
+
+        namespace StripeBalance {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
@@ -9800,6 +9892,11 @@ declare module 'stripe' {
         sofort?: PaymentMethodData.Sofort;
 
         /**
+         * This hash contains details about the Stripe balance payment method.
+         */
+        stripe_balance?: PaymentMethodData.StripeBalance;
+
+        /**
          * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
          */
         swish?: PaymentMethodData.Swish;
@@ -10257,6 +10354,22 @@ declare module 'stripe' {
           type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
         }
 
+        interface StripeBalance {
+          /**
+           * The connected account ID whose Stripe balance to use as the source of payment
+           */
+          account?: string;
+
+          /**
+           * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
+           */
+          source_type?: StripeBalance.SourceType;
+        }
+
+        namespace StripeBalance {
+          type SourceType = 'bank_account' | 'card' | 'fpx';
+        }
+
         interface Swish {}
 
         interface Twint {}
@@ -10310,6 +10423,7 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'shopeepay'
           | 'sofort'
+          | 'stripe_balance'
           | 'swish'
           | 'twint'
           | 'us_bank_account'
@@ -10605,6 +10719,11 @@ declare module 'stripe' {
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
         sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
+
+        /**
+         * If this is a `stripe_balance` PaymentMethod, this sub-hash contains details about the Stripe Balance payment method options.
+         */
+        stripe_balance?: Stripe.Emptyable<PaymentMethodOptions.StripeBalance>;
 
         /**
          * If this is a `Swish` PaymentMethod, this sub-hash contains details about the Swish payment method options.
@@ -12306,6 +12425,25 @@ declare module 'stripe' {
             | 'nl'
             | 'pl';
 
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface StripeBalance {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<StripeBalance.SetupFutureUsage>;
+        }
+
+        namespace StripeBalance {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 

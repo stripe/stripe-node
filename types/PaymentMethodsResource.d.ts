@@ -289,6 +289,11 @@ declare module 'stripe' {
       sofort?: PaymentMethodCreateParams.Sofort;
 
       /**
+       * This hash contains details about the Stripe balance payment method.
+       */
+      stripe_balance?: PaymentMethodCreateParams.StripeBalance;
+
+      /**
        * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
        */
       swish?: PaymentMethodCreateParams.Swish;
@@ -791,6 +796,22 @@ declare module 'stripe' {
         type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
       }
 
+      interface StripeBalance {
+        /**
+         * The connected account ID whose Stripe balance to use as the source of payment
+         */
+        account?: string;
+
+        /**
+         * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
+         */
+        source_type?: StripeBalance.SourceType;
+      }
+
+      namespace StripeBalance {
+        type SourceType = 'bank_account' | 'card' | 'fpx';
+      }
+
       interface Swish {}
 
       interface Twint {}
@@ -845,6 +866,7 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'shopeepay'
         | 'sofort'
+        | 'stripe_balance'
         | 'swish'
         | 'twint'
         | 'us_bank_account'
@@ -1106,6 +1128,7 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'shopeepay'
         | 'sofort'
+        | 'stripe_balance'
         | 'swish'
         | 'twint'
         | 'us_bank_account'

@@ -254,6 +254,8 @@ declare module 'stripe' {
 
         sofort?: PaymentMethodPreview.Sofort;
 
+        stripe_balance?: PaymentMethodPreview.StripeBalance;
+
         swish?: PaymentMethodPreview.Swish;
 
         twint?: PaymentMethodPreview.Twint;
@@ -1551,6 +1553,22 @@ declare module 'stripe' {
           country: string | null;
         }
 
+        interface StripeBalance {
+          /**
+           * The connected account ID whose Stripe balance to use as the source of payment
+           */
+          account?: string | null;
+
+          /**
+           * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
+           */
+          source_type: StripeBalance.SourceType;
+        }
+
+        namespace StripeBalance {
+          type SourceType = 'bank_account' | 'card' | 'fpx';
+        }
+
         interface Swish {}
 
         interface Twint {}
@@ -1607,6 +1625,7 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'shopeepay'
           | 'sofort'
+          | 'stripe_balance'
           | 'swish'
           | 'twint'
           | 'us_bank_account'

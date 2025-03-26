@@ -1371,6 +1371,7 @@ declare module 'stripe' {
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'stripe_balance'
           | 'swish'
           | 'us_bank_account'
           | 'wechat_pay';

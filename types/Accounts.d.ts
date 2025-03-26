@@ -505,6 +505,11 @@ declare module 'stripe' {
         sofort_payments?: Capabilities.SofortPayments;
 
         /**
+         * The status of the stripe_balance payments capability of the account, or whether the account can directly process stripe_balance charges.
+         */
+        stripe_balance_payments?: Capabilities.StripeBalancePayments;
+
+        /**
          * The status of the Swish capability of the account, or whether the account can directly process Swish payments.
          */
         swish_payments?: Capabilities.SwishPayments;
@@ -679,6 +684,8 @@ declare module 'stripe' {
         type ShopeepayPayments = 'active' | 'inactive' | 'pending';
 
         type SofortPayments = 'active' | 'inactive' | 'pending';
+
+        type StripeBalancePayments = 'active' | 'inactive' | 'pending';
 
         type SwishPayments = 'active' | 'inactive' | 'pending';
 

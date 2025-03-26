@@ -490,6 +490,11 @@ declare module 'stripe' {
         sofort_payments?: Capabilities.SofortPayments;
 
         /**
+         * The stripe_balance_payments capability.
+         */
+        stripe_balance_payments?: Capabilities.StripeBalancePayments;
+
+        /**
          * The swish_payments capability.
          */
         swish_payments?: Capabilities.SwishPayments;
@@ -944,6 +949,13 @@ declare module 'stripe' {
         }
 
         interface SofortPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface StripeBalancePayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2545,6 +2557,11 @@ declare module 'stripe' {
         sofort_payments?: Capabilities.SofortPayments;
 
         /**
+         * The stripe_balance_payments capability.
+         */
+        stripe_balance_payments?: Capabilities.StripeBalancePayments;
+
+        /**
          * The swish_payments capability.
          */
         swish_payments?: Capabilities.SwishPayments;
@@ -2999,6 +3016,13 @@ declare module 'stripe' {
         }
 
         interface SofortPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface StripeBalancePayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
