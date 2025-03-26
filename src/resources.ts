@@ -4,6 +4,7 @@ import {resourceNamespace} from './ResourceNamespace.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
 import {Accounts as V2CoreAccounts} from './resources/V2/Core/Accounts.js';
 import {ActiveEntitlements as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
+import {Adjustments as V2MoneyManagementAdjustments} from './resources/V2/MoneyManagement/Adjustments.js';
 import {Alerts as BillingAlerts} from './resources/Billing/Alerts.js';
 import {Associations as TaxAssociations} from './resources/Tax/Associations.js';
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
@@ -90,12 +91,14 @@ import {Suppliers as ClimateSuppliers} from './resources/Climate/Suppliers.js';
 import {TestClocks as TestHelpersTestClocks} from './resources/TestHelpers/TestClocks.js';
 import {Tokens as IssuingTokens} from './resources/Issuing/Tokens.js';
 import {TransactionEntries as TreasuryTransactionEntries} from './resources/Treasury/TransactionEntries.js';
+import {TransactionEntries as V2MoneyManagementTransactionEntries} from './resources/V2/MoneyManagement/TransactionEntries.js';
 import {Transactions as TestHelpersIssuingTransactions} from './resources/TestHelpers/Issuing/Transactions.js';
 import {Transactions as FinancialConnectionsTransactions} from './resources/FinancialConnections/Transactions.js';
 import {Transactions as GiftCardsTransactions} from './resources/GiftCards/Transactions.js';
 import {Transactions as IssuingTransactions} from './resources/Issuing/Transactions.js';
 import {Transactions as TaxTransactions} from './resources/Tax/Transactions.js';
 import {Transactions as TreasuryTransactions} from './resources/Treasury/Transactions.js';
+import {Transactions as V2MoneyManagementTransactions} from './resources/V2/MoneyManagement/Transactions.js';
 import {UsBankAccounts as V2CoreVaultUsBankAccounts} from './resources/V2/Core/Vault/UsBankAccounts.js';
 import {ValueListItems as RadarValueListItems} from './resources/Radar/ValueListItems.js';
 import {ValueLists as RadarValueLists} from './resources/Radar/ValueLists.js';
@@ -298,6 +301,7 @@ export const V2 = resourceNamespace('v2', {
     }),
   }),
   MoneyManagement: resourceNamespace('moneyManagement', {
+    Adjustments: V2MoneyManagementAdjustments,
     FinancialAccounts: V2MoneyManagementFinancialAccounts,
     FinancialAddresses: V2MoneyManagementFinancialAddresses,
     InboundTransfers: V2MoneyManagementInboundTransfers,
@@ -308,6 +312,8 @@ export const V2 = resourceNamespace('v2', {
     PayoutMethodsBankAccountSpec: V2MoneyManagementPayoutMethodsBankAccountSpec,
     ReceivedCredits: V2MoneyManagementReceivedCredits,
     ReceivedDebits: V2MoneyManagementReceivedDebits,
+    TransactionEntries: V2MoneyManagementTransactionEntries,
+    Transactions: V2MoneyManagementTransactions,
   }),
   TestHelper: resourceNamespace('testHelper', {
     FinancialAddresses: V2TestHelpersFinancialAddresses,

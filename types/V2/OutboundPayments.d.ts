@@ -60,6 +60,11 @@ declare module 'stripe' {
         metadata: Stripe.Metadata | null;
 
         /**
+         * The quote for this OutboundPayment. Only required for countries with regulatory mandates to display fee estimates before OutboundPayment creation.
+         */
+        outbound_payment_quote: string | null;
+
+        /**
          * A hosted transaction receipt URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
          */
         receipt_url: string;

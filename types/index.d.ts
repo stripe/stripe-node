@@ -156,9 +156,11 @@
 ///<reference path='./V2/Core/EventsResource.d.ts' />
 ///<reference path='./V2/Core/Vault/GbBankAccountsResource.d.ts' />
 ///<reference path='./V2/Core/Vault/UsBankAccountsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/AdjustmentsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/FinancialAccountsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/FinancialAddressesResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/InboundTransfersResource.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPayments/QuotesResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/OutboundPaymentsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/OutboundSetupIntentsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/OutboundTransfersResource.d.ts' />
@@ -166,6 +168,8 @@
 ///<reference path='./V2/MoneyManagement/PayoutMethodsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/ReceivedCreditsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/ReceivedDebitsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/TransactionEntriesResource.d.ts' />
+///<reference path='./V2/MoneyManagement/TransactionsResource.d.ts' />
 ///<reference path='./V2/TestHelpers/FinancialAddressesResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
@@ -330,6 +334,7 @@
 ///<reference path='./Treasury/ReceivedDebits.d.ts' />
 ///<reference path='./Treasury/TransactionEntries.d.ts' />
 ///<reference path='./Treasury/Transactions.d.ts' />
+///<reference path='./V2/Adjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
@@ -347,10 +352,13 @@
 ///<reference path='./V2/MoneyManagement/OutboundSetupIntents.d.ts' />
 ///<reference path='./V2/MoneyManagement/PayoutMethods.d.ts' />
 ///<reference path='./V2/MoneyManagement/PayoutMethodsBankAccountSpecs.d.ts' />
+///<reference path='./V2/OutboundPaymentQuotes.d.ts' />
 ///<reference path='./V2/OutboundPayments.d.ts' />
 ///<reference path='./V2/OutboundTransfers.d.ts' />
 ///<reference path='./V2/ReceivedCredits.d.ts' />
 ///<reference path='./V2/ReceivedDebits.d.ts' />
+///<reference path='./V2/TransactionEntries.d.ts' />
+///<reference path='./V2/Transactions.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
@@ -562,13 +570,8 @@ declare module 'stripe' {
           usBankAccounts: Stripe.V2.Core.Vault.UsBankAccountsResource;
         };
       };
-      billing: {
-        meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
-        meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
-        meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
-        meterEvents: Stripe.V2.Billing.MeterEventsResource;
-      };
       moneyManagement: {
+        adjustments: Stripe.V2.MoneyManagement.AdjustmentsResource;
         financialAccounts: Stripe.V2.MoneyManagement.FinancialAccountsResource;
         financialAddresses: Stripe.V2.MoneyManagement.FinancialAddressesResource;
         inboundTransfers: Stripe.V2.MoneyManagement.InboundTransfersResource;
@@ -579,6 +582,14 @@ declare module 'stripe' {
         payoutMethodsBankAccountSpec: Stripe.V2.MoneyManagement.PayoutMethodsBankAccountSpecResource;
         receivedCredits: Stripe.V2.MoneyManagement.ReceivedCreditsResource;
         receivedDebits: Stripe.V2.MoneyManagement.ReceivedDebitsResource;
+        transactions: Stripe.V2.MoneyManagement.TransactionsResource;
+        transactionEntries: Stripe.V2.MoneyManagement.TransactionEntriesResource;
+      };
+      billing: {
+        meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
+        meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
+        meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
+        meterEvents: Stripe.V2.Billing.MeterEventsResource;
       };
       testHelper: {
         financialAddresses: Stripe.V2.TestHelpers.FinancialAddressesResource;

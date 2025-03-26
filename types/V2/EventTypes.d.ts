@@ -5,6 +5,7 @@ declare module 'stripe' {
     export type Event =
       | Stripe.Events.V1BillingMeterErrorReportTriggeredEvent
       | Stripe.Events.V1BillingMeterNoMeterFoundEvent
+      | Stripe.Events.V2MoneyManagementFinancialAccountCreatedEvent
       | Stripe.Events.V2MoneyManagementFinancialAddressActivatedEvent
       | Stripe.Events.V2MoneyManagementFinancialAddressFailedEvent
       | Stripe.Events.V2MoneyManagementInboundTransferAvailableEvent
@@ -13,6 +14,16 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementInboundTransferBankDebitQueuedEvent
       | Stripe.Events.V2MoneyManagementInboundTransferBankDebitReturnedEvent
       | Stripe.Events.V2MoneyManagementInboundTransferBankDebitSucceededEvent
+      | Stripe.Events.V2MoneyManagementOutboundPaymentCanceledEvent
+      | Stripe.Events.V2MoneyManagementOutboundPaymentCreatedEvent
+      | Stripe.Events.V2MoneyManagementOutboundPaymentFailedEvent
+      | Stripe.Events.V2MoneyManagementOutboundPaymentPostedEvent
+      | Stripe.Events.V2MoneyManagementOutboundPaymentReturnedEvent
+      | Stripe.Events.V2MoneyManagementOutboundTransferCanceledEvent
+      | Stripe.Events.V2MoneyManagementOutboundTransferCreatedEvent
+      | Stripe.Events.V2MoneyManagementOutboundTransferFailedEvent
+      | Stripe.Events.V2MoneyManagementOutboundTransferPostedEvent
+      | Stripe.Events.V2MoneyManagementOutboundTransferReturnedEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditAvailableEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditFailedEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditReturnedEvent
@@ -231,6 +242,18 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs when a financial account is created.
+     */
+    export interface V2MoneyManagementFinancialAccountCreatedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.financial_account.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.FinancialAccount>;
+    }
+
+    /**
      * The FinancialAddress is now active and ready to receive funds using the credentials provided.
      */
     export interface V2MoneyManagementFinancialAddressActivatedEvent
@@ -335,6 +358,126 @@ declare module 'stripe' {
       related_object: Event.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.InboundTransfer>;
+    }
+
+    /**
+     * An OutboundPayment has transitioned into the canceled state.
+     */
+    export interface V2MoneyManagementOutboundPaymentCanceledEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.outbound_payment.canceled';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.OutboundPayment>;
+    }
+
+    /**
+     * A new OutboundPayment has been created.
+     */
+    export interface V2MoneyManagementOutboundPaymentCreatedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.outbound_payment.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.OutboundPayment>;
+    }
+
+    /**
+     * An OutboundPayment has transitioned into the failed state.
+     */
+    export interface V2MoneyManagementOutboundPaymentFailedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.outbound_payment.failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.OutboundPayment>;
+    }
+
+    /**
+     * An OutboundPayment has transitioned into the posted state.
+     */
+    export interface V2MoneyManagementOutboundPaymentPostedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.outbound_payment.posted';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.OutboundPayment>;
+    }
+
+    /**
+     * An OutboundPayment has transitioned into the returned state.
+     */
+    export interface V2MoneyManagementOutboundPaymentReturnedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.outbound_payment.returned';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.OutboundPayment>;
+    }
+
+    /**
+     * An OutboundTransfer has transitioned into the canceled state.
+     */
+    export interface V2MoneyManagementOutboundTransferCanceledEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.outbound_transfer.canceled';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.OutboundTransfer>;
+    }
+
+    /**
+     * A new OutboundTransfer has been created.
+     */
+    export interface V2MoneyManagementOutboundTransferCreatedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.outbound_transfer.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.OutboundTransfer>;
+    }
+
+    /**
+     * An OutboundTransfer has transitioned into the failed state.
+     */
+    export interface V2MoneyManagementOutboundTransferFailedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.outbound_transfer.failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.OutboundTransfer>;
+    }
+
+    /**
+     * An OutboundTransfer has transitioned into the posted state.
+     */
+    export interface V2MoneyManagementOutboundTransferPostedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.outbound_transfer.posted';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.OutboundTransfer>;
+    }
+
+    /**
+     * An OutboundTransfer has transitioned into the returned state.
+     */
+    export interface V2MoneyManagementOutboundTransferReturnedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.outbound_transfer.returned';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.OutboundTransfer>;
     }
 
     /**

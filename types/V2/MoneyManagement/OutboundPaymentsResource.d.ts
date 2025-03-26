@@ -36,6 +36,11 @@ declare module 'stripe' {
           metadata?: Stripe.MetadataParam;
 
           /**
+           * The quote for this OutboundPayment. Only required for countries with regulatory mandates to display fee estimates before OutboundPayment creation.
+           */
+          outbound_payment_quote?: string;
+
+          /**
            * Details about the notification settings for the OutboundPayment recipient.
            */
           recipient_notification?: OutboundPaymentCreateParams.RecipientNotification;
@@ -170,6 +175,8 @@ declare module 'stripe' {
 
       namespace MoneyManagement {
         class OutboundPaymentsResource {
+          quotes: Stripe.V2.MoneyManagement.OutboundPayments.QuotesResource;
+
           /**
            * Creates an OutboundPayment.
            * @throws Stripe.InsufficientFundsError
