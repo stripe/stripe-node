@@ -138,15 +138,27 @@ declare module 'stripe' {
 
     namespace InvoiceItem {
       interface Parent {
+        /**
+         * Details about the subscription that generated this invoice item
+         */
         subscription_details: Parent.SubscriptionDetails | null;
 
+        /**
+         * The type of parent that generated this invoice item
+         */
         type: 'subscription_details';
       }
 
       namespace Parent {
         interface SubscriptionDetails {
+          /**
+           * The subscription that generated this invoice item
+           */
           subscription: string;
 
+          /**
+           * The subscription item that generated this invoice item
+           */
           subscription_item?: string;
         }
       }

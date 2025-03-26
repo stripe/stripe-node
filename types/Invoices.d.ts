@@ -1068,32 +1068,63 @@ declare module 'stripe' {
       }
 
       interface Parent {
+        /**
+         * Details about the quote that generated this invoice
+         */
         quote_details: Parent.QuoteDetails | null;
 
+        /**
+         * Details about the subscription that generated this invoice
+         */
         subscription_details: Parent.SubscriptionDetails | null;
 
+        /**
+         * The type of parent that generated this invoice
+         */
         type: Parent.Type;
       }
 
       namespace Parent {
         interface QuoteDetails {
+          /**
+           * The quote that generated this invoice
+           */
           quote: string;
         }
 
         interface SubscriptionDetails {
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) defined as subscription metadata when an invoice is created. Becomes an immutable snapshot of the subscription metadata at the time of invoice finalization.
+           *  *Note: This attribute is populated only for invoices created on or after June 29, 2023.*
+           */
           metadata: Stripe.Metadata | null;
 
+          /**
+           * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/docs/billing/subscriptions/pause-payment).
+           */
           pause_collection?: SubscriptionDetails.PauseCollection | null;
 
+          /**
+           * The subscription that generated this invoice
+           */
           subscription: string;
 
+          /**
+           * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
+           */
           subscription_proration_date?: number;
         }
 
         namespace SubscriptionDetails {
           interface PauseCollection {
+            /**
+             * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+             */
             behavior: string | null;
 
+            /**
+             * The time after which the subscription will resume collecting payments.
+             */
             resumes_at: number | null;
           }
         }
