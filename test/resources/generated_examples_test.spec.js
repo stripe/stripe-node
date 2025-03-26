@@ -4126,7 +4126,7 @@ describe('Generated tests', function() {
         },
       });
 
-    const emptyObject = await realStripe.v2.billing.meterEventStream.create(
+    await realStripe.v2.billing.meterEventStream.create(
       {
         events: [
           {
