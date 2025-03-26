@@ -14,6 +14,11 @@ declare module 'stripe' {
       customer?: string;
 
       /**
+       * The identifier of the account to create the subscription schedule for.
+       */
+      customer_account?: string;
+
+      /**
        * Object representing the subscription schedule's default settings.
        */
       default_settings?: SubscriptionScheduleCreateParams.DefaultSettings;
@@ -1620,6 +1625,11 @@ declare module 'stripe' {
        * Only return subscription schedules for the given customer.
        */
       customer?: string;
+
+      /**
+       * Only return subscription schedules for the given account.
+       */
+      customer_account?: string;
 
       /**
        * Specifies which fields in the response should be expanded.

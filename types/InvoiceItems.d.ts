@@ -62,6 +62,11 @@ declare module 'stripe' {
       customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
       /**
+       * The ID of the account who will be billed when this invoice item is billed.
+       */
+      customer_account?: string | null;
+
+      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       date: number;

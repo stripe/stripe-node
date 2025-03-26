@@ -42,6 +42,11 @@ declare module 'stripe' {
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
+       * The value of [customer_account](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-customer_account) on the SetupIntent at the time of this confirmation.
+       */
+      customer_account?: string | null;
+
+      /**
        * Indicates the directions of money movement for which this payment method is intended to be used.
        *
        * Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include `outbound` if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.
@@ -870,7 +875,9 @@ declare module 'stripe' {
           | 'token_in_use'
           | 'transfer_source_balance_parameters_mismatch'
           | 'transfers_not_allowed'
-          | 'url_invalid';
+          | 'url_invalid'
+          | 'v2_account_disconnection_unsupported'
+          | 'v2_account_missing_configuration';
 
         type Type =
           | 'api_error'

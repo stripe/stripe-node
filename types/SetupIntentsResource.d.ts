@@ -35,6 +35,13 @@ declare module 'stripe' {
       customer?: string;
 
       /**
+       * ID of the Account this SetupIntent belongs to, if one exists.
+       *
+       * If present, the SetupIntent's payment method will be attached to the Account on successful setup. Payment methods attached to other Accounts cannot be used with this SetupIntent.
+       */
+      customer_account?: string;
+
+      /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
       description?: string;
@@ -1602,6 +1609,13 @@ declare module 'stripe' {
       customer?: string;
 
       /**
+       * ID of the Account this SetupIntent belongs to, if one exists.
+       *
+       * If present, the SetupIntent's payment method will be attached to the Account on successful setup. Payment methods attached to other Accounts cannot be used with this SetupIntent.
+       */
+      customer_account?: string;
+
+      /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
       description?: string;
@@ -3045,6 +3059,11 @@ declare module 'stripe' {
        * Only return SetupIntents for the customer specified by this customer ID.
        */
       customer?: string;
+
+      /**
+       * Only return SetupIntents for the account specified by this customer ID.
+       */
+      customer_account?: string;
 
       /**
        * Specifies which fields in the response should be expanded.

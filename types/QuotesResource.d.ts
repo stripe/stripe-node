@@ -34,6 +34,11 @@ declare module 'stripe' {
       customer?: string;
 
       /**
+       * The account for which this quote belongs to. A customer or account is required before finalizing the quote. Once specified, it cannot be changed.
+       */
+      customer_account?: string;
+
+      /**
        * The tax rates that will apply to any line item that does not have `tax_rates` set.
        */
       default_tax_rates?: Stripe.Emptyable<Array<string>>;
@@ -1455,6 +1460,11 @@ declare module 'stripe' {
       customer?: string;
 
       /**
+       * The account for which this quote belongs to. A customer or account is required before finalizing the quote. Once specified, it cannot be changed.
+       */
+      customer_account?: string;
+
+      /**
        * The tax rates that will apply to any line item that does not have `tax_rates` set.
        */
       default_tax_rates?: Stripe.Emptyable<Array<string>>;
@@ -2834,6 +2844,11 @@ declare module 'stripe' {
        * The ID of the customer whose quotes will be retrieved.
        */
       customer?: string;
+
+      /**
+       * The ID of the account whose quotes will be retrieved.
+       */
+      customer_account?: string;
 
       /**
        * Specifies which fields in the response should be expanded.

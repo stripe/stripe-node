@@ -19,6 +19,7 @@
 ///<reference path='./ApplicationFeesResource.d.ts' />
 ///<reference path='./Apps/SecretsResource.d.ts' />
 ///<reference path='./BalanceResource.d.ts' />
+///<reference path='./BalanceSettingsResource.d.ts' />
 ///<reference path='./BalanceTransactionsResource.d.ts' />
 ///<reference path='./Billing/AlertsResource.d.ts' />
 ///<reference path='./Billing/CreditBalanceSummaryResource.d.ts' />
@@ -49,6 +50,7 @@
 ///<reference path='./EphemeralKeysResource.d.ts' />
 ///<reference path='./EventsResource.d.ts' />
 ///<reference path='./ExchangeRatesResource.d.ts' />
+///<reference path='./ExternalAccountsResource.d.ts' />
 ///<reference path='./FileLinksResource.d.ts' />
 ///<reference path='./FilesResource.d.ts' />
 ///<reference path='./FinancialConnections/AccountsResource.d.ts' />
@@ -182,6 +184,7 @@
 ///<reference path='./Applications.d.ts' />
 ///<reference path='./Apps/Secrets.d.ts' />
 ///<reference path='./Balance.d.ts' />
+///<reference path='./BalanceSettings.d.ts' />
 ///<reference path='./BalanceTransactionSources.d.ts' />
 ///<reference path='./BalanceTransactions.d.ts' />
 ///<reference path='./BankAccounts.d.ts' />
@@ -389,6 +392,7 @@ declare module 'stripe' {
     applePayDomains: Stripe.ApplePayDomainsResource;
     applicationFees: Stripe.ApplicationFeesResource;
     balance: Stripe.BalanceResource;
+    balanceSettings: Stripe.BalanceSettingsResource;
     balanceTransactions: Stripe.BalanceTransactionsResource;
     charges: Stripe.ChargesResource;
     confirmationTokens: Stripe.ConfirmationTokensResource;
@@ -401,6 +405,7 @@ declare module 'stripe' {
     ephemeralKeys: Stripe.EphemeralKeysResource;
     events: Stripe.EventsResource;
     exchangeRates: Stripe.ExchangeRatesResource;
+    externalAccounts: Stripe.ExternalAccountsResource;
     fileLinks: Stripe.FileLinksResource;
     files: Stripe.FilesResource;
     invoiceItems: Stripe.InvoiceItemsResource;

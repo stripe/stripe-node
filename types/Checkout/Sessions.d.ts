@@ -127,6 +127,11 @@ declare module 'stripe' {
         customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
         /**
+         * The ID of the account for this Session.
+         */
+        customer_account?: string | null;
+
+        /**
          * Configure whether a Checkout Session creates a Customer when the Checkout Session completes.
          */
         customer_creation: Session.CustomerCreation | null;

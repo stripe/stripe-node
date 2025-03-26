@@ -15,6 +15,11 @@ declare module 'stripe' {
         configuration?: string;
 
         /**
+         * The ID of an existing account.
+         */
+        customer_account?: string;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;

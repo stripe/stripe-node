@@ -76,6 +76,11 @@ declare module 'stripe' {
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
+       * The account which this quote belongs to. A customer or account is required before finalizing the quote. Once specified, it cannot be changed.
+       */
+      customer_account?: string | null;
+
+      /**
        * The tax rates applied to this quote.
        */
       default_tax_rates?: Array<string | Stripe.TaxRate>;

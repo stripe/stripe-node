@@ -60,6 +60,15 @@ declare module 'stripe' {
       customer?: string;
 
       /**
+       * ID of the Account this PaymentIntent belongs to, if one exists.
+       *
+       * Payment methods attached to other Accounts cannot be used with this PaymentIntent.
+       *
+       * If [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Account after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Account instead.
+       */
+      customer_account?: string;
+
+      /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
       description?: string;
@@ -4044,6 +4053,15 @@ declare module 'stripe' {
       customer?: string;
 
       /**
+       * ID of the Account this PaymentIntent belongs to, if one exists.
+       *
+       * Payment methods attached to other Accounts cannot be used with this PaymentIntent.
+       *
+       * If [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) is set and this PaymentIntent's payment method is not `card_present`, then the payment method attaches to the Account after the PaymentIntent has been confirmed and any required actions from the user are complete. If the payment method is `card_present` and isn't a digital wallet, then a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card is created and attached to the Account instead.
+       */
+      customer_account?: string;
+
+      /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
       description?: string;
@@ -7891,6 +7909,11 @@ declare module 'stripe' {
        * Only return PaymentIntents for the customer that this customer ID specifies.
        */
       customer?: string;
+
+      /**
+       * Only return PaymentIntents for the account that this ID specifies.
+       */
+      customer_account?: string;
 
       /**
        * Specifies which fields in the response should be expanded.

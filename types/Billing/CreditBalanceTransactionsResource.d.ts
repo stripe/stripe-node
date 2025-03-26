@@ -22,6 +22,11 @@ declare module 'stripe' {
         credit_grant?: string;
 
         /**
+         * The account for which to fetch credit balance transactions.
+         */
+        customer_account?: string;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;

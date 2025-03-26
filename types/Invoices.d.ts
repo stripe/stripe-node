@@ -189,6 +189,11 @@ declare module 'stripe' {
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
+       * The ID of the account who will be billed.
+       */
+      customer_account?: string | null;
+
+      /**
        * The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
        */
       customer_address: Stripe.Address | null;
@@ -1058,7 +1063,9 @@ declare module 'stripe' {
           | 'token_in_use'
           | 'transfer_source_balance_parameters_mismatch'
           | 'transfers_not_allowed'
-          | 'url_invalid';
+          | 'url_invalid'
+          | 'v2_account_disconnection_unsupported'
+          | 'v2_account_missing_configuration';
 
         type Type =
           | 'api_error'

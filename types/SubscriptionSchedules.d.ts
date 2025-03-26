@@ -57,6 +57,11 @@ declare module 'stripe' {
        */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
+      /**
+       * ID of the account who owns the subscription schedule.
+       */
+      customer_account?: string | null;
+
       default_settings: SubscriptionSchedule.DefaultSettings;
 
       /**

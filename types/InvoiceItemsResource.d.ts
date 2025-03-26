@@ -19,6 +19,11 @@ declare module 'stripe' {
       currency?: string;
 
       /**
+       * The ID of the account who will be billed when this invoice item is billed.
+       */
+      customer_account?: string;
+
+      /**
        * An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
        */
       description?: string;
@@ -423,6 +428,11 @@ declare module 'stripe' {
        * The identifier of the customer whose invoice items to return. If none is provided, all invoice items will be returned.
        */
       customer?: string;
+
+      /**
+       * The identifier of the account whose invoice items to return. If none is provided, all invoice items will be returned.
+       */
+      customer_account?: string;
 
       /**
        * Specifies which fields in the response should be expanded.

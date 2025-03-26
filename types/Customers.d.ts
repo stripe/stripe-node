@@ -42,6 +42,8 @@ declare module 'stripe' {
        */
       currency?: string | null;
 
+      customer_account?: string | null;
+
       /**
        * ID of the default payment source for the customer.
        *

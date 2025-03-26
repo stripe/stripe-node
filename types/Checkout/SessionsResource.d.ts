@@ -77,6 +77,11 @@ declare module 'stripe' {
         customer?: string;
 
         /**
+         * ID of an existing Account, if one exists. Has the same behavior as `customer`.
+         */
+        customer_account?: string;
+
+        /**
          * Configure whether a Checkout Session creates a [Customer](https://stripe.com/docs/api/customers) during Session confirmation.
          *
          * When a Customer is not created, you can still retrieve email, address, and other customer data entered in Checkout
@@ -3255,6 +3260,11 @@ declare module 'stripe' {
          * Only return the Checkout Sessions for the Customer specified.
          */
         customer?: string;
+
+        /**
+         * Only return the Checkout Sessions for the Account specified.
+         */
+        customer_account?: string;
 
         /**
          * Only return the Checkout Sessions for the Customer details specified.

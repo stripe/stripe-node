@@ -54,6 +54,11 @@ declare module 'stripe' {
       customer?: string;
 
       /**
+       * The ID of the account who will be billed.
+       */
+      customer_account?: string;
+
+      /**
        * The number of days from when the invoice is created until it is due. Valid only for invoices where `collection_method=send_invoice`.
        */
       days_until_due?: number;
@@ -1670,6 +1675,8 @@ declare module 'stripe' {
        */
       customer?: string;
 
+      customer_account?: string;
+
       due_date?: Stripe.RangeQueryParam | number;
 
       /**
@@ -2138,6 +2145,11 @@ declare module 'stripe' {
        * The identifier of the customer whose upcoming invoice you'd like to retrieve. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
        */
       customer?: string;
+
+      /**
+       * The identifier of the account whose upcoming invoice you'd like to retrieve. If `automatic_tax` is enabled then one of `customer`, `customer_account`, `customer_details`, `subscription`, or `schedule` must be set.
+       */
+      customer_account?: string;
 
       /**
        * Details about the customer you want to invoice or overrides for an existing customer. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.

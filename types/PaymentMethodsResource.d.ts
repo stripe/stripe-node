@@ -1120,6 +1120,11 @@ declare module 'stripe' {
       customer: string;
 
       /**
+       * The ID of the account to which to attach the PaymentMethod.
+       */
+      customer_account?: string;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;

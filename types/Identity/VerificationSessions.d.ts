@@ -86,6 +86,11 @@ declare module 'stripe' {
         related_customer: string | null;
 
         /**
+         * Token referencing a Customer Account resource.
+         */
+        related_customer_account?: string | null;
+
+        /**
          * Status of this VerificationSession. [Learn more about the lifecycle of sessions](https://stripe.com/docs/identity/how-sessions-work).
          */
         status: VerificationSession.Status;

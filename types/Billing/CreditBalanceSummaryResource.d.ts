@@ -15,6 +15,11 @@ declare module 'stripe' {
         filter: CreditBalanceSummaryRetrieveParams.Filter;
 
         /**
+         * The account for which to fetch credit balance summary.
+         */
+        customer_account?: string;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;

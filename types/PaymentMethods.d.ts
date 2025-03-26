@@ -67,6 +67,8 @@ declare module 'stripe' {
        */
       customer: string | Stripe.Customer | null;
 
+      customer_account?: string | null;
+
       customer_balance?: PaymentMethod.CustomerBalance;
 
       eps?: PaymentMethod.Eps;
