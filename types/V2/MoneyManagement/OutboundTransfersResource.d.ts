@@ -150,7 +150,9 @@ declare module 'stripe' {
           create(
             params: OutboundTransferCreateParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.OutboundTransfer>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.OutboundTransfer>
+          >;
 
           /**
            * Retrieves the details of an existing OutboundTransfer by passing the unique OutboundTransfer ID from either the OutboundPayment create or list response.
@@ -159,11 +161,15 @@ declare module 'stripe' {
             id: string,
             params?: OutboundTransferRetrieveParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.OutboundTransfer>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.OutboundTransfer>
+          >;
           retrieve(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.OutboundTransfer>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.OutboundTransfer>
+          >;
 
           /**
            * Returns a list of OutboundTransfers that match the provided filters.
@@ -171,10 +177,10 @@ declare module 'stripe' {
           list(
             params?: OutboundTransferListParams,
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.OutboundTransfer>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.OutboundTransfer>;
           list(
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.OutboundTransfer>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.OutboundTransfer>;
 
           /**
            * Cancels an OutboundTransfer. Only processing OutboundTransfers can be canceled.
@@ -185,11 +191,15 @@ declare module 'stripe' {
             id: string,
             params?: OutboundTransferCancelParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.OutboundTransfer>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.OutboundTransfer>
+          >;
           cancel(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.OutboundTransfer>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.OutboundTransfer>
+          >;
         }
       }
     }

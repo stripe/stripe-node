@@ -55,11 +55,11 @@ declare module 'stripe' {
             id: string,
             params?: ReceivedCreditRetrieveParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.ReceivedCredit>>;
+          ): Promise<Stripe.Response<Stripe.V2.MoneyManagement.ReceivedCredit>>;
           retrieve(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.ReceivedCredit>>;
+          ): Promise<Stripe.Response<Stripe.V2.MoneyManagement.ReceivedCredit>>;
 
           /**
            * Retrieves a list of ReceivedCredits.
@@ -67,10 +67,10 @@ declare module 'stripe' {
           list(
             params?: ReceivedCreditListParams,
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.ReceivedCredit>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.ReceivedCredit>;
           list(
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.ReceivedCredit>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.ReceivedCredit>;
         }
       }
     }

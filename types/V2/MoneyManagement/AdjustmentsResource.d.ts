@@ -60,11 +60,11 @@ declare module 'stripe' {
             id: string,
             params?: AdjustmentRetrieveParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.Adjustment>>;
+          ): Promise<Stripe.Response<Stripe.V2.MoneyManagement.Adjustment>>;
           retrieve(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.Adjustment>>;
+          ): Promise<Stripe.Response<Stripe.V2.MoneyManagement.Adjustment>>;
 
           /**
            * Returns a list of Adjustments that match the provided filters.
@@ -72,8 +72,10 @@ declare module 'stripe' {
           list(
             params?: AdjustmentListParams,
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.Adjustment>;
-          list(options?: RequestOptions): ApiListPromise<Stripe.V2.Adjustment>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.Adjustment>;
+          list(
+            options?: RequestOptions
+          ): ApiListPromise<Stripe.V2.MoneyManagement.Adjustment>;
         }
       }
     }

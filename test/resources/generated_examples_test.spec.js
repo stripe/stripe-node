@@ -4050,6 +4050,34 @@ describe('Generated tests', function() {
     expect(person).not.to.be.null;
   });
 
+  it('test_v2_core_account_link_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/account_links',
+        response:
+          '{"account":"account","created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","object":"v2.core.account_link","url":"url","use_case":{"type":"account_onboarding","account_onboarding":null,"account_update":null}}',
+      },
+    ]);
+    const accountLink = await stripe.v2.core.accountLinks.create({
+      account: 'account',
+      use_case: {
+        type: 'account_onboarding',
+        account_onboarding: {
+          configurations: ['recipient'],
+          refresh_url: 'refresh_url',
+          return_url: 'return_url',
+        },
+        account_update: {
+          configurations: ['recipient'],
+          refresh_url: 'refresh_url',
+          return_url: 'return_url',
+        },
+      },
+    });
+    expect(accountLink).not.to.be.null;
+  });
+
   it('test_v2_core_event_destination_post', async function() {
     const stripe = testUtils.createMockClient([
       {

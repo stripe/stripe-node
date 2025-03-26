@@ -55,11 +55,15 @@ declare module 'stripe' {
             id: string,
             params?: TransactionEntryRetrieveParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.TransactionEntry>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.TransactionEntry>
+          >;
           retrieve(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.TransactionEntry>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.TransactionEntry>
+          >;
 
           /**
            * Returns a list of TransactionEntries that match the provided filters.
@@ -67,10 +71,10 @@ declare module 'stripe' {
           list(
             params?: TransactionEntryListParams,
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.TransactionEntry>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.TransactionEntry>;
           list(
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.TransactionEntry>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.TransactionEntry>;
         }
       }
     }

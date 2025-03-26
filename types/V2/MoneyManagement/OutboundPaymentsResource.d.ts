@@ -187,7 +187,9 @@ declare module 'stripe' {
           create(
             params: OutboundPaymentCreateParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.OutboundPayment>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.OutboundPayment>
+          >;
 
           /**
            * Retrieves the details of an existing OutboundPayment by passing the unique OutboundPayment ID from either the OutboundPayment create or list response.
@@ -196,11 +198,15 @@ declare module 'stripe' {
             id: string,
             params?: OutboundPaymentRetrieveParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.OutboundPayment>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.OutboundPayment>
+          >;
           retrieve(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.OutboundPayment>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.OutboundPayment>
+          >;
 
           /**
            * Returns a list of OutboundPayments that match the provided filters.
@@ -208,10 +214,10 @@ declare module 'stripe' {
           list(
             params?: OutboundPaymentListParams,
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.OutboundPayment>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.OutboundPayment>;
           list(
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.OutboundPayment>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.OutboundPayment>;
 
           /**
            * Cancels an OutboundPayment. Only processing OutboundPayments can be canceled.
@@ -222,11 +228,15 @@ declare module 'stripe' {
             id: string,
             params?: OutboundPaymentCancelParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.OutboundPayment>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.OutboundPayment>
+          >;
           cancel(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.OutboundPayment>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.OutboundPayment>
+          >;
         }
       }
     }

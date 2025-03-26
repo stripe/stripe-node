@@ -106,7 +106,9 @@ declare module 'stripe' {
           create(
             params: InboundTransferCreateParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.InboundTransfer>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.InboundTransfer>
+          >;
 
           /**
            * Retrieve an InboundTransfer by ID.
@@ -115,11 +117,15 @@ declare module 'stripe' {
             id: string,
             params?: InboundTransferRetrieveParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.InboundTransfer>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.InboundTransfer>
+          >;
           retrieve(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.InboundTransfer>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.InboundTransfer>
+          >;
 
           /**
            * Retrieves a list of InboundTransfers.
@@ -127,10 +133,10 @@ declare module 'stripe' {
           list(
             params?: InboundTransferListParams,
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.InboundTransfer>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.InboundTransfer>;
           list(
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.InboundTransfer>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.InboundTransfer>;
         }
       }
     }

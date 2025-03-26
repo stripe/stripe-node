@@ -150,6 +150,7 @@
 ///<reference path='./V2/Billing/MeterEventSessionResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
+///<reference path='./V2/Core/AccountLinksResource.d.ts' />
 ///<reference path='./V2/Core/Accounts/PersonsResource.d.ts' />
 ///<reference path='./V2/Core/AccountsResource.d.ts' />
 ///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
@@ -334,31 +335,32 @@
 ///<reference path='./Treasury/ReceivedDebits.d.ts' />
 ///<reference path='./Treasury/TransactionEntries.d.ts' />
 ///<reference path='./Treasury/Transactions.d.ts' />
-///<reference path='./V2/Adjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
+///<reference path='./V2/Core/AccountLinks.d.ts' />
 ///<reference path='./V2/Core/Accounts.d.ts' />
 ///<reference path='./V2/Core/Persons.d.ts' />
 ///<reference path='./V2/Core/Vault/GbBankAccounts.d.ts' />
 ///<reference path='./V2/Core/Vault/UsBankAccounts.d.ts' />
 ///<reference path='./V2/EventDestinations.d.ts' />
 ///<reference path='./V2/Events.d.ts' />
-///<reference path='./V2/FinancialAccounts.d.ts' />
 ///<reference path='./V2/FinancialAddressCreditSimulations.d.ts' />
 ///<reference path='./V2/FinancialAddressGeneratedMicrodeposits.d.ts' />
-///<reference path='./V2/FinancialAddresses.d.ts' />
-///<reference path='./V2/InboundTransfers.d.ts' />
+///<reference path='./V2/MoneyManagement/Adjustments.d.ts' />
+///<reference path='./V2/MoneyManagement/FinancialAccounts.d.ts' />
+///<reference path='./V2/MoneyManagement/FinancialAddresses.d.ts' />
+///<reference path='./V2/MoneyManagement/InboundTransfers.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPaymentQuotes.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPayments.d.ts' />
 ///<reference path='./V2/MoneyManagement/OutboundSetupIntents.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundTransfers.d.ts' />
 ///<reference path='./V2/MoneyManagement/PayoutMethods.d.ts' />
 ///<reference path='./V2/MoneyManagement/PayoutMethodsBankAccountSpecs.d.ts' />
-///<reference path='./V2/OutboundPaymentQuotes.d.ts' />
-///<reference path='./V2/OutboundPayments.d.ts' />
-///<reference path='./V2/OutboundTransfers.d.ts' />
-///<reference path='./V2/ReceivedCredits.d.ts' />
-///<reference path='./V2/ReceivedDebits.d.ts' />
-///<reference path='./V2/TransactionEntries.d.ts' />
-///<reference path='./V2/Transactions.d.ts' />
+///<reference path='./V2/MoneyManagement/ReceivedCredits.d.ts' />
+///<reference path='./V2/MoneyManagement/ReceivedDebits.d.ts' />
+///<reference path='./V2/MoneyManagement/TransactionEntries.d.ts' />
+///<reference path='./V2/MoneyManagement/Transactions.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
@@ -563,6 +565,7 @@ declare module 'stripe' {
     v2: {
       core: {
         accounts: Stripe.V2.Core.AccountsResource;
+        accountLinks: Stripe.V2.Core.AccountLinksResource;
         eventDestinations: Stripe.V2.Core.EventDestinationsResource;
         events: Stripe.V2.Core.EventsResource;
         vault: {

@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {resourceNamespace} from './ResourceNamespace.js';
+import {AccountLinks as V2CoreAccountLinks} from './resources/V2/Core/AccountLinks.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
 import {Accounts as V2CoreAccounts} from './resources/V2/Core/Accounts.js';
 import {ActiveEntitlements as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
@@ -292,6 +293,7 @@ export const V2 = resourceNamespace('v2', {
     MeterEvents: V2BillingMeterEvents,
   }),
   Core: resourceNamespace('core', {
+    AccountLinks: V2CoreAccountLinks,
     Accounts: V2CoreAccounts,
     EventDestinations: V2CoreEventDestinations,
     Events: V2CoreEvents,

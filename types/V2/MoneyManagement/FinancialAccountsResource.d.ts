@@ -25,11 +25,15 @@ declare module 'stripe' {
             id: string,
             params?: FinancialAccountRetrieveParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.FinancialAccount>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.FinancialAccount>
+          >;
           retrieve(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.FinancialAccount>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.FinancialAccount>
+          >;
 
           /**
            * Lists FinancialAccounts in this compartment.
@@ -37,10 +41,10 @@ declare module 'stripe' {
           list(
             params?: FinancialAccountListParams,
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.FinancialAccount>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.FinancialAccount>;
           list(
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.FinancialAccount>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.FinancialAccount>;
         }
       }
     }

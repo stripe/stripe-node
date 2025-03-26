@@ -25,11 +25,11 @@ declare module 'stripe' {
             id: string,
             params?: ReceivedDebitRetrieveParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.ReceivedDebit>>;
+          ): Promise<Stripe.Response<Stripe.V2.MoneyManagement.ReceivedDebit>>;
           retrieve(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.ReceivedDebit>>;
+          ): Promise<Stripe.Response<Stripe.V2.MoneyManagement.ReceivedDebit>>;
 
           /**
            * Retrieves a list of ReceivedDebits, given the selected filters.
@@ -37,10 +37,10 @@ declare module 'stripe' {
           list(
             params?: ReceivedDebitListParams,
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.ReceivedDebit>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.ReceivedDebit>;
           list(
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.ReceivedDebit>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.ReceivedDebit>;
         }
       }
     }

@@ -249,7 +249,9 @@ declare module 'stripe' {
           create(
             params: FinancialAddressCreateParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.FinancialAddress>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.FinancialAddress>
+          >;
 
           /**
            * Retrieve a FinancialAddress. By default, the FinancialAddress will be returned in it's unexpanded state, revealing only the last 4 digits of the account number.
@@ -258,11 +260,15 @@ declare module 'stripe' {
             id: string,
             params?: FinancialAddressRetrieveParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.FinancialAddress>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.FinancialAddress>
+          >;
           retrieve(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.FinancialAddress>>;
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.FinancialAddress>
+          >;
 
           /**
            * List all FinancialAddresses for a FinancialAccount.
@@ -270,10 +276,10 @@ declare module 'stripe' {
           list(
             params?: FinancialAddressListParams,
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.FinancialAddress>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.FinancialAddress>;
           list(
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.FinancialAddress>;
+          ): ApiListPromise<Stripe.V2.MoneyManagement.FinancialAddress>;
         }
       }
     }

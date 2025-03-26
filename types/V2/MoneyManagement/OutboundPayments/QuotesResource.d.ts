@@ -86,7 +86,9 @@ declare module 'stripe' {
             create(
               params: QuoteCreateParams,
               options?: RequestOptions
-            ): Promise<Stripe.Response<Stripe.V2.OutboundPaymentQuote>>;
+            ): Promise<
+              Stripe.Response<Stripe.V2.MoneyManagement.OutboundPaymentQuote>
+            >;
           }
         }
       }
