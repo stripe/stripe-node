@@ -20,11 +20,6 @@ declare module 'stripe' {
            * The page size.
            */
           limit?: number;
-
-          /**
-           * The requested page.
-           */
-          page?: string;
         }
       }
 
@@ -37,11 +32,11 @@ declare module 'stripe' {
             id: string,
             params?: EventRetrieveParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.Event>>;
+          ): Promise<Stripe.Response<Stripe.V2.Core.Event>>;
           retrieve(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.Event>>;
+          ): Promise<Stripe.Response<Stripe.V2.Core.Event>>;
 
           /**
            * List events, going back up to 30 days.
@@ -49,7 +44,7 @@ declare module 'stripe' {
           list(
             params: EventListParams,
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.Event>;
+          ): ApiListPromise<Stripe.V2.Core.Event>;
         }
       }
     }

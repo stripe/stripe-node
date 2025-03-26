@@ -156,11 +156,6 @@ declare module 'stripe' {
            * The page size.
            */
           limit?: number;
-
-          /**
-           * The requested page.
-           */
-          page?: string;
         }
       }
 
@@ -188,7 +183,7 @@ declare module 'stripe' {
           create(
             params: EventDestinationCreateParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.EventDestination>>;
+          ): Promise<Stripe.Response<Stripe.V2.Core.EventDestination>>;
 
           /**
            * Retrieves the details of an event destination.
@@ -197,11 +192,11 @@ declare module 'stripe' {
             id: string,
             params?: EventDestinationRetrieveParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.EventDestination>>;
+          ): Promise<Stripe.Response<Stripe.V2.Core.EventDestination>>;
           retrieve(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.EventDestination>>;
+          ): Promise<Stripe.Response<Stripe.V2.Core.EventDestination>>;
 
           /**
            * Update the details of an event destination.
@@ -210,7 +205,7 @@ declare module 'stripe' {
             id: string,
             params?: EventDestinationUpdateParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.EventDestination>>;
+          ): Promise<Stripe.Response<Stripe.V2.Core.EventDestination>>;
 
           /**
            * Lists all event destinations.
@@ -218,10 +213,10 @@ declare module 'stripe' {
           list(
             params?: EventDestinationListParams,
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.EventDestination>;
+          ): ApiListPromise<Stripe.V2.Core.EventDestination>;
           list(
             options?: RequestOptions
-          ): ApiListPromise<Stripe.V2.EventDestination>;
+          ): ApiListPromise<Stripe.V2.Core.EventDestination>;
 
           /**
            * Delete an event destination.
@@ -230,11 +225,11 @@ declare module 'stripe' {
             id: string,
             params?: EventDestinationDeleteParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.EventDestination>>;
+          ): Promise<Stripe.Response<Stripe.V2.Core.EventDestination>>;
           del(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.EventDestination>>;
+          ): Promise<Stripe.Response<Stripe.V2.Core.EventDestination>>;
 
           /**
            * Disable an event destination.
@@ -243,11 +238,11 @@ declare module 'stripe' {
             id: string,
             params?: EventDestinationDisableParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.EventDestination>>;
+          ): Promise<Stripe.Response<Stripe.V2.Core.EventDestination>>;
           disable(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.EventDestination>>;
+          ): Promise<Stripe.Response<Stripe.V2.Core.EventDestination>>;
 
           /**
            * Enable an event destination.
@@ -256,11 +251,11 @@ declare module 'stripe' {
             id: string,
             params?: EventDestinationEnableParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.EventDestination>>;
+          ): Promise<Stripe.Response<Stripe.V2.Core.EventDestination>>;
           enable(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.EventDestination>>;
+          ): Promise<Stripe.Response<Stripe.V2.Core.EventDestination>>;
 
           /**
            * Send a `ping` event to an event destination.
@@ -269,11 +264,11 @@ declare module 'stripe' {
             id: string,
             params?: EventDestinationPingParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.Event>>;
+          ): Promise<Stripe.Response<Stripe.V2.Core.Event>>;
           ping(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.Event>>;
+          ): Promise<Stripe.Response<Stripe.V2.Core.Event>>;
         }
       }
     }
