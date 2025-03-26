@@ -39,7 +39,7 @@ declare module 'stripe' {
               /**
                * The human readable local name of the field.
                */
-              local_name_human: string;
+              local_name_human: Field.LocalNameHuman;
 
               /**
                * The maximum length of the field.
@@ -65,6 +65,14 @@ declare module 'stripe' {
                * The validation regex of the field.
                */
               validation_regex: string;
+            }
+
+            namespace Field {
+              interface LocalNameHuman {
+                content: string;
+
+                localization_key: string;
+              }
             }
           }
         }

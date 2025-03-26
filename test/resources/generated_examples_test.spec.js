@@ -4828,7 +4828,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/payout_methods_bank_account_spec',
         response:
-          '{"countries":{"undefined":{"fields":[{"local_name":"local_name","local_name_human":"local_name_human","max_length":1111390753,"min_length":711577229,"placeholder":"placeholder","stripe_name":"stripe_name","validation_regex":"validation_regex"}]}},"object":"v2.money_management.payout_methods_bank_account_spec"}',
+          '{"countries":{"undefined":{"fields":[{"local_name":"local_name","local_name_human":{"content":"content","localization_key":"localization_key"},"max_length":1111390753,"min_length":711577229,"placeholder":"placeholder","stripe_name":"stripe_name","validation_regex":"validation_regex"}]}},"object":"v2.money_management.payout_methods_bank_account_spec"}',
       },
     ]);
     const payoutMethodsBankAccountSpec = await stripe.v2.moneyManagement.payoutMethodsBankAccountSpec.retrieve();
@@ -5072,7 +5072,7 @@ describe('Generated tests', function() {
         },
       });
 
-    const emptyObject = await realStripe.v2.billing.meterEventStream.create(
+    await realStripe.v2.billing.meterEventStream.create(
       {
         events: [
           {
@@ -5102,7 +5102,7 @@ describe('Generated tests', function() {
         },
       });
 
-    const financialAddress = await realStripe.v2.moneyManagement.financialAddresses.create(
+    await realStripe.v2.moneyManagement.financialAddresses.create(
       {
         currency: 'gip',
         financial_account: 'financial_account',
@@ -5126,7 +5126,7 @@ describe('Generated tests', function() {
         },
       });
 
-    const usBankAccount = await realStripe.v2.core.vault.usBankAccounts.create(
+    await realStripe.v2.core.vault.usBankAccounts.create(
       {
         account_number: 'account_number',
       },
@@ -5149,7 +5149,7 @@ describe('Generated tests', function() {
         },
       });
 
-    const outboundPayment = await realStripe.v2.moneyManagement.outboundPayments.cancel(
+    await realStripe.v2.moneyManagement.outboundPayments.cancel(
       'id_123',
 
       (err) => {
@@ -5170,7 +5170,7 @@ describe('Generated tests', function() {
         },
       });
 
-    const outboundPayment = await realStripe.v2.moneyManagement.outboundPayments.cancel(
+    await realStripe.v2.moneyManagement.outboundPayments.cancel(
       'id_123',
 
       (err) => {
@@ -5191,7 +5191,7 @@ describe('Generated tests', function() {
         },
       });
 
-    const outboundPayment = await realStripe.v2.moneyManagement.outboundPayments.create(
+    await realStripe.v2.moneyManagement.outboundPayments.create(
       {
         amount: {
           value: 96,
@@ -5224,7 +5224,7 @@ describe('Generated tests', function() {
         },
       });
 
-    const usBankAccount = await realStripe.v2.core.vault.usBankAccounts.create(
+    await realStripe.v2.core.vault.usBankAccounts.create(
       {
         account_number: 'account_number',
       },
@@ -5247,7 +5247,7 @@ describe('Generated tests', function() {
         },
       });
 
-    const outboundPayment = await realStripe.v2.moneyManagement.outboundPayments.create(
+    await realStripe.v2.moneyManagement.outboundPayments.create(
       {
         amount: {
           value: 96,
@@ -5280,7 +5280,7 @@ describe('Generated tests', function() {
         },
       });
 
-    const outboundPayment = await realStripe.v2.moneyManagement.outboundPayments.create(
+    await realStripe.v2.moneyManagement.outboundPayments.create(
       {
         amount: {
           value: 96,
@@ -5313,11 +5313,9 @@ describe('Generated tests', function() {
         },
       });
 
-    const outboundSetupIntent = await realStripe.v2.moneyManagement.outboundSetupIntents.create(
-      (err) => {
-        expect(err).to.be.instanceOf(InvalidPayoutMethodError);
-      }
-    );
+    await realStripe.v2.moneyManagement.outboundSetupIntents.create((err) => {
+      expect(err).to.be.instanceOf(InvalidPayoutMethodError);
+    });
   });
 
   it('test_controlled_by_dashboard_error', async function() {
@@ -5332,7 +5330,7 @@ describe('Generated tests', function() {
         },
       });
 
-    const usBankAccount = await realStripe.v2.core.vault.usBankAccounts.archive(
+    await realStripe.v2.core.vault.usBankAccounts.archive(
       'id_123',
 
       (err) => {
@@ -5353,7 +5351,7 @@ describe('Generated tests', function() {
         },
       });
 
-    const usBankAccount = await realStripe.v2.core.vault.usBankAccounts.create(
+    await realStripe.v2.core.vault.usBankAccounts.create(
       {
         account_number: 'account_number',
       },
