@@ -118,6 +118,10 @@ declare module 'stripe' {
 
         link?: PaymentMethodDetails.Link;
 
+        naver_pay?: PaymentMethodDetails.NaverPay;
+
+        nz_bank_account?: PaymentMethodDetails.NzBankAccount;
+
         paypal?: PaymentMethodDetails.Paypal;
 
         revolut_pay?: PaymentMethodDetails.RevolutPay;
@@ -474,6 +478,15 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface NaverPay {
+          /**
+           * Uniquely identifies this particular Naver Pay account. You can use this attribute to check whether two Naver Pay accounts are the same.
+           */
+          buyer_id?: string;
+        }
+
+        interface NzBankAccount {}
+
         interface Paypal {}
 
         interface RevolutPay {}
@@ -697,6 +710,7 @@ declare module 'stripe' {
           | 'financial_connections_no_successful_transaction_refresh'
           | 'forwarding_api_inactive'
           | 'forwarding_api_invalid_parameter'
+          | 'forwarding_api_retryable_upstream_error'
           | 'forwarding_api_upstream_connection_error'
           | 'forwarding_api_upstream_connection_timeout'
           | 'idempotency_key_in_use'
@@ -793,6 +807,7 @@ declare module 'stripe' {
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'
           | 'setup_intent_mandate_invalid'
+          | 'setup_intent_mobile_wallet_unsupported'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
           | 'shipping_address_invalid'
