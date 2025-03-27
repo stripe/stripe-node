@@ -325,6 +325,9 @@ declare module 'stripe' {
        */
       on_behalf_of: string | Stripe.Account | null;
 
+      /**
+       * The parent that generated this invoice
+       */
       parent: Invoice.Parent | null;
 
       payment_settings: Invoice.PaymentSettings;
@@ -996,23 +999,45 @@ declare module 'stripe' {
       }
 
       interface Parent {
+        /**
+         * Details about the quote that generated this invoice
+         */
         quote_details: Parent.QuoteDetails | null;
 
+        /**
+         * Details about the subscription that generated this invoice
+         */
         subscription_details: Parent.SubscriptionDetails | null;
 
+        /**
+         * The type of parent that generated this invoice
+         */
         type: Parent.Type;
       }
 
       namespace Parent {
         interface QuoteDetails {
+          /**
+           * The quote that generated this invoice
+           */
           quote: string;
         }
 
         interface SubscriptionDetails {
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) defined as subscription metadata when an invoice is created. Becomes an immutable snapshot of the subscription metadata at the time of invoice finalization.
+           *  *Note: This attribute is populated only for invoices created on or after June 29, 2023.*
+           */
           metadata: Stripe.Metadata | null;
 
-          subscription: string;
+          /**
+           * The subscription that generated this invoice
+           */
+          subscription: string | Stripe.Subscription;
 
+          /**
+           * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
+           */
           subscription_proration_date?: number;
         }
 

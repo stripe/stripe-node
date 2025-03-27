@@ -63,6 +63,9 @@ declare module 'stripe' {
        */
       metadata: Stripe.Metadata;
 
+      /**
+       * The parent that generated this invoice
+       */
       parent: InvoiceLineItem.Parent | null;
 
       period: InvoiceLineItem.Period;
@@ -104,19 +107,31 @@ declare module 'stripe' {
       }
 
       interface Parent {
+        /**
+         * Details about the invoice item that generated this line item
+         */
         invoice_item_details: Parent.InvoiceItemDetails | null;
 
+        /**
+         * Details about the subscription item that generated this line item
+         */
         subscription_item_details: Parent.SubscriptionItemDetails | null;
 
+        /**
+         * The type of parent that generated this line item
+         */
         type: Parent.Type;
       }
 
       namespace Parent {
         interface InvoiceItemDetails {
+          /**
+           * The invoice item that generated this line item
+           */
           invoice_item: string;
 
           /**
-           * Whether this is a proration.
+           * Whether this is a proration
            */
           proration: boolean;
 
@@ -125,6 +140,9 @@ declare module 'stripe' {
            */
           proration_details: InvoiceItemDetails.ProrationDetails | null;
 
+          /**
+           * The subscription that the invoice item belongs to
+           */
           subscription: string | null;
         }
 
@@ -152,10 +170,13 @@ declare module 'stripe' {
         }
 
         interface SubscriptionItemDetails {
+          /**
+           * The invoice item that generated this line item
+           */
           invoice_item: string | null;
 
           /**
-           * Whether this is a proration.
+           * Whether this is a proration
            */
           proration: boolean;
 
@@ -164,8 +185,14 @@ declare module 'stripe' {
            */
           proration_details: SubscriptionItemDetails.ProrationDetails | null;
 
+          /**
+           * The subscription that the subscription item belongs to
+           */
           subscription: string;
 
+          /**
+           * The subscription item that generated this line item
+           */
           subscription_item: string;
         }
 

@@ -15,17 +15,32 @@ declare module 'stripe' {
        */
       expand?: Array<string>;
 
+      /**
+       * The identifier of the invoice whose payments to return.
+       */
       invoice?: string;
 
+      /**
+       * The payment details of the invoice payments to return.
+       */
       payment?: InvoicePaymentListParams.Payment;
 
+      /**
+       * The status of the invoice payments to return.
+       */
       status?: InvoicePaymentListParams.Status;
     }
 
     namespace InvoicePaymentListParams {
       interface Payment {
+        /**
+         * Only return invoice payments associated by this payment intent ID.
+         */
         payment_intent?: string;
 
+        /**
+         * Only return invoice payments associated by this payment type.
+         */
         type: 'payment_intent';
       }
 
