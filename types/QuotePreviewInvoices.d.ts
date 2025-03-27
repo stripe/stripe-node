@@ -1112,12 +1112,16 @@ declare module 'stripe' {
             /**
              * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
              */
-            behavior: string | null;
+            behavior: PauseCollection.Behavior | null;
 
             /**
              * The time after which the subscription will resume collecting payments.
              */
             resumes_at: number | null;
+          }
+
+          namespace PauseCollection {
+            type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
           }
         }
 
