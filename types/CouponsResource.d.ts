@@ -31,6 +31,11 @@ declare module 'stripe' {
       duration?: CouponCreateParams.Duration;
 
       /**
+       * Required only if `duration` is `repeating`, in which case it must be a positive integer that specifies the number of months the discount will be in effect.
+       */
+      duration_in_months?: number;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -81,7 +86,7 @@ declare module 'stripe' {
         amount_off: number;
       }
 
-      type Duration = 'forever' | 'once';
+      type Duration = 'forever' | 'once' | 'repeating';
     }
 
     interface CouponRetrieveParams {
