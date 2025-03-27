@@ -340,6 +340,9 @@ declare module 'stripe' {
        */
       on_behalf_of: string | Stripe.Account | null;
 
+      /**
+       * The parent that generated this invoice
+       */
       parent: Invoice.Parent | null;
 
       payment_settings: Invoice.PaymentSettings;

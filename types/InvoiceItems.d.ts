@@ -111,6 +111,9 @@ declare module 'stripe' {
        */
       metadata: Stripe.Metadata | null;
 
+      /**
+       * The parent that generated this invoice
+       */
       parent: InvoiceItem.Parent | null;
 
       period: InvoiceItem.Period;
