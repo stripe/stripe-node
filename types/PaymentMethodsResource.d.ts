@@ -1140,7 +1140,7 @@ declare module 'stripe' {
       /**
        * The ID of the customer to which to attach the PaymentMethod.
        */
-      customer: string;
+      customer?: string;
 
       /**
        * The ID of the account to which to attach the PaymentMethod.
@@ -1222,7 +1222,11 @@ declare module 'stripe' {
        */
       attach(
         id: string,
-        params: PaymentMethodAttachParams,
+        params?: PaymentMethodAttachParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
+      attach(
+        id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 

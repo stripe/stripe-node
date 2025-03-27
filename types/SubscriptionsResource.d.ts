@@ -4,11 +4,6 @@ declare module 'stripe' {
   namespace Stripe {
     interface SubscriptionCreateParams {
       /**
-       * The identifier of the customer to subscribe.
-       */
-      customer: string;
-
-      /**
        * A list of prices and quantities that will generate invoice items appended to the next invoice for this subscription. You may pass up to 20 items.
        */
       add_invoice_items?: Array<SubscriptionCreateParams.AddInvoiceItem>;
@@ -57,6 +52,11 @@ declare module 'stripe' {
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
       currency?: string;
+
+      /**
+       * The identifier of the customer to subscribe.
+       */
+      customer?: string;
 
       customer_account?: string;
 
@@ -2223,7 +2223,10 @@ declare module 'stripe' {
        * Schedules provide the flexibility to model more complex billing configurations that change over time.
        */
       create(
-        params: SubscriptionCreateParams,
+        params?: SubscriptionCreateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Subscription>>;
+      create(
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Subscription>>;
 

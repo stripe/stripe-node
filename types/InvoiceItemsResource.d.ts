@@ -4,11 +4,6 @@ declare module 'stripe' {
   namespace Stripe {
     interface InvoiceItemCreateParams {
       /**
-       * The ID of the customer who will be billed when this invoice item is billed.
-       */
-      customer: string;
-
-      /**
        * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. Passing in a negative `amount` will reduce the `amount_due` on the invoice.
        */
       amount?: number;
@@ -17,6 +12,11 @@ declare module 'stripe' {
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
       currency?: string;
+
+      /**
+       * The ID of the customer who will be billed when this invoice item is billed.
+       */
+      customer?: string;
 
       /**
        * The ID of the account who will be billed when this invoice item is billed.
@@ -457,7 +457,10 @@ declare module 'stripe' {
        * Creates an item to be added to a draft invoice (up to 250 items per invoice). If no invoice is specified, the item will be on the next invoice created for the customer specified.
        */
       create(
-        params: InvoiceItemCreateParams,
+        params?: InvoiceItemCreateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.InvoiceItem>>;
+      create(
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.InvoiceItem>>;
 

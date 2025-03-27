@@ -22,7 +22,7 @@ declare module 'stripe' {
         /**
          * ID of the customer to receive the billing credits.
          */
-        customer: string;
+        customer?: string;
 
         /**
          * ID of the account to receive the billing credits.

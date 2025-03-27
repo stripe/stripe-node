@@ -12,14 +12,14 @@ declare module 'stripe' {
 
       interface CreditBalanceTransactionListParams extends PaginationParams {
         /**
-         * The customer for which to fetch credit balance transactions.
-         */
-        customer: string;
-
-        /**
          * The credit grant for which to fetch credit balance transactions.
          */
         credit_grant?: string;
+
+        /**
+         * The customer for which to fetch credit balance transactions.
+         */
+        customer?: string;
 
         /**
          * The account for which to fetch credit balance transactions.
@@ -50,7 +50,10 @@ declare module 'stripe' {
          * Retrieve a list of credit balance transactions.
          */
         list(
-          params: CreditBalanceTransactionListParams,
+          params?: CreditBalanceTransactionListParams,
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.Billing.CreditBalanceTransaction>;
+        list(
           options?: RequestOptions
         ): ApiListPromise<Stripe.Billing.CreditBalanceTransaction>;
       }
