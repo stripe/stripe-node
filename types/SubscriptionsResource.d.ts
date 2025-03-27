@@ -41,7 +41,7 @@ declare module 'stripe' {
       /**
        * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
        */
-      cancel_at?: number | 'min_period_end';
+      cancel_at?: number;
 
       /**
        * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
@@ -1046,7 +1046,7 @@ declare module 'stripe' {
       /**
        * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
        */
-      cancel_at?: Stripe.Emptyable<number | 'min_period_end'>;
+      cancel_at?: Stripe.Emptyable<number>;
 
       /**
        * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
