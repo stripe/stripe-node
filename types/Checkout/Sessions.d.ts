@@ -2175,6 +2175,15 @@ declare module 'stripe' {
           update?: Permissions.Update | null;
 
           /**
+           * Determines which entity is allowed to update the line items.
+           *
+           * Default is `client_only`. Stripe Checkout client will automatically update the line items. If set to `server_only`, only your server is allowed to update the line items.
+           *
+           * When set to `server_only`, you must add the onLineItemsChange event handler when initializing the Stripe Checkout client and manually update the line items from your server using the Stripe API.
+           */
+          update_line_items?: Permissions.UpdateLineItems | null;
+
+          /**
            * Determines which entity is allowed to update the shipping details.
            *
            * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
@@ -2210,6 +2219,8 @@ declare module 'stripe' {
 
             type ShippingDetails = 'client_only' | 'server_only';
           }
+
+          type UpdateLineItems = 'client_only' | 'server_only';
 
           type UpdateShippingDetails = 'client_only' | 'server_only';
         }
