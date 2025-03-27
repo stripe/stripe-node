@@ -1117,7 +1117,7 @@ declare module 'stripe' {
           /**
            * The subscription that generated this invoice
            */
-          subscription: string;
+          subscription: string | Stripe.Subscription;
 
           /**
            * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
