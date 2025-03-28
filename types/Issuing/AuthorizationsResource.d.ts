@@ -50,7 +50,7 @@ declare module 'stripe' {
       }
 
       namespace AuthorizationListParams {
-        type Status = 'closed' | 'pending' | 'reversed';
+        type Status = 'closed' | 'expired' | 'pending' | 'reversed';
       }
 
       interface AuthorizationApproveParams {

@@ -59,11 +59,6 @@ declare module 'stripe' {
       reason?: CreditNoteCreateParams.Reason;
 
       /**
-       * ID of an existing refund to link this credit note to.
-       */
-      refund?: string;
-
-      /**
        * The integer amount in cents (or local equivalent) representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
        */
       refund_amount?: number;
@@ -212,6 +207,11 @@ declare module 'stripe' {
       customer?: string;
 
       /**
+       * Only return credit notes for the account specified by this account ID.
+       */
+      customer_account?: string;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -284,11 +284,6 @@ declare module 'stripe' {
        * Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
        */
       reason?: CreditNoteListPreviewLineItemsParams.Reason;
-
-      /**
-       * ID of an existing refund to link this credit note to.
-       */
-      refund?: string;
 
       /**
        * The integer amount in cents (or local equivalent) representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
@@ -458,11 +453,6 @@ declare module 'stripe' {
        * Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
        */
       reason?: CreditNotePreviewParams.Reason;
-
-      /**
-       * ID of an existing refund to link this credit note to.
-       */
-      refund?: string;
 
       /**
        * The integer amount in cents (or local equivalent) representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.

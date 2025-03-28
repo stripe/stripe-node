@@ -77,6 +77,11 @@ declare module 'stripe' {
         customer?: string;
 
         /**
+         * ID of an existing Account, if one exists. Has the same behavior as `customer`.
+         */
+        customer_account?: string;
+
+        /**
          * Configure whether a Checkout Session creates a [Customer](https://stripe.com/docs/api/customers) during Session confirmation.
          *
          * When a Customer is not created, you can still retrieve email, address, and other customer data entered in Checkout
@@ -146,6 +151,17 @@ declare module 'stripe' {
          * The mode of the Checkout Session. Pass `subscription` if the Checkout Session includes at least one recurring item.
          */
         mode?: SessionCreateParams.Mode;
+
+        /**
+         * A list of optional items the customer can add to their order at checkout. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices).
+         *
+         * There is a maximum of 10 optional items allowed on a Checkout Session, and the existing limits on the number of line items allowed on a Checkout Session apply to the combined number of line items and optional items.
+         *
+         * For `payment` mode, there is a maximum of 100 combined line items and optional items, however it is recommended to consolidate items if there are more than a few dozen.
+         *
+         * For `subscription` mode, there is a maximum of 20 line items and optional items with recurring Prices and 20 line items and optional items with one-time Prices.
+         */
+        optional_items?: Array<SessionCreateParams.OptionalItem>;
 
         /**
          * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
@@ -240,9 +256,10 @@ declare module 'stripe' {
         shipping_options?: Array<SessionCreateParams.ShippingOption>;
 
         /**
-         * Describes the type of transaction being performed by Checkout in order to customize
-         * relevant text on the page, such as the submit button. `submit_type` can only be
-         * specified on Checkout Sessions in `payment` mode. If blank or `auto`, `pay` is used.
+         * Describes the type of transaction being performed by Checkout in order
+         * to customize relevant text on the page, such as the submit button.
+         *  `submit_type` can only be specified on Checkout Sessions in
+         * `payment` or `subscription` mode. If blank or `auto`, `pay` is used.
          */
         submit_type?: SessionCreateParams.SubmitType;
 
@@ -738,12 +755,12 @@ declare module 'stripe' {
             currency: string;
 
             /**
-             * The ID of the product that this price will belong to. One of `product` or `product_data` is required.
+             * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to. One of `product` or `product_data` is required.
              */
             product?: string;
 
             /**
-             * Data used to generate a new product object inline. One of `product` or `product_data` is required.
+             * Data used to generate a new [Product](https://docs.stripe.com/api/products) object inline. One of `product` or `product_data` is required.
              */
             product_data?: PriceData.ProductData;
 
@@ -861,9 +878,45 @@ declare module 'stripe' {
 
         type Mode = 'payment' | 'setup' | 'subscription';
 
+        interface OptionalItem {
+          /**
+           * When set, provides configuration for the customer to adjust the quantity of the line item created when a customer chooses to add this optional item to their order.
+           */
+          adjustable_quantity?: OptionalItem.AdjustableQuantity;
+
+          /**
+           * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object.
+           */
+          price: string;
+
+          /**
+           * The initial quantity of the line item created when a customer chooses to add this optional item to their order.
+           */
+          quantity: number;
+        }
+
+        namespace OptionalItem {
+          interface AdjustableQuantity {
+            /**
+             * Set to true if the quantity can be adjusted to any non-negative integer.
+             */
+            enabled: boolean;
+
+            /**
+             * The maximum quantity of this item the customer can purchase. By default this value is 99. You can specify a value up to 999999.
+             */
+            maximum?: number;
+
+            /**
+             * The minimum quantity of this item the customer must purchase, if they choose to purchase it. Because this item is optional, the customer will always be able to remove it from their order, even if the `minimum` configured here is greater than 0. By default this value is 0.
+             */
+            minimum?: number;
+          }
+        }
+
         interface PaymentIntentData {
           /**
-           * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+           * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
            */
           application_fee_amount?: number;
 
@@ -2226,6 +2279,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'billie'
           | 'blik'
           | 'boleto'
           | 'card'
@@ -2259,6 +2313,7 @@ declare module 'stripe' {
           | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
+          | 'satispay'
           | 'sepa_debit'
           | 'shopeepay'
           | 'sofort'
@@ -2273,6 +2328,24 @@ declare module 'stripe' {
            * Permissions for updating the Checkout Session.
            */
           update?: Permissions.Update;
+
+          /**
+           * Determines which entity is allowed to update the line items.
+           *
+           * Default is `client_only`. Stripe Checkout client will automatically update the line items. If set to `server_only`, only your server is allowed to update the line items.
+           *
+           * When set to `server_only`, you must add the onLineItemsChange event handler when initializing the Stripe Checkout client and manually update the line items from your server using the Stripe API.
+           */
+          update_line_items?: Permissions.UpdateLineItems;
+
+          /**
+           * Determines which entity is allowed to update the shipping details.
+           *
+           * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
+           *
+           * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+           */
+          update_shipping_details?: Permissions.UpdateShippingDetails;
         }
 
         namespace Permissions {
@@ -2301,6 +2374,10 @@ declare module 'stripe' {
 
             type ShippingDetails = 'client_only' | 'server_only';
           }
+
+          type UpdateLineItems = 'client_only' | 'server_only';
+
+          type UpdateShippingDetails = 'client_only' | 'server_only';
         }
 
         interface PhoneNumberCollection {
@@ -2917,7 +2994,7 @@ declare module 'stripe' {
          *
          * To update an existing line item, specify its `id` along with the new values of the fields to update.
          *
-         * To add a new line item, specify a `price` and `quantity`. We don't currently support recurring prices.
+         * To add a new line item, specify a `price` and `quantity`.
          *
          * To remove an existing line item, omit the line item's ID from the retransmitted array.
          *
@@ -3184,120 +3261,6 @@ declare module 'stripe' {
         }
       }
 
-      namespace SessionUpdateParams {
-        interface CollectedInformation {
-          /**
-           * The shipping details to apply to this Session.
-           */
-          shipping_details?: CollectedInformation.ShippingDetails;
-        }
-
-        namespace CollectedInformation {
-          interface ShippingDetails {
-            /**
-             * The address of the customer
-             */
-            address: ShippingDetails.Address;
-
-            /**
-             * The name of customer
-             */
-            name: string;
-          }
-
-          namespace ShippingDetails {
-            interface Address {
-              /**
-               * City, district, suburb, town, or village.
-               */
-              city?: string;
-
-              /**
-               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-               */
-              country: string;
-
-              /**
-               * Address line 1 (e.g., street, PO Box, or company name).
-               */
-              line1: string;
-
-              /**
-               * Address line 2 (e.g., apartment, suite, unit, or building).
-               */
-              line2?: string;
-
-              /**
-               * ZIP or postal code.
-               */
-              postal_code?: string;
-
-              /**
-               * State, county, province, or region.
-               */
-              state?: string;
-            }
-          }
-        }
-      }
-
-      namespace SessionUpdateParams {
-        interface CollectedInformation {
-          /**
-           * The shipping details to apply to this Session.
-           */
-          shipping_details?: CollectedInformation.ShippingDetails;
-        }
-
-        namespace CollectedInformation {
-          interface ShippingDetails {
-            /**
-             * The address of the customer
-             */
-            address: ShippingDetails.Address;
-
-            /**
-             * The name of customer
-             */
-            name: string;
-          }
-
-          namespace ShippingDetails {
-            interface Address {
-              /**
-               * City, district, suburb, town, or village.
-               */
-              city?: string;
-
-              /**
-               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-               */
-              country: string;
-
-              /**
-               * Address line 1 (e.g., street, PO Box, or company name).
-               */
-              line1: string;
-
-              /**
-               * Address line 2 (e.g., apartment, suite, unit, or building).
-               */
-              line2?: string;
-
-              /**
-               * ZIP or postal code.
-               */
-              postal_code?: string;
-
-              /**
-               * State, county, province, or region.
-               */
-              state?: string;
-            }
-          }
-        }
-      }
-
       interface SessionListParams extends PaginationParams {
         /**
          * Only return Checkout Sessions that were created during the given date interval.
@@ -3308,6 +3271,11 @@ declare module 'stripe' {
          * Only return the Checkout Sessions for the Customer specified.
          */
         customer?: string;
+
+        /**
+         * Only return the Checkout Sessions for the Account specified.
+         */
+        customer_account?: string;
 
         /**
          * Only return the Checkout Sessions for the Customer details specified.
@@ -3367,7 +3335,7 @@ declare module 'stripe' {
 
       class SessionsResource {
         /**
-         * Creates a Session object.
+         * Creates a Checkout Session object.
          */
         create(
           params?: SessionCreateParams,
@@ -3378,7 +3346,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 
         /**
-         * Retrieves a Session object.
+         * Retrieves a Checkout Session object.
          */
         retrieve(
           id: string,
@@ -3391,7 +3359,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 
         /**
-         * Updates a Session object.
+         * Updates a Checkout Session object.
          */
         update(
           id: string,
@@ -3409,9 +3377,9 @@ declare module 'stripe' {
         list(options?: RequestOptions): ApiListPromise<Stripe.Checkout.Session>;
 
         /**
-         * A Session can be expired when it is in one of these statuses: open
+         * A Checkout Session can be expired when it is in one of these statuses: open
          *
-         * After it expires, a customer can't complete a Session and customers loading the Session see a message saying the Session is expired.
+         * After it expires, a customer can't complete a Checkout Session and customers loading the Checkout Session see a message saying the Checkout Session is expired.
          */
         expire(
           id: string,

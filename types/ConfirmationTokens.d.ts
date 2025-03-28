@@ -161,6 +161,8 @@ declare module 'stripe' {
 
         bancontact?: PaymentMethodPreview.Bancontact;
 
+        billie?: PaymentMethodPreview.Billie;
+
         billing_details: PaymentMethodPreview.BillingDetails;
 
         blik?: PaymentMethodPreview.Blik;
@@ -177,6 +179,8 @@ declare module 'stripe' {
          * The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
          */
         customer: string | Stripe.Customer | null;
+
+        customer_account?: string | null;
 
         customer_balance?: PaymentMethodPreview.CustomerBalance;
 
@@ -214,6 +218,8 @@ declare module 'stripe' {
 
         naver_pay?: PaymentMethodPreview.NaverPay;
 
+        nz_bank_account?: PaymentMethodPreview.NzBankAccount;
+
         oxxo?: PaymentMethodPreview.Oxxo;
 
         p24?: PaymentMethodPreview.P24;
@@ -240,11 +246,15 @@ declare module 'stripe' {
 
         samsung_pay?: PaymentMethodPreview.SamsungPay;
 
+        satispay?: PaymentMethodPreview.Satispay;
+
         sepa_debit?: PaymentMethodPreview.SepaDebit;
 
         shopeepay?: PaymentMethodPreview.Shopeepay;
 
         sofort?: PaymentMethodPreview.Sofort;
+
+        stripe_balance?: PaymentMethodPreview.StripeBalance;
 
         swish?: PaymentMethodPreview.Swish;
 
@@ -337,6 +347,8 @@ declare module 'stripe' {
         }
 
         interface Bancontact {}
+
+        interface Billie {}
 
         interface BillingDetails {
           /**
@@ -1314,6 +1326,11 @@ declare module 'stripe' {
 
         interface NaverPay {
           /**
+           * Uniquely identifies this particular Naver Pay account. You can use this attribute to check whether two Naver Pay accounts are the same.
+           */
+          buyer_id?: string | null;
+
+          /**
            * Whether to fund this transaction with Naver Pay points or a card.
            */
           funding: NaverPay.Funding;
@@ -1321,6 +1338,38 @@ declare module 'stripe' {
 
         namespace NaverPay {
           type Funding = 'card' | 'points';
+        }
+
+        interface NzBankAccount {
+          /**
+           * The name on the bank account. Only present if the account holder name is different from the name of the authorized signatory collected in the PaymentMethod's billing details.
+           */
+          account_holder_name: string | null;
+
+          /**
+           * The numeric code for the bank account's bank.
+           */
+          bank_code: string;
+
+          /**
+           * The name of the bank.
+           */
+          bank_name: string;
+
+          /**
+           * The numeric code for the bank account's bank branch.
+           */
+          branch_code: string;
+
+          /**
+           * Last four digits of the bank account number.
+           */
+          last4: string;
+
+          /**
+           * The suffix of the bank account number.
+           */
+          suffix: string | null;
         }
 
         interface Oxxo {}
@@ -1447,6 +1496,8 @@ declare module 'stripe' {
 
         interface SamsungPay {}
 
+        interface Satispay {}
+
         interface SepaDebit {
           /**
            * Bank code of bank associated with the bank account.
@@ -1502,6 +1553,22 @@ declare module 'stripe' {
           country: string | null;
         }
 
+        interface StripeBalance {
+          /**
+           * The connected account ID whose Stripe balance to use as the source of payment
+           */
+          account?: string | null;
+
+          /**
+           * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
+           */
+          source_type: StripeBalance.SourceType;
+        }
+
+        namespace StripeBalance {
+          type SourceType = 'bank_account' | 'card' | 'fpx';
+        }
+
         interface Swish {}
 
         interface Twint {}
@@ -1516,6 +1583,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'billie'
           | 'blik'
           | 'boleto'
           | 'card'
@@ -1539,6 +1607,7 @@ declare module 'stripe' {
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'
+          | 'nz_bank_account'
           | 'oxxo'
           | 'p24'
           | 'pay_by_bank'
@@ -1552,9 +1621,11 @@ declare module 'stripe' {
           | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
+          | 'satispay'
           | 'sepa_debit'
           | 'shopeepay'
           | 'sofort'
+          | 'stripe_balance'
           | 'swish'
           | 'twint'
           | 'us_bank_account'

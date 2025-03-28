@@ -275,22 +275,32 @@ declare module 'stripe' {
                 choices: Array<Selection.Choice>;
 
                 /**
-                 * The value of the selected choice
+                 * The id of the selected choice
                  */
-                value: string | null;
+                id: string | null;
+
+                /**
+                 * The text of the selected choice
+                 */
+                text: string | null;
               }
 
               namespace Selection {
                 interface Choice {
+                  /**
+                   * The id to be selected
+                   */
+                  id: string | null;
+
                   /**
                    * The button style for the choice
                    */
                   style: Choice.Style | null;
 
                   /**
-                   * A value to be selected
+                   * The text to be selected
                    */
-                  value: string;
+                  text: string;
                 }
 
                 namespace Choice {

@@ -39,6 +39,11 @@ declare module 'stripe' {
       method?: PayoutCreateParams.Method;
 
       /**
+       * The ID of a v2 FinancialAccount to send funds to.
+       */
+      payout_method?: string;
+
+      /**
        * The balance type of your Stripe balance to draw this payout from. Balances for different payment sources are kept separately. You can find the amounts with the Balances API. One of `bank_account`, `card`, or `fpx`.
        */
       source_type?: PayoutCreateParams.SourceType;
