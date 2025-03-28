@@ -393,6 +393,11 @@ declare module 'stripe' {
         naver_pay_payments?: Capabilities.NaverPayPayments;
 
         /**
+         * The status of the New Zealand BECS Direct Debit payments capability of the account, or whether the account can directly process New Zealand BECS Direct Debit charges.
+         */
+        nz_bank_account_becs_debit_payments?: Capabilities.NzBankAccountBecsDebitPayments;
+
+        /**
          * The status of the OXXO payments capability of the account, or whether the account can directly process OXXO charges.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -568,6 +573,8 @@ declare module 'stripe' {
         type MxBankTransferPayments = 'active' | 'inactive' | 'pending';
 
         type NaverPayPayments = 'active' | 'inactive' | 'pending';
+
+        type NzBankAccountBecsDebitPayments = 'active' | 'inactive' | 'pending';
 
         type OxxoPayments = 'active' | 'inactive' | 'pending';
 

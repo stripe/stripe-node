@@ -375,6 +375,11 @@ declare module 'stripe' {
         naver_pay_payments?: Capabilities.NaverPayPayments;
 
         /**
+         * The nz_bank_account_becs_debit_payments capability.
+         */
+        nz_bank_account_becs_debit_payments?: Capabilities.NzBankAccountBecsDebitPayments;
+
+        /**
          * The oxxo_payments capability.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -720,6 +725,13 @@ declare module 'stripe' {
         }
 
         interface NaverPayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface NzBankAccountBecsDebitPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2151,6 +2163,11 @@ declare module 'stripe' {
         naver_pay_payments?: Capabilities.NaverPayPayments;
 
         /**
+         * The nz_bank_account_becs_debit_payments capability.
+         */
+        nz_bank_account_becs_debit_payments?: Capabilities.NzBankAccountBecsDebitPayments;
+
+        /**
          * The oxxo_payments capability.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -2496,6 +2513,13 @@ declare module 'stripe' {
         }
 
         interface NaverPayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface NzBankAccountBecsDebitPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
