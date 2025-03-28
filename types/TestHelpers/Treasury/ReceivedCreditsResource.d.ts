@@ -39,6 +39,11 @@ declare module 'stripe' {
            * Initiating payment method details for the object.
            */
           initiating_payment_method_details?: ReceivedCreditCreateParams.InitiatingPaymentMethodDetails;
+
+          /**
+           * Details about the network used for the ReceivedCredit.
+           */
+          network_details?: ReceivedCreditCreateParams.NetworkDetails;
         }
 
         namespace ReceivedCreditCreateParams {
@@ -74,6 +79,27 @@ declare module 'stripe' {
           }
 
           type Network = 'ach' | 'us_domestic_wire';
+
+          interface NetworkDetails {
+            /**
+             * Optional fields for `ach`.
+             */
+            ach?: NetworkDetails.Ach;
+
+            /**
+             * The type of flow that originated the ReceivedCredit.
+             */
+            type: 'ach';
+          }
+
+          namespace NetworkDetails {
+            interface Ach {
+              /**
+               * ACH Addenda record
+               */
+              addenda?: string;
+            }
+          }
         }
       }
 

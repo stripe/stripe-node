@@ -147,6 +147,11 @@ declare module 'stripe' {
       items: ApiList<Stripe.SubscriptionItem>;
 
       /**
+       * Details of the most recent price migration that failed for the subscription.
+       */
+      last_price_migration_error?: Subscription.LastPriceMigrationError | null;
+
+      /**
        * The most recent invoice this subscription has generated.
        */
       latest_invoice: string | Stripe.Invoice | null;
@@ -195,6 +200,11 @@ declare module 'stripe' {
        * If specified, [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates) that will be applied to the subscription once the `latest_invoice` has been paid.
        */
       pending_update: Subscription.PendingUpdate | null;
+
+      /**
+       * Time period and invoice for a Subscription billed in advance.
+       */
+      prebilling?: Subscription.Prebilling | null;
 
       /**
        * The schedule attached to the subscription
@@ -387,6 +397,37 @@ declare module 'stripe' {
         }
       }
 
+      interface LastPriceMigrationError {
+        /**
+         * The time at which the price migration encountered an error.
+         */
+        errored_at: number;
+
+        /**
+         * The involved price pairs in each failed transition.
+         */
+        failed_transitions: Array<LastPriceMigrationError.FailedTransition>;
+
+        /**
+         * The type of error encountered by the price migration.
+         */
+        type: 'price_uniqueness_violation';
+      }
+
+      namespace LastPriceMigrationError {
+        interface FailedTransition {
+          /**
+           * The original price to be migrated.
+           */
+          source_price: string;
+
+          /**
+           * The intended resulting price of the migration.
+           */
+          target_price: string;
+        }
+      }
+
       interface PauseCollection {
         /**
          * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
@@ -441,6 +482,11 @@ declare module 'stripe' {
            * This sub-hash contains details about the Bank transfer payment method options to pass to invoices created by the subscription.
            */
           customer_balance: PaymentMethodOptions.CustomerBalance | null;
+
+          /**
+           * This sub-hash contains details about the Indonesia bank transfer payment method options to pass to invoices created by the subscription.
+           */
+          id_bank_transfer?: PaymentMethodOptions.IdBankTransfer | null;
 
           /**
            * This sub-hash contains details about the Konbini payment method options to pass to invoices created by the subscription.
@@ -581,6 +627,8 @@ declare module 'stripe' {
             }
           }
 
+          interface IdBankTransfer {}
+
           interface Konbini {}
 
           interface SepaDebit {}
@@ -615,6 +663,11 @@ declare module 'stripe' {
                  * The account subcategories to use to filter for possible accounts to link. Valid subcategories are `checking` and `savings`.
                  */
                 account_subcategories?: Array<Filters.AccountSubcategory>;
+
+                /**
+                 * The institution to use to filter for possible accounts to link.
+                 */
+                institution?: string;
               }
 
               namespace Filters {
@@ -627,7 +680,11 @@ declare module 'stripe' {
                 | 'payment_method'
                 | 'transactions';
 
-              type Prefetch = 'balances' | 'ownership' | 'transactions';
+              type Prefetch =
+                | 'balances'
+                | 'inferred_balances'
+                | 'ownership'
+                | 'transactions';
             }
 
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
@@ -645,11 +702,13 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'custom'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
           | 'giropay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'
@@ -702,6 +761,11 @@ declare module 'stripe' {
         expires_at: number;
 
         /**
+         * The number of iterations of prebilling to apply.
+         */
+        prebilling_iterations?: number | null;
+
+        /**
          * List of subscription items, each with an attached plan, that will be set if the update is applied.
          */
         subscription_items: Array<Stripe.SubscriptionItem> | null;
@@ -715,6 +779,32 @@ declare module 'stripe' {
          * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed. See [Using trial periods on subscriptions](https://stripe.com/docs/billing/subscriptions/trials) to learn more.
          */
         trial_from_plan: boolean | null;
+      }
+
+      interface Prebilling {
+        /**
+         * ID of the prebilling invoice.
+         */
+        invoice: string | Stripe.Invoice;
+
+        /**
+         * The end of the last period for which the invoice pre-bills.
+         */
+        period_end: number;
+
+        /**
+         * The start of the first period for which the invoice pre-bills.
+         */
+        period_start: number;
+
+        /**
+         * Whether to cancel or preserve `prebilling` if the subscription is updated during the prebilled period.
+         */
+        update_behavior?: Prebilling.UpdateBehavior;
+      }
+
+      namespace Prebilling {
+        type UpdateBehavior = 'prebill' | 'reset';
       }
 
       type Status =

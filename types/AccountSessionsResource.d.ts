@@ -32,9 +32,39 @@ declare module 'stripe' {
         account_onboarding?: Components.AccountOnboarding;
 
         /**
+         * Configuration for the app install component.
+         */
+        app_install?: Components.AppInstall;
+
+        /**
+         * Configuration for the app viewport component.
+         */
+        app_viewport?: Components.AppViewport;
+
+        /**
          * Configuration for the balances embedded component.
          */
         balances?: Components.Balances;
+
+        /**
+         * Configuration for the capital financing embedded component.
+         */
+        capital_financing?: Components.CapitalFinancing;
+
+        /**
+         * Configuration for the capital financing application embedded component.
+         */
+        capital_financing_application?: Components.CapitalFinancingApplication;
+
+        /**
+         * Configuration for the capital financing promotion embedded component.
+         */
+        capital_financing_promotion?: Components.CapitalFinancingPromotion;
+
+        /**
+         * Configuration for the capital overview embedded component.
+         */
+        capital_overview?: Components.CapitalOverview;
 
         /**
          * Configuration for the documents embedded component.
@@ -72,6 +102,11 @@ declare module 'stripe' {
         payment_details?: Components.PaymentDetails;
 
         /**
+         * Configuration for the payment method settings embedded component.
+         */
+        payment_method_settings?: Components.PaymentMethodSettings;
+
+        /**
          * Configuration for the payments embedded component.
          */
         payments?: Components.Payments;
@@ -87,6 +122,21 @@ declare module 'stripe' {
         payouts_list?: Components.PayoutsList;
 
         /**
+         * Configuration for the product tax code selector embedded component.
+         */
+        product_tax_code_selector?: Components.ProductTaxCodeSelector;
+
+        /**
+         * Configuration for the recipients component.
+         */
+        recipients?: Components.Recipients;
+
+        /**
+         * Configuration for the reporting chart embedded component.
+         */
+        reporting_chart?: Components.ReportingChart;
+
+        /**
          * Configuration for the tax registrations embedded component.
          */
         tax_registrations?: Components.TaxRegistrations;
@@ -95,6 +145,11 @@ declare module 'stripe' {
          * Configuration for the tax settings embedded component.
          */
         tax_settings?: Components.TaxSettings;
+
+        /**
+         * Configuration for the tax threshold monitoring embedded component.
+         */
+        tax_threshold_monitoring?: Components.TaxThresholdMonitoring;
       }
 
       namespace Components {
@@ -150,6 +205,48 @@ declare module 'stripe' {
           }
         }
 
+        interface AppInstall {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: AppInstall.Features;
+        }
+
+        namespace AppInstall {
+          interface Features {
+            /**
+             * List of apps allowed to be enabled for this account session.
+             */
+            allowed_apps?: Stripe.Emptyable<Array<string>>;
+          }
+        }
+
+        interface AppViewport {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: AppViewport.Features;
+        }
+
+        namespace AppViewport {
+          interface Features {
+            /**
+             * List of apps allowed to be enabled for this account session.
+             */
+            allowed_apps?: Stripe.Emptyable<Array<string>>;
+          }
+        }
+
         interface Balances {
           /**
            * Whether the embedded component is enabled.
@@ -189,6 +286,70 @@ declare module 'stripe' {
              */
             standard_payouts?: boolean;
           }
+        }
+
+        interface CapitalFinancing {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: CapitalFinancing.Features;
+        }
+
+        namespace CapitalFinancing {
+          interface Features {}
+        }
+
+        interface CapitalFinancingApplication {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: CapitalFinancingApplication.Features;
+        }
+
+        namespace CapitalFinancingApplication {
+          interface Features {}
+        }
+
+        interface CapitalFinancingPromotion {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: CapitalFinancingPromotion.Features;
+        }
+
+        namespace CapitalFinancingPromotion {
+          interface Features {}
+        }
+
+        interface CapitalOverview {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: CapitalOverview.Features;
+        }
+
+        namespace CapitalOverview {
+          interface Features {}
         }
 
         interface Documents {
@@ -403,6 +564,22 @@ declare module 'stripe' {
           }
         }
 
+        interface PaymentMethodSettings {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: PaymentMethodSettings.Features;
+        }
+
+        namespace PaymentMethodSettings {
+          interface Features {}
+        }
+
         interface Payments {
           /**
            * Whether the embedded component is enabled.
@@ -496,6 +673,56 @@ declare module 'stripe' {
           interface Features {}
         }
 
+        interface ProductTaxCodeSelector {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: ProductTaxCodeSelector.Features;
+        }
+
+        namespace ProductTaxCodeSelector {
+          interface Features {}
+        }
+
+        interface Recipients {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features?: Recipients.Features;
+        }
+
+        namespace Recipients {
+          interface Features {
+            /**
+             * Whether to allow sending money.
+             */
+            send_money?: boolean;
+          }
+        }
+
+        interface ReportingChart {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: ReportingChart.Features;
+        }
+
+        namespace ReportingChart {
+          interface Features {}
+        }
+
         interface TaxRegistrations {
           /**
            * Whether the embedded component is enabled.
@@ -525,6 +752,22 @@ declare module 'stripe' {
         }
 
         namespace TaxSettings {
+          interface Features {}
+        }
+
+        interface TaxThresholdMonitoring {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: TaxThresholdMonitoring.Features;
+        }
+
+        namespace TaxThresholdMonitoring {
           interface Features {}
         }
       }

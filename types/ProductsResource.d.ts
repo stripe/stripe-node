@@ -54,6 +54,11 @@ declare module 'stripe' {
       package_dimensions?: ProductCreateParams.PackageDimensions;
 
       /**
+       * Provisioning configuration for this product.
+       */
+      provisioning?: ProductCreateParams.Provisioning;
+
+      /**
        * Whether this product is shipped (i.e., physical goods).
        */
       shippable?: boolean;
@@ -281,6 +286,37 @@ declare module 'stripe' {
          * Width, in inches. Maximum precision is 2 decimal places.
          */
         width: number;
+      }
+
+      interface Provisioning {
+        gift_card?: Provisioning.GiftCard;
+
+        /**
+         * The type of provisioning, only `gift_card` currently supported.
+         */
+        type: 'gift_card';
+      }
+
+      namespace Provisioning {
+        interface GiftCard {
+          fixed_amount?: GiftCard.FixedAmount;
+
+          /**
+           * The specific type of gift_card provisioning, only `fixed_amount` currently supported.
+           */
+          type: 'fixed_amount';
+        }
+
+        namespace GiftCard {
+          interface FixedAmount {
+            /**
+             * The initial amount with which the provisioned gift card will be created.
+             */
+            amount: number;
+
+            currency: string;
+          }
+        }
       }
 
       type Type = 'good' | 'service';

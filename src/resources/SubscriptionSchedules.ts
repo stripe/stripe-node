@@ -20,6 +20,10 @@ export const SubscriptionSchedules = StripeResource.extend({
     fullPath: '/v1/subscription_schedules',
     methodType: 'list',
   }),
+  amend: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/subscription_schedules/{schedule}/amend',
+  }),
   cancel: stripeMethod({
     method: 'POST',
     fullPath: '/v1/subscription_schedules/{schedule}/cancel',

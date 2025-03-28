@@ -75,14 +75,14 @@ declare module 'stripe' {
         client_reference_id: string | null;
 
         /**
-         * Client secret to be used when initializing Stripe.js embedded checkout.
+         * The client secret of the Session. Use this with [initCheckout](https://stripe.com/docs/js/custom_checkout/init) on your front end.
          */
         client_secret: string | null;
 
         /**
          * Information about the customer collected within the Checkout Session.
          */
-        collected_information?: Session.CollectedInformation | null;
+        collected_information: Session.CollectedInformation | null;
 
         /**
          * Results of `consent_collection` for this session.
@@ -226,6 +226,13 @@ declare module 'stripe' {
          */
         payment_status: Session.PaymentStatus;
 
+        /**
+         * This property is used to set up permissions for various actions (e.g., update) on the CheckoutSession object.
+         *
+         * For specific permissions, please refer to their dedicated subsections, such as `permissions.update.shipping_details`.
+         */
+        permissions?: Session.Permissions | null;
+
         phone_number_collection?: Session.PhoneNumberCollection;
 
         /**
@@ -239,7 +246,7 @@ declare module 'stripe' {
         redirect_on_completion?: Session.RedirectOnCompletion;
 
         /**
-         * Applies to Checkout Sessions with `ui_mode: embedded`. The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site.
+         * Applies to Checkout Sessions with `ui_mode: embedded` or `ui_mode: custom`. The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site.
          */
         return_url?: string;
 
@@ -397,9 +404,29 @@ declare module 'stripe' {
 
         interface CollectedInformation {
           /**
+           * Customer's business name for this Checkout Session
+           */
+          business_name?: string | null;
+
+          /**
+           * Customer's email for this Checkout Session
+           */
+          email?: string | null;
+
+          /**
+           * Customer's phone number for this Checkout Session
+           */
+          phone?: string | null;
+
+          /**
            * Shipping information for this Checkout Session.
            */
-          shipping_details?: CollectedInformation.ShippingDetails | null;
+          shipping_details: CollectedInformation.ShippingDetails | null;
+
+          /**
+           * Customer's tax ids for this Checkout Session.
+           */
+          tax_ids?: Array<CollectedInformation.TaxId> | null;
         }
 
         namespace CollectedInformation {
@@ -425,6 +452,123 @@ declare module 'stripe' {
              * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
              */
             tracking_number?: string | null;
+          }
+
+          interface TaxId {
+            /**
+             * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, or `unknown`
+             */
+            type: TaxId.Type;
+
+            /**
+             * The value of the tax ID.
+             */
+            value: string | null;
+          }
+
+          namespace TaxId {
+            type Type =
+              | 'ad_nrt'
+              | 'ae_trn'
+              | 'al_tin'
+              | 'am_tin'
+              | 'ao_tin'
+              | 'ar_cuit'
+              | 'au_abn'
+              | 'au_arn'
+              | 'ba_tin'
+              | 'bb_tin'
+              | 'bg_uic'
+              | 'bh_vat'
+              | 'bo_tin'
+              | 'br_cnpj'
+              | 'br_cpf'
+              | 'bs_tin'
+              | 'by_tin'
+              | 'ca_bn'
+              | 'ca_gst_hst'
+              | 'ca_pst_bc'
+              | 'ca_pst_mb'
+              | 'ca_pst_sk'
+              | 'ca_qst'
+              | 'cd_nif'
+              | 'ch_uid'
+              | 'ch_vat'
+              | 'cl_tin'
+              | 'cn_tin'
+              | 'co_nit'
+              | 'cr_tin'
+              | 'de_stn'
+              | 'do_rcn'
+              | 'ec_ruc'
+              | 'eg_tin'
+              | 'es_cif'
+              | 'eu_oss_vat'
+              | 'eu_vat'
+              | 'gb_vat'
+              | 'ge_vat'
+              | 'gn_nif'
+              | 'hk_br'
+              | 'hr_oib'
+              | 'hu_tin'
+              | 'id_npwp'
+              | 'il_vat'
+              | 'in_gst'
+              | 'is_vat'
+              | 'jp_cn'
+              | 'jp_rn'
+              | 'jp_trn'
+              | 'ke_pin'
+              | 'kh_tin'
+              | 'kr_brn'
+              | 'kz_bin'
+              | 'li_uid'
+              | 'li_vat'
+              | 'ma_vat'
+              | 'md_vat'
+              | 'me_pib'
+              | 'mk_vat'
+              | 'mr_nif'
+              | 'mx_rfc'
+              | 'my_frp'
+              | 'my_itn'
+              | 'my_sst'
+              | 'ng_tin'
+              | 'no_vat'
+              | 'no_voec'
+              | 'np_pan'
+              | 'nz_gst'
+              | 'om_vat'
+              | 'pe_ruc'
+              | 'ph_tin'
+              | 'ro_tin'
+              | 'rs_pib'
+              | 'ru_inn'
+              | 'ru_kpp'
+              | 'sa_vat'
+              | 'sg_gst'
+              | 'sg_uen'
+              | 'si_tin'
+              | 'sn_ninea'
+              | 'sr_fin'
+              | 'sv_nit'
+              | 'th_vat'
+              | 'tj_tin'
+              | 'tr_tin'
+              | 'tw_vat'
+              | 'tz_vat'
+              | 'ua_vat'
+              | 'ug_tin'
+              | 'unknown'
+              | 'us_ein'
+              | 'uy_ruc'
+              | 'uz_tin'
+              | 'uz_vat'
+              | 've_rif'
+              | 'vn_tin'
+              | 'za_vat'
+              | 'zm_tin'
+              | 'zw_tin';
           }
         }
 
@@ -1048,6 +1192,8 @@ declare module 'stripe' {
 
           paypal?: PaymentMethodOptions.Paypal;
 
+          payto?: PaymentMethodOptions.Payto;
+
           pix?: PaymentMethodOptions.Pix;
 
           revolut_pay?: PaymentMethodOptions.RevolutPay;
@@ -1283,6 +1429,11 @@ declare module 'stripe' {
             /**
              * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/payments/extended-authorization) for this CheckoutSession.
              */
+            request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+            /**
+             * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/payments/extended-authorization) for this CheckoutSession.
+             */
             request_extended_authorization?: Card.RequestExtendedAuthorization;
 
             /**
@@ -1336,6 +1487,8 @@ declare module 'stripe' {
                */
               enabled?: boolean;
             }
+
+            type RequestDecrementalAuthorization = 'if_available' | 'never';
 
             type RequestExtendedAuthorization = 'if_available' | 'never';
 
@@ -1718,9 +1871,97 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: Paypal.SetupFutureUsage;
+
+            /**
+             * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+             */
+            subsellers?: Array<string>;
           }
 
           namespace Paypal {
+            type SetupFutureUsage = 'none' | 'off_session';
+          }
+
+          interface Payto {
+            mandate_options?: Payto.MandateOptions;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: Payto.SetupFutureUsage;
+          }
+
+          namespace Payto {
+            interface MandateOptions {
+              /**
+               * Amount that will be collected. It is required when `amount_type` is `fixed`.
+               */
+              amount: number | null;
+
+              /**
+               * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+               */
+              amount_type: MandateOptions.AmountType | null;
+
+              /**
+               * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+               */
+              end_date: string | null;
+
+              /**
+               * The periodicity at which payments will be collected.
+               */
+              payment_schedule: MandateOptions.PaymentSchedule | null;
+
+              /**
+               * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+               */
+              payments_per_period: number | null;
+
+              /**
+               * The purpose for which payments are made. Defaults to retail.
+               */
+              purpose: MandateOptions.Purpose | null;
+
+              /**
+               * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+               */
+              start_date: string | null;
+            }
+
+            namespace MandateOptions {
+              type AmountType = 'fixed' | 'maximum';
+
+              type PaymentSchedule =
+                | 'adhoc'
+                | 'annual'
+                | 'daily'
+                | 'fortnightly'
+                | 'monthly'
+                | 'quarterly'
+                | 'semi_annual'
+                | 'weekly';
+
+              type Purpose =
+                | 'dependant_support'
+                | 'government'
+                | 'loan'
+                | 'mortgage'
+                | 'other'
+                | 'pension'
+                | 'personal'
+                | 'retail'
+                | 'salary'
+                | 'tax'
+                | 'utility';
+            }
+
             type SetupFutureUsage = 'none' | 'off_session';
           }
 
@@ -1835,6 +2076,8 @@ declare module 'stripe' {
             interface FinancialConnections {
               filters?: FinancialConnections.Filters;
 
+              manual_entry?: FinancialConnections.ManualEntry;
+
               /**
                * The list of permissions to request. The `payment_method` permission must be included.
                */
@@ -1857,10 +2100,26 @@ declare module 'stripe' {
                  * The account subcategories to use to filter for possible accounts to link. Valid subcategories are `checking` and `savings`.
                  */
                 account_subcategories?: Array<Filters.AccountSubcategory>;
+
+                /**
+                 * The institution to use to filter for possible accounts to link.
+                 */
+                institution?: string;
               }
 
               namespace Filters {
                 type AccountSubcategory = 'checking' | 'savings';
+              }
+
+              interface ManualEntry {
+                /**
+                 * Settings for configuring manual entry of account details.
+                 */
+                mode?: ManualEntry.Mode;
+              }
+
+              namespace ManualEntry {
+                type Mode = 'automatic' | 'custom';
               }
 
               type Permission =
@@ -1869,7 +2128,11 @@ declare module 'stripe' {
                 | 'payment_method'
                 | 'transactions';
 
-              type Prefetch = 'balances' | 'ownership' | 'transactions';
+              type Prefetch =
+                | 'balances'
+                | 'inferred_balances'
+                | 'ownership'
+                | 'transactions';
             }
 
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
@@ -1879,6 +2142,41 @@ declare module 'stripe' {
         }
 
         type PaymentStatus = 'no_payment_required' | 'paid' | 'unpaid';
+
+        interface Permissions {
+          /**
+           * Permissions for updating the Checkout Session.
+           */
+          update: Permissions.Update | null;
+        }
+
+        namespace Permissions {
+          interface Update {
+            /**
+             * Determines which entity is allowed to update the line items.
+             *
+             * Default is `client_only`. Stripe Checkout client will automatically update the line items. If set to `server_only`, only your server is allowed to update the line items.
+             *
+             * When set to `server_only`, you must add the onLineItemsChange event handler when initializing the Stripe Checkout client and manually update the line items from your server using the Stripe API.
+             */
+            line_items?: Update.LineItems | null;
+
+            /**
+             * Determines which entity is allowed to update the shipping details.
+             *
+             * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
+             *
+             * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+             */
+            shipping_details: Update.ShippingDetails | null;
+          }
+
+          namespace Update {
+            type LineItems = 'client_only' | 'server_only';
+
+            type ShippingDetails = 'client_only' | 'server_only';
+          }
+        }
 
         interface PhoneNumberCollection {
           /**
@@ -2387,7 +2685,7 @@ declare module 'stripe' {
           }
         }
 
-        type UiMode = 'embedded' | 'hosted';
+        type UiMode = 'custom' | 'embedded' | 'hosted';
       }
     }
   }

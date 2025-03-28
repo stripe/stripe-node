@@ -158,6 +158,11 @@ declare module 'stripe' {
       >;
 
       /**
+       * If specified, the invoicing for the given billing cycle iterations will be processed now.
+       */
+      prebilling?: SubscriptionCreateParams.Prebilling;
+
+      /**
        * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       promotion_code?: string;
@@ -234,9 +239,53 @@ declare module 'stripe' {
           discount?: string;
 
           /**
+           * Details to determine how long the discount should be applied for.
+           */
+          discount_end?: Discount.DiscountEnd;
+
+          /**
            * ID of the promotion code to create a new discount for.
            */
           promotion_code?: string;
+        }
+
+        namespace Discount {
+          interface DiscountEnd {
+            /**
+             * Time span for the redeemed discount.
+             */
+            duration?: DiscountEnd.Duration;
+
+            /**
+             * A precise Unix timestamp for the discount to end. Must be in the future.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of calculation made to determine when the discount ends.
+             */
+            type: DiscountEnd.Type;
+          }
+
+          namespace DiscountEnd {
+            interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type Type = 'duration' | 'timestamp';
+          }
         }
 
         interface PriceData {
@@ -354,9 +403,53 @@ declare module 'stripe' {
         discount?: string;
 
         /**
+         * Details to determine how long the discount should be applied for.
+         */
+        discount_end?: Discount.DiscountEnd;
+
+        /**
          * ID of the promotion code to create a new discount for.
          */
         promotion_code?: string;
+      }
+
+      namespace Discount {
+        interface DiscountEnd {
+          /**
+           * Time span for the redeemed discount.
+           */
+          duration?: DiscountEnd.Duration;
+
+          /**
+           * A precise Unix timestamp for the discount to end. Must be in the future.
+           */
+          timestamp?: number;
+
+          /**
+           * The type of calculation made to determine when the discount ends.
+           */
+          type: DiscountEnd.Type;
+        }
+
+        namespace DiscountEnd {
+          interface Duration {
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            interval_count: number;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type = 'duration' | 'timestamp';
+        }
       }
 
       interface InvoiceSettings {
@@ -429,6 +522,11 @@ declare module 'stripe' {
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
          */
         tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * Define options to configure the trial on the subscription item.
+         */
+        trial?: Item.Trial;
       }
 
       namespace Item {
@@ -451,9 +549,53 @@ declare module 'stripe' {
           discount?: string;
 
           /**
+           * Details to determine how long the discount should be applied for.
+           */
+          discount_end?: Discount.DiscountEnd;
+
+          /**
            * ID of the promotion code to create a new discount for.
            */
           promotion_code?: string;
+        }
+
+        namespace Discount {
+          interface DiscountEnd {
+            /**
+             * Time span for the redeemed discount.
+             */
+            duration?: DiscountEnd.Duration;
+
+            /**
+             * A precise Unix timestamp for the discount to end. Must be in the future.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of calculation made to determine when the discount ends.
+             */
+            type: DiscountEnd.Type;
+          }
+
+          namespace DiscountEnd {
+            interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type Type = 'duration' | 'timestamp';
+          }
         }
 
         interface PriceData {
@@ -507,6 +649,22 @@ declare module 'stripe' {
 
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
         }
+
+        interface Trial {
+          /**
+           * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial. Currently only supports at most 1 price ID.
+           */
+          converts_to?: Array<string>;
+
+          /**
+           * Determines the type of trial for this item.
+           */
+          type: Trial.Type;
+        }
+
+        namespace Trial {
+          type Type = 'free' | 'paid';
+        }
       }
 
       type PaymentBehavior =
@@ -556,6 +714,13 @@ declare module 'stripe' {
            */
           customer_balance?: Stripe.Emptyable<
             PaymentMethodOptions.CustomerBalance
+          >;
+
+          /**
+           * This sub-hash contains details about the Indonesia bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          id_bank_transfer?: Stripe.Emptyable<
+            PaymentMethodOptions.IdBankTransfer
           >;
 
           /**
@@ -707,6 +872,8 @@ declare module 'stripe' {
             }
           }
 
+          interface IdBankTransfer {}
+
           interface Konbini {}
 
           interface SepaDebit {}
@@ -747,6 +914,11 @@ declare module 'stripe' {
                  * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
                  */
                 account_subcategories?: Array<Filters.AccountSubcategory>;
+
+                /**
+                 * ID of the institution to use to filter for selectable accounts.
+                 */
+                institution?: string;
               }
 
               namespace Filters {
@@ -759,7 +931,11 @@ declare module 'stripe' {
                 | 'payment_method'
                 | 'transactions';
 
-              type Prefetch = 'balances' | 'ownership' | 'transactions';
+              type Prefetch =
+                | 'balances'
+                | 'inferred_balances'
+                | 'ownership'
+                | 'transactions';
             }
 
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
@@ -777,11 +953,13 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'custom'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
           | 'giropay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'
@@ -820,6 +998,22 @@ declare module 'stripe' {
 
       namespace PendingInvoiceItemInterval {
         type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+
+      interface Prebilling {
+        /**
+         * This is used to determine the number of billing cycles to prebill.
+         */
+        iterations: number;
+
+        /**
+         * Whether to cancel or preserve `prebilling` if the subscription is updated during the prebilled period. The default value is `reset`.
+         */
+        update_behavior?: Prebilling.UpdateBehavior;
+      }
+
+      namespace Prebilling {
+        type UpdateBehavior = 'prebill' | 'reset';
       }
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
@@ -1008,6 +1202,11 @@ declare module 'stripe' {
       >;
 
       /**
+       * If specified, the invoicing for the given billing cycle iterations will be processed now.
+       */
+      prebilling?: SubscriptionUpdateParams.Prebilling;
+
+      /**
        * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
        */
       promotion_code?: string;
@@ -1084,9 +1283,53 @@ declare module 'stripe' {
           discount?: string;
 
           /**
+           * Details to determine how long the discount should be applied for.
+           */
+          discount_end?: Discount.DiscountEnd;
+
+          /**
            * ID of the promotion code to create a new discount for.
            */
           promotion_code?: string;
+        }
+
+        namespace Discount {
+          interface DiscountEnd {
+            /**
+             * Time span for the redeemed discount.
+             */
+            duration?: DiscountEnd.Duration;
+
+            /**
+             * A precise Unix timestamp for the discount to end. Must be in the future.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of calculation made to determine when the discount ends.
+             */
+            type: DiscountEnd.Type;
+          }
+
+          namespace DiscountEnd {
+            interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type Type = 'duration' | 'timestamp';
+          }
         }
 
         interface PriceData {
@@ -1203,9 +1446,53 @@ declare module 'stripe' {
         discount?: string;
 
         /**
+         * Details to determine how long the discount should be applied for.
+         */
+        discount_end?: Discount.DiscountEnd;
+
+        /**
          * ID of the promotion code to create a new discount for.
          */
         promotion_code?: string;
+      }
+
+      namespace Discount {
+        interface DiscountEnd {
+          /**
+           * Time span for the redeemed discount.
+           */
+          duration?: DiscountEnd.Duration;
+
+          /**
+           * A precise Unix timestamp for the discount to end. Must be in the future.
+           */
+          timestamp?: number;
+
+          /**
+           * The type of calculation made to determine when the discount ends.
+           */
+          type: DiscountEnd.Type;
+        }
+
+        namespace DiscountEnd {
+          interface Duration {
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            interval_count: number;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type = 'duration' | 'timestamp';
+        }
       }
 
       interface InvoiceSettings {
@@ -1315,9 +1602,53 @@ declare module 'stripe' {
           discount?: string;
 
           /**
+           * Details to determine how long the discount should be applied for.
+           */
+          discount_end?: Discount.DiscountEnd;
+
+          /**
            * ID of the promotion code to create a new discount for.
            */
           promotion_code?: string;
+        }
+
+        namespace Discount {
+          interface DiscountEnd {
+            /**
+             * Time span for the redeemed discount.
+             */
+            duration?: DiscountEnd.Duration;
+
+            /**
+             * A precise Unix timestamp for the discount to end. Must be in the future.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of calculation made to determine when the discount ends.
+             */
+            type: DiscountEnd.Type;
+          }
+
+          namespace DiscountEnd {
+            interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type Type = 'duration' | 'timestamp';
+          }
         }
 
         interface PriceData {
@@ -1436,6 +1767,13 @@ declare module 'stripe' {
            */
           customer_balance?: Stripe.Emptyable<
             PaymentMethodOptions.CustomerBalance
+          >;
+
+          /**
+           * This sub-hash contains details about the Indonesia bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          id_bank_transfer?: Stripe.Emptyable<
+            PaymentMethodOptions.IdBankTransfer
           >;
 
           /**
@@ -1587,6 +1925,8 @@ declare module 'stripe' {
             }
           }
 
+          interface IdBankTransfer {}
+
           interface Konbini {}
 
           interface SepaDebit {}
@@ -1627,6 +1967,11 @@ declare module 'stripe' {
                  * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
                  */
                 account_subcategories?: Array<Filters.AccountSubcategory>;
+
+                /**
+                 * ID of the institution to use to filter for selectable accounts.
+                 */
+                institution?: string;
               }
 
               namespace Filters {
@@ -1639,7 +1984,11 @@ declare module 'stripe' {
                 | 'payment_method'
                 | 'transactions';
 
-              type Prefetch = 'balances' | 'ownership' | 'transactions';
+              type Prefetch =
+                | 'balances'
+                | 'inferred_balances'
+                | 'ownership'
+                | 'transactions';
             }
 
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
@@ -1657,11 +2006,13 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'custom'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
           | 'giropay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'
@@ -1700,6 +2051,22 @@ declare module 'stripe' {
 
       namespace PendingInvoiceItemInterval {
         type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+
+      interface Prebilling {
+        /**
+         * This is used to determine the number of billing cycles to prebill.
+         */
+        iterations: number;
+
+        /**
+         * Whether to cancel or preserve `prebilling` if the subscription is updated during the prebilled period. The default value is `reset`.
+         */
+        update_behavior?: Prebilling.UpdateBehavior;
+      }
+
+      namespace Prebilling {
+        type UpdateBehavior = 'prebill' | 'reset';
       }
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';

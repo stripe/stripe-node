@@ -9,15 +9,27 @@ declare module 'stripe' {
       | AccountExternalAccountDeletedEvent
       | AccountExternalAccountUpdatedEvent
       | AccountUpdatedEvent
+      | AccountNoticeCreatedEvent
+      | AccountNoticeUpdatedEvent
       | ApplicationFeeCreatedEvent
       | ApplicationFeeRefundUpdatedEvent
       | ApplicationFeeRefundedEvent
       | BalanceAvailableEvent
       | BillingAlertTriggeredEvent
+      | BillingMeterErrorReportTriggeredEvent
       | BillingPortalConfigurationCreatedEvent
       | BillingPortalConfigurationUpdatedEvent
       | BillingPortalSessionCreatedEvent
       | CapabilityUpdatedEvent
+      | CapitalFinancingOfferAcceptedEvent
+      | CapitalFinancingOfferCanceledEvent
+      | CapitalFinancingOfferCreatedEvent
+      | CapitalFinancingOfferExpiredEvent
+      | CapitalFinancingOfferFullyRepaidEvent
+      | CapitalFinancingOfferPaidOutEvent
+      | CapitalFinancingOfferRejectedEvent
+      | CapitalFinancingOfferReplacementCreatedEvent
+      | CapitalFinancingTransactionCreatedEvent
       | CashBalanceFundsAvailableEvent
       | ChargeCapturedEvent
       | ChargeDisputeClosedEvent
@@ -58,11 +70,15 @@ declare module 'stripe' {
       | CustomerSourceDeletedEvent
       | CustomerSourceExpiringEvent
       | CustomerSourceUpdatedEvent
+      | CustomerSubscriptionCollectionPausedEvent
+      | CustomerSubscriptionCollectionResumedEvent
       | CustomerSubscriptionCreatedEvent
+      | CustomerSubscriptionCustomEventEvent
       | CustomerSubscriptionDeletedEvent
       | CustomerSubscriptionPausedEvent
       | CustomerSubscriptionPendingUpdateAppliedEvent
       | CustomerSubscriptionPendingUpdateExpiredEvent
+      | CustomerSubscriptionPriceMigrationFailedEvent
       | CustomerSubscriptionResumedEvent
       | CustomerSubscriptionTrialWillEndEvent
       | CustomerSubscriptionUpdatedEvent
@@ -78,8 +94,10 @@ declare module 'stripe' {
       | FinancialConnectionsAccountDisconnectedEvent
       | FinancialConnectionsAccountReactivatedEvent
       | FinancialConnectionsAccountRefreshedBalanceEvent
+      | FinancialConnectionsAccountRefreshedInferredBalancesEvent
       | FinancialConnectionsAccountRefreshedOwnershipEvent
       | FinancialConnectionsAccountRefreshedTransactionsEvent
+      | FinancialConnectionsSessionUpdatedEvent
       | IdentityVerificationSessionCanceledEvent
       | IdentityVerificationSessionCreatedEvent
       | IdentityVerificationSessionProcessingEvent
@@ -92,8 +110,11 @@ declare module 'stripe' {
       | InvoiceFinalizedEvent
       | InvoiceMarkedUncollectibleEvent
       | InvoiceOverdueEvent
+      | InvoiceOverpaidEvent
       | InvoicePaidEvent
+      | InvoicePaymentOverpaidEvent
       | InvoicePaymentActionRequiredEvent
+      | InvoicePaymentAttemptRequiredEvent
       | InvoicePaymentFailedEvent
       | InvoicePaymentSucceededEvent
       | InvoiceSentEvent
@@ -116,10 +137,15 @@ declare module 'stripe' {
       | IssuingDisputeFundsRescindedEvent
       | IssuingDisputeSubmittedEvent
       | IssuingDisputeUpdatedEvent
+      | IssuingDisputeSettlementDetailCreatedEvent
+      | IssuingDisputeSettlementDetailUpdatedEvent
+      | IssuingFraudLiabilityDebitCreatedEvent
       | IssuingPersonalizationDesignActivatedEvent
       | IssuingPersonalizationDesignDeactivatedEvent
       | IssuingPersonalizationDesignRejectedEvent
       | IssuingPersonalizationDesignUpdatedEvent
+      | IssuingSettlementCreatedEvent
+      | IssuingSettlementUpdatedEvent
       | IssuingTokenCreatedEvent
       | IssuingTokenUpdatedEvent
       | IssuingTransactionCreatedEvent
@@ -160,10 +186,16 @@ declare module 'stripe' {
       | ProductUpdatedEvent
       | PromotionCodeCreatedEvent
       | PromotionCodeUpdatedEvent
+      | QuoteAcceptFailedEvent
       | QuoteAcceptedEvent
+      | QuoteAcceptingEvent
       | QuoteCanceledEvent
       | QuoteCreatedEvent
+      | QuoteDraftEvent
       | QuoteFinalizedEvent
+      | QuoteReestimateFailedEvent
+      | QuoteReestimatedEvent
+      | QuoteStaleEvent
       | RadarEarlyFraudWarningCreatedEvent
       | RadarEarlyFraudWarningUpdatedEvent
       | RefundCreatedEvent
@@ -192,13 +224,16 @@ declare module 'stripe' {
       | SubscriptionScheduleCompletedEvent
       | SubscriptionScheduleCreatedEvent
       | SubscriptionScheduleExpiringEvent
+      | SubscriptionSchedulePriceMigrationFailedEvent
       | SubscriptionScheduleReleasedEvent
       | SubscriptionScheduleUpdatedEvent
+      | TaxFormUpdatedEvent
       | TaxSettingsUpdatedEvent
       | TaxRateCreatedEvent
       | TaxRateUpdatedEvent
       | TerminalReaderActionFailedEvent
       | TerminalReaderActionSucceededEvent
+      | TerminalReaderActionUpdatedEvent
       | TestHelpersTestClockAdvancingEvent
       | TestHelpersTestClockCreatedEvent
       | TestHelpersTestClockDeletedEvent
@@ -342,6 +377,38 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs whenever an AccountNotice is created.
+     */
+    interface AccountNoticeCreatedEvent extends EventBase {
+      type: 'account_notice.created';
+      data: AccountNoticeCreatedEvent.Data;
+    }
+
+    namespace AccountNoticeCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.AccountNotice;
+
+        previous_attributes?: Partial<Stripe.AccountNotice>;
+      }
+    }
+
+    /**
+     * Occurs whenever an AccountNotice is updated.
+     */
+    interface AccountNoticeUpdatedEvent extends EventBase {
+      type: 'account_notice.updated';
+      data: AccountNoticeUpdatedEvent.Data;
+    }
+
+    namespace AccountNoticeUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.AccountNotice;
+
+        previous_attributes?: Partial<Stripe.AccountNotice>;
+      }
+    }
+
+    /**
      * Occurs whenever an application fee is created on a charge.
      */
     interface ApplicationFeeCreatedEvent extends EventBase {
@@ -422,6 +489,22 @@ declare module 'stripe' {
     }
 
     /**
+     * Notifies of errors on a billing meter
+     */
+    interface BillingMeterErrorReportTriggeredEvent extends EventBase {
+      type: 'billing.meter_error_report.triggered';
+      data: BillingMeterErrorReportTriggeredEvent.Data;
+    }
+
+    namespace BillingMeterErrorReportTriggeredEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.MeterErrorReport;
+
+        previous_attributes?: Partial<Stripe.Billing.MeterErrorReport>;
+      }
+    }
+
+    /**
      * Occurs whenever a portal configuration is created.
      */
     interface BillingPortalConfigurationCreatedEvent extends EventBase {
@@ -482,6 +565,150 @@ declare module 'stripe' {
         object: Stripe.Capability;
 
         previous_attributes?: Partial<Stripe.Capability>;
+      }
+    }
+
+    /**
+     * Occurs whenever a connected account accepts a financing offer.
+     */
+    interface CapitalFinancingOfferAcceptedEvent extends EventBase {
+      type: 'capital.financing_offer.accepted';
+      data: CapitalFinancingOfferAcceptedEvent.Data;
+    }
+
+    namespace CapitalFinancingOfferAcceptedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Capital.FinancingOffer;
+
+        previous_attributes?: Partial<Stripe.Capital.FinancingOffer>;
+      }
+    }
+
+    /**
+     * Occurs whenever a financing offer is canceled.
+     */
+    interface CapitalFinancingOfferCanceledEvent extends EventBase {
+      type: 'capital.financing_offer.canceled';
+      data: CapitalFinancingOfferCanceledEvent.Data;
+    }
+
+    namespace CapitalFinancingOfferCanceledEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Capital.FinancingOffer;
+
+        previous_attributes?: Partial<Stripe.Capital.FinancingOffer>;
+      }
+    }
+
+    /**
+     * Occurs whenever a new financing offer is created for a connected account.
+     */
+    interface CapitalFinancingOfferCreatedEvent extends EventBase {
+      type: 'capital.financing_offer.created';
+      data: CapitalFinancingOfferCreatedEvent.Data;
+    }
+
+    namespace CapitalFinancingOfferCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Capital.FinancingOffer;
+
+        previous_attributes?: Partial<Stripe.Capital.FinancingOffer>;
+      }
+    }
+
+    /**
+     * Occurs whenever a financing offer expires.
+     */
+    interface CapitalFinancingOfferExpiredEvent extends EventBase {
+      type: 'capital.financing_offer.expired';
+      data: CapitalFinancingOfferExpiredEvent.Data;
+    }
+
+    namespace CapitalFinancingOfferExpiredEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Capital.FinancingOffer;
+
+        previous_attributes?: Partial<Stripe.Capital.FinancingOffer>;
+      }
+    }
+
+    /**
+     * Occurs whenever a financing offer is fully repaid.
+     */
+    interface CapitalFinancingOfferFullyRepaidEvent extends EventBase {
+      type: 'capital.financing_offer.fully_repaid';
+      data: CapitalFinancingOfferFullyRepaidEvent.Data;
+    }
+
+    namespace CapitalFinancingOfferFullyRepaidEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Capital.FinancingOffer;
+
+        previous_attributes?: Partial<Stripe.Capital.FinancingOffer>;
+      }
+    }
+
+    /**
+     * Occurs whenever a financing offer is paid out.
+     */
+    interface CapitalFinancingOfferPaidOutEvent extends EventBase {
+      type: 'capital.financing_offer.paid_out';
+      data: CapitalFinancingOfferPaidOutEvent.Data;
+    }
+
+    namespace CapitalFinancingOfferPaidOutEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Capital.FinancingOffer;
+
+        previous_attributes?: Partial<Stripe.Capital.FinancingOffer>;
+      }
+    }
+
+    /**
+     * Occurs whenever a financing offer is rejected.
+     */
+    interface CapitalFinancingOfferRejectedEvent extends EventBase {
+      type: 'capital.financing_offer.rejected';
+      data: CapitalFinancingOfferRejectedEvent.Data;
+    }
+
+    namespace CapitalFinancingOfferRejectedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Capital.FinancingOffer;
+
+        previous_attributes?: Partial<Stripe.Capital.FinancingOffer>;
+      }
+    }
+
+    /**
+     * Occurs whenever a replacement for a financing offer has been created. More details can be [found here](https://docs.stripe.com/capital/replacements).
+     */
+    interface CapitalFinancingOfferReplacementCreatedEvent extends EventBase {
+      type: 'capital.financing_offer.replacement_created';
+      data: CapitalFinancingOfferReplacementCreatedEvent.Data;
+    }
+
+    namespace CapitalFinancingOfferReplacementCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Capital.FinancingOffer;
+
+        previous_attributes?: Partial<Stripe.Capital.FinancingOffer>;
+      }
+    }
+
+    /**
+     * Occurs whenever a financing transaction is created.
+     */
+    interface CapitalFinancingTransactionCreatedEvent extends EventBase {
+      type: 'capital.financing_transaction.created';
+      data: CapitalFinancingTransactionCreatedEvent.Data;
+    }
+
+    namespace CapitalFinancingTransactionCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Capital.FinancingTransaction;
+
+        previous_attributes?: Partial<Stripe.Capital.FinancingTransaction>;
       }
     }
 
@@ -1126,6 +1353,38 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs whenever collection is paused on a customer's subscription. Only applies when [payment collection](https://docs.stripe.com/billing/subscriptions/pause) is paused, not when subscriptions enter `status=paused`.
+     */
+    interface CustomerSubscriptionCollectionPausedEvent extends EventBase {
+      type: 'customer.subscription.collection_paused';
+      data: CustomerSubscriptionCollectionPausedEvent.Data;
+    }
+
+    namespace CustomerSubscriptionCollectionPausedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Subscription;
+
+        previous_attributes?: Partial<Stripe.Subscription>;
+      }
+    }
+
+    /**
+     * Occurs whenever collection is resumed on a customer's subscription that is currently paused. Only applies when [payment collection](https://docs.stripe.com/billing/subscriptions/pause) is resumed, not when subscriptions exit `status=paused`.
+     */
+    interface CustomerSubscriptionCollectionResumedEvent extends EventBase {
+      type: 'customer.subscription.collection_resumed';
+      data: CustomerSubscriptionCollectionResumedEvent.Data;
+    }
+
+    namespace CustomerSubscriptionCollectionResumedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Subscription;
+
+        previous_attributes?: Partial<Stripe.Subscription>;
+      }
+    }
+
+    /**
      * Occurs whenever a customer is signed up for a new plan.
      */
     interface CustomerSubscriptionCreatedEvent extends EventBase {
@@ -1134,6 +1393,22 @@ declare module 'stripe' {
     }
 
     namespace CustomerSubscriptionCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Subscription;
+
+        previous_attributes?: Partial<Stripe.Subscription>;
+      }
+    }
+
+    /**
+     * An ad-hoc custom event that is sent based on user configured [Automation](https://docs.stripe.com/billing/automations#send-custom-webhook-event-action).
+     */
+    interface CustomerSubscriptionCustomEventEvent extends EventBase {
+      type: 'customer.subscription.custom_event';
+      data: CustomerSubscriptionCustomEventEvent.Data;
+    }
+
+    namespace CustomerSubscriptionCustomEventEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Subscription;
 
@@ -1198,6 +1473,22 @@ declare module 'stripe' {
     }
 
     namespace CustomerSubscriptionPendingUpdateExpiredEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Subscription;
+
+        previous_attributes?: Partial<Stripe.Subscription>;
+      }
+    }
+
+    /**
+     * Occurs whenever a price migration failed to transition prices on a subscription.
+     */
+    interface CustomerSubscriptionPriceMigrationFailedEvent extends EventBase {
+      type: 'customer.subscription.price_migration_failed';
+      data: CustomerSubscriptionPriceMigrationFailedEvent.Data;
+    }
+
+    namespace CustomerSubscriptionPriceMigrationFailedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Subscription;
 
@@ -1450,6 +1741,23 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs when an Account’s `inferred_balances_refresh` status transitions from `pending` to either `succeeded` or `failed`.
+     */
+    interface FinancialConnectionsAccountRefreshedInferredBalancesEvent
+      extends EventBase {
+      type: 'financial_connections.account.refreshed_inferred_balances';
+      data: FinancialConnectionsAccountRefreshedInferredBalancesEvent.Data;
+    }
+
+    namespace FinancialConnectionsAccountRefreshedInferredBalancesEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.FinancialConnections.Account;
+
+        previous_attributes?: Partial<Stripe.FinancialConnections.Account>;
+      }
+    }
+
+    /**
      * Occurs when an Account’s `ownership_refresh` status transitions from `pending` to either `succeeded` or `failed`.
      */
     interface FinancialConnectionsAccountRefreshedOwnershipEvent
@@ -1480,6 +1788,22 @@ declare module 'stripe' {
         object: Stripe.FinancialConnections.Account;
 
         previous_attributes?: Partial<Stripe.FinancialConnections.Account>;
+      }
+    }
+
+    /**
+     * Occurs when a Financial Connections Session `status` transitions from `pending` to `failed`, `cancelled`, or `completed`.
+     */
+    interface FinancialConnectionsSessionUpdatedEvent extends EventBase {
+      type: 'financial_connections.session.updated';
+      data: FinancialConnectionsSessionUpdatedEvent.Data;
+    }
+
+    namespace FinancialConnectionsSessionUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.FinancialConnections.Session;
+
+        previous_attributes?: Partial<Stripe.FinancialConnections.Session>;
       }
     }
 
@@ -1676,6 +2000,22 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs when an invoice transitions to paid with a non-zero amount_overpaid.
+     */
+    interface InvoiceOverpaidEvent extends EventBase {
+      type: 'invoice.overpaid';
+      data: InvoiceOverpaidEvent.Data;
+    }
+
+    namespace InvoiceOverpaidEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
+      }
+    }
+
+    /**
      * Occurs whenever an invoice payment attempt succeeds or an invoice is marked as paid out-of-band.
      */
     interface InvoicePaidEvent extends EventBase {
@@ -1688,6 +2028,22 @@ declare module 'stripe' {
         object: Stripe.Invoice;
 
         previous_attributes?: Partial<Stripe.Invoice>;
+      }
+    }
+
+    /**
+     * Occurs when an InvoicePayment transitions to paid with a non-zero amount_overpaid.
+     */
+    interface InvoicePaymentOverpaidEvent extends EventBase {
+      type: 'invoice.payment.overpaid';
+      data: InvoicePaymentOverpaidEvent.Data;
+    }
+
+    namespace InvoicePaymentOverpaidEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.InvoicePayment;
+
+        previous_attributes?: Partial<Stripe.InvoicePayment>;
       }
     }
 
@@ -1708,7 +2064,23 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever an invoice payment attempt fails, due either to a declined payment or to the lack of a stored payment method.
+     * Occurs when an invoice requires a payment using a payment method that cannot be processed by Stripe.
+     */
+    interface InvoicePaymentAttemptRequiredEvent extends EventBase {
+      type: 'invoice.payment_attempt_required';
+      data: InvoicePaymentAttemptRequiredEvent.Data;
+    }
+
+    namespace InvoicePaymentAttemptRequiredEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
+      }
+    }
+
+    /**
+     * Occurs whenever an invoice payment attempt fails, due to either a declined payment, including soft decline, or to the lack of a stored payment method.
      */
     interface InvoicePaymentFailedEvent extends EventBase {
       type: 'invoice.payment_failed';
@@ -2060,6 +2432,54 @@ declare module 'stripe' {
     }
 
     /**
+     * Emitted when the DisputeSettlementDetail object is created
+     */
+    interface IssuingDisputeSettlementDetailCreatedEvent extends EventBase {
+      type: 'issuing_dispute_settlement_detail.created';
+      data: IssuingDisputeSettlementDetailCreatedEvent.Data;
+    }
+
+    namespace IssuingDisputeSettlementDetailCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.DisputeSettlementDetail;
+
+        previous_attributes?: Partial<Stripe.Issuing.DisputeSettlementDetail>;
+      }
+    }
+
+    /**
+     * Emitted when the DisputeSettlementDetail object is updated
+     */
+    interface IssuingDisputeSettlementDetailUpdatedEvent extends EventBase {
+      type: 'issuing_dispute_settlement_detail.updated';
+      data: IssuingDisputeSettlementDetailUpdatedEvent.Data;
+    }
+
+    namespace IssuingDisputeSettlementDetailUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.DisputeSettlementDetail;
+
+        previous_attributes?: Partial<Stripe.Issuing.DisputeSettlementDetail>;
+      }
+    }
+
+    /**
+     * Occurs whenever funds are deducted from your account for fraud dispute loss liability.
+     */
+    interface IssuingFraudLiabilityDebitCreatedEvent extends EventBase {
+      type: 'issuing_fraud_liability_debit.created';
+      data: IssuingFraudLiabilityDebitCreatedEvent.Data;
+    }
+
+    namespace IssuingFraudLiabilityDebitCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.FraudLiabilityDebit;
+
+        previous_attributes?: Partial<Stripe.Issuing.FraudLiabilityDebit>;
+      }
+    }
+
+    /**
      * Occurs whenever a personalization design is activated following the activation of the physical bundle that belongs to it.
      */
     interface IssuingPersonalizationDesignActivatedEvent extends EventBase {
@@ -2120,6 +2540,38 @@ declare module 'stripe' {
         object: Stripe.Issuing.PersonalizationDesign;
 
         previous_attributes?: Partial<Stripe.Issuing.PersonalizationDesign>;
+      }
+    }
+
+    /**
+     * Occurs whenever an issuing settlement is created.
+     */
+    interface IssuingSettlementCreatedEvent extends EventBase {
+      type: 'issuing_settlement.created';
+      data: IssuingSettlementCreatedEvent.Data;
+    }
+
+    namespace IssuingSettlementCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.Settlement;
+
+        previous_attributes?: Partial<Stripe.Issuing.Settlement>;
+      }
+    }
+
+    /**
+     * Occurs whenever an issuing settlement is updated.
+     */
+    interface IssuingSettlementUpdatedEvent extends EventBase {
+      type: 'issuing_settlement.updated';
+      data: IssuingSettlementUpdatedEvent.Data;
+    }
+
+    namespace IssuingSettlementUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.Settlement;
+
+        previous_attributes?: Partial<Stripe.Issuing.Settlement>;
       }
     }
 
@@ -2765,6 +3217,22 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs whenever a quote acceptance fails
+     */
+    interface QuoteAcceptFailedEvent extends EventBase {
+      type: 'quote.accept_failed';
+      data: QuoteAcceptFailedEvent.Data;
+    }
+
+    namespace QuoteAcceptFailedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Quote;
+
+        previous_attributes?: Partial<Stripe.Quote>;
+      }
+    }
+
+    /**
      * Occurs whenever a quote is accepted.
      */
     interface QuoteAcceptedEvent extends EventBase {
@@ -2773,6 +3241,22 @@ declare module 'stripe' {
     }
 
     namespace QuoteAcceptedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Quote;
+
+        previous_attributes?: Partial<Stripe.Quote>;
+      }
+    }
+
+    /**
+     * Occurs whenever a quote's status changes to accepting
+     */
+    interface QuoteAcceptingEvent extends EventBase {
+      type: 'quote.accepting';
+      data: QuoteAcceptingEvent.Data;
+    }
+
+    namespace QuoteAcceptingEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Quote;
 
@@ -2813,6 +3297,22 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs when a quote's status changes from stale to draft
+     */
+    interface QuoteDraftEvent extends EventBase {
+      type: 'quote.draft';
+      data: QuoteDraftEvent.Data;
+    }
+
+    namespace QuoteDraftEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Quote;
+
+        previous_attributes?: Partial<Stripe.Quote>;
+      }
+    }
+
+    /**
      * Occurs whenever a quote is finalized.
      */
     interface QuoteFinalizedEvent extends EventBase {
@@ -2821,6 +3321,54 @@ declare module 'stripe' {
     }
 
     namespace QuoteFinalizedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Quote;
+
+        previous_attributes?: Partial<Stripe.Quote>;
+      }
+    }
+
+    /**
+     * Occurs whenever a quote reestimate fails
+     */
+    interface QuoteReestimateFailedEvent extends EventBase {
+      type: 'quote.reestimate_failed';
+      data: QuoteReestimateFailedEvent.Data;
+    }
+
+    namespace QuoteReestimateFailedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Quote;
+
+        previous_attributes?: Partial<Stripe.Quote>;
+      }
+    }
+
+    /**
+     * Occurs whenever an async job to compute preview subscription schedules/upcoming invoices for the quote has completed.
+     */
+    interface QuoteReestimatedEvent extends EventBase {
+      type: 'quote.reestimated';
+      data: QuoteReestimatedEvent.Data;
+    }
+
+    namespace QuoteReestimatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Quote;
+
+        previous_attributes?: Partial<Stripe.Quote>;
+      }
+    }
+
+    /**
+     * Occurs whenever a quote's status changes to stale
+     */
+    interface QuoteStaleEvent extends EventBase {
+      type: 'quote.stale';
+      data: QuoteStaleEvent.Data;
+    }
+
+    namespace QuoteStaleEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Quote;
 
@@ -3277,6 +3825,22 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs whenever a price migration failed to transition prices on a subscription schedule.
+     */
+    interface SubscriptionSchedulePriceMigrationFailedEvent extends EventBase {
+      type: 'subscription_schedule.price_migration_failed';
+      data: SubscriptionSchedulePriceMigrationFailedEvent.Data;
+    }
+
+    namespace SubscriptionSchedulePriceMigrationFailedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.SubscriptionSchedule;
+
+        previous_attributes?: Partial<Stripe.SubscriptionSchedule>;
+      }
+    }
+
+    /**
      * Occurs whenever a new subscription schedule is released.
      */
     interface SubscriptionScheduleReleasedEvent extends EventBase {
@@ -3305,6 +3869,22 @@ declare module 'stripe' {
         object: Stripe.SubscriptionSchedule;
 
         previous_attributes?: Partial<Stripe.SubscriptionSchedule>;
+      }
+    }
+
+    /**
+     * Occurs when a tax form is updated.
+     */
+    interface TaxFormUpdatedEvent extends EventBase {
+      type: 'tax.form.updated';
+      data: TaxFormUpdatedEvent.Data;
+    }
+
+    namespace TaxFormUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Tax.Form;
+
+        previous_attributes?: Partial<Stripe.Tax.Form>;
       }
     }
 
@@ -3381,6 +3961,22 @@ declare module 'stripe' {
     }
 
     namespace TerminalReaderActionSucceededEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Terminal.Reader;
+
+        previous_attributes?: Partial<Stripe.Terminal.Reader>;
+      }
+    }
+
+    /**
+     * Occurs whenever an action sent to a Terminal reader is updated.
+     */
+    interface TerminalReaderActionUpdatedEvent extends EventBase {
+      type: 'terminal.reader.action_updated';
+      data: TerminalReaderActionUpdatedEvent.Data;
+    }
+
+    namespace TerminalReaderActionUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Terminal.Reader;
 

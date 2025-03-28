@@ -98,6 +98,21 @@ declare module 'stripe' {
       namespace Reader {
         interface Action {
           /**
+           * Represents a reader action to collect customer inputs
+           */
+          collect_inputs?: Action.CollectInputs;
+
+          /**
+           * Represents a reader action to collect a payment method
+           */
+          collect_payment_method?: Action.CollectPaymentMethod;
+
+          /**
+           * Represents a reader action to confirm a payment
+           */
+          confirm_payment_intent?: Action.ConfirmPaymentIntent;
+
+          /**
            * Failure code, only set if status is `failed`.
            */
           failure_code: string | null;
@@ -139,7 +154,274 @@ declare module 'stripe' {
         }
 
         namespace Action {
+          interface CollectInputs {
+            /**
+             * List of inputs to be collected.
+             */
+            inputs: Array<CollectInputs.Input>;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+             */
+            metadata: Stripe.Metadata | null;
+          }
+
+          namespace CollectInputs {
+            interface Input {
+              /**
+               * Default text of input being collected.
+               */
+              custom_text: Input.CustomText | null;
+
+              /**
+               * Information about a email being collected using a reader
+               */
+              email?: Input.Email;
+
+              /**
+               * Information about a number being collected using a reader
+               */
+              numeric?: Input.Numeric;
+
+              /**
+               * Information about a phone number being collected using a reader
+               */
+              phone?: Input.Phone;
+
+              /**
+               * Indicate that this input is required, disabling the skip button.
+               */
+              required: boolean | null;
+
+              /**
+               * Information about a selection being collected using a reader
+               */
+              selection?: Input.Selection;
+
+              /**
+               * Information about a signature being collected using a reader
+               */
+              signature?: Input.Signature;
+
+              /**
+               * Indicate that this input was skipped by the user.
+               */
+              skipped?: boolean;
+
+              /**
+               * Information about text being collected using a reader
+               */
+              text?: Input.Text;
+
+              /**
+               * List of toggles being collected. Values are present if collection is complete.
+               */
+              toggles: Array<Input.Toggle> | null;
+
+              /**
+               * Type of input being collected.
+               */
+              type: Input.Type;
+            }
+
+            namespace Input {
+              interface CustomText {
+                /**
+                 * Customize the default description for this input
+                 */
+                description: string | null;
+
+                /**
+                 * Customize the default label for this input's skip button
+                 */
+                skip_button: string | null;
+
+                /**
+                 * Customize the default label for this input's submit button
+                 */
+                submit_button: string | null;
+
+                /**
+                 * Customize the default title for this input
+                 */
+                title: string | null;
+              }
+
+              interface Email {
+                /**
+                 * The collected email address
+                 */
+                value: string | null;
+              }
+
+              interface Numeric {
+                /**
+                 * The collected number
+                 */
+                value: string | null;
+              }
+
+              interface Phone {
+                /**
+                 * The collected phone number
+                 */
+                value: string | null;
+              }
+
+              interface Selection {
+                /**
+                 * List of possible choices to be selected
+                 */
+                choices: Array<Selection.Choice>;
+
+                /**
+                 * The value of the selected choice
+                 */
+                value: string | null;
+              }
+
+              namespace Selection {
+                interface Choice {
+                  /**
+                   * The button style for the choice
+                   */
+                  style: Choice.Style | null;
+
+                  /**
+                   * A value to be selected
+                   */
+                  value: string;
+                }
+
+                namespace Choice {
+                  type Style = 'primary' | 'secondary';
+                }
+              }
+
+              interface Signature {
+                /**
+                 * The File ID of a collected signature image
+                 */
+                value: string | null;
+              }
+
+              interface Text {
+                /**
+                 * The collected text value
+                 */
+                value: string | null;
+              }
+
+              interface Toggle {
+                /**
+                 * The toggle's default value
+                 */
+                default_value: Toggle.DefaultValue | null;
+
+                /**
+                 * The toggle's description text
+                 */
+                description: string | null;
+
+                /**
+                 * The toggle's title text
+                 */
+                title: string | null;
+
+                /**
+                 * The toggle's collected value
+                 */
+                value: Toggle.Value | null;
+              }
+
+              namespace Toggle {
+                type DefaultValue = 'disabled' | 'enabled';
+
+                type Value = 'disabled' | 'enabled';
+              }
+
+              type Type =
+                | 'email'
+                | 'numeric'
+                | 'phone'
+                | 'selection'
+                | 'signature'
+                | 'text';
+            }
+          }
+
+          interface CollectPaymentMethod {
+            /**
+             * Account the payment intent belongs to.
+             */
+            account?: string;
+
+            /**
+             * Represents a per-transaction override of a reader configuration
+             */
+            collect_config?: CollectPaymentMethod.CollectConfig;
+
+            /**
+             * Most recent PaymentIntent processed by the reader.
+             */
+            payment_intent: string | Stripe.PaymentIntent;
+
+            /**
+             * PaymentMethod objects represent your customer's payment instruments.
+             * You can use them with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or save them to
+             * Customer objects to store instrument details for future payments.
+             *
+             * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
+             */
+            payment_method?: Stripe.PaymentMethod;
+          }
+
+          namespace CollectPaymentMethod {
+            interface CollectConfig {
+              /**
+               * Enable customer initiated cancellation when processing this payment.
+               */
+              enable_customer_cancellation?: boolean;
+
+              /**
+               * Override showing a tipping selection screen on this transaction.
+               */
+              skip_tipping?: boolean;
+
+              /**
+               * Represents a per-transaction tipping configuration
+               */
+              tipping?: CollectConfig.Tipping;
+            }
+
+            namespace CollectConfig {
+              interface Tipping {
+                /**
+                 * Amount used to calculate tip suggestions on tipping selection screen for this transaction. Must be a positive integer in the smallest currency unit (e.g., 100 cents to represent $1.00 or 100 to represent ¥100, a zero-decimal currency).
+                 */
+                amount_eligible?: number;
+              }
+            }
+          }
+
+          interface ConfirmPaymentIntent {
+            /**
+             * Account the payment intent belongs to.
+             */
+            account?: string;
+
+            /**
+             * Most recent PaymentIntent processed by the reader.
+             */
+            payment_intent: string | Stripe.PaymentIntent;
+          }
+
           interface ProcessPaymentIntent {
+            /**
+             * Account the payment intent belongs to.
+             */
+            account?: string;
+
             /**
              * Most recent PaymentIntent processed by the reader.
              */
@@ -206,6 +488,11 @@ declare module 'stripe' {
           }
 
           interface RefundPayment {
+            /**
+             * Account the payment intent belongs to.
+             */
+            account?: string;
+
             /**
              * The amount being refunded.
              */
@@ -321,6 +608,9 @@ declare module 'stripe' {
           type Status = 'failed' | 'in_progress' | 'succeeded';
 
           type Type =
+            | 'collect_inputs'
+            | 'collect_payment_method'
+            | 'confirm_payment_intent'
             | 'process_payment_intent'
             | 'process_setup_intent'
             | 'refund_payment'

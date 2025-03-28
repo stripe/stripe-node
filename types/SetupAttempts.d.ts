@@ -108,6 +108,8 @@ declare module 'stripe' {
 
         cashapp?: PaymentMethodDetails.Cashapp;
 
+        id_bank_transfer?: PaymentMethodDetails.IdBankTransfer;
+
         ideal?: PaymentMethodDetails.Ideal;
 
         kakao_pay?: PaymentMethodDetails.KakaoPay;
@@ -119,6 +121,8 @@ declare module 'stripe' {
         link?: PaymentMethodDetails.Link;
 
         paypal?: PaymentMethodDetails.Paypal;
+
+        payto?: PaymentMethodDetails.Payto;
 
         revolut_pay?: PaymentMethodDetails.RevolutPay;
 
@@ -394,6 +398,32 @@ declare module 'stripe' {
 
         interface Cashapp {}
 
+        interface IdBankTransfer {
+          /**
+           * Bank where the account is located.
+           */
+          bank: IdBankTransfer.Bank | null;
+
+          /**
+           * Local bank code of the bank.
+           */
+          bank_code: string | null;
+
+          /**
+           * Name of the bank associated with the bank account.
+           */
+          bank_name: string | null;
+
+          /**
+           * Merchant name and billing details name, for the customer to check for the correct merchant when performing the bank transfer.
+           */
+          display_name: string | null;
+        }
+
+        namespace IdBankTransfer {
+          type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+        }
+
         interface Ideal {
           /**
            * The customer's bank. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
@@ -475,6 +505,8 @@ declare module 'stripe' {
         interface Link {}
 
         interface Paypal {}
+
+        interface Payto {}
 
         interface RevolutPay {}
 
@@ -694,11 +726,15 @@ declare module 'stripe' {
           | 'email_invalid'
           | 'expired_card'
           | 'financial_connections_account_inactive'
+          | 'financial_connections_institution_unavailable'
           | 'financial_connections_no_successful_transaction_refresh'
           | 'forwarding_api_inactive'
           | 'forwarding_api_invalid_parameter'
           | 'forwarding_api_upstream_connection_error'
           | 'forwarding_api_upstream_connection_timeout'
+          | 'gift_card_balance_insufficient'
+          | 'gift_card_code_exists'
+          | 'gift_card_inactive'
           | 'idempotency_key_in_use'
           | 'incorrect_address'
           | 'incorrect_cvc'
@@ -788,6 +824,7 @@ declare module 'stripe' {
           | 'return_intent_already_processed'
           | 'routing_number_invalid'
           | 'secret_key_required'
+          | 'sensitive_data_access_expired'
           | 'sepa_unsupported_account'
           | 'setup_attempt_failed'
           | 'setup_intent_authentication_failure'
@@ -805,6 +842,7 @@ declare module 'stripe' {
           | 'taxes_calculation_failed'
           | 'terminal_location_country_unsupported'
           | 'terminal_reader_busy'
+          | 'terminal_reader_collected_data_invalid'
           | 'terminal_reader_hardware_fault'
           | 'terminal_reader_invalid_location_for_activation'
           | 'terminal_reader_invalid_location_for_payment'

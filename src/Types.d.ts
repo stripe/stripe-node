@@ -55,7 +55,7 @@ export type RequestCallback = (
   error: Error | null,
   response?: any
 ) => RequestCallbackReturn;
-export type RequestCallbackReturn = any;
+export type RequestCallbackReturn = void;
 export type RequestData = Record<string, any>;
 export type RequestEvent = {
   api_version?: string;
@@ -67,6 +67,7 @@ export type RequestEvent = {
   usage: Array<string>;
 };
 export type RequestHeaders = Record<string, string | number | string[]>;
+export type APIMode = 'preview' | 'standard';
 export type RequestOptions = {
   settings: RequestSettings;
   streaming: boolean;
@@ -82,6 +83,7 @@ export type RequestOpts = {
   host: string | null;
   streaming: boolean;
   settings: RequestSettings;
+  apiMode?: APIMode;
   usage: Array<string>;
 };
 export type RequestSettings = {timeout?: number; maxNetworkRetries?: number};

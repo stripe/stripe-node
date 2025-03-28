@@ -16,6 +16,14 @@ export const Invoices = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/invoices/{invoice}/add_lines',
   }),
+  attachPayment: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/invoices/{invoice}/attach_payment',
+  }),
+  attachPaymentIntent: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/invoices/{invoice}/attach_payment_intent',
+  }),
   createPreview: stripeMethod({
     method: 'POST',
     fullPath: '/v1/invoices/create_preview',
@@ -27,6 +35,11 @@ export const Invoices = StripeResource.extend({
   listLineItems: stripeMethod({
     method: 'GET',
     fullPath: '/v1/invoices/{invoice}/lines',
+    methodType: 'list',
+  }),
+  listPayments: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/invoices/{invoice}/payments',
     methodType: 'list',
   }),
   listUpcomingLines: stripeMethod({
@@ -42,6 +55,10 @@ export const Invoices = StripeResource.extend({
   removeLines: stripeMethod({
     method: 'POST',
     fullPath: '/v1/invoices/{invoice}/remove_lines',
+  }),
+  retrievePayment: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/invoices/{invoice}/payments/{invoice_payment}',
   }),
   retrieveUpcoming: stripeMethod({
     method: 'GET',

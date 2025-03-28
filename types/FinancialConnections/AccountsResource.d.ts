@@ -48,6 +48,13 @@ declare module 'stripe' {
         expand?: Array<string>;
       }
 
+      interface AccountListInferredBalancesParams extends PaginationParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
       interface AccountListOwnersParams extends PaginationParams {
         /**
          * The ID of the ownership object to fetch owners from.
@@ -73,14 +80,18 @@ declare module 'stripe' {
       }
 
       namespace AccountRefreshParams {
-        type Feature = 'balance' | 'ownership' | 'transactions';
+        type Feature =
+          | 'balance'
+          | 'inferred_balances'
+          | 'ownership'
+          | 'transactions';
       }
 
       interface AccountSubscribeParams {
         /**
          * The list of account features to which you would like to subscribe.
          */
-        features: Array<'transactions'>;
+        features: Array<AccountSubscribeParams.Feature>;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -88,16 +99,24 @@ declare module 'stripe' {
         expand?: Array<string>;
       }
 
+      namespace AccountSubscribeParams {
+        type Feature = 'balance' | 'inferred_balances' | 'transactions';
+      }
+
       interface AccountUnsubscribeParams {
         /**
          * The list of account features from which you would like to unsubscribe.
          */
-        features: Array<'transactions'>;
+        features: Array<AccountUnsubscribeParams.Feature>;
 
         /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+      }
+
+      namespace AccountUnsubscribeParams {
+        type Feature = 'balance' | 'inferred_balances' | 'transactions';
       }
 
       class AccountsResource {
@@ -137,6 +156,19 @@ declare module 'stripe' {
           id: string,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.FinancialConnections.Account>>;
+
+        /**
+         * Lists the recorded inferred balances for a Financial Connections Account.
+         */
+        listInferredBalances(
+          id: string,
+          params?: AccountListInferredBalancesParams,
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.FinancialConnections.AccountInferredBalance>;
+        listInferredBalances(
+          id: string,
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.FinancialConnections.AccountInferredBalance>;
 
         /**
          * Lists all owners for a given Account

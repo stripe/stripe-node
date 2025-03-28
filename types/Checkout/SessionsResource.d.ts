@@ -30,7 +30,7 @@ declare module 'stripe' {
         billing_address_collection?: SessionCreateParams.BillingAddressCollection;
 
         /**
-         * If set, Checkout displays a back button and customers will be directed to this URL if they decide to cancel payment and return to your website. This parameter is not allowed if ui_mode is `embedded`.
+         * If set, Checkout displays a back button and customers will be directed to this URL if they decide to cancel payment and return to your website. This parameter is not allowed if ui_mode is `embedded` or `custom`.
          */
         cancel_url?: string;
 
@@ -193,6 +193,13 @@ declare module 'stripe' {
         payment_method_types?: Array<SessionCreateParams.PaymentMethodType>;
 
         /**
+         * This property is used to set up permissions for various actions (e.g., update) on the CheckoutSession object.
+         *
+         * For specific permissions, please refer to their dedicated subsections, such as `permissions.update.shipping_details`.
+         */
+        permissions?: SessionCreateParams.Permissions;
+
+        /**
          * Controls phone number collection settings for the session.
          *
          * We recommend that you review your privacy policy and check with your legal contacts
@@ -207,7 +214,7 @@ declare module 'stripe' {
 
         /**
          * The URL to redirect your customer back to after they authenticate or cancel their payment on the
-         * payment method's app or site. This parameter is required if ui_mode is `embedded`
+         * payment method's app or site. This parameter is required if `ui_mode` is `embedded` or `custom`
          * and redirect-based payment methods are enabled on the session.
          */
         return_url?: string;
@@ -247,7 +254,7 @@ declare module 'stripe' {
         /**
          * The URL to which Stripe should send customers when payment or setup
          * is complete.
-         * This parameter is not allowed if ui_mode is `embedded`. If you'd like to use
+         * This parameter is not allowed if ui_mode is `embedded` or `custom`. If you'd like to use
          * information from the successful Checkout Session on your page, read the
          * guide on [customizing your success page](https://stripe.com/docs/payments/checkout/custom-success-page).
          */
@@ -679,6 +686,11 @@ declare module 'stripe' {
            * The [tax rates](https://stripe.com/docs/api/tax_rates) that will be applied to this line item depending on the customer's billing/shipping address. We currently support the following countries: US, GB, AU, and all countries in the EU.
            */
           dynamic_tax_rates?: Array<string>;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.MetadataParam;
 
           /**
            * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object. One of `price` or `price_data` is required.
@@ -1153,6 +1165,11 @@ declare module 'stripe' {
           paypal?: PaymentMethodOptions.Paypal;
 
           /**
+           * contains details about the PayTo payment method options.
+           */
+          payto?: PaymentMethodOptions.Payto;
+
+          /**
            * contains details about the Pix payment method options.
            */
           pix?: PaymentMethodOptions.Pix;
@@ -1424,6 +1441,11 @@ declare module 'stripe' {
             /**
              * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/payments/extended-authorization) for this CheckoutSession.
              */
+            request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+            /**
+             * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/payments/extended-authorization) for this CheckoutSession.
+             */
             request_extended_authorization?: Card.RequestExtendedAuthorization;
 
             /**
@@ -1481,6 +1503,8 @@ declare module 'stripe' {
                */
               enabled?: boolean;
             }
+
+            type RequestDecrementalAuthorization = 'if_available' | 'never';
 
             type RequestExtendedAuthorization = 'if_available' | 'never';
 
@@ -1878,6 +1902,11 @@ declare module 'stripe' {
             reference?: string;
 
             /**
+             * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+             */
+            reference_id?: string;
+
+            /**
              * The risk correlation ID for an on-session payment using a saved PayPal payment method.
              */
             risk_correlation_id?: string;
@@ -1894,6 +1923,11 @@ declare module 'stripe' {
              * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
              */
             setup_future_usage?: Stripe.Emptyable<Paypal.SetupFutureUsage>;
+
+            /**
+             * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+             */
+            subsellers?: Array<string>;
           }
 
           namespace Paypal {
@@ -1919,6 +1953,92 @@ declare module 'stripe' {
               | 'pt-PT'
               | 'sk-SK'
               | 'sv-SE';
+
+            type SetupFutureUsage = 'none' | 'off_session';
+          }
+
+          interface Payto {
+            /**
+             * Additional fields for Mandate creation
+             */
+            mandate_options?: Payto.MandateOptions;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: Payto.SetupFutureUsage;
+          }
+
+          namespace Payto {
+            interface MandateOptions {
+              /**
+               * Amount that will be collected. It is required when `amount_type` is `fixed`.
+               */
+              amount?: number;
+
+              /**
+               * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+               */
+              amount_type?: MandateOptions.AmountType;
+
+              /**
+               * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+               */
+              end_date?: string;
+
+              /**
+               * The periodicity at which payments will be collected.
+               */
+              payment_schedule?: MandateOptions.PaymentSchedule;
+
+              /**
+               * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+               */
+              payments_per_period?: number;
+
+              /**
+               * The purpose for which payments are made. Defaults to retail.
+               */
+              purpose?: MandateOptions.Purpose;
+
+              /**
+               * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+               */
+              start_date?: string;
+            }
+
+            namespace MandateOptions {
+              type AmountType = 'fixed' | 'maximum';
+
+              type PaymentSchedule =
+                | 'adhoc'
+                | 'annual'
+                | 'daily'
+                | 'fortnightly'
+                | 'monthly'
+                | 'quarterly'
+                | 'semi_annual'
+                | 'weekly';
+
+              type Purpose =
+                | 'dependant_support'
+                | 'government'
+                | 'loan'
+                | 'mortgage'
+                | 'other'
+                | 'pension'
+                | 'personal'
+                | 'retail'
+                | 'salary'
+                | 'tax'
+                | 'utility';
+            }
 
             type SetupFutureUsage = 'none' | 'off_session';
           }
@@ -2056,7 +2176,11 @@ declare module 'stripe' {
                 | 'payment_method'
                 | 'transactions';
 
-              type Prefetch = 'balances' | 'ownership' | 'transactions';
+              type Prefetch =
+                | 'balances'
+                | 'inferred_balances'
+                | 'ownership'
+                | 'transactions';
             }
 
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
@@ -2110,6 +2234,7 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'gopay'
           | 'grabpay'
           | 'ideal'
           | 'kakao_pay'
@@ -2117,6 +2242,7 @@ declare module 'stripe' {
           | 'konbini'
           | 'kr_card'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'
@@ -2126,17 +2252,56 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'qris'
+          | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
           | 'sepa_debit'
+          | 'shopeepay'
           | 'sofort'
           | 'swish'
           | 'twint'
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
+
+        interface Permissions {
+          /**
+           * Permissions for updating the Checkout Session.
+           */
+          update?: Permissions.Update;
+        }
+
+        namespace Permissions {
+          interface Update {
+            /**
+             * Determines which entity is allowed to update the line items.
+             *
+             * Default is `client_only`. Stripe Checkout client will automatically update the line items. If set to `server_only`, only your server is allowed to update the line items.
+             *
+             * When set to `server_only`, you must add the onLineItemsChange event handler when initializing the Stripe Checkout client and manually update the line items from your server using the Stripe API.
+             */
+            line_items?: Update.LineItems;
+
+            /**
+             * Determines which entity is allowed to update the shipping details.
+             *
+             * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
+             *
+             * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+             */
+            shipping_details?: Update.ShippingDetails;
+          }
+
+          namespace Update {
+            type LineItems = 'client_only' | 'server_only';
+
+            type ShippingDetails = 'client_only' | 'server_only';
+          }
+        }
 
         interface PhoneNumberCollection {
           /**
@@ -2722,7 +2887,7 @@ declare module 'stripe' {
           type Required = 'if_supported' | 'never';
         }
 
-        type UiMode = 'embedded' | 'hosted';
+        type UiMode = 'custom' | 'embedded' | 'hosted';
       }
 
       interface SessionRetrieveParams {
@@ -2744,9 +2909,336 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
+         * A list of items the customer is purchasing.
+         *
+         * When updating line items, you must retransmit the entire array of line items.
+         *
+         * To retain an existing line item, specify its `id`.
+         *
+         * To update an existing line item, specify its `id` along with the new values of the fields to update.
+         *
+         * To add a new line item, specify a `price` and `quantity`. We don't currently support recurring prices.
+         *
+         * To remove an existing line item, omit the line item's ID from the retransmitted array.
+         *
+         * To reorder a line item, specify it at the desired position in the retransmitted array.
+         */
+        line_items?: Array<SessionUpdateParams.LineItem>;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * The shipping rate options to apply to this Session. Up to a maximum of 5.
+         */
+        shipping_options?: Stripe.Emptyable<
+          Array<SessionUpdateParams.ShippingOption>
+        >;
+      }
+
+      namespace SessionUpdateParams {
+        interface CollectedInformation {
+          /**
+           * The shipping details to apply to this Session.
+           */
+          shipping_details?: CollectedInformation.ShippingDetails;
+        }
+
+        namespace CollectedInformation {
+          interface ShippingDetails {
+            /**
+             * The address of the customer
+             */
+            address: ShippingDetails.Address;
+
+            /**
+             * The name of customer
+             */
+            name: string;
+          }
+
+          namespace ShippingDetails {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
+        }
+
+        interface LineItem {
+          /**
+           * When set, provides configuration for this item's quantity to be adjusted by the customer during Checkout.
+           */
+          adjustable_quantity?: LineItem.AdjustableQuantity;
+
+          /**
+           * ID of an existing line item.
+           */
+          id?: string;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+          /**
+           * The ID of the [Price](https://stripe.com/docs/api/prices).
+           */
+          price?: string;
+
+          /**
+           * The quantity of the line item being purchased.
+           */
+          quantity?: number;
+
+          /**
+           * The [tax rates](https://stripe.com/docs/api/tax_rates) which apply to this line item.
+           */
+          tax_rates?: Stripe.Emptyable<Array<string>>;
+        }
+
+        namespace LineItem {
+          interface AdjustableQuantity {
+            /**
+             * Set to true if the quantity can be adjusted to any positive integer. Setting to false will remove any previously specified constraints on quantity.
+             */
+            enabled: boolean;
+
+            /**
+             * The maximum quantity the customer can purchase for the Checkout Session. By default this value is 99. You can specify a value up to 999999.
+             */
+            maximum?: number;
+
+            /**
+             * The minimum quantity the customer must purchase for the Checkout Session. By default this value is 0.
+             */
+            minimum?: number;
+          }
+        }
+
+        interface ShippingOption {
+          /**
+           * The ID of the Shipping Rate to use for this shipping option.
+           */
+          shipping_rate?: string;
+
+          /**
+           * Parameters to be passed to Shipping Rate creation for this shipping option.
+           */
+          shipping_rate_data?: ShippingOption.ShippingRateData;
+        }
+
+        namespace ShippingOption {
+          interface ShippingRateData {
+            /**
+             * The estimated range for how long shipping will take, meant to be displayable to the customer. This will appear on CheckoutSessions.
+             */
+            delivery_estimate?: ShippingRateData.DeliveryEstimate;
+
+            /**
+             * The name of the shipping rate, meant to be displayable to the customer. This will appear on CheckoutSessions.
+             */
+            display_name: string;
+
+            /**
+             * Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
+             */
+            fixed_amount?: ShippingRateData.FixedAmount;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             */
+            metadata?: Stripe.MetadataParam;
+
+            /**
+             * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+             */
+            tax_behavior?: ShippingRateData.TaxBehavior;
+
+            /**
+             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+             */
+            tax_code?: string;
+
+            /**
+             * The type of calculation to use on the shipping rate.
+             */
+            type?: 'fixed_amount';
+          }
+
+          namespace ShippingRateData {
+            interface DeliveryEstimate {
+              /**
+               * The upper bound of the estimated range. If empty, represents no upper bound i.e., infinite.
+               */
+              maximum?: DeliveryEstimate.Maximum;
+
+              /**
+               * The lower bound of the estimated range. If empty, represents no lower bound.
+               */
+              minimum?: DeliveryEstimate.Minimum;
+            }
+
+            namespace DeliveryEstimate {
+              interface Maximum {
+                /**
+                 * A unit of time.
+                 */
+                unit: Maximum.Unit;
+
+                /**
+                 * Must be greater than 0.
+                 */
+                value: number;
+              }
+
+              namespace Maximum {
+                type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+              }
+
+              interface Minimum {
+                /**
+                 * A unit of time.
+                 */
+                unit: Minimum.Unit;
+
+                /**
+                 * Must be greater than 0.
+                 */
+                value: number;
+              }
+
+              namespace Minimum {
+                type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+              }
+            }
+
+            interface FixedAmount {
+              /**
+               * A non-negative integer in cents representing how much to charge.
+               */
+              amount: number;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+
+              /**
+               * Shipping rates defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency_options?: {
+                [key: string]: FixedAmount.CurrencyOptions;
+              };
+            }
+
+            namespace FixedAmount {
+              interface CurrencyOptions {
+                /**
+                 * A non-negative integer in cents representing how much to charge.
+                 */
+                amount: number;
+
+                /**
+                 * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+                 */
+                tax_behavior?: CurrencyOptions.TaxBehavior;
+              }
+
+              namespace CurrencyOptions {
+                type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+              }
+            }
+
+            type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          }
+        }
+      }
+
+      namespace SessionUpdateParams {
+        interface CollectedInformation {
+          /**
+           * The shipping details to apply to this Session.
+           */
+          shipping_details?: CollectedInformation.ShippingDetails;
+        }
+
+        namespace CollectedInformation {
+          interface ShippingDetails {
+            /**
+             * The address of the customer
+             */
+            address: ShippingDetails.Address;
+
+            /**
+             * The name of customer
+             */
+            name: string;
+          }
+
+          namespace ShippingDetails {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city?: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1: string;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code?: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
+        }
       }
 
       namespace SessionUpdateParams {

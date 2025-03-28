@@ -21,6 +21,59 @@ declare module 'stripe' {
         interface PreviousAttributes {}
       }
 
+      interface Reason {
+        automation_action?: Reason.AutomationAction;
+
+        request?: Reason.Request;
+
+        /**
+         * The type of the reason for the event.
+         */
+        type: Reason.Type;
+      }
+
+      namespace Reason {
+        interface AutomationAction {
+          stripe_send_webhook_custom_event?: AutomationAction.StripeSendWebhookCustomEvent;
+
+          /**
+           * The trigger name of the automation that triggered this action.
+           *  Please visit [Revenue and retention automations](https://docs.stripe.com/billing/automations#choose-a-trigger) for all possible trigger names.
+           */
+          trigger: string;
+
+          /**
+           * The type of the `automation_action`.
+           */
+          type: 'stripe_send_webhook_custom_event';
+        }
+
+        namespace AutomationAction {
+          interface StripeSendWebhookCustomEvent {
+            /**
+             * Set of key-value pairs attached to the action when creating an Automation.
+             */
+            custom_data: {
+              [key: string]: string;
+            } | null;
+          }
+        }
+
+        interface Request {
+          /**
+           * ID of the API request that caused the event. If null, the event was automatic (e.g., Stripe's automatic subscription handling). Request logs are available in the [dashboard](https://dashboard.stripe.com/logs), but currently not in the API.
+           */
+          id: string | null;
+
+          /**
+           * The idempotency key transmitted during the request, if any. *Note: This property is populated only for events on or after May 23, 2017*.
+           */
+          idempotency_key: string | null;
+        }
+
+        type Type = 'automation_action' | 'request';
+      }
+
       interface Request {
         /**
          * ID of the API request that caused the event. If null, the event was automatic (e.g., Stripe's automatic subscription handling). Request logs are available in the [dashboard](https://dashboard.stripe.com/logs), but currently not in the API.
@@ -40,15 +93,27 @@ declare module 'stripe' {
         | 'account.external_account.deleted'
         | 'account.external_account.updated'
         | 'account.updated'
+        | 'account_notice.created'
+        | 'account_notice.updated'
         | 'application_fee.created'
         | 'application_fee.refund.updated'
         | 'application_fee.refunded'
         | 'balance.available'
         | 'billing.alert.triggered'
+        | 'billing.meter_error_report.triggered'
         | 'billing_portal.configuration.created'
         | 'billing_portal.configuration.updated'
         | 'billing_portal.session.created'
         | 'capability.updated'
+        | 'capital.financing_offer.accepted'
+        | 'capital.financing_offer.canceled'
+        | 'capital.financing_offer.created'
+        | 'capital.financing_offer.expired'
+        | 'capital.financing_offer.fully_repaid'
+        | 'capital.financing_offer.paid_out'
+        | 'capital.financing_offer.rejected'
+        | 'capital.financing_offer.replacement_created'
+        | 'capital.financing_transaction.created'
         | 'cash_balance.funds_available'
         | 'charge.captured'
         | 'charge.dispute.closed'
@@ -89,11 +154,15 @@ declare module 'stripe' {
         | 'customer.source.deleted'
         | 'customer.source.expiring'
         | 'customer.source.updated'
+        | 'customer.subscription.collection_paused'
+        | 'customer.subscription.collection_resumed'
         | 'customer.subscription.created'
+        | 'customer.subscription.custom_event'
         | 'customer.subscription.deleted'
         | 'customer.subscription.paused'
         | 'customer.subscription.pending_update_applied'
         | 'customer.subscription.pending_update_expired'
+        | 'customer.subscription.price_migration_failed'
         | 'customer.subscription.resumed'
         | 'customer.subscription.trial_will_end'
         | 'customer.subscription.updated'
@@ -109,8 +178,10 @@ declare module 'stripe' {
         | 'financial_connections.account.disconnected'
         | 'financial_connections.account.reactivated'
         | 'financial_connections.account.refreshed_balance'
+        | 'financial_connections.account.refreshed_inferred_balances'
         | 'financial_connections.account.refreshed_ownership'
         | 'financial_connections.account.refreshed_transactions'
+        | 'financial_connections.session.updated'
         | 'identity.verification_session.canceled'
         | 'identity.verification_session.created'
         | 'identity.verification_session.processing'
@@ -123,8 +194,11 @@ declare module 'stripe' {
         | 'invoice.finalized'
         | 'invoice.marked_uncollectible'
         | 'invoice.overdue'
+        | 'invoice.overpaid'
         | 'invoice.paid'
+        | 'invoice.payment.overpaid'
         | 'invoice.payment_action_required'
+        | 'invoice.payment_attempt_required'
         | 'invoice.payment_failed'
         | 'invoice.payment_succeeded'
         | 'invoice.sent'
@@ -147,10 +221,15 @@ declare module 'stripe' {
         | 'issuing_dispute.funds_rescinded'
         | 'issuing_dispute.submitted'
         | 'issuing_dispute.updated'
+        | 'issuing_dispute_settlement_detail.created'
+        | 'issuing_dispute_settlement_detail.updated'
+        | 'issuing_fraud_liability_debit.created'
         | 'issuing_personalization_design.activated'
         | 'issuing_personalization_design.deactivated'
         | 'issuing_personalization_design.rejected'
         | 'issuing_personalization_design.updated'
+        | 'issuing_settlement.created'
+        | 'issuing_settlement.updated'
         | 'issuing_token.created'
         | 'issuing_token.updated'
         | 'issuing_transaction.created'
@@ -191,10 +270,16 @@ declare module 'stripe' {
         | 'product.updated'
         | 'promotion_code.created'
         | 'promotion_code.updated'
+        | 'quote.accept_failed'
         | 'quote.accepted'
+        | 'quote.accepting'
         | 'quote.canceled'
         | 'quote.created'
+        | 'quote.draft'
         | 'quote.finalized'
+        | 'quote.reestimate_failed'
+        | 'quote.reestimated'
+        | 'quote.stale'
         | 'radar.early_fraud_warning.created'
         | 'radar.early_fraud_warning.updated'
         | 'refund.created'
@@ -223,13 +308,16 @@ declare module 'stripe' {
         | 'subscription_schedule.completed'
         | 'subscription_schedule.created'
         | 'subscription_schedule.expiring'
+        | 'subscription_schedule.price_migration_failed'
         | 'subscription_schedule.released'
         | 'subscription_schedule.updated'
+        | 'tax.form.updated'
         | 'tax.settings.updated'
         | 'tax_rate.created'
         | 'tax_rate.updated'
         | 'terminal.reader.action_failed'
         | 'terminal.reader.action_succeeded'
+        | 'terminal.reader.action_updated'
         | 'test_helpers.test_clock.advancing'
         | 'test_helpers.test_clock.created'
         | 'test_helpers.test_clock.deleted'
@@ -344,6 +432,11 @@ declare module 'stripe' {
        * Number of webhooks that haven't been successfully delivered (for example, to return a 20x response) to the URLs you specify.
        */
       pending_webhooks: number;
+
+      /**
+       * Information about the action that causes the event. Only present when the event is triggered by an API request or an [Automation](https://docs.stripe.com/billing/automations) action.
+       */
+      reason?: Event.Reason | null;
 
       /**
        * Information on the API request that triggers the event.

@@ -33,6 +33,10 @@ export const PaymentIntents = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/payment_intents/{intent}/confirm',
   }),
+  decrementAuthorization: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/payment_intents/{intent}/decrement_authorization',
+  }),
   incrementAuthorization: stripeMethod({
     method: 'POST',
     fullPath: '/v1/payment_intents/{intent}/increment_authorization',
@@ -41,6 +45,10 @@ export const PaymentIntents = StripeResource.extend({
     method: 'GET',
     fullPath: '/v1/payment_intents/search',
     methodType: 'search',
+  }),
+  triggerAction: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/test/payment_intents/{intent}/trigger_action',
   }),
   verifyMicrodeposits: stripeMethod({
     method: 'POST',

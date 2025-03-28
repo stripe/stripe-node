@@ -108,6 +108,8 @@ declare module 'stripe' {
 
         paypal?: PaymentMethodDetails.Paypal;
 
+        payto?: PaymentMethodDetails.Payto;
+
         revolut_pay?: PaymentMethodDetails.RevolutPay;
 
         sepa_debit?: PaymentMethodDetails.SepaDebit;
@@ -210,9 +212,84 @@ declare module 'stripe' {
           billing_agreement_id: string | null;
 
           /**
+           * Uniquely identifies this particular PayPal account. You can use this attribute to check whether two PayPal accounts are the same.
+           */
+          fingerprint?: string | null;
+
+          /**
            * PayPal account PayerID. This identifier uniquely identifies the PayPal customer.
            */
           payer_id: string | null;
+
+          /**
+           * Owner's verified email. Values are verified or provided by PayPal directly
+           * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          verified_email?: string | null;
+        }
+
+        interface Payto {
+          /**
+           * Amount that will be collected. It is required when `amount_type` is `fixed`.
+           */
+          amount: number | null;
+
+          /**
+           * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+           */
+          amount_type: Payto.AmountType;
+
+          /**
+           * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+           */
+          end_date: string | null;
+
+          /**
+           * The periodicity at which payments will be collected.
+           */
+          payment_schedule: Payto.PaymentSchedule;
+
+          /**
+           * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+           */
+          payments_per_period: number | null;
+
+          /**
+           * The purpose for which payments are made. Defaults to retail.
+           */
+          purpose: Payto.Purpose | null;
+
+          /**
+           * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+           */
+          start_date: string | null;
+        }
+
+        namespace Payto {
+          type AmountType = 'fixed' | 'maximum';
+
+          type PaymentSchedule =
+            | 'adhoc'
+            | 'annual'
+            | 'daily'
+            | 'fortnightly'
+            | 'monthly'
+            | 'quarterly'
+            | 'semi_annual'
+            | 'weekly';
+
+          type Purpose =
+            | 'dependant_support'
+            | 'government'
+            | 'loan'
+            | 'mortgage'
+            | 'other'
+            | 'pension'
+            | 'personal'
+            | 'retail'
+            | 'salary'
+            | 'tax'
+            | 'utility';
         }
 
         interface RevolutPay {}

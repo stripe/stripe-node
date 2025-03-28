@@ -69,6 +69,16 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
+       * The amount of margin calculated per margin for this line item.
+       */
+      margin_amounts?: Array<InvoiceLineItem.MarginAmount> | null;
+
+      /**
+       * The margins applied to the line item. When set, the `default_margins` on the invoice do not apply to the line item. Use `expand[]=margins` to expand each margin.
+       */
+      margins?: Array<string | Stripe.Margin> | null;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription`, `metadata` reflects the current metadata from the subscription associated with the line item, unless the invoice line was directly updated with different metadata after creation.
        */
       metadata: Stripe.Metadata;
@@ -149,6 +159,18 @@ declare module 'stripe' {
         discount: string | Stripe.Discount | Stripe.DeletedDiscount;
       }
 
+      interface MarginAmount {
+        /**
+         * The amount, in cents (or local equivalent), of the reduction in line item amount.
+         */
+        amount: number;
+
+        /**
+         * The margin that was applied to get this margin amount.
+         */
+        margin: string | Stripe.Margin;
+      }
+
       interface Period {
         /**
          * The end of the period, which must be greater than or equal to the start. This value is inclusive.
@@ -181,13 +203,18 @@ declare module 'stripe' {
         discount?: string | Stripe.Discount | Stripe.DeletedDiscount;
 
         /**
+         * The margin that was applied to get this pretax credit amount.
+         */
+        margin?: string | Stripe.Margin;
+
+        /**
          * Type of the pretax credit amount referenced.
          */
         type: PretaxCreditAmount.Type;
       }
 
       namespace PretaxCreditAmount {
-        type Type = 'credit_balance_transaction' | 'discount';
+        type Type = 'credit_balance_transaction' | 'discount' | 'margin';
       }
 
       interface ProrationDetails {

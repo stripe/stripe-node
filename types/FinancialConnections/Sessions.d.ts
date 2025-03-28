@@ -34,10 +34,14 @@ declare module 'stripe' {
 
         filters?: Session.Filters;
 
+        limits?: Session.Limits;
+
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
+
+        manual_entry?: Session.ManualEntry;
 
         /**
          * Permissions requested for accounts collected during this session.
@@ -53,6 +57,13 @@ declare module 'stripe' {
          * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
          */
         return_url?: string;
+
+        /**
+         * The current state of the session.
+         */
+        status?: Session.Status;
+
+        status_details?: Session.StatusDetails;
       }
 
       namespace Session {
@@ -87,6 +98,11 @@ declare module 'stripe' {
            * List of countries from which to filter accounts.
            */
           countries: Array<string> | null;
+
+          /**
+           * Stripe ID of the institution with which the customer should be directed to log in.
+           */
+          institution?: string;
         }
 
         namespace Filters {
@@ -98,13 +114,45 @@ declare module 'stripe' {
             | 'savings';
         }
 
+        interface Limits {
+          /**
+           * The number of accounts that can be linked in this Session.
+           */
+          accounts: number;
+        }
+
+        interface ManualEntry {}
+
         type Permission =
           | 'balances'
           | 'ownership'
           | 'payment_method'
           | 'transactions';
 
-        type Prefetch = 'balances' | 'ownership' | 'transactions';
+        type Prefetch =
+          | 'balances'
+          | 'inferred_balances'
+          | 'ownership'
+          | 'transactions';
+
+        type Status = 'cancelled' | 'failed' | 'pending' | 'succeeded';
+
+        interface StatusDetails {
+          cancelled?: StatusDetails.Cancelled;
+        }
+
+        namespace StatusDetails {
+          interface Cancelled {
+            /**
+             * The reason for the Session being cancelled.
+             */
+            reason: Cancelled.Reason;
+          }
+
+          namespace Cancelled {
+            type Reason = 'custom_manual_entry' | 'other';
+          }
+        }
       }
     }
   }

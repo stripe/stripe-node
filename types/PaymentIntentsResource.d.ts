@@ -19,6 +19,11 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      async_workflows?: PaymentIntentCreateParams.AsyncWorkflows;
+
+      /**
        * When you enable this parameter, this PaymentIntent accepts payment methods that you enable in the Dashboard and that are compatible with this PaymentIntent's other parameters.
        */
       automatic_payment_methods?: PaymentIntentCreateParams.AutomaticPaymentMethods;
@@ -95,6 +100,11 @@ declare module 'stripe' {
       on_behalf_of?: string;
 
       /**
+       * Provides industry-specific information about the charge.
+       */
+      payment_details?: PaymentIntentCreateParams.PaymentDetails;
+
+      /**
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
        *
        * If you don't provide the `payment_method` parameter or the `source` parameter with `confirm=true`, `source` automatically populates with `customer.default_source` to improve migration for users of the Charges API. We recommend that you explicitly provide the `payment_method` moving forward.
@@ -137,6 +147,11 @@ declare module 'stripe' {
        * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. If you'd prefer to redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
        */
       return_url?: string;
+
+      /**
+       * Indicates whether confirmation for this PaymentIntent using a secret key is `required` or `optional`.
+       */
+      secret_key_confirmation?: PaymentIntentCreateParams.SecretKeyConfirmation;
 
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -184,6 +199,31 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentCreateParams {
+      interface AsyncWorkflows {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: AsyncWorkflows.Inputs;
+      }
+
+      namespace AsyncWorkflows {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
+
       interface AutomaticPaymentMethods {
         /**
          * Controls whether this PaymentIntent will accept redirect-based payment methods.
@@ -256,6 +296,648 @@ declare module 'stripe' {
       }
 
       type OffSession = 'one_off' | 'recurring';
+
+      interface PaymentDetails {
+        /**
+         * Car rental details for this PaymentIntent.
+         */
+        car_rental?: PaymentDetails.CarRental;
+
+        /**
+         * Event details for this PaymentIntent
+         */
+        event_details?: PaymentDetails.EventDetails;
+
+        /**
+         * Flight reservation details for this PaymentIntent
+         */
+        flight?: PaymentDetails.Flight;
+
+        /**
+         * Lodging reservation details for this PaymentIntent
+         */
+        lodging?: PaymentDetails.Lodging;
+
+        /**
+         * Subscription details for this PaymentIntent
+         */
+        subscription?: PaymentDetails.Subscription;
+      }
+
+      namespace PaymentDetails {
+        interface CarRental {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: CarRental.Affiliate;
+
+          /**
+           * The booking number associated with the car rental.
+           */
+          booking_number: string;
+
+          /**
+           * Class code of the car.
+           */
+          car_class_code?: string;
+
+          /**
+           * Make of the car.
+           */
+          car_make?: string;
+
+          /**
+           * Model of the car.
+           */
+          car_model?: string;
+
+          /**
+           * The name of the rental car company.
+           */
+          company?: string;
+
+          /**
+           * The customer service phone number of the car rental company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Number of days the car is being rented.
+           */
+          days_rented: number;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: CarRental.Delivery;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          drivers?: Array<CarRental.Driver>;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<CarRental.ExtraCharge>;
+
+          /**
+           * Indicates if the customer did not keep nor cancel their booking.
+           */
+          no_show?: boolean;
+
+          /**
+           * Car pick-up address.
+           */
+          pickup_address?: Stripe.AddressParam;
+
+          /**
+           * Car pick-up time. Measured in seconds since the Unix epoch.
+           */
+          pickup_at: number;
+
+          /**
+           * Rental rate.
+           */
+          rate_amount?: number;
+
+          /**
+           * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+           */
+          rate_interval?: CarRental.RateInterval;
+
+          /**
+           * The name of the person or entity renting the car.
+           */
+          renter_name?: string;
+
+          /**
+           * Car return address.
+           */
+          return_address?: Stripe.AddressParam;
+
+          /**
+           * Car return time. Measured in seconds since the Unix epoch.
+           */
+          return_at: number;
+
+          /**
+           * Indicates whether the goods or services are tax-exempt or tax is not collected.
+           */
+          tax_exempt?: boolean;
+        }
+
+        namespace CarRental {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Driver {
+            /**
+             * Full name of the person or entity on the car reservation.
+             */
+            name: string;
+          }
+
+          type ExtraCharge =
+            | 'extra_mileage'
+            | 'gas'
+            | 'late_return'
+            | 'one_way_service'
+            | 'parking_violation';
+
+          type RateInterval = 'day' | 'month' | 'week';
+        }
+
+        interface EventDetails {
+          /**
+           * Indicates if the tickets are digitally checked when entering the venue.
+           */
+          access_controlled_venue?: boolean;
+
+          /**
+           * The event location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: EventDetails.Affiliate;
+
+          /**
+           * The name of the company
+           */
+          company?: string;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: EventDetails.Delivery;
+
+          /**
+           * Event end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Type of the event entertainment (concert, sports event etc)
+           */
+          genre?: string;
+
+          /**
+           * The name of the event.
+           */
+          name: string;
+
+          /**
+           * Event start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace EventDetails {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+        }
+
+        interface Flight {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Flight.Affiliate;
+
+          /**
+           * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
+           */
+          agency_number?: string;
+
+          /**
+           * The International Air Transport Association (IATA) carrier code of the carrier that issued the ticket.
+           */
+          carrier?: string;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Flight.Delivery;
+
+          /**
+           * The name of the person or entity on the reservation.
+           */
+          passenger_name?: string;
+
+          /**
+           * The details of the passengers in the travel reservation.
+           */
+          passengers?: Array<Flight.Passenger>;
+
+          /**
+           * The individual flight segments associated with the trip.
+           */
+          segments: Array<Flight.Segment>;
+
+          /**
+           * The ticket number associated with the travel reservation.
+           */
+          ticket_number?: string;
+        }
+
+        namespace Flight {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the flight reservation.
+             */
+            name: string;
+          }
+
+          interface Segment {
+            /**
+             * The flight segment amount.
+             */
+            amount?: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the arrival airport.
+             */
+            arrival_airport?: string;
+
+            /**
+             * The arrival time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            arrives_at?: number;
+
+            /**
+             * The International Air Transport Association (IATA) carrier code of the carrier operating the flight segment.
+             */
+            carrier?: string;
+
+            /**
+             * The departure time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            departs_at: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the departure airport.
+             */
+            departure_airport?: string;
+
+            /**
+             * The flight number associated with the segment
+             */
+            flight_number?: string;
+
+            /**
+             * The fare class for the segment.
+             */
+            service_class?: Segment.ServiceClass;
+          }
+
+          namespace Segment {
+            type ServiceClass =
+              | 'business'
+              | 'economy'
+              | 'first'
+              | 'premium_economy';
+          }
+        }
+
+        interface Lodging {
+          /**
+           * The lodging location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * The number of adults on the booking
+           */
+          adults?: number;
+
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Lodging.Affiliate;
+
+          /**
+           * The booking number associated with the lodging reservation.
+           */
+          booking_number?: string;
+
+          /**
+           * The lodging category
+           */
+          category?: Lodging.Category;
+
+          /**
+           * Loding check-in time. Measured in seconds since the Unix epoch.
+           */
+          checkin_at: number;
+
+          /**
+           * Lodging check-out time. Measured in seconds since the Unix epoch.
+           */
+          checkout_at: number;
+
+          /**
+           * The customer service phone number of the lodging company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * The daily lodging room rate.
+           */
+          daily_room_rate_amount?: number;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Lodging.Delivery;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<Lodging.ExtraCharge>;
+
+          /**
+           * Indicates whether the lodging location is compliant with the Fire Safety Act.
+           */
+          fire_safety_act_compliance?: boolean;
+
+          /**
+           * The name of the lodging location.
+           */
+          name?: string;
+
+          /**
+           * Indicates if the customer did not keep their booking while failing to cancel the reservation.
+           */
+          no_show?: boolean;
+
+          /**
+           * The number of rooms on the booking
+           */
+          number_of_rooms?: number;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          passengers?: Array<Lodging.Passenger>;
+
+          /**
+           * The phone number of the lodging location.
+           */
+          property_phone_number?: string;
+
+          /**
+           * The room class for this purchase.
+           */
+          room_class?: string;
+
+          /**
+           * The number of room nights
+           */
+          room_nights?: number;
+
+          /**
+           * The total tax amount associating with the room reservation.
+           */
+          total_room_tax_amount?: number;
+
+          /**
+           * The total tax amount
+           */
+          total_tax_amount?: number;
+        }
+
+        namespace Lodging {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          type Category = 'hotel' | 'vacation_rental';
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          type ExtraCharge =
+            | 'gift_shop'
+            | 'laundry'
+            | 'mini_bar'
+            | 'other'
+            | 'restaurant'
+            | 'telephone';
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the lodging reservation.
+             */
+            name: string;
+          }
+        }
+
+        interface Subscription {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Subscription.Affiliate;
+
+          /**
+           * Info whether the subscription will be auto renewed upon expiry.
+           */
+          auto_renewal?: boolean;
+
+          /**
+           * Subscription billing details for this purchase.
+           */
+          billing_interval?: Subscription.BillingInterval;
+
+          /**
+           * Subscription end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Name of the product on subscription. e.g. Apple Music Subscription
+           */
+          name: string;
+
+          /**
+           * Subscription start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace Subscription {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface BillingInterval {
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            count: number;
+
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: BillingInterval.Interval;
+          }
+
+          namespace BillingInterval {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+        }
+      }
 
       interface PaymentMethodData {
         /**
@@ -349,9 +1031,19 @@ declare module 'stripe' {
         giropay?: PaymentMethodData.Giropay;
 
         /**
+         * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+         */
+        gopay?: PaymentMethodData.Gopay;
+
+        /**
          * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
          */
         grabpay?: PaymentMethodData.Grabpay;
+
+        /**
+         * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+         */
+        id_bank_transfer?: PaymentMethodData.IdBankTransfer;
 
         /**
          * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -387,6 +1079,11 @@ declare module 'stripe' {
          * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
          */
         link?: PaymentMethodData.Link;
+
+        /**
+         * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+         */
+        mb_way?: PaymentMethodData.MbWay;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -439,6 +1136,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+         */
+        payto?: PaymentMethodData.Payto;
+
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -449,9 +1151,19 @@ declare module 'stripe' {
         promptpay?: PaymentMethodData.Promptpay;
 
         /**
+         * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+         */
+        qris?: PaymentMethodData.Qris;
+
+        /**
          * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
+
+        /**
+         * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
+         */
+        rechnung?: PaymentMethodData.Rechnung;
 
         /**
          * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
@@ -467,6 +1179,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
+
+        /**
+         * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+         */
+        shopeepay?: PaymentMethodData.Shopeepay;
 
         /**
          * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
@@ -676,7 +1393,20 @@ declare module 'stripe' {
 
         interface Giropay {}
 
+        interface Gopay {}
+
         interface Grabpay {}
+
+        interface IdBankTransfer {
+          /**
+           * Bank where the account is held.
+           */
+          bank?: IdBankTransfer.Bank;
+        }
+
+        namespace IdBankTransfer {
+          type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+        }
 
         interface Ideal {
           /**
@@ -741,6 +1471,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface MbWay {}
+
         interface Mobilepay {}
 
         interface Multibanco {}
@@ -803,15 +1535,60 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Payto {
+          /**
+           * The account number for the bank account.
+           */
+          account_number?: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number?: string;
+
+          /**
+           * The PayID alias for the bank account.
+           */
+          pay_id?: string;
+        }
+
         interface Pix {}
 
         interface Promptpay {}
+
+        interface Qris {}
 
         interface RadarOptions {
           /**
            * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
            */
           session?: string;
+        }
+
+        interface Rechnung {
+          /**
+           * Customer's date of birth
+           */
+          dob: Rechnung.Dob;
+        }
+
+        namespace Rechnung {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
         }
 
         interface RevolutPay {}
@@ -824,6 +1601,8 @@ declare module 'stripe' {
            */
           iban: string;
         }
+
+        interface Shopeepay {}
 
         interface Sofort {
           /**
@@ -857,13 +1636,16 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'gopay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'kakao_pay'
           | 'klarna'
           | 'konbini'
           | 'kr_card'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'
@@ -873,11 +1655,15 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'qris'
+          | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
           | 'sepa_debit'
+          | 'shopeepay'
           | 'sofort'
           | 'swish'
           | 'twint'
@@ -1019,9 +1805,21 @@ declare module 'stripe' {
         giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
 
         /**
+         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the GoPay payment method options.
+         */
+        gopay?: Stripe.Emptyable<PaymentMethodOptions.Gopay>;
+
+        /**
          * If this is a `grabpay` PaymentMethod, this sub-hash contains details about the Grabpay payment method options.
          */
         grabpay?: Stripe.Emptyable<PaymentMethodOptions.Grabpay>;
+
+        /**
+         * If this is a `id_bank_transfer` PaymentMethod, this sub-hash contains details about the Indonesia Bank Transfer payment method options.
+         */
+        id_bank_transfer?: Stripe.Emptyable<
+          PaymentMethodOptions.IdBankTransfer
+        >;
 
         /**
          * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
@@ -1057,6 +1855,11 @@ declare module 'stripe' {
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
          */
         link?: Stripe.Emptyable<PaymentMethodOptions.Link>;
+
+        /**
+         * If this is a `mb_way` PaymentMethod, this sub-hash contains details about the MB WAY payment method options.
+         */
+        mb_way?: Stripe.Emptyable<PaymentMethodOptions.MbWay>;
 
         /**
          * If this is a `MobilePay` PaymentMethod, this sub-hash contains details about the MobilePay payment method options.
@@ -1104,6 +1907,11 @@ declare module 'stripe' {
         paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
 
         /**
+         * If this is a `payto` PaymentMethod, this sub-hash contains details about the PayTo payment method options.
+         */
+        payto?: Stripe.Emptyable<PaymentMethodOptions.Payto>;
+
+        /**
          * If this is a `pix` PaymentMethod, this sub-hash contains details about the Pix payment method options.
          */
         pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
@@ -1112,6 +1920,16 @@ declare module 'stripe' {
          * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
          */
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
+
+        /**
+         * If this is a `qris` PaymentMethod, this sub-hash contains details about the QRIS payment method options.
+         */
+        qris?: Stripe.Emptyable<PaymentMethodOptions.Qris>;
+
+        /**
+         * If this is a `rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
+         */
+        rechnung?: Stripe.Emptyable<PaymentMethodOptions.Rechnung>;
 
         /**
          * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Revolut Pay payment method options.
@@ -1127,6 +1945,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
+
+        /**
+         * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
+         */
+        shopeepay?: Stripe.Emptyable<PaymentMethodOptions.Shopeepay>;
 
         /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
@@ -1511,6 +2334,11 @@ declare module 'stripe' {
           network?: Card.Network;
 
           /**
+           * Request ability to [decrement the authorization](https://stripe.com/docs/payments/decremental-authorization) for this PaymentIntent.
+           */
+          request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+          /**
            * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/docs/payments/extended-authorization) for this PaymentIntent.
            */
           request_extended_authorization?: Card.RequestExtendedAuthorization;
@@ -1529,6 +2357,11 @@ declare module 'stripe' {
            * Request ability to [overcapture](https://stripe.com/docs/payments/overcapture) for this PaymentIntent.
            */
           request_overcapture?: Card.RequestOvercapture;
+
+          /**
+           * Request partial authorization on this PaymentIntent.
+           */
+          request_partial_authorization?: Card.RequestPartialAuthorization;
 
           /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
@@ -1562,6 +2395,11 @@ declare module 'stripe' {
            * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
            */
           statement_descriptor_suffix_kanji?: Stripe.Emptyable<string>;
+
+          /**
+           * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
+           */
+          statement_details?: Stripe.Emptyable<Card.StatementDetails>;
 
           /**
            * If 3D Secure authentication was performed with a third-party provider,
@@ -1674,6 +2512,8 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
+          type RequestDecrementalAuthorization = 'if_available' | 'never';
+
           type RequestExtendedAuthorization = 'if_available' | 'never';
 
           type RequestIncrementalAuthorization = 'if_available' | 'never';
@@ -1682,9 +2522,23 @@ declare module 'stripe' {
 
           type RequestOvercapture = 'if_available' | 'never';
 
+          type RequestPartialAuthorization = 'if_available' | 'never';
+
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          interface StatementDetails {
+            /**
+             * Please pass in an address that is within your Stripe user account country
+             */
+            address?: Stripe.AddressParam;
+
+            /**
+             * Phone number (e.g., a toll-free number that customers can call)
+             */
+            phone?: string;
+          }
 
           interface ThreeDSecure {
             /**
@@ -1957,7 +2811,47 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Gopay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface Grabpay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface IdBankTransfer {
+          /**
+           * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from 5 minutes from now until 31 days from now. If unset, it defaults to 3 days from now.
+           */
+          expires_after?: number;
+
+          /**
+           * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from now until 30 days from now. If unset, it defaults to 1 days from now.
+           */
+          expires_at?: number;
+
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -2193,6 +3087,21 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface MbWay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface Mobilepay {
           /**
            * Controls when the funds are captured from the customer's account.
@@ -2318,6 +3227,11 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
+           * The line items purchased by the customer.
+           */
+          line_items?: Array<Paypal.LineItem>;
+
+          /**
            * [Preferred locale](https://stripe.com/docs/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
            */
           preferred_locale?: Paypal.PreferredLocale;
@@ -2326,6 +3240,11 @@ declare module 'stripe' {
            * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
            */
           reference?: string;
+
+          /**
+           * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+           */
+          reference_id?: string;
 
           /**
            * The risk correlation ID for an on-session payment using a saved PayPal payment method.
@@ -2344,9 +3263,76 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<Paypal.SetupFutureUsage>;
+
+          /**
+           * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+           */
+          subsellers?: Array<string>;
         }
 
         namespace Paypal {
+          interface LineItem {
+            /**
+             * Type of the line item.
+             */
+            category?: LineItem.Category;
+
+            /**
+             * Description of the line item.
+             */
+            description?: string;
+
+            /**
+             * Descriptive name of the line item.
+             */
+            name: string;
+
+            /**
+             * Quantity of the line item. Must be a positive number.
+             */
+            quantity: number;
+
+            /**
+             * Client facing stock keeping unit, article number or similar.
+             */
+            sku?: string;
+
+            /**
+             * The Stripe account ID of the connected account that sells the item.
+             */
+            sold_by?: string;
+
+            /**
+             * The tax information for the line item.
+             */
+            tax?: LineItem.Tax;
+
+            /**
+             * Price for a single unit of the line item in minor units. Cannot be a negative number.
+             */
+            unit_amount: number;
+          }
+
+          namespace LineItem {
+            type Category = 'digital_goods' | 'donation' | 'physical_goods';
+
+            interface Tax {
+              /**
+               * The tax for a single unit of the line item in minor units. Cannot be a negative number.
+               */
+              amount: number;
+
+              /**
+               * The tax behavior for the line item.
+               */
+              behavior: Tax.Behavior;
+            }
+
+            namespace Tax {
+              type Behavior = 'exclusive' | 'inclusive';
+            }
+          }
+
           type PreferredLocale =
             | 'cs-CZ'
             | 'da-DK'
@@ -2369,6 +3355,89 @@ declare module 'stripe' {
             | 'pt-PT'
             | 'sk-SK'
             | 'sv-SE';
+
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Payto {
+          /**
+           * Additional fields for Mandate creation. Only `purpose` field is configurable for PayTo PaymentIntent with `setup_future_usage=none`. Other fields are only applicable to PayTo PaymentIntent with `setup_future_usage=off_session`
+           */
+          mandate_options?: Payto.MandateOptions;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<Payto.SetupFutureUsage>;
+        }
+
+        namespace Payto {
+          interface MandateOptions {
+            /**
+             * Amount that will be collected. It is required when `amount_type` is `fixed`.
+             */
+            amount?: number;
+
+            /**
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+             */
+            end_date?: string;
+
+            /**
+             * The periodicity at which payments will be collected.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+             */
+            payments_per_period?: number;
+
+            /**
+             * The purpose for which payments are made. Defaults to retail.
+             */
+            purpose?: MandateOptions.Purpose;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'adhoc'
+              | 'annual'
+              | 'daily'
+              | 'fortnightly'
+              | 'monthly'
+              | 'quarterly'
+              | 'semi_annual'
+              | 'weekly';
+
+            type Purpose =
+              | 'dependant_support'
+              | 'government'
+              | 'loan'
+              | 'mortgage'
+              | 'other'
+              | 'pension'
+              | 'personal'
+              | 'retail'
+              | 'salary'
+              | 'tax'
+              | 'utility';
+          }
 
           type SetupFutureUsage = 'none' | 'off_session';
         }
@@ -2412,6 +3481,23 @@ declare module 'stripe' {
            */
           setup_future_usage?: 'none';
         }
+
+        interface Qris {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Rechnung {}
 
         interface RevolutPay {
           /**
@@ -2484,6 +3570,21 @@ declare module 'stripe' {
           }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
+        interface Shopeepay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Sofort {
@@ -2609,6 +3710,11 @@ declare module 'stripe' {
             filters?: FinancialConnections.Filters;
 
             /**
+             * Customize manual entry behavior
+             */
+            manual_entry?: FinancialConnections.ManualEntry;
+
+            /**
              * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
@@ -2630,10 +3736,26 @@ declare module 'stripe' {
                * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
                */
               account_subcategories?: Array<Filters.AccountSubcategory>;
+
+              /**
+               * ID of the institution to use to filter for selectable accounts.
+               */
+              institution?: string;
             }
 
             namespace Filters {
               type AccountSubcategory = 'checking' | 'savings';
+            }
+
+            interface ManualEntry {
+              /**
+               * Settings for configuring manual entry of account details.
+               */
+              mode: ManualEntry.Mode;
+            }
+
+            namespace ManualEntry {
+              type Mode = 'automatic' | 'custom';
             }
 
             type Permission =
@@ -2642,7 +3764,11 @@ declare module 'stripe' {
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'ownership' | 'transactions';
+            type Prefetch =
+              | 'balances'
+              | 'inferred_balances'
+              | 'ownership'
+              | 'transactions';
           }
 
           interface MandateOptions {
@@ -2722,6 +3848,8 @@ declare module 'stripe' {
         session?: string;
       }
 
+      type SecretKeyConfirmation = 'optional' | 'required';
+
       type SetupFutureUsage = 'off_session' | 'on_session';
 
       interface Shipping {
@@ -2797,6 +3925,11 @@ declare module 'stripe' {
       application_fee_amount?: Stripe.Emptyable<number>;
 
       /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      async_workflows?: PaymentIntentUpdateParams.AsyncWorkflows;
+
+      /**
        * Controls when the funds will be captured from the customer's account.
        */
       capture_method?: PaymentIntentUpdateParams.CaptureMethod;
@@ -2826,13 +3959,22 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * This hash contains details about the Mandate to create.
+       */
+      mandate_data?: PaymentIntentUpdateParams.MandateData;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
-       * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent. To unset this field to null, pass in an empty string.
+       * Provides industry-specific information about the charge.
        */
+      payment_details?: Stripe.Emptyable<
+        PaymentIntentUpdateParams.PaymentDetails
+      >;
+
       payment_method?: string;
 
       /**
@@ -2906,7 +4048,709 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentUpdateParams {
+      interface AsyncWorkflows {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: AsyncWorkflows.Inputs;
+      }
+
+      namespace AsyncWorkflows {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
+
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
+
+      interface MandateData {
+        /**
+         * This hash contains details about the customer acceptance of the Mandate.
+         */
+        customer_acceptance: MandateData.CustomerAcceptance;
+      }
+
+      namespace MandateData {
+        interface CustomerAcceptance {
+          /**
+           * If this is a Mandate accepted online, this hash contains details about the online acceptance.
+           */
+          online: CustomerAcceptance.Online;
+
+          /**
+           * The type of customer acceptance information included with the Mandate.
+           */
+          type: 'online';
+        }
+
+        namespace CustomerAcceptance {
+          interface Online {
+            /**
+             * The IP address from which the Mandate was accepted by the customer.
+             */
+            ip_address?: string;
+
+            /**
+             * The user agent of the browser from which the Mandate was accepted by the customer.
+             */
+            user_agent?: string;
+          }
+        }
+      }
+
+      interface PaymentDetails {
+        /**
+         * Car rental details for this PaymentIntent.
+         */
+        car_rental?: PaymentDetails.CarRental;
+
+        /**
+         * Event details for this PaymentIntent
+         */
+        event_details?: PaymentDetails.EventDetails;
+
+        /**
+         * Flight reservation details for this PaymentIntent
+         */
+        flight?: PaymentDetails.Flight;
+
+        /**
+         * Lodging reservation details for this PaymentIntent
+         */
+        lodging?: PaymentDetails.Lodging;
+
+        /**
+         * Subscription details for this PaymentIntent
+         */
+        subscription?: PaymentDetails.Subscription;
+      }
+
+      namespace PaymentDetails {
+        interface CarRental {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: CarRental.Affiliate;
+
+          /**
+           * The booking number associated with the car rental.
+           */
+          booking_number: string;
+
+          /**
+           * Class code of the car.
+           */
+          car_class_code?: string;
+
+          /**
+           * Make of the car.
+           */
+          car_make?: string;
+
+          /**
+           * Model of the car.
+           */
+          car_model?: string;
+
+          /**
+           * The name of the rental car company.
+           */
+          company?: string;
+
+          /**
+           * The customer service phone number of the car rental company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Number of days the car is being rented.
+           */
+          days_rented: number;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: CarRental.Delivery;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          drivers?: Array<CarRental.Driver>;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<CarRental.ExtraCharge>;
+
+          /**
+           * Indicates if the customer did not keep nor cancel their booking.
+           */
+          no_show?: boolean;
+
+          /**
+           * Car pick-up address.
+           */
+          pickup_address?: Stripe.AddressParam;
+
+          /**
+           * Car pick-up time. Measured in seconds since the Unix epoch.
+           */
+          pickup_at: number;
+
+          /**
+           * Rental rate.
+           */
+          rate_amount?: number;
+
+          /**
+           * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+           */
+          rate_interval?: CarRental.RateInterval;
+
+          /**
+           * The name of the person or entity renting the car.
+           */
+          renter_name?: string;
+
+          /**
+           * Car return address.
+           */
+          return_address?: Stripe.AddressParam;
+
+          /**
+           * Car return time. Measured in seconds since the Unix epoch.
+           */
+          return_at: number;
+
+          /**
+           * Indicates whether the goods or services are tax-exempt or tax is not collected.
+           */
+          tax_exempt?: boolean;
+        }
+
+        namespace CarRental {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Driver {
+            /**
+             * Full name of the person or entity on the car reservation.
+             */
+            name: string;
+          }
+
+          type ExtraCharge =
+            | 'extra_mileage'
+            | 'gas'
+            | 'late_return'
+            | 'one_way_service'
+            | 'parking_violation';
+
+          type RateInterval = 'day' | 'month' | 'week';
+        }
+
+        interface EventDetails {
+          /**
+           * Indicates if the tickets are digitally checked when entering the venue.
+           */
+          access_controlled_venue?: boolean;
+
+          /**
+           * The event location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: EventDetails.Affiliate;
+
+          /**
+           * The name of the company
+           */
+          company?: string;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: EventDetails.Delivery;
+
+          /**
+           * Event end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Type of the event entertainment (concert, sports event etc)
+           */
+          genre?: string;
+
+          /**
+           * The name of the event.
+           */
+          name: string;
+
+          /**
+           * Event start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace EventDetails {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+        }
+
+        interface Flight {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Flight.Affiliate;
+
+          /**
+           * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
+           */
+          agency_number?: string;
+
+          /**
+           * The International Air Transport Association (IATA) carrier code of the carrier that issued the ticket.
+           */
+          carrier?: string;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Flight.Delivery;
+
+          /**
+           * The name of the person or entity on the reservation.
+           */
+          passenger_name?: string;
+
+          /**
+           * The details of the passengers in the travel reservation.
+           */
+          passengers?: Array<Flight.Passenger>;
+
+          /**
+           * The individual flight segments associated with the trip.
+           */
+          segments: Array<Flight.Segment>;
+
+          /**
+           * The ticket number associated with the travel reservation.
+           */
+          ticket_number?: string;
+        }
+
+        namespace Flight {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the flight reservation.
+             */
+            name: string;
+          }
+
+          interface Segment {
+            /**
+             * The flight segment amount.
+             */
+            amount?: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the arrival airport.
+             */
+            arrival_airport?: string;
+
+            /**
+             * The arrival time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            arrives_at?: number;
+
+            /**
+             * The International Air Transport Association (IATA) carrier code of the carrier operating the flight segment.
+             */
+            carrier?: string;
+
+            /**
+             * The departure time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            departs_at: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the departure airport.
+             */
+            departure_airport?: string;
+
+            /**
+             * The flight number associated with the segment
+             */
+            flight_number?: string;
+
+            /**
+             * The fare class for the segment.
+             */
+            service_class?: Segment.ServiceClass;
+          }
+
+          namespace Segment {
+            type ServiceClass =
+              | 'business'
+              | 'economy'
+              | 'first'
+              | 'premium_economy';
+          }
+        }
+
+        interface Lodging {
+          /**
+           * The lodging location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * The number of adults on the booking
+           */
+          adults?: number;
+
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Lodging.Affiliate;
+
+          /**
+           * The booking number associated with the lodging reservation.
+           */
+          booking_number?: string;
+
+          /**
+           * The lodging category
+           */
+          category?: Lodging.Category;
+
+          /**
+           * Loding check-in time. Measured in seconds since the Unix epoch.
+           */
+          checkin_at: number;
+
+          /**
+           * Lodging check-out time. Measured in seconds since the Unix epoch.
+           */
+          checkout_at: number;
+
+          /**
+           * The customer service phone number of the lodging company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * The daily lodging room rate.
+           */
+          daily_room_rate_amount?: number;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Lodging.Delivery;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<Lodging.ExtraCharge>;
+
+          /**
+           * Indicates whether the lodging location is compliant with the Fire Safety Act.
+           */
+          fire_safety_act_compliance?: boolean;
+
+          /**
+           * The name of the lodging location.
+           */
+          name?: string;
+
+          /**
+           * Indicates if the customer did not keep their booking while failing to cancel the reservation.
+           */
+          no_show?: boolean;
+
+          /**
+           * The number of rooms on the booking
+           */
+          number_of_rooms?: number;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          passengers?: Array<Lodging.Passenger>;
+
+          /**
+           * The phone number of the lodging location.
+           */
+          property_phone_number?: string;
+
+          /**
+           * The room class for this purchase.
+           */
+          room_class?: string;
+
+          /**
+           * The number of room nights
+           */
+          room_nights?: number;
+
+          /**
+           * The total tax amount associating with the room reservation.
+           */
+          total_room_tax_amount?: number;
+
+          /**
+           * The total tax amount
+           */
+          total_tax_amount?: number;
+        }
+
+        namespace Lodging {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          type Category = 'hotel' | 'vacation_rental';
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          type ExtraCharge =
+            | 'gift_shop'
+            | 'laundry'
+            | 'mini_bar'
+            | 'other'
+            | 'restaurant'
+            | 'telephone';
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the lodging reservation.
+             */
+            name: string;
+          }
+        }
+
+        interface Subscription {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Subscription.Affiliate;
+
+          /**
+           * Info whether the subscription will be auto renewed upon expiry.
+           */
+          auto_renewal?: boolean;
+
+          /**
+           * Subscription billing details for this purchase.
+           */
+          billing_interval?: Subscription.BillingInterval;
+
+          /**
+           * Subscription end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Name of the product on subscription. e.g. Apple Music Subscription
+           */
+          name: string;
+
+          /**
+           * Subscription start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace Subscription {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface BillingInterval {
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            count: number;
+
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: BillingInterval.Interval;
+          }
+
+          namespace BillingInterval {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+        }
+      }
 
       interface PaymentMethodData {
         /**
@@ -3000,9 +4844,19 @@ declare module 'stripe' {
         giropay?: PaymentMethodData.Giropay;
 
         /**
+         * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+         */
+        gopay?: PaymentMethodData.Gopay;
+
+        /**
          * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
          */
         grabpay?: PaymentMethodData.Grabpay;
+
+        /**
+         * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+         */
+        id_bank_transfer?: PaymentMethodData.IdBankTransfer;
 
         /**
          * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -3038,6 +4892,11 @@ declare module 'stripe' {
          * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
          */
         link?: PaymentMethodData.Link;
+
+        /**
+         * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+         */
+        mb_way?: PaymentMethodData.MbWay;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -3090,6 +4949,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+         */
+        payto?: PaymentMethodData.Payto;
+
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -3100,9 +4964,19 @@ declare module 'stripe' {
         promptpay?: PaymentMethodData.Promptpay;
 
         /**
+         * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+         */
+        qris?: PaymentMethodData.Qris;
+
+        /**
          * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
+
+        /**
+         * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
+         */
+        rechnung?: PaymentMethodData.Rechnung;
 
         /**
          * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
@@ -3118,6 +4992,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
+
+        /**
+         * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+         */
+        shopeepay?: PaymentMethodData.Shopeepay;
 
         /**
          * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
@@ -3327,7 +5206,20 @@ declare module 'stripe' {
 
         interface Giropay {}
 
+        interface Gopay {}
+
         interface Grabpay {}
+
+        interface IdBankTransfer {
+          /**
+           * Bank where the account is held.
+           */
+          bank?: IdBankTransfer.Bank;
+        }
+
+        namespace IdBankTransfer {
+          type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+        }
 
         interface Ideal {
           /**
@@ -3392,6 +5284,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface MbWay {}
+
         interface Mobilepay {}
 
         interface Multibanco {}
@@ -3454,15 +5348,60 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Payto {
+          /**
+           * The account number for the bank account.
+           */
+          account_number?: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number?: string;
+
+          /**
+           * The PayID alias for the bank account.
+           */
+          pay_id?: string;
+        }
+
         interface Pix {}
 
         interface Promptpay {}
+
+        interface Qris {}
 
         interface RadarOptions {
           /**
            * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
            */
           session?: string;
+        }
+
+        interface Rechnung {
+          /**
+           * Customer's date of birth
+           */
+          dob: Rechnung.Dob;
+        }
+
+        namespace Rechnung {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
         }
 
         interface RevolutPay {}
@@ -3475,6 +5414,8 @@ declare module 'stripe' {
            */
           iban: string;
         }
+
+        interface Shopeepay {}
 
         interface Sofort {
           /**
@@ -3508,13 +5449,16 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'gopay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'kakao_pay'
           | 'klarna'
           | 'konbini'
           | 'kr_card'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'
@@ -3524,11 +5468,15 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'qris'
+          | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
           | 'sepa_debit'
+          | 'shopeepay'
           | 'sofort'
           | 'swish'
           | 'twint'
@@ -3670,9 +5618,21 @@ declare module 'stripe' {
         giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
 
         /**
+         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the GoPay payment method options.
+         */
+        gopay?: Stripe.Emptyable<PaymentMethodOptions.Gopay>;
+
+        /**
          * If this is a `grabpay` PaymentMethod, this sub-hash contains details about the Grabpay payment method options.
          */
         grabpay?: Stripe.Emptyable<PaymentMethodOptions.Grabpay>;
+
+        /**
+         * If this is a `id_bank_transfer` PaymentMethod, this sub-hash contains details about the Indonesia Bank Transfer payment method options.
+         */
+        id_bank_transfer?: Stripe.Emptyable<
+          PaymentMethodOptions.IdBankTransfer
+        >;
 
         /**
          * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
@@ -3708,6 +5668,11 @@ declare module 'stripe' {
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
          */
         link?: Stripe.Emptyable<PaymentMethodOptions.Link>;
+
+        /**
+         * If this is a `mb_way` PaymentMethod, this sub-hash contains details about the MB WAY payment method options.
+         */
+        mb_way?: Stripe.Emptyable<PaymentMethodOptions.MbWay>;
 
         /**
          * If this is a `MobilePay` PaymentMethod, this sub-hash contains details about the MobilePay payment method options.
@@ -3755,6 +5720,11 @@ declare module 'stripe' {
         paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
 
         /**
+         * If this is a `payto` PaymentMethod, this sub-hash contains details about the PayTo payment method options.
+         */
+        payto?: Stripe.Emptyable<PaymentMethodOptions.Payto>;
+
+        /**
          * If this is a `pix` PaymentMethod, this sub-hash contains details about the Pix payment method options.
          */
         pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
@@ -3763,6 +5733,16 @@ declare module 'stripe' {
          * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
          */
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
+
+        /**
+         * If this is a `qris` PaymentMethod, this sub-hash contains details about the QRIS payment method options.
+         */
+        qris?: Stripe.Emptyable<PaymentMethodOptions.Qris>;
+
+        /**
+         * If this is a `rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
+         */
+        rechnung?: Stripe.Emptyable<PaymentMethodOptions.Rechnung>;
 
         /**
          * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Revolut Pay payment method options.
@@ -3778,6 +5758,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
+
+        /**
+         * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
+         */
+        shopeepay?: Stripe.Emptyable<PaymentMethodOptions.Shopeepay>;
 
         /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
@@ -4162,6 +6147,11 @@ declare module 'stripe' {
           network?: Card.Network;
 
           /**
+           * Request ability to [decrement the authorization](https://stripe.com/docs/payments/decremental-authorization) for this PaymentIntent.
+           */
+          request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+          /**
            * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/docs/payments/extended-authorization) for this PaymentIntent.
            */
           request_extended_authorization?: Card.RequestExtendedAuthorization;
@@ -4180,6 +6170,11 @@ declare module 'stripe' {
            * Request ability to [overcapture](https://stripe.com/docs/payments/overcapture) for this PaymentIntent.
            */
           request_overcapture?: Card.RequestOvercapture;
+
+          /**
+           * Request partial authorization on this PaymentIntent.
+           */
+          request_partial_authorization?: Card.RequestPartialAuthorization;
 
           /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
@@ -4213,6 +6208,11 @@ declare module 'stripe' {
            * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
            */
           statement_descriptor_suffix_kanji?: Stripe.Emptyable<string>;
+
+          /**
+           * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
+           */
+          statement_details?: Stripe.Emptyable<Card.StatementDetails>;
 
           /**
            * If 3D Secure authentication was performed with a third-party provider,
@@ -4325,6 +6325,8 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
+          type RequestDecrementalAuthorization = 'if_available' | 'never';
+
           type RequestExtendedAuthorization = 'if_available' | 'never';
 
           type RequestIncrementalAuthorization = 'if_available' | 'never';
@@ -4333,9 +6335,23 @@ declare module 'stripe' {
 
           type RequestOvercapture = 'if_available' | 'never';
 
+          type RequestPartialAuthorization = 'if_available' | 'never';
+
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          interface StatementDetails {
+            /**
+             * Please pass in an address that is within your Stripe user account country
+             */
+            address?: Stripe.AddressParam;
+
+            /**
+             * Phone number (e.g., a toll-free number that customers can call)
+             */
+            phone?: string;
+          }
 
           interface ThreeDSecure {
             /**
@@ -4608,7 +6624,47 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Gopay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface Grabpay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface IdBankTransfer {
+          /**
+           * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from 5 minutes from now until 31 days from now. If unset, it defaults to 3 days from now.
+           */
+          expires_after?: number;
+
+          /**
+           * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from now until 30 days from now. If unset, it defaults to 1 days from now.
+           */
+          expires_at?: number;
+
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -4844,6 +6900,21 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface MbWay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface Mobilepay {
           /**
            * Controls when the funds are captured from the customer's account.
@@ -4969,6 +7040,11 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
+           * The line items purchased by the customer.
+           */
+          line_items?: Array<Paypal.LineItem>;
+
+          /**
            * [Preferred locale](https://stripe.com/docs/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
            */
           preferred_locale?: Paypal.PreferredLocale;
@@ -4977,6 +7053,11 @@ declare module 'stripe' {
            * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
            */
           reference?: string;
+
+          /**
+           * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+           */
+          reference_id?: string;
 
           /**
            * The risk correlation ID for an on-session payment using a saved PayPal payment method.
@@ -4995,9 +7076,76 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<Paypal.SetupFutureUsage>;
+
+          /**
+           * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+           */
+          subsellers?: Array<string>;
         }
 
         namespace Paypal {
+          interface LineItem {
+            /**
+             * Type of the line item.
+             */
+            category?: LineItem.Category;
+
+            /**
+             * Description of the line item.
+             */
+            description?: string;
+
+            /**
+             * Descriptive name of the line item.
+             */
+            name: string;
+
+            /**
+             * Quantity of the line item. Must be a positive number.
+             */
+            quantity: number;
+
+            /**
+             * Client facing stock keeping unit, article number or similar.
+             */
+            sku?: string;
+
+            /**
+             * The Stripe account ID of the connected account that sells the item.
+             */
+            sold_by?: string;
+
+            /**
+             * The tax information for the line item.
+             */
+            tax?: LineItem.Tax;
+
+            /**
+             * Price for a single unit of the line item in minor units. Cannot be a negative number.
+             */
+            unit_amount: number;
+          }
+
+          namespace LineItem {
+            type Category = 'digital_goods' | 'donation' | 'physical_goods';
+
+            interface Tax {
+              /**
+               * The tax for a single unit of the line item in minor units. Cannot be a negative number.
+               */
+              amount: number;
+
+              /**
+               * The tax behavior for the line item.
+               */
+              behavior: Tax.Behavior;
+            }
+
+            namespace Tax {
+              type Behavior = 'exclusive' | 'inclusive';
+            }
+          }
+
           type PreferredLocale =
             | 'cs-CZ'
             | 'da-DK'
@@ -5020,6 +7168,89 @@ declare module 'stripe' {
             | 'pt-PT'
             | 'sk-SK'
             | 'sv-SE';
+
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Payto {
+          /**
+           * Additional fields for Mandate creation. Only `purpose` field is configurable for PayTo PaymentIntent with `setup_future_usage=none`. Other fields are only applicable to PayTo PaymentIntent with `setup_future_usage=off_session`
+           */
+          mandate_options?: Payto.MandateOptions;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<Payto.SetupFutureUsage>;
+        }
+
+        namespace Payto {
+          interface MandateOptions {
+            /**
+             * Amount that will be collected. It is required when `amount_type` is `fixed`.
+             */
+            amount?: number;
+
+            /**
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+             */
+            end_date?: string;
+
+            /**
+             * The periodicity at which payments will be collected.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+             */
+            payments_per_period?: number;
+
+            /**
+             * The purpose for which payments are made. Defaults to retail.
+             */
+            purpose?: MandateOptions.Purpose;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'adhoc'
+              | 'annual'
+              | 'daily'
+              | 'fortnightly'
+              | 'monthly'
+              | 'quarterly'
+              | 'semi_annual'
+              | 'weekly';
+
+            type Purpose =
+              | 'dependant_support'
+              | 'government'
+              | 'loan'
+              | 'mortgage'
+              | 'other'
+              | 'pension'
+              | 'personal'
+              | 'retail'
+              | 'salary'
+              | 'tax'
+              | 'utility';
+          }
 
           type SetupFutureUsage = 'none' | 'off_session';
         }
@@ -5063,6 +7294,23 @@ declare module 'stripe' {
            */
           setup_future_usage?: 'none';
         }
+
+        interface Qris {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Rechnung {}
 
         interface RevolutPay {
           /**
@@ -5135,6 +7383,21 @@ declare module 'stripe' {
           }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
+        interface Shopeepay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Sofort {
@@ -5260,6 +7523,11 @@ declare module 'stripe' {
             filters?: FinancialConnections.Filters;
 
             /**
+             * Customize manual entry behavior
+             */
+            manual_entry?: FinancialConnections.ManualEntry;
+
+            /**
              * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
@@ -5281,10 +7549,26 @@ declare module 'stripe' {
                * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
                */
               account_subcategories?: Array<Filters.AccountSubcategory>;
+
+              /**
+               * ID of the institution to use to filter for selectable accounts.
+               */
+              institution?: string;
             }
 
             namespace Filters {
               type AccountSubcategory = 'checking' | 'savings';
+            }
+
+            interface ManualEntry {
+              /**
+               * Settings for configuring manual entry of account details.
+               */
+              mode: ManualEntry.Mode;
+            }
+
+            namespace ManualEntry {
+              type Mode = 'automatic' | 'custom';
             }
 
             type Permission =
@@ -5293,7 +7577,11 @@ declare module 'stripe' {
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'ownership' | 'transactions';
+            type Prefetch =
+              | 'balances'
+              | 'inferred_balances'
+              | 'ownership'
+              | 'transactions';
           }
 
           interface MandateOptions {
@@ -5473,6 +7761,11 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      async_workflows?: PaymentIntentCaptureParams.AsyncWorkflows;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -5486,6 +7779,13 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+      /**
+       * Provides industry-specific information about the charge.
+       */
+      payment_details?: Stripe.Emptyable<
+        PaymentIntentCaptureParams.PaymentDetails
+      >;
 
       /**
        * Text that appears on the customer's statement as the statement descriptor for a non-card charge. This value overrides the account's default statement descriptor. For information about requirements, including the 22-character limit, see [the Statement Descriptor docs](https://docs.stripe.com/get-started/account/statement-descriptors).
@@ -5507,6 +7807,673 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentCaptureParams {
+      interface AsyncWorkflows {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: AsyncWorkflows.Inputs;
+      }
+
+      namespace AsyncWorkflows {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
+
+      interface PaymentDetails {
+        /**
+         * Car rental details for this PaymentIntent.
+         */
+        car_rental?: PaymentDetails.CarRental;
+
+        /**
+         * Event details for this PaymentIntent
+         */
+        event_details?: PaymentDetails.EventDetails;
+
+        /**
+         * Flight reservation details for this PaymentIntent
+         */
+        flight?: PaymentDetails.Flight;
+
+        /**
+         * Lodging reservation details for this PaymentIntent
+         */
+        lodging?: PaymentDetails.Lodging;
+
+        /**
+         * Subscription details for this PaymentIntent
+         */
+        subscription?: PaymentDetails.Subscription;
+      }
+
+      namespace PaymentDetails {
+        interface CarRental {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: CarRental.Affiliate;
+
+          /**
+           * The booking number associated with the car rental.
+           */
+          booking_number: string;
+
+          /**
+           * Class code of the car.
+           */
+          car_class_code?: string;
+
+          /**
+           * Make of the car.
+           */
+          car_make?: string;
+
+          /**
+           * Model of the car.
+           */
+          car_model?: string;
+
+          /**
+           * The name of the rental car company.
+           */
+          company?: string;
+
+          /**
+           * The customer service phone number of the car rental company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Number of days the car is being rented.
+           */
+          days_rented: number;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: CarRental.Delivery;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          drivers?: Array<CarRental.Driver>;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<CarRental.ExtraCharge>;
+
+          /**
+           * Indicates if the customer did not keep nor cancel their booking.
+           */
+          no_show?: boolean;
+
+          /**
+           * Car pick-up address.
+           */
+          pickup_address?: Stripe.AddressParam;
+
+          /**
+           * Car pick-up time. Measured in seconds since the Unix epoch.
+           */
+          pickup_at: number;
+
+          /**
+           * Rental rate.
+           */
+          rate_amount?: number;
+
+          /**
+           * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+           */
+          rate_interval?: CarRental.RateInterval;
+
+          /**
+           * The name of the person or entity renting the car.
+           */
+          renter_name?: string;
+
+          /**
+           * Car return address.
+           */
+          return_address?: Stripe.AddressParam;
+
+          /**
+           * Car return time. Measured in seconds since the Unix epoch.
+           */
+          return_at: number;
+
+          /**
+           * Indicates whether the goods or services are tax-exempt or tax is not collected.
+           */
+          tax_exempt?: boolean;
+        }
+
+        namespace CarRental {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Driver {
+            /**
+             * Full name of the person or entity on the car reservation.
+             */
+            name: string;
+          }
+
+          type ExtraCharge =
+            | 'extra_mileage'
+            | 'gas'
+            | 'late_return'
+            | 'one_way_service'
+            | 'parking_violation';
+
+          type RateInterval = 'day' | 'month' | 'week';
+        }
+
+        interface EventDetails {
+          /**
+           * Indicates if the tickets are digitally checked when entering the venue.
+           */
+          access_controlled_venue?: boolean;
+
+          /**
+           * The event location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: EventDetails.Affiliate;
+
+          /**
+           * The name of the company
+           */
+          company?: string;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: EventDetails.Delivery;
+
+          /**
+           * Event end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Type of the event entertainment (concert, sports event etc)
+           */
+          genre?: string;
+
+          /**
+           * The name of the event.
+           */
+          name: string;
+
+          /**
+           * Event start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace EventDetails {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+        }
+
+        interface Flight {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Flight.Affiliate;
+
+          /**
+           * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
+           */
+          agency_number?: string;
+
+          /**
+           * The International Air Transport Association (IATA) carrier code of the carrier that issued the ticket.
+           */
+          carrier?: string;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Flight.Delivery;
+
+          /**
+           * The name of the person or entity on the reservation.
+           */
+          passenger_name?: string;
+
+          /**
+           * The details of the passengers in the travel reservation.
+           */
+          passengers?: Array<Flight.Passenger>;
+
+          /**
+           * The individual flight segments associated with the trip.
+           */
+          segments: Array<Flight.Segment>;
+
+          /**
+           * The ticket number associated with the travel reservation.
+           */
+          ticket_number?: string;
+        }
+
+        namespace Flight {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the flight reservation.
+             */
+            name: string;
+          }
+
+          interface Segment {
+            /**
+             * The flight segment amount.
+             */
+            amount?: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the arrival airport.
+             */
+            arrival_airport?: string;
+
+            /**
+             * The arrival time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            arrives_at?: number;
+
+            /**
+             * The International Air Transport Association (IATA) carrier code of the carrier operating the flight segment.
+             */
+            carrier?: string;
+
+            /**
+             * The departure time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            departs_at: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the departure airport.
+             */
+            departure_airport?: string;
+
+            /**
+             * The flight number associated with the segment
+             */
+            flight_number?: string;
+
+            /**
+             * The fare class for the segment.
+             */
+            service_class?: Segment.ServiceClass;
+          }
+
+          namespace Segment {
+            type ServiceClass =
+              | 'business'
+              | 'economy'
+              | 'first'
+              | 'premium_economy';
+          }
+        }
+
+        interface Lodging {
+          /**
+           * The lodging location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * The number of adults on the booking
+           */
+          adults?: number;
+
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Lodging.Affiliate;
+
+          /**
+           * The booking number associated with the lodging reservation.
+           */
+          booking_number?: string;
+
+          /**
+           * The lodging category
+           */
+          category?: Lodging.Category;
+
+          /**
+           * Loding check-in time. Measured in seconds since the Unix epoch.
+           */
+          checkin_at: number;
+
+          /**
+           * Lodging check-out time. Measured in seconds since the Unix epoch.
+           */
+          checkout_at: number;
+
+          /**
+           * The customer service phone number of the lodging company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * The daily lodging room rate.
+           */
+          daily_room_rate_amount?: number;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Lodging.Delivery;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<Lodging.ExtraCharge>;
+
+          /**
+           * Indicates whether the lodging location is compliant with the Fire Safety Act.
+           */
+          fire_safety_act_compliance?: boolean;
+
+          /**
+           * The name of the lodging location.
+           */
+          name?: string;
+
+          /**
+           * Indicates if the customer did not keep their booking while failing to cancel the reservation.
+           */
+          no_show?: boolean;
+
+          /**
+           * The number of rooms on the booking
+           */
+          number_of_rooms?: number;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          passengers?: Array<Lodging.Passenger>;
+
+          /**
+           * The phone number of the lodging location.
+           */
+          property_phone_number?: string;
+
+          /**
+           * The room class for this purchase.
+           */
+          room_class?: string;
+
+          /**
+           * The number of room nights
+           */
+          room_nights?: number;
+
+          /**
+           * The total tax amount associating with the room reservation.
+           */
+          total_room_tax_amount?: number;
+
+          /**
+           * The total tax amount
+           */
+          total_tax_amount?: number;
+        }
+
+        namespace Lodging {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          type Category = 'hotel' | 'vacation_rental';
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          type ExtraCharge =
+            | 'gift_shop'
+            | 'laundry'
+            | 'mini_bar'
+            | 'other'
+            | 'restaurant'
+            | 'telephone';
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the lodging reservation.
+             */
+            name: string;
+          }
+        }
+
+        interface Subscription {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Subscription.Affiliate;
+
+          /**
+           * Info whether the subscription will be auto renewed upon expiry.
+           */
+          auto_renewal?: boolean;
+
+          /**
+           * Subscription billing details for this purchase.
+           */
+          billing_interval?: Subscription.BillingInterval;
+
+          /**
+           * Subscription end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Name of the product on subscription. e.g. Apple Music Subscription
+           */
+          name: string;
+
+          /**
+           * Subscription start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace Subscription {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface BillingInterval {
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            count: number;
+
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: BillingInterval.Interval;
+          }
+
+          namespace BillingInterval {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+        }
+      }
+
       interface TransferData {
         /**
          * The amount that will be transferred automatically when a charge succeeds.
@@ -5516,6 +8483,16 @@ declare module 'stripe' {
     }
 
     interface PaymentIntentConfirmParams {
+      /**
+       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       */
+      application_fee_amount?: Stripe.Emptyable<number>;
+
+      /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      async_workflows?: PaymentIntentConfirmParams.AsyncWorkflows;
+
       /**
        * Controls when the funds will be captured from the customer's account.
        */
@@ -5549,6 +8526,13 @@ declare module 'stripe' {
        * Set to `true` to indicate that the customer isn't in your checkout flow during this payment attempt and can't authenticate. Use this parameter in scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
        */
       off_session?: boolean | PaymentIntentConfirmParams.OffSession;
+
+      /**
+       * Provides industry-specific information about the charge.
+       */
+      payment_details?: Stripe.Emptyable<
+        PaymentIntentConfirmParams.PaymentDetails
+      >;
 
       /**
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.
@@ -5616,6 +8600,31 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentConfirmParams {
+      interface AsyncWorkflows {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: AsyncWorkflows.Inputs;
+      }
+
+      namespace AsyncWorkflows {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
+
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       interface MandateData {
@@ -5668,6 +8677,648 @@ declare module 'stripe' {
       }
 
       type OffSession = 'one_off' | 'recurring';
+
+      interface PaymentDetails {
+        /**
+         * Car rental details for this PaymentIntent.
+         */
+        car_rental?: PaymentDetails.CarRental;
+
+        /**
+         * Event details for this PaymentIntent
+         */
+        event_details?: PaymentDetails.EventDetails;
+
+        /**
+         * Flight reservation details for this PaymentIntent
+         */
+        flight?: PaymentDetails.Flight;
+
+        /**
+         * Lodging reservation details for this PaymentIntent
+         */
+        lodging?: PaymentDetails.Lodging;
+
+        /**
+         * Subscription details for this PaymentIntent
+         */
+        subscription?: PaymentDetails.Subscription;
+      }
+
+      namespace PaymentDetails {
+        interface CarRental {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: CarRental.Affiliate;
+
+          /**
+           * The booking number associated with the car rental.
+           */
+          booking_number: string;
+
+          /**
+           * Class code of the car.
+           */
+          car_class_code?: string;
+
+          /**
+           * Make of the car.
+           */
+          car_make?: string;
+
+          /**
+           * Model of the car.
+           */
+          car_model?: string;
+
+          /**
+           * The name of the rental car company.
+           */
+          company?: string;
+
+          /**
+           * The customer service phone number of the car rental company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Number of days the car is being rented.
+           */
+          days_rented: number;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: CarRental.Delivery;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          drivers?: Array<CarRental.Driver>;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<CarRental.ExtraCharge>;
+
+          /**
+           * Indicates if the customer did not keep nor cancel their booking.
+           */
+          no_show?: boolean;
+
+          /**
+           * Car pick-up address.
+           */
+          pickup_address?: Stripe.AddressParam;
+
+          /**
+           * Car pick-up time. Measured in seconds since the Unix epoch.
+           */
+          pickup_at: number;
+
+          /**
+           * Rental rate.
+           */
+          rate_amount?: number;
+
+          /**
+           * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+           */
+          rate_interval?: CarRental.RateInterval;
+
+          /**
+           * The name of the person or entity renting the car.
+           */
+          renter_name?: string;
+
+          /**
+           * Car return address.
+           */
+          return_address?: Stripe.AddressParam;
+
+          /**
+           * Car return time. Measured in seconds since the Unix epoch.
+           */
+          return_at: number;
+
+          /**
+           * Indicates whether the goods or services are tax-exempt or tax is not collected.
+           */
+          tax_exempt?: boolean;
+        }
+
+        namespace CarRental {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Driver {
+            /**
+             * Full name of the person or entity on the car reservation.
+             */
+            name: string;
+          }
+
+          type ExtraCharge =
+            | 'extra_mileage'
+            | 'gas'
+            | 'late_return'
+            | 'one_way_service'
+            | 'parking_violation';
+
+          type RateInterval = 'day' | 'month' | 'week';
+        }
+
+        interface EventDetails {
+          /**
+           * Indicates if the tickets are digitally checked when entering the venue.
+           */
+          access_controlled_venue?: boolean;
+
+          /**
+           * The event location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: EventDetails.Affiliate;
+
+          /**
+           * The name of the company
+           */
+          company?: string;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: EventDetails.Delivery;
+
+          /**
+           * Event end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Type of the event entertainment (concert, sports event etc)
+           */
+          genre?: string;
+
+          /**
+           * The name of the event.
+           */
+          name: string;
+
+          /**
+           * Event start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace EventDetails {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+        }
+
+        interface Flight {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Flight.Affiliate;
+
+          /**
+           * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
+           */
+          agency_number?: string;
+
+          /**
+           * The International Air Transport Association (IATA) carrier code of the carrier that issued the ticket.
+           */
+          carrier?: string;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Flight.Delivery;
+
+          /**
+           * The name of the person or entity on the reservation.
+           */
+          passenger_name?: string;
+
+          /**
+           * The details of the passengers in the travel reservation.
+           */
+          passengers?: Array<Flight.Passenger>;
+
+          /**
+           * The individual flight segments associated with the trip.
+           */
+          segments: Array<Flight.Segment>;
+
+          /**
+           * The ticket number associated with the travel reservation.
+           */
+          ticket_number?: string;
+        }
+
+        namespace Flight {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the flight reservation.
+             */
+            name: string;
+          }
+
+          interface Segment {
+            /**
+             * The flight segment amount.
+             */
+            amount?: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the arrival airport.
+             */
+            arrival_airport?: string;
+
+            /**
+             * The arrival time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            arrives_at?: number;
+
+            /**
+             * The International Air Transport Association (IATA) carrier code of the carrier operating the flight segment.
+             */
+            carrier?: string;
+
+            /**
+             * The departure time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            departs_at: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the departure airport.
+             */
+            departure_airport?: string;
+
+            /**
+             * The flight number associated with the segment
+             */
+            flight_number?: string;
+
+            /**
+             * The fare class for the segment.
+             */
+            service_class?: Segment.ServiceClass;
+          }
+
+          namespace Segment {
+            type ServiceClass =
+              | 'business'
+              | 'economy'
+              | 'first'
+              | 'premium_economy';
+          }
+        }
+
+        interface Lodging {
+          /**
+           * The lodging location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * The number of adults on the booking
+           */
+          adults?: number;
+
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Lodging.Affiliate;
+
+          /**
+           * The booking number associated with the lodging reservation.
+           */
+          booking_number?: string;
+
+          /**
+           * The lodging category
+           */
+          category?: Lodging.Category;
+
+          /**
+           * Loding check-in time. Measured in seconds since the Unix epoch.
+           */
+          checkin_at: number;
+
+          /**
+           * Lodging check-out time. Measured in seconds since the Unix epoch.
+           */
+          checkout_at: number;
+
+          /**
+           * The customer service phone number of the lodging company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * The daily lodging room rate.
+           */
+          daily_room_rate_amount?: number;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Lodging.Delivery;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<Lodging.ExtraCharge>;
+
+          /**
+           * Indicates whether the lodging location is compliant with the Fire Safety Act.
+           */
+          fire_safety_act_compliance?: boolean;
+
+          /**
+           * The name of the lodging location.
+           */
+          name?: string;
+
+          /**
+           * Indicates if the customer did not keep their booking while failing to cancel the reservation.
+           */
+          no_show?: boolean;
+
+          /**
+           * The number of rooms on the booking
+           */
+          number_of_rooms?: number;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          passengers?: Array<Lodging.Passenger>;
+
+          /**
+           * The phone number of the lodging location.
+           */
+          property_phone_number?: string;
+
+          /**
+           * The room class for this purchase.
+           */
+          room_class?: string;
+
+          /**
+           * The number of room nights
+           */
+          room_nights?: number;
+
+          /**
+           * The total tax amount associating with the room reservation.
+           */
+          total_room_tax_amount?: number;
+
+          /**
+           * The total tax amount
+           */
+          total_tax_amount?: number;
+        }
+
+        namespace Lodging {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          type Category = 'hotel' | 'vacation_rental';
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          type ExtraCharge =
+            | 'gift_shop'
+            | 'laundry'
+            | 'mini_bar'
+            | 'other'
+            | 'restaurant'
+            | 'telephone';
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the lodging reservation.
+             */
+            name: string;
+          }
+        }
+
+        interface Subscription {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Subscription.Affiliate;
+
+          /**
+           * Info whether the subscription will be auto renewed upon expiry.
+           */
+          auto_renewal?: boolean;
+
+          /**
+           * Subscription billing details for this purchase.
+           */
+          billing_interval?: Subscription.BillingInterval;
+
+          /**
+           * Subscription end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Name of the product on subscription. e.g. Apple Music Subscription
+           */
+          name: string;
+
+          /**
+           * Subscription start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace Subscription {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface BillingInterval {
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            count: number;
+
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: BillingInterval.Interval;
+          }
+
+          namespace BillingInterval {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+        }
+      }
 
       interface PaymentMethodData {
         /**
@@ -5761,9 +9412,19 @@ declare module 'stripe' {
         giropay?: PaymentMethodData.Giropay;
 
         /**
+         * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+         */
+        gopay?: PaymentMethodData.Gopay;
+
+        /**
          * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
          */
         grabpay?: PaymentMethodData.Grabpay;
+
+        /**
+         * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+         */
+        id_bank_transfer?: PaymentMethodData.IdBankTransfer;
 
         /**
          * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -5799,6 +9460,11 @@ declare module 'stripe' {
          * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
          */
         link?: PaymentMethodData.Link;
+
+        /**
+         * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+         */
+        mb_way?: PaymentMethodData.MbWay;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -5851,6 +9517,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+         */
+        payto?: PaymentMethodData.Payto;
+
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -5861,9 +9532,19 @@ declare module 'stripe' {
         promptpay?: PaymentMethodData.Promptpay;
 
         /**
+         * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+         */
+        qris?: PaymentMethodData.Qris;
+
+        /**
          * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
+
+        /**
+         * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
+         */
+        rechnung?: PaymentMethodData.Rechnung;
 
         /**
          * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
@@ -5879,6 +9560,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
+
+        /**
+         * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+         */
+        shopeepay?: PaymentMethodData.Shopeepay;
 
         /**
          * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
@@ -6088,7 +9774,20 @@ declare module 'stripe' {
 
         interface Giropay {}
 
+        interface Gopay {}
+
         interface Grabpay {}
+
+        interface IdBankTransfer {
+          /**
+           * Bank where the account is held.
+           */
+          bank?: IdBankTransfer.Bank;
+        }
+
+        namespace IdBankTransfer {
+          type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+        }
 
         interface Ideal {
           /**
@@ -6153,6 +9852,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface MbWay {}
+
         interface Mobilepay {}
 
         interface Multibanco {}
@@ -6215,15 +9916,60 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Payto {
+          /**
+           * The account number for the bank account.
+           */
+          account_number?: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number?: string;
+
+          /**
+           * The PayID alias for the bank account.
+           */
+          pay_id?: string;
+        }
+
         interface Pix {}
 
         interface Promptpay {}
+
+        interface Qris {}
 
         interface RadarOptions {
           /**
            * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
            */
           session?: string;
+        }
+
+        interface Rechnung {
+          /**
+           * Customer's date of birth
+           */
+          dob: Rechnung.Dob;
+        }
+
+        namespace Rechnung {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
         }
 
         interface RevolutPay {}
@@ -6236,6 +9982,8 @@ declare module 'stripe' {
            */
           iban: string;
         }
+
+        interface Shopeepay {}
 
         interface Sofort {
           /**
@@ -6269,13 +10017,16 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'gopay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'kakao_pay'
           | 'klarna'
           | 'konbini'
           | 'kr_card'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'
@@ -6285,11 +10036,15 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'qris'
+          | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
           | 'sepa_debit'
+          | 'shopeepay'
           | 'sofort'
           | 'swish'
           | 'twint'
@@ -6431,9 +10186,21 @@ declare module 'stripe' {
         giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
 
         /**
+         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the GoPay payment method options.
+         */
+        gopay?: Stripe.Emptyable<PaymentMethodOptions.Gopay>;
+
+        /**
          * If this is a `grabpay` PaymentMethod, this sub-hash contains details about the Grabpay payment method options.
          */
         grabpay?: Stripe.Emptyable<PaymentMethodOptions.Grabpay>;
+
+        /**
+         * If this is a `id_bank_transfer` PaymentMethod, this sub-hash contains details about the Indonesia Bank Transfer payment method options.
+         */
+        id_bank_transfer?: Stripe.Emptyable<
+          PaymentMethodOptions.IdBankTransfer
+        >;
 
         /**
          * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
@@ -6469,6 +10236,11 @@ declare module 'stripe' {
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
          */
         link?: Stripe.Emptyable<PaymentMethodOptions.Link>;
+
+        /**
+         * If this is a `mb_way` PaymentMethod, this sub-hash contains details about the MB WAY payment method options.
+         */
+        mb_way?: Stripe.Emptyable<PaymentMethodOptions.MbWay>;
 
         /**
          * If this is a `MobilePay` PaymentMethod, this sub-hash contains details about the MobilePay payment method options.
@@ -6516,6 +10288,11 @@ declare module 'stripe' {
         paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
 
         /**
+         * If this is a `payto` PaymentMethod, this sub-hash contains details about the PayTo payment method options.
+         */
+        payto?: Stripe.Emptyable<PaymentMethodOptions.Payto>;
+
+        /**
          * If this is a `pix` PaymentMethod, this sub-hash contains details about the Pix payment method options.
          */
         pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
@@ -6524,6 +10301,16 @@ declare module 'stripe' {
          * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
          */
         promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
+
+        /**
+         * If this is a `qris` PaymentMethod, this sub-hash contains details about the QRIS payment method options.
+         */
+        qris?: Stripe.Emptyable<PaymentMethodOptions.Qris>;
+
+        /**
+         * If this is a `rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
+         */
+        rechnung?: Stripe.Emptyable<PaymentMethodOptions.Rechnung>;
 
         /**
          * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Revolut Pay payment method options.
@@ -6539,6 +10326,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
+
+        /**
+         * If this is a `shopeepay` PaymentMethod, this sub-hash contains details about the ShopeePay payment method options.
+         */
+        shopeepay?: Stripe.Emptyable<PaymentMethodOptions.Shopeepay>;
 
         /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
@@ -6923,6 +10715,11 @@ declare module 'stripe' {
           network?: Card.Network;
 
           /**
+           * Request ability to [decrement the authorization](https://stripe.com/docs/payments/decremental-authorization) for this PaymentIntent.
+           */
+          request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+          /**
            * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/docs/payments/extended-authorization) for this PaymentIntent.
            */
           request_extended_authorization?: Card.RequestExtendedAuthorization;
@@ -6941,6 +10738,11 @@ declare module 'stripe' {
            * Request ability to [overcapture](https://stripe.com/docs/payments/overcapture) for this PaymentIntent.
            */
           request_overcapture?: Card.RequestOvercapture;
+
+          /**
+           * Request partial authorization on this PaymentIntent.
+           */
+          request_partial_authorization?: Card.RequestPartialAuthorization;
 
           /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
@@ -6974,6 +10776,11 @@ declare module 'stripe' {
            * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
            */
           statement_descriptor_suffix_kanji?: Stripe.Emptyable<string>;
+
+          /**
+           * Statement details for this payment intent. You can use this to override the merchant details shown on your customers' statements.
+           */
+          statement_details?: Stripe.Emptyable<Card.StatementDetails>;
 
           /**
            * If 3D Secure authentication was performed with a third-party provider,
@@ -7086,6 +10893,8 @@ declare module 'stripe' {
             | 'unknown'
             | 'visa';
 
+          type RequestDecrementalAuthorization = 'if_available' | 'never';
+
           type RequestExtendedAuthorization = 'if_available' | 'never';
 
           type RequestIncrementalAuthorization = 'if_available' | 'never';
@@ -7094,9 +10903,23 @@ declare module 'stripe' {
 
           type RequestOvercapture = 'if_available' | 'never';
 
+          type RequestPartialAuthorization = 'if_available' | 'never';
+
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          interface StatementDetails {
+            /**
+             * Please pass in an address that is within your Stripe user account country
+             */
+            address?: Stripe.AddressParam;
+
+            /**
+             * Phone number (e.g., a toll-free number that customers can call)
+             */
+            phone?: string;
+          }
 
           interface ThreeDSecure {
             /**
@@ -7369,7 +11192,47 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Gopay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface Grabpay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface IdBankTransfer {
+          /**
+           * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from 5 minutes from now until 31 days from now. If unset, it defaults to 3 days from now.
+           */
+          expires_after?: number;
+
+          /**
+           * The UNIX timestamp until which the virtual bank account is valid. Permitted range is from now until 30 days from now. If unset, it defaults to 1 days from now.
+           */
+          expires_at?: number;
+
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -7605,6 +11468,21 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface MbWay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface Mobilepay {
           /**
            * Controls when the funds are captured from the customer's account.
@@ -7730,6 +11608,11 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
+           * The line items purchased by the customer.
+           */
+          line_items?: Array<Paypal.LineItem>;
+
+          /**
            * [Preferred locale](https://stripe.com/docs/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
            */
           preferred_locale?: Paypal.PreferredLocale;
@@ -7738,6 +11621,11 @@ declare module 'stripe' {
            * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
            */
           reference?: string;
+
+          /**
+           * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+           */
+          reference_id?: string;
 
           /**
            * The risk correlation ID for an on-session payment using a saved PayPal payment method.
@@ -7756,9 +11644,76 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<Paypal.SetupFutureUsage>;
+
+          /**
+           * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+           */
+          subsellers?: Array<string>;
         }
 
         namespace Paypal {
+          interface LineItem {
+            /**
+             * Type of the line item.
+             */
+            category?: LineItem.Category;
+
+            /**
+             * Description of the line item.
+             */
+            description?: string;
+
+            /**
+             * Descriptive name of the line item.
+             */
+            name: string;
+
+            /**
+             * Quantity of the line item. Must be a positive number.
+             */
+            quantity: number;
+
+            /**
+             * Client facing stock keeping unit, article number or similar.
+             */
+            sku?: string;
+
+            /**
+             * The Stripe account ID of the connected account that sells the item.
+             */
+            sold_by?: string;
+
+            /**
+             * The tax information for the line item.
+             */
+            tax?: LineItem.Tax;
+
+            /**
+             * Price for a single unit of the line item in minor units. Cannot be a negative number.
+             */
+            unit_amount: number;
+          }
+
+          namespace LineItem {
+            type Category = 'digital_goods' | 'donation' | 'physical_goods';
+
+            interface Tax {
+              /**
+               * The tax for a single unit of the line item in minor units. Cannot be a negative number.
+               */
+              amount: number;
+
+              /**
+               * The tax behavior for the line item.
+               */
+              behavior: Tax.Behavior;
+            }
+
+            namespace Tax {
+              type Behavior = 'exclusive' | 'inclusive';
+            }
+          }
+
           type PreferredLocale =
             | 'cs-CZ'
             | 'da-DK'
@@ -7781,6 +11736,89 @@ declare module 'stripe' {
             | 'pt-PT'
             | 'sk-SK'
             | 'sv-SE';
+
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Payto {
+          /**
+           * Additional fields for Mandate creation. Only `purpose` field is configurable for PayTo PaymentIntent with `setup_future_usage=none`. Other fields are only applicable to PayTo PaymentIntent with `setup_future_usage=off_session`
+           */
+          mandate_options?: Payto.MandateOptions;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<Payto.SetupFutureUsage>;
+        }
+
+        namespace Payto {
+          interface MandateOptions {
+            /**
+             * Amount that will be collected. It is required when `amount_type` is `fixed`.
+             */
+            amount?: number;
+
+            /**
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+             */
+            end_date?: string;
+
+            /**
+             * The periodicity at which payments will be collected.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+             */
+            payments_per_period?: number;
+
+            /**
+             * The purpose for which payments are made. Defaults to retail.
+             */
+            purpose?: MandateOptions.Purpose;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'adhoc'
+              | 'annual'
+              | 'daily'
+              | 'fortnightly'
+              | 'monthly'
+              | 'quarterly'
+              | 'semi_annual'
+              | 'weekly';
+
+            type Purpose =
+              | 'dependant_support'
+              | 'government'
+              | 'loan'
+              | 'mortgage'
+              | 'other'
+              | 'pension'
+              | 'personal'
+              | 'retail'
+              | 'salary'
+              | 'tax'
+              | 'utility';
+          }
 
           type SetupFutureUsage = 'none' | 'off_session';
         }
@@ -7824,6 +11862,23 @@ declare module 'stripe' {
            */
           setup_future_usage?: 'none';
         }
+
+        interface Qris {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Rechnung {}
 
         interface RevolutPay {
           /**
@@ -7896,6 +11951,21 @@ declare module 'stripe' {
           }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
+        interface Shopeepay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Sofort {
@@ -8021,6 +12091,11 @@ declare module 'stripe' {
             filters?: FinancialConnections.Filters;
 
             /**
+             * Customize manual entry behavior
+             */
+            manual_entry?: FinancialConnections.ManualEntry;
+
+            /**
              * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
@@ -8042,10 +12117,26 @@ declare module 'stripe' {
                * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
                */
               account_subcategories?: Array<Filters.AccountSubcategory>;
+
+              /**
+               * ID of the institution to use to filter for selectable accounts.
+               */
+              institution?: string;
             }
 
             namespace Filters {
               type AccountSubcategory = 'checking' | 'savings';
+            }
+
+            interface ManualEntry {
+              /**
+               * Settings for configuring manual entry of account details.
+               */
+              mode: ManualEntry.Mode;
+            }
+
+            namespace ManualEntry {
+              type Mode = 'automatic' | 'custom';
             }
 
             type Permission =
@@ -8054,7 +12145,11 @@ declare module 'stripe' {
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'ownership' | 'transactions';
+            type Prefetch =
+              | 'balances'
+              | 'inferred_balances'
+              | 'ownership'
+              | 'transactions';
           }
 
           interface MandateOptions {
@@ -8164,9 +12259,9 @@ declare module 'stripe' {
       }
     }
 
-    interface PaymentIntentIncrementAuthorizationParams {
+    interface PaymentIntentDecrementAuthorizationParams {
       /**
-       * The updated total amount that you intend to collect from the cardholder. This amount must be greater than the currently authorized amount.
+       * The updated total amount that you intend to collect from the cardholder. This amount must be smaller than the currently authorized amount and greater than the already captured amount.
        */
       amount: number;
 
@@ -8174,6 +12269,11 @@ declare module 'stripe' {
        * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: number;
+
+      /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      async_workflows?: PaymentIntentDecrementAuthorizationParams.AsyncWorkflows;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -8191,6 +12291,83 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
+       * The parameters used to automatically create a transfer after the payment is captured.
+       * Learn more about the [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       */
+      transfer_data?: PaymentIntentDecrementAuthorizationParams.TransferData;
+    }
+
+    namespace PaymentIntentDecrementAuthorizationParams {
+      interface AsyncWorkflows {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: AsyncWorkflows.Inputs;
+      }
+
+      namespace AsyncWorkflows {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
+
+      interface TransferData {
+        /**
+         * The amount that will be transferred automatically when a charge succeeds.
+         */
+        amount?: number;
+      }
+    }
+
+    interface PaymentIntentIncrementAuthorizationParams {
+      /**
+       * The updated total amount that you intend to collect from the cardholder. This amount must be greater than the currently authorized amount.
+       */
+      amount: number;
+
+      /**
+       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       */
+      application_fee_amount?: number;
+
+      /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      async_workflows?: PaymentIntentIncrementAuthorizationParams.AsyncWorkflows;
+
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users.
+       */
+      description?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: Stripe.MetadataParam;
+
+      /**
+       * Payment method-specific configuration for this PaymentIntent.
+       */
+      payment_method_options?: PaymentIntentIncrementAuthorizationParams.PaymentMethodOptions;
+
+      /**
        * Text that appears on the customer's statement as the statement descriptor for a non-card or card charge. This value overrides the account's default statement descriptor. For information about requirements, including the 22-character limit, see [the Statement Descriptor docs](https://docs.stripe.com/get-started/account/statement-descriptors).
        */
       statement_descriptor?: string;
@@ -8203,6 +12380,51 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentIncrementAuthorizationParams {
+      interface AsyncWorkflows {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: AsyncWorkflows.Inputs;
+      }
+
+      namespace AsyncWorkflows {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
+
+      interface PaymentMethodOptions {
+        /**
+         * Configuration for any card payments attempted on this PaymentIntent.
+         */
+        card?: PaymentMethodOptions.Card;
+      }
+
+      namespace PaymentMethodOptions {
+        interface Card {
+          /**
+           * Request partial authorization on this PaymentIntent.
+           */
+          request_partial_authorization?: Card.RequestPartialAuthorization;
+        }
+
+        namespace Card {
+          type RequestPartialAuthorization = 'if_available' | 'never';
+        }
+      }
+
       interface TransferData {
         /**
          * The amount that will be transferred automatically when a charge succeeds.
@@ -8231,6 +12453,38 @@ declare module 'stripe' {
        * A cursor for pagination across multiple pages of results. Don't include this parameter on the first call. Use the next_page value returned in a previous response to request subsequent results.
        */
       page?: string;
+    }
+
+    interface PaymentIntentTriggerActionParams {
+      /**
+       * The type of action to be simulated.
+       */
+      type: PaymentIntentTriggerActionParams.Type;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * True to simulate success, false to simulate failure.
+       */
+      scan_qr_code?: PaymentIntentTriggerActionParams.ScanQrCode;
+    }
+
+    namespace PaymentIntentTriggerActionParams {
+      interface ScanQrCode {
+        /**
+         * Whether the QR Code scan's payment should succeed or fail.
+         */
+        result?: ScanQrCode.Result;
+      }
+
+      namespace ScanQrCode {
+        type Result = 'failure' | 'success';
+      }
+
+      type Type = 'expire' | 'fund';
     }
 
     interface PaymentIntentVerifyMicrodepositsParams {
@@ -8394,6 +12648,30 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
 
       /**
+       * Perform a decremental authorization on an eligible
+       * [PaymentIntent](https://stripe.com/docs/api/payment_intents/object). To be eligible, the
+       * PaymentIntent's status must be requires_capture and
+       * [decremental_authorization.status](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card-decremental_authorization)
+       * must be available.
+       *
+       * Decremental authorizations decrease the authorized amount on your customer's card
+       * to the new, lower amount provided. A single PaymentIntent can call this endpoint multiple times to further decrease the authorized amount.
+       *
+       * After decrement, the PaymentIntent object
+       * returns with the updated
+       * [amount](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-amount).
+       * The PaymentIntent will now be capturable up to the new authorized amount.
+       *
+       * Each PaymentIntent can have a maximum of 10 decremental or incremental authorization attempts, including declines.
+       * After it's fully captured, a PaymentIntent can no longer be decremented.
+       */
+      decrementAuthorization(
+        id: string,
+        params: PaymentIntentDecrementAuthorizationParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
+
+      /**
        * Perform an incremental authorization on an eligible
        * [PaymentIntent](https://stripe.com/docs/api/payment_intents/object). To be eligible, the
        * PaymentIntent's status must be requires_capture and
@@ -8435,6 +12713,15 @@ declare module 'stripe' {
         params: PaymentIntentSearchParams,
         options?: RequestOptions
       ): ApiSearchResultPromise<Stripe.PaymentIntent>;
+
+      /**
+       * Trigger an external action on a PaymentIntent.
+       */
+      triggerAction(
+        id: string,
+        params: PaymentIntentTriggerActionParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
 
       /**
        * Verifies microdeposits on a PaymentIntent object.

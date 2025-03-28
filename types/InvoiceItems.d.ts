@@ -97,6 +97,11 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
+       * The margins which apply to the invoice item. When set, the `default_margins` on the invoice do not apply to this invoice item.
+       */
+      margins?: Array<string | Stripe.Margin> | null;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata | null;

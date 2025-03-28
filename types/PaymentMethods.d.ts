@@ -73,7 +73,11 @@ declare module 'stripe' {
 
       giropay?: PaymentMethod.Giropay;
 
+      gopay?: PaymentMethod.Gopay;
+
       grabpay?: PaymentMethod.Grabpay;
+
+      id_bank_transfer?: PaymentMethod.IdBankTransfer;
 
       ideal?: PaymentMethod.Ideal;
 
@@ -93,6 +97,8 @@ declare module 'stripe' {
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
+
+      mb_way?: PaymentMethod.MbWay;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -117,20 +123,28 @@ declare module 'stripe' {
 
       paypal?: PaymentMethod.Paypal;
 
+      payto?: PaymentMethod.Payto;
+
       pix?: PaymentMethod.Pix;
 
       promptpay?: PaymentMethod.Promptpay;
+
+      qris?: PaymentMethod.Qris;
 
       /**
        * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
        */
       radar_options?: PaymentMethod.RadarOptions;
 
+      rechnung?: PaymentMethod.Rechnung;
+
       revolut_pay?: PaymentMethod.RevolutPay;
 
       samsung_pay?: PaymentMethod.SamsungPay;
 
       sepa_debit?: PaymentMethod.SepaDebit;
+
+      shopeepay?: PaymentMethod.Shopeepay;
 
       sofort?: PaymentMethod.Sofort;
 
@@ -949,7 +963,23 @@ declare module 'stripe' {
 
       interface Giropay {}
 
+      interface Gopay {}
+
       interface Grabpay {}
+
+      interface IdBankTransfer {
+        bank: IdBankTransfer.Bank | null;
+
+        bank_code: string | null;
+
+        bank_name: string | null;
+
+        display_name: string | null;
+      }
+
+      namespace IdBankTransfer {
+        type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+      }
 
       interface Ideal {
         /**
@@ -1178,6 +1208,8 @@ declare module 'stripe' {
         persistent_token?: string;
       }
 
+      interface MbWay {}
+
       interface Mobilepay {}
 
       interface Multibanco {}
@@ -1245,6 +1277,11 @@ declare module 'stripe' {
         country: string | null;
 
         /**
+         * Uniquely identifies this particular PayPal account. You can use this attribute to check whether two PayPal accounts are the same.
+         */
+        fingerprint?: string | null;
+
+        /**
          * Owner's email. Values are provided by PayPal directly
          * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
          */
@@ -1254,17 +1291,65 @@ declare module 'stripe' {
          * PayPal account PayerID. This identifier uniquely identifies the PayPal customer.
          */
         payer_id: string | null;
+
+        /**
+         * Owner's verified email. Values are verified or provided by PayPal directly
+         * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+         */
+        verified_email?: string | null;
+      }
+
+      interface Payto {
+        /**
+         * Bank-State-Branch number of the bank account.
+         */
+        bsb_number: string | null;
+
+        /**
+         * Last four digits of the bank account number.
+         */
+        last4: string | null;
+
+        /**
+         * The PayID alias for the bank account.
+         */
+        pay_id: string | null;
       }
 
       interface Pix {}
 
       interface Promptpay {}
 
+      interface Qris {}
+
       interface RadarOptions {
         /**
          * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
          */
         session?: string;
+      }
+
+      interface Rechnung {
+        dob?: Rechnung.Dob;
+      }
+
+      namespace Rechnung {
+        interface Dob {
+          /**
+           * The day of birth, between 1 and 31.
+           */
+          day: number;
+
+          /**
+           * The month of birth, between 1 and 12.
+           */
+          month: number;
+
+          /**
+           * The four-digit year of birth.
+           */
+          year: number;
+        }
       }
 
       interface RevolutPay {}
@@ -1317,6 +1402,8 @@ declare module 'stripe' {
         }
       }
 
+      interface Shopeepay {}
+
       interface Sofort {
         /**
          * Two-letter ISO code representing the country the bank account is located in.
@@ -1347,7 +1434,9 @@ declare module 'stripe' {
         | 'eps'
         | 'fpx'
         | 'giropay'
+        | 'gopay'
         | 'grabpay'
+        | 'id_bank_transfer'
         | 'ideal'
         | 'interac_present'
         | 'kakao_pay'
@@ -1355,6 +1444,7 @@ declare module 'stripe' {
         | 'konbini'
         | 'kr_card'
         | 'link'
+        | 'mb_way'
         | 'mobilepay'
         | 'multibanco'
         | 'naver_pay'
@@ -1364,11 +1454,15 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'payto'
         | 'pix'
         | 'promptpay'
+        | 'qris'
+        | 'rechnung'
         | 'revolut_pay'
         | 'samsung_pay'
         | 'sepa_debit'
+        | 'shopeepay'
         | 'sofort'
         | 'swish'
         | 'twint'
@@ -1381,6 +1475,11 @@ declare module 'stripe' {
          * Account holder type: individual or company.
          */
         account_holder_type: UsBankAccount.AccountHolderType | null;
+
+        /**
+         * Account number of the bank account.
+         */
+        account_number?: string | null;
 
         /**
          * Account type: checkings or savings. Defaults to checking if omitted.

@@ -90,6 +90,11 @@ declare module 'stripe' {
       amount_due: number;
 
       /**
+       * Amount that was overpaid on the invoice. Overpayments are debited to the customer's credit balance.
+       */
+      amount_overpaid?: number;
+
+      /**
        * The amount, in cents (or local equivalent), that was paid.
        */
       amount_paid: number;
@@ -103,6 +108,11 @@ declare module 'stripe' {
        * This is the sum of all the shipping amounts.
        */
       amount_shipping: number;
+
+      /**
+       * List of expected payments and corresponding due dates. This value will be null for invoices where collection_method=charge_automatically.
+       */
+      amounts_due?: Array<Invoice.AmountsDue> | null;
 
       /**
        * ID of the Connect Application that created the invoice.
@@ -217,6 +227,11 @@ declare module 'stripe' {
        * The customer's tax IDs. Until the invoice is finalized, this field will contain the same tax IDs as `customer.tax_ids`. Once the invoice is finalized, this field will no longer be updated.
        */
       customer_tax_ids?: Array<Invoice.CustomerTaxId> | null;
+
+      /**
+       * The margins applied to the invoice. Can be overridden by line item `margins`. Use `expand[]=default_margins` to expand each margin.
+       */
+      default_margins?: Array<string | Stripe.Margin> | null;
 
       /**
        * ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription's default payment method, if any, or to the default payment method in the customer's invoice settings.
@@ -348,6 +363,11 @@ declare module 'stripe' {
       payment_settings: Invoice.PaymentSettings;
 
       /**
+       * Payments for this invoice
+       */
+      payments?: ApiList<Stripe.InvoicePayment>;
+
+      /**
        * End of the usage period during which invoice items were added to this invoice. This looks back one period for a subscription invoice. Use the [line item period](https://stripe.com/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each price.
        */
       period_end: number;
@@ -462,6 +482,11 @@ declare module 'stripe' {
       total_excluding_tax: number | null;
 
       /**
+       * The aggregate amounts calculated per margin across all line items.
+       */
+      total_margin_amounts?: Array<Invoice.TotalMarginAmount> | null;
+
+      /**
        * Contains pretax credit amounts (ex: discount, credit grants, etc) that apply to this invoice. This is a combined list of total_pretax_credit_amounts across all invoice line items.
        */
       total_pretax_credit_amounts: Array<
@@ -485,6 +510,52 @@ declare module 'stripe' {
     }
 
     namespace Invoice {
+      interface AmountsDue {
+        /**
+         * Incremental amount due for this payment in cents (or local equivalent).
+         */
+        amount: number;
+
+        /**
+         * The amount in cents (or local equivalent) that was paid for this payment.
+         */
+        amount_paid: number;
+
+        /**
+         * The difference between the payment's amount and amount_paid, in cents (or local equivalent).
+         */
+        amount_remaining: number;
+
+        /**
+         * Number of days from when invoice is finalized until the payment is due.
+         */
+        days_until_due: number | null;
+
+        /**
+         * An arbitrary string attached to the object. Often useful for displaying to users.
+         */
+        description: string | null;
+
+        /**
+         * Date on which a payment plan's payment is due.
+         */
+        due_date: number | null;
+
+        /**
+         * Timestamp when the payment was paid.
+         */
+        paid_at: number | null;
+
+        /**
+         * The status of the payment, one of `open`, `paid`, or `past_due`
+         */
+        status: AmountsDue.Status;
+      }
+
+      namespace AmountsDue {
+        type Status = 'open' | 'paid' | 'past_due';
+      }
+
       interface AutomaticTax {
         /**
          * If Stripe disabled automatic tax, this enum describes why.
@@ -890,11 +961,15 @@ declare module 'stripe' {
           | 'email_invalid'
           | 'expired_card'
           | 'financial_connections_account_inactive'
+          | 'financial_connections_institution_unavailable'
           | 'financial_connections_no_successful_transaction_refresh'
           | 'forwarding_api_inactive'
           | 'forwarding_api_invalid_parameter'
           | 'forwarding_api_upstream_connection_error'
           | 'forwarding_api_upstream_connection_timeout'
+          | 'gift_card_balance_insufficient'
+          | 'gift_card_code_exists'
+          | 'gift_card_inactive'
           | 'idempotency_key_in_use'
           | 'incorrect_address'
           | 'incorrect_cvc'
@@ -984,6 +1059,7 @@ declare module 'stripe' {
           | 'return_intent_already_processed'
           | 'routing_number_invalid'
           | 'secret_key_required'
+          | 'sensitive_data_access_expired'
           | 'sepa_unsupported_account'
           | 'setup_attempt_failed'
           | 'setup_intent_authentication_failure'
@@ -1001,6 +1077,7 @@ declare module 'stripe' {
           | 'taxes_calculation_failed'
           | 'terminal_location_country_unsupported'
           | 'terminal_reader_busy'
+          | 'terminal_reader_collected_data_invalid'
           | 'terminal_reader_hardware_fault'
           | 'terminal_reader_invalid_location_for_activation'
           | 'terminal_reader_invalid_location_for_payment'
@@ -1060,6 +1137,11 @@ declare module 'stripe' {
            * If paying by `customer_balance`, this sub-hash contains details about the Bank transfer payment method options to pass to the invoice's PaymentIntent.
            */
           customer_balance: PaymentMethodOptions.CustomerBalance | null;
+
+          /**
+           * If paying by `id_bank_transfer`, this sub-hash contains details about the Indonesia bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          id_bank_transfer?: PaymentMethodOptions.IdBankTransfer | null;
 
           /**
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
@@ -1166,6 +1248,8 @@ declare module 'stripe' {
             }
           }
 
+          interface IdBankTransfer {}
+
           interface Konbini {}
 
           interface SepaDebit {}
@@ -1200,6 +1284,11 @@ declare module 'stripe' {
                  * The account subcategories to use to filter for possible accounts to link. Valid subcategories are `checking` and `savings`.
                  */
                 account_subcategories?: Array<Filters.AccountSubcategory>;
+
+                /**
+                 * The institution to use to filter for possible accounts to link.
+                 */
+                institution?: string;
               }
 
               namespace Filters {
@@ -1212,7 +1301,11 @@ declare module 'stripe' {
                 | 'payment_method'
                 | 'transactions';
 
-              type Prefetch = 'balances' | 'ownership' | 'transactions';
+              type Prefetch =
+                | 'balances'
+                | 'inferred_balances'
+                | 'ownership'
+                | 'transactions';
             }
 
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
@@ -1230,11 +1323,13 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'custom'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
           | 'giropay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'
@@ -1418,6 +1513,29 @@ declare module 'stripe' {
          *  *Note: This attribute is populated only for invoices created on or after June 29, 2023.*
          */
         metadata: Stripe.Metadata | null;
+
+        /**
+         * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/docs/billing/subscriptions/pause-payment).
+         */
+        pause_collection?: SubscriptionDetails.PauseCollection | null;
+      }
+
+      namespace SubscriptionDetails {
+        interface PauseCollection {
+          /**
+           * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+           */
+          behavior: PauseCollection.Behavior;
+
+          /**
+           * The time after which the subscription will resume collecting payments.
+           */
+          resumes_at: number | null;
+        }
+
+        namespace PauseCollection {
+          type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+        }
       }
 
       interface ThresholdReason {
@@ -1458,6 +1576,18 @@ declare module 'stripe' {
         discount: string | Stripe.Discount | Stripe.DeletedDiscount;
       }
 
+      interface TotalMarginAmount {
+        /**
+         * The amount, in cents (or local equivalent), of the reduction in line item amount.
+         */
+        amount: number;
+
+        /**
+         * The margin that was applied to get this margin amount.
+         */
+        margin: string | Stripe.Margin;
+      }
+
       interface TotalPretaxCreditAmount {
         /**
          * The amount, in cents (or local equivalent), of the pretax credit amount.
@@ -1478,13 +1608,18 @@ declare module 'stripe' {
         discount?: string | Stripe.Discount | Stripe.DeletedDiscount;
 
         /**
+         * The margin that was applied to get this pretax credit amount.
+         */
+        margin?: string | Stripe.Margin;
+
+        /**
          * Type of the pretax credit amount referenced.
          */
         type: TotalPretaxCreditAmount.Type;
       }
 
       namespace TotalPretaxCreditAmount {
-        type Type = 'credit_balance_transaction' | 'discount';
+        type Type = 'credit_balance_transaction' | 'discount' | 'margin';
       }
 
       interface TotalTaxAmount {

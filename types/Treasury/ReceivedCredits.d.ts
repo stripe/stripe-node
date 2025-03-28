@@ -67,6 +67,11 @@ declare module 'stripe' {
         network: ReceivedCredit.Network;
 
         /**
+         * Details specific to the money movement rails.
+         */
+        network_details?: ReceivedCredit.NetworkDetails | null;
+
+        /**
          * Details describing when a ReceivedCredit may be reversed.
          */
         reversal_details: ReceivedCredit.ReversalDetails | null;
@@ -250,6 +255,27 @@ declare module 'stripe' {
         }
 
         type Network = 'ach' | 'card' | 'stripe' | 'us_domestic_wire';
+
+        interface NetworkDetails {
+          /**
+           * Details about an ACH transaction.
+           */
+          ach?: NetworkDetails.Ach | null;
+
+          /**
+           * The type of flow that originated the ReceivedCredit.
+           */
+          type: 'ach';
+        }
+
+        namespace NetworkDetails {
+          interface Ach {
+            /**
+             * ACH Addenda record
+             */
+            addenda: string | null;
+          }
+        }
 
         interface ReversalDetails {
           /**

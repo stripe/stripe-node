@@ -130,9 +130,19 @@ declare module 'stripe' {
           giropay?: PaymentMethodData.Giropay;
 
           /**
+           * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+           */
+          gopay?: PaymentMethodData.Gopay;
+
+          /**
            * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
            */
           grabpay?: PaymentMethodData.Grabpay;
+
+          /**
+           * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+           */
+          id_bank_transfer?: PaymentMethodData.IdBankTransfer;
 
           /**
            * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -168,6 +178,11 @@ declare module 'stripe' {
            * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
            */
           link?: PaymentMethodData.Link;
+
+          /**
+           * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+           */
+          mb_way?: PaymentMethodData.MbWay;
 
           /**
            * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -220,6 +235,11 @@ declare module 'stripe' {
           paypal?: PaymentMethodData.Paypal;
 
           /**
+           * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+           */
+          payto?: PaymentMethodData.Payto;
+
+          /**
            * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
            */
           pix?: PaymentMethodData.Pix;
@@ -230,9 +250,19 @@ declare module 'stripe' {
           promptpay?: PaymentMethodData.Promptpay;
 
           /**
+           * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+           */
+          qris?: PaymentMethodData.Qris;
+
+          /**
            * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
            */
           radar_options?: PaymentMethodData.RadarOptions;
+
+          /**
+           * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
+           */
+          rechnung?: PaymentMethodData.Rechnung;
 
           /**
            * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
@@ -248,6 +278,11 @@ declare module 'stripe' {
            * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
            */
           sepa_debit?: PaymentMethodData.SepaDebit;
+
+          /**
+           * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+           */
+          shopeepay?: PaymentMethodData.Shopeepay;
 
           /**
            * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
@@ -457,7 +492,20 @@ declare module 'stripe' {
 
           interface Giropay {}
 
+          interface Gopay {}
+
           interface Grabpay {}
+
+          interface IdBankTransfer {
+            /**
+             * Bank where the account is held.
+             */
+            bank?: IdBankTransfer.Bank;
+          }
+
+          namespace IdBankTransfer {
+            type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+          }
 
           interface Ideal {
             /**
@@ -522,6 +570,8 @@ declare module 'stripe' {
 
           interface Link {}
 
+          interface MbWay {}
+
           interface Mobilepay {}
 
           interface Multibanco {}
@@ -584,15 +634,60 @@ declare module 'stripe' {
 
           interface Paypal {}
 
+          interface Payto {
+            /**
+             * The account number for the bank account.
+             */
+            account_number?: string;
+
+            /**
+             * Bank-State-Branch number of the bank account.
+             */
+            bsb_number?: string;
+
+            /**
+             * The PayID alias for the bank account.
+             */
+            pay_id?: string;
+          }
+
           interface Pix {}
 
           interface Promptpay {}
+
+          interface Qris {}
 
           interface RadarOptions {
             /**
              * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
              */
             session?: string;
+          }
+
+          interface Rechnung {
+            /**
+             * Customer's date of birth
+             */
+            dob: Rechnung.Dob;
+          }
+
+          namespace Rechnung {
+            interface Dob {
+              /**
+               * The day of birth, between 1 and 31.
+               */
+              day: number;
+
+              /**
+               * The month of birth, between 1 and 12.
+               */
+              month: number;
+
+              /**
+               * The four-digit year of birth.
+               */
+              year: number;
+            }
           }
 
           interface RevolutPay {}
@@ -605,6 +700,8 @@ declare module 'stripe' {
              */
             iban: string;
           }
+
+          interface Shopeepay {}
 
           interface Sofort {
             /**
@@ -638,13 +735,16 @@ declare module 'stripe' {
             | 'eps'
             | 'fpx'
             | 'giropay'
+            | 'gopay'
             | 'grabpay'
+            | 'id_bank_transfer'
             | 'ideal'
             | 'kakao_pay'
             | 'klarna'
             | 'konbini'
             | 'kr_card'
             | 'link'
+            | 'mb_way'
             | 'mobilepay'
             | 'multibanco'
             | 'naver_pay'
@@ -654,11 +754,15 @@ declare module 'stripe' {
             | 'payco'
             | 'paynow'
             | 'paypal'
+            | 'payto'
             | 'pix'
             | 'promptpay'
+            | 'qris'
+            | 'rechnung'
             | 'revolut_pay'
             | 'samsung_pay'
             | 'sepa_debit'
+            | 'shopeepay'
             | 'sofort'
             | 'swish'
             | 'twint'
