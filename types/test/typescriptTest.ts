@@ -303,6 +303,3 @@ stripe.files.create({
   },
   file_link_data: {create: true},
 });
-
-// Test deprecated parameters still work
-const param: Stripe.UsageRecordSummaryListParams = {expand: []};
