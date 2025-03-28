@@ -38,6 +38,11 @@ declare module 'stripe' {
            * The ID of the Stripe customer whose accounts will be retrieved.
            */
           customer?: string;
+
+          /**
+           * The Account ID of the Stripe customer whose accounts will be retrieved.
+           */
+          customer_account?: string;
         }
       }
 

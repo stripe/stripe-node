@@ -78,6 +78,13 @@ declare module 'stripe' {
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
+       * ID of the Account this SetupIntent belongs to, if one exists.
+       *
+       * If present, the SetupIntent's payment method will be attached to the Account on successful setup. Payment methods attached to other Accounts cannot be used with this SetupIntent.
+       */
+      customer_account?: string | null;
+
+      /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
       description: string | null;
@@ -355,6 +362,7 @@ declare module 'stripe' {
           | 'financial_connections_no_successful_transaction_refresh'
           | 'forwarding_api_inactive'
           | 'forwarding_api_invalid_parameter'
+          | 'forwarding_api_retryable_upstream_error'
           | 'forwarding_api_upstream_connection_error'
           | 'forwarding_api_upstream_connection_timeout'
           | 'gift_card_balance_insufficient'
@@ -455,6 +463,7 @@ declare module 'stripe' {
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'
           | 'setup_intent_mandate_invalid'
+          | 'setup_intent_mobile_wallet_unsupported'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
           | 'shipping_address_invalid'
@@ -480,7 +489,9 @@ declare module 'stripe' {
           | 'token_in_use'
           | 'transfer_source_balance_parameters_mismatch'
           | 'transfers_not_allowed'
-          | 'url_invalid';
+          | 'url_invalid'
+          | 'v2_account_disconnection_unsupported'
+          | 'v2_account_missing_configuration';
 
         type Type =
           | 'api_error'

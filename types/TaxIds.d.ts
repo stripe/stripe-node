@@ -55,6 +55,11 @@ declare module 'stripe' {
       customer: string | Stripe.Customer | null;
 
       /**
+       * ID of the account.
+       */
+      customer_account?: string | null;
+
+      /**
        * Always true for a deleted object
        */
       deleted?: void;
@@ -101,6 +106,11 @@ declare module 'stripe' {
          * The customer being referenced when `type` is `customer`.
          */
         customer?: string | Stripe.Customer;
+
+        /**
+         * The account being referenced when `type` is `customer`.
+         */
+        customer_account?: string | null;
 
         /**
          * Type of owner referenced.

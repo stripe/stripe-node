@@ -98,6 +98,9 @@ declare module 'stripe' {
          */
         purchase_details?: Transaction.PurchaseDetails | null;
 
+        /**
+         * The ID of the [settlement](https://stripe.com/docs/api/issuing/settlements) to which this transaction belongs.
+         */
         settlement?: string | Stripe.Issuing.Settlement | null;
 
         /**

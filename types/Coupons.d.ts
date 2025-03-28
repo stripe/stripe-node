@@ -113,7 +113,7 @@ declare module 'stripe' {
         amount_off: number;
       }
 
-      type Duration = 'forever' | 'once' | 'repeating' | 'variable';
+      type Duration = 'forever' | 'once' | 'repeating';
     }
 
     /**

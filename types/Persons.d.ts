@@ -25,7 +25,7 @@ declare module 'stripe' {
     /**
      * This is an object representing a person associated with a Stripe account.
      *
-     * A platform cannot access a person for an account where [account.controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`, which includes Standard and Express accounts, after creating an Account Link or Account Session to start Connect onboarding.
+     * A platform can only access a subset of data in a person for an account where [account.controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`, which includes Standard and Express accounts, after creating an Account Link or Account Session to start Connect onboarding.
      *
      * See the [Standard onboarding](https://stripe.com/connect/standard-accounts) or [Express onboarding](https://stripe.com/connect/express-accounts) documentation for information about prefilling information and account onboarding steps. Learn more about [handling identity verification with the API](https://stripe.com/connect/handling-api-verification#person-information).
      */
@@ -72,27 +72,27 @@ declare module 'stripe' {
       dob?: Person.Dob;
 
       /**
-       * The person's email address.
+       * The person's email address. Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
        */
       email?: string | null;
 
       /**
-       * The person's first name.
+       * The person's first name. Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
        */
       first_name?: string | null;
 
       /**
-       * The Kana variation of the person's first name (Japan only).
+       * The Kana variation of the person's first name (Japan only). Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
        */
       first_name_kana?: string | null;
 
       /**
-       * The Kanji variation of the person's first name (Japan only).
+       * The Kanji variation of the person's first name (Japan only). Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
        */
       first_name_kanji?: string | null;
 
       /**
-       * A list of alternate names or aliases that the person is known by.
+       * A list of alternate names or aliases that the person is known by. Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
        */
       full_name_aliases?: Array<string>;
 
@@ -117,17 +117,17 @@ declare module 'stripe' {
       id_number_secondary_provided?: boolean;
 
       /**
-       * The person's last name.
+       * The person's last name. Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
        */
       last_name?: string | null;
 
       /**
-       * The Kana variation of the person's last name (Japan only).
+       * The Kana variation of the person's last name (Japan only). Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
        */
       last_name_kana?: string | null;
 
       /**
-       * The Kanji variation of the person's last name (Japan only).
+       * The Kanji variation of the person's last name (Japan only). Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
        */
       last_name_kanji?: string | null;
 
@@ -355,6 +355,7 @@ declare module 'stripe' {
 
         namespace Error {
           type Code =
+            | 'information_missing'
             | 'invalid_address_city_state_postal_code'
             | 'invalid_address_highway_contract_box'
             | 'invalid_address_private_mailbox'
@@ -367,6 +368,7 @@ declare module 'stripe' {
             | 'invalid_product_description_length'
             | 'invalid_product_description_url_match'
             | 'invalid_representative_country'
+            | 'invalid_signator'
             | 'invalid_statement_descriptor_business_mismatch'
             | 'invalid_statement_descriptor_denylisted'
             | 'invalid_statement_descriptor_length'
@@ -428,6 +430,7 @@ declare module 'stripe' {
             | 'verification_document_type_not_supported'
             | 'verification_extraneous_directors'
             | 'verification_failed_address_match'
+            | 'verification_failed_authorizer_authority'
             | 'verification_failed_business_iec_number'
             | 'verification_failed_document_match'
             | 'verification_failed_id_number_match'
@@ -442,6 +445,7 @@ declare module 'stripe' {
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
+            | 'verification_rejected_ownership_exemption_reason'
             | 'verification_requires_additional_memorandum_of_associations'
             | 'verification_requires_additional_proof_of_registration'
             | 'verification_supportability';
@@ -556,6 +560,7 @@ declare module 'stripe' {
 
         namespace Error {
           type Code =
+            | 'information_missing'
             | 'invalid_address_city_state_postal_code'
             | 'invalid_address_highway_contract_box'
             | 'invalid_address_private_mailbox'
@@ -568,6 +573,7 @@ declare module 'stripe' {
             | 'invalid_product_description_length'
             | 'invalid_product_description_url_match'
             | 'invalid_representative_country'
+            | 'invalid_signator'
             | 'invalid_statement_descriptor_business_mismatch'
             | 'invalid_statement_descriptor_denylisted'
             | 'invalid_statement_descriptor_length'
@@ -629,6 +635,7 @@ declare module 'stripe' {
             | 'verification_document_type_not_supported'
             | 'verification_extraneous_directors'
             | 'verification_failed_address_match'
+            | 'verification_failed_authorizer_authority'
             | 'verification_failed_business_iec_number'
             | 'verification_failed_document_match'
             | 'verification_failed_id_number_match'
@@ -643,6 +650,7 @@ declare module 'stripe' {
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
+            | 'verification_rejected_ownership_exemption_reason'
             | 'verification_requires_additional_memorandum_of_associations'
             | 'verification_requires_additional_proof_of_registration'
             | 'verification_supportability';

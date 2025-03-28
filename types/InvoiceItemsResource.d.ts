@@ -4,11 +4,6 @@ declare module 'stripe' {
   namespace Stripe {
     interface InvoiceItemCreateParams {
       /**
-       * The ID of the customer who will be billed when this invoice item is billed.
-       */
-      customer: string;
-
-      /**
        * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. Passing in a negative `amount` will reduce the `amount_due` on the invoice.
        */
       amount?: number;
@@ -17,6 +12,16 @@ declare module 'stripe' {
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
       currency?: string;
+
+      /**
+       * The ID of the customer who will be billed when this invoice item is billed.
+       */
+      customer?: string;
+
+      /**
+       * The ID of the account who will be billed when this invoice item is billed.
+       */
+      customer_account?: string;
 
       /**
        * An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
@@ -59,14 +64,14 @@ declare module 'stripe' {
       period?: InvoiceItemCreateParams.Period;
 
       /**
-       * The ID of the price object. One of `price` or `price_data` is required.
-       */
-      price?: string;
-
-      /**
-       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
        */
       price_data?: InvoiceItemCreateParams.PriceData;
+
+      /**
+       * The pricing information for the invoice item.
+       */
+      pricing?: InvoiceItemCreateParams.Pricing;
 
       /**
        * Non-negative integer. The quantity of units for the invoice item.
@@ -94,12 +99,7 @@ declare module 'stripe' {
       tax_rates?: Array<string>;
 
       /**
-       * The integer unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This `unit_amount` will be multiplied by the quantity to get the full amount. Passing in a negative `unit_amount` will reduce the `amount_due` on the invoice.
-       */
-      unit_amount?: number;
-
-      /**
-       * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+       * The decimal unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This `unit_amount_decimal` will be multiplied by the quantity to get the full amount. Passing in a negative `unit_amount_decimal` will reduce the `amount_due` on the invoice. Accepts at most 12 decimal places.
        */
       unit_amount_decimal?: string;
     }
@@ -185,7 +185,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * The ID of the product that this price will belong to.
+         * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
          */
         product: string;
 
@@ -207,6 +207,13 @@ declare module 'stripe' {
 
       namespace PriceData {
         type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      }
+
+      interface Pricing {
+        /**
+         * The ID of the price object.
+         */
+        price?: string;
       }
 
       type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
@@ -261,14 +268,14 @@ declare module 'stripe' {
       period?: InvoiceItemUpdateParams.Period;
 
       /**
-       * The ID of the price object. One of `price` or `price_data` is required.
-       */
-      price?: string;
-
-      /**
-       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
        */
       price_data?: InvoiceItemUpdateParams.PriceData;
+
+      /**
+       * The pricing information for the invoice item.
+       */
+      pricing?: InvoiceItemUpdateParams.Pricing;
 
       /**
        * Non-negative integer. The quantity of units for the invoice item.
@@ -291,12 +298,7 @@ declare module 'stripe' {
       tax_rates?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * The integer unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
-       */
-      unit_amount?: number;
-
-      /**
-       * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+       * The decimal unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This `unit_amount_decimal` will be multiplied by the quantity to get the full amount. Passing in a negative `unit_amount_decimal` will reduce the `amount_due` on the invoice. Accepts at most 12 decimal places.
        */
       unit_amount_decimal?: string;
     }
@@ -382,7 +384,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * The ID of the product that this price will belong to.
+         * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
          */
         product: string;
 
@@ -406,6 +408,13 @@ declare module 'stripe' {
         type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
       }
 
+      interface Pricing {
+        /**
+         * The ID of the price object.
+         */
+        price?: string;
+      }
+
       type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
     }
 
@@ -419,6 +428,11 @@ declare module 'stripe' {
        * The identifier of the customer whose invoice items to return. If none is provided, all invoice items will be returned.
        */
       customer?: string;
+
+      /**
+       * The identifier of the account whose invoice items to return. If none is provided, all invoice items will be returned.
+       */
+      customer_account?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -443,7 +457,10 @@ declare module 'stripe' {
        * Creates an item to be added to a draft invoice (up to 250 items per invoice). If no invoice is specified, the item will be on the next invoice created for the customer specified.
        */
       create(
-        params: InvoiceItemCreateParams,
+        params?: InvoiceItemCreateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.InvoiceItem>>;
+      create(
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.InvoiceItem>>;
 

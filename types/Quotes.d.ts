@@ -76,6 +76,11 @@ declare module 'stripe' {
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
+       * The account which this quote belongs to. A customer or account is required before finalizing the quote. Once specified, it cannot be changed.
+       */
+      customer_account?: string | null;
+
+      /**
        * The tax rates applied to this quote.
        */
       default_tax_rates?: Array<string | Stripe.TaxRate>;
@@ -207,6 +212,11 @@ declare module 'stripe' {
          * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
          */
         liability: AutomaticTax.Liability | null;
+
+        /**
+         * The tax provider powering automatic tax.
+         */
+        provider?: string | null;
 
         /**
          * The status of the most recent automated tax calculation for this quote.

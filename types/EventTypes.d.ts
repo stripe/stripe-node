@@ -16,6 +16,13 @@ declare module 'stripe' {
       | ApplicationFeeRefundedEvent
       | BalanceAvailableEvent
       | BillingAlertTriggeredEvent
+      | BillingCreditBalanceTransactionCreatedEvent
+      | BillingCreditGrantCreatedEvent
+      | BillingCreditGrantUpdatedEvent
+      | BillingMeterCreatedEvent
+      | BillingMeterDeactivatedEvent
+      | BillingMeterReactivatedEvent
+      | BillingMeterUpdatedEvent
       | BillingMeterErrorReportTriggeredEvent
       | BillingPortalConfigurationCreatedEvent
       | BillingPortalConfigurationUpdatedEvent
@@ -485,6 +492,118 @@ declare module 'stripe' {
         object: Stripe.Billing.AlertTriggered;
 
         previous_attributes?: Partial<Stripe.Billing.AlertTriggered>;
+      }
+    }
+
+    /**
+     * Occurs when a credit balance transaction is created
+     */
+    interface BillingCreditBalanceTransactionCreatedEvent extends EventBase {
+      type: 'billing.credit_balance_transaction.created';
+      data: BillingCreditBalanceTransactionCreatedEvent.Data;
+    }
+
+    namespace BillingCreditBalanceTransactionCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.CreditBalanceTransaction;
+
+        previous_attributes?: Partial<Stripe.Billing.CreditBalanceTransaction>;
+      }
+    }
+
+    /**
+     * Occurs when a credit grant is created
+     */
+    interface BillingCreditGrantCreatedEvent extends EventBase {
+      type: 'billing.credit_grant.created';
+      data: BillingCreditGrantCreatedEvent.Data;
+    }
+
+    namespace BillingCreditGrantCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.CreditGrant;
+
+        previous_attributes?: Partial<Stripe.Billing.CreditGrant>;
+      }
+    }
+
+    /**
+     * Occurs when a credit grant is updated
+     */
+    interface BillingCreditGrantUpdatedEvent extends EventBase {
+      type: 'billing.credit_grant.updated';
+      data: BillingCreditGrantUpdatedEvent.Data;
+    }
+
+    namespace BillingCreditGrantUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.CreditGrant;
+
+        previous_attributes?: Partial<Stripe.Billing.CreditGrant>;
+      }
+    }
+
+    /**
+     * Occurs when a meter is created
+     */
+    interface BillingMeterCreatedEvent extends EventBase {
+      type: 'billing.meter.created';
+      data: BillingMeterCreatedEvent.Data;
+    }
+
+    namespace BillingMeterCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.Meter;
+
+        previous_attributes?: Partial<Stripe.Billing.Meter>;
+      }
+    }
+
+    /**
+     * Occurs when a meter is deactivated
+     */
+    interface BillingMeterDeactivatedEvent extends EventBase {
+      type: 'billing.meter.deactivated';
+      data: BillingMeterDeactivatedEvent.Data;
+    }
+
+    namespace BillingMeterDeactivatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.Meter;
+
+        previous_attributes?: Partial<Stripe.Billing.Meter>;
+      }
+    }
+
+    /**
+     * Occurs when a meter is reactivated
+     */
+    interface BillingMeterReactivatedEvent extends EventBase {
+      type: 'billing.meter.reactivated';
+      data: BillingMeterReactivatedEvent.Data;
+    }
+
+    namespace BillingMeterReactivatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.Meter;
+
+        previous_attributes?: Partial<Stripe.Billing.Meter>;
+      }
+    }
+
+    /**
+     * Occurs when a meter is updated
+     */
+    interface BillingMeterUpdatedEvent extends EventBase {
+      type: 'billing.meter.updated';
+      data: BillingMeterUpdatedEvent.Data;
+    }
+
+    namespace BillingMeterUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.Meter;
+
+        previous_attributes?: Partial<Stripe.Billing.Meter>;
       }
     }
 
@@ -3505,7 +3624,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a review is closed. The review's `reason` field indicates why: `approved`, `disputed`, `refunded`, or `refunded_as_fraud`.
+     * Occurs whenever a review is closed. The review's `reason` field indicates why: `approved`, `disputed`, `refunded`, `refunded_as_fraud`, or `canceled`.
      */
     interface ReviewClosedEvent extends EventBase {
       type: 'review.closed';
