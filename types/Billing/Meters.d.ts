@@ -84,7 +84,7 @@ declare module 'stripe' {
         }
 
         namespace DefaultAggregation {
-          type Formula = 'count' | 'sum';
+          type Formula = 'count' | 'last' | 'sum';
         }
 
         type EventTimeWindow = 'day' | 'hour';

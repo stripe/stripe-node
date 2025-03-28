@@ -161,6 +161,8 @@ declare module 'stripe' {
 
         bancontact?: PaymentMethodPreview.Bancontact;
 
+        billie?: PaymentMethodPreview.Billie;
+
         billing_details: PaymentMethodPreview.BillingDetails;
 
         blik?: PaymentMethodPreview.Blik;
@@ -208,6 +210,8 @@ declare module 'stripe' {
 
         naver_pay?: PaymentMethodPreview.NaverPay;
 
+        nz_bank_account?: PaymentMethodPreview.NzBankAccount;
+
         oxxo?: PaymentMethodPreview.Oxxo;
 
         p24?: PaymentMethodPreview.P24;
@@ -227,6 +231,8 @@ declare module 'stripe' {
         revolut_pay?: PaymentMethodPreview.RevolutPay;
 
         samsung_pay?: PaymentMethodPreview.SamsungPay;
+
+        satispay?: PaymentMethodPreview.Satispay;
 
         sepa_debit?: PaymentMethodPreview.SepaDebit;
 
@@ -323,6 +329,8 @@ declare module 'stripe' {
         }
 
         interface Bancontact {}
+
+        interface Billie {}
 
         interface BillingDetails {
           /**
@@ -1282,6 +1290,11 @@ declare module 'stripe' {
 
         interface NaverPay {
           /**
+           * Uniquely identifies this particular Naver Pay account. You can use this attribute to check whether two Naver Pay accounts are the same.
+           */
+          buyer_id?: string | null;
+
+          /**
            * Whether to fund this transaction with Naver Pay points or a card.
            */
           funding: NaverPay.Funding;
@@ -1289,6 +1302,38 @@ declare module 'stripe' {
 
         namespace NaverPay {
           type Funding = 'card' | 'points';
+        }
+
+        interface NzBankAccount {
+          /**
+           * The name on the bank account. Only present if the account holder name is different from the name of the authorized signatory collected in the PaymentMethod's billing details.
+           */
+          account_holder_name: string | null;
+
+          /**
+           * The numeric code for the bank account's bank.
+           */
+          bank_code: string;
+
+          /**
+           * The name of the bank.
+           */
+          bank_name: string;
+
+          /**
+           * The numeric code for the bank account's bank branch.
+           */
+          branch_code: string;
+
+          /**
+           * Last four digits of the bank account number.
+           */
+          last4: string;
+
+          /**
+           * The suffix of the bank account number.
+           */
+          suffix: string | null;
         }
 
         interface Oxxo {}
@@ -1362,6 +1407,8 @@ declare module 'stripe' {
 
         interface SamsungPay {}
 
+        interface Satispay {}
+
         interface SepaDebit {
           /**
            * Bank code of bank associated with the bank account.
@@ -1429,6 +1476,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'billie'
           | 'blik'
           | 'boleto'
           | 'card'
@@ -1449,6 +1497,7 @@ declare module 'stripe' {
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'
+          | 'nz_bank_account'
           | 'oxxo'
           | 'p24'
           | 'pay_by_bank'
@@ -1459,6 +1508,7 @@ declare module 'stripe' {
           | 'promptpay'
           | 'revolut_pay'
           | 'samsung_pay'
+          | 'satispay'
           | 'sepa_debit'
           | 'sofort'
           | 'swish'

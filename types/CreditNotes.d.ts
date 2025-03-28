@@ -117,9 +117,9 @@ declare module 'stripe' {
       reason: CreditNote.Reason | null;
 
       /**
-       * Refund related to this credit note.
+       * Refunds related to this credit note.
        */
-      refund: string | Stripe.Refund | null;
+      refunds: Array<CreditNote.Refund>;
 
       /**
        * The details of the cost of shipping, including the ShippingRate applied to the invoice.
@@ -142,11 +142,6 @@ declare module 'stripe' {
       subtotal_excluding_tax: number | null;
 
       /**
-       * The aggregate amounts calculated per tax rate for all line items.
-       */
-      tax_amounts: Array<CreditNote.TaxAmount>;
-
-      /**
        * The integer amount in cents (or local equivalent) representing the total amount of the credit note, including tax and all discount.
        */
       total: number;
@@ -155,6 +150,11 @@ declare module 'stripe' {
        * The integer amount in cents (or local equivalent) representing the total amount of the credit note, excluding tax, but including discounts.
        */
       total_excluding_tax: number | null;
+
+      /**
+       * The aggregate tax information for all line items.
+       */
+      total_taxes: Array<CreditNote.TotalTax> | null;
 
       /**
        * Type of this credit note, one of `pre_payment` or `post_payment`. A `pre_payment` credit note means it was issued when the invoice was open. A `post_payment` credit note means it was issued when the invoice was paid.
@@ -213,6 +213,18 @@ declare module 'stripe' {
         | 'fraudulent'
         | 'order_change'
         | 'product_unsatisfactory';
+
+      interface Refund {
+        /**
+         * Amount of the refund that applies to this credit note, in cents (or local equivalent).
+         */
+        amount_refunded: number;
+
+        /**
+         * ID of the refund.
+         */
+        refund: string | Stripe.Refund;
+      }
 
       interface ShippingCost {
         /**
@@ -288,36 +300,42 @@ declare module 'stripe' {
 
       type Status = 'issued' | 'void';
 
-      interface TaxAmount {
+      interface TotalTax {
         /**
-         * The amount, in cents (or local equivalent), of the tax.
+         * The amount of the tax, in cents (or local equivalent).
          */
         amount: number;
 
         /**
-         * Whether this tax amount is inclusive or exclusive.
+         * Whether this tax is inclusive or exclusive.
          */
-        inclusive: boolean;
+        tax_behavior: TotalTax.TaxBehavior;
 
         /**
-         * The tax rate that was applied to get this tax amount.
+         * Additional details about the tax rate. Only present when `type` is `tax_rate_details`.
          */
-        tax_rate: string | Stripe.TaxRate;
+        tax_rate_details: TotalTax.TaxRateDetails | null;
 
         /**
          * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
          */
-        taxability_reason: TaxAmount.TaxabilityReason | null;
+        taxability_reason: TotalTax.TaxabilityReason;
 
         /**
          * The amount on which tax is calculated, in cents (or local equivalent).
          */
         taxable_amount: number | null;
+
+        /**
+         * The type of tax information.
+         */
+        type: 'tax_rate_details';
       }
 
-      namespace TaxAmount {
+      namespace TotalTax {
         type TaxabilityReason =
           | 'customer_exempt'
+          | 'not_available'
           | 'not_collecting'
           | 'not_subject_to_tax'
           | 'not_supported'
@@ -332,6 +350,12 @@ declare module 'stripe' {
           | 'standard_rated'
           | 'taxable_basis_reduced'
           | 'zero_rated';
+
+        type TaxBehavior = 'exclusive' | 'inclusive';
+
+        interface TaxRateDetails {
+          tax_rate: string;
+        }
       }
 
       type Type = 'post_payment' | 'pre_payment';

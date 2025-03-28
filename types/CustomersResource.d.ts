@@ -18,8 +18,6 @@ declare module 'stripe' {
        */
       cash_balance?: CustomerCreateParams.CashBalance;
 
-      coupon?: string;
-
       /**
        * An arbitrary string that you can attach to a customer object. It is displayed alongside the customer in the dashboard.
        */
@@ -71,11 +69,6 @@ declare module 'stripe' {
        * Customer's preferred languages, ordered by preference.
        */
       preferred_locales?: Array<string>;
-
-      /**
-       * The ID of a promotion code to apply to the customer. The customer will have a discount applied on all recurring payments. Charges you create through the API will not have the discount.
-       */
-      promotion_code?: string;
 
       /**
        * The customer's shipping information. Appears on invoices emailed to this customer.
@@ -358,8 +351,6 @@ declare module 'stripe' {
        */
       cash_balance?: CustomerUpdateParams.CashBalance;
 
-      coupon?: string;
-
       /**
        * If you are using payment methods created via the PaymentMethods API, see the [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/update#update_customer-invoice_settings-default_payment_method) parameter.
        *
@@ -418,11 +409,6 @@ declare module 'stripe' {
        * Customer's preferred languages, ordered by preference.
        */
       preferred_locales?: Array<string>;
-
-      /**
-       * The ID of a promotion code to apply to the customer. The customer will have a discount applied on all recurring payments. Charges you create through the API will not have the discount.
-       */
-      promotion_code?: string;
 
       /**
        * The customer's shipping information. Appears on invoices emailed to this customer.
@@ -864,6 +850,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'billie'
         | 'blik'
         | 'boleto'
         | 'card'
@@ -882,6 +869,7 @@ declare module 'stripe' {
         | 'mobilepay'
         | 'multibanco'
         | 'naver_pay'
+        | 'nz_bank_account'
         | 'oxxo'
         | 'p24'
         | 'pay_by_bank'
@@ -892,6 +880,7 @@ declare module 'stripe' {
         | 'promptpay'
         | 'revolut_pay'
         | 'samsung_pay'
+        | 'satispay'
         | 'sepa_debit'
         | 'sofort'
         | 'swish'

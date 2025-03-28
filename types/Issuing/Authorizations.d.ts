@@ -570,6 +570,7 @@ declare module 'stripe' {
             | 'cardholder_verification_required'
             | 'insecure_authorization_method'
             | 'insufficient_funds'
+            | 'network_fallback'
             | 'not_allowed'
             | 'pin_blocked'
             | 'spending_controls'
@@ -581,7 +582,7 @@ declare module 'stripe' {
             | 'webhook_timeout';
         }
 
-        type Status = 'closed' | 'pending' | 'reversed';
+        type Status = 'closed' | 'expired' | 'pending' | 'reversed';
 
         interface Treasury {
           /**

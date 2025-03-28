@@ -97,6 +97,7 @@ export {ExchangeRates} from './resources/ExchangeRates.js';
 export {FileLinks} from './resources/FileLinks.js';
 export {Files} from './resources/Files.js';
 export {InvoiceItems} from './resources/InvoiceItems.js';
+export {InvoicePayments} from './resources/InvoicePayments.js';
 export {InvoiceRenderingTemplates} from './resources/InvoiceRenderingTemplates.js';
 export {Invoices} from './resources/Invoices.js';
 export {Mandates} from './resources/Mandates.js';

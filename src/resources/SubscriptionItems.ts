@@ -21,14 +21,4 @@ export const SubscriptionItems = StripeResource.extend({
     method: 'DELETE',
     fullPath: '/v1/subscription_items/{item}',
   }),
-  createUsageRecord: stripeMethod({
-    method: 'POST',
-    fullPath: '/v1/subscription_items/{subscription_item}/usage_records',
-  }),
-  listUsageRecordSummaries: stripeMethod({
-    method: 'GET',
-    fullPath:
-      '/v1/subscription_items/{subscription_item}/usage_record_summaries',
-    methodType: 'list',
-  }),
 });
