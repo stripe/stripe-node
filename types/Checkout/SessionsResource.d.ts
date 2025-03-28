@@ -30,7 +30,7 @@ declare module 'stripe' {
         billing_address_collection?: SessionCreateParams.BillingAddressCollection;
 
         /**
-         * If set, Checkout displays a back button and customers will be directed to this URL if they decide to cancel payment and return to your website. This parameter is not allowed if ui_mode is `embedded`.
+         * If set, Checkout displays a back button and customers will be directed to this URL if they decide to cancel payment and return to your website. This parameter is not allowed if ui_mode is `embedded` or `custom`.
          */
         cancel_url?: string;
 
@@ -148,6 +148,17 @@ declare module 'stripe' {
         mode?: SessionCreateParams.Mode;
 
         /**
+         * A list of optional items the customer can add to their order at checkout. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices).
+         *
+         * There is a maximum of 10 optional items allowed on a Checkout Session, and the existing limits on the number of line items allowed on a Checkout Session apply to the combined number of line items and optional items.
+         *
+         * For `payment` mode, there is a maximum of 100 combined line items and optional items, however it is recommended to consolidate items if there are more than a few dozen.
+         *
+         * For `subscription` mode, there is a maximum of 20 line items and optional items with recurring Prices and 20 line items and optional items with one-time Prices.
+         */
+        optional_items?: Array<SessionCreateParams.OptionalItem>;
+
+        /**
          * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
          */
         payment_intent_data?: SessionCreateParams.PaymentIntentData;
@@ -193,6 +204,13 @@ declare module 'stripe' {
         payment_method_types?: Array<SessionCreateParams.PaymentMethodType>;
 
         /**
+         * This property is used to set up permissions for various actions (e.g., update) on the CheckoutSession object.
+         *
+         * For specific permissions, please refer to their dedicated subsections, such as `permissions.update.shipping_details`.
+         */
+        permissions?: SessionCreateParams.Permissions;
+
+        /**
          * Controls phone number collection settings for the session.
          *
          * We recommend that you review your privacy policy and check with your legal contacts
@@ -207,7 +225,7 @@ declare module 'stripe' {
 
         /**
          * The URL to redirect your customer back to after they authenticate or cancel their payment on the
-         * payment method's app or site. This parameter is required if ui_mode is `embedded`
+         * payment method's app or site. This parameter is required if `ui_mode` is `embedded` or `custom`
          * and redirect-based payment methods are enabled on the session.
          */
         return_url?: string;
@@ -233,9 +251,10 @@ declare module 'stripe' {
         shipping_options?: Array<SessionCreateParams.ShippingOption>;
 
         /**
-         * Describes the type of transaction being performed by Checkout in order to customize
-         * relevant text on the page, such as the submit button. `submit_type` can only be
-         * specified on Checkout Sessions in `payment` mode. If blank or `auto`, `pay` is used.
+         * Describes the type of transaction being performed by Checkout in order
+         * to customize relevant text on the page, such as the submit button.
+         *  `submit_type` can only be specified on Checkout Sessions in
+         * `payment` or `subscription` mode. If blank or `auto`, `pay` is used.
          */
         submit_type?: SessionCreateParams.SubmitType;
 
@@ -247,7 +266,7 @@ declare module 'stripe' {
         /**
          * The URL to which Stripe should send customers when payment or setup
          * is complete.
-         * This parameter is not allowed if ui_mode is `embedded`. If you'd like to use
+         * This parameter is not allowed if ui_mode is `embedded` or `custom`. If you'd like to use
          * information from the successful Checkout Session on your page, read the
          * guide on [customizing your success page](https://stripe.com/docs/payments/checkout/custom-success-page).
          */
@@ -726,12 +745,12 @@ declare module 'stripe' {
             currency: string;
 
             /**
-             * The ID of the product that this price will belong to. One of `product` or `product_data` is required.
+             * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to. One of `product` or `product_data` is required.
              */
             product?: string;
 
             /**
-             * Data used to generate a new product object inline. One of `product` or `product_data` is required.
+             * Data used to generate a new [Product](https://docs.stripe.com/api/products) object inline. One of `product` or `product_data` is required.
              */
             product_data?: PriceData.ProductData;
 
@@ -849,9 +868,45 @@ declare module 'stripe' {
 
         type Mode = 'payment' | 'setup' | 'subscription';
 
+        interface OptionalItem {
+          /**
+           * When set, provides configuration for the customer to adjust the quantity of the line item created when a customer chooses to add this optional item to their order.
+           */
+          adjustable_quantity?: OptionalItem.AdjustableQuantity;
+
+          /**
+           * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object.
+           */
+          price: string;
+
+          /**
+           * The initial quantity of the line item created when a customer chooses to add this optional item to their order.
+           */
+          quantity: number;
+        }
+
+        namespace OptionalItem {
+          interface AdjustableQuantity {
+            /**
+             * Set to true if the quantity can be adjusted to any non-negative integer.
+             */
+            enabled: boolean;
+
+            /**
+             * The maximum quantity of this item the customer can purchase. By default this value is 99. You can specify a value up to 999999.
+             */
+            maximum?: number;
+
+            /**
+             * The minimum quantity of this item the customer must purchase, if they choose to purchase it. Because this item is optional, the customer will always be able to remove it from their order, even if the `minimum` configured here is greater than 0. By default this value is 0.
+             */
+            minimum?: number;
+          }
+        }
+
         interface PaymentIntentData {
           /**
-           * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+           * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
            */
           application_fee_amount?: number;
 
@@ -2102,6 +2157,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'billie'
           | 'blik'
           | 'boleto'
           | 'card'
@@ -2130,6 +2186,7 @@ declare module 'stripe' {
           | 'promptpay'
           | 'revolut_pay'
           | 'samsung_pay'
+          | 'satispay'
           | 'sepa_debit'
           | 'sofort'
           | 'swish'
@@ -2137,6 +2194,21 @@ declare module 'stripe' {
           | 'us_bank_account'
           | 'wechat_pay'
           | 'zip';
+
+        interface Permissions {
+          /**
+           * Determines which entity is allowed to update the shipping details.
+           *
+           * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
+           *
+           * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+           */
+          update_shipping_details?: Permissions.UpdateShippingDetails;
+        }
+
+        namespace Permissions {
+          type UpdateShippingDetails = 'client_only' | 'server_only';
+        }
 
         interface PhoneNumberCollection {
           /**
@@ -2722,7 +2794,7 @@ declare module 'stripe' {
           type Required = 'if_supported' | 'never';
         }
 
-        type UiMode = 'embedded' | 'hosted';
+        type UiMode = 'custom' | 'embedded' | 'hosted';
       }
 
       interface SessionRetrieveParams {
@@ -2747,6 +2819,13 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * The shipping rate options to apply to this Session. Up to a maximum of 5.
+         */
+        shipping_options?: Stripe.Emptyable<
+          Array<SessionUpdateParams.ShippingOption>
+        >;
       }
 
       namespace SessionUpdateParams {
@@ -2802,6 +2881,144 @@ declare module 'stripe' {
                */
               state?: string;
             }
+          }
+        }
+
+        interface ShippingOption {
+          /**
+           * The ID of the Shipping Rate to use for this shipping option.
+           */
+          shipping_rate?: string;
+
+          /**
+           * Parameters to be passed to Shipping Rate creation for this shipping option.
+           */
+          shipping_rate_data?: ShippingOption.ShippingRateData;
+        }
+
+        namespace ShippingOption {
+          interface ShippingRateData {
+            /**
+             * The estimated range for how long shipping will take, meant to be displayable to the customer. This will appear on CheckoutSessions.
+             */
+            delivery_estimate?: ShippingRateData.DeliveryEstimate;
+
+            /**
+             * The name of the shipping rate, meant to be displayable to the customer. This will appear on CheckoutSessions.
+             */
+            display_name: string;
+
+            /**
+             * Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
+             */
+            fixed_amount?: ShippingRateData.FixedAmount;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             */
+            metadata?: Stripe.MetadataParam;
+
+            /**
+             * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+             */
+            tax_behavior?: ShippingRateData.TaxBehavior;
+
+            /**
+             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+             */
+            tax_code?: string;
+
+            /**
+             * The type of calculation to use on the shipping rate.
+             */
+            type?: 'fixed_amount';
+          }
+
+          namespace ShippingRateData {
+            interface DeliveryEstimate {
+              /**
+               * The upper bound of the estimated range. If empty, represents no upper bound i.e., infinite.
+               */
+              maximum?: DeliveryEstimate.Maximum;
+
+              /**
+               * The lower bound of the estimated range. If empty, represents no lower bound.
+               */
+              minimum?: DeliveryEstimate.Minimum;
+            }
+
+            namespace DeliveryEstimate {
+              interface Maximum {
+                /**
+                 * A unit of time.
+                 */
+                unit: Maximum.Unit;
+
+                /**
+                 * Must be greater than 0.
+                 */
+                value: number;
+              }
+
+              namespace Maximum {
+                type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+              }
+
+              interface Minimum {
+                /**
+                 * A unit of time.
+                 */
+                unit: Minimum.Unit;
+
+                /**
+                 * Must be greater than 0.
+                 */
+                value: number;
+              }
+
+              namespace Minimum {
+                type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+              }
+            }
+
+            interface FixedAmount {
+              /**
+               * A non-negative integer in cents representing how much to charge.
+               */
+              amount: number;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+
+              /**
+               * Shipping rates defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency_options?: {
+                [key: string]: FixedAmount.CurrencyOptions;
+              };
+            }
+
+            namespace FixedAmount {
+              interface CurrencyOptions {
+                /**
+                 * A non-negative integer in cents representing how much to charge.
+                 */
+                amount: number;
+
+                /**
+                 * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+                 */
+                tax_behavior?: CurrencyOptions.TaxBehavior;
+              }
+
+              namespace CurrencyOptions {
+                type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+              }
+            }
+
+            type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
           }
         }
       }
@@ -2875,7 +3092,7 @@ declare module 'stripe' {
 
       class SessionsResource {
         /**
-         * Creates a Session object.
+         * Creates a Checkout Session object.
          */
         create(
           params?: SessionCreateParams,
@@ -2886,7 +3103,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 
         /**
-         * Retrieves a Session object.
+         * Retrieves a Checkout Session object.
          */
         retrieve(
           id: string,
@@ -2899,7 +3116,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 
         /**
-         * Updates a Session object.
+         * Updates a Checkout Session object.
          */
         update(
           id: string,
@@ -2917,9 +3134,9 @@ declare module 'stripe' {
         list(options?: RequestOptions): ApiListPromise<Stripe.Checkout.Session>;
 
         /**
-         * A Session can be expired when it is in one of these statuses: open
+         * A Checkout Session can be expired when it is in one of these statuses: open
          *
-         * After it expires, a customer can't complete a Session and customers loading the Session see a message saying the Session is expired.
+         * After it expires, a customer can't complete a Checkout Session and customers loading the Checkout Session see a message saying the Checkout Session is expired.
          */
         expire(
           id: string,

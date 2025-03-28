@@ -75,14 +75,14 @@ declare module 'stripe' {
         client_reference_id: string | null;
 
         /**
-         * Client secret to be used when initializing Stripe.js embedded checkout.
+         * The client secret of your Checkout Session. Applies to Checkout Sessions with `ui_mode: embedded`. Client secret to be used when initializing Stripe.js embedded checkout.
          */
         client_secret: string | null;
 
         /**
          * Information about the customer collected within the Checkout Session.
          */
-        collected_information?: Session.CollectedInformation | null;
+        collected_information: Session.CollectedInformation | null;
 
         /**
          * Results of `consent_collection` for this session.
@@ -105,7 +105,7 @@ declare module 'stripe' {
         currency: string | null;
 
         /**
-         * Currency conversion details for [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing) sessions
+         * Currency conversion details for [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing) sessions created before 2025-03-31.
          */
         currency_conversion: Session.CurrencyConversion | null;
 
@@ -190,6 +190,11 @@ declare module 'stripe' {
         mode: Session.Mode;
 
         /**
+         * The optional items presented to the customer at checkout.
+         */
+        optional_items?: Array<Session.OptionalItem> | null;
+
+        /**
          * The ID of the PaymentIntent for Checkout Sessions in `payment` mode. You can't confirm or cancel the PaymentIntent for a Checkout Session. To cancel, [expire the Checkout Session](https://stripe.com/docs/api/checkout/sessions/expire) instead.
          */
         payment_intent: string | Stripe.PaymentIntent | null;
@@ -226,7 +231,16 @@ declare module 'stripe' {
          */
         payment_status: Session.PaymentStatus;
 
+        /**
+         * This property is used to set up permissions for various actions (e.g., update) on the CheckoutSession object.
+         *
+         * For specific permissions, please refer to their dedicated subsections, such as `permissions.update.shipping_details`.
+         */
+        permissions: Session.Permissions | null;
+
         phone_number_collection?: Session.PhoneNumberCollection;
+
+        presentment_details?: Session.PresentmentDetails;
 
         /**
          * The ID of the original expired Checkout Session that triggered the recovery flow.
@@ -262,11 +276,6 @@ declare module 'stripe' {
          * The details of the customer cost of shipping, including the customer chosen ShippingRate.
          */
         shipping_cost: Session.ShippingCost | null;
-
-        /**
-         * Shipping information for this Checkout Session.
-         */
-        shipping_details: Session.ShippingDetails | null;
 
         /**
          * The shipping rate options applied to this Session.
@@ -309,7 +318,7 @@ declare module 'stripe' {
         ui_mode: Session.UiMode | null;
 
         /**
-         * The URL to the Checkout Session. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://stripe.com/docs/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
+         * The URL to the Checkout Session. Applies to Checkout Sessions with `ui_mode: hosted`. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://stripe.com/docs/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
          * This value is only present when the session is active.
          */
         url: string | null;
@@ -399,32 +408,17 @@ declare module 'stripe' {
           /**
            * Shipping information for this Checkout Session.
            */
-          shipping_details?: CollectedInformation.ShippingDetails | null;
+          shipping_details: CollectedInformation.ShippingDetails | null;
         }
 
         namespace CollectedInformation {
           interface ShippingDetails {
-            address?: Stripe.Address;
+            address: Stripe.Address;
 
             /**
-             * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+             * Customer name.
              */
-            carrier?: string | null;
-
-            /**
-             * Recipient name.
-             */
-            name?: string;
-
-            /**
-             * Recipient phone (including extension).
-             */
-            phone?: string | null;
-
-            /**
-             * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-             */
-            tracking_number?: string | null;
+            name: string;
           }
         }
 
@@ -972,6 +966,33 @@ declare module 'stripe' {
           | 'zh-TW';
 
         type Mode = 'payment' | 'setup' | 'subscription';
+
+        interface OptionalItem {
+          adjustable_quantity: OptionalItem.AdjustableQuantity | null;
+
+          price: string;
+
+          quantity: number;
+        }
+
+        namespace OptionalItem {
+          interface AdjustableQuantity {
+            /**
+             * Set to true if the quantity can be adjusted to any non-negative integer.
+             */
+            enabled: boolean;
+
+            /**
+             * The maximum quantity of this item the customer can purchase. By default this value is 99. You can specify a value up to 999999.
+             */
+            maximum: number | null;
+
+            /**
+             * The minimum quantity of this item the customer must purchase, if they choose to purchase it. Because this item is optional, the customer will always be able to remove it from their order, even if the `minimum` configured here is greater than 0. By default this value is 0.
+             */
+            minimum: number | null;
+          }
+        }
 
         type PaymentMethodCollection = 'always' | 'if_required';
 
@@ -1880,11 +1901,38 @@ declare module 'stripe' {
 
         type PaymentStatus = 'no_payment_required' | 'paid' | 'unpaid';
 
+        interface Permissions {
+          /**
+           * Determines which entity is allowed to update the shipping details.
+           *
+           * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
+           *
+           * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+           */
+          update_shipping_details: Permissions.UpdateShippingDetails | null;
+        }
+
+        namespace Permissions {
+          type UpdateShippingDetails = 'client_only' | 'server_only';
+        }
+
         interface PhoneNumberCollection {
           /**
            * Indicates whether phone number collection is enabled for the session
            */
           enabled: boolean;
+        }
+
+        interface PresentmentDetails {
+          /**
+           * Amount intended to be collected by this payment, denominated in presentment_currency.
+           */
+          presentment_amount: number;
+
+          /**
+           * Currency presented to the customer during payment.
+           */
+          presentment_currency: string;
         }
 
         type RedirectOnCompletion = 'always' | 'if_required' | 'never';
@@ -2238,30 +2286,6 @@ declare module 'stripe' {
           }
         }
 
-        interface ShippingDetails {
-          address?: Stripe.Address;
-
-          /**
-           * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-           */
-          carrier?: string | null;
-
-          /**
-           * Recipient name.
-           */
-          name?: string;
-
-          /**
-           * Recipient phone (including extension).
-           */
-          phone?: string | null;
-
-          /**
-           * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-           */
-          tracking_number?: string | null;
-        }
-
         interface ShippingOption {
           /**
            * A non-negative integer in cents representing how much to charge.
@@ -2387,7 +2411,7 @@ declare module 'stripe' {
           }
         }
 
-        type UiMode = 'embedded' | 'hosted';
+        type UiMode = 'custom' | 'embedded' | 'hosted';
       }
     }
   }

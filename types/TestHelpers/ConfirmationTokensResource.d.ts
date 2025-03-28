@@ -90,6 +90,11 @@ declare module 'stripe' {
           bancontact?: PaymentMethodData.Bancontact;
 
           /**
+           * If this is a `billie` PaymentMethod, this hash contains details about the billie payment method.
+           */
+          billie?: PaymentMethodData.Billie;
+
+          /**
            * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
            */
           billing_details?: PaymentMethodData.BillingDetails;
@@ -190,6 +195,11 @@ declare module 'stripe' {
           naver_pay?: PaymentMethodData.NaverPay;
 
           /**
+           * If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account payment method.
+           */
+          nz_bank_account?: PaymentMethodData.NzBankAccount;
+
+          /**
            * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
            */
           oxxo?: PaymentMethodData.Oxxo;
@@ -243,6 +253,11 @@ declare module 'stripe' {
            * If this is a `samsung_pay` PaymentMethod, this hash contains details about the SamsungPay payment method.
            */
           samsung_pay?: PaymentMethodData.SamsungPay;
+
+          /**
+           * If this is a `satispay` PaymentMethod, this hash contains details about the satispay payment method.
+           */
+          satispay?: PaymentMethodData.Satispay;
 
           /**
            * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -340,6 +355,8 @@ declare module 'stripe' {
           }
 
           interface Bancontact {}
+
+          interface Billie {}
 
           interface BillingDetails {
             /**
@@ -537,6 +554,35 @@ declare module 'stripe' {
             type Funding = 'card' | 'points';
           }
 
+          interface NzBankAccount {
+            /**
+             * The name on the bank account. Only required if the account holder name is different from the name of the authorized signatory collected in the PaymentMethod's billing details.
+             */
+            account_holder_name?: string;
+
+            /**
+             * The account number for the bank account.
+             */
+            account_number: string;
+
+            /**
+             * The numeric code for the bank account's bank.
+             */
+            bank_code: string;
+
+            /**
+             * The numeric code for the bank account's bank branch.
+             */
+            branch_code: string;
+
+            reference?: string;
+
+            /**
+             * The suffix of the bank account number.
+             */
+            suffix: string;
+          }
+
           interface Oxxo {}
 
           interface P24 {
@@ -599,6 +645,8 @@ declare module 'stripe' {
 
           interface SamsungPay {}
 
+          interface Satispay {}
+
           interface SepaDebit {
             /**
              * IBAN of the bank account.
@@ -631,6 +679,7 @@ declare module 'stripe' {
             | 'au_becs_debit'
             | 'bacs_debit'
             | 'bancontact'
+            | 'billie'
             | 'blik'
             | 'boleto'
             | 'cashapp'
@@ -648,6 +697,7 @@ declare module 'stripe' {
             | 'mobilepay'
             | 'multibanco'
             | 'naver_pay'
+            | 'nz_bank_account'
             | 'oxxo'
             | 'p24'
             | 'pay_by_bank'
@@ -658,6 +708,7 @@ declare module 'stripe' {
             | 'promptpay'
             | 'revolut_pay'
             | 'samsung_pay'
+            | 'satispay'
             | 'sepa_debit'
             | 'sofort'
             | 'swish'

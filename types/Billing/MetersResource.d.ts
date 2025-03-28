@@ -55,13 +55,13 @@ declare module 'stripe' {
 
         interface DefaultAggregation {
           /**
-           * Specifies how events are aggregated. Allowed values are `count` to count the number of events and `sum` to sum each event's value.
+           * Specifies how events are aggregated. Allowed values are `count` to count the number of events, `sum` to sum each event's value and `last` to take the last event's value in the window.
            */
           formula: DefaultAggregation.Formula;
         }
 
         namespace DefaultAggregation {
-          type Formula = 'count' | 'sum';
+          type Formula = 'count' | 'last' | 'sum';
         }
 
         type EventTimeWindow = 'day' | 'hour';

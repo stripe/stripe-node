@@ -22,11 +22,6 @@ declare module 'stripe' {
       amount: number;
 
       /**
-       * The integer amount in cents (or local equivalent) representing the amount being credited for this line item, excluding all tax and discounts.
-       */
-      amount_excluding_tax: number | null;
-
-      /**
        * Description of the item being credited.
        */
       description: string | null;
@@ -62,14 +57,14 @@ declare module 'stripe' {
       quantity: number | null;
 
       /**
-       * The amount of tax calculated per tax rate for this line item
-       */
-      tax_amounts: Array<CreditNoteLineItem.TaxAmount>;
-
-      /**
        * The tax rates which apply to the line item.
        */
       tax_rates: Array<Stripe.TaxRate>;
+
+      /**
+       * The tax information of the line item.
+       */
+      taxes: Array<CreditNoteLineItem.Tax> | null;
 
       /**
        * The type of the credit note line item, one of `invoice_line_item` or `custom_line_item`. When the type is `invoice_line_item` there is an additional `invoice_line_item` property on the resource the value of which is the id of the credited line item on the invoice.
@@ -85,11 +80,6 @@ declare module 'stripe' {
        * Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
        */
       unit_amount_decimal: string | null;
-
-      /**
-       * The amount in cents (or local equivalent) representing the unit amount being credited for this line item, excluding all tax and discounts.
-       */
-      unit_amount_excluding_tax: string | null;
     }
 
     namespace CreditNoteLineItem {
@@ -133,36 +123,42 @@ declare module 'stripe' {
         type Type = 'credit_balance_transaction' | 'discount';
       }
 
-      interface TaxAmount {
+      interface Tax {
         /**
-         * The amount, in cents (or local equivalent), of the tax.
+         * The amount of the tax, in cents (or local equivalent).
          */
         amount: number;
 
         /**
-         * Whether this tax amount is inclusive or exclusive.
+         * Whether this tax is inclusive or exclusive.
          */
-        inclusive: boolean;
+        tax_behavior: Tax.TaxBehavior;
 
         /**
-         * The tax rate that was applied to get this tax amount.
+         * Additional details about the tax rate. Only present when `type` is `tax_rate_details`.
          */
-        tax_rate: string | Stripe.TaxRate;
+        tax_rate_details: Tax.TaxRateDetails | null;
 
         /**
          * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
          */
-        taxability_reason: TaxAmount.TaxabilityReason | null;
+        taxability_reason: Tax.TaxabilityReason;
 
         /**
          * The amount on which tax is calculated, in cents (or local equivalent).
          */
         taxable_amount: number | null;
+
+        /**
+         * The type of tax information.
+         */
+        type: 'tax_rate_details';
       }
 
-      namespace TaxAmount {
+      namespace Tax {
         type TaxabilityReason =
           | 'customer_exempt'
+          | 'not_available'
           | 'not_collecting'
           | 'not_subject_to_tax'
           | 'not_supported'
@@ -177,6 +173,12 @@ declare module 'stripe' {
           | 'standard_rated'
           | 'taxable_basis_reduced'
           | 'zero_rated';
+
+        type TaxBehavior = 'exclusive' | 'inclusive';
+
+        interface TaxRateDetails {
+          tax_rate: string;
+        }
       }
 
       type Type = 'custom_line_item' | 'invoice_line_item';
