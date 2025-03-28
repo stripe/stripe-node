@@ -15,6 +15,7 @@ declare module 'stripe' {
       | ApplicationFeeRefundUpdatedEvent
       | ApplicationFeeRefundedEvent
       | BalanceAvailableEvent
+      | BalanceSettingsUpdatedEvent
       | BillingAlertTriggeredEvent
       | BillingCreditBalanceTransactionCreatedEvent
       | BillingCreditGrantCreatedEvent
@@ -476,6 +477,22 @@ declare module 'stripe' {
         object: Stripe.Balance;
 
         previous_attributes?: Partial<Stripe.Balance>;
+      }
+    }
+
+    /**
+     * Occurs whenever a balance settings status or property has changed.
+     */
+    interface BalanceSettingsUpdatedEvent extends EventBase {
+      type: 'balance_settings.updated';
+      data: BalanceSettingsUpdatedEvent.Data;
+    }
+
+    namespace BalanceSettingsUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.BalanceSettings;
+
+        previous_attributes?: Partial<Stripe.BalanceSettings>;
       }
     }
 
