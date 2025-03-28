@@ -148,7 +148,9 @@ declare module 'stripe' {
         | '2024-11-20.acacia'
         | '2024-12-18.acacia'
         | '2025-01-27.acacia'
-        | '2025-02-24.acacia';
+        | '2025-02-24.acacia'
+        | '2025-03-01.dashboard'
+        | '2025-03-31.basil';
 
       type EnabledEvent =
         | '*'
@@ -425,7 +427,14 @@ declare module 'stripe' {
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created';
+        | 'treasury.received_debit.created'
+        | 'billing.credit_balance_transaction.created'
+        | 'billing.credit_grant.created'
+        | 'billing.credit_grant.updated'
+        | 'billing.meter.created'
+        | 'billing.meter.deactivated'
+        | 'billing.meter.reactivated'
+        | 'billing.meter.updated';
     }
 
     interface WebhookEndpointRetrieveParams {
@@ -743,7 +752,14 @@ declare module 'stripe' {
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created';
+        | 'treasury.received_debit.created'
+        | 'billing.credit_balance_transaction.created'
+        | 'billing.credit_grant.created'
+        | 'billing.credit_grant.updated'
+        | 'billing.meter.created'
+        | 'billing.meter.deactivated'
+        | 'billing.meter.reactivated'
+        | 'billing.meter.updated';
     }
 
     interface WebhookEndpointListParams extends PaginationParams {

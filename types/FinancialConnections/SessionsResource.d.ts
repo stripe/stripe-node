@@ -60,6 +60,11 @@ declare module 'stripe' {
           customer?: string;
 
           /**
+           * The ID of the Stripe customer Account whose accounts will be retrieved. Should only be present if `type` is `customer`.
+           */
+          customer_account?: string;
+
+          /**
            * Type of account holder to collect accounts for.
            */
           type: AccountHolder.Type;

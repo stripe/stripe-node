@@ -45,6 +45,11 @@ declare module 'stripe' {
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
+       * The account that this promotion code can be used by.
+       */
+      customer_account?: string | null;
+
+      /**
        * Date at which the promotion code can no longer be redeemed.
        */
       expires_at: number | null;

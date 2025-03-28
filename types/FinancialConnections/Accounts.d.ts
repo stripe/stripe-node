@@ -135,6 +135,8 @@ declare module 'stripe' {
            */
           customer?: string | Stripe.Customer;
 
+          customer_account?: string;
+
           /**
            * Type of account holder that this account belongs to.
            */

@@ -116,11 +116,6 @@ declare module 'stripe' {
        */
       fraud_details: Charge.FraudDetails | null;
 
-      /**
-       * ID of the invoice this charge is for if one exists.
-       */
-      invoice: string | Stripe.Invoice | null;
-
       level3?: Charge.Level3;
 
       /**
@@ -162,6 +157,8 @@ declare module 'stripe' {
        * Details about the payment method at the time of the transaction.
        */
       payment_method_details: Charge.PaymentMethodDetails | null;
+
+      presentment_details?: Charge.PresentmentDetails;
 
       /**
        * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
@@ -410,6 +407,8 @@ declare module 'stripe' {
 
         bancontact?: PaymentMethodDetails.Bancontact;
 
+        billie?: PaymentMethodDetails.Billie;
+
         blik?: PaymentMethodDetails.Blik;
 
         boleto?: PaymentMethodDetails.Boleto;
@@ -456,6 +455,8 @@ declare module 'stripe' {
 
         naver_pay?: PaymentMethodDetails.NaverPay;
 
+        nz_bank_account?: PaymentMethodDetails.NzBankAccount;
+
         oxxo?: PaymentMethodDetails.Oxxo;
 
         p24?: PaymentMethodDetails.P24;
@@ -482,6 +483,8 @@ declare module 'stripe' {
 
         samsung_pay?: PaymentMethodDetails.SamsungPay;
 
+        satispay?: PaymentMethodDetails.Satispay;
+
         sepa_credit_transfer?: PaymentMethodDetails.SepaCreditTransfer;
 
         sepa_debit?: PaymentMethodDetails.SepaDebit;
@@ -491,6 +494,8 @@ declare module 'stripe' {
         sofort?: PaymentMethodDetails.Sofort;
 
         stripe_account?: PaymentMethodDetails.StripeAccount;
+
+        stripe_balance?: PaymentMethodDetails.StripeBalance;
 
         swish?: PaymentMethodDetails.Swish;
 
@@ -786,6 +791,8 @@ declare module 'stripe' {
         namespace Bancontact {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
         }
+
+        interface Billie {}
 
         interface Blik {
           /**
@@ -2010,6 +2017,38 @@ declare module 'stripe' {
           buyer_id: string | null;
         }
 
+        interface NzBankAccount {
+          /**
+           * The name on the bank account. Only present if the account holder name is different from the name of the authorized signatory collected in the PaymentMethod's billing details.
+           */
+          account_holder_name: string | null;
+
+          /**
+           * The numeric code for the bank account's bank.
+           */
+          bank_code: string;
+
+          /**
+           * The name of the bank.
+           */
+          bank_name: string;
+
+          /**
+           * The numeric code for the bank account's bank branch.
+           */
+          branch_code: string;
+
+          /**
+           * Last four digits of the bank account number.
+           */
+          last4: string;
+
+          /**
+           * The suffix of the bank account number.
+           */
+          suffix: string | null;
+        }
+
         interface Oxxo {
           /**
            * OXXO reference number
@@ -2263,6 +2302,8 @@ declare module 'stripe' {
           buyer_id: string | null;
         }
 
+        interface Satispay {}
+
         interface SepaCreditTransfer {
           /**
            * Name of the bank associated with the bank account.
@@ -2376,6 +2417,22 @@ declare module 'stripe' {
 
         interface StripeAccount {}
 
+        interface StripeBalance {
+          /**
+           * The connected account ID whose Stripe balance to use as the source of payment
+           */
+          account?: string | null;
+
+          /**
+           * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
+           */
+          source_type: StripeBalance.SourceType;
+        }
+
+        namespace StripeBalance {
+          type SourceType = 'bank_account' | 'card' | 'fpx';
+        }
+
         interface Swish {
           /**
            * Uniquely identifies the payer's Swish account. You can use this attribute to check whether two Swish transactions were paid for by the same payer
@@ -2458,6 +2515,18 @@ declare module 'stripe' {
         }
 
         interface Zip {}
+      }
+
+      interface PresentmentDetails {
+        /**
+         * Amount intended to be collected by this payment, denominated in presentment_currency.
+         */
+        presentment_amount: number;
+
+        /**
+         * Currency presented to the customer during payment.
+         */
+        presentment_currency: string;
       }
 
       interface RadarOptions {
