@@ -305,4 +305,4 @@ stripe.files.create({
 });
 
 // Test deprecated parameters still work
-const param: Stripe.UsageRecordSummaryListParams = {expand: []};
+const param: Stripe.TransferListReversalsParams = {expand: []};

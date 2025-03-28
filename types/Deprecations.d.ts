@@ -201,15 +201,5 @@ declare module 'stripe' {
      * @deprecated prefer {@link TransferUpdateReversalParams}
      **/
     type TransferReversalUpdateParams = TransferUpdateReversalParams;
-
-    /**
-     * @deprecated prefer {@link SubscriptionItemCreateUsageRecordParams}
-     **/
-    type UsageRecordCreateParams = SubscriptionItemCreateUsageRecordParams;
-
-    /**
-     * @deprecated prefer {@link SubscriptionItemListUsageRecordSummariesParams}
-     **/
-    type UsageRecordSummaryListParams = SubscriptionItemListUsageRecordSummariesParams;
   }
 }
