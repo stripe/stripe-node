@@ -38,6 +38,8 @@ declare module 'stripe' {
        */
       customer: string | Stripe.Customer;
 
+      customer_account?: string | null;
+
       /**
        * The total available cash balance for the specified currency after this transaction was applied. Represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
        */

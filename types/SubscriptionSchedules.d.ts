@@ -57,6 +57,11 @@ declare module 'stripe' {
        */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
+      /**
+       * ID of the account who owns the subscription schedule.
+       */
+      customer_account?: string | null;
+
       default_settings: SubscriptionSchedule.DefaultSettings;
 
       /**
@@ -144,11 +149,6 @@ declare module 'stripe' {
         billing_cycle_anchor: DefaultSettings.BillingCycleAnchor;
 
         /**
-         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
-         */
-        billing_thresholds: DefaultSettings.BillingThresholds | null;
-
-        /**
          * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`.
          */
         collection_method: DefaultSettings.CollectionMethod | null;
@@ -213,18 +213,6 @@ declare module 'stripe' {
         }
 
         type BillingCycleAnchor = 'automatic' | 'phase_start';
-
-        interface BillingThresholds {
-          /**
-           * Monetary threshold that triggers the subscription to create an invoice
-           */
-          amount_gte: number | null;
-
-          /**
-           * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged. This value may not be `true` if the subscription contains items with plans that have `aggregate_usage=last_ever`.
-           */
-          reset_billing_cycle_anchor: boolean | null;
-        }
 
         type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
@@ -327,19 +315,9 @@ declare module 'stripe' {
         billing_cycle_anchor: Phase.BillingCycleAnchor | null;
 
         /**
-         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
-         */
-        billing_thresholds: Phase.BillingThresholds | null;
-
-        /**
          * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`.
          */
         collection_method: Phase.CollectionMethod | null;
-
-        /**
-         * ID of the coupon to use during this phase of the subscription schedule.
-         */
-        coupon: string | Stripe.Coupon | Stripe.DeletedCoupon | null;
 
         /**
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -525,18 +503,6 @@ declare module 'stripe' {
 
         type BillingCycleAnchor = 'automatic' | 'phase_start';
 
-        interface BillingThresholds {
-          /**
-           * Monetary threshold that triggers the subscription to create an invoice
-           */
-          amount_gte: number | null;
-
-          /**
-           * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged. This value may not be `true` if the subscription contains items with plans that have `aggregate_usage=last_ever`.
-           */
-          reset_billing_cycle_anchor: boolean | null;
-        }
-
         type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
         interface Discount {
@@ -614,11 +580,6 @@ declare module 'stripe' {
 
         interface Item {
           /**
-           * Define thresholds at which an invoice will be sent, and the related subscription advanced to a new billing period
-           */
-          billing_thresholds: Item.BillingThresholds | null;
-
-          /**
            * The discounts applied to the subscription item. Subscription item discounts are applied before subscription discounts. Use `expand[]=discounts` to expand each discount.
            */
           discounts: Array<Item.Discount>;
@@ -655,13 +616,6 @@ declare module 'stripe' {
         }
 
         namespace Item {
-          interface BillingThresholds {
-            /**
-             * Usage threshold that triggers the subscription to create an invoice
-             */
-            usage_gte: number | null;
-          }
-
           interface Discount {
             /**
              * ID of the coupon to create a new discount for.

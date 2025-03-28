@@ -5,14 +5,19 @@ declare module 'stripe' {
     namespace Billing {
       interface CreditBalanceSummaryRetrieveParams {
         /**
-         * The customer for which to fetch credit balance summary.
-         */
-        customer: string;
-
-        /**
          * The filter criteria for the credit balance summary.
          */
         filter: CreditBalanceSummaryRetrieveParams.Filter;
+
+        /**
+         * The customer for which to fetch credit balance summary.
+         */
+        customer?: string;
+
+        /**
+         * The account for which to fetch credit balance summary.
+         */
+        customer_account?: string;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -41,12 +46,12 @@ declare module 'stripe' {
         namespace Filter {
           interface ApplicabilityScope {
             /**
-             * The price type that credit grants can apply to. We currently only support the `metered` price type.
+             * The price type that credit grants can apply to. We currently only support the `metered` price type. Cannot be used in combination with `prices`.
              */
             price_type?: 'metered';
 
             /**
-             * A list of prices that the credit grant can apply to. We currently only support the `metered` prices.
+             * A list of prices that the credit grant can apply to. We currently only support the `metered` prices. Cannot be used in combination with `price_type`.
              */
             prices?: Array<ApplicabilityScope.Price>;
           }

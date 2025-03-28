@@ -35,6 +35,11 @@ declare module 'stripe' {
         related_customer?: string;
 
         /**
+         * Token referencing a Customer Account resource.
+         */
+        related_customer_account?: string;
+
+        /**
          * The URL that the user will be redirected to upon completing the verification flow.
          */
         return_url?: string;
@@ -203,6 +208,8 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         related_customer?: string;
+
+        related_customer_account?: string;
 
         /**
          * Only return VerificationSessions with this status. [Learn more about the lifecycle of sessions](https://stripe.com/docs/identity/how-sessions-work).

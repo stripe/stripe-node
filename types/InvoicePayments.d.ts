@@ -17,11 +17,6 @@ declare module 'stripe' {
       object: 'invoice_payment';
 
       /**
-       * Excess payment that was received for this invoice and credited to the customer's `invoice_credit_balance`. This field is null until the payment is `paid`. Overpayment can happen when you attach more than one PaymentIntent to the invoice, and each of them succeeds. To avoid overpayment, cancel any PaymentIntents that you do not need before attaching more.
-       */
-      amount_overpaid: number | null;
-
-      /**
        * Amount that was actually paid for this invoice, in cents (or local equivalent). This field is null until the payment is `paid`. This amount can be less than the `amount_requested` if the PaymentIntent's `amount_received` is not sufficient to pay all of the invoices that it is attached to.
        */
       amount_paid: number | null;
@@ -49,7 +44,7 @@ declare module 'stripe' {
       /**
        * Stripe automatically creates a default InvoicePayment when the invoice is finalized, and keeps it synchronized with the invoice's `amount_remaining`. The PaymentIntent associated with the default payment can't be edited or canceled directly.
        */
-      is_default: boolean | null;
+      is_default: boolean;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -90,11 +85,7 @@ declare module 'stripe' {
       }
 
       namespace Payment {
-        type Type =
-          | 'charge'
-          | 'out_of_band_payment'
-          | 'payment_intent'
-          | 'payment_record';
+        type Type = 'charge' | 'payment_intent';
       }
 
       interface StatusTransitions {

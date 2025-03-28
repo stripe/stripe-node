@@ -34,6 +34,11 @@ declare module 'stripe' {
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
+       * The ID of the account associated with this discount.
+       */
+      customer_account?: string | null;
+
+      /**
        * Always true for a deleted object
        */
       deleted: true;
@@ -102,6 +107,11 @@ declare module 'stripe' {
        * The ID of the customer associated with this discount.
        */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+
+      /**
+       * The ID of the account associated with this discount.
+       */
+      customer_account?: string | null;
 
       /**
        * Always true for a deleted object

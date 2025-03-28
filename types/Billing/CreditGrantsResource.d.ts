@@ -22,7 +22,12 @@ declare module 'stripe' {
         /**
          * ID of the customer to receive the billing credits.
          */
-        customer: string;
+        customer?: string;
+
+        /**
+         * ID of the account to receive the billing credits.
+         */
+        customer_account?: string;
 
         /**
          * The time when the billing credits become effective-when they're eligible for use. It defaults to the current timestamp if not specified.
@@ -92,12 +97,12 @@ declare module 'stripe' {
         namespace ApplicabilityConfig {
           interface Scope {
             /**
-             * The price type that credit grants can apply to. We currently only support the `metered` price type.
+             * The price type that credit grants can apply to. We currently only support the `metered` price type. Cannot be used in combination with `prices`.
              */
             price_type?: 'metered';
 
             /**
-             * A list of prices that the credit grant can apply to. We currently only support the `metered` prices.
+             * A list of prices that the credit grant can apply to. We currently only support the `metered` prices. Cannot be used in combination with `price_type`.
              */
             prices?: Array<Scope.Price>;
           }
@@ -144,6 +149,11 @@ declare module 'stripe' {
          * Only return credit grants for this customer.
          */
         customer?: string;
+
+        /**
+         * Only return credit grants for this account.
+         */
+        customer_account?: string;
 
         /**
          * Specifies which fields in the response should be expanded.

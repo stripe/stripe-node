@@ -182,6 +182,11 @@ declare module 'stripe' {
           namespace Selection {
             interface Choice {
               /**
+               * The unique identifier for this choice
+               */
+              id: string;
+
+              /**
                * The style of the button which will be shown for this choice
                */
               style?: Choice.Style;
@@ -189,7 +194,7 @@ declare module 'stripe' {
               /**
                * The text which will be shown on the button for this choice
                */
-              value: string;
+              text: string;
             }
 
             namespace Choice {

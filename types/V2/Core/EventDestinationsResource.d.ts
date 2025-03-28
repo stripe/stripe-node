@@ -156,11 +156,6 @@ declare module 'stripe' {
            * The page size.
            */
           limit?: number;
-
-          /**
-           * The requested page.
-           */
-          page?: string;
         }
       }
 

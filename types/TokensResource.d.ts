@@ -145,6 +145,9 @@ declare module 'stripe' {
            */
           ownership_declaration_shown_and_signed?: boolean;
 
+          /**
+           * This value is used to determine if a business is exempt from providing ultimate beneficial owners. See [this support article](https://support.stripe.com/questions/exemption-from-providing-ownership-details) and [changelog](https://docs.stripe.com/changelog/acacia/2025-01-27/ownership-exemption-reason-accounts-api) for more details.
+           */
           ownership_exemption_reason?: Stripe.Emptyable<
             Company.OwnershipExemptionReason
           >;
@@ -719,7 +722,7 @@ declare module 'stripe' {
         /**
          * Indicates if the person or any of their representatives, family members, or other closely related persons, declares that they hold or have held an important public job or function, in any jurisdiction.
          */
-        political_exposure?: string;
+        political_exposure?: Person.PoliticalExposure;
 
         /**
          * The person's registered address.
@@ -825,6 +828,8 @@ declare module 'stripe' {
             files?: Array<string>;
           }
         }
+
+        type PoliticalExposure = 'existing' | 'none';
 
         interface Relationship {
           /**

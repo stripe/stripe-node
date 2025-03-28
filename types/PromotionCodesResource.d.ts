@@ -26,6 +26,11 @@ declare module 'stripe' {
       customer?: string;
 
       /**
+       * The account that this promotion code can be used by. If not set, the promotion code can be used by all accounts.
+       */
+      customer_account?: string;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -160,6 +165,11 @@ declare module 'stripe' {
        * Only return promotion codes that are restricted to this customer.
        */
       customer?: string;
+
+      /**
+       * Only return promotion codes that are restricted to this account.
+       */
+      customer_account?: string;
 
       /**
        * Specifies which fields in the response should be expanded.

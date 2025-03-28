@@ -42,6 +42,11 @@ declare module 'stripe' {
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
+       * The value of [customer_account](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-customer_account) on the SetupIntent at the time of this confirmation.
+       */
+      customer_account?: string | null;
+
+      /**
        * Indicates the directions of money movement for which this payment method is intended to be used.
        *
        * Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include `outbound` if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.
@@ -120,6 +125,10 @@ declare module 'stripe' {
 
         link?: PaymentMethodDetails.Link;
 
+        naver_pay?: PaymentMethodDetails.NaverPay;
+
+        nz_bank_account?: PaymentMethodDetails.NzBankAccount;
+
         paypal?: PaymentMethodDetails.Paypal;
 
         payto?: PaymentMethodDetails.Payto;
@@ -129,6 +138,8 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodDetails.SepaDebit;
 
         sofort?: PaymentMethodDetails.Sofort;
+
+        stripe_balance?: PaymentMethodDetails.StripeBalance;
 
         /**
          * The type of the payment method used in the SetupIntent (e.g., `card`). An additional hash is included on `payment_method_details` with a name matching this value. It contains confirmation-specific information for the payment method.
@@ -504,6 +515,15 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface NaverPay {
+          /**
+           * Uniquely identifies this particular Naver Pay account. You can use this attribute to check whether two Naver Pay accounts are the same.
+           */
+          buyer_id?: string;
+        }
+
+        interface NzBankAccount {}
+
         interface Paypal {}
 
         interface Payto {}
@@ -559,6 +579,8 @@ declare module 'stripe' {
         namespace Sofort {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
         }
+
+        interface StripeBalance {}
 
         interface UsBankAccount {}
       }
@@ -730,6 +752,7 @@ declare module 'stripe' {
           | 'financial_connections_no_successful_transaction_refresh'
           | 'forwarding_api_inactive'
           | 'forwarding_api_invalid_parameter'
+          | 'forwarding_api_retryable_upstream_error'
           | 'forwarding_api_upstream_connection_error'
           | 'forwarding_api_upstream_connection_timeout'
           | 'gift_card_balance_insufficient'
@@ -830,6 +853,7 @@ declare module 'stripe' {
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'
           | 'setup_intent_mandate_invalid'
+          | 'setup_intent_mobile_wallet_unsupported'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
           | 'shipping_address_invalid'
@@ -855,7 +879,9 @@ declare module 'stripe' {
           | 'token_in_use'
           | 'transfer_source_balance_parameters_mismatch'
           | 'transfers_not_allowed'
-          | 'url_invalid';
+          | 'url_invalid'
+          | 'v2_account_disconnection_unsupported'
+          | 'v2_account_missing_configuration';
 
         type Type =
           | 'api_error'

@@ -24,6 +24,11 @@ declare module 'stripe' {
       customer: string;
 
       /**
+       * The ID of the account whose cash balance this object represents.
+       */
+      customer_account?: string | null;
+
+      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;

@@ -42,6 +42,8 @@ declare module 'stripe' {
        */
       currency?: string | null;
 
+      customer_account?: string | null;
+
       /**
        * ID of the default payment source for the customer.
        *
@@ -240,7 +242,7 @@ declare module 'stripe' {
         ip_address: string | null;
 
         /**
-         * The customer's location as identified by Stripe Tax.
+         * The identified tax location of the customer.
          */
         location: Tax.Location | null;
       }
@@ -254,7 +256,7 @@ declare module 'stripe' {
 
         interface Location {
           /**
-           * The customer's country as identified by Stripe Tax.
+           * The identified tax country of the customer.
            */
           country: string;
 
@@ -264,7 +266,7 @@ declare module 'stripe' {
           source: Location.Source;
 
           /**
-           * The customer's state, county, province, or region as identified by Stripe Tax.
+           * The identified tax state, county, province, or region of the customer.
            */
           state: string | null;
         }

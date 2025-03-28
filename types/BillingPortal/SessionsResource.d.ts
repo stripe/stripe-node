@@ -5,14 +5,19 @@ declare module 'stripe' {
     namespace BillingPortal {
       interface SessionCreateParams {
         /**
-         * The ID of an existing customer.
-         */
-        customer: string;
-
-        /**
          * The ID of an existing [configuration](https://stripe.com/docs/api/customer_portal/configuration) to use for this session, describing its functionality and features. If not specified, the session uses the default configuration.
          */
         configuration?: string;
+
+        /**
+         * The ID of an existing customer.
+         */
+        customer?: string;
+
+        /**
+         * The ID of an existing account.
+         */
+        customer_account?: string;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -256,7 +261,10 @@ declare module 'stripe' {
          * Creates a session of the customer portal.
          */
         create(
-          params: SessionCreateParams,
+          params?: SessionCreateParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.BillingPortal.Session>>;
+        create(
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.BillingPortal.Session>>;
       }

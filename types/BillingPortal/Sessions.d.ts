@@ -46,6 +46,11 @@ declare module 'stripe' {
         customer: string;
 
         /**
+         * The ID of the account for this session.
+         */
+        customer_account?: string | null;
+
+        /**
          * Information about a specific flow for the customer to go through. See the [docs](https://stripe.com/docs/customer-management/portal-deep-links) to learn more about using customer portal deep links and flows.
          */
         flow: Session.Flow | null;

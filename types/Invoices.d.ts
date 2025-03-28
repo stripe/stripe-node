@@ -60,7 +60,7 @@ declare module 'stripe' {
       /**
        * Unique identifier for the object. This property is always present unless the invoice is an upcoming invoice. See [Retrieve an upcoming invoice](https://stripe.com/docs/api/invoices/upcoming) for more details.
        */
-      id: string;
+      id?: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
@@ -90,9 +90,9 @@ declare module 'stripe' {
       amount_due: number;
 
       /**
-       * Amount that was overpaid on the invoice. Overpayments are debited to the customer's credit balance.
+       * Amount that was overpaid on the invoice. The amount overpaid is credited to the customer's credit balance.
        */
-      amount_overpaid?: number;
+      amount_overpaid: number;
 
       /**
        * The amount, in cents (or local equivalent), that was paid.
@@ -122,11 +122,6 @@ declare module 'stripe' {
         | Stripe.Application
         | Stripe.DeletedApplication
         | null;
-
-      /**
-       * The fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account when the invoice is paid.
-       */
-      application_fee_amount: number | null;
 
       /**
        * Number of payment attempts made for this invoice, from the perspective of the payment retry schedule. Any payment attempt counts as the first attempt, and subsequently only automatic retries increment the attempt count. In other words, manual payment attempts after the first attempt do not affect the retry schedule. If a failure is returned with a non-retryable return code, the invoice can no longer be retried unless a new payment method is obtained. Retries will continue to be scheduled, and attempt_count will continue to increment, but retries will only be executed if a new payment method is obtained.
@@ -164,14 +159,14 @@ declare module 'stripe' {
       billing_reason: Invoice.BillingReason | null;
 
       /**
-       * ID of the latest charge generated for this invoice, if any.
-       */
-      charge: string | Stripe.Charge | null;
-
-      /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions.
        */
       collection_method: Invoice.CollectionMethod;
+
+      /**
+       * The confirmation secret associated with this invoice. Currently, this contains the client_secret of the PaymentIntent that Stripe creates during invoice finalization.
+       */
+      confirmation_secret?: Invoice.ConfirmationSecret | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -192,6 +187,11 @@ declare module 'stripe' {
        * The ID of the customer who will be billed.
        */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+
+      /**
+       * The ID of the account who will be billed.
+       */
+      customer_account?: string | null;
 
       /**
        * The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
@@ -257,11 +257,6 @@ declare module 'stripe' {
        * An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
        */
       description: string | null;
-
-      /**
-       * Describes the current discount applied to this invoice, if there is one. Not populated if there are multiple discounts.
-       */
-      discount: Stripe.Discount | null;
 
       /**
        * The discounts applied to the invoice. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
@@ -346,19 +341,9 @@ declare module 'stripe' {
       on_behalf_of: string | Stripe.Account | null;
 
       /**
-       * Whether payment was successfully collected for this invoice. An invoice can be paid (most commonly) with a charge or with credit from the customer's account balance.
+       * The parent that generated this invoice
        */
-      paid: boolean;
-
-      /**
-       * Returns true if the invoice was manually marked paid, returns false if the invoice hasn't been paid yet or was paid on Stripe.
-       */
-      paid_out_of_band: boolean;
-
-      /**
-       * The PaymentIntent associated with this invoice. The PaymentIntent is generated when the invoice is finalized, and can then be used to pay the invoice. Note that voiding an invoice will cancel the PaymentIntent.
-       */
-      payment_intent: string | Stripe.PaymentIntent | null;
+      parent: Invoice.Parent | null;
 
       payment_settings: Invoice.PaymentSettings;
 
@@ -386,11 +371,6 @@ declare module 'stripe' {
        * Total amount of all pre-payment credit notes issued for this invoice.
        */
       pre_payment_credit_notes_amount: number;
-
-      /**
-       * The quote this invoice was generated from.
-       */
-      quote: string | Stripe.Quote | null;
 
       /**
        * This is the transaction number that appears on email receipts sent for this invoice.
@@ -429,20 +409,7 @@ declare module 'stripe' {
 
       status_transitions: Invoice.StatusTransitions;
 
-      /**
-       * The subscription that this invoice was prepared for, if any.
-       */
-      subscription: string | Stripe.Subscription | null;
-
-      /**
-       * Details about the subscription that created this invoice.
-       */
-      subscription_details: Invoice.SubscriptionDetails | null;
-
-      /**
-       * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
-       */
-      subscription_proration_date?: number;
+      subscription?: string | Stripe.Subscription | null;
 
       /**
        * Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level discount or exclusive tax is applied. Item discounts are already incorporated
@@ -453,11 +420,6 @@ declare module 'stripe' {
        * The integer amount in cents (or local equivalent) representing the subtotal of the invoice before any invoice level discount or tax is applied. Item discounts are already incorporated
        */
       subtotal_excluding_tax: number | null;
-
-      /**
-       * The amount of tax on this invoice. This is the sum of all the tax amounts on this invoice.
-       */
-      tax: number | null;
 
       /**
        * ID of the test clock this invoice belongs to.
@@ -494,14 +456,9 @@ declare module 'stripe' {
       > | null;
 
       /**
-       * The aggregate amounts calculated per tax rate for all line items.
+       * The aggregate tax information of all line items.
        */
-      total_tax_amounts: Array<Invoice.TotalTaxAmount>;
-
-      /**
-       * The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to for the invoice.
-       */
-      transfer_data: Invoice.TransferData | null;
+      total_taxes: Array<Invoice.TotalTax> | null;
 
       /**
        * Invoices are automatically paid or sent 1 hour after webhooks are delivered, or until all webhook delivery attempts have [been exhausted](https://stripe.com/docs/billing/webhooks#understand). This field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had no webhooks to deliver, this will be set while the invoice is being created.
@@ -573,6 +530,11 @@ declare module 'stripe' {
         liability: AutomaticTax.Liability | null;
 
         /**
+         * The tax provider powering automatic tax.
+         */
+        provider?: string | null;
+
+        /**
          * The status of the most recent automated tax calculation for this invoice.
          */
         status: AutomaticTax.Status | null;
@@ -614,6 +576,18 @@ declare module 'stripe' {
         | 'upcoming';
 
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
+
+      interface ConfirmationSecret {
+        /**
+         * The client_secret of the payment that Stripe creates for the invoice after finalization.
+         */
+        client_secret: string;
+
+        /**
+         * The type of client_secret. Currently this is always payment_intent, referencing the default payment_intent that Stripe creates during invoice finalization
+         */
+        type: string;
+      }
 
       interface CustomerShipping {
         address?: Stripe.Address;
@@ -965,6 +939,7 @@ declare module 'stripe' {
           | 'financial_connections_no_successful_transaction_refresh'
           | 'forwarding_api_inactive'
           | 'forwarding_api_invalid_parameter'
+          | 'forwarding_api_retryable_upstream_error'
           | 'forwarding_api_upstream_connection_error'
           | 'forwarding_api_upstream_connection_timeout'
           | 'gift_card_balance_insufficient'
@@ -1065,6 +1040,7 @@ declare module 'stripe' {
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'
           | 'setup_intent_mandate_invalid'
+          | 'setup_intent_mobile_wallet_unsupported'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
           | 'shipping_address_invalid'
@@ -1090,13 +1066,84 @@ declare module 'stripe' {
           | 'token_in_use'
           | 'transfer_source_balance_parameters_mismatch'
           | 'transfers_not_allowed'
-          | 'url_invalid';
+          | 'url_invalid'
+          | 'v2_account_disconnection_unsupported'
+          | 'v2_account_missing_configuration';
 
         type Type =
           | 'api_error'
           | 'card_error'
           | 'idempotency_error'
           | 'invalid_request_error';
+      }
+
+      interface Parent {
+        /**
+         * Details about the quote that generated this invoice
+         */
+        quote_details: Parent.QuoteDetails | null;
+
+        /**
+         * Details about the subscription that generated this invoice
+         */
+        subscription_details: Parent.SubscriptionDetails | null;
+
+        /**
+         * The type of parent that generated this invoice
+         */
+        type: Parent.Type;
+      }
+
+      namespace Parent {
+        interface QuoteDetails {
+          /**
+           * The quote that generated this invoice
+           */
+          quote: string;
+        }
+
+        interface SubscriptionDetails {
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) defined as subscription metadata when an invoice is created. Becomes an immutable snapshot of the subscription metadata at the time of invoice finalization.
+           *  *Note: This attribute is populated only for invoices created on or after June 29, 2023.*
+           */
+          metadata: Stripe.Metadata | null;
+
+          /**
+           * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/docs/billing/subscriptions/pause-payment).
+           */
+          pause_collection?: SubscriptionDetails.PauseCollection | null;
+
+          /**
+           * The subscription that generated this invoice
+           */
+          subscription: string | Stripe.Subscription;
+
+          /**
+           * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
+           */
+          subscription_proration_date?: number;
+        }
+
+        namespace SubscriptionDetails {
+          interface PauseCollection {
+            /**
+             * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+             */
+            behavior: PauseCollection.Behavior | null;
+
+            /**
+             * The time after which the subscription will resume collecting payments.
+             */
+            resumes_at: number | null;
+          }
+
+          namespace PauseCollection {
+            type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+          }
+        }
+
+        type Type = 'quote_details' | 'subscription_details';
       }
 
       interface PaymentSettings {
@@ -1333,11 +1380,13 @@ declare module 'stripe' {
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'
+          | 'klarna'
           | 'konbini'
           | 'kr_card'
           | 'link'
           | 'multibanco'
           | 'naver_pay'
+          | 'nz_bank_account'
           | 'p24'
           | 'payco'
           | 'paynow'
@@ -1347,6 +1396,7 @@ declare module 'stripe' {
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'stripe_balance'
           | 'swish'
           | 'us_bank_account'
           | 'wechat_pay';
@@ -1507,37 +1557,6 @@ declare module 'stripe' {
         voided_at: number | null;
       }
 
-      interface SubscriptionDetails {
-        /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) defined as subscription metadata when an invoice is created. Becomes an immutable snapshot of the subscription metadata at the time of invoice finalization.
-         *  *Note: This attribute is populated only for invoices created on or after June 29, 2023.*
-         */
-        metadata: Stripe.Metadata | null;
-
-        /**
-         * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/docs/billing/subscriptions/pause-payment).
-         */
-        pause_collection?: SubscriptionDetails.PauseCollection | null;
-      }
-
-      namespace SubscriptionDetails {
-        interface PauseCollection {
-          /**
-           * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
-           */
-          behavior: PauseCollection.Behavior;
-
-          /**
-           * The time after which the subscription will resume collecting payments.
-           */
-          resumes_at: number | null;
-        }
-
-        namespace PauseCollection {
-          type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
-        }
-      }
-
       interface ThresholdReason {
         /**
          * The total invoice amount threshold boundary if it triggered the threshold invoice.
@@ -1622,36 +1641,42 @@ declare module 'stripe' {
         type Type = 'credit_balance_transaction' | 'discount' | 'margin';
       }
 
-      interface TotalTaxAmount {
+      interface TotalTax {
         /**
-         * The amount, in cents (or local equivalent), of the tax.
+         * The amount of the tax, in cents (or local equivalent).
          */
         amount: number;
 
         /**
-         * Whether this tax amount is inclusive or exclusive.
+         * Whether this tax is inclusive or exclusive.
          */
-        inclusive: boolean;
+        tax_behavior: TotalTax.TaxBehavior;
 
         /**
-         * The tax rate that was applied to get this tax amount.
+         * Additional details about the tax rate. Only present when `type` is `tax_rate_details`.
          */
-        tax_rate: string | Stripe.TaxRate;
+        tax_rate_details: TotalTax.TaxRateDetails | null;
 
         /**
          * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
          */
-        taxability_reason: TotalTaxAmount.TaxabilityReason | null;
+        taxability_reason: TotalTax.TaxabilityReason;
 
         /**
          * The amount on which tax is calculated, in cents (or local equivalent).
          */
         taxable_amount: number | null;
+
+        /**
+         * The type of tax information.
+         */
+        type: 'tax_rate_details';
       }
 
-      namespace TotalTaxAmount {
+      namespace TotalTax {
         type TaxabilityReason =
           | 'customer_exempt'
+          | 'not_available'
           | 'not_collecting'
           | 'not_subject_to_tax'
           | 'not_supported'
@@ -1666,18 +1691,12 @@ declare module 'stripe' {
           | 'standard_rated'
           | 'taxable_basis_reduced'
           | 'zero_rated';
-      }
 
-      interface TransferData {
-        /**
-         * The amount in cents (or local equivalent) that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
-         */
-        amount: number | null;
+        type TaxBehavior = 'exclusive' | 'inclusive';
 
-        /**
-         * The account where funds from the payment will be transferred to upon payment success.
-         */
-        destination: string | Stripe.Account;
+        interface TaxRateDetails {
+          tax_rate: string;
+        }
       }
     }
   }

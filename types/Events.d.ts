@@ -360,7 +360,15 @@ declare module 'stripe' {
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created';
+        | 'treasury.received_debit.created'
+        | 'billing.credit_balance_transaction.created'
+        | 'billing.credit_grant.created'
+        | 'billing.credit_grant.updated'
+        | 'billing.meter.created'
+        | 'billing.meter.deactivated'
+        | 'billing.meter.reactivated'
+        | 'billing.meter.updated'
+        | 'balance_settings.updated';
     }
 
     /**
@@ -415,6 +423,8 @@ declare module 'stripe' {
        * The Stripe API version used to render `data`. This property is populated only for events on or after October 31, 2014.
        */
       api_version: string | null;
+
+      context?: string;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.

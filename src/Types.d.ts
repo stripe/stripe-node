@@ -37,7 +37,18 @@ export type RawErrorType =
   | 'rate_limit_error'
   | 'authentication_error'
   | 'invalid_grant'
-  | 'temporary_session_expired';
+  | 'temporary_session_expired'
+  | 'financial_account_not_open'
+  | 'blocked_by_stripe'
+  | 'already_canceled'
+  | 'not_cancelable'
+  | 'insufficient_funds'
+  | 'quota_exceeded'
+  | 'recipient_not_notifiable'
+  | 'feature_not_enabled'
+  | 'invalid_payout_method'
+  | 'controlled_by_dashboard'
+  | 'invalid_payment_method';
 // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
 export type RequestArgs = Array<any>;
 export type StripeRequest = {

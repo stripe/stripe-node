@@ -27,7 +27,7 @@ declare module 'stripe' {
       }): (...args: any[]) => Response<ResponseObject>; //eslint-disable-line @typescript-eslint/no-explicit-any
       static MAX_BUFFERED_REQUEST_METRICS: number;
     }
-    export type LatestApiVersion = '2025-02-24.acacia';
+    export type LatestApiVersion = '2025-03-31.basil';
     export type HttpAgent = Agent;
     export type HttpProtocol = 'http' | 'https';
 
@@ -303,6 +303,16 @@ declare module 'stripe' {
       data: string | Buffer | Uint8Array;
       name?: string;
       type?: string;
+    }
+
+    namespace V2 {
+      /**
+       * Represents a monetary amount with associated currency
+       */
+      export interface Amount {
+        value: number;
+        currency: string;
+      }
     }
   }
 }
