@@ -29,7 +29,7 @@ declare module 'stripe' {
           configuration: Account.Configuration | null;
 
           /**
-           * The default contact email address for the Account.
+           * The default contact email address for the Account. Required when configuring the account as a merchant or recipient.
            */
           contact_email: string | null;
 
@@ -79,7 +79,7 @@ declare module 'stripe' {
             customer: Configuration.Customer | null;
 
             /**
-             * The Merchant Configuration allows the Account to make charges.
+             * The Merchant configuration allows the Account to act as a connected account and collect payments facilitated by a Connect platform. You can add this configuration to your connected accounts only if you've completed onboarding as a Connect platform.
              */
             merchant: Configuration.Merchant | null;
 
@@ -3777,9 +3777,14 @@ declare module 'stripe' {
 
               interface DefaultOutboundDestination {
                 /**
+                 * The payout method ID of the default outbound destination.
+                 */
+                id: string;
+
+                /**
                  * Closed Enum. The payout method type of the default outbound destination.
                  */
-                type: DefaultOutboundDestination.Type | null;
+                type: DefaultOutboundDestination.Type;
               }
 
               namespace DefaultOutboundDestination {
@@ -8022,7 +8027,7 @@ declare module 'stripe' {
 
             interface Summary {
               /**
-               * An aggregate soonest point when the account will be impacted by not providing requirements.
+               * The soonest date and time a requirement on the Account will become `past due`. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
                */
               minimum_deadline: Summary.MinimumDeadline | null;
             }

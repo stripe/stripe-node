@@ -11,7 +11,7 @@ declare module 'stripe' {
           configuration?: AccountCreateParams.Configuration;
 
           /**
-           * The default contact email address for the Account.
+           * The default contact email address for the Account. Required when configuring the account as a merchant or recipient.
            */
           contact_email?: string;
 
@@ -54,7 +54,7 @@ declare module 'stripe' {
             customer?: Configuration.Customer;
 
             /**
-             * The Merchant Configuration allows the Account to make charges.
+             * The Merchant configuration allows the Account to act as a connected account and collect payments facilitated by a Connect platform. You can add this configuration to your connected accounts only if you've completed onboarding as a Connect platform.
              */
             merchant?: Configuration.Merchant;
 
@@ -5058,7 +5058,7 @@ declare module 'stripe' {
           configuration?: AccountUpdateParams.Configuration;
 
           /**
-           * The default contact email address for the Account.
+           * The default contact email address for the Account. Required when configuring the account as a merchant or recipient.
            */
           contact_email?: string;
 
@@ -5101,7 +5101,7 @@ declare module 'stripe' {
             customer?: Configuration.Customer;
 
             /**
-             * The Merchant Configuration allows the Account to make charges.
+             * The Merchant configuration allows the Account to act as a connected account and collect payments facilitated by a Connect platform. You can add this configuration to your connected accounts only if you've completed onboarding as a Connect platform.
              */
             merchant?: Configuration.Merchant;
 
