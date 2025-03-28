@@ -393,7 +393,14 @@ declare module 'stripe' {
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created';
+        | 'treasury.received_debit.created'
+        | 'billing.credit_balance_transaction.created'
+        | 'billing.credit_grant.created'
+        | 'billing.credit_grant.updated'
+        | 'billing.meter.created'
+        | 'billing.meter.deactivated'
+        | 'billing.meter.reactivated'
+        | 'billing.meter.updated';
     }
 
     interface WebhookEndpointRetrieveParams {
@@ -677,7 +684,14 @@ declare module 'stripe' {
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
         | 'treasury.received_credit.succeeded'
-        | 'treasury.received_debit.created';
+        | 'treasury.received_debit.created'
+        | 'billing.credit_balance_transaction.created'
+        | 'billing.credit_grant.created'
+        | 'billing.credit_grant.updated'
+        | 'billing.meter.created'
+        | 'billing.meter.deactivated'
+        | 'billing.meter.reactivated'
+        | 'billing.meter.updated';
     }
 
     interface WebhookEndpointListParams extends PaginationParams {
