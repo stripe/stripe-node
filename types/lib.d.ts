@@ -304,5 +304,15 @@ declare module 'stripe' {
       name?: string;
       type?: string;
     }
+
+    namespace V2 {
+      /**
+       * Represents a monetary amount with associated currency
+       */
+      export interface Amount {
+        value: number;
+        currency: string;
+      }
+    }
   }
 }
