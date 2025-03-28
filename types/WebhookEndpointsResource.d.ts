@@ -434,8 +434,7 @@ declare module 'stripe' {
         | 'billing.meter.created'
         | 'billing.meter.deactivated'
         | 'billing.meter.reactivated'
-        | 'billing.meter.updated'
-        | 'balance_settings.updated';
+        | 'billing.meter.updated';
     }
 
     interface WebhookEndpointRetrieveParams {
@@ -760,8 +759,7 @@ declare module 'stripe' {
         | 'billing.meter.created'
         | 'billing.meter.deactivated'
         | 'billing.meter.reactivated'
-        | 'billing.meter.updated'
-        | 'balance_settings.updated';
+        | 'billing.meter.updated';
     }
 
     interface WebhookEndpointListParams extends PaginationParams {

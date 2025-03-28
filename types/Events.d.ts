@@ -367,8 +367,7 @@ declare module 'stripe' {
         | 'billing.meter.created'
         | 'billing.meter.deactivated'
         | 'billing.meter.reactivated'
-        | 'billing.meter.updated'
-        | 'balance_settings.updated';
+        | 'billing.meter.updated';
     }
 
     /**
