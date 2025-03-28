@@ -3,7 +3,15 @@
 declare module 'stripe' {
   namespace Stripe.V2 {
     export type Event =
+      | Stripe.Events.V2CoreAccountRequirementsUpdatedEvent
       | Stripe.Events.V2CoreAccountLinkCompletedEvent
+      | Stripe.Events.V2CoreAccountConfigurationCustomerCapabilityStatusUpdatedEvent
+      | Stripe.Events.V2CoreAccountIdentityUpdatedEvent
+      | Stripe.Events.V2CoreAccountPersonCreatedEvent
+      | Stripe.Events.V2CoreAccountPersonDeletedEvent
+      | Stripe.Events.V2CoreAccountPersonUpdatedEvent
+      | Stripe.Events.V2CoreAccountConfigurationMerchantCapabilityStatusUpdatedEvent
+      | Stripe.Events.V2CoreAccountConfigurationRecipientCapabilityStatusUpdatedEvent
       | Stripe.Events.V1BillingMeterErrorReportTriggeredEvent
       | Stripe.Events.V1BillingMeterNoMeterFoundEvent
       | Stripe.Events.V2MoneyManagementFinancialAccountCreatedEvent
@@ -38,6 +46,14 @@ declare module 'stripe' {
 
   namespace Stripe.Events {
     /**
+     * This event occurs when the account's requirements are updated.
+     */
+    export interface V2CoreAccountRequirementsUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[requirements].updated';
+    }
+
+    /**
      * The generated account link has been completed.
      */
     export interface V2CoreAccountLinkCompletedEvent extends V2.EventBase {
@@ -70,6 +86,197 @@ declare module 'stripe' {
 
       namespace Data {
         export type UseCase = 'account_onboarding' | 'account_update';
+      }
+    }
+
+    /**
+     * The status of a customer config capability was updated.
+     */
+    export interface V2CoreAccountConfigurationCustomerCapabilityStatusUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.customer].capability_status_updated';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountConfigurationCustomerCapabilityStatusUpdatedEvent.Data;
+    }
+
+    namespace V2CoreAccountConfigurationCustomerCapabilityStatusUpdatedEvent {
+      export interface Data {
+        /**
+         * Open Enum. The capability which had its status updated.
+         */
+        updated_capability: 'automatic_indirect_tax';
+      }
+    }
+
+    /**
+     * This event occurs when identity is updated.
+     */
+    export interface V2CoreAccountIdentityUpdatedEvent extends V2.EventBase {
+      type: 'v2.core.account[identity].updated';
+    }
+
+    /**
+     * This event occurs when a person is created.
+     */
+    export interface V2CoreAccountPersonCreatedEvent extends V2.EventBase {
+      type: 'v2.core.account_person.created';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountPersonCreatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Person>;
+    }
+
+    namespace V2CoreAccountPersonCreatedEvent {
+      export interface Data {
+        /**
+         * The ID of the v2 account.
+         */
+        account_id: string;
+      }
+    }
+
+    /**
+     * This event occurs when a person is deleted.
+     */
+    export interface V2CoreAccountPersonDeletedEvent extends V2.EventBase {
+      type: 'v2.core.account_person.deleted';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountPersonDeletedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Person>;
+    }
+
+    namespace V2CoreAccountPersonDeletedEvent {
+      export interface Data {
+        /**
+         * The ID of the v2 account.
+         */
+        account_id: string;
+      }
+    }
+
+    /**
+     * This event occurs when a person is updated.
+     */
+    export interface V2CoreAccountPersonUpdatedEvent extends V2.EventBase {
+      type: 'v2.core.account_person.updated';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountPersonUpdatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Person>;
+    }
+
+    namespace V2CoreAccountPersonUpdatedEvent {
+      export interface Data {
+        /**
+         * The ID of the v2 account.
+         */
+        account_id: string;
+      }
+    }
+
+    /**
+     * The status of a merchant config capability was updated.
+     */
+    export interface V2CoreAccountConfigurationMerchantCapabilityStatusUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.merchant].capability_status_updated';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountConfigurationMerchantCapabilityStatusUpdatedEvent.Data;
+    }
+
+    namespace V2CoreAccountConfigurationMerchantCapabilityStatusUpdatedEvent {
+      export interface Data {
+        /**
+         * Open Enum. The capability which had its status updated.
+         */
+        updated_capability: Data.UpdatedCapability;
+      }
+
+      namespace Data {
+        export type UpdatedCapability =
+          | 'ach_debit_payments'
+          | 'acss_debit_payments'
+          | 'affirm_payments'
+          | 'afterpay_clearpay_payments'
+          | 'alma_payments'
+          | 'amazon_pay_payments'
+          | 'au_becs_debit_payments'
+          | 'bacs_debit_payments'
+          | 'bancontact_payments'
+          | 'blik_payments'
+          | 'boleto_payments'
+          | 'card_payments'
+          | 'cartes_bancaires_payments'
+          | 'cashapp_payments'
+          | 'eps_payments'
+          | 'fpx_payments'
+          | 'gb_bank_transfer_payments'
+          | 'grabpay_payments'
+          | 'ideal_payments'
+          | 'jcb_payments'
+          | 'jp_bank_transfer_payments'
+          | 'kakao_pay_payments'
+          | 'klarna_payments'
+          | 'konbini_payments'
+          | 'kr_card_payments'
+          | 'link_payments'
+          | 'mobilepay_payments'
+          | 'multibanco_payments'
+          | 'mx_bank_transfer_payments'
+          | 'naver_pay_payments'
+          | 'oxxo_payments'
+          | 'p24_payments'
+          | 'payco_payments'
+          | 'paynow_payments'
+          | 'pay_by_bank_payments'
+          | 'promptpay_payments'
+          | 'revolut_pay_payments'
+          | 'samsung_pay_payments'
+          | 'sepa_bank_transfer_payments'
+          | 'sepa_debit_payments'
+          | 'swish_payments'
+          | 'twint_payments'
+          | 'us_bank_transfer_payments'
+          | 'zip_payments';
+      }
+    }
+
+    /**
+     * The status of a recipient config capability was updated.
+     */
+    export interface V2CoreAccountConfigurationRecipientCapabilityStatusUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.recipient].capability_status_updated';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountConfigurationRecipientCapabilityStatusUpdatedEvent.Data;
+    }
+
+    namespace V2CoreAccountConfigurationRecipientCapabilityStatusUpdatedEvent {
+      export interface Data {
+        /**
+         * Open Enum. The capability which had its status updated.
+         */
+        updated_capability: Data.UpdatedCapability;
+      }
+
+      namespace Data {
+        export type UpdatedCapability =
+          | 'bank_accounts.local'
+          | 'bank_accounts.local_uk'
+          | 'bank_accounts.wire'
+          | 'bank_accounts.wire_uk'
+          | 'cards'
+          | 'cards_uk'
+          | 'crypto_wallets_v2'
+          | 'stripe_balance.stripe_transfers'
+          | 'stripe.transfers';
       }
     }
 

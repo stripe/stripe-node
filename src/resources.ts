@@ -55,6 +55,7 @@ import {MeterEvents as BillingMeterEvents} from './resources/Billing/MeterEvents
 import {MeterEvents as V2BillingMeterEvents} from './resources/V2/Billing/MeterEvents.js';
 import {Meters as BillingMeters} from './resources/Billing/Meters.js';
 import {Orders as ClimateOrders} from './resources/Climate/Orders.js';
+import {OutboundPaymentQuotes as V2MoneyManagementOutboundPaymentQuotes} from './resources/V2/MoneyManagement/OutboundPaymentQuotes.js';
 import {OutboundPayments as TestHelpersTreasuryOutboundPayments} from './resources/TestHelpers/Treasury/OutboundPayments.js';
 import {OutboundPayments as TreasuryOutboundPayments} from './resources/Treasury/OutboundPayments.js';
 import {OutboundPayments as V2MoneyManagementOutboundPayments} from './resources/V2/MoneyManagement/OutboundPayments.js';
@@ -309,6 +310,7 @@ export const V2 = resourceNamespace('v2', {
     FinancialAccounts: V2MoneyManagementFinancialAccounts,
     FinancialAddresses: V2MoneyManagementFinancialAddresses,
     InboundTransfers: V2MoneyManagementInboundTransfers,
+    OutboundPaymentQuotes: V2MoneyManagementOutboundPaymentQuotes,
     OutboundPayments: V2MoneyManagementOutboundPayments,
     OutboundSetupIntents: V2MoneyManagementOutboundSetupIntents,
     OutboundTransfers: V2MoneyManagementOutboundTransfers,

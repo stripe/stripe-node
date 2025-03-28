@@ -163,7 +163,7 @@
 ///<reference path='./V2/MoneyManagement/FinancialAccountsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/FinancialAddressesResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/InboundTransfersResource.d.ts' />
-///<reference path='./V2/MoneyManagement/OutboundPayments/QuotesResource.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPaymentQuotesResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/OutboundPaymentsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/OutboundSetupIntentsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/OutboundTransfersResource.d.ts' />
@@ -584,6 +584,7 @@ declare module 'stripe' {
         financialAddresses: Stripe.V2.MoneyManagement.FinancialAddressesResource;
         inboundTransfers: Stripe.V2.MoneyManagement.InboundTransfersResource;
         outboundPayments: Stripe.V2.MoneyManagement.OutboundPaymentsResource;
+        outboundPaymentQuotes: Stripe.V2.MoneyManagement.OutboundPaymentQuotesResource;
         outboundTransfers: Stripe.V2.MoneyManagement.OutboundTransfersResource;
         outboundSetupIntents: Stripe.V2.MoneyManagement.OutboundSetupIntentsResource;
         payoutMethods: Stripe.V2.MoneyManagement.PayoutMethodsResource;

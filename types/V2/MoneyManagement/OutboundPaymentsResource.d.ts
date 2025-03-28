@@ -175,8 +175,6 @@ declare module 'stripe' {
 
       namespace MoneyManagement {
         class OutboundPaymentsResource {
-          quotes: Stripe.V2.MoneyManagement.OutboundPayments.QuotesResource;
-
           /**
            * Creates an OutboundPayment.
            * @throws Stripe.InsufficientFundsError

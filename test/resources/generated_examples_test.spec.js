@@ -4593,16 +4593,16 @@ describe('Generated tests', function() {
     expect(outboundPayment).not.to.be.null;
   });
 
-  it('test_v2_money_management_outbound_payments_quote_post', async function() {
+  it('test_v2_money_management_outbound_payment_quote_post', async function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
-        path: '/v2/money_management/outbound_payments/quotes',
+        path: '/v2/money_management/outbound_payment_quotes',
         response:
           '{"amount":{"currency":"USD","value":96},"created":"1970-01-12T21:42:34.472Z","delivery_options":null,"estimated_fees":[{"amount":{"currency":"USD","value":96},"type":"cross_border_fee"}],"from":{"debited":{"currency":"USD","value":55},"financial_account":"financial_account"},"fx_quote":{"rates":{"undefined":{"exchange_rate":"exchange_rate"}},"to_currency":"to_currency"},"id":"obj_123","object":"v2.money_management.outbound_payment_quote","to":{"credited":{"currency":"USD","value":68},"payout_method":"payout_method","recipient":"recipient"}}',
       },
     ]);
-    const outboundPaymentQuote = await stripe.v2.moneyManagement.outboundPayments.quotes.create(
+    const outboundPaymentQuote = await stripe.v2.moneyManagement.outboundPaymentQuotes.create(
       {
         amount: {
           value: 96,
