@@ -6,12 +6,15 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreAccountRequirementsUpdatedEvent
       | Stripe.Events.V2CoreAccountLinkCompletedEvent
       | Stripe.Events.V2CoreAccountConfigurationCustomerCapabilityStatusUpdatedEvent
+      | Stripe.Events.V2CoreAccountConfigurationCustomerUpdatedEvent
       | Stripe.Events.V2CoreAccountIdentityUpdatedEvent
       | Stripe.Events.V2CoreAccountPersonCreatedEvent
       | Stripe.Events.V2CoreAccountPersonDeletedEvent
       | Stripe.Events.V2CoreAccountPersonUpdatedEvent
       | Stripe.Events.V2CoreAccountConfigurationMerchantCapabilityStatusUpdatedEvent
+      | Stripe.Events.V2CoreAccountConfigurationMerchantUpdatedEvent
       | Stripe.Events.V2CoreAccountConfigurationRecipientCapabilityStatusUpdatedEvent
+      | Stripe.Events.V2CoreAccountConfigurationRecipientUpdatedEvent
       | Stripe.Events.V1BillingMeterErrorReportTriggeredEvent
       | Stripe.Events.V1BillingMeterNoMeterFoundEvent
       | Stripe.Events.V2MoneyManagementFinancialAccountCreatedEvent
@@ -106,6 +109,14 @@ declare module 'stripe' {
          */
         updated_capability: 'automatic_indirect_tax';
       }
+    }
+
+    /**
+     * A customer config was updated.
+     */
+    export interface V2CoreAccountConfigurationCustomerUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.customer].updated';
     }
 
     /**
@@ -249,6 +260,14 @@ declare module 'stripe' {
     }
 
     /**
+     * A merchant config was updated.
+     */
+    export interface V2CoreAccountConfigurationMerchantUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.merchant].updated';
+    }
+
+    /**
      * The status of a recipient config capability was updated.
      */
     export interface V2CoreAccountConfigurationRecipientCapabilityStatusUpdatedEvent
@@ -278,6 +297,14 @@ declare module 'stripe' {
           | 'stripe_balance.stripe_transfers'
           | 'stripe.transfers';
       }
+    }
+
+    /**
+     * A recipient config was updated.
+     */
+    export interface V2CoreAccountConfigurationRecipientUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.recipient].updated';
     }
 
     /**
