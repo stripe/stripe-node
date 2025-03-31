@@ -409,8 +409,6 @@ declare module 'stripe' {
 
       status_transitions: Invoice.StatusTransitions;
 
-      subscription?: string | Stripe.Subscription | null;
-
       /**
        * Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level discount or exclusive tax is applied. Item discounts are already incorporated
        */
