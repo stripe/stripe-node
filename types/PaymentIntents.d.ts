@@ -1688,6 +1688,8 @@ declare module 'stripe' {
 
         bancontact?: PaymentMethodOptions.Bancontact;
 
+        billie?: PaymentMethodOptions.Billie;
+
         blik?: PaymentMethodOptions.Blik;
 
         boleto?: PaymentMethodOptions.Boleto;
@@ -2010,6 +2012,8 @@ declare module 'stripe' {
 
           type SetupFutureUsage = 'none' | 'off_session';
         }
+
+        interface Billie {}
 
         interface Blik {
           /**

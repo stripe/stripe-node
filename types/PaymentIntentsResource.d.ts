@@ -1840,6 +1840,11 @@ declare module 'stripe' {
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
 
         /**
+         * If this is a `billie` PaymentMethod, this sub-hash contains details about the Billie payment method options.
+         */
+        billie?: Stripe.Emptyable<PaymentMethodOptions.Billie>;
+
+        /**
          * If this is a `blik` PaymentMethod, this sub-hash contains details about the BLIK payment method options.
          */
         blik?: Stripe.Emptyable<PaymentMethodOptions.Blik>;
@@ -2340,6 +2345,17 @@ declare module 'stripe' {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Billie {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
         }
 
         interface Blik {
@@ -5803,6 +5819,11 @@ declare module 'stripe' {
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
 
         /**
+         * If this is a `billie` PaymentMethod, this sub-hash contains details about the Billie payment method options.
+         */
+        billie?: Stripe.Emptyable<PaymentMethodOptions.Billie>;
+
+        /**
          * If this is a `blik` PaymentMethod, this sub-hash contains details about the BLIK payment method options.
          */
         blik?: Stripe.Emptyable<PaymentMethodOptions.Blik>;
@@ -6303,6 +6324,17 @@ declare module 'stripe' {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Billie {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
         }
 
         interface Blik {
@@ -10517,6 +10549,11 @@ declare module 'stripe' {
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
 
         /**
+         * If this is a `billie` PaymentMethod, this sub-hash contains details about the Billie payment method options.
+         */
+        billie?: Stripe.Emptyable<PaymentMethodOptions.Billie>;
+
+        /**
          * If this is a `blik` PaymentMethod, this sub-hash contains details about the BLIK payment method options.
          */
         blik?: Stripe.Emptyable<PaymentMethodOptions.Blik>;
@@ -11017,6 +11054,17 @@ declare module 'stripe' {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Billie {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
         }
 
         interface Blik {
