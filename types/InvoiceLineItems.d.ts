@@ -24,11 +24,6 @@ declare module 'stripe' {
       amount: number;
 
       /**
-       * The integer amount in cents (or local equivalent) representing the amount for this line item, excluding all tax and discounts.
-       */
-      amount_excluding_tax: number | null;
-
-      /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
       currency: string;
@@ -59,11 +54,6 @@ declare module 'stripe' {
       invoice: string | null;
 
       /**
-       * The ID of the [invoice item](https://stripe.com/docs/api/invoiceitems) associated with this line item if any.
-       */
-      invoice_item?: string | Stripe.InvoiceItem;
-
-      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
@@ -73,12 +63,12 @@ declare module 'stripe' {
        */
       metadata: Stripe.Metadata;
 
-      period: InvoiceLineItem.Period;
-
       /**
-       * The plan of the subscription, if the line item is a subscription or a proration.
+       * The parent that generated this invoice
        */
-      plan: Stripe.Plan | null;
+      parent: InvoiceLineItem.Parent | null;
+
+      period: InvoiceLineItem.Period;
 
       /**
        * Contains pretax credit amounts (ex: discount, credit grants, etc) that apply to this line item.
@@ -86,54 +76,21 @@ declare module 'stripe' {
       pretax_credit_amounts: Array<InvoiceLineItem.PretaxCreditAmount> | null;
 
       /**
-       * The price of the line item.
+       * The pricing information of the line item.
        */
-      price: Stripe.Price | null;
-
-      /**
-       * Whether this is a proration.
-       */
-      proration: boolean;
-
-      /**
-       * Additional details for proration line items
-       */
-      proration_details: InvoiceLineItem.ProrationDetails | null;
+      pricing: InvoiceLineItem.Pricing | null;
 
       /**
        * The quantity of the subscription, if the line item is a subscription or a proration.
        */
       quantity: number | null;
 
-      /**
-       * The subscription that the invoice item pertains to, if any.
-       */
       subscription: string | Stripe.Subscription | null;
 
       /**
-       * The subscription item that generated this line item. Left empty if the line item is not an explicit result of a subscription.
+       * The tax information of the line item.
        */
-      subscription_item?: string | Stripe.SubscriptionItem;
-
-      /**
-       * The amount of tax calculated per tax rate for this line item
-       */
-      tax_amounts: Array<InvoiceLineItem.TaxAmount>;
-
-      /**
-       * The tax rates which apply to the line item.
-       */
-      tax_rates: Array<Stripe.TaxRate>;
-
-      /**
-       * A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
-       */
-      type: InvoiceLineItem.Type;
-
-      /**
-       * The amount in cents (or local equivalent) representing the unit amount for this line item, excluding all tax and discounts.
-       */
-      unit_amount_excluding_tax: string | null;
+      taxes: Array<InvoiceLineItem.Tax> | null;
     }
 
     namespace InvoiceLineItem {
@@ -147,6 +104,122 @@ declare module 'stripe' {
          * The discount that was applied to get this discount amount.
          */
         discount: string | Stripe.Discount | Stripe.DeletedDiscount;
+      }
+
+      interface Parent {
+        /**
+         * Details about the invoice item that generated this line item
+         */
+        invoice_item_details: Parent.InvoiceItemDetails | null;
+
+        /**
+         * Details about the subscription item that generated this line item
+         */
+        subscription_item_details: Parent.SubscriptionItemDetails | null;
+
+        /**
+         * The type of parent that generated this line item
+         */
+        type: Parent.Type;
+      }
+
+      namespace Parent {
+        interface InvoiceItemDetails {
+          /**
+           * The invoice item that generated this line item
+           */
+          invoice_item: string;
+
+          /**
+           * Whether this is a proration
+           */
+          proration: boolean;
+
+          /**
+           * Additional details for proration line items
+           */
+          proration_details: InvoiceItemDetails.ProrationDetails | null;
+
+          /**
+           * The subscription that the invoice item belongs to
+           */
+          subscription: string | null;
+        }
+
+        namespace InvoiceItemDetails {
+          interface ProrationDetails {
+            /**
+             * For a credit proration `line_item`, the original debit line_items to which the credit proration applies.
+             */
+            credited_items: ProrationDetails.CreditedItems | null;
+          }
+
+          namespace ProrationDetails {
+            interface CreditedItems {
+              /**
+               * Invoice containing the credited invoice line items
+               */
+              invoice: string;
+
+              /**
+               * Credited invoice line items
+               */
+              invoice_line_items: Array<string>;
+            }
+          }
+        }
+
+        interface SubscriptionItemDetails {
+          /**
+           * The invoice item that generated this line item
+           */
+          invoice_item: string | null;
+
+          /**
+           * Whether this is a proration
+           */
+          proration: boolean;
+
+          /**
+           * Additional details for proration line items
+           */
+          proration_details: SubscriptionItemDetails.ProrationDetails | null;
+
+          /**
+           * The subscription that the subscription item belongs to
+           */
+          subscription: string;
+
+          /**
+           * The subscription item that generated this line item
+           */
+          subscription_item: string;
+        }
+
+        namespace SubscriptionItemDetails {
+          interface ProrationDetails {
+            /**
+             * For a credit proration `line_item`, the original debit line_items to which the credit proration applies.
+             */
+            credited_items: ProrationDetails.CreditedItems | null;
+          }
+
+          namespace ProrationDetails {
+            interface CreditedItems {
+              /**
+               * Invoice containing the credited invoice line items
+               */
+              invoice: string;
+
+              /**
+               * Credited invoice line items
+               */
+              invoice_line_items: Array<string>;
+            }
+          }
+        }
+
+        type Type = 'invoice_item_details' | 'subscription_item_details';
       }
 
       interface Period {
@@ -190,57 +263,70 @@ declare module 'stripe' {
         type Type = 'credit_balance_transaction' | 'discount';
       }
 
-      interface ProrationDetails {
+      interface Pricing {
+        price_details?: Pricing.PriceDetails;
+
         /**
-         * For a credit proration `line_item`, the original debit line_items to which the credit proration applies.
+         * The type of the pricing details.
          */
-        credited_items: ProrationDetails.CreditedItems | null;
+        type: 'price_details';
+
+        /**
+         * The unit amount (in the `currency` specified) of the item which contains a decimal value with at most 12 decimal places.
+         */
+        unit_amount_decimal: string | null;
       }
 
-      namespace ProrationDetails {
-        interface CreditedItems {
+      namespace Pricing {
+        interface PriceDetails {
           /**
-           * Invoice containing the credited invoice line items
+           * The ID of the price this item is associated with.
            */
-          invoice: string;
+          price: string;
 
           /**
-           * Credited invoice line items
+           * The ID of the product this item is associated with.
            */
-          invoice_line_items: Array<string>;
+          product: string;
         }
       }
 
-      interface TaxAmount {
+      interface Tax {
         /**
-         * The amount, in cents (or local equivalent), of the tax.
+         * The amount of the tax, in cents (or local equivalent).
          */
         amount: number;
 
         /**
-         * Whether this tax amount is inclusive or exclusive.
+         * Whether this tax is inclusive or exclusive.
          */
-        inclusive: boolean;
+        tax_behavior: Tax.TaxBehavior;
 
         /**
-         * The tax rate that was applied to get this tax amount.
+         * Additional details about the tax rate. Only present when `type` is `tax_rate_details`.
          */
-        tax_rate: string | Stripe.TaxRate;
+        tax_rate_details: Tax.TaxRateDetails | null;
 
         /**
          * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
          */
-        taxability_reason: TaxAmount.TaxabilityReason | null;
+        taxability_reason: Tax.TaxabilityReason;
 
         /**
          * The amount on which tax is calculated, in cents (or local equivalent).
          */
         taxable_amount: number | null;
+
+        /**
+         * The type of tax information.
+         */
+        type: 'tax_rate_details';
       }
 
-      namespace TaxAmount {
+      namespace Tax {
         type TaxabilityReason =
           | 'customer_exempt'
+          | 'not_available'
           | 'not_collecting'
           | 'not_subject_to_tax'
           | 'not_supported'
@@ -255,9 +341,13 @@ declare module 'stripe' {
           | 'standard_rated'
           | 'taxable_basis_reduced'
           | 'zero_rated';
-      }
 
-      type Type = 'invoiceitem' | 'subscription';
+        type TaxBehavior = 'exclusive' | 'inclusive';
+
+        interface TaxRateDetails {
+          tax_rate: string;
+        }
+      }
     }
   }
 }

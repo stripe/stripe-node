@@ -640,7 +640,7 @@ declare module 'stripe' {
 
       class FinancialAccountsResource {
         /**
-         * Creates a new FinancialAccount. For now, each connected account can only have one FinancialAccount.
+         * Creates a new FinancialAccount. Each connected account can have up to three FinancialAccounts by default.
          */
         create(
           params: FinancialAccountCreateParams,
