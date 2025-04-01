@@ -6,7 +6,7 @@
 
   ### ⚠️ Breaking changes due to changes in the Stripe API
 
-  Please review details for the breaking changes and alternatives in the [Stripe API changelog](https://docs.stripe.com/changelog/acacia) before upgrading.
+  Please review details for the breaking changes and alternatives in the [Stripe API changelog](https://docs.stripe.com/changelog/basil) before upgrading.
 
   * Remove support for resources `SubscriptionItemUsageRecordSummary` and `SubscriptionItemUsageRecord`
   * Remove support for `listUpcomingLines` and `retrieveUpcoming` methods on resource `Invoice`
