@@ -134,6 +134,37 @@ declare module 'stripe' {
            * The `cvc_update` Token collected from the Payment Element.
            */
           cvc_token: string | null;
+
+          /**
+           * Installment configuration for payments.
+           */
+          installments?: Card.Installments;
+        }
+
+        namespace Card {
+          interface Installments {
+            plan?: Installments.Plan;
+          }
+
+          namespace Installments {
+            interface Plan {
+              /**
+               * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+               */
+              count: number | null;
+
+              /**
+               * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
+               * One of `month`.
+               */
+              interval: 'month' | null;
+
+              /**
+               * Type of installment plan, one of `fixed_count`.
+               */
+              type: 'fixed_count';
+            }
+          }
         }
       }
 

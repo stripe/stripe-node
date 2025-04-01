@@ -19,6 +19,8 @@ declare module 'stripe' {
          */
         payment_method_data?: ConfirmationTokenCreateParams.PaymentMethodData;
 
+        payment_method_options?: ConfirmationTokenCreateParams.PaymentMethodOptions;
+
         /**
          * Return URL used to confirm the Intent.
          */
@@ -879,6 +881,49 @@ declare module 'stripe' {
           interface WechatPay {}
 
           interface Zip {}
+        }
+
+        interface PaymentMethodOptions {
+          card?: PaymentMethodOptions.Card;
+        }
+
+        namespace PaymentMethodOptions {
+          interface Card {
+            /**
+             * Installment configuration for payments attempted on this PaymentIntent.
+             */
+            installments?: Card.Installments;
+          }
+
+          namespace Card {
+            interface Installments {
+              /**
+               * The selected installment plan to use for this payment attempt.
+               * This parameter can only be provided during confirmation.
+               */
+              plan: Installments.Plan;
+            }
+
+            namespace Installments {
+              interface Plan {
+                /**
+                 * For `fixed_count` installment plans, this is required. It represents the number of installment payments your customer will make to their credit card.
+                 */
+                count?: number;
+
+                /**
+                 * For `fixed_count` installment plans, this is required. It represents the interval between installment payments your customer will make to their credit card.
+                 * One of `month`.
+                 */
+                interval?: 'month';
+
+                /**
+                 * Type of installment plan, one of `fixed_count`.
+                 */
+                type: 'fixed_count';
+              }
+            }
+          }
         }
 
         type SetupFutureUsage = 'off_session' | 'on_session';
