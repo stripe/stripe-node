@@ -19,6 +19,8 @@ declare module 'stripe' {
          */
         payment_method_data?: ConfirmationTokenCreateParams.PaymentMethodData;
 
+        payment_method_options?: ConfirmationTokenCreateParams.PaymentMethodOptions;
+
         /**
          * Return URL used to confirm the Intent.
          */
@@ -88,6 +90,11 @@ declare module 'stripe' {
            * If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment method.
            */
           bancontact?: PaymentMethodData.Bancontact;
+
+          /**
+           * If this is a `billie` PaymentMethod, this hash contains details about the billie payment method.
+           */
+          billie?: PaymentMethodData.Billie;
 
           /**
            * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
@@ -205,6 +212,11 @@ declare module 'stripe' {
           naver_pay?: PaymentMethodData.NaverPay;
 
           /**
+           * If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account payment method.
+           */
+          nz_bank_account?: PaymentMethodData.NzBankAccount;
+
+          /**
            * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
            */
           oxxo?: PaymentMethodData.Oxxo;
@@ -275,6 +287,11 @@ declare module 'stripe' {
           samsung_pay?: PaymentMethodData.SamsungPay;
 
           /**
+           * If this is a `satispay` PaymentMethod, this hash contains details about the satispay payment method.
+           */
+          satispay?: PaymentMethodData.Satispay;
+
+          /**
            * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
            */
           sepa_debit?: PaymentMethodData.SepaDebit;
@@ -288,6 +305,11 @@ declare module 'stripe' {
            * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
            */
           sofort?: PaymentMethodData.Sofort;
+
+          /**
+           * This hash contains details about the Stripe balance payment method.
+           */
+          stripe_balance?: PaymentMethodData.StripeBalance;
 
           /**
            * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -375,6 +397,8 @@ declare module 'stripe' {
           }
 
           interface Bancontact {}
+
+          interface Billie {}
 
           interface BillingDetails {
             /**
@@ -587,6 +611,35 @@ declare module 'stripe' {
             type Funding = 'card' | 'points';
           }
 
+          interface NzBankAccount {
+            /**
+             * The name on the bank account. Only required if the account holder name is different from the name of the authorized signatory collected in the PaymentMethod's billing details.
+             */
+            account_holder_name?: string;
+
+            /**
+             * The account number for the bank account.
+             */
+            account_number: string;
+
+            /**
+             * The numeric code for the bank account's bank.
+             */
+            bank_code: string;
+
+            /**
+             * The numeric code for the bank account's bank branch.
+             */
+            branch_code: string;
+
+            reference?: string;
+
+            /**
+             * The suffix of the bank account number.
+             */
+            suffix: string;
+          }
+
           interface Oxxo {}
 
           interface P24 {
@@ -694,6 +747,8 @@ declare module 'stripe' {
 
           interface SamsungPay {}
 
+          interface Satispay {}
+
           interface SepaDebit {
             /**
              * IBAN of the bank account.
@@ -714,6 +769,22 @@ declare module 'stripe' {
             type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
           }
 
+          interface StripeBalance {
+            /**
+             * The connected account ID whose Stripe balance to use as the source of payment
+             */
+            account?: string;
+
+            /**
+             * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
+             */
+            source_type?: StripeBalance.SourceType;
+          }
+
+          namespace StripeBalance {
+            type SourceType = 'bank_account' | 'card' | 'fpx';
+          }
+
           interface Swish {}
 
           interface Twint {}
@@ -728,6 +799,7 @@ declare module 'stripe' {
             | 'au_becs_debit'
             | 'bacs_debit'
             | 'bancontact'
+            | 'billie'
             | 'blik'
             | 'boleto'
             | 'cashapp'
@@ -748,6 +820,7 @@ declare module 'stripe' {
             | 'mobilepay'
             | 'multibanco'
             | 'naver_pay'
+            | 'nz_bank_account'
             | 'oxxo'
             | 'p24'
             | 'pay_by_bank'
@@ -761,9 +834,11 @@ declare module 'stripe' {
             | 'rechnung'
             | 'revolut_pay'
             | 'samsung_pay'
+            | 'satispay'
             | 'sepa_debit'
             | 'shopeepay'
             | 'sofort'
+            | 'stripe_balance'
             | 'swish'
             | 'twint'
             | 'us_bank_account'
@@ -806,6 +881,49 @@ declare module 'stripe' {
           interface WechatPay {}
 
           interface Zip {}
+        }
+
+        interface PaymentMethodOptions {
+          card?: PaymentMethodOptions.Card;
+        }
+
+        namespace PaymentMethodOptions {
+          interface Card {
+            /**
+             * Installment configuration for payments attempted on this PaymentIntent.
+             */
+            installments?: Card.Installments;
+          }
+
+          namespace Card {
+            interface Installments {
+              /**
+               * The selected installment plan to use for this payment attempt.
+               * This parameter can only be provided during confirmation.
+               */
+              plan: Installments.Plan;
+            }
+
+            namespace Installments {
+              interface Plan {
+                /**
+                 * For `fixed_count` installment plans, this is required. It represents the number of installment payments your customer will make to their credit card.
+                 */
+                count?: number;
+
+                /**
+                 * For `fixed_count` installment plans, this is required. It represents the interval between installment payments your customer will make to their credit card.
+                 * One of `month`.
+                 */
+                interval?: 'month';
+
+                /**
+                 * Type of installment plan, one of `fixed_count`.
+                 */
+                type: 'fixed_count';
+              }
+            }
+          }
         }
 
         type SetupFutureUsage = 'off_session' | 'on_session';

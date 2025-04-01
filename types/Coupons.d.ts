@@ -48,7 +48,7 @@ declare module 'stripe' {
       deleted?: void;
 
       /**
-       * One of `forever`, `once`, and `repeating`. Describes how long a customer who applies this coupon will get the discount.
+       * One of `forever`, `once`, or `repeating`. Describes how long a customer who applies this coupon will get the discount.
        */
       duration: Coupon.Duration;
 
@@ -113,7 +113,7 @@ declare module 'stripe' {
         amount_off: number;
       }
 
-      type Duration = 'forever' | 'once' | 'repeating' | 'variable';
+      type Duration = 'forever' | 'once' | 'repeating';
     }
 
     /**

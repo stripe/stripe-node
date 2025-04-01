@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace V2 {
       /**
-       * The EventDestination object.
+       * Set up an event destination to receive events from Stripe across multiple destination types, including [webhook endpoints](https://docs.stripe.com/webhooks) and [Amazon EventBridge](https://docs.stripe.com/event-destinations/eventbridge). Event destinations support receiving [thin events](https://docs.stripe.com/api/v2/events) and [snapshot events](https://docs.stripe.com/api/events).
        */
       interface EventDestination {
         /**

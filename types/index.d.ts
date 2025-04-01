@@ -18,6 +18,7 @@
 ///<reference path='./ApplicationFeesResource.d.ts' />
 ///<reference path='./Apps/SecretsResource.d.ts' />
 ///<reference path='./BalanceResource.d.ts' />
+///<reference path='./BalanceSettingsResource.d.ts' />
 ///<reference path='./BalanceTransactionsResource.d.ts' />
 ///<reference path='./Billing/AlertsResource.d.ts' />
 ///<reference path='./Billing/CreditBalanceSummaryResource.d.ts' />
@@ -48,6 +49,7 @@
 ///<reference path='./EphemeralKeysResource.d.ts' />
 ///<reference path='./EventsResource.d.ts' />
 ///<reference path='./ExchangeRatesResource.d.ts' />
+///<reference path='./ExternalAccountsResource.d.ts' />
 ///<reference path='./FileLinksResource.d.ts' />
 ///<reference path='./FilesResource.d.ts' />
 ///<reference path='./FinancialConnections/AccountsResource.d.ts' />
@@ -149,8 +151,28 @@
 ///<reference path='./V2/Billing/MeterEventSessionResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
+///<reference path='./V2/Core/AccountLinksResource.d.ts' />
+///<reference path='./V2/Core/Accounts/PersonsResource.d.ts' />
+///<reference path='./V2/Core/AccountsResource.d.ts' />
 ///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
 ///<reference path='./V2/Core/EventsResource.d.ts' />
+///<reference path='./V2/Core/Vault/GbBankAccountsResource.d.ts' />
+///<reference path='./V2/Core/Vault/UsBankAccountsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/AdjustmentsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/FinancialAccountsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/FinancialAddressesResource.d.ts' />
+///<reference path='./V2/MoneyManagement/InboundTransfersResource.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPaymentQuotesResource.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPaymentsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundSetupIntentsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundTransfersResource.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethodsBankAccountSpecResource.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethodsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/ReceivedCreditsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/ReceivedDebitsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/TransactionEntriesResource.d.ts' />
+///<reference path='./V2/MoneyManagement/TransactionsResource.d.ts' />
+///<reference path='./V2/TestHelpers/FinancialAddressesResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./AccountNotices.d.ts' />
@@ -161,6 +183,7 @@
 ///<reference path='./Applications.d.ts' />
 ///<reference path='./Apps/Secrets.d.ts' />
 ///<reference path='./Balance.d.ts' />
+///<reference path='./BalanceSettings.d.ts' />
 ///<reference path='./BalanceTransactionSources.d.ts' />
 ///<reference path='./BalanceTransactions.d.ts' />
 ///<reference path='./BankAccounts.d.ts' />
@@ -314,13 +337,32 @@
 ///<reference path='./Treasury/ReceivedDebits.d.ts' />
 ///<reference path='./Treasury/TransactionEntries.d.ts' />
 ///<reference path='./Treasury/Transactions.d.ts' />
-///<reference path='./UsageRecordSummaries.d.ts' />
-///<reference path='./UsageRecords.d.ts' />
 ///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
+///<reference path='./V2/Core/AccountLinks.d.ts' />
+///<reference path='./V2/Core/Accounts.d.ts' />
+///<reference path='./V2/Core/Persons.d.ts' />
+///<reference path='./V2/Core/Vault/GbBankAccounts.d.ts' />
+///<reference path='./V2/Core/Vault/UsBankAccounts.d.ts' />
 ///<reference path='./V2/EventDestinations.d.ts' />
 ///<reference path='./V2/Events.d.ts' />
+///<reference path='./V2/FinancialAddressCreditSimulations.d.ts' />
+///<reference path='./V2/FinancialAddressGeneratedMicrodeposits.d.ts' />
+///<reference path='./V2/MoneyManagement/Adjustments.d.ts' />
+///<reference path='./V2/MoneyManagement/FinancialAccounts.d.ts' />
+///<reference path='./V2/MoneyManagement/FinancialAddresses.d.ts' />
+///<reference path='./V2/MoneyManagement/InboundTransfers.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPaymentQuotes.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPayments.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundSetupIntents.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundTransfers.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethods.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethodsBankAccountSpecs.d.ts' />
+///<reference path='./V2/MoneyManagement/ReceivedCredits.d.ts' />
+///<reference path='./V2/MoneyManagement/ReceivedDebits.d.ts' />
+///<reference path='./V2/MoneyManagement/TransactionEntries.d.ts' />
+///<reference path='./V2/MoneyManagement/Transactions.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
@@ -349,6 +391,7 @@ declare module 'stripe' {
     applePayDomains: Stripe.ApplePayDomainsResource;
     applicationFees: Stripe.ApplicationFeesResource;
     balance: Stripe.BalanceResource;
+    balanceSettings: Stripe.BalanceSettingsResource;
     balanceTransactions: Stripe.BalanceTransactionsResource;
     charges: Stripe.ChargesResource;
     confirmationTokens: Stripe.ConfirmationTokensResource;
@@ -361,6 +404,7 @@ declare module 'stripe' {
     ephemeralKeys: Stripe.EphemeralKeysResource;
     events: Stripe.EventsResource;
     exchangeRates: Stripe.ExchangeRatesResource;
+    externalAccounts: Stripe.ExternalAccountsResource;
     fileLinks: Stripe.FileLinksResource;
     files: Stripe.FilesResource;
     invoiceItems: Stripe.InvoiceItemsResource;
@@ -523,15 +567,40 @@ declare module 'stripe' {
       transactionEntries: Stripe.Treasury.TransactionEntriesResource;
     };
     v2: {
+      core: {
+        accounts: Stripe.V2.Core.AccountsResource;
+        accountLinks: Stripe.V2.Core.AccountLinksResource;
+        eventDestinations: Stripe.V2.Core.EventDestinationsResource;
+        events: Stripe.V2.Core.EventsResource;
+        vault: {
+          gbBankAccounts: Stripe.V2.Core.Vault.GbBankAccountsResource;
+          usBankAccounts: Stripe.V2.Core.Vault.UsBankAccountsResource;
+        };
+      };
+      moneyManagement: {
+        adjustments: Stripe.V2.MoneyManagement.AdjustmentsResource;
+        financialAccounts: Stripe.V2.MoneyManagement.FinancialAccountsResource;
+        financialAddresses: Stripe.V2.MoneyManagement.FinancialAddressesResource;
+        inboundTransfers: Stripe.V2.MoneyManagement.InboundTransfersResource;
+        outboundPayments: Stripe.V2.MoneyManagement.OutboundPaymentsResource;
+        outboundPaymentQuotes: Stripe.V2.MoneyManagement.OutboundPaymentQuotesResource;
+        outboundTransfers: Stripe.V2.MoneyManagement.OutboundTransfersResource;
+        outboundSetupIntents: Stripe.V2.MoneyManagement.OutboundSetupIntentsResource;
+        payoutMethods: Stripe.V2.MoneyManagement.PayoutMethodsResource;
+        payoutMethodsBankAccountSpec: Stripe.V2.MoneyManagement.PayoutMethodsBankAccountSpecResource;
+        receivedCredits: Stripe.V2.MoneyManagement.ReceivedCreditsResource;
+        receivedDebits: Stripe.V2.MoneyManagement.ReceivedDebitsResource;
+        transactions: Stripe.V2.MoneyManagement.TransactionsResource;
+        transactionEntries: Stripe.V2.MoneyManagement.TransactionEntriesResource;
+      };
       billing: {
         meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
         meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
         meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
         meterEvents: Stripe.V2.Billing.MeterEventsResource;
       };
-      core: {
-        eventDestinations: Stripe.V2.Core.EventDestinationsResource;
-        events: Stripe.V2.Core.EventsResource;
+      testHelper: {
+        financialAddresses: Stripe.V2.TestHelpers.FinancialAddressesResource;
       };
     };
     // Fields: The end of the section generated from our OpenAPI spec

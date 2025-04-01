@@ -78,6 +78,11 @@ declare module 'stripe' {
       quantity: number | null;
 
       /**
+       * The tax calculation identifiers of the line item.
+       */
+      tax_calculation_reference?: LineItem.TaxCalculationReference | null;
+
+      /**
        * The taxes applied to the line item.
        */
       taxes?: Array<LineItem.Tax>;
@@ -156,6 +161,18 @@ declare module 'stripe' {
           | 'standard_rated'
           | 'taxable_basis_reduced'
           | 'zero_rated';
+      }
+
+      interface TaxCalculationReference {
+        /**
+         * The calculation identifier for tax calculation response.
+         */
+        calculation_id: string | null;
+
+        /**
+         * The calculation identifier for tax calculation response line item.
+         */
+        calculation_item_id: string | null;
       }
     }
   }
