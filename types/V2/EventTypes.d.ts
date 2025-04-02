@@ -3,18 +3,18 @@
 declare module 'stripe' {
   namespace Stripe.V2 {
     export type Event =
-      | Stripe.Events.V2CoreAccountRequirementsUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingRequirementsUpdatedEvent
       | Stripe.Events.V2CoreAccountLinkCompletedEvent
-      | Stripe.Events.V2CoreAccountConfigurationCustomerCapabilityStatusUpdatedEvent
-      | Stripe.Events.V2CoreAccountConfigurationCustomerUpdatedEvent
-      | Stripe.Events.V2CoreAccountIdentityUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingConfigurationCustomerUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingIdentityUpdatedEvent
       | Stripe.Events.V2CoreAccountPersonCreatedEvent
       | Stripe.Events.V2CoreAccountPersonDeletedEvent
       | Stripe.Events.V2CoreAccountPersonUpdatedEvent
-      | Stripe.Events.V2CoreAccountConfigurationMerchantCapabilityStatusUpdatedEvent
-      | Stripe.Events.V2CoreAccountConfigurationMerchantUpdatedEvent
-      | Stripe.Events.V2CoreAccountConfigurationRecipientCapabilityStatusUpdatedEvent
-      | Stripe.Events.V2CoreAccountConfigurationRecipientUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingConfigurationMerchantUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingConfigurationRecipientUpdatedEvent
       | Stripe.Events.V1BillingMeterErrorReportTriggeredEvent
       | Stripe.Events.V1BillingMeterNoMeterFoundEvent
       | Stripe.Events.V2MoneyManagementFinancialAccountCreatedEvent
@@ -51,9 +51,13 @@ declare module 'stripe' {
     /**
      * This event occurs when the account's requirements are updated.
      */
-    export interface V2CoreAccountRequirementsUpdatedEvent
+    export interface V2CoreAccountIncludingRequirementsUpdatedEvent
       extends V2.EventBase {
       type: 'v2.core.account[requirements].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
     }
 
     /**
@@ -63,10 +67,6 @@ declare module 'stripe' {
       type: 'v2.core.account_link.completed';
       // Retrieves data specific to this event.
       data: V2CoreAccountLinkCompletedEvent.Data;
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.AccountLink>;
     }
 
     namespace V2CoreAccountLinkCompletedEvent {
@@ -95,14 +95,18 @@ declare module 'stripe' {
     /**
      * The status of a customer config capability was updated.
      */
-    export interface V2CoreAccountConfigurationCustomerCapabilityStatusUpdatedEvent
+    export interface V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent
       extends V2.EventBase {
       type: 'v2.core.account[configuration.customer].capability_status_updated';
       // Retrieves data specific to this event.
-      data: V2CoreAccountConfigurationCustomerCapabilityStatusUpdatedEvent.Data;
+      data: V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
     }
 
-    namespace V2CoreAccountConfigurationCustomerCapabilityStatusUpdatedEvent {
+    namespace V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent {
       export interface Data {
         /**
          * Open Enum. The capability which had its status updated.
@@ -114,16 +118,25 @@ declare module 'stripe' {
     /**
      * A customer config was updated.
      */
-    export interface V2CoreAccountConfigurationCustomerUpdatedEvent
+    export interface V2CoreAccountIncludingConfigurationCustomerUpdatedEvent
       extends V2.EventBase {
       type: 'v2.core.account[configuration.customer].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
     }
 
     /**
      * This event occurs when identity is updated.
      */
-    export interface V2CoreAccountIdentityUpdatedEvent extends V2.EventBase {
+    export interface V2CoreAccountIncludingIdentityUpdatedEvent
+      extends V2.EventBase {
       type: 'v2.core.account[identity].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
     }
 
     /**
@@ -195,14 +208,18 @@ declare module 'stripe' {
     /**
      * The status of a merchant config capability was updated.
      */
-    export interface V2CoreAccountConfigurationMerchantCapabilityStatusUpdatedEvent
+    export interface V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent
       extends V2.EventBase {
       type: 'v2.core.account[configuration.merchant].capability_status_updated';
       // Retrieves data specific to this event.
-      data: V2CoreAccountConfigurationMerchantCapabilityStatusUpdatedEvent.Data;
+      data: V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
     }
 
-    namespace V2CoreAccountConfigurationMerchantCapabilityStatusUpdatedEvent {
+    namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent {
       export interface Data {
         /**
          * Open Enum. The capability which had its status updated.
@@ -262,22 +279,30 @@ declare module 'stripe' {
     /**
      * A merchant config was updated.
      */
-    export interface V2CoreAccountConfigurationMerchantUpdatedEvent
+    export interface V2CoreAccountIncludingConfigurationMerchantUpdatedEvent
       extends V2.EventBase {
       type: 'v2.core.account[configuration.merchant].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
     }
 
     /**
      * The status of a recipient config capability was updated.
      */
-    export interface V2CoreAccountConfigurationRecipientCapabilityStatusUpdatedEvent
+    export interface V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent
       extends V2.EventBase {
       type: 'v2.core.account[configuration.recipient].capability_status_updated';
       // Retrieves data specific to this event.
-      data: V2CoreAccountConfigurationRecipientCapabilityStatusUpdatedEvent.Data;
+      data: V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
     }
 
-    namespace V2CoreAccountConfigurationRecipientCapabilityStatusUpdatedEvent {
+    namespace V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent {
       export interface Data {
         /**
          * Open Enum. The capability which had its status updated.
@@ -302,9 +327,13 @@ declare module 'stripe' {
     /**
      * A recipient config was updated.
      */
-    export interface V2CoreAccountConfigurationRecipientUpdatedEvent
+    export interface V2CoreAccountIncludingConfigurationRecipientUpdatedEvent
       extends V2.EventBase {
       type: 'v2.core.account[configuration.recipient].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
     }
 
     /**
