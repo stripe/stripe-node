@@ -1677,6 +1677,9 @@ declare module 'stripe' {
        */
       customer?: string;
 
+      /**
+       * Only return invoices for the account specified by this account ID.
+       */
       customer_account?: string;
 
       due_date?: Stripe.RangeQueryParam | number;

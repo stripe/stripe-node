@@ -211,7 +211,7 @@ declare module 'stripe' {
         /**
          * This property is used to set up permissions for various actions (e.g., update) on the CheckoutSession object.
          *
-         * For specific permissions, please refer to their dedicated subsections, such as `permissions.update.shipping_details`.
+         * For specific permissions, please refer to their dedicated subsections, such as `permissions.update_shipping_details`.
          */
         permissions?: SessionCreateParams.Permissions;
 
