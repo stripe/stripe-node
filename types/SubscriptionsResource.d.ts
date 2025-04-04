@@ -39,13 +39,6 @@ declare module 'stripe' {
       billing_cycle_anchor_config?: SubscriptionCreateParams.BillingCycleAnchorConfig;
 
       /**
-       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
-       */
-      billing_thresholds?: Stripe.Emptyable<
-        SubscriptionCreateParams.BillingThresholds
-      >;
-
-      /**
        * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
        */
       cancel_at?: number;
@@ -59,11 +52,6 @@ declare module 'stripe' {
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically`.
        */
       collection_method?: SubscriptionCreateParams.CollectionMethod;
-
-      /**
-       * The ID of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
-       */
-      coupon?: string;
 
       /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -158,11 +146,6 @@ declare module 'stripe' {
       >;
 
       /**
-       * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
-       */
-      promotion_code?: string;
-
-      /**
        * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) resulting from the `billing_cycle_anchor`. If no value is passed, the default is `create_prorations`.
        */
       proration_behavior?: SubscriptionCreateParams.ProrationBehavior;
@@ -246,7 +229,7 @@ declare module 'stripe' {
           currency: string;
 
           /**
-           * The ID of the product that this price will belong to.
+           * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
            */
           product: string;
 
@@ -328,18 +311,6 @@ declare module 'stripe' {
         second?: number;
       }
 
-      interface BillingThresholds {
-        /**
-         * Monetary threshold that triggers the subscription to advance to a new billing period
-         */
-        amount_gte?: number;
-
-        /**
-         * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
-         */
-        reset_billing_cycle_anchor?: boolean;
-      }
-
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
       interface Discount {
@@ -391,11 +362,6 @@ declare module 'stripe' {
 
       interface Item {
         /**
-         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
-         */
-        billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
-
-        /**
          * The coupons to redeem into discounts for the subscription item.
          */
         discounts?: Stripe.Emptyable<Array<Item.Discount>>;
@@ -432,13 +398,6 @@ declare module 'stripe' {
       }
 
       namespace Item {
-        interface BillingThresholds {
-          /**
-           * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
-           */
-          usage_gte: number;
-        }
-
         interface Discount {
           /**
            * ID of the coupon to create a new discount for.
@@ -463,7 +422,7 @@ declare module 'stripe' {
           currency: string;
 
           /**
-           * The ID of the product that this price will belong to.
+           * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
            */
           product: string;
 
@@ -785,11 +744,13 @@ declare module 'stripe' {
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'
+          | 'klarna'
           | 'konbini'
           | 'kr_card'
           | 'link'
           | 'multibanco'
           | 'naver_pay'
+          | 'nz_bank_account'
           | 'p24'
           | 'payco'
           | 'paynow'
@@ -886,13 +847,6 @@ declare module 'stripe' {
       billing_cycle_anchor?: SubscriptionUpdateParams.BillingCycleAnchor;
 
       /**
-       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
-       */
-      billing_thresholds?: Stripe.Emptyable<
-        SubscriptionUpdateParams.BillingThresholds
-      >;
-
-      /**
        * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
        */
       cancel_at?: Stripe.Emptyable<number>;
@@ -911,11 +865,6 @@ declare module 'stripe' {
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically`.
        */
       collection_method?: SubscriptionUpdateParams.CollectionMethod;
-
-      /**
-       * The ID of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
-       */
-      coupon?: string;
 
       /**
        * Number of days a customer has to pay invoices generated by this subscription. Valid only for subscriptions where `collection_method` is set to `send_invoice`.
@@ -1008,11 +957,6 @@ declare module 'stripe' {
       >;
 
       /**
-       * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
-       */
-      promotion_code?: string;
-
-      /**
        * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
        */
       proration_behavior?: SubscriptionUpdateParams.ProrationBehavior;
@@ -1096,7 +1040,7 @@ declare module 'stripe' {
           currency: string;
 
           /**
-           * The ID of the product that this price will belong to.
+           * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
            */
           product: string;
 
@@ -1152,18 +1096,6 @@ declare module 'stripe' {
       }
 
       type BillingCycleAnchor = 'now' | 'unchanged';
-
-      interface BillingThresholds {
-        /**
-         * Monetary threshold that triggers the subscription to advance to a new billing period
-         */
-        amount_gte?: number;
-
-        /**
-         * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
-         */
-        reset_billing_cycle_anchor?: boolean;
-      }
 
       interface CancellationDetails {
         /**
@@ -1240,11 +1172,6 @@ declare module 'stripe' {
 
       interface Item {
         /**
-         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
-         */
-        billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
-
-        /**
          * Delete all usage for a given subscription item. You must pass this when deleting a usage records subscription item. `clear_usage` has no effect if the plan has a billing meter attached.
          */
         clear_usage?: boolean;
@@ -1296,13 +1223,6 @@ declare module 'stripe' {
       }
 
       namespace Item {
-        interface BillingThresholds {
-          /**
-           * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
-           */
-          usage_gte: number;
-        }
-
         interface Discount {
           /**
            * ID of the coupon to create a new discount for.
@@ -1327,7 +1247,7 @@ declare module 'stripe' {
           currency: string;
 
           /**
-           * The ID of the product that this price will belong to.
+           * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
            */
           product: string;
 
@@ -1665,11 +1585,13 @@ declare module 'stripe' {
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'
+          | 'klarna'
           | 'konbini'
           | 'kr_card'
           | 'link'
           | 'multibanco'
           | 'naver_pay'
+          | 'nz_bank_account'
           | 'p24'
           | 'payco'
           | 'paynow'

@@ -7,7 +7,6 @@
 ///<reference path='./Webhooks.d.ts' />
 ///<reference path='./EventTypes.d.ts' />
 ///<reference path='./UpcomingInvoices.d.ts' />
-///<reference path='./Deprecations.d.ts' />
 ///<reference path='./ThinEvent.d.ts' />
 ///<reference path='./crypto/crypto.d.ts' />
 // Imports: The beginning of the section generated from our OpenAPI spec
@@ -54,6 +53,7 @@
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
 ///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
+///<reference path='./InvoicePaymentsResource.d.ts' />
 ///<reference path='./InvoiceRenderingTemplatesResource.d.ts' />
 ///<reference path='./InvoicesResource.d.ts' />
 ///<reference path='./Issuing/AuthorizationsResource.d.ts' />
@@ -200,6 +200,7 @@
 ///<reference path='./Identity/VerificationSessions.d.ts' />
 ///<reference path='./InvoiceItems.d.ts' />
 ///<reference path='./InvoiceLineItems.d.ts' />
+///<reference path='./InvoicePayments.d.ts' />
 ///<reference path='./InvoiceRenderingTemplates.d.ts' />
 ///<reference path='./Invoices.d.ts' />
 ///<reference path='./Issuing/Authorizations.d.ts' />
@@ -274,8 +275,6 @@
 ///<reference path='./Treasury/ReceivedDebits.d.ts' />
 ///<reference path='./Treasury/TransactionEntries.d.ts' />
 ///<reference path='./Treasury/Transactions.d.ts' />
-///<reference path='./UsageRecordSummaries.d.ts' />
-///<reference path='./UsageRecords.d.ts' />
 ///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
@@ -323,6 +322,7 @@ declare module 'stripe' {
     fileLinks: Stripe.FileLinksResource;
     files: Stripe.FilesResource;
     invoiceItems: Stripe.InvoiceItemsResource;
+    invoicePayments: Stripe.InvoicePaymentsResource;
     invoiceRenderingTemplates: Stripe.InvoiceRenderingTemplatesResource;
     invoices: Stripe.InvoicesResource;
     mandates: Stripe.MandatesResource;

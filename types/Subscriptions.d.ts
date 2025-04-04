@@ -45,11 +45,6 @@ declare module 'stripe' {
       billing_cycle_anchor_config: Subscription.BillingCycleAnchorConfig | null;
 
       /**
-       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
-       */
-      billing_thresholds: Subscription.BillingThresholds | null;
-
-      /**
        * A date in the future at which the subscription will automatically get canceled
        */
       cancel_at: number | null;
@@ -85,16 +80,6 @@ declare module 'stripe' {
       currency: string;
 
       /**
-       * End of the current period that the subscription has been invoiced for. At the end of this period, a new invoice will be created.
-       */
-      current_period_end: number;
-
-      /**
-       * Start of the current period that the subscription has been invoiced for.
-       */
-      current_period_start: number;
-
-      /**
        * ID of the customer who owns the subscription.
        */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer;
@@ -123,11 +108,6 @@ declare module 'stripe' {
        * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
        */
       description: string | null;
-
-      /**
-       * Describes the current discount applied to this subscription, if there is one. When billing, a discount applied to a subscription overrides a discount applied on a customer-wide basis. This field has been deprecated and will be removed in a future API version. Use `discounts` instead.
-       */
-      discount: Stripe.Discount | null;
 
       /**
        * The discounts applied to the subscription. Subscription item discounts are applied before subscription discounts. Use `expand[]=discounts` to expand each discount.
@@ -167,7 +147,7 @@ declare module 'stripe' {
       next_pending_invoice_item_invoice: number | null;
 
       /**
-       * The account (if any) the charge was made on behalf of for charges associated with this subscription. See the Connect documentation for details.
+       * The account (if any) the charge was made on behalf of for charges associated with this subscription. See the [Connect documentation](https://stripe.com/docs/connect/subscriptions#on-behalf-of) for details.
        */
       on_behalf_of: string | Stripe.Account | null;
 
@@ -308,18 +288,6 @@ declare module 'stripe' {
          * The second of the minute of the billing_cycle_anchor.
          */
         second: number | null;
-      }
-
-      interface BillingThresholds {
-        /**
-         * Monetary threshold that triggers the subscription to create an invoice
-         */
-        amount_gte: number | null;
-
-        /**
-         * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged. This value may not be `true` if the subscription contains items with plans that have `aggregate_usage=last_ever`.
-         */
-        reset_billing_cycle_anchor: boolean | null;
       }
 
       interface CancellationDetails {
@@ -653,11 +621,13 @@ declare module 'stripe' {
           | 'ideal'
           | 'jp_credit_transfer'
           | 'kakao_pay'
+          | 'klarna'
           | 'konbini'
           | 'kr_card'
           | 'link'
           | 'multibanco'
           | 'naver_pay'
+          | 'nz_bank_account'
           | 'p24'
           | 'payco'
           | 'paynow'

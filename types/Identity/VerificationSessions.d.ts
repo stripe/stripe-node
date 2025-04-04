@@ -81,7 +81,7 @@ declare module 'stripe' {
         redaction: VerificationSession.Redaction | null;
 
         /**
-         * Token referencing a Customer resource.
+         * Customer ID
          */
         related_customer: string | null;
 

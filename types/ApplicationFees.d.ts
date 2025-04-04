@@ -95,7 +95,7 @@ declare module 'stripe' {
         payout?: string;
 
         /**
-         * Type of object that created the application fee, either `charge` or `payout`.
+         * Type of object that created the application fee.
          */
         type: FeeSource.Type;
       }

@@ -49,11 +49,6 @@ declare module 'stripe' {
       active: boolean;
 
       /**
-       * Specifies a usage aggregation strategy for plans of `usage_type=metered`. Allowed values are `sum` for summing up all usage during a period, `last_during_period` for using the last usage record reported within a period, `last_ever` for using the last usage record ever (across period bounds) or `max` which uses the usage record with the maximum reported usage during a period. Defaults to `sum`.
-       */
-      aggregate_usage: Plan.AggregateUsage | null;
-
-      /**
        * The unit amount in cents (or local equivalent) to be charged, represented as a whole integer if possible. Only set if `billing_scheme=per_unit`.
        */
       amount: number | null;
@@ -145,8 +140,6 @@ declare module 'stripe' {
     }
 
     namespace Plan {
-      type AggregateUsage = 'last_during_period' | 'last_ever' | 'max' | 'sum';
-
       type BillingScheme = 'per_unit' | 'tiered';
 
       type Interval = 'day' | 'month' | 'week' | 'year';

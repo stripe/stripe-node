@@ -9,7 +9,7 @@ import {
   RequestData,
   RequestOptions,
 } from './Types.js';
-import {WebhookObject, WebhookEvent, createWebhooks} from './Webhooks.js';
+import {WebhookEvent, createWebhooks} from './Webhooks.js';
 import {ApiVersion} from './apiVersion.js';
 import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
@@ -59,7 +59,7 @@ export function createStripe(
   platformFunctions: PlatformFunctions,
   requestSender: RequestSenderFactory = defaultRequestSenderFactory
 ): typeof Stripe {
-  Stripe.PACKAGE_VERSION = '17.7.0';
+  Stripe.PACKAGE_VERSION = '18.0.0';
   Stripe.USER_AGENT = {
     bindings_version: Stripe.PACKAGE_VERSION,
     lang: 'node',
@@ -73,20 +73,7 @@ export function createStripe(
   Stripe.HttpClient = HttpClient;
   Stripe.HttpClientResponse = HttpClientResponse;
   Stripe.CryptoProvider = CryptoProvider;
-
-  // Previously Stripe.webhooks was just the createWebhooks() factory function
-  // however going forward it will be a WebhookObject instance. To maintain
-  // backwards compatibility it is currently a factory function that also
-  // complies to the WebhookObject signature. The factory function signature
-  // will be removed as a breaking change in the next major release.
-  // See https://github.com/stripe/stripe-node/issues/1956
-  function createWebhooksDefault(fns = platformFunctions): WebhookObject {
-    return createWebhooks(fns);
-  }
-  Stripe.webhooks = Object.assign(
-    createWebhooksDefault,
-    createWebhooks(platformFunctions)
-  );
+  Stripe.webhooks = createWebhooks(platformFunctions);
 
   function Stripe(
     this: StripeObject,
@@ -157,9 +144,7 @@ export function createStripe(
 
     this.errors = _Error;
 
-    // Once Stripe.webhooks looses the factory function signature in a future release
-    // then this should become this.webhooks = Stripe.webhooks
-    this.webhooks = createWebhooksDefault();
+    this.webhooks = Stripe.webhooks;
 
     this._prevRequestMetrics = [];
     this._enableTelemetry = props.telemetry !== false;
