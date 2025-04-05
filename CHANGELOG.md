@@ -84,14 +84,6 @@
   * Change `OrderCreateParams.payment.settings.payment_method_options.wechat_pay.client` and `OrderUpdateParams.payment.settings.payment_method_options.wechat_pay.client` to be optional
 
 
-## 17.8.0-beta.1 - 2025-03-18
-* [#2271](https://github.com/stripe/stripe-node/pull/2271) Beta SDK updates between Open API versions 1473 and 1505
-
-  * Add support for `succeed_input_collection` and `timeout_input_collection` test helper methods on resource `Terminal.Reader`
-  * Change type of `Account.risk_controls.rejected_reason` from enum to enum | null
-  * Change `Checkout.Session.collected_information.shipping_details` and `Checkout.Session.collected_information` to be required
-  * Add support for `target_date` on `Order.payment.settings.payment_method_options.acss_debit`, `Order.payment.settings.payment_method_options.sepa_debit`, `OrderCreateParams.payment.settings.payment_method_options.acss_debit`, `OrderCreateParams.payment.settings.payment_method_options.sepa_debit`, `OrderUpdateParams.payment.settings.payment_method_options.acss_debit`, and `OrderUpdateParams.payment.settings.payment_method_options.sepa_debit`
-* [#2272](https://github.com/stripe/stripe-node/pull/2272) Merge master
 ## 18.0.0 - 2025-04-01
 * [#2279](https://github.com/stripe/stripe-node/pull/2279) Support for APIs in the new API version 2025-03-31.basil
 
@@ -230,6 +222,15 @@
   * Remove `TransferReversalListParams` in favor of `TransferListReversalsParams`
   * Remove `TransferReversalRetrieveParams` in favor of `TransferRetrieveReversalParams`
   * Remove `TransferReversalUpdateParams` in favor of `TransferUpdateReversalParams`
+
+## 17.8.0-beta.1 - 2025-03-18
+* [#2271](https://github.com/stripe/stripe-node/pull/2271) Beta SDK updates between Open API versions 1473 and 1505
+
+  * Add support for `succeed_input_collection` and `timeout_input_collection` test helper methods on resource `Terminal.Reader`
+  * Change type of `Account.risk_controls.rejected_reason` from enum to enum | null
+  * Change `Checkout.Session.collected_information.shipping_details` and `Checkout.Session.collected_information` to be required
+  * Add support for `target_date` on `Order.payment.settings.payment_method_options.acss_debit`, `Order.payment.settings.payment_method_options.sepa_debit`, `OrderCreateParams.payment.settings.payment_method_options.acss_debit`, `OrderCreateParams.payment.settings.payment_method_options.sepa_debit`, `OrderUpdateParams.payment.settings.payment_method_options.acss_debit`, and `OrderUpdateParams.payment.settings.payment_method_options.sepa_debit`
+* [#2272](https://github.com/stripe/stripe-node/pull/2272) Merge master
 
 ## 17.7.0 - 2025-02-24
 * [#2256](https://github.com/stripe/stripe-node/pull/2256) Update generated code
