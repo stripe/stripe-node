@@ -3,7 +3,7 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * "Options for customizing account balances within Stripe."
+     * Options for customizing account balances within Stripe.
      */
     interface BalanceSettings {
       /**

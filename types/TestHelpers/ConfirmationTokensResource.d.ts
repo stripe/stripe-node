@@ -92,7 +92,7 @@ declare module 'stripe' {
           bancontact?: PaymentMethodData.Bancontact;
 
           /**
-           * If this is a `billie` PaymentMethod, this hash contains details about the billie payment method.
+           * If this is a `billie` PaymentMethod, this hash contains details about the Billie payment method.
            */
           billie?: PaymentMethodData.Billie;
 
@@ -277,7 +277,7 @@ declare module 'stripe' {
           rechnung?: PaymentMethodData.Rechnung;
 
           /**
-           * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
+           * If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
            */
           revolut_pay?: PaymentMethodData.RevolutPay;
 
@@ -287,7 +287,7 @@ declare module 'stripe' {
           samsung_pay?: PaymentMethodData.SamsungPay;
 
           /**
-           * If this is a `satispay` PaymentMethod, this hash contains details about the satispay payment method.
+           * If this is a `satispay` PaymentMethod, this hash contains details about the Satispay payment method.
            */
           satispay?: PaymentMethodData.Satispay;
 

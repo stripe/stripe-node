@@ -78,6 +78,7 @@ import {ReceivedCredits as V2MoneyManagementReceivedCredits} from './resources/V
 import {ReceivedDebits as TestHelpersTreasuryReceivedDebits} from './resources/TestHelpers/Treasury/ReceivedDebits.js';
 import {ReceivedDebits as TreasuryReceivedDebits} from './resources/Treasury/ReceivedDebits.js';
 import {ReceivedDebits as V2MoneyManagementReceivedDebits} from './resources/V2/MoneyManagement/ReceivedDebits.js';
+import {RedactionJobs as PrivacyRedactionJobs} from './resources/Privacy/RedactionJobs.js';
 import {Refunds as TestHelpersRefunds} from './resources/TestHelpers/Refunds.js';
 import {Registrations as TaxRegistrations} from './resources/Tax/Registrations.js';
 import {ReportRuns as ReportingReportRuns} from './resources/Reporting/ReportRuns.js';
@@ -131,7 +132,6 @@ export {ExternalAccounts} from './resources/ExternalAccounts.js';
 export {FileLinks} from './resources/FileLinks.js';
 export {Files} from './resources/Files.js';
 export {InvoiceItems} from './resources/InvoiceItems.js';
-export {InvoicePayments} from './resources/InvoicePayments.js';
 export {InvoiceRenderingTemplates} from './resources/InvoiceRenderingTemplates.js';
 export {Invoices} from './resources/Invoices.js';
 export {Mandates} from './resources/Mandates.js';
@@ -227,6 +227,9 @@ export const Issuing = resourceNamespace('issuing', {
   PhysicalBundles: IssuingPhysicalBundles,
   Tokens: IssuingTokens,
   Transactions: IssuingTransactions,
+});
+export const Privacy = resourceNamespace('privacy', {
+  RedactionJobs: PrivacyRedactionJobs,
 });
 export const Radar = resourceNamespace('radar', {
   EarlyFraudWarnings: RadarEarlyFraudWarnings,

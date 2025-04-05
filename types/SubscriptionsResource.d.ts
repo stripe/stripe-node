@@ -58,6 +58,9 @@ declare module 'stripe' {
        */
       customer?: string;
 
+      /**
+       * The identifier of the account to subscribe.
+       */
       customer_account?: string;
 
       /**
@@ -2061,6 +2064,9 @@ declare module 'stripe' {
        */
       customer?: string;
 
+      /**
+       * The ID of the account whose subscriptions will be retrieved.
+       */
       customer_account?: string;
 
       /**

@@ -181,7 +181,7 @@ declare module 'stripe' {
           | 'replaced'
           | 'undelivered';
 
-        type Type = 'cash_advance' | 'flex_loan';
+        type Type = 'cash_advance' | 'fixed_term_loan' | 'flex_loan';
       }
     }
   }

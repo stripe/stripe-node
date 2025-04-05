@@ -189,6 +189,11 @@ declare module 'stripe' {
       | PriceCreatedEvent
       | PriceDeletedEvent
       | PriceUpdatedEvent
+      | PrivacyRedactionJobCanceledEvent
+      | PrivacyRedactionJobCreatedEvent
+      | PrivacyRedactionJobReadyEvent
+      | PrivacyRedactionJobSucceededEvent
+      | PrivacyRedactionJobValidationErrorEvent
       | ProductCreatedEvent
       | ProductDeletedEvent
       | ProductUpdatedEvent
@@ -3269,6 +3274,86 @@ declare module 'stripe' {
         object: Stripe.Price;
 
         previous_attributes?: Partial<Stripe.Price>;
+      }
+    }
+
+    /**
+     * Occurs whenever a redaction job is canceled.
+     */
+    interface PrivacyRedactionJobCanceledEvent extends EventBase {
+      type: 'privacy.redaction_job.canceled';
+      data: PrivacyRedactionJobCanceledEvent.Data;
+    }
+
+    namespace PrivacyRedactionJobCanceledEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Privacy.RedactionJob;
+
+        previous_attributes?: Partial<Stripe.Privacy.RedactionJob>;
+      }
+    }
+
+    /**
+     * Occurs whenever a redaction job is created.
+     */
+    interface PrivacyRedactionJobCreatedEvent extends EventBase {
+      type: 'privacy.redaction_job.created';
+      data: PrivacyRedactionJobCreatedEvent.Data;
+    }
+
+    namespace PrivacyRedactionJobCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Privacy.RedactionJob;
+
+        previous_attributes?: Partial<Stripe.Privacy.RedactionJob>;
+      }
+    }
+
+    /**
+     * Occurs whenever a redaction job has been successfully validated and is ready to run.
+     */
+    interface PrivacyRedactionJobReadyEvent extends EventBase {
+      type: 'privacy.redaction_job.ready';
+      data: PrivacyRedactionJobReadyEvent.Data;
+    }
+
+    namespace PrivacyRedactionJobReadyEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Privacy.RedactionJob;
+
+        previous_attributes?: Partial<Stripe.Privacy.RedactionJob>;
+      }
+    }
+
+    /**
+     * Occurs whenever a redaction job finishes running.
+     */
+    interface PrivacyRedactionJobSucceededEvent extends EventBase {
+      type: 'privacy.redaction_job.succeeded';
+      data: PrivacyRedactionJobSucceededEvent.Data;
+    }
+
+    namespace PrivacyRedactionJobSucceededEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Privacy.RedactionJob;
+
+        previous_attributes?: Partial<Stripe.Privacy.RedactionJob>;
+      }
+    }
+
+    /**
+     * Occurs whenever a redaction job fails validation.
+     */
+    interface PrivacyRedactionJobValidationErrorEvent extends EventBase {
+      type: 'privacy.redaction_job.validation_error';
+      data: PrivacyRedactionJobValidationErrorEvent.Data;
+    }
+
+    namespace PrivacyRedactionJobValidationErrorEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Privacy.RedactionJob;
+
+        previous_attributes?: Partial<Stripe.Privacy.RedactionJob>;
       }
     }
 

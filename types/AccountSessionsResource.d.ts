@@ -72,6 +72,11 @@ declare module 'stripe' {
         documents?: Components.Documents;
 
         /**
+         * Configuration for the export tax transactions embedded component.
+         */
+        export_tax_transactions?: Components.ExportTaxTransactions;
+
+        /**
          * Configuration for the financial account embedded component.
          */
         financial_account?: Components.FinancialAccount;
@@ -365,6 +370,22 @@ declare module 'stripe' {
         }
 
         namespace Documents {
+          interface Features {}
+        }
+
+        interface ExportTaxTransactions {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: ExportTaxTransactions.Features;
+        }
+
+        namespace ExportTaxTransactions {
           interface Features {}
         }
 

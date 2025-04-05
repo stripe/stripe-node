@@ -211,7 +211,7 @@ declare module 'stripe' {
         /**
          * This property is used to set up permissions for various actions (e.g., update) on the CheckoutSession object.
          *
-         * For specific permissions, please refer to their dedicated subsections, such as `permissions.update.shipping_details`.
+         * For specific permissions, please refer to their dedicated subsections, such as `permissions.update_shipping_details`.
          */
         permissions?: SessionCreateParams.Permissions;
 
@@ -286,6 +286,11 @@ declare module 'stripe' {
          * The UI mode of the Session. Defaults to `hosted`.
          */
         ui_mode?: SessionCreateParams.UiMode;
+
+        /**
+         * Wallet-specific configuration.
+         */
+        wallet_options?: SessionCreateParams.WalletOptions;
       }
 
       namespace SessionCreateParams {
@@ -2965,6 +2970,26 @@ declare module 'stripe' {
         }
 
         type UiMode = 'custom' | 'embedded' | 'hosted';
+
+        interface WalletOptions {
+          /**
+           * contains details about the Link wallet options.
+           */
+          link?: WalletOptions.Link;
+        }
+
+        namespace WalletOptions {
+          interface Link {
+            /**
+             * Specifies whether Checkout should display Link as a payment option. By default, Checkout will display all the supported wallets that the Checkout Session was created with. This is the `auto` behavior, and it is the default choice.
+             */
+            display?: Link.Display;
+          }
+
+          namespace Link {
+            type Display = 'auto' | 'never';
+          }
+        }
       }
 
       interface SessionRetrieveParams {
