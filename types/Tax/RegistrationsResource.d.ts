@@ -218,6 +218,11 @@ declare module 'stripe' {
           ie?: CountryOptions.Ie;
 
           /**
+           * Options for the registration in IN.
+           */
+          in?: CountryOptions.In;
+
+          /**
            * Options for the registration in IS.
            */
           is?: CountryOptions.Is;
@@ -1037,6 +1042,13 @@ declare module 'stripe' {
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
+          }
+
+          interface In {
+            /**
+             * Type of registration to be created in `country`.
+             */
+            type: 'simplified';
           }
 
           interface Is {
