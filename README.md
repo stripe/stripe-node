@@ -14,8 +14,6 @@ For collecting customer and payment information in the browser, use [Stripe.js][
 
 See the [`stripe-node` API docs](https://stripe.com/docs/api?lang=node) for Node.js.
 
-See [video demonstrations][youtube-playlist] covering how to use the library.
-
 ## Requirements
 
 Node 12 or higher.
