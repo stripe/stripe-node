@@ -84,11 +84,6 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * The FX rate in the quote is validated and used to convert the presentment amount to the settlement amount.
-       */
-      fx_quote?: string;
-
-      /**
        * ID of the mandate that's used for this payment. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
        */
       mandate?: string;
@@ -4137,11 +4132,6 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
-
-      /**
-       * The FX rate in the quote is validated and used to convert the presentment amount to the settlement amount.
-       */
-      fx_quote?: string;
 
       /**
        * This hash contains details about the Mandate to create.
@@ -8861,11 +8851,6 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
-
-      /**
-       * The FX rate in the quote is validated and used to convert the presentment amount to the settlement amount.
-       */
-      fx_quote?: string;
 
       /**
        * ID of the mandate that's used for this payment.
