@@ -123,6 +123,11 @@ declare module 'stripe' {
       description: string | null;
 
       /**
+       * The FX Quote used for the PaymentIntent.
+       */
+      fx_quote?: string | null;
+
+      /**
        * The payment error encountered in the previous PaymentIntent confirmation. It will be cleared if the PaymentIntent is later updated for any reason.
        */
       last_payment_error: PaymentIntent.LastPaymentError | null;
