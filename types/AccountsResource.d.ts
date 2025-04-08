@@ -126,6 +126,13 @@ declare module 'stripe' {
         mcc?: string;
 
         /**
+         * Whether the business is a minority-owned, women-owned, and/or LGBTQI+-owned business.
+         */
+        minority_owned_business_designation?: Array<
+          BusinessProfile.MinorityOwnedBusinessDesignation
+        >;
+
+        /**
          * An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
          */
         monthly_estimated_revenue?: BusinessProfile.MonthlyEstimatedRevenue;
@@ -183,6 +190,13 @@ declare module 'stripe' {
            */
           fiscal_year_end: string;
         }
+
+        type MinorityOwnedBusinessDesignation =
+          | 'lgbtqi_owned_business'
+          | 'minority_owned_business'
+          | 'none_of_these_apply'
+          | 'prefer_not_to_answer'
+          | 'women_owned_business';
 
         interface MonthlyEstimatedRevenue {
           /**
@@ -2205,6 +2219,13 @@ declare module 'stripe' {
         mcc?: string;
 
         /**
+         * Whether the business is a minority-owned, women-owned, and/or LGBTQI+-owned business.
+         */
+        minority_owned_business_designation?: Array<
+          BusinessProfile.MinorityOwnedBusinessDesignation
+        >;
+
+        /**
          * An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
          */
         monthly_estimated_revenue?: BusinessProfile.MonthlyEstimatedRevenue;
@@ -2262,6 +2283,13 @@ declare module 'stripe' {
            */
           fiscal_year_end: string;
         }
+
+        type MinorityOwnedBusinessDesignation =
+          | 'lgbtqi_owned_business'
+          | 'minority_owned_business'
+          | 'none_of_these_apply'
+          | 'prefer_not_to_answer'
+          | 'women_owned_business';
 
         interface MonthlyEstimatedRevenue {
           /**

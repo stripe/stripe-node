@@ -143,6 +143,13 @@ declare module 'stripe' {
          */
         mcc: string | null;
 
+        /**
+         * Whether the business is a minority-owned, women-owned, and/or LGBTQI+-owned business.
+         */
+        minority_owned_business_designation: Array<
+          BusinessProfile.MinorityOwnedBusinessDesignation
+        > | null;
+
         monthly_estimated_revenue?: BusinessProfile.MonthlyEstimatedRevenue;
 
         /**
@@ -198,6 +205,13 @@ declare module 'stripe' {
            */
           fiscal_year_end: string | null;
         }
+
+        type MinorityOwnedBusinessDesignation =
+          | 'lgbtqi_owned_business'
+          | 'minority_owned_business'
+          | 'none_of_these_apply'
+          | 'prefer_not_to_answer'
+          | 'women_owned_business';
 
         interface MonthlyEstimatedRevenue {
           /**
