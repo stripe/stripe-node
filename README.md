@@ -656,7 +656,6 @@ just format
 [stripe-js]: https://stripe.com/docs/js
 [stripe-mock]: https://github.com/stripe/stripe-mock
 [stripe-mock-usage]: https://github.com/stripe/stripe-mock#usage
-[youtube-playlist]: https://www.youtube.com/playlist?list=PLy1nL-pvL2M5xNIuNapwmABwEy2uifAlY
 
 <!--
 # vim: set tw=79:
