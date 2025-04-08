@@ -6,7 +6,11 @@ declare module 'stripe' {
       /**
        * Either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/js), or a dictionary containing a user's external account details (with the options shown below).
        */
-      external_account: string;
+      external_account:
+        | string
+        | ExternalAccountCreateParams.Card
+        | ExternalAccountCreateParams.BankAccount
+        | ExternalAccountCreateParams.CardToken;
 
       /**
        * When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
@@ -22,6 +26,87 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.MetadataParam;
+    }
+
+    namespace ExternalAccountCreateParams {
+      interface BankAccount {
+        object: 'bank_account';
+
+        /**
+         * The name of the person or business that owns the bank account.This field is required when attaching the bank account to a `Customer` object.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The type of entity that holds the account. It can be `company` or `individual`. This field is required when attaching the bank account to a `Customer` object.
+         */
+        account_holder_type?: BankAccount.AccountHolderType;
+
+        /**
+         * The account number for the bank account, in string form. Must be a checking account.
+         */
+        account_number: string;
+
+        /**
+         * The country in which the bank account is located.
+         */
+        country: string;
+
+        /**
+         * The currency the bank account is in. This must be a country/currency pairing that [Stripe supports.](docs/payouts)
+         */
+        currency?: string;
+
+        /**
+         * The routing number, sort code, or other country-appropriateinstitution number for the bank account. For US bank accounts, this is required and should bethe ACH routing number, not the wire routing number. If you are providing an IBAN for`account_number`, this field is not required.
+         */
+        routing_number?: string;
+      }
+
+      namespace BankAccount {
+        type AccountHolderType = 'company' | 'individual';
+      }
+
+      interface Card {
+        object: 'card';
+
+        address_city?: string;
+
+        address_country?: string;
+
+        address_line1?: string;
+
+        address_line2?: string;
+
+        address_state?: string;
+
+        address_zip?: string;
+
+        currency?: string;
+
+        cvc?: string;
+
+        exp_month: number;
+
+        exp_year: number;
+
+        name?: string;
+
+        number: string;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         */
+        metadata?: Stripe.MetadataParam;
+      }
+
+      interface CardToken {
+        object: 'card';
+
+        currency?: string;
+
+        token: string;
+      }
     }
 
     interface ExternalAccountRetrieveParams {
