@@ -62,7 +62,6 @@
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
 ///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
-///<reference path='./InvoicePaymentsResource.d.ts' />
 ///<reference path='./InvoiceRenderingTemplatesResource.d.ts' />
 ///<reference path='./InvoicesResource.d.ts' />
 ///<reference path='./Issuing/AuthorizationsResource.d.ts' />
@@ -89,6 +88,7 @@
 ///<reference path='./PayoutsResource.d.ts' />
 ///<reference path='./PlansResource.d.ts' />
 ///<reference path='./PricesResource.d.ts' />
+///<reference path='./Privacy/RedactionJobsResource.d.ts' />
 ///<reference path='./ProductsResource.d.ts' />
 ///<reference path='./PromotionCodesResource.d.ts' />
 ///<reference path='./QuotesResource.d.ts' />
@@ -280,6 +280,9 @@
 ///<reference path='./Persons.d.ts' />
 ///<reference path='./Plans.d.ts' />
 ///<reference path='./Prices.d.ts' />
+///<reference path='./Privacy/RedactionJobRootObjects.d.ts' />
+///<reference path='./Privacy/RedactionJobValidationErrors.d.ts' />
+///<reference path='./Privacy/RedactionJobs.d.ts' />
 ///<reference path='./ProductFeatures.d.ts' />
 ///<reference path='./Products.d.ts' />
 ///<reference path='./PromotionCodes.d.ts' />
@@ -409,7 +412,6 @@ declare module 'stripe' {
     fileLinks: Stripe.FileLinksResource;
     files: Stripe.FilesResource;
     invoiceItems: Stripe.InvoiceItemsResource;
-    invoicePayments: Stripe.InvoicePaymentsResource;
     invoiceRenderingTemplates: Stripe.InvoiceRenderingTemplatesResource;
     invoices: Stripe.InvoicesResource;
     mandates: Stripe.MandatesResource;
@@ -506,6 +508,9 @@ declare module 'stripe' {
       physicalBundles: Stripe.Issuing.PhysicalBundlesResource;
       tokens: Stripe.Issuing.TokensResource;
       transactions: Stripe.Issuing.TransactionsResource;
+    };
+    privacy: {
+      redactionJobs: Stripe.Privacy.RedactionJobsResource;
     };
     radar: {
       earlyFraudWarnings: Stripe.Radar.EarlyFraudWarningsResource;

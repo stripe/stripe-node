@@ -240,7 +240,7 @@ declare module 'stripe' {
         /**
          * This property is used to set up permissions for various actions (e.g., update) on the CheckoutSession object.
          *
-         * For specific permissions, please refer to their dedicated subsections, such as `permissions.update.shipping_details`.
+         * For specific permissions, please refer to their dedicated subsections, such as `permissions.update_shipping_details`.
          */
         permissions: Session.Permissions | null;
 
@@ -328,6 +328,11 @@ declare module 'stripe' {
          * This value is only present when the session is active.
          */
         url: string | null;
+
+        /**
+         * Wallet-specific configuration for this Checkout Session.
+         */
+        wallet_options: Session.WalletOptions | null;
       }
 
       namespace Session {
@@ -2721,6 +2726,23 @@ declare module 'stripe' {
         }
 
         type UiMode = 'custom' | 'embedded' | 'hosted';
+
+        interface WalletOptions {
+          link?: WalletOptions.Link;
+        }
+
+        namespace WalletOptions {
+          interface Link {
+            /**
+             * Describes whether Checkout should display Link. Defaults to `auto`.
+             */
+            display?: Link.Display;
+          }
+
+          namespace Link {
+            type Display = 'auto' | 'never';
+          }
+        }
       }
     }
   }

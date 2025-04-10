@@ -72,6 +72,11 @@ declare module 'stripe' {
         documents?: Components.Documents;
 
         /**
+         * Configuration for the export tax transactions embedded component.
+         */
+        export_tax_transactions?: Components.ExportTaxTransactions;
+
+        /**
          * Configuration for the financial account embedded component.
          */
         financial_account?: Components.FinancialAccount;
@@ -100,6 +105,11 @@ declare module 'stripe' {
          * Configuration for the payment details embedded component.
          */
         payment_details?: Components.PaymentDetails;
+
+        /**
+         * Configuration for the payment disputes embedded component.
+         */
+        payment_disputes?: Components.PaymentDisputes;
 
         /**
          * Configuration for the payment method settings embedded component.
@@ -368,6 +378,22 @@ declare module 'stripe' {
           interface Features {}
         }
 
+        interface ExportTaxTransactions {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: ExportTaxTransactions.Features;
+        }
+
+        namespace ExportTaxTransactions {
+          interface Features {}
+        }
+
         interface FinancialAccount {
           /**
            * Whether the embedded component is enabled.
@@ -547,6 +573,37 @@ declare module 'stripe' {
              */
             capture_payments?: boolean;
 
+            /**
+             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             */
+            destination_on_behalf_of_charge_management?: boolean;
+
+            /**
+             * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
+             */
+            dispute_management?: boolean;
+
+            /**
+             * Whether to allow sending refunds. This is `true` by default.
+             */
+            refund_management?: boolean;
+          }
+        }
+
+        interface PaymentDisputes {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: PaymentDisputes.Features;
+        }
+
+        namespace PaymentDisputes {
+          interface Features {
             /**
              * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
              */

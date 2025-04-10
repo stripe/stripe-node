@@ -11,7 +11,7 @@ declare module 'stripe' {
 
     interface PaymentRecordReportPaymentParams {
       /**
-       * The amount you intend to collect for this payment.
+       * The amount you initially requested for this payment.
        */
       amount_requested: PaymentRecordReportPaymentParams.AmountRequested;
 
@@ -84,7 +84,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * A positive integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) e.g., 100 cents for $1.00 or 100 for ¥100, a zero-decimal currency).
+         * A positive integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) for example, 100 cents for 1 USD or 100 for 100 JPY, a zero-decimal currency.
          */
         value: number;
       }

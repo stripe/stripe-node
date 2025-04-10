@@ -143,6 +143,13 @@ declare module 'stripe' {
          */
         mcc: string | null;
 
+        /**
+         * Whether the business is a minority-owned, women-owned, and/or LGBTQI+-owned business.
+         */
+        minority_owned_business_designation: Array<
+          BusinessProfile.MinorityOwnedBusinessDesignation
+        > | null;
+
         monthly_estimated_revenue?: BusinessProfile.MonthlyEstimatedRevenue;
 
         /**
@@ -198,6 +205,13 @@ declare module 'stripe' {
            */
           fiscal_year_end: string | null;
         }
+
+        type MinorityOwnedBusinessDesignation =
+          | 'lgbtqi_owned_business'
+          | 'minority_owned_business'
+          | 'none_of_these_apply'
+          | 'prefer_not_to_answer'
+          | 'women_owned_business';
 
         interface MonthlyEstimatedRevenue {
           /**
@@ -1262,6 +1276,7 @@ declare module 'stripe' {
             | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
+            | 'verification_legal_entity_structure_mismatch'
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
@@ -1457,6 +1472,7 @@ declare module 'stripe' {
             | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
+            | 'verification_legal_entity_structure_mismatch'
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'

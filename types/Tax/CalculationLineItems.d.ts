@@ -45,7 +45,7 @@ declare module 'stripe' {
         /**
          * A custom identifier for this line item.
          */
-        reference: string | null;
+        reference: string;
 
         /**
          * Specifies whether the `amount` includes taxes. If `tax_behavior=inclusive`, then the amount includes taxes.

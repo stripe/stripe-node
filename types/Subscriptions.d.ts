@@ -84,6 +84,9 @@ declare module 'stripe' {
        */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
+      /**
+       * ID of the account who owns the subscription.
+       */
       customer_account?: string | null;
 
       /**

@@ -67,7 +67,7 @@ declare module 'stripe' {
           /**
            * The time at which the ReceivedDebit transitioned to a particular status.
            */
-          status_transitions: ReceivedDebit.StatusTransitions;
+          status_transitions: ReceivedDebit.StatusTransitions | null;
 
           /**
            * Open Enum. The type of the ReceivedDebit.

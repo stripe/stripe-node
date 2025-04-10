@@ -313,12 +313,8 @@ declare module 'stripe' {
       namespace Data {
         export type UpdatedCapability =
           | 'bank_accounts.local'
-          | 'bank_accounts.local_uk'
           | 'bank_accounts.wire'
-          | 'bank_accounts.wire_uk'
           | 'cards'
-          | 'cards_uk'
-          | 'crypto_wallets_v2'
           | 'stripe_balance.stripe_transfers'
           | 'stripe.transfers';
       }
