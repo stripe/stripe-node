@@ -3,7 +3,11 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * Options for customizing account balances within Stripe.
+     * Options for customizing account balances and payout settings for a Stripe platform's connected accounts.
+     *
+     * This API is only available for users enrolled in the public preview for Accounts v2 on Stripe Connect.
+     * If you are not in this preview, please use the [Accounts v1 API](https://docs.stripe.com/api/accounts?api-version=2025-03-31.basil)
+     * to manage your connected accounts' balance settings instead.
      */
     interface BalanceSettings {
       /**

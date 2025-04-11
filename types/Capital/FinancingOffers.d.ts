@@ -97,7 +97,7 @@ declare module 'stripe' {
       namespace FinancingOffer {
         interface AcceptedTerms {
           /**
-           * Amount of financing offered, in minor units.
+           * Amount of financing offered, in minor units. For example, $1,000 USD will be represented as 100000.
            */
           advance_amount: number;
 
@@ -107,7 +107,7 @@ declare module 'stripe' {
           currency: string;
 
           /**
-           * Fixed fee amount, in minor units.
+           * Fixed fee amount, in minor units. For example, $100 USD will be represented as 10000.
            */
           fee_amount: number;
 
@@ -127,7 +127,7 @@ declare module 'stripe' {
 
         interface OfferedTerms {
           /**
-           * Amount of financing offered, in minor units.
+           * Amount of financing offered, in minor units. For example, $1,000 USD will be represented as 100000.
            */
           advance_amount: number;
 
@@ -142,7 +142,7 @@ declare module 'stripe' {
           currency: string;
 
           /**
-           * Fixed fee amount, in minor units.
+           * Fixed fee amount, in minor units. For example, $100 USD will be represented as 10000.
            */
           fee_amount: number;
 
