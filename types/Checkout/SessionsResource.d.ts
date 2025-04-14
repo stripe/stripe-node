@@ -209,7 +209,7 @@ declare module 'stripe' {
         payment_method_types?: Array<SessionCreateParams.PaymentMethodType>;
 
         /**
-         * This property is used to set up permissions for various actions (e.g., update) on the CheckoutSession object.
+         * This property is used to set up permissions for various actions (e.g., update) on the CheckoutSession object. Can only be set when creating `embedded` or `custom` sessions.
          *
          * For specific permissions, please refer to their dedicated subsections, such as `permissions.update_shipping_details`.
          */
@@ -3001,7 +3001,7 @@ declare module 'stripe' {
 
       interface SessionUpdateParams {
         /**
-         * Information about the customer collected within the Checkout Session.
+         * Information about the customer collected within the Checkout Session. Can only be set when updating `embedded` or `custom` sessions.
          */
         collected_information?: SessionUpdateParams.CollectedInformation;
 
