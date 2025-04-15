@@ -30,6 +30,11 @@ declare module 'stripe' {
         destination_payment_method?: string;
 
         /**
+         * Hash used to generate the PaymentMethod to be used for this OutboundTransfer. Exclusive with `destination_payment_method`.
+         */
+        destination_payment_method_data?: OutboundTransferCreateParams.DestinationPaymentMethodData;
+
+        /**
          * Hash describing payment method configuration details.
          */
         destination_payment_method_options?: OutboundTransferCreateParams.DestinationPaymentMethodOptions;
@@ -51,6 +56,18 @@ declare module 'stripe' {
       }
 
       namespace OutboundTransferCreateParams {
+        interface DestinationPaymentMethodData {
+          /**
+           * Required if type is set to `financial_account`. The FinancialAccount ID to send funds to.
+           */
+          financial_account?: string;
+
+          /**
+           * The type of the destination.
+           */
+          type: 'financial_account';
+        }
+
         interface DestinationPaymentMethodOptions {
           /**
            * Optional fields for `us_bank_account`.

@@ -33,7 +33,7 @@ describe('Account Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
         url: '/v1/accounts/acct_16Tzq6DBahdM4C8s',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -59,7 +59,7 @@ describe('Account Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/account',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -70,7 +70,7 @@ describe('Account Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/accounts/foo',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -83,7 +83,7 @@ describe('Account Resource', () => {
         auth: key,
         method: 'GET',
         url: '/v1/account',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -96,7 +96,7 @@ describe('Account Resource', () => {
         auth: params.apiKey,
         method: 'GET',
         url: '/v1/account',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -107,7 +107,7 @@ describe('Account Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/account',
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });
@@ -122,7 +122,7 @@ describe('Account Resource', () => {
           method: 'GET',
           url: '/v1/accounts/acct_123/capabilities',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -133,7 +133,7 @@ describe('Account Resource', () => {
           method: 'GET',
           url: '/v1/accounts/acct_123/capabilities',
           headers: {},
-          data: {},
+          data: null,
           auth: TEST_AUTH_KEY,
           settings: {},
         });
@@ -147,7 +147,7 @@ describe('Account Resource', () => {
           method: 'GET',
           url: '/v1/accounts/acct_123/capabilities/acap_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -162,7 +162,7 @@ describe('Account Resource', () => {
           method: 'GET',
           url: '/v1/accounts/acct_123/capabilities/acap_123',
           headers: {},
-          data: {},
+          data: null,
           auth: TEST_AUTH_KEY,
           settings: {},
         });
@@ -216,7 +216,7 @@ describe('Account Resource', () => {
           url:
             '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -232,7 +232,7 @@ describe('Account Resource', () => {
           url:
             '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
-          data: {},
+          data: null,
           auth: TEST_AUTH_KEY,
           settings: {},
         });
@@ -307,7 +307,7 @@ describe('Account Resource', () => {
           url:
             '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -323,7 +323,7 @@ describe('Account Resource', () => {
           url:
             '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
-          data: {},
+          data: null,
           auth: TEST_AUTH_KEY,
           settings: {},
         });
@@ -337,7 +337,7 @@ describe('Account Resource', () => {
           method: 'GET',
           url: '/v1/accounts/accountIdFoo321/external_accounts',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -348,7 +348,7 @@ describe('Account Resource', () => {
           method: 'GET',
           url: '/v1/accounts/accountIdFoo321/external_accounts',
           headers: {},
-          data: {},
+          data: null,
           auth: TEST_AUTH_KEY,
           settings: {},
         });
@@ -379,7 +379,7 @@ describe('Account Resource', () => {
           method: 'GET',
           url: '/v1/accounts/acct_123/persons/person_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -390,7 +390,7 @@ describe('Account Resource', () => {
           method: 'GET',
           url: '/v1/accounts/acct_123/persons/person_123',
           headers: {},
-          data: {},
+          data: null,
           auth: TEST_AUTH_KEY,
           settings: {},
         });
@@ -471,7 +471,7 @@ describe('Account Resource', () => {
           method: 'DELETE',
           url: '/v1/accounts/acct_123/persons/person_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -482,7 +482,7 @@ describe('Account Resource', () => {
           method: 'DELETE',
           url: '/v1/accounts/acct_123/persons/person_123',
           headers: {},
-          data: {},
+          data: null,
           auth: TEST_AUTH_KEY,
           settings: {},
         });
@@ -496,7 +496,7 @@ describe('Account Resource', () => {
           method: 'GET',
           url: '/v1/accounts/acct_123/persons',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -507,7 +507,7 @@ describe('Account Resource', () => {
           method: 'GET',
           url: '/v1/accounts/acct_123/persons',
           headers: {},
-          data: {},
+          data: null,
           auth: TEST_AUTH_KEY,
           settings: {},
         });

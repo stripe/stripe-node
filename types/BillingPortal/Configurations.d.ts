@@ -209,6 +209,8 @@ declare module 'stripe' {
              * Determines how to handle prorations resulting from subscription updates. Valid values are `none`, `create_prorations`, and `always_invoice`. Defaults to a value of `none` if you don't set it during creation.
              */
             proration_behavior: SubscriptionUpdate.ProrationBehavior;
+
+            schedule_at_period_end: SubscriptionUpdate.ScheduleAtPeriodEnd;
           }
 
           namespace SubscriptionUpdate {
@@ -230,6 +232,26 @@ declare module 'stripe' {
               | 'always_invoice'
               | 'create_prorations'
               | 'none';
+
+            interface ScheduleAtPeriodEnd {
+              /**
+               * List of conditions. When any condition is true, an update will be scheduled at the end of the current period.
+               */
+              conditions: Array<ScheduleAtPeriodEnd.Condition>;
+            }
+
+            namespace ScheduleAtPeriodEnd {
+              interface Condition {
+                /**
+                 * The type of condition.
+                 */
+                type: Condition.Type;
+              }
+
+              namespace Condition {
+                type Type = 'decreasing_item_amount' | 'shortening_interval';
+              }
+            }
           }
         }
 

@@ -14,7 +14,7 @@ describe('Issuing', () => {
           method: 'GET',
           url: '/v1/issuing/transactions/ipi_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -50,7 +50,7 @@ describe('Issuing', () => {
           method: 'GET',
           url: '/v1/issuing/transactions',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });

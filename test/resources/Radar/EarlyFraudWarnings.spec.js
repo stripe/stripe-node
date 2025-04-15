@@ -11,7 +11,7 @@ describe('Radar', () => {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/radar/early_fraud_warnings/issfr_123',
-          data: {},
+          data: null,
           headers: {},
           settings: {},
         });
@@ -24,7 +24,7 @@ describe('Radar', () => {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/radar/early_fraud_warnings',
-          data: {},
+          data: null,
           headers: {},
           settings: {},
         });

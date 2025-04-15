@@ -14,7 +14,7 @@ describe('Reporting', () => {
           method: 'GET',
           url: '/v1/reporting/report_types/activity.summary.1',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -27,7 +27,7 @@ describe('Reporting', () => {
           method: 'GET',
           url: '/v1/reporting/report_types',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });

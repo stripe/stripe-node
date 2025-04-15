@@ -100,7 +100,15 @@ declare module 'stripe' {
 
         cashapp?: PaymentMethodDetails.Cashapp;
 
+        kakao_pay?: PaymentMethodDetails.KakaoPay;
+
+        kr_card?: PaymentMethodDetails.KrCard;
+
         link?: PaymentMethodDetails.Link;
+
+        naver_pay?: PaymentMethodDetails.NaverPay;
+
+        nz_bank_account?: PaymentMethodDetails.NzBankAccount;
 
         paypal?: PaymentMethodDetails.Paypal;
 
@@ -193,7 +201,15 @@ declare module 'stripe' {
 
         interface Cashapp {}
 
+        interface KakaoPay {}
+
+        interface KrCard {}
+
         interface Link {}
+
+        interface NaverPay {}
+
+        interface NzBankAccount {}
 
         interface Paypal {
           /**

@@ -81,7 +81,7 @@ declare module 'stripe' {
         redaction: VerificationSession.Redaction | null;
 
         /**
-         * Token referencing a Customer resource.
+         * Customer ID
          */
         related_customer: string | null;
 
@@ -101,7 +101,7 @@ declare module 'stripe' {
         url: string | null;
 
         /**
-         * The configuration token of a Verification Flow from the dashboard.
+         * The configuration token of a verification flow from the dashboard.
          */
         verification_flow?: string;
 

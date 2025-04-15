@@ -116,11 +116,6 @@ declare module 'stripe' {
        */
       fraud_details: Charge.FraudDetails | null;
 
-      /**
-       * ID of the invoice this charge is for if one exists.
-       */
-      invoice: string | Stripe.Invoice | null;
-
       level3?: Charge.Level3;
 
       /**
@@ -162,6 +157,8 @@ declare module 'stripe' {
        * Details about the payment method at the time of the transaction.
        */
       payment_method_details: Charge.PaymentMethodDetails | null;
+
+      presentment_details?: Charge.PresentmentDetails;
 
       /**
        * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
@@ -313,6 +310,21 @@ declare module 'stripe' {
 
       interface Outcome {
         /**
+         * An enumerated value providing a more detailed explanation on [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines).
+         */
+        advice_code: Outcome.AdviceCode | null;
+
+        /**
+         * For charges declined by the network, a 2 digit code which indicates the advice returned by the network on how to proceed with an error.
+         */
+        network_advice_code: string | null;
+
+        /**
+         * For charges declined by the network, a brand specific 2, 3, or 4 digit code which indicates the reason the authorization failed.
+         */
+        network_decline_code: string | null;
+
+        /**
          * Possible values are `approved_by_network`, `declined_by_network`, `not_sent_to_network`, and `reversed_after_approval`. The value `reversed_after_approval` indicates the payment was [blocked by Stripe](https://stripe.com/docs/declines#blocked-payments) after bank authorization, and may temporarily appear as "pending" on a cardholder's statement.
          */
         network_status: string | null;
@@ -349,6 +361,11 @@ declare module 'stripe' {
       }
 
       namespace Outcome {
+        type AdviceCode =
+          | 'confirm_card_data'
+          | 'do_not_try_again'
+          | 'try_again_later';
+
         interface Rule {
           /**
            * The action taken on the payment.
@@ -380,6 +397,8 @@ declare module 'stripe' {
 
         alipay?: PaymentMethodDetails.Alipay;
 
+        alma?: PaymentMethodDetails.Alma;
+
         amazon_pay?: PaymentMethodDetails.AmazonPay;
 
         au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
@@ -387,6 +406,8 @@ declare module 'stripe' {
         bacs_debit?: PaymentMethodDetails.BacsDebit;
 
         bancontact?: PaymentMethodDetails.Bancontact;
+
+        billie?: PaymentMethodDetails.Billie;
 
         blik?: PaymentMethodDetails.Blik;
 
@@ -412,9 +433,13 @@ declare module 'stripe' {
 
         interac_present?: PaymentMethodDetails.InteracPresent;
 
+        kakao_pay?: PaymentMethodDetails.KakaoPay;
+
         klarna?: PaymentMethodDetails.Klarna;
 
         konbini?: PaymentMethodDetails.Konbini;
+
+        kr_card?: PaymentMethodDetails.KrCard;
 
         link?: PaymentMethodDetails.Link;
 
@@ -422,9 +447,17 @@ declare module 'stripe' {
 
         multibanco?: PaymentMethodDetails.Multibanco;
 
+        naver_pay?: PaymentMethodDetails.NaverPay;
+
+        nz_bank_account?: PaymentMethodDetails.NzBankAccount;
+
         oxxo?: PaymentMethodDetails.Oxxo;
 
         p24?: PaymentMethodDetails.P24;
+
+        pay_by_bank?: PaymentMethodDetails.PayByBank;
+
+        payco?: PaymentMethodDetails.Payco;
 
         paynow?: PaymentMethodDetails.Paynow;
 
@@ -435,6 +468,10 @@ declare module 'stripe' {
         promptpay?: PaymentMethodDetails.Promptpay;
 
         revolut_pay?: PaymentMethodDetails.RevolutPay;
+
+        samsung_pay?: PaymentMethodDetails.SamsungPay;
+
+        satispay?: PaymentMethodDetails.Satispay;
 
         sepa_credit_transfer?: PaymentMethodDetails.SepaCreditTransfer;
 
@@ -449,7 +486,7 @@ declare module 'stripe' {
         twint?: PaymentMethodDetails.Twint;
 
         /**
-         * The type of transaction-specific details of the payment method used in the payment, one of `ach_credit_transfer`, `ach_debit`, `acss_debit`, `alipay`, `au_becs_debit`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `klarna`, `multibanco`, `p24`, `sepa_debit`, `sofort`, `stripe_account`, or `wechat`.
+         * The type of transaction-specific details of the payment method used in the payment. See [PaymentMethod.type](https://stripe.com/docs/api/payment_methods/object#payment_method_object-type) for the full list of possible types.
          * An additional hash is included on `payment_method_details` with a name matching this value.
          * It contains information specific to the payment method.
          */
@@ -591,7 +628,56 @@ declare module 'stripe' {
           transaction_id: string | null;
         }
 
-        interface AmazonPay {}
+        interface Alma {}
+
+        interface AmazonPay {
+          funding?: AmazonPay.Funding;
+        }
+
+        namespace AmazonPay {
+          interface Funding {
+            card?: Funding.Card;
+
+            /**
+             * funding type of the underlying payment method.
+             */
+            type: 'card' | null;
+          }
+
+          namespace Funding {
+            interface Card {
+              /**
+               * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+               */
+              brand: string | null;
+
+              /**
+               * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+               */
+              country: string | null;
+
+              /**
+               * Two-digit number representing the card's expiration month.
+               */
+              exp_month: number | null;
+
+              /**
+               * Four-digit number representing the card's expiration year.
+               */
+              exp_year: number | null;
+
+              /**
+               * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+               */
+              funding: string | null;
+
+              /**
+               * The last four digits of the card.
+               */
+              last4: string | null;
+            }
+          }
+        }
 
         interface AuBecsDebit {
           /**
@@ -685,6 +771,8 @@ declare module 'stripe' {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
         }
 
+        interface Billie {}
+
         interface Blik {
           /**
            * A unique and immutable identifier assigned by BLIK to every buyer.
@@ -711,7 +799,7 @@ declare module 'stripe' {
           authorization_code: string | null;
 
           /**
-           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           brand: string | null;
 
@@ -796,7 +884,7 @@ declare module 'stripe' {
           multicapture?: Card.Multicapture;
 
           /**
-           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           network: string | null;
 
@@ -805,7 +893,17 @@ declare module 'stripe' {
            */
           network_token?: Card.NetworkToken | null;
 
+          /**
+           * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. This value will be present if it is returned by the financial network in the authorization response, and null otherwise.
+           */
+          network_transaction_id: string | null;
+
           overcapture?: Card.Overcapture;
+
+          /**
+           * Status of a card based on the card issuer.
+           */
+          regulated_status: Card.RegulatedStatus | null;
 
           /**
            * Populated if this transaction used 3D Secure authentication.
@@ -918,6 +1016,8 @@ declare module 'stripe' {
           namespace Overcapture {
             type Status = 'available' | 'unavailable';
           }
+
+          type RegulatedStatus = 'regulated' | 'unregulated';
 
           interface ThreeDSecure {
             /**
@@ -1092,7 +1192,7 @@ declare module 'stripe' {
           amount_authorized: number | null;
 
           /**
-           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           brand: string | null;
 
@@ -1174,12 +1274,12 @@ declare module 'stripe' {
           last4: string | null;
 
           /**
-           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           network: string | null;
 
           /**
-           * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. The first three digits of the Trace ID is the Financial Network Code, the next 6 digits is the Banknet Reference Number, and the last 4 digits represent the date (MM/DD). This field will be available for successful Visa, Mastercard, or American Express transactions and always null for other card brands.
+           * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. This value will be present if it is returned by the financial network in the authorization response, and null otherwise.
            */
           network_transaction_id: string | null;
 
@@ -1571,12 +1671,12 @@ declare module 'stripe' {
           last4: string | null;
 
           /**
-           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           network: string | null;
 
           /**
-           * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. The first three digits of the Trace ID is the Financial Network Code, the next 6 digits is the Banknet Reference Number, and the last 4 digits represent the date (MM/DD). This field will be available for successful Visa, Mastercard, or American Express transactions and always null for other card brands.
+           * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. This value will be present if it is returned by the financial network in the authorization response, and null otherwise.
            */
           network_transaction_id: string | null;
 
@@ -1656,7 +1756,19 @@ declare module 'stripe' {
           }
         }
 
+        interface KakaoPay {
+          /**
+           * A unique identifier for the buyer as determined by the local payment processor.
+           */
+          buyer_id: string | null;
+        }
+
         interface Klarna {
+          /**
+           * The payer details for this transaction.
+           */
+          payer_details: Klarna.PayerDetails | null;
+
           /**
            * The Klarna payment method used for this transaction.
            * Can be one of `pay_later`, `pay_now`, `pay_with_financing`, or `pay_in_installments`
@@ -1668,6 +1780,24 @@ declare module 'stripe' {
            * Can be one of `de-AT`, `en-AT`, `nl-BE`, `fr-BE`, `en-BE`, `de-DE`, `en-DE`, `da-DK`, `en-DK`, `es-ES`, `en-ES`, `fi-FI`, `sv-FI`, `en-FI`, `en-GB`, `en-IE`, `it-IT`, `en-IT`, `nl-NL`, `en-NL`, `nb-NO`, `en-NO`, `sv-SE`, `en-SE`, `en-US`, `es-US`, `fr-FR`, `en-FR`, `cs-CZ`, `en-CZ`, `ro-RO`, `en-RO`, `el-GR`, `en-GR`, `en-AU`, `en-NZ`, `en-CA`, `fr-CA`, `pl-PL`, `en-PL`, `pt-PT`, `en-PT`, `de-CH`, `fr-CH`, `it-CH`, or `en-CH`
            */
           preferred_locale: string | null;
+        }
+
+        namespace Klarna {
+          interface PayerDetails {
+            /**
+             * The payer's address
+             */
+            address: PayerDetails.Address | null;
+          }
+
+          namespace PayerDetails {
+            interface Address {
+              /**
+               * The payer address country
+               */
+              country: string | null;
+            }
+          }
         }
 
         interface Konbini {
@@ -1688,6 +1818,49 @@ declare module 'stripe' {
           namespace Store {
             type Chain = 'familymart' | 'lawson' | 'ministop' | 'seicomart';
           }
+        }
+
+        interface KrCard {
+          /**
+           * The local credit or debit card brand.
+           */
+          brand: KrCard.Brand | null;
+
+          /**
+           * A unique identifier for the buyer as determined by the local payment processor.
+           */
+          buyer_id: string | null;
+
+          /**
+           * The last four digits of the card. This may not be present for American Express cards.
+           */
+          last4: string | null;
+        }
+
+        namespace KrCard {
+          type Brand =
+            | 'bc'
+            | 'citi'
+            | 'hana'
+            | 'hyundai'
+            | 'jeju'
+            | 'jeonbuk'
+            | 'kakaobank'
+            | 'kbank'
+            | 'kdbbank'
+            | 'kookmin'
+            | 'kwangju'
+            | 'lotte'
+            | 'mg'
+            | 'nh'
+            | 'post'
+            | 'samsung'
+            | 'savingsbank'
+            | 'shinhan'
+            | 'shinhyup'
+            | 'suhyup'
+            | 'tossbank'
+            | 'woori';
         }
 
         interface Link {
@@ -1746,6 +1919,45 @@ declare module 'stripe' {
           reference: string | null;
         }
 
+        interface NaverPay {
+          /**
+           * A unique identifier for the buyer as determined by the local payment processor.
+           */
+          buyer_id: string | null;
+        }
+
+        interface NzBankAccount {
+          /**
+           * The name on the bank account. Only present if the account holder name is different from the name of the authorized signatory collected in the PaymentMethod's billing details.
+           */
+          account_holder_name: string | null;
+
+          /**
+           * The numeric code for the bank account's bank.
+           */
+          bank_code: string;
+
+          /**
+           * The name of the bank.
+           */
+          bank_name: string;
+
+          /**
+           * The numeric code for the bank account's bank branch.
+           */
+          branch_code: string;
+
+          /**
+           * Last four digits of the bank account number.
+           */
+          last4: string;
+
+          /**
+           * The suffix of the bank account number.
+           */
+          suffix: string | null;
+        }
+
         interface Oxxo {
           /**
            * OXXO reference number
@@ -1802,6 +2014,15 @@ declare module 'stripe' {
             | 'volkswagen_bank';
         }
 
+        interface PayByBank {}
+
+        interface Payco {
+          /**
+           * A unique identifier for the buyer as determined by the local payment processor.
+           */
+          buyer_id: string | null;
+        }
+
         interface Paynow {
           /**
            * Reference number associated with this PayNow payment
@@ -1810,6 +2031,11 @@ declare module 'stripe' {
         }
 
         interface Paypal {
+          /**
+           * Two-letter ISO code representing the buyer's country. Values are provided by PayPal directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          country: string | null;
+
           /**
            * Owner's email. Values are provided by PayPal directly
            * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
@@ -1872,7 +2098,63 @@ declare module 'stripe' {
           reference: string | null;
         }
 
-        interface RevolutPay {}
+        interface RevolutPay {
+          funding?: RevolutPay.Funding;
+        }
+
+        namespace RevolutPay {
+          interface Funding {
+            card?: Funding.Card;
+
+            /**
+             * funding type of the underlying payment method.
+             */
+            type: 'card' | null;
+          }
+
+          namespace Funding {
+            interface Card {
+              /**
+               * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+               */
+              brand: string | null;
+
+              /**
+               * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+               */
+              country: string | null;
+
+              /**
+               * Two-digit number representing the card's expiration month.
+               */
+              exp_month: number | null;
+
+              /**
+               * Four-digit number representing the card's expiration year.
+               */
+              exp_year: number | null;
+
+              /**
+               * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+               */
+              funding: string | null;
+
+              /**
+               * The last four digits of the card.
+               */
+              last4: string | null;
+            }
+          }
+        }
+
+        interface SamsungPay {
+          /**
+           * A unique identifier for the buyer as determined by the local payment processor.
+           */
+          buyer_id: string | null;
+        }
+
+        interface Satispay {}
 
         interface SepaCreditTransfer {
           /**
@@ -2067,6 +2349,18 @@ declare module 'stripe' {
         }
 
         interface Zip {}
+      }
+
+      interface PresentmentDetails {
+        /**
+         * Amount intended to be collected by this payment, denominated in presentment_currency.
+         */
+        presentment_amount: number;
+
+        /**
+         * Currency presented to the customer during payment.
+         */
+        presentment_currency: string;
       }
 
       interface RadarOptions {

@@ -52,7 +52,7 @@ describe('BillingPortal', () => {
           method: 'GET',
           url: '/v1/billing_portal/configurations/bpc_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -64,7 +64,7 @@ describe('BillingPortal', () => {
           method: 'GET',
           url: '/v1/billing_portal/configurations',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });

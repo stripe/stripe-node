@@ -87,6 +87,7 @@ declare module 'stripe' {
           | 'account_closed'
           | 'account_frozen'
           | 'insufficient_funds'
+          | 'international_transaction'
           | 'other';
 
         interface InitiatingPaymentMethodDetails {

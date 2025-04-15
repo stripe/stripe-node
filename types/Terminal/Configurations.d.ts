@@ -48,12 +48,14 @@ declare module 'stripe' {
         tipping?: Configuration.Tipping;
 
         verifone_p400?: Configuration.VerifoneP400;
+
+        wifi?: Configuration.Wifi;
       }
 
       namespace Configuration {
         interface BbposWiseposE {
           /**
-           * A File ID representing an image you would like displayed on the reader.
+           * A File ID representing an image to display on the reader
            */
           splashscreen?: string | Stripe.File;
         }
@@ -79,7 +81,7 @@ declare module 'stripe' {
 
         interface StripeS700 {
           /**
-           * A File ID representing an image you would like displayed on the reader.
+           * A File ID representing an image to display on the reader
            */
           splashscreen?: string | Stripe.File;
         }
@@ -101,11 +103,15 @@ declare module 'stripe' {
 
           hkd?: Tipping.Hkd;
 
+          jpy?: Tipping.Jpy;
+
           myr?: Tipping.Myr;
 
           nok?: Tipping.Nok;
 
           nzd?: Tipping.Nzd;
+
+          pln?: Tipping.Pln;
 
           sek?: Tipping.Sek;
 
@@ -251,6 +257,23 @@ declare module 'stripe' {
             smart_tip_threshold?: number;
           }
 
+          interface Jpy {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts?: Array<number> | null;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages?: Array<number> | null;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
           interface Myr {
             /**
              * Fixed amounts displayed when collecting a tip
@@ -286,6 +309,23 @@ declare module 'stripe' {
           }
 
           interface Nzd {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts?: Array<number> | null;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages?: Array<number> | null;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
+          interface Pln {
             /**
              * Fixed amounts displayed when collecting a tip
              */
@@ -356,9 +396,90 @@ declare module 'stripe' {
 
         interface VerifoneP400 {
           /**
-           * A File ID representing an image you would like displayed on the reader.
+           * A File ID representing an image to display on the reader
            */
           splashscreen?: string | Stripe.File;
+        }
+
+        interface Wifi {
+          enterprise_eap_peap?: Wifi.EnterpriseEapPeap;
+
+          enterprise_eap_tls?: Wifi.EnterpriseEapTls;
+
+          personal_psk?: Wifi.PersonalPsk;
+
+          /**
+           * Security type of the WiFi network. The hash with the corresponding name contains the credentials for this security type.
+           */
+          type: Wifi.Type;
+        }
+
+        namespace Wifi {
+          interface EnterpriseEapPeap {
+            /**
+             * A File ID representing a PEM file containing the server certificate
+             */
+            ca_certificate_file?: string;
+
+            /**
+             * Password for connecting to the WiFi network
+             */
+            password: string;
+
+            /**
+             * Name of the WiFi network
+             */
+            ssid: string;
+
+            /**
+             * Username for connecting to the WiFi network
+             */
+            username: string;
+          }
+
+          interface EnterpriseEapTls {
+            /**
+             * A File ID representing a PEM file containing the server certificate
+             */
+            ca_certificate_file?: string;
+
+            /**
+             * A File ID representing a PEM file containing the client certificate
+             */
+            client_certificate_file: string;
+
+            /**
+             * A File ID representing a PEM file containing the client RSA private key
+             */
+            private_key_file: string;
+
+            /**
+             * Password for the private key file
+             */
+            private_key_file_password?: string;
+
+            /**
+             * Name of the WiFi network
+             */
+            ssid: string;
+          }
+
+          interface PersonalPsk {
+            /**
+             * Password for connecting to the WiFi network
+             */
+            password: string;
+
+            /**
+             * Name of the WiFi network
+             */
+            ssid: string;
+          }
+
+          type Type =
+            | 'enterprise_eap_peap'
+            | 'enterprise_eap_tls'
+            | 'personal_psk';
         }
       }
 

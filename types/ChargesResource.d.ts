@@ -273,7 +273,7 @@ declare module 'stripe' {
 
     interface ChargeCaptureParams {
       /**
-       * The amount to capture, which must be less than or equal to the original amount. Any additional amount will be automatically refunded.
+       * The amount to capture, which must be less than or equal to the original amount.
        */
       amount?: number;
 

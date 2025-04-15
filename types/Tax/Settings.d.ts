@@ -27,7 +27,7 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * The `active` status indicates you have all required settings to calculate tax. A status can transition out of `active` when new required settings are introduced.
+         * The status of the Tax `Settings`.
          */
         status: Settings.Status;
 

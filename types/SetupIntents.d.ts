@@ -130,7 +130,7 @@ declare module 'stripe' {
       payment_method: string | Stripe.PaymentMethod | null;
 
       /**
-       * Information about the payment method configuration used for this Setup Intent.
+       * Information about the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) used for this Setup Intent.
        */
       payment_method_configuration_details: SetupIntent.PaymentMethodConfigurationDetails | null;
 
@@ -190,6 +190,11 @@ declare module 'stripe' {
 
       interface LastSetupError {
         /**
+         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines) if they provide one.
+         */
+        advice_code?: string;
+
+        /**
          * For card errors, the ID of the failed charge.
          */
         charge?: string;
@@ -213,6 +218,16 @@ declare module 'stripe' {
          * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
          */
         message?: string;
+
+        /**
+         * For card errors resulting from a card issuer decline, a 2 digit code which indicates the advice given to merchant by the card network on how to proceed with an error.
+         */
+        network_advice_code?: string;
+
+        /**
+         * For card errors resulting from a card issuer decline, a brand specific 2, 3, or 4 digit code which indicates the reason the authorization failed.
+         */
+        network_decline_code?: string;
 
         /**
          * If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
@@ -339,6 +354,7 @@ declare module 'stripe' {
           | 'financial_connections_no_successful_transaction_refresh'
           | 'forwarding_api_inactive'
           | 'forwarding_api_invalid_parameter'
+          | 'forwarding_api_retryable_upstream_error'
           | 'forwarding_api_upstream_connection_error'
           | 'forwarding_api_upstream_connection_timeout'
           | 'idempotency_key_in_use'
@@ -435,6 +451,7 @@ declare module 'stripe' {
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'
           | 'setup_intent_mandate_invalid'
+          | 'setup_intent_mobile_wallet_unsupported'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
           | 'shipping_address_invalid'
@@ -448,6 +465,7 @@ declare module 'stripe' {
           | 'terminal_location_country_unsupported'
           | 'terminal_reader_busy'
           | 'terminal_reader_hardware_fault'
+          | 'terminal_reader_invalid_location_for_activation'
           | 'terminal_reader_invalid_location_for_payment'
           | 'terminal_reader_offline'
           | 'terminal_reader_timeout'
@@ -650,7 +668,12 @@ declare module 'stripe' {
         }
 
         namespace BacsDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
+             */
+            reference_prefix?: string;
+          }
         }
 
         interface Card {
@@ -738,6 +761,7 @@ declare module 'stripe' {
             | 'girocard'
             | 'interac'
             | 'jcb'
+            | 'link'
             | 'mastercard'
             | 'unionpay'
             | 'unknown'
@@ -768,7 +792,12 @@ declare module 'stripe' {
         }
 
         namespace SepaDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'STRIPE'.
+             */
+            reference_prefix?: string;
+          }
         }
 
         interface UsBankAccount {

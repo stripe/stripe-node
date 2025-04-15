@@ -39,7 +39,7 @@ declare module 'stripe' {
       description?: Stripe.Emptyable<string>;
 
       /**
-       * The discounts applied to the quote. You can only set up to one discount.
+       * The discounts applied to the quote.
        */
       discounts?: Stripe.Emptyable<Array<QuoteCreateParams.Discount>>;
 
@@ -248,7 +248,7 @@ declare module 'stripe' {
           currency: string;
 
           /**
-           * The ID of the product that this price will belong to.
+           * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
            */
           product: string;
 
@@ -378,7 +378,7 @@ declare module 'stripe' {
       description?: Stripe.Emptyable<string>;
 
       /**
-       * The discounts applied to the quote. You can only set up to one discount.
+       * The discounts applied to the quote.
        */
       discounts?: Stripe.Emptyable<Array<QuoteUpdateParams.Discount>>;
 
@@ -570,7 +570,7 @@ declare module 'stripe' {
           currency: string;
 
           /**
-           * The ID of the product that this price will belong to.
+           * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
            */
           product: string;
 

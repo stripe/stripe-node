@@ -57,5 +57,16 @@ export const createCryptoProviderTestSuite = (
         });
       }
     });
+
+    describe('computeSHA256Async', () => {
+      it('computes the hash', async () => {
+        const signature = await cryptoProvider.computeSHA256Async(
+          new Uint8Array([1, 2, 3, 4, 5])
+        );
+        expect(Buffer.from(signature).toString('base64')).to.equal(
+          'dPgf4WfZm0y0HW0MzagieMrunz4vJdXlo5Nv89zsYNA='
+        );
+      });
+    });
   });
 };

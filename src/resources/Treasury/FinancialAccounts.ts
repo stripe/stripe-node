@@ -20,6 +20,10 @@ export const FinancialAccounts = StripeResource.extend({
     fullPath: '/v1/treasury/financial_accounts',
     methodType: 'list',
   }),
+  close: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/treasury/financial_accounts/{financial_account}/close',
+  }),
   retrieveFeatures: stripeMethod({
     method: 'GET',
     fullPath: '/v1/treasury/financial_accounts/{financial_account}/features',

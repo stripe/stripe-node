@@ -110,9 +110,17 @@ declare module 'stripe' {
 
         ideal?: PaymentMethodDetails.Ideal;
 
+        kakao_pay?: PaymentMethodDetails.KakaoPay;
+
         klarna?: PaymentMethodDetails.Klarna;
 
+        kr_card?: PaymentMethodDetails.KrCard;
+
         link?: PaymentMethodDetails.Link;
+
+        naver_pay?: PaymentMethodDetails.NaverPay;
+
+        nz_bank_account?: PaymentMethodDetails.NzBankAccount;
 
         paypal?: PaymentMethodDetails.Paypal;
 
@@ -191,7 +199,7 @@ declare module 'stripe' {
 
         interface Card {
           /**
-           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           brand: string | null;
 
@@ -248,7 +256,7 @@ declare module 'stripe' {
           last4: string | null;
 
           /**
-           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           network: string | null;
 
@@ -462,9 +470,22 @@ declare module 'stripe' {
             | 'TRIONL2U';
         }
 
+        interface KakaoPay {}
+
         interface Klarna {}
 
+        interface KrCard {}
+
         interface Link {}
+
+        interface NaverPay {
+          /**
+           * Uniquely identifies this particular Naver Pay account. You can use this attribute to check whether two Naver Pay accounts are the same.
+           */
+          buyer_id?: string;
+        }
+
+        interface NzBankAccount {}
 
         interface Paypal {}
 
@@ -525,6 +546,11 @@ declare module 'stripe' {
 
       interface SetupError {
         /**
+         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines) if they provide one.
+         */
+        advice_code?: string;
+
+        /**
          * For card errors, the ID of the failed charge.
          */
         charge?: string;
@@ -548,6 +574,16 @@ declare module 'stripe' {
          * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
          */
         message?: string;
+
+        /**
+         * For card errors resulting from a card issuer decline, a 2 digit code which indicates the advice given to merchant by the card network on how to proceed with an error.
+         */
+        network_advice_code?: string;
+
+        /**
+         * For card errors resulting from a card issuer decline, a brand specific 2, 3, or 4 digit code which indicates the reason the authorization failed.
+         */
+        network_decline_code?: string;
 
         /**
          * If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
@@ -674,6 +710,7 @@ declare module 'stripe' {
           | 'financial_connections_no_successful_transaction_refresh'
           | 'forwarding_api_inactive'
           | 'forwarding_api_invalid_parameter'
+          | 'forwarding_api_retryable_upstream_error'
           | 'forwarding_api_upstream_connection_error'
           | 'forwarding_api_upstream_connection_timeout'
           | 'idempotency_key_in_use'
@@ -770,6 +807,7 @@ declare module 'stripe' {
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'
           | 'setup_intent_mandate_invalid'
+          | 'setup_intent_mobile_wallet_unsupported'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
           | 'shipping_address_invalid'
@@ -783,6 +821,7 @@ declare module 'stripe' {
           | 'terminal_location_country_unsupported'
           | 'terminal_reader_busy'
           | 'terminal_reader_hardware_fault'
+          | 'terminal_reader_invalid_location_for_activation'
           | 'terminal_reader_invalid_location_for_payment'
           | 'terminal_reader_offline'
           | 'terminal_reader_timeout'

@@ -5,14 +5,9 @@ import {
   StripeError,
   StripePermissionError,
   StripeRateLimitError,
+  generateV1Error,
+  generateV2Error,
 } from './Error.js';
-import {
-  emitWarning,
-  normalizeHeaders,
-  removeNullish,
-  stringifyRequestData,
-} from './utils.js';
-import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
 import {
   StripeObject,
   RequestHeaders,
@@ -20,11 +15,27 @@ import {
   ResponseEvent,
   RequestCallback,
   RequestCallbackReturn,
-  RequestSettings,
   RequestData,
-  RequestOptions,
   RequestDataProcessor,
+  RequestOptions,
+  RequestSettings,
+  StripeRequest,
+  RequestOpts,
+  RequestArgs,
+  RequestAuthenticator,
+  ApiMode,
 } from './Types.js';
+import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
+import {
+  emitWarning,
+  jsonStringifyRequestData,
+  normalizeHeaders,
+  queryStringifyRequestData,
+  removeNullish,
+  getAPIMode,
+  getOptionsFromArgs,
+  getDataFromArgs,
+} from './utils.js';
 
 export type HttpClientResponseError = {code: string};
 
@@ -126,6 +137,7 @@ export class RequestSender {
    */
   _jsonResponseHandler(
     requestEvent: RequestEvent,
+    apiMode: 'v1' | 'v2',
     usage: Array<string>,
     callback: RequestCallback
   ) {
@@ -167,8 +179,10 @@ export class RequestSender {
                 err = new StripePermissionError(jsonResponse.error);
               } else if (statusCode === 429) {
                 err = new StripeRateLimitError(jsonResponse.error);
+              } else if (apiMode === 'v2') {
+                err = generateV2Error(jsonResponse.error);
               } else {
-                err = StripeError.generate(jsonResponse.error);
+                err = generateV1Error(jsonResponse.error);
               }
 
               throw err;
@@ -272,7 +286,7 @@ export class RequestSender {
     // number of numRetries so far as inputs. Do not allow the number to exceed
     // maxNetworkRetryDelay.
     let sleepSeconds = Math.min(
-      initialNetworkRetryDelay * Math.pow(numRetries - 1, 2),
+      initialNetworkRetryDelay * Math.pow(2, numRetries - 1),
       maxNetworkRetryDelay
     );
 
@@ -301,39 +315,65 @@ export class RequestSender {
 
   _defaultIdempotencyKey(
     method: string,
-    settings: RequestSettings
+    settings: RequestSettings,
+    apiMode: ApiMode
   ): string | null {
     // If this is a POST and we allow multiple retries, ensure an idempotency key.
     const maxRetries = this._getMaxNetworkRetries(settings);
 
-    if (method === 'POST' && maxRetries > 0) {
-      return `stripe-node-retry-${this._stripe._platformFunctions.uuid4()}`;
+    const genKey = (): string =>
+      `stripe-node-retry-${this._stripe._platformFunctions.uuid4()}`;
+
+    // more verbose than it needs to be, but gives clear separation between V1 and V2 behavior
+    if (apiMode === 'v2') {
+      if (method === 'POST' || method === 'DELETE') {
+        return genKey();
+      }
+    } else if (apiMode === 'v1') {
+      if (method === 'POST' && maxRetries > 0) {
+        return genKey();
+      }
     }
+
     return null;
   }
 
-  _makeHeaders(
-    auth: string | null,
-    contentLength: number,
-    apiVersion: string,
-    clientUserAgent: string,
-    method: string,
-    userSuppliedHeaders: RequestHeaders | null,
-    userSuppliedSettings: RequestSettings
-  ): RequestHeaders {
+  _makeHeaders({
+    contentType,
+    contentLength,
+    apiVersion,
+    clientUserAgent,
+    method,
+    userSuppliedHeaders,
+    userSuppliedSettings,
+    stripeAccount,
+    stripeContext,
+    apiMode,
+  }: {
+    contentType: string;
+    contentLength: number;
+    apiVersion: string | null;
+    clientUserAgent: string;
+    method: string;
+    userSuppliedHeaders: RequestHeaders | null;
+    userSuppliedSettings: RequestSettings;
+    stripeAccount: string | null;
+    stripeContext: string | null;
+    apiMode: ApiMode;
+  }): RequestHeaders {
     const defaultHeaders = {
-      // Use specified auth token or use default from this stripe instance:
-      Authorization: auth ? `Bearer ${auth}` : this._stripe.getApiField('auth'),
       Accept: 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'User-Agent': this._getUserAgentString(),
+      'Content-Type': contentType,
+      'User-Agent': this._getUserAgentString(apiMode),
       'X-Stripe-Client-User-Agent': clientUserAgent,
       'X-Stripe-Client-Telemetry': this._getTelemetryHeader(),
       'Stripe-Version': apiVersion,
-      'Stripe-Account': this._stripe.getApiField('stripeAccount'),
+      'Stripe-Account': stripeAccount,
+      'Stripe-Context': stripeContext,
       'Idempotency-Key': this._defaultIdempotencyKey(
         method,
-        userSuppliedSettings
+        userSuppliedSettings,
+        apiMode
       ),
     } as RequestHeaders;
 
@@ -372,13 +412,13 @@ export class RequestSender {
     );
   }
 
-  _getUserAgentString(): string {
+  _getUserAgentString(apiMode: string): string {
     const packageVersion = this._stripe.getConstant('PACKAGE_VERSION');
     const appInfo = this._stripe._appInfo
       ? this._stripe.getAppInfoAsString()
       : '';
 
-    return `Stripe/v1 NodeBindings/${packageVersion} ${appInfo}`.trim();
+    return `Stripe/${apiMode} NodeBindings/${packageVersion} ${appInfo}`.trim();
   }
 
   _getTelemetryHeader(): string | undefined {
@@ -422,19 +462,96 @@ export class RequestSender {
     }
   }
 
+  _rawRequest(
+    method: string,
+    path: string,
+    params?: RequestData,
+    options?: RequestOptions
+  ): Promise<any> {
+    const requestPromise = new Promise<any>((resolve, reject) => {
+      let opts: RequestOpts;
+      try {
+        const requestMethod = method.toUpperCase();
+        if (
+          requestMethod !== 'POST' &&
+          params &&
+          Object.keys(params).length !== 0
+        ) {
+          throw new Error(
+            'rawRequest only supports params on POST requests. Please pass null and add your parameters to path.'
+          );
+        }
+        const args: RequestArgs = [].slice.call([params, options]);
+
+        // Pull request data and options (headers, auth) from args.
+        const dataFromArgs = getDataFromArgs(args);
+        const data = Object.assign({}, dataFromArgs);
+        const calculatedOptions = getOptionsFromArgs(args);
+
+        const headers = calculatedOptions.headers;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const authenticator: RequestAuthenticator = calculatedOptions.authenticator!;
+        opts = {
+          requestMethod,
+          requestPath: path,
+          bodyData: data,
+          queryData: {},
+          authenticator,
+          headers,
+          host: null,
+          streaming: false,
+          settings: {},
+          usage: ['raw_request'],
+        };
+      } catch (err) {
+        reject(err);
+        return;
+      }
+
+      function requestCallback(
+        err: any,
+        response: HttpClientResponseInterface
+      ): void {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(response);
+        }
+      }
+
+      const {headers, settings} = opts;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const authenticator: RequestAuthenticator = opts.authenticator!;
+
+      this._request(
+        opts.requestMethod,
+        opts.host,
+        path,
+        opts.bodyData,
+        authenticator,
+        {headers, settings, streaming: opts.streaming},
+        opts.usage,
+        requestCallback
+      );
+    });
+
+    return requestPromise;
+  }
+
   _request(
     method: string,
     host: string | null,
     path: string,
-    data: RequestData,
-    auth: string | null,
-    options: RequestOptions = {},
+    data: RequestData | null,
+    authenticator: RequestAuthenticator,
+    options: RequestOptions,
     usage: Array<string> = [],
     callback: RequestCallback,
     requestDataProcessor: RequestDataProcessor | null = null
   ): void {
     let requestData: string;
-
+    authenticator = authenticator ?? this._stripe._authenticator ?? null;
+    const apiMode: ApiMode = getAPIMode(path);
     const retryRequest = (
       requestFn: typeof makeRequest,
       apiVersion: string,
@@ -465,88 +582,113 @@ export class RequestSender {
           ? options.settings.timeout
           : this._stripe.getApiField('timeout');
 
-      const req = this._stripe
-        .getApiField('httpClient')
-        .makeRequest(
-          host || this._stripe.getApiField('host'),
-          this._stripe.getApiField('port'),
-          path,
-          method,
-          headers,
-          requestData,
-          this._stripe.getApiField('protocol'),
-          timeout
-        );
+      const request = <StripeRequest>{
+        host: host || this._stripe.getApiField('host'),
+        port: this._stripe.getApiField('port'),
+        path: path,
+        method: method,
+        headers: Object.assign({}, headers),
+        body: requestData,
+        protocol: this._stripe.getApiField('protocol'),
+      };
 
-      const requestStartTime = Date.now();
-
-      // @ts-ignore
-      const requestEvent: RequestEvent = removeNullish({
-        api_version: apiVersion,
-        account: headers['Stripe-Account'],
-        idempotency_key: headers['Idempotency-Key'],
-        method,
-        path,
-        request_start_time: requestStartTime,
-      });
-
-      const requestRetries = numRetries || 0;
-
-      const maxRetries = this._getMaxNetworkRetries(options.settings || {});
-      this._stripe._emitter.emit('request', requestEvent);
-
-      req
-        .then((res: HttpClientResponseInterface) => {
-          if (RequestSender._shouldRetry(res, requestRetries, maxRetries)) {
-            return retryRequest(
-              makeRequest,
-              apiVersion,
-              headers,
-              requestRetries,
-              // @ts-ignore
-              res.getHeaders()['retry-after']
+      authenticator(request)
+        .then(() => {
+          const req = this._stripe
+            .getApiField('httpClient')
+            .makeRequest(
+              request.host,
+              request.port,
+              request.path,
+              request.method,
+              request.headers,
+              request.body,
+              request.protocol,
+              timeout
             );
-          } else if (options.streaming && res.getStatusCode() < 400) {
-            return this._streamingResponseHandler(
-              requestEvent,
-              usage,
-              callback
-            )(res);
-          } else {
-            return this._jsonResponseHandler(
-              requestEvent,
-              usage,
-              callback
-            )(res);
-          }
+
+          const requestStartTime = Date.now();
+
+          // @ts-ignore
+          const requestEvent: RequestEvent = removeNullish({
+            api_version: apiVersion,
+            account: headers['Stripe-Account'],
+            idempotency_key: headers['Idempotency-Key'],
+            method,
+            path,
+            request_start_time: requestStartTime,
+          });
+
+          const requestRetries = numRetries || 0;
+
+          const maxRetries = this._getMaxNetworkRetries(options.settings || {});
+          this._stripe._emitter.emit('request', requestEvent);
+
+          req
+            .then((res: HttpClientResponseInterface) => {
+              if (RequestSender._shouldRetry(res, requestRetries, maxRetries)) {
+                return retryRequest(
+                  makeRequest,
+                  apiVersion,
+                  headers,
+                  requestRetries,
+                  // @ts-ignore
+                  res.getHeaders()['retry-after']
+                );
+              } else if (options.streaming && res.getStatusCode() < 400) {
+                return this._streamingResponseHandler(
+                  requestEvent,
+                  usage,
+                  callback
+                )(res);
+              } else {
+                return this._jsonResponseHandler(
+                  requestEvent,
+                  apiMode,
+                  usage,
+                  callback
+                )(res);
+              }
+            })
+            .catch((error: HttpClientResponseError) => {
+              if (
+                RequestSender._shouldRetry(
+                  null,
+                  requestRetries,
+                  maxRetries,
+                  error
+                )
+              ) {
+                return retryRequest(
+                  makeRequest,
+                  apiVersion,
+                  headers,
+                  requestRetries,
+                  null
+                );
+              } else {
+                const isTimeoutError =
+                  error.code && error.code === HttpClient.TIMEOUT_ERROR_CODE;
+
+                return callback(
+                  new StripeConnectionError({
+                    message: isTimeoutError
+                      ? `Request aborted due to timeout being reached (${timeout}ms)`
+                      : RequestSender._generateConnectionErrorMessage(
+                          requestRetries
+                        ),
+                    // @ts-ignore
+                    detail: error,
+                  })
+                );
+              }
+            });
         })
-        .catch((error: HttpClientResponseError) => {
-          if (
-            RequestSender._shouldRetry(null, requestRetries, maxRetries, error)
-          ) {
-            return retryRequest(
-              makeRequest,
-              apiVersion,
-              headers,
-              requestRetries,
-              null
-            );
-          } else {
-            const isTimeoutError =
-              error.code && error.code === HttpClient.TIMEOUT_ERROR_CODE;
-
-            return callback(
-              new StripeConnectionError({
-                message: isTimeoutError
-                  ? `Request aborted due to timeout being reached (${timeout}ms)`
-                  : RequestSender._generateConnectionErrorMessage(
-                      requestRetries
-                    ),
-                // @ts-ignore
-                detail: error,
-              })
-            );
-          }
+        .catch((e: any) => {
+          throw new StripeError({
+            message: 'Unable to authenticate the request',
+            exception: e,
+          });
         });
     };
 
@@ -559,15 +701,23 @@ export class RequestSender {
 
       this._stripe.getClientUserAgent((clientUserAgent: string) => {
         const apiVersion = this._stripe.getApiField('version');
-        const headers = this._makeHeaders(
-          auth,
-          requestData.length,
-          apiVersion,
+        const headers = this._makeHeaders({
+          contentType:
+            apiMode == 'v2'
+              ? 'application/json'
+              : 'application/x-www-form-urlencoded',
+          contentLength: requestData.length,
+          apiVersion: apiVersion,
           clientUserAgent,
           method,
-          options.headers ?? null,
-          options.settings ?? {}
-        );
+          userSuppliedHeaders: options.headers,
+          userSuppliedSettings: options.settings,
+          stripeAccount:
+            apiMode == 'v2' ? null : this._stripe.getApiField('stripeAccount'),
+          stripeContext:
+            apiMode == 'v2' ? this._stripe.getApiField('stripeContext') : null,
+          apiMode: apiMode,
+        });
 
         makeRequest(apiVersion, headers, 0);
       });
@@ -581,7 +731,15 @@ export class RequestSender {
         prepareAndMakeRequest
       );
     } else {
-      prepareAndMakeRequest(null, stringifyRequestData(data || {}));
+      let stringifiedData: string;
+
+      if (apiMode == 'v2') {
+        stringifiedData = data ? jsonStringifyRequestData(data) : '';
+      } else {
+        stringifiedData = queryStringifyRequestData(data || {}, apiMode);
+      }
+
+      prepareAndMakeRequest(null, stringifiedData);
     }
   }
 }

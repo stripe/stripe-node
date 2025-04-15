@@ -102,6 +102,16 @@ declare module 'stripe' {
         };
 
         /**
+         * When set, provides configuration for the amount to be adjusted by the customer during Checkout Sessions and Payment Links.
+         */
+        custom_unit_amount?: DefaultPriceData.CustomUnitAmount;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
          * The recurring components of a price such as `interval` and `interval_count`.
          */
         recurring?: DefaultPriceData.Recurring;
@@ -112,7 +122,7 @@ declare module 'stripe' {
         tax_behavior?: DefaultPriceData.TaxBehavior;
 
         /**
-         * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge. One of `unit_amount` or `unit_amount_decimal` is required.
+         * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge. One of `unit_amount`, `unit_amount_decimal`, or `custom_unit_amount` is required.
          */
         unit_amount?: number;
 
@@ -201,6 +211,28 @@ declare module 'stripe' {
              */
             up_to: 'inf' | number;
           }
+        }
+
+        interface CustomUnitAmount {
+          /**
+           * Pass in `true` to enable `custom_unit_amount`, otherwise omit `custom_unit_amount`.
+           */
+          enabled: boolean;
+
+          /**
+           * The maximum unit amount the customer can specify for this item.
+           */
+          maximum?: number;
+
+          /**
+           * The minimum unit amount the customer can specify for this item. Must be at least the minimum charge amount.
+           */
+          minimum?: number;
+
+          /**
+           * The starting unit amount which can be updated by the customer.
+           */
+          preset?: number;
         }
 
         interface Recurring {

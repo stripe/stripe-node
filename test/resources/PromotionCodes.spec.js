@@ -11,7 +11,7 @@ describe('PromotionCodes Resource', () => {
         method: 'GET',
         url: '/v1/promotion_codes/promo_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -61,7 +61,7 @@ describe('PromotionCodes Resource', () => {
         method: 'GET',
         url: '/v1/promotion_codes',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

@@ -138,6 +138,11 @@ declare module 'stripe' {
       status: string;
 
       /**
+       * A value that generates from the beneficiary's bank that allows users to track payouts with their bank. Banks might call this a "reference number" or something similar.
+       */
+      trace_id: Payout.TraceId | null;
+
+      /**
        * Can be `bank_account` or `card`.
        */
       type: Payout.Type;
@@ -148,6 +153,18 @@ declare module 'stripe' {
         | 'completed'
         | 'in_progress'
         | 'not_applicable';
+
+      interface TraceId {
+        /**
+         * Possible values are `pending`, `supported`, and `unsupported`. When `payout.status` is `pending` or `in_transit`, this will be `pending`. When the payout transitions to `paid`, `failed`, or `canceled`, this status will become `supported` or `unsupported` shortly after in most cases. In some cases, this may appear as `pending` for up to 10 days after `arrival_date` until transitioning to `supported` or `unsupported`.
+         */
+        status: string;
+
+        /**
+         * The trace ID value if `trace_id.status` is `supported`, otherwise `nil`.
+         */
+        value: string | null;
+      }
 
       type Type = 'bank_account' | 'card';
     }

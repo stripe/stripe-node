@@ -4,6 +4,15 @@ import {FAKE_API_KEY} from './testUtils.js';
 const nodeVersion = parseInt(process.versions.node.split('.')[0], 10);
 
 describe('Integration test', function() {
+  // these tests are expensive and start processes they don't clean up
+  // so, skip them in the regular test suite (which we run locally) and run them via `just test-integrations`
+  // (which is also called in CI)
+  before(function() {
+    if (process.env.RUN_INTEGRATION_TESTS !== '1') {
+      this.skip();
+    }
+  });
+
   this.timeout(50000);
   const testExec = (cmd: string): Promise<void> => {
     const child = childProcess.exec(cmd);

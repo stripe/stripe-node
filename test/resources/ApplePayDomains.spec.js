@@ -11,7 +11,7 @@ describe('ApplePayDomains Resource', () => {
         method: 'GET',
         url: '/v1/apple_pay/domains/apwc_retrieve',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -24,7 +24,7 @@ describe('ApplePayDomains Resource', () => {
         method: 'DELETE',
         url: '/v1/apple_pay/domains/apwc_delete',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -55,7 +55,7 @@ describe('ApplePayDomains Resource', () => {
         method: 'GET',
         url: '/v1/apple_pay/domains',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
