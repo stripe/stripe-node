@@ -3120,7 +3120,7 @@ declare module 'stripe' {
           /**
            * The quantity of the line item being purchased.
            */
-          quantity?: number;
+          quantity?: Stripe.Emptyable<number>;
 
           /**
            * The [tax rates](https://stripe.com/docs/api/tax_rates) which apply to this line item.
