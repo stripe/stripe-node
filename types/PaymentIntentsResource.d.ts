@@ -1333,6 +1333,11 @@ declare module 'stripe' {
            * Billing phone number (including extension).
            */
           phone?: Stripe.Emptyable<string>;
+
+          /**
+           * Taxpayer identification number.
+           */
+          tax_id?: string;
         }
 
         interface Blik {}
@@ -5317,6 +5322,11 @@ declare module 'stripe' {
            * Billing phone number (including extension).
            */
           phone?: Stripe.Emptyable<string>;
+
+          /**
+           * Taxpayer identification number.
+           */
+          tax_id?: string;
         }
 
         interface Blik {}
@@ -10052,6 +10062,11 @@ declare module 'stripe' {
            * Billing phone number (including extension).
            */
           phone?: Stripe.Emptyable<string>;
+
+          /**
+           * Taxpayer identification number.
+           */
+          tax_id?: string;
         }
 
         interface Blik {}

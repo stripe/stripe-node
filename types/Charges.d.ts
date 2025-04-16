@@ -264,6 +264,11 @@ declare module 'stripe' {
          * Billing phone number (including extension).
          */
         phone: string | null;
+
+        /**
+         * Taxpayer identification number
+         */
+        tax_id: string | null;
       }
 
       interface FraudDetails {
