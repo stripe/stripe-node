@@ -4330,6 +4330,11 @@ declare module 'stripe' {
       ssn_last_4?: string;
 
       /**
+       * Demographic data related to the person.
+       */
+      us_cfpb_data?: AccountCreatePersonParams.UsCfpbData;
+
+      /**
        * The person's verification status.
        */
       verification?: AccountCreatePersonParams.Verification;
@@ -4461,6 +4466,88 @@ declare module 'stripe' {
          * The person's title (e.g., CEO, Support Engineer).
          */
         title?: string;
+      }
+
+      interface UsCfpbData {
+        /**
+         * The persons ethnicity details
+         */
+        ethnicity_details?: UsCfpbData.EthnicityDetails;
+
+        /**
+         * The persons race details
+         */
+        race_details?: UsCfpbData.RaceDetails;
+
+        /**
+         * The persons self-identified gender
+         */
+        self_identified_gender?: string;
+      }
+
+      namespace UsCfpbData {
+        interface EthnicityDetails {
+          /**
+           * The persons ethnicity
+           */
+          ethnicity?: Array<EthnicityDetails.Ethnicity>;
+
+          /**
+           * Please specify your origin, when other is selected.
+           */
+          ethnicity_other?: string;
+        }
+
+        namespace EthnicityDetails {
+          type Ethnicity =
+            | 'cuban'
+            | 'hispanic_or_latino'
+            | 'mexican'
+            | 'not_hispanic_or_latino'
+            | 'other_hispanic_or_latino'
+            | 'prefer_not_to_answer'
+            | 'puerto_rican';
+        }
+
+        interface RaceDetails {
+          /**
+           * The persons race.
+           */
+          race?: Array<RaceDetails.Race>;
+
+          /**
+           * Please specify your race, when other is selected.
+           */
+          race_other?: string;
+        }
+
+        namespace RaceDetails {
+          type Race =
+            | 'african_american'
+            | 'american_indian_or_alaska_native'
+            | 'asian'
+            | 'asian_indian'
+            | 'black_or_african_american'
+            | 'chinese'
+            | 'ethiopian'
+            | 'filipino'
+            | 'guamanian_or_chamorro'
+            | 'haitian'
+            | 'jamaican'
+            | 'japanese'
+            | 'korean'
+            | 'native_hawaiian'
+            | 'native_hawaiian_or_other_pacific_islander'
+            | 'nigerian'
+            | 'other_asian'
+            | 'other_black_or_african_american'
+            | 'other_pacific_islander'
+            | 'prefer_not_to_answer'
+            | 'samoan'
+            | 'somali'
+            | 'vietnamese'
+            | 'white';
+        }
       }
 
       interface Verification {
@@ -4872,6 +4959,11 @@ declare module 'stripe' {
       ssn_last_4?: string;
 
       /**
+       * Demographic data related to the person.
+       */
+      us_cfpb_data?: AccountUpdatePersonParams.UsCfpbData;
+
+      /**
        * The person's verification status.
        */
       verification?: AccountUpdatePersonParams.Verification;
@@ -5003,6 +5095,88 @@ declare module 'stripe' {
          * The person's title (e.g., CEO, Support Engineer).
          */
         title?: string;
+      }
+
+      interface UsCfpbData {
+        /**
+         * The persons ethnicity details
+         */
+        ethnicity_details?: UsCfpbData.EthnicityDetails;
+
+        /**
+         * The persons race details
+         */
+        race_details?: UsCfpbData.RaceDetails;
+
+        /**
+         * The persons self-identified gender
+         */
+        self_identified_gender?: string;
+      }
+
+      namespace UsCfpbData {
+        interface EthnicityDetails {
+          /**
+           * The persons ethnicity
+           */
+          ethnicity?: Array<EthnicityDetails.Ethnicity>;
+
+          /**
+           * Please specify your origin, when other is selected.
+           */
+          ethnicity_other?: string;
+        }
+
+        namespace EthnicityDetails {
+          type Ethnicity =
+            | 'cuban'
+            | 'hispanic_or_latino'
+            | 'mexican'
+            | 'not_hispanic_or_latino'
+            | 'other_hispanic_or_latino'
+            | 'prefer_not_to_answer'
+            | 'puerto_rican';
+        }
+
+        interface RaceDetails {
+          /**
+           * The persons race.
+           */
+          race?: Array<RaceDetails.Race>;
+
+          /**
+           * Please specify your race, when other is selected.
+           */
+          race_other?: string;
+        }
+
+        namespace RaceDetails {
+          type Race =
+            | 'african_american'
+            | 'american_indian_or_alaska_native'
+            | 'asian'
+            | 'asian_indian'
+            | 'black_or_african_american'
+            | 'chinese'
+            | 'ethiopian'
+            | 'filipino'
+            | 'guamanian_or_chamorro'
+            | 'haitian'
+            | 'jamaican'
+            | 'japanese'
+            | 'korean'
+            | 'native_hawaiian'
+            | 'native_hawaiian_or_other_pacific_islander'
+            | 'nigerian'
+            | 'other_asian'
+            | 'other_black_or_african_american'
+            | 'other_pacific_islander'
+            | 'prefer_not_to_answer'
+            | 'samoan'
+            | 'somali'
+            | 'vietnamese'
+            | 'white';
+        }
       }
 
       interface Verification {
