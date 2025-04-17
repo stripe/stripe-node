@@ -157,6 +157,8 @@ declare module 'stripe' {
            */
           phone?: string;
 
+          registration_date?: Stripe.Emptyable<Company.RegistrationDate>;
+
           /**
            * The identification number given to a company when it is registered or incorporated, if distinct from the identification number used for filing taxes. (Examples are the CIN for companies and LLP IN for partnerships in India, and the Company Registration Number in Hong Kong).
            */
@@ -226,6 +228,23 @@ declare module 'stripe' {
           type OwnershipExemptionReason =
             | 'qualified_entity_exceeds_ownership_threshold'
             | 'qualifies_as_financial_institution';
+
+          interface RegistrationDate {
+            /**
+             * The day of registration, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of registration, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of registration.
+             */
+            year: number;
+          }
 
           type Structure =
             | 'free_zone_establishment'
