@@ -2120,23 +2120,6 @@ declare module 'stripe' {
       }
     }
 
-    interface InvoiceAttachPaymentIntentParams {
-      /**
-       * The ID of the PaymentIntent to attach to the invoice.
-       */
-      payment_intent: string;
-
-      /**
-       * The portion of the PaymentIntent's `amount` that should be applied to thisinvoice. Defaults to the entire amount.
-       */
-      amount_requested?: number;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     interface InvoiceCreatePreviewParams {
       /**
        * Settings for automatic tax lookup for this invoice preview.
@@ -4253,13 +4236,6 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface InvoiceListPaymentsParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     interface InvoiceMarkUncollectibleParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -4341,13 +4317,6 @@ declare module 'stripe' {
       namespace Line {
         type Behavior = 'delete' | 'unassign';
       }
-    }
-
-    interface InvoiceRetrievePaymentParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
     }
 
     interface InvoiceSearchParams {
@@ -5161,23 +5130,6 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Invoice>>;
 
       /**
-       * Attaches a PaymentIntent to the invoice, adding it to the list of payments.
-       * When the PaymentIntent's status changes to succeeded, the payment is credited
-       * to the invoice, increasing its amount_paid. When the invoice is fully paid, the
-       * invoice's status becomes paid.
-       *
-       * If the PaymentIntent's status is already succeeded when it is attached, it is
-       * credited to the invoice immediately.
-       *
-       * Related guide: [Create an invoice payment](https://stripe.com/docs/invoicing/payments/create)
-       */
-      attachPaymentIntent(
-        id: string,
-        params: InvoiceAttachPaymentIntentParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Invoice>>;
-
-      /**
        * At any time, you can preview the upcoming invoice for a subscription or subscription schedule. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discounts that are applicable to the invoice.
        *
        * Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
@@ -5221,19 +5173,6 @@ declare module 'stripe' {
       ): ApiListPromise<Stripe.InvoiceLineItem>;
 
       /**
-       * When retrieving an invoice, there is an includable payments property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of payments.
-       */
-      listPayments(
-        id: string,
-        params?: InvoiceListPaymentsParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.InvoicePayment>;
-      listPayments(
-        id: string,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.InvoicePayment>;
-
-      /**
        * Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off for accounting purposes.
        */
       markUncollectible(
@@ -5267,21 +5206,6 @@ declare module 'stripe' {
         params: InvoiceRemoveLinesParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Invoice>>;
-
-      /**
-       * Retrieves the invoice payment with the given ID.
-       */
-      retrievePayment(
-        invoiceId: string,
-        id: string,
-        params?: InvoiceRetrievePaymentParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.InvoicePayment>>;
-      retrievePayment(
-        invoiceId: string,
-        id: string,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.InvoicePayment>>;
 
       /**
        * Search for invoices you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
