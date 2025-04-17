@@ -318,6 +318,11 @@ declare module 'stripe' {
         car_rental?: PaymentDetails.CarRental;
 
         /**
+         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
+         */
+        customer_reference?: Stripe.Emptyable<string>;
+
+        /**
          * Event details for this PaymentIntent
          */
         event_details?: PaymentDetails.EventDetails;
@@ -331,6 +336,11 @@ declare module 'stripe' {
          * Lodging reservation details for this PaymentIntent
          */
         lodging?: PaymentDetails.Lodging;
+
+        /**
+         * A unique value assigned by the business to identify the transaction.
+         */
+        order_reference?: Stripe.Emptyable<string>;
 
         /**
          * Subscription details for this PaymentIntent
@@ -4307,6 +4317,11 @@ declare module 'stripe' {
         car_rental?: PaymentDetails.CarRental;
 
         /**
+         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
+         */
+        customer_reference?: Stripe.Emptyable<string>;
+
+        /**
          * Event details for this PaymentIntent
          */
         event_details?: PaymentDetails.EventDetails;
@@ -4320,6 +4335,11 @@ declare module 'stripe' {
          * Lodging reservation details for this PaymentIntent
          */
         lodging?: PaymentDetails.Lodging;
+
+        /**
+         * A unique value assigned by the business to identify the transaction.
+         */
+        order_reference?: Stripe.Emptyable<string>;
 
         /**
          * Subscription details for this PaymentIntent
@@ -8196,6 +8216,11 @@ declare module 'stripe' {
         car_rental?: PaymentDetails.CarRental;
 
         /**
+         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
+         */
+        customer_reference?: Stripe.Emptyable<string>;
+
+        /**
          * Event details for this PaymentIntent
          */
         event_details?: PaymentDetails.EventDetails;
@@ -8209,6 +8234,11 @@ declare module 'stripe' {
          * Lodging reservation details for this PaymentIntent
          */
         lodging?: PaymentDetails.Lodging;
+
+        /**
+         * A unique value assigned by the business to identify the transaction.
+         */
+        order_reference?: Stripe.Emptyable<string>;
 
         /**
          * Subscription details for this PaymentIntent
@@ -9047,6 +9077,11 @@ declare module 'stripe' {
         car_rental?: PaymentDetails.CarRental;
 
         /**
+         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
+         */
+        customer_reference?: Stripe.Emptyable<string>;
+
+        /**
          * Event details for this PaymentIntent
          */
         event_details?: PaymentDetails.EventDetails;
@@ -9060,6 +9095,11 @@ declare module 'stripe' {
          * Lodging reservation details for this PaymentIntent
          */
         lodging?: PaymentDetails.Lodging;
+
+        /**
+         * A unique value assigned by the business to identify the transaction.
+         */
+        order_reference?: Stripe.Emptyable<string>;
 
         /**
          * Subscription details for this PaymentIntent
@@ -12957,6 +12997,14 @@ declare module 'stripe' {
       }
     }
 
+    interface PaymentIntentListAmountDetailsLineItemsParams
+      extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface PaymentIntentSearchParams {
       /**
        * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for payment intents](https://stripe.com/docs/search#query-fields-for-payment-intents).
@@ -13226,6 +13274,19 @@ declare module 'stripe' {
         params: PaymentIntentIncrementAuthorizationParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
+
+      /**
+       * Lists all LineItems of a given PaymentIntent.
+       */
+      listAmountDetailsLineItems(
+        id: string,
+        params?: PaymentIntentListAmountDetailsLineItemsParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.PaymentIntentAmountDetailsLineItem>;
+      listAmountDetailsLineItems(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.PaymentIntentAmountDetailsLineItem>;
 
       /**
        * Search for PaymentIntents you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).

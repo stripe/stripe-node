@@ -272,6 +272,7 @@
 ///<reference path='./Margins.d.ts' />
 ///<reference path='./Orders.d.ts' />
 ///<reference path='./PaymentAttemptRecords.d.ts' />
+///<reference path='./PaymentIntentAmountDetailsLineItems.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
 ///<reference path='./PaymentMethodConfigurations.d.ts' />

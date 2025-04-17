@@ -256,10 +256,48 @@ declare module 'stripe' {
 
     namespace PaymentIntent {
       interface AmountDetails {
+        /**
+         * The amount an item was discounted for.
+         */
+        discount_amount?: number;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         */
+        line_items?: ApiList<Stripe.PaymentIntentAmountDetailsLineItem>;
+
+        shipping?: AmountDetails.Shipping;
+
+        tax?: AmountDetails.Tax;
+
         tip?: AmountDetails.Tip;
       }
 
       namespace AmountDetails {
+        interface Shipping {
+          /**
+           * Portion of the amount that is for shipping.
+           */
+          amount: number | null;
+
+          /**
+           * The postal code that represents the shipping source.
+           */
+          from_postal_code: string | null;
+
+          /**
+           * The postal code that represents the shipping destination.
+           */
+          to_postal_code: string | null;
+        }
+
+        interface Tax {
+          /**
+           * Total portion of the amount that is for tax.
+           */
+          total_tax_amount: number | null;
+        }
+
         interface Tip {
           /**
            * Portion of the amount that corresponds to a tip.
@@ -1383,7 +1421,17 @@ declare module 'stripe' {
       interface PaymentDetails {
         car_rental?: PaymentDetails.CarRental;
 
+        /**
+         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
+         */
+        customer_reference?: string | null;
+
         event_details?: PaymentDetails.EventDetails;
+
+        /**
+         * A unique value assigned by the business to identify the transaction.
+         */
+        order_reference?: string | null;
 
         subscription?: PaymentDetails.Subscription;
       }
