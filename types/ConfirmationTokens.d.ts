@@ -403,7 +403,7 @@ declare module 'stripe' {
           phone: string | null;
 
           /**
-           * Taxpayer identification number
+           * Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM sellers.
            */
           tax_id: string | null;
         }
