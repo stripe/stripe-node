@@ -214,6 +214,11 @@ declare module 'stripe' {
       payto?: PaymentMethodConfigurationCreateParams.Payto;
 
       /**
+       * Pix is a payment method popular in Brazil. When paying with Pix, customers authenticate and approve payments by scanning a QR code in their preferred banking app. Check this [page](https://docs.stripe.com/payments/pix) for more details.
+       */
+      pix?: PaymentMethodConfigurationCreateParams.Pix;
+
+      /**
        * PromptPay is a Thailand-based payment method that allows customers to make a payment using their preferred app from participating banks. Check this [page](https://stripe.com/docs/payments/promptpay) for more details.
        */
       promptpay?: PaymentMethodConfigurationCreateParams.Promptpay;
@@ -1055,6 +1060,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Pix {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Pix.DisplayPreference;
+      }
+
+      namespace Pix {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Promptpay {
         /**
          * Whether or not the payment method should be displayed.
@@ -1513,6 +1538,11 @@ declare module 'stripe' {
        * PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables customers in Australia to pay by providing their bank account details. Customers must accept a mandate authorizing you to debit their account. Check this [page](https://docs.stripe.com/payments/payto) for more details.
        */
       payto?: PaymentMethodConfigurationUpdateParams.Payto;
+
+      /**
+       * Pix is a payment method popular in Brazil. When paying with Pix, customers authenticate and approve payments by scanning a QR code in their preferred banking app. Check this [page](https://docs.stripe.com/payments/pix) for more details.
+       */
+      pix?: PaymentMethodConfigurationUpdateParams.Pix;
 
       /**
        * PromptPay is a Thailand-based payment method that allows customers to make a payment using their preferred app from participating banks. Check this [page](https://stripe.com/docs/payments/promptpay) for more details.
@@ -2344,6 +2374,26 @@ declare module 'stripe' {
       }
 
       namespace Payto {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Pix {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Pix.DisplayPreference;
+      }
+
+      namespace Pix {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
