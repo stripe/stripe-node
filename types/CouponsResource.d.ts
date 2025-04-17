@@ -69,6 +69,11 @@ declare module 'stripe' {
        * Unix timestamp specifying the last time at which the coupon can be redeemed. After the redeem_by date, the coupon can no longer be applied to new customers.
        */
       redeem_by?: number;
+
+      /**
+       * Configuration of the [script](https://docs.stripe.com/billing/subscriptions/script-coupons) used to calculate the discount.
+       */
+      script?: CouponCreateParams.Script;
     }
 
     namespace CouponCreateParams {
@@ -87,6 +92,22 @@ declare module 'stripe' {
       }
 
       type Duration = 'forever' | 'once' | 'repeating';
+
+      interface Script {
+        /**
+         * The configuration values of the script. The keys and values are specific to the script implementation.
+         */
+        configuration: Script.Configuration;
+
+        /**
+         * The script implementation ID for this coupon.
+         */
+        id: string;
+      }
+
+      namespace Script {
+        interface Configuration {}
+      }
     }
 
     interface CouponRetrieveParams {
