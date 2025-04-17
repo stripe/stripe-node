@@ -63,7 +63,9 @@ jobs:
           - '18'
           - '16'
           - '14'
-          - '12'
+          # Node subdependency(eslint-utils) added optional chaining syntax that does not work in v12
+          # TODO: https://jira.corp.stripe.com/browse/RUN_DEVSDK-1610
+          # - "12"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: extractions/setup-just@v2
