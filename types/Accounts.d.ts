@@ -806,6 +806,8 @@ declare module 'stripe' {
          */
         phone?: string | null;
 
+        registration_date?: Company.RegistrationDate;
+
         /**
          * The category identifying the legal structure of the company or legal entity. Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details.
          */
@@ -944,6 +946,23 @@ declare module 'stripe' {
         type OwnershipExemptionReason =
           | 'qualified_entity_exceeds_ownership_threshold'
           | 'qualifies_as_financial_institution';
+
+        interface RegistrationDate {
+          /**
+           * The day of registration, between 1 and 31.
+           */
+          day: number | null;
+
+          /**
+           * The month of registration, between 1 and 12.
+           */
+          month: number | null;
+
+          /**
+           * The four-digit year of registration.
+           */
+          year: number | null;
+        }
 
         type Structure =
           | 'free_zone_establishment'

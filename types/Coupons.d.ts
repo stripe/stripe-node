@@ -88,9 +88,19 @@ declare module 'stripe' {
       redeem_by: number | null;
 
       /**
+       * Configuration of the [script](https://docs.stripe.com/billing/subscriptions/script-coupons) used to calculate the discount.
+       */
+      script?: Coupon.Script | null;
+
+      /**
        * Number of times this coupon has been applied to a customer.
        */
       times_redeemed: number;
+
+      /**
+       * One of `amount_off`, `percent_off`, or `script`. Describes the type of coupon logic used to calculate the discount.
+       */
+      type?: Coupon.Type | null;
 
       /**
        * Taking account of the above properties, whether this coupon can still be applied to a customer.
@@ -114,6 +124,29 @@ declare module 'stripe' {
       }
 
       type Duration = 'forever' | 'once' | 'repeating';
+
+      interface Script {
+        /**
+         * The configuration values of the script. The keys and values are specific to the script implementation.
+         */
+        configuration: Script.Configuration;
+
+        /**
+         * The name of the script used to calculate the discount.
+         */
+        display_name: string;
+
+        /**
+         * The script implementation ID for this coupon.
+         */
+        id: string;
+      }
+
+      namespace Script {
+        interface Configuration {}
+      }
+
+      type Type = 'amount_off' | 'percent_off' | 'script';
     }
 
     /**

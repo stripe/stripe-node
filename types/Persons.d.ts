@@ -170,6 +170,11 @@ declare module 'stripe' {
        */
       ssn_last_4_provided?: boolean;
 
+      /**
+       * Demographic data related to the person.
+       */
+      us_cfpb_data?: Person.UsCfpbData | null;
+
       verification?: Person.Verification;
     }
 
@@ -659,6 +664,88 @@ declare module 'stripe' {
         }
       }
 
+      interface UsCfpbData {
+        /**
+         * The persons ethnicity details
+         */
+        ethnicity_details: UsCfpbData.EthnicityDetails | null;
+
+        /**
+         * The persons race details
+         */
+        race_details: UsCfpbData.RaceDetails | null;
+
+        /**
+         * The persons self-identified gender
+         */
+        self_identified_gender: string | null;
+      }
+
+      namespace UsCfpbData {
+        interface EthnicityDetails {
+          /**
+           * The persons ethnicity
+           */
+          ethnicity: Array<EthnicityDetails.Ethnicity> | null;
+
+          /**
+           * Please specify your origin, when other is selected.
+           */
+          ethnicity_other: string | null;
+        }
+
+        namespace EthnicityDetails {
+          type Ethnicity =
+            | 'cuban'
+            | 'hispanic_or_latino'
+            | 'mexican'
+            | 'not_hispanic_or_latino'
+            | 'other_hispanic_or_latino'
+            | 'prefer_not_to_answer'
+            | 'puerto_rican';
+        }
+
+        interface RaceDetails {
+          /**
+           * The persons race.
+           */
+          race: Array<RaceDetails.Race> | null;
+
+          /**
+           * Please specify your race, when other is selected.
+           */
+          race_other: string | null;
+        }
+
+        namespace RaceDetails {
+          type Race =
+            | 'african_american'
+            | 'american_indian_or_alaska_native'
+            | 'asian'
+            | 'asian_indian'
+            | 'black_or_african_american'
+            | 'chinese'
+            | 'ethiopian'
+            | 'filipino'
+            | 'guamanian_or_chamorro'
+            | 'haitian'
+            | 'jamaican'
+            | 'japanese'
+            | 'korean'
+            | 'native_hawaiian'
+            | 'native_hawaiian_or_other_pacific_islander'
+            | 'nigerian'
+            | 'other_asian'
+            | 'other_black_or_african_american'
+            | 'other_pacific_islander'
+            | 'prefer_not_to_answer'
+            | 'samoan'
+            | 'somali'
+            | 'vietnamese'
+            | 'white';
+        }
+      }
+
       interface Verification {
         /**
          * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
@@ -678,7 +765,7 @@ declare module 'stripe' {
         document?: Verification.Document;
 
         /**
-         * The state of verification for the person. Possible values are `unverified`, `pending`, or `verified`.
+         * The state of verification for the person. Possible values are `unverified`, `pending`, or `verified`. Please refer [guide](https://stripe.com/docs/connect/handling-api-verification) to handle verification updates.
          */
         status: string;
       }

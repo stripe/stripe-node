@@ -264,6 +264,11 @@ declare module 'stripe' {
          * Billing phone number (including extension).
          */
         phone: string | null;
+
+        /**
+         * Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM sellers.
+         */
+        tax_id: string | null;
       }
 
       interface FraudDetails {

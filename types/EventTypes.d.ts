@@ -106,6 +106,7 @@ declare module 'stripe' {
       | FinancialConnectionsAccountRefreshedOwnershipEvent
       | FinancialConnectionsAccountRefreshedTransactionsEvent
       | FinancialConnectionsSessionUpdatedEvent
+      | FxQuoteExpiredEvent
       | IdentityVerificationSessionCanceledEvent
       | IdentityVerificationSessionCreatedEvent
       | IdentityVerificationSessionProcessingEvent
@@ -1945,6 +1946,22 @@ declare module 'stripe' {
         object: Stripe.FinancialConnections.Session;
 
         previous_attributes?: Partial<Stripe.FinancialConnections.Session>;
+      }
+    }
+
+    /**
+     * Occurs when FX Quote's lock_status field transitions to 'Expired'.
+     */
+    interface FxQuoteExpiredEvent extends EventBase {
+      type: 'fx_quote.expired';
+      data: FxQuoteExpiredEvent.Data;
+    }
+
+    namespace FxQuoteExpiredEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.FxQuote;
+
+        previous_attributes?: Partial<Stripe.FxQuote>;
       }
     }
 

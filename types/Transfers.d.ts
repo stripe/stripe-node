@@ -66,6 +66,11 @@ declare module 'stripe' {
       destination_payment?: string | Stripe.Charge;
 
       /**
+       * The FX Quote used for the transfer.
+       */
+      fx_quote?: string;
+
+      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
