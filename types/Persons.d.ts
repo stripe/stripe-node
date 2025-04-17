@@ -765,7 +765,7 @@ declare module 'stripe' {
         document?: Verification.Document;
 
         /**
-         * The state of verification for the person. Possible values are `unverified`, `pending`, or `verified`.
+         * The state of verification for the person. Possible values are `unverified`, `pending`, or `verified`. Please refer [guide](https://stripe.com/docs/connect/handling-api-verification) to handle verification updates.
          */
         status: string;
       }
