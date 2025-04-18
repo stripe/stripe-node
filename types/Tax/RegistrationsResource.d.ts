@@ -93,6 +93,11 @@ declare module 'stripe' {
           be?: CountryOptions.Be;
 
           /**
+           * Options for the registration in BF.
+           */
+          bf?: CountryOptions.Bf;
+
+          /**
            * Options for the registration in BG.
            */
           bg?: CountryOptions.Bg;
@@ -138,6 +143,11 @@ declare module 'stripe' {
           cl?: CountryOptions.Cl;
 
           /**
+           * Options for the registration in CM.
+           */
+          cm?: CountryOptions.Cm;
+
+          /**
            * Options for the registration in CO.
            */
           co?: CountryOptions.Co;
@@ -146,6 +156,11 @@ declare module 'stripe' {
            * Options for the registration in CR.
            */
           cr?: CountryOptions.Cr;
+
+          /**
+           * Options for the registration in CV.
+           */
+          cv?: CountryOptions.Cv;
 
           /**
            * Options for the registration in CY.
@@ -633,6 +648,13 @@ declare module 'stripe' {
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
           }
 
+          interface Bf {
+            /**
+             * Type of registration to be created in `country`.
+             */
+            type: 'standard';
+          }
+
           interface Bg {
             /**
              * Options for the standard registration.
@@ -732,6 +754,13 @@ declare module 'stripe' {
             type: 'simplified';
           }
 
+          interface Cm {
+            /**
+             * Type of registration to be created in `country`.
+             */
+            type: 'simplified';
+          }
+
           interface Co {
             /**
              * Type of registration to be created in `country`.
@@ -740,6 +769,13 @@ declare module 'stripe' {
           }
 
           interface Cr {
+            /**
+             * Type of registration to be created in `country`.
+             */
+            type: 'simplified';
+          }
+
+          interface Cv {
             /**
              * Type of registration to be created in `country`.
              */
