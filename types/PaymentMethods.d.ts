@@ -177,6 +177,11 @@ declare module 'stripe' {
     namespace PaymentMethod {
       interface AcssDebit {
         /**
+         * Account number of the bank account.
+         */
+        account_number?: string | null;
+
+        /**
          * Name of the bank associated with the bank account.
          */
         bank_name: string | null;
