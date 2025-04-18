@@ -530,7 +530,7 @@ declare module 'stripe' {
         /**
          * The tax provider powering automatic tax.
          */
-        provider?: string | null;
+        provider: string | null;
 
         /**
          * The status of the most recent automated tax calculation for this invoice.
