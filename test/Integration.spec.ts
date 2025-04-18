@@ -38,6 +38,7 @@ describe('Integration test', function() {
   const runTestProject = (projectName: string): Promise<void> => {
     return testExec(`
       cd testProjects/${projectName} && rm -rf node_modules &&
+      echo 'hello world' &&
       npm install &&
       npm run lint &&
       npm run runtestproject -- ${FAKE_API_KEY}
