@@ -79,6 +79,11 @@ declare module 'stripe' {
        */
       payment_intent: string | Stripe.PaymentIntent | null;
 
+      /**
+       * Provides the reason for why the refund is pending. Possible values are: `processing`, `insufficient_funds`, or `charge_pending`.
+       */
+      pending_reason?: Refund.PendingReason;
+
       presentment_details?: Refund.PresentmentDetails;
 
       /**
@@ -422,6 +427,11 @@ declare module 'stripe' {
           }
         }
       }
+
+      type PendingReason =
+        | 'charge_pending'
+        | 'insufficient_funds'
+        | 'processing';
 
       interface PresentmentDetails {
         /**
