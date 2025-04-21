@@ -760,6 +760,11 @@ declare module 'stripe' {
         billing_cycle_anchor?: 'reset' | null;
 
         /**
+         * The [billing mode](https://stripe.com/api/subscriptions/create#create_subscription-billing_mode) that will be set on the subscription once the quote is accepted.
+         */
+        billing_mode?: SubscriptionData.BillingMode;
+
+        /**
          * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description: string | null;
@@ -802,6 +807,8 @@ declare module 'stripe' {
 
       namespace SubscriptionData {
         type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+        type BillingMode = 'credits_attributed_to_debits' | 'legacy_prorations';
 
         interface BillOnAcceptance {
           /**

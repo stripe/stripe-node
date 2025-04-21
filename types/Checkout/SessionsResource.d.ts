@@ -2835,6 +2835,11 @@ declare module 'stripe' {
           billing_cycle_anchor?: number;
 
           /**
+           * The billing mode to create the subscription with. Once a subscription has been created with a billing_mode, all future operations on the subscription will be processed based on the billing_mode.
+           */
+          billing_mode?: SubscriptionData.BillingMode;
+
+          /**
            * The tax rates that will apply to any subscription item that does not have
            * `tax_rates` set. Invoices created will have their `default_tax_rates` populated
            * from the subscription.
@@ -2893,6 +2898,10 @@ declare module 'stripe' {
         }
 
         namespace SubscriptionData {
+          type BillingMode =
+            | 'credits_attributed_to_debits'
+            | 'legacy_prorations';
+
           interface InvoiceSettings {
             /**
              * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.

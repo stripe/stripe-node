@@ -2690,6 +2690,11 @@ declare module 'stripe' {
         billing_behavior?: ScheduleDetails.BillingBehavior;
 
         /**
+         * The billing mode that will be used to create the subscription schedule. When the schedule creates a subscription, the subscription's `billing_mode` will be set to the same value as the schedule's `billing_mode`.
+         */
+        billing_mode?: ScheduleDetails.BillingMode;
+
+        /**
          * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running. `cancel` will end the subscription schedule and cancel the underlying subscription.
          */
         end_behavior?: ScheduleDetails.EndBehavior;
@@ -3307,6 +3312,8 @@ declare module 'stripe' {
         }
 
         type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+        type BillingMode = 'credits_attributed_to_debits' | 'legacy_prorations';
 
         type EndBehavior = 'cancel' | 'release';
 
@@ -3988,6 +3995,11 @@ declare module 'stripe' {
         billing_cycle_anchor?: SubscriptionDetails.BillingCycleAnchor | number;
 
         /**
+         * The billing mode to create the subscription with. Once a subscription has been created with a billing_mode, all future operations on the subscription will be processed based on the billing_mode.
+         */
+        billing_mode?: SubscriptionDetails.BillingMode;
+
+        /**
          * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
          */
         cancel_at?: Stripe.Emptyable<number>;
@@ -4045,6 +4057,8 @@ declare module 'stripe' {
 
       namespace SubscriptionDetails {
         type BillingCycleAnchor = 'now' | 'unchanged';
+
+        type BillingMode = 'credits_attributed_to_debits' | 'legacy_prorations';
 
         interface Item {
           /**
