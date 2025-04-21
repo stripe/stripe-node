@@ -34,6 +34,11 @@ declare module 'stripe' {
       billing_cycle_anchor_config?: SubscriptionCreateParams.BillingCycleAnchorConfig;
 
       /**
+       * The billing mode to create the subscription with. Once a subscription has been created with a billing_mode, all future operations on the subscription will be processed based on the billing_mode unless the subscription is migrated to a different version.
+       */
+      billing_mode?: SubscriptionCreateParams.BillingMode;
+
+      /**
        * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
        */
       cancel_at?: number;
@@ -364,6 +369,8 @@ declare module 'stripe' {
          */
         second?: number;
       }
+
+      type BillingMode = 'credits_attributed_to_debits' | 'legacy_prorations';
 
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
