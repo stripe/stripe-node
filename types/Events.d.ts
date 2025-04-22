@@ -99,6 +99,7 @@ declare module 'stripe' {
         | 'application_fee.refund.updated'
         | 'application_fee.refunded'
         | 'balance.available'
+        | 'balance_settings.updated'
         | 'billing.alert.triggered'
         | 'billing.meter_error_report.triggered'
         | 'billing_portal.configuration.created'
@@ -373,8 +374,7 @@ declare module 'stripe' {
         | 'billing.meter.created'
         | 'billing.meter.deactivated'
         | 'billing.meter.reactivated'
-        | 'billing.meter.updated'
-        | 'balance_settings.updated';
+        | 'billing.meter.updated';
     }
 
     /**
