@@ -23,12 +23,12 @@ declare module 'stripe' {
       namespace CreditBalanceSummaryRetrieveParams {
         interface Filter {
           /**
-           * The credit applicability scope for which to fetch balance summary.
+           * The billing credit applicability scope for which to fetch credit balance summary.
            */
           applicability_scope?: Filter.ApplicabilityScope;
 
           /**
-           * The credit grant for which to fetch balance summary.
+           * The credit grant for which to fetch credit balance summary.
            */
           credit_grant?: string;
 
@@ -41,9 +41,23 @@ declare module 'stripe' {
         namespace Filter {
           interface ApplicabilityScope {
             /**
-             * The price type to which credit grants can apply to. We currently only support `metered` price type.
+             * The price type that credit grants can apply to. We currently only support the `metered` price type. Cannot be used in combination with `prices`.
              */
-            price_type: 'metered';
+            price_type?: 'metered';
+
+            /**
+             * A list of prices that the credit grant can apply to. We currently only support the `metered` prices. Cannot be used in combination with `price_type`.
+             */
+            prices?: Array<ApplicabilityScope.Price>;
+          }
+
+          namespace ApplicabilityScope {
+            interface Price {
+              /**
+               * The price ID this credit grant should apply to.
+               */
+              id: string;
+            }
           }
 
           type Type = 'applicability_scope' | 'credit_grant';
@@ -52,7 +66,7 @@ declare module 'stripe' {
 
       class CreditBalanceSummaryResource {
         /**
-         * Retrieves the credit balance summary for a customer
+         * Retrieves the credit balance summary for a customer.
          */
         retrieve(
           params: CreditBalanceSummaryRetrieveParams,

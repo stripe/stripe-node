@@ -7,7 +7,6 @@
 ///<reference path='./Webhooks.d.ts' />
 ///<reference path='./EventTypes.d.ts' />
 ///<reference path='./UpcomingInvoices.d.ts' />
-///<reference path='./Deprecations.d.ts' />
 ///<reference path='./ThinEvent.d.ts' />
 ///<reference path='./crypto/crypto.d.ts' />
 // Imports: The beginning of the section generated from our OpenAPI spec
@@ -54,6 +53,7 @@
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
 ///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
+///<reference path='./InvoicePaymentsResource.d.ts' />
 ///<reference path='./InvoiceRenderingTemplatesResource.d.ts' />
 ///<reference path='./InvoicesResource.d.ts' />
 ///<reference path='./Issuing/AuthorizationsResource.d.ts' />
@@ -133,10 +133,8 @@
 ///<reference path='./V2/Billing/MeterEventSessionResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
-///<reference path='./V2/BillingResource.d.ts' />
+///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
 ///<reference path='./V2/Core/EventsResource.d.ts' />
-///<reference path='./V2/CoreResource.d.ts' />
-///<reference path='./V2Resource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./AccountSessions.d.ts' />
@@ -202,6 +200,7 @@
 ///<reference path='./Identity/VerificationSessions.d.ts' />
 ///<reference path='./InvoiceItems.d.ts' />
 ///<reference path='./InvoiceLineItems.d.ts' />
+///<reference path='./InvoicePayments.d.ts' />
 ///<reference path='./InvoiceRenderingTemplates.d.ts' />
 ///<reference path='./Invoices.d.ts' />
 ///<reference path='./Issuing/Authorizations.d.ts' />
@@ -276,11 +275,10 @@
 ///<reference path='./Treasury/ReceivedDebits.d.ts' />
 ///<reference path='./Treasury/TransactionEntries.d.ts' />
 ///<reference path='./Treasury/Transactions.d.ts' />
-///<reference path='./UsageRecordSummaries.d.ts' />
-///<reference path='./UsageRecords.d.ts' />
 ///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
+///<reference path='./V2/EventDestinations.d.ts' />
 ///<reference path='./V2/Events.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
@@ -324,6 +322,7 @@ declare module 'stripe' {
     fileLinks: Stripe.FileLinksResource;
     files: Stripe.FilesResource;
     invoiceItems: Stripe.InvoiceItemsResource;
+    invoicePayments: Stripe.InvoicePaymentsResource;
     invoiceRenderingTemplates: Stripe.InvoiceRenderingTemplatesResource;
     invoices: Stripe.InvoicesResource;
     mandates: Stripe.MandatesResource;
@@ -353,7 +352,6 @@ declare module 'stripe' {
     tokens: Stripe.TokensResource;
     topups: Stripe.TopupsResource;
     transfers: Stripe.TransfersResource;
-    v2: Stripe.V2Resource;
     webhookEndpoints: Stripe.WebhookEndpointsResource;
     apps: {
       secrets: Stripe.Apps.SecretsResource;
@@ -462,6 +460,18 @@ declare module 'stripe' {
       receivedDebits: Stripe.Treasury.ReceivedDebitsResource;
       transactions: Stripe.Treasury.TransactionsResource;
       transactionEntries: Stripe.Treasury.TransactionEntriesResource;
+    };
+    v2: {
+      billing: {
+        meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
+        meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
+        meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
+        meterEvents: Stripe.V2.Billing.MeterEventsResource;
+      };
+      core: {
+        eventDestinations: Stripe.V2.Core.EventDestinationsResource;
+        events: Stripe.V2.Core.EventsResource;
+      };
     };
     // Fields: The end of the section generated from our OpenAPI spec
     webhooks: Stripe.Webhooks;

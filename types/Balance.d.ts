@@ -67,17 +67,17 @@ declare module 'stripe' {
       namespace Available {
         interface SourceTypes {
           /**
-           * Amount for bank account.
+           * Amount coming from [legacy US ACH payments](https://docs.stripe.com/ach-deprecated).
            */
           bank_account?: number;
 
           /**
-           * Amount for card.
+           * Amount coming from most payment methods, including cards as well as [non-legacy bank debits](https://docs.stripe.com/payments/bank-debits).
            */
           card?: number;
 
           /**
-           * Amount for FPX.
+           * Amount coming from [FPX](https://docs.stripe.com/payments/fpx), a Malaysian payment method.
            */
           fpx?: number;
         }
@@ -100,17 +100,17 @@ declare module 'stripe' {
       namespace ConnectReserved {
         interface SourceTypes {
           /**
-           * Amount for bank account.
+           * Amount coming from [legacy US ACH payments](https://docs.stripe.com/ach-deprecated).
            */
           bank_account?: number;
 
           /**
-           * Amount for card.
+           * Amount coming from most payment methods, including cards as well as [non-legacy bank debits](https://docs.stripe.com/payments/bank-debits).
            */
           card?: number;
 
           /**
-           * Amount for FPX.
+           * Amount coming from [FPX](https://docs.stripe.com/payments/fpx), a Malaysian payment method.
            */
           fpx?: number;
         }
@@ -153,17 +153,17 @@ declare module 'stripe' {
         namespace NetAvailable {
           interface SourceTypes {
             /**
-             * Amount for bank account.
+             * Amount coming from [legacy US ACH payments](https://docs.stripe.com/ach-deprecated).
              */
             bank_account?: number;
 
             /**
-             * Amount for card.
+             * Amount coming from most payment methods, including cards as well as [non-legacy bank debits](https://docs.stripe.com/payments/bank-debits).
              */
             card?: number;
 
             /**
-             * Amount for FPX.
+             * Amount coming from [FPX](https://docs.stripe.com/payments/fpx), a Malaysian payment method.
              */
             fpx?: number;
           }
@@ -171,17 +171,17 @@ declare module 'stripe' {
 
         interface SourceTypes {
           /**
-           * Amount for bank account.
+           * Amount coming from [legacy US ACH payments](https://docs.stripe.com/ach-deprecated).
            */
           bank_account?: number;
 
           /**
-           * Amount for card.
+           * Amount coming from most payment methods, including cards as well as [non-legacy bank debits](https://docs.stripe.com/payments/bank-debits).
            */
           card?: number;
 
           /**
-           * Amount for FPX.
+           * Amount coming from [FPX](https://docs.stripe.com/payments/fpx), a Malaysian payment method.
            */
           fpx?: number;
         }
@@ -212,17 +212,17 @@ declare module 'stripe' {
         namespace Available {
           interface SourceTypes {
             /**
-             * Amount for bank account.
+             * Amount coming from [legacy US ACH payments](https://docs.stripe.com/ach-deprecated).
              */
             bank_account?: number;
 
             /**
-             * Amount for card.
+             * Amount coming from most payment methods, including cards as well as [non-legacy bank debits](https://docs.stripe.com/payments/bank-debits).
              */
             card?: number;
 
             /**
-             * Amount for FPX.
+             * Amount coming from [FPX](https://docs.stripe.com/payments/fpx), a Malaysian payment method.
              */
             fpx?: number;
           }
@@ -246,17 +246,17 @@ declare module 'stripe' {
       namespace Pending {
         interface SourceTypes {
           /**
-           * Amount for bank account.
+           * Amount coming from [legacy US ACH payments](https://docs.stripe.com/ach-deprecated).
            */
           bank_account?: number;
 
           /**
-           * Amount for card.
+           * Amount coming from most payment methods, including cards as well as [non-legacy bank debits](https://docs.stripe.com/payments/bank-debits).
            */
           card?: number;
 
           /**
-           * Amount for FPX.
+           * Amount coming from [FPX](https://docs.stripe.com/payments/fpx), a Malaysian payment method.
            */
           fpx?: number;
         }

@@ -9,13 +9,6 @@ declare module 'stripe' {
       subscription: string;
 
       /**
-       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
-       */
-      billing_thresholds?: Stripe.Emptyable<
-        SubscriptionItemCreateParams.BillingThresholds
-      >;
-
-      /**
        * The coupons to redeem into discounts for the subscription item.
        */
       discounts?: Stripe.Emptyable<
@@ -80,13 +73,6 @@ declare module 'stripe' {
     }
 
     namespace SubscriptionItemCreateParams {
-      interface BillingThresholds {
-        /**
-         * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
-         */
-        usage_gte: number;
-      }
-
       interface Discount {
         /**
          * ID of the coupon to create a new discount for.
@@ -117,7 +103,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * The ID of the product that this price will belong to.
+         * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
          */
         product: string;
 
@@ -173,13 +159,6 @@ declare module 'stripe' {
     }
 
     interface SubscriptionItemUpdateParams {
-      /**
-       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
-       */
-      billing_thresholds?: Stripe.Emptyable<
-        SubscriptionItemUpdateParams.BillingThresholds
-      >;
-
       /**
        * The coupons to redeem into discounts for the subscription item.
        */
@@ -250,13 +229,6 @@ declare module 'stripe' {
     }
 
     namespace SubscriptionItemUpdateParams {
-      interface BillingThresholds {
-        /**
-         * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
-         */
-        usage_gte: number;
-      }
-
       interface Discount {
         /**
          * ID of the coupon to create a new discount for.
@@ -287,7 +259,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * The ID of the product that this price will belong to.
+         * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
          */
         product: string;
 
@@ -368,40 +340,6 @@ declare module 'stripe' {
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
     }
 
-    interface SubscriptionItemCreateUsageRecordParams {
-      /**
-       * The usage quantity for the specified timestamp.
-       */
-      quantity: number;
-
-      /**
-       * Valid values are `increment` (default) or `set`. When using `increment` the specified `quantity` will be added to the usage at the specified timestamp. The `set` action will overwrite the usage quantity at that timestamp. If the subscription has [billing thresholds](https://stripe.com/docs/api/subscriptions/object#subscription_object-billing_thresholds), `increment` is the only allowed value.
-       */
-      action?: SubscriptionItemCreateUsageRecordParams.Action;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * The timestamp for the usage event. This timestamp must be within the current billing period of the subscription of the provided `subscription_item`, and must not be in the future. When passing `"now"`, Stripe records usage for the current time. Default is `"now"` if a value is not provided.
-       */
-      timestamp?: 'now' | number;
-    }
-
-    namespace SubscriptionItemCreateUsageRecordParams {
-      type Action = 'increment' | 'set';
-    }
-
-    interface SubscriptionItemListUsageRecordSummariesParams
-      extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     class SubscriptionItemsResource {
       /**
        * Adds a new item to an existing subscription. No existing items will be changed or replaced.
@@ -453,36 +391,6 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedSubscriptionItem>>;
-
-      /**
-       * Creates a usage record for a specified subscription item and date, and fills it with a quantity.
-       *
-       * Usage records provide quantity information that Stripe uses to track how much a customer is using your service. With usage information and the pricing model set up by the [metered billing](https://stripe.com/docs/billing/subscriptions/metered-billing) plan, Stripe helps you send accurate invoices to your customers.
-       *
-       * The default calculation for usage is to add up all the quantity values of the usage records within a billing period. You can change this default behavior with the billing plan's aggregate_usage [parameter](https://stripe.com/docs/api/plans/create#create_plan-aggregate_usage). When there is more than one usage record with the same timestamp, Stripe adds the quantity values together. In most cases, this is the desired resolution, however, you can change this behavior with the action parameter.
-       *
-       * The default pricing model for metered billing is [per-unit pricing. For finer granularity, you can configure metered billing to have a <a href="https://stripe.com/docs/billing/subscriptions/tiers">tiered pricing](https://stripe.com/docs/api/plans/object#plan_object-billing_scheme) model.
-       */
-      createUsageRecord(
-        id: string,
-        params: SubscriptionItemCreateUsageRecordParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.UsageRecord>>;
-
-      /**
-       * For the specified subscription item, returns a list of summary objects. Each object in the list provides usage information that's been summarized from multiple usage records and over a subscription billing period (e.g., 15 usage records in the month of September).
-       *
-       * The list is sorted in reverse-chronological order (newest first). The first list item represents the most current usage period that hasn't ended yet. Since new usage records can still be added, the returned summary information for the subscription item's ID should be seen as unstable until the subscription billing period ends.
-       */
-      listUsageRecordSummaries(
-        id: string,
-        params?: SubscriptionItemListUsageRecordSummariesParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.UsageRecordSummary>;
-      listUsageRecordSummaries(
-        id: string,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.UsageRecordSummary>;
     }
   }
 }

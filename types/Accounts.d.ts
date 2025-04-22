@@ -33,14 +33,14 @@ declare module 'stripe' {
       business_profile?: Account.BusinessProfile | null;
 
       /**
-       * The business type. After you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions), this property is only returned for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
+       * The business type.
        */
       business_type?: Account.BusinessType | null;
 
       capabilities?: Account.Capabilities;
 
       /**
-       * Whether the account can create live charges.
+       * Whether the account can process charges.
        */
       charges_enabled: boolean;
 
@@ -86,9 +86,14 @@ declare module 'stripe' {
       future_requirements?: Account.FutureRequirements;
 
       /**
+       * The groups associated with the account.
+       */
+      groups?: Account.Groups | null;
+
+      /**
        * This is an object representing a person associated with a Stripe account.
        *
-       * A platform cannot access a person for an account where [account.controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`, which includes Standard and Express accounts, after creating an Account Link or Account Session to start Connect onboarding.
+       * A platform can only access a subset of data in a person for an account where [account.controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`, which includes Standard and Express accounts, after creating an Account Link or Account Session to start Connect onboarding.
        *
        * See the [Standard onboarding](https://stripe.com/connect/standard-accounts) or [Express onboarding](https://stripe.com/connect/express-accounts) documentation for information about prefilling information and account onboarding steps. Learn more about [handling identity verification with the API](https://stripe.com/connect/handling-api-verification#person-information).
        */
@@ -100,7 +105,7 @@ declare module 'stripe' {
       metadata?: Stripe.Metadata;
 
       /**
-       * Whether Stripe can send payouts to this account.
+       * Whether the funds in this account can be paid out.
        */
       payouts_enabled: boolean;
 
@@ -124,12 +129,12 @@ declare module 'stripe' {
         /**
          * The applicant's gross annual revenue for its preceding fiscal year.
          */
-        annual_revenue: BusinessProfile.AnnualRevenue | null;
+        annual_revenue?: BusinessProfile.AnnualRevenue | null;
 
         /**
          * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
          */
-        estimated_worker_count: number | null;
+        estimated_worker_count?: number | null;
 
         /**
          * [The merchant category code for the account](https://stripe.com/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
@@ -228,6 +233,11 @@ declare module 'stripe' {
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
 
         /**
+         * The status of the Alma capability of the account, or whether the account can directly process Alma payments.
+         */
+        alma_payments?: Capabilities.AlmaPayments;
+
+        /**
          * The status of the AmazonPay capability of the account, or whether the account can directly process AmazonPay payments.
          */
         amazon_pay_payments?: Capabilities.AmazonPayPayments;
@@ -251,6 +261,11 @@ declare module 'stripe' {
          * The status of the customer_balance payments capability of the account, or whether the account can directly process customer_balance charges.
          */
         bank_transfer_payments?: Capabilities.BankTransferPayments;
+
+        /**
+         * The status of the Billie capability of the account, or whether the account can directly process Billie payments.
+         */
+        billie_payments?: Capabilities.BilliePayments;
 
         /**
          * The status of the blik payments capability of the account, or whether the account can directly process blik charges.
@@ -328,6 +343,11 @@ declare module 'stripe' {
         jp_bank_transfer_payments?: Capabilities.JpBankTransferPayments;
 
         /**
+         * The status of the KakaoPay capability of the account, or whether the account can directly process KakaoPay payments.
+         */
+        kakao_pay_payments?: Capabilities.KakaoPayPayments;
+
+        /**
          * The status of the Klarna payments capability of the account, or whether the account can directly process Klarna charges.
          */
         klarna_payments?: Capabilities.KlarnaPayments;
@@ -336,6 +356,11 @@ declare module 'stripe' {
          * The status of the konbini payments capability of the account, or whether the account can directly process konbini charges.
          */
         konbini_payments?: Capabilities.KonbiniPayments;
+
+        /**
+         * The status of the KrCard capability of the account, or whether the account can directly process KrCard payments.
+         */
+        kr_card_payments?: Capabilities.KrCardPayments;
 
         /**
          * The status of the legacy payments capability of the account.
@@ -363,6 +388,16 @@ declare module 'stripe' {
         mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
 
         /**
+         * The status of the NaverPay capability of the account, or whether the account can directly process NaverPay payments.
+         */
+        naver_pay_payments?: Capabilities.NaverPayPayments;
+
+        /**
+         * The status of the New Zealand BECS Direct Debit payments capability of the account, or whether the account can directly process New Zealand BECS Direct Debit charges.
+         */
+        nz_bank_account_becs_debit_payments?: Capabilities.NzBankAccountBecsDebitPayments;
+
+        /**
          * The status of the OXXO payments capability of the account, or whether the account can directly process OXXO charges.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -371,6 +406,16 @@ declare module 'stripe' {
          * The status of the P24 payments capability of the account, or whether the account can directly process P24 charges.
          */
         p24_payments?: Capabilities.P24Payments;
+
+        /**
+         * The status of the pay_by_bank payments capability of the account, or whether the account can directly process pay_by_bank charges.
+         */
+        pay_by_bank_payments?: Capabilities.PayByBankPayments;
+
+        /**
+         * The status of the Payco capability of the account, or whether the account can directly process Payco payments.
+         */
+        payco_payments?: Capabilities.PaycoPayments;
 
         /**
          * The status of the paynow payments capability of the account, or whether the account can directly process paynow charges.
@@ -386,6 +431,16 @@ declare module 'stripe' {
          * The status of the RevolutPay capability of the account, or whether the account can directly process RevolutPay payments.
          */
         revolut_pay_payments?: Capabilities.RevolutPayPayments;
+
+        /**
+         * The status of the SamsungPay capability of the account, or whether the account can directly process SamsungPay payments.
+         */
+        samsung_pay_payments?: Capabilities.SamsungPayPayments;
+
+        /**
+         * The status of the Satispay capability of the account, or whether the account can directly process Satispay payments.
+         */
+        satispay_payments?: Capabilities.SatispayPayments;
 
         /**
          * The status of the SEPA customer_balance payments (EUR currency) capability of the account, or whether the account can directly process SEPA customer_balance charges.
@@ -455,6 +510,8 @@ declare module 'stripe' {
 
         type AfterpayClearpayPayments = 'active' | 'inactive' | 'pending';
 
+        type AlmaPayments = 'active' | 'inactive' | 'pending';
+
         type AmazonPayPayments = 'active' | 'inactive' | 'pending';
 
         type AuBecsDebitPayments = 'active' | 'inactive' | 'pending';
@@ -464,6 +521,8 @@ declare module 'stripe' {
         type BancontactPayments = 'active' | 'inactive' | 'pending';
 
         type BankTransferPayments = 'active' | 'inactive' | 'pending';
+
+        type BilliePayments = 'active' | 'inactive' | 'pending';
 
         type BlikPayments = 'active' | 'inactive' | 'pending';
 
@@ -495,9 +554,13 @@ declare module 'stripe' {
 
         type JpBankTransferPayments = 'active' | 'inactive' | 'pending';
 
+        type KakaoPayPayments = 'active' | 'inactive' | 'pending';
+
         type KlarnaPayments = 'active' | 'inactive' | 'pending';
 
         type KonbiniPayments = 'active' | 'inactive' | 'pending';
+
+        type KrCardPayments = 'active' | 'inactive' | 'pending';
 
         type LegacyPayments = 'active' | 'inactive' | 'pending';
 
@@ -509,15 +572,27 @@ declare module 'stripe' {
 
         type MxBankTransferPayments = 'active' | 'inactive' | 'pending';
 
+        type NaverPayPayments = 'active' | 'inactive' | 'pending';
+
+        type NzBankAccountBecsDebitPayments = 'active' | 'inactive' | 'pending';
+
         type OxxoPayments = 'active' | 'inactive' | 'pending';
 
         type P24Payments = 'active' | 'inactive' | 'pending';
+
+        type PayByBankPayments = 'active' | 'inactive' | 'pending';
+
+        type PaycoPayments = 'active' | 'inactive' | 'pending';
 
         type PaynowPayments = 'active' | 'inactive' | 'pending';
 
         type PromptpayPayments = 'active' | 'inactive' | 'pending';
 
         type RevolutPayPayments = 'active' | 'inactive' | 'pending';
+
+        type SamsungPayPayments = 'active' | 'inactive' | 'pending';
+
+        type SatispayPayments = 'active' | 'inactive' | 'pending';
 
         type SepaBankTransferPayments = 'active' | 'inactive' | 'pending';
 
@@ -563,6 +638,11 @@ declare module 'stripe' {
         directors_provided?: boolean;
 
         /**
+         * This hash is used to attest that the director information provided to Stripe is both current and correct.
+         */
+        directorship_declaration?: Company.DirectorshipDeclaration | null;
+
+        /**
          * Whether the company's executives have been provided. This Boolean will be `true` if you've manually indicated that all executives are provided via [the `executives_provided` parameter](https://stripe.com/docs/api/accounts/update#update_account-company-executives_provided), or if Stripe determined that sufficient executives were provided.
          */
         executives_provided?: boolean;
@@ -578,17 +658,17 @@ declare module 'stripe' {
         export_purpose_code?: string;
 
         /**
-         * The company's legal name.
+         * The company's legal name. Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
          */
         name?: string | null;
 
         /**
-         * The Kana variation of the company's legal name (Japan only).
+         * The Kana variation of the company's legal name (Japan only). Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
          */
         name_kana?: string | null;
 
         /**
-         * The Kanji variation of the company's legal name (Japan only).
+         * The Kanji variation of the company's legal name (Japan only). Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
          */
         name_kanji?: string | null;
 
@@ -603,12 +683,17 @@ declare module 'stripe' {
         ownership_declaration?: Company.OwnershipDeclaration | null;
 
         /**
+         * This value is used to determine if a business is exempt from providing ultimate beneficial owners. See [this support article](https://support.stripe.com/questions/exemption-from-providing-ownership-details) and [changelog](https://docs.stripe.com/changelog/acacia/2025-01-27/ownership-exemption-reason-accounts-api) for more details.
+         */
+        ownership_exemption_reason?: Company.OwnershipExemptionReason;
+
+        /**
          * The company's phone number (used for verification).
          */
         phone?: string | null;
 
         /**
-         * The category identifying the legal structure of the company or legal entity. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details.
+         * The category identifying the legal structure of the company or legal entity. Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details.
          */
         structure?: Company.Structure;
 
@@ -708,6 +793,23 @@ declare module 'stripe' {
           town: string | null;
         }
 
+        interface DirectorshipDeclaration {
+          /**
+           * The Unix timestamp marking when the directorship declaration attestation was made.
+           */
+          date: number | null;
+
+          /**
+           * The IP address from which the directorship declaration attestation was made.
+           */
+          ip: string | null;
+
+          /**
+           * The user-agent string from the browser where the directorship declaration attestation was made.
+           */
+          user_agent: string | null;
+        }
+
         interface OwnershipDeclaration {
           /**
            * The Unix timestamp marking when the beneficial owner attestation was made.
@@ -724,6 +826,10 @@ declare module 'stripe' {
            */
           user_agent: string | null;
         }
+
+        type OwnershipExemptionReason =
+          | 'qualified_entity_exceeds_ownership_threshold'
+          | 'qualifies_as_financial_institution';
 
         type Structure =
           | 'free_zone_establishment'
@@ -852,7 +958,7 @@ declare module 'stripe' {
         alternatives: Array<FutureRequirements.Alternative> | null;
 
         /**
-         * Date on which `future_requirements` merges with the main `requirements` hash and `future_requirements` becomes empty. After the transition, `currently_due` requirements may immediately become `past_due`, but the account may also be given a grace period depending on its enablement state prior to transitioning.
+         * Date on which `future_requirements` becomes the main `requirements` hash and `future_requirements` becomes empty. After the transition, `currently_due` requirements may immediately become `past_due`, but the account may also be given a grace period depending on its enablement state prior to transitioning.
          */
         current_deadline: number | null;
 
@@ -862,9 +968,9 @@ declare module 'stripe' {
         currently_due: Array<string> | null;
 
         /**
-         * This is typed as a string for consistency with `requirements.disabled_reason`.
+         * This is typed as an enum for consistency with `requirements.disabled_reason`.
          */
-        disabled_reason: string | null;
+        disabled_reason: FutureRequirements.DisabledReason | null;
 
         /**
          * Fields that are `currently_due` and need to be collected again because validation or verification failed.
@@ -872,7 +978,7 @@ declare module 'stripe' {
         errors: Array<FutureRequirements.Error> | null;
 
         /**
-         * Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well.
+         * Fields you must collect when all thresholds are reached. As they become required, they appear in `currently_due` as well.
          */
         eventually_due: Array<string> | null;
 
@@ -900,6 +1006,23 @@ declare module 'stripe' {
           original_fields_due: Array<string>;
         }
 
+        type DisabledReason =
+          | 'action_required.requested_capabilities'
+          | 'listed'
+          | 'other'
+          | 'platform_paused'
+          | 'rejected.fraud'
+          | 'rejected.incomplete_verification'
+          | 'rejected.listed'
+          | 'rejected.other'
+          | 'rejected.platform_fraud'
+          | 'rejected.platform_other'
+          | 'rejected.platform_terms_of_service'
+          | 'rejected.terms_of_service'
+          | 'requirements.past_due'
+          | 'requirements.pending_verification'
+          | 'under_review';
+
         interface Error {
           /**
            * The code for the type of error.
@@ -919,6 +1042,7 @@ declare module 'stripe' {
 
         namespace Error {
           type Code =
+            | 'information_missing'
             | 'invalid_address_city_state_postal_code'
             | 'invalid_address_highway_contract_box'
             | 'invalid_address_private_mailbox'
@@ -931,6 +1055,7 @@ declare module 'stripe' {
             | 'invalid_product_description_length'
             | 'invalid_product_description_url_match'
             | 'invalid_representative_country'
+            | 'invalid_signator'
             | 'invalid_statement_descriptor_business_mismatch'
             | 'invalid_statement_descriptor_denylisted'
             | 'invalid_statement_descriptor_length'
@@ -992,6 +1117,7 @@ declare module 'stripe' {
             | 'verification_document_type_not_supported'
             | 'verification_extraneous_directors'
             | 'verification_failed_address_match'
+            | 'verification_failed_authorizer_authority'
             | 'verification_failed_business_iec_number'
             | 'verification_failed_document_match'
             | 'verification_failed_id_number_match'
@@ -1006,10 +1132,18 @@ declare module 'stripe' {
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
+            | 'verification_rejected_ownership_exemption_reason'
             | 'verification_requires_additional_memorandum_of_associations'
             | 'verification_requires_additional_proof_of_registration'
             | 'verification_supportability';
         }
+      }
+
+      interface Groups {
+        /**
+         * The group the account is in to determine their payments pricing, and null if the account is on customized pricing. [See the Platform pricing tool documentation](https://stripe.com/docs/connect/platform-pricing-tools) for details.
+         */
+        payments_pricing: string | null;
       }
 
       interface Requirements {
@@ -1029,9 +1163,9 @@ declare module 'stripe' {
         currently_due: Array<string> | null;
 
         /**
-         * If the account is disabled, this string describes why. [Learn more about handling verification issues](https://stripe.com/docs/connect/handling-api-verification). Can be `action_required.requested_capabilities`, `requirements.past_due`, `requirements.pending_verification`, `listed`, `platform_paused`, `rejected.fraud`, `rejected.incomplete_verification`, `rejected.listed`, `rejected.other`, `rejected.terms_of_service`, `under_review`, or `other`.
+         * If the account is disabled, this enum describes why. [Learn more about handling verification issues](https://stripe.com/docs/connect/handling-api-verification).
          */
-        disabled_reason: string | null;
+        disabled_reason: Requirements.DisabledReason | null;
 
         /**
          * Fields that are `currently_due` and need to be collected again because validation or verification failed.
@@ -1039,7 +1173,7 @@ declare module 'stripe' {
         errors: Array<Requirements.Error> | null;
 
         /**
-         * Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well, and `current_deadline` becomes set.
+         * Fields you must collect when all thresholds are reached. As they become required, they appear in `currently_due` as well, and `current_deadline` becomes set.
          */
         eventually_due: Array<string> | null;
 
@@ -1067,6 +1201,23 @@ declare module 'stripe' {
           original_fields_due: Array<string>;
         }
 
+        type DisabledReason =
+          | 'action_required.requested_capabilities'
+          | 'listed'
+          | 'other'
+          | 'platform_paused'
+          | 'rejected.fraud'
+          | 'rejected.incomplete_verification'
+          | 'rejected.listed'
+          | 'rejected.other'
+          | 'rejected.platform_fraud'
+          | 'rejected.platform_other'
+          | 'rejected.platform_terms_of_service'
+          | 'rejected.terms_of_service'
+          | 'requirements.past_due'
+          | 'requirements.pending_verification'
+          | 'under_review';
+
         interface Error {
           /**
            * The code for the type of error.
@@ -1086,6 +1237,7 @@ declare module 'stripe' {
 
         namespace Error {
           type Code =
+            | 'information_missing'
             | 'invalid_address_city_state_postal_code'
             | 'invalid_address_highway_contract_box'
             | 'invalid_address_private_mailbox'
@@ -1098,6 +1250,7 @@ declare module 'stripe' {
             | 'invalid_product_description_length'
             | 'invalid_product_description_url_match'
             | 'invalid_representative_country'
+            | 'invalid_signator'
             | 'invalid_statement_descriptor_business_mismatch'
             | 'invalid_statement_descriptor_denylisted'
             | 'invalid_statement_descriptor_length'
@@ -1159,6 +1312,7 @@ declare module 'stripe' {
             | 'verification_document_type_not_supported'
             | 'verification_extraneous_directors'
             | 'verification_failed_address_match'
+            | 'verification_failed_authorizer_authority'
             | 'verification_failed_business_iec_number'
             | 'verification_failed_document_match'
             | 'verification_failed_id_number_match'
@@ -1173,6 +1327,7 @@ declare module 'stripe' {
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
+            | 'verification_rejected_ownership_exemption_reason'
             | 'verification_requires_additional_memorandum_of_associations'
             | 'verification_requires_additional_proof_of_registration'
             | 'verification_supportability';
@@ -1309,6 +1464,15 @@ declare module 'stripe' {
            * The list of default Account Tax IDs to automatically include on invoices. Account Tax IDs get added when an invoice is finalized.
            */
           default_account_tax_ids: Array<string | Stripe.TaxId> | null;
+
+          /**
+           * Whether payment methods should be saved when a payment is completed for a one-time invoices on a hosted invoice page.
+           */
+          hosted_payment_method_save?: Invoices.HostedPaymentMethodSave | null;
+        }
+
+        namespace Invoices {
+          type HostedPaymentMethodSave = 'always' | 'never' | 'offer';
         }
 
         interface Payments {

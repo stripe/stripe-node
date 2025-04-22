@@ -8,6 +8,7 @@
 !/LICENSE
 !/README.md
 !/VERSION
+!/OPENAPI_VERSION
 !/package.json
 !/cjs/**/*
 !/esm/**/*

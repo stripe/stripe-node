@@ -27,6 +27,11 @@ declare module 'stripe' {
       amount: number;
 
       /**
+       * The ID of the checkout session (if any) that created the transaction.
+       */
+      checkout_session: string | Stripe.Checkout.Session | null;
+
+      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created: number;
@@ -72,7 +77,7 @@ declare module 'stripe' {
       metadata: Stripe.Metadata | null;
 
       /**
-       * Transaction type: `adjustment`, `applied_to_invoice`, `credit_note`, `initial`, `invoice_overpaid`, `invoice_too_large`, `invoice_too_small`, `unspent_receiver_credit`, or `unapplied_from_invoice`. See the [Customer Balance page](https://stripe.com/docs/billing/customer/balance#types) to learn more about transaction types.
+       * Transaction type: `adjustment`, `applied_to_invoice`, `credit_note`, `initial`, `invoice_overpaid`, `invoice_too_large`, `invoice_too_small`, `unspent_receiver_credit`, `unapplied_from_invoice`, `checkout_session_subscription_payment`, or `checkout_session_subscription_payment_canceled`. See the [Customer Balance page](https://stripe.com/docs/billing/customer/balance#types) to learn more about transaction types.
        */
       type: CustomerBalanceTransaction.Type;
     }
@@ -81,6 +86,8 @@ declare module 'stripe' {
       type Type =
         | 'adjustment'
         | 'applied_to_invoice'
+        | 'checkout_session_subscription_payment'
+        | 'checkout_session_subscription_payment_canceled'
         | 'credit_note'
         | 'initial'
         | 'invoice_overpaid'

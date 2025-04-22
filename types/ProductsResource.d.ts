@@ -107,6 +107,11 @@ declare module 'stripe' {
         custom_unit_amount?: DefaultPriceData.CustomUnitAmount;
 
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
          * The recurring components of a price such as `interval` and `interval_count`.
          */
         recurring?: DefaultPriceData.Recurring;

@@ -73,6 +73,11 @@ declare module 'stripe' {
       external_account?: string | AccountCreateParams.ExternalAccount;
 
       /**
+       * A hash of account group type to tokens. These are account groups this account should be added to.
+       */
+      groups?: AccountCreateParams.Groups;
+
+      /**
        * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`. Once you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions), this property can only be updated for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
        */
       individual?: AccountCreateParams.Individual;
@@ -210,6 +215,11 @@ declare module 'stripe' {
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
 
         /**
+         * The alma_payments capability.
+         */
+        alma_payments?: Capabilities.AlmaPayments;
+
+        /**
          * The amazon_pay_payments capability.
          */
         amazon_pay_payments?: Capabilities.AmazonPayPayments;
@@ -233,6 +243,11 @@ declare module 'stripe' {
          * The bank_transfer_payments capability.
          */
         bank_transfer_payments?: Capabilities.BankTransferPayments;
+
+        /**
+         * The billie_payments capability.
+         */
+        billie_payments?: Capabilities.BilliePayments;
 
         /**
          * The blik_payments capability.
@@ -310,6 +325,11 @@ declare module 'stripe' {
         jp_bank_transfer_payments?: Capabilities.JpBankTransferPayments;
 
         /**
+         * The kakao_pay_payments capability.
+         */
+        kakao_pay_payments?: Capabilities.KakaoPayPayments;
+
+        /**
          * The klarna_payments capability.
          */
         klarna_payments?: Capabilities.KlarnaPayments;
@@ -318,6 +338,11 @@ declare module 'stripe' {
          * The konbini_payments capability.
          */
         konbini_payments?: Capabilities.KonbiniPayments;
+
+        /**
+         * The kr_card_payments capability.
+         */
+        kr_card_payments?: Capabilities.KrCardPayments;
 
         /**
          * The legacy_payments capability.
@@ -345,6 +370,16 @@ declare module 'stripe' {
         mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
 
         /**
+         * The naver_pay_payments capability.
+         */
+        naver_pay_payments?: Capabilities.NaverPayPayments;
+
+        /**
+         * The nz_bank_account_becs_debit_payments capability.
+         */
+        nz_bank_account_becs_debit_payments?: Capabilities.NzBankAccountBecsDebitPayments;
+
+        /**
          * The oxxo_payments capability.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -353,6 +388,16 @@ declare module 'stripe' {
          * The p24_payments capability.
          */
         p24_payments?: Capabilities.P24Payments;
+
+        /**
+         * The pay_by_bank_payments capability.
+         */
+        pay_by_bank_payments?: Capabilities.PayByBankPayments;
+
+        /**
+         * The payco_payments capability.
+         */
+        payco_payments?: Capabilities.PaycoPayments;
 
         /**
          * The paynow_payments capability.
@@ -368,6 +413,16 @@ declare module 'stripe' {
          * The revolut_pay_payments capability.
          */
         revolut_pay_payments?: Capabilities.RevolutPayPayments;
+
+        /**
+         * The samsung_pay_payments capability.
+         */
+        samsung_pay_payments?: Capabilities.SamsungPayPayments;
+
+        /**
+         * The satispay_payments capability.
+         */
+        satispay_payments?: Capabilities.SatispayPayments;
 
         /**
          * The sepa_bank_transfer_payments capability.
@@ -452,6 +507,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface AlmaPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface AmazonPayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -481,6 +543,13 @@ declare module 'stripe' {
         }
 
         interface BankTransferPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface BilliePayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -592,6 +661,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface KakaoPayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface KlarnaPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -600,6 +676,13 @@ declare module 'stripe' {
         }
 
         interface KonbiniPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface KrCardPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -641,6 +724,20 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface NaverPayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface NzBankAccountBecsDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface OxxoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -649,6 +746,20 @@ declare module 'stripe' {
         }
 
         interface P24Payments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface PayByBankPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface PaycoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -670,6 +781,20 @@ declare module 'stripe' {
         }
 
         interface RevolutPayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface SamsungPayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface SatispayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -783,6 +908,11 @@ declare module 'stripe' {
         directors_provided?: boolean;
 
         /**
+         * This hash is used to attest that the directors information provided to Stripe is both current and correct.
+         */
+        directorship_declaration?: Company.DirectorshipDeclaration;
+
+        /**
          * Whether the company's executives have been provided. Set this Boolean to `true` after creating all the company's executives with [the Persons API](https://stripe.com/api/persons) for accounts with a `relationship.executive` requirement.
          */
         executives_provided?: boolean;
@@ -823,6 +953,13 @@ declare module 'stripe' {
         ownership_declaration?: Company.OwnershipDeclaration;
 
         /**
+         * This value is used to determine if a business is exempt from providing ultimate beneficial owners. See [this support article](https://support.stripe.com/questions/exemption-from-providing-ownership-details) and [changelog](https://docs.stripe.com/changelog/acacia/2025-01-27/ownership-exemption-reason-accounts-api) for more details.
+         */
+        ownership_exemption_reason?: Stripe.Emptyable<
+          Company.OwnershipExemptionReason
+        >;
+
+        /**
          * The company's phone number (used for verification).
          */
         phone?: string;
@@ -859,6 +996,23 @@ declare module 'stripe' {
       }
 
       namespace Company {
+        interface DirectorshipDeclaration {
+          /**
+           * The Unix timestamp marking when the directorship declaration attestation was made.
+           */
+          date?: number;
+
+          /**
+           * The IP address from which the directorship declaration attestation was made.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the directorship declaration attestation was made.
+           */
+          user_agent?: string;
+        }
+
         interface OwnershipDeclaration {
           /**
            * The Unix timestamp marking when the beneficial owner attestation was made.
@@ -875,6 +1029,10 @@ declare module 'stripe' {
            */
           user_agent?: string;
         }
+
+        type OwnershipExemptionReason =
+          | 'qualified_entity_exceeds_ownership_threshold'
+          | 'qualifies_as_financial_institution';
 
         type Structure =
           | 'free_zone_establishment'
@@ -1017,6 +1175,11 @@ declare module 'stripe' {
          * One or more documents showing the company's proof of registration with the national business registry.
          */
         proof_of_registration?: Documents.ProofOfRegistration;
+
+        /**
+         * One or more documents that demonstrate proof of ultimate beneficial ownership.
+         */
+        proof_of_ultimate_beneficial_ownership?: Documents.ProofOfUltimateBeneficialOwnership;
       }
 
       namespace Documents {
@@ -1068,6 +1231,13 @@ declare module 'stripe' {
            */
           files?: Array<string>;
         }
+
+        interface ProofOfUltimateBeneficialOwnership {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
       }
 
       interface ExternalAccount {
@@ -1105,6 +1275,13 @@ declare module 'stripe' {
          * The account number for the bank account, in string form. Must be a checking account.
          */
         account_number: string;
+      }
+
+      interface Groups {
+        /**
+         * The group the account is in to determine their payments pricing, and null if the account is on customized pricing. [See the Platform pricing tool documentation](https://stripe.com/docs/connect/platform-pricing-tools) for details.
+         */
+        payments_pricing?: Stripe.Emptyable<string>;
       }
 
       interface Individual {
@@ -1154,7 +1331,7 @@ declare module 'stripe' {
         full_name_aliases?: Stripe.Emptyable<Array<string>>;
 
         /**
-         * The individual's gender (International regulations require either "male" or "female").
+         * The individual's gender
          */
         gender?: string;
 
@@ -1332,6 +1509,11 @@ declare module 'stripe' {
         card_payments?: Settings.CardPayments;
 
         /**
+         * Settings specific to the account's use of Invoices.
+         */
+        invoices?: Settings.Invoices;
+
+        /**
          * Settings that apply across payment methods for charging on the account.
          */
         payments?: Settings.Payments;
@@ -1437,6 +1619,17 @@ declare module 'stripe' {
              */
             cvc_failure?: boolean;
           }
+        }
+
+        interface Invoices {
+          /**
+           * Whether payment methods should be saved when a payment is completed for a one-time invoices on a hosted invoice page.
+           */
+          hosted_payment_method_save?: Invoices.HostedPaymentMethodSave;
+        }
+
+        namespace Invoices {
+          type HostedPaymentMethodSave = 'always' | 'never' | 'offer';
         }
 
         interface Payments {
@@ -1635,6 +1828,11 @@ declare module 'stripe' {
       >;
 
       /**
+       * A hash of account group type to tokens. These are account groups this account should be added to.
+       */
+      groups?: AccountUpdateParams.Groups;
+
+      /**
        * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`. Once you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions), this property can only be updated for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts.
        */
       individual?: AccountUpdateParams.Individual;
@@ -1805,6 +2003,11 @@ declare module 'stripe' {
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
 
         /**
+         * The alma_payments capability.
+         */
+        alma_payments?: Capabilities.AlmaPayments;
+
+        /**
          * The amazon_pay_payments capability.
          */
         amazon_pay_payments?: Capabilities.AmazonPayPayments;
@@ -1828,6 +2031,11 @@ declare module 'stripe' {
          * The bank_transfer_payments capability.
          */
         bank_transfer_payments?: Capabilities.BankTransferPayments;
+
+        /**
+         * The billie_payments capability.
+         */
+        billie_payments?: Capabilities.BilliePayments;
 
         /**
          * The blik_payments capability.
@@ -1905,6 +2113,11 @@ declare module 'stripe' {
         jp_bank_transfer_payments?: Capabilities.JpBankTransferPayments;
 
         /**
+         * The kakao_pay_payments capability.
+         */
+        kakao_pay_payments?: Capabilities.KakaoPayPayments;
+
+        /**
          * The klarna_payments capability.
          */
         klarna_payments?: Capabilities.KlarnaPayments;
@@ -1913,6 +2126,11 @@ declare module 'stripe' {
          * The konbini_payments capability.
          */
         konbini_payments?: Capabilities.KonbiniPayments;
+
+        /**
+         * The kr_card_payments capability.
+         */
+        kr_card_payments?: Capabilities.KrCardPayments;
 
         /**
          * The legacy_payments capability.
@@ -1940,6 +2158,16 @@ declare module 'stripe' {
         mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
 
         /**
+         * The naver_pay_payments capability.
+         */
+        naver_pay_payments?: Capabilities.NaverPayPayments;
+
+        /**
+         * The nz_bank_account_becs_debit_payments capability.
+         */
+        nz_bank_account_becs_debit_payments?: Capabilities.NzBankAccountBecsDebitPayments;
+
+        /**
          * The oxxo_payments capability.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -1948,6 +2176,16 @@ declare module 'stripe' {
          * The p24_payments capability.
          */
         p24_payments?: Capabilities.P24Payments;
+
+        /**
+         * The pay_by_bank_payments capability.
+         */
+        pay_by_bank_payments?: Capabilities.PayByBankPayments;
+
+        /**
+         * The payco_payments capability.
+         */
+        payco_payments?: Capabilities.PaycoPayments;
 
         /**
          * The paynow_payments capability.
@@ -1963,6 +2201,16 @@ declare module 'stripe' {
          * The revolut_pay_payments capability.
          */
         revolut_pay_payments?: Capabilities.RevolutPayPayments;
+
+        /**
+         * The samsung_pay_payments capability.
+         */
+        samsung_pay_payments?: Capabilities.SamsungPayPayments;
+
+        /**
+         * The satispay_payments capability.
+         */
+        satispay_payments?: Capabilities.SatispayPayments;
 
         /**
          * The sepa_bank_transfer_payments capability.
@@ -2047,6 +2295,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface AlmaPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface AmazonPayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -2076,6 +2331,13 @@ declare module 'stripe' {
         }
 
         interface BankTransferPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface BilliePayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2187,6 +2449,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface KakaoPayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface KlarnaPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -2195,6 +2464,13 @@ declare module 'stripe' {
         }
 
         interface KonbiniPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface KrCardPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2236,6 +2512,20 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface NaverPayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface NzBankAccountBecsDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface OxxoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -2244,6 +2534,20 @@ declare module 'stripe' {
         }
 
         interface P24Payments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface PayByBankPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface PaycoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2265,6 +2569,20 @@ declare module 'stripe' {
         }
 
         interface RevolutPayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface SamsungPayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface SatispayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2421,6 +2739,11 @@ declare module 'stripe' {
         directors_provided?: boolean;
 
         /**
+         * This hash is used to attest that the directors information provided to Stripe is both current and correct.
+         */
+        directorship_declaration?: Company.DirectorshipDeclaration;
+
+        /**
          * Whether the company's executives have been provided. Set this Boolean to `true` after creating all the company's executives with [the Persons API](https://stripe.com/api/persons) for accounts with a `relationship.executive` requirement.
          */
         executives_provided?: boolean;
@@ -2461,6 +2784,13 @@ declare module 'stripe' {
         ownership_declaration?: Company.OwnershipDeclaration;
 
         /**
+         * This value is used to determine if a business is exempt from providing ultimate beneficial owners. See [this support article](https://support.stripe.com/questions/exemption-from-providing-ownership-details) and [changelog](https://docs.stripe.com/changelog/acacia/2025-01-27/ownership-exemption-reason-accounts-api) for more details.
+         */
+        ownership_exemption_reason?: Stripe.Emptyable<
+          Company.OwnershipExemptionReason
+        >;
+
+        /**
          * The company's phone number (used for verification).
          */
         phone?: string;
@@ -2497,6 +2827,23 @@ declare module 'stripe' {
       }
 
       namespace Company {
+        interface DirectorshipDeclaration {
+          /**
+           * The Unix timestamp marking when the directorship declaration attestation was made.
+           */
+          date?: number;
+
+          /**
+           * The IP address from which the directorship declaration attestation was made.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the directorship declaration attestation was made.
+           */
+          user_agent?: string;
+        }
+
         interface OwnershipDeclaration {
           /**
            * The Unix timestamp marking when the beneficial owner attestation was made.
@@ -2513,6 +2860,10 @@ declare module 'stripe' {
            */
           user_agent?: string;
         }
+
+        type OwnershipExemptionReason =
+          | 'qualified_entity_exceeds_ownership_threshold'
+          | 'qualifies_as_financial_institution';
 
         type Structure =
           | 'free_zone_establishment'
@@ -2596,6 +2947,11 @@ declare module 'stripe' {
          * One or more documents showing the company's proof of registration with the national business registry.
          */
         proof_of_registration?: Documents.ProofOfRegistration;
+
+        /**
+         * One or more documents that demonstrate proof of ultimate beneficial ownership.
+         */
+        proof_of_ultimate_beneficial_ownership?: Documents.ProofOfUltimateBeneficialOwnership;
       }
 
       namespace Documents {
@@ -2647,6 +3003,20 @@ declare module 'stripe' {
            */
           files?: Array<string>;
         }
+
+        interface ProofOfUltimateBeneficialOwnership {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+      }
+
+      interface Groups {
+        /**
+         * The group the account is in to determine their payments pricing, and null if the account is on customized pricing. [See the Platform pricing tool documentation](https://stripe.com/docs/connect/platform-pricing-tools) for details.
+         */
+        payments_pricing?: Stripe.Emptyable<string>;
       }
 
       interface Individual {
@@ -2696,7 +3066,7 @@ declare module 'stripe' {
         full_name_aliases?: Stripe.Emptyable<Array<string>>;
 
         /**
-         * The individual's gender (International regulations require either "male" or "female").
+         * The individual's gender
          */
         gender?: string;
 
@@ -2991,6 +3361,15 @@ declare module 'stripe' {
            * The list of default Account Tax IDs to automatically include on invoices. Account Tax IDs get added when an invoice is finalized.
            */
           default_account_tax_ids?: Stripe.Emptyable<Array<string>>;
+
+          /**
+           * Whether payment methods should be saved when a payment is completed for a one-time invoices on a hosted invoice page.
+           */
+          hosted_payment_method_save?: Invoices.HostedPaymentMethodSave;
+        }
+
+        namespace Invoices {
+          type HostedPaymentMethodSave = 'always' | 'never' | 'offer';
         }
 
         interface Payments {
@@ -3130,7 +3509,7 @@ declare module 'stripe' {
 
     interface AccountCreateExternalAccountParams {
       /**
-       * Please refer to full [documentation](https://stripe.com/docs/api) instead.
+       * A token, like the ones returned by [Stripe.js](https://stripe.com/docs/js) or a dictionary containing a user's external account details (with the options shown below). Please refer to full [documentation](https://stripe.com/docs/api/external_accounts) instead.
        */
       external_account:
         | string
@@ -3361,7 +3740,7 @@ declare module 'stripe' {
       /**
        * Indicates if the person or any of their representatives, family members, or other closely related persons, declares that they hold or have held an important public job or function, in any jurisdiction.
        */
-      political_exposure?: string;
+      political_exposure?: AccountCreatePersonParams.PoliticalExposure;
 
       /**
        * The person's registered address.
@@ -3468,7 +3847,14 @@ declare module 'stripe' {
         }
       }
 
+      type PoliticalExposure = 'existing' | 'none';
+
       interface Relationship {
+        /**
+         * Whether the person is the authorizer of the account's representative.
+         */
+        authorizer?: boolean;
+
         /**
          * Whether the person is a director of the account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
          */
@@ -3585,6 +3971,11 @@ declare module 'stripe' {
 
     namespace AccountListPersonsParams {
       interface Relationship {
+        /**
+         * A filter on the list of people returned based on whether these people are authorizers of the account's representative.
+         */
+        authorizer?: boolean;
+
         /**
          * A filter on the list of people returned based on whether these people are directors of the account's company.
          */
@@ -3891,7 +4282,7 @@ declare module 'stripe' {
       /**
        * Indicates if the person or any of their representatives, family members, or other closely related persons, declares that they hold or have held an important public job or function, in any jurisdiction.
        */
-      political_exposure?: string;
+      political_exposure?: AccountUpdatePersonParams.PoliticalExposure;
 
       /**
        * The person's registered address.
@@ -3998,7 +4389,14 @@ declare module 'stripe' {
         }
       }
 
+      type PoliticalExposure = 'existing' | 'none';
+
       interface Relationship {
+        /**
+         * Whether the person is the authorizer of the account's representative.
+         */
+        authorizer?: boolean;
+
         /**
          * Whether the person is a director of the account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
          */
@@ -4174,7 +4572,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.ExternalAccount>>;
 
       /**
-       * Creates a single-use login link for a connected account to access the Express Dashboard.
+       * Creates a login link for a connected account to access the Express Dashboard.
        *
        * You can only create login links for accounts that use the [Express Dashboard](https://stripe.com/connect/express-dashboard) and are connected to your platform.
        */

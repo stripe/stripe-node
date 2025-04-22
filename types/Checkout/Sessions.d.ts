@@ -31,6 +31,11 @@ declare module 'stripe' {
         object: 'checkout.session';
 
         /**
+         * Settings for price localization with [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing).
+         */
+        adaptive_pricing: Session.AdaptivePricing | null;
+
+        /**
          * When set, provides configuration for actions to take if this Checkout Session expires.
          */
         after_expiration: Session.AfterExpiration | null;
@@ -70,9 +75,14 @@ declare module 'stripe' {
         client_reference_id: string | null;
 
         /**
-         * Client secret to be used when initializing Stripe.js embedded checkout.
+         * The client secret of your Checkout Session. Applies to Checkout Sessions with `ui_mode: embedded`. Client secret to be used when initializing Stripe.js embedded checkout.
          */
         client_secret: string | null;
+
+        /**
+         * Information about the customer collected within the Checkout Session.
+         */
+        collected_information: Session.CollectedInformation | null;
 
         /**
          * Results of `consent_collection` for this session.
@@ -95,7 +105,7 @@ declare module 'stripe' {
         currency: string | null;
 
         /**
-         * Currency conversion details for [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing) sessions
+         * Currency conversion details for [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing) sessions created before 2025-03-31.
          */
         currency_conversion: Session.CurrencyConversion | null;
 
@@ -133,6 +143,11 @@ declare module 'stripe' {
          * complete, use the `customer` attribute.
          */
         customer_email: string | null;
+
+        /**
+         * List of coupons and promotion codes attached to the Checkout Session.
+         */
+        discounts: Array<Session.Discount> | null;
 
         /**
          * The timestamp at which the Checkout Session will expire.
@@ -175,6 +190,11 @@ declare module 'stripe' {
         mode: Session.Mode;
 
         /**
+         * The optional items presented to the customer at checkout.
+         */
+        optional_items?: Array<Session.OptionalItem> | null;
+
+        /**
          * The ID of the PaymentIntent for Checkout Sessions in `payment` mode. You can't confirm or cancel the PaymentIntent for a Checkout Session. To cancel, [expire the Checkout Session](https://stripe.com/docs/api/checkout/sessions/expire) instead.
          */
         payment_intent: string | Stripe.PaymentIntent | null;
@@ -211,7 +231,16 @@ declare module 'stripe' {
          */
         payment_status: Session.PaymentStatus;
 
+        /**
+         * This property is used to set up permissions for various actions (e.g., update) on the CheckoutSession object.
+         *
+         * For specific permissions, please refer to their dedicated subsections, such as `permissions.update.shipping_details`.
+         */
+        permissions: Session.Permissions | null;
+
         phone_number_collection?: Session.PhoneNumberCollection;
+
+        presentment_details?: Session.PresentmentDetails;
 
         /**
          * The ID of the original expired Checkout Session that triggered the recovery flow.
@@ -247,11 +276,6 @@ declare module 'stripe' {
          * The details of the customer cost of shipping, including the customer chosen ShippingRate.
          */
         shipping_cost: Session.ShippingCost | null;
-
-        /**
-         * Shipping information for this Checkout Session.
-         */
-        shipping_details: Session.ShippingDetails | null;
 
         /**
          * The shipping rate options applied to this Session.
@@ -294,13 +318,20 @@ declare module 'stripe' {
         ui_mode: Session.UiMode | null;
 
         /**
-         * The URL to the Checkout Session. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://stripe.com/docs/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
+         * The URL to the Checkout Session. Applies to Checkout Sessions with `ui_mode: hosted`. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://stripe.com/docs/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
          * This value is only present when the session is active.
          */
         url: string | null;
       }
 
       namespace Session {
+        interface AdaptivePricing {
+          /**
+           * Whether Adaptive Pricing is enabled.
+           */
+          enabled: boolean;
+        }
+
         interface AfterExpiration {
           /**
            * When set, configuration used to recover the Checkout Session on expiry.
@@ -372,6 +403,24 @@ declare module 'stripe' {
         }
 
         type BillingAddressCollection = 'auto' | 'required';
+
+        interface CollectedInformation {
+          /**
+           * Shipping information for this Checkout Session.
+           */
+          shipping_details: CollectedInformation.ShippingDetails | null;
+        }
+
+        namespace CollectedInformation {
+          interface ShippingDetails {
+            address: Stripe.Address;
+
+            /**
+             * Customer name.
+             */
+            name: string;
+          }
+        }
 
         interface Consent {
           /**
@@ -490,7 +539,7 @@ declare module 'stripe' {
 
           interface TaxId {
             /**
-             * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, or `unknown`
+             * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, or `unknown`
              */
             type: TaxId.Type;
 
@@ -504,20 +553,28 @@ declare module 'stripe' {
             type Type =
               | 'ad_nrt'
               | 'ae_trn'
+              | 'al_tin'
+              | 'am_tin'
+              | 'ao_tin'
               | 'ar_cuit'
               | 'au_abn'
               | 'au_arn'
+              | 'ba_tin'
+              | 'bb_tin'
               | 'bg_uic'
               | 'bh_vat'
               | 'bo_tin'
               | 'br_cnpj'
               | 'br_cpf'
+              | 'bs_tin'
+              | 'by_tin'
               | 'ca_bn'
               | 'ca_gst_hst'
               | 'ca_pst_bc'
               | 'ca_pst_mb'
               | 'ca_pst_sk'
               | 'ca_qst'
+              | 'cd_nif'
               | 'ch_uid'
               | 'ch_vat'
               | 'cl_tin'
@@ -533,6 +590,7 @@ declare module 'stripe' {
               | 'eu_vat'
               | 'gb_vat'
               | 'ge_vat'
+              | 'gn_nif'
               | 'hk_br'
               | 'hr_oib'
               | 'hu_tin'
@@ -544,9 +602,16 @@ declare module 'stripe' {
               | 'jp_rn'
               | 'jp_trn'
               | 'ke_pin'
+              | 'kh_tin'
               | 'kr_brn'
               | 'kz_bin'
               | 'li_uid'
+              | 'li_vat'
+              | 'ma_vat'
+              | 'md_vat'
+              | 'me_pib'
+              | 'mk_vat'
+              | 'mr_nif'
               | 'mx_rfc'
               | 'my_frp'
               | 'my_itn'
@@ -554,6 +619,7 @@ declare module 'stripe' {
               | 'ng_tin'
               | 'no_vat'
               | 'no_voec'
+              | 'np_pan'
               | 'nz_gst'
               | 'om_vat'
               | 'pe_ruc'
@@ -566,17 +632,26 @@ declare module 'stripe' {
               | 'sg_gst'
               | 'sg_uen'
               | 'si_tin'
+              | 'sn_ninea'
+              | 'sr_fin'
               | 'sv_nit'
               | 'th_vat'
+              | 'tj_tin'
               | 'tr_tin'
               | 'tw_vat'
+              | 'tz_vat'
               | 'ua_vat'
+              | 'ug_tin'
               | 'unknown'
               | 'us_ein'
               | 'uy_ruc'
+              | 'uz_tin'
+              | 'uz_vat'
               | 've_rif'
               | 'vn_tin'
-              | 'za_vat';
+              | 'za_vat'
+              | 'zm_tin'
+              | 'zw_tin';
           }
         }
 
@@ -748,6 +823,18 @@ declare module 'stripe' {
           }
         }
 
+        interface Discount {
+          /**
+           * Coupon attached to the Checkout Session.
+           */
+          coupon: string | Stripe.Coupon | null;
+
+          /**
+           * Promotion code attached to the Checkout Session.
+           */
+          promotion_code: string | Stripe.PromotionCode | null;
+        }
+
         interface InvoiceCreation {
           /**
            * Indicates whether invoice creation is enabled for the Checkout Session.
@@ -880,6 +967,33 @@ declare module 'stripe' {
 
         type Mode = 'payment' | 'setup' | 'subscription';
 
+        interface OptionalItem {
+          adjustable_quantity: OptionalItem.AdjustableQuantity | null;
+
+          price: string;
+
+          quantity: number;
+        }
+
+        namespace OptionalItem {
+          interface AdjustableQuantity {
+            /**
+             * Set to true if the quantity can be adjusted to any non-negative integer.
+             */
+            enabled: boolean;
+
+            /**
+             * The maximum quantity of this item the customer can purchase. By default this value is 99. You can specify a value up to 999999.
+             */
+            maximum: number | null;
+
+            /**
+             * The minimum quantity of this item the customer must purchase, if they choose to purchase it. Because this item is optional, the customer will always be able to remove it from their order, even if the `minimum` configured here is greater than 0. By default this value is 0.
+             */
+            minimum: number | null;
+          }
+        }
+
         type PaymentMethodCollection = 'always' | 'if_required';
 
         interface PaymentMethodConfigurationDetails {
@@ -929,9 +1043,13 @@ declare module 'stripe' {
 
           ideal?: PaymentMethodOptions.Ideal;
 
+          kakao_pay?: PaymentMethodOptions.KakaoPay;
+
           klarna?: PaymentMethodOptions.Klarna;
 
           konbini?: PaymentMethodOptions.Konbini;
+
+          kr_card?: PaymentMethodOptions.KrCard;
 
           link?: PaymentMethodOptions.Link;
 
@@ -939,9 +1057,13 @@ declare module 'stripe' {
 
           multibanco?: PaymentMethodOptions.Multibanco;
 
+          naver_pay?: PaymentMethodOptions.NaverPay;
+
           oxxo?: PaymentMethodOptions.Oxxo;
 
           p24?: PaymentMethodOptions.P24;
+
+          payco?: PaymentMethodOptions.Payco;
 
           paynow?: PaymentMethodOptions.Paynow;
 
@@ -950,6 +1072,8 @@ declare module 'stripe' {
           pix?: PaymentMethodOptions.Pix;
 
           revolut_pay?: PaymentMethodOptions.RevolutPay;
+
+          samsung_pay?: PaymentMethodOptions.SamsungPay;
 
           sepa_debit?: PaymentMethodOptions.SepaDebit;
 
@@ -979,6 +1103,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: AcssDebit.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
 
             /**
              * Bank account verification method.
@@ -1096,9 +1225,16 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
           }
 
           interface BacsDebit {
+            mandate_options?: BacsDebit.MandateOptions;
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -1109,9 +1245,21 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: BacsDebit.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
           }
 
           namespace BacsDebit {
+            interface MandateOptions {
+              /**
+               * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
+               */
+              reference_prefix?: string;
+            }
+
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
           }
 
@@ -1154,9 +1302,31 @@ declare module 'stripe' {
             installments?: Card.Installments;
 
             /**
+             * Request ability to [capture beyond the standard authorization validity window](https://stripe.com/payments/extended-authorization) for this CheckoutSession.
+             */
+            request_extended_authorization?: Card.RequestExtendedAuthorization;
+
+            /**
+             * Request ability to [increment the authorization](https://stripe.com/payments/incremental-authorization) for this CheckoutSession.
+             */
+            request_incremental_authorization?: Card.RequestIncrementalAuthorization;
+
+            /**
+             * Request ability to make [multiple captures](https://stripe.com/payments/multicapture) for this CheckoutSession.
+             */
+            request_multicapture?: Card.RequestMulticapture;
+
+            /**
+             * Request ability to [overcapture](https://stripe.com/payments/overcapture) for this CheckoutSession.
+             */
+            request_overcapture?: Card.RequestOvercapture;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure: Card.RequestThreeDSecure;
+
+            restrictions?: Card.Restrictions;
 
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -1188,7 +1358,30 @@ declare module 'stripe' {
               enabled?: boolean;
             }
 
+            type RequestExtendedAuthorization = 'if_available' | 'never';
+
+            type RequestIncrementalAuthorization = 'if_available' | 'never';
+
+            type RequestMulticapture = 'if_available' | 'never';
+
+            type RequestOvercapture = 'if_available' | 'never';
+
             type RequestThreeDSecure = 'any' | 'automatic' | 'challenge';
+
+            interface Restrictions {
+              /**
+               * Specify the card brands to block in the Checkout Session. If a customer enters or selects a card belonging to a blocked brand, they can't complete the Session.
+               */
+              brands_blocked?: Array<Restrictions.BrandsBlocked>;
+            }
+
+            namespace Restrictions {
+              type BrandsBlocked =
+                | 'american_express'
+                | 'discover_global_network'
+                | 'mastercard'
+                | 'visa';
+            }
 
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
           }
@@ -1340,6 +1533,28 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface KakaoPay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: KakaoPay.SetupFutureUsage;
+          }
+
+          namespace KakaoPay {
+            type SetupFutureUsage = 'none' | 'off_session';
+          }
+
           interface Klarna {
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -1373,6 +1588,28 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+          }
+
+          interface KrCard {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: KrCard.SetupFutureUsage;
+          }
+
+          namespace KrCard {
+            type SetupFutureUsage = 'none' | 'off_session';
           }
 
           interface Link {
@@ -1418,6 +1655,13 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface NaverPay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+          }
+
           interface Oxxo {
             /**
              * The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -1447,6 +1691,13 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+          }
+
+          interface Payco {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
           }
 
           interface Paynow {
@@ -1518,7 +1769,16 @@ declare module 'stripe' {
             type SetupFutureUsage = 'none' | 'off_session';
           }
 
+          interface SamsungPay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+          }
+
           interface SepaDebit {
+            mandate_options?: SepaDebit.MandateOptions;
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -1529,9 +1789,21 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: SepaDebit.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
           }
 
           namespace SepaDebit {
+            interface MandateOptions {
+              /**
+               * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'STRIPE'.
+               */
+              reference_prefix?: string;
+            }
+
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
           }
 
@@ -1568,6 +1840,11 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: UsBankAccount.SetupFutureUsage;
+
+            /**
+             * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+             */
+            target_date?: string;
 
             /**
              * Bank account verification method.
@@ -1624,11 +1901,38 @@ declare module 'stripe' {
 
         type PaymentStatus = 'no_payment_required' | 'paid' | 'unpaid';
 
+        interface Permissions {
+          /**
+           * Determines which entity is allowed to update the shipping details.
+           *
+           * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
+           *
+           * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+           */
+          update_shipping_details: Permissions.UpdateShippingDetails | null;
+        }
+
+        namespace Permissions {
+          type UpdateShippingDetails = 'client_only' | 'server_only';
+        }
+
         interface PhoneNumberCollection {
           /**
            * Indicates whether phone number collection is enabled for the session
            */
           enabled: boolean;
+        }
+
+        interface PresentmentDetails {
+          /**
+           * Amount intended to be collected by this payment, denominated in presentment_currency.
+           */
+          presentment_amount: number;
+
+          /**
+           * Currency presented to the customer during payment.
+           */
+          presentment_currency: string;
         }
 
         type RedirectOnCompletion = 'always' | 'if_required' | 'never';
@@ -1663,7 +1967,7 @@ declare module 'stripe' {
         interface ShippingAddressCollection {
           /**
            * An array of two-letter ISO country codes representing which countries Checkout should provide as options for
-           * shipping locations. Unsupported country codes: `AS, CX, CC, CU, HM, IR, KP, MH, FM, NF, MP, PW, SD, SY, UM, VI`.
+           * shipping locations. Unsupported country codes: `AS, CX, CC, CU, HM, IR, KP, MH, FM, NF, MP, PW, SY, UM, VI`.
            */
           allowed_countries: Array<ShippingAddressCollection.AllowedCountry>;
         }
@@ -1854,6 +2158,7 @@ declare module 'stripe' {
             | 'SA'
             | 'SB'
             | 'SC'
+            | 'SD'
             | 'SE'
             | 'SG'
             | 'SH'
@@ -1944,9 +2249,9 @@ declare module 'stripe' {
             amount: number;
 
             /**
-             * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+             * Tax rates can be applied to [invoices](https://stripe.com/invoicing/taxes/tax-rates), [subscriptions](https://stripe.com/billing/taxes/tax-rates) and [Checkout Sessions](https://stripe.com/payments/checkout/use-manual-tax-rates) to collect tax.
              *
-             * Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
+             * Related guide: [Tax rates](https://stripe.com/billing/taxes/tax-rates)
              */
             rate: Stripe.TaxRate;
 
@@ -1981,30 +2286,6 @@ declare module 'stripe' {
           }
         }
 
-        interface ShippingDetails {
-          address?: Stripe.Address;
-
-          /**
-           * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-           */
-          carrier?: string | null;
-
-          /**
-           * Recipient name.
-           */
-          name?: string;
-
-          /**
-           * Recipient phone (including extension).
-           */
-          phone?: string | null;
-
-          /**
-           * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-           */
-          tracking_number?: string | null;
-        }
-
         interface ShippingOption {
           /**
            * A non-negative integer in cents representing how much to charge.
@@ -2019,7 +2300,7 @@ declare module 'stripe' {
 
         type Status = 'complete' | 'expired' | 'open';
 
-        type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
+        type SubmitType = 'auto' | 'book' | 'donate' | 'pay' | 'subscribe';
 
         interface TaxIdCollection {
           /**
@@ -2092,9 +2373,9 @@ declare module 'stripe' {
               amount: number;
 
               /**
-               * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+               * Tax rates can be applied to [invoices](https://stripe.com/invoicing/taxes/tax-rates), [subscriptions](https://stripe.com/billing/taxes/tax-rates) and [Checkout Sessions](https://stripe.com/payments/checkout/use-manual-tax-rates) to collect tax.
                *
-               * Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
+               * Related guide: [Tax rates](https://stripe.com/billing/taxes/tax-rates)
                */
               rate: Stripe.TaxRate;
 
@@ -2130,7 +2411,7 @@ declare module 'stripe' {
           }
         }
 
-        type UiMode = 'embedded' | 'hosted';
+        type UiMode = 'custom' | 'embedded' | 'hosted';
       }
     }
   }

@@ -20,11 +20,6 @@ declare module 'stripe' {
            * The page size.
            */
           limit?: number;
-
-          /**
-           * The requested page number.
-           */
-          page?: string;
         }
       }
 

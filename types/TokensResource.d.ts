@@ -96,6 +96,11 @@ declare module 'stripe' {
           directors_provided?: boolean;
 
           /**
+           * This hash is used to attest that the directors information provided to Stripe is both current and correct.
+           */
+          directorship_declaration?: Company.DirectorshipDeclaration;
+
+          /**
            * Whether the company's executives have been provided. Set this Boolean to `true` after creating all the company's executives with [the Persons API](https://stripe.com/api/persons) for accounts with a `relationship.executive` requirement.
            */
           executives_provided?: boolean;
@@ -141,6 +146,13 @@ declare module 'stripe' {
           ownership_declaration_shown_and_signed?: boolean;
 
           /**
+           * This value is used to determine if a business is exempt from providing ultimate beneficial owners. See [this support article](https://support.stripe.com/questions/exemption-from-providing-ownership-details) and [changelog](https://docs.stripe.com/changelog/acacia/2025-01-27/ownership-exemption-reason-accounts-api) for more details.
+           */
+          ownership_exemption_reason?: Stripe.Emptyable<
+            Company.OwnershipExemptionReason
+          >;
+
+          /**
            * The company's phone number (used for verification).
            */
           phone?: string;
@@ -177,6 +189,23 @@ declare module 'stripe' {
         }
 
         namespace Company {
+          interface DirectorshipDeclaration {
+            /**
+             * The Unix timestamp marking when the directorship declaration attestation was made.
+             */
+            date?: number;
+
+            /**
+             * The IP address from which the directorship declaration attestation was made.
+             */
+            ip?: string;
+
+            /**
+             * The user agent of the browser from which the directorship declaration attestation was made.
+             */
+            user_agent?: string;
+          }
+
           interface OwnershipDeclaration {
             /**
              * The Unix timestamp marking when the beneficial owner attestation was made.
@@ -193,6 +222,10 @@ declare module 'stripe' {
              */
             user_agent?: string;
           }
+
+          type OwnershipExemptionReason =
+            | 'qualified_entity_exceeds_ownership_threshold'
+            | 'qualifies_as_financial_institution';
 
           type Structure =
             | 'free_zone_establishment'
@@ -288,7 +321,7 @@ declare module 'stripe' {
           full_name_aliases?: Stripe.Emptyable<Array<string>>;
 
           /**
-           * The individual's gender (International regulations require either "male" or "female").
+           * The individual's gender
            */
           gender?: string;
 
@@ -689,7 +722,7 @@ declare module 'stripe' {
         /**
          * Indicates if the person or any of their representatives, family members, or other closely related persons, declares that they hold or have held an important public job or function, in any jurisdiction.
          */
-        political_exposure?: string;
+        political_exposure?: Person.PoliticalExposure;
 
         /**
          * The person's registered address.
@@ -796,7 +829,14 @@ declare module 'stripe' {
           }
         }
 
+        type PoliticalExposure = 'existing' | 'none';
+
         interface Relationship {
+          /**
+           * Whether the person is the authorizer of the account's representative.
+           */
+          authorizer?: boolean;
+
           /**
            * Whether the person is a director of the account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
            */
@@ -890,7 +930,7 @@ declare module 'stripe' {
     class TokensResource {
       /**
        * Creates a single-use token that represents a bank account's details.
-       * You can use this token with any API method in place of a bank account dictionary. You can only use this token once. To do so, attach it to a [connected account](https://stripe.com/docs/api#accounts) where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is application, which includes Custom accounts.
+       * You can use this token with any v1 API method in place of a bank account dictionary. You can only use this token once. To do so, attach it to a [connected account](https://stripe.com/docs/api#accounts) where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is application, which includes Custom accounts.
        */
       create(
         params?: TokenCreateParams,

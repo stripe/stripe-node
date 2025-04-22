@@ -24,6 +24,11 @@ declare module 'stripe' {
       alipay?: PaymentMethodConfigurationCreateParams.Alipay;
 
       /**
+       * Alma is a Buy Now, Pay Later payment method that offers customers the ability to pay in 2, 3, or 4 installments.
+       */
+      alma?: PaymentMethodConfigurationCreateParams.Alma;
+
+      /**
        * Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
        */
       amazon_pay?: PaymentMethodConfigurationCreateParams.AmazonPay;
@@ -52,6 +57,11 @@ declare module 'stripe' {
        * Bancontact is the most popular online payment method in Belgium, with over 15 million cards in circulation. [Customers](https://stripe.com/docs/api/customers) use a Bancontact card or mobile app linked to a Belgian bank account to make online payments that are secure, guaranteed, and confirmed immediately. Check this [page](https://stripe.com/docs/payments/bancontact) for more details.
        */
       bancontact?: PaymentMethodConfigurationCreateParams.Bancontact;
+
+      /**
+       * Billie is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that offers businesses Pay by Invoice where they offer payment terms ranging from 7-120 days. Customers are redirected from your website or app, authorize the payment with Billie, then return to your website or app. You get [immediate notification](https://stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
+       */
+      billie?: PaymentMethodConfigurationCreateParams.Billie;
 
       /**
        * BLIK is a [single use](https://stripe.com/docs/payments/payment-methods#usage) payment method that requires customers to authenticate their payments. When customers want to pay online using BLIK, they request a six-digit code from their banking application and enter it into the payment collection form. Check this [page](https://stripe.com/docs/payments/blik) for more details.
@@ -154,6 +164,11 @@ declare module 'stripe' {
       name?: string;
 
       /**
+       * Stripe users in New Zealand can accept Bulk Electronic Clearing System (BECS) direct debit payments from customers with a New Zeland bank account. Check this [page](https://stripe.com/docs/payments/nz-bank-account) for more details.
+       */
+      nz_bank_account?: PaymentMethodConfigurationCreateParams.NzBankAccount;
+
+      /**
        * OXXO is a Mexican chain of convenience stores with thousands of locations across Latin America and represents nearly 20% of online transactions in Mexico. OXXO allows customers to pay bills and online purchases in-store with cash. Check this [page](https://stripe.com/docs/payments/oxxo) for more details.
        */
       oxxo?: PaymentMethodConfigurationCreateParams.Oxxo;
@@ -167,6 +182,11 @@ declare module 'stripe' {
        * Configuration's parent configuration. Specify to create a child configuration.
        */
       parent?: string;
+
+      /**
+       * Pay by bank is a redirect payment method backed by bank transfers. A customer is redirected to their bank to authorize a bank transfer for a given amount. This removes a lot of the error risks inherent in waiting for the customer to initiate a transfer themselves, and is less expensive than card payments.
+       */
+      pay_by_bank?: PaymentMethodConfigurationCreateParams.PayByBank;
 
       /**
        * PayNow is a Singapore-based payment method that allows customers to make a payment using their preferred app from participating banks and participating non-bank financial institutions. Check this [page](https://stripe.com/docs/payments/paynow) for more details.
@@ -189,6 +209,11 @@ declare module 'stripe' {
       revolut_pay?: PaymentMethodConfigurationCreateParams.RevolutPay;
 
       /**
+       * Satispay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method where customers are required to [authenticate](https://stripe.com/payments/payment-methods#customer-actions) their payment. Customers pay by being redirected from your website or app, authorizing the payment with Satispay, then returning to your website or app. You get [immediate notification](https://stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
+       */
+      satispay?: PaymentMethodConfigurationCreateParams.Satispay;
+
+      /**
        * The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is an initiative of the European Union to simplify payments within and across member countries. SEPA established and enforced banking standards to allow for the direct debiting of every EUR-denominated bank account within the SEPA region, check this [page](https://stripe.com/docs/payments/sepa-debit) for more details.
        */
       sepa_debit?: PaymentMethodConfigurationCreateParams.SepaDebit;
@@ -209,7 +234,7 @@ declare module 'stripe' {
       twint?: PaymentMethodConfigurationCreateParams.Twint;
 
       /**
-       * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-debit) for more details.
+       * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-direct-debit) for more details.
        */
       us_bank_account?: PaymentMethodConfigurationCreateParams.UsBankAccount;
 
@@ -293,6 +318,26 @@ declare module 'stripe' {
       }
 
       namespace Alipay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Alma {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Alma.DisplayPreference;
+      }
+
+      namespace Alma {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -413,6 +458,26 @@ declare module 'stripe' {
       }
 
       namespace Bancontact {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Billie {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Billie.DisplayPreference;
+      }
+
+      namespace Billie {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -785,6 +850,26 @@ declare module 'stripe' {
         }
       }
 
+      interface NzBankAccount {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: NzBankAccount.DisplayPreference;
+      }
+
+      namespace NzBankAccount {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Oxxo {
         /**
          * Whether or not the payment method should be displayed.
@@ -813,6 +898,26 @@ declare module 'stripe' {
       }
 
       namespace P24 {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface PayByBank {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: PayByBank.DisplayPreference;
+      }
+
+      namespace PayByBank {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -893,6 +998,26 @@ declare module 'stripe' {
       }
 
       namespace RevolutPay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Satispay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Satispay.DisplayPreference;
+      }
+
+      namespace Satispay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -1080,6 +1205,11 @@ declare module 'stripe' {
       alipay?: PaymentMethodConfigurationUpdateParams.Alipay;
 
       /**
+       * Alma is a Buy Now, Pay Later payment method that offers customers the ability to pay in 2, 3, or 4 installments.
+       */
+      alma?: PaymentMethodConfigurationUpdateParams.Alma;
+
+      /**
        * Amazon Pay is a wallet payment method that lets your customers check out the same way as on Amazon.
        */
       amazon_pay?: PaymentMethodConfigurationUpdateParams.AmazonPay;
@@ -1108,6 +1238,11 @@ declare module 'stripe' {
        * Bancontact is the most popular online payment method in Belgium, with over 15 million cards in circulation. [Customers](https://stripe.com/docs/api/customers) use a Bancontact card or mobile app linked to a Belgian bank account to make online payments that are secure, guaranteed, and confirmed immediately. Check this [page](https://stripe.com/docs/payments/bancontact) for more details.
        */
       bancontact?: PaymentMethodConfigurationUpdateParams.Bancontact;
+
+      /**
+       * Billie is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method that offers businesses Pay by Invoice where they offer payment terms ranging from 7-120 days. Customers are redirected from your website or app, authorize the payment with Billie, then return to your website or app. You get [immediate notification](https://stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
+       */
+      billie?: PaymentMethodConfigurationUpdateParams.Billie;
 
       /**
        * BLIK is a [single use](https://stripe.com/docs/payments/payment-methods#usage) payment method that requires customers to authenticate their payments. When customers want to pay online using BLIK, they request a six-digit code from their banking application and enter it into the payment collection form. Check this [page](https://stripe.com/docs/payments/blik) for more details.
@@ -1210,6 +1345,11 @@ declare module 'stripe' {
       name?: string;
 
       /**
+       * Stripe users in New Zealand can accept Bulk Electronic Clearing System (BECS) direct debit payments from customers with a New Zeland bank account. Check this [page](https://stripe.com/docs/payments/nz-bank-account) for more details.
+       */
+      nz_bank_account?: PaymentMethodConfigurationUpdateParams.NzBankAccount;
+
+      /**
        * OXXO is a Mexican chain of convenience stores with thousands of locations across Latin America and represents nearly 20% of online transactions in Mexico. OXXO allows customers to pay bills and online purchases in-store with cash. Check this [page](https://stripe.com/docs/payments/oxxo) for more details.
        */
       oxxo?: PaymentMethodConfigurationUpdateParams.Oxxo;
@@ -1218,6 +1358,11 @@ declare module 'stripe' {
        * Przelewy24 is a Poland-based payment method aggregator that allows customers to complete transactions online using bank transfers and other methods. Bank transfers account for 30% of online payments in Poland and Przelewy24 provides a way for customers to pay with over 165 banks. Check this [page](https://stripe.com/docs/payments/p24) for more details.
        */
       p24?: PaymentMethodConfigurationUpdateParams.P24;
+
+      /**
+       * Pay by bank is a redirect payment method backed by bank transfers. A customer is redirected to their bank to authorize a bank transfer for a given amount. This removes a lot of the error risks inherent in waiting for the customer to initiate a transfer themselves, and is less expensive than card payments.
+       */
+      pay_by_bank?: PaymentMethodConfigurationUpdateParams.PayByBank;
 
       /**
        * PayNow is a Singapore-based payment method that allows customers to make a payment using their preferred app from participating banks and participating non-bank financial institutions. Check this [page](https://stripe.com/docs/payments/paynow) for more details.
@@ -1240,6 +1385,11 @@ declare module 'stripe' {
       revolut_pay?: PaymentMethodConfigurationUpdateParams.RevolutPay;
 
       /**
+       * Satispay is a [single-use](https://docs.stripe.com/payments/payment-methods#usage) payment method where customers are required to [authenticate](https://stripe.com/payments/payment-methods#customer-actions) their payment. Customers pay by being redirected from your website or app, authorizing the payment with Satispay, then returning to your website or app. You get [immediate notification](https://stripe.com/payments/payment-methods#payment-notification) of whether the payment succeeded or failed.
+       */
+      satispay?: PaymentMethodConfigurationUpdateParams.Satispay;
+
+      /**
        * The [Single Euro Payments Area (SEPA)](https://en.wikipedia.org/wiki/Single_Euro_Payments_Area) is an initiative of the European Union to simplify payments within and across member countries. SEPA established and enforced banking standards to allow for the direct debiting of every EUR-denominated bank account within the SEPA region, check this [page](https://stripe.com/docs/payments/sepa-debit) for more details.
        */
       sepa_debit?: PaymentMethodConfigurationUpdateParams.SepaDebit;
@@ -1260,7 +1410,7 @@ declare module 'stripe' {
       twint?: PaymentMethodConfigurationUpdateParams.Twint;
 
       /**
-       * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-debit) for more details.
+       * Stripe users in the United States can accept ACH direct debit payments from customers with a US bank account using the Automated Clearing House (ACH) payments system operated by Nacha. Check this [page](https://stripe.com/docs/payments/ach-direct-debit) for more details.
        */
       us_bank_account?: PaymentMethodConfigurationUpdateParams.UsBankAccount;
 
@@ -1344,6 +1494,26 @@ declare module 'stripe' {
       }
 
       namespace Alipay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Alma {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Alma.DisplayPreference;
+      }
+
+      namespace Alma {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -1464,6 +1634,26 @@ declare module 'stripe' {
       }
 
       namespace Bancontact {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Billie {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Billie.DisplayPreference;
+      }
+
+      namespace Billie {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -1836,6 +2026,26 @@ declare module 'stripe' {
         }
       }
 
+      interface NzBankAccount {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: NzBankAccount.DisplayPreference;
+      }
+
+      namespace NzBankAccount {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Oxxo {
         /**
          * Whether or not the payment method should be displayed.
@@ -1864,6 +2074,26 @@ declare module 'stripe' {
       }
 
       namespace P24 {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface PayByBank {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: PayByBank.DisplayPreference;
+      }
+
+      namespace PayByBank {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -1944,6 +2174,26 @@ declare module 'stripe' {
       }
 
       namespace RevolutPay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Satispay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Satispay.DisplayPreference;
+      }
+
+      namespace Satispay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

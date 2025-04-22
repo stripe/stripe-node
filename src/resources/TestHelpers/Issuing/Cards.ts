@@ -19,4 +19,8 @@ export const Cards = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/test_helpers/issuing/cards/{card}/shipping/ship',
   }),
+  submitCard: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/test_helpers/issuing/cards/{card}/shipping/submit',
+  }),
 });

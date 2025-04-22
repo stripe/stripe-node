@@ -14,6 +14,13 @@ declare module 'stripe' {
       | ApplicationFeeRefundedEvent
       | BalanceAvailableEvent
       | BillingAlertTriggeredEvent
+      | BillingCreditBalanceTransactionCreatedEvent
+      | BillingCreditGrantCreatedEvent
+      | BillingCreditGrantUpdatedEvent
+      | BillingMeterCreatedEvent
+      | BillingMeterDeactivatedEvent
+      | BillingMeterReactivatedEvent
+      | BillingMeterUpdatedEvent
       | BillingPortalConfigurationCreatedEvent
       | BillingPortalConfigurationUpdatedEvent
       | BillingPortalSessionCreatedEvent
@@ -92,6 +99,7 @@ declare module 'stripe' {
       | InvoiceFinalizedEvent
       | InvoiceMarkedUncollectibleEvent
       | InvoiceOverdueEvent
+      | InvoiceOverpaidEvent
       | InvoicePaidEvent
       | InvoicePaymentActionRequiredEvent
       | InvoicePaymentFailedEvent
@@ -123,6 +131,7 @@ declare module 'stripe' {
       | IssuingTokenCreatedEvent
       | IssuingTokenUpdatedEvent
       | IssuingTransactionCreatedEvent
+      | IssuingTransactionPurchaseDetailsReceiptUpdatedEvent
       | IssuingTransactionUpdatedEvent
       | MandateUpdatedEvent
       | PaymentIntentAmountCapturableUpdatedEvent
@@ -166,6 +175,7 @@ declare module 'stripe' {
       | RadarEarlyFraudWarningCreatedEvent
       | RadarEarlyFraudWarningUpdatedEvent
       | RefundCreatedEvent
+      | RefundFailedEvent
       | RefundUpdatedEvent
       | ReportingReportRunFailedEvent
       | ReportingReportRunSucceededEvent
@@ -420,6 +430,118 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs when a credit balance transaction is created
+     */
+    interface BillingCreditBalanceTransactionCreatedEvent extends EventBase {
+      type: 'billing.credit_balance_transaction.created';
+      data: BillingCreditBalanceTransactionCreatedEvent.Data;
+    }
+
+    namespace BillingCreditBalanceTransactionCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.CreditBalanceTransaction;
+
+        previous_attributes?: Partial<Stripe.Billing.CreditBalanceTransaction>;
+      }
+    }
+
+    /**
+     * Occurs when a credit grant is created
+     */
+    interface BillingCreditGrantCreatedEvent extends EventBase {
+      type: 'billing.credit_grant.created';
+      data: BillingCreditGrantCreatedEvent.Data;
+    }
+
+    namespace BillingCreditGrantCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.CreditGrant;
+
+        previous_attributes?: Partial<Stripe.Billing.CreditGrant>;
+      }
+    }
+
+    /**
+     * Occurs when a credit grant is updated
+     */
+    interface BillingCreditGrantUpdatedEvent extends EventBase {
+      type: 'billing.credit_grant.updated';
+      data: BillingCreditGrantUpdatedEvent.Data;
+    }
+
+    namespace BillingCreditGrantUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.CreditGrant;
+
+        previous_attributes?: Partial<Stripe.Billing.CreditGrant>;
+      }
+    }
+
+    /**
+     * Occurs when a meter is created
+     */
+    interface BillingMeterCreatedEvent extends EventBase {
+      type: 'billing.meter.created';
+      data: BillingMeterCreatedEvent.Data;
+    }
+
+    namespace BillingMeterCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.Meter;
+
+        previous_attributes?: Partial<Stripe.Billing.Meter>;
+      }
+    }
+
+    /**
+     * Occurs when a meter is deactivated
+     */
+    interface BillingMeterDeactivatedEvent extends EventBase {
+      type: 'billing.meter.deactivated';
+      data: BillingMeterDeactivatedEvent.Data;
+    }
+
+    namespace BillingMeterDeactivatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.Meter;
+
+        previous_attributes?: Partial<Stripe.Billing.Meter>;
+      }
+    }
+
+    /**
+     * Occurs when a meter is reactivated
+     */
+    interface BillingMeterReactivatedEvent extends EventBase {
+      type: 'billing.meter.reactivated';
+      data: BillingMeterReactivatedEvent.Data;
+    }
+
+    namespace BillingMeterReactivatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.Meter;
+
+        previous_attributes?: Partial<Stripe.Billing.Meter>;
+      }
+    }
+
+    /**
+     * Occurs when a meter is updated
+     */
+    interface BillingMeterUpdatedEvent extends EventBase {
+      type: 'billing.meter.updated';
+      data: BillingMeterUpdatedEvent.Data;
+    }
+
+    namespace BillingMeterUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Billing.Meter;
+
+        previous_attributes?: Partial<Stripe.Billing.Meter>;
+      }
+    }
+
+    /**
      * Occurs whenever a portal configuration is created.
      */
     interface BillingPortalConfigurationCreatedEvent extends EventBase {
@@ -644,7 +766,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a refund is updated, on selected payment methods.
+     * Occurs whenever a refund is updated on selected payment methods. For updates on all refunds, listen to `refund.updated` instead.
      */
     interface ChargeRefundUpdatedEvent extends EventBase {
       type: 'charge.refund.updated';
@@ -660,7 +782,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a charge is refunded, including partial refunds.
+     * Occurs whenever a charge is refunded, including partial refunds. Listen to `refund.created` for information about the refund.
      */
     interface ChargeRefundedEvent extends EventBase {
       type: 'charge.refunded';
@@ -1674,6 +1796,22 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs when an invoice transitions to paid with a non-zero amount_overpaid.
+     */
+    interface InvoiceOverpaidEvent extends EventBase {
+      type: 'invoice.overpaid';
+      data: InvoiceOverpaidEvent.Data;
+    }
+
+    namespace InvoiceOverpaidEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
+      }
+    }
+
+    /**
      * Occurs whenever an invoice payment attempt succeeds or an invoice is marked as paid out-of-band.
      */
     interface InvoicePaidEvent extends EventBase {
@@ -1706,7 +1844,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever an invoice payment attempt fails, due either to a declined payment or to the lack of a stored payment method.
+     * Occurs whenever an invoice payment attempt fails, due to either a declined payment, including soft decline, or to the lack of a stored payment method.
      */
     interface InvoicePaymentFailedEvent extends EventBase {
       type: 'invoice.payment_failed';
@@ -2162,6 +2300,23 @@ declare module 'stripe' {
     }
 
     namespace IssuingTransactionCreatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Issuing.Transaction;
+
+        previous_attributes?: Partial<Stripe.Issuing.Transaction>;
+      }
+    }
+
+    /**
+     * Occurs whenever an issuing transaction is updated with receipt data.
+     */
+    interface IssuingTransactionPurchaseDetailsReceiptUpdatedEvent
+      extends EventBase {
+      type: 'issuing_transaction.purchase_details_receipt_updated';
+      data: IssuingTransactionPurchaseDetailsReceiptUpdatedEvent.Data;
+    }
+
+    namespace IssuingTransactionPurchaseDetailsReceiptUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Issuing.Transaction;
 
@@ -2842,7 +2997,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a refund from a customer's cash balance is created.
+     * Occurs whenever a refund is created.
      */
     interface RefundCreatedEvent extends EventBase {
       type: 'refund.created';
@@ -2858,7 +3013,23 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a refund from a customer's cash balance is updated.
+     * Occurs whenever a refund has failed.
+     */
+    interface RefundFailedEvent extends EventBase {
+      type: 'refund.failed';
+      data: RefundFailedEvent.Data;
+    }
+
+    namespace RefundFailedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Refund;
+
+        previous_attributes?: Partial<Stripe.Refund>;
+      }
+    }
+
+    /**
+     * Occurs whenever a refund is updated.
      */
     interface RefundUpdatedEvent extends EventBase {
       type: 'refund.updated';
@@ -2922,7 +3093,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs whenever a review is closed. The review's `reason` field indicates why: `approved`, `disputed`, `refunded`, or `refunded_as_fraud`.
+     * Occurs whenever a review is closed. The review's `reason` field indicates why: `approved`, `disputed`, `refunded`, `refunded_as_fraud`, or `canceled`.
      */
     interface ReviewClosedEvent extends EventBase {
       type: 'review.closed';
