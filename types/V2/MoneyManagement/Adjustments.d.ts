@@ -44,9 +44,14 @@ declare module 'stripe' {
           financial_account: string;
 
           /**
-           * A hosted transaction receipt URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
+           * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
            */
-          receipt_url: string;
+          livemode: boolean;
+
+          /**
+           * A link to the Stripe-hosted receipt that is provided when money movement is considered regulated under Stripe's money transmission licenses. The receipt link remains active for 60 days from the Adjustment creation date. After this period, the link will expire and the receipt url value will be null.
+           */
+          receipt_url: string | null;
         }
 
         namespace Adjustment {

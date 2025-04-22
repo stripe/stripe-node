@@ -50,6 +50,11 @@ declare module 'stripe' {
             last4: string;
 
             /**
+             * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+             */
+            livemode: boolean;
+
+            /**
              * The ACH routing number of the bank account.
              */
             routing_number: string | null;

@@ -19,6 +19,11 @@ declare module 'stripe' {
           countries: {
             [key: string]: PayoutMethodsBankAccountSpec.Countries;
           };
+
+          /**
+           * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+           */
+          livemode: boolean;
         }
 
         namespace PayoutMethodsBankAccountSpec {

@@ -76,12 +76,34 @@ declare module 'stripe' {
       }
 
       namespace MoneyManagement {
+        interface OutboundPaymentQuoteRetrieveParams {}
+      }
+
+      namespace MoneyManagement {
         class OutboundPaymentQuotesResource {
           /**
            * Creates an OutboundPaymentQuote usable in an OutboundPayment.
+           * @throws Stripe.FeatureNotEnabledError
            */
           create(
             params: OutboundPaymentQuoteCreateParams,
+            options?: RequestOptions
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.OutboundPaymentQuote>
+          >;
+
+          /**
+           * Retrieves the details of an existing OutboundPaymentQuote by passing the unique OutboundPaymentQuote ID.
+           */
+          retrieve(
+            id: string,
+            params?: OutboundPaymentQuoteRetrieveParams,
+            options?: RequestOptions
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.OutboundPaymentQuote>
+          >;
+          retrieve(
+            id: string,
             options?: RequestOptions
           ): Promise<
             Stripe.Response<Stripe.V2.MoneyManagement.OutboundPaymentQuote>

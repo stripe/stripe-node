@@ -18,6 +18,11 @@ declare module 'stripe' {
         amounts: Array<Amount>;
 
         /**
+         * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+         */
+        livemode: boolean;
+
+        /**
          * Closed Enum. The status of the request.
          */
         status: 'accepted';

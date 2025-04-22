@@ -26,7 +26,7 @@ declare module 'stripe' {
           delivery_options?: OutboundTransferCreateParams.DeliveryOptions;
 
           /**
-           * An arbitrary string attached to the OutboundTransfer. Often useful for displaying to users.
+           * An arbitrary string attached to the OutboundTransfer. Often useful for displaying to users. The description can not be longer than 100 characters and can only contain basic Latin characters and spaces. The following special characters are not allowed: <>\'"* .
            */
           description?: string;
 

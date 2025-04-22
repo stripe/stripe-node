@@ -56,6 +56,11 @@ declare module 'stripe' {
           from: OutboundPayment.From;
 
           /**
+           * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+           */
+          livemode: boolean;
+
+          /**
            * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata: Stripe.Metadata | null;
@@ -66,9 +71,9 @@ declare module 'stripe' {
           outbound_payment_quote: string | null;
 
           /**
-           * A hosted transaction receipt URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
+           * A link to the Stripe-hosted receipt for this OutboundPayment. The receipt link remains active for 60 days from the OutboundPayment creation date. After this period, the link will expire and the receipt url value will be null.
            */
-          receipt_url: string;
+          receipt_url: string | null;
 
           /**
            * Details about the OutboundPayment notification settings for recipient.
