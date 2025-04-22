@@ -1042,7 +1042,7 @@ declare module 'stripe' {
         billing_cycle_anchor?: Stripe.Emptyable<'reset'>;
 
         /**
-         * The billing mode to create the quote with. Once a quote that creates a subscription or subscription schedule is accepted,all future operations on the subscription or subscription schedule will be processed based on this billing_mode.
+         * Configure billing_mode to opt in improved credit proration behavior.Once a quote that creates a subscription or subscription schedule is accepted,all future operations on the subscription or subscription schedule will be processed based on this billing_mode.
          */
         billing_mode?: SubscriptionData.BillingMode;
 

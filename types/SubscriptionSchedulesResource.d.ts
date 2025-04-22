@@ -9,7 +9,7 @@ declare module 'stripe' {
       billing_behavior?: SubscriptionScheduleCreateParams.BillingBehavior;
 
       /**
-       * The billing mode that will be used to create the subscription schedule. When the schedule creates a subscription, the subscription's `billing_mode` will be set to the same value as the schedule's `billing_mode`.
+       * Configure billing_mode to opt in improved credit proration behavior.When the schedule creates a subscription, the subscription's `billing_mode` will be set to the same value as the schedule's `billing_mode`.
        */
       billing_mode?: SubscriptionScheduleCreateParams.BillingMode;
 

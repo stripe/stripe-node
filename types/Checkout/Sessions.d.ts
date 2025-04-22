@@ -301,7 +301,7 @@ declare module 'stripe' {
         submit_type: Session.SubmitType | null;
 
         /**
-         * The ID of the subscription for Checkout Sessions in `subscription` mode.
+         * The ID of the [Subscription](https://stripe.com/docs/api/subscriptions) for Checkout Sessions in `subscription` mode.
          */
         subscription: string | Stripe.Subscription | null;
 
