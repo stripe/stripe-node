@@ -766,7 +766,7 @@ declare module 'stripe' {
           category?: Lodging.Category;
 
           /**
-           * Loding check-in time. Measured in seconds since the Unix epoch.
+           * Lodging check-in time. Measured in seconds since the Unix epoch.
            */
           checkin_at: number;
 
@@ -4765,7 +4765,7 @@ declare module 'stripe' {
           category?: Lodging.Category;
 
           /**
-           * Loding check-in time. Measured in seconds since the Unix epoch.
+           * Lodging check-in time. Measured in seconds since the Unix epoch.
            */
           checkin_at: number;
 
@@ -8664,7 +8664,7 @@ declare module 'stripe' {
           category?: Lodging.Category;
 
           /**
-           * Loding check-in time. Measured in seconds since the Unix epoch.
+           * Lodging check-in time. Measured in seconds since the Unix epoch.
            */
           checkin_at: number;
 
@@ -9525,7 +9525,7 @@ declare module 'stripe' {
           category?: Lodging.Category;
 
           /**
-           * Loding check-in time. Measured in seconds since the Unix epoch.
+           * Lodging check-in time. Measured in seconds since the Unix epoch.
            */
           checkin_at: number;
 
