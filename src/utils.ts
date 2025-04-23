@@ -460,3 +460,28 @@ export function getAPIMode(path?: string): ApiMode {
   }
   return path.startsWith('/v2') ? 'v2' : 'v1';
 }
+
+
+export function parseHttpHeaderAsString<K extends keyof RequestHeaders>(
+  header: RequestHeaders[K]
+): string {
+  if (Array.isArray(header)) {
+    return header.join(', ');
+  }
+  return String(header);
+}
+
+export function parseHttpHeaderAsNumber<K extends keyof RequestHeaders>(
+  header: RequestHeaders[K]
+): number {
+  const number = Array.isArray(header) ? header[0] : header;
+  return Number(number);
+}
+
+export function parseHeadersForFetch(
+  headers: RequestHeaders
+): [string, string][] {
+  return Object.entries(headers).map(([key, value]) => {
+    return [key, parseHttpHeaderAsString(value)];
+  });
+}
