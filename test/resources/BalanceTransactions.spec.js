@@ -11,7 +11,7 @@ describe('BalanceTransactions Resource', function() {
         method: 'GET',
         url: '/v1/balance_transactions/txn_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -24,7 +24,7 @@ describe('BalanceTransactions Resource', function() {
         method: 'GET',
         url: '/v1/balance_transactions',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

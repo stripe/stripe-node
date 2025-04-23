@@ -11,7 +11,7 @@ describe('subscriptions Resource', () => {
         method: 'GET',
         url: '/v1/subscriptions/test_sub',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -175,7 +175,7 @@ describe('subscriptions Resource', () => {
         method: 'GET',
         url: '/v1/subscriptions?limit=3&customer=test_cus&plan=gold',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -189,7 +189,7 @@ describe('subscriptions Resource', () => {
           method: 'DELETE',
           url: '/v1/subscriptions/test_sub/discount',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });

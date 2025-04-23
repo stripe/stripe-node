@@ -38,7 +38,7 @@ declare module 'stripe' {
       requirements?: Capability.Requirements;
 
       /**
-       * The status of the capability. Can be `active`, `inactive`, `pending`, or `unrequested`.
+       * The status of the capability.
        */
       status: Capability.Status;
     }
@@ -51,7 +51,7 @@ declare module 'stripe' {
         alternatives: Array<FutureRequirements.Alternative> | null;
 
         /**
-         * Date on which `future_requirements` merges with the main `requirements` hash and `future_requirements` becomes empty. After the transition, `currently_due` requirements may immediately become `past_due`, but the account may also be given a grace period depending on the capability's enablement state prior to transitioning.
+         * Date on which `future_requirements` becomes the main `requirements` hash and `future_requirements` becomes empty. After the transition, `currently_due` requirements may immediately become `past_due`, but the account may also be given a grace period depending on the capability's enablement state prior to transitioning.
          */
         current_deadline: number | null;
 
@@ -71,7 +71,7 @@ declare module 'stripe' {
         errors: Array<FutureRequirements.Error>;
 
         /**
-         * Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well.
+         * Fields you must collect when all thresholds are reached. As they become required, they appear in `currently_due` as well.
          */
         eventually_due: Array<string>;
 
@@ -130,6 +130,7 @@ declare module 'stripe' {
 
         namespace Error {
           type Code =
+            | 'information_missing'
             | 'invalid_address_city_state_postal_code'
             | 'invalid_address_highway_contract_box'
             | 'invalid_address_private_mailbox'
@@ -142,6 +143,7 @@ declare module 'stripe' {
             | 'invalid_product_description_length'
             | 'invalid_product_description_url_match'
             | 'invalid_representative_country'
+            | 'invalid_signator'
             | 'invalid_statement_descriptor_business_mismatch'
             | 'invalid_statement_descriptor_denylisted'
             | 'invalid_statement_descriptor_length'
@@ -203,6 +205,7 @@ declare module 'stripe' {
             | 'verification_document_type_not_supported'
             | 'verification_extraneous_directors'
             | 'verification_failed_address_match'
+            | 'verification_failed_authorizer_authority'
             | 'verification_failed_business_iec_number'
             | 'verification_failed_document_match'
             | 'verification_failed_id_number_match'
@@ -217,8 +220,10 @@ declare module 'stripe' {
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
+            | 'verification_rejected_ownership_exemption_reason'
             | 'verification_requires_additional_memorandum_of_associations'
-            | 'verification_requires_additional_proof_of_registration';
+            | 'verification_requires_additional_proof_of_registration'
+            | 'verification_supportability';
         }
       }
 
@@ -249,7 +254,7 @@ declare module 'stripe' {
         errors: Array<Requirements.Error>;
 
         /**
-         * Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well, and `current_deadline` becomes set.
+         * Fields you must collect when all thresholds are reached. As they become required, they appear in `currently_due` as well, and `current_deadline` becomes set.
          */
         eventually_due: Array<string>;
 
@@ -308,6 +313,7 @@ declare module 'stripe' {
 
         namespace Error {
           type Code =
+            | 'information_missing'
             | 'invalid_address_city_state_postal_code'
             | 'invalid_address_highway_contract_box'
             | 'invalid_address_private_mailbox'
@@ -320,6 +326,7 @@ declare module 'stripe' {
             | 'invalid_product_description_length'
             | 'invalid_product_description_url_match'
             | 'invalid_representative_country'
+            | 'invalid_signator'
             | 'invalid_statement_descriptor_business_mismatch'
             | 'invalid_statement_descriptor_denylisted'
             | 'invalid_statement_descriptor_length'
@@ -381,6 +388,7 @@ declare module 'stripe' {
             | 'verification_document_type_not_supported'
             | 'verification_extraneous_directors'
             | 'verification_failed_address_match'
+            | 'verification_failed_authorizer_authority'
             | 'verification_failed_business_iec_number'
             | 'verification_failed_document_match'
             | 'verification_failed_id_number_match'
@@ -395,8 +403,10 @@ declare module 'stripe' {
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
+            | 'verification_rejected_ownership_exemption_reason'
             | 'verification_requires_additional_memorandum_of_associations'
-            | 'verification_requires_additional_proof_of_registration';
+            | 'verification_requires_additional_proof_of_registration'
+            | 'verification_supportability';
         }
       }
 

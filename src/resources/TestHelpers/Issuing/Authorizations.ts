@@ -25,6 +25,11 @@ export const Authorizations = StripeResource.extend({
     fullPath:
       '/v1/test_helpers/issuing/authorizations/{authorization}/increment',
   }),
+  respond: stripeMethod({
+    method: 'POST',
+    fullPath:
+      '/v1/test_helpers/issuing/authorizations/{authorization}/fraud_challenges/respond',
+  }),
   reverse: stripeMethod({
     method: 'POST',
     fullPath: '/v1/test_helpers/issuing/authorizations/{authorization}/reverse',

@@ -11,7 +11,7 @@ describe('Issuing', () => {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/issuing/authorizations/iauth_123',
-          data: {},
+          data: null,
           headers: {},
           settings: {},
         });
@@ -24,7 +24,7 @@ describe('Issuing', () => {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/issuing/authorizations',
-          data: {},
+          data: null,
           headers: {},
           settings: {},
         });

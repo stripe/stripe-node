@@ -14,7 +14,7 @@ declare module 'stripe' {
       currency: string;
 
       /**
-       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: number;
 
@@ -102,7 +102,7 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
-       * The ID of the payment method configuration to use with this PaymentIntent.
+       * The ID of the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) to use with this PaymentIntent.
        */
       payment_method_configuration?: string;
 
@@ -119,7 +119,7 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentCreateParams.PaymentMethodOptions;
 
       /**
-       * The list of payment method types (for example, a card) that this PaymentIntent can use. If you don't provide this, it defaults to ["card"]. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+       * The list of payment method types (for example, a card) that this PaymentIntent can use. If you don't provide this, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
        */
       payment_method_types?: Array<string>;
 
@@ -284,6 +284,11 @@ declare module 'stripe' {
         allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
         /**
+         * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+         */
+        alma?: PaymentMethodData.Alma;
+
+        /**
          * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
          */
         amazon_pay?: PaymentMethodData.AmazonPay;
@@ -302,6 +307,11 @@ declare module 'stripe' {
          * If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment method.
          */
         bancontact?: PaymentMethodData.Bancontact;
+
+        /**
+         * If this is a `billie` PaymentMethod, this hash contains details about the billie payment method.
+         */
+        billie?: PaymentMethodData.Billie;
 
         /**
          * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
@@ -359,6 +369,11 @@ declare module 'stripe' {
         interac_present?: PaymentMethodData.InteracPresent;
 
         /**
+         * If this is a `kakao_pay` PaymentMethod, this hash contains details about the Kakao Pay payment method.
+         */
+        kakao_pay?: PaymentMethodData.KakaoPay;
+
+        /**
          * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
          */
         klarna?: PaymentMethodData.Klarna;
@@ -367,6 +382,11 @@ declare module 'stripe' {
          * If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
          */
         konbini?: PaymentMethodData.Konbini;
+
+        /**
+         * If this is a `kr_card` PaymentMethod, this hash contains details about the Korean Card payment method.
+         */
+        kr_card?: PaymentMethodData.KrCard;
 
         /**
          * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
@@ -389,6 +409,16 @@ declare module 'stripe' {
         multibanco?: PaymentMethodData.Multibanco;
 
         /**
+         * If this is a `naver_pay` PaymentMethod, this hash contains details about the Naver Pay payment method.
+         */
+        naver_pay?: PaymentMethodData.NaverPay;
+
+        /**
+         * If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account payment method.
+         */
+        nz_bank_account?: PaymentMethodData.NzBankAccount;
+
+        /**
          * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
          */
         oxxo?: PaymentMethodData.Oxxo;
@@ -397,6 +427,16 @@ declare module 'stripe' {
          * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
          */
         p24?: PaymentMethodData.P24;
+
+        /**
+         * If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment method.
+         */
+        pay_by_bank?: PaymentMethodData.PayByBank;
+
+        /**
+         * If this is a `payco` PaymentMethod, this hash contains details about the PAYCO payment method.
+         */
+        payco?: PaymentMethodData.Payco;
 
         /**
          * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
@@ -427,6 +467,16 @@ declare module 'stripe' {
          * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
          */
         revolut_pay?: PaymentMethodData.RevolutPay;
+
+        /**
+         * If this is a `samsung_pay` PaymentMethod, this hash contains details about the SamsungPay payment method.
+         */
+        samsung_pay?: PaymentMethodData.SamsungPay;
+
+        /**
+         * If this is a `satispay` PaymentMethod, this hash contains details about the satispay payment method.
+         */
+        satispay?: PaymentMethodData.Satispay;
 
         /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -495,6 +545,8 @@ declare module 'stripe' {
 
         type AllowRedisplay = 'always' | 'limited' | 'unspecified';
 
+        interface Alma {}
+
         interface AmazonPay {}
 
         interface AuBecsDebit {
@@ -522,6 +574,8 @@ declare module 'stripe' {
         }
 
         interface Bancontact {}
+
+        interface Billie {}
 
         interface BillingDetails {
           /**
@@ -643,7 +697,7 @@ declare module 'stripe' {
 
         interface Ideal {
           /**
-           * The customer's bank.
+           * The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
            */
           bank?: Ideal.Bank;
         }
@@ -669,6 +723,8 @@ declare module 'stripe' {
         }
 
         interface InteracPresent {}
+
+        interface KakaoPay {}
 
         interface Klarna {
           /**
@@ -698,11 +754,53 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface KrCard {}
+
         interface Link {}
 
         interface Mobilepay {}
 
         interface Multibanco {}
+
+        interface NaverPay {
+          /**
+           * Whether to use Naver Pay points or a card to fund this transaction. If not provided, this defaults to `card`.
+           */
+          funding?: NaverPay.Funding;
+        }
+
+        namespace NaverPay {
+          type Funding = 'card' | 'points';
+        }
+
+        interface NzBankAccount {
+          /**
+           * The name on the bank account. Only required if the account holder name is different from the name of the authorized signatory collected in the PaymentMethod's billing details.
+           */
+          account_holder_name?: string;
+
+          /**
+           * The account number for the bank account.
+           */
+          account_number: string;
+
+          /**
+           * The numeric code for the bank account's bank.
+           */
+          bank_code: string;
+
+          /**
+           * The numeric code for the bank account's bank branch.
+           */
+          branch_code: string;
+
+          reference?: string;
+
+          /**
+           * The suffix of the bank account number.
+           */
+          suffix: string;
+        }
 
         interface Oxxo {}
 
@@ -743,6 +841,10 @@ declare module 'stripe' {
             | 'volkswagen_bank';
         }
 
+        interface PayByBank {}
+
+        interface Payco {}
+
         interface Paynow {}
 
         interface Paypal {}
@@ -759,6 +861,10 @@ declare module 'stripe' {
         }
 
         interface RevolutPay {}
+
+        interface SamsungPay {}
+
+        interface Satispay {}
 
         interface SepaDebit {
           /**
@@ -787,10 +893,12 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'alma'
           | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'billie'
           | 'blik'
           | 'boleto'
           | 'cashapp'
@@ -800,18 +908,26 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'kakao_pay'
           | 'klarna'
           | 'konbini'
+          | 'kr_card'
           | 'link'
           | 'mobilepay'
           | 'multibanco'
+          | 'naver_pay'
+          | 'nz_bank_account'
           | 'oxxo'
           | 'p24'
+          | 'pay_by_bank'
+          | 'payco'
           | 'paynow'
           | 'paypal'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
+          | 'samsung_pay'
+          | 'satispay'
           | 'sepa_debit'
           | 'sofort'
           | 'swish'
@@ -880,6 +996,11 @@ declare module 'stripe' {
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
+
+        /**
+         * If this is a `alma` PaymentMethod, this sub-hash contains details about the Alma payment method options.
+         */
+        alma?: Stripe.Emptyable<PaymentMethodOptions.Alma>;
 
         /**
          * If this is a `amazon_pay` PaymentMethod, this sub-hash contains details about the Amazon Pay payment method options.
@@ -964,6 +1085,11 @@ declare module 'stripe' {
         interac_present?: Stripe.Emptyable<PaymentMethodOptions.InteracPresent>;
 
         /**
+         * If this is a `kakao_pay` PaymentMethod, this sub-hash contains details about the Kakao Pay payment method options.
+         */
+        kakao_pay?: Stripe.Emptyable<PaymentMethodOptions.KakaoPay>;
+
+        /**
          * If this is a `klarna` PaymentMethod, this sub-hash contains details about the Klarna payment method options.
          */
         klarna?: Stripe.Emptyable<PaymentMethodOptions.Klarna>;
@@ -972,6 +1098,11 @@ declare module 'stripe' {
          * If this is a `konbini` PaymentMethod, this sub-hash contains details about the Konbini payment method options.
          */
         konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+        /**
+         * If this is a `kr_card` PaymentMethod, this sub-hash contains details about the KR Card payment method options.
+         */
+        kr_card?: Stripe.Emptyable<PaymentMethodOptions.KrCard>;
 
         /**
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
@@ -989,6 +1120,16 @@ declare module 'stripe' {
         multibanco?: Stripe.Emptyable<PaymentMethodOptions.Multibanco>;
 
         /**
+         * If this is a `naver_pay` PaymentMethod, this sub-hash contains details about the Naver Pay payment method options.
+         */
+        naver_pay?: Stripe.Emptyable<PaymentMethodOptions.NaverPay>;
+
+        /**
+         * If this is a `nz_bank_account` PaymentMethod, this sub-hash contains details about the NZ BECS Direct Debit payment method options.
+         */
+        nz_bank_account?: Stripe.Emptyable<PaymentMethodOptions.NzBankAccount>;
+
+        /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
          */
         oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
@@ -997,6 +1138,16 @@ declare module 'stripe' {
          * If this is a `p24` PaymentMethod, this sub-hash contains details about the Przelewy24 payment method options.
          */
         p24?: Stripe.Emptyable<PaymentMethodOptions.P24>;
+
+        /**
+         * If this is a `pay_by_bank` PaymentMethod, this sub-hash contains details about the PayByBank payment method options.
+         */
+        pay_by_bank?: Stripe.Emptyable<PaymentMethodOptions.PayByBank>;
+
+        /**
+         * If this is a `payco` PaymentMethod, this sub-hash contains details about the PAYCO payment method options.
+         */
+        payco?: Stripe.Emptyable<PaymentMethodOptions.Payco>;
 
         /**
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
@@ -1022,6 +1173,11 @@ declare module 'stripe' {
          * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Revolut Pay payment method options.
          */
         revolut_pay?: Stripe.Emptyable<PaymentMethodOptions.RevolutPay>;
+
+        /**
+         * If this is a `samsung_pay` PaymentMethod, this sub-hash contains details about the Samsung Pay payment method options.
+         */
+        samsung_pay?: Stripe.Emptyable<PaymentMethodOptions.SamsungPay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -1078,6 +1234,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<AcssDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
 
           /**
            * Bank account verification method.
@@ -1199,6 +1360,17 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface Alma {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+        }
+
         interface AmazonPay {
           /**
            * Controls when the funds are captured from the customer's account.
@@ -1238,6 +1410,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<AuBecsDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace AuBecsDebit {
@@ -1262,10 +1439,20 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<BacsDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace BacsDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
+             */
+            reference_prefix?: Stripe.Emptyable<string>;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -1537,6 +1724,7 @@ declare module 'stripe' {
             | 'girocard'
             | 'interac'
             | 'jcb'
+            | 'link'
             | 'mastercard'
             | 'unionpay'
             | 'unknown'
@@ -1861,6 +2049,32 @@ declare module 'stripe' {
 
         interface InteracPresent {}
 
+        interface KakaoPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<KakaoPay.SetupFutureUsage>;
+        }
+
+        namespace KakaoPay {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
         interface Klarna {
           /**
            * Controls when the funds are captured from the customer's account.
@@ -1975,6 +2189,32 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface KrCard {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<KrCard.SetupFutureUsage>;
+        }
+
+        namespace KrCard {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
         interface Link {
           /**
            * Controls when the funds are captured from the customer's account.
@@ -2048,6 +2288,56 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface NaverPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<NaverPay.SetupFutureUsage>;
+        }
+
+        namespace NaverPay {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface NzBankAccount {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<NzBankAccount.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
+        }
+
+        namespace NzBankAccount {
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
         interface Oxxo {
           /**
            * The number of calendar days before an OXXO voucher expires. For example, if you create an OXXO voucher on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -2086,6 +2376,19 @@ declare module 'stripe' {
            * Confirm that the payer has accepted the P24 terms and conditions.
            */
           tos_shown_and_accepted?: boolean;
+        }
+
+        interface PayByBank {}
+
+        interface Payco {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
         }
 
         interface Paynow {
@@ -2231,6 +2534,17 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface SamsungPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+        }
+
         interface SepaDebit {
           /**
            * Additional fields for Mandate creation
@@ -2249,10 +2563,20 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<SepaDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace SepaDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'STRIPE'.
+             */
+            reference_prefix?: Stripe.Emptyable<string>;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -2292,7 +2616,7 @@ declare module 'stripe' {
 
         interface Swish {
           /**
-           * The order ID displayed in the Swish app after the payment is authorized.
+           * A reference for this payment to be displayed in the Swish app.
            */
           reference?: Stripe.Emptyable<string>;
 
@@ -2362,6 +2686,11 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<UsBankAccount.SetupFutureUsage>;
 
           /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
+
+          /**
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
@@ -2370,7 +2699,7 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
-             * Provide filters for the linked accounts that the customer can select for the payment method
+             * Provide filters for the linked accounts that the customer can select for the payment method.
              */
             filters?: FinancialConnections.Filters;
 
@@ -2445,7 +2774,7 @@ declare module 'stripe' {
           /**
            * The client type that the end customer will pay from
            */
-          client: WechatPay.Client;
+          client?: WechatPay.Client;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -2558,7 +2887,7 @@ declare module 'stripe' {
       amount?: number;
 
       /**
-       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: Stripe.Emptyable<number>;
 
@@ -2602,7 +2931,7 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
-       * The ID of the payment method configuration to use with this PaymentIntent.
+       * The ID of the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) to use with this PaymentIntent.
        */
       payment_method_configuration?: string;
 
@@ -2701,6 +3030,11 @@ declare module 'stripe' {
         allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
         /**
+         * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+         */
+        alma?: PaymentMethodData.Alma;
+
+        /**
          * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
          */
         amazon_pay?: PaymentMethodData.AmazonPay;
@@ -2719,6 +3053,11 @@ declare module 'stripe' {
          * If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment method.
          */
         bancontact?: PaymentMethodData.Bancontact;
+
+        /**
+         * If this is a `billie` PaymentMethod, this hash contains details about the billie payment method.
+         */
+        billie?: PaymentMethodData.Billie;
 
         /**
          * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
@@ -2776,6 +3115,11 @@ declare module 'stripe' {
         interac_present?: PaymentMethodData.InteracPresent;
 
         /**
+         * If this is a `kakao_pay` PaymentMethod, this hash contains details about the Kakao Pay payment method.
+         */
+        kakao_pay?: PaymentMethodData.KakaoPay;
+
+        /**
          * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
          */
         klarna?: PaymentMethodData.Klarna;
@@ -2784,6 +3128,11 @@ declare module 'stripe' {
          * If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
          */
         konbini?: PaymentMethodData.Konbini;
+
+        /**
+         * If this is a `kr_card` PaymentMethod, this hash contains details about the Korean Card payment method.
+         */
+        kr_card?: PaymentMethodData.KrCard;
 
         /**
          * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
@@ -2806,6 +3155,16 @@ declare module 'stripe' {
         multibanco?: PaymentMethodData.Multibanco;
 
         /**
+         * If this is a `naver_pay` PaymentMethod, this hash contains details about the Naver Pay payment method.
+         */
+        naver_pay?: PaymentMethodData.NaverPay;
+
+        /**
+         * If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account payment method.
+         */
+        nz_bank_account?: PaymentMethodData.NzBankAccount;
+
+        /**
          * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
          */
         oxxo?: PaymentMethodData.Oxxo;
@@ -2814,6 +3173,16 @@ declare module 'stripe' {
          * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
          */
         p24?: PaymentMethodData.P24;
+
+        /**
+         * If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment method.
+         */
+        pay_by_bank?: PaymentMethodData.PayByBank;
+
+        /**
+         * If this is a `payco` PaymentMethod, this hash contains details about the PAYCO payment method.
+         */
+        payco?: PaymentMethodData.Payco;
 
         /**
          * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
@@ -2844,6 +3213,16 @@ declare module 'stripe' {
          * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
          */
         revolut_pay?: PaymentMethodData.RevolutPay;
+
+        /**
+         * If this is a `samsung_pay` PaymentMethod, this hash contains details about the SamsungPay payment method.
+         */
+        samsung_pay?: PaymentMethodData.SamsungPay;
+
+        /**
+         * If this is a `satispay` PaymentMethod, this hash contains details about the satispay payment method.
+         */
+        satispay?: PaymentMethodData.Satispay;
 
         /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -2912,6 +3291,8 @@ declare module 'stripe' {
 
         type AllowRedisplay = 'always' | 'limited' | 'unspecified';
 
+        interface Alma {}
+
         interface AmazonPay {}
 
         interface AuBecsDebit {
@@ -2939,6 +3320,8 @@ declare module 'stripe' {
         }
 
         interface Bancontact {}
+
+        interface Billie {}
 
         interface BillingDetails {
           /**
@@ -3060,7 +3443,7 @@ declare module 'stripe' {
 
         interface Ideal {
           /**
-           * The customer's bank.
+           * The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
            */
           bank?: Ideal.Bank;
         }
@@ -3086,6 +3469,8 @@ declare module 'stripe' {
         }
 
         interface InteracPresent {}
+
+        interface KakaoPay {}
 
         interface Klarna {
           /**
@@ -3115,11 +3500,53 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface KrCard {}
+
         interface Link {}
 
         interface Mobilepay {}
 
         interface Multibanco {}
+
+        interface NaverPay {
+          /**
+           * Whether to use Naver Pay points or a card to fund this transaction. If not provided, this defaults to `card`.
+           */
+          funding?: NaverPay.Funding;
+        }
+
+        namespace NaverPay {
+          type Funding = 'card' | 'points';
+        }
+
+        interface NzBankAccount {
+          /**
+           * The name on the bank account. Only required if the account holder name is different from the name of the authorized signatory collected in the PaymentMethod's billing details.
+           */
+          account_holder_name?: string;
+
+          /**
+           * The account number for the bank account.
+           */
+          account_number: string;
+
+          /**
+           * The numeric code for the bank account's bank.
+           */
+          bank_code: string;
+
+          /**
+           * The numeric code for the bank account's bank branch.
+           */
+          branch_code: string;
+
+          reference?: string;
+
+          /**
+           * The suffix of the bank account number.
+           */
+          suffix: string;
+        }
 
         interface Oxxo {}
 
@@ -3160,6 +3587,10 @@ declare module 'stripe' {
             | 'volkswagen_bank';
         }
 
+        interface PayByBank {}
+
+        interface Payco {}
+
         interface Paynow {}
 
         interface Paypal {}
@@ -3176,6 +3607,10 @@ declare module 'stripe' {
         }
 
         interface RevolutPay {}
+
+        interface SamsungPay {}
+
+        interface Satispay {}
 
         interface SepaDebit {
           /**
@@ -3204,10 +3639,12 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'alma'
           | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'billie'
           | 'blik'
           | 'boleto'
           | 'cashapp'
@@ -3217,18 +3654,26 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'kakao_pay'
           | 'klarna'
           | 'konbini'
+          | 'kr_card'
           | 'link'
           | 'mobilepay'
           | 'multibanco'
+          | 'naver_pay'
+          | 'nz_bank_account'
           | 'oxxo'
           | 'p24'
+          | 'pay_by_bank'
+          | 'payco'
           | 'paynow'
           | 'paypal'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
+          | 'samsung_pay'
+          | 'satispay'
           | 'sepa_debit'
           | 'sofort'
           | 'swish'
@@ -3297,6 +3742,11 @@ declare module 'stripe' {
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
+
+        /**
+         * If this is a `alma` PaymentMethod, this sub-hash contains details about the Alma payment method options.
+         */
+        alma?: Stripe.Emptyable<PaymentMethodOptions.Alma>;
 
         /**
          * If this is a `amazon_pay` PaymentMethod, this sub-hash contains details about the Amazon Pay payment method options.
@@ -3381,6 +3831,11 @@ declare module 'stripe' {
         interac_present?: Stripe.Emptyable<PaymentMethodOptions.InteracPresent>;
 
         /**
+         * If this is a `kakao_pay` PaymentMethod, this sub-hash contains details about the Kakao Pay payment method options.
+         */
+        kakao_pay?: Stripe.Emptyable<PaymentMethodOptions.KakaoPay>;
+
+        /**
          * If this is a `klarna` PaymentMethod, this sub-hash contains details about the Klarna payment method options.
          */
         klarna?: Stripe.Emptyable<PaymentMethodOptions.Klarna>;
@@ -3389,6 +3844,11 @@ declare module 'stripe' {
          * If this is a `konbini` PaymentMethod, this sub-hash contains details about the Konbini payment method options.
          */
         konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+        /**
+         * If this is a `kr_card` PaymentMethod, this sub-hash contains details about the KR Card payment method options.
+         */
+        kr_card?: Stripe.Emptyable<PaymentMethodOptions.KrCard>;
 
         /**
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
@@ -3406,6 +3866,16 @@ declare module 'stripe' {
         multibanco?: Stripe.Emptyable<PaymentMethodOptions.Multibanco>;
 
         /**
+         * If this is a `naver_pay` PaymentMethod, this sub-hash contains details about the Naver Pay payment method options.
+         */
+        naver_pay?: Stripe.Emptyable<PaymentMethodOptions.NaverPay>;
+
+        /**
+         * If this is a `nz_bank_account` PaymentMethod, this sub-hash contains details about the NZ BECS Direct Debit payment method options.
+         */
+        nz_bank_account?: Stripe.Emptyable<PaymentMethodOptions.NzBankAccount>;
+
+        /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
          */
         oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
@@ -3414,6 +3884,16 @@ declare module 'stripe' {
          * If this is a `p24` PaymentMethod, this sub-hash contains details about the Przelewy24 payment method options.
          */
         p24?: Stripe.Emptyable<PaymentMethodOptions.P24>;
+
+        /**
+         * If this is a `pay_by_bank` PaymentMethod, this sub-hash contains details about the PayByBank payment method options.
+         */
+        pay_by_bank?: Stripe.Emptyable<PaymentMethodOptions.PayByBank>;
+
+        /**
+         * If this is a `payco` PaymentMethod, this sub-hash contains details about the PAYCO payment method options.
+         */
+        payco?: Stripe.Emptyable<PaymentMethodOptions.Payco>;
 
         /**
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
@@ -3439,6 +3919,11 @@ declare module 'stripe' {
          * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Revolut Pay payment method options.
          */
         revolut_pay?: Stripe.Emptyable<PaymentMethodOptions.RevolutPay>;
+
+        /**
+         * If this is a `samsung_pay` PaymentMethod, this sub-hash contains details about the Samsung Pay payment method options.
+         */
+        samsung_pay?: Stripe.Emptyable<PaymentMethodOptions.SamsungPay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -3495,6 +3980,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<AcssDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
 
           /**
            * Bank account verification method.
@@ -3616,6 +4106,17 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface Alma {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+        }
+
         interface AmazonPay {
           /**
            * Controls when the funds are captured from the customer's account.
@@ -3655,6 +4156,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<AuBecsDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace AuBecsDebit {
@@ -3679,10 +4185,20 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<BacsDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace BacsDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
+             */
+            reference_prefix?: Stripe.Emptyable<string>;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -3954,6 +4470,7 @@ declare module 'stripe' {
             | 'girocard'
             | 'interac'
             | 'jcb'
+            | 'link'
             | 'mastercard'
             | 'unionpay'
             | 'unknown'
@@ -4278,6 +4795,32 @@ declare module 'stripe' {
 
         interface InteracPresent {}
 
+        interface KakaoPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<KakaoPay.SetupFutureUsage>;
+        }
+
+        namespace KakaoPay {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
         interface Klarna {
           /**
            * Controls when the funds are captured from the customer's account.
@@ -4392,6 +4935,32 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface KrCard {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<KrCard.SetupFutureUsage>;
+        }
+
+        namespace KrCard {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
         interface Link {
           /**
            * Controls when the funds are captured from the customer's account.
@@ -4465,6 +5034,56 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface NaverPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<NaverPay.SetupFutureUsage>;
+        }
+
+        namespace NaverPay {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface NzBankAccount {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<NzBankAccount.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
+        }
+
+        namespace NzBankAccount {
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
         interface Oxxo {
           /**
            * The number of calendar days before an OXXO voucher expires. For example, if you create an OXXO voucher on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -4503,6 +5122,19 @@ declare module 'stripe' {
            * Confirm that the payer has accepted the P24 terms and conditions.
            */
           tos_shown_and_accepted?: boolean;
+        }
+
+        interface PayByBank {}
+
+        interface Payco {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
         }
 
         interface Paynow {
@@ -4648,6 +5280,17 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface SamsungPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+        }
+
         interface SepaDebit {
           /**
            * Additional fields for Mandate creation
@@ -4666,10 +5309,20 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<SepaDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace SepaDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'STRIPE'.
+             */
+            reference_prefix?: Stripe.Emptyable<string>;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -4709,7 +5362,7 @@ declare module 'stripe' {
 
         interface Swish {
           /**
-           * The order ID displayed in the Swish app after the payment is authorized.
+           * A reference for this payment to be displayed in the Swish app.
            */
           reference?: Stripe.Emptyable<string>;
 
@@ -4779,6 +5432,11 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<UsBankAccount.SetupFutureUsage>;
 
           /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
+
+          /**
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
@@ -4787,7 +5445,7 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
-             * Provide filters for the linked accounts that the customer can select for the payment method
+             * Provide filters for the linked accounts that the customer can select for the payment method.
              */
             filters?: FinancialConnections.Filters;
 
@@ -4862,7 +5520,7 @@ declare module 'stripe' {
           /**
            * The client type that the end customer will pay from
            */
-          client: WechatPay.Client;
+          client?: WechatPay.Client;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -4954,11 +5612,9 @@ declare module 'stripe' {
 
     interface PaymentIntentApplyCustomerBalanceParams {
       /**
-       * Amount that you intend to apply to this PaymentIntent from the customer's cash balance.
+       * Amount that you intend to apply to this PaymentIntent from the customer's cash balance. If the PaymentIntent was created by an Invoice, the full amount of the PaymentIntent is applied regardless of this parameter.
        *
-       * A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (for example, 100 cents to charge 1 USD or 100 to charge 100 JPY, a zero-decimal currency).
-       *
-       * The maximum amount is the amount of the PaymentIntent.
+       * A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (for example, 100 cents to charge 1 USD or 100 to charge 100 JPY, a zero-decimal currency). The maximum amount is the amount of the PaymentIntent.
        *
        * When you omit the amount, it defaults to the remaining amount requested on the PaymentIntent.
        */
@@ -4997,12 +5653,12 @@ declare module 'stripe' {
 
     interface PaymentIntentCaptureParams {
       /**
-       * The amount to capture from the PaymentIntent, which must be less than or equal to the original amount. Any additional amount is automatically refunded. Defaults to the full `amount_capturable` if it's not provided.
+       * The amount to capture from the PaymentIntent, which must be less than or equal to the original amount. Defaults to the full `amount_capturable` if it's not provided.
        */
       amount_to_capture?: number;
 
       /**
-       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: number;
 
@@ -5230,6 +5886,11 @@ declare module 'stripe' {
         allow_redisplay?: PaymentMethodData.AllowRedisplay;
 
         /**
+         * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+         */
+        alma?: PaymentMethodData.Alma;
+
+        /**
          * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
          */
         amazon_pay?: PaymentMethodData.AmazonPay;
@@ -5248,6 +5909,11 @@ declare module 'stripe' {
          * If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment method.
          */
         bancontact?: PaymentMethodData.Bancontact;
+
+        /**
+         * If this is a `billie` PaymentMethod, this hash contains details about the billie payment method.
+         */
+        billie?: PaymentMethodData.Billie;
 
         /**
          * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
@@ -5305,6 +5971,11 @@ declare module 'stripe' {
         interac_present?: PaymentMethodData.InteracPresent;
 
         /**
+         * If this is a `kakao_pay` PaymentMethod, this hash contains details about the Kakao Pay payment method.
+         */
+        kakao_pay?: PaymentMethodData.KakaoPay;
+
+        /**
          * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
          */
         klarna?: PaymentMethodData.Klarna;
@@ -5313,6 +5984,11 @@ declare module 'stripe' {
          * If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
          */
         konbini?: PaymentMethodData.Konbini;
+
+        /**
+         * If this is a `kr_card` PaymentMethod, this hash contains details about the Korean Card payment method.
+         */
+        kr_card?: PaymentMethodData.KrCard;
 
         /**
          * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
@@ -5335,6 +6011,16 @@ declare module 'stripe' {
         multibanco?: PaymentMethodData.Multibanco;
 
         /**
+         * If this is a `naver_pay` PaymentMethod, this hash contains details about the Naver Pay payment method.
+         */
+        naver_pay?: PaymentMethodData.NaverPay;
+
+        /**
+         * If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account payment method.
+         */
+        nz_bank_account?: PaymentMethodData.NzBankAccount;
+
+        /**
          * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
          */
         oxxo?: PaymentMethodData.Oxxo;
@@ -5343,6 +6029,16 @@ declare module 'stripe' {
          * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
          */
         p24?: PaymentMethodData.P24;
+
+        /**
+         * If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment method.
+         */
+        pay_by_bank?: PaymentMethodData.PayByBank;
+
+        /**
+         * If this is a `payco` PaymentMethod, this hash contains details about the PAYCO payment method.
+         */
+        payco?: PaymentMethodData.Payco;
 
         /**
          * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
@@ -5373,6 +6069,16 @@ declare module 'stripe' {
          * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
          */
         revolut_pay?: PaymentMethodData.RevolutPay;
+
+        /**
+         * If this is a `samsung_pay` PaymentMethod, this hash contains details about the SamsungPay payment method.
+         */
+        samsung_pay?: PaymentMethodData.SamsungPay;
+
+        /**
+         * If this is a `satispay` PaymentMethod, this hash contains details about the satispay payment method.
+         */
+        satispay?: PaymentMethodData.Satispay;
 
         /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -5441,6 +6147,8 @@ declare module 'stripe' {
 
         type AllowRedisplay = 'always' | 'limited' | 'unspecified';
 
+        interface Alma {}
+
         interface AmazonPay {}
 
         interface AuBecsDebit {
@@ -5468,6 +6176,8 @@ declare module 'stripe' {
         }
 
         interface Bancontact {}
+
+        interface Billie {}
 
         interface BillingDetails {
           /**
@@ -5589,7 +6299,7 @@ declare module 'stripe' {
 
         interface Ideal {
           /**
-           * The customer's bank.
+           * The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
            */
           bank?: Ideal.Bank;
         }
@@ -5615,6 +6325,8 @@ declare module 'stripe' {
         }
 
         interface InteracPresent {}
+
+        interface KakaoPay {}
 
         interface Klarna {
           /**
@@ -5644,11 +6356,53 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface KrCard {}
+
         interface Link {}
 
         interface Mobilepay {}
 
         interface Multibanco {}
+
+        interface NaverPay {
+          /**
+           * Whether to use Naver Pay points or a card to fund this transaction. If not provided, this defaults to `card`.
+           */
+          funding?: NaverPay.Funding;
+        }
+
+        namespace NaverPay {
+          type Funding = 'card' | 'points';
+        }
+
+        interface NzBankAccount {
+          /**
+           * The name on the bank account. Only required if the account holder name is different from the name of the authorized signatory collected in the PaymentMethod's billing details.
+           */
+          account_holder_name?: string;
+
+          /**
+           * The account number for the bank account.
+           */
+          account_number: string;
+
+          /**
+           * The numeric code for the bank account's bank.
+           */
+          bank_code: string;
+
+          /**
+           * The numeric code for the bank account's bank branch.
+           */
+          branch_code: string;
+
+          reference?: string;
+
+          /**
+           * The suffix of the bank account number.
+           */
+          suffix: string;
+        }
 
         interface Oxxo {}
 
@@ -5689,6 +6443,10 @@ declare module 'stripe' {
             | 'volkswagen_bank';
         }
 
+        interface PayByBank {}
+
+        interface Payco {}
+
         interface Paynow {}
 
         interface Paypal {}
@@ -5705,6 +6463,10 @@ declare module 'stripe' {
         }
 
         interface RevolutPay {}
+
+        interface SamsungPay {}
+
+        interface Satispay {}
 
         interface SepaDebit {
           /**
@@ -5733,10 +6495,12 @@ declare module 'stripe' {
           | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'alma'
           | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'billie'
           | 'blik'
           | 'boleto'
           | 'cashapp'
@@ -5746,18 +6510,26 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'kakao_pay'
           | 'klarna'
           | 'konbini'
+          | 'kr_card'
           | 'link'
           | 'mobilepay'
           | 'multibanco'
+          | 'naver_pay'
+          | 'nz_bank_account'
           | 'oxxo'
           | 'p24'
+          | 'pay_by_bank'
+          | 'payco'
           | 'paynow'
           | 'paypal'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
+          | 'samsung_pay'
+          | 'satispay'
           | 'sepa_debit'
           | 'sofort'
           | 'swish'
@@ -5826,6 +6598,11 @@ declare module 'stripe' {
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
+
+        /**
+         * If this is a `alma` PaymentMethod, this sub-hash contains details about the Alma payment method options.
+         */
+        alma?: Stripe.Emptyable<PaymentMethodOptions.Alma>;
 
         /**
          * If this is a `amazon_pay` PaymentMethod, this sub-hash contains details about the Amazon Pay payment method options.
@@ -5910,6 +6687,11 @@ declare module 'stripe' {
         interac_present?: Stripe.Emptyable<PaymentMethodOptions.InteracPresent>;
 
         /**
+         * If this is a `kakao_pay` PaymentMethod, this sub-hash contains details about the Kakao Pay payment method options.
+         */
+        kakao_pay?: Stripe.Emptyable<PaymentMethodOptions.KakaoPay>;
+
+        /**
          * If this is a `klarna` PaymentMethod, this sub-hash contains details about the Klarna payment method options.
          */
         klarna?: Stripe.Emptyable<PaymentMethodOptions.Klarna>;
@@ -5918,6 +6700,11 @@ declare module 'stripe' {
          * If this is a `konbini` PaymentMethod, this sub-hash contains details about the Konbini payment method options.
          */
         konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+        /**
+         * If this is a `kr_card` PaymentMethod, this sub-hash contains details about the KR Card payment method options.
+         */
+        kr_card?: Stripe.Emptyable<PaymentMethodOptions.KrCard>;
 
         /**
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
@@ -5935,6 +6722,16 @@ declare module 'stripe' {
         multibanco?: Stripe.Emptyable<PaymentMethodOptions.Multibanco>;
 
         /**
+         * If this is a `naver_pay` PaymentMethod, this sub-hash contains details about the Naver Pay payment method options.
+         */
+        naver_pay?: Stripe.Emptyable<PaymentMethodOptions.NaverPay>;
+
+        /**
+         * If this is a `nz_bank_account` PaymentMethod, this sub-hash contains details about the NZ BECS Direct Debit payment method options.
+         */
+        nz_bank_account?: Stripe.Emptyable<PaymentMethodOptions.NzBankAccount>;
+
+        /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
          */
         oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
@@ -5943,6 +6740,16 @@ declare module 'stripe' {
          * If this is a `p24` PaymentMethod, this sub-hash contains details about the Przelewy24 payment method options.
          */
         p24?: Stripe.Emptyable<PaymentMethodOptions.P24>;
+
+        /**
+         * If this is a `pay_by_bank` PaymentMethod, this sub-hash contains details about the PayByBank payment method options.
+         */
+        pay_by_bank?: Stripe.Emptyable<PaymentMethodOptions.PayByBank>;
+
+        /**
+         * If this is a `payco` PaymentMethod, this sub-hash contains details about the PAYCO payment method options.
+         */
+        payco?: Stripe.Emptyable<PaymentMethodOptions.Payco>;
 
         /**
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
@@ -5968,6 +6775,11 @@ declare module 'stripe' {
          * If this is a `revolut_pay` PaymentMethod, this sub-hash contains details about the Revolut Pay payment method options.
          */
         revolut_pay?: Stripe.Emptyable<PaymentMethodOptions.RevolutPay>;
+
+        /**
+         * If this is a `samsung_pay` PaymentMethod, this sub-hash contains details about the Samsung Pay payment method options.
+         */
+        samsung_pay?: Stripe.Emptyable<PaymentMethodOptions.SamsungPay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -6024,6 +6836,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<AcssDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
 
           /**
            * Bank account verification method.
@@ -6145,6 +6962,17 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface Alma {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+        }
+
         interface AmazonPay {
           /**
            * Controls when the funds are captured from the customer's account.
@@ -6184,6 +7012,11 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<AuBecsDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace AuBecsDebit {
@@ -6208,10 +7041,20 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<BacsDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace BacsDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'DDIC' or 'STRIPE'.
+             */
+            reference_prefix?: Stripe.Emptyable<string>;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -6483,6 +7326,7 @@ declare module 'stripe' {
             | 'girocard'
             | 'interac'
             | 'jcb'
+            | 'link'
             | 'mastercard'
             | 'unionpay'
             | 'unknown'
@@ -6807,6 +7651,32 @@ declare module 'stripe' {
 
         interface InteracPresent {}
 
+        interface KakaoPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<KakaoPay.SetupFutureUsage>;
+        }
+
+        namespace KakaoPay {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
         interface Klarna {
           /**
            * Controls when the funds are captured from the customer's account.
@@ -6921,6 +7791,32 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface KrCard {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<KrCard.SetupFutureUsage>;
+        }
+
+        namespace KrCard {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
         interface Link {
           /**
            * Controls when the funds are captured from the customer's account.
@@ -6994,6 +7890,56 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface NaverPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           */
+          setup_future_usage?: Stripe.Emptyable<NaverPay.SetupFutureUsage>;
+        }
+
+        namespace NaverPay {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface NzBankAccount {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<NzBankAccount.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
+        }
+
+        namespace NzBankAccount {
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
         interface Oxxo {
           /**
            * The number of calendar days before an OXXO voucher expires. For example, if you create an OXXO voucher on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -7032,6 +7978,19 @@ declare module 'stripe' {
            * Confirm that the payer has accepted the P24 terms and conditions.
            */
           tos_shown_and_accepted?: boolean;
+        }
+
+        interface PayByBank {}
+
+        interface Payco {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
         }
 
         interface Paynow {
@@ -7177,6 +8136,17 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface SamsungPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+        }
+
         interface SepaDebit {
           /**
            * Additional fields for Mandate creation
@@ -7195,10 +8165,20 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<SepaDebit.SetupFutureUsage>;
+
+          /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
         }
 
         namespace SepaDebit {
-          interface MandateOptions {}
+          interface MandateOptions {
+            /**
+             * Prefix used to generate the Mandate reference. Must be at most 12 characters long. Must consist of only uppercase letters, numbers, spaces, or the following special characters: '/', '_', '-', '&', '.'. Cannot begin with 'STRIPE'.
+             */
+            reference_prefix?: Stripe.Emptyable<string>;
+          }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
@@ -7238,7 +8218,7 @@ declare module 'stripe' {
 
         interface Swish {
           /**
-           * The order ID displayed in the Swish app after the payment is authorized.
+           * A reference for this payment to be displayed in the Swish app.
            */
           reference?: Stripe.Emptyable<string>;
 
@@ -7308,6 +8288,11 @@ declare module 'stripe' {
           setup_future_usage?: Stripe.Emptyable<UsBankAccount.SetupFutureUsage>;
 
           /**
+           * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
+           */
+          target_date?: string;
+
+          /**
            * Bank account verification method.
            */
           verification_method?: UsBankAccount.VerificationMethod;
@@ -7316,7 +8301,7 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
-             * Provide filters for the linked accounts that the customer can select for the payment method
+             * Provide filters for the linked accounts that the customer can select for the payment method.
              */
             filters?: FinancialConnections.Filters;
 
@@ -7391,7 +8376,7 @@ declare module 'stripe' {
           /**
            * The client type that the end customer will pay from
            */
-          client: WechatPay.Client;
+          client?: WechatPay.Client;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -7471,7 +8456,7 @@ declare module 'stripe' {
       amount: number;
 
       /**
-       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: number;
 
@@ -7679,6 +8664,9 @@ declare module 'stripe' {
        * after those actions are completed. Your server needs to then
        * explicitly re-confirm the PaymentIntent to initiate the next payment
        * attempt.
+       * There is a variable upper limit on how many times a PaymentIntent can be confirmed.
+       * After this limit is reached, any further calls to this endpoint will
+       * transition the PaymentIntent to the canceled state.
        */
       confirm(
         id: string,

@@ -30,10 +30,10 @@ describe('utils', () => {
     });
   });
 
-  describe('stringifyRequestData', () => {
+  describe('queryStringifyRequestData', () => {
     it('Handles basic types', () => {
       expect(
-        utils.stringifyRequestData({
+        utils.queryStringifyRequestData({
           a: 1,
           b: 'foo',
         })
@@ -42,7 +42,7 @@ describe('utils', () => {
 
     it('Handles Dates', () => {
       expect(
-        utils.stringifyRequestData({
+        utils.queryStringifyRequestData({
           date: new Date('2009-02-13T23:31:30Z'),
           created: {
             gte: new Date('2009-02-13T23:31:30Z'),
@@ -60,7 +60,7 @@ describe('utils', () => {
 
     it('Handles deeply nested object', () => {
       expect(
-        utils.stringifyRequestData({
+        utils.queryStringifyRequestData({
           a: {
             b: {
               c: {
@@ -74,7 +74,7 @@ describe('utils', () => {
 
     it('Handles arrays of objects', () => {
       expect(
-        utils.stringifyRequestData({
+        utils.queryStringifyRequestData({
           a: [{b: 'c'}, {b: 'd'}],
         })
       ).to.equal('a[0][b]=c&a[1][b]=d');
@@ -82,7 +82,7 @@ describe('utils', () => {
 
     it('Handles indexed arrays', () => {
       expect(
-        utils.stringifyRequestData({
+        utils.queryStringifyRequestData({
           a: {
             0: {b: 'c'},
             1: {b: 'd'},
@@ -93,7 +93,7 @@ describe('utils', () => {
 
     it('Creates a string from an object, handling shallow nested objects', () => {
       expect(
-        utils.stringifyRequestData({
+        utils.queryStringifyRequestData({
           test: 1,
           foo: 'baz',
           somethingElse: '::""%&',
@@ -111,6 +111,17 @@ describe('utils', () => {
           'nested[a%20n%20o%20t%20h%20e%20r]=',
         ].join('&')
       );
+    });
+
+    it('Handles v2 arrays', () => {
+      expect(
+        utils.queryStringifyRequestData(
+          {
+            include: ['a', 'b'],
+          },
+          'v2'
+        )
+      ).to.equal('include=a&include=b');
     });
   });
 
@@ -185,7 +196,6 @@ describe('utils', () => {
   describe('getOptsFromArgs', () => {
     it('handles an empty list', () => {
       expect(utils.getOptionsFromArgs([])).to.deep.equal({
-        auth: null,
         host: null,
         headers: {},
         settings: {},
@@ -195,7 +205,6 @@ describe('utils', () => {
     it('handles an list with no object', () => {
       const args = [1, 3];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: null,
         host: null,
         headers: {},
         settings: {},
@@ -206,7 +215,6 @@ describe('utils', () => {
     it('ignores a non-options object', () => {
       const args = [{foo: 'bar'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: null,
         host: null,
         headers: {},
         settings: {},
@@ -216,30 +224,33 @@ describe('utils', () => {
 
     it('parses an api key', () => {
       const args = ['sk_test_iiiiiiiiiiiiiiiiiiiiiiii'];
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+      const options = utils.getOptionsFromArgs(args);
+      expect(options).to.deep.contain({
         host: null,
         headers: {},
         settings: {},
       });
       expect(args.length).to.equal(0);
+      expect(options.authenticator._apiKey).to.equal(
+        'sk_test_iiiiiiiiiiiiiiiiiiiiiiii'
+      );
     });
 
     it('assumes any string is an api key', () => {
       const args = ['yolo'];
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: 'yolo',
+      const options = utils.getOptionsFromArgs(args);
+      expect(options).to.deep.contain({
         host: null,
         headers: {},
         settings: {},
       });
       expect(args.length).to.equal(0);
+      expect(options.authenticator._apiKey).to.equal('yolo');
     });
 
     it('parses an idempotency key', () => {
       const args = [{foo: 'bar'}, {idempotencyKey: 'foo'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: null,
         host: null,
         headers: {'Idempotency-Key': 'foo'},
         settings: {},
@@ -250,7 +261,6 @@ describe('utils', () => {
     it('parses an api version', () => {
       const args = [{foo: 'bar'}, {apiVersion: '2003-03-30'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: null,
         host: null,
         headers: {'Stripe-Version': '2003-03-30'},
         settings: {},
@@ -267,8 +277,8 @@ describe('utils', () => {
           apiVersion: '2010-01-10',
         },
       ];
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+      const options = utils.getOptionsFromArgs(args);
+      expect(options).to.deep.contains({
         host: null,
         headers: {
           'Idempotency-Key': 'foo',
@@ -277,6 +287,9 @@ describe('utils', () => {
         settings: {},
       });
       expect(args.length).to.equal(1);
+      expect(options.authenticator._apiKey).to.equal(
+        'sk_test_iiiiiiiiiiiiiiiiiiiiiiii'
+      );
     });
 
     it('parses an idempotency key and api key and api version', () => {
@@ -287,8 +300,8 @@ describe('utils', () => {
           apiVersion: 'hunter2',
         },
       ];
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+      const options = utils.getOptionsFromArgs(args);
+      expect(options).to.deep.contains({
         host: null,
         headers: {
           'Idempotency-Key': 'foo',
@@ -297,6 +310,9 @@ describe('utils', () => {
         settings: {},
       });
       expect(args.length).to.equal(0);
+      expect(options.authenticator._apiKey).to.equal(
+        'sk_test_iiiiiiiiiiiiiiiiiiiiiiii'
+      );
     });
 
     it('parses additional per-request settings', () => {
@@ -308,7 +324,6 @@ describe('utils', () => {
       ];
 
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: null,
         host: null,
         headers: {},
         settings: {

@@ -2,7 +2,6 @@
 
 [![Version](https://img.shields.io/npm/v/stripe.svg)](https://www.npmjs.org/package/stripe)
 [![Build Status](https://github.com/stripe/stripe-node/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/stripe/stripe-node/actions?query=branch%3Amaster)
-[![Coverage Status](https://coveralls.io/repos/github/stripe/stripe-node/badge.svg?branch=master)](https://coveralls.io/github/stripe/stripe-node?branch=master)
 [![Downloads](https://img.shields.io/npm/dm/stripe.svg)](https://www.npmjs.com/package/stripe)
 [![Try on RunKit](https://badge.runkitcdn.com/stripe.svg)](https://runkit.com/npm/stripe)
 
@@ -14,8 +13,6 @@ For collecting customer and payment information in the browser, use [Stripe.js][
 ## Documentation
 
 See the [`stripe-node` API docs](https://stripe.com/docs/api?lang=node) for Node.js.
-
-See [video demonstrations][youtube-playlist] covering how to use the library.
 
 ## Requirements
 
@@ -60,6 +57,39 @@ const customer = await stripe.customers.create({
 
 console.log(customer.id);
 ```
+
+> [!WARNING]
+> If you're using `v17.x.x` or later and getting an error about a missing API key despite being sure it's available, it's likely you're importing the file that instantiates `Stripe` while the key isn't present (for instance, during a build step).
+> If that's the case, consider instantiating the client lazily:
+>
+> ```ts
+> import Stripe from 'stripe';
+>
+> let _stripe: Stripe | null = null;
+> const getStripe = (): Stripe => {
+>   if (!_stripe) {
+>     _stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+>       // ...
+>     });
+>   }
+>   return _stripe;
+> };
+>
+> const getCustomers = () => getStripe().customers.list();
+> ```
+>
+> Alternatively, you can provide a placeholder for the real key (which will be enough to get the code through a build step):
+>
+> ```ts
+> import Stripe from 'stripe';
+>
+> export const stripe = new Stripe(
+>   process.env.STRIPE_SECRET_KEY || 'api_key_placeholder',
+>   {
+>     // ...
+>   }
+> );
+> ```
 
 ### Usage with TypeScript
 
@@ -197,7 +227,7 @@ const stripe = Stripe('sk_test_...', {
 | `host`              | `'api.stripe.com'` | Host that requests are made to.                                                                                                                                                                                                                   |
 | `port`              | 443                | Port that requests are made to.                                                                                                                                                                                                                   |
 | `protocol`          | `'https'`          | `'https'` or `'http'`. `http` is never appropriate for sending requests to Stripe servers, and we strongly discourage `http`, even in local testing scenarios, as this can result in your credentials being transmitted over an insecure channel. |
-| `telemetry`         | `true`             | Allow Stripe to send [telemetry](#telemetry).                                                                                                                                                                             |
+| `telemetry`         | `true`             | Allow Stripe to send [telemetry](#telemetry).                                                                                                                                                                                                     |
 
 > **Note**
 > Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
@@ -517,6 +547,39 @@ const stripe = new Stripe('sk_test_...', {
 });
 ```
 
+### Custom requests
+
+If you would like to send a request to an undocumented API (for example you are in a private beta), or if you prefer to bypass the method definitions in the library and specify your request details directly, you can use the `rawRequest` method on the StripeClient object.
+
+```javascript
+const client = new Stripe('sk_test_...');
+
+client.rawRequest(
+    'POST',
+    '/v1/beta_endpoint',
+    { param: 123 },
+    { apiVersion: '2022-11-15; feature_beta=v3' }
+  )
+  .then((response) => /* handle response */ )
+  .catch((error) => console.error(error));
+```
+
+Or using ES modules and `async`/`await`:
+
+```javascript
+import Stripe from 'stripe';
+const stripe = new Stripe('sk_test_...');
+
+const response = await stripe.rawRequest(
+  'POST',
+  '/v1/beta_endpoint',
+  {param: 123},
+  {apiVersion: '2022-11-15; feature_beta=v3'}
+);
+
+// handle response
+```
+
 ## Support
 
 New features and bug fixes are released on the latest major version of the `stripe` package. If you are on an older major version, we recommend that you upgrade to the latest in order to use the new features and bug fixes including those for security vulnerabilities. Older major versions of the package will continue to be available for use, but will not be receiving any updates.
@@ -530,16 +593,9 @@ New features and bug fixes are released on the latest major version of the `stri
 
 ## Development
 
-Run all tests:
+[Contribution guidelines for this project](CONTRIBUTING.md)
 
-```bash
-$ yarn install
-$ yarn test
-```
-
-If you do not have `yarn` installed, you can get it with `npm install --global yarn`.
-
-The tests also depends on [stripe-mock][stripe-mock], so make sure to fetch and
+The tests depend on [stripe-mock][stripe-mock], so make sure to fetch and
 run it from a background terminal ([stripe-mock's README][stripe-mock-usage]
 also contains instructions for installing via Homebrew and other methods):
 
@@ -548,24 +604,38 @@ go get -u github.com/stripe/stripe-mock
 stripe-mock
 ```
 
-Run a single test suite without a coverage report:
+We use [just](https://github.com/casey/just) for conveniently running development tasks. You can use them directly, or copy the commands out of the `justfile`. To our help docs, run `just`.
+
+Run all tests (installing the dependencies first, if needed)
 
 ```bash
-$ yarn mocha-only test/Error.spec.ts
+just test
+# or: yarn && yarn test
+```
+
+If you do not have `yarn` installed, consult its [installation instructions](https://classic.yarnpkg.com/lang/en/docs/install/).
+
+Run a single test suite:
+
+```bash
+just test test/Error.spec.ts
+# or: yarn test test/Error.spec.ts
 ```
 
 Run a single test (case sensitive) in watch mode:
 
 ```bash
-$ yarn mocha-only test/Error.spec.ts --grep 'Populates with type' --watch
+just test test/Error.spec.ts --grep 'StripeError' --watch
+# or: yarn test test/Error.spec.ts --grep 'StripeError' --watch
 ```
 
 If you wish, you may run tests using your Stripe _Test_ API key by setting the
 environment variable `STRIPE_TEST_API_KEY` before running the tests:
 
 ```bash
-$ export STRIPE_TEST_API_KEY='sk_test....'
-$ yarn test
+export STRIPE_TEST_API_KEY='sk_test....'
+just test
+# or: yarn test
 ```
 
 Run prettier:
@@ -573,7 +643,8 @@ Run prettier:
 Add an [editor integration](https://prettier.io/docs/en/editors.html) or:
 
 ```bash
-$ yarn fix
+just format
+# or: yarn prettier src/**/*.ts --write
 ```
 
 [api-keys]: https://dashboard.stripe.com/account/apikeys
@@ -585,7 +656,6 @@ $ yarn fix
 [stripe-js]: https://stripe.com/docs/js
 [stripe-mock]: https://github.com/stripe/stripe-mock
 [stripe-mock-usage]: https://github.com/stripe/stripe-mock#usage
-[youtube-playlist]: https://www.youtube.com/playlist?list=PLy1nL-pvL2M5xNIuNapwmABwEy2uifAlY
 
 <!--
 # vim: set tw=79:

@@ -1,5 +1,6 @@
 declare module 'stripe' {
   namespace Stripe {
+    // rawErrorTypeEnum: The beginning of the section generated from our OpenAPI spec
     export type RawErrorType =
       | 'card_error'
       | 'invalid_request_error'
@@ -7,10 +8,13 @@ declare module 'stripe' {
       | 'idempotency_error'
       | 'rate_limit_error'
       | 'authentication_error'
-      | 'invalid_grant';
+      | 'invalid_grant'
+      | 'temporary_session_expired';
+    // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
 
     export type StripeRawError = {
       message?: string;
+      userMessage?: string;
 
       type: RawErrorType;
 
@@ -32,27 +36,35 @@ declare module 'stripe' {
     };
 
     namespace errors {
+      /** @deprecated Not for external use. */
       function generate(
         rawError: StripeRawError & {type: 'card_error'}
       ): StripeCardError;
+      /** @deprecated Not for external use. */
       function generate(
         rawError: StripeRawError & {type: 'invalid_request_error'}
       ): StripeInvalidRequestError;
+      /** @deprecated Not for external use. */
       function generate(
         rawError: StripeRawError & {type: 'api_error'}
       ): StripeAPIError;
+      /** @deprecated Not for external use. */
       function generate(
         rawError: StripeRawError & {type: 'authentication_error'}
       ): StripeAuthenticationError;
+      /** @deprecated Not for external use. */
       function generate(
         rawError: StripeRawError & {type: 'rate_limit_error'}
       ): StripeRateLimitError;
+      /** @deprecated Not for external use. */
       function generate(
         rawError: StripeRawError & {type: 'idempotency_error'}
       ): StripeIdempotencyError;
+      /** @deprecated Not for external use. */
       function generate(
         rawError: StripeRawError & {type: 'invalid_grant'}
       ): StripeInvalidGrantError;
+      /** @deprecated Not for external use. */
       function generate(
         rawError: StripeRawError & {type: RawErrorType}
       ): StripeError;
@@ -60,27 +72,35 @@ declare module 'stripe' {
       class StripeError extends Error {
         constructor(rawError: StripeRawError);
 
+        /** @deprecated Not for external use. */
         static generate(
           rawError: StripeRawError & {type: 'card_error'}
         ): StripeCardError;
+        /** @deprecated Not for external use. */
         static generate(
           rawError: StripeRawError & {type: 'invalid_request_error'}
         ): StripeInvalidRequestError;
+        /** @deprecated Not for external use. */
         static generate(
           rawError: StripeRawError & {type: 'api_error'}
         ): StripeAPIError;
+        /** @deprecated Not for external use. */
         static generate(
           rawError: StripeRawError & {type: 'authentication_error'}
         ): StripeAuthenticationError;
+        /** @deprecated Not for external use. */
         static generate(
           rawError: StripeRawError & {type: 'rate_limit_error'}
         ): StripeRateLimitError;
+        /** @deprecated Not for external use. */
         static generate(
           rawError: StripeRawError & {type: 'idempotency_error'}
         ): StripeIdempotencyError;
+        /** @deprecated Not for external use. */
         static generate(
           rawError: StripeRawError & {type: 'invalid_grant'}
         ): StripeInvalidGrantError;
+        /** @deprecated Not for external use. */
         static generate(
           rawError: StripeRawError & {type: RawErrorType}
         ): StripeError;
@@ -91,6 +111,7 @@ declare module 'stripe' {
          */
         readonly message: string;
 
+        // errorClassNameEnum: The beginning of the section generated from our OpenAPI spec
         readonly type:
           | 'StripeError'
           | 'StripeCardError'
@@ -102,7 +123,9 @@ declare module 'stripe' {
           | 'StripeConnectionError'
           | 'StripeSignatureVerificationError'
           | 'StripeIdempotencyError'
-          | 'StripeInvalidGrantError';
+          | 'StripeInvalidGrantError'
+          | 'TemporarySessionExpiredError';
+        // errorClassNameEnum: The end of the section generated from our OpenAPI spec
 
         /**
          * See the "error types" section at https://stripe.com/docs/api/errors
@@ -245,6 +268,13 @@ declare module 'stripe' {
         readonly type: 'StripeInvalidGrantError';
         readonly rawType: 'invalid_grant';
       }
+
+      // errorClassDefinitions: The beginning of the section generated from our OpenAPI spec
+      export class TemporarySessionExpiredError extends StripeError {
+        readonly type: 'TemporarySessionExpiredError';
+        readonly rawType: 'temporary_session_expired';
+      }
+      // errorClassDefinitions: The end of the section generated from our OpenAPI spec
     }
   }
 }

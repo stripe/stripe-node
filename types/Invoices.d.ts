@@ -60,7 +60,7 @@ declare module 'stripe' {
       /**
        * Unique identifier for the object. This property is always present unless the invoice is an upcoming invoice. See [Retrieve an upcoming invoice](https://stripe.com/docs/api/invoices/upcoming) for more details.
        */
-      id: string;
+      id?: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
@@ -90,6 +90,11 @@ declare module 'stripe' {
       amount_due: number;
 
       /**
+       * Amount that was overpaid on the invoice. The amount overpaid is credited to the customer's credit balance.
+       */
+      amount_overpaid: number;
+
+      /**
        * The amount, in cents (or local equivalent), that was paid.
        */
       amount_paid: number;
@@ -114,11 +119,6 @@ declare module 'stripe' {
         | null;
 
       /**
-       * The fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account when the invoice is paid.
-       */
-      application_fee_amount: number | null;
-
-      /**
        * Number of payment attempts made for this invoice, from the perspective of the payment retry schedule. Any payment attempt counts as the first attempt, and subsequently only automatic retries increment the attempt count. In other words, manual payment attempts after the first attempt do not affect the retry schedule. If a failure is returned with a non-retryable return code, the invoice can no longer be retried unless a new payment method is obtained. Retries will continue to be scheduled, and attempt_count will continue to increment, but retries will only be executed if a new payment method is obtained.
        */
       attempt_count: number;
@@ -136,6 +136,11 @@ declare module 'stripe' {
       automatic_tax: Invoice.AutomaticTax;
 
       /**
+       * The time when this invoice is currently scheduled to be automatically finalized. The field will be `null` if the invoice is not scheduled to finalize in the future. If the invoice is not in the draft state, this field will always be `null` - see `finalized_at` for the time when an already-finalized invoice was finalized.
+       */
+      automatically_finalizes_at: number | null;
+
+      /**
        * Indicates the reason why the invoice was created.
        *
        * * `manual`: Unrelated to a subscription, for example, created via the invoice editor.
@@ -149,14 +154,14 @@ declare module 'stripe' {
       billing_reason: Invoice.BillingReason | null;
 
       /**
-       * ID of the latest charge generated for this invoice, if any.
-       */
-      charge: string | Stripe.Charge | null;
-
-      /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions.
        */
       collection_method: Invoice.CollectionMethod;
+
+      /**
+       * The confirmation secret associated with this invoice. Currently, this contains the client_secret of the PaymentIntent that Stripe creates during invoice finalization.
+       */
+      confirmation_secret?: Invoice.ConfirmationSecret | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -237,11 +242,6 @@ declare module 'stripe' {
        * An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
        */
       description: string | null;
-
-      /**
-       * Describes the current discount applied to this invoice, if there is one. Not populated if there are multiple discounts.
-       */
-      discount: Stripe.Discount | null;
 
       /**
        * The discounts applied to the invoice. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
@@ -326,21 +326,16 @@ declare module 'stripe' {
       on_behalf_of: string | Stripe.Account | null;
 
       /**
-       * Whether payment was successfully collected for this invoice. An invoice can be paid (most commonly) with a charge or with credit from the customer's account balance.
+       * The parent that generated this invoice
        */
-      paid: boolean;
-
-      /**
-       * Returns true if the invoice was manually marked paid, returns false if the invoice hasn't been paid yet or was paid on Stripe.
-       */
-      paid_out_of_band: boolean;
-
-      /**
-       * The PaymentIntent associated with this invoice. The PaymentIntent is generated when the invoice is finalized, and can then be used to pay the invoice. Note that voiding an invoice will cancel the PaymentIntent.
-       */
-      payment_intent: string | Stripe.PaymentIntent | null;
+      parent: Invoice.Parent | null;
 
       payment_settings: Invoice.PaymentSettings;
+
+      /**
+       * Payments for this invoice
+       */
+      payments?: ApiList<Stripe.InvoicePayment>;
 
       /**
        * End of the usage period during which invoice items were added to this invoice. This looks back one period for a subscription invoice. Use the [line item period](https://stripe.com/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each price.
@@ -361,11 +356,6 @@ declare module 'stripe' {
        * Total amount of all pre-payment credit notes issued for this invoice.
        */
       pre_payment_credit_notes_amount: number;
-
-      /**
-       * The quote this invoice was generated from.
-       */
-      quote: string | Stripe.Quote | null;
 
       /**
        * This is the transaction number that appears on email receipts sent for this invoice.
@@ -405,21 +395,6 @@ declare module 'stripe' {
       status_transitions: Invoice.StatusTransitions;
 
       /**
-       * The subscription that this invoice was prepared for, if any.
-       */
-      subscription: string | Stripe.Subscription | null;
-
-      /**
-       * Details about the subscription that created this invoice.
-       */
-      subscription_details: Invoice.SubscriptionDetails | null;
-
-      /**
-       * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
-       */
-      subscription_proration_date?: number;
-
-      /**
        * Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level discount or exclusive tax is applied. Item discounts are already incorporated
        */
       subtotal: number;
@@ -428,11 +403,6 @@ declare module 'stripe' {
        * The integer amount in cents (or local equivalent) representing the subtotal of the invoice before any invoice level discount or tax is applied. Item discounts are already incorporated
        */
       subtotal_excluding_tax: number | null;
-
-      /**
-       * The amount of tax on this invoice. This is the sum of all the tax amounts on this invoice.
-       */
-      tax: number | null;
 
       /**
        * ID of the test clock this invoice belongs to.
@@ -457,14 +427,16 @@ declare module 'stripe' {
       total_excluding_tax: number | null;
 
       /**
-       * The aggregate amounts calculated per tax rate for all line items.
+       * Contains pretax credit amounts (ex: discount, credit grants, etc) that apply to this invoice. This is a combined list of total_pretax_credit_amounts across all invoice line items.
        */
-      total_tax_amounts: Array<Invoice.TotalTaxAmount>;
+      total_pretax_credit_amounts: Array<
+        Invoice.TotalPretaxCreditAmount
+      > | null;
 
       /**
-       * The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to for the invoice.
+       * The aggregate tax information of all line items.
        */
-      transfer_data: Invoice.TransferData | null;
+      total_taxes: Array<Invoice.TotalTax> | null;
 
       /**
        * Invoices are automatically paid or sent 1 hour after webhooks are delivered, or until all webhook delivery attempts have [been exhausted](https://stripe.com/docs/billing/webhooks#understand). This field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had no webhooks to deliver, this will be set while the invoice is being created.
@@ -474,6 +446,11 @@ declare module 'stripe' {
 
     namespace Invoice {
       interface AutomaticTax {
+        /**
+         * If Stripe disabled automatic tax, this enum describes why.
+         */
+        disabled_reason: AutomaticTax.DisabledReason | null;
+
         /**
          * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
          */
@@ -491,6 +468,10 @@ declare module 'stripe' {
       }
 
       namespace AutomaticTax {
+        type DisabledReason =
+          | 'finalization_requires_location_inputs'
+          | 'finalization_system_error';
+
         interface Liability {
           /**
            * The connected account being referenced when `type` is `account`.
@@ -523,6 +504,18 @@ declare module 'stripe' {
 
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
+      interface ConfirmationSecret {
+        /**
+         * The client_secret of the payment that Stripe creates for the invoice after finalization.
+         */
+        client_secret: string;
+
+        /**
+         * The type of client_secret. Currently this is always payment_intent, referencing the default payment_intent that Stripe creates during invoice finalization
+         */
+        type: string;
+      }
+
       interface CustomerShipping {
         address?: Stripe.Address;
 
@@ -551,7 +544,7 @@ declare module 'stripe' {
 
       interface CustomerTaxId {
         /**
-         * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, or `unknown`
+         * The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, or `unknown`
          */
         type: CustomerTaxId.Type;
 
@@ -565,20 +558,28 @@ declare module 'stripe' {
         type Type =
           | 'ad_nrt'
           | 'ae_trn'
+          | 'al_tin'
+          | 'am_tin'
+          | 'ao_tin'
           | 'ar_cuit'
           | 'au_abn'
           | 'au_arn'
+          | 'ba_tin'
+          | 'bb_tin'
           | 'bg_uic'
           | 'bh_vat'
           | 'bo_tin'
           | 'br_cnpj'
           | 'br_cpf'
+          | 'bs_tin'
+          | 'by_tin'
           | 'ca_bn'
           | 'ca_gst_hst'
           | 'ca_pst_bc'
           | 'ca_pst_mb'
           | 'ca_pst_sk'
           | 'ca_qst'
+          | 'cd_nif'
           | 'ch_uid'
           | 'ch_vat'
           | 'cl_tin'
@@ -594,6 +595,7 @@ declare module 'stripe' {
           | 'eu_vat'
           | 'gb_vat'
           | 'ge_vat'
+          | 'gn_nif'
           | 'hk_br'
           | 'hr_oib'
           | 'hu_tin'
@@ -605,9 +607,16 @@ declare module 'stripe' {
           | 'jp_rn'
           | 'jp_trn'
           | 'ke_pin'
+          | 'kh_tin'
           | 'kr_brn'
           | 'kz_bin'
           | 'li_uid'
+          | 'li_vat'
+          | 'ma_vat'
+          | 'md_vat'
+          | 'me_pib'
+          | 'mk_vat'
+          | 'mr_nif'
           | 'mx_rfc'
           | 'my_frp'
           | 'my_itn'
@@ -615,6 +624,7 @@ declare module 'stripe' {
           | 'ng_tin'
           | 'no_vat'
           | 'no_voec'
+          | 'np_pan'
           | 'nz_gst'
           | 'om_vat'
           | 'pe_ruc'
@@ -627,17 +637,26 @@ declare module 'stripe' {
           | 'sg_gst'
           | 'sg_uen'
           | 'si_tin'
+          | 'sn_ninea'
+          | 'sr_fin'
           | 'sv_nit'
           | 'th_vat'
+          | 'tj_tin'
           | 'tr_tin'
           | 'tw_vat'
+          | 'tz_vat'
           | 'ua_vat'
+          | 'ug_tin'
           | 'unknown'
           | 'us_ein'
           | 'uy_ruc'
+          | 'uz_tin'
+          | 'uz_vat'
           | 've_rif'
           | 'vn_tin'
-          | 'za_vat';
+          | 'za_vat'
+          | 'zm_tin'
+          | 'zw_tin';
       }
 
       interface CustomField {
@@ -682,6 +701,11 @@ declare module 'stripe' {
 
       interface LastFinalizationError {
         /**
+         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines) if they provide one.
+         */
+        advice_code?: string;
+
+        /**
          * For card errors, the ID of the failed charge.
          */
         charge?: string;
@@ -705,6 +729,16 @@ declare module 'stripe' {
          * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
          */
         message?: string;
+
+        /**
+         * For card errors resulting from a card issuer decline, a 2 digit code which indicates the advice given to merchant by the card network on how to proceed with an error.
+         */
+        network_advice_code?: string;
+
+        /**
+         * For card errors resulting from a card issuer decline, a brand specific 2, 3, or 4 digit code which indicates the reason the authorization failed.
+         */
+        network_decline_code?: string;
 
         /**
          * If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
@@ -831,6 +865,7 @@ declare module 'stripe' {
           | 'financial_connections_no_successful_transaction_refresh'
           | 'forwarding_api_inactive'
           | 'forwarding_api_invalid_parameter'
+          | 'forwarding_api_retryable_upstream_error'
           | 'forwarding_api_upstream_connection_error'
           | 'forwarding_api_upstream_connection_timeout'
           | 'idempotency_key_in_use'
@@ -927,6 +962,7 @@ declare module 'stripe' {
           | 'setup_intent_authentication_failure'
           | 'setup_intent_invalid_parameter'
           | 'setup_intent_mandate_invalid'
+          | 'setup_intent_mobile_wallet_unsupported'
           | 'setup_intent_setup_attempt_expired'
           | 'setup_intent_unexpected_state'
           | 'shipping_address_invalid'
@@ -940,6 +976,7 @@ declare module 'stripe' {
           | 'terminal_location_country_unsupported'
           | 'terminal_reader_busy'
           | 'terminal_reader_hardware_fault'
+          | 'terminal_reader_invalid_location_for_activation'
           | 'terminal_reader_invalid_location_for_payment'
           | 'terminal_reader_offline'
           | 'terminal_reader_timeout'
@@ -957,6 +994,52 @@ declare module 'stripe' {
           | 'card_error'
           | 'idempotency_error'
           | 'invalid_request_error';
+      }
+
+      interface Parent {
+        /**
+         * Details about the quote that generated this invoice
+         */
+        quote_details: Parent.QuoteDetails | null;
+
+        /**
+         * Details about the subscription that generated this invoice
+         */
+        subscription_details: Parent.SubscriptionDetails | null;
+
+        /**
+         * The type of parent that generated this invoice
+         */
+        type: Parent.Type;
+      }
+
+      namespace Parent {
+        interface QuoteDetails {
+          /**
+           * The quote that generated this invoice
+           */
+          quote: string;
+        }
+
+        interface SubscriptionDetails {
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) defined as subscription metadata when an invoice is created. Becomes an immutable snapshot of the subscription metadata at the time of invoice finalization.
+           *  *Note: This attribute is populated only for invoices created on or after June 29, 2023.*
+           */
+          metadata: Stripe.Metadata | null;
+
+          /**
+           * The subscription that generated this invoice
+           */
+          subscription: string | Stripe.Subscription;
+
+          /**
+           * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
+           */
+          subscription_proration_date?: number;
+        }
+
+        type Type = 'quote_details' | 'subscription_details';
       }
 
       interface PaymentSettings {
@@ -1173,10 +1256,17 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'jp_credit_transfer'
+          | 'kakao_pay'
+          | 'klarna'
           | 'konbini'
+          | 'kr_card'
           | 'link'
           | 'multibanco'
+          | 'naver_pay'
+          | 'nz_bank_account'
           | 'p24'
+          | 'payco'
           | 'paynow'
           | 'paypal'
           | 'promptpay'
@@ -1199,6 +1289,16 @@ declare module 'stripe' {
          * Invoice pdf rendering options
          */
         pdf: Rendering.Pdf | null;
+
+        /**
+         * ID of the rendering template that the invoice is formatted by.
+         */
+        template: string | null;
+
+        /**
+         * Version of the rendering template that the invoice is using.
+         */
+        template_version: number | null;
       }
 
       namespace Rendering {
@@ -1249,9 +1349,9 @@ declare module 'stripe' {
           amount: number;
 
           /**
-           * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+           * Tax rates can be applied to [invoices](https://stripe.com/invoicing/taxes/tax-rates), [subscriptions](https://stripe.com/billing/taxes/tax-rates) and [Checkout Sessions](https://stripe.com/payments/checkout/use-manual-tax-rates) to collect tax.
            *
-           * Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
+           * Related guide: [Tax rates](https://stripe.com/billing/taxes/tax-rates)
            */
           rate: Stripe.TaxRate;
 
@@ -1334,14 +1434,6 @@ declare module 'stripe' {
         voided_at: number | null;
       }
 
-      interface SubscriptionDetails {
-        /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) defined as subscription metadata when an invoice is created. Becomes an immutable snapshot of the subscription metadata at the time of invoice finalization.
-         *  *Note: This attribute is populated only for invoices created on or after June 29, 2023.*
-         */
-        metadata: Stripe.Metadata | null;
-      }
-
       interface ThresholdReason {
         /**
          * The total invoice amount threshold boundary if it triggered the threshold invoice.
@@ -1380,36 +1472,71 @@ declare module 'stripe' {
         discount: string | Stripe.Discount | Stripe.DeletedDiscount;
       }
 
-      interface TotalTaxAmount {
+      interface TotalPretaxCreditAmount {
         /**
-         * The amount, in cents (or local equivalent), of the tax.
+         * The amount, in cents (or local equivalent), of the pretax credit amount.
          */
         amount: number;
 
         /**
-         * Whether this tax amount is inclusive or exclusive.
+         * The credit balance transaction that was applied to get this pretax credit amount.
          */
-        inclusive: boolean;
+        credit_balance_transaction?:
+          | string
+          | Stripe.Billing.CreditBalanceTransaction
+          | null;
 
         /**
-         * The tax rate that was applied to get this tax amount.
+         * The discount that was applied to get this pretax credit amount.
          */
-        tax_rate: string | Stripe.TaxRate;
+        discount?: string | Stripe.Discount | Stripe.DeletedDiscount;
+
+        /**
+         * Type of the pretax credit amount referenced.
+         */
+        type: TotalPretaxCreditAmount.Type;
+      }
+
+      namespace TotalPretaxCreditAmount {
+        type Type = 'credit_balance_transaction' | 'discount';
+      }
+
+      interface TotalTax {
+        /**
+         * The amount of the tax, in cents (or local equivalent).
+         */
+        amount: number;
+
+        /**
+         * Whether this tax is inclusive or exclusive.
+         */
+        tax_behavior: TotalTax.TaxBehavior;
+
+        /**
+         * Additional details about the tax rate. Only present when `type` is `tax_rate_details`.
+         */
+        tax_rate_details: TotalTax.TaxRateDetails | null;
 
         /**
          * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
          */
-        taxability_reason: TotalTaxAmount.TaxabilityReason | null;
+        taxability_reason: TotalTax.TaxabilityReason;
 
         /**
          * The amount on which tax is calculated, in cents (or local equivalent).
          */
         taxable_amount: number | null;
+
+        /**
+         * The type of tax information.
+         */
+        type: 'tax_rate_details';
       }
 
-      namespace TotalTaxAmount {
+      namespace TotalTax {
         type TaxabilityReason =
           | 'customer_exempt'
+          | 'not_available'
           | 'not_collecting'
           | 'not_subject_to_tax'
           | 'not_supported'
@@ -1424,18 +1551,12 @@ declare module 'stripe' {
           | 'standard_rated'
           | 'taxable_basis_reduced'
           | 'zero_rated';
-      }
 
-      interface TransferData {
-        /**
-         * The amount in cents (or local equivalent) that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
-         */
-        amount: number | null;
+        type TaxBehavior = 'exclusive' | 'inclusive';
 
-        /**
-         * The account where funds from the payment will be transferred to upon payment success.
-         */
-        destination: string | Stripe.Account;
+        interface TaxRateDetails {
+          tax_rate: string;
+        }
       }
     }
   }

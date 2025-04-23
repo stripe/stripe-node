@@ -13,7 +13,7 @@ describe('Customers Resource', () => {
         method: 'GET',
         url: '/v1/customers/cus_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -24,7 +24,7 @@ describe('Customers Resource', () => {
         method: 'GET',
         url: '/v1/customers/cus_123',
         headers: {},
-        data: {},
+        data: null,
         auth: TEST_AUTH_KEY,
         settings: {},
       });
@@ -146,7 +146,7 @@ describe('Customers Resource', () => {
         method: 'DELETE',
         url: '/v1/customers/cus_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -159,7 +159,7 @@ describe('Customers Resource', () => {
         method: 'GET',
         url: '/v1/customers',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -170,7 +170,7 @@ describe('Customers Resource', () => {
         method: 'GET',
         url: '/v1/customers',
         headers: {},
-        data: {},
+        data: null,
         auth: TEST_AUTH_KEY,
         settings: {},
       });
@@ -185,7 +185,7 @@ describe('Customers Resource', () => {
           method: 'DELETE',
           url: '/v1/customers/cus_123/discount',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -200,7 +200,7 @@ describe('Customers Resource', () => {
           method: 'GET',
           url: '/v1/customers/cus_123/sources/card_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -211,7 +211,7 @@ describe('Customers Resource', () => {
           method: 'GET',
           url: '/v1/customers/cus_123/sources/card_123',
           headers: {},
-          data: {},
+          data: null,
           auth: TEST_AUTH_KEY,
           settings: {},
         });
@@ -281,7 +281,7 @@ describe('Customers Resource', () => {
           method: 'DELETE',
           url: '/v1/customers/cus_123/sources/card_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -292,7 +292,7 @@ describe('Customers Resource', () => {
           method: 'DELETE',
           url: '/v1/customers/cus_123/sources/card_123',
           headers: {},
-          data: {},
+          data: null,
           auth: TEST_AUTH_KEY,
           settings: {},
         });
@@ -306,7 +306,7 @@ describe('Customers Resource', () => {
           method: 'GET',
           url: '/v1/customers/cus_123/sources',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -317,7 +317,7 @@ describe('Customers Resource', () => {
           method: 'GET',
           url: '/v1/customers/cus_123/sources',
           headers: {},
-          data: {},
+          data: null,
           auth: TEST_AUTH_KEY,
           settings: {},
         });
@@ -354,7 +354,7 @@ describe('Customers Resource', () => {
           method: 'GET',
           url: '/v1/customers/cus_123/tax_ids/txi_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -384,7 +384,7 @@ describe('Customers Resource', () => {
           method: 'DELETE',
           url: '/v1/customers/cus_123/tax_ids/txi_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -397,7 +397,7 @@ describe('Customers Resource', () => {
           method: 'GET',
           url: '/v1/customers/cus_123/tax_ids',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -412,7 +412,7 @@ describe('Customers Resource', () => {
           method: 'GET',
           url: '/v1/customers/cus_123/balance_transactions/cbtxn_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -456,7 +456,7 @@ describe('Customers Resource', () => {
           method: 'GET',
           url: '/v1/customers/cus_123/balance_transactions',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });

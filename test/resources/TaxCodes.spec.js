@@ -11,7 +11,7 @@ describe('TaxCodes Resource', () => {
         method: 'GET',
         url: '/v1/tax_codes/txcd_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -24,7 +24,7 @@ describe('TaxCodes Resource', () => {
         method: 'GET',
         url: '/v1/tax_codes',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

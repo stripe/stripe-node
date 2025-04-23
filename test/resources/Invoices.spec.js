@@ -11,7 +11,7 @@ describe('Invoices Resource', () => {
         method: 'GET',
         url: '/v1/invoices/in_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -37,7 +37,7 @@ describe('Invoices Resource', () => {
         method: 'GET',
         url: '/v1/invoices?count=25',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -63,7 +63,7 @@ describe('Invoices Resource', () => {
         method: 'DELETE',
         url: '/v1/invoices/in_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -76,57 +76,7 @@ describe('Invoices Resource', () => {
         method: 'GET',
         url: '/v1/invoices/in_123/lines',
         headers: {},
-        data: {},
-        settings: {},
-      });
-    });
-  });
-
-  describe('listUpcomingLines', () => {
-    it('Sends the correct request', () => {
-      stripe.invoices.listUpcomingLines();
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'GET',
-        url: '/v1/invoices/upcoming/lines',
-        headers: {},
-        data: {},
-        settings: {},
-      });
-    });
-  });
-
-  describe('retrieveUpcoming', () => {
-    it('Sends the correct request', () => {
-      stripe.invoices.retrieveUpcoming({
-        customer: 'cus_abc',
-        subscription_items: [{plan: 'potato'}, {plan: 'rutabaga'}],
-      });
-
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'GET',
-        url:
-          '/v1/invoices/upcoming?customer=cus_abc&subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga',
-        headers: {},
-        data: {},
-        settings: {},
-      });
-    });
-  });
-
-  describe('listUpcomingLineItems', () => {
-    it('Sends the correct request', () => {
-      stripe.invoices.listUpcomingLines({
-        customer: 'cus_abc',
-        subscription_items: [{plan: 'potato'}, {plan: 'rutabaga'}],
-        limit: 5,
-      });
-
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'GET',
-        url:
-          '/v1/invoices/upcoming/lines?customer=cus_abc&subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga&limit=5',
-        headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

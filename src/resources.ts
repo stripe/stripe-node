@@ -14,18 +14,27 @@ import {Configurations as BillingPortalConfigurations} from './resources/Billing
 import {Configurations as TerminalConfigurations} from './resources/Terminal/Configurations.js';
 import {ConfirmationTokens as TestHelpersConfirmationTokens} from './resources/TestHelpers/ConfirmationTokens.js';
 import {ConnectionTokens as TerminalConnectionTokens} from './resources/Terminal/ConnectionTokens.js';
+import {CreditBalanceSummary as BillingCreditBalanceSummary} from './resources/Billing/CreditBalanceSummary.js';
+import {CreditBalanceTransactions as BillingCreditBalanceTransactions} from './resources/Billing/CreditBalanceTransactions.js';
+import {CreditGrants as BillingCreditGrants} from './resources/Billing/CreditGrants.js';
 import {CreditReversals as TreasuryCreditReversals} from './resources/Treasury/CreditReversals.js';
 import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Customers.js';
 import {DebitReversals as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
 import {Disputes as IssuingDisputes} from './resources/Issuing/Disputes.js';
 import {EarlyFraudWarnings as RadarEarlyFraudWarnings} from './resources/Radar/EarlyFraudWarnings.js';
+import {EventDestinations as V2CoreEventDestinations} from './resources/V2/Core/EventDestinations.js';
+import {Events as V2CoreEvents} from './resources/V2/Core/Events.js';
 import {Features as EntitlementsFeatures} from './resources/Entitlements/Features.js';
 import {FinancialAccounts as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts.js';
 import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {Locations as TerminalLocations} from './resources/Terminal/Locations.js';
 import {MeterEventAdjustments as BillingMeterEventAdjustments} from './resources/Billing/MeterEventAdjustments.js';
+import {MeterEventAdjustments as V2BillingMeterEventAdjustments} from './resources/V2/Billing/MeterEventAdjustments.js';
+import {MeterEventSession as V2BillingMeterEventSession} from './resources/V2/Billing/MeterEventSession.js';
+import {MeterEventStream as V2BillingMeterEventStream} from './resources/V2/Billing/MeterEventStream.js';
 import {MeterEvents as BillingMeterEvents} from './resources/Billing/MeterEvents.js';
+import {MeterEvents as V2BillingMeterEvents} from './resources/V2/Billing/MeterEvents.js';
 import {Meters as BillingMeters} from './resources/Billing/Meters.js';
 import {Orders as ClimateOrders} from './resources/Climate/Orders.js';
 import {OutboundPayments as TestHelpersTreasuryOutboundPayments} from './resources/TestHelpers/Treasury/OutboundPayments.js';
@@ -88,6 +97,8 @@ export {ExchangeRates} from './resources/ExchangeRates.js';
 export {FileLinks} from './resources/FileLinks.js';
 export {Files} from './resources/Files.js';
 export {InvoiceItems} from './resources/InvoiceItems.js';
+export {InvoicePayments} from './resources/InvoicePayments.js';
+export {InvoiceRenderingTemplates} from './resources/InvoiceRenderingTemplates.js';
 export {Invoices} from './resources/Invoices.js';
 export {Mandates} from './resources/Mandates.js';
 export {OAuth} from './resources/OAuth.js';
@@ -121,6 +132,9 @@ export {WebhookEndpoints} from './resources/WebhookEndpoints.js';
 export const Apps = resourceNamespace('apps', {Secrets: AppsSecrets});
 export const Billing = resourceNamespace('billing', {
   Alerts: BillingAlerts,
+  CreditBalanceSummary: BillingCreditBalanceSummary,
+  CreditBalanceTransactions: BillingCreditBalanceTransactions,
+  CreditGrants: BillingCreditGrants,
   MeterEventAdjustments: BillingMeterEventAdjustments,
   MeterEvents: BillingMeterEvents,
   Meters: BillingMeters,
@@ -220,4 +234,16 @@ export const Treasury = resourceNamespace('treasury', {
   ReceivedDebits: TreasuryReceivedDebits,
   TransactionEntries: TreasuryTransactionEntries,
   Transactions: TreasuryTransactions,
+});
+export const V2 = resourceNamespace('v2', {
+  Billing: resourceNamespace('billing', {
+    MeterEventAdjustments: V2BillingMeterEventAdjustments,
+    MeterEventSession: V2BillingMeterEventSession,
+    MeterEventStream: V2BillingMeterEventStream,
+    MeterEvents: V2BillingMeterEvents,
+  }),
+  Core: resourceNamespace('core', {
+    EventDestinations: V2CoreEventDestinations,
+    Events: V2CoreEvents,
+  }),
 });

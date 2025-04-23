@@ -30,7 +30,7 @@ declare module 'stripe' {
         provided_details?: VerificationSessionCreateParams.ProvidedDetails;
 
         /**
-         * Token referencing a Customer resource.
+         * Customer ID
          */
         related_customer?: string;
 
@@ -45,7 +45,7 @@ declare module 'stripe' {
         type?: VerificationSessionCreateParams.Type;
 
         /**
-         * The ID of a Verification Flow from the Dashboard. See https://docs.stripe.com/identity/verification-flows.
+         * The ID of a verification flow from the Dashboard. See https://docs.stripe.com/identity/verification-flows.
          */
         verification_flow?: string;
       }

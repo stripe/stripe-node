@@ -31,7 +31,7 @@ describe('Payment Intents Resource', () => {
         method: 'GET',
         url: '/v1/payment_intents',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -44,7 +44,7 @@ describe('Payment Intents Resource', () => {
         method: 'GET',
         url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}`,
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

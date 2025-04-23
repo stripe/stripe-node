@@ -29,6 +29,11 @@ declare module 'stripe' {
       allow_redisplay?: PaymentMethodCreateParams.AllowRedisplay;
 
       /**
+       * If this is a Alma PaymentMethod, this hash contains details about the Alma payment method.
+       */
+      alma?: PaymentMethodCreateParams.Alma;
+
+      /**
        * If this is a AmazonPay PaymentMethod, this hash contains details about the AmazonPay payment method.
        */
       amazon_pay?: PaymentMethodCreateParams.AmazonPay;
@@ -47,6 +52,11 @@ declare module 'stripe' {
        * If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment method.
        */
       bancontact?: PaymentMethodCreateParams.Bancontact;
+
+      /**
+       * If this is a `billie` PaymentMethod, this hash contains details about the billie payment method.
+       */
+      billie?: PaymentMethodCreateParams.Billie;
 
       /**
        * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
@@ -119,6 +129,11 @@ declare module 'stripe' {
       interac_present?: PaymentMethodCreateParams.InteracPresent;
 
       /**
+       * If this is a `kakao_pay` PaymentMethod, this hash contains details about the Kakao Pay payment method.
+       */
+      kakao_pay?: PaymentMethodCreateParams.KakaoPay;
+
+      /**
        * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
        */
       klarna?: PaymentMethodCreateParams.Klarna;
@@ -127,6 +142,11 @@ declare module 'stripe' {
        * If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
        */
       konbini?: PaymentMethodCreateParams.Konbini;
+
+      /**
+       * If this is a `kr_card` PaymentMethod, this hash contains details about the Korean Card payment method.
+       */
+      kr_card?: PaymentMethodCreateParams.KrCard;
 
       /**
        * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
@@ -149,6 +169,16 @@ declare module 'stripe' {
       multibanco?: PaymentMethodCreateParams.Multibanco;
 
       /**
+       * If this is a `naver_pay` PaymentMethod, this hash contains details about the Naver Pay payment method.
+       */
+      naver_pay?: PaymentMethodCreateParams.NaverPay;
+
+      /**
+       * If this is an nz_bank_account PaymentMethod, this hash contains details about the nz_bank_account payment method.
+       */
+      nz_bank_account?: PaymentMethodCreateParams.NzBankAccount;
+
+      /**
        * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
        */
       oxxo?: PaymentMethodCreateParams.Oxxo;
@@ -157,6 +187,16 @@ declare module 'stripe' {
        * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
        */
       p24?: PaymentMethodCreateParams.P24;
+
+      /**
+       * If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment method.
+       */
+      pay_by_bank?: PaymentMethodCreateParams.PayByBank;
+
+      /**
+       * If this is a `payco` PaymentMethod, this hash contains details about the PAYCO payment method.
+       */
+      payco?: PaymentMethodCreateParams.Payco;
 
       /**
        * The PaymentMethod to share.
@@ -192,6 +232,16 @@ declare module 'stripe' {
        * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
        */
       revolut_pay?: PaymentMethodCreateParams.RevolutPay;
+
+      /**
+       * If this is a `samsung_pay` PaymentMethod, this hash contains details about the SamsungPay payment method.
+       */
+      samsung_pay?: PaymentMethodCreateParams.SamsungPay;
+
+      /**
+       * If this is a `satispay` PaymentMethod, this hash contains details about the satispay payment method.
+       */
+      satispay?: PaymentMethodCreateParams.Satispay;
 
       /**
        * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -260,6 +310,8 @@ declare module 'stripe' {
 
       type AllowRedisplay = 'always' | 'limited' | 'unspecified';
 
+      interface Alma {}
+
       interface AmazonPay {}
 
       interface AuBecsDebit {
@@ -287,6 +339,8 @@ declare module 'stripe' {
       }
 
       interface Bancontact {}
+
+      interface Billie {}
 
       interface BillingDetails {
         /**
@@ -453,7 +507,7 @@ declare module 'stripe' {
 
       interface Ideal {
         /**
-         * The customer's bank.
+         * The customer's bank. Only use this parameter for existing customers. Don't use it for new customers.
          */
         bank?: Ideal.Bank;
       }
@@ -479,6 +533,8 @@ declare module 'stripe' {
       }
 
       interface InteracPresent {}
+
+      interface KakaoPay {}
 
       interface Klarna {
         /**
@@ -508,11 +564,53 @@ declare module 'stripe' {
 
       interface Konbini {}
 
+      interface KrCard {}
+
       interface Link {}
 
       interface Mobilepay {}
 
       interface Multibanco {}
+
+      interface NaverPay {
+        /**
+         * Whether to use Naver Pay points or a card to fund this transaction. If not provided, this defaults to `card`.
+         */
+        funding?: NaverPay.Funding;
+      }
+
+      namespace NaverPay {
+        type Funding = 'card' | 'points';
+      }
+
+      interface NzBankAccount {
+        /**
+         * The name on the bank account. Only required if the account holder name is different from the name of the authorized signatory collected in the PaymentMethod's billing details.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The account number for the bank account.
+         */
+        account_number: string;
+
+        /**
+         * The numeric code for the bank account's bank.
+         */
+        bank_code: string;
+
+        /**
+         * The numeric code for the bank account's bank branch.
+         */
+        branch_code: string;
+
+        reference?: string;
+
+        /**
+         * The suffix of the bank account number.
+         */
+        suffix: string;
+      }
 
       interface Oxxo {}
 
@@ -553,6 +651,10 @@ declare module 'stripe' {
           | 'volkswagen_bank';
       }
 
+      interface PayByBank {}
+
+      interface Payco {}
+
       interface Paynow {}
 
       interface Paypal {}
@@ -569,6 +671,10 @@ declare module 'stripe' {
       }
 
       interface RevolutPay {}
+
+      interface SamsungPay {}
+
+      interface Satispay {}
 
       interface SepaDebit {
         /**
@@ -597,10 +703,12 @@ declare module 'stripe' {
         | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
+        | 'alma'
         | 'amazon_pay'
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'billie'
         | 'blik'
         | 'boleto'
         | 'card'
@@ -611,18 +719,26 @@ declare module 'stripe' {
         | 'giropay'
         | 'grabpay'
         | 'ideal'
+        | 'kakao_pay'
         | 'klarna'
         | 'konbini'
+        | 'kr_card'
         | 'link'
         | 'mobilepay'
         | 'multibanco'
+        | 'naver_pay'
+        | 'nz_bank_account'
         | 'oxxo'
         | 'p24'
+        | 'pay_by_bank'
+        | 'payco'
         | 'paynow'
         | 'paypal'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'
+        | 'samsung_pay'
+        | 'satispay'
         | 'sepa_debit'
         | 'sofort'
         | 'swish'
@@ -708,6 +824,11 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
+       * If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment method.
+       */
+      pay_by_bank?: PaymentMethodUpdateParams.PayByBank;
+
+      /**
        * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
        */
       us_bank_account?: PaymentMethodUpdateParams.UsBankAccount;
@@ -770,6 +891,8 @@ declare module 'stripe' {
 
       interface Link {}
 
+      interface PayByBank {}
+
       interface UsBankAccount {
         /**
          * Bank account holder type.
@@ -812,10 +935,12 @@ declare module 'stripe' {
         | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
+        | 'alma'
         | 'amazon_pay'
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'billie'
         | 'blik'
         | 'boleto'
         | 'card'
@@ -826,18 +951,26 @@ declare module 'stripe' {
         | 'giropay'
         | 'grabpay'
         | 'ideal'
+        | 'kakao_pay'
         | 'klarna'
         | 'konbini'
+        | 'kr_card'
         | 'link'
         | 'mobilepay'
         | 'multibanco'
+        | 'naver_pay'
+        | 'nz_bank_account'
         | 'oxxo'
         | 'p24'
+        | 'pay_by_bank'
+        | 'payco'
         | 'paynow'
         | 'paypal'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'
+        | 'samsung_pay'
+        | 'satispay'
         | 'sepa_debit'
         | 'sofort'
         | 'swish'

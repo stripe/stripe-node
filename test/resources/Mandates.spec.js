@@ -12,7 +12,7 @@ describe('Mandate Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: `/v1/mandates/${MANDATE_TEST_ID}`,
-        data: {},
+        data: null,
         headers: {},
         settings: {},
       });

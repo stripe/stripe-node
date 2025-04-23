@@ -14,7 +14,7 @@ describe('Issuing', () => {
           method: 'GET',
           url: '/v1/issuing/disputes/idp_123',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });
@@ -67,7 +67,7 @@ describe('Issuing', () => {
           method: 'GET',
           url: '/v1/issuing/disputes',
           headers: {},
-          data: {},
+          data: null,
           settings: {},
         });
       });

@@ -34,6 +34,11 @@ declare module 'stripe' {
       alipay?: Source.Alipay;
 
       /**
+       * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow. The field defaults to “unspecified”.
+       */
+      allow_redisplay: Source.AllowRedisplay | null;
+
+      /**
        * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount associated with the source. This is the amount for which the source will be chargeable once ready. Required for `single_use` sources.
        */
       amount: number | null;
@@ -199,6 +204,8 @@ declare module 'stripe' {
 
         statement_descriptor?: string | null;
       }
+
+      type AllowRedisplay = 'always' | 'limited' | 'unspecified';
 
       interface AuBecsDebit {
         bsb_number?: string | null;

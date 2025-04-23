@@ -11,7 +11,7 @@ describe('Coupons Resource', () => {
         method: 'GET',
         url: '/v1/coupons/couponId123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -24,7 +24,7 @@ describe('Coupons Resource', () => {
         method: 'DELETE',
         url: '/v1/coupons/couponId123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -76,7 +76,7 @@ describe('Coupons Resource', () => {
         method: 'GET',
         url: '/v1/coupons',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

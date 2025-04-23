@@ -11,7 +11,7 @@ describe('Plans Resource', () => {
         method: 'GET',
         url: '/v1/plans/plan_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -116,7 +116,7 @@ describe('Plans Resource', () => {
         method: 'DELETE',
         url: '/v1/plans/plan_123',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });
@@ -129,7 +129,7 @@ describe('Plans Resource', () => {
         method: 'GET',
         url: '/v1/plans',
         headers: {},
-        data: {},
+        data: null,
         settings: {},
       });
     });

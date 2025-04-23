@@ -116,7 +116,7 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
     path: string,
     method: string,
     headers: RequestHeaders,
-    requestData: RequestData,
+    requestData: string,
     protocol: string,
     timeout: number
   ): Promise<HttpClientResponseInterface> {
