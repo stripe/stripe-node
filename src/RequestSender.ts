@@ -614,7 +614,9 @@ export class RequestSender {
           const requestEvent: RequestEvent = removeNullish({
             api_version: apiVersion,
             account: parseHttpHeaderAsString(headers['Stripe-Account']),
-            idempotency_key: parseHttpHeaderAsString(headers['Idempotency-Key']),
+            idempotency_key: parseHttpHeaderAsString(
+              headers['Idempotency-Key']
+            ),
             method,
             path,
             request_start_time: requestStartTime,

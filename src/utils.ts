@@ -461,7 +461,6 @@ export function getAPIMode(path?: string): ApiMode {
   return path.startsWith('/v2') ? 'v2' : 'v1';
 }
 
-
 export function parseHttpHeaderAsString<K extends keyof RequestHeaders>(
   header: RequestHeaders[K]
 ): string {
