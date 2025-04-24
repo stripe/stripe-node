@@ -45,6 +45,11 @@ declare module 'stripe' {
       billing_cycle_anchor_config: Subscription.BillingCycleAnchorConfig | null;
 
       /**
+       * Configure billing_mode in each subscription to opt in improved credit proration behavior.
+       */
+      billing_mode?: Subscription.BillingMode;
+
+      /**
        * A date in the future at which the subscription will automatically get canceled
        */
       cancel_at: number | null;
@@ -304,6 +309,8 @@ declare module 'stripe' {
          */
         second: number | null;
       }
+
+      type BillingMode = 'credits_attributed_to_debits' | 'legacy_prorations';
 
       interface CancellationDetails {
         /**

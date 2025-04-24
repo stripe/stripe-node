@@ -7,4 +7,8 @@ export const OutboundPaymentQuotes = StripeResource.extend({
     method: 'POST',
     fullPath: '/v2/money_management/outbound_payment_quotes',
   }),
+  retrieve: stripeMethod({
+    method: 'GET',
+    fullPath: '/v2/money_management/outbound_payment_quotes/{id}',
+  }),
 });

@@ -19,6 +19,9 @@ declare module 'stripe' {
          */
         payment_method_data?: ConfirmationTokenCreateParams.PaymentMethodData;
 
+        /**
+         * Payment-method-specific configuration for this ConfirmationToken.
+         */
         payment_method_options?: ConfirmationTokenCreateParams.PaymentMethodOptions;
 
         /**
@@ -889,13 +892,16 @@ declare module 'stripe' {
         }
 
         interface PaymentMethodOptions {
+          /**
+           * Configuration for any card payments confirmed using this ConfirmationToken.
+           */
           card?: PaymentMethodOptions.Card;
         }
 
         namespace PaymentMethodOptions {
           interface Card {
             /**
-             * Installment configuration for payments attempted on this PaymentIntent.
+             * Installment configuration for payments confirmed using this ConfirmationToken.
              */
             installments?: Card.Installments;
           }

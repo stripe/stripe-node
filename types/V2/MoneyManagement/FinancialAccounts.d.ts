@@ -36,12 +36,17 @@ declare module 'stripe' {
           description: string | null;
 
           /**
+           * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+           */
+          livemode: boolean;
+
+          /**
            * If this is a `other` FinancialAccount, this hash indicates what the actual type is. Upgrade your API version to see it reflected in `type`.
            */
           other: FinancialAccount.Other | null;
 
           /**
-           * An enum value that specifies which state the FinancialAccount is in.
+           * Closed Enum. An enum representing the status of the FinancialAccount. This indicates whether or not the FinancialAccount can be used for any money movement flows.
            */
           status: FinancialAccount.Status;
 
@@ -340,7 +345,7 @@ declare module 'stripe' {
             type: string;
           }
 
-          type Status = 'closed' | 'open';
+          type Status = 'closed' | 'open' | 'pending';
 
           interface Storage {
             /**
@@ -508,6 +513,7 @@ declare module 'stripe' {
               | 'uah'
               | 'ugx'
               | 'usd'
+              | 'usdb'
               | 'usdc'
               | 'usn'
               | 'uyi'

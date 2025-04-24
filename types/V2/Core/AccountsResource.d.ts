@@ -105,7 +105,7 @@ declare module 'stripe' {
                 ip_address?: string;
 
                 /**
-                 * The data source used by Stripe Tax to identify the customer's location - defaults to 'identity_address'. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions.
+                 * The data source used to identify the customer's tax location - defaults to 'identity_address'. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions.
                  */
                 location_source?: AutomaticIndirectTax.LocationSource;
               }
@@ -1189,7 +1189,7 @@ declare module 'stripe' {
                 cards?: Capabilities.Cards;
 
                 /**
-                 * Capabilities that enable the recipient to receive money into their Stripe Balance (/v1/balance).
+                 * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
                  */
                 stripe_balance?: Capabilities.StripeBalance;
               }
@@ -1232,7 +1232,7 @@ declare module 'stripe' {
 
                 interface StripeBalance {
                   /**
-                   * Allows the recipient to receive /v1/transfers into their Stripe Balance (/v1/balance).
+                   * Allows the account to receive /v1/transfers into their Stripe Balance (/v1/balance).
                    */
                   stripe_transfers?: StripeBalance.StripeTransfers;
                 }
@@ -1427,6 +1427,7 @@ declare module 'stripe' {
               | 'uah'
               | 'ugx'
               | 'usd'
+              | 'usdb'
               | 'usdc'
               | 'usn'
               | 'uyi'
@@ -5152,7 +5153,7 @@ declare module 'stripe' {
                 ip_address?: string;
 
                 /**
-                 * The data source used by Stripe Tax to identify the customer's location - defaults to 'identity_address'. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions.
+                 * The data source used to identify the customer's tax location - defaults to 'identity_address'. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions.
                  */
                 location_source?: AutomaticIndirectTax.LocationSource;
               }
@@ -6246,7 +6247,7 @@ declare module 'stripe' {
                 cards?: Capabilities.Cards;
 
                 /**
-                 * Capabilities that enable the recipient to receive money into their Stripe Balance (/v1/balance).
+                 * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
                  */
                 stripe_balance?: Capabilities.StripeBalance;
               }
@@ -6289,7 +6290,7 @@ declare module 'stripe' {
 
                 interface StripeBalance {
                   /**
-                   * Allows the recipient to receive /v1/transfers into their Stripe Balance (/v1/balance).
+                   * Allows the account to receive /v1/transfers into their Stripe Balance (/v1/balance).
                    */
                   stripe_transfers?: StripeBalance.StripeTransfers;
                 }
@@ -6484,6 +6485,7 @@ declare module 'stripe' {
               | 'uah'
               | 'ugx'
               | 'usd'
+              | 'usdb'
               | 'usdc'
               | 'usn'
               | 'uyi'

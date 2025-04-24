@@ -40,9 +40,14 @@ declare module 'stripe' {
           from: InboundTransfer.From;
 
           /**
+           * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+           */
+          livemode: boolean;
+
+          /**
            * A hosted transaction receipt URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
            */
-          receipt_url: string;
+          receipt_url: string | null;
 
           /**
            * A nested object containing information about the destination of the InboundTransfer.

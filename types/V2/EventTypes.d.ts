@@ -5,6 +5,10 @@ declare module 'stripe' {
     export type Event =
       | Stripe.Events.V2CoreAccountIncludingRequirementsUpdatedEvent
       | Stripe.Events.V2CoreAccountLinkCompletedEvent
+      | Stripe.Events.V2CoreAccountClosedEvent
+      | Stripe.Events.V2CoreAccountCreatedEvent
+      | Stripe.Events.V2CoreAccountUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingDefaultsUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationCustomerUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingIdentityUpdatedEvent
@@ -15,9 +19,11 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreAccountIncludingConfigurationMerchantUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationRecipientUpdatedEvent
+      | Stripe.Events.V2MoneyManagementAdjustmentCreatedEvent
       | Stripe.Events.V1BillingMeterErrorReportTriggeredEvent
       | Stripe.Events.V1BillingMeterNoMeterFoundEvent
       | Stripe.Events.V2MoneyManagementFinancialAccountCreatedEvent
+      | Stripe.Events.V2MoneyManagementFinancialAccountUpdatedEvent
       | Stripe.Events.V2MoneyManagementFinancialAddressActivatedEvent
       | Stripe.Events.V2MoneyManagementFinancialAddressFailedEvent
       | Stripe.Events.V2MoneyManagementInboundTransferAvailableEvent
@@ -26,16 +32,19 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementInboundTransferBankDebitQueuedEvent
       | Stripe.Events.V2MoneyManagementInboundTransferBankDebitReturnedEvent
       | Stripe.Events.V2MoneyManagementInboundTransferBankDebitSucceededEvent
+      | Stripe.Events.V2CoreEventDestinationPingEvent
       | Stripe.Events.V2MoneyManagementOutboundPaymentCanceledEvent
       | Stripe.Events.V2MoneyManagementOutboundPaymentCreatedEvent
       | Stripe.Events.V2MoneyManagementOutboundPaymentFailedEvent
       | Stripe.Events.V2MoneyManagementOutboundPaymentPostedEvent
       | Stripe.Events.V2MoneyManagementOutboundPaymentReturnedEvent
+      | Stripe.Events.V2MoneyManagementOutboundPaymentUpdatedEvent
       | Stripe.Events.V2MoneyManagementOutboundTransferCanceledEvent
       | Stripe.Events.V2MoneyManagementOutboundTransferCreatedEvent
       | Stripe.Events.V2MoneyManagementOutboundTransferFailedEvent
       | Stripe.Events.V2MoneyManagementOutboundTransferPostedEvent
       | Stripe.Events.V2MoneyManagementOutboundTransferReturnedEvent
+      | Stripe.Events.V2MoneyManagementOutboundTransferUpdatedEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditAvailableEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditFailedEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditReturnedEvent
@@ -44,7 +53,9 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementReceivedDebitFailedEvent
       | Stripe.Events.V2MoneyManagementReceivedDebitPendingEvent
       | Stripe.Events.V2MoneyManagementReceivedDebitSucceededEvent
-      | Stripe.Events.V2MoneyManagementReceivedDebitUpdatedEvent;
+      | Stripe.Events.V2MoneyManagementReceivedDebitUpdatedEvent
+      | Stripe.Events.V2MoneyManagementTransactionCreatedEvent
+      | Stripe.Events.V2MoneyManagementTransactionUpdatedEvent;
   }
 
   namespace Stripe.Events {
@@ -90,6 +101,51 @@ declare module 'stripe' {
       namespace Data {
         export type UseCase = 'account_onboarding' | 'account_update';
       }
+    }
+
+    /**
+     * This event occurs when an account is closed.
+     */
+    export interface V2CoreAccountClosedEvent extends V2.EventBase {
+      type: 'v2.core.account.closed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    /**
+     * This event occurs when an account is created.
+     */
+    export interface V2CoreAccountCreatedEvent extends V2.EventBase {
+      type: 'v2.core.account.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    /**
+     * This event occurs when an account is updated.
+     */
+    export interface V2CoreAccountUpdatedEvent extends V2.EventBase {
+      type: 'v2.core.account.updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    /**
+     * This event occurs when account defaults are created or updated.
+     */
+    export interface V2CoreAccountIncludingDefaultsUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[defaults].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
     }
 
     /**
@@ -263,6 +319,7 @@ declare module 'stripe' {
           | 'p24_payments'
           | 'payco_payments'
           | 'paynow_payments'
+          | 'stripe_balance.payouts'
           | 'pay_by_bank_payments'
           | 'promptpay_payments'
           | 'revolut_pay_payments'
@@ -315,6 +372,7 @@ declare module 'stripe' {
           | 'bank_accounts.local'
           | 'bank_accounts.wire'
           | 'cards'
+          | 'stripe_balance.payouts'
           | 'stripe_balance.stripe_transfers'
           | 'stripe.transfers';
       }
@@ -330,6 +388,18 @@ declare module 'stripe' {
       related_object: Event.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    /**
+     * Occurs when an Adjustment is created.
+     */
+    export interface V2MoneyManagementAdjustmentCreatedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.adjustment.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.MoneyManagement.Adjustment>;
     }
 
     /**
@@ -538,11 +608,23 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when a financial account is created.
+     * Occurs when a FinancialAccount is created.
      */
     export interface V2MoneyManagementFinancialAccountCreatedEvent
       extends V2.EventBase {
       type: 'v2.money_management.financial_account.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.MoneyManagement.FinancialAccount>;
+    }
+
+    /**
+     * Occurs when a FinancialAccount is updated.
+     */
+    export interface V2MoneyManagementFinancialAccountUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.financial_account.updated';
       // Object containing the reference to API resource relevant to the event.
       related_object: Event.RelatedObject;
       // Retrieves the object associated with the event.
@@ -657,6 +739,17 @@ declare module 'stripe' {
     }
 
     /**
+     * A ping event used to test the connection to an event destination.
+     */
+    export interface V2CoreEventDestinationPingEvent extends V2.EventBase {
+      type: 'v2.core.event_destination.ping';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.EventDestination>;
+    }
+
+    /**
      * An OutboundPayment has transitioned into the canceled state.
      */
     export interface V2MoneyManagementOutboundPaymentCanceledEvent
@@ -717,6 +810,18 @@ declare module 'stripe' {
     }
 
     /**
+     * Event that is emitted every time an Outbound Payment is updated.
+     */
+    export interface V2MoneyManagementOutboundPaymentUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.outbound_payment.updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundPayment>;
+    }
+
+    /**
      * An OutboundTransfer has transitioned into the canceled state.
      */
     export interface V2MoneyManagementOutboundTransferCanceledEvent
@@ -770,6 +875,18 @@ declare module 'stripe' {
     export interface V2MoneyManagementOutboundTransferReturnedEvent
       extends V2.EventBase {
       type: 'v2.money_management.outbound_transfer.returned';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
+    }
+
+    /**
+     * Event that is emitted every time an Outbound Transfer is updated.
+     */
+    export interface V2MoneyManagementOutboundTransferUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.outbound_transfer.updated';
       // Object containing the reference to API resource relevant to the event.
       related_object: Event.RelatedObject;
       // Retrieves the object associated with the event.
@@ -893,6 +1010,30 @@ declare module 'stripe' {
       related_object: Event.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedDebit>;
+    }
+
+    /**
+     * Occurs when a Transaction is created.
+     */
+    export interface V2MoneyManagementTransactionCreatedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.transaction.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.MoneyManagement.Transaction>;
+    }
+
+    /**
+     * Occurs when a Transaction is updated.
+     */
+    export interface V2MoneyManagementTransactionUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.transaction.updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.MoneyManagement.Transaction>;
     }
   }
 }

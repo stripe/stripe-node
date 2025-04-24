@@ -24,6 +24,11 @@ declare module 'stripe' {
           created: string;
 
           /**
+           * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+           */
+          livemode: boolean;
+
+          /**
            * Specifies which actions needs to be taken next to continue setup of the credential.
            */
           next_action: OutboundSetupIntent.NextAction | null;

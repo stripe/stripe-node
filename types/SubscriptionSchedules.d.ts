@@ -33,6 +33,11 @@ declare module 'stripe' {
       billing_behavior?: SubscriptionSchedule.BillingBehavior;
 
       /**
+       * The [billing mode](https://stripe.com/api/subscriptions/create#create_subscription-billing_mode) that will be used to process all future operations for the subscription schedule.
+       */
+      billing_mode?: SubscriptionSchedule.BillingMode;
+
+      /**
        * Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.
        */
       canceled_at: number | null;
@@ -122,6 +127,8 @@ declare module 'stripe' {
 
     namespace SubscriptionSchedule {
       type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+      type BillingMode = 'credits_attributed_to_debits' | 'legacy_prorations';
 
       interface CurrentPhase {
         /**

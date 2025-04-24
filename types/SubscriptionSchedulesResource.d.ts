@@ -9,6 +9,11 @@ declare module 'stripe' {
       billing_behavior?: SubscriptionScheduleCreateParams.BillingBehavior;
 
       /**
+       * Configure billing_mode to opt in improved credit proration behavior.When the schedule creates a subscription, the subscription's `billing_mode` will be set to the same value as the schedule's `billing_mode`.
+       */
+      billing_mode?: SubscriptionScheduleCreateParams.BillingMode;
+
+      /**
        * The identifier of the customer to create the subscription schedule for.
        */
       customer?: string;
@@ -61,6 +66,8 @@ declare module 'stripe' {
 
     namespace SubscriptionScheduleCreateParams {
       type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+      type BillingMode = 'credits_attributed_to_debits' | 'legacy_prorations';
 
       interface DefaultSettings {
         /**

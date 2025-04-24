@@ -50,6 +50,11 @@ declare module 'stripe' {
           fx_quote: OutboundPaymentQuote.FxQuote;
 
           /**
+           * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+           */
+          livemode: boolean;
+
+          /**
            * Details about the recipient of an OutboundPaymentQuote.
            */
           to: OutboundPaymentQuote.To;
@@ -80,7 +85,12 @@ declare module 'stripe' {
           }
 
           namespace EstimatedFee {
-            type Type = 'cross_border_fee' | 'fx_fee' | 'payout_fee';
+            type Type =
+              | 'cross_border_payout_fee'
+              | 'foreign_exchange_fee'
+              | 'instant_payout_fee'
+              | 'standard_payout_fee'
+              | 'wire_payout_fee';
           }
 
           interface From {
@@ -97,6 +107,21 @@ declare module 'stripe' {
 
           interface FxQuote {
             /**
+             * The duration the exchange rate lock remains valid from creation time. Allowed value is five_minutes.
+             */
+            lock_duration: 'five_minutes';
+
+            /**
+             * Time at which the rate lock will expire, measured in seconds since the Unix epoch.
+             */
+            lock_expires_at: string;
+
+            /**
+             * Lock status of the quote. Transitions from active to expired once past the lock_expires_at timestamp. Value can be active or expired.
+             */
+            lock_status: FxQuote.LockStatus;
+
+            /**
              * Key pair: from currency Value: exchange rate going from_currency -> to_currency.
              */
             rates: {
@@ -110,6 +135,8 @@ declare module 'stripe' {
           }
 
           namespace FxQuote {
+            type LockStatus = 'active' | 'expired';
+
             interface Rates {
               /**
                * The exchange rate going from_currency -> to_currency.

@@ -1042,6 +1042,11 @@ declare module 'stripe' {
         billing_cycle_anchor?: Stripe.Emptyable<'reset'>;
 
         /**
+         * Configure billing_mode to opt in improved credit proration behavior.Once a quote that creates a subscription or subscription schedule is accepted,all future operations on the subscription or subscription schedule will be processed based on this billing_mode.
+         */
+        billing_mode?: SubscriptionData.BillingMode;
+
+        /**
          * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description?: string;
@@ -1090,6 +1095,8 @@ declare module 'stripe' {
 
       namespace SubscriptionData {
         type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+        type BillingMode = 'credits_attributed_to_debits' | 'legacy_prorations';
 
         interface BillOnAcceptance {
           /**

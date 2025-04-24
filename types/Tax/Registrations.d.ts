@@ -80,6 +80,8 @@ declare module 'stripe' {
 
           be?: CountryOptions.Be;
 
+          bf?: CountryOptions.Bf;
+
           bg?: CountryOptions.Bg;
 
           bh?: CountryOptions.Bh;
@@ -98,9 +100,13 @@ declare module 'stripe' {
 
           cl?: CountryOptions.Cl;
 
+          cm?: CountryOptions.Cm;
+
           co?: CountryOptions.Co;
 
           cr?: CountryOptions.Cr;
+
+          cv?: CountryOptions.Cv;
 
           cy?: CountryOptions.Cy;
 
@@ -366,6 +372,13 @@ declare module 'stripe' {
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
           }
 
+          interface Bf {
+            /**
+             * Type of registration in `country`.
+             */
+            type: 'standard';
+          }
+
           interface Bg {
             standard?: Bg.Standard;
 
@@ -459,6 +472,13 @@ declare module 'stripe' {
             type: 'simplified';
           }
 
+          interface Cm {
+            /**
+             * Type of registration in `country`.
+             */
+            type: 'simplified';
+          }
+
           interface Co {
             /**
              * Type of registration in `country`.
@@ -467,6 +487,13 @@ declare module 'stripe' {
           }
 
           interface Cr {
+            /**
+             * Type of registration in `country`.
+             */
+            type: 'simplified';
+          }
+
+          interface Cv {
             /**
              * Type of registration in `country`.
              */

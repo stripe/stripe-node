@@ -50,6 +50,11 @@ declare module 'stripe' {
           flow: Transaction.Flow;
 
           /**
+           * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+           */
+          livemode: boolean;
+
+          /**
            * Closed Enum. Current status of the Transaction.
            * A Transaction is `pending` if either `balance_impact.inbound_pending` or `balance_impact.outbound_pending` is non-zero.
            * A Transaction is `posted` if only `balance_impact.available` is non-zero.
@@ -137,7 +142,6 @@ declare module 'stripe' {
           namespace Flow {
             type Type =
               | 'adjustment'
-              | 'currency_conversion'
               | 'fee_transaction'
               | 'inbound_transfer'
               | 'outbound_payment'

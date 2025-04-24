@@ -34,6 +34,11 @@ declare module 'stripe' {
           effective_at: string;
 
           /**
+           * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+           */
+          livemode: boolean;
+
+          /**
            * The Transaction that this TransactionEntry belongs to.
            */
           transaction: string;
@@ -135,7 +140,6 @@ declare module 'stripe' {
             namespace Flow {
               type Type =
                 | 'adjustment'
-                | 'currency_conversion'
                 | 'fee_transaction'
                 | 'inbound_transfer'
                 | 'outbound_payment'

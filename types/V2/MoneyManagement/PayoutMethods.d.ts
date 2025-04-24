@@ -44,6 +44,11 @@ declare module 'stripe' {
           latest_outbound_setup_intent: string | null;
 
           /**
+           * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+           */
+          livemode: boolean;
+
+          /**
            * Closed Enum. The type of payout method.
            */
           type: PayoutMethod.Type;
@@ -124,12 +129,12 @@ declare module 'stripe' {
 
           interface UsageStatus {
             /**
-             * Payments status.
+             * Payments status - used when sending OutboundPayments (sending funds to recipients).
              */
             payments: UsageStatus.Payments;
 
             /**
-             * Transfers status.
+             * Transfers status - used when making an OutboundTransfer (sending funds to yourself).
              */
             transfers: UsageStatus.Transfers;
           }

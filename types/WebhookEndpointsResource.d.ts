@@ -150,7 +150,8 @@ declare module 'stripe' {
         | '2025-01-27.acacia'
         | '2025-02-24.acacia'
         | '2025-03-01.dashboard'
-        | '2025-03-31.basil';
+        | '2025-03-31.basil'
+        | '2025-04-30.basil';
 
       type EnabledEvent =
         | '*'
@@ -166,6 +167,7 @@ declare module 'stripe' {
         | 'application_fee.refund.updated'
         | 'application_fee.refunded'
         | 'balance.available'
+        | 'balance_settings.updated'
         | 'billing.alert.triggered'
         | 'billing.meter_error_report.triggered'
         | 'billing_portal.configuration.created'
@@ -440,8 +442,7 @@ declare module 'stripe' {
         | 'billing.meter.created'
         | 'billing.meter.deactivated'
         | 'billing.meter.reactivated'
-        | 'billing.meter.updated'
-        | 'balance_settings.updated';
+        | 'billing.meter.updated';
     }
 
     interface WebhookEndpointRetrieveParams {
@@ -498,6 +499,7 @@ declare module 'stripe' {
         | 'application_fee.refund.updated'
         | 'application_fee.refunded'
         | 'balance.available'
+        | 'balance_settings.updated'
         | 'billing.alert.triggered'
         | 'billing.meter_error_report.triggered'
         | 'billing_portal.configuration.created'
@@ -772,8 +774,7 @@ declare module 'stripe' {
         | 'billing.meter.created'
         | 'billing.meter.deactivated'
         | 'billing.meter.reactivated'
-        | 'billing.meter.updated'
-        | 'balance_settings.updated';
+        | 'billing.meter.updated';
     }
 
     interface WebhookEndpointListParams extends PaginationParams {

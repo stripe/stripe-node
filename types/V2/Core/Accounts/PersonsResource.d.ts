@@ -1160,6 +1160,11 @@ declare module 'stripe' {
 
             interface Relationship {
               /**
+               * Whether the individual is an authorizer of the Account's legal entity.
+               */
+              authorizer?: boolean;
+
+              /**
                * Indicates whether the person is a director of the associated legal entity.
                */
               director?: boolean;
@@ -2994,6 +2999,11 @@ declare module 'stripe' {
             type PoliticalExposure = 'existing' | 'none';
 
             interface Relationship {
+              /**
+               * Whether the individual is an authorizer of the Account's legal entity.
+               */
+              authorizer?: boolean;
+
               /**
                * Indicates whether the person is a director of the associated legal entity.
                */

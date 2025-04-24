@@ -79,6 +79,11 @@ declare module 'stripe' {
           legal_gender: Person.LegalGender | null;
 
           /**
+           * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+           */
+          livemode: boolean;
+
+          /**
            * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata: Stripe.Metadata | null;
@@ -1181,6 +1186,11 @@ declare module 'stripe' {
           type PoliticalExposure = 'existing' | 'none';
 
           interface Relationship {
+            /**
+             * Whether the individual is an authorizer of the Account's legal entity.
+             */
+            authorizer: boolean | null;
+
             /**
              * Whether the individual is a director of the Account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
              */

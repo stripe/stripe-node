@@ -59,6 +59,11 @@ declare module 'stripe' {
           identity: Account.Identity | null;
 
           /**
+           * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+           */
+          livemode: boolean;
+
+          /**
            * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata: Stripe.Metadata | null;
@@ -130,12 +135,12 @@ declare module 'stripe' {
                 ip_address: string | null;
 
                 /**
-                 * The customer's location as identified by Stripe Tax - uses `location_source`. Will only be rendered if the `automatic_indirect_tax` feature is requested and `active`.
+                 * The customer's identified tax location - uses `location_source`. Will only be rendered if the `automatic_indirect_tax` feature is requested and `active`.
                  */
                 location: AutomaticIndirectTax.Location | null;
 
                 /**
-                 * The data source used by Stripe Tax to identify the customer's location - defaults to 'identity_address'. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions.
+                 * The data source used to identify the customer's tax location - defaults to 'identity_address'. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions.
                  */
                 location_source: AutomaticIndirectTax.LocationSource | null;
               }
@@ -145,12 +150,12 @@ declare module 'stripe' {
 
                 interface Location {
                   /**
-                   * The customer's country as identified by Stripe Tax.
+                   * The identified tax country of the customer.
                    */
                   country: Location.Country | null;
 
                   /**
-                   * The customer's state, county, province, or region as identified by Stripe Tax.
+                   * The identified tax state, county, province, or region of the customer.
                    */
                   state: string | null;
                 }
@@ -844,6 +849,11 @@ declare module 'stripe' {
                  * Allow the merchant to process SEPA Direct Debit payments.
                  */
                 sepa_debit_payments: Capabilities.SepaDebitPayments | null;
+
+                /**
+                 * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
+                 */
+                stripe_balance: Capabilities.StripeBalance | null;
 
                 /**
                  * Allow the merchant to process Swish payments.
@@ -2947,6 +2957,67 @@ declare module 'stripe' {
                   }
                 }
 
+                interface StripeBalance {
+                  /**
+                   * Allows the account to do payouts using their Stripe Balance (/v1/balance).
+                   */
+                  payouts: StripeBalance.Payouts | null;
+                }
+
+                namespace StripeBalance {
+                  interface Payouts {
+                    /**
+                     * Whether the Capability has been requested.
+                     */
+                    requested: boolean;
+
+                    /**
+                     * The status of the Capability.
+                     */
+                    status: Payouts.Status;
+
+                    /**
+                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     */
+                    status_details: Array<Payouts.StatusDetail>;
+                  }
+
+                  namespace Payouts {
+                    type Status =
+                      | 'active'
+                      | 'pending'
+                      | 'restricted'
+                      | 'unsupported';
+
+                    interface StatusDetail {
+                      /**
+                       * Machine-readable code explaining the reason for the Capability to be in its current status.
+                       */
+                      code: StatusDetail.Code;
+
+                      /**
+                       * Machine-readable code explaining how to make the Capability active.
+                       */
+                      resolution: StatusDetail.Resolution;
+                    }
+
+                    namespace StatusDetail {
+                      type Code =
+                        | 'determining_status'
+                        | 'requirements_past_due'
+                        | 'requirements_pending_verification'
+                        | 'restricted_other'
+                        | 'unsupported_business'
+                        | 'unsupported_country';
+
+                      type Resolution =
+                        | 'contact_stripe'
+                        | 'no_resolution'
+                        | 'provide_info';
+                    }
+                  }
+                }
+
                 interface SwishPayments {
                   /**
                    * Whether the Capability has been requested.
@@ -3537,7 +3608,7 @@ declare module 'stripe' {
                 cards: Capabilities.Cards | null;
 
                 /**
-                 * Capabilities that enable the recipient to receive money into their Stripe Balance (/v1/balance).
+                 * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
                  */
                 stripe_balance: Capabilities.StripeBalance | null;
               }
@@ -3715,12 +3786,69 @@ declare module 'stripe' {
 
                 interface StripeBalance {
                   /**
-                   * Allows the recipient to receive /v1/transfers into their Stripe Balance (/v1/balance).
+                   * Allows the account to do payouts using their Stripe Balance (/v1/balance).
+                   */
+                  payouts: StripeBalance.Payouts | null;
+
+                  /**
+                   * Allows the account to receive /v1/transfers into their Stripe Balance (/v1/balance).
                    */
                   stripe_transfers: StripeBalance.StripeTransfers | null;
                 }
 
                 namespace StripeBalance {
+                  interface Payouts {
+                    /**
+                     * Whether the Capability has been requested.
+                     */
+                    requested: boolean;
+
+                    /**
+                     * The status of the Capability.
+                     */
+                    status: Payouts.Status;
+
+                    /**
+                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     */
+                    status_details: Array<Payouts.StatusDetail>;
+                  }
+
+                  namespace Payouts {
+                    type Status =
+                      | 'active'
+                      | 'pending'
+                      | 'restricted'
+                      | 'unsupported';
+
+                    interface StatusDetail {
+                      /**
+                       * Machine-readable code explaining the reason for the Capability to be in its current status.
+                       */
+                      code: StatusDetail.Code;
+
+                      /**
+                       * Machine-readable code explaining how to make the Capability active.
+                       */
+                      resolution: StatusDetail.Resolution;
+                    }
+
+                    namespace StatusDetail {
+                      type Code =
+                        | 'determining_status'
+                        | 'requirements_past_due'
+                        | 'requirements_pending_verification'
+                        | 'restricted_other'
+                        | 'unsupported_business'
+                        | 'unsupported_country';
+
+                      type Resolution =
+                        | 'contact_stripe'
+                        | 'no_resolution'
+                        | 'provide_info';
+                    }
+                  }
+
                   interface StripeTransfers {
                     /**
                      * Whether the Capability has been requested.
@@ -3800,6 +3928,7 @@ declare module 'stripe' {
                   | 'ca_bank_account'
                   | 'ch_bank_account'
                   | 'ci_bank_account'
+                  | 'crypto_wallet'
                   | 'cy_bank_account'
                   | 'cz_bank_account'
                   | 'de_bank_account'
@@ -4031,6 +4160,7 @@ declare module 'stripe' {
               | 'uah'
               | 'ugx'
               | 'usd'
+              | 'usdb'
               | 'usdc'
               | 'usn'
               | 'uyi'
@@ -7010,6 +7140,11 @@ declare module 'stripe' {
 
               interface Relationship {
                 /**
+                 * Whether the individual is an authorizer of the Account's legal entity.
+                 */
+                authorizer: boolean | null;
+
+                /**
                  * Whether the individual is a director of the Account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
                  */
                 director: boolean | null;
@@ -7860,11 +7995,6 @@ declare module 'stripe' {
                 restricts_capabilities: Array<
                   Impact.RestrictsCapability
                 > | null;
-
-                /**
-                 * Details about payouts restrictions that will be enforced if the requirement is not collected and satisfactory to Stripe.
-                 */
-                restricts_payouts: Impact.RestrictsPayouts | null;
               }
 
               namespace Impact {
@@ -7931,6 +8061,7 @@ declare module 'stripe' {
                     | 'samsung_pay_payments'
                     | 'sepa_bank_transfer_payments'
                     | 'sepa_debit_payments'
+                    | 'stripe_balance.payouts'
                     | 'stripe_balance.stripe_transfers'
                     | 'swish_payments'
                     | 'twint_payments'
@@ -7939,29 +8070,6 @@ declare module 'stripe' {
 
                   type Configuration = 'customer' | 'merchant' | 'recipient';
 
-                  interface Deadline {
-                    /**
-                     * The current status of the requirement's impact.
-                     */
-                    status: Deadline.Status;
-                  }
-
-                  namespace Deadline {
-                    type Status =
-                      | 'currently_due'
-                      | 'eventually_due'
-                      | 'past_due';
-                  }
-                }
-
-                interface RestrictsPayouts {
-                  /**
-                   * Details about when in the Account's lifecycle the requirement must be collected by the avoid the earliest specified impact.
-                   */
-                  deadline: RestrictsPayouts.Deadline;
-                }
-
-                namespace RestrictsPayouts {
                   interface Deadline {
                     /**
                      * The current status of the requirement's impact.
