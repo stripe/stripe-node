@@ -6,11 +6,11 @@ declare module 'stripe' {
       namespace Core {
         namespace Vault {
           /**
-           * Use the UsBankAccounts API to create and manage US bank accounts objects that you can use to receive funds. Note that these are not interchangeable with v1 Tokens.
+           * Use the USBankAccounts API to create and manage US bank accounts objects that you can use to receive funds. Note that these are not interchangeable with v1 Tokens.
            */
           interface UsBankAccount {
             /**
-             * The ID of the UsBankAccount object.
+             * The ID of the USBankAccount object.
              */
             id: string;
 
@@ -20,7 +20,7 @@ declare module 'stripe' {
             object: 'v2.core.vault.us_bank_account';
 
             /**
-             * Whether this UsBankAccount object was archived.
+             * Whether this USBankAccount object was archived.
              */
             archived: boolean;
 

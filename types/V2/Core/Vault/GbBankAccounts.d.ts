@@ -6,11 +6,11 @@ declare module 'stripe' {
       namespace Core {
         namespace Vault {
           /**
-           * Use the GbBankAccounts API to create and manage GB bank account objects
+           * Use the GBBankAccounts API to create and manage GB bank account objects
            */
           interface GbBankAccount {
             /**
-             * The ID of the GbBankAccount object.
+             * The ID of the GBBankAccount object.
              */
             id: string;
 

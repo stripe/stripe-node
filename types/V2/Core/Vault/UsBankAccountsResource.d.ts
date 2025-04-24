@@ -65,7 +65,7 @@ declare module 'stripe' {
         namespace Vault {
           class UsBankAccountsResource {
             /**
-             * Create a UsBankAccount object.
+             * Create a USBankAccount object.
              * @throws Stripe.BlockedByStripeError
              * @throws Stripe.InvalidPaymentMethodError
              * @throws Stripe.QuotaExceededError
@@ -76,7 +76,7 @@ declare module 'stripe' {
             ): Promise<Stripe.Response<Stripe.V2.Core.Vault.UsBankAccount>>;
 
             /**
-             * Retrieve a UsBankAccount object.
+             * Retrieve a USBankAccount object.
              */
             retrieve(
               id: string,
@@ -89,7 +89,7 @@ declare module 'stripe' {
             ): Promise<Stripe.Response<Stripe.V2.Core.Vault.UsBankAccount>>;
 
             /**
-             * Update a UsBankAccount object. This is limited to supplying a previously empty routing_number field.
+             * Update a USBankAccount object. This is limited to supplying a previously empty routing_number field.
              * @throws Stripe.BlockedByStripeError
              * @throws Stripe.InvalidPaymentMethodError
              * @throws Stripe.QuotaExceededError
@@ -101,8 +101,8 @@ declare module 'stripe' {
             ): Promise<Stripe.Response<Stripe.V2.Core.Vault.UsBankAccount>>;
 
             /**
-             * Archive a UsBankAccount object. UsBankAccount objects will not be automatically archived by Stripe.
-             * Archived UsBankAccount objects cannot be used as outbound destinations
+             * Archive a USBankAccount object. USBankAccount objects will not be automatically archived by Stripe.
+             * Archived USBankAccount objects cannot be used as outbound destinations
              * and will not appear in the outbound destination list.
              * @throws Stripe.ControlledByDashboardError
              */

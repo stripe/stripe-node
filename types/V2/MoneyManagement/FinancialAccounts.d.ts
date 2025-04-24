@@ -345,7 +345,7 @@ declare module 'stripe' {
             type: string;
           }
 
-          type Status = 'closed' | 'open' | 'pending';
+          type Status = 'closed' | 'open';
 
           interface Storage {
             /**

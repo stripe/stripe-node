@@ -14,33 +14,9 @@ declare module 'stripe' {
            * The ID of the FinancialAccount the new FinancialAddress should be associated with.
            */
           financial_account: string;
-
-          /**
-           * Properties needed to create a FinancialAddress for an FA with USDC currency.
-           */
-          crypto_properties?: FinancialAddressCreateParams.CryptoProperties;
         }
 
         namespace FinancialAddressCreateParams {
-          interface CryptoProperties {
-            /**
-             * The blockchain network of the crypto wallet.
-             */
-            network: CryptoProperties.Network;
-          }
-
-          namespace CryptoProperties {
-            type Network =
-              | 'arbitrum'
-              | 'avalanche_c_chain'
-              | 'base'
-              | 'ethereum'
-              | 'optimism'
-              | 'polygon'
-              | 'solana'
-              | 'stellar';
-          }
-
           type Currency =
             | 'aed'
             | 'afn'

@@ -135,12 +135,12 @@ declare module 'stripe' {
                 ip_address: string | null;
 
                 /**
-                 * The customer's identified tax location - uses `location_source`. Will only be rendered if the `automatic_indirect_tax` feature is requested and `active`.
+                 * The customer's location as identified by Stripe Tax - uses `location_source`. Will only be rendered if the `automatic_indirect_tax` feature is requested and `active`.
                  */
                 location: AutomaticIndirectTax.Location | null;
 
                 /**
-                 * The data source used to identify the customer's tax location - defaults to 'identity_address'. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions.
+                 * The data source used by Stripe Tax to identify the customer's location - defaults to 'identity_address'. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions.
                  */
                 location_source: AutomaticIndirectTax.LocationSource | null;
               }
@@ -150,12 +150,12 @@ declare module 'stripe' {
 
                 interface Location {
                   /**
-                   * The identified tax country of the customer.
+                   * The customer's country as identified by Stripe Tax.
                    */
                   country: Location.Country | null;
 
                   /**
-                   * The identified tax state, county, province, or region of the customer.
+                   * The customer's state, county, province, or region as identified by Stripe Tax.
                    */
                   state: string | null;
                 }
@@ -3928,7 +3928,6 @@ declare module 'stripe' {
                   | 'ca_bank_account'
                   | 'ch_bank_account'
                   | 'ci_bank_account'
-                  | 'crypto_wallet'
                   | 'cy_bank_account'
                   | 'cz_bank_account'
                   | 'de_bank_account'
@@ -5683,12 +5682,15 @@ declare module 'stripe' {
               }
 
               type Structure =
+                | 'cooperative'
                 | 'free_zone_establishment'
                 | 'free_zone_llc'
                 | 'governmental_unit'
                 | 'government_instrumentality'
+                | 'incorporated_association'
                 | 'incorporated_non_profit'
                 | 'incorporated_partnership'
+                | 'limited_liability_partnership'
                 | 'llc'
                 | 'multi_member_llc'
                 | 'private_company'
@@ -5696,12 +5698,14 @@ declare module 'stripe' {
                 | 'private_partnership'
                 | 'public_company'
                 | 'public_corporation'
+                | 'public_listed_corporation'
                 | 'public_partnership'
                 | 'registered_charity'
                 | 'single_member_llc'
                 | 'sole_establishment'
                 | 'sole_proprietorship'
                 | 'tax_exempt_government_instrumentality'
+                | 'trust'
                 | 'unincorporated_association'
                 | 'unincorporated_non_profit'
                 | 'unincorporated_partnership';

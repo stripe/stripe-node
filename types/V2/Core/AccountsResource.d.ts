@@ -2955,12 +2955,15 @@ declare module 'stripe' {
               }
 
               type Structure =
+                | 'cooperative'
                 | 'free_zone_establishment'
                 | 'free_zone_llc'
                 | 'governmental_unit'
                 | 'government_instrumentality'
+                | 'incorporated_association'
                 | 'incorporated_non_profit'
                 | 'incorporated_partnership'
+                | 'limited_liability_partnership'
                 | 'llc'
                 | 'multi_member_llc'
                 | 'private_company'
@@ -2968,12 +2971,14 @@ declare module 'stripe' {
                 | 'private_partnership'
                 | 'public_company'
                 | 'public_corporation'
+                | 'public_listed_corporation'
                 | 'public_partnership'
                 | 'registered_charity'
                 | 'single_member_llc'
                 | 'sole_establishment'
                 | 'sole_proprietorship'
                 | 'tax_exempt_government_instrumentality'
+                | 'trust'
                 | 'unincorporated_association'
                 | 'unincorporated_non_profit'
                 | 'unincorporated_partnership';
@@ -5156,6 +5161,11 @@ declare module 'stripe' {
                  * The data source used to identify the customer's tax location - defaults to 'identity_address'. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions.
                  */
                 location_source?: AutomaticIndirectTax.LocationSource;
+
+                /**
+                 * A per-request flag that indicates when Stripe should validate the customer tax location - defaults to 'auto'.
+                 */
+                validate_location?: AutomaticIndirectTax.ValidateLocation;
               }
 
               namespace AutomaticIndirectTax {
@@ -5165,6 +5175,8 @@ declare module 'stripe' {
                   | 'identity_address'
                   | 'ip_address'
                   | 'shipping_address';
+
+                type ValidateLocation = 'auto' | 'deferred' | 'immediately';
               }
 
               interface Billing {
@@ -8013,12 +8025,15 @@ declare module 'stripe' {
               }
 
               type Structure =
+                | 'cooperative'
                 | 'free_zone_establishment'
                 | 'free_zone_llc'
                 | 'governmental_unit'
                 | 'government_instrumentality'
+                | 'incorporated_association'
                 | 'incorporated_non_profit'
                 | 'incorporated_partnership'
+                | 'limited_liability_partnership'
                 | 'llc'
                 | 'multi_member_llc'
                 | 'private_company'
@@ -8026,12 +8041,14 @@ declare module 'stripe' {
                 | 'private_partnership'
                 | 'public_company'
                 | 'public_corporation'
+                | 'public_listed_corporation'
                 | 'public_partnership'
                 | 'registered_charity'
                 | 'single_member_llc'
                 | 'sole_establishment'
                 | 'sole_proprietorship'
                 | 'tax_exempt_government_instrumentality'
+                | 'trust'
                 | 'unincorporated_association'
                 | 'unincorporated_non_profit'
                 | 'unincorporated_partnership';
