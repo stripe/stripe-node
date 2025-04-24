@@ -60,7 +60,7 @@ declare module 'stripe' {
 
   namespace Stripe.Events {
     /**
-     * This event occurs when the account's requirements are updated.
+     * Occurs when an Account's requirements are updated.
      */
     export interface V2CoreAccountIncludingRequirementsUpdatedEvent
       extends V2.EventBase {
@@ -115,7 +115,7 @@ declare module 'stripe' {
     }
 
     /**
-     * This event occurs when an account is created.
+     * Occurs when an Account is created.
      */
     export interface V2CoreAccountCreatedEvent extends V2.EventBase {
       type: 'v2.core.account.created';
@@ -126,7 +126,7 @@ declare module 'stripe' {
     }
 
     /**
-     * This event occurs when an account is updated.
+     * Occurs when an Account is updated.
      */
     export interface V2CoreAccountUpdatedEvent extends V2.EventBase {
       type: 'v2.core.account.updated';
@@ -149,7 +149,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The status of a customer config capability was updated.
+     * Occurs when the status of an Account's customer configuration capability is updated.
      */
     export interface V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent
       extends V2.EventBase {
@@ -172,7 +172,7 @@ declare module 'stripe' {
     }
 
     /**
-     * A customer config was updated.
+     * Occurs when an Account's customer configuration is updated.
      */
     export interface V2CoreAccountIncludingConfigurationCustomerUpdatedEvent
       extends V2.EventBase {
@@ -184,7 +184,7 @@ declare module 'stripe' {
     }
 
     /**
-     * This event occurs when identity is updated.
+     * Occurs when an Identity is updated.
      */
     export interface V2CoreAccountIncludingIdentityUpdatedEvent
       extends V2.EventBase {
@@ -196,7 +196,7 @@ declare module 'stripe' {
     }
 
     /**
-     * This event occurs when a person is created.
+     * Occurs when a Person is created.
      */
     export interface V2CoreAccountPersonCreatedEvent extends V2.EventBase {
       type: 'v2.core.account_person.created';
@@ -218,7 +218,7 @@ declare module 'stripe' {
     }
 
     /**
-     * This event occurs when a person is deleted.
+     * Occurs when a Person is deleted.
      */
     export interface V2CoreAccountPersonDeletedEvent extends V2.EventBase {
       type: 'v2.core.account_person.deleted';
@@ -240,7 +240,7 @@ declare module 'stripe' {
     }
 
     /**
-     * This event occurs when a person is updated.
+     * Occurs when a Person is updated.
      */
     export interface V2CoreAccountPersonUpdatedEvent extends V2.EventBase {
       type: 'v2.core.account_person.updated';
@@ -262,7 +262,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The status of a merchant config capability was updated.
+     * Occurs when the status of an Account's merchant configuration capability is updated.
      */
     export interface V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent
       extends V2.EventBase {
@@ -334,7 +334,7 @@ declare module 'stripe' {
     }
 
     /**
-     * A merchant config was updated.
+     * Occurs when an Account's merchant configuration is updated.
      */
     export interface V2CoreAccountIncludingConfigurationMerchantUpdatedEvent
       extends V2.EventBase {
@@ -346,7 +346,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The status of a recipient config capability was updated.
+     * Occurs when the status of an Account's recipient configuration capability is updated.
      */
     export interface V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent
       extends V2.EventBase {
@@ -379,7 +379,7 @@ declare module 'stripe' {
     }
 
     /**
-     * A recipient config was updated.
+     * Occurs when a Recipient's configuration is updated.
      */
     export interface V2CoreAccountIncludingConfigurationRecipientUpdatedEvent
       extends V2.EventBase {
@@ -403,7 +403,7 @@ declare module 'stripe' {
     }
 
     /**
-     * This event occurs when there are invalid async usage events for a given meter.
+     * Occurs when a Meter has invalid async usage events.
      */
     export interface V1BillingMeterErrorReportTriggeredEvent
       extends V2.EventBase {
@@ -508,7 +508,7 @@ declare module 'stripe' {
     }
 
     /**
-     * This event occurs when async usage events have missing or invalid meter ids.
+     * Occurs when a Meter's id is missing or invalid in async usage events.
      */
     export interface V1BillingMeterNoMeterFoundEvent extends V2.EventBase {
       type: 'v1.billing.meter.no_meter_found';
@@ -632,7 +632,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The FinancialAddress is now active and ready to receive funds using the credentials provided.
+     * Occurs when a FinancialAddress is activated and is ready to receive funds.
      */
     export interface V2MoneyManagementFinancialAddressActivatedEvent
       extends V2.EventBase {
@@ -644,7 +644,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The FinancialAddress could not be activated and can not receive funds.
+     * Occurs when a FinancialAddress fails to activate and can not receive funds.
      */
     export interface V2MoneyManagementFinancialAddressFailedEvent
       extends V2.EventBase {
@@ -656,7 +656,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Funds from an InboundTransfer were just made available.
+     * Occurs when an InboundTransfer's funds are made available.
      */
     export interface V2MoneyManagementInboundTransferAvailableEvent
       extends V2.EventBase {
@@ -762,7 +762,7 @@ declare module 'stripe' {
     }
 
     /**
-     * A new OutboundPayment has been created.
+     * Occurs when an OutboundPayment is created.
      */
     export interface V2MoneyManagementOutboundPaymentCreatedEvent
       extends V2.EventBase {
@@ -822,7 +822,7 @@ declare module 'stripe' {
     }
 
     /**
-     * An OutboundTransfer has transitioned into the canceled state.
+     * Occurs when an OutboundTransfer transitions into the canceled state.
      */
     export interface V2MoneyManagementOutboundTransferCanceledEvent
       extends V2.EventBase {
@@ -834,7 +834,7 @@ declare module 'stripe' {
     }
 
     /**
-     * A new OutboundTransfer has been created.
+     * Occurs when an OutboundTransfer is created.
      */
     export interface V2MoneyManagementOutboundTransferCreatedEvent
       extends V2.EventBase {
@@ -846,7 +846,7 @@ declare module 'stripe' {
     }
 
     /**
-     * An OutboundTransfer has transitioned into the failed state.
+     * Occurs when an OutboundTransfer transitions into the failed state.
      */
     export interface V2MoneyManagementOutboundTransferFailedEvent
       extends V2.EventBase {
@@ -858,7 +858,7 @@ declare module 'stripe' {
     }
 
     /**
-     * An OutboundTransfer has transitioned into the posted state.
+     * Occurs when an OutboundTransfer transitions into the posted state.
      */
     export interface V2MoneyManagementOutboundTransferPostedEvent
       extends V2.EventBase {
@@ -870,7 +870,7 @@ declare module 'stripe' {
     }
 
     /**
-     * An OutboundTransfer has transitioned into the returned state.
+     * Occurs when an OutboundTransfer transitions into the returned state.
      */
     export interface V2MoneyManagementOutboundTransferReturnedEvent
       extends V2.EventBase {
@@ -894,7 +894,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The funds related to the received credit are available in your balance.
+     * Occurs when a ReceivedCredit's funds are received and are available in your balance.
      */
     export interface V2MoneyManagementReceivedCreditAvailableEvent
       extends V2.EventBase {
@@ -917,7 +917,7 @@ declare module 'stripe' {
     }
 
     /**
-     * A credit was attempted to your balance and was not successful. See the status_details for more information.
+     * Occurs when a ReceivedCredit is attempted to your balance and fails. See the status_details for more information.
      */
     export interface V2MoneyManagementReceivedCreditFailedEvent
       extends V2.EventBase {
@@ -929,7 +929,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The previously received credit has been reversed, returned to the originator and deducted from your balance.
+     * Occurs when a ReceivedCredit is reversed, returned to the originator, and deducted from your balance.
      */
     export interface V2MoneyManagementReceivedCreditReturnedEvent
       extends V2.EventBase {
@@ -941,7 +941,7 @@ declare module 'stripe' {
     }
 
     /**
-     * A credit was received successfully and processed by Stripe.
+     * Occurs when a ReceivedCredit succeeds.
      */
     export interface V2MoneyManagementReceivedCreditSucceededEvent
       extends V2.EventBase {
@@ -953,7 +953,7 @@ declare module 'stripe' {
     }
 
     /**
-     * This event is sent when a received debit is canceled.
+     * Occurs when a ReceivedDebit is canceled.
      */
     export interface V2MoneyManagementReceivedDebitCanceledEvent
       extends V2.EventBase {
@@ -965,7 +965,7 @@ declare module 'stripe' {
     }
 
     /**
-     * This event is sent when a received debit fails.
+     * Occurs when a ReceivedDebit fails.
      */
     export interface V2MoneyManagementReceivedDebitFailedEvent
       extends V2.EventBase {
@@ -977,7 +977,7 @@ declare module 'stripe' {
     }
 
     /**
-     * This event is sent when a ReceivedDebit is set to pending.
+     * Occurs when a ReceivedDebit is set to pending.
      */
     export interface V2MoneyManagementReceivedDebitPendingEvent
       extends V2.EventBase {
@@ -989,7 +989,7 @@ declare module 'stripe' {
     }
 
     /**
-     * This event is sent when a ReceivedDebit succeeds.
+     * Occurs when a ReceivedDebit succeeds.
      */
     export interface V2MoneyManagementReceivedDebitSucceededEvent
       extends V2.EventBase {
@@ -1001,7 +1001,7 @@ declare module 'stripe' {
     }
 
     /**
-     * This event is sent when a ReceivedDebit is updated.
+     * Occurs when a ReceivedDebit is updated.
      */
     export interface V2MoneyManagementReceivedDebitUpdatedEvent
       extends V2.EventBase {

@@ -34,15 +34,15 @@ declare module 'stripe' {
           bank_transfer: ReceivedCredit.BankTransfer | null;
 
           /**
+           * This object stores details about the originating issuing card spend that resulted in the ReceivedCredit. Present if `type` field value is `card_spend`.
+           */
+          card_spend: ReceivedCredit.CardSpend | null;
+
+          /**
            * Time at which the ReceivedCredit was created.
            * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
            */
           created: string;
-
-          /**
-           * This object stores details about the originating crypto transaction that resulted in the ReceivedCredit. Present if `type` field value is `crypto_wallet_transfer`.
-           */
-          crypto_wallet_transfer: ReceivedCredit.CryptoWalletTransfer | null;
 
           /**
            * Freeform string set by originator of the ReceivedCredit.
@@ -88,33 +88,14 @@ declare module 'stripe' {
         namespace ReceivedCredit {
           interface BalanceTransfer {
             /**
-             * The ID of the account that owns the source object originated the ReceivedCredit.
+             * The ID of the Stripe Money Movement that originated the ReceivedCredit.
              */
-            from_account: string | null;
+            payout_v1: string;
 
             /**
              * Open Enum. The type of Stripe Money Movement that originated the ReceivedCredit.
              */
-            type: BalanceTransfer.Type;
-
-            /**
-             * The ID of the outbound payment object that originated the ReceivedCredit.
-             */
-            outbound_payment: string | null;
-
-            /**
-             * The ID of the outbound transfer object that originated the ReceivedCredit.
-             */
-            outbound_transfer: string | null;
-
-            /**
-             * The ID of the payout object that originated the ReceivedCredit.
-             */
-            payout_v1: string | null;
-          }
-
-          namespace BalanceTransfer {
-            type Type = 'outbound_payment' | 'outbound_transfer' | 'payout_v1';
+            type: 'payout_v1';
           }
 
           interface BankTransfer {
@@ -134,11 +115,6 @@ declare module 'stripe' {
             statement_descriptor: string | null;
 
             /**
-             * Hash containing the transaction bank details. Present if `payment_method_type` field value is `eu_bank_account`.
-             */
-            eu_bank_account: BankTransfer.EuBankAccount | null;
-
-            /**
              * Hash containing the transaction bank details. Present if `payment_method_type` field value is `gb_bank_account`.
              */
             gb_bank_account: BankTransfer.GbBankAccount | null;
@@ -150,33 +126,6 @@ declare module 'stripe' {
           }
 
           namespace BankTransfer {
-            interface EuBankAccount {
-              /**
-               * The account holder name of the bank account the transfer was received from.
-               */
-              account_holder_name: string | null;
-
-              /**
-               * The bank name the transfer was received from.
-               */
-              bank_name: string | null;
-
-              /**
-               * The bic of the account that originated the transfer.
-               */
-              bic: string | null;
-
-              /**
-               * The last 4 digits of the account number that originated the transfer.
-               */
-              last4: string | null;
-
-              /**
-               * Open Enum. The money transmission network used to send funds for this ReceivedCredit.
-               */
-              network: 'sepa';
-            }
-
             interface GbBankAccount {
               /**
                * The bank name the transfer was received from.
@@ -204,11 +153,7 @@ declare module 'stripe' {
               sort_code: string | null;
             }
 
-            type PaymentMethodType =
-              | 'crypto_wallet'
-              | 'eu_bank_account'
-              | 'gb_bank_account'
-              | 'us_bank_account';
+            type PaymentMethodType = 'gb_bank_account' | 'us_bank_account';
 
             interface UsBankAccount {
               /**
@@ -237,63 +182,37 @@ declare module 'stripe' {
             }
           }
 
-          interface CryptoWalletTransfer {
+          interface CardSpend {
             /**
-             * Hash containing the transaction crypto wallet details.
+             * The reference to the issuing card object.
              */
-            crypto_wallet: CryptoWalletTransfer.CryptoWallet;
+            card_v1_id: string;
 
             /**
-             * Financial Address on which funds for ReceivedCredit were received.
+             * Hash containing information about the Dispute that triggered this credit.
              */
-            financial_address: string;
+            dispute: CardSpend.Dispute | null;
 
             /**
-             * Open Enum. Indicates the type of source via from which external funds originated.
+             * Hash containing information about the Refund that triggered this credit.
              */
-            payment_method_type: CryptoWalletTransfer.PaymentMethodType;
-
-            /**
-             * Freeform string set by originator of the external ReceivedCredit.
-             */
-            statement_descriptor: string | null;
+            refund: CardSpend.Refund | null;
           }
 
-          namespace CryptoWalletTransfer {
-            interface CryptoWallet {
+          namespace CardSpend {
+            interface Dispute {
               /**
-               * The address of the wallet the crypto was received from.
+               * The reference to the v1 issuing dispute ID.
                */
-              address: string;
-
-              /**
-               * A memo also for identifying the recipient for memo-based blockchains (e.g., Stellar),.
-               */
-              memo: string;
-
-              /**
-               * The network the crypto was received from.
-               */
-              network: CryptoWallet.Network;
+              issuing_dispute_v1: string;
             }
 
-            namespace CryptoWallet {
-              type Network =
-                | 'arbitrum'
-                | 'avalanche_c_chain'
-                | 'base'
-                | 'ethereum'
-                | 'optimism'
-                | 'polygon'
-                | 'solana'
-                | 'stellar';
+            interface Refund {
+              /**
+               * The reference to the v1 issuing transaction ID.
+               */
+              issuing_transaction_v1: string;
             }
-
-            type PaymentMethodType =
-              | 'crypto_wallet'
-              | 'eu_bank_account'
-              | 'gb_bank_account'
-              | 'us_bank_account';
           }
 
           type Status = 'failed' | 'pending' | 'returned' | 'succeeded';
@@ -357,7 +276,7 @@ declare module 'stripe' {
           type Type =
             | 'balance_transfer'
             | 'bank_transfer'
-            | 'crypto_wallet_transfer'
+            | 'card_spend'
             | 'external_credit';
         }
       }
