@@ -606,6 +606,7 @@ declare module 'stripe' {
           | 'ach_credit_transfer'
           | 'ach_debit'
           | 'acss_debit'
+          | 'affirm'
           | 'amazon_pay'
           | 'au_becs_debit'
           | 'bacs_debit'

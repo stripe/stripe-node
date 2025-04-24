@@ -48,7 +48,7 @@ declare module 'stripe' {
       deleted?: void;
 
       /**
-       * One of `forever`, `once`, and `repeating`. Describes how long a customer who applies this coupon will get the discount.
+       * One of `forever`, `once`, or `repeating`. Describes how long a customer who applies this coupon will get the discount.
        */
       duration: Coupon.Duration;
 

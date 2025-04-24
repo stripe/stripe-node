@@ -309,7 +309,7 @@ declare module 'stripe' {
         bancontact?: PaymentMethodData.Bancontact;
 
         /**
-         * If this is a `billie` PaymentMethod, this hash contains details about the billie payment method.
+         * If this is a `billie` PaymentMethod, this hash contains details about the Billie payment method.
          */
         billie?: PaymentMethodData.Billie;
 
@@ -464,7 +464,7 @@ declare module 'stripe' {
         radar_options?: PaymentMethodData.RadarOptions;
 
         /**
-         * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
+         * If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
          */
         revolut_pay?: PaymentMethodData.RevolutPay;
 
@@ -474,7 +474,7 @@ declare module 'stripe' {
         samsung_pay?: PaymentMethodData.SamsungPay;
 
         /**
-         * If this is a `satispay` PaymentMethod, this hash contains details about the satispay payment method.
+         * If this is a `satispay` PaymentMethod, this hash contains details about the Satispay payment method.
          */
         satispay?: PaymentMethodData.Satispay;
 
@@ -597,6 +597,11 @@ declare module 'stripe' {
            * Billing phone number (including extension).
            */
           phone?: Stripe.Emptyable<string>;
+
+          /**
+           * Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM sellers.
+           */
+          tax_id?: string;
         }
 
         interface Blik {}
@@ -1021,6 +1026,11 @@ declare module 'stripe' {
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
+
+        /**
+         * If this is a `billie` PaymentMethod, this sub-hash contains details about the Billie payment method options.
+         */
+        billie?: Stripe.Emptyable<PaymentMethodOptions.Billie>;
 
         /**
          * If this is a `blik` PaymentMethod, this sub-hash contains details about the BLIK payment method options.
@@ -1481,6 +1491,17 @@ declare module 'stripe' {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Billie {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
         }
 
         interface Blik {
@@ -3055,7 +3076,7 @@ declare module 'stripe' {
         bancontact?: PaymentMethodData.Bancontact;
 
         /**
-         * If this is a `billie` PaymentMethod, this hash contains details about the billie payment method.
+         * If this is a `billie` PaymentMethod, this hash contains details about the Billie payment method.
          */
         billie?: PaymentMethodData.Billie;
 
@@ -3210,7 +3231,7 @@ declare module 'stripe' {
         radar_options?: PaymentMethodData.RadarOptions;
 
         /**
-         * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
+         * If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
          */
         revolut_pay?: PaymentMethodData.RevolutPay;
 
@@ -3220,7 +3241,7 @@ declare module 'stripe' {
         samsung_pay?: PaymentMethodData.SamsungPay;
 
         /**
-         * If this is a `satispay` PaymentMethod, this hash contains details about the satispay payment method.
+         * If this is a `satispay` PaymentMethod, this hash contains details about the Satispay payment method.
          */
         satispay?: PaymentMethodData.Satispay;
 
@@ -3343,6 +3364,11 @@ declare module 'stripe' {
            * Billing phone number (including extension).
            */
           phone?: Stripe.Emptyable<string>;
+
+          /**
+           * Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM sellers.
+           */
+          tax_id?: string;
         }
 
         interface Blik {}
@@ -3767,6 +3793,11 @@ declare module 'stripe' {
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
+
+        /**
+         * If this is a `billie` PaymentMethod, this sub-hash contains details about the Billie payment method options.
+         */
+        billie?: Stripe.Emptyable<PaymentMethodOptions.Billie>;
 
         /**
          * If this is a `blik` PaymentMethod, this sub-hash contains details about the BLIK payment method options.
@@ -4227,6 +4258,17 @@ declare module 'stripe' {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Billie {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
         }
 
         interface Blik {
@@ -5911,7 +5953,7 @@ declare module 'stripe' {
         bancontact?: PaymentMethodData.Bancontact;
 
         /**
-         * If this is a `billie` PaymentMethod, this hash contains details about the billie payment method.
+         * If this is a `billie` PaymentMethod, this hash contains details about the Billie payment method.
          */
         billie?: PaymentMethodData.Billie;
 
@@ -6066,7 +6108,7 @@ declare module 'stripe' {
         radar_options?: PaymentMethodData.RadarOptions;
 
         /**
-         * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
+         * If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
          */
         revolut_pay?: PaymentMethodData.RevolutPay;
 
@@ -6076,7 +6118,7 @@ declare module 'stripe' {
         samsung_pay?: PaymentMethodData.SamsungPay;
 
         /**
-         * If this is a `satispay` PaymentMethod, this hash contains details about the satispay payment method.
+         * If this is a `satispay` PaymentMethod, this hash contains details about the Satispay payment method.
          */
         satispay?: PaymentMethodData.Satispay;
 
@@ -6199,6 +6241,11 @@ declare module 'stripe' {
            * Billing phone number (including extension).
            */
           phone?: Stripe.Emptyable<string>;
+
+          /**
+           * Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM sellers.
+           */
+          tax_id?: string;
         }
 
         interface Blik {}
@@ -6623,6 +6670,11 @@ declare module 'stripe' {
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
+
+        /**
+         * If this is a `billie` PaymentMethod, this sub-hash contains details about the Billie payment method options.
+         */
+        billie?: Stripe.Emptyable<PaymentMethodOptions.Billie>;
 
         /**
          * If this is a `blik` PaymentMethod, this sub-hash contains details about the BLIK payment method options.
@@ -7083,6 +7135,17 @@ declare module 'stripe' {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Billie {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
         }
 
         interface Blik {

@@ -20,6 +20,11 @@ declare module 'stripe' {
         payment_method_data?: ConfirmationTokenCreateParams.PaymentMethodData;
 
         /**
+         * Payment-method-specific configuration for this ConfirmationToken.
+         */
+        payment_method_options?: ConfirmationTokenCreateParams.PaymentMethodOptions;
+
+        /**
          * Return URL used to confirm the Intent.
          */
         return_url?: string;
@@ -90,7 +95,7 @@ declare module 'stripe' {
           bancontact?: PaymentMethodData.Bancontact;
 
           /**
-           * If this is a `billie` PaymentMethod, this hash contains details about the billie payment method.
+           * If this is a `billie` PaymentMethod, this hash contains details about the Billie payment method.
            */
           billie?: PaymentMethodData.Billie;
 
@@ -245,7 +250,7 @@ declare module 'stripe' {
           radar_options?: PaymentMethodData.RadarOptions;
 
           /**
-           * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
+           * If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
            */
           revolut_pay?: PaymentMethodData.RevolutPay;
 
@@ -255,7 +260,7 @@ declare module 'stripe' {
           samsung_pay?: PaymentMethodData.SamsungPay;
 
           /**
-           * If this is a `satispay` PaymentMethod, this hash contains details about the satispay payment method.
+           * If this is a `satispay` PaymentMethod, this hash contains details about the Satispay payment method.
            */
           satispay?: PaymentMethodData.Satispay;
 
@@ -378,6 +383,11 @@ declare module 'stripe' {
              * Billing phone number (including extension).
              */
             phone?: Stripe.Emptyable<string>;
+
+            /**
+             * Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM sellers.
+             */
+            tax_id?: string;
           }
 
           interface Blik {}
@@ -753,6 +763,52 @@ declare module 'stripe' {
           interface WechatPay {}
 
           interface Zip {}
+        }
+
+        interface PaymentMethodOptions {
+          /**
+           * Configuration for any card payments confirmed using this ConfirmationToken.
+           */
+          card?: PaymentMethodOptions.Card;
+        }
+
+        namespace PaymentMethodOptions {
+          interface Card {
+            /**
+             * Installment configuration for payments confirmed using this ConfirmationToken.
+             */
+            installments?: Card.Installments;
+          }
+
+          namespace Card {
+            interface Installments {
+              /**
+               * The selected installment plan to use for this payment attempt.
+               * This parameter can only be provided during confirmation.
+               */
+              plan: Installments.Plan;
+            }
+
+            namespace Installments {
+              interface Plan {
+                /**
+                 * For `fixed_count` installment plans, this is required. It represents the number of installment payments your customer will make to their credit card.
+                 */
+                count?: number;
+
+                /**
+                 * For `fixed_count` installment plans, this is required. It represents the interval between installment payments your customer will make to their credit card.
+                 * One of `month`.
+                 */
+                interval?: 'month';
+
+                /**
+                 * Type of installment plan, one of `fixed_count`.
+                 */
+                type: 'fixed_count';
+              }
+            }
+          }
         }
 
         type SetupFutureUsage = 'off_session' | 'on_session';

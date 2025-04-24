@@ -54,7 +54,7 @@ declare module 'stripe' {
       bancontact?: PaymentMethodCreateParams.Bancontact;
 
       /**
-       * If this is a `billie` PaymentMethod, this hash contains details about the billie payment method.
+       * If this is a `billie` PaymentMethod, this hash contains details about the Billie payment method.
        */
       billie?: PaymentMethodCreateParams.Billie;
 
@@ -229,7 +229,7 @@ declare module 'stripe' {
       radar_options?: PaymentMethodCreateParams.RadarOptions;
 
       /**
-       * If this is a `Revolut Pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
+       * If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
        */
       revolut_pay?: PaymentMethodCreateParams.RevolutPay;
 
@@ -239,7 +239,7 @@ declare module 'stripe' {
       samsung_pay?: PaymentMethodCreateParams.SamsungPay;
 
       /**
-       * If this is a `satispay` PaymentMethod, this hash contains details about the satispay payment method.
+       * If this is a `satispay` PaymentMethod, this hash contains details about the Satispay payment method.
        */
       satispay?: PaymentMethodCreateParams.Satispay;
 
@@ -362,6 +362,11 @@ declare module 'stripe' {
          * Billing phone number (including extension).
          */
         phone?: Stripe.Emptyable<string>;
+
+        /**
+         * Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM sellers.
+         */
+        tax_id?: string;
       }
 
       interface Blik {}
@@ -857,6 +862,11 @@ declare module 'stripe' {
          * Billing phone number (including extension).
          */
         phone?: Stripe.Emptyable<string>;
+
+        /**
+         * Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM sellers.
+         */
+        tax_id?: string;
       }
 
       interface Card {
