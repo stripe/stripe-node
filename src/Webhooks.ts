@@ -85,7 +85,11 @@ export function createWebhooks(
       receivedAt: number
     ): WebhookEvent {
       try {
-        this.signature?.verifyHeader(
+        if (!this.signature) {
+          throw new Error('ERR: missing signature helper, unable to verify');
+        }
+
+        this.signature.verifyHeader(
           payload,
           header,
           secret,
@@ -116,7 +120,11 @@ export function createWebhooks(
       cryptoProvider: CryptoProvider,
       receivedAt: number
     ): Promise<WebhookEvent> {
-      await this.signature?.verifyHeaderAsync(
+      if (!this.signature) {
+        throw new Error('ERR: missing signature helper, unable to verify');
+      }
+
+      await this.signature.verifyHeaderAsync(
         payload,
         header,
         secret,
