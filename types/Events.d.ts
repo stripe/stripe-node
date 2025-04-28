@@ -336,6 +336,8 @@ declare module 'stripe' {
        */
       api_version: string | null;
 
+      context?: string;
+
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
