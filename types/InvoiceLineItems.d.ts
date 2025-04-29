@@ -188,7 +188,7 @@ declare module 'stripe' {
           /**
            * The subscription that the subscription item belongs to
            */
-          subscription: string;
+          subscription: string | null;
 
           /**
            * The subscription item that generated this line item

@@ -4,12 +4,13 @@ declare module 'stripe' {
   namespace Stripe.V2 {
     export type Event =
       | Stripe.Events.V1BillingMeterErrorReportTriggeredEvent
-      | Stripe.Events.V1BillingMeterNoMeterFoundEvent;
+      | Stripe.Events.V1BillingMeterNoMeterFoundEvent
+      | Stripe.Events.V2CoreEventDestinationPingEvent;
   }
 
   namespace Stripe.Events {
     /**
-     * This event occurs when there are invalid async usage events for a given meter.
+     * Occurs when a Meter has invalid async usage events.
      */
     export interface V1BillingMeterErrorReportTriggeredEvent
       extends V2.EventBase {
@@ -114,7 +115,7 @@ declare module 'stripe' {
     }
 
     /**
-     * This event occurs when async usage events have missing or invalid meter ids.
+     * Occurs when a Meter's id is missing or invalid in async usage events.
      */
     export interface V1BillingMeterNoMeterFoundEvent extends V2.EventBase {
       type: 'v1.billing.meter.no_meter_found';
@@ -211,6 +212,17 @@ declare module 'stripe' {
           }
         }
       }
+    }
+
+    /**
+     * A ping event used to test the connection to an event destination.
+     */
+    export interface V2CoreEventDestinationPingEvent extends V2.EventBase {
+      type: 'v2.core.event_destination.ping';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.EventDestination>;
     }
   }
 }

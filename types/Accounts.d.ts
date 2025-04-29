@@ -141,6 +141,13 @@ declare module 'stripe' {
          */
         mcc: string | null;
 
+        /**
+         * Whether the business is a minority-owned, women-owned, and/or LGBTQI+-owned business.
+         */
+        minority_owned_business_designation: Array<
+          BusinessProfile.MinorityOwnedBusinessDesignation
+        > | null;
+
         monthly_estimated_revenue?: BusinessProfile.MonthlyEstimatedRevenue;
 
         /**
@@ -196,6 +203,13 @@ declare module 'stripe' {
            */
           fiscal_year_end: string | null;
         }
+
+        type MinorityOwnedBusinessDesignation =
+          | 'lgbtqi_owned_business'
+          | 'minority_owned_business'
+          | 'none_of_these_apply'
+          | 'prefer_not_to_answer'
+          | 'women_owned_business';
 
         interface MonthlyEstimatedRevenue {
           /**
@@ -692,6 +706,8 @@ declare module 'stripe' {
          */
         phone?: string | null;
 
+        registration_date?: Company.RegistrationDate;
+
         /**
          * The category identifying the legal structure of the company or legal entity. Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details.
          */
@@ -830,6 +846,23 @@ declare module 'stripe' {
         type OwnershipExemptionReason =
           | 'qualified_entity_exceeds_ownership_threshold'
           | 'qualifies_as_financial_institution';
+
+        interface RegistrationDate {
+          /**
+           * The day of registration, between 1 and 31.
+           */
+          day: number | null;
+
+          /**
+           * The month of registration, between 1 and 12.
+           */
+          month: number | null;
+
+          /**
+           * The four-digit year of registration.
+           */
+          year: number | null;
+        }
 
         type Structure =
           | 'free_zone_establishment'
@@ -1129,6 +1162,7 @@ declare module 'stripe' {
             | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
+            | 'verification_legal_entity_structure_mismatch'
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'
@@ -1324,6 +1358,7 @@ declare module 'stripe' {
             | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
+            | 'verification_legal_entity_structure_mismatch'
             | 'verification_missing_directors'
             | 'verification_missing_executives'
             | 'verification_missing_owners'

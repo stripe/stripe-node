@@ -14,8 +14,6 @@ For collecting customer and payment information in the browser, use [Stripe.js][
 
 See the [`stripe-node` API docs](https://stripe.com/docs/api?lang=node) for Node.js.
 
-See [video demonstrations][youtube-playlist] covering how to use the library.
-
 ## Requirements
 
 Node 12 or higher.
@@ -658,7 +656,6 @@ just format
 [stripe-js]: https://stripe.com/docs/js
 [stripe-mock]: https://github.com/stripe/stripe-mock
 [stripe-mock-usage]: https://github.com/stripe/stripe-mock#usage
-[youtube-playlist]: https://www.youtube.com/playlist?list=PLy1nL-pvL2M5xNIuNapwmABwEy2uifAlY
 
 <!--
 # vim: set tw=79:

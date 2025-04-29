@@ -182,6 +182,11 @@ declare module 'stripe' {
         liability: AutomaticTax.Liability | null;
 
         /**
+         * The tax provider powering automatic tax.
+         */
+        provider: string | null;
+
+        /**
          * The status of the most recent automated tax calculation for this quote.
          */
         status: AutomaticTax.Status | null;
