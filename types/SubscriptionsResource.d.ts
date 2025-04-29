@@ -370,7 +370,7 @@ declare module 'stripe' {
         second?: number;
       }
 
-      type BillingMode = 'credits_attributed_to_debits' | 'legacy_prorations';
+      type BillingMode = 'classic' | 'flexible';
 
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
