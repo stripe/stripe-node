@@ -283,7 +283,6 @@
 ///<reference path='./Persons.d.ts' />
 ///<reference path='./Plans.d.ts' />
 ///<reference path='./Prices.d.ts' />
-///<reference path='./Privacy/RedactionJobRootObjects.d.ts' />
 ///<reference path='./Privacy/RedactionJobValidationErrors.d.ts' />
 ///<reference path='./Privacy/RedactionJobs.d.ts' />
 ///<reference path='./ProductFeatures.d.ts' />

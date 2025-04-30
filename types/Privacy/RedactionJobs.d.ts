@@ -26,7 +26,7 @@ declare module 'stripe' {
         /**
          * The objects at the root level that are subject to redaction.
          */
-        objects?: Stripe.Privacy.RedactionJobRootObjects | null;
+        objects?: RedactionJob.Objects | null;
 
         /**
          * The status field represents the current state of the redaction job. It can take on any of the following values: VALIDATING, READY, REDACTING, SUCCEEDED, CANCELED, FAILED.
@@ -37,6 +37,28 @@ declare module 'stripe' {
          * Default is "error". If "error", we will make sure all objects in the graph are redactable in the 1st traversal, otherwise error. If "fix", where possible, we will auto-fix any validation errors (e.g. by auto-transitioning objects to a terminal state, etc.) in the 2nd traversal before redacting
          */
         validation_behavior: string | null;
+      }
+
+      namespace RedactionJob {
+        interface Objects {
+          charges: Array<string> | null;
+
+          checkout_sessions: Array<string> | null;
+
+          customers: Array<string> | null;
+
+          identity_verification_sessions: Array<string> | null;
+
+          invoices: Array<string> | null;
+
+          issuing_cardholders: Array<string> | null;
+
+          payment_intents: Array<string> | null;
+
+          radar_value_list_items: Array<string> | null;
+
+          setup_intents: Array<string> | null;
+        }
       }
     }
   }

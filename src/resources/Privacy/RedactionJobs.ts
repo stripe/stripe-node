@@ -29,10 +29,6 @@ export const RedactionJobs = StripeResource.extend({
     fullPath: '/v1/privacy/redaction_jobs/{job}/validation_errors',
     methodType: 'list',
   }),
-  retrieveValidationError: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/privacy/redaction_jobs/{job}/validation_errors/{error}',
-  }),
   run: stripeMethod({
     method: 'POST',
     fullPath: '/v1/privacy/redaction_jobs/{job}/run',

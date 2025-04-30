@@ -105,13 +105,6 @@ declare module 'stripe' {
         expand?: Array<string>;
       }
 
-      interface RedactionJobRetrieveValidationErrorParams {
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
-      }
-
       interface RedactionJobRunParams {
         /**
          * Specifies which fields in the response should be expanded.
@@ -193,21 +186,6 @@ declare module 'stripe' {
           id: string,
           options?: RequestOptions
         ): ApiListPromise<Stripe.Privacy.RedactionJobValidationError>;
-
-        /**
-         * Retrieve validation error method
-         */
-        retrieveValidationError(
-          jobId: string,
-          id: string,
-          params?: RedactionJobRetrieveValidationErrorParams,
-          options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Privacy.RedactionJobValidationError>>;
-        retrieveValidationError(
-          jobId: string,
-          id: string,
-          options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Privacy.RedactionJobValidationError>>;
 
         /**
          * Run redaction job method
