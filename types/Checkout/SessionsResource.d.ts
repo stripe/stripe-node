@@ -2898,9 +2898,7 @@ declare module 'stripe' {
         }
 
         namespace SubscriptionData {
-          type BillingMode =
-            | 'credits_attributed_to_debits'
-            | 'legacy_prorations';
+          type BillingMode = 'classic' | 'flexible';
 
           interface InvoiceSettings {
             /**

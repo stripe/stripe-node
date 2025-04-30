@@ -1096,7 +1096,7 @@ declare module 'stripe' {
       namespace SubscriptionData {
         type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
 
-        type BillingMode = 'credits_attributed_to_debits' | 'legacy_prorations';
+        type BillingMode = 'classic' | 'flexible';
 
         interface BillOnAcceptance {
           /**

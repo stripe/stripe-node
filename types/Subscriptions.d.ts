@@ -310,7 +310,7 @@ declare module 'stripe' {
         second: number | null;
       }
 
-      type BillingMode = 'credits_attributed_to_debits' | 'legacy_prorations';
+      type BillingMode = 'classic' | 'flexible';
 
       interface CancellationDetails {
         /**
