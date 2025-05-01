@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^8.2.0",
+    "dotenv": "^16.4.7",
     "koa": "^2.14.1",
     "stripe": "^17.5.0",
     "koa-bodyparser": "^4.3.0"
