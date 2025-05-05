@@ -19,9 +19,14 @@ alter table users
     create policy "Can update own user data." on users
       for update using ((select auth.uid()) = id);
 
+ Main
       /*
        * This trigger automatically creates a user entry when a new user signs up via Supabase Auth.
        */
+=======
+      /**
+      * This trigger automatically creates a user entry when a new user signs up via Supabase Auth.
+      */nodoubtz-patch-1
       create function public.handle_new_user()
       returns trigger
       set search_path = ''
@@ -84,7 +89,12 @@ alter table users
                                   create table prices (
                                       -- Price ID from Stripe, e.g. price_1234.
                                         id text primary key,
+Main
                                           -- The ID of the product that this price belongs to.
+=======
+                                          -- The ID of the prduct that this price belongs to.
+
+nodoubtz-patch-1
                                             product_id text references products,
                                               -- Whether the price can be used for new purchases.
                                                 active boolean,
@@ -158,3 +168,9 @@ alter table users
                                              drop publication if exists supabase_realtime;
                                              create publication supabase_realtime
                                                for table products, prices;
+                                               Main
+
+                                      )
+                                  )
+                              )
+                              )nodoubtz-patch-1
