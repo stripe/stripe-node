@@ -36,12 +36,22 @@ describe('Integration test', function() {
     });
   };
   const runTestProject = (projectName: string): Promise<void> => {
-    return testExec(`
+    let command = `
       cd testProjects/${projectName} && rm -rf node_modules &&
       npm install &&
+    `;
+
+    // Node supports ES Modules starting at v12
+    if (nodeVersion > 12) {
+      command += `
       npm run lint &&
-      npm run runtestproject -- ${FAKE_API_KEY}
-    `);
+      `;
+    }
+
+    command += `npm run runtestproject -- ${FAKE_API_KEY}`;
+
+    console.log(command);
+    return testExec(command);
   };
 
   it('should work with CommonJS imports', () => runTestProject('cjs'));
