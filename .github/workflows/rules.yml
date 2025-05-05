@@ -1,0 +1,21 @@
+
+name: rules
+
+on:
+  workflow_dispatch: {}
+  pull_request:
+    types:
+      - auto_merge_enabled
+
+jobs:
+  require_merge_commit_on_merge_script_pr:
+    name: Merge script PRs must create merge commits
+    if: ${{ contains(github.head_ref, '/merge-') }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          if ${{ github.event.pull_request.auto_merge.merge_method != 'merge' }}; then
+            echo "Auto-merge method must be 'merge' instead of '${{github.event.pull_request.auto_merge.merge_method}}'"
+            exit 1
+          fi
+
