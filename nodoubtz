@@ -1,0 +1,2 @@
+brew install stripe/stripe-cli/stripe
+brew install stripe-cli

@@ -1,0 +1,22 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "install",
+			"group": "clean",
+			"problemMatcher": [],
+			"label": "npm: install",
+			"detail": "install dependencies from package"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "testProjects/cloudflare-pages",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - testProjects/cloudflare-pages",
+			"detail": "wrangler pages functions build"
+		}
+	]
+}
