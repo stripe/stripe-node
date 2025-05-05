@@ -19,9 +19,9 @@ alter table users
     create policy "Can update own user data." on users
       for update using ((select auth.uid()) = id);
 
-      /**
-      * This trigger automatically creates a user entry when a new user signs up via Supabase Auth.
-      */
+      /*
+       * This trigger automatically creates a user entry when a new user signs up via Supabase Auth.
+       */
       create function public.handle_new_user()
       returns trigger
       set search_path = ''
