@@ -27,19 +27,22 @@ integrations-test: build
 # run the full test suite; you probably want `test`
 ci-test: install test types-test integrations-test
 
-_build mode packageType: install
+_build mode packageType tscArgs: install
     mkdir -p {{ mode }}
-    tsc -p tsconfig.{{ mode }}.json
+    tsc -p tsconfig.{{ mode }}.json {{ tscArgs }}
     echo '{"type":"{{ packageType }}"}' > {{ mode }}/package.json
 
 [private]
-build-esm: (_build "esm" "module")
+build-esm *args="": (_build "esm" "module" args)
 
 [private]
-build-cjs: (_build "cjs" "commonjs")
+build-cjs *args="": (_build "cjs" "commonjs" args)
 
 # generate CJS and ESM versions of the package; mostly used as a pre-req for other steps
 build: build-esm build-cjs
+
+# generate CJS and ESM versions of the package including sourceMaps for each build
+build-dev: (build-esm "--sourceMap" "true") (build-cjs "--sourceMap" "true")
 
 # ⭐ run style checks, fixing issues if possible
 lint: (lint-check "--fix")
