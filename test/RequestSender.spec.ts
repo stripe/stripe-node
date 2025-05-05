@@ -495,6 +495,32 @@ describe('RequestSender', () => {
         });
       });
     });
+
+    describe('_rawRequest', () => {
+      it('should set the host correctly for raw request', (done) => {
+        const scope = nock(`https://files.stripe.com`)
+          .get(`/v1/files/file_1Mr4LDLkdIwHu7ixFCz0dZiH/contents`)
+          .reply(200, '{}');
+
+        realStripe
+          .rawRequest(
+            'GET',
+            '/v1/files/file_1Mr4LDLkdIwHu7ixFCz0dZiH/contents',
+            {},
+            {
+              host: 'files.stripe.com',
+              streaming: true,
+            }
+          )
+          .then((result) => {
+            done();
+            scope.done();
+          })
+          .catch((error) => {
+            done(error);
+          });
+      });
+    });
   });
 
   describe('Retry Network Requests', () => {
