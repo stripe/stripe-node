@@ -84,7 +84,7 @@ alter table users
                                   create table prices (
                                       -- Price ID from Stripe, e.g. price_1234.
                                         id text primary key,
-                                          -- The ID of the prduct that this price belongs to.
+                                          -- The ID of the product that this price belongs to.
                                             product_id text references products,
                                               -- Whether the price can be used for new purchases.
                                                 active boolean,
