@@ -22,6 +22,7 @@ const OPTIONS_KEYS = [
   'authenticator',
   'stripeContext',
   'additionalHeaders',
+  'streaming',
 ];
 
 type Settings = {
@@ -153,6 +154,7 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
     host: null,
     headers: {},
     settings: {},
+    streaming: false,
   };
   if (args.length > 0) {
     const arg = args[args.length - 1];
@@ -216,6 +218,9 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
         opts.headers = params.additionalHeaders as {
           [headerName: string]: string;
         };
+      }
+      if (params.streaming) {
+        opts.streaming = true;
       }
     }
   }

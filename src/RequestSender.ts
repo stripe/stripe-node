@@ -500,8 +500,8 @@ export class RequestSender {
           queryData: {},
           authenticator,
           headers,
-          host: null,
-          streaming: false,
+          host: calculatedOptions.host,
+          streaming: !!calculatedOptions.streaming,
           settings: {},
           usage: ['raw_request'],
         };
