@@ -2835,7 +2835,7 @@ declare module 'stripe' {
           billing_cycle_anchor?: number;
 
           /**
-           * Configure billing_mode in each subscription to opt in improved credit proration behavior.
+           * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
            */
           billing_mode?: SubscriptionData.BillingMode;
 
@@ -3026,7 +3026,7 @@ declare module 'stripe' {
          *
          * To update an existing line item, specify its `id` along with the new values of the fields to update.
          *
-         * To add a new line item, specify a `price` and `quantity`.
+         * To add a new line item, specify one of `price` or `price_data` and `quantity`.
          *
          * To remove an existing line item, omit the line item's ID from the retransmitted array.
          *
@@ -3130,7 +3130,7 @@ declare module 'stripe' {
           price_data?: LineItem.PriceData;
 
           /**
-           * The quantity of the line item being purchased.
+           * The quantity of the line item being purchased. Quantity should not be defined when `recurring.usage_type=metered`.
            */
           quantity?: Stripe.Emptyable<number>;
 
@@ -3481,6 +3481,8 @@ declare module 'stripe' {
 
         /**
          * Updates a Checkout Session object.
+         *
+         * Related guide: [Dynamically update Checkout](https://stripe.com/payments/checkout/dynamic-updates)
          */
         update(
           id: string,

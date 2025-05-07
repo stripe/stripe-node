@@ -365,9 +365,6 @@ declare module 'stripe' {
           | 'forwarding_api_retryable_upstream_error'
           | 'forwarding_api_upstream_connection_error'
           | 'forwarding_api_upstream_connection_timeout'
-          | 'gift_card_balance_insufficient'
-          | 'gift_card_code_exists'
-          | 'gift_card_inactive'
           | 'idempotency_key_in_use'
           | 'incorrect_address'
           | 'incorrect_cvc'
@@ -507,7 +504,7 @@ declare module 'stripe' {
         redirect_to_url?: NextAction.RedirectToUrl;
 
         /**
-         * Type of the next action to perform, one of `redirect_to_url`, `use_stripe_sdk`, `alipay_handle_redirect`, `oxxo_display_details`, or `verify_with_microdeposits`.
+         * Type of the next action to perform. Refer to the other child attributes under `next_action` for available values. Examples include: `redirect_to_url`, `use_stripe_sdk`, `alipay_handle_redirect`, `oxxo_display_details`, or `verify_with_microdeposits`.
          */
         type: string;
 

@@ -24,6 +24,11 @@ declare module 'stripe' {
         created: number;
 
         /**
+         * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+         */
+        livemode: boolean;
+
+        /**
          * The objects at the root level that are subject to redaction.
          */
         objects?: RedactionJob.Objects | null;
@@ -31,12 +36,12 @@ declare module 'stripe' {
         /**
          * The status field represents the current state of the redaction job. It can take on any of the following values: VALIDATING, READY, REDACTING, SUCCEEDED, CANCELED, FAILED.
          */
-        status: string;
+        status: RedactionJob.Status;
 
         /**
          * Default is "error". If "error", we will make sure all objects in the graph are redactable in the 1st traversal, otherwise error. If "fix", where possible, we will auto-fix any validation errors (e.g. by auto-transitioning objects to a terminal state, etc.) in the 2nd traversal before redacting
          */
-        validation_behavior: string | null;
+        validation_behavior: RedactionJob.ValidationBehavior | null;
       }
 
       namespace RedactionJob {
@@ -59,6 +64,18 @@ declare module 'stripe' {
 
           setup_intents: Array<string> | null;
         }
+
+        type Status =
+          | 'canceled'
+          | 'canceling'
+          | 'created'
+          | 'failed'
+          | 'ready'
+          | 'redacting'
+          | 'succeeded'
+          | 'validating';
+
+        type ValidationBehavior = 'error' | 'fix';
       }
     }
   }

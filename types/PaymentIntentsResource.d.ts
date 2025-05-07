@@ -122,6 +122,8 @@ declare module 'stripe' {
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
        *
        * If you don't provide the `payment_method` parameter or the `source` parameter with `confirm=true`, `source` automatically populates with `customer.default_source` to improve migration for users of the Charges API. We recommend that you explicitly provide the `payment_method` moving forward.
+       * If the payment method is attached to a Customer, you must also provide the ID of that Customer as the [customer](https://stripe.com/docs/api#create_payment_intent-customer) parameter of this PaymentIntent.
+       * end
        */
       payment_method?: string;
 
@@ -1912,7 +1914,7 @@ declare module 'stripe' {
         giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
 
         /**
-         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the GoPay payment method options.
+         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the Gopay payment method options.
          */
         gopay?: Stripe.Emptyable<PaymentMethodOptions.Gopay>;
 
@@ -2052,6 +2054,11 @@ declare module 'stripe' {
          * If this is a `samsung_pay` PaymentMethod, this sub-hash contains details about the Samsung Pay payment method options.
          */
         samsung_pay?: Stripe.Emptyable<PaymentMethodOptions.SamsungPay>;
+
+        /**
+         * If this is a `satispay` PaymentMethod, this sub-hash contains details about the Satispay payment method options.
+         */
+        satispay?: Stripe.Emptyable<PaymentMethodOptions.Satispay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -3693,6 +3700,17 @@ declare module 'stripe' {
         }
 
         interface SamsungPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+        }
+
+        interface Satispay {
           /**
            * Controls when the funds are captured from the customer's account.
            *
@@ -5911,7 +5929,7 @@ declare module 'stripe' {
         giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
 
         /**
-         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the GoPay payment method options.
+         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the Gopay payment method options.
          */
         gopay?: Stripe.Emptyable<PaymentMethodOptions.Gopay>;
 
@@ -6051,6 +6069,11 @@ declare module 'stripe' {
          * If this is a `samsung_pay` PaymentMethod, this sub-hash contains details about the Samsung Pay payment method options.
          */
         samsung_pay?: Stripe.Emptyable<PaymentMethodOptions.SamsungPay>;
+
+        /**
+         * If this is a `satispay` PaymentMethod, this sub-hash contains details about the Satispay payment method options.
+         */
+        satispay?: Stripe.Emptyable<PaymentMethodOptions.Satispay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -7702,6 +7725,17 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
         }
 
+        interface Satispay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+        }
+
         interface SepaDebit {
           /**
            * Additional fields for Mandate creation
@@ -8928,6 +8962,7 @@ declare module 'stripe' {
 
       /**
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.
+       * If the payment method is attached to a Customer, it must match the [customer](https://stripe.com/docs/api#create_payment_intent-customer) that is set on this PaymentIntent.
        */
       payment_method?: string;
 
@@ -10671,7 +10706,7 @@ declare module 'stripe' {
         giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
 
         /**
-         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the GoPay payment method options.
+         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the Gopay payment method options.
          */
         gopay?: Stripe.Emptyable<PaymentMethodOptions.Gopay>;
 
@@ -10811,6 +10846,11 @@ declare module 'stripe' {
          * If this is a `samsung_pay` PaymentMethod, this sub-hash contains details about the Samsung Pay payment method options.
          */
         samsung_pay?: Stripe.Emptyable<PaymentMethodOptions.SamsungPay>;
+
+        /**
+         * If this is a `satispay` PaymentMethod, this sub-hash contains details about the Satispay payment method options.
+         */
+        satispay?: Stripe.Emptyable<PaymentMethodOptions.Satispay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -12452,6 +12492,17 @@ declare module 'stripe' {
         }
 
         interface SamsungPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+        }
+
+        interface Satispay {
           /**
            * Controls when the funds are captured from the customer's account.
            *

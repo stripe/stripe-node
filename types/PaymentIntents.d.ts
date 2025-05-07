@@ -527,9 +527,6 @@ declare module 'stripe' {
           | 'forwarding_api_retryable_upstream_error'
           | 'forwarding_api_upstream_connection_error'
           | 'forwarding_api_upstream_connection_timeout'
-          | 'gift_card_balance_insufficient'
-          | 'gift_card_code_exists'
-          | 'gift_card_inactive'
           | 'idempotency_key_in_use'
           | 'incorrect_address'
           | 'incorrect_cvc'
@@ -691,7 +688,7 @@ declare module 'stripe' {
         swish_handle_redirect_or_display_qr_code?: NextAction.SwishHandleRedirectOrDisplayQrCode;
 
         /**
-         * Type of the next action to perform, one of `redirect_to_url`, `use_stripe_sdk`, `alipay_handle_redirect`, `oxxo_display_details`, or `verify_with_microdeposits`.
+         * Type of the next action to perform. Refer to the other child attributes under `next_action` for available values. Examples include: `redirect_to_url`, `use_stripe_sdk`, `alipay_handle_redirect`, `oxxo_display_details`, or `verify_with_microdeposits`.
          */
         type: string;
 
@@ -1818,6 +1815,8 @@ declare module 'stripe' {
 
         samsung_pay?: PaymentMethodOptions.SamsungPay;
 
+        satispay?: PaymentMethodOptions.Satispay;
+
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
         shopeepay?: PaymentMethodOptions.Shopeepay;
@@ -2067,7 +2066,12 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
-        interface Billie {}
+        interface Billie {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+        }
 
         interface Blik {
           /**
@@ -3125,6 +3129,13 @@ declare module 'stripe' {
         }
 
         interface SamsungPay {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+        }
+
+        interface Satispay {
           /**
            * Controls when the funds will be captured from the customer's account.
            */

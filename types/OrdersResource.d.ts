@@ -24,11 +24,6 @@ declare module 'stripe' {
       billing_details?: Stripe.Emptyable<OrderCreateParams.BillingDetails>;
 
       /**
-       * The credits to apply to the order, only `gift_card` currently supported.
-       */
-      credits?: Stripe.Emptyable<Array<OrderCreateParams.Credit>>;
-
-      /**
        * The customer associated with this order.
        */
       customer?: string;
@@ -107,18 +102,6 @@ declare module 'stripe' {
          * The billing phone number provided by the customer.
          */
         phone?: string;
-      }
-
-      interface Credit {
-        /**
-         * The gift card to apply to the order.
-         */
-        gift_card?: string;
-
-        /**
-         * The type of credit to apply to the order, only `gift_card` currently supported.
-         */
-        type: 'gift_card';
       }
 
       interface Discount {
@@ -1444,11 +1427,6 @@ declare module 'stripe' {
       billing_details?: Stripe.Emptyable<OrderUpdateParams.BillingDetails>;
 
       /**
-       * The credits to apply to the order, only `gift_card` currently supported. Pass the empty string `""` to unset this field.
-       */
-      credits?: Stripe.Emptyable<Array<OrderUpdateParams.Credit>>;
-
-      /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
       currency?: string;
@@ -1537,18 +1515,6 @@ declare module 'stripe' {
          * The billing phone number provided by the customer.
          */
         phone?: string;
-      }
-
-      interface Credit {
-        /**
-         * The gift card to apply to the order.
-         */
-        gift_card?: string;
-
-        /**
-         * The type of credit to apply to the order, only `gift_card` currently supported.
-         */
-        type: 'gift_card';
       }
 
       interface Discount {

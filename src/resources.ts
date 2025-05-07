@@ -13,7 +13,6 @@ import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Autho
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
 import {Cardholders as IssuingCardholders} from './resources/Issuing/Cardholders.js';
 import {Cards as TestHelpersIssuingCards} from './resources/TestHelpers/Issuing/Cards.js';
-import {Cards as GiftCardsCards} from './resources/GiftCards/Cards.js';
 import {Cards as IssuingCards} from './resources/Issuing/Cards.js';
 import {Configurations as BillingPortalConfigurations} from './resources/BillingPortal/Configurations.js';
 import {Configurations as TerminalConfigurations} from './resources/Terminal/Configurations.js';
@@ -97,7 +96,6 @@ import {TransactionEntries as TreasuryTransactionEntries} from './resources/Trea
 import {TransactionEntries as V2MoneyManagementTransactionEntries} from './resources/V2/MoneyManagement/TransactionEntries.js';
 import {Transactions as TestHelpersIssuingTransactions} from './resources/TestHelpers/Issuing/Transactions.js';
 import {Transactions as FinancialConnectionsTransactions} from './resources/FinancialConnections/Transactions.js';
-import {Transactions as GiftCardsTransactions} from './resources/GiftCards/Transactions.js';
 import {Transactions as IssuingTransactions} from './resources/Issuing/Transactions.js';
 import {Transactions as TaxTransactions} from './resources/Tax/Transactions.js';
 import {Transactions as TreasuryTransactions} from './resources/Treasury/Transactions.js';
@@ -207,10 +205,6 @@ export const FinancialConnections = resourceNamespace('financialConnections', {
 });
 export const Forwarding = resourceNamespace('forwarding', {
   Requests: ForwardingRequests,
-});
-export const GiftCards = resourceNamespace('giftCards', {
-  Cards: GiftCardsCards,
-  Transactions: GiftCardsTransactions,
 });
 export const Identity = resourceNamespace('identity', {
   VerificationReports: IdentityVerificationReports,

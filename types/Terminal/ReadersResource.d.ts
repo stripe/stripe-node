@@ -87,6 +87,7 @@ declare module 'stripe' {
           | 'bbpos_wisepad3'
           | 'bbpos_wisepos_e'
           | 'mobile_phone_reader'
+          | 'simulated_stripe_s700'
           | 'simulated_wisepos_e'
           | 'stripe_m2'
           | 'stripe_s700'

@@ -17,13 +17,22 @@ declare module 'stripe' {
          */
         object: 'privacy.redaction_job_validation_error';
 
-        code: string;
+        code: RedactionJobValidationError.Code;
 
         erroring_object: {
           [key: string]: string;
         } | null;
 
         message: string;
+      }
+
+      namespace RedactionJobValidationError {
+        type Code =
+          | 'invalid_cascading_source'
+          | 'invalid_file_purpose'
+          | 'invalid_state'
+          | 'locked_by_other_job'
+          | 'too_many_objects';
       }
     }
   }
