@@ -158,8 +158,7 @@ StripeResource.prototype = {
     const data = encode(Object.assign({}, dataFromArgs, overrideData));
     const options = getOptionsFromArgs(args);
     const host = options.host || spec.host;
-    const streaming = !!spec.streaming;
-
+    const streaming = !!spec.streaming || !!options.streaming;
     // Validate that there are no more args.
     if (args.filter((x) => x != null).length) {
       throw new Error(
