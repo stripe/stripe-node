@@ -210,6 +210,44 @@ describe('StripeResource', () => {
       });
     });
 
+    it('setting streaming in raw request works correctly', (callback) => {
+      const handleRequest = (req, res) => {
+        setTimeout(() => res.write('pretend'), 10);
+        setTimeout(() => res.write(' this'), 20);
+        setTimeout(() => res.write(' is a pdf'), 30);
+        setTimeout(() => res.end(), 40);
+      };
+
+      getTestServerStripe({}, handleRequest, (err, stripe, closeServer) => {
+        if (err) {
+          return callback(err);
+        }
+
+        stripe
+          .rawRequest(
+            'GET',
+            '/v1/files/file_123/contents',
+            {},
+            {host: 'localhost', streaming: true}
+          )
+          .then((result) => {
+            closeServer();
+            const chunks = [];
+            result.on('data', (chunk) => chunks.push(chunk));
+            result.on('error', callback);
+            result.on('end', () => {
+              expect(Buffer.concat(chunks).toString()).to.equal(
+                'pretend this is a pdf'
+              );
+              return callback();
+            });
+          })
+          .catch((error) => {
+            return callback(error);
+          });
+      });
+    });
+
     it('failure', (callback) => {
       const handleRequest = (_req, res, nPreviousRequests) => {
         setTimeout(() => res.writeHead(500));

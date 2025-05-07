@@ -223,6 +223,7 @@ describe('utils', () => {
       expect(utils.getOptionsFromArgs([])).to.deep.equal({
         host: null,
         headers: {},
+        streaming: false,
         settings: {},
       });
     });
@@ -232,6 +233,7 @@ describe('utils', () => {
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         host: null,
         headers: {},
+        streaming: false,
         settings: {},
       });
       expect(args.length).to.equal(2);
@@ -242,6 +244,7 @@ describe('utils', () => {
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         host: null,
         headers: {},
+        streaming: false,
         settings: {},
       });
       expect(args.length).to.equal(1);
@@ -253,6 +256,7 @@ describe('utils', () => {
       expect(options).to.deep.contain({
         host: null,
         headers: {},
+        streaming: false,
         settings: {},
       });
       expect(args.length).to.equal(0);
@@ -267,6 +271,7 @@ describe('utils', () => {
       expect(options).to.deep.contain({
         host: null,
         headers: {},
+        streaming: false,
         settings: {},
       });
       expect(args.length).to.equal(0);
@@ -278,6 +283,7 @@ describe('utils', () => {
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         host: null,
         headers: {'Idempotency-Key': 'foo'},
+        streaming: false,
         settings: {},
       });
       expect(args.length).to.equal(1);
@@ -288,6 +294,18 @@ describe('utils', () => {
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         host: null,
         headers: {'Stripe-Version': '2003-03-30'},
+        streaming: false,
+        settings: {},
+      });
+      expect(args.length).to.equal(1);
+    });
+
+    it('parses streaming', () => {
+      const args = [{foo: 'bar'}, {streaming: true}];
+      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+        host: null,
+        headers: {},
+        streaming: true,
         settings: {},
       });
       expect(args.length).to.equal(1);
@@ -309,6 +327,7 @@ describe('utils', () => {
           'Idempotency-Key': 'foo',
           'Stripe-Version': '2010-01-10',
         },
+        streaming: false,
         settings: {},
       });
       expect(args.length).to.equal(1);
@@ -332,6 +351,7 @@ describe('utils', () => {
           'Idempotency-Key': 'foo',
           'Stripe-Version': 'hunter2',
         },
+        streaming: false,
         settings: {},
       });
       expect(args.length).to.equal(0);
@@ -351,6 +371,7 @@ describe('utils', () => {
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         host: null,
         headers: {},
+        streaming: false,
         settings: {
           maxNetworkRetries: 5,
           timeout: 1000,
