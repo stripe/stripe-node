@@ -523,21 +523,19 @@ const stripe = new Stripe('sk_test_...', {
 });
 ```
 
-### Beta SDKs
+### Public Preview SDKs
 
-Stripe has features in the beta phase that can be accessed via the beta version of this package.
-We would love for you to try these and share feedback with us before these features reach the stable phase.
-The beta versions can be installed in one of two ways
+Stripe has features in the [public preview phase](https://docs.stripe.com/release-phases) that can be accessed via the beta version of this package.
+We would love for you to try these as we incrementally release new features and improve them based on your feedback.
+The public preview SDKs can be installed in one of two ways
 
-- To install the latest beta version, run the command `npm install stripe@beta --save`
-- To install a specific beta version, replace the term "beta" in the above command with the version number like `npm install stripe@1.2.3-beta.1 --save`
+- To install the latest public preview SDK, run the command `npm install stripe@beta --save`
+- To install a specific public preview SDK version, replace the term "beta" in the above command with the version number like `npm install stripe@1.2.3-beta.1 --save`.
 
 > **Note**
-> There can be breaking changes between beta versions. Therefore we recommend pinning the package version to a specific beta version in your package.json file. This way you can install the same version each time without breaking changes unless you are intentionally looking for the latest beta version.
+> There can be breaking changes between two versions of the public preview SDKs without a bump in the major version. Therefore we recommend pinning the package version to a specific version in your package.json file. This way you can install the same version each time without breaking changes unless you are intentionally looking for the latest public preview SDK.
 
-We highly recommend keeping an eye on when the beta feature you are interested in goes from beta to stable so that you can move from using a beta version of the SDK to the stable version.
-
-The versions tab on the [stripe page on npm](https://www.npmjs.com/package/stripe) lists the current tags in use. The `beta` tag here corresponds to the the latest beta version of the package.
+The versions tab on the [stripe page on npm](https://www.npmjs.com/package/stripe) lists the current tags in use. The `beta` tag here corresponds to the the latest public preview SDK.
 
 If your beta feature requires a `Stripe-Version` header to be sent, use the `apiVersion` property of `config` object to set it:
 
