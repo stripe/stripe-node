@@ -531,7 +531,7 @@ We would love for you to try these as we incrementally release new features and 
 The public preview SDKs are just a different version of the same package and are appended with `-beta.X` such as `45.0.0-beta.1`. To install, choose the version that includes support for the preview feature you are interested in by reviewing the [releases page](https://github.com/stripe/stripe-node/releases/) and use it in the below command
 
 ```
-npm install stripe@<beta version> --save
+npm install stripe@<replace-with-the-version-of-your-choice> --save
 ```
 
 > **Note**
