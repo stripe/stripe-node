@@ -528,7 +528,7 @@ const stripe = new Stripe('sk_test_...', {
 Stripe has features in the [public preview phase](https://docs.stripe.com/release-phases) that can be accessed via the beta version of this package.
 We would love for you to try these as we incrementally release new features and improve them based on your feedback.
 
-The public preview SDKs are just a different version of the same package and are appended with `-beta.X` such as `45.0.0-beta.1`. To install, choose the version that includes support for the preview feature you are interested in by reviewing the [releases page](https://github.com/stripe/stripe-node/releases/) and use it in the below command
+The public preview SDKs are a different version of the same package as the stable SDKs. These versions are appended with `-beta.X` such as `15.0.0-beta.1`. To install, choose the version that includes support for the preview feature you are interested in by reviewing the [releases page](https://github.com/stripe/stripe-node/releases/) and use it in the below command
 
 ```
 npm install stripe@<replace-with-the-version-of-your-choice> --save
