@@ -32,7 +32,7 @@ declare module 'stripe' {
       /**
        * The balance that this transaction impacts.
        */
-      balance_type?: BalanceTransaction.BalanceType;
+      balance_type: BalanceTransaction.BalanceType;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
