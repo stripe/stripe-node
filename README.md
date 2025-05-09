@@ -525,10 +525,10 @@ const stripe = new Stripe('sk_test_...', {
 
 ### Public Preview SDKs
 
-Stripe has features in the [public preview phase](https://docs.stripe.com/release-phases) that can be accessed via the beta version of this package.
+Stripe has features in the [public preview phase](https://docs.stripe.com/release-phases) that can be accessed via versions of this package that have the `-beta.X` suffix like `15.2.0-beta.2`.
 We would love for you to try these as we incrementally release new features and improve them based on your feedback.
 
-The public preview SDKs are a different version of the same package as the stable SDKs. These versions are appended with `-beta.X` such as `15.0.0-beta.1`. To install, choose the version that includes support for the preview feature you are interested in by reviewing the [releases page](https://github.com/stripe/stripe-node/releases/) and use it in the below command
+To install, choose the version that includes support for the preview feature you are interested in by reviewing the [releases page](https://github.com/stripe/stripe-node/releases/) and use it in the below command
 
 ```
 npm install stripe@<replace-with-the-version-of-your-choice> --save
@@ -539,7 +539,7 @@ npm install stripe@<replace-with-the-version-of-your-choice> --save
 
 The versions tab on the [stripe page on npm](https://www.npmjs.com/package/stripe) lists the current tags in use. The `beta` tag here corresponds to the the latest public preview SDK.
 
-If your beta feature requires a `Stripe-Version` header to be sent, use the `apiVersion` property of `config` object to set it:
+Some preview features require a name and version to be set in the `Stripe-Version` header like `feature_beta=v3`. If your preview feature has this requirement, use the `apiVersion` property of `config` object to set it:
 
 ```js
 const stripe = new Stripe('sk_test_...', {
