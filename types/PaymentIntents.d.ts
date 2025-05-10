@@ -1474,8 +1474,6 @@ declare module 'stripe' {
 
           delivery?: CarRental.Delivery;
 
-          distance?: CarRental.Distance;
-
           /**
            * The details of the drivers associated with the trip.
            */
@@ -1497,11 +1495,6 @@ declare module 'stripe' {
            * Car pick-up time. Measured in seconds since the Unix epoch.
            */
           pickup_at: number;
-
-          /**
-           * Name of the pickup location.
-           */
-          pickup_location_name: string | null;
 
           /**
            * Rental rate.
@@ -1526,19 +1519,9 @@ declare module 'stripe' {
           return_at: number;
 
           /**
-           * Name of the return location.
-           */
-          return_location_name: string | null;
-
-          /**
            * Indicates whether the goods or services are tax-exempt or tax is not collected.
            */
           tax_exempt?: boolean;
-
-          /**
-           * The vehicle identification number of the car.
-           */
-          vehicle_identification_number: string | null;
         }
 
         namespace CarRental {
@@ -1579,29 +1562,7 @@ declare module 'stripe' {
             }
           }
 
-          interface Distance {
-            /**
-             * Distance traveled.
-             */
-            amount?: number;
-
-            /**
-             * Unit of measurement for the distance traveled. One of `miles` or `kilometers`
-             */
-            unit?: string;
-          }
-
           interface Driver {
-            /**
-             * Driver's identification number.
-             */
-            driver_identification_number?: string;
-
-            /**
-             * Driver's tax number.
-             */
-            driver_tax_number?: string;
-
             /**
              * Full name of the driver on the reservation.
              */
