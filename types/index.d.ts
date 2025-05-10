@@ -58,8 +58,6 @@
 ///<reference path='./FinancialConnections/TransactionsResource.d.ts' />
 ///<reference path='./Forwarding/RequestsResource.d.ts' />
 ///<reference path='./FxQuotesResource.d.ts' />
-///<reference path='./GiftCards/CardsResource.d.ts' />
-///<reference path='./GiftCards/TransactionsResource.d.ts' />
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
 ///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
@@ -194,7 +192,6 @@
 ///<reference path='./Billing/CreditBalanceSummary.d.ts' />
 ///<reference path='./Billing/CreditBalanceTransactions.d.ts' />
 ///<reference path='./Billing/CreditGrants.d.ts' />
-///<reference path='./Billing/MeterErrorReports.d.ts' />
 ///<reference path='./Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./Billing/MeterEventSummaries.d.ts' />
 ///<reference path='./Billing/MeterEvents.d.ts' />
@@ -245,8 +242,6 @@
 ///<reference path='./Forwarding/Requests.d.ts' />
 ///<reference path='./FundingInstructions.d.ts' />
 ///<reference path='./FxQuotes.d.ts' />
-///<reference path='./GiftCards/Cards.d.ts' />
-///<reference path='./GiftCards/Transactions.d.ts' />
 ///<reference path='./Identity/VerificationReports.d.ts' />
 ///<reference path='./Identity/VerificationSessions.d.ts' />
 ///<reference path='./InvoiceItems.d.ts' />
@@ -490,10 +485,6 @@ declare module 'stripe' {
     };
     forwarding: {
       requests: Stripe.Forwarding.RequestsResource;
-    };
-    giftCards: {
-      cards: Stripe.GiftCards.CardsResource;
-      transactions: Stripe.GiftCards.TransactionsResource;
     };
     identity: {
       verificationReports: Stripe.Identity.VerificationReportsResource;

@@ -24,6 +24,9 @@ declare module 'stripe' {
          */
         expand?: Array<string>;
 
+        /**
+         * The new financial account ID the card will be associated with. This field allows a card to be reassigned to a different financial account.
+         */
         financial_account?: string;
 
         /**

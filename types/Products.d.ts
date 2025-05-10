@@ -99,11 +99,6 @@ declare module 'stripe' {
       package_dimensions: Product.PackageDimensions | null;
 
       /**
-       * Provisioning configuration for this product.
-       */
-      provisioning?: Product.Provisioning | null;
-
-      /**
        * Whether this product is shipped (i.e., physical goods).
        */
       shippable: boolean | null;
@@ -167,40 +162,6 @@ declare module 'stripe' {
          * Width, in inches.
          */
         width: number;
-      }
-
-      interface Provisioning {
-        gift_card: Provisioning.GiftCard | null;
-
-        /**
-         * The type of provisioning, only `gift_card` currently supported.
-         */
-        type: 'gift_card';
-      }
-
-      namespace Provisioning {
-        interface GiftCard {
-          fixed_amount: GiftCard.FixedAmount | null;
-
-          /**
-           * The specific type of gift_card provisioning, only `fixed_amount` currently supported.
-           */
-          type: 'fixed_amount';
-        }
-
-        namespace GiftCard {
-          interface FixedAmount {
-            /**
-             * The initial amount with which the provisioned gift card will be created.
-             */
-            amount: number;
-
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-          }
-        }
       }
 
       type Type = 'good' | 'service';

@@ -45,7 +45,7 @@ declare module 'stripe' {
       billing_cycle_anchor_config: Subscription.BillingCycleAnchorConfig | null;
 
       /**
-       * Configure billing_mode in each subscription to opt in improved credit proration behavior.
+       * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
        */
       billing_mode?: Subscription.BillingMode;
 

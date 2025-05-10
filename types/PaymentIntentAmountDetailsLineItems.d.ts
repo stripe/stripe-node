@@ -61,6 +61,8 @@ declare module 'stripe' {
       interface PaymentMethodOptions {
         card?: PaymentMethodOptions.Card;
 
+        card_present?: PaymentMethodOptions.CardPresent;
+
         klarna?: PaymentMethodOptions.Klarna;
 
         paypal?: PaymentMethodOptions.Paypal;
@@ -68,6 +70,10 @@ declare module 'stripe' {
 
       namespace PaymentMethodOptions {
         interface Card {
+          commodity_code: string | null;
+        }
+
+        interface CardPresent {
           commodity_code: string | null;
         }
 

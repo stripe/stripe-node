@@ -34,14 +34,14 @@ declare module 'stripe' {
       billing_cycle_anchor_config?: SubscriptionCreateParams.BillingCycleAnchorConfig;
 
       /**
-       * Configure billing_mode in each subscription to opt in improved credit proration behavior.
+       * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
        */
       billing_mode?: SubscriptionCreateParams.BillingMode;
 
       /**
        * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
        */
-      cancel_at?: number;
+      cancel_at?: number | SubscriptionCreateParams.CancelAt;
 
       /**
        * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
@@ -371,6 +371,8 @@ declare module 'stripe' {
       }
 
       type BillingMode = 'classic' | 'flexible';
+
+      type CancelAt = 'max_period_end' | 'min_period_end';
 
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
@@ -1057,7 +1059,7 @@ declare module 'stripe' {
       /**
        * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
        */
-      cancel_at?: Stripe.Emptyable<number>;
+      cancel_at?: Stripe.Emptyable<number | SubscriptionUpdateParams.CancelAt>;
 
       /**
        * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
@@ -1175,7 +1177,7 @@ declare module 'stripe' {
       proration_behavior?: SubscriptionUpdateParams.ProrationBehavior;
 
       /**
-       * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply exactly the same proration that was previewed with [upcoming invoice](https://stripe.com/docs/api#upcoming_invoice) endpoint. It can also be used to implement custom proration logic, such as prorating by day instead of by second, by providing the time that you wish to use for proration calculations.
+       * If set, prorations will be calculated as though the subscription was updated at the given time. This can be used to apply exactly the same prorations that were previewed with the [create preview](https://stripe.com/docs/api/invoices/create_preview) endpoint. `proration_date` can also be used to implement custom proration logic, such as prorating by day instead of by second, by providing the time that you wish to use for proration calculations.
        */
       proration_date?: number;
 
@@ -1353,6 +1355,8 @@ declare module 'stripe' {
       }
 
       type BillingCycleAnchor = 'now' | 'unchanged';
+
+      type CancelAt = 'max_period_end' | 'min_period_end';
 
       interface CancellationDetails {
         /**
@@ -2194,7 +2198,7 @@ declare module 'stripe' {
       proration_behavior?: SubscriptionResumeParams.ProrationBehavior;
 
       /**
-       * If set, the proration will be calculated as though the subscription was resumed at the given time. This can be used to apply exactly the same proration that was previewed with [upcoming invoice](https://stripe.com/docs/api#retrieve_customer_invoice) endpoint.
+       * If set, prorations will be calculated as though the subscription was resumed at the given time. This can be used to apply exactly the same prorations that were previewed with the [create preview](https://stripe.com/docs/api/invoices/create_preview) endpoint.
        */
       proration_date?: number;
     }
