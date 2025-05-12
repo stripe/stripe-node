@@ -4,7 +4,9 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Privacy {
       /**
-       * Validation errors
+       * The Redaction Job validation error object contains information about
+       * errors that affect the ability to redact a specific object in a
+       * redaction job.
        */
       interface RedactionJobValidationError {
         /**
@@ -17,12 +19,21 @@ declare module 'stripe' {
          */
         object: 'privacy.redaction_job_validation_error';
 
+        /**
+         * A code indicating the reason for the error.
+         */
         code: RedactionJobValidationError.Code;
 
+        /**
+         * If the error is related to a specific object, this field will include the object's identifier in `id` and object type in `object`.
+         */
         erroring_object: {
           [key: string]: string;
         } | null;
 
+        /**
+         * A human-readable message providing more details about the error.
+         */
         message: string;
       }
 

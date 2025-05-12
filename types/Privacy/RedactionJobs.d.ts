@@ -4,8 +4,10 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Privacy {
       /**
-       * Redaction Jobs store the status of a redaction request. They are created
-       * when a redaction request is made and track the redaction validation and execution.
+       * The Redaction Job object is used to redact Stripe objects. It is used
+       * to coordinate the removal of personal information from selected
+       * objects, making them permanently inaccessible in the Stripe Dashboard
+       * and API.
        */
       interface RedactionJob {
         /**
@@ -29,39 +31,66 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * The objects at the root level that are subject to redaction.
+         * The objects to redact in this job.
          */
         objects?: RedactionJob.Objects | null;
 
         /**
-         * The status field represents the current state of the redaction job. It can take on any of the following values: VALIDATING, READY, REDACTING, SUCCEEDED, CANCELED, FAILED.
+         * The status of the job.
          */
         status: RedactionJob.Status;
 
         /**
-         * Default is "error". If "error", we will make sure all objects in the graph are redactable in the 1st traversal, otherwise error. If "fix", where possible, we will auto-fix any validation errors (e.g. by auto-transitioning objects to a terminal state, etc.) in the 2nd traversal before redacting
+         * Validation behavior determines how a job validates objects for redaction eligibility. Default is `error`.
          */
         validation_behavior: RedactionJob.ValidationBehavior | null;
       }
 
       namespace RedactionJob {
         interface Objects {
+          /**
+           * Charge object identifiers usually starting with `ch_`
+           */
           charges: Array<string> | null;
 
+          /**
+           * CheckoutSession object identifiers starting with `cs_`
+           */
           checkout_sessions: Array<string> | null;
 
+          /**
+           * Customer object identifiers starting with `cus_`
+           */
           customers: Array<string> | null;
 
+          /**
+           * Identity VerificationSessions object identifiers starting with `vs_`
+           */
           identity_verification_sessions: Array<string> | null;
 
+          /**
+           * Invoice object identifiers starting with `in_`
+           */
           invoices: Array<string> | null;
 
+          /**
+           * Issuing Cardholder object identifiers starting with `ich_`
+           */
           issuing_cardholders: Array<string> | null;
 
+          /**
+           * PaymentIntent object identifiers starting with `pi_`
+           */
           payment_intents: Array<string> | null;
 
+          /**
+           * Fraud ValueListItem object identifiers starting with `rsli_`
+           */
           radar_value_list_items: Array<string> | null;
 
+          /**
+           * SetupIntent object identifiers starting with `seti_`
+           */
           setup_intents: Array<string> | null;
         }
 
