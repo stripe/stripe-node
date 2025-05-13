@@ -3139,7 +3139,7 @@ declare module 'stripe' {
           /**
            * The quantity of the line item being purchased. Quantity should not be defined when `recurring.usage_type=metered`.
            */
-          quantity?: Stripe.Emptyable<number>;
+          quantity?: number;
 
           /**
            * The [tax rates](https://stripe.com/docs/api/tax_rates) which apply to this line item.
