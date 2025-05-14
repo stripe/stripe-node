@@ -273,6 +273,21 @@ declare module 'stripe' {
            * The user's verified phone number
            */
           phone: string | null;
+
+          /**
+           * The user's verified sex.
+           */
+          sex?: VerifiedOutputs.Sex | null;
+
+          /**
+           * The user's verified place of birth as it appears in the document.
+           */
+          unparsed_place_of_birth?: string | null;
+
+          /**
+           * The user's verified sex as it appears in the document.
+           */
+          unparsed_sex?: string | null;
         }
 
         namespace VerifiedOutputs {
@@ -294,6 +309,8 @@ declare module 'stripe' {
           }
 
           type IdNumberType = 'br_cpf' | 'sg_nric' | 'us_ssn';
+
+          type Sex = '[redacted]' | 'female' | 'male' | 'unknown';
         }
       }
     }
