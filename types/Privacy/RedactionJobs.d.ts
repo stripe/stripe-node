@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Privacy {
       /**
-       * The Redaction Job object is used to redact Stripe objects. It is used
+       * The Redaction Job object redacts Stripe objects. You can use it
        * to coordinate the removal of personal information from selected
        * objects, making them permanently inaccessible in the Stripe Dashboard
        * and API.
