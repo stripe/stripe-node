@@ -121,6 +121,7 @@ declare module 'stripe' {
       | InvoiceOverpaidEvent
       | InvoicePaidEvent
       | InvoicePaymentOverpaidEvent
+      | InvoicePaymentPaidEvent
       | InvoicePaymentActionRequiredEvent
       | InvoicePaymentAttemptRequiredEvent
       | InvoicePaymentFailedEvent
@@ -2181,6 +2182,22 @@ declare module 'stripe' {
     }
 
     namespace InvoicePaymentOverpaidEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.InvoicePayment;
+
+        previous_attributes?: Partial<Stripe.InvoicePayment>;
+      }
+    }
+
+    /**
+     * Occurs when an InvoicePayment is successfully paid.
+     */
+    interface InvoicePaymentPaidEvent extends EventBase {
+      type: 'invoice.payment.paid';
+      data: InvoicePaymentPaidEvent.Data;
+    }
+
+    namespace InvoicePaymentPaidEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.InvoicePayment;
 

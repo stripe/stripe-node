@@ -198,6 +198,7 @@ declare module 'stripe' {
         | 'invoice.overpaid'
         | 'invoice.paid'
         | 'invoice.payment.overpaid'
+        | 'invoice.payment.paid'
         | 'invoice.payment_action_required'
         | 'invoice.payment_attempt_required'
         | 'invoice.payment_failed'
