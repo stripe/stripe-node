@@ -421,9 +421,23 @@ declare module 'stripe' {
             account?: string;
 
             /**
+             * Represents a per-transaction override of a reader configuration
+             */
+            confirm_config?: ConfirmPaymentIntent.ConfirmConfig;
+
+            /**
              * Most recent PaymentIntent processed by the reader.
              */
             payment_intent: string | Stripe.PaymentIntent;
+          }
+
+          namespace ConfirmPaymentIntent {
+            interface ConfirmConfig {
+              /**
+               * If the customer does not abandon authenticating the payment, they will be redirected to this specified URL after completion.
+               */
+              return_url?: string;
+            }
           }
 
           interface ProcessPaymentIntent {
@@ -449,6 +463,11 @@ declare module 'stripe' {
                * Enable customer initiated cancellation when processing this payment.
                */
               enable_customer_cancellation?: boolean;
+
+              /**
+               * If the customer does not abandon authenticating the payment, they will be redirected to this specified URL after completion.
+               */
+              return_url?: string;
 
               /**
                * Override showing a tipping selection screen on this transaction.
