@@ -25,11 +25,9 @@ declare module 'stripe' {
         code: RedactionJobValidationError.Code;
 
         /**
-         * If the error is related to a specific object, this field will include the object's identifier in `id` and object type in `object`.
+         * If the error is related to a specific object, this field includes the object's identifier and object type.
          */
-        erroring_object: {
-          [key: string]: string;
-        } | null;
+        erroring_object: RedactionJobValidationError.ErroringObject | null;
 
         /**
          * A human-readable message providing more details about the error.
@@ -44,6 +42,18 @@ declare module 'stripe' {
           | 'invalid_state'
           | 'locked_by_other_job'
           | 'too_many_objects';
+
+        interface ErroringObject {
+          /**
+           * Unique identifier for the object.
+           */
+          id: string;
+
+          /**
+           * Erroring object type
+           */
+          object_type: string;
+        }
       }
     }
   }
