@@ -28,86 +28,41 @@ declare module 'stripe' {
         payment_intent: string;
 
         /**
-         * Status of the Tax Association.
+         * Information about the tax transactions linked to this payment intent
          */
-        status: Association.Status;
-
-        status_details: Association.StatusDetails;
+        tax_transaction_attempts?: Array<
+          Association.TaxTransactionAttempt
+        > | null;
       }
 
       namespace Association {
-        type Status = 'committed' | 'errored';
+        interface TaxTransactionAttempt {
+          committed?: TaxTransactionAttempt.Committed;
 
-        interface StatusDetails {
-          committed?: StatusDetails.Committed;
+          errored?: TaxTransactionAttempt.Errored;
 
-          errored?: StatusDetails.Errored;
+          /**
+           * The source of the tax transaction attempt. This is either a refund or a payment intent.
+           */
+          source: string;
+
+          /**
+           * The status of the transaction attempt. This can be `errored` or `committed`.
+           */
+          status: string;
         }
 
-        namespace StatusDetails {
+        namespace TaxTransactionAttempt {
           interface Committed {
-            /**
-             * Attempts to create Tax Transaction reversals
-             */
-            reversals: Array<Committed.Reversal>;
-
             /**
              * The [Tax Transaction](https://stripe.com/docs/api/tax/transaction/object)
              */
             transaction: string;
           }
 
-          namespace Committed {
-            interface Reversal {
-              /**
-               * Status of the attempted Tax Transaction reversal.
-               */
-              status: Reversal.Status;
-
-              status_details: Reversal.StatusDetails;
-            }
-
-            namespace Reversal {
-              type Status = 'committed' | 'errored';
-
-              interface StatusDetails {
-                committed?: StatusDetails.Committed;
-
-                errored?: StatusDetails.Errored;
-              }
-
-              namespace StatusDetails {
-                interface Committed {
-                  /**
-                   * The [Tax Transaction](https://stripe.com/docs/api/tax/transaction/object)
-                   */
-                  transaction: string;
-                }
-
-                interface Errored {
-                  /**
-                   * Details on why we could not commit the reversal Tax Transaction
-                   */
-                  reason: Errored.Reason;
-
-                  /**
-                   * The [Refund](https://stripe.com/docs/api/refunds/object) ID that should have created a tax reversal.
-                   */
-                  refund_id: string;
-                }
-
-                namespace Errored {
-                  type Reason =
-                    | 'original_transaction_voided'
-                    | 'unique_reference_violation';
-                }
-              }
-            }
-          }
-
           interface Errored {
             /**
-             * Details on why we could not commit the Tax Transaction
+             * Details on why we couldn't commit the tax transaction.
              */
             reason: Errored.Reason;
           }
@@ -117,6 +72,7 @@ declare module 'stripe' {
               | 'another_payment_associated_with_calculation'
               | 'calculation_expired'
               | 'currency_mismatch'
+              | 'original_transaction_voided'
               | 'unique_reference_violation';
           }
         }
