@@ -50,6 +50,11 @@ declare module 'stripe' {
       billing_mode?: Subscription.BillingMode;
 
       /**
+       * Details about when the current billing_mode was updated.
+       */
+      billing_mode_details?: Subscription.BillingModeDetails | null;
+
+      /**
        * A date in the future at which the subscription will automatically get canceled
        */
       cancel_at: number | null;
@@ -311,6 +316,13 @@ declare module 'stripe' {
       }
 
       type BillingMode = 'classic' | 'flexible';
+
+      interface BillingModeDetails {
+        /**
+         * Details on when the current billing_mode was adopted.
+         */
+        updated_at?: number;
+      }
 
       interface CancellationDetails {
         /**

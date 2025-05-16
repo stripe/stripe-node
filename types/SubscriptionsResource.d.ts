@@ -2343,7 +2343,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
 
       /**
-       * This endpoint allows merchants to upgrade the billing_mode on their existing subscriptions.
+       * Upgrade the billing_mode of an existing subscription.
        */
       migrate(
         id: string,
