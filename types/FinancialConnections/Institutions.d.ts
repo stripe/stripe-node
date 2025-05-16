@@ -17,6 +17,11 @@ declare module 'stripe' {
          */
         object: 'financial_connections.institution';
 
+        /**
+         * The list of countries supported by this institution, formatted as ISO country codes.
+         */
+        countries: Array<string>;
+
         features: Institution.Features;
 
         /**

@@ -151,7 +151,8 @@ declare module 'stripe' {
         | '2025-02-24.acacia'
         | '2025-03-01.dashboard'
         | '2025-03-31.basil'
-        | '2025-04-30.basil';
+        | '2025-04-30.basil'
+        | '2025-05-28.basil';
 
       type EnabledEvent =
         | '*'
@@ -169,7 +170,6 @@ declare module 'stripe' {
         | 'balance.available'
         | 'balance_settings.updated'
         | 'billing.alert.triggered'
-        | 'billing.meter_error_report.triggered'
         | 'billing_portal.configuration.created'
         | 'billing_portal.configuration.updated'
         | 'billing_portal.session.created'
@@ -267,6 +267,7 @@ declare module 'stripe' {
         | 'invoice.overpaid'
         | 'invoice.paid'
         | 'invoice.payment.overpaid'
+        | 'invoice.payment.paid'
         | 'invoice.payment_action_required'
         | 'invoice.payment_attempt_required'
         | 'invoice.payment_failed'
@@ -501,7 +502,6 @@ declare module 'stripe' {
         | 'balance.available'
         | 'balance_settings.updated'
         | 'billing.alert.triggered'
-        | 'billing.meter_error_report.triggered'
         | 'billing_portal.configuration.created'
         | 'billing_portal.configuration.updated'
         | 'billing_portal.session.created'
@@ -599,6 +599,7 @@ declare module 'stripe' {
         | 'invoice.overpaid'
         | 'invoice.paid'
         | 'invoice.payment.overpaid'
+        | 'invoice.payment.paid'
         | 'invoice.payment_action_required'
         | 'invoice.payment_attempt_required'
         | 'invoice.payment_failed'

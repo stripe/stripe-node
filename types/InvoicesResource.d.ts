@@ -2690,7 +2690,7 @@ declare module 'stripe' {
         billing_behavior?: ScheduleDetails.BillingBehavior;
 
         /**
-         * Configure billing_mode to opt in improved credit proration behavior.When the schedule creates a subscription, the subscription's `billing_mode` will be set to the same value as the schedule's `billing_mode`.
+         * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
          */
         billing_mode?: ScheduleDetails.BillingMode;
 
@@ -3404,7 +3404,7 @@ declare module 'stripe' {
           pause_collection?: Phase.PauseCollection;
 
           /**
-           * Whether the subscription schedule will create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase. The default value is `create_prorations`. This setting controls prorations when a phase is started asynchronously and it is persisted as a field on the phase. It's different from the request-level [proration_behavior](https://stripe.com/docs/api/subscription_schedules/update#update_subscription_schedule-proration_behavior) parameter which controls what happens if the update request affects the billing configuration of the current phase.
+           * Controls whether the subscription schedule should create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase if there is a difference in billing configuration. It's different from the request-level [proration_behavior](https://stripe.com/docs/api/subscription_schedules/update#update_subscription_schedule-proration_behavior) parameter which controls what happens if the update request affects the billing configuration (item price, quantity, etc.) of the current phase.
            */
           proration_behavior?: Phase.ProrationBehavior;
 
@@ -3995,17 +3995,17 @@ declare module 'stripe' {
         billing_cycle_anchor?: SubscriptionDetails.BillingCycleAnchor | number;
 
         /**
-         * Configure billing_mode in each subscription to opt in improved credit proration behavior.
+         * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
          */
         billing_mode?: SubscriptionDetails.BillingMode;
 
         /**
          * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
          */
-        cancel_at?: Stripe.Emptyable<number>;
+        cancel_at?: Stripe.Emptyable<number | SubscriptionDetails.CancelAt>;
 
         /**
-         * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
+         * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`. This param will be removed in a future API version. Please use `cancel_at` instead.
          */
         cancel_at_period_end?: boolean;
 
@@ -4059,6 +4059,8 @@ declare module 'stripe' {
         type BillingCycleAnchor = 'now' | 'unchanged';
 
         type BillingMode = 'classic' | 'flexible';
+
+        type CancelAt = 'max_period_end' | 'min_period_end';
 
         interface Item {
           /**
@@ -5131,9 +5133,6 @@ declare module 'stripe' {
       /**
        * Attaches a PaymentIntent or an Out of Band Payment to the invoice, adding it to the list of payments.
        *
-       * For Out of Band Payment, the payment is credited to the invoice immediately, increasing the amount_paid
-       * of the invoice and subsequently transitioning the status of the invoice to paid if necessary.
-       *
        * For the PaymentIntent, when the PaymentIntent's status changes to succeeded, the payment is credited
        * to the invoice, increasing its amount_paid. When the invoice is fully paid, the
        * invoice's status becomes paid.
@@ -5141,7 +5140,7 @@ declare module 'stripe' {
        * If the PaymentIntent's status is already succeeded when it's attached, it's
        * credited to the invoice immediately.
        *
-       * See: [Create an invoice payment](https://stripe.com/docs/invoicing/payments/create) to learn more.
+       * See: [Partial payments](https://stripe.com/docs/invoicing/partial-payments) to learn more.
        */
       attachPayment(
         id: string,
@@ -5156,9 +5155,9 @@ declare module 'stripe' {
       /**
        * At any time, you can preview the upcoming invoice for a subscription or subscription schedule. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discounts that are applicable to the invoice.
        *
-       * Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
+       * You can also preview the effects of creating or updating a subscription or subscription schedule, including a preview of any prorations that will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass the subscription_details.proration_date parameter when doing the actual subscription update. The recommended way to get only the prorations being previewed is to consider only proration line items where period[start] is equal to the subscription_details.proration_date value passed in the request.
        *
-       * You can preview the effects of updating a subscription, including a preview of what proration will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass the subscription_details.proration_date parameter when doing the actual subscription update. The recommended way to get only the prorations being previewed is to consider only proration line items where period[start] is equal to the subscription_details.proration_date value passed in the request.
+       * Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
        *
        * Note: Currency conversion calculations use the latest exchange rates. Exchange rates may vary between the time of the preview and the time of the actual invoice creation. [Learn more](https://docs.stripe.com/currencies/conversions)
        */

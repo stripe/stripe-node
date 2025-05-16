@@ -45,9 +45,14 @@ declare module 'stripe' {
       billing_cycle_anchor_config: Subscription.BillingCycleAnchorConfig | null;
 
       /**
-       * Configure billing_mode in each subscription to opt in improved credit proration behavior.
+       * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
        */
       billing_mode?: Subscription.BillingMode;
+
+      /**
+       * Details about when the current billing_mode was updated.
+       */
+      billing_mode_details?: Subscription.BillingModeDetails | null;
 
       /**
        * A date in the future at which the subscription will automatically get canceled
@@ -55,7 +60,7 @@ declare module 'stripe' {
       cancel_at: number | null;
 
       /**
-       * Whether this subscription will (if `status=active`) or did (if `status=canceled`) cancel at the end of the current billing period.
+       * Whether this subscription will (if `status=active`) or did (if `status=canceled`) cancel at the end of the current billing period. This field will be removed in a future API version. Please use `cancel_at` instead.
        */
       cancel_at_period_end: boolean;
 
@@ -311,6 +316,13 @@ declare module 'stripe' {
       }
 
       type BillingMode = 'classic' | 'flexible';
+
+      interface BillingModeDetails {
+        /**
+         * Details on when the current billing_mode was adopted.
+         */
+        updated_at?: number;
+      }
 
       interface CancellationDetails {
         /**

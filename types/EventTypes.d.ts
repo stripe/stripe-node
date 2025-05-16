@@ -24,7 +24,6 @@ declare module 'stripe' {
       | BillingMeterDeactivatedEvent
       | BillingMeterReactivatedEvent
       | BillingMeterUpdatedEvent
-      | BillingMeterErrorReportTriggeredEvent
       | BillingPortalConfigurationCreatedEvent
       | BillingPortalConfigurationUpdatedEvent
       | BillingPortalSessionCreatedEvent
@@ -122,6 +121,7 @@ declare module 'stripe' {
       | InvoiceOverpaidEvent
       | InvoicePaidEvent
       | InvoicePaymentOverpaidEvent
+      | InvoicePaymentPaidEvent
       | InvoicePaymentActionRequiredEvent
       | InvoicePaymentAttemptRequiredEvent
       | InvoicePaymentFailedEvent
@@ -627,22 +627,6 @@ declare module 'stripe' {
         object: Stripe.Billing.Meter;
 
         previous_attributes?: Partial<Stripe.Billing.Meter>;
-      }
-    }
-
-    /**
-     * Notifies of errors on a billing meter
-     */
-    interface BillingMeterErrorReportTriggeredEvent extends EventBase {
-      type: 'billing.meter_error_report.triggered';
-      data: BillingMeterErrorReportTriggeredEvent.Data;
-    }
-
-    namespace BillingMeterErrorReportTriggeredEvent {
-      interface Data extends Stripe.Event.Data {
-        object: Stripe.Billing.MeterErrorReport;
-
-        previous_attributes?: Partial<Stripe.Billing.MeterErrorReport>;
       }
     }
 
@@ -2198,6 +2182,22 @@ declare module 'stripe' {
     }
 
     namespace InvoicePaymentOverpaidEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.InvoicePayment;
+
+        previous_attributes?: Partial<Stripe.InvoicePayment>;
+      }
+    }
+
+    /**
+     * Occurs when an InvoicePayment is successfully paid.
+     */
+    interface InvoicePaymentPaidEvent extends EventBase {
+      type: 'invoice.payment.paid';
+      data: InvoicePaymentPaidEvent.Data;
+    }
+
+    namespace InvoicePaymentPaidEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.InvoicePayment;
 

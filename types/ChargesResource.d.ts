@@ -306,6 +306,11 @@ declare module 'stripe' {
           delivery?: CarRental.Delivery;
 
           /**
+           * The details of the distance traveled during the rental period.
+           */
+          distance?: CarRental.Distance;
+
+          /**
            * The details of the passengers in the travel reservation
            */
           drivers?: Array<CarRental.Driver>;
@@ -329,6 +334,11 @@ declare module 'stripe' {
            * Car pick-up time. Measured in seconds since the Unix epoch.
            */
           pickup_at: number;
+
+          /**
+           * Name of the pickup location.
+           */
+          pickup_location_name?: string;
 
           /**
            * Rental rate.
@@ -356,9 +366,19 @@ declare module 'stripe' {
           return_at: number;
 
           /**
+           * Name of the return location.
+           */
+          return_location_name?: string;
+
+          /**
            * Indicates whether the goods or services are tax-exempt or tax is not collected.
            */
           tax_exempt?: boolean;
+
+          /**
+           * The vehicle identification number.
+           */
+          vehicle_identification_number?: string;
         }
 
         namespace CarRental {
@@ -402,7 +422,33 @@ declare module 'stripe' {
             }
           }
 
+          interface Distance {
+            /**
+             * Distance traveled.
+             */
+            amount?: number;
+
+            /**
+             * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+             */
+            unit?: Distance.Unit;
+          }
+
+          namespace Distance {
+            type Unit = 'kilometers' | 'miles';
+          }
+
           interface Driver {
+            /**
+             * Driver's identification number.
+             */
+            driver_identification_number?: string;
+
+            /**
+             * Driver's tax number.
+             */
+            driver_tax_number?: string;
+
             /**
              * Full name of the person or entity on the car reservation.
              */
@@ -1068,6 +1114,11 @@ declare module 'stripe' {
           delivery?: CarRental.Delivery;
 
           /**
+           * The details of the distance traveled during the rental period.
+           */
+          distance?: CarRental.Distance;
+
+          /**
            * The details of the passengers in the travel reservation
            */
           drivers?: Array<CarRental.Driver>;
@@ -1091,6 +1142,11 @@ declare module 'stripe' {
            * Car pick-up time. Measured in seconds since the Unix epoch.
            */
           pickup_at: number;
+
+          /**
+           * Name of the pickup location.
+           */
+          pickup_location_name?: string;
 
           /**
            * Rental rate.
@@ -1118,9 +1174,19 @@ declare module 'stripe' {
           return_at: number;
 
           /**
+           * Name of the return location.
+           */
+          return_location_name?: string;
+
+          /**
            * Indicates whether the goods or services are tax-exempt or tax is not collected.
            */
           tax_exempt?: boolean;
+
+          /**
+           * The vehicle identification number.
+           */
+          vehicle_identification_number?: string;
         }
 
         namespace CarRental {
@@ -1164,7 +1230,33 @@ declare module 'stripe' {
             }
           }
 
+          interface Distance {
+            /**
+             * Distance traveled.
+             */
+            amount?: number;
+
+            /**
+             * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+             */
+            unit?: Distance.Unit;
+          }
+
+          namespace Distance {
+            type Unit = 'kilometers' | 'miles';
+          }
+
           interface Driver {
+            /**
+             * Driver's identification number.
+             */
+            driver_identification_number?: string;
+
+            /**
+             * Driver's tax number.
+             */
+            driver_tax_number?: string;
+
             /**
              * Full name of the person or entity on the car reservation.
              */

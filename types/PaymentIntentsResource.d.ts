@@ -19,11 +19,6 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
-       * Automations to be run during the PaymentIntent lifecycle
-       */
-      async_workflows?: PaymentIntentCreateParams.AsyncWorkflows;
-
-      /**
        * When you enable this parameter, this PaymentIntent accepts payment methods that you enable in the Dashboard and that are compatible with this PaymentIntent's other parameters.
        */
       automatic_payment_methods?: PaymentIntentCreateParams.AutomaticPaymentMethods;
@@ -89,6 +84,11 @@ declare module 'stripe' {
       fx_quote?: string;
 
       /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentCreateParams.Hooks;
+
+      /**
        * ID of the mandate that's used for this payment. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
        */
       mandate?: string;
@@ -122,6 +122,8 @@ declare module 'stripe' {
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
        *
        * If you don't provide the `payment_method` parameter or the `source` parameter with `confirm=true`, `source` automatically populates with `customer.default_source` to improve migration for users of the Charges API. We recommend that you explicitly provide the `payment_method` moving forward.
+       * If the payment method is attached to a Customer, you must also provide the ID of that Customer as the [customer](https://stripe.com/docs/api#create_payment_intent-customer) parameter of this PaymentIntent.
+       * end
        */
       payment_method?: string;
 
@@ -213,31 +215,6 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentCreateParams {
-      interface AsyncWorkflows {
-        /**
-         * Arguments passed in automations
-         */
-        inputs?: AsyncWorkflows.Inputs;
-      }
-
-      namespace AsyncWorkflows {
-        interface Inputs {
-          /**
-           * Tax arguments for automations
-           */
-          tax?: Inputs.Tax;
-        }
-
-        namespace Inputs {
-          interface Tax {
-            /**
-             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
-             */
-            calculation: Stripe.Emptyable<string>;
-          }
-        }
-      }
-
       interface AutomaticPaymentMethods {
         /**
          * Controls whether this PaymentIntent will accept redirect-based payment methods.
@@ -259,6 +236,31 @@ declare module 'stripe' {
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       type ConfirmationMethod = 'automatic' | 'manual';
+
+      interface Hooks {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: Hooks.Inputs;
+      }
+
+      namespace Hooks {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
 
       interface MandateData {
         /**
@@ -396,6 +398,11 @@ declare module 'stripe' {
           delivery?: CarRental.Delivery;
 
           /**
+           * The details of the distance traveled during the rental period.
+           */
+          distance?: CarRental.Distance;
+
+          /**
            * The details of the passengers in the travel reservation
            */
           drivers?: Array<CarRental.Driver>;
@@ -419,6 +426,11 @@ declare module 'stripe' {
            * Car pick-up time. Measured in seconds since the Unix epoch.
            */
           pickup_at: number;
+
+          /**
+           * Name of the pickup location.
+           */
+          pickup_location_name?: string;
 
           /**
            * Rental rate.
@@ -446,9 +458,19 @@ declare module 'stripe' {
           return_at: number;
 
           /**
+           * Name of the return location.
+           */
+          return_location_name?: string;
+
+          /**
            * Indicates whether the goods or services are tax-exempt or tax is not collected.
            */
           tax_exempt?: boolean;
+
+          /**
+           * The vehicle identification number.
+           */
+          vehicle_identification_number?: string;
         }
 
         namespace CarRental {
@@ -492,7 +514,33 @@ declare module 'stripe' {
             }
           }
 
+          interface Distance {
+            /**
+             * Distance traveled.
+             */
+            amount?: number;
+
+            /**
+             * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+             */
+            unit?: Distance.Unit;
+          }
+
+          namespace Distance {
+            type Unit = 'kilometers' | 'miles';
+          }
+
           interface Driver {
+            /**
+             * Driver's identification number.
+             */
+            driver_identification_number?: string;
+
+            /**
+             * Driver's tax number.
+             */
+            driver_tax_number?: string;
+
             /**
              * Full name of the person or entity on the car reservation.
              */
@@ -1912,7 +1960,7 @@ declare module 'stripe' {
         giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
 
         /**
-         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the GoPay payment method options.
+         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the Gopay payment method options.
          */
         gopay?: Stripe.Emptyable<PaymentMethodOptions.Gopay>;
 
@@ -2052,6 +2100,11 @@ declare module 'stripe' {
          * If this is a `samsung_pay` PaymentMethod, this sub-hash contains details about the Samsung Pay payment method options.
          */
         samsung_pay?: Stripe.Emptyable<PaymentMethodOptions.SamsungPay>;
+
+        /**
+         * If this is a `satispay` PaymentMethod, this sub-hash contains details about the Satispay payment method options.
+         */
+        satispay?: Stripe.Emptyable<PaymentMethodOptions.Satispay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -3693,6 +3746,17 @@ declare module 'stripe' {
         }
 
         interface SamsungPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+        }
+
+        interface Satispay {
           /**
            * Controls when the funds are captured from the customer's account.
            *
@@ -4111,11 +4175,6 @@ declare module 'stripe' {
       application_fee_amount?: Stripe.Emptyable<number>;
 
       /**
-       * Automations to be run during the PaymentIntent lifecycle
-       */
-      async_workflows?: PaymentIntentUpdateParams.AsyncWorkflows;
-
-      /**
        * Controls when the funds will be captured from the customer's account.
        */
       capture_method?: PaymentIntentUpdateParams.CaptureMethod;
@@ -4157,6 +4216,11 @@ declare module 'stripe' {
        * The FX rate in the quote is validated and used to convert the presentment amount to the settlement amount.
        */
       fx_quote?: string;
+
+      /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentUpdateParams.Hooks;
 
       /**
        * This hash contains details about the Mandate to create.
@@ -4248,14 +4312,16 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentUpdateParams {
-      interface AsyncWorkflows {
+      type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
+
+      interface Hooks {
         /**
          * Arguments passed in automations
          */
-        inputs?: AsyncWorkflows.Inputs;
+        inputs?: Hooks.Inputs;
       }
 
-      namespace AsyncWorkflows {
+      namespace Hooks {
         interface Inputs {
           /**
            * Tax arguments for automations
@@ -4272,8 +4338,6 @@ declare module 'stripe' {
           }
         }
       }
-
-      type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       interface MandateData {
         /**
@@ -4395,6 +4459,11 @@ declare module 'stripe' {
           delivery?: CarRental.Delivery;
 
           /**
+           * The details of the distance traveled during the rental period.
+           */
+          distance?: CarRental.Distance;
+
+          /**
            * The details of the passengers in the travel reservation
            */
           drivers?: Array<CarRental.Driver>;
@@ -4418,6 +4487,11 @@ declare module 'stripe' {
            * Car pick-up time. Measured in seconds since the Unix epoch.
            */
           pickup_at: number;
+
+          /**
+           * Name of the pickup location.
+           */
+          pickup_location_name?: string;
 
           /**
            * Rental rate.
@@ -4445,9 +4519,19 @@ declare module 'stripe' {
           return_at: number;
 
           /**
+           * Name of the return location.
+           */
+          return_location_name?: string;
+
+          /**
            * Indicates whether the goods or services are tax-exempt or tax is not collected.
            */
           tax_exempt?: boolean;
+
+          /**
+           * The vehicle identification number.
+           */
+          vehicle_identification_number?: string;
         }
 
         namespace CarRental {
@@ -4491,7 +4575,33 @@ declare module 'stripe' {
             }
           }
 
+          interface Distance {
+            /**
+             * Distance traveled.
+             */
+            amount?: number;
+
+            /**
+             * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+             */
+            unit?: Distance.Unit;
+          }
+
+          namespace Distance {
+            type Unit = 'kilometers' | 'miles';
+          }
+
           interface Driver {
+            /**
+             * Driver's identification number.
+             */
+            driver_identification_number?: string;
+
+            /**
+             * Driver's tax number.
+             */
+            driver_tax_number?: string;
+
             /**
              * Full name of the person or entity on the car reservation.
              */
@@ -5911,7 +6021,7 @@ declare module 'stripe' {
         giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
 
         /**
-         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the GoPay payment method options.
+         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the Gopay payment method options.
          */
         gopay?: Stripe.Emptyable<PaymentMethodOptions.Gopay>;
 
@@ -6051,6 +6161,11 @@ declare module 'stripe' {
          * If this is a `samsung_pay` PaymentMethod, this sub-hash contains details about the Samsung Pay payment method options.
          */
         samsung_pay?: Stripe.Emptyable<PaymentMethodOptions.SamsungPay>;
+
+        /**
+         * If this is a `satispay` PaymentMethod, this sub-hash contains details about the Satispay payment method options.
+         */
+        satispay?: Stripe.Emptyable<PaymentMethodOptions.Satispay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -7692,6 +7807,17 @@ declare module 'stripe' {
         }
 
         interface SamsungPay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+        }
+
+        interface Satispay {
           /**
            * Controls when the funds are captured from the customer's account.
            *
@@ -8138,11 +8264,6 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
-       * Automations to be run during the PaymentIntent lifecycle
-       */
-      async_workflows?: PaymentIntentCaptureParams.AsyncWorkflows;
-
-      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -8151,6 +8272,11 @@ declare module 'stripe' {
        * Defaults to `true`. When capturing a PaymentIntent, setting `final_capture` to `false` notifies Stripe to not release the remaining uncaptured funds to make sure that they're captured in future requests. You can only use this setting when [multicapture](https://stripe.com/docs/payments/multicapture) is available for PaymentIntents.
        */
       final_capture?: boolean;
+
+      /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentCaptureParams.Hooks;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -8184,14 +8310,14 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentCaptureParams {
-      interface AsyncWorkflows {
+      interface Hooks {
         /**
          * Arguments passed in automations
          */
-        inputs?: AsyncWorkflows.Inputs;
+        inputs?: Hooks.Inputs;
       }
 
-      namespace AsyncWorkflows {
+      namespace Hooks {
         interface Inputs {
           /**
            * Tax arguments for automations
@@ -8294,6 +8420,11 @@ declare module 'stripe' {
           delivery?: CarRental.Delivery;
 
           /**
+           * The details of the distance traveled during the rental period.
+           */
+          distance?: CarRental.Distance;
+
+          /**
            * The details of the passengers in the travel reservation
            */
           drivers?: Array<CarRental.Driver>;
@@ -8317,6 +8448,11 @@ declare module 'stripe' {
            * Car pick-up time. Measured in seconds since the Unix epoch.
            */
           pickup_at: number;
+
+          /**
+           * Name of the pickup location.
+           */
+          pickup_location_name?: string;
 
           /**
            * Rental rate.
@@ -8344,9 +8480,19 @@ declare module 'stripe' {
           return_at: number;
 
           /**
+           * Name of the return location.
+           */
+          return_location_name?: string;
+
+          /**
            * Indicates whether the goods or services are tax-exempt or tax is not collected.
            */
           tax_exempt?: boolean;
+
+          /**
+           * The vehicle identification number.
+           */
+          vehicle_identification_number?: string;
         }
 
         namespace CarRental {
@@ -8390,7 +8536,33 @@ declare module 'stripe' {
             }
           }
 
+          interface Distance {
+            /**
+             * Distance traveled.
+             */
+            amount?: number;
+
+            /**
+             * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+             */
+            unit?: Distance.Unit;
+          }
+
+          namespace Distance {
+            type Unit = 'kilometers' | 'miles';
+          }
+
           interface Driver {
+            /**
+             * Driver's identification number.
+             */
+            driver_identification_number?: string;
+
+            /**
+             * Driver's tax number.
+             */
+            driver_tax_number?: string;
+
             /**
              * Full name of the person or entity on the car reservation.
              */
@@ -8876,11 +9048,6 @@ declare module 'stripe' {
       application_fee_amount?: Stripe.Emptyable<number>;
 
       /**
-       * Automations to be run during the PaymentIntent lifecycle
-       */
-      async_workflows?: PaymentIntentConfirmParams.AsyncWorkflows;
-
-      /**
        * Controls when the funds will be captured from the customer's account.
        */
       capture_method?: PaymentIntentConfirmParams.CaptureMethod;
@@ -8908,6 +9075,11 @@ declare module 'stripe' {
       fx_quote?: string;
 
       /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentConfirmParams.Hooks;
+
+      /**
        * ID of the mandate that's used for this payment.
        */
       mandate?: string;
@@ -8928,6 +9100,7 @@ declare module 'stripe' {
 
       /**
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.
+       * If the payment method is attached to a Customer, it must match the [customer](https://stripe.com/docs/api#create_payment_intent-customer) that is set on this PaymentIntent.
        */
       payment_method?: string;
 
@@ -8992,14 +9165,16 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentConfirmParams {
-      interface AsyncWorkflows {
+      type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
+
+      interface Hooks {
         /**
          * Arguments passed in automations
          */
-        inputs?: AsyncWorkflows.Inputs;
+        inputs?: Hooks.Inputs;
       }
 
-      namespace AsyncWorkflows {
+      namespace Hooks {
         interface Inputs {
           /**
            * Tax arguments for automations
@@ -9016,8 +9191,6 @@ declare module 'stripe' {
           }
         }
       }
-
-      type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       interface MandateData {
         /**
@@ -9155,6 +9328,11 @@ declare module 'stripe' {
           delivery?: CarRental.Delivery;
 
           /**
+           * The details of the distance traveled during the rental period.
+           */
+          distance?: CarRental.Distance;
+
+          /**
            * The details of the passengers in the travel reservation
            */
           drivers?: Array<CarRental.Driver>;
@@ -9178,6 +9356,11 @@ declare module 'stripe' {
            * Car pick-up time. Measured in seconds since the Unix epoch.
            */
           pickup_at: number;
+
+          /**
+           * Name of the pickup location.
+           */
+          pickup_location_name?: string;
 
           /**
            * Rental rate.
@@ -9205,9 +9388,19 @@ declare module 'stripe' {
           return_at: number;
 
           /**
+           * Name of the return location.
+           */
+          return_location_name?: string;
+
+          /**
            * Indicates whether the goods or services are tax-exempt or tax is not collected.
            */
           tax_exempt?: boolean;
+
+          /**
+           * The vehicle identification number.
+           */
+          vehicle_identification_number?: string;
         }
 
         namespace CarRental {
@@ -9251,7 +9444,33 @@ declare module 'stripe' {
             }
           }
 
+          interface Distance {
+            /**
+             * Distance traveled.
+             */
+            amount?: number;
+
+            /**
+             * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+             */
+            unit?: Distance.Unit;
+          }
+
+          namespace Distance {
+            type Unit = 'kilometers' | 'miles';
+          }
+
           interface Driver {
+            /**
+             * Driver's identification number.
+             */
+            driver_identification_number?: string;
+
+            /**
+             * Driver's tax number.
+             */
+            driver_tax_number?: string;
+
             /**
              * Full name of the person or entity on the car reservation.
              */
@@ -10671,7 +10890,7 @@ declare module 'stripe' {
         giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
 
         /**
-         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the GoPay payment method options.
+         * If this is a `gopay` PaymentMethod, this sub-hash contains details about the Gopay payment method options.
          */
         gopay?: Stripe.Emptyable<PaymentMethodOptions.Gopay>;
 
@@ -10811,6 +11030,11 @@ declare module 'stripe' {
          * If this is a `samsung_pay` PaymentMethod, this sub-hash contains details about the Samsung Pay payment method options.
          */
         samsung_pay?: Stripe.Emptyable<PaymentMethodOptions.SamsungPay>;
+
+        /**
+         * If this is a `satispay` PaymentMethod, this sub-hash contains details about the Satispay payment method options.
+         */
+        satispay?: Stripe.Emptyable<PaymentMethodOptions.Satispay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -12462,6 +12686,17 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
         }
 
+        interface Satispay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+        }
+
         interface SepaDebit {
           /**
            * Additional fields for Mandate creation
@@ -12835,11 +13070,6 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
-       * Automations to be run during the PaymentIntent lifecycle
-       */
-      async_workflows?: PaymentIntentDecrementAuthorizationParams.AsyncWorkflows;
-
-      /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
       description?: string;
@@ -12848,6 +13078,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentDecrementAuthorizationParams.Hooks;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -12862,14 +13097,14 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentDecrementAuthorizationParams {
-      interface AsyncWorkflows {
+      interface Hooks {
         /**
          * Arguments passed in automations
          */
-        inputs?: AsyncWorkflows.Inputs;
+        inputs?: Hooks.Inputs;
       }
 
-      namespace AsyncWorkflows {
+      namespace Hooks {
         interface Inputs {
           /**
            * Tax arguments for automations
@@ -12907,11 +13142,6 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
-       * Automations to be run during the PaymentIntent lifecycle
-       */
-      async_workflows?: PaymentIntentIncrementAuthorizationParams.AsyncWorkflows;
-
-      /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
       description?: string;
@@ -12920,6 +13150,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentIncrementAuthorizationParams.Hooks;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -12944,14 +13179,14 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentIncrementAuthorizationParams {
-      interface AsyncWorkflows {
+      interface Hooks {
         /**
          * Arguments passed in automations
          */
-        inputs?: AsyncWorkflows.Inputs;
+        inputs?: Hooks.Inputs;
       }
 
-      namespace AsyncWorkflows {
+      namespace Hooks {
         interface Inputs {
           /**
            * Tax arguments for automations

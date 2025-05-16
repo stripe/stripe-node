@@ -111,9 +111,15 @@ declare module 'stripe' {
        */
       pdf: string;
 
-      post_payment_amount?: number;
+      /**
+       * The amount of the credit note that was refunded to the customer, credited to the customer's balance, credited outside of Stripe, or any combination thereof.
+       */
+      post_payment_amount: number;
 
-      pre_payment_amount?: number;
+      /**
+       * The amount of the credit note by which the invoice's `amount_remaining` and `amount_due` were reduced.
+       */
+      pre_payment_amount: number;
 
       /**
        * The pretax credit amounts (ex: discount, credit grants, etc) for all line items.
@@ -367,7 +373,7 @@ declare module 'stripe' {
         }
       }
 
-      type Type = 'post_payment' | 'pre_payment';
+      type Type = 'mixed' | 'post_payment' | 'pre_payment';
     }
   }
 }

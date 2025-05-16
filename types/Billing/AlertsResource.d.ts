@@ -40,7 +40,7 @@ declare module 'stripe' {
           /**
            * The [Billing Meter](https://stripe.com/api/billing/meter) ID whose usage is monitored.
            */
-          meter?: string;
+          meter: string;
 
           /**
            * Whether the alert should only fire only once, or once per billing cycle.
