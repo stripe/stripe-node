@@ -599,6 +599,16 @@ declare module 'stripe' {
 
         interface Affirm {
           /**
+           * ID of the [location](https://stripe.com/docs/api/terminal/locations) that this transaction's reader is assigned to.
+           */
+          location?: string;
+
+          /**
+           * ID of the [reader](https://stripe.com/docs/api/terminal/readers) this transaction was made on.
+           */
+          reader?: string;
+
+          /**
            * The Affirm transaction ID associated with this payment.
            */
           transaction_id: string | null;
@@ -2346,6 +2356,16 @@ declare module 'stripe' {
            * Uniquely identifies this particular WeChat Pay account. You can use this attribute to check whether two WeChat accounts are the same.
            */
           fingerprint: string | null;
+
+          /**
+           * ID of the [location](https://stripe.com/docs/api/terminal/locations) that this transaction's reader is assigned to.
+           */
+          location?: string;
+
+          /**
+           * ID of the [reader](https://stripe.com/docs/api/terminal/readers) this transaction was made on.
+           */
+          reader?: string;
 
           /**
            * Transaction ID of this particular WeChat Pay transaction.

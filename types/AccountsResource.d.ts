@@ -419,6 +419,11 @@ declare module 'stripe' {
         paynow_payments?: Capabilities.PaynowPayments;
 
         /**
+         * The pix_payments capability.
+         */
+        pix_payments?: Capabilities.PixPayments;
+
+        /**
          * The promptpay_payments capability.
          */
         promptpay_payments?: Capabilities.PromptpayPayments;
@@ -781,6 +786,13 @@ declare module 'stripe' {
         }
 
         interface PaynowPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface PixPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2240,6 +2252,11 @@ declare module 'stripe' {
         paynow_payments?: Capabilities.PaynowPayments;
 
         /**
+         * The pix_payments capability.
+         */
+        pix_payments?: Capabilities.PixPayments;
+
+        /**
          * The promptpay_payments capability.
          */
         promptpay_payments?: Capabilities.PromptpayPayments;
@@ -2602,6 +2619,13 @@ declare module 'stripe' {
         }
 
         interface PaynowPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface PixPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

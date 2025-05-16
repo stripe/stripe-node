@@ -125,6 +125,7 @@ declare module 'stripe' {
         | 'invoice.overdue'
         | 'invoice.overpaid'
         | 'invoice.paid'
+        | 'invoice.payment.paid'
         | 'invoice.payment_action_required'
         | 'invoice.payment_failed'
         | 'invoice.payment_succeeded'
@@ -336,6 +337,9 @@ declare module 'stripe' {
        */
       api_version: string | null;
 
+      /**
+       * Authentication context needed to fetch the event or related object.
+       */
       context?: string;
 
       /**
