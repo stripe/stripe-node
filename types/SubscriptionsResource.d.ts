@@ -2181,6 +2181,18 @@ declare module 'stripe' {
 
     interface SubscriptionDeleteDiscountParams {}
 
+    interface SubscriptionMigrateParams {
+      /**
+       * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+       */
+      billing_mode: 'flexible';
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface SubscriptionResumeParams {
       /**
        * The billing cycle anchor that applies when the subscription is resumed. Either `now` or `unchanged`. The default is `now`. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
@@ -2329,6 +2341,15 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
+
+      /**
+       * This endpoint allows merchants to upgrade the billing_mode on their existing subscriptions.
+       */
+      migrate(
+        id: string,
+        params: SubscriptionMigrateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Subscription>>;
 
       /**
        * Initiates resumption of a paused subscription, optionally resetting the billing cycle anchor and creating prorations. If a resumption invoice is generated, it must be paid or marked uncollectible before the subscription will be unpaused. If payment succeeds the subscription will become active, and if payment fails the subscription will be past_due. The resumption invoice will void automatically if not paid by the expiration date.
