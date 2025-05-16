@@ -19,11 +19,6 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
-       * Automations to be run during the PaymentIntent lifecycle
-       */
-      async_workflows?: PaymentIntentCreateParams.AsyncWorkflows;
-
-      /**
        * When you enable this parameter, this PaymentIntent accepts payment methods that you enable in the Dashboard and that are compatible with this PaymentIntent's other parameters.
        */
       automatic_payment_methods?: PaymentIntentCreateParams.AutomaticPaymentMethods;
@@ -87,6 +82,11 @@ declare module 'stripe' {
        * The FX rate in the quote is validated and used to convert the presentment amount to the settlement amount.
        */
       fx_quote?: string;
+
+      /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentCreateParams.Hooks;
 
       /**
        * ID of the mandate that's used for this payment. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
@@ -215,31 +215,6 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentCreateParams {
-      interface AsyncWorkflows {
-        /**
-         * Arguments passed in automations
-         */
-        inputs?: AsyncWorkflows.Inputs;
-      }
-
-      namespace AsyncWorkflows {
-        interface Inputs {
-          /**
-           * Tax arguments for automations
-           */
-          tax?: Inputs.Tax;
-        }
-
-        namespace Inputs {
-          interface Tax {
-            /**
-             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
-             */
-            calculation: Stripe.Emptyable<string>;
-          }
-        }
-      }
-
       interface AutomaticPaymentMethods {
         /**
          * Controls whether this PaymentIntent will accept redirect-based payment methods.
@@ -261,6 +236,31 @@ declare module 'stripe' {
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       type ConfirmationMethod = 'automatic' | 'manual';
+
+      interface Hooks {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: Hooks.Inputs;
+      }
+
+      namespace Hooks {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
 
       interface MandateData {
         /**
@@ -4175,11 +4175,6 @@ declare module 'stripe' {
       application_fee_amount?: Stripe.Emptyable<number>;
 
       /**
-       * Automations to be run during the PaymentIntent lifecycle
-       */
-      async_workflows?: PaymentIntentUpdateParams.AsyncWorkflows;
-
-      /**
        * Controls when the funds will be captured from the customer's account.
        */
       capture_method?: PaymentIntentUpdateParams.CaptureMethod;
@@ -4221,6 +4216,11 @@ declare module 'stripe' {
        * The FX rate in the quote is validated and used to convert the presentment amount to the settlement amount.
        */
       fx_quote?: string;
+
+      /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentUpdateParams.Hooks;
 
       /**
        * This hash contains details about the Mandate to create.
@@ -4312,14 +4312,16 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentUpdateParams {
-      interface AsyncWorkflows {
+      type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
+
+      interface Hooks {
         /**
          * Arguments passed in automations
          */
-        inputs?: AsyncWorkflows.Inputs;
+        inputs?: Hooks.Inputs;
       }
 
-      namespace AsyncWorkflows {
+      namespace Hooks {
         interface Inputs {
           /**
            * Tax arguments for automations
@@ -4336,8 +4338,6 @@ declare module 'stripe' {
           }
         }
       }
-
-      type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       interface MandateData {
         /**
@@ -8264,11 +8264,6 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
-       * Automations to be run during the PaymentIntent lifecycle
-       */
-      async_workflows?: PaymentIntentCaptureParams.AsyncWorkflows;
-
-      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -8277,6 +8272,11 @@ declare module 'stripe' {
        * Defaults to `true`. When capturing a PaymentIntent, setting `final_capture` to `false` notifies Stripe to not release the remaining uncaptured funds to make sure that they're captured in future requests. You can only use this setting when [multicapture](https://stripe.com/docs/payments/multicapture) is available for PaymentIntents.
        */
       final_capture?: boolean;
+
+      /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentCaptureParams.Hooks;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -8310,14 +8310,14 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentCaptureParams {
-      interface AsyncWorkflows {
+      interface Hooks {
         /**
          * Arguments passed in automations
          */
-        inputs?: AsyncWorkflows.Inputs;
+        inputs?: Hooks.Inputs;
       }
 
-      namespace AsyncWorkflows {
+      namespace Hooks {
         interface Inputs {
           /**
            * Tax arguments for automations
@@ -9048,11 +9048,6 @@ declare module 'stripe' {
       application_fee_amount?: Stripe.Emptyable<number>;
 
       /**
-       * Automations to be run during the PaymentIntent lifecycle
-       */
-      async_workflows?: PaymentIntentConfirmParams.AsyncWorkflows;
-
-      /**
        * Controls when the funds will be captured from the customer's account.
        */
       capture_method?: PaymentIntentConfirmParams.CaptureMethod;
@@ -9078,6 +9073,11 @@ declare module 'stripe' {
        * The FX rate in the quote is validated and used to convert the presentment amount to the settlement amount.
        */
       fx_quote?: string;
+
+      /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentConfirmParams.Hooks;
 
       /**
        * ID of the mandate that's used for this payment.
@@ -9165,14 +9165,16 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentConfirmParams {
-      interface AsyncWorkflows {
+      type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
+
+      interface Hooks {
         /**
          * Arguments passed in automations
          */
-        inputs?: AsyncWorkflows.Inputs;
+        inputs?: Hooks.Inputs;
       }
 
-      namespace AsyncWorkflows {
+      namespace Hooks {
         interface Inputs {
           /**
            * Tax arguments for automations
@@ -9189,8 +9191,6 @@ declare module 'stripe' {
           }
         }
       }
-
-      type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       interface MandateData {
         /**
@@ -13070,11 +13070,6 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
-       * Automations to be run during the PaymentIntent lifecycle
-       */
-      async_workflows?: PaymentIntentDecrementAuthorizationParams.AsyncWorkflows;
-
-      /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
       description?: string;
@@ -13083,6 +13078,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentDecrementAuthorizationParams.Hooks;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -13097,14 +13097,14 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentDecrementAuthorizationParams {
-      interface AsyncWorkflows {
+      interface Hooks {
         /**
          * Arguments passed in automations
          */
-        inputs?: AsyncWorkflows.Inputs;
+        inputs?: Hooks.Inputs;
       }
 
-      namespace AsyncWorkflows {
+      namespace Hooks {
         interface Inputs {
           /**
            * Tax arguments for automations
@@ -13142,11 +13142,6 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
-       * Automations to be run during the PaymentIntent lifecycle
-       */
-      async_workflows?: PaymentIntentIncrementAuthorizationParams.AsyncWorkflows;
-
-      /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
       description?: string;
@@ -13155,6 +13150,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentIncrementAuthorizationParams.Hooks;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -13179,14 +13179,14 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentIncrementAuthorizationParams {
-      interface AsyncWorkflows {
+      interface Hooks {
         /**
          * Arguments passed in automations
          */
-        inputs?: AsyncWorkflows.Inputs;
+        inputs?: Hooks.Inputs;
       }
 
-      namespace AsyncWorkflows {
+      namespace Hooks {
         interface Inputs {
           /**
            * Tax arguments for automations

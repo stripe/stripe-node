@@ -53,8 +53,6 @@ declare module 'stripe' {
        */
       application_fee_amount: number | null;
 
-      async_workflows?: PaymentIntent.AsyncWorkflows;
-
       /**
        * Settings to configure compatible payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods)
        */
@@ -126,6 +124,8 @@ declare module 'stripe' {
        * The FX Quote used for the PaymentIntent.
        */
       fx_quote?: string | null;
+
+      hooks?: PaymentIntent.Hooks;
 
       /**
        * The payment error encountered in the previous PaymentIntent confirmation. It will be cleared if the PaymentIntent is later updated for any reason.
@@ -306,25 +306,6 @@ declare module 'stripe' {
         }
       }
 
-      interface AsyncWorkflows {
-        inputs?: AsyncWorkflows.Inputs;
-      }
-
-      namespace AsyncWorkflows {
-        interface Inputs {
-          tax?: Inputs.Tax;
-        }
-
-        namespace Inputs {
-          interface Tax {
-            /**
-             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
-             */
-            calculation: string;
-          }
-        }
-      }
-
       interface AutomaticPaymentMethods {
         /**
          * Controls whether this PaymentIntent will accept redirect-based payment methods.
@@ -356,6 +337,25 @@ declare module 'stripe' {
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       type ConfirmationMethod = 'automatic' | 'manual';
+
+      interface Hooks {
+        inputs?: Hooks.Inputs;
+      }
+
+      namespace Hooks {
+        interface Inputs {
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: string;
+          }
+        }
+      }
 
       interface LastPaymentError {
         /**
