@@ -317,7 +317,7 @@ declare module 'stripe' {
         on_behalf_of: string | Stripe.Account | null;
 
         /**
-         * If the subscription schedule will prorate when transitioning to this phase. Possible values are `create_prorations` and `none`.
+         * When transitioning phases, controls how prorations are handled (if any). Possible values are `create_prorations`, `none`, and `always_invoice`.
          */
         proration_behavior: Phase.ProrationBehavior;
 

@@ -87,6 +87,7 @@ declare module 'stripe' {
           | 'bbpos_wisepad3'
           | 'bbpos_wisepos_e'
           | 'mobile_phone_reader'
+          | 'simulated_stripe_s700'
           | 'simulated_wisepos_e'
           | 'stripe_m2'
           | 'stripe_s700'
@@ -102,6 +103,135 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+      }
+
+      interface ReaderCollectInputsParams {
+        /**
+         * List of inputs to be collected using the Reader
+         */
+        inputs: Array<ReaderCollectInputsParams.Input>;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
+      }
+
+      namespace ReaderCollectInputsParams {
+        interface Input {
+          /**
+           * Customize the text which will be displayed while collecting this input
+           */
+          custom_text: Input.CustomText;
+
+          /**
+           * Indicate that this input is required, disabling the skip button
+           */
+          required?: boolean;
+
+          /**
+           * Options for the `selection` input
+           */
+          selection?: Input.Selection;
+
+          /**
+           * List of toggles to be displayed and customization for the toggles
+           */
+          toggles?: Array<Input.Toggle>;
+
+          /**
+           * The type of input to collect
+           */
+          type: Input.Type;
+        }
+
+        namespace Input {
+          interface CustomText {
+            /**
+             * The description which will be displayed when collecting this input
+             */
+            description?: string;
+
+            /**
+             * The skip button text
+             */
+            skip_button?: string;
+
+            /**
+             * The submit button text
+             */
+            submit_button?: string;
+
+            /**
+             * The title which will be displayed when collecting this input
+             */
+            title: string;
+          }
+
+          interface Selection {
+            /**
+             * List of choices for the `selection` input
+             */
+            choices: Array<Selection.Choice>;
+          }
+
+          namespace Selection {
+            interface Choice {
+              /**
+               * The unique identifier for this choice
+               */
+              id: string;
+
+              /**
+               * The style of the button which will be shown for this choice
+               */
+              style?: Choice.Style;
+
+              /**
+               * The text which will be shown on the button for this choice
+               */
+              text: string;
+            }
+
+            namespace Choice {
+              type Style = 'primary' | 'secondary';
+            }
+          }
+
+          interface Toggle {
+            /**
+             * The default value of the toggle
+             */
+            default_value?: Toggle.DefaultValue;
+
+            /**
+             * The description which will be displayed for the toggle
+             */
+            description?: string;
+
+            /**
+             * The title which will be displayed for the toggle
+             */
+            title?: string;
+          }
+
+          namespace Toggle {
+            type DefaultValue = 'disabled' | 'enabled';
+          }
+
+          type Type =
+            | 'email'
+            | 'numeric'
+            | 'phone'
+            | 'selection'
+            | 'signature'
+            | 'text';
+        }
       }
 
       interface ReaderProcessPaymentIntentParams {
@@ -132,6 +262,11 @@ declare module 'stripe' {
            * Enables cancel button on transaction screens.
            */
           enable_customer_cancellation?: boolean;
+
+          /**
+           * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. If you'd prefer to redirect to a mobile application, you can alternatively supply an application URI scheme.
+           */
+          return_url?: string;
 
           /**
            * Override showing a tipping selection screen on this transaction.
@@ -375,6 +510,15 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
         cancelAction(
           id: string,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+
+        /**
+         * Initiates an input collection flow on a Reader.
+         */
+        collectInputs(
+          id: string,
+          params: ReaderCollectInputsParams,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 

@@ -55,7 +55,7 @@ declare module 'stripe' {
         device_sw_version: string | null;
 
         /**
-         * Type of reader, one of `bbpos_wisepad3`, `stripe_m2`, `stripe_s700`, `bbpos_chipper2x`, `bbpos_wisepos_e`, `verifone_P400`, `simulated_wisepos_e`, or `mobile_phone_reader`.
+         * Device type of the reader.
          */
         device_type: Reader.DeviceType;
 
@@ -98,6 +98,11 @@ declare module 'stripe' {
       namespace Reader {
         interface Action {
           /**
+           * Represents a reader action to collect customer inputs
+           */
+          collect_inputs?: Action.CollectInputs;
+
+          /**
            * Failure code, only set if status is `failed`.
            */
           failure_code: string | null;
@@ -139,6 +144,212 @@ declare module 'stripe' {
         }
 
         namespace Action {
+          interface CollectInputs {
+            /**
+             * List of inputs to be collected.
+             */
+            inputs: Array<CollectInputs.Input>;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+             */
+            metadata: Stripe.Metadata | null;
+          }
+
+          namespace CollectInputs {
+            interface Input {
+              /**
+               * Default text of input being collected.
+               */
+              custom_text: Input.CustomText | null;
+
+              /**
+               * Information about a email being collected using a reader
+               */
+              email?: Input.Email;
+
+              /**
+               * Information about a number being collected using a reader
+               */
+              numeric?: Input.Numeric;
+
+              /**
+               * Information about a phone number being collected using a reader
+               */
+              phone?: Input.Phone;
+
+              /**
+               * Indicate that this input is required, disabling the skip button.
+               */
+              required: boolean | null;
+
+              /**
+               * Information about a selection being collected using a reader
+               */
+              selection?: Input.Selection;
+
+              /**
+               * Information about a signature being collected using a reader
+               */
+              signature?: Input.Signature;
+
+              /**
+               * Indicate that this input was skipped by the user.
+               */
+              skipped?: boolean;
+
+              /**
+               * Information about text being collected using a reader
+               */
+              text?: Input.Text;
+
+              /**
+               * List of toggles being collected. Values are present if collection is complete.
+               */
+              toggles: Array<Input.Toggle> | null;
+
+              /**
+               * Type of input being collected.
+               */
+              type: Input.Type;
+            }
+
+            namespace Input {
+              interface CustomText {
+                /**
+                 * Customize the default description for this input
+                 */
+                description: string | null;
+
+                /**
+                 * Customize the default label for this input's skip button
+                 */
+                skip_button: string | null;
+
+                /**
+                 * Customize the default label for this input's submit button
+                 */
+                submit_button: string | null;
+
+                /**
+                 * Customize the default title for this input
+                 */
+                title: string | null;
+              }
+
+              interface Email {
+                /**
+                 * The collected email address
+                 */
+                value: string | null;
+              }
+
+              interface Numeric {
+                /**
+                 * The collected number
+                 */
+                value: string | null;
+              }
+
+              interface Phone {
+                /**
+                 * The collected phone number
+                 */
+                value: string | null;
+              }
+
+              interface Selection {
+                /**
+                 * List of possible choices to be selected
+                 */
+                choices: Array<Selection.Choice>;
+
+                /**
+                 * The id of the selected choice
+                 */
+                id: string | null;
+
+                /**
+                 * The text of the selected choice
+                 */
+                text: string | null;
+              }
+
+              namespace Selection {
+                interface Choice {
+                  /**
+                   * The id to be selected
+                   */
+                  id: string | null;
+
+                  /**
+                   * The button style for the choice
+                   */
+                  style: Choice.Style | null;
+
+                  /**
+                   * The text to be selected
+                   */
+                  text: string;
+                }
+
+                namespace Choice {
+                  type Style = 'primary' | 'secondary';
+                }
+              }
+
+              interface Signature {
+                /**
+                 * The File ID of a collected signature image
+                 */
+                value: string | null;
+              }
+
+              interface Text {
+                /**
+                 * The collected text value
+                 */
+                value: string | null;
+              }
+
+              interface Toggle {
+                /**
+                 * The toggle's default value
+                 */
+                default_value: Toggle.DefaultValue | null;
+
+                /**
+                 * The toggle's description text
+                 */
+                description: string | null;
+
+                /**
+                 * The toggle's title text
+                 */
+                title: string | null;
+
+                /**
+                 * The toggle's collected value
+                 */
+                value: Toggle.Value | null;
+              }
+
+              namespace Toggle {
+                type DefaultValue = 'disabled' | 'enabled';
+
+                type Value = 'disabled' | 'enabled';
+              }
+
+              type Type =
+                | 'email'
+                | 'numeric'
+                | 'phone'
+                | 'selection'
+                | 'signature'
+                | 'text';
+            }
+          }
+
           interface ProcessPaymentIntent {
             /**
              * Most recent PaymentIntent processed by the reader.
@@ -157,6 +368,11 @@ declare module 'stripe' {
                * Enable customer initiated cancellation when processing this payment.
                */
               enable_customer_cancellation?: boolean;
+
+              /**
+               * If the customer does not abandon authenticating the payment, they will be redirected to this specified URL after completion.
+               */
+              return_url?: string;
 
               /**
                * Override showing a tipping selection screen on this transaction.
@@ -321,6 +537,7 @@ declare module 'stripe' {
           type Status = 'failed' | 'in_progress' | 'succeeded';
 
           type Type =
+            | 'collect_inputs'
             | 'process_payment_intent'
             | 'process_setup_intent'
             | 'refund_payment'
@@ -332,6 +549,7 @@ declare module 'stripe' {
           | 'bbpos_wisepad3'
           | 'bbpos_wisepos_e'
           | 'mobile_phone_reader'
+          | 'simulated_stripe_s700'
           | 'simulated_wisepos_e'
           | 'stripe_m2'
           | 'stripe_s700'

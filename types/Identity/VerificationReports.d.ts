@@ -138,6 +138,11 @@ declare module 'stripe' {
           number?: string | null;
 
           /**
+           * Sex of the person in the document.
+           */
+          sex?: Document.Sex | null;
+
+          /**
            * Status of this `document` check.
            */
           status: Document.Status;
@@ -146,6 +151,16 @@ declare module 'stripe' {
            * Type of the document.
            */
           type: Document.Type | null;
+
+          /**
+           * Place of birth as it appears in the document.
+           */
+          unparsed_place_of_birth?: string | null;
+
+          /**
+           * Sex as it appears in the document.
+           */
+          unparsed_sex?: string | null;
         }
 
         namespace Document {
@@ -218,6 +233,8 @@ declare module 'stripe' {
              */
             year: number | null;
           }
+
+          type Sex = '[redacted]' | 'female' | 'male' | 'unknown';
 
           type Status = 'unverified' | 'verified';
 
