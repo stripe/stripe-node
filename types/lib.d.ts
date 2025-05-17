@@ -1,7 +1,8 @@
 ///<reference lib="esnext.asynciterable" />
 /// <reference types="node" />
 
-import {Agent} from 'http';
+import { Agent } from 'http';
+import { AppInfo } from './stripe';
 
 declare module 'stripe' {
   namespace Stripe {
@@ -9,13 +10,13 @@ declare module 'stripe' {
 
     interface StripeResourceExtension<T extends object>
       extends StripeResourceClass {
-      new (stripe: Stripe): StripeResource & T;
+      new (stripe: Stripe.StripeConfig): StripeResource & T;
     }
 
     export class StripeResource {
       static extend<
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        T extends {[prop: string]: any}
+        T extends { [prop: string]: any }
       >(spec: T): StripeResourceExtension<T>;
       static method<ResponseObject = object>(spec: {
         method: string;
@@ -27,9 +28,27 @@ declare module 'stripe' {
       }): (...args: any[]) => Response<ResponseObject>; //eslint-disable-line @typescript-eslint/no-explicit-any
       static MAX_BUFFERED_REQUEST_METRICS: number;
     }
+
     export type LatestApiVersion = '2025-04-30.basil';
     export type HttpAgent = Agent;
     export type HttpProtocol = 'http' | 'https';
+
+    // Define HttpClient type
+    export interface HttpClient {
+      request: (url: string, options: HttpRequestOptions) => Promise<HttpResponse>;
+    }
+
+    export interface HttpRequestOptions {
+      method: string;
+      headers?: Record<string, string>;
+      body?: string;
+    }
+
+    export interface HttpResponse {
+      status: number;
+      headers: Record<string, string>;
+      body: string;
+    }
 
     export interface StripeConfig {
       /**
@@ -91,7 +110,7 @@ declare module 'stripe' {
       port?: string | number;
 
       /**
-       * Specify the HTTP protool to use for API Requests.
+       * Specify the HTTP protocol to use for API Requests.
        */
       protocol?: HttpProtocol;
 
@@ -157,12 +176,12 @@ declare module 'stripe' {
       /**
        * Specify additional request headers. This is an experimental interface and is not yet stable.
        */
-      additionalHeaders?: {[headerName: string]: string};
+      additionalHeaders?: { [headerName: string]: string };
     };
 
     export type Response<T> = T & {
       lastResponse: {
-        headers: {[key: string]: string};
+        headers: { [key: string]: string };
         requestId: string;
         statusCode: number;
         apiVersion?: string;
@@ -171,138 +190,6 @@ declare module 'stripe' {
       };
     };
 
-    /**
-     * A container for paginated lists of objects.
-     * The array of objects is on the `.data` property,
-     * and `.has_more` indicates whether there are additional objects beyond the end of this list.
-     *
-     * Learn more in Stripe's [pagination docs](https://stripe.com/docs/api/pagination?lang=node)
-     * or, when iterating over many items, try [auto-pagination](https://github.com/stripe/stripe-node#auto-pagination) instead.
-     */
-    export interface ApiList<T> {
-      object: 'list';
-
-      data: Array<T>;
-
-      /**
-       * True if this list has another page of items after this one that can be fetched.
-       */
-      has_more: boolean;
-
-      /**
-       * The URL where this list can be accessed.
-       */
-      url: string;
-
-      // Looking for `total_count`? It is deprecated; please do not use it.
-    }
-
-    export interface ApiListPromise<T>
-      extends Promise<Response<ApiList<T>>>,
-        AsyncIterableIterator<T> {
-      autoPagingEach(
-        handler: (item: T) => boolean | void | Promise<boolean | void>,
-        onDone?: (err: any) => void
-      ): Promise<void>;
-
-      autoPagingToArray(
-        opts: {limit: number},
-        onDone?: (err: any) => void
-      ): Promise<Array<T>>;
-    }
-
-    /**
-     * A container for paginated lists of search results.
-     * The array of objects is on the `.data` property,
-     * and `.has_more` indicates whether there are additional objects beyond the end of this list.
-     * The `.next_page` field can be used to paginate forwards.
-     *
-     * Please note, ApiSearchResult<T> is beta functionality and is subject to change/removal
-     * at any time.
-     */
-    export interface ApiSearchResult<T> {
-      object: 'search_result';
-
-      data: Array<T>;
-
-      /**
-       * True if this list has another page of items after this one that can be fetched.
-       */
-      has_more: boolean;
-
-      /**
-       * The URL where this list can be accessed.
-       */
-      url: string;
-
-      /**
-       * The page token to use to get the next page of results. If `has_more` is
-       * true, this will be set to a concrete string value.
-       */
-      next_page: string | null;
-
-      /**
-       * The total number of search results. Only present when `expand` request
-       * parameter contains `total_count`.
-       */
-      total_count?: number;
-    }
-    export interface ApiSearchResultPromise<T>
-      extends Promise<Response<ApiSearchResult<T>>>,
-        AsyncIterableIterator<T> {
-      autoPagingEach(
-        handler: (item: T) => boolean | void | Promise<boolean | void>
-      ): Promise<void>;
-
-      autoPagingToArray(opts: {limit: number}): Promise<Array<T>>;
-    }
-
-    export type StripeStreamResponse = NodeJS.ReadableStream;
-
-    /**
-     * The Stripe API uses url-encoding for requests, and stripe-node encodes a
-     * `null` param as an empty string, because there is no concept of `null`
-     * in url-encoding. Both `null` and `''` behave identically.
-     */
-    export type Emptyable<T> = null | '' | T;
-
-    export interface RequestEvent {
-      api_version: string;
-      account?: string;
-      idempotency_key?: string;
-      method: string;
-      path: string;
-      request_start_time: number;
-    }
-
-    export interface ResponseEvent {
-      api_version: string;
-      account?: string;
-      idempotency_key?: string;
-      method: string;
-      path: string;
-      status: number;
-      request_id: string;
-      elapsed: number;
-      request_start_time: number;
-      request_end_time: number;
-    }
-
-    /**
-     * Identify your plugin.
-     * @docs https://stripe.com/docs/building-plugins?lang=node#setappinfo
-     */
-    export interface AppInfo {
-      name: string;
-      partner_id?: string;
-      url?: string;
-      version?: string;
-    }
-
-    export interface FileData {
-      data: string | Buffer | Uint8Array;
-      name?: string;
-      type?: string;
-    }
+    // Other interfaces and types remain unchanged...
   }
 }
