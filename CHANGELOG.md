@@ -9,7 +9,7 @@
     {host: 'files.stripe.com', streaming: true}
   );
   ```
-* [#2320](https://github.com/stripe/stripe-node/pull/2320) fix: examples/webhook-signing/nestjs/package.json to reduce vulnerabi…
+* [#2320](https://github.com/stripe/stripe-node/pull/2320) fix: examples/webhook-signing/nestjs/package.json to reduce vulnerabilities.
 * [#2326](https://github.com/stripe/stripe-node/pull/2326) Adds CONTRIBUTING.md
 
 ## 18.1.0 - 2025-04-30
