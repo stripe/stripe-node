@@ -1,7 +1,6 @@
 # Changelog
 ## 18.1.1 - 2025-05-19
-* [#2308](https://github.com/stripe/stripe-node/pull/2308) RawRequest can use custom host
-  * RawRequest now allows you set `host` and `streaming` in request options.
+* [#2308](https://github.com/stripe/stripe-node/pull/2308) RawRequest now allows you set `host` and `streaming` in request options.
   ```typescript
   const file = await stripe.rawRequest(
     'GET',
