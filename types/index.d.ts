@@ -172,6 +172,7 @@
 ///<reference path='./V2/MoneyManagement/ReceivedDebitsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionEntriesResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionsResource.d.ts' />
+///<reference path='./V2/Payments/OffSessionPaymentsResource.d.ts' />
 ///<reference path='./V2/TestHelpers/FinancialAddressesResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
@@ -364,6 +365,7 @@
 ///<reference path='./V2/MoneyManagement/ReceivedDebits.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionEntries.d.ts' />
 ///<reference path='./V2/MoneyManagement/Transactions.d.ts' />
+///<reference path='./V2/Payments/OffSessionPayments.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
@@ -602,6 +604,9 @@ declare module 'stripe' {
       };
       testHelper: {
         financialAddresses: Stripe.V2.TestHelpers.FinancialAddressesResource;
+      };
+      payment: {
+        offSessionPayments: Stripe.V2.Payments.OffSessionPaymentsResource;
       };
     };
     // Fields: The end of the section generated from our OpenAPI spec

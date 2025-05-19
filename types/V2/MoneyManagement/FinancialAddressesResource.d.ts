@@ -255,7 +255,7 @@ declare module 'stripe' {
           >;
 
           /**
-           * Retrieve a FinancialAddress. By default, the FinancialAddress will be returned in it's unexpanded state, revealing only the last 4 digits of the account number.
+           * Retrieve a FinancialAddress. By default, the FinancialAddress will be returned in its unexpanded state, revealing only the last 4 digits of the account number.
            */
           retrieve(
             id: string,
