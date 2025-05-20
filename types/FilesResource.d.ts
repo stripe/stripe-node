@@ -113,7 +113,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.File>>;
 
       /**
-       * Retrieves the details of an existing file object. After you supply a unique file ID, Stripe returns the corresponding file object. Learn how to [access file contents](https://stripe.com/docs/file-upload#download-file-contents).
+       * Retrieves the details of an existing file object. After you supply a unique file ID, Stripe returns the corresponding file object. Learn how to [access file contents](https://docs.stripe.com/docs/file-upload#download-file-contents).
        */
       retrieve(
         id: string,

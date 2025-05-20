@@ -33,7 +33,7 @@ declare module 'stripe' {
       billing_behavior?: QuotePreviewSubscriptionSchedule.BillingBehavior;
 
       /**
-       * The [billing mode](https://stripe.com/api/subscriptions/create#create_subscription-billing_mode) that will be used to process all future operations for the subscription schedule.
+       * The [billing mode](https://docs.stripe.com/api/subscriptions/create#create_subscription-billing_mode) that will be used to process all future operations for the subscription schedule.
        */
       billing_mode?: QuotePreviewSubscriptionSchedule.BillingMode;
 

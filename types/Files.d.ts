@@ -7,7 +7,7 @@ declare module 'stripe' {
      * files with the [create file](https://stripe.com/docs/api#create_file) request
      * (for example, when uploading dispute evidence). Stripe also
      * creates files independently (for example, the results of a [Sigma scheduled
-     * query](https://stripe.com/docs/api#scheduled_queries)).
+     * query](https://docs.stripe.com/api#scheduled_queries)).
      *
      * Related guide: [File upload guide](https://stripe.com/docs/file-upload)
      */
