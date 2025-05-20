@@ -651,7 +651,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.CreditNote>>;
 
       /**
-       * Marks a credit note as void. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
+       * Marks a credit note as void. Learn more about [voiding credit notes](https://docs.stripe.com/docs/billing/invoices/credit-notes#voiding).
        */
       voidCreditNote(
         id: string,
