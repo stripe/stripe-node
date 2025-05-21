@@ -67,6 +67,11 @@ declare module 'stripe' {
         capital_overview?: Components.CapitalOverview;
 
         /**
+         * Configuration for the disputes list embedded component.
+         */
+        disputes_list?: Components.DisputesList;
+
+        /**
          * Configuration for the documents embedded component.
          */
         documents?: Components.Documents;
@@ -360,6 +365,42 @@ declare module 'stripe' {
 
         namespace CapitalOverview {
           interface Features {}
+        }
+
+        interface DisputesList {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: DisputesList.Features;
+        }
+
+        namespace DisputesList {
+          interface Features {
+            /**
+             * Whether to allow capturing and cancelling payment intents. This is `true` by default.
+             */
+            capture_payments?: boolean;
+
+            /**
+             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             */
+            destination_on_behalf_of_charge_management?: boolean;
+
+            /**
+             * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
+             */
+            dispute_management?: boolean;
+
+            /**
+             * Whether to allow sending refunds. This is `true` by default.
+             */
+            refund_management?: boolean;
+          }
         }
 
         interface Documents {

@@ -86,6 +86,13 @@ declare module 'stripe' {
         billing_cycle_anchor?: DefaultSettings.BillingCycleAnchor;
 
         /**
+         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+         */
+        billing_thresholds?: Stripe.Emptyable<
+          DefaultSettings.BillingThresholds
+        >;
+
+        /**
          * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
          */
         collection_method?: DefaultSettings.CollectionMethod;
@@ -148,6 +155,18 @@ declare module 'stripe' {
         }
 
         type BillingCycleAnchor = 'automatic' | 'phase_start';
+
+        interface BillingThresholds {
+          /**
+           * Monetary threshold that triggers the subscription to advance to a new billing period
+           */
+          amount_gte?: number;
+
+          /**
+           * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+           */
+          reset_billing_cycle_anchor?: boolean;
+        }
 
         type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
@@ -221,6 +240,11 @@ declare module 'stripe' {
          * Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
          */
         billing_cycle_anchor?: Phase.BillingCycleAnchor;
+
+        /**
+         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+         */
+        billing_thresholds?: Stripe.Emptyable<Phase.BillingThresholds>;
 
         /**
          * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
@@ -472,6 +496,18 @@ declare module 'stripe' {
 
         type BillingCycleAnchor = 'automatic' | 'phase_start';
 
+        interface BillingThresholds {
+          /**
+           * Monetary threshold that triggers the subscription to advance to a new billing period
+           */
+          amount_gte?: number;
+
+          /**
+           * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+           */
+          reset_billing_cycle_anchor?: boolean;
+        }
+
         type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
         interface Discount {
@@ -572,6 +608,11 @@ declare module 'stripe' {
 
         interface Item {
           /**
+           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+           */
+          billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
+          /**
            * The coupons to redeem into discounts for the subscription item.
            */
           discounts?: Stripe.Emptyable<Array<Item.Discount>>;
@@ -613,6 +654,13 @@ declare module 'stripe' {
         }
 
         namespace Item {
+          interface BillingThresholds {
+            /**
+             * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+             */
+            usage_gte: number;
+          }
+
           interface Discount {
             /**
              * ID of the coupon to create a new discount for.
@@ -880,6 +928,13 @@ declare module 'stripe' {
         billing_cycle_anchor?: DefaultSettings.BillingCycleAnchor;
 
         /**
+         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+         */
+        billing_thresholds?: Stripe.Emptyable<
+          DefaultSettings.BillingThresholds
+        >;
+
+        /**
          * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
          */
         collection_method?: DefaultSettings.CollectionMethod;
@@ -942,6 +997,18 @@ declare module 'stripe' {
         }
 
         type BillingCycleAnchor = 'automatic' | 'phase_start';
+
+        interface BillingThresholds {
+          /**
+           * Monetary threshold that triggers the subscription to advance to a new billing period
+           */
+          amount_gte?: number;
+
+          /**
+           * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+           */
+          reset_billing_cycle_anchor?: boolean;
+        }
 
         type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
@@ -1015,6 +1082,11 @@ declare module 'stripe' {
          * Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
          */
         billing_cycle_anchor?: Phase.BillingCycleAnchor;
+
+        /**
+         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+         */
+        billing_thresholds?: Stripe.Emptyable<Phase.BillingThresholds>;
 
         /**
          * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
@@ -1271,6 +1343,18 @@ declare module 'stripe' {
 
         type BillingCycleAnchor = 'automatic' | 'phase_start';
 
+        interface BillingThresholds {
+          /**
+           * Monetary threshold that triggers the subscription to advance to a new billing period
+           */
+          amount_gte?: number;
+
+          /**
+           * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+           */
+          reset_billing_cycle_anchor?: boolean;
+        }
+
         type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
         interface Discount {
@@ -1371,6 +1455,11 @@ declare module 'stripe' {
 
         interface Item {
           /**
+           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+           */
+          billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
+          /**
            * The coupons to redeem into discounts for the subscription item.
            */
           discounts?: Stripe.Emptyable<Array<Item.Discount>>;
@@ -1412,6 +1501,13 @@ declare module 'stripe' {
         }
 
         namespace Item {
+          interface BillingThresholds {
+            /**
+             * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+             */
+            usage_gte: number;
+          }
+
           interface Discount {
             /**
              * ID of the coupon to create a new discount for.

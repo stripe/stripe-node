@@ -58,6 +58,8 @@ declare module 'stripe' {
 
         capital_financing_promotion?: Components.CapitalFinancingPromotion | null;
 
+        disputes_list: Components.DisputesList;
+
         documents: Components.Documents;
 
         financial_account: Components.FinancialAccount;
@@ -71,6 +73,8 @@ declare module 'stripe' {
         notification_banner: Components.NotificationBanner;
 
         payment_details: Components.PaymentDetails;
+
+        payment_disputes: Components.PaymentDisputes;
 
         payments: Components.Payments;
 
@@ -205,6 +209,39 @@ declare module 'stripe' {
 
         namespace CapitalFinancingPromotion {
           interface Features {}
+        }
+
+        interface DisputesList {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: DisputesList.Features;
+        }
+
+        namespace DisputesList {
+          interface Features {
+            /**
+             * Whether to allow capturing and cancelling payment intents. This is `true` by default.
+             */
+            capture_payments: boolean;
+
+            /**
+             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             */
+            destination_on_behalf_of_charge_management: boolean;
+
+            /**
+             * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
+             */
+            dispute_management: boolean;
+
+            /**
+             * Whether to allow sending refunds. This is `true` by default.
+             */
+            refund_management: boolean;
+          }
         }
 
         interface Documents {
@@ -381,6 +418,34 @@ declare module 'stripe' {
              */
             capture_payments: boolean;
 
+            /**
+             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             */
+            destination_on_behalf_of_charge_management: boolean;
+
+            /**
+             * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
+             */
+            dispute_management: boolean;
+
+            /**
+             * Whether to allow sending refunds. This is `true` by default.
+             */
+            refund_management: boolean;
+          }
+        }
+
+        interface PaymentDisputes {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: PaymentDisputes.Features;
+        }
+
+        namespace PaymentDisputes {
+          interface Features {
             /**
              * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
              */
