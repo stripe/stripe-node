@@ -133,6 +133,7 @@ declare module 'stripe' {
         | 'invoice.updated'
         | 'invoice.voided'
         | 'invoice.will_be_due'
+        | 'invoice_payment.paid'
         | 'invoiceitem.created'
         | 'invoiceitem.deleted'
         | 'issuing_authorization.created'
@@ -336,6 +337,9 @@ declare module 'stripe' {
        */
       api_version: string | null;
 
+      /**
+       * Authentication context needed to fetch the event or related object.
+       */
       context?: string;
 
       /**

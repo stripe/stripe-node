@@ -224,9 +224,9 @@ declare module 'stripe' {
             /**
              * A `Payout` object is created when you receive funds from Stripe, or when you
              * initiate a payout to either a bank account or debit card of a [connected
-             * Stripe account](https://stripe.com/docs/connect/bank-debit-card-payouts). You can retrieve individual payouts,
+             * Stripe account](https://docs.stripe.com/docs/connect/bank-debit-card-payouts). You can retrieve individual payouts,
              * and list all payouts. Payouts are made on [varying
-             * schedules](https://stripe.com/docs/connect/manage-payout-schedule), depending on your country and
+             * schedules](https://docs.stripe.com/docs/connect/manage-payout-schedule), depending on your country and
              * industry.
              *
              * Related guide: [Receiving payouts](https://stripe.com/docs/payouts)

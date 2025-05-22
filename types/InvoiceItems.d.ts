@@ -102,7 +102,7 @@ declare module 'stripe' {
       metadata: Stripe.Metadata | null;
 
       /**
-       * The parent that generated this invoice
+       * The parent that generated this invoice item.
        */
       parent: InvoiceItem.Parent | null;
 

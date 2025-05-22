@@ -107,6 +107,16 @@ declare module 'stripe' {
       pdf: string;
 
       /**
+       * The amount of the credit note that was refunded to the customer, credited to the customer's balance, credited outside of Stripe, or any combination thereof.
+       */
+      post_payment_amount: number;
+
+      /**
+       * The amount of the credit note by which the invoice's `amount_remaining` and `amount_due` were reduced.
+       */
+      pre_payment_amount: number;
+
+      /**
        * The pretax credit amounts (ex: discount, credit grants, etc) for all line items.
        */
       pretax_credit_amounts: Array<CreditNote.PretaxCreditAmount>;
@@ -261,9 +271,9 @@ declare module 'stripe' {
           amount: number;
 
           /**
-           * Tax rates can be applied to [invoices](https://stripe.com/invoicing/taxes/tax-rates), [subscriptions](https://stripe.com/billing/taxes/tax-rates) and [Checkout Sessions](https://stripe.com/payments/checkout/use-manual-tax-rates) to collect tax.
+           * Tax rates can be applied to [invoices](https://docs.stripe.com/invoicing/taxes/tax-rates), [subscriptions](https://docs.stripe.com/billing/taxes/tax-rates) and [Checkout Sessions](https://docs.stripe.com/payments/checkout/use-manual-tax-rates) to collect tax.
            *
-           * Related guide: [Tax rates](https://stripe.com/billing/taxes/tax-rates)
+           * Related guide: [Tax rates](https://docs.stripe.com/billing/taxes/tax-rates)
            */
           rate: Stripe.TaxRate;
 
@@ -358,7 +368,7 @@ declare module 'stripe' {
         }
       }
 
-      type Type = 'post_payment' | 'pre_payment';
+      type Type = 'mixed' | 'post_payment' | 'pre_payment';
     }
   }
 }

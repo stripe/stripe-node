@@ -7,14 +7,14 @@ declare module 'stripe' {
      * properties on the account like its current requirements or if the account is
      * enabled to make live charges or receive payouts.
      *
-     * For accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection)
+     * For accounts where [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection)
      * is `application`, which includes Custom accounts, the properties below are always
      * returned.
      *
-     * For accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection)
+     * For accounts where [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection)
      * is `stripe`, which includes Standard and Express accounts, some properties are only returned
-     * until you create an [Account Link](https://stripe.com/api/account_links) or [Account Session](https://stripe.com/api/account_sessions)
-     * to start Connect Onboarding. Learn about the [differences between accounts](https://stripe.com/connect/accounts).
+     * until you create an [Account Link](https://docs.stripe.com/api/account_links) or [Account Session](https://docs.stripe.com/api/account_sessions)
+     * to start Connect Onboarding. Learn about the [differences between accounts](https://docs.stripe.com/connect/accounts).
      */
     interface Account {
       /**
@@ -69,7 +69,7 @@ declare module 'stripe' {
       deleted?: void;
 
       /**
-       * Whether account details have been submitted. Accounts with Stripe Dashboard access, which includes Standard accounts, cannot receive payouts before this is true. Accounts where this is false should be directed to [an onboarding flow](https://stripe.com/connect/onboarding) to finish submitting account details.
+       * Whether account details have been submitted. Accounts with Stripe Dashboard access, which includes Standard accounts, cannot receive payouts before this is true. Accounts where this is false should be directed to [an onboarding flow](https://docs.stripe.com/connect/onboarding) to finish submitting account details.
        */
       details_submitted: boolean;
 
@@ -93,9 +93,9 @@ declare module 'stripe' {
       /**
        * This is an object representing a person associated with a Stripe account.
        *
-       * A platform can only access a subset of data in a person for an account where [account.controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`, which includes Standard and Express accounts, after creating an Account Link or Account Session to start Connect onboarding.
+       * A platform can only access a subset of data in a person for an account where [account.controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`, which includes Standard and Express accounts, after creating an Account Link or Account Session to start Connect onboarding.
        *
-       * See the [Standard onboarding](https://stripe.com/connect/standard-accounts) or [Express onboarding](https://stripe.com/connect/express-accounts) documentation for information about prefilling information and account onboarding steps. Learn more about [handling identity verification with the API](https://stripe.com/connect/handling-api-verification#person-information).
+       * See the [Standard onboarding](https://docs.stripe.com/connect/standard-accounts) or [Express onboarding](https://docs.stripe.com/connect/express-accounts) documentation for information about prefilling information and account onboarding steps. Learn more about [handling identity verification with the API](https://docs.stripe.com/connect/handling-api-verification#person-information).
        */
       individual?: Stripe.Person;
 
@@ -137,7 +137,7 @@ declare module 'stripe' {
         estimated_worker_count?: number | null;
 
         /**
-         * [The merchant category code for the account](https://stripe.com/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
+         * [The merchant category code for the account](https://docs.stripe.com/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
          */
         mcc: string | null;
 
@@ -189,7 +189,7 @@ declare module 'stripe' {
       namespace BusinessProfile {
         interface AnnualRevenue {
           /**
-           * A non-negative integer representing the amount in the [smallest currency unit](https://stripe.com/currencies#zero-decimal).
+           * A non-negative integer representing the amount in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           amount: number | null;
 
@@ -213,7 +213,7 @@ declare module 'stripe' {
 
         interface MonthlyEstimatedRevenue {
           /**
-           * A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/currencies#zero-decimal).
+           * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
            */
           amount: number;
 
@@ -437,6 +437,11 @@ declare module 'stripe' {
         paynow_payments?: Capabilities.PaynowPayments;
 
         /**
+         * The status of the pix payments capability of the account, or whether the account can directly process pix charges.
+         */
+        pix_payments?: Capabilities.PixPayments;
+
+        /**
          * The status of the promptpay payments capability of the account, or whether the account can directly process promptpay charges.
          */
         promptpay_payments?: Capabilities.PromptpayPayments;
@@ -600,6 +605,8 @@ declare module 'stripe' {
 
         type PaynowPayments = 'active' | 'inactive' | 'pending';
 
+        type PixPayments = 'active' | 'inactive' | 'pending';
+
         type PromptpayPayments = 'active' | 'inactive' | 'pending';
 
         type RevolutPayPayments = 'active' | 'inactive' | 'pending';
@@ -672,17 +679,17 @@ declare module 'stripe' {
         export_purpose_code?: string;
 
         /**
-         * The company's legal name. Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
+         * The company's legal name. Also available for accounts where [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
          */
         name?: string | null;
 
         /**
-         * The Kana variation of the company's legal name (Japan only). Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
+         * The Kana variation of the company's legal name (Japan only). Also available for accounts where [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
          */
         name_kana?: string | null;
 
         /**
-         * The Kanji variation of the company's legal name (Japan only). Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
+         * The Kanji variation of the company's legal name (Japan only). Also available for accounts where [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`.
          */
         name_kanji?: string | null;
 
@@ -709,7 +716,7 @@ declare module 'stripe' {
         registration_date?: Company.RegistrationDate;
 
         /**
-         * The category identifying the legal structure of the company or legal entity. Also available for accounts where [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details.
+         * The category identifying the legal structure of the company or legal entity. Also available for accounts where [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details.
          */
         structure?: Company.Structure;
 
@@ -1539,7 +1546,7 @@ declare module 'stripe' {
 
         interface Payouts {
           /**
-           * A Boolean indicating if Stripe should try to reclaim negative balances from an attached bank account. See [Understanding Connect account balances](https://stripe.com/connect/account-balances) for details. The default value is `false` when [controller.requirement_collection](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts, otherwise `true`.
+           * A Boolean indicating if Stripe should try to reclaim negative balances from an attached bank account. See [Understanding Connect account balances](https://docs.stripe.com/connect/account-balances) for details. The default value is `false` when [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts, otherwise `true`.
            */
           debit_negative_balances: boolean;
 

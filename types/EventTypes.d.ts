@@ -109,6 +109,7 @@ declare module 'stripe' {
       | InvoiceUpdatedEvent
       | InvoiceVoidedEvent
       | InvoiceWillBeDueEvent
+      | InvoicePaymentPaidEvent
       | InvoiceItemCreatedEvent
       | InvoiceItemDeletedEvent
       | IssuingAuthorizationCreatedEvent
@@ -1952,6 +1953,22 @@ declare module 'stripe' {
         object: Stripe.Invoice;
 
         previous_attributes?: Partial<Stripe.Invoice>;
+      }
+    }
+
+    /**
+     * Occurs when an InvoicePayment is successfully paid.
+     */
+    interface InvoicePaymentPaidEvent extends EventBase {
+      type: 'invoice_payment.paid';
+      data: InvoicePaymentPaidEvent.Data;
+    }
+
+    namespace InvoicePaymentPaidEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.InvoicePayment;
+
+        previous_attributes?: Partial<Stripe.InvoicePayment>;
       }
     }
 

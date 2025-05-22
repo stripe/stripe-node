@@ -6,11 +6,11 @@ declare module 'stripe' {
       /**
        * A VerificationSession guides you through the process of collecting and verifying the identities
        * of your users. It contains details about the type of verification, such as what [verification
-       * check](https://stripe.com/docs/identity/verification-checks) to perform. Only create one VerificationSession for
+       * check](https://docs.stripe.com/docs/identity/verification-checks) to perform. Only create one VerificationSession for
        * each verification in your system.
        *
        * A VerificationSession transitions through [multiple
-       * statuses](https://stripe.com/docs/identity/how-sessions-work) throughout its lifetime as it progresses through
+       * statuses](https://docs.stripe.com/docs/identity/how-sessions-work) throughout its lifetime as it progresses through
        * the verification flow. The VerificationSession contains the user's verified data after
        * verification checks are complete.
        *
@@ -268,6 +268,21 @@ declare module 'stripe' {
            * The user's verified phone number
            */
           phone: string | null;
+
+          /**
+           * The user's verified sex.
+           */
+          sex?: VerifiedOutputs.Sex | null;
+
+          /**
+           * The user's verified place of birth as it appears in the document.
+           */
+          unparsed_place_of_birth?: string | null;
+
+          /**
+           * The user's verified sex as it appears in the document.
+           */
+          unparsed_sex?: string | null;
         }
 
         namespace VerifiedOutputs {
@@ -289,6 +304,8 @@ declare module 'stripe' {
           }
 
           type IdNumberType = 'br_cpf' | 'sg_nric' | 'us_ssn';
+
+          type Sex = '[redacted]' | 'female' | 'male' | 'unknown';
         }
       }
     }

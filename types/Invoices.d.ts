@@ -47,7 +47,7 @@ declare module 'stripe' {
      * Stripe applies any customer credit on the account before determining the
      * amount due for the invoice (i.e., the amount that will be actually
      * charged). If the amount due for the invoice is less than Stripe's [minimum allowed charge
-     * per currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts), the
+     * per currency](https://docs.stripe.com/docs/currencies#minimum-and-maximum-charge-amounts), the
      * invoice is automatically marked paid, and we add the amount due to the
      * customer's credit balance which is applied to the next invoice.
      *
@@ -58,7 +58,7 @@ declare module 'stripe' {
      */
     interface Invoice {
       /**
-       * Unique identifier for the object. This property is always present unless the invoice is an upcoming invoice. See [Retrieve an upcoming invoice](https://stripe.com/docs/api/invoices/upcoming) for more details.
+       * Unique identifier for the object. For preview invoices created using the [create preview](https://stripe.com/docs/api/invoices/create_preview) endpoint, this id will be prefixed with `upcoming_in`.
        */
       id?: string;
 
@@ -338,12 +338,12 @@ declare module 'stripe' {
       payments?: ApiList<Stripe.InvoicePayment>;
 
       /**
-       * End of the usage period during which invoice items were added to this invoice. This looks back one period for a subscription invoice. Use the [line item period](https://stripe.com/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each price.
+       * End of the usage period during which invoice items were added to this invoice. This looks back one period for a subscription invoice. Use the [line item period](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each price.
        */
       period_end: number;
 
       /**
-       * Start of the usage period during which invoice items were added to this invoice. This looks back one period for a subscription invoice. Use the [line item period](https://stripe.com/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each price.
+       * Start of the usage period during which invoice items were added to this invoice. This looks back one period for a subscription invoice. Use the [line item period](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-period) to get the service period for each price.
        */
       period_start: number;
 
@@ -883,6 +883,7 @@ declare module 'stripe' {
           | 'forwarding_api_retryable_upstream_error'
           | 'forwarding_api_upstream_connection_error'
           | 'forwarding_api_upstream_connection_timeout'
+          | 'forwarding_api_upstream_error'
           | 'idempotency_key_in_use'
           | 'incorrect_address'
           | 'incorrect_cvc'
@@ -1366,9 +1367,9 @@ declare module 'stripe' {
           amount: number;
 
           /**
-           * Tax rates can be applied to [invoices](https://stripe.com/invoicing/taxes/tax-rates), [subscriptions](https://stripe.com/billing/taxes/tax-rates) and [Checkout Sessions](https://stripe.com/payments/checkout/use-manual-tax-rates) to collect tax.
+           * Tax rates can be applied to [invoices](https://docs.stripe.com/invoicing/taxes/tax-rates), [subscriptions](https://docs.stripe.com/billing/taxes/tax-rates) and [Checkout Sessions](https://docs.stripe.com/payments/checkout/use-manual-tax-rates) to collect tax.
            *
-           * Related guide: [Tax rates](https://stripe.com/billing/taxes/tax-rates)
+           * Related guide: [Tax rates](https://docs.stripe.com/billing/taxes/tax-rates)
            */
           rate: Stripe.TaxRate;
 
