@@ -267,7 +267,7 @@ declare module 'stripe' {
        * a connected account and optionally sets it as the default for its currency. Other bank account
        * details are not editable by design.
        *
-       * You can only update bank accounts when [account.controller.requirement_collection is application, which includes <a href="/connect/custom-accounts">Custom accounts](https://stripe.com/api/accounts/object#account_object-controller-requirement_collection).
+       * You can only update bank accounts when [account.controller.requirement_collection is application, which includes <a href="/connect/custom-accounts">Custom accounts](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection).
        *
        * You can re-enable a disabled bank account by performing an update call without providing any
        * arguments or changes.

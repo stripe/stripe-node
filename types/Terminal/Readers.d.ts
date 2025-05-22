@@ -55,7 +55,7 @@ declare module 'stripe' {
         device_sw_version: string | null;
 
         /**
-         * Type of reader, one of `bbpos_wisepad3`, `stripe_m2`, `stripe_s700`, `bbpos_chipper2x`, `bbpos_wisepos_e`, `verifone_P400`, `simulated_wisepos_e`, or `mobile_phone_reader`.
+         * Device type of the reader.
          */
         device_type: Reader.DeviceType;
 
@@ -421,9 +421,23 @@ declare module 'stripe' {
             account?: string;
 
             /**
+             * Represents a per-transaction override of a reader configuration
+             */
+            confirm_config?: ConfirmPaymentIntent.ConfirmConfig;
+
+            /**
              * Most recent PaymentIntent processed by the reader.
              */
             payment_intent: string | Stripe.PaymentIntent;
+          }
+
+          namespace ConfirmPaymentIntent {
+            interface ConfirmConfig {
+              /**
+               * If the customer does not abandon authenticating the payment, they will be redirected to this specified URL after completion.
+               */
+              return_url?: string;
+            }
           }
 
           interface ProcessPaymentIntent {
@@ -449,6 +463,11 @@ declare module 'stripe' {
                * Enable customer initiated cancellation when processing this payment.
                */
               enable_customer_cancellation?: boolean;
+
+              /**
+               * If the customer does not abandon authenticating the payment, they will be redirected to this specified URL after completion.
+               */
+              return_url?: string;
 
               /**
                * Override showing a tipping selection screen on this transaction.
@@ -632,6 +651,7 @@ declare module 'stripe' {
           | 'bbpos_wisepad3'
           | 'bbpos_wisepos_e'
           | 'mobile_phone_reader'
+          | 'simulated_stripe_s700'
           | 'simulated_wisepos_e'
           | 'stripe_m2'
           | 'stripe_s700'

@@ -9,7 +9,7 @@ declare module 'stripe' {
      * platform's balance and subtract from the destination account's balance.
      *
      * Reversing a transfer that was made for a [destination
-     * charge](https://stripe.com/docs/connect/destination-charges) is allowed only up to the amount of
+     * charge](https://docs.stripe.com/docs/connect/destination-charges) is allowed only up to the amount of
      * the charge. It is possible to reverse a
      * [transfer_group](https://stripe.com/docs/connect/separate-charges-and-transfers#transfer-options)
      * transfer only if the destination account has enough balance to cover the

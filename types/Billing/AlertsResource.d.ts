@@ -38,9 +38,9 @@ declare module 'stripe' {
           gte: number;
 
           /**
-           * The [Billing Meter](https://stripe.com/api/billing/meter) ID whose usage is monitored.
+           * The [Billing Meter](https://docs.stripe.com/api/billing/meter) ID whose usage is monitored.
            */
-          meter?: string;
+          meter: string;
 
           /**
            * Whether the alert should only fire only once, or once per billing cycle.

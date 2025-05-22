@@ -17,7 +17,7 @@ declare module 'stripe' {
        * Create sessions on-demand when customers intend to manage their subscriptions
        * and billing details.
        *
-       * Related guide: [Customer management](https://stripe.com/customer-management)
+       * Related guide: [Customer management](https://docs.stripe.com/customer-management)
        */
       interface Session {
         /**

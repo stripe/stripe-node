@@ -13,7 +13,6 @@ import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Autho
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
 import {Cardholders as IssuingCardholders} from './resources/Issuing/Cardholders.js';
 import {Cards as TestHelpersIssuingCards} from './resources/TestHelpers/Issuing/Cards.js';
-import {Cards as GiftCardsCards} from './resources/GiftCards/Cards.js';
 import {Cards as IssuingCards} from './resources/Issuing/Cards.js';
 import {Configurations as BillingPortalConfigurations} from './resources/BillingPortal/Configurations.js';
 import {Configurations as TerminalConfigurations} from './resources/Terminal/Configurations.js';
@@ -54,6 +53,7 @@ import {MeterEventStream as V2BillingMeterEventStream} from './resources/V2/Bill
 import {MeterEvents as BillingMeterEvents} from './resources/Billing/MeterEvents.js';
 import {MeterEvents as V2BillingMeterEvents} from './resources/V2/Billing/MeterEvents.js';
 import {Meters as BillingMeters} from './resources/Billing/Meters.js';
+import {OffSessionPayments as V2PaymentsOffSessionPayments} from './resources/V2/Payments/OffSessionPayments.js';
 import {Orders as ClimateOrders} from './resources/Climate/Orders.js';
 import {OutboundPaymentQuotes as V2MoneyManagementOutboundPaymentQuotes} from './resources/V2/MoneyManagement/OutboundPaymentQuotes.js';
 import {OutboundPayments as TestHelpersTreasuryOutboundPayments} from './resources/TestHelpers/Treasury/OutboundPayments.js';
@@ -97,7 +97,6 @@ import {TransactionEntries as TreasuryTransactionEntries} from './resources/Trea
 import {TransactionEntries as V2MoneyManagementTransactionEntries} from './resources/V2/MoneyManagement/TransactionEntries.js';
 import {Transactions as TestHelpersIssuingTransactions} from './resources/TestHelpers/Issuing/Transactions.js';
 import {Transactions as FinancialConnectionsTransactions} from './resources/FinancialConnections/Transactions.js';
-import {Transactions as GiftCardsTransactions} from './resources/GiftCards/Transactions.js';
 import {Transactions as IssuingTransactions} from './resources/Issuing/Transactions.js';
 import {Transactions as TaxTransactions} from './resources/Tax/Transactions.js';
 import {Transactions as TreasuryTransactions} from './resources/Treasury/Transactions.js';
@@ -207,10 +206,6 @@ export const FinancialConnections = resourceNamespace('financialConnections', {
 });
 export const Forwarding = resourceNamespace('forwarding', {
   Requests: ForwardingRequests,
-});
-export const GiftCards = resourceNamespace('giftCards', {
-  Cards: GiftCardsCards,
-  Transactions: GiftCardsTransactions,
 });
 export const Identity = resourceNamespace('identity', {
   VerificationReports: IdentityVerificationReports,
@@ -325,6 +320,9 @@ export const V2 = resourceNamespace('v2', {
     ReceivedDebits: V2MoneyManagementReceivedDebits,
     TransactionEntries: V2MoneyManagementTransactionEntries,
     Transactions: V2MoneyManagementTransactions,
+  }),
+  Payment: resourceNamespace('payment', {
+    OffSessionPayments: V2PaymentsOffSessionPayments,
   }),
   TestHelper: resourceNamespace('testHelper', {
     FinancialAddresses: V2TestHelpersFinancialAddresses,

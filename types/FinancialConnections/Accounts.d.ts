@@ -53,6 +53,11 @@ declare module 'stripe' {
         inferred_balances_refresh?: Account.InferredBalancesRefresh | null;
 
         /**
+         * The ID of the Financial Connections Institution this account belongs to. Note that this relationship may sometimes change in rare circumstances (e.g. institution mergers).
+         */
+        institution?: string | Stripe.FinancialConnections.Institution | null;
+
+        /**
          * The name of the institution that holds this account.
          */
         institution_name: string;

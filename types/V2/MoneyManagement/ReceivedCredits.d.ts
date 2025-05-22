@@ -34,11 +34,6 @@ declare module 'stripe' {
           bank_transfer: ReceivedCredit.BankTransfer | null;
 
           /**
-           * This object stores details about the originating issuing card spend that resulted in the ReceivedCredit. Present if `type` field value is `card_spend`.
-           */
-          card_spend: ReceivedCredit.CardSpend | null;
-
-          /**
            * Time at which the ReceivedCredit was created.
            * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
            */
@@ -182,39 +177,6 @@ declare module 'stripe' {
             }
           }
 
-          interface CardSpend {
-            /**
-             * The reference to the issuing card object.
-             */
-            card_v1_id: string;
-
-            /**
-             * Hash containing information about the Dispute that triggered this credit.
-             */
-            dispute: CardSpend.Dispute | null;
-
-            /**
-             * Hash containing information about the Refund that triggered this credit.
-             */
-            refund: CardSpend.Refund | null;
-          }
-
-          namespace CardSpend {
-            interface Dispute {
-              /**
-               * The reference to the v1 issuing dispute ID.
-               */
-              issuing_dispute_v1: string;
-            }
-
-            interface Refund {
-              /**
-               * The reference to the v1 issuing transaction ID.
-               */
-              issuing_transaction_v1: string;
-            }
-          }
-
           type Status = 'failed' | 'pending' | 'returned' | 'succeeded';
 
           interface StatusDetails {
@@ -273,11 +235,7 @@ declare module 'stripe' {
             succeeded_at: string | null;
           }
 
-          type Type =
-            | 'balance_transfer'
-            | 'bank_transfer'
-            | 'card_spend'
-            | 'external_credit';
+          type Type = 'balance_transfer' | 'bank_transfer' | 'external_credit';
         }
       }
     }

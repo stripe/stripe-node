@@ -25,6 +25,10 @@ export const Subscriptions = StripeResource.extend({
     method: 'DELETE',
     fullPath: '/v1/subscriptions/{subscription_exposed_id}/discount',
   }),
+  migrate: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/subscriptions/{subscription}/migrate',
+  }),
   resume: stripeMethod({
     method: 'POST',
     fullPath: '/v1/subscriptions/{subscription}/resume',

@@ -9,6 +9,13 @@ declare module 'stripe' {
       subscription: string;
 
       /**
+       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+       */
+      billing_thresholds?: Stripe.Emptyable<
+        SubscriptionItemCreateParams.BillingThresholds
+      >;
+
+      /**
        * The coupons to redeem into discounts for the subscription item.
        */
       discounts?: Stripe.Emptyable<
@@ -78,6 +85,13 @@ declare module 'stripe' {
     }
 
     namespace SubscriptionItemCreateParams {
+      interface BillingThresholds {
+        /**
+         * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+         */
+        usage_gte: number;
+      }
+
       interface Discount {
         /**
          * ID of the coupon to create a new discount for.
@@ -225,6 +239,13 @@ declare module 'stripe' {
 
     interface SubscriptionItemUpdateParams {
       /**
+       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+       */
+      billing_thresholds?: Stripe.Emptyable<
+        SubscriptionItemUpdateParams.BillingThresholds
+      >;
+
+      /**
        * The coupons to redeem into discounts for the subscription item.
        */
       discounts?: Stripe.Emptyable<
@@ -294,6 +315,13 @@ declare module 'stripe' {
     }
 
     namespace SubscriptionItemUpdateParams {
+      interface BillingThresholds {
+        /**
+         * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+         */
+        usage_gte: number;
+      }
+
       interface Discount {
         /**
          * ID of the coupon to create a new discount for.

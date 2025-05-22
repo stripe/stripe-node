@@ -11,7 +11,7 @@ declare module 'stripe' {
 
     interface BalanceSettingsUpdateParams {
       /**
-       * A Boolean indicating whether Stripe should try to reclaim negative balances from an attached bank account. For details, see [Understanding Connect Account Balances](https://stripe.com/connect/account-balances).
+       * A Boolean indicating whether Stripe should try to reclaim negative balances from an attached bank account. For details, see [Understanding Connect Account Balances](https://docs.stripe.com/connect/account-balances).
        */
       debit_negative_balances?: boolean;
 
@@ -34,7 +34,7 @@ declare module 'stripe' {
     namespace BalanceSettingsUpdateParams {
       interface Payouts {
         /**
-         * Details on when funds from charges are available, and when they are paid out to an external account. For details, see our [Setting Bank and Debit Card Payouts](https://stripe.com/connect/bank-transfers#payout-information) documentation.
+         * Details on when funds from charges are available, and when they are paid out to an external account. For details, see our [Setting Bank and Debit Card Payouts](https://docs.stripe.com/connect/bank-transfers#payout-information) documentation.
          */
         schedule?: Payouts.Schedule;
 
@@ -76,7 +76,7 @@ declare module 'stripe' {
 
       interface SettlementTiming {
         /**
-         * The number of days charge funds are held before becoming available. May also be set to `minimum`, representing the lowest available value for the account country. Default is `minimum`. The `delay_days` parameter remains at the last configured value if `payouts.schedule.interval` is `manual`. [Learn more about controlling payout delay days](https://stripe.com/connect/manage-payout-schedule).
+         * The number of days charge funds are held before becoming available. May also be set to `minimum`, representing the lowest available value for the account country. Default is `minimum`. The `delay_days` parameter remains at the last configured value if `payouts.schedule.interval` is `manual`. [Learn more about controlling payout delay days](https://docs.stripe.com/connect/manage-payout-schedule).
          */
         delay_days?: number;
       }
@@ -85,7 +85,7 @@ declare module 'stripe' {
     class BalanceSettingsResource {
       /**
        * Retrieves balance settings for a given connected account.
-       *  Related guide: [Making API calls for connected accounts](https://stripe.com/connect/authentication)
+       *  Related guide: [Making API calls for connected accounts](https://docs.stripe.com/connect/authentication)
        */
       retrieve(
         params?: BalanceSettingsRetrieveParams,
@@ -97,7 +97,7 @@ declare module 'stripe' {
 
       /**
        * Updates balance settings for a given connected account.
-       *  Related guide: [Making API calls for connected accounts](https://stripe.com/connect/authentication)
+       *  Related guide: [Making API calls for connected accounts](https://docs.stripe.com/connect/authentication)
        */
       update(
         params?: BalanceSettingsUpdateParams,

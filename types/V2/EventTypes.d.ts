@@ -33,6 +33,13 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementInboundTransferBankDebitReturnedEvent
       | Stripe.Events.V2MoneyManagementInboundTransferBankDebitSucceededEvent
       | Stripe.Events.V2CoreEventDestinationPingEvent
+      | Stripe.Events.V2OffSessionPaymentRequiresCaptureEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentCanceledEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentCreatedEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentFailedEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentSucceededEvent
       | Stripe.Events.V2MoneyManagementOutboundPaymentCanceledEvent
       | Stripe.Events.V2MoneyManagementOutboundPaymentCreatedEvent
       | Stripe.Events.V2MoneyManagementOutboundPaymentFailedEvent
@@ -72,7 +79,7 @@ declare module 'stripe' {
     }
 
     /**
-     * The generated account link has been completed.
+     * Occurs when the generated AccountLink is completed.
      */
     export interface V2CoreAccountLinkCompletedEvent extends V2.EventBase {
       type: 'v2.core.account_link.completed';
@@ -679,7 +686,7 @@ declare module 'stripe' {
     }
 
     /**
-     * An InboundTransfer failed.
+     * Occurs when an InboundTransfer fails.
      */
     export interface V2MoneyManagementInboundTransferBankDebitFailedEvent
       extends V2.EventBase {
@@ -691,7 +698,7 @@ declare module 'stripe' {
     }
 
     /**
-     * An InboundTransfer is now processing.
+     * Occurs when an InboundTransfer starts processing.
      */
     export interface V2MoneyManagementInboundTransferBankDebitProcessingEvent
       extends V2.EventBase {
@@ -703,7 +710,7 @@ declare module 'stripe' {
     }
 
     /**
-     * An InboundTransfer has been queued.
+     * Occurs when an InboundTransfer is queued.
      */
     export interface V2MoneyManagementInboundTransferBankDebitQueuedEvent
       extends V2.EventBase {
@@ -715,7 +722,7 @@ declare module 'stripe' {
     }
 
     /**
-     * An InboundTransfer was returned.
+     * Occurs when an InboundTransfer is returned.
      */
     export interface V2MoneyManagementInboundTransferBankDebitReturnedEvent
       extends V2.EventBase {
@@ -727,7 +734,7 @@ declare module 'stripe' {
     }
 
     /**
-     * An InboundTransfer succeeded.
+     * Occurs when an InboundTransfer succeeds.
      */
     export interface V2MoneyManagementInboundTransferBankDebitSucceededEvent
       extends V2.EventBase {
@@ -750,7 +757,91 @@ declare module 'stripe' {
     }
 
     /**
-     * An OutboundPayment has transitioned into the canceled state.
+     * Off session payment requires capture event definition.
+     */
+    export interface V2OffSessionPaymentRequiresCaptureEvent
+      extends V2.EventBase {
+      type: 'v2.off_session_payment.requires_capture';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+
+    /**
+     * Off session payment authorization attempt failed event definition.
+     */
+    export interface V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
+      extends V2.EventBase {
+      type: 'v2.payments.off_session_payment.authorization_attempt_failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+
+    /**
+     * Off session payment authorization attempt started event definition.
+     */
+    export interface V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
+      extends V2.EventBase {
+      type: 'v2.payments.off_session_payment.authorization_attempt_started';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+
+    /**
+     * Off session payment canceled event definition.
+     */
+    export interface V2PaymentsOffSessionPaymentCanceledEvent
+      extends V2.EventBase {
+      type: 'v2.payments.off_session_payment.canceled';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+
+    /**
+     * Off session payment created event definition.
+     */
+    export interface V2PaymentsOffSessionPaymentCreatedEvent
+      extends V2.EventBase {
+      type: 'v2.payments.off_session_payment.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+
+    /**
+     * Off session payment failed event definition.
+     */
+    export interface V2PaymentsOffSessionPaymentFailedEvent
+      extends V2.EventBase {
+      type: 'v2.payments.off_session_payment.failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+
+    /**
+     * Off session payment succeeded event definition.
+     */
+    export interface V2PaymentsOffSessionPaymentSucceededEvent
+      extends V2.EventBase {
+      type: 'v2.payments.off_session_payment.succeeded';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+
+    /**
+     * Occurs when an OutboundPayment transitions into the canceled state.
      */
     export interface V2MoneyManagementOutboundPaymentCanceledEvent
       extends V2.EventBase {
@@ -774,7 +865,7 @@ declare module 'stripe' {
     }
 
     /**
-     * An OutboundPayment has transitioned into the failed state.
+     * Occurs when an OutboundPayment transitions into the failed state.
      */
     export interface V2MoneyManagementOutboundPaymentFailedEvent
       extends V2.EventBase {
@@ -786,7 +877,7 @@ declare module 'stripe' {
     }
 
     /**
-     * An OutboundPayment has transitioned into the posted state.
+     * Occurs when an OutboundPayment transitions into the posted state.
      */
     export interface V2MoneyManagementOutboundPaymentPostedEvent
       extends V2.EventBase {
@@ -798,7 +889,7 @@ declare module 'stripe' {
     }
 
     /**
-     * An OutboundPayment has transitioned into the returned state.
+     * Occurs when an OutboundPayment transitions into the returned state.
      */
     export interface V2MoneyManagementOutboundPaymentReturnedEvent
       extends V2.EventBase {
@@ -810,7 +901,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Event that is emitted every time an Outbound Payment is updated.
+     * Occurs when an OutboundPayment is updated.
      */
     export interface V2MoneyManagementOutboundPaymentUpdatedEvent
       extends V2.EventBase {

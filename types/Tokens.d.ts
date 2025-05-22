@@ -20,7 +20,7 @@ declare module 'stripe' {
      *
      * You can't store or use tokens more than once. To store card or bank account
      * information for later use, create [Customer](https://stripe.com/docs/api#customers)
-     * objects or [External accounts](https://stripe.com/api#external_accounts).
+     * objects or [External accounts](https://docs.stripe.com/api#external_accounts).
      * [Radar](https://stripe.com/docs/radar), our integrated solution for automatic fraud protection,
      * performs best with integrations that use client-side tokenization.
      */
@@ -38,11 +38,11 @@ declare module 'stripe' {
       /**
        * These bank accounts are payment methods on `Customer` objects.
        *
-       * On the other hand [External Accounts](https://stripe.com/api#external_accounts) are transfer
+       * On the other hand [External Accounts](https://docs.stripe.com/api#external_accounts) are transfer
        * destinations on `Account` objects for connected accounts.
        * They can be bank accounts or debit cards as well, and are documented in the links above.
        *
-       * Related guide: [Bank debits and transfers](https://stripe.com/payments/bank-debits-transfers)
+       * Related guide: [Bank debits and transfers](https://docs.stripe.com/payments/bank-debits-transfers)
        */
       bank_account?: Stripe.BankAccount;
 
