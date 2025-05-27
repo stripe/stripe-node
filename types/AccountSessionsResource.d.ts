@@ -37,6 +37,11 @@ declare module 'stripe' {
         balances?: Components.Balances;
 
         /**
+         * Configuration for the disputes list embedded component.
+         */
+        disputes_list?: Components.DisputesList;
+
+        /**
          * Configuration for the documents embedded component.
          */
         documents?: Components.Documents;
@@ -70,6 +75,11 @@ declare module 'stripe' {
          * Configuration for the payment details embedded component.
          */
         payment_details?: Components.PaymentDetails;
+
+        /**
+         * Configuration for the payment disputes embedded component.
+         */
+        payment_disputes?: Components.PaymentDisputes;
 
         /**
          * Configuration for the payments embedded component.
@@ -188,6 +198,42 @@ declare module 'stripe' {
              * Whether to allow creation of standard payouts. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
              */
             standard_payouts?: boolean;
+          }
+        }
+
+        interface DisputesList {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: DisputesList.Features;
+        }
+
+        namespace DisputesList {
+          interface Features {
+            /**
+             * Whether to allow capturing and cancelling payment intents. This is `true` by default.
+             */
+            capture_payments?: boolean;
+
+            /**
+             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             */
+            destination_on_behalf_of_charge_management?: boolean;
+
+            /**
+             * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
+             */
+            dispute_management?: boolean;
+
+            /**
+             * Whether to allow sending refunds. This is `true` by default.
+             */
+            refund_management?: boolean;
           }
         }
 
@@ -386,6 +432,37 @@ declare module 'stripe' {
              */
             capture_payments?: boolean;
 
+            /**
+             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             */
+            destination_on_behalf_of_charge_management?: boolean;
+
+            /**
+             * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
+             */
+            dispute_management?: boolean;
+
+            /**
+             * Whether to allow sending refunds. This is `true` by default.
+             */
+            refund_management?: boolean;
+          }
+        }
+
+        interface PaymentDisputes {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: PaymentDisputes.Features;
+        }
+
+        namespace PaymentDisputes {
+          interface Features {
             /**
              * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
              */

@@ -38,6 +38,11 @@ declare module 'stripe' {
       object: 'subscription_item';
 
       /**
+       * Define thresholds at which an invoice will be sent, and the related subscription advanced to a new billing period
+       */
+      billing_thresholds: SubscriptionItem.BillingThresholds | null;
+
+      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created: number;
@@ -103,6 +108,15 @@ declare module 'stripe' {
        * The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
        */
       tax_rates: Array<Stripe.TaxRate> | null;
+    }
+
+    namespace SubscriptionItem {
+      interface BillingThresholds {
+        /**
+         * Usage threshold that triggers the subscription to create an invoice
+         */
+        usage_gte: number | null;
+      }
     }
   }
 }
