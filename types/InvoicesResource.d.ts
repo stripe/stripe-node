@@ -2690,7 +2690,7 @@ declare module 'stripe' {
         billing_behavior?: ScheduleDetails.BillingBehavior;
 
         /**
-         * Configure billing_mode to opt in improved credit proration behavior.When the schedule creates a subscription, the subscription's `billing_mode` will be set to the same value as the schedule's `billing_mode`.
+         * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
          */
         billing_mode?: ScheduleDetails.BillingMode;
 
@@ -3339,6 +3339,11 @@ declare module 'stripe' {
           billing_cycle_anchor?: Phase.BillingCycleAnchor;
 
           /**
+           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+           */
+          billing_thresholds?: Stripe.Emptyable<Phase.BillingThresholds>;
+
+          /**
            * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
            */
           collection_method?: Phase.CollectionMethod;
@@ -3404,7 +3409,7 @@ declare module 'stripe' {
           pause_collection?: Phase.PauseCollection;
 
           /**
-           * Whether the subscription schedule will create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase. The default value is `create_prorations`. This setting controls prorations when a phase is started asynchronously and it is persisted as a field on the phase. It's different from the request-level [proration_behavior](https://stripe.com/docs/api/subscription_schedules/update#update_subscription_schedule-proration_behavior) parameter which controls what happens if the update request affects the billing configuration of the current phase.
+           * Controls whether the subscription schedule should create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase if there is a difference in billing configuration. It's different from the request-level [proration_behavior](https://stripe.com/docs/api/subscription_schedules/update#update_subscription_schedule-proration_behavior) parameter which controls what happens if the update request affects the billing configuration (item price, quantity, etc.) of the current phase.
            */
           proration_behavior?: Phase.ProrationBehavior;
 
@@ -3593,6 +3598,18 @@ declare module 'stripe' {
 
           type BillingCycleAnchor = 'automatic' | 'phase_start';
 
+          interface BillingThresholds {
+            /**
+             * Monetary threshold that triggers the subscription to advance to a new billing period
+             */
+            amount_gte?: number;
+
+            /**
+             * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+             */
+            reset_billing_cycle_anchor?: boolean;
+          }
+
           type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
           interface Discount {
@@ -3693,6 +3710,11 @@ declare module 'stripe' {
 
           interface Item {
             /**
+             * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+             */
+            billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
+            /**
              * The coupons to redeem into discounts for the subscription item.
              */
             discounts?: Stripe.Emptyable<Array<Item.Discount>>;
@@ -3734,6 +3756,13 @@ declare module 'stripe' {
           }
 
           namespace Item {
+            interface BillingThresholds {
+              /**
+               * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+               */
+              usage_gte: number;
+            }
+
             interface Discount {
               /**
                * ID of the coupon to create a new discount for.
@@ -3995,17 +4024,17 @@ declare module 'stripe' {
         billing_cycle_anchor?: SubscriptionDetails.BillingCycleAnchor | number;
 
         /**
-         * Configure billing_mode in each subscription to opt in improved credit proration behavior.
+         * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
          */
         billing_mode?: SubscriptionDetails.BillingMode;
 
         /**
          * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
          */
-        cancel_at?: Stripe.Emptyable<number>;
+        cancel_at?: Stripe.Emptyable<number | SubscriptionDetails.CancelAt>;
 
         /**
-         * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
+         * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`. This param will be removed in a future API version. Please use `cancel_at` instead.
          */
         cancel_at_period_end?: boolean;
 
@@ -4060,7 +4089,14 @@ declare module 'stripe' {
 
         type BillingMode = 'classic' | 'flexible';
 
+        type CancelAt = 'max_period_end' | 'min_period_end';
+
         interface Item {
+          /**
+           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+           */
+          billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
           /**
            * Delete all usage for a given subscription item. You must pass this when deleting a usage records subscription item. `clear_usage` has no effect if the plan has a billing meter attached.
            */
@@ -4113,6 +4149,13 @@ declare module 'stripe' {
         }
 
         namespace Item {
+          interface BillingThresholds {
+            /**
+             * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+             */
+            usage_gte: number;
+          }
+
           interface Discount {
             /**
              * ID of the coupon to create a new discount for.
@@ -5060,7 +5103,7 @@ declare module 'stripe' {
 
     class InvoicesResource {
       /**
-       * This endpoint creates a draft invoice for a given customer. The invoice remains a draft until you [finalize the invoice, which allows you to [pay](#pay_invoice) or <a href="#send_invoice">send](https://stripe.com/docs/api#finalize_invoice) the invoice to your customers.
+       * This endpoint creates a draft invoice for a given customer. The invoice remains a draft until you [finalize the invoice, which allows you to [pay](#pay_invoice) or <a href="#send_invoice">send](https://docs.stripe.com/api#finalize_invoice) the invoice to your customers.
        */
       create(
         params?: InvoiceCreateParams,
@@ -5084,11 +5127,11 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Invoice>>;
 
       /**
-       * Draft invoices are fully editable. Once an invoice is [finalized](https://stripe.com/docs/billing/invoices/workflow#finalized),
+       * Draft invoices are fully editable. Once an invoice is [finalized](https://docs.stripe.com/docs/billing/invoices/workflow#finalized),
        * monetary values, as well as collection_method, become uneditable.
        *
        * If you would like to stop the Stripe Billing engine from automatically finalizing, reattempting payments on,
-       * sending reminders for, or [automatically reconciling](https://stripe.com/docs/billing/invoices/reconciliation) invoices, pass
+       * sending reminders for, or [automatically reconciling](https://docs.stripe.com/docs/billing/invoices/reconciliation) invoices, pass
        * auto_advance=false.
        */
       update(
@@ -5107,7 +5150,7 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.Invoice>;
 
       /**
-       * Permanently deletes a one-off invoice draft. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized or if an invoice is for a subscription, it must be [voided](https://stripe.com/docs/api#void_invoice).
+       * Permanently deletes a one-off invoice draft. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized or if an invoice is for a subscription, it must be [voided](https://docs.stripe.com/api#void_invoice).
        */
       del(
         id: string,
@@ -5131,9 +5174,6 @@ declare module 'stripe' {
       /**
        * Attaches a PaymentIntent or an Out of Band Payment to the invoice, adding it to the list of payments.
        *
-       * For Out of Band Payment, the payment is credited to the invoice immediately, increasing the amount_paid
-       * of the invoice and subsequently transitioning the status of the invoice to paid if necessary.
-       *
        * For the PaymentIntent, when the PaymentIntent's status changes to succeeded, the payment is credited
        * to the invoice, increasing its amount_paid. When the invoice is fully paid, the
        * invoice's status becomes paid.
@@ -5141,7 +5181,7 @@ declare module 'stripe' {
        * If the PaymentIntent's status is already succeeded when it's attached, it's
        * credited to the invoice immediately.
        *
-       * See: [Create an invoice payment](https://stripe.com/docs/invoicing/payments/create) to learn more.
+       * See: [Partial payments](https://docs.stripe.com/docs/invoicing/partial-payments) to learn more.
        */
       attachPayment(
         id: string,
@@ -5156,9 +5196,11 @@ declare module 'stripe' {
       /**
        * At any time, you can preview the upcoming invoice for a subscription or subscription schedule. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discounts that are applicable to the invoice.
        *
-       * Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
+       * You can also preview the effects of creating or updating a subscription or subscription schedule, including a preview of any prorations that will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass the subscription_details.proration_date parameter when doing the actual subscription update.
        *
-       * You can preview the effects of updating a subscription, including a preview of what proration will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass the subscription_details.proration_date parameter when doing the actual subscription update. The recommended way to get only the prorations being previewed is to consider only proration line items where period[start] is equal to the subscription_details.proration_date value passed in the request.
+       * The recommended way to get only the prorations being previewed on the invoice is to consider line items where parent.subscription_item_details.proration is true.
+       *
+       * Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
        *
        * Note: Currency conversion calculations use the latest exchange rates. Exchange rates may vary between the time of the preview and the time of the actual invoice creation. [Learn more](https://docs.stripe.com/currencies/conversions)
        */
@@ -5232,7 +5274,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Invoice>>;
 
       /**
-       * Search for invoices you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
+       * Search for invoices you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
        * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
        * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
        * to an hour behind during outages. Search functionality is not available to merchants in India.
@@ -5285,9 +5327,9 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.InvoiceLineItem>>;
 
       /**
-       * Mark a finalized invoice as void. This cannot be undone. Voiding an invoice is similar to [deletion](https://stripe.com/docs/api#delete_invoice), however it only applies to finalized invoices and maintains a papertrail where the invoice can still be found.
+       * Mark a finalized invoice as void. This cannot be undone. Voiding an invoice is similar to [deletion](https://docs.stripe.com/api#delete_invoice), however it only applies to finalized invoices and maintains a papertrail where the invoice can still be found.
        *
-       * Consult with local regulations to determine whether and how an invoice might be amended, canceled, or voided in the jurisdiction you're doing business in. You might need to [issue another invoice or <a href="#create_credit_note">credit note](https://stripe.com/docs/api#create_invoice) instead. Stripe recommends that you consult with your legal counsel for advice specific to your business.
+       * Consult with local regulations to determine whether and how an invoice might be amended, canceled, or voided in the jurisdiction you're doing business in. You might need to [issue another invoice or <a href="#create_credit_note">credit note](https://docs.stripe.com/api#create_invoice) instead. Stripe recommends that you consult with your legal counsel for advice specific to your business.
        */
       voidInvoice(
         id: string,

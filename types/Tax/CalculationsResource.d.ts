@@ -248,6 +248,11 @@ declare module 'stripe' {
           amount: number;
 
           /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           */
+          metadata?: Stripe.MetadataParam;
+
+          /**
            * If provided, the product's `tax_code` will be used as the line item's `tax_code`.
            */
           product?: string;

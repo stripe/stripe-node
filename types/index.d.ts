@@ -58,8 +58,6 @@
 ///<reference path='./FinancialConnections/TransactionsResource.d.ts' />
 ///<reference path='./Forwarding/RequestsResource.d.ts' />
 ///<reference path='./FxQuotesResource.d.ts' />
-///<reference path='./GiftCards/CardsResource.d.ts' />
-///<reference path='./GiftCards/TransactionsResource.d.ts' />
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
 ///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
@@ -174,6 +172,7 @@
 ///<reference path='./V2/MoneyManagement/ReceivedDebitsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionEntriesResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionsResource.d.ts' />
+///<reference path='./V2/Payments/OffSessionPaymentsResource.d.ts' />
 ///<reference path='./V2/TestHelpers/FinancialAddressesResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
@@ -194,7 +193,6 @@
 ///<reference path='./Billing/CreditBalanceSummary.d.ts' />
 ///<reference path='./Billing/CreditBalanceTransactions.d.ts' />
 ///<reference path='./Billing/CreditGrants.d.ts' />
-///<reference path='./Billing/MeterErrorReports.d.ts' />
 ///<reference path='./Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./Billing/MeterEventSummaries.d.ts' />
 ///<reference path='./Billing/MeterEvents.d.ts' />
@@ -245,8 +243,6 @@
 ///<reference path='./Forwarding/Requests.d.ts' />
 ///<reference path='./FundingInstructions.d.ts' />
 ///<reference path='./FxQuotes.d.ts' />
-///<reference path='./GiftCards/Cards.d.ts' />
-///<reference path='./GiftCards/Transactions.d.ts' />
 ///<reference path='./Identity/VerificationReports.d.ts' />
 ///<reference path='./Identity/VerificationSessions.d.ts' />
 ///<reference path='./InvoiceItems.d.ts' />
@@ -369,6 +365,7 @@
 ///<reference path='./V2/MoneyManagement/ReceivedDebits.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionEntries.d.ts' />
 ///<reference path='./V2/MoneyManagement/Transactions.d.ts' />
+///<reference path='./V2/Payments/OffSessionPayments.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
@@ -491,10 +488,6 @@ declare module 'stripe' {
     forwarding: {
       requests: Stripe.Forwarding.RequestsResource;
     };
-    giftCards: {
-      cards: Stripe.GiftCards.CardsResource;
-      transactions: Stripe.GiftCards.TransactionsResource;
-    };
     identity: {
       verificationReports: Stripe.Identity.VerificationReportsResource;
       verificationSessions: Stripe.Identity.VerificationSessionsResource;
@@ -611,6 +604,9 @@ declare module 'stripe' {
       };
       testHelper: {
         financialAddresses: Stripe.V2.TestHelpers.FinancialAddressesResource;
+      };
+      payment: {
+        offSessionPayments: Stripe.V2.Payments.OffSessionPaymentsResource;
       };
     };
     // Fields: The end of the section generated from our OpenAPI spec

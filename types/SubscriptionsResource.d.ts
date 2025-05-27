@@ -34,17 +34,24 @@ declare module 'stripe' {
       billing_cycle_anchor_config?: SubscriptionCreateParams.BillingCycleAnchorConfig;
 
       /**
-       * Configure billing_mode in each subscription to opt in improved credit proration behavior.
+       * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
        */
       billing_mode?: SubscriptionCreateParams.BillingMode;
 
       /**
-       * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
+       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
        */
-      cancel_at?: number;
+      billing_thresholds?: Stripe.Emptyable<
+        SubscriptionCreateParams.BillingThresholds
+      >;
 
       /**
-       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
+       * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
+       */
+      cancel_at?: number | SubscriptionCreateParams.CancelAt;
+
+      /**
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`. This param will be removed in a future API version. Please use `cancel_at` instead.
        */
       cancel_at_period_end?: boolean;
 
@@ -372,6 +379,20 @@ declare module 'stripe' {
 
       type BillingMode = 'classic' | 'flexible';
 
+      interface BillingThresholds {
+        /**
+         * Monetary threshold that triggers the subscription to advance to a new billing period
+         */
+        amount_gte?: number;
+
+        /**
+         * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+         */
+        reset_billing_cycle_anchor?: boolean;
+      }
+
+      type CancelAt = 'max_period_end' | 'min_period_end';
+
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
       interface Discount {
@@ -467,6 +488,11 @@ declare module 'stripe' {
 
       interface Item {
         /**
+         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+         */
+        billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
+        /**
          * The coupons to redeem into discounts for the subscription item.
          */
         discounts?: Stripe.Emptyable<Array<Item.Discount>>;
@@ -508,6 +534,13 @@ declare module 'stripe' {
       }
 
       namespace Item {
+        interface BillingThresholds {
+          /**
+           * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+           */
+          usage_gte: number;
+        }
+
         interface Discount {
           /**
            * ID of the coupon to create a new discount for.
@@ -1055,12 +1088,19 @@ declare module 'stripe' {
       billing_cycle_anchor?: SubscriptionUpdateParams.BillingCycleAnchor;
 
       /**
-       * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
+       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
        */
-      cancel_at?: Stripe.Emptyable<number>;
+      billing_thresholds?: Stripe.Emptyable<
+        SubscriptionUpdateParams.BillingThresholds
+      >;
 
       /**
-       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
+       * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
+       */
+      cancel_at?: Stripe.Emptyable<number | SubscriptionUpdateParams.CancelAt>;
+
+      /**
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`. This param will be removed in a future API version. Please use `cancel_at` instead.
        */
       cancel_at_period_end?: boolean;
 
@@ -1175,7 +1215,7 @@ declare module 'stripe' {
       proration_behavior?: SubscriptionUpdateParams.ProrationBehavior;
 
       /**
-       * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply exactly the same proration that was previewed with [upcoming invoice](https://stripe.com/docs/api#upcoming_invoice) endpoint. It can also be used to implement custom proration logic, such as prorating by day instead of by second, by providing the time that you wish to use for proration calculations.
+       * If set, prorations will be calculated as though the subscription was updated at the given time. This can be used to apply exactly the same prorations that were previewed with the [create preview](https://stripe.com/docs/api/invoices/create_preview) endpoint. `proration_date` can also be used to implement custom proration logic, such as prorating by day instead of by second, by providing the time that you wish to use for proration calculations.
        */
       proration_date?: number;
 
@@ -1185,7 +1225,7 @@ declare module 'stripe' {
       transfer_data?: Stripe.Emptyable<SubscriptionUpdateParams.TransferData>;
 
       /**
-       * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
+       * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, `trial_end` will override the default trial period of the plan the customer is being subscribed to. The `billing_cycle_anchor` will be updated to the `trial_end` value. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
        */
       trial_end?: 'now' | number;
 
@@ -1354,6 +1394,20 @@ declare module 'stripe' {
 
       type BillingCycleAnchor = 'now' | 'unchanged';
 
+      interface BillingThresholds {
+        /**
+         * Monetary threshold that triggers the subscription to advance to a new billing period
+         */
+        amount_gte?: number;
+
+        /**
+         * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+         */
+        reset_billing_cycle_anchor?: boolean;
+      }
+
+      type CancelAt = 'max_period_end' | 'min_period_end';
+
       interface CancellationDetails {
         /**
          * Additional comments about why the user canceled the subscription, if the subscription was canceled explicitly by the user.
@@ -1473,6 +1527,11 @@ declare module 'stripe' {
 
       interface Item {
         /**
+         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+         */
+        billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
+        /**
          * Delete all usage for a given subscription item. You must pass this when deleting a usage records subscription item. `clear_usage` has no effect if the plan has a billing meter attached.
          */
         clear_usage?: boolean;
@@ -1524,6 +1583,13 @@ declare module 'stripe' {
       }
 
       namespace Item {
+        interface BillingThresholds {
+          /**
+           * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+           */
+          usage_gte: number;
+        }
+
         interface Discount {
           /**
            * ID of the coupon to create a new discount for.
@@ -2177,6 +2243,18 @@ declare module 'stripe' {
 
     interface SubscriptionDeleteDiscountParams {}
 
+    interface SubscriptionMigrateParams {
+      /**
+       * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+       */
+      billing_mode: 'flexible';
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface SubscriptionResumeParams {
       /**
        * The billing cycle anchor that applies when the subscription is resumed. Either `now` or `unchanged`. The default is `now`. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
@@ -2189,12 +2267,12 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) resulting from the `billing_cycle_anchor` being `unchanged`. When the `billing_cycle_anchor` is set to `now` (default value), no prorations are generated. If no value is passed, the default is `create_prorations`.
        */
       proration_behavior?: SubscriptionResumeParams.ProrationBehavior;
 
       /**
-       * If set, the proration will be calculated as though the subscription was resumed at the given time. This can be used to apply exactly the same proration that was previewed with [upcoming invoice](https://stripe.com/docs/api#retrieve_customer_invoice) endpoint.
+       * If set, prorations will be calculated as though the subscription was resumed at the given time. This can be used to apply exactly the same prorations that were previewed with the [create preview](https://stripe.com/docs/api/invoices/create_preview) endpoint.
        */
       proration_date?: number;
     }
@@ -2234,7 +2312,7 @@ declare module 'stripe' {
        * When you create a subscription with collection_method=charge_automatically, the first invoice is finalized as part of the request.
        * The payment_behavior parameter determines the exact behavior of the initial payment.
        *
-       * To start subscriptions where the first invoice always begins in a draft status, use [subscription schedules](https://stripe.com/docs/billing/subscriptions/subscription-schedules#managing) instead.
+       * To start subscriptions where the first invoice always begins in a draft status, use [subscription schedules](https://docs.stripe.com/docs/billing/subscriptions/subscription-schedules#managing) instead.
        * Schedules provide the flexibility to model more complex billing configurations that change over time.
        */
       create(
@@ -2261,7 +2339,7 @@ declare module 'stripe' {
       /**
        * Updates an existing subscription to match the specified parameters.
        * When changing prices or quantities, we optionally prorate the price we charge next month to make up for any price changes.
-       * To preview how the proration is calculated, use the [create preview](https://stripe.com/docs/api/invoices/create_preview) endpoint.
+       * To preview how the proration is calculated, use the [create preview](https://docs.stripe.com/docs/api/invoices/create_preview) endpoint.
        *
        * By default, we prorate subscription changes. For example, if a customer signs up on May 1 for a 100 price, they'll be billed 100 immediately. If on May 15 they switch to a 200 price, then on June 1 they'll be billed 250 (200 for a renewal of her subscription, plus a 50 prorating adjustment for half of the previous month's 100 difference). Similarly, a downgrade generates a credit that is applied to the next invoice. We also prorate when you make quantity changes.
        *
@@ -2273,13 +2351,13 @@ declare module 'stripe' {
        * A trial starts or ends.
        *
        *
-       * In these cases, we apply a credit for the unused time on the previous price, immediately charge the customer using the new price, and reset the billing date. Learn about how [Stripe immediately attempts payment for subscription changes](https://stripe.com/docs/billing/subscriptions/upgrade-downgrade#immediate-payment).
+       * In these cases, we apply a credit for the unused time on the previous price, immediately charge the customer using the new price, and reset the billing date. Learn about how [Stripe immediately attempts payment for subscription changes](https://docs.stripe.com/docs/billing/subscriptions/upgrade-downgrade#immediate-payment).
        *
-       * If you want to charge for an upgrade immediately, pass proration_behavior as always_invoice to create prorations, automatically invoice the customer for those proration adjustments, and attempt to collect payment. If you pass create_prorations, the prorations are created but not automatically invoiced. If you want to bill the customer for the prorations before the subscription's renewal date, you need to manually [invoice the customer](https://stripe.com/docs/api/invoices/create).
+       * If you want to charge for an upgrade immediately, pass proration_behavior as always_invoice to create prorations, automatically invoice the customer for those proration adjustments, and attempt to collect payment. If you pass create_prorations, the prorations are created but not automatically invoiced. If you want to bill the customer for the prorations before the subscription's renewal date, you need to manually [invoice the customer](https://docs.stripe.com/docs/api/invoices/create).
        *
        * If you don't want to prorate, set the proration_behavior option to none. With this option, the customer is billed 100 on May 1 and 200 on June 1. Similarly, if you set proration_behavior to none when switching between different billing intervals (for example, from monthly to yearly), we don't generate any credits for the old subscription's unused time. We still reset the billing date and bill immediately for the new subscription.
        *
-       * Updating the quantity on a subscription many times in an hour may result in [rate limiting. If you need to bill for a frequently changing quantity, consider integrating <a href="/docs/billing/subscriptions/usage-based">usage-based billing](https://stripe.com/docs/rate-limits) instead.
+       * Updating the quantity on a subscription many times in an hour may result in [rate limiting. If you need to bill for a frequently changing quantity, consider integrating <a href="/docs/billing/subscriptions/usage-based">usage-based billing](https://docs.stripe.com/docs/rate-limits) instead.
        */
       update(
         id: string,
@@ -2297,9 +2375,9 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.Subscription>;
 
       /**
-       * Cancels a customer's subscription immediately. The customer won't be charged again for the subscription. After it's canceled, you can no longer update the subscription or its [metadata](https://stripe.com/metadata).
+       * Cancels a customer's subscription immediately. The customer won't be charged again for the subscription. After it's canceled, you can no longer update the subscription or its [metadata](https://docs.stripe.com/metadata).
        *
-       * Any pending invoice items that you've created are still charged at the end of the period, unless manually [deleted](https://stripe.com/docs/api#delete_invoiceitem). If you've set the subscription to cancel at the end of the period, any pending prorations are also left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations are removed if invoice_now and prorate are both set to true.
+       * Any pending invoice items that you've created are still charged at the end of the period, unless manually [deleted](https://docs.stripe.com/api#delete_invoiceitem). If you've set the subscription to cancel at the end of the period, any pending prorations are also left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations are removed if invoice_now and prorate are both set to true.
        *
        * By default, upon subscription cancellation, Stripe stops automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
        */
@@ -2327,6 +2405,15 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
 
       /**
+       * Upgrade the billing_mode of an existing subscription.
+       */
+      migrate(
+        id: string,
+        params: SubscriptionMigrateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Subscription>>;
+
+      /**
        * Initiates resumption of a paused subscription, optionally resetting the billing cycle anchor and creating prorations. If a resumption invoice is generated, it must be paid or marked uncollectible before the subscription will be unpaused. If payment succeeds the subscription will become active, and if payment fails the subscription will be past_due. The resumption invoice will void automatically if not paid by the expiration date.
        */
       resume(
@@ -2340,7 +2427,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Subscription>>;
 
       /**
-       * Search for subscriptions you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
+       * Search for subscriptions you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
        * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
        * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
        * to an hour behind during outages. Search functionality is not available to merchants in India.

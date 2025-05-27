@@ -12,6 +12,19 @@
   * Add support for new values `aw_tin`, `az_tin`, `bd_bin`, `bf_ifu`, `bj_ifu`, `cm_niu`, `cv_nif`, `et_tin`, `kg_tin`, and `la_tin` on enums `OrderCreateParams.tax_details.tax_ids[].type` and `OrderUpdateParams.tax_details.tax_ids[].type`
   * Add support for new value `balance_settings.updated` on enums `WebhookEndpointUpdateParams.enabled_events`
 
+## 18.1.1 - 2025-05-19
+* [#2308](https://github.com/stripe/stripe-node/pull/2308) RawRequest now allows you set `host` and `streaming` in request options.
+  ```typescript
+  const file = await stripe.rawRequest(
+    'GET',
+    '/v1/files/file_123/contents',
+    {},
+    {host: 'files.stripe.com', streaming: true}
+  );
+  ```
+* [#2320](https://github.com/stripe/stripe-node/pull/2320) fix: examples/webhook-signing/nestjs/package.json to reduce vulnerabilities.
+* [#2326](https://github.com/stripe/stripe-node/pull/2326) Adds CONTRIBUTING.md
+
 ## 18.1.0 - 2025-04-30
 
   This release changes the pinned API version to `2025-04-30.basil`.
@@ -706,24 +719,6 @@
 
   ### Changes
   * Change `BillingPortal.ConfigurationCreateParams.features.subscription_update.default_allowed_updates` and `BillingPortal.ConfigurationCreateParams.features.subscription_update.products` to be optional
-* [#2195](https://github.com/stripe/stripe-node/pull/2195) Remove parseSnapshotEvent
-* [#2188](https://github.com/stripe/stripe-node/pull/2188) Revert "Add raw_request (#2185)"
-* [#2185](https://github.com/stripe/stripe-node/pull/2185) Add raw_request
-  Adds the ability to make raw requests to the Stripe API, by providing an HTTP method and url.
-
-  Example:
-  ```node
-  import Stripe from 'stripe';
-  const stripe = new Stripe('sk_test_...');
-
-  const response = await stripe.rawRequest(
-    'POST',
-    '/v1/beta_endpoint',
-    { param: 123 },
-    { apiVersion: '2022-11-15; feature_beta=v3' }
-  );
-
-  ```
 
 ## 16.13.0-beta.1 - 2024-09-18
 * [#2178](https://github.com/stripe/stripe-node/pull/2178) Update generated code for beta
@@ -2125,8 +2120,13 @@
 ## 12.10.0 - 2023-06-22
 * [#1820](https://github.com/stripe/stripe-node/pull/1820) Update generated code
   * Add support for `on_behalf_of` on `Mandate`
+* [#1817](https://github.com/stripe/stripe-node/pull/1817) Update README.md
+* [#1819](https://github.com/stripe/stripe-node/pull/1819) Update generated code
+  * Release specs are identical.
 * [#1813](https://github.com/stripe/stripe-node/pull/1813) Update generated code
   * Change type of `Checkout.Session.success_url` from `string` to `string | null`
+  * Change type of `FileCreateParams.file` from `string` to `file`
+* [#1815](https://github.com/stripe/stripe-node/pull/1815) Generate FileCreateParams
 
 ## 12.10.0-beta.2 - 2023-06-15
 * [#1818](https://github.com/stripe/stripe-node/pull/1818) Update generated code for beta
@@ -2237,15 +2237,6 @@
 ## 12.4.0-beta.1 - 2023-04-27
 * [#1769](https://github.com/stripe/stripe-node/pull/1769) Update generated code for beta
   * Add support for `billing_cycle_anchor` and `proration_behavior` on `CheckoutSessionCreateParams.subscription_data`
-  * Add support for `terminal_id` on `Issuing.Authorization.merchant_data` and `Issuing.Transaction.merchant_data`
-  * Add support for `metadata` on `PaymentIntentCaptureParams`
-  * Add support for `checks` on `SetupAttempt.payment_method_details.card`
-  * Add support for `tax_breakdown` on `Tax.Calculation.shipping_cost` and `Tax.Transaction.shipping_cost`
-  * Change type of `TaxRegistrationCreateParams.active_from`, `TaxRegistrationUpdateParams.active_from`, and `TaxRegistrationUpdateParams.expires_at` from `longInteger` to `longInteger | literal('now')`
-
-## 12.3.0 - 2023-04-27
-* [#1770](https://github.com/stripe/stripe-node/pull/1770) Update generated code
-  * Add support for `billing_cycle_anchor` and `proration_behavior` on `Checkout.SessionCreateParams.subscription_data`
   * Add support for `terminal_id` on `Issuing.Authorization.merchant_data` and `Issuing.Transaction.merchant_data`
   * Add support for `metadata` on `PaymentIntentCaptureParams`
   * Add support for `checks` on `SetupAttempt.payment_method_details.card`
@@ -2574,6 +2565,7 @@ This was added to maintain backwards compatibility during the transition of stri
   * Add support for new value `BE` on enums `Checkout.Session.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`, `Invoice.payment_settings.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`, `PaymentIntent.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`, and `Subscription.payment_settings.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`
   * Add support for new values `cs-CZ`, `el-GR`, `en-CZ`, and `en-GR` on enums `PaymentIntentConfirmParams.payment_method_options.klarna.preferred_locale`, `PaymentIntentCreateParams.payment_method_options.klarna.preferred_locale`, and `PaymentIntentUpdateParams.payment_method_options.klarna.preferred_locale`
 * [#1660](https://github.com/stripe/stripe-node/pull/1660) Introduce separate entry point for worker environments
+  * This is technically a breaking change that explicitly defines package entry points and was mistakenly released in a minor version. If your application previously imported other internal files from stripe-node and this change breaks it, please open an issue detailing your use case.
 
 ## 11.8.0-beta.1 - 2023-01-19
 * [#1662](https://github.com/stripe/stripe-node/pull/1662) API Updates for beta branch
@@ -2682,6 +2674,63 @@ This release includes breaking changes resulting from moving to use the new API 
 * [#1612](https://github.com/stripe/stripe-node/pull/1612) Add type information here and there
 * [#1615](https://github.com/stripe/stripe-node/pull/1615) API Updates
   * ⚠️ Remove support for `tos_shown_and_accepted` on `Checkout.SessionCreateParams.payment_method_options.paynow`. The property was mistakenly released and never worked.
+
+### ⚠️ Changed
+* Drop support for Node.js 8 and 10. We now support Node.js 12+. ((#1579)
+* Change `StripeSignatureVerificationError` to have `header` and `payload` fields instead of `detail`. To access these properties, use `err.header` and `err.payload` instead of `err.detail.header` and `err.detail.payload`. (#1574)
+
+### ⚠️ Removed
+* Remove `Orders` resource. (#1580)
+* Remove `SKU` resource (#1583)
+* Remove deprecated `Checkout.SessionCreateParams.subscription_data.items`. (#1580)
+* Remove deprecated configuration setter methods (`setHost`, `setProtocol`, `setPort`, `setApiVersion`, `setApiKey`, `setTimeout`, `setAppInfo`, `setHttpAgent`, `setMaxNetworkRetries`, and `setTelemetryEnabled`). (#1597)
+
+  Use the config object to set these options instead, for example:
+  ```typescript
+  const stripe = Stripe('sk_test_...', {
+    apiVersion: '2019-08-08',
+    maxNetworkRetries: 1,
+    httpAgent: new ProxyAgent(process.env.http_proxy),
+    timeout: 1000,
+    host: 'api.example.com',
+    port: 123,
+    telemetry: true,
+  });
+  ```
+* Remove deprecated basic method definitions. (#1600)
+  Use basic methods defined on the resource instead.
+  ```typescript
+  // Before
+  basicMethods: true
+
+  // After
+  create: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/resource',
+  }),
+  list: stripeMethod({
+    method: 'GET',
+    methodType: 'list',
+    fullPath: '/v1/resource',
+  }),
+  retrieve: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/resource/{id}',
+  }),
+  update: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/resource/{id}',
+  }),
+  // Avoid 'delete' keyword in JS
+  del: stripeMethod({
+    method: 'DELETE',
+    fullPath: '/v1/resource/{id}',
+  }),
+  ```
+* Remove deprecated option names. Use the following option names instead (`OLD`->`NEW`): `api_key`->`apiKey`, `idempotency_key`->`idempotencyKey`, `stripe_account`->`stripeAccount`, `stripe_version`->`apiVersion`, `stripeVersion`->`apiVersion`. (#1600)
+* Remove `charges` field on `PaymentIntent` and replace it with `latest_charge`. (#1614 )
+* Remove deprecated `amount` field on `Checkout.Session.LineItem`. (#1614 )
+* Remove support for `tos_shown_and_accepted` on `Checkout.Session.PaymentMethodOptions.Paynow`. (#1614 )
 
 ## 10.18.0-beta.1 - 2022-11-10
 * [#1616](https://github.com/stripe/stripe-node/pull/1616) API Updates for beta branch
@@ -2876,14 +2925,47 @@ This release includes breaking changes resulting from moving to use the new API 
 
 ## 10.0.0 - 2022-08-02
 
-Major version release for API version 2022-08-01. Default API version changed to "2022-08-01".
+This release includes breaking changes resulting from:
 
-Breaking changes that arose during code generation of the library that we postponed for the next major version. For changes to the SDK, read more detailed description at https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v10. For changes to the Stripe products, read more at https://stripe.com/docs/upgrades#2022-08-01.
+* Moving to use the new API version "2022-08-01". To learn more about these changes to Stripe products, see https://stripe.com/docs/upgrades#2022-08-01
+* Cleaning up the SDK to remove deprecated/unused APIs and rename classes/methods/properties to sync with product APIs. Read more detailed description at https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v10.
 
 "⚠️" symbol highlights breaking changes.
 
 * [#1497](https://github.com/stripe/stripe-node/pull/1497) API Updates
 * [#1493](https://github.com/stripe/stripe-node/pull/1493) Next major release changes
+
+### Added
+* Add support for new value `invalid_tos_acceptance` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `Capability.future_requirements.errors[].code`, `Capability.requirements.errors[].code`, `Person.future_requirements.errors[].code`, and `Person.requirements.errors[].code`
+* Add support for `shipping_cost` and `shipping_details` on `Checkout.Session`
+
+### ⚠️ Changed
+* Change type of `business_profile`, `business_type`, `country`, `default_currency`, and `settings` properties on `Account` resource to be nullable.
+* Change type of `currency` property on `Checkout.Session` resource from `string` to `'cad' | 'usd'`.
+* Change location of TypeScript definitions for `CreditNoteLineItemListPreviewParams`, `CreditNoteLineItemListPreviewParams.Line`, `CreditNoteLineItemListPreviewParams.Line.Type`, and `CreditNoteLineItemListPreviewParams.Line.Reason` interfaces from `CreditNoteLineItems.d.ts` to `CreditNotes.d.ts`.
+* Change type of `address`, `currency`, `delinquent`, `discount`, `invoice_prefix`, `name`, `phone`, and `preferred_locales` properties on `Customer` resource to be nullable.
+* Rename `InvoiceRetrieveUpcomingParams` to `InvoiceListUpcomingLinesParams`.
+
+### ⚠️ Removed
+* Remove for `AlipayAccount`, `DeletedAlipayAccount`, `BitcoinReceiver`, `DeletedBitcoinReceiver`, `BitcoinTransaction`, and `BitcoinTransactionListParams` definitions.
+* Remove `AlipayAccount` and `BitcoinReceiver` from `CustomerSource`.
+* Remove `Stripe.DeletedAlipayAccount` and `Stripe.DeletedBitcoinReceiver` from possible values of `source` property in `PaymentIntent`.
+* Remove `IssuerFraudRecord`, `IssuerFraudRecordRetrieveParams`, `IssuerFraudRecordListParams`, and `IssuerFraudRecordsResource`, definitions.
+* Remove `treasury.received_credit.reversed` webhook event constant. Please use `treasury.received_credit.returned` instead.
+* Remove `order.payment_failed`, `transfer.failed`, and `transfer.paid`. The events were deprecated.
+* Remove `retrieveDetails` method from `Issuing.Card` resource. The method was unsupported. Read more at https://stripe.com/docs/issuing/cards/virtual.
+* Remove `Issuing.CardDetails` and `CardRetrieveDetailsParams` definition.
+* Remove `IssuerFraudRecords` resource.
+* Remove `Recipient` resource and`recipient` property from `Card` resource.
+* Remove `InvoiceMarkUncollectibleParams` definition.
+* Remove deprecated `Stripe.Errors` and `StripeError` (and derived `StripeCardError`, `StripeInvalidRequestError`, `StripeAPIError`, `StripeAuthenticationError`,  `StripePermissionError`, `StripeRateLimitError`, `StripeConnectionError`, `StripeSignatureVerificationError`, `StripeIdempotencyError`, and `StripeInvalidGrantError`)  definitions.
+* Remove `redirect_url` from `LoginLinks` definition. The property is no longer supported.
+* Remove `LineItemListParams` definition. The interface was no longer in use.
+
+### ⚠️ Renamed
+* Rename `listUpcomingLineItems` method on `Invoice` resource to `listUpcomingLines`.
+* Rename `InvoiceLineItemListUpcomingParams` to `InvoiceListUpcomingLinesParams`.
+* Rename `InvoiceRetrieveUpcomingParams` to `InvoiceListUpcomingLinesParams`.
 
 ## 9.16.0 - 2022-07-26
 * [#1492](https://github.com/stripe/stripe-node/pull/1492) API Updates
@@ -5078,6 +5160,10 @@ Pull requests included in this release (cf. [#606](https://github.com/stripe/str
 ## 2.2.2 - 2013-11-20
 
 - [BUGFIX] Fix incorrect deleteDiscount method & related spec(s)
+
+### 2.2.1 - 2013-12-01
+
+- [BUGFIX] Fix user-agent header issue (see issue #75)
 
 ## 2.2.1 - 2013-12-01
 

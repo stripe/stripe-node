@@ -30,6 +30,11 @@ declare module 'stripe' {
       available_on: number;
 
       /**
+       * The balance that this transaction impacts.
+       */
+      balance_type: BalanceTransaction.BalanceType;
+
+      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created: number;
@@ -86,6 +91,11 @@ declare module 'stripe' {
     }
 
     namespace BalanceTransaction {
+      type BalanceType =
+        | 'issuing'
+        | 'payments'
+        | 'refund_and_dispute_prefunding';
+
       interface FeeDetail {
         /**
          * Amount of the fee, in cents.

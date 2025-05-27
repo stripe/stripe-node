@@ -649,7 +649,7 @@ declare module 'stripe' {
 
         interface Networks {
           /**
-           * All networks available for selection via [payment_method_options.card.network](https://stripe.com/api/payment_intents/confirm#confirm_payment_intent-payment_method_options-card-network).
+           * All networks available for selection via [payment_method_options.card.network](https://docs.stripe.com/api/payment_intents/confirm#confirm_payment_intent-payment_method_options-card-network).
            */
           available: Array<string>;
 
@@ -849,7 +849,7 @@ declare module 'stripe' {
       namespace CardPresent {
         interface Networks {
           /**
-           * All networks available for selection via [payment_method_options.card.network](https://stripe.com/api/payment_intents/confirm#confirm_payment_intent-payment_method_options-card-network).
+           * All networks available for selection via [payment_method_options.card.network](https://docs.stripe.com/api/payment_intents/confirm#confirm_payment_intent-payment_method_options-card-network).
            */
           available: Array<string>;
 
@@ -1131,7 +1131,7 @@ declare module 'stripe' {
       namespace InteracPresent {
         interface Networks {
           /**
-           * All networks available for selection via [payment_method_options.card.network](https://stripe.com/api/payment_intents/confirm#confirm_payment_intent-payment_method_options-card-network).
+           * All networks available for selection via [payment_method_options.card.network](https://docs.stripe.com/api/payment_intents/confirm#confirm_payment_intent-payment_method_options-card-network).
            */
           available: Array<string>;
 
@@ -1240,7 +1240,7 @@ declare module 'stripe' {
         /**
          * Uniquely identifies this particular Naver Pay account. You can use this attribute to check whether two Naver Pay accounts are the same.
          */
-        buyer_id?: string | null;
+        buyer_id: string | null;
 
         /**
          * Whether to fund this transaction with Naver Pay points or a card.

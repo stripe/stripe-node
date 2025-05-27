@@ -87,6 +87,7 @@ declare module 'stripe' {
           | 'bbpos_wisepad3'
           | 'bbpos_wisepos_e'
           | 'mobile_phone_reader'
+          | 'simulated_stripe_s700'
           | 'simulated_wisepos_e'
           | 'stripe_m2'
           | 'stripe_s700'
@@ -292,9 +293,23 @@ declare module 'stripe' {
         payment_intent: string;
 
         /**
+         * Configuration overrides
+         */
+        confirm_config?: ReaderConfirmPaymentIntentParams.ConfirmConfig;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+      }
+
+      namespace ReaderConfirmPaymentIntentParams {
+        interface ConfirmConfig {
+          /**
+           * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. If you'd prefer to redirect to a mobile application, you can alternatively supply an application URI scheme.
+           */
+          return_url?: string;
+        }
       }
 
       interface ReaderProcessPaymentIntentParams {
@@ -325,6 +340,11 @@ declare module 'stripe' {
            * Enables cancel button on transaction screens.
            */
           enable_customer_cancellation?: boolean;
+
+          /**
+           * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. If you'd prefer to redirect to a mobile application, you can alternatively supply an application URI scheme.
+           */
+          return_url?: string;
 
           /**
            * Override showing a tipping selection screen on this transaction.
