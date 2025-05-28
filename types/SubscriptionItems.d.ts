@@ -139,5 +139,14 @@ declare module 'stripe' {
         type Type = 'free' | 'paid';
       }
     }
+
+    namespace SubscriptionItem {
+      interface BillingThresholds {
+        /**
+         * Usage threshold that triggers the subscription to create an invoice
+         */
+        usage_gte: number | null;
+      }
+    }
   }
 }
