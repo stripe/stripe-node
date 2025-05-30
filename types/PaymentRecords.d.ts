@@ -307,6 +307,9 @@ declare module 'stripe' {
          */
         type: string;
 
+        /**
+         * Details of the US Bank Account used for this payment attempt.
+         */
         us_bank_account?: PaymentMethodDetails.UsBankAccount;
 
         wechat?: PaymentMethodDetails.Wechat;
@@ -2030,15 +2033,14 @@ declare module 'stripe' {
         interface Twint {}
 
         interface UsBankAccount {
-          /**
-           * Account holder type: individual or company.
-           */
           account_holder_type: UsBankAccount.AccountHolderType | null;
 
-          /**
-           * Account type: checkings or savings. Defaults to checking if omitted.
-           */
           account_type: UsBankAccount.AccountType | null;
+
+          /**
+           * Amount of the ACH return to the bank account.
+           */
+          ach_return_amount: UsBankAccount.AchReturnAmount | null;
 
           /**
            * Name of the bank associated with the bank account.
@@ -2075,6 +2077,18 @@ declare module 'stripe' {
           type AccountHolderType = 'company' | 'individual';
 
           type AccountType = 'checking' | 'savings';
+
+          interface AchReturnAmount {
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * A positive integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) for example, 100 cents for 1 USD or 100 for 100 JPY, a zero-decimal currency.
+             */
+            value: number;
+          }
         }
 
         interface Wechat {}

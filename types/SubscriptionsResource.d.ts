@@ -14,7 +14,7 @@ declare module 'stripe' {
       application_fee_percent?: Stripe.Emptyable<number>;
 
       /**
-       * Automatic tax settings for this subscription. We recommend you only include this parameter when the existing value is being changed.
+       * Automatic tax settings for this subscription.
        */
       automatic_tax?: SubscriptionCreateParams.AutomaticTax;
 
@@ -51,7 +51,7 @@ declare module 'stripe' {
       cancel_at?: number | SubscriptionCreateParams.CancelAt;
 
       /**
-       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`. This param will be removed in a future API version. Please use `cancel_at` instead.
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
        */
       cancel_at_period_end?: boolean;
 
@@ -1100,7 +1100,7 @@ declare module 'stripe' {
       cancel_at?: Stripe.Emptyable<number | SubscriptionUpdateParams.CancelAt>;
 
       /**
-       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`. This param will be removed in a future API version. Please use `cancel_at` instead.
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
        */
       cancel_at_period_end?: boolean;
 
