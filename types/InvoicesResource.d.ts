@@ -4034,7 +4034,7 @@ declare module 'stripe' {
         cancel_at?: Stripe.Emptyable<number | SubscriptionDetails.CancelAt>;
 
         /**
-         * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`. This param will be removed in a future API version. Please use `cancel_at` instead.
+         * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
          */
         cancel_at_period_end?: boolean;
 

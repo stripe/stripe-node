@@ -1163,6 +1163,9 @@ declare module 'stripe' {
          */
         phone?: string;
 
+        /**
+         * When the business was incorporated or registered.
+         */
         registration_date?: Stripe.Emptyable<Company.RegistrationDate>;
 
         /**
