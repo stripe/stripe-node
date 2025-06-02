@@ -1,4 +1,8 @@
 # Changelog
+## 18.2.1 - 2025-06-02
+* [#2346](https://github.com/stripe/stripe-node/pull/2346) Allow data to be set in only `POST` rawRequests
+  * Fix bug where `rawRequest` incorrectly emits a warning when sending v2 GET requests
+
 ## 18.2.0 - 2025-05-29
  This release changes the pinned API version to `2025-05-28.basil`.
 
