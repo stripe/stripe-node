@@ -26,24 +26,24 @@ declare module 'stripe' {
     namespace V1BillingMeterErrorReportTriggeredEvent {
       export interface Data {
         /**
-         * Extra field included in the event's `data` when fetched from /v2/events.
-         */
-        developer_message_summary: string;
-
-        /**
          * This contains information about why meter error happens.
          */
         reason: Data.Reason;
 
         /**
-         * The end of the window that is encapsulated by this summary.
+         * Extra field included in the event's `data` when fetched from /v2/events.
          */
-        validation_end: string;
+        developer_message_summary: string;
 
         /**
          * The start of the window that is encapsulated by this summary.
          */
         validation_start: string;
+
+        /**
+         * The end of the window that is encapsulated by this summary.
+         */
+        validation_end: string;
       }
 
       namespace Data {
@@ -126,24 +126,24 @@ declare module 'stripe' {
     namespace V1BillingMeterNoMeterFoundEvent {
       export interface Data {
         /**
-         * Extra field included in the event's `data` when fetched from /v2/events.
-         */
-        developer_message_summary: string;
-
-        /**
          * This contains information about why meter error happens.
          */
         reason: Data.Reason;
 
         /**
-         * The end of the window that is encapsulated by this summary.
+         * Extra field included in the event's `data` when fetched from /v2/events.
          */
-        validation_end: string;
+        developer_message_summary: string;
 
         /**
          * The start of the window that is encapsulated by this summary.
          */
         validation_start: string;
+
+        /**
+         * The end of the window that is encapsulated by this summary.
+         */
+        validation_end: string;
       }
 
       namespace Data {

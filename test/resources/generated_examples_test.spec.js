@@ -3894,17 +3894,22 @@ describe('Generated tests', function() {
     expect(webhookEndpoint).not.to.be.null;
   });
 
-  it('test_v2_billing_meter_event_session_post', async function() {
+  it('test_v2_billing_meter_event_post', async function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
-        path: '/v2/billing/meter_event_session',
+        path: '/v2/billing/meter_events',
         response:
-          '{"authentication_token":"authentication_token","created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","id":"obj_123","object":"v2.billing.meter_event_session","livemode":true}',
+          '{"created":"1970-01-12T21:42:34.472Z","event_name":"event_name","identifier":"identifier","object":"v2.billing.meter_event","payload":{"undefined":"payload"},"timestamp":"1970-01-01T15:18:46.294Z","livemode":true}',
       },
     ]);
-    const meterEventSession = await stripe.v2.billing.meterEventSession.create();
-    expect(meterEventSession).not.to.be.null;
+    const meterEvent = await stripe.v2.billing.meterEvents.create({
+      event_name: 'event_name',
+      payload: {
+        undefined: 'payload',
+      },
+    });
+    expect(meterEvent).not.to.be.null;
   });
 
   it('test_v2_billing_meter_event_adjustment_post', async function() {
@@ -3926,6 +3931,19 @@ describe('Generated tests', function() {
       }
     );
     expect(meterEventAdjustment).not.to.be.null;
+  });
+
+  it('test_v2_billing_meter_event_session_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/meter_event_session',
+        response:
+          '{"authentication_token":"authentication_token","created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","id":"obj_123","object":"v2.billing.meter_event_session","livemode":true}',
+      },
+    ]);
+    const meterEventSession = await stripe.v2.billing.meterEventSession.create();
+    expect(meterEventSession).not.to.be.null;
   });
 
   it('test_v2_billing_meter_event_stream_post', async function() {
@@ -3951,22 +3969,45 @@ describe('Generated tests', function() {
     expect(emptyObject).to.eql({});
   });
 
-  it('test_v2_billing_meter_event_post', async function() {
+  it('test_v2_core_event_get', async function() {
     const stripe = testUtils.createMockClient([
       {
-        method: 'POST',
-        path: '/v2/billing/meter_events',
+        method: 'GET',
+        path: '/v2/core/events?object_id=object_id',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","event_name":"event_name","identifier":"identifier","object":"v2.billing.meter_event","payload":{"undefined":"payload"},"timestamp":"1970-01-01T15:18:46.294Z","livemode":true}',
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","type":"type","livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
-    const meterEvent = await stripe.v2.billing.meterEvents.create({
-      event_name: 'event_name',
-      payload: {
-        undefined: 'payload',
-      },
+    const events = await stripe.v2.core.events.list({
+      object_id: 'object_id',
     });
-    expect(meterEvent).not.to.be.null;
+    expect(events).not.to.be.null;
+  });
+
+  it('test_v2_core_event_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/events/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","type":"type","livemode":true}',
+      },
+    ]);
+    const event = await stripe.v2.core.events.retrieve('id_123');
+    expect(event).not.to.be.null;
+  });
+
+  it('test_v2_core_event_destination_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/event_destinations',
+        response:
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","description":"description","enabled_events":["enabled_events"],"event_payload":"thin","id":"obj_123","name":"name","object":"v2.core.event_destination","status":"disabled","type":"amazon_eventbridge","updated":"1970-01-03T17:07:10.277Z","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const eventDestinations = await stripe.v2.core.eventDestinations.list();
+    expect(eventDestinations).not.to.be.null;
   });
 
   it('test_v2_core_event_destination_post', async function() {
@@ -3975,7 +4016,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/core/event_destinations',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","description":"description","enabled_events":["enabled_events"],"event_payload":"thin","events_from":null,"id":"obj_123","metadata":null,"name":"name","object":"v2.core.event_destination","snapshot_api_version":null,"status":"disabled","status_details":null,"type":"amazon_eventbridge","updated":"1970-01-03T17:07:10.277Z","livemode":true,"amazon_eventbridge":null,"webhook_endpoint":null}',
+          '{"created":"1970-01-12T21:42:34.472Z","description":"description","enabled_events":["enabled_events"],"event_payload":"thin","id":"obj_123","name":"name","object":"v2.core.event_destination","status":"disabled","type":"amazon_eventbridge","updated":"1970-01-03T17:07:10.277Z","livemode":true}',
       },
     ]);
     const eventDestination = await stripe.v2.core.eventDestinations.create({
@@ -3992,11 +4033,23 @@ describe('Generated tests', function() {
       {
         method: 'DELETE',
         path: '/v2/core/event_destinations/id_123',
-        response:
-          '{"created":"1970-01-12T21:42:34.472Z","description":"description","enabled_events":["enabled_events"],"event_payload":"thin","events_from":null,"id":"obj_123","metadata":null,"name":"name","object":"v2.core.event_destination","snapshot_api_version":null,"status":"disabled","status_details":null,"type":"amazon_eventbridge","updated":"1970-01-03T17:07:10.277Z","livemode":true,"amazon_eventbridge":null,"webhook_endpoint":null}',
+        response: 'null',
       },
     ]);
-    const eventDestination = await stripe.v2.core.eventDestinations.del(
+    const deleted = await stripe.v2.core.eventDestinations.del('id_123');
+    expect(deleted).not.to.be.null;
+  });
+
+  it('test_v2_core_event_destination_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/event_destinations/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","description":"description","enabled_events":["enabled_events"],"event_payload":"thin","id":"obj_123","name":"name","object":"v2.core.event_destination","status":"disabled","type":"amazon_eventbridge","updated":"1970-01-03T17:07:10.277Z","livemode":true}',
+      },
+    ]);
+    const eventDestination = await stripe.v2.core.eventDestinations.retrieve(
       'id_123'
     );
     expect(eventDestination).not.to.be.null;
@@ -4006,12 +4059,12 @@ describe('Generated tests', function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
-        path: '/v2/core/event_destinations/id_123/disable',
+        path: '/v2/core/event_destinations/id_123',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","description":"description","enabled_events":["enabled_events"],"event_payload":"thin","events_from":null,"id":"obj_123","metadata":null,"name":"name","object":"v2.core.event_destination","snapshot_api_version":null,"status":"disabled","status_details":null,"type":"amazon_eventbridge","updated":"1970-01-03T17:07:10.277Z","livemode":true,"amazon_eventbridge":null,"webhook_endpoint":null}',
+          '{"created":"1970-01-12T21:42:34.472Z","description":"description","enabled_events":["enabled_events"],"event_payload":"thin","id":"obj_123","name":"name","object":"v2.core.event_destination","status":"disabled","type":"amazon_eventbridge","updated":"1970-01-03T17:07:10.277Z","livemode":true}',
       },
     ]);
-    const eventDestination = await stripe.v2.core.eventDestinations.disable(
+    const eventDestination = await stripe.v2.core.eventDestinations.update(
       'id_123'
     );
     expect(eventDestination).not.to.be.null;
@@ -4021,53 +4074,27 @@ describe('Generated tests', function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
-        path: '/v2/core/event_destinations/id_123/enable',
+        path: '/v2/core/event_destinations/id_123/disable',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","description":"description","enabled_events":["enabled_events"],"event_payload":"thin","events_from":null,"id":"obj_123","metadata":null,"name":"name","object":"v2.core.event_destination","snapshot_api_version":null,"status":"disabled","status_details":null,"type":"amazon_eventbridge","updated":"1970-01-03T17:07:10.277Z","livemode":true,"amazon_eventbridge":null,"webhook_endpoint":null}',
+          '{"created":"1970-01-12T21:42:34.472Z","description":"description","enabled_events":["enabled_events"],"event_payload":"thin","id":"obj_123","name":"name","object":"v2.core.event_destination","status":"disabled","type":"amazon_eventbridge","updated":"1970-01-03T17:07:10.277Z","livemode":true}',
       },
     ]);
-    const eventDestination = await stripe.v2.core.eventDestinations.enable(
+    const eventDestination = await stripe.v2.core.eventDestinations.disable(
       'id_123'
     );
     expect(eventDestination).not.to.be.null;
-  });
-
-  it('test_v2_core_event_destination_get', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/core/event_destinations',
-        response:
-          '{"data":[{"created":"1970-01-12T21:42:34.472Z","description":"description","enabled_events":["enabled_events"],"event_payload":"thin","events_from":null,"id":"obj_123","metadata":null,"name":"name","object":"v2.core.event_destination","snapshot_api_version":null,"status":"disabled","status_details":null,"type":"amazon_eventbridge","updated":"1970-01-03T17:07:10.277Z","livemode":true,"amazon_eventbridge":null,"webhook_endpoint":null}],"next_page_url":null,"previous_page_url":null}',
-      },
-    ]);
-    const eventDestinations = await stripe.v2.core.eventDestinations.list();
-    expect(eventDestinations).not.to.be.null;
   });
 
   it('test_v2_core_event_destination_post_4', async function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
-        path: '/v2/core/event_destinations/id_123/ping',
+        path: '/v2/core/event_destinations/id_123/enable',
         response:
-          '{"context":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":null,"type":"type","livemode":true}',
+          '{"created":"1970-01-12T21:42:34.472Z","description":"description","enabled_events":["enabled_events"],"event_payload":"thin","id":"obj_123","name":"name","object":"v2.core.event_destination","status":"disabled","type":"amazon_eventbridge","updated":"1970-01-03T17:07:10.277Z","livemode":true}',
       },
     ]);
-    const event = await stripe.v2.core.eventDestinations.ping('id_123');
-    expect(event).not.to.be.null;
-  });
-
-  it('test_v2_core_event_destination_get_2', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/core/event_destinations/id_123',
-        response:
-          '{"created":"1970-01-12T21:42:34.472Z","description":"description","enabled_events":["enabled_events"],"event_payload":"thin","events_from":null,"id":"obj_123","metadata":null,"name":"name","object":"v2.core.event_destination","snapshot_api_version":null,"status":"disabled","status_details":null,"type":"amazon_eventbridge","updated":"1970-01-03T17:07:10.277Z","livemode":true,"amazon_eventbridge":null,"webhook_endpoint":null}',
-      },
-    ]);
-    const eventDestination = await stripe.v2.core.eventDestinations.retrieve(
+    const eventDestination = await stripe.v2.core.eventDestinations.enable(
       'id_123'
     );
     expect(eventDestination).not.to.be.null;
@@ -4077,42 +4104,12 @@ describe('Generated tests', function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
-        path: '/v2/core/event_destinations/id_123',
+        path: '/v2/core/event_destinations/id_123/ping',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","description":"description","enabled_events":["enabled_events"],"event_payload":"thin","events_from":null,"id":"obj_123","metadata":null,"name":"name","object":"v2.core.event_destination","snapshot_api_version":null,"status":"disabled","status_details":null,"type":"amazon_eventbridge","updated":"1970-01-03T17:07:10.277Z","livemode":true,"amazon_eventbridge":null,"webhook_endpoint":null}',
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","type":"type","livemode":true}',
       },
     ]);
-    const eventDestination = await stripe.v2.core.eventDestinations.update(
-      'id_123'
-    );
-    expect(eventDestination).not.to.be.null;
-  });
-
-  it('test_v2_core_event_get', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/core/events?object_id=object_id',
-        response:
-          '{"data":[{"context":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":null,"type":"type","livemode":true}],"next_page_url":null,"previous_page_url":null}',
-      },
-    ]);
-    const events = await stripe.v2.core.events.list({
-      object_id: 'object_id',
-    });
-    expect(events).not.to.be.null;
-  });
-
-  it('test_v2_core_event_get_2', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/core/events/id_123',
-        response:
-          '{"context":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":null,"type":"type","livemode":true}',
-      },
-    ]);
-    const event = await stripe.v2.core.events.retrieve('id_123');
+    const event = await stripe.v2.core.eventDestinations.ping('id_123');
     expect(event).not.to.be.null;
   });
 
