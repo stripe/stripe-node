@@ -2038,11 +2038,6 @@ declare module 'stripe' {
           account_type: UsBankAccount.AccountType | null;
 
           /**
-           * Amount of the ACH return to the bank account.
-           */
-          ach_return_amount: UsBankAccount.AchReturnAmount | null;
-
-          /**
            * Name of the bank associated with the bank account.
            */
           bank_name: string | null;
@@ -2077,18 +2072,6 @@ declare module 'stripe' {
           type AccountHolderType = 'company' | 'individual';
 
           type AccountType = 'checking' | 'savings';
-
-          interface AchReturnAmount {
-            /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-             */
-            currency: string;
-
-            /**
-             * A positive integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) for example, 100 cents for 1 USD or 100 for 100 JPY, a zero-decimal currency.
-             */
-            value: number;
-          }
         }
 
         interface Wechat {}
