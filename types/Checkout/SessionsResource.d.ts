@@ -2886,15 +2886,12 @@ declare module 'stripe' {
           transfer_data?: SubscriptionData.TransferData;
 
           /**
-           * Unix timestamp representing the end of the trial period the customer
-           * will get before being charged for the first time. Has to be at least
-           * 48 hours in the future.
+           * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. Has to be at least 48 hours in the future.
            */
           trial_end?: number;
 
           /**
-           * Integer representing the number of trial period days before the
-           * customer is charged for the first time. Has to be at least 1.
+           * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
            */
           trial_period_days?: number;
 
