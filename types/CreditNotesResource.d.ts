@@ -9,7 +9,7 @@ declare module 'stripe' {
       invoice: string;
 
       /**
-       * The integer amount in cents (or local equivalent) representing the total amount of the credit note.
+       * The integer amount in cents (or local equivalent) representing the total amount of the credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
        */
       amount?: number;
 
@@ -34,7 +34,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Line items that make up the credit note.
+       * Line items that make up the credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
        */
       lines?: Array<CreditNoteCreateParams.Line>;
 
@@ -69,7 +69,7 @@ declare module 'stripe' {
       refunds?: Array<CreditNoteCreateParams.Refund>;
 
       /**
-       * When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the credit note.
+       * When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
        */
       shipping_cost?: CreditNoteCreateParams.ShippingCost;
     }
@@ -236,7 +236,7 @@ declare module 'stripe' {
       invoice: string;
 
       /**
-       * The integer amount in cents (or local equivalent) representing the total amount of the credit note.
+       * The integer amount in cents (or local equivalent) representing the total amount of the credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
        */
       amount?: number;
 
@@ -261,7 +261,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Line items that make up the credit note.
+       * Line items that make up the credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
        */
       lines?: Array<CreditNoteListPreviewLineItemsParams.Line>;
 
@@ -296,7 +296,7 @@ declare module 'stripe' {
       refunds?: Array<CreditNoteListPreviewLineItemsParams.Refund>;
 
       /**
-       * When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the credit note.
+       * When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
        */
       shipping_cost?: CreditNoteListPreviewLineItemsParams.ShippingCost;
     }
@@ -405,7 +405,7 @@ declare module 'stripe' {
       invoice: string;
 
       /**
-       * The integer amount in cents (or local equivalent) representing the total amount of the credit note.
+       * The integer amount in cents (or local equivalent) representing the total amount of the credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
        */
       amount?: number;
 
@@ -430,7 +430,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Line items that make up the credit note.
+       * Line items that make up the credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
        */
       lines?: Array<CreditNotePreviewParams.Line>;
 
@@ -465,7 +465,7 @@ declare module 'stripe' {
       refunds?: Array<CreditNotePreviewParams.Refund>;
 
       /**
-       * When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the credit note.
+       * When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the credit note. One of `amount`, `lines`, or `shipping_cost` must be provided.
        */
       shipping_cost?: CreditNotePreviewParams.ShippingCost;
     }
