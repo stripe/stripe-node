@@ -145,7 +145,7 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentCreateParams.PaymentMethodOptions;
 
       /**
-       * The list of payment method types (for example, a card) that this PaymentIntent can use. If you don't provide this, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
+       * The list of payment method types (for example, a card) that this PaymentIntent can use. If you don't provide this, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
        */
       payment_method_types?: Array<string>;
 
@@ -4259,7 +4259,7 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentUpdateParams.PaymentMethodOptions;
 
       /**
-       * The list of payment method types (for example, card) that this PaymentIntent can use. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+       * The list of payment method types (for example, card) that this PaymentIntent can use. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
        */
       payment_method_types?: Array<string>;
 
@@ -9117,7 +9117,7 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentConfirmParams.PaymentMethodOptions;
 
       /**
-       * The list of payment method types (for example, a card) that this PaymentIntent can use. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+       * The list of payment method types (for example, a card) that this PaymentIntent can use. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
        */
       payment_method_types?: Array<string>;
 
