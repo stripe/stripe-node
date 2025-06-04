@@ -3049,6 +3049,11 @@ declare module 'stripe' {
         shipping_options?: Stripe.Emptyable<
           Array<SessionUpdateParams.ShippingOption>
         >;
+
+        /**
+         * A subset of parameters to be passed to subscription creation for Checkout Sessions in `subscription` mode.
+         */
+        subscription_data?: SessionUpdateParams.SubscriptionData;
       }
 
       namespace SessionUpdateParams {
@@ -3383,6 +3388,18 @@ declare module 'stripe' {
 
             type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
           }
+        }
+
+        interface SubscriptionData {
+          /**
+           * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. Has to be at least 48 hours in the future.
+           */
+          trial_end?: number;
+
+          /**
+           * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
+           */
+          trial_period_days?: number;
         }
       }
 
