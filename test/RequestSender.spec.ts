@@ -520,6 +520,22 @@ describe('RequestSender', () => {
             done(error);
           });
       });
+
+      it('sends empty v2 GET request bodies', (done) => {
+        const scope = nock(`https://api.stripe.com`)
+          .get(`/v2/core/event_destinations`)
+          .reply(200, {data: [], next_page_url: null, previous_page_url: null});
+
+        realStripe
+          .rawRequest('GET', '/v2/core/event_destinations')
+          .then((result) => {
+            done();
+            scope.done();
+          })
+          .catch((error) => {
+            done(error);
+          });
+      });
     });
   });
 

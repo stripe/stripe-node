@@ -147,7 +147,7 @@ declare module 'stripe' {
       payment_method_options: SetupIntent.PaymentMethodOptions | null;
 
       /**
-       * The list of payment method types (e.g. card) that this SetupIntent is allowed to set up.
+       * The list of payment method types (e.g. card) that this SetupIntent is allowed to set up. A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
        */
       payment_method_types: Array<string>;
 

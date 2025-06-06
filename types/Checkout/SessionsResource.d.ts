@@ -129,7 +129,7 @@ declare module 'stripe' {
         invoice_creation?: SessionCreateParams.InvoiceCreation;
 
         /**
-         * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices).
+         * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices). The parameter is required for `payment` and `subscription` mode.
          *
          * For `payment` mode, there is a maximum of 100 line items, however it is recommended to consolidate line items if there are more than a few dozen.
          *
@@ -2886,15 +2886,12 @@ declare module 'stripe' {
           transfer_data?: SubscriptionData.TransferData;
 
           /**
-           * Unix timestamp representing the end of the trial period the customer
-           * will get before being charged for the first time. Has to be at least
-           * 48 hours in the future.
+           * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. Has to be at least 48 hours in the future.
            */
           trial_end?: number;
 
           /**
-           * Integer representing the number of trial period days before the
-           * customer is charged for the first time. Has to be at least 1.
+           * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
            */
           trial_period_days?: number;
 

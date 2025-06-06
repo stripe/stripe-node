@@ -65,7 +65,7 @@ declare module 'stripe' {
       cancel_at: number | null;
 
       /**
-       * Whether this subscription will (if `status=active`) or did (if `status=canceled`) cancel at the end of the current billing period. This field will be removed in a future API version. Please use `cancel_at` instead.
+       * Whether this subscription will (if `status=active`) or did (if `status=canceled`) cancel at the end of the current billing period.
        */
       cancel_at_period_end: boolean;
 

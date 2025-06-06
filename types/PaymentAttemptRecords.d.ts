@@ -312,6 +312,9 @@ declare module 'stripe' {
          */
         type: string;
 
+        /**
+         * Details of the US Bank Account used for this payment attempt.
+         */
         us_bank_account?: PaymentMethodDetails.UsBankAccount;
 
         wechat?: PaymentMethodDetails.Wechat;
@@ -2035,14 +2038,8 @@ declare module 'stripe' {
         interface Twint {}
 
         interface UsBankAccount {
-          /**
-           * Account holder type: individual or company.
-           */
           account_holder_type: UsBankAccount.AccountHolderType | null;
 
-          /**
-           * Account type: checkings or savings. Defaults to checking if omitted.
-           */
           account_type: UsBankAccount.AccountType | null;
 
           /**
