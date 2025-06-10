@@ -3004,7 +3004,11 @@ declare module 'stripe' {
            *
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: Gopay.SetupFutureUsage;
+        }
+
+        namespace Gopay {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Grabpay {
@@ -7065,7 +7069,11 @@ declare module 'stripe' {
            *
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: Gopay.SetupFutureUsage;
+        }
+
+        namespace Gopay {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Grabpay {
@@ -11934,7 +11942,11 @@ declare module 'stripe' {
            *
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: Gopay.SetupFutureUsage;
+        }
+
+        namespace Gopay {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Grabpay {
