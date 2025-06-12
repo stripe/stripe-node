@@ -898,7 +898,7 @@ declare module 'stripe' {
           incremental_authorization?: Card.IncrementalAuthorization;
 
           /**
-           * Installment details for this payment (Mexico only).
+           * Installment details for this payment.
            *
            * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
            */
@@ -1033,9 +1033,13 @@ declare module 'stripe' {
               interval: 'month' | null;
 
               /**
-               * Type of installment plan, one of `fixed_count`.
+               * Type of installment plan, one of `fixed_count`, `bonus`, or `revolving`.
                */
-              type: 'fixed_count';
+              type: Plan.Type;
+            }
+
+            namespace Plan {
+              type Type = 'bonus' | 'fixed_count' | 'revolving';
             }
           }
 

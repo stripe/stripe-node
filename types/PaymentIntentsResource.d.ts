@@ -2619,9 +2619,13 @@ declare module 'stripe' {
               interval?: 'month';
 
               /**
-               * Type of installment plan, one of `fixed_count`.
+               * Type of installment plan, one of `fixed_count`, `bonus`, or `revolving`.
                */
-              type: 'fixed_count';
+              type: Plan.Type;
+            }
+
+            namespace Plan {
+              type Type = 'bonus' | 'fixed_count' | 'revolving';
             }
           }
 
@@ -6684,9 +6688,13 @@ declare module 'stripe' {
               interval?: 'month';
 
               /**
-               * Type of installment plan, one of `fixed_count`.
+               * Type of installment plan, one of `fixed_count`, `bonus`, or `revolving`.
                */
-              type: 'fixed_count';
+              type: Plan.Type;
+            }
+
+            namespace Plan {
+              type Type = 'bonus' | 'fixed_count' | 'revolving';
             }
           }
 
@@ -11557,9 +11565,13 @@ declare module 'stripe' {
               interval?: 'month';
 
               /**
-               * Type of installment plan, one of `fixed_count`.
+               * Type of installment plan, one of `fixed_count`, `bonus`, or `revolving`.
                */
-              type: 'fixed_count';
+              type: Plan.Type;
+            }
+
+            namespace Plan {
+              type Type = 'bonus' | 'fixed_count' | 'revolving';
             }
           }
 
