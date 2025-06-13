@@ -379,6 +379,8 @@ declare module 'stripe' {
          * The number of times evidence has been submitted. Typically, you may only submit evidence once.
          */
         submission_count: number;
+
+        submission_method?: EvidenceDetails.SubmissionMethod;
       }
 
       namespace EvidenceDetails {
@@ -423,6 +425,8 @@ declare module 'stripe' {
             type Status = 'fee_acknowledged' | 'requires_fee_acknowledgement';
           }
         }
+
+        type SubmissionMethod = 'manual' | 'not_submitted' | 'smart_disputes';
       }
 
       interface PaymentMethodDetails {
