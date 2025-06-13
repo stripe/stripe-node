@@ -487,7 +487,8 @@ export class RequestSender {
 
         // Pull request data and options (headers, auth) from args.
         const dataFromArgs = getDataFromArgs(args);
-        const data = Object.assign({}, dataFromArgs);
+        const data =
+          requestMethod === 'POST' ? Object.assign({}, dataFromArgs) : null;
         const calculatedOptions = getOptionsFromArgs(args);
 
         const headers = calculatedOptions.headers;

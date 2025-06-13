@@ -1714,7 +1714,7 @@ declare module 'stripe' {
           /**
            * Whether payment methods should be saved when a payment is completed for a one-time invoices on a hosted invoice page.
            */
-          hosted_payment_method_save?: Invoices.HostedPaymentMethodSave | null;
+          hosted_payment_method_save: Invoices.HostedPaymentMethodSave | null;
         }
 
         namespace Invoices {
