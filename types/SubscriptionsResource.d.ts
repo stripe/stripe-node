@@ -377,7 +377,13 @@ declare module 'stripe' {
         second?: number;
       }
 
-      type BillingMode = 'classic' | 'flexible';
+      interface BillingMode {
+        type: BillingMode.Type;
+      }
+
+      namespace BillingMode {
+        type Type = 'classic' | 'flexible';
+      }
 
       interface BillingThresholds {
         /**
@@ -2247,12 +2253,18 @@ declare module 'stripe' {
       /**
        * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
        */
-      billing_mode: 'flexible';
+      billing_mode: SubscriptionMigrateParams.BillingMode;
 
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+    }
+
+    namespace SubscriptionMigrateParams {
+      interface BillingMode {
+        type: 'flexible';
+      }
     }
 
     interface SubscriptionResumeParams {

@@ -2902,7 +2902,13 @@ declare module 'stripe' {
         }
 
         namespace SubscriptionData {
-          type BillingMode = 'classic' | 'flexible';
+          interface BillingMode {
+            type: BillingMode.Type;
+          }
+
+          namespace BillingMode {
+            type Type = 'classic' | 'flexible';
+          }
 
           interface InvoiceSettings {
             /**
