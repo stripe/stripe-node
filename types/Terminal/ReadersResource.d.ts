@@ -236,12 +236,12 @@ declare module 'stripe' {
 
       interface ReaderCollectPaymentMethodParams {
         /**
-         * PaymentIntent ID
+         * PaymentIntent ID.
          */
         payment_intent: string;
 
         /**
-         * Configuration overrides
+         * Configuration overrides.
          */
         collect_config?: ReaderCollectPaymentMethodParams.CollectConfig;
 
@@ -288,12 +288,12 @@ declare module 'stripe' {
 
       interface ReaderConfirmPaymentIntentParams {
         /**
-         * PaymentIntent ID
+         * PaymentIntent ID.
          */
         payment_intent: string;
 
         /**
-         * Configuration overrides
+         * Configuration overrides.
          */
         confirm_config?: ReaderConfirmPaymentIntentParams.ConfirmConfig;
 
