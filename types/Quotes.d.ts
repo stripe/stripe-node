@@ -762,7 +762,7 @@ declare module 'stripe' {
         /**
          * The billing mode of the quote.
          */
-        billing_mode?: SubscriptionData.BillingMode;
+        billing_mode: SubscriptionData.BillingMode;
 
         /**
          * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.

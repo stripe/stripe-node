@@ -35,7 +35,7 @@ declare module 'stripe' {
       /**
        * The billing mode of the subscription.
        */
-      billing_mode?: SubscriptionSchedule.BillingMode;
+      billing_mode: SubscriptionSchedule.BillingMode;
 
       /**
        * Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.

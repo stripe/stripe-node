@@ -47,7 +47,7 @@ declare module 'stripe' {
       /**
        * The billing mode of the subscription.
        */
-      billing_mode?: Subscription.BillingMode;
+      billing_mode: Subscription.BillingMode;
 
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
