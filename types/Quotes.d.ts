@@ -760,7 +760,7 @@ declare module 'stripe' {
         billing_cycle_anchor?: 'reset' | null;
 
         /**
-         * The [billing mode](https://docs.stripe.com/api/subscriptions/create#create_subscription-billing_mode) that will be set on the subscription once the quote is accepted.
+         * The billing mode of the quote.
          */
         billing_mode?: SubscriptionData.BillingMode;
 
@@ -808,7 +808,16 @@ declare module 'stripe' {
       namespace SubscriptionData {
         type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
 
-        type BillingMode = 'classic' | 'flexible';
+        interface BillingMode {
+          /**
+           * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+           */
+          type: BillingMode.Type;
+        }
+
+        namespace BillingMode {
+          type Type = 'classic' | 'flexible';
+        }
 
         interface BillOnAcceptance {
           /**

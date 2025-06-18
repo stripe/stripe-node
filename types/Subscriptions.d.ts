@@ -45,14 +45,9 @@ declare module 'stripe' {
       billing_cycle_anchor_config: Subscription.BillingCycleAnchorConfig | null;
 
       /**
-       * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+       * The billing mode of the subscription.
        */
       billing_mode?: Subscription.BillingMode;
-
-      /**
-       * Details about when the current billing_mode was updated.
-       */
-      billing_mode_details?: Subscription.BillingModeDetails | null;
 
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
@@ -320,13 +315,20 @@ declare module 'stripe' {
         second: number | null;
       }
 
-      type BillingMode = 'classic' | 'flexible';
+      interface BillingMode {
+        /**
+         * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+         */
+        type: BillingMode.Type;
 
-      interface BillingModeDetails {
         /**
          * Details on when the current billing_mode was adopted.
          */
         updated_at?: number;
+      }
+
+      namespace BillingMode {
+        type Type = 'classic' | 'flexible';
       }
 
       interface BillingThresholds {

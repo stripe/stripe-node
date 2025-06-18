@@ -19,7 +19,7 @@ declare module 'stripe' {
       automatic_tax?: SubscriptionCreateParams.AutomaticTax;
 
       /**
-       * For new subscriptions, a past timestamp to backdate the subscription's start date to. If set, the first invoice will contain a proration for the timespan between the start date and the current time. Can be combined with trials and the billing cycle anchor.
+       * A past timestamp to backdate the subscription's start date to. If set, the first invoice will contain line items for the timespan between the start date and the current time. Can be combined with trials and the billing cycle anchor.
        */
       backdate_start_date?: number;
 
