@@ -380,6 +380,9 @@ declare module 'stripe' {
          */
         submission_count: number;
 
+        /**
+         * Whether the dispute was submitted manually, with Smart Disputes, or not submitted.
+         */
         submission_method?: EvidenceDetails.SubmissionMethod;
       }
 
