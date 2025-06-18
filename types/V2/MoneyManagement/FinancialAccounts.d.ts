@@ -33,12 +33,15 @@ declare module 'stripe' {
            */
           created: string;
 
-          description: string | null;
-
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
            */
           livemode: boolean;
+
+          /**
+           * Metadata associated with the FinancialAccount
+           */
+          metadata: Stripe.Metadata | null;
 
           /**
            * If this is a `other` FinancialAccount, this hash indicates what the actual type is. Upgrade your API version to see it reflected in `type`.
@@ -49,6 +52,8 @@ declare module 'stripe' {
            * Closed Enum. An enum representing the status of the FinancialAccount. This indicates whether or not the FinancialAccount can be used for any money movement flows.
            */
           status: FinancialAccount.Status;
+
+          status_details: FinancialAccount.StatusDetails | null;
 
           /**
            * If this is a `storage` FinancialAccount, this hash includes details specific to `storage` FinancialAccounts.
@@ -332,6 +337,7 @@ declare module 'stripe' {
             | 'vu'
             | 'wf'
             | 'ws'
+            | 'xx'
             | 'ye'
             | 'yt'
             | 'za'
@@ -345,7 +351,21 @@ declare module 'stripe' {
             type: string;
           }
 
-          type Status = 'closed' | 'open';
+          type Status = 'closed' | 'open' | 'pending';
+
+          interface StatusDetails {
+            closed: StatusDetails.Closed | null;
+          }
+
+          namespace StatusDetails {
+            interface Closed {
+              reason: Closed.Reason;
+            }
+
+            namespace Closed {
+              type Reason = 'account_closed' | 'closed_by_platform' | 'other';
+            }
+          }
 
           interface Storage {
             /**
