@@ -247,7 +247,7 @@ declare module 'stripe' {
       trial_settings: Subscription.TrialSettings | null;
 
       /**
-       * If the subscription has a trial, the beginning of that trial. For subsequent trials, this date remains as the start of the first ever trial on the subscription.
+       * If the subscription has a trial, the beginning of that trial.
        */
       trial_start: number | null;
     }
