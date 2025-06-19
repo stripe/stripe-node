@@ -2696,7 +2696,11 @@ declare module 'stripe' {
            *
            * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: Klarna.SetupFutureUsage;
+        }
+
+        namespace Klarna {
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
         interface Konbini {

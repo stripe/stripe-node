@@ -3114,6 +3114,11 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
+           * On-demand details if setting up or charging an on-demand payment.
+           */
+          on_demand?: Klarna.OnDemand;
+
+          /**
            * Preferred language of the Klarna authorization page that the customer is redirected to
            */
           preferred_locale?: Klarna.PreferredLocale;
@@ -3129,10 +3134,46 @@ declare module 'stripe' {
            *
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: Klarna.SetupFutureUsage;
+
+          /**
+           * Subscription details if setting up or charging a subscription.
+           */
+          subscriptions?: Stripe.Emptyable<Array<Klarna.Subscription>>;
         }
 
         namespace Klarna {
+          interface OnDemand {
+            /**
+             * Your average amount value. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            average_amount?: number;
+
+            /**
+             * The maximum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            maximum_amount?: number;
+
+            /**
+             * The lowest or minimum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            minimum_amount?: number;
+
+            /**
+             * Interval at which the customer is making purchases
+             */
+            purchase_interval?: OnDemand.PurchaseInterval;
+
+            /**
+             * The number of `purchase_interval` between charges
+             */
+            purchase_interval_count?: number;
+          }
+
+          namespace OnDemand {
+            type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+          }
+
           type PreferredLocale =
             | 'cs-CZ'
             | 'da-DK'
@@ -3180,6 +3221,51 @@ declare module 'stripe' {
             | 'ro-RO'
             | 'sv-FI'
             | 'sv-SE';
+
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          interface Subscription {
+            /**
+             * Unit of time between subscription charges.
+             */
+            interval: Subscription.Interval;
+
+            /**
+             * The number of intervals (specified in the `interval` attribute) between subscription charges. For example, `interval=month` and `interval_count=3` charges every 3 months.
+             */
+            interval_count?: number;
+
+            /**
+             * Name for subscription.
+             */
+            name?: string;
+
+            /**
+             * Describes the upcoming charge for this subscription.
+             */
+            next_billing?: Subscription.NextBilling;
+
+            /**
+             * A non-customer-facing reference to correlate subscription charges in the Klarna app. Use a value that persists across subscription charges.
+             */
+            reference: string;
+          }
+
+          namespace Subscription {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+
+            interface NextBilling {
+              /**
+               * The amount of the next charge for the subscription.
+               */
+              amount: number;
+
+              /**
+               * The date of the next charge for the subscription in YYYY-MM-DD format.
+               */
+              date: string;
+            }
+          }
         }
 
         interface Konbini {
@@ -7184,6 +7270,11 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
+           * On-demand details if setting up or charging an on-demand payment.
+           */
+          on_demand?: Klarna.OnDemand;
+
+          /**
            * Preferred language of the Klarna authorization page that the customer is redirected to
            */
           preferred_locale?: Klarna.PreferredLocale;
@@ -7199,10 +7290,46 @@ declare module 'stripe' {
            *
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: Klarna.SetupFutureUsage;
+
+          /**
+           * Subscription details if setting up or charging a subscription.
+           */
+          subscriptions?: Stripe.Emptyable<Array<Klarna.Subscription>>;
         }
 
         namespace Klarna {
+          interface OnDemand {
+            /**
+             * Your average amount value. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            average_amount?: number;
+
+            /**
+             * The maximum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            maximum_amount?: number;
+
+            /**
+             * The lowest or minimum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            minimum_amount?: number;
+
+            /**
+             * Interval at which the customer is making purchases
+             */
+            purchase_interval?: OnDemand.PurchaseInterval;
+
+            /**
+             * The number of `purchase_interval` between charges
+             */
+            purchase_interval_count?: number;
+          }
+
+          namespace OnDemand {
+            type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+          }
+
           type PreferredLocale =
             | 'cs-CZ'
             | 'da-DK'
@@ -7250,6 +7377,51 @@ declare module 'stripe' {
             | 'ro-RO'
             | 'sv-FI'
             | 'sv-SE';
+
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          interface Subscription {
+            /**
+             * Unit of time between subscription charges.
+             */
+            interval: Subscription.Interval;
+
+            /**
+             * The number of intervals (specified in the `interval` attribute) between subscription charges. For example, `interval=month` and `interval_count=3` charges every 3 months.
+             */
+            interval_count?: number;
+
+            /**
+             * Name for subscription.
+             */
+            name?: string;
+
+            /**
+             * Describes the upcoming charge for this subscription.
+             */
+            next_billing?: Subscription.NextBilling;
+
+            /**
+             * A non-customer-facing reference to correlate subscription charges in the Klarna app. Use a value that persists across subscription charges.
+             */
+            reference: string;
+          }
+
+          namespace Subscription {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+
+            interface NextBilling {
+              /**
+               * The amount of the next charge for the subscription.
+               */
+              amount: number;
+
+              /**
+               * The date of the next charge for the subscription in YYYY-MM-DD format.
+               */
+              date: string;
+            }
+          }
         }
 
         interface Konbini {
@@ -12062,6 +12234,11 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
+           * On-demand details if setting up or charging an on-demand payment.
+           */
+          on_demand?: Klarna.OnDemand;
+
+          /**
            * Preferred language of the Klarna authorization page that the customer is redirected to
            */
           preferred_locale?: Klarna.PreferredLocale;
@@ -12077,10 +12254,46 @@ declare module 'stripe' {
            *
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: Klarna.SetupFutureUsage;
+
+          /**
+           * Subscription details if setting up or charging a subscription.
+           */
+          subscriptions?: Stripe.Emptyable<Array<Klarna.Subscription>>;
         }
 
         namespace Klarna {
+          interface OnDemand {
+            /**
+             * Your average amount value. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            average_amount?: number;
+
+            /**
+             * The maximum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            maximum_amount?: number;
+
+            /**
+             * The lowest or minimum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            minimum_amount?: number;
+
+            /**
+             * Interval at which the customer is making purchases
+             */
+            purchase_interval?: OnDemand.PurchaseInterval;
+
+            /**
+             * The number of `purchase_interval` between charges
+             */
+            purchase_interval_count?: number;
+          }
+
+          namespace OnDemand {
+            type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+          }
+
           type PreferredLocale =
             | 'cs-CZ'
             | 'da-DK'
@@ -12128,6 +12341,51 @@ declare module 'stripe' {
             | 'ro-RO'
             | 'sv-FI'
             | 'sv-SE';
+
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          interface Subscription {
+            /**
+             * Unit of time between subscription charges.
+             */
+            interval: Subscription.Interval;
+
+            /**
+             * The number of intervals (specified in the `interval` attribute) between subscription charges. For example, `interval=month` and `interval_count=3` charges every 3 months.
+             */
+            interval_count?: number;
+
+            /**
+             * Name for subscription.
+             */
+            name?: string;
+
+            /**
+             * Describes the upcoming charge for this subscription.
+             */
+            next_billing?: Subscription.NextBilling;
+
+            /**
+             * A non-customer-facing reference to correlate subscription charges in the Klarna app. Use a value that persists across subscription charges.
+             */
+            reference: string;
+          }
+
+          namespace Subscription {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+
+            interface NextBilling {
+              /**
+               * The amount of the next charge for the subscription.
+               */
+              amount: number;
+
+              /**
+               * The date of the next charge for the subscription in YYYY-MM-DD format.
+               */
+              date: string;
+            }
+          }
         }
 
         interface Konbini {

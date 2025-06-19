@@ -1778,6 +1778,56 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+
+            /**
+             * Subscription details if the Checkout Session sets up a future subscription.
+             */
+            subscriptions?: Stripe.Emptyable<Array<Klarna.Subscription>>;
+          }
+
+          namespace Klarna {
+            interface Subscription {
+              /**
+               * Unit of time between subscription charges.
+               */
+              interval: Subscription.Interval;
+
+              /**
+               * The number of intervals (specified in the `interval` attribute) between subscription charges. For example, `interval=month` and `interval_count=3` charges every 3 months.
+               */
+              interval_count?: number;
+
+              /**
+               * Name for subscription.
+               */
+              name?: string;
+
+              /**
+               * Describes the upcoming charge for this subscription.
+               */
+              next_billing: Subscription.NextBilling;
+
+              /**
+               * A non-customer-facing reference to correlate subscription charges in the Klarna app. Use a value that persists across subscription charges.
+               */
+              reference: string;
+            }
+
+            namespace Subscription {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+
+              interface NextBilling {
+                /**
+                 * The amount of the next charge for the subscription.
+                 */
+                amount: number;
+
+                /**
+                 * The date of the next charge for the subscription in YYYY-MM-DD format.
+                 */
+                date: string;
+              }
+            }
           }
 
           interface Konbini {

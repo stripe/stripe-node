@@ -1068,6 +1068,11 @@ declare module 'stripe' {
         card_present?: PaymentMethodOptions.CardPresent;
 
         /**
+         * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method options.
+         */
+        klarna?: PaymentMethodOptions.Klarna;
+
+        /**
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
          */
         link?: PaymentMethodOptions.Link;
@@ -1369,6 +1374,152 @@ declare module 'stripe' {
         }
 
         interface CardPresent {}
+
+        interface Klarna {
+          /**
+           * The currency of the SetupIntent. Three letter ISO currency code.
+           */
+          currency?: string;
+
+          /**
+           * On-demand details if setting up a payment method for on-demand payments.
+           */
+          on_demand?: Klarna.OnDemand;
+
+          /**
+           * Preferred language of the Klarna authorization page that the customer is redirected to
+           */
+          preferred_locale?: Klarna.PreferredLocale;
+
+          /**
+           * Subscription details if setting up or charging a subscription
+           */
+          subscriptions?: Stripe.Emptyable<Array<Klarna.Subscription>>;
+        }
+
+        namespace Klarna {
+          interface OnDemand {
+            /**
+             * Your average amount value. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            average_amount?: number;
+
+            /**
+             * The maximum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            maximum_amount?: number;
+
+            /**
+             * The lowest or minimum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            minimum_amount?: number;
+
+            /**
+             * Interval at which the customer is making purchases
+             */
+            purchase_interval?: OnDemand.PurchaseInterval;
+
+            /**
+             * The number of `purchase_interval` between charges
+             */
+            purchase_interval_count?: number;
+          }
+
+          namespace OnDemand {
+            type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type PreferredLocale =
+            | 'cs-CZ'
+            | 'da-DK'
+            | 'de-AT'
+            | 'de-CH'
+            | 'de-DE'
+            | 'el-GR'
+            | 'en-AT'
+            | 'en-AU'
+            | 'en-BE'
+            | 'en-CA'
+            | 'en-CH'
+            | 'en-CZ'
+            | 'en-DE'
+            | 'en-DK'
+            | 'en-ES'
+            | 'en-FI'
+            | 'en-FR'
+            | 'en-GB'
+            | 'en-GR'
+            | 'en-IE'
+            | 'en-IT'
+            | 'en-NL'
+            | 'en-NO'
+            | 'en-NZ'
+            | 'en-PL'
+            | 'en-PT'
+            | 'en-RO'
+            | 'en-SE'
+            | 'en-US'
+            | 'es-ES'
+            | 'es-US'
+            | 'fi-FI'
+            | 'fr-BE'
+            | 'fr-CA'
+            | 'fr-CH'
+            | 'fr-FR'
+            | 'it-CH'
+            | 'it-IT'
+            | 'nb-NO'
+            | 'nl-BE'
+            | 'nl-NL'
+            | 'pl-PL'
+            | 'pt-PT'
+            | 'ro-RO'
+            | 'sv-FI'
+            | 'sv-SE';
+
+          interface Subscription {
+            /**
+             * Unit of time between subscription charges.
+             */
+            interval: Subscription.Interval;
+
+            /**
+             * The number of intervals (specified in the `interval` attribute) between subscription charges. For example, `interval=month` and `interval_count=3` charges every 3 months.
+             */
+            interval_count?: number;
+
+            /**
+             * Name for subscription.
+             */
+            name?: string;
+
+            /**
+             * Describes the upcoming charge for this subscription.
+             */
+            next_billing: Subscription.NextBilling;
+
+            /**
+             * A non-customer-facing reference to correlate subscription charges in the Klarna app. Use a value that persists across subscription charges.
+             */
+            reference: string;
+          }
+
+          namespace Subscription {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+
+            interface NextBilling {
+              /**
+               * The amount of the next charge for the subscription.
+               */
+              amount: number;
+
+              /**
+               * The date of the next charge for the subscription in YYYY-MM-DD format.
+               */
+              date: string;
+            }
+          }
+        }
 
         interface Link {
           /**
@@ -2571,6 +2722,11 @@ declare module 'stripe' {
         card_present?: PaymentMethodOptions.CardPresent;
 
         /**
+         * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method options.
+         */
+        klarna?: PaymentMethodOptions.Klarna;
+
+        /**
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
          */
         link?: PaymentMethodOptions.Link;
@@ -2872,6 +3028,152 @@ declare module 'stripe' {
         }
 
         interface CardPresent {}
+
+        interface Klarna {
+          /**
+           * The currency of the SetupIntent. Three letter ISO currency code.
+           */
+          currency?: string;
+
+          /**
+           * On-demand details if setting up a payment method for on-demand payments.
+           */
+          on_demand?: Klarna.OnDemand;
+
+          /**
+           * Preferred language of the Klarna authorization page that the customer is redirected to
+           */
+          preferred_locale?: Klarna.PreferredLocale;
+
+          /**
+           * Subscription details if setting up or charging a subscription
+           */
+          subscriptions?: Stripe.Emptyable<Array<Klarna.Subscription>>;
+        }
+
+        namespace Klarna {
+          interface OnDemand {
+            /**
+             * Your average amount value. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            average_amount?: number;
+
+            /**
+             * The maximum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            maximum_amount?: number;
+
+            /**
+             * The lowest or minimum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            minimum_amount?: number;
+
+            /**
+             * Interval at which the customer is making purchases
+             */
+            purchase_interval?: OnDemand.PurchaseInterval;
+
+            /**
+             * The number of `purchase_interval` between charges
+             */
+            purchase_interval_count?: number;
+          }
+
+          namespace OnDemand {
+            type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type PreferredLocale =
+            | 'cs-CZ'
+            | 'da-DK'
+            | 'de-AT'
+            | 'de-CH'
+            | 'de-DE'
+            | 'el-GR'
+            | 'en-AT'
+            | 'en-AU'
+            | 'en-BE'
+            | 'en-CA'
+            | 'en-CH'
+            | 'en-CZ'
+            | 'en-DE'
+            | 'en-DK'
+            | 'en-ES'
+            | 'en-FI'
+            | 'en-FR'
+            | 'en-GB'
+            | 'en-GR'
+            | 'en-IE'
+            | 'en-IT'
+            | 'en-NL'
+            | 'en-NO'
+            | 'en-NZ'
+            | 'en-PL'
+            | 'en-PT'
+            | 'en-RO'
+            | 'en-SE'
+            | 'en-US'
+            | 'es-ES'
+            | 'es-US'
+            | 'fi-FI'
+            | 'fr-BE'
+            | 'fr-CA'
+            | 'fr-CH'
+            | 'fr-FR'
+            | 'it-CH'
+            | 'it-IT'
+            | 'nb-NO'
+            | 'nl-BE'
+            | 'nl-NL'
+            | 'pl-PL'
+            | 'pt-PT'
+            | 'ro-RO'
+            | 'sv-FI'
+            | 'sv-SE';
+
+          interface Subscription {
+            /**
+             * Unit of time between subscription charges.
+             */
+            interval: Subscription.Interval;
+
+            /**
+             * The number of intervals (specified in the `interval` attribute) between subscription charges. For example, `interval=month` and `interval_count=3` charges every 3 months.
+             */
+            interval_count?: number;
+
+            /**
+             * Name for subscription.
+             */
+            name?: string;
+
+            /**
+             * Describes the upcoming charge for this subscription.
+             */
+            next_billing: Subscription.NextBilling;
+
+            /**
+             * A non-customer-facing reference to correlate subscription charges in the Klarna app. Use a value that persists across subscription charges.
+             */
+            reference: string;
+          }
+
+          namespace Subscription {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+
+            interface NextBilling {
+              /**
+               * The amount of the next charge for the subscription.
+               */
+              amount: number;
+
+              /**
+               * The date of the next charge for the subscription in YYYY-MM-DD format.
+               */
+              date: string;
+            }
+          }
+        }
 
         interface Link {
           /**
@@ -4121,6 +4423,11 @@ declare module 'stripe' {
         card_present?: PaymentMethodOptions.CardPresent;
 
         /**
+         * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method options.
+         */
+        klarna?: PaymentMethodOptions.Klarna;
+
+        /**
          * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
          */
         link?: PaymentMethodOptions.Link;
@@ -4422,6 +4729,152 @@ declare module 'stripe' {
         }
 
         interface CardPresent {}
+
+        interface Klarna {
+          /**
+           * The currency of the SetupIntent. Three letter ISO currency code.
+           */
+          currency?: string;
+
+          /**
+           * On-demand details if setting up a payment method for on-demand payments.
+           */
+          on_demand?: Klarna.OnDemand;
+
+          /**
+           * Preferred language of the Klarna authorization page that the customer is redirected to
+           */
+          preferred_locale?: Klarna.PreferredLocale;
+
+          /**
+           * Subscription details if setting up or charging a subscription
+           */
+          subscriptions?: Stripe.Emptyable<Array<Klarna.Subscription>>;
+        }
+
+        namespace Klarna {
+          interface OnDemand {
+            /**
+             * Your average amount value. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            average_amount?: number;
+
+            /**
+             * The maximum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            maximum_amount?: number;
+
+            /**
+             * The lowest or minimum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            minimum_amount?: number;
+
+            /**
+             * Interval at which the customer is making purchases
+             */
+            purchase_interval?: OnDemand.PurchaseInterval;
+
+            /**
+             * The number of `purchase_interval` between charges
+             */
+            purchase_interval_count?: number;
+          }
+
+          namespace OnDemand {
+            type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type PreferredLocale =
+            | 'cs-CZ'
+            | 'da-DK'
+            | 'de-AT'
+            | 'de-CH'
+            | 'de-DE'
+            | 'el-GR'
+            | 'en-AT'
+            | 'en-AU'
+            | 'en-BE'
+            | 'en-CA'
+            | 'en-CH'
+            | 'en-CZ'
+            | 'en-DE'
+            | 'en-DK'
+            | 'en-ES'
+            | 'en-FI'
+            | 'en-FR'
+            | 'en-GB'
+            | 'en-GR'
+            | 'en-IE'
+            | 'en-IT'
+            | 'en-NL'
+            | 'en-NO'
+            | 'en-NZ'
+            | 'en-PL'
+            | 'en-PT'
+            | 'en-RO'
+            | 'en-SE'
+            | 'en-US'
+            | 'es-ES'
+            | 'es-US'
+            | 'fi-FI'
+            | 'fr-BE'
+            | 'fr-CA'
+            | 'fr-CH'
+            | 'fr-FR'
+            | 'it-CH'
+            | 'it-IT'
+            | 'nb-NO'
+            | 'nl-BE'
+            | 'nl-NL'
+            | 'pl-PL'
+            | 'pt-PT'
+            | 'ro-RO'
+            | 'sv-FI'
+            | 'sv-SE';
+
+          interface Subscription {
+            /**
+             * Unit of time between subscription charges.
+             */
+            interval: Subscription.Interval;
+
+            /**
+             * The number of intervals (specified in the `interval` attribute) between subscription charges. For example, `interval=month` and `interval_count=3` charges every 3 months.
+             */
+            interval_count?: number;
+
+            /**
+             * Name for subscription.
+             */
+            name?: string;
+
+            /**
+             * Describes the upcoming charge for this subscription.
+             */
+            next_billing: Subscription.NextBilling;
+
+            /**
+             * A non-customer-facing reference to correlate subscription charges in the Klarna app. Use a value that persists across subscription charges.
+             */
+            reference: string;
+          }
+
+          namespace Subscription {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+
+            interface NextBilling {
+              /**
+               * The amount of the next charge for the subscription.
+               */
+              amount: number;
+
+              /**
+               * The date of the next charge for the subscription in YYYY-MM-DD format.
+               */
+              date: string;
+            }
+          }
+        }
 
         interface Link {
           /**

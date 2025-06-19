@@ -610,6 +610,8 @@ declare module 'stripe' {
 
         card_present?: PaymentMethodOptions.CardPresent;
 
+        klarna?: PaymentMethodOptions.Klarna;
+
         link?: PaymentMethodOptions.Link;
 
         paypal?: PaymentMethodOptions.Paypal;
@@ -787,6 +789,18 @@ declare module 'stripe' {
         }
 
         interface CardPresent {}
+
+        interface Klarna {
+          /**
+           * The currency of the setup intent. Three letter ISO currency code.
+           */
+          currency: string | null;
+
+          /**
+           * Preferred locale of the Klarna checkout page that the customer is redirected to.
+           */
+          preferred_locale: string | null;
+        }
 
         interface Link {
           /**
