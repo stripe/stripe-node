@@ -1088,6 +1088,11 @@ declare module 'stripe' {
         cashapp?: PaymentMethodData.Cashapp;
 
         /**
+         * If this is a Crypto PaymentMethod, this hash contains details about the Crypto payment method.
+         */
+        crypto?: PaymentMethodData.Crypto;
+
+        /**
          * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
          */
         customer_balance?: PaymentMethodData.CustomerBalance;
@@ -1408,6 +1413,8 @@ declare module 'stripe' {
         }
 
         interface Cashapp {}
+
+        interface Crypto {}
 
         interface CustomerBalance {}
 
@@ -1780,6 +1787,7 @@ declare module 'stripe' {
           | 'blik'
           | 'boleto'
           | 'cashapp'
+          | 'crypto'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -1937,6 +1945,11 @@ declare module 'stripe' {
          * If this is a `cashapp` PaymentMethod, this sub-hash contains details about the Cash App Pay payment method options.
          */
         cashapp?: Stripe.Emptyable<PaymentMethodOptions.Cashapp>;
+
+        /**
+         * If this is a `crypto` PaymentMethod, this sub-hash contains details about the Crypto payment method options.
+         */
+        crypto?: Stripe.Emptyable<PaymentMethodOptions.Crypto>;
 
         /**
          * If this is a `customer balance` PaymentMethod, this sub-hash contains details about the customer balance payment method options.
@@ -2879,6 +2892,21 @@ declare module 'stripe' {
 
         namespace Cashapp {
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
+        interface Crypto {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface CustomerBalance {
@@ -5244,6 +5272,11 @@ declare module 'stripe' {
         cashapp?: PaymentMethodData.Cashapp;
 
         /**
+         * If this is a Crypto PaymentMethod, this hash contains details about the Crypto payment method.
+         */
+        crypto?: PaymentMethodData.Crypto;
+
+        /**
          * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
          */
         customer_balance?: PaymentMethodData.CustomerBalance;
@@ -5564,6 +5597,8 @@ declare module 'stripe' {
         }
 
         interface Cashapp {}
+
+        interface Crypto {}
 
         interface CustomerBalance {}
 
@@ -5936,6 +5971,7 @@ declare module 'stripe' {
           | 'blik'
           | 'boleto'
           | 'cashapp'
+          | 'crypto'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -6093,6 +6129,11 @@ declare module 'stripe' {
          * If this is a `cashapp` PaymentMethod, this sub-hash contains details about the Cash App Pay payment method options.
          */
         cashapp?: Stripe.Emptyable<PaymentMethodOptions.Cashapp>;
+
+        /**
+         * If this is a `crypto` PaymentMethod, this sub-hash contains details about the Crypto payment method options.
+         */
+        crypto?: Stripe.Emptyable<PaymentMethodOptions.Crypto>;
 
         /**
          * If this is a `customer balance` PaymentMethod, this sub-hash contains details about the customer balance payment method options.
@@ -7035,6 +7076,21 @@ declare module 'stripe' {
 
         namespace Cashapp {
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
+        interface Crypto {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface CustomerBalance {
@@ -10208,6 +10264,11 @@ declare module 'stripe' {
         cashapp?: PaymentMethodData.Cashapp;
 
         /**
+         * If this is a Crypto PaymentMethod, this hash contains details about the Crypto payment method.
+         */
+        crypto?: PaymentMethodData.Crypto;
+
+        /**
          * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
          */
         customer_balance?: PaymentMethodData.CustomerBalance;
@@ -10528,6 +10589,8 @@ declare module 'stripe' {
         }
 
         interface Cashapp {}
+
+        interface Crypto {}
 
         interface CustomerBalance {}
 
@@ -10900,6 +10963,7 @@ declare module 'stripe' {
           | 'blik'
           | 'boleto'
           | 'cashapp'
+          | 'crypto'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -11057,6 +11121,11 @@ declare module 'stripe' {
          * If this is a `cashapp` PaymentMethod, this sub-hash contains details about the Cash App Pay payment method options.
          */
         cashapp?: Stripe.Emptyable<PaymentMethodOptions.Cashapp>;
+
+        /**
+         * If this is a `crypto` PaymentMethod, this sub-hash contains details about the Crypto payment method options.
+         */
+        crypto?: Stripe.Emptyable<PaymentMethodOptions.Crypto>;
 
         /**
          * If this is a `customer balance` PaymentMethod, this sub-hash contains details about the customer balance payment method options.
@@ -11999,6 +12068,21 @@ declare module 'stripe' {
 
         namespace Cashapp {
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
+        interface Crypto {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface CustomerBalance {

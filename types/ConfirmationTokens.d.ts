@@ -210,6 +210,8 @@ declare module 'stripe' {
 
         cashapp?: PaymentMethodPreview.Cashapp;
 
+        crypto?: PaymentMethodPreview.Crypto;
+
         /**
          * The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
          */
@@ -1035,6 +1037,8 @@ declare module 'stripe' {
           cashtag: string | null;
         }
 
+        interface Crypto {}
+
         interface CustomerBalance {}
 
         interface Eps {
@@ -1636,6 +1640,7 @@ declare module 'stripe' {
           | 'card'
           | 'card_present'
           | 'cashapp'
+          | 'crypto'
           | 'customer_balance'
           | 'eps'
           | 'fpx'

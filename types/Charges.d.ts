@@ -424,6 +424,8 @@ declare module 'stripe' {
 
         cashapp?: PaymentMethodDetails.Cashapp;
 
+        crypto?: PaymentMethodDetails.Crypto;
+
         customer_balance?: PaymentMethodDetails.CustomerBalance;
 
         eps?: PaymentMethodDetails.Eps;
@@ -1479,6 +1481,34 @@ declare module 'stripe' {
            * A public identifier for buyers using Cash App.
            */
           cashtag: string | null;
+        }
+
+        interface Crypto {
+          /**
+           * The wallet address of the customer.
+           */
+          buyer_address?: string;
+
+          /**
+           * The blockchain network that the transaction was sent on.
+           */
+          network?: Crypto.Network;
+
+          /**
+           * The token currency that the transaction was sent with.
+           */
+          token_currency?: Crypto.TokenCurrency;
+
+          /**
+           * The blockchain transaction hash of the crypto payment.
+           */
+          transaction_hash?: string;
+        }
+
+        namespace Crypto {
+          type Network = 'base' | 'ethereum' | 'polygon';
+
+          type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
         }
 
         interface CustomerBalance {}
