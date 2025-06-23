@@ -4397,7 +4397,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/financial_accounts',
         response:
-          '{"data":[{"balance":{"available":{"undefined":{"currency":"USD","value":35}},"inbound_pending":{"undefined":{"currency":"USD","value":11}},"outbound_pending":{"undefined":{"currency":"USD","value":60}}},"country":"af","created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.money_management.financial_account","other":null,"status":"closed","status_details":null,"storage":null,"type":"other","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"balance":{"available":{"undefined":{"currency":"USD","value":35}},"inbound_pending":{"undefined":{"currency":"USD","value":11}},"outbound_pending":{"undefined":{"currency":"USD","value":60}}},"country":"af","created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.money_management.financial_account","other":null,"status":"closed","storage":null,"type":"other","livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const financialAccounts = await stripe.v2.moneyManagement.financialAccounts.list();
@@ -4410,7 +4410,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/financial_accounts/id_123',
         response:
-          '{"balance":{"available":{"undefined":{"currency":"USD","value":35}},"inbound_pending":{"undefined":{"currency":"USD","value":11}},"outbound_pending":{"undefined":{"currency":"USD","value":60}}},"country":"af","created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.money_management.financial_account","other":null,"status":"closed","status_details":null,"storage":null,"type":"other","livemode":true}',
+          '{"balance":{"available":{"undefined":{"currency":"USD","value":35}},"inbound_pending":{"undefined":{"currency":"USD","value":11}},"outbound_pending":{"undefined":{"currency":"USD","value":60}}},"country":"af","created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.money_management.financial_account","other":null,"status":"closed","storage":null,"type":"other","livemode":true}',
       },
     ]);
     const financialAccount = await stripe.v2.moneyManagement.financialAccounts.retrieve(
@@ -5198,6 +5198,30 @@ describe('Generated tests', function() {
     );
   });
 
+  it('test_feature_not_enabled_error', async function() {
+    const {FeatureNotEnabledError} = require('../../src/Error.js');
+
+    nock('https://api.stripe.com')
+      .post('/v2/money_management/financial_addresses')
+      .reply(400, {
+        error: {
+          type: 'feature_not_enabled',
+          code: 'storer_capability_missing',
+        },
+      });
+
+    await realStripe.v2.moneyManagement.financialAddresses.create(
+      {
+        currency: 'stn',
+        financial_account: 'financial_account',
+      },
+
+      (err) => {
+        expect(err).to.be.instanceOf(FeatureNotEnabledError);
+      }
+    );
+  });
+
   it('test_blocked_by_stripe_error', async function() {
     const {BlockedByStripeError} = require('../../src/Error.js');
 
@@ -5348,39 +5372,6 @@ describe('Generated tests', function() {
 
       (err) => {
         expect(err).to.be.instanceOf(RecipientNotNotifiableError);
-      }
-    );
-  });
-
-  it('test_feature_not_enabled_error', async function() {
-    const {FeatureNotEnabledError} = require('../../src/Error.js');
-
-    nock('https://api.stripe.com')
-      .post('/v2/money_management/outbound_payments')
-      .reply(400, {
-        error: {
-          type: 'feature_not_enabled',
-          code: 'recipient_feature_not_active',
-        },
-      });
-
-    await realStripe.v2.moneyManagement.outboundPayments.create(
-      {
-        amount: {
-          value: 96,
-          currency: 'USD',
-        },
-        from: {
-          currency: 'currency',
-          financial_account: 'financial_account',
-        },
-        to: {
-          recipient: 'recipient',
-        },
-      },
-
-      (err) => {
-        expect(err).to.be.instanceOf(FeatureNotEnabledError);
       }
     );
   });

@@ -53,8 +53,6 @@ declare module 'stripe' {
            */
           status: FinancialAccount.Status;
 
-          status_details: FinancialAccount.StatusDetails | null;
-
           /**
            * If this is a `storage` FinancialAccount, this hash includes details specific to `storage` FinancialAccounts.
            */
@@ -77,7 +75,7 @@ declare module 'stripe' {
             };
 
             /**
-             * Balance of inbound funds that will later transition to the `cash` balance.
+             * Balance of inbound funds that will later transition to the `available` balance.
              */
             inbound_pending: {
               [key: string]: Amount;
@@ -352,20 +350,6 @@ declare module 'stripe' {
           }
 
           type Status = 'closed' | 'open' | 'pending';
-
-          interface StatusDetails {
-            closed: StatusDetails.Closed | null;
-          }
-
-          namespace StatusDetails {
-            interface Closed {
-              reason: Closed.Reason;
-            }
-
-            namespace Closed {
-              type Reason = 'account_closed' | 'closed_by_platform' | 'other';
-            }
-          }
 
           interface Storage {
             /**
