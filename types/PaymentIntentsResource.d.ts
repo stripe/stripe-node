@@ -121,7 +121,7 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentCreateParams.PaymentMethodOptions;
 
       /**
-       * The list of payment method types (for example, a card) that this PaymentIntent can use. If you don't provide this, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
+       * The list of payment method types (for example, a card) that this PaymentIntent can use. If you don't provide this, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
        */
       payment_method_types?: Array<string>;
 
@@ -334,6 +334,11 @@ declare module 'stripe' {
          * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
          */
         cashapp?: PaymentMethodData.Cashapp;
+
+        /**
+         * If this is a Crypto PaymentMethod, this hash contains details about the Crypto payment method.
+         */
+        crypto?: PaymentMethodData.Crypto;
 
         /**
          * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
@@ -617,6 +622,8 @@ declare module 'stripe' {
 
         interface Cashapp {}
 
+        interface Crypto {}
+
         interface CustomerBalance {}
 
         interface Eps {
@@ -714,6 +721,7 @@ declare module 'stripe' {
             | 'abn_amro'
             | 'asn_bank'
             | 'bunq'
+            | 'buut'
             | 'handelsbanken'
             | 'ing'
             | 'knab'
@@ -909,6 +917,7 @@ declare module 'stripe' {
           | 'blik'
           | 'boleto'
           | 'cashapp'
+          | 'crypto'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -1058,6 +1067,11 @@ declare module 'stripe' {
          * If this is a `cashapp` PaymentMethod, this sub-hash contains details about the Cash App Pay payment method options.
          */
         cashapp?: Stripe.Emptyable<PaymentMethodOptions.Cashapp>;
+
+        /**
+         * If this is a `crypto` PaymentMethod, this sub-hash contains details about the Crypto payment method options.
+         */
+        crypto?: Stripe.Emptyable<PaymentMethodOptions.Crypto>;
 
         /**
          * If this is a `customer balance` PaymentMethod, this sub-hash contains details about the customer balance payment method options.
@@ -1684,9 +1698,13 @@ declare module 'stripe' {
               interval?: 'month';
 
               /**
-               * Type of installment plan, one of `fixed_count`.
+               * Type of installment plan, one of `fixed_count`, `bonus`, or `revolving`.
                */
-              type: 'fixed_count';
+              type: Plan.Type;
+            }
+
+            namespace Plan {
+              type Type = 'bonus' | 'fixed_count' | 'revolving';
             }
           }
 
@@ -1925,6 +1943,21 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
+        interface Crypto {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface CustomerBalance {
           /**
            * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
@@ -2114,6 +2147,11 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
+           * On-demand details if setting up or charging an on-demand payment.
+           */
+          on_demand?: Klarna.OnDemand;
+
+          /**
            * Preferred language of the Klarna authorization page that the customer is redirected to
            */
           preferred_locale?: Klarna.PreferredLocale;
@@ -2129,10 +2167,46 @@ declare module 'stripe' {
            *
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: Klarna.SetupFutureUsage;
+
+          /**
+           * Subscription details if setting up or charging a subscription.
+           */
+          subscriptions?: Stripe.Emptyable<Array<Klarna.Subscription>>;
         }
 
         namespace Klarna {
+          interface OnDemand {
+            /**
+             * Your average amount value. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            average_amount?: number;
+
+            /**
+             * The maximum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            maximum_amount?: number;
+
+            /**
+             * The lowest or minimum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            minimum_amount?: number;
+
+            /**
+             * Interval at which the customer is making purchases
+             */
+            purchase_interval?: OnDemand.PurchaseInterval;
+
+            /**
+             * The number of `purchase_interval` between charges
+             */
+            purchase_interval_count?: number;
+          }
+
+          namespace OnDemand {
+            type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+          }
+
           type PreferredLocale =
             | 'cs-CZ'
             | 'da-DK'
@@ -2180,6 +2254,51 @@ declare module 'stripe' {
             | 'ro-RO'
             | 'sv-FI'
             | 'sv-SE';
+
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          interface Subscription {
+            /**
+             * Unit of time between subscription charges.
+             */
+            interval: Subscription.Interval;
+
+            /**
+             * The number of intervals (specified in the `interval` attribute) between subscription charges. For example, `interval=month` and `interval_count=3` charges every 3 months.
+             */
+            interval_count?: number;
+
+            /**
+             * Name for subscription.
+             */
+            name?: string;
+
+            /**
+             * Describes the upcoming charge for this subscription.
+             */
+            next_billing?: Subscription.NextBilling;
+
+            /**
+             * A non-customer-facing reference to correlate subscription charges in the Klarna app. Use a value that persists across subscription charges.
+             */
+            reference: string;
+          }
+
+          namespace Subscription {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+
+            interface NextBilling {
+              /**
+               * The amount of the next charge for the subscription.
+               */
+              amount: number;
+
+              /**
+               * The date of the next charge for the subscription in YYYY-MM-DD format.
+               */
+              date: string;
+            }
+          }
         }
 
         interface Konbini {
@@ -2987,7 +3106,7 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentUpdateParams.PaymentMethodOptions;
 
       /**
-       * The list of payment method types (for example, card) that this PaymentIntent can use. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+       * The list of payment method types (for example, card) that this PaymentIntent can use. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
        */
       payment_method_types?: Array<string>;
 
@@ -3117,6 +3236,11 @@ declare module 'stripe' {
          * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
          */
         cashapp?: PaymentMethodData.Cashapp;
+
+        /**
+         * If this is a Crypto PaymentMethod, this hash contains details about the Crypto payment method.
+         */
+        crypto?: PaymentMethodData.Crypto;
 
         /**
          * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
@@ -3400,6 +3524,8 @@ declare module 'stripe' {
 
         interface Cashapp {}
 
+        interface Crypto {}
+
         interface CustomerBalance {}
 
         interface Eps {
@@ -3497,6 +3623,7 @@ declare module 'stripe' {
             | 'abn_amro'
             | 'asn_bank'
             | 'bunq'
+            | 'buut'
             | 'handelsbanken'
             | 'ing'
             | 'knab'
@@ -3692,6 +3819,7 @@ declare module 'stripe' {
           | 'blik'
           | 'boleto'
           | 'cashapp'
+          | 'crypto'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -3841,6 +3969,11 @@ declare module 'stripe' {
          * If this is a `cashapp` PaymentMethod, this sub-hash contains details about the Cash App Pay payment method options.
          */
         cashapp?: Stripe.Emptyable<PaymentMethodOptions.Cashapp>;
+
+        /**
+         * If this is a `crypto` PaymentMethod, this sub-hash contains details about the Crypto payment method options.
+         */
+        crypto?: Stripe.Emptyable<PaymentMethodOptions.Crypto>;
 
         /**
          * If this is a `customer balance` PaymentMethod, this sub-hash contains details about the customer balance payment method options.
@@ -4467,9 +4600,13 @@ declare module 'stripe' {
               interval?: 'month';
 
               /**
-               * Type of installment plan, one of `fixed_count`.
+               * Type of installment plan, one of `fixed_count`, `bonus`, or `revolving`.
                */
-              type: 'fixed_count';
+              type: Plan.Type;
+            }
+
+            namespace Plan {
+              type Type = 'bonus' | 'fixed_count' | 'revolving';
             }
           }
 
@@ -4708,6 +4845,21 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
+        interface Crypto {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface CustomerBalance {
           /**
            * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
@@ -4897,6 +5049,11 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
+           * On-demand details if setting up or charging an on-demand payment.
+           */
+          on_demand?: Klarna.OnDemand;
+
+          /**
            * Preferred language of the Klarna authorization page that the customer is redirected to
            */
           preferred_locale?: Klarna.PreferredLocale;
@@ -4912,10 +5069,46 @@ declare module 'stripe' {
            *
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: Klarna.SetupFutureUsage;
+
+          /**
+           * Subscription details if setting up or charging a subscription.
+           */
+          subscriptions?: Stripe.Emptyable<Array<Klarna.Subscription>>;
         }
 
         namespace Klarna {
+          interface OnDemand {
+            /**
+             * Your average amount value. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            average_amount?: number;
+
+            /**
+             * The maximum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            maximum_amount?: number;
+
+            /**
+             * The lowest or minimum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            minimum_amount?: number;
+
+            /**
+             * Interval at which the customer is making purchases
+             */
+            purchase_interval?: OnDemand.PurchaseInterval;
+
+            /**
+             * The number of `purchase_interval` between charges
+             */
+            purchase_interval_count?: number;
+          }
+
+          namespace OnDemand {
+            type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+          }
+
           type PreferredLocale =
             | 'cs-CZ'
             | 'da-DK'
@@ -4963,6 +5156,51 @@ declare module 'stripe' {
             | 'ro-RO'
             | 'sv-FI'
             | 'sv-SE';
+
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          interface Subscription {
+            /**
+             * Unit of time between subscription charges.
+             */
+            interval: Subscription.Interval;
+
+            /**
+             * The number of intervals (specified in the `interval` attribute) between subscription charges. For example, `interval=month` and `interval_count=3` charges every 3 months.
+             */
+            interval_count?: number;
+
+            /**
+             * Name for subscription.
+             */
+            name?: string;
+
+            /**
+             * Describes the upcoming charge for this subscription.
+             */
+            next_billing?: Subscription.NextBilling;
+
+            /**
+             * A non-customer-facing reference to correlate subscription charges in the Klarna app. Use a value that persists across subscription charges.
+             */
+            reference: string;
+          }
+
+          namespace Subscription {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+
+            interface NextBilling {
+              /**
+               * The amount of the next charge for the subscription.
+               */
+              amount: number;
+
+              /**
+               * The date of the next charge for the subscription in YYYY-MM-DD format.
+               */
+              date: string;
+            }
+          }
         }
 
         interface Konbini {
@@ -5835,7 +6073,7 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentConfirmParams.PaymentMethodOptions;
 
       /**
-       * The list of payment method types (for example, a card) that this PaymentIntent can use. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+       * The list of payment method types (for example, a card) that this PaymentIntent can use. Use `automatic_payment_methods` to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
        */
       payment_method_types?: Array<string>;
 
@@ -6011,6 +6249,11 @@ declare module 'stripe' {
          * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
          */
         cashapp?: PaymentMethodData.Cashapp;
+
+        /**
+         * If this is a Crypto PaymentMethod, this hash contains details about the Crypto payment method.
+         */
+        crypto?: PaymentMethodData.Crypto;
 
         /**
          * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
@@ -6294,6 +6537,8 @@ declare module 'stripe' {
 
         interface Cashapp {}
 
+        interface Crypto {}
+
         interface CustomerBalance {}
 
         interface Eps {
@@ -6391,6 +6636,7 @@ declare module 'stripe' {
             | 'abn_amro'
             | 'asn_bank'
             | 'bunq'
+            | 'buut'
             | 'handelsbanken'
             | 'ing'
             | 'knab'
@@ -6586,6 +6832,7 @@ declare module 'stripe' {
           | 'blik'
           | 'boleto'
           | 'cashapp'
+          | 'crypto'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -6735,6 +6982,11 @@ declare module 'stripe' {
          * If this is a `cashapp` PaymentMethod, this sub-hash contains details about the Cash App Pay payment method options.
          */
         cashapp?: Stripe.Emptyable<PaymentMethodOptions.Cashapp>;
+
+        /**
+         * If this is a `crypto` PaymentMethod, this sub-hash contains details about the Crypto payment method options.
+         */
+        crypto?: Stripe.Emptyable<PaymentMethodOptions.Crypto>;
 
         /**
          * If this is a `customer balance` PaymentMethod, this sub-hash contains details about the customer balance payment method options.
@@ -7361,9 +7613,13 @@ declare module 'stripe' {
               interval?: 'month';
 
               /**
-               * Type of installment plan, one of `fixed_count`.
+               * Type of installment plan, one of `fixed_count`, `bonus`, or `revolving`.
                */
-              type: 'fixed_count';
+              type: Plan.Type;
+            }
+
+            namespace Plan {
+              type Type = 'bonus' | 'fixed_count' | 'revolving';
             }
           }
 
@@ -7602,6 +7858,21 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
+        interface Crypto {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+           *
+           * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface CustomerBalance {
           /**
            * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
@@ -7791,6 +8062,11 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           /**
+           * On-demand details if setting up or charging an on-demand payment.
+           */
+          on_demand?: Klarna.OnDemand;
+
+          /**
            * Preferred language of the Klarna authorization page that the customer is redirected to
            */
           preferred_locale?: Klarna.PreferredLocale;
@@ -7806,10 +8082,46 @@ declare module 'stripe' {
            *
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: Klarna.SetupFutureUsage;
+
+          /**
+           * Subscription details if setting up or charging a subscription.
+           */
+          subscriptions?: Stripe.Emptyable<Array<Klarna.Subscription>>;
         }
 
         namespace Klarna {
+          interface OnDemand {
+            /**
+             * Your average amount value. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            average_amount?: number;
+
+            /**
+             * The maximum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            maximum_amount?: number;
+
+            /**
+             * The lowest or minimum value you may charge a customer per purchase. You can use a value across your customer base, or segment based on customer type, country, etc.
+             */
+            minimum_amount?: number;
+
+            /**
+             * Interval at which the customer is making purchases
+             */
+            purchase_interval?: OnDemand.PurchaseInterval;
+
+            /**
+             * The number of `purchase_interval` between charges
+             */
+            purchase_interval_count?: number;
+          }
+
+          namespace OnDemand {
+            type PurchaseInterval = 'day' | 'month' | 'week' | 'year';
+          }
+
           type PreferredLocale =
             | 'cs-CZ'
             | 'da-DK'
@@ -7857,6 +8169,51 @@ declare module 'stripe' {
             | 'ro-RO'
             | 'sv-FI'
             | 'sv-SE';
+
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
+          interface Subscription {
+            /**
+             * Unit of time between subscription charges.
+             */
+            interval: Subscription.Interval;
+
+            /**
+             * The number of intervals (specified in the `interval` attribute) between subscription charges. For example, `interval=month` and `interval_count=3` charges every 3 months.
+             */
+            interval_count?: number;
+
+            /**
+             * Name for subscription.
+             */
+            name?: string;
+
+            /**
+             * Describes the upcoming charge for this subscription.
+             */
+            next_billing?: Subscription.NextBilling;
+
+            /**
+             * A non-customer-facing reference to correlate subscription charges in the Klarna app. Use a value that persists across subscription charges.
+             */
+            reference: string;
+          }
+
+          namespace Subscription {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+
+            interface NextBilling {
+              /**
+               * The amount of the next charge for the subscription.
+               */
+              amount: number;
+
+              /**
+               * The date of the next charge for the subscription in YYYY-MM-DD format.
+               */
+              date: string;
+            }
+          }
         }
 
         interface Konbini {

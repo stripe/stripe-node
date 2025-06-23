@@ -148,7 +148,7 @@ declare module 'stripe' {
 
           interface SubscriptionUpdateConfirm {
             /**
-             * The coupon or promotion code to apply to this subscription update. Currently, only up to one may be specified.
+             * The coupon or promotion code to apply to this subscription update.
              */
             discounts?: Array<SubscriptionUpdateConfirm.Discount>;
 

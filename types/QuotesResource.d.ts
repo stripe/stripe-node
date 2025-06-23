@@ -296,12 +296,17 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
+         * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+         */
+        billing_mode?: SubscriptionData.BillingMode;
+
+        /**
          * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description?: string;
 
         /**
-         * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. When updating a subscription, the date of which the subscription will be updated using a subscription schedule. The special value `current_period_end` can be provided to update a subscription at the end of its current period. The `effective_date` is ignored if it is in the past when the quote is accepted.
+         * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. The `effective_date` is ignored if it is in the past when the quote is accepted.
          */
         effective_date?: Stripe.Emptyable<'current_period_end' | number>;
 
@@ -314,6 +319,16 @@ declare module 'stripe' {
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days?: Stripe.Emptyable<number>;
+      }
+
+      namespace SubscriptionData {
+        interface BillingMode {
+          type: BillingMode.Type;
+        }
+
+        namespace BillingMode {
+          type Type = 'classic' | 'flexible';
+        }
       }
 
       interface TransferData {
@@ -623,7 +638,7 @@ declare module 'stripe' {
         description?: Stripe.Emptyable<string>;
 
         /**
-         * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. When updating a subscription, the date of which the subscription will be updated using a subscription schedule. The special value `current_period_end` can be provided to update a subscription at the end of its current period. The `effective_date` is ignored if it is in the past when the quote is accepted.
+         * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. The `effective_date` is ignored if it is in the past when the quote is accepted.
          */
         effective_date?: Stripe.Emptyable<'current_period_end' | number>;
 

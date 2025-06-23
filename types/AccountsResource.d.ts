@@ -294,6 +294,11 @@ declare module 'stripe' {
         cashapp_payments?: Capabilities.CashappPayments;
 
         /**
+         * The crypto_payments capability.
+         */
+        crypto_payments?: Capabilities.CryptoPayments;
+
+        /**
          * The eps_payments capability.
          */
         eps_payments?: Capabilities.EpsPayments;
@@ -611,6 +616,13 @@ declare module 'stripe' {
         }
 
         interface CashappPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface CryptoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -990,6 +1002,9 @@ declare module 'stripe' {
          */
         phone?: string;
 
+        /**
+         * When the business was incorporated or registered.
+         */
         registration_date?: Stripe.Emptyable<Company.RegistrationDate>;
 
         /**
@@ -1217,6 +1232,11 @@ declare module 'stripe' {
         company_tax_id_verification?: Documents.CompanyTaxIdVerification;
 
         /**
+         * One or more documents that demonstrate proof of address.
+         */
+        proof_of_address?: Documents.ProofOfAddress;
+
+        /**
          * One or more documents showing the company's proof of registration with the national business registry.
          */
         proof_of_registration?: Documents.ProofOfRegistration;
@@ -1264,6 +1284,13 @@ declare module 'stripe' {
         }
 
         interface CompanyTaxIdVerification {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface ProofOfAddress {
           /**
            * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
            */
@@ -1729,15 +1756,34 @@ declare module 'stripe' {
             monthly_anchor?: number;
 
             /**
+             * The days of the month when available funds are paid out, specified as an array of numbers between 1--31. Payouts nominally scheduled between the 29th and 31st of the month are instead sent on the last day of a shorter month. Required and applicable only if `interval` is `monthly` and `monthly_anchor` is not set.
+             */
+            monthly_payout_days?: Array<number>;
+
+            /**
              * The day of the week when available funds are paid out, specified as `monday`, `tuesday`, etc. (required and applicable only if `interval` is `weekly`.)
              */
             weekly_anchor?: Schedule.WeeklyAnchor;
+
+            /**
+             * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. (required and applicable only if `interval` is `weekly` and `weekly_anchor` is not set.)
+             */
+            weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
           }
 
           namespace Schedule {
             type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
 
             type WeeklyAnchor =
+              | 'friday'
+              | 'monday'
+              | 'saturday'
+              | 'sunday'
+              | 'thursday'
+              | 'tuesday'
+              | 'wednesday';
+
+            type WeeklyPayoutDay =
               | 'friday'
               | 'monday'
               | 'saturday'
@@ -2127,6 +2173,11 @@ declare module 'stripe' {
         cashapp_payments?: Capabilities.CashappPayments;
 
         /**
+         * The crypto_payments capability.
+         */
+        crypto_payments?: Capabilities.CryptoPayments;
+
+        /**
          * The eps_payments capability.
          */
         eps_payments?: Capabilities.EpsPayments;
@@ -2444,6 +2495,13 @@ declare module 'stripe' {
         }
 
         interface CashappPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface CryptoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -3034,6 +3092,11 @@ declare module 'stripe' {
         company_tax_id_verification?: Documents.CompanyTaxIdVerification;
 
         /**
+         * One or more documents that demonstrate proof of address.
+         */
+        proof_of_address?: Documents.ProofOfAddress;
+
+        /**
          * One or more documents showing the company's proof of registration with the national business registry.
          */
         proof_of_registration?: Documents.ProofOfRegistration;
@@ -3081,6 +3144,13 @@ declare module 'stripe' {
         }
 
         interface CompanyTaxIdVerification {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface ProofOfAddress {
           /**
            * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
            */
@@ -3514,15 +3584,34 @@ declare module 'stripe' {
             monthly_anchor?: number;
 
             /**
+             * The days of the month when available funds are paid out, specified as an array of numbers between 1--31. Payouts nominally scheduled between the 29th and 31st of the month are instead sent on the last day of a shorter month. Required and applicable only if `interval` is `monthly` and `monthly_anchor` is not set.
+             */
+            monthly_payout_days?: Array<number>;
+
+            /**
              * The day of the week when available funds are paid out, specified as `monday`, `tuesday`, etc. (required and applicable only if `interval` is `weekly`.)
              */
             weekly_anchor?: Schedule.WeeklyAnchor;
+
+            /**
+             * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. (required and applicable only if `interval` is `weekly` and `weekly_anchor` is not set.)
+             */
+            weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
           }
 
           namespace Schedule {
             type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
 
             type WeeklyAnchor =
+              | 'friday'
+              | 'monday'
+              | 'saturday'
+              | 'sunday'
+              | 'thursday'
+              | 'tuesday'
+              | 'wednesday';
+
+            type WeeklyPayoutDay =
               | 'friday'
               | 'monday'
               | 'saturday'

@@ -124,7 +124,7 @@ declare module 'stripe' {
         invoice_creation?: SessionCreateParams.InvoiceCreation;
 
         /**
-         * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices).
+         * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices). The parameter is required for `payment` and `subscription` mode.
          *
          * For `payment` mode, there is a maximum of 100 line items, however it is recommended to consolidate line items if there are more than a few dozen.
          *
@@ -1756,6 +1756,56 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+
+            /**
+             * Subscription details if the Checkout Session sets up a future subscription.
+             */
+            subscriptions?: Stripe.Emptyable<Array<Klarna.Subscription>>;
+          }
+
+          namespace Klarna {
+            interface Subscription {
+              /**
+               * Unit of time between subscription charges.
+               */
+              interval: Subscription.Interval;
+
+              /**
+               * The number of intervals (specified in the `interval` attribute) between subscription charges. For example, `interval=month` and `interval_count=3` charges every 3 months.
+               */
+              interval_count?: number;
+
+              /**
+               * Name for subscription.
+               */
+              name?: string;
+
+              /**
+               * Describes the upcoming charge for this subscription.
+               */
+              next_billing: Subscription.NextBilling;
+
+              /**
+               * A non-customer-facing reference to correlate subscription charges in the Klarna app. Use a value that persists across subscription charges.
+               */
+              reference: string;
+            }
+
+            namespace Subscription {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+
+              interface NextBilling {
+                /**
+                 * The amount of the next charge for the subscription.
+                 */
+                amount: number;
+
+                /**
+                 * The date of the next charge for the subscription in YYYY-MM-DD format.
+                 */
+                date: string;
+              }
+            }
           }
 
           interface Konbini {
@@ -2167,6 +2217,7 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'crypto'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -2672,6 +2723,11 @@ declare module 'stripe' {
           billing_cycle_anchor?: number;
 
           /**
+           * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+           */
+          billing_mode?: SubscriptionData.BillingMode;
+
+          /**
            * The tax rates that will apply to any subscription item that does not have
            * `tax_rates` set. Invoices created will have their `default_tax_rates` populated
            * from the subscription.
@@ -2711,15 +2767,12 @@ declare module 'stripe' {
           transfer_data?: SubscriptionData.TransferData;
 
           /**
-           * Unix timestamp representing the end of the trial period the customer
-           * will get before being charged for the first time. Has to be at least
-           * 48 hours in the future.
+           * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. Has to be at least 48 hours in the future.
            */
           trial_end?: number;
 
           /**
-           * Integer representing the number of trial period days before the
-           * customer is charged for the first time. Has to be at least 1.
+           * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
            */
           trial_period_days?: number;
 
@@ -2730,6 +2783,14 @@ declare module 'stripe' {
         }
 
         namespace SubscriptionData {
+          interface BillingMode {
+            type: BillingMode.Type;
+          }
+
+          namespace BillingMode {
+            type Type = 'classic' | 'flexible';
+          }
+
           interface InvoiceSettings {
             /**
              * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
