@@ -132,6 +132,11 @@ declare module 'stripe' {
       stripeAccount?: string;
 
       /**
+       * An account on whose behalf you wish to make a request. See https://docs.corp.stripe.com/context for more information.
+       */
+      stripeContext?: string;
+
+      /**
        * The [API Version](https://stripe.com/docs/upgrades) to use for a given request (e.g., '2020-03-02').
        */
       apiVersion?: string;
