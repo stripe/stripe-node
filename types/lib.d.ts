@@ -112,6 +112,11 @@ declare module 'stripe' {
        * An account id on whose behalf you wish to make every request.
        */
       stripeAccount?: string;
+
+      /**
+       * The Context this client will use for every request.
+       */
+      stripeContext?: string;
     }
 
     export interface RequestOptions {
