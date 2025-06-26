@@ -120,6 +120,11 @@ declare module 'stripe' {
           cashapp?: PaymentMethodData.Cashapp;
 
           /**
+           * If this is a Crypto PaymentMethod, this hash contains details about the Crypto payment method.
+           */
+          crypto?: PaymentMethodData.Crypto;
+
+          /**
            * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
            */
           customer_balance?: PaymentMethodData.CustomerBalance;
@@ -441,6 +446,8 @@ declare module 'stripe' {
 
           interface Cashapp {}
 
+          interface Crypto {}
+
           interface CustomerBalance {}
 
           interface Eps {
@@ -551,6 +558,7 @@ declare module 'stripe' {
               | 'abn_amro'
               | 'asn_bank'
               | 'bunq'
+              | 'buut'
               | 'handelsbanken'
               | 'ing'
               | 'knab'
@@ -811,6 +819,7 @@ declare module 'stripe' {
             | 'blik'
             | 'boleto'
             | 'cashapp'
+            | 'crypto'
             | 'customer_balance'
             | 'eps'
             | 'fpx'
@@ -929,9 +938,13 @@ declare module 'stripe' {
                 interval?: 'month';
 
                 /**
-                 * Type of installment plan, one of `fixed_count`.
+                 * Type of installment plan, one of `fixed_count`, `bonus`, or `revolving`.
                  */
-                type: 'fixed_count';
+                type: Plan.Type;
+              }
+
+              namespace Plan {
+                type Type = 'bonus' | 'fixed_count' | 'revolving';
               }
             }
           }

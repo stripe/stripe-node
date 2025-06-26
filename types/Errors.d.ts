@@ -11,13 +11,13 @@ declare module 'stripe' {
       | 'invalid_grant'
       | 'temporary_session_expired'
       | 'financial_account_not_open'
+      | 'feature_not_enabled'
       | 'blocked_by_stripe'
       | 'already_canceled'
       | 'not_cancelable'
       | 'insufficient_funds'
       | 'quota_exceeded'
       | 'recipient_not_notifiable'
-      | 'feature_not_enabled'
       | 'invalid_payout_method'
       | 'controlled_by_dashboard'
       | 'invalid_payment_method';
@@ -137,13 +137,13 @@ declare module 'stripe' {
           | 'StripeInvalidGrantError'
           | 'TemporarySessionExpiredError'
           | 'FinancialAccountNotOpenError'
+          | 'FeatureNotEnabledError'
           | 'BlockedByStripeError'
           | 'AlreadyCanceledError'
           | 'NotCancelableError'
           | 'InsufficientFundsError'
           | 'QuotaExceededError'
           | 'RecipientNotNotifiableError'
-          | 'FeatureNotEnabledError'
           | 'InvalidPayoutMethodError'
           | 'ControlledByDashboardError'
           | 'InvalidPaymentMethodError';
@@ -300,6 +300,10 @@ declare module 'stripe' {
         readonly type: 'FinancialAccountNotOpenError';
         readonly rawType: 'financial_account_not_open';
       }
+      export class FeatureNotEnabledError extends StripeError {
+        readonly type: 'FeatureNotEnabledError';
+        readonly rawType: 'feature_not_enabled';
+      }
       export class BlockedByStripeError extends StripeError {
         readonly type: 'BlockedByStripeError';
         readonly rawType: 'blocked_by_stripe';
@@ -323,10 +327,6 @@ declare module 'stripe' {
       export class RecipientNotNotifiableError extends StripeError {
         readonly type: 'RecipientNotNotifiableError';
         readonly rawType: 'recipient_not_notifiable';
-      }
-      export class FeatureNotEnabledError extends StripeError {
-        readonly type: 'FeatureNotEnabledError';
-        readonly rawType: 'feature_not_enabled';
       }
       export class InvalidPayoutMethodError extends StripeError {
         readonly type: 'InvalidPayoutMethodError';

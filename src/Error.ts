@@ -37,6 +37,8 @@ export const generateV2Error = (
       return new TemporarySessionExpiredError(rawStripeError);
     case 'financial_account_not_open':
       return new FinancialAccountNotOpenError(rawStripeError);
+    case 'feature_not_enabled':
+      return new FeatureNotEnabledError(rawStripeError);
     case 'blocked_by_stripe':
       return new BlockedByStripeError(rawStripeError);
     case 'already_canceled':
@@ -49,8 +51,6 @@ export const generateV2Error = (
       return new QuotaExceededError(rawStripeError);
     case 'recipient_not_notifiable':
       return new RecipientNotNotifiableError(rawStripeError);
-    case 'feature_not_enabled':
-      return new FeatureNotEnabledError(rawStripeError);
     case 'invalid_payout_method':
       return new InvalidPayoutMethodError(rawStripeError);
     case 'controlled_by_dashboard':
@@ -264,6 +264,11 @@ export class FinancialAccountNotOpenError extends StripeError {
     super(rawStripeError, 'FinancialAccountNotOpenError');
   }
 }
+export class FeatureNotEnabledError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'FeatureNotEnabledError');
+  }
+}
 export class BlockedByStripeError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'BlockedByStripeError');
@@ -292,11 +297,6 @@ export class QuotaExceededError extends StripeError {
 export class RecipientNotNotifiableError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'RecipientNotNotifiableError');
-  }
-}
-export class FeatureNotEnabledError extends StripeError {
-  constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'FeatureNotEnabledError');
   }
 }
 export class InvalidPayoutMethodError extends StripeError {

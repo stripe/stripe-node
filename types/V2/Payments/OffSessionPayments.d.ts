@@ -24,11 +24,6 @@ declare module 'stripe' {
           amount_requested: Amount;
 
           /**
-           * Number of authorization attempts.
-           */
-          attempts: number;
-
-          /**
            * The frequency of the underlying payment that this OSP represents.
            */
           cadence: OffSessionPayment.Cadence;
@@ -153,7 +148,7 @@ declare module 'stripe' {
             /**
              * Amount in minor units that you want to transfer.
              */
-            amount: number;
+            amount: number | null;
 
             /**
              * ID of the connected account where you want money to go.

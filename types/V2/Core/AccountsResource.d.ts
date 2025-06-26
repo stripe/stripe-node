@@ -1160,6 +1160,7 @@ declare module 'stripe' {
                     | 'vu'
                     | 'wf'
                     | 'ws'
+                    | 'xx'
                     | 'ye'
                     | 'yt'
                     | 'za'
@@ -2053,6 +2054,7 @@ declare module 'stripe' {
                   | 'vu'
                   | 'wf'
                   | 'ws'
+                  | 'xx'
                   | 'ye'
                   | 'yt'
                   | 'za'
@@ -2107,6 +2109,11 @@ declare module 'stripe' {
                  * A document verifying the business.
                  */
                 primary_verification?: Documents.PrimaryVerification;
+
+                /**
+                 * One or more documents that demonstrate proof of address.
+                 */
+                proof_of_address?: Documents.ProofOfAddress;
 
                 /**
                  * One or more documents showing the company's proof of registration with the national business registry.
@@ -2216,6 +2223,18 @@ declare module 'stripe' {
                      */
                     front: string;
                   }
+                }
+
+                interface ProofOfAddress {
+                  /**
+                   * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+                   */
+                  files: Array<string>;
+
+                  /**
+                   * The format of the document. Currently supports `files` only.
+                   */
+                  type: 'files';
                 }
 
                 interface ProofOfRegistration {
@@ -2627,6 +2646,7 @@ declare module 'stripe' {
                     | 'vu'
                     | 'wf'
                     | 'ws'
+                    | 'xx'
                     | 'ye'
                     | 'yt'
                     | 'za'
@@ -2918,6 +2938,7 @@ declare module 'stripe' {
                     | 'vu'
                     | 'wf'
                     | 'ws'
+                    | 'xx'
                     | 'ye'
                     | 'yt'
                     | 'za'
@@ -3230,6 +3251,7 @@ declare module 'stripe' {
               | 'vu'
               | 'wf'
               | 'ws'
+              | 'xx'
               | 'ye'
               | 'yt'
               | 'za'
@@ -3619,6 +3641,7 @@ declare module 'stripe' {
                   | 'vu'
                   | 'wf'
                   | 'ws'
+                  | 'xx'
                   | 'ye'
                   | 'yt'
                   | 'za'
@@ -3936,6 +3959,7 @@ declare module 'stripe' {
                   | 'vu'
                   | 'wf'
                   | 'ws'
+                  | 'xx'
                   | 'ye'
                   | 'yt'
                   | 'za'
@@ -4356,6 +4380,7 @@ declare module 'stripe' {
                 | 'vu'
                 | 'wf'
                 | 'ws'
+                | 'xx'
                 | 'ye'
                 | 'yt'
                 | 'za'
@@ -4688,6 +4713,7 @@ declare module 'stripe' {
                     | 'vu'
                     | 'wf'
                     | 'ws'
+                    | 'xx'
                     | 'ye'
                     | 'yt'
                     | 'za'
@@ -4979,6 +5005,7 @@ declare module 'stripe' {
                     | 'vu'
                     | 'wf'
                     | 'ws'
+                    | 'xx'
                     | 'ye'
                     | 'yt'
                     | 'za'
@@ -6225,6 +6252,7 @@ declare module 'stripe' {
                     | 'vu'
                     | 'wf'
                     | 'ws'
+                    | 'xx'
                     | 'ye'
                     | 'yt'
                     | 'za'
@@ -7123,6 +7151,7 @@ declare module 'stripe' {
                   | 'vu'
                   | 'wf'
                   | 'ws'
+                  | 'xx'
                   | 'ye'
                   | 'yt'
                   | 'za'
@@ -7177,6 +7206,11 @@ declare module 'stripe' {
                  * A document verifying the business.
                  */
                 primary_verification?: Documents.PrimaryVerification | null;
+
+                /**
+                 * One or more documents that demonstrate proof of address.
+                 */
+                proof_of_address?: Documents.ProofOfAddress;
 
                 /**
                  * One or more documents showing the company's proof of registration with the national business registry.
@@ -7286,6 +7320,18 @@ declare module 'stripe' {
                      */
                     front?: string;
                   }
+                }
+
+                interface ProofOfAddress {
+                  /**
+                   * One or more document IDs returned by a [file upload](https://docs.stripe.com/api/persons/update#create_file) with a purpose value of `account_requirement`.
+                   */
+                  files: Array<string>;
+
+                  /**
+                   * The format of the document. Currently supports `files` only.
+                   */
+                  type: 'files';
                 }
 
                 interface ProofOfRegistration {
@@ -7697,6 +7743,7 @@ declare module 'stripe' {
                     | 'vu'
                     | 'wf'
                     | 'ws'
+                    | 'xx'
                     | 'ye'
                     | 'yt'
                     | 'za'
@@ -7988,6 +8035,7 @@ declare module 'stripe' {
                     | 'vu'
                     | 'wf'
                     | 'ws'
+                    | 'xx'
                     | 'ye'
                     | 'yt'
                     | 'za'
@@ -8300,6 +8348,7 @@ declare module 'stripe' {
               | 'vu'
               | 'wf'
               | 'ws'
+              | 'xx'
               | 'ye'
               | 'yt'
               | 'za'
@@ -8689,6 +8738,7 @@ declare module 'stripe' {
                   | 'vu'
                   | 'wf'
                   | 'ws'
+                  | 'xx'
                   | 'ye'
                   | 'yt'
                   | 'za'
@@ -9006,6 +9056,7 @@ declare module 'stripe' {
                   | 'vu'
                   | 'wf'
                   | 'ws'
+                  | 'xx'
                   | 'ye'
                   | 'yt'
                   | 'za'
@@ -9426,6 +9477,7 @@ declare module 'stripe' {
                 | 'vu'
                 | 'wf'
                 | 'ws'
+                | 'xx'
                 | 'ye'
                 | 'yt'
                 | 'za'
@@ -9758,6 +9810,7 @@ declare module 'stripe' {
                     | 'vu'
                     | 'wf'
                     | 'ws'
+                    | 'xx'
                     | 'ye'
                     | 'yt'
                     | 'za'
@@ -10049,6 +10102,7 @@ declare module 'stripe' {
                     | 'vu'
                     | 'wf'
                     | 'ws'
+                    | 'xx'
                     | 'ye'
                     | 'yt'
                     | 'za'

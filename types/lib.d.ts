@@ -27,7 +27,7 @@ declare module 'stripe' {
       }): (...args: any[]) => Response<ResponseObject>; //eslint-disable-line @typescript-eslint/no-explicit-any
       static MAX_BUFFERED_REQUEST_METRICS: number;
     }
-    export type LatestApiVersion = '2025-05-28.preview';
+    export type LatestApiVersion = '2025-06-30.preview';
     export type HttpAgent = Agent;
     export type HttpProtocol = 'http' | 'https';
 
@@ -112,6 +112,11 @@ declare module 'stripe' {
        * An account id on whose behalf you wish to make every request.
        */
       stripeAccount?: string;
+
+      /**
+       * An account on whose behalf you wish to make every request. See https://docs.corp.stripe.com/context for more information.
+       */
+      stripeContext?: string;
     }
 
     export interface RequestOptions {
@@ -130,6 +135,11 @@ declare module 'stripe' {
        * An account id on whose behalf you wish to make a request.
        */
       stripeAccount?: string;
+
+      /**
+       * An account on whose behalf you wish to make a request. See https://docs.corp.stripe.com/context for more information.
+       */
+      stripeContext?: string;
 
       /**
        * The [API Version](https://stripe.com/docs/upgrades) to use for a given request (e.g., '2020-03-02').

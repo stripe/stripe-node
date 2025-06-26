@@ -33,9 +33,9 @@ declare module 'stripe' {
       billing_behavior?: QuotePreviewSubscriptionSchedule.BillingBehavior;
 
       /**
-       * The [billing mode](https://docs.stripe.com/api/subscriptions/create#create_subscription-billing_mode) that will be used to process all future operations for the subscription schedule.
+       * The billing mode of the subscription.
        */
-      billing_mode?: QuotePreviewSubscriptionSchedule.BillingMode;
+      billing_mode: QuotePreviewSubscriptionSchedule.BillingMode;
 
       /**
        * Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.
@@ -149,7 +149,21 @@ declare module 'stripe' {
 
       type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
 
-      type BillingMode = 'classic' | 'flexible';
+      interface BillingMode {
+        /**
+         * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+         */
+        type: BillingMode.Type;
+
+        /**
+         * Details on when the current billing_mode was adopted.
+         */
+        updated_at?: number;
+      }
+
+      namespace BillingMode {
+        type Type = 'classic' | 'flexible';
+      }
 
       interface CurrentPhase {
         /**

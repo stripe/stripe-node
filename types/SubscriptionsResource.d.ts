@@ -14,12 +14,12 @@ declare module 'stripe' {
       application_fee_percent?: Stripe.Emptyable<number>;
 
       /**
-       * Automatic tax settings for this subscription. We recommend you only include this parameter when the existing value is being changed.
+       * Automatic tax settings for this subscription.
        */
       automatic_tax?: SubscriptionCreateParams.AutomaticTax;
 
       /**
-       * For new subscriptions, a past timestamp to backdate the subscription's start date to. If set, the first invoice will contain a proration for the timespan between the start date and the current time. Can be combined with trials and the billing cycle anchor.
+       * A past timestamp to backdate the subscription's start date to. If set, the first invoice will contain line items for the timespan between the start date and the current time. Can be combined with trials and the billing cycle anchor.
        */
       backdate_start_date?: number;
 
@@ -51,7 +51,7 @@ declare module 'stripe' {
       cancel_at?: number | SubscriptionCreateParams.CancelAt;
 
       /**
-       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`. This param will be removed in a future API version. Please use `cancel_at` instead.
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
        */
       cancel_at_period_end?: boolean;
 
@@ -377,7 +377,13 @@ declare module 'stripe' {
         second?: number;
       }
 
-      type BillingMode = 'classic' | 'flexible';
+      interface BillingMode {
+        type: BillingMode.Type;
+      }
+
+      namespace BillingMode {
+        type Type = 'classic' | 'flexible';
+      }
 
       interface BillingThresholds {
         /**
@@ -958,6 +964,7 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'crypto'
           | 'custom'
           | 'customer_balance'
           | 'eps'
@@ -1100,7 +1107,7 @@ declare module 'stripe' {
       cancel_at?: Stripe.Emptyable<number | SubscriptionUpdateParams.CancelAt>;
 
       /**
-       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`. This param will be removed in a future API version. Please use `cancel_at` instead.
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
        */
       cancel_at_period_end?: boolean;
 
@@ -2007,6 +2014,7 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'crypto'
           | 'custom'
           | 'customer_balance'
           | 'eps'
@@ -2247,12 +2255,18 @@ declare module 'stripe' {
       /**
        * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
        */
-      billing_mode: 'flexible';
+      billing_mode: SubscriptionMigrateParams.BillingMode;
 
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+    }
+
+    namespace SubscriptionMigrateParams {
+      interface BillingMode {
+        type: 'flexible';
+      }
     }
 
     interface SubscriptionResumeParams {

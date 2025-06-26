@@ -246,6 +246,7 @@ declare module 'stripe' {
           /**
            * Create a new FinancialAddress for a FinancialAccount.
            * @throws Stripe.FinancialAccountNotOpenError
+           * @throws Stripe.FeatureNotEnabledError
            */
           create(
             params: FinancialAddressCreateParams,

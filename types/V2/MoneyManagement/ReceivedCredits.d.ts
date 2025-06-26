@@ -83,14 +83,33 @@ declare module 'stripe' {
         namespace ReceivedCredit {
           interface BalanceTransfer {
             /**
-             * The ID of the Stripe Money Movement that originated the ReceivedCredit.
+             * The ID of the account that owns the source object originated the ReceivedCredit.
              */
-            payout_v1: string;
+            from_account: string | null;
 
             /**
              * Open Enum. The type of Stripe Money Movement that originated the ReceivedCredit.
              */
-            type: 'payout_v1';
+            type: BalanceTransfer.Type;
+
+            /**
+             * The ID of the outbound payment object that originated the ReceivedCredit.
+             */
+            outbound_payment: string | null;
+
+            /**
+             * The ID of the outbound transfer object that originated the ReceivedCredit.
+             */
+            outbound_transfer: string | null;
+
+            /**
+             * The ID of the payout object that originated the ReceivedCredit.
+             */
+            payout_v1: string | null;
+          }
+
+          namespace BalanceTransfer {
+            type Type = 'outbound_payment' | 'outbound_transfer' | 'payout_v1';
           }
 
           interface BankTransfer {

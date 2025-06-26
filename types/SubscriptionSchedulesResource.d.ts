@@ -67,7 +67,13 @@ declare module 'stripe' {
     namespace SubscriptionScheduleCreateParams {
       type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
 
-      type BillingMode = 'classic' | 'flexible';
+      interface BillingMode {
+        type: BillingMode.Type;
+      }
+
+      namespace BillingMode {
+        type Type = 'classic' | 'flexible';
+      }
 
       interface DefaultSettings {
         /**

@@ -484,9 +484,13 @@ declare module 'stripe' {
                 interval?: 'month';
 
                 /**
-                 * Type of installment plan, one of `fixed_count`.
+                 * Type of installment plan, one of `fixed_count`, `bonus`, or `revolving`.
                  */
-                type: 'fixed_count';
+                type: Plan.Type;
+              }
+
+              namespace Plan {
+                type Type = 'bonus' | 'fixed_count' | 'revolving';
               }
             }
 
@@ -610,6 +614,7 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'crypto'
           | 'custom'
           | 'customer_balance'
           | 'eps'
@@ -1298,9 +1303,13 @@ declare module 'stripe' {
                 interval?: 'month';
 
                 /**
-                 * Type of installment plan, one of `fixed_count`.
+                 * Type of installment plan, one of `fixed_count`, `bonus`, or `revolving`.
                  */
-                type: 'fixed_count';
+                type: Plan.Type;
+              }
+
+              namespace Plan {
+                type Type = 'bonus' | 'fixed_count' | 'revolving';
               }
             }
 
@@ -1424,6 +1433,7 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'crypto'
           | 'custom'
           | 'customer_balance'
           | 'eps'
@@ -3313,7 +3323,13 @@ declare module 'stripe' {
 
         type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
 
-        type BillingMode = 'classic' | 'flexible';
+        interface BillingMode {
+          type: BillingMode.Type;
+        }
+
+        namespace BillingMode {
+          type Type = 'classic' | 'flexible';
+        }
 
         type EndBehavior = 'cancel' | 'release';
 
@@ -4034,7 +4050,7 @@ declare module 'stripe' {
         cancel_at?: Stripe.Emptyable<number | SubscriptionDetails.CancelAt>;
 
         /**
-         * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`. This param will be removed in a future API version. Please use `cancel_at` instead.
+         * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
          */
         cancel_at_period_end?: boolean;
 
@@ -4087,7 +4103,13 @@ declare module 'stripe' {
       namespace SubscriptionDetails {
         type BillingCycleAnchor = 'now' | 'unchanged';
 
-        type BillingMode = 'classic' | 'flexible';
+        interface BillingMode {
+          type: BillingMode.Type;
+        }
+
+        namespace BillingMode {
+          type Type = 'classic' | 'flexible';
+        }
 
         type CancelAt = 'max_period_end' | 'min_period_end';
 
