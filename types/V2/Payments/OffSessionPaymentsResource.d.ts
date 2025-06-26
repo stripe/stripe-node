@@ -79,7 +79,7 @@ declare module 'stripe' {
             /**
              * Amount in minor units that you want to transfer.
              */
-            amount: number;
+            amount?: number;
 
             /**
              * ID of the connected account where you want money to go.
