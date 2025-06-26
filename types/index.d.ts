@@ -463,8 +463,8 @@ declare module 'stripe' {
     };
     v2: {
       billing: {
-        meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
         meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
+        meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
         meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
         meterEvents: Stripe.V2.Billing.MeterEventsResource;
       };

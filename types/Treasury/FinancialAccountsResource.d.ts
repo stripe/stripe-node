@@ -441,6 +441,15 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+
+        /**
+         * Only return FinancialAccounts that have the given status: `open` or `closed`
+         */
+        status?: FinancialAccountListParams.Status;
+      }
+
+      namespace FinancialAccountListParams {
+        type Status = 'closed' | 'open';
       }
 
       interface FinancialAccountCloseParams {

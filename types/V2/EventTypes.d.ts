@@ -215,7 +215,7 @@ declare module 'stripe' {
     }
 
     /**
-     * A ping event used to test the connection to an event destination.
+     * A ping event used to test the connection to an EventDestination.
      */
     export interface V2CoreEventDestinationPingEvent extends V2.EventBase {
       type: 'v2.core.event_destination.ping';

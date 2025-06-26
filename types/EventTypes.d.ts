@@ -208,6 +208,7 @@ declare module 'stripe' {
       | TaxRateUpdatedEvent
       | TerminalReaderActionFailedEvent
       | TerminalReaderActionSucceededEvent
+      | TerminalReaderActionUpdatedEvent
       | TestHelpersTestClockAdvancingEvent
       | TestHelpersTestClockCreatedEvent
       | TestHelpersTestClockDeletedEvent
@@ -3534,6 +3535,22 @@ declare module 'stripe' {
     }
 
     namespace TerminalReaderActionSucceededEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Terminal.Reader;
+
+        previous_attributes?: Partial<Stripe.Terminal.Reader>;
+      }
+    }
+
+    /**
+     * Occurs whenever an action sent to a Terminal reader is updated.
+     */
+    interface TerminalReaderActionUpdatedEvent extends EventBase {
+      type: 'terminal.reader.action_updated';
+      data: TerminalReaderActionUpdatedEvent.Data;
+    }
+
+    namespace TerminalReaderActionUpdatedEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Terminal.Reader;
 

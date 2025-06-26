@@ -483,6 +483,11 @@ declare module 'stripe' {
           tz?: CountryOptions.Tz;
 
           /**
+           * Options for the registration in UA.
+           */
+          ua?: CountryOptions.Ua;
+
+          /**
            * Options for the registration in UG.
            */
           ug?: CountryOptions.Ug;
@@ -1704,6 +1709,13 @@ declare module 'stripe' {
           }
 
           interface Tz {
+            /**
+             * Type of registration to be created in `country`.
+             */
+            type: 'simplified';
+          }
+
+          interface Ua {
             /**
              * Type of registration to be created in `country`.
              */

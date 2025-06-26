@@ -45,6 +45,11 @@ declare module 'stripe' {
       billing_cycle_anchor_config: Subscription.BillingCycleAnchorConfig | null;
 
       /**
+       * The billing mode of the subscription.
+       */
+      billing_mode: Subscription.BillingMode;
+
+      /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
        */
       billing_thresholds: Subscription.BillingThresholds | null;
@@ -55,7 +60,7 @@ declare module 'stripe' {
       cancel_at: number | null;
 
       /**
-       * Whether this subscription will (if `status=active`) or did (if `status=canceled`) cancel at the end of the current billing period. This field will be removed in a future API version. Please use `cancel_at` instead.
+       * Whether this subscription will (if `status=active`) or did (if `status=canceled`) cancel at the end of the current billing period.
        */
       cancel_at_period_end: boolean;
 
@@ -227,7 +232,7 @@ declare module 'stripe' {
       trial_settings: Subscription.TrialSettings | null;
 
       /**
-       * If the subscription has a trial, the beginning of that trial. For subsequent trials, this date remains as the start of the first ever trial on the subscription.
+       * If the subscription has a trial, the beginning of that trial.
        */
       trial_start: number | null;
     }
@@ -293,6 +298,22 @@ declare module 'stripe' {
          * The second of the minute of the billing_cycle_anchor.
          */
         second: number | null;
+      }
+
+      interface BillingMode {
+        /**
+         * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+         */
+        type: BillingMode.Type;
+
+        /**
+         * Details on when the current billing_mode was adopted.
+         */
+        updated_at?: number;
+      }
+
+      namespace BillingMode {
+        type Type = 'classic' | 'flexible';
       }
 
       interface BillingThresholds {
@@ -631,6 +652,7 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'crypto'
           | 'customer_balance'
           | 'eps'
           | 'fpx'

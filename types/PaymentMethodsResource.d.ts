@@ -84,6 +84,11 @@ declare module 'stripe' {
       cashapp?: PaymentMethodCreateParams.Cashapp;
 
       /**
+       * If this is a Crypto PaymentMethod, this hash contains details about the Crypto payment method.
+       */
+      crypto?: PaymentMethodCreateParams.Crypto;
+
+      /**
        * The `Customer` to whom the original PaymentMethod is attached.
        */
       customer?: string;
@@ -425,6 +430,8 @@ declare module 'stripe' {
 
       interface Cashapp {}
 
+      interface Crypto {}
+
       interface CustomerBalance {}
 
       interface Eps {
@@ -522,6 +529,7 @@ declare module 'stripe' {
           | 'abn_amro'
           | 'asn_bank'
           | 'bunq'
+          | 'buut'
           | 'handelsbanken'
           | 'ing'
           | 'knab'
@@ -718,6 +726,7 @@ declare module 'stripe' {
         | 'boleto'
         | 'card'
         | 'cashapp'
+        | 'crypto'
         | 'customer_balance'
         | 'eps'
         | 'fpx'
@@ -955,6 +964,7 @@ declare module 'stripe' {
         | 'boleto'
         | 'card'
         | 'cashapp'
+        | 'crypto'
         | 'customer_balance'
         | 'eps'
         | 'fpx'

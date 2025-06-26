@@ -102,6 +102,8 @@ declare module 'stripe' {
 
         kakao_pay?: PaymentMethodDetails.KakaoPay;
 
+        klarna?: PaymentMethodDetails.Klarna;
+
         kr_card?: PaymentMethodDetails.KrCard;
 
         link?: PaymentMethodDetails.Link;
@@ -202,6 +204,8 @@ declare module 'stripe' {
         interface Cashapp {}
 
         interface KakaoPay {}
+
+        interface Klarna {}
 
         interface KrCard {}
 

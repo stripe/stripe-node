@@ -103,6 +103,16 @@ declare module 'stripe' {
           collect_inputs?: Action.CollectInputs;
 
           /**
+           * Represents a reader action to collect a payment method
+           */
+          collect_payment_method?: Action.CollectPaymentMethod;
+
+          /**
+           * Represents a reader action to confirm a payment
+           */
+          confirm_payment_intent?: Action.ConfirmPaymentIntent;
+
+          /**
            * Failure code, only set if status is `failed`.
            */
           failure_code: string | null;
@@ -350,6 +360,76 @@ declare module 'stripe' {
             }
           }
 
+          interface CollectPaymentMethod {
+            /**
+             * Represents a per-transaction override of a reader configuration
+             */
+            collect_config?: CollectPaymentMethod.CollectConfig;
+
+            /**
+             * Most recent PaymentIntent processed by the reader.
+             */
+            payment_intent: string | Stripe.PaymentIntent;
+
+            /**
+             * PaymentMethod objects represent your customer's payment instruments.
+             * You can use them with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or save them to
+             * Customer objects to store instrument details for future payments.
+             *
+             * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
+             */
+            payment_method?: Stripe.PaymentMethod;
+          }
+
+          namespace CollectPaymentMethod {
+            interface CollectConfig {
+              /**
+               * Enable customer-initiated cancellation when processing this payment.
+               */
+              enable_customer_cancellation?: boolean;
+
+              /**
+               * Override showing a tipping selection screen on this transaction.
+               */
+              skip_tipping?: boolean;
+
+              /**
+               * Represents a per-transaction tipping configuration
+               */
+              tipping?: CollectConfig.Tipping;
+            }
+
+            namespace CollectConfig {
+              interface Tipping {
+                /**
+                 * Amount used to calculate tip suggestions on tipping selection screen for this transaction. Must be a positive integer in the smallest currency unit (e.g., 100 cents to represent $1.00 or 100 to represent ¥100, a zero-decimal currency).
+                 */
+                amount_eligible?: number;
+              }
+            }
+          }
+
+          interface ConfirmPaymentIntent {
+            /**
+             * Represents a per-transaction override of a reader configuration
+             */
+            confirm_config?: ConfirmPaymentIntent.ConfirmConfig;
+
+            /**
+             * Most recent PaymentIntent processed by the reader.
+             */
+            payment_intent: string | Stripe.PaymentIntent;
+          }
+
+          namespace ConfirmPaymentIntent {
+            interface ConfirmConfig {
+              /**
+               * If the customer doesn't abandon authenticating the payment, they're redirected to this URL after completion.
+               */
+              return_url?: string;
+            }
+          }
+
           interface ProcessPaymentIntent {
             /**
              * Most recent PaymentIntent processed by the reader.
@@ -365,12 +445,12 @@ declare module 'stripe' {
           namespace ProcessPaymentIntent {
             interface ProcessConfig {
               /**
-               * Enable customer initiated cancellation when processing this payment.
+               * Enable customer-initiated cancellation when processing this payment.
                */
               enable_customer_cancellation?: boolean;
 
               /**
-               * If the customer does not abandon authenticating the payment, they will be redirected to this specified URL after completion.
+               * If the customer doesn't abandon authenticating the payment, they're redirected to this URL after completion.
                */
               return_url?: string;
 
@@ -415,7 +495,7 @@ declare module 'stripe' {
           namespace ProcessSetupIntent {
             interface ProcessConfig {
               /**
-               * Enable customer initiated cancellation when processing this SetupIntent.
+               * Enable customer-initiated cancellation when processing this SetupIntent.
                */
               enable_customer_cancellation?: boolean;
             }
@@ -473,7 +553,7 @@ declare module 'stripe' {
 
             interface RefundPaymentConfig {
               /**
-               * Enable customer initiated cancellation when refunding this payment.
+               * Enable customer-initiated cancellation when refunding this payment.
                */
               enable_customer_cancellation?: boolean;
             }
@@ -538,6 +618,8 @@ declare module 'stripe' {
 
           type Type =
             | 'collect_inputs'
+            | 'collect_payment_method'
+            | 'confirm_payment_intent'
             | 'process_payment_intent'
             | 'process_setup_intent'
             | 'refund_payment'

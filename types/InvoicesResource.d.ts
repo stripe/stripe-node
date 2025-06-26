@@ -396,9 +396,13 @@ declare module 'stripe' {
                 interval?: 'month';
 
                 /**
-                 * Type of installment plan, one of `fixed_count`.
+                 * Type of installment plan, one of `fixed_count`, `bonus`, or `revolving`.
                  */
-                type: 'fixed_count';
+                type: Plan.Type;
+              }
+
+              namespace Plan {
+                type Type = 'bonus' | 'fixed_count' | 'revolving';
               }
             }
 
@@ -511,6 +515,7 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'crypto'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -1113,9 +1118,13 @@ declare module 'stripe' {
                 interval?: 'month';
 
                 /**
-                 * Type of installment plan, one of `fixed_count`.
+                 * Type of installment plan, one of `fixed_count`, `bonus`, or `revolving`.
                  */
-                type: 'fixed_count';
+                type: Plan.Type;
+              }
+
+              namespace Plan {
+                type Type = 'bonus' | 'fixed_count' | 'revolving';
               }
             }
 
@@ -1228,6 +1237,7 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'crypto'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -2285,6 +2295,11 @@ declare module 'stripe' {
 
       interface ScheduleDetails {
         /**
+         * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+         */
+        billing_mode?: ScheduleDetails.BillingMode;
+
+        /**
          * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running. `cancel` will end the subscription schedule and cancel the underlying subscription.
          */
         end_behavior?: ScheduleDetails.EndBehavior;
@@ -2301,6 +2316,14 @@ declare module 'stripe' {
       }
 
       namespace ScheduleDetails {
+        interface BillingMode {
+          type: BillingMode.Type;
+        }
+
+        namespace BillingMode {
+          type Type = 'classic' | 'flexible';
+        }
+
         type EndBehavior = 'cancel' | 'release';
 
         interface Phase {
@@ -2742,12 +2765,17 @@ declare module 'stripe' {
         billing_cycle_anchor?: SubscriptionDetails.BillingCycleAnchor | number;
 
         /**
+         * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+         */
+        billing_mode?: SubscriptionDetails.BillingMode;
+
+        /**
          * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
          */
         cancel_at?: Stripe.Emptyable<number>;
 
         /**
-         * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`. This param will be removed in a future API version. Please use `cancel_at` instead.
+         * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
          */
         cancel_at_period_end?: boolean;
 
@@ -2794,6 +2822,14 @@ declare module 'stripe' {
 
       namespace SubscriptionDetails {
         type BillingCycleAnchor = 'now' | 'unchanged';
+
+        interface BillingMode {
+          type: BillingMode.Type;
+        }
+
+        namespace BillingMode {
+          type Type = 'classic' | 'flexible';
+        }
 
         interface Item {
           /**

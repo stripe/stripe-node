@@ -85,6 +85,8 @@ declare module 'stripe' {
          */
         related_customer: string | null;
 
+        related_person?: VerificationSession.RelatedPerson;
+
         /**
          * Status of this VerificationSession. [Learn more about the lifecycle of sessions](https://stripe.com/docs/identity/how-sessions-work).
          */
@@ -154,6 +156,8 @@ declare module 'stripe' {
 
           id_number?: Options.IdNumber;
 
+          matching?: Options.Matching;
+
           phone?: Options.Phone;
         }
 
@@ -193,6 +197,24 @@ declare module 'stripe' {
 
           interface IdNumber {}
 
+          interface Matching {
+            /**
+             * Strictness of the DOB matching policy to apply.
+             */
+            dob?: Matching.Dob;
+
+            /**
+             * Strictness of the name matching policy to apply.
+             */
+            name?: Matching.Name;
+          }
+
+          namespace Matching {
+            type Dob = 'none' | 'similar';
+
+            type Name = 'none' | 'similar';
+          }
+
           interface Phone {
             /**
              * Request one time password verification of `provided_details.phone`.
@@ -222,6 +244,18 @@ declare module 'stripe' {
 
         namespace Redaction {
           type Status = 'processing' | 'redacted';
+        }
+
+        interface RelatedPerson {
+          /**
+           * Token referencing the associated Account of the related Person resource.
+           */
+          account?: string;
+
+          /**
+           * Token referencing the related Person resource.
+           */
+          person?: string;
         }
 
         type Status = 'canceled' | 'processing' | 'requires_input' | 'verified';
