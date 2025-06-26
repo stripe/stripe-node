@@ -1,5 +1,8 @@
 # Changelog
 
+## 18.3.0-beta.2 - 2025-06-26
+* [#2358](https://github.com/stripe/stripe-node/pull/2358) Pull in OffSessionPayment changes for the May release
+
 ## 18.3.0-beta.1 - 2025-05-29
 This release changes the pinned API version to 2025-05-28.preview.
 
