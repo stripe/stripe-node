@@ -234,6 +234,84 @@ declare module 'stripe' {
         }
       }
 
+      interface ReaderCollectPaymentMethodParams {
+        /**
+         * PaymentIntent ID.
+         */
+        payment_intent: string;
+
+        /**
+         * Configuration overrides.
+         */
+        collect_config?: ReaderCollectPaymentMethodParams.CollectConfig;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
+      namespace ReaderCollectPaymentMethodParams {
+        interface CollectConfig {
+          /**
+           * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow.
+           */
+          allow_redisplay?: CollectConfig.AllowRedisplay;
+
+          /**
+           * Enables cancel button on transaction screens.
+           */
+          enable_customer_cancellation?: boolean;
+
+          /**
+           * Override showing a tipping selection screen on this transaction.
+           */
+          skip_tipping?: boolean;
+
+          /**
+           * Tipping configuration for this transaction.
+           */
+          tipping?: CollectConfig.Tipping;
+        }
+
+        namespace CollectConfig {
+          type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
+          interface Tipping {
+            /**
+             * Amount used to calculate tip suggestions on tipping selection screen for this transaction. Must be a positive integer in the smallest currency unit (e.g., 100 cents to represent $1.00 or 100 to represent ¥100, a zero-decimal currency).
+             */
+            amount_eligible?: number;
+          }
+        }
+      }
+
+      interface ReaderConfirmPaymentIntentParams {
+        /**
+         * PaymentIntent ID.
+         */
+        payment_intent: string;
+
+        /**
+         * Configuration overrides.
+         */
+        confirm_config?: ReaderConfirmPaymentIntentParams.ConfirmConfig;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
+      namespace ReaderConfirmPaymentIntentParams {
+        interface ConfirmConfig {
+          /**
+           * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. If you'd prefer to redirect to a mobile application, you can alternatively supply an application URI scheme.
+           */
+          return_url?: string;
+        }
+      }
+
       interface ReaderProcessPaymentIntentParams {
         /**
          * PaymentIntent ID
@@ -519,6 +597,24 @@ declare module 'stripe' {
         collectInputs(
           id: string,
           params: ReaderCollectInputsParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+
+        /**
+         * Initiates a payment flow on a Reader and updates the PaymentIntent with card details before manual confirmation.
+         */
+        collectPaymentMethod(
+          id: string,
+          params: ReaderCollectPaymentMethodParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+
+        /**
+         * Finalizes a payment on a Reader.
+         */
+        confirmPaymentIntent(
+          id: string,
+          params: ReaderConfirmPaymentIntentParams,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 

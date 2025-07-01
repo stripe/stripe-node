@@ -19,12 +19,12 @@ declare module 'stripe' {
       application_fee_percent?: Stripe.Emptyable<number>;
 
       /**
-       * Automatic tax settings for this subscription. We recommend you only include this parameter when the existing value is being changed.
+       * Automatic tax settings for this subscription.
        */
       automatic_tax?: SubscriptionCreateParams.AutomaticTax;
 
       /**
-       * For new subscriptions, a past timestamp to backdate the subscription's start date to. If set, the first invoice will contain a proration for the timespan between the start date and the current time. Can be combined with trials and the billing cycle anchor.
+       * A past timestamp to backdate the subscription's start date to. If set, the first invoice will contain line items for the timespan between the start date and the current time. Can be combined with trials and the billing cycle anchor.
        */
       backdate_start_date?: number;
 
@@ -39,6 +39,11 @@ declare module 'stripe' {
       billing_cycle_anchor_config?: SubscriptionCreateParams.BillingCycleAnchorConfig;
 
       /**
+       * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+       */
+      billing_mode?: SubscriptionCreateParams.BillingMode;
+
+      /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
        */
       billing_thresholds?: Stripe.Emptyable<
@@ -51,7 +56,7 @@ declare module 'stripe' {
       cancel_at?: number;
 
       /**
-       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`. This param will be removed in a future API version. Please use `cancel_at` instead.
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
        */
       cancel_at_period_end?: boolean;
 
@@ -316,6 +321,14 @@ declare module 'stripe' {
          * The second of the minute the billing_cycle_anchor should be. Ranges from 0 to 59.
          */
         second?: number;
+      }
+
+      interface BillingMode {
+        type: BillingMode.Type;
+      }
+
+      namespace BillingMode {
+        type Type = 'classic' | 'flexible';
       }
 
       interface BillingThresholds {
@@ -768,6 +781,7 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'crypto'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -891,7 +905,7 @@ declare module 'stripe' {
       cancel_at?: Stripe.Emptyable<number>;
 
       /**
-       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`. This param will be removed in a future API version. Please use `cancel_at` instead.
+       * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
        */
       cancel_at_period_end?: boolean;
 
@@ -1641,6 +1655,7 @@ declare module 'stripe' {
           | 'boleto'
           | 'card'
           | 'cashapp'
+          | 'crypto'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -1853,6 +1868,24 @@ declare module 'stripe' {
 
     interface SubscriptionDeleteDiscountParams {}
 
+    interface SubscriptionMigrateParams {
+      /**
+       * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+       */
+      billing_mode: SubscriptionMigrateParams.BillingMode;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    namespace SubscriptionMigrateParams {
+      interface BillingMode {
+        type: 'flexible';
+      }
+    }
+
     interface SubscriptionResumeParams {
       /**
        * The billing cycle anchor that applies when the subscription is resumed. Either `now` or `unchanged`. The default is `now`. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
@@ -1998,6 +2031,15 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
+
+      /**
+       * Upgrade the billing_mode of an existing subscription.
+       */
+      migrate(
+        id: string,
+        params: SubscriptionMigrateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Subscription>>;
 
       /**
        * Initiates resumption of a paused subscription, optionally resetting the billing cycle anchor and creating prorations. If a resumption invoice is generated, it must be paid or marked uncollectible before the subscription will be unpaused. If payment succeeds the subscription will become active, and if payment fails the subscription will be past_due. The resumption invoice will void automatically if not paid by the expiration date.

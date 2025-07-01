@@ -28,6 +28,11 @@ declare module 'stripe' {
         | null;
 
       /**
+       * The billing mode of the subscription.
+       */
+      billing_mode: SubscriptionSchedule.BillingMode;
+
+      /**
        * Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.
        */
       canceled_at: number | null;
@@ -101,6 +106,22 @@ declare module 'stripe' {
     }
 
     namespace SubscriptionSchedule {
+      interface BillingMode {
+        /**
+         * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+         */
+        type: BillingMode.Type;
+
+        /**
+         * Details on when the current billing_mode was adopted.
+         */
+        updated_at?: number;
+      }
+
+      namespace BillingMode {
+        type Type = 'classic' | 'flexible';
+      }
+
       interface CurrentPhase {
         /**
          * The end of this phase of the subscription schedule.

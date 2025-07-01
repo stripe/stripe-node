@@ -48,7 +48,7 @@ declare module 'stripe' {
       /**
        * List of eligibility types that are included in `enhanced_evidence`.
        */
-      enhanced_eligibility_types: Array<'visa_compelling_evidence_3'>;
+      enhanced_eligibility_types: Array<Dispute.EnhancedEligibilityType>;
 
       evidence: Dispute.Evidence;
 
@@ -93,6 +93,10 @@ declare module 'stripe' {
     }
 
     namespace Dispute {
+      type EnhancedEligibilityType =
+        | 'visa_compelling_evidence_3'
+        | 'visa_compliance';
+
       interface Evidence {
         /**
          * Any server or activity logs showing proof that the customer accessed or downloaded the purchased digital product. This information should include IP addresses, corresponding timestamps, and any detailed recorded activity.
@@ -466,7 +470,7 @@ declare module 'stripe' {
         }
 
         namespace Card {
-          type CaseType = 'chargeback' | 'inquiry';
+          type CaseType = 'chargeback' | 'compliance' | 'inquiry';
         }
 
         interface Klarna {

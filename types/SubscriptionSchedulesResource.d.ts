@@ -4,6 +4,11 @@ declare module 'stripe' {
   namespace Stripe {
     interface SubscriptionScheduleCreateParams {
       /**
+       * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
+       */
+      billing_mode?: SubscriptionScheduleCreateParams.BillingMode;
+
+      /**
        * The identifier of the customer to create the subscription schedule for.
        */
       customer?: string;
@@ -45,6 +50,14 @@ declare module 'stripe' {
     }
 
     namespace SubscriptionScheduleCreateParams {
+      interface BillingMode {
+        type: BillingMode.Type;
+      }
+
+      namespace BillingMode {
+        type Type = 'classic' | 'flexible';
+      }
+
       interface DefaultSettings {
         /**
          * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).

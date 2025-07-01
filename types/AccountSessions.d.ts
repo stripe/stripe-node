@@ -94,12 +94,12 @@ declare module 'stripe' {
         namespace AccountManagement {
           interface Features {
             /**
-             * Disables Stripe user authentication for this embedded component. This value can only be true for accounts where `controller.requirement_collection` is `application`. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to true and `disable_stripe_user_authentication` defaults to false.
+             * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to `true` and `disable_stripe_user_authentication` defaults to `false`.
              */
             disable_stripe_user_authentication: boolean;
 
             /**
-             * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts. Otherwise, bank account collection is determined by compliance requirements. The default value for this feature is `true`.
+             * Whether external account collection is enabled. This feature can only be `false` for accounts where you're responsible for collecting updated information when requirements are due or change, like Custom accounts. The default value for this feature is `true`.
              */
             external_account_collection: boolean;
           }
@@ -117,12 +117,12 @@ declare module 'stripe' {
         namespace AccountOnboarding {
           interface Features {
             /**
-             * Disables Stripe user authentication for this embedded component. This value can only be true for accounts where `controller.requirement_collection` is `application`. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to true and `disable_stripe_user_authentication` defaults to false.
+             * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to `true` and `disable_stripe_user_authentication` defaults to `false`.
              */
             disable_stripe_user_authentication: boolean;
 
             /**
-             * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts. Otherwise, bank account collection is determined by compliance requirements. The default value for this feature is `true`.
+             * Whether external account collection is enabled. This feature can only be `false` for accounts where you're responsible for collecting updated information when requirements are due or change, like Custom accounts. The default value for this feature is `true`.
              */
             external_account_collection: boolean;
           }
@@ -140,27 +140,27 @@ declare module 'stripe' {
         namespace Balances {
           interface Features {
             /**
-             * Disables Stripe user authentication for this embedded component. This value can only be true for accounts where `controller.requirement_collection` is `application`. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to true and `disable_stripe_user_authentication` defaults to false.
+             * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to `true` and `disable_stripe_user_authentication` defaults to `false`.
              */
             disable_stripe_user_authentication: boolean;
 
             /**
-             * Whether to allow payout schedule to be changed. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             * Whether to allow payout schedule to be changed. Defaults to `true` when `controller.losses.payments` is set to `stripe` for the account, otherwise `false`.
              */
             edit_payout_schedule: boolean;
 
             /**
-             * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts. Otherwise, bank account collection is determined by compliance requirements. The default value for this feature is `true`.
+             * Whether external account collection is enabled. This feature can only be `false` for accounts where you're responsible for collecting updated information when requirements are due or change, like Custom accounts. The default value for this feature is `true`.
              */
             external_account_collection: boolean;
 
             /**
-             * Whether to allow creation of instant payouts. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             * Whether to allow creation of instant payouts. Defaults to `true` when `controller.losses.payments` is set to `stripe` for the account, otherwise `false`.
              */
             instant_payouts: boolean;
 
             /**
-             * Whether to allow creation of standard payouts. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             * Whether to allow creation of standard payouts. Defaults to `true` when `controller.losses.payments` is set to `stripe` for the account, otherwise `false`.
              */
             standard_payouts: boolean;
           }
@@ -183,17 +183,17 @@ declare module 'stripe' {
             capture_payments: boolean;
 
             /**
-             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             * Whether connected accounts can manage destination charges that are created on behalf of them. This is `false` by default.
              */
             destination_on_behalf_of_charge_management: boolean;
 
             /**
-             * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
+             * Whether responding to disputes is enabled, including submitting evidence and accepting disputes. This is `true` by default.
              */
             dispute_management: boolean;
 
             /**
-             * Whether to allow sending refunds. This is `true` by default.
+             * Whether sending refunds is enabled. This is `true` by default.
              */
             refund_management: boolean;
           }
@@ -224,12 +224,12 @@ declare module 'stripe' {
         namespace FinancialAccount {
           interface Features {
             /**
-             * Disables Stripe user authentication for this embedded component. This value can only be true for accounts where `controller.requirement_collection` is `application`. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to true and `disable_stripe_user_authentication` defaults to false.
+             * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to `true` and `disable_stripe_user_authentication` defaults to `false`.
              */
             disable_stripe_user_authentication: boolean;
 
             /**
-             * Whether to allow external accounts to be linked for money transfer.
+             * Whether external account collection is enabled. This feature can only be `false` for accounts where you're responsible for collecting updated information when requirements are due or change, like Custom accounts. The default value for this feature is `true`.
              */
             external_account_collection: boolean;
 
@@ -323,7 +323,7 @@ declare module 'stripe' {
             cardholder_management: boolean;
 
             /**
-             * Disables Stripe user authentication for this embedded component. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts.
+             * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to `true` and `disable_stripe_user_authentication` defaults to `false`.
              */
             disable_stripe_user_authentication: boolean;
 
@@ -346,12 +346,12 @@ declare module 'stripe' {
         namespace NotificationBanner {
           interface Features {
             /**
-             * Disables Stripe user authentication for this embedded component. This value can only be true for accounts where `controller.requirement_collection` is `application`. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to true and `disable_stripe_user_authentication` defaults to false.
+             * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to `true` and `disable_stripe_user_authentication` defaults to `false`.
              */
             disable_stripe_user_authentication: boolean;
 
             /**
-             * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts. Otherwise, bank account collection is determined by compliance requirements. The default value for this feature is `true`.
+             * Whether external account collection is enabled. This feature can only be `false` for accounts where you're responsible for collecting updated information when requirements are due or change, like Custom accounts. The default value for this feature is `true`.
              */
             external_account_collection: boolean;
           }
@@ -374,17 +374,17 @@ declare module 'stripe' {
             capture_payments: boolean;
 
             /**
-             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             * Whether connected accounts can manage destination charges that are created on behalf of them. This is `false` by default.
              */
             destination_on_behalf_of_charge_management: boolean;
 
             /**
-             * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
+             * Whether responding to disputes is enabled, including submitting evidence and accepting disputes. This is `true` by default.
              */
             dispute_management: boolean;
 
             /**
-             * Whether to allow sending refunds. This is `true` by default.
+             * Whether sending refunds is enabled. This is `true` by default.
              */
             refund_management: boolean;
           }
@@ -402,17 +402,17 @@ declare module 'stripe' {
         namespace PaymentDisputes {
           interface Features {
             /**
-             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             * Whether connected accounts can manage destination charges that are created on behalf of them. This is `false` by default.
              */
             destination_on_behalf_of_charge_management: boolean;
 
             /**
-             * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
+             * Whether responding to disputes is enabled, including submitting evidence and accepting disputes. This is `true` by default.
              */
             dispute_management: boolean;
 
             /**
-             * Whether to allow sending refunds. This is `true` by default.
+             * Whether sending refunds is enabled. This is `true` by default.
              */
             refund_management: boolean;
           }
@@ -435,17 +435,17 @@ declare module 'stripe' {
             capture_payments: boolean;
 
             /**
-             * Whether to allow connected accounts to manage destination charges that are created on behalf of them. This is `false` by default.
+             * Whether connected accounts can manage destination charges that are created on behalf of them. This is `false` by default.
              */
             destination_on_behalf_of_charge_management: boolean;
 
             /**
-             * Whether to allow responding to disputes, including submitting evidence and accepting disputes. This is `true` by default.
+             * Whether responding to disputes is enabled, including submitting evidence and accepting disputes. This is `true` by default.
              */
             dispute_management: boolean;
 
             /**
-             * Whether to allow sending refunds. This is `true` by default.
+             * Whether sending refunds is enabled. This is `true` by default.
              */
             refund_management: boolean;
           }
@@ -463,27 +463,27 @@ declare module 'stripe' {
         namespace Payouts {
           interface Features {
             /**
-             * Disables Stripe user authentication for this embedded component. This value can only be true for accounts where `controller.requirement_collection` is `application`. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to true and `disable_stripe_user_authentication` defaults to false.
+             * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to `true` and `disable_stripe_user_authentication` defaults to `false`.
              */
             disable_stripe_user_authentication: boolean;
 
             /**
-             * Whether to allow payout schedule to be changed. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             * Whether to allow payout schedule to be changed. Defaults to `true` when `controller.losses.payments` is set to `stripe` for the account, otherwise `false`.
              */
             edit_payout_schedule: boolean;
 
             /**
-             * Whether to allow platforms to control bank account collection for their connected accounts. This feature can only be false for accounts where you're responsible for collecting updated information when requirements are due or change, like custom accounts. Otherwise, bank account collection is determined by compliance requirements. The default value for this feature is `true`.
+             * Whether external account collection is enabled. This feature can only be `false` for accounts where you're responsible for collecting updated information when requirements are due or change, like Custom accounts. The default value for this feature is `true`.
              */
             external_account_collection: boolean;
 
             /**
-             * Whether to allow creation of instant payouts. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             * Whether to allow creation of instant payouts. Defaults to `true` when `controller.losses.payments` is set to `stripe` for the account, otherwise `false`.
              */
             instant_payouts: boolean;
 
             /**
-             * Whether to allow creation of standard payouts. Default `true` when Stripe owns Loss Liability, default `false` otherwise.
+             * Whether to allow creation of standard payouts. Defaults to `true` when `controller.losses.payments` is set to `stripe` for the account, otherwise `false`.
              */
             standard_payouts: boolean;
           }
