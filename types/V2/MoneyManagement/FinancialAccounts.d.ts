@@ -33,12 +33,15 @@ declare module 'stripe' {
            */
           created: string;
 
-          description: string | null;
-
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
            */
           livemode: boolean;
+
+          /**
+           * Metadata associated with the FinancialAccount
+           */
+          metadata: Stripe.Metadata | null;
 
           /**
            * If this is a `other` FinancialAccount, this hash indicates what the actual type is. Upgrade your API version to see it reflected in `type`.
@@ -72,7 +75,7 @@ declare module 'stripe' {
             };
 
             /**
-             * Balance of inbound funds that will later transition to the `cash` balance.
+             * Balance of inbound funds that will later transition to the `available` balance.
              */
             inbound_pending: {
               [key: string]: Amount;
@@ -332,6 +335,7 @@ declare module 'stripe' {
             | 'vu'
             | 'wf'
             | 'ws'
+            | 'xx'
             | 'ye'
             | 'yt'
             | 'za'
@@ -345,7 +349,7 @@ declare module 'stripe' {
             type: string;
           }
 
-          type Status = 'closed' | 'open';
+          type Status = 'closed' | 'open' | 'pending';
 
           interface Storage {
             /**

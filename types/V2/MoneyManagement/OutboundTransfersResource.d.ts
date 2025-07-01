@@ -146,6 +146,7 @@ declare module 'stripe' {
           /**
            * Creates an OutboundTransfer.
            * @throws Stripe.InsufficientFundsError
+           * @throws Stripe.FeatureNotEnabledError
            */
           create(
             params: OutboundTransferCreateParams,

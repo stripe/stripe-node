@@ -319,6 +319,11 @@ declare module 'stripe' {
         cashapp_payments?: Capabilities.CashappPayments;
 
         /**
+         * The status of the Crypto capability of the account, or whether the account can directly process Crypto payments.
+         */
+        crypto_payments?: Capabilities.CryptoPayments;
+
+        /**
          * The status of the EPS payments capability of the account, or whether the account can directly process EPS charges.
          */
         eps_payments?: Capabilities.EpsPayments;
@@ -628,6 +633,8 @@ declare module 'stripe' {
         type CartesBancairesPayments = 'active' | 'inactive' | 'pending';
 
         type CashappPayments = 'active' | 'inactive' | 'pending';
+
+        type CryptoPayments = 'active' | 'inactive' | 'pending';
 
         type EpsPayments = 'active' | 'inactive' | 'pending';
 
@@ -1714,7 +1721,7 @@ declare module 'stripe' {
           /**
            * Whether payment methods should be saved when a payment is completed for a one-time invoices on a hosted invoice page.
            */
-          hosted_payment_method_save?: Invoices.HostedPaymentMethodSave | null;
+          hosted_payment_method_save: Invoices.HostedPaymentMethodSave | null;
         }
 
         namespace Invoices {
@@ -1780,9 +1787,30 @@ declare module 'stripe' {
             monthly_anchor?: number;
 
             /**
+             * The days of the month funds will be paid out. Only shown if `interval` is monthly. Payouts scheduled between the 29th and 31st of the month are sent on the last day of shorter months.
+             */
+            monthly_payout_days?: Array<number>;
+
+            /**
              * The day of the week funds will be paid out, of the style 'monday', 'tuesday', etc. Only shown if `interval` is weekly.
              */
             weekly_anchor?: string;
+
+            /**
+             * The days of the week when available funds are paid out, specified as an array, for example, [`monday`, `tuesday`]. Only shown if `interval` is weekly.
+             */
+            weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
+          }
+
+          namespace Schedule {
+            type WeeklyPayoutDay =
+              | 'friday'
+              | 'monday'
+              | 'saturday'
+              | 'sunday'
+              | 'thursday'
+              | 'tuesday'
+              | 'wednesday';
           }
         }
 

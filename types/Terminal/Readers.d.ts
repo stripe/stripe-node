@@ -389,7 +389,7 @@ declare module 'stripe' {
           namespace CollectPaymentMethod {
             interface CollectConfig {
               /**
-               * Enable customer initiated cancellation when processing this payment.
+               * Enable customer-initiated cancellation when processing this payment.
                */
               enable_customer_cancellation?: boolean;
 
@@ -434,7 +434,7 @@ declare module 'stripe' {
           namespace ConfirmPaymentIntent {
             interface ConfirmConfig {
               /**
-               * If the customer does not abandon authenticating the payment, they will be redirected to this specified URL after completion.
+               * If the customer doesn't abandon authenticating the payment, they're redirected to this URL after completion.
                */
               return_url?: string;
             }
@@ -460,12 +460,12 @@ declare module 'stripe' {
           namespace ProcessPaymentIntent {
             interface ProcessConfig {
               /**
-               * Enable customer initiated cancellation when processing this payment.
+               * Enable customer-initiated cancellation when processing this payment.
                */
               enable_customer_cancellation?: boolean;
 
               /**
-               * If the customer does not abandon authenticating the payment, they will be redirected to this specified URL after completion.
+               * If the customer doesn't abandon authenticating the payment, they're redirected to this URL after completion.
                */
               return_url?: string;
 
@@ -510,7 +510,7 @@ declare module 'stripe' {
           namespace ProcessSetupIntent {
             interface ProcessConfig {
               /**
-               * Enable customer initiated cancellation when processing this SetupIntent.
+               * Enable customer-initiated cancellation when processing this SetupIntent.
                */
               enable_customer_cancellation?: boolean;
             }
@@ -573,7 +573,7 @@ declare module 'stripe' {
 
             interface RefundPaymentConfig {
               /**
-               * Enable customer initiated cancellation when refunding this payment.
+               * Enable customer-initiated cancellation when refunding this payment.
                */
               enable_customer_cancellation?: boolean;
             }

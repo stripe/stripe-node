@@ -85,7 +85,7 @@ declare module 'stripe' {
         /**
          * A name for the location.
          */
-        display_name?: string;
+        display_name?: Stripe.Emptyable<string>;
 
         /**
          * Specifies which fields in the response should be expanded.

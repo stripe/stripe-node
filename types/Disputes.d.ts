@@ -48,7 +48,7 @@ declare module 'stripe' {
       /**
        * List of eligibility types that are included in `enhanced_evidence`.
        */
-      enhanced_eligibility_types: Array<'visa_compelling_evidence_3'>;
+      enhanced_eligibility_types: Array<Dispute.EnhancedEligibilityType>;
 
       evidence: Dispute.Evidence;
 
@@ -93,6 +93,10 @@ declare module 'stripe' {
     }
 
     namespace Dispute {
+      type EnhancedEligibilityType =
+        | 'visa_compelling_evidence_3'
+        | 'visa_compliance';
+
       interface Evidence {
         /**
          * Any server or activity logs showing proof that the customer accessed or downloaded the purchased digital product. This information should include IP addresses, corresponding timestamps, and any detailed recorded activity.
@@ -375,6 +379,11 @@ declare module 'stripe' {
          * The number of times evidence has been submitted. Typically, you may only submit evidence once.
          */
         submission_count: number;
+
+        /**
+         * Whether the dispute was submitted manually, with Smart Disputes, or not submitted.
+         */
+        submission_method?: EvidenceDetails.SubmissionMethod;
       }
 
       namespace EvidenceDetails {
@@ -419,6 +428,8 @@ declare module 'stripe' {
             type Status = 'fee_acknowledged' | 'requires_fee_acknowledgement';
           }
         }
+
+        type SubmissionMethod = 'manual' | 'not_submitted' | 'smart_disputes';
       }
 
       interface PaymentMethodDetails {
@@ -466,7 +477,7 @@ declare module 'stripe' {
         }
 
         namespace Card {
-          type CaseType = 'chargeback' | 'inquiry';
+          type CaseType = 'chargeback' | 'compliance' | 'inquiry';
         }
 
         interface Klarna {

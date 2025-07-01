@@ -40,6 +40,11 @@ declare module 'stripe' {
         related_customer_account?: string;
 
         /**
+         * Tokens referencing a Person resource and it's associated account.
+         */
+        related_person?: VerificationSessionCreateParams.RelatedPerson;
+
+        /**
          * The URL that the user will be redirected to upon completing the verification flow.
          */
         return_url?: string;
@@ -101,6 +106,18 @@ declare module 'stripe' {
            * Phone number of user being verified
            */
           phone?: string;
+        }
+
+        interface RelatedPerson {
+          /**
+           * A token representing a connected account. If provided, the person parameter is also required and must be associated with the account.
+           */
+          account: string;
+
+          /**
+           * A token referencing a Person resource that this verification is being used to verify.
+           */
+          person: string;
         }
 
         type Type = 'document' | 'id_number';

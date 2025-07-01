@@ -570,9 +570,15 @@ declare module 'stripe' {
       transactionEntries: Stripe.Treasury.TransactionEntriesResource;
     };
     v2: {
+      billing: {
+        meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
+        meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
+        meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
+        meterEvents: Stripe.V2.Billing.MeterEventsResource;
+      };
       core: {
-        accounts: Stripe.V2.Core.AccountsResource;
         accountLinks: Stripe.V2.Core.AccountLinksResource;
+        accounts: Stripe.V2.Core.AccountsResource;
         eventDestinations: Stripe.V2.Core.EventDestinationsResource;
         events: Stripe.V2.Core.EventsResource;
         vault: {
@@ -585,28 +591,22 @@ declare module 'stripe' {
         financialAccounts: Stripe.V2.MoneyManagement.FinancialAccountsResource;
         financialAddresses: Stripe.V2.MoneyManagement.FinancialAddressesResource;
         inboundTransfers: Stripe.V2.MoneyManagement.InboundTransfersResource;
-        outboundPayments: Stripe.V2.MoneyManagement.OutboundPaymentsResource;
         outboundPaymentQuotes: Stripe.V2.MoneyManagement.OutboundPaymentQuotesResource;
-        outboundTransfers: Stripe.V2.MoneyManagement.OutboundTransfersResource;
+        outboundPayments: Stripe.V2.MoneyManagement.OutboundPaymentsResource;
         outboundSetupIntents: Stripe.V2.MoneyManagement.OutboundSetupIntentsResource;
+        outboundTransfers: Stripe.V2.MoneyManagement.OutboundTransfersResource;
         payoutMethods: Stripe.V2.MoneyManagement.PayoutMethodsResource;
         payoutMethodsBankAccountSpec: Stripe.V2.MoneyManagement.PayoutMethodsBankAccountSpecResource;
         receivedCredits: Stripe.V2.MoneyManagement.ReceivedCreditsResource;
         receivedDebits: Stripe.V2.MoneyManagement.ReceivedDebitsResource;
-        transactions: Stripe.V2.MoneyManagement.TransactionsResource;
         transactionEntries: Stripe.V2.MoneyManagement.TransactionEntriesResource;
-      };
-      billing: {
-        meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
-        meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
-        meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
-        meterEvents: Stripe.V2.Billing.MeterEventsResource;
-      };
-      testHelper: {
-        financialAddresses: Stripe.V2.TestHelpers.FinancialAddressesResource;
+        transactions: Stripe.V2.MoneyManagement.TransactionsResource;
       };
       payment: {
         offSessionPayments: Stripe.V2.Payments.OffSessionPaymentsResource;
+      };
+      testHelper: {
+        financialAddresses: Stripe.V2.TestHelpers.FinancialAddressesResource;
       };
     };
     // Fields: The end of the section generated from our OpenAPI spec

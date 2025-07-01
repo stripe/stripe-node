@@ -49,6 +49,10 @@ This release changes the pinned API version to 2025-05-28.preview.
   * Add support for `confirm_config` on `Terminal.Reader.action.confirm_payment_intent` and `Terminal.ReaderConfirmPaymentIntentParams`
   * Add support for error code `forwarding_api_upstream_error` on `QuotePreviewInvoice.last_finalization_error`
 
+## 18.2.1 - 2025-06-02
+* [#2346](https://github.com/stripe/stripe-node/pull/2346) Allow data to be set in only `POST` rawRequests
+  * Fix bug where `rawRequest` incorrectly emits a warning when sending v2 GET requests
+
 ## 18.2.0 - 2025-05-29
  This release changes the pinned API version to `2025-05-28.basil`.
 
@@ -779,7 +783,7 @@ This release changes the pinned API version to 2025-05-28.preview.
 ## 17.0.0 - 2024-10-01
 * [#2192](https://github.com/stripe/stripe-node/pull/2192) Support for APIs in the new API version 2024-09-30.acacia
 
-  This release changes the pinned API version to `2024-09-30.acacia`. Please read the [API Upgrade Guide](https://stripe.com/docs/upgrades#2024-09-30.acacia) and carefully review the API changes before upgrading.
+  This release changes the pinned API version to `2024-09-30.acacia`. Please read the [API Changelog](https://docs.stripe.com/changelog/acacia#2024-09-30.acacia) and carefully review the API changes before upgrading.
 
   ### ⚠️ Breaking changes  due to changes in the Stripe API
   - Rename `usage_threshold_config` to `usage_threshold` on `Billing.AlertCreateParams` and `Billing.Alert`
@@ -1027,7 +1031,7 @@ This release changes the pinned API version to 2025-05-28.preview.
 ## 16.0.0 - 2024-06-24
 * [#2113](https://github.com/stripe/stripe-node/pull/2113)
 
-  This release changes the pinned API version to 2024-06-20. Please read the [API Upgrade Guide](https://stripe.com/docs/upgrades#2024-06-20) and carefully review the API changes before upgrading.
+  This release changes the pinned API version to 2024-06-20. Please read the [API Changelog](https://docs.stripe.com/changelog/2024-06-20) and carefully review the API changes before upgrading.
 
   ### ⚠️ Breaking changes
 
@@ -1269,7 +1273,7 @@ This release changes the pinned API version to 2025-05-28.preview.
 ## 15.0.0 - 2024-04-10
 * [#2057](https://github.com/stripe/stripe-node/pull/2057)
 
-  * This release changes the pinned API version to `2024-04-10`. Please read the [API Upgrade Guide](https://stripe.com/docs/upgrades#2024-04-10) and carefully review the API changes before upgrading.
+  * This release changes the pinned API version to `2024-04-10`. Please read the [API Changelog](https://docs.stripe.com/changelog/2024-04-10) and carefully review the API changes before upgrading.
 
   ### ⚠️ Breaking changes
 
@@ -1884,7 +1888,7 @@ This release changes the pinned API version to 2025-05-28.preview.
   * Change `Checkout.Session.client_secret` and `Checkout.Session.ui_mode` to be required
 
 ## 14.0.0 - 2023-10-16
-* This release changes the pinned API version to `2023-10-16`. Please read the [API Upgrade Guide](https://stripe.com/docs/upgrades#2023-10-16) and carefully review the API changes before upgrading `stripe` package.
+* This release changes the pinned API version to `2023-10-16`. Please read the [API Changelog](https://docs.stripe.com/changelog/2023-10-16) and carefully review the API changes before upgrading `stripe` package.
 * [#1932](https://github.com/stripe/stripe-node/pull/1932) Update generated code
   * Add support for `legal_guardian` on `AccountPersonsParams.relationship` and `TokenCreateParams.person.relationship`
   * Add support for new values `invalid_address_highway_contract_box`, `invalid_address_private_mailbox`, `invalid_business_profile_name_denylisted`, `invalid_business_profile_name`, `invalid_company_name_denylisted`, `invalid_dob_age_over_maximum`, `invalid_product_description_length`, `invalid_product_description_url_match`, `invalid_statement_descriptor_business_mismatch`, `invalid_statement_descriptor_denylisted`, `invalid_statement_descriptor_length`, `invalid_statement_descriptor_prefix_denylisted`, `invalid_statement_descriptor_prefix_mismatch`, `invalid_tax_id_format`, `invalid_tax_id`, `invalid_url_denylisted`, `invalid_url_format`, `invalid_url_length`, `invalid_url_web_presence_detected`, `invalid_url_website_business_information_mismatch`, `invalid_url_website_empty`, `invalid_url_website_inaccessible_geoblocked`, `invalid_url_website_inaccessible_password_protected`, `invalid_url_website_inaccessible`, `invalid_url_website_incomplete_cancellation_policy`, `invalid_url_website_incomplete_customer_service_details`, `invalid_url_website_incomplete_legal_restrictions`, `invalid_url_website_incomplete_refund_policy`, `invalid_url_website_incomplete_return_policy`, `invalid_url_website_incomplete_terms_and_conditions`, `invalid_url_website_incomplete_under_construction`, `invalid_url_website_incomplete`, and `invalid_url_website_other` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `BankAccount.future_requirements.errors[].code`, and `BankAccount.requirements.errors[].code`
@@ -2061,7 +2065,7 @@ This release changes the pinned API version to 2025-05-28.preview.
 * [#1875](https://github.com/stripe/stripe-node/pull/1875) Update Typescript types to support version `2023-08-16`.
 
 ## 13.0.0 - 2023-08-16
-* This release changes the pinned API version to `2023-08-16`. Please read the [API Upgrade Guide](https://stripe.com/docs/upgrades#2023-08-16) and carefully review the API changes before upgrading `stripe-node`.
+* This release changes the pinned API version to `2023-08-16`. Please read the [API Changelog](https://docs.stripe.com/changelog/2023-08-16) and carefully review the API changes before upgrading `stripe-node`.
 * More information is available in the [stripe-node v13 migration guide](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v13)
 
 "⚠️" symbol highlights breaking changes.
@@ -2749,7 +2753,7 @@ This was added to maintain backwards compatibility during the transition of stri
 
 ## 11.0.0 - 2022-11-16
 
-This release includes breaking changes resulting from moving to use the new API version "2022-11-15". To learn more about these changes to Stripe products, see https://stripe.com/docs/upgrades#2022-11-15
+This release includes breaking changes resulting from moving to use the new API version "2022-11-15". To learn more about these changes to Stripe products, see https://docs.stripe.com/changelog/2022-11-15
 
 "⚠️" symbol highlights breaking changes.
 
@@ -3011,7 +3015,7 @@ This release includes breaking changes resulting from moving to use the new API 
 
 This release includes breaking changes resulting from:
 
-* Moving to use the new API version "2022-08-01". To learn more about these changes to Stripe products, see https://stripe.com/docs/upgrades#2022-08-01
+* Moving to use the new API version "2022-08-01". To learn more about these changes to Stripe products, see https://docs.stripe.com/changelog/2022-08-01
 * Cleaning up the SDK to remove deprecated/unused APIs and rename classes/methods/properties to sync with product APIs. Read more detailed description at https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v10.
 
 "⚠️" symbol highlights breaking changes.
