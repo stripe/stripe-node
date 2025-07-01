@@ -293,13 +293,6 @@ export function createStripe(
       return this._clientId;
     },
 
-    /**
-     * @private
-     * Please open or upvote an issue at github.com/stripe/stripe-node
-     * if you use this, detailing your use-case.
-     *
-     * It may be deprecated and removed in the future.
-     */
     getConstant: (c: string): unknown => {
       switch (c) {
         case 'DEFAULT_HOST':
