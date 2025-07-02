@@ -85,8 +85,6 @@ declare module 'stripe' {
          */
         related_customer: string | null;
 
-        related_person?: VerificationSession.RelatedPerson;
-
         /**
          * Token referencing a Customer Account resource.
          */
