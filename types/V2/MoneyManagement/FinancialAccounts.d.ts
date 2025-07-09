@@ -53,6 +53,8 @@ declare module 'stripe' {
            */
           status: FinancialAccount.Status;
 
+          status_details: FinancialAccount.StatusDetails | null;
+
           /**
            * If this is a `storage` FinancialAccount, this hash includes details specific to `storage` FinancialAccounts.
            */
@@ -350,6 +352,34 @@ declare module 'stripe' {
           }
 
           type Status = 'closed' | 'open' | 'pending';
+
+          interface StatusDetails {
+            closed: StatusDetails.Closed | null;
+          }
+
+          namespace StatusDetails {
+            interface Closed {
+              forwarding_settings: Closed.ForwardingSettings | null;
+
+              reason: Closed.Reason;
+            }
+
+            namespace Closed {
+              interface ForwardingSettings {
+                /**
+                 * The address to send forwarded payments to.
+                 */
+                payment_method: string | null;
+
+                /**
+                 * The address to send forwarded payouts to.
+                 */
+                payout_method: string | null;
+              }
+
+              type Reason = 'account_closed' | 'closed_by_platform' | 'other';
+            }
+          }
 
           interface Storage {
             /**

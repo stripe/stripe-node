@@ -3,6 +3,10 @@
 import {StripeResource} from '../../../StripeResource.js';
 const stripeMethod = StripeResource.method;
 export const FinancialAccounts = StripeResource.extend({
+  create: stripeMethod({
+    method: 'POST',
+    fullPath: '/v2/money_management/financial_accounts',
+  }),
   retrieve: stripeMethod({
     method: 'GET',
     fullPath: '/v2/money_management/financial_accounts/{id}',
@@ -11,5 +15,9 @@ export const FinancialAccounts = StripeResource.extend({
     method: 'GET',
     fullPath: '/v2/money_management/financial_accounts',
     methodType: 'list',
+  }),
+  close: stripeMethod({
+    method: 'POST',
+    fullPath: '/v2/money_management/financial_accounts/{id}/close',
   }),
 });

@@ -75,7 +75,11 @@ declare module 'stripe' {
         }
 
         namespace Account {
-          type AppliedConfiguration = 'customer' | 'merchant' | 'recipient';
+          type AppliedConfiguration =
+            | 'customer'
+            | 'merchant'
+            | 'recipient'
+            | 'storer';
 
           interface Configuration {
             /**
@@ -92,6 +96,11 @@ declare module 'stripe' {
              * The Recipient Configuration allows the Account to receive funds.
              */
             recipient: Configuration.Recipient | null;
+
+            /**
+             * The Storer Configuration allows the Account to store and move funds using stored-value FinancialAccounts.
+             */
+            storer: Configuration.Storer | null;
           }
 
           namespace Configuration {
@@ -4030,6 +4039,528 @@ declare module 'stripe' {
                   | 'tr_bank_account'
                   | 'us_bank_account'
                   | 'za_bank_account';
+              }
+            }
+
+            interface Storer {
+              /**
+               * Capabilities that have been requested on the Storer Configuration.
+               */
+              capabilities: Storer.Capabilities | null;
+            }
+
+            namespace Storer {
+              interface Capabilities {
+                /**
+                 * Can provision a financial address to credit/debit a FinancialAccount.
+                 */
+                financial_addresses: Capabilities.FinancialAddresses | null;
+
+                /**
+                 * Can hold storage-type funds on Stripe.
+                 */
+                holds_currencies: Capabilities.HoldsCurrencies | null;
+
+                /**
+                 * Can pull funds from an external source, owned by yourself, to a FinancialAccount.
+                 */
+                inbound_transfers: Capabilities.InboundTransfers | null;
+
+                /**
+                 * Can send funds from a FinancialAccount to a destination owned by someone else.
+                 */
+                outbound_payments: Capabilities.OutboundPayments | null;
+
+                /**
+                 * Can send funds from a FinancialAccount to a destination owned by yourself.
+                 */
+                outbound_transfers: Capabilities.OutboundTransfers | null;
+              }
+
+              namespace Capabilities {
+                interface FinancialAddresses {
+                  /**
+                   * Can provision a bank-account like financial address (VBAN) to credit/debit a FinancialAccount.
+                   */
+                  bank_accounts: FinancialAddresses.BankAccounts | null;
+                }
+
+                namespace FinancialAddresses {
+                  interface BankAccounts {
+                    /**
+                     * Whether the Capability has been requested.
+                     */
+                    requested: boolean;
+
+                    /**
+                     * The status of the Capability.
+                     */
+                    status: BankAccounts.Status;
+
+                    /**
+                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     */
+                    status_details: Array<BankAccounts.StatusDetail>;
+                  }
+
+                  namespace BankAccounts {
+                    type Status =
+                      | 'active'
+                      | 'pending'
+                      | 'restricted'
+                      | 'unsupported';
+
+                    interface StatusDetail {
+                      /**
+                       * Machine-readable code explaining the reason for the Capability to be in its current status.
+                       */
+                      code: StatusDetail.Code;
+
+                      /**
+                       * Machine-readable code explaining how to make the Capability active.
+                       */
+                      resolution: StatusDetail.Resolution;
+                    }
+
+                    namespace StatusDetail {
+                      type Code =
+                        | 'determining_status'
+                        | 'requirements_past_due'
+                        | 'requirements_pending_verification'
+                        | 'restricted_other'
+                        | 'unsupported_business'
+                        | 'unsupported_country'
+                        | 'unsupported_entity_type';
+
+                      type Resolution =
+                        | 'contact_stripe'
+                        | 'no_resolution'
+                        | 'provide_info';
+                    }
+                  }
+                }
+
+                interface HoldsCurrencies {
+                  /**
+                   * Can hold storage-type funds on Stripe in GBP.
+                   */
+                  gbp: HoldsCurrencies.Gbp | null;
+                }
+
+                namespace HoldsCurrencies {
+                  interface Gbp {
+                    /**
+                     * Whether the Capability has been requested.
+                     */
+                    requested: boolean;
+
+                    /**
+                     * The status of the Capability.
+                     */
+                    status: Gbp.Status;
+
+                    /**
+                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     */
+                    status_details: Array<Gbp.StatusDetail>;
+                  }
+
+                  namespace Gbp {
+                    type Status =
+                      | 'active'
+                      | 'pending'
+                      | 'restricted'
+                      | 'unsupported';
+
+                    interface StatusDetail {
+                      /**
+                       * Machine-readable code explaining the reason for the Capability to be in its current status.
+                       */
+                      code: StatusDetail.Code;
+
+                      /**
+                       * Machine-readable code explaining how to make the Capability active.
+                       */
+                      resolution: StatusDetail.Resolution;
+                    }
+
+                    namespace StatusDetail {
+                      type Code =
+                        | 'determining_status'
+                        | 'requirements_past_due'
+                        | 'requirements_pending_verification'
+                        | 'restricted_other'
+                        | 'unsupported_business'
+                        | 'unsupported_country'
+                        | 'unsupported_entity_type';
+
+                      type Resolution =
+                        | 'contact_stripe'
+                        | 'no_resolution'
+                        | 'provide_info';
+                    }
+                  }
+                }
+
+                interface InboundTransfers {
+                  /**
+                   * Can pull funds from an external bank account, owned by yourself, to a FinancialAccount.
+                   */
+                  bank_accounts: InboundTransfers.BankAccounts | null;
+                }
+
+                namespace InboundTransfers {
+                  interface BankAccounts {
+                    /**
+                     * Whether the Capability has been requested.
+                     */
+                    requested: boolean;
+
+                    /**
+                     * The status of the Capability.
+                     */
+                    status: BankAccounts.Status;
+
+                    /**
+                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     */
+                    status_details: Array<BankAccounts.StatusDetail>;
+                  }
+
+                  namespace BankAccounts {
+                    type Status =
+                      | 'active'
+                      | 'pending'
+                      | 'restricted'
+                      | 'unsupported';
+
+                    interface StatusDetail {
+                      /**
+                       * Machine-readable code explaining the reason for the Capability to be in its current status.
+                       */
+                      code: StatusDetail.Code;
+
+                      /**
+                       * Machine-readable code explaining how to make the Capability active.
+                       */
+                      resolution: StatusDetail.Resolution;
+                    }
+
+                    namespace StatusDetail {
+                      type Code =
+                        | 'determining_status'
+                        | 'requirements_past_due'
+                        | 'requirements_pending_verification'
+                        | 'restricted_other'
+                        | 'unsupported_business'
+                        | 'unsupported_country'
+                        | 'unsupported_entity_type';
+
+                      type Resolution =
+                        | 'contact_stripe'
+                        | 'no_resolution'
+                        | 'provide_info';
+                    }
+                  }
+                }
+
+                interface OutboundPayments {
+                  /**
+                   * Can send funds from a FinancialAccount to a bank account, owned by someone else.
+                   */
+                  bank_accounts: OutboundPayments.BankAccounts | null;
+
+                  /**
+                   * Can send funds from a FinancialAccount to a debit card, owned by someone else.
+                   */
+                  cards: OutboundPayments.Cards | null;
+
+                  /**
+                   * Can send funds from a FinancialAccount to another FinancialAccount, owned by someone else.
+                   */
+                  financial_accounts: OutboundPayments.FinancialAccounts | null;
+                }
+
+                namespace OutboundPayments {
+                  interface BankAccounts {
+                    /**
+                     * Whether the Capability has been requested.
+                     */
+                    requested: boolean;
+
+                    /**
+                     * The status of the Capability.
+                     */
+                    status: BankAccounts.Status;
+
+                    /**
+                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     */
+                    status_details: Array<BankAccounts.StatusDetail>;
+                  }
+
+                  namespace BankAccounts {
+                    type Status =
+                      | 'active'
+                      | 'pending'
+                      | 'restricted'
+                      | 'unsupported';
+
+                    interface StatusDetail {
+                      /**
+                       * Machine-readable code explaining the reason for the Capability to be in its current status.
+                       */
+                      code: StatusDetail.Code;
+
+                      /**
+                       * Machine-readable code explaining how to make the Capability active.
+                       */
+                      resolution: StatusDetail.Resolution;
+                    }
+
+                    namespace StatusDetail {
+                      type Code =
+                        | 'determining_status'
+                        | 'requirements_past_due'
+                        | 'requirements_pending_verification'
+                        | 'restricted_other'
+                        | 'unsupported_business'
+                        | 'unsupported_country'
+                        | 'unsupported_entity_type';
+
+                      type Resolution =
+                        | 'contact_stripe'
+                        | 'no_resolution'
+                        | 'provide_info';
+                    }
+                  }
+
+                  interface Cards {
+                    /**
+                     * Whether the Capability has been requested.
+                     */
+                    requested: boolean;
+
+                    /**
+                     * The status of the Capability.
+                     */
+                    status: Cards.Status;
+
+                    /**
+                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     */
+                    status_details: Array<Cards.StatusDetail>;
+                  }
+
+                  namespace Cards {
+                    type Status =
+                      | 'active'
+                      | 'pending'
+                      | 'restricted'
+                      | 'unsupported';
+
+                    interface StatusDetail {
+                      /**
+                       * Machine-readable code explaining the reason for the Capability to be in its current status.
+                       */
+                      code: StatusDetail.Code;
+
+                      /**
+                       * Machine-readable code explaining how to make the Capability active.
+                       */
+                      resolution: StatusDetail.Resolution;
+                    }
+
+                    namespace StatusDetail {
+                      type Code =
+                        | 'determining_status'
+                        | 'requirements_past_due'
+                        | 'requirements_pending_verification'
+                        | 'restricted_other'
+                        | 'unsupported_business'
+                        | 'unsupported_country'
+                        | 'unsupported_entity_type';
+
+                      type Resolution =
+                        | 'contact_stripe'
+                        | 'no_resolution'
+                        | 'provide_info';
+                    }
+                  }
+
+                  interface FinancialAccounts {
+                    /**
+                     * Whether the Capability has been requested.
+                     */
+                    requested: boolean;
+
+                    /**
+                     * The status of the Capability.
+                     */
+                    status: FinancialAccounts.Status;
+
+                    /**
+                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     */
+                    status_details: Array<FinancialAccounts.StatusDetail>;
+                  }
+
+                  namespace FinancialAccounts {
+                    type Status =
+                      | 'active'
+                      | 'pending'
+                      | 'restricted'
+                      | 'unsupported';
+
+                    interface StatusDetail {
+                      /**
+                       * Machine-readable code explaining the reason for the Capability to be in its current status.
+                       */
+                      code: StatusDetail.Code;
+
+                      /**
+                       * Machine-readable code explaining how to make the Capability active.
+                       */
+                      resolution: StatusDetail.Resolution;
+                    }
+
+                    namespace StatusDetail {
+                      type Code =
+                        | 'determining_status'
+                        | 'requirements_past_due'
+                        | 'requirements_pending_verification'
+                        | 'restricted_other'
+                        | 'unsupported_business'
+                        | 'unsupported_country'
+                        | 'unsupported_entity_type';
+
+                      type Resolution =
+                        | 'contact_stripe'
+                        | 'no_resolution'
+                        | 'provide_info';
+                    }
+                  }
+                }
+
+                interface OutboundTransfers {
+                  /**
+                   * Can send funds from a FinancialAccount, to a bank account, owned by yourself.
+                   */
+                  bank_accounts: OutboundTransfers.BankAccounts | null;
+
+                  /**
+                   * Can send funds from a FinancialAccount to another FinancialAccount, owned by yourself.
+                   */
+                  financial_accounts: OutboundTransfers.FinancialAccounts | null;
+                }
+
+                namespace OutboundTransfers {
+                  interface BankAccounts {
+                    /**
+                     * Whether the Capability has been requested.
+                     */
+                    requested: boolean;
+
+                    /**
+                     * The status of the Capability.
+                     */
+                    status: BankAccounts.Status;
+
+                    /**
+                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     */
+                    status_details: Array<BankAccounts.StatusDetail>;
+                  }
+
+                  namespace BankAccounts {
+                    type Status =
+                      | 'active'
+                      | 'pending'
+                      | 'restricted'
+                      | 'unsupported';
+
+                    interface StatusDetail {
+                      /**
+                       * Machine-readable code explaining the reason for the Capability to be in its current status.
+                       */
+                      code: StatusDetail.Code;
+
+                      /**
+                       * Machine-readable code explaining how to make the Capability active.
+                       */
+                      resolution: StatusDetail.Resolution;
+                    }
+
+                    namespace StatusDetail {
+                      type Code =
+                        | 'determining_status'
+                        | 'requirements_past_due'
+                        | 'requirements_pending_verification'
+                        | 'restricted_other'
+                        | 'unsupported_business'
+                        | 'unsupported_country'
+                        | 'unsupported_entity_type';
+
+                      type Resolution =
+                        | 'contact_stripe'
+                        | 'no_resolution'
+                        | 'provide_info';
+                    }
+                  }
+
+                  interface FinancialAccounts {
+                    /**
+                     * Whether the Capability has been requested.
+                     */
+                    requested: boolean;
+
+                    /**
+                     * The status of the Capability.
+                     */
+                    status: FinancialAccounts.Status;
+
+                    /**
+                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     */
+                    status_details: Array<FinancialAccounts.StatusDetail>;
+                  }
+
+                  namespace FinancialAccounts {
+                    type Status =
+                      | 'active'
+                      | 'pending'
+                      | 'restricted'
+                      | 'unsupported';
+
+                    interface StatusDetail {
+                      /**
+                       * Machine-readable code explaining the reason for the Capability to be in its current status.
+                       */
+                      code: StatusDetail.Code;
+
+                      /**
+                       * Machine-readable code explaining how to make the Capability active.
+                       */
+                      resolution: StatusDetail.Resolution;
+                    }
+
+                    namespace StatusDetail {
+                      type Code =
+                        | 'determining_status'
+                        | 'requirements_past_due'
+                        | 'requirements_pending_verification'
+                        | 'restricted_other'
+                        | 'unsupported_business'
+                        | 'unsupported_country'
+                        | 'unsupported_entity_type';
+
+                      type Resolution =
+                        | 'contact_stripe'
+                        | 'no_resolution'
+                        | 'provide_info';
+                    }
+                  }
+                }
               }
             }
           }
@@ -8119,10 +8650,13 @@ declare module 'stripe' {
                     | 'cartes_bancaires_payments'
                     | 'cashapp_payments'
                     | 'eps_payments'
+                    | 'financial_addresses.bank_accounts'
                     | 'fpx_payments'
                     | 'gb_bank_transfer_payments'
                     | 'grabpay_payments'
+                    | 'holds_currencies.gbp'
                     | 'ideal_payments'
+                    | 'inbound_transfers.financial_accounts'
                     | 'jcb_payments'
                     | 'jp_bank_transfer_payments'
                     | 'kakao_pay_payments'
@@ -8134,6 +8668,11 @@ declare module 'stripe' {
                     | 'multibanco_payments'
                     | 'mx_bank_transfer_payments'
                     | 'naver_pay_payments'
+                    | 'outbound_payments.bank_accounts'
+                    | 'outbound_payments.cards'
+                    | 'outbound_payments.financial_accounts'
+                    | 'outbound_transfers.bank_accounts'
+                    | 'outbound_transfers.financial_accounts'
                     | 'oxxo_payments'
                     | 'p24_payments'
                     | 'payco_payments'
@@ -8151,7 +8690,11 @@ declare module 'stripe' {
                     | 'us_bank_transfer_payments'
                     | 'zip_payments';
 
-                  type Configuration = 'customer' | 'merchant' | 'recipient';
+                  type Configuration =
+                    | 'customer'
+                    | 'merchant'
+                    | 'recipient'
+                    | 'storer';
 
                   interface Deadline {
                     /**

@@ -35,10 +35,14 @@ export const generateV2Error = (
     // switchCases: The beginning of the section generated from our OpenAPI spec
     case 'temporary_session_expired':
       return new TemporarySessionExpiredError(rawStripeError);
-    case 'financial_account_not_open':
-      return new FinancialAccountNotOpenError(rawStripeError);
+    case 'non_zero_balance':
+      return new NonZeroBalanceError(rawStripeError);
+    case 'already_exists':
+      return new AlreadyExistsError(rawStripeError);
     case 'feature_not_enabled':
       return new FeatureNotEnabledError(rawStripeError);
+    case 'financial_account_not_open':
+      return new FinancialAccountNotOpenError(rawStripeError);
     case 'blocked_by_stripe':
       return new BlockedByStripeError(rawStripeError);
     case 'already_canceled':
@@ -259,14 +263,24 @@ export class TemporarySessionExpiredError extends StripeError {
     super(rawStripeError, 'TemporarySessionExpiredError');
   }
 }
-export class FinancialAccountNotOpenError extends StripeError {
+export class NonZeroBalanceError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
-    super(rawStripeError, 'FinancialAccountNotOpenError');
+    super(rawStripeError, 'NonZeroBalanceError');
+  }
+}
+export class AlreadyExistsError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'AlreadyExistsError');
   }
 }
 export class FeatureNotEnabledError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'FeatureNotEnabledError');
+  }
+}
+export class FinancialAccountNotOpenError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'FinancialAccountNotOpenError');
   }
 }
 export class BlockedByStripeError extends StripeError {
