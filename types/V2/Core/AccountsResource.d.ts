@@ -62,6 +62,11 @@ declare module 'stripe' {
              * The Recipient Configuration allows the Account to receive funds.
              */
             recipient?: Configuration.Recipient;
+
+            /**
+             * The Storer Configuration allows the Account to store and move funds using stored-value FinancialAccounts.
+             */
+            storer?: Configuration.Storer;
           }
 
           namespace Configuration {
@@ -1240,6 +1245,160 @@ declare module 'stripe' {
 
                 namespace StripeBalance {
                   interface StripeTransfers {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+                }
+              }
+            }
+
+            interface Storer {
+              /**
+               * Capabilities to request on the Storer Configuration.
+               */
+              capabilities?: Storer.Capabilities;
+            }
+
+            namespace Storer {
+              interface Capabilities {
+                /**
+                 * Can provision a financial address to credit/debit a FinancialAccount.
+                 */
+                financial_addresses?: Capabilities.FinancialAddresses;
+
+                /**
+                 * Can hold storage-type funds on Stripe.
+                 */
+                holds_currencies?: Capabilities.HoldsCurrencies;
+
+                /**
+                 * Can pull funds from an external source, owned by yourself, to a FinancialAccount.
+                 */
+                inbound_transfers?: Capabilities.InboundTransfers;
+
+                /**
+                 * Can send funds from a FinancialAccount to a destination owned by someone else.
+                 */
+                outbound_payments?: Capabilities.OutboundPayments;
+
+                /**
+                 * Can send funds from a FinancialAccount to a destination owned by yourself.
+                 */
+                outbound_transfers?: Capabilities.OutboundTransfers;
+              }
+
+              namespace Capabilities {
+                interface FinancialAddresses {
+                  /**
+                   * Can provision a bank-account-like financial address (VBAN) to credit/debit a FinancialAccount.
+                   */
+                  bank_accounts?: FinancialAddresses.BankAccounts;
+                }
+
+                namespace FinancialAddresses {
+                  interface BankAccounts {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+                }
+
+                interface HoldsCurrencies {
+                  /**
+                   * Can hold storage-type funds on Stripe in GBP.
+                   */
+                  gbp?: HoldsCurrencies.Gbp;
+                }
+
+                namespace HoldsCurrencies {
+                  interface Gbp {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+                }
+
+                interface InboundTransfers {
+                  /**
+                   * Can pull funds from an external bank account owned by yourself to a FinancialAccount.
+                   */
+                  bank_accounts?: InboundTransfers.BankAccounts;
+                }
+
+                namespace InboundTransfers {
+                  interface BankAccounts {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+                }
+
+                interface OutboundPayments {
+                  /**
+                   * Can send funds from a FinancialAccount to a bank account owned by someone else.
+                   */
+                  bank_accounts?: OutboundPayments.BankAccounts;
+
+                  /**
+                   * Can send funds from a FinancialAccount to a debit card owned by someone else.
+                   */
+                  cards?: OutboundPayments.Cards;
+
+                  /**
+                   * Can send funds from a FinancialAccount to another FinancialAccount owned by someone else.
+                   */
+                  financial_accounts?: OutboundPayments.FinancialAccounts;
+                }
+
+                namespace OutboundPayments {
+                  interface BankAccounts {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  interface Cards {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  interface FinancialAccounts {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+                }
+
+                interface OutboundTransfers {
+                  /**
+                   * Can send funds from a FinancialAccount to a bank account owned by yourself.
+                   */
+                  bank_accounts?: OutboundTransfers.BankAccounts;
+
+                  /**
+                   * Can send funds from a FinancialAccount to another FinancialAccount owned by yourself.
+                   */
+                  financial_accounts?: OutboundTransfers.FinancialAccounts;
+                }
+
+                namespace OutboundTransfers {
+                  interface BankAccounts {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  interface FinancialAccounts {
                     /**
                      * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                      */
@@ -5058,6 +5217,7 @@ declare module 'stripe' {
             | 'configuration.customer'
             | 'configuration.merchant'
             | 'configuration.recipient'
+            | 'configuration.storer'
             | 'defaults'
             | 'identity'
             | 'requirements';
@@ -5077,6 +5237,7 @@ declare module 'stripe' {
             | 'configuration.customer'
             | 'configuration.merchant'
             | 'configuration.recipient'
+            | 'configuration.storer'
             | 'defaults'
             | 'identity'
             | 'requirements';
@@ -5142,6 +5303,11 @@ declare module 'stripe' {
              * The Recipient Configuration allows the Account to receive funds.
              */
             recipient?: Configuration.Recipient;
+
+            /**
+             * The Storer Configuration allows the Account to store and move funds using stored-value FinancialAccounts.
+             */
+            storer?: Configuration.Storer;
           }
 
           namespace Configuration {
@@ -6337,6 +6503,160 @@ declare module 'stripe' {
 
                 namespace StripeBalance {
                   interface StripeTransfers {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+                }
+              }
+            }
+
+            interface Storer {
+              /**
+               * Capabilities to request on the Storer Configuration.
+               */
+              capabilities?: Storer.Capabilities;
+            }
+
+            namespace Storer {
+              interface Capabilities {
+                /**
+                 * Can provision a financial address to credit/debit a FinancialAccount.
+                 */
+                financial_addresses?: Capabilities.FinancialAddresses;
+
+                /**
+                 * Can hold storage-type funds on Stripe.
+                 */
+                holds_currencies?: Capabilities.HoldsCurrencies;
+
+                /**
+                 * Can pull funds from an external source, owned by yourself, to a FinancialAccount.
+                 */
+                inbound_transfers?: Capabilities.InboundTransfers;
+
+                /**
+                 * Can send funds from a FinancialAccount to a destination owned by someone else.
+                 */
+                outbound_payments?: Capabilities.OutboundPayments;
+
+                /**
+                 * Can send funds from a FinancialAccount to a destination owned by yourself.
+                 */
+                outbound_transfers?: Capabilities.OutboundTransfers;
+              }
+
+              namespace Capabilities {
+                interface FinancialAddresses {
+                  /**
+                   * Can provision a bank-account-like financial address (VBAN) to credit/debit a FinancialAccount.
+                   */
+                  bank_accounts?: FinancialAddresses.BankAccounts;
+                }
+
+                namespace FinancialAddresses {
+                  interface BankAccounts {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+                }
+
+                interface HoldsCurrencies {
+                  /**
+                   * Can hold storage-type funds on Stripe in GBP.
+                   */
+                  gbp?: HoldsCurrencies.Gbp;
+                }
+
+                namespace HoldsCurrencies {
+                  interface Gbp {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+                }
+
+                interface InboundTransfers {
+                  /**
+                   * Can pull funds from an external bank account owned by yourself to a FinancialAccount.
+                   */
+                  bank_accounts?: InboundTransfers.BankAccounts;
+                }
+
+                namespace InboundTransfers {
+                  interface BankAccounts {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+                }
+
+                interface OutboundPayments {
+                  /**
+                   * Can send funds from a FinancialAccount to a bank account owned by someone else.
+                   */
+                  bank_accounts?: OutboundPayments.BankAccounts;
+
+                  /**
+                   * Can send funds from a FinancialAccount to a debit card owned by someone else.
+                   */
+                  cards?: OutboundPayments.Cards;
+
+                  /**
+                   * Can send funds from a FinancialAccount to another FinancialAccount owned by someone else.
+                   */
+                  financial_accounts?: OutboundPayments.FinancialAccounts;
+                }
+
+                namespace OutboundPayments {
+                  interface BankAccounts {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  interface Cards {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  interface FinancialAccounts {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+                }
+
+                interface OutboundTransfers {
+                  /**
+                   * Can send funds from a FinancialAccount to a bank account owned by yourself.
+                   */
+                  bank_accounts?: OutboundTransfers.BankAccounts;
+
+                  /**
+                   * Can send funds from a FinancialAccount to another FinancialAccount owned by yourself.
+                   */
+                  financial_accounts?: OutboundTransfers.FinancialAccounts;
+                }
+
+                namespace OutboundTransfers {
+                  interface BankAccounts {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  interface FinancialAccounts {
                     /**
                      * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                      */
@@ -10155,6 +10475,7 @@ declare module 'stripe' {
             | 'configuration.customer'
             | 'configuration.merchant'
             | 'configuration.recipient'
+            | 'configuration.storer'
             | 'defaults'
             | 'identity'
             | 'requirements';
@@ -10186,7 +10507,11 @@ declare module 'stripe' {
         }
 
         namespace AccountCloseParams {
-          type AppliedConfiguration = 'customer' | 'merchant' | 'recipient';
+          type AppliedConfiguration =
+            | 'customer'
+            | 'merchant'
+            | 'recipient'
+            | 'storer';
         }
       }
 

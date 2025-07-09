@@ -10,8 +10,10 @@ declare module 'stripe' {
       | 'authentication_error'
       | 'invalid_grant'
       | 'temporary_session_expired'
-      | 'financial_account_not_open'
+      | 'non_zero_balance'
+      | 'already_exists'
       | 'feature_not_enabled'
+      | 'financial_account_not_open'
       | 'blocked_by_stripe'
       | 'already_canceled'
       | 'not_cancelable'
@@ -136,8 +138,10 @@ declare module 'stripe' {
           | 'StripeIdempotencyError'
           | 'StripeInvalidGrantError'
           | 'TemporarySessionExpiredError'
-          | 'FinancialAccountNotOpenError'
+          | 'NonZeroBalanceError'
+          | 'AlreadyExistsError'
           | 'FeatureNotEnabledError'
+          | 'FinancialAccountNotOpenError'
           | 'BlockedByStripeError'
           | 'AlreadyCanceledError'
           | 'NotCancelableError'
@@ -296,13 +300,21 @@ declare module 'stripe' {
         readonly type: 'TemporarySessionExpiredError';
         readonly rawType: 'temporary_session_expired';
       }
-      export class FinancialAccountNotOpenError extends StripeError {
-        readonly type: 'FinancialAccountNotOpenError';
-        readonly rawType: 'financial_account_not_open';
+      export class NonZeroBalanceError extends StripeError {
+        readonly type: 'NonZeroBalanceError';
+        readonly rawType: 'non_zero_balance';
+      }
+      export class AlreadyExistsError extends StripeError {
+        readonly type: 'AlreadyExistsError';
+        readonly rawType: 'already_exists';
       }
       export class FeatureNotEnabledError extends StripeError {
         readonly type: 'FeatureNotEnabledError';
         readonly rawType: 'feature_not_enabled';
+      }
+      export class FinancialAccountNotOpenError extends StripeError {
+        readonly type: 'FinancialAccountNotOpenError';
+        readonly rawType: 'financial_account_not_open';
       }
       export class BlockedByStripeError extends StripeError {
         readonly type: 'BlockedByStripeError';

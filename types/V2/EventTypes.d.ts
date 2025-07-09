@@ -19,6 +19,8 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreAccountIncludingConfigurationMerchantUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationRecipientUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingConfigurationStorerUpdatedEvent
       | Stripe.Events.V2MoneyManagementAdjustmentCreatedEvent
       | Stripe.Events.V1BillingMeterErrorReportTriggeredEvent
       | Stripe.Events.V1BillingMeterNoMeterFoundEvent
@@ -391,6 +393,55 @@ declare module 'stripe' {
     export interface V2CoreAccountIncludingConfigurationRecipientUpdatedEvent
       extends V2.EventBase {
       type: 'v2.core.account[configuration.recipient].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    /**
+     * Occurs when the status of an Account's storer configuration capability is updated.
+     */
+    export interface V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.storer].capability_status_updated';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    namespace V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent {
+      export interface Data {
+        /**
+         * Open Enum. The capability which had its status updated.
+         */
+        updated_capability: Data.UpdatedCapability;
+      }
+
+      namespace Data {
+        export type UpdatedCapability =
+          | 'financial_addressses.bank_accounts'
+          | 'holds_currencies.eur'
+          | 'holds_currencies.gbp'
+          | 'holds_currencies.usd'
+          | 'inbound_transfers.bank_accounts'
+          | 'outbound_payments.bank_accounts'
+          | 'outbound_payments.cards'
+          | 'outbound_payments.financial_accounts'
+          | 'outbound_transfers.bank_accounts'
+          | 'outbound_transfers.financial_accounts';
+      }
+    }
+
+    /**
+     * Occurs when a Storer's configuration is updated.
+     */
+    export interface V2CoreAccountIncludingConfigurationStorerUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.storer].updated';
       // Object containing the reference to API resource relevant to the event.
       related_object: Event.RelatedObject;
       // Retrieves the object associated with the event.
