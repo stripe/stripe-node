@@ -491,9 +491,10 @@ export function createStripe(
       tolerance?: number,
       cryptoProvider?: CryptoProvider,
       receivedAt?: number
-    ): WebhookEvent {
+      // this return type is ignored?? picks up types from `types/index.d.ts` instead
+    ): unknown {
       // parses and validates the event payload all in one go
-      return this.webhooks.constructEvent(
+      const thinEvent = this.webhooks.constructEvent(
         payload,
         header,
         secret,
@@ -501,6 +502,36 @@ export function createStripe(
         cryptoProvider,
         receivedAt
       );
+
+      thinEvent.pull = (): Promise<unknown> => {
+        return this._requestSender._rawRequest(
+          'GET',
+          `/v2/core/events/${thinEvent.id}`,
+          undefined,
+          {
+            stripeContext: thinEvent.context as string,
+          },
+          ['pushed_event_pull']
+        );
+      };
+
+      if (thinEvent.related_object) {
+        thinEvent.fetchRelatedObject = (): Promise<unknown> => {
+          return this._requestSender._rawRequest(
+            'GET',
+            // rawRequest takes a path, but events give a full URL
+            // this assumes that the event's URL matches client's base URL
+            new URL(thinEvent.related_object.url).pathname,
+            undefined,
+            {
+              stripeContext: thinEvent.context,
+            },
+            ['pushed_event_fetch_related_object']
+          );
+        };
+      }
+
+      return thinEvent;
     },
   } as StripeObject;
 

@@ -20,6 +20,7 @@ import {
 import stripe = require('../src/stripe.cjs.node.js');
 import {NodeHttpClient} from '../src/net/NodeHttpClient.js';
 import {HttpClientResponseInterface} from '../src/net/HttpClient.js';
+import {AddressInfo} from 'net';
 
 const testingHttpAgent = new http.Agent({keepAlive: false});
 
@@ -34,7 +35,8 @@ export const getTestServerStripe = (
   callback: (
     err: Error | null,
     stripe: StripeClient,
-    closeServer: () => void
+    closeServer: () => void,
+    address: string
   ) => void
 ): void => {
   let nPreviousRequests = 0;
@@ -48,17 +50,25 @@ export const getTestServerStripe = (
     }
   });
   server.listen(0, () => {
-    const {port} = server.address() as any;
+    const {port} = server.address() as AddressInfo;
+    const host = 'localhost';
+    const protocol = 'http';
+
     const stripe = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
-      host: 'localhost',
+      host,
       port,
-      protocol: 'http',
+      protocol,
       httpAgent: testingHttpAgent,
       ...clientOptions,
     });
-    return callback(null, stripe, () => {
-      server.close();
-    });
+    return callback(
+      null,
+      stripe,
+      () => {
+        server.close();
+      },
+      `${protocol}://${host}:${port}`
+    );
   });
 };
 
