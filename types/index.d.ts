@@ -554,7 +554,7 @@ declare module 'stripe' {
        * Optional: timestamp to use when checking signature validity. Defaults to Date.now().
        */
       receivedAt?: number
-    ) => Stripe.ThinEvent;
+    ) => Stripe.V2.PushedEvent;
   }
 
   export default Stripe;

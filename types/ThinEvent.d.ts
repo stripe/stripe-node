@@ -23,14 +23,5 @@ declare module 'stripe' {
         url: string;
       }
     }
-    /**
-     * The Event object as recieved from StripeClient.parseThinEvent.
-     */
-    interface ThinEvent extends V2.EventBase {
-      /**
-       * Object containing the reference to API resource relevant to the event.
-       */
-      related_object: Event.RelatedObject | null;
-    }
   }
 }
