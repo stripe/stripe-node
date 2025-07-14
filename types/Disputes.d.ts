@@ -86,6 +86,8 @@ declare module 'stripe' {
        */
       reason: string;
 
+      smart_disputes?: Dispute.SmartDisputes;
+
       /**
        * Current status of dispute. Possible values are `warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `won`, or `lost`.
        */
@@ -461,7 +463,7 @@ declare module 'stripe' {
 
         interface Card {
           /**
-           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
            */
           brand: string;
 
@@ -500,6 +502,26 @@ declare module 'stripe' {
         }
 
         type Type = 'amazon_pay' | 'card' | 'klarna' | 'paypal';
+      }
+
+      interface SmartDisputes {
+        /**
+         * Evidence that could be provided to improve the SmartDisputes packet
+         */
+        recommended_evidence: Array<string> | null;
+
+        /**
+         * Smart Disputes auto representment packet availability status.
+         */
+        status: SmartDisputes.Status;
+      }
+
+      namespace SmartDisputes {
+        type Status =
+          | 'available'
+          | 'processing'
+          | 'requires_evidence'
+          | 'unavailable';
       }
 
       type Status =

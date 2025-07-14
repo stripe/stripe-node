@@ -510,6 +510,11 @@ declare module 'stripe' {
           sepa_debit: PaymentMethodOptions.SepaDebit | null;
 
           /**
+           * This sub-hash contains details about the UPI payment method options to pass to invoices created by the subscription.
+           */
+          upi?: PaymentMethodOptions.Upi | null;
+
+          /**
            * This sub-hash contains details about the ACH direct debit payment method options to pass to invoices created by the subscription.
            */
           us_bank_account: PaymentMethodOptions.UsBankAccount | null;
@@ -644,6 +649,38 @@ declare module 'stripe' {
 
           interface SepaDebit {}
 
+          interface Upi {
+            mandate_options?: Upi.MandateOptions;
+          }
+
+          namespace Upi {
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments.
+               */
+              amount: number | null;
+
+              /**
+               * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+               */
+              amount_type: MandateOptions.AmountType | null;
+
+              /**
+               * A description of the mandate or subscription that is meant to be displayed to the customer.
+               */
+              description: string | null;
+
+              /**
+               * End date of the mandate or subscription. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+               */
+              end_date: number | null;
+            }
+
+            namespace MandateOptions {
+              type AmountType = 'fixed' | 'maximum';
+            }
+          }
+
           interface UsBankAccount {
             financial_connections?: UsBankAccount.FinancialConnections;
 
@@ -743,6 +780,7 @@ declare module 'stripe' {
           | 'sofort'
           | 'stripe_balance'
           | 'swish'
+          | 'upi'
           | 'us_bank_account'
           | 'wechat_pay';
 

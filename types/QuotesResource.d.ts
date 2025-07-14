@@ -1097,6 +1097,9 @@ declare module 'stripe' {
         type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
 
         interface BillingMode {
+          /**
+           * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+           */
           type: BillingMode.Type;
         }
 

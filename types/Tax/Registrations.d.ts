@@ -257,10 +257,25 @@ declare module 'stripe' {
 
         namespace CountryOptions {
           interface Ae {
+            standard?: Ae.Standard;
+
             /**
              * Type of registration in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Ae {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an Default standard registration.
+               */
+              place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Al {
@@ -302,17 +317,35 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
           }
 
           interface Au {
+            standard?: Au.Standard;
+
             /**
              * Type of registration in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Au {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an Default standard registration.
+               */
+              place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Aw {
@@ -368,7 +401,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -399,7 +435,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -461,10 +500,25 @@ declare module 'stripe' {
           }
 
           interface Ch {
+            standard?: Ch.Standard;
+
             /**
              * Type of registration in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Ch {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an Default standard registration.
+               */
+              place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Cl {
@@ -520,7 +574,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -544,7 +601,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -568,7 +628,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -592,7 +655,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -623,7 +689,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -654,7 +723,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -685,7 +757,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -709,17 +784,35 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
           }
 
           interface Gb {
+            standard?: Gb.Standard;
+
             /**
              * Type of registration in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Gb {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an Default standard registration.
+               */
+              place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Ge {
@@ -754,7 +847,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -778,7 +874,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -802,7 +901,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -833,7 +935,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -871,17 +976,35 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
           }
 
           interface Jp {
+            standard?: Jp.Standard;
+
             /**
              * Type of registration in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Jp {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an Default standard registration.
+               */
+              place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Ke {
@@ -944,7 +1067,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -968,7 +1094,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -992,7 +1121,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1051,7 +1183,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1096,17 +1231,35 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
           }
 
           interface No {
+            standard?: No.Standard;
+
             /**
              * Type of registration in `country`.
              */
             type: 'standard';
+          }
+
+          namespace No {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an Default standard registration.
+               */
+              place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Np {
@@ -1117,10 +1270,25 @@ declare module 'stripe' {
           }
 
           interface Nz {
+            standard?: Nz.Standard;
+
             /**
              * Type of registration in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Nz {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an Default standard registration.
+               */
+              place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Om {
@@ -1162,7 +1330,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1186,7 +1357,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1210,7 +1384,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1255,17 +1432,35 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
           }
 
           interface Sg {
+            standard?: Sg.Standard;
+
             /**
              * Type of registration in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Sg {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an Default standard registration.
+               */
+              place_of_supply_scheme: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Si {
@@ -1286,7 +1481,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1310,7 +1508,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';

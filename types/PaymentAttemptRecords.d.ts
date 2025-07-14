@@ -482,7 +482,7 @@ declare module 'stripe' {
           namespace Funding {
             interface Card {
               /**
-               * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+               * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
                */
               brand: string | null;
 
@@ -651,7 +651,7 @@ declare module 'stripe' {
 
         interface Card {
           /**
-           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
            */
           brand: Card.Brand;
 
@@ -823,7 +823,7 @@ declare module 'stripe' {
           amount_authorized: number | null;
 
           /**
-           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
            */
           brand: string | null;
 
@@ -1035,6 +1035,11 @@ declare module 'stripe' {
            * A public identifier for buyers using Cash App.
            */
           cashtag: string | null;
+
+          /**
+           * A unique and immutable identifier of payments assigned by Cash App
+           */
+          transaction_id: string | null;
         }
 
         interface Crypto {
@@ -1875,7 +1880,7 @@ declare module 'stripe' {
           namespace Funding {
             interface Card {
               /**
-               * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+               * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
                */
               brand: string | null;
 

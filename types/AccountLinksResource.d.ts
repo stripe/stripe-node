@@ -9,7 +9,9 @@ declare module 'stripe' {
       account: string;
 
       /**
-       * The type of account link the user is requesting. Possible values are `account_onboarding` or `account_update`.
+       * The type of account link the user is requesting.
+       *
+       * You can create Account Links of type `account_update` only for connected accounts where your platform is responsible for collecting requirements, including Custom accounts. You can't create them for accounts that have access to a Stripe-hosted Dashboard. If you use [Connect embedded components](https://docs.stripe.com/connect/get-started-connect-embedded-components), you can include components that allow your connected accounts to update their own information. For an account without Stripe-hosted Dashboard access where Stripe is liable for negative balances, you must use embedded components.
        */
       type: AccountLinkCreateParams.Type;
 
