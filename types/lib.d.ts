@@ -28,6 +28,7 @@ declare module 'stripe' {
       static MAX_BUFFERED_REQUEST_METRICS: number;
     }
     export type LatestApiVersion = '2025-06-30.preview';
+    export const API_VERSION: string;
     export type HttpAgent = Agent;
     export type HttpProtocol = 'http' | 'https';
 
