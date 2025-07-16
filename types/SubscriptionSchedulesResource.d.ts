@@ -286,6 +286,11 @@ declare module 'stripe' {
         discounts?: Stripe.Emptyable<Array<Phase.Discount>>;
 
         /**
+         * The number of intervals the phase should last. If set, `end_date` must not be set.
+         */
+        duration?: Phase.Duration;
+
+        /**
          * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
          */
         end_date?: number;
@@ -301,7 +306,7 @@ declare module 'stripe' {
         items: Array<Phase.Item>;
 
         /**
-         * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
+         * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set. This parameter is deprecated and will be removed in a future version. Use `duration` instead.
          */
         iterations?: number;
 
@@ -578,6 +583,22 @@ declare module 'stripe' {
 
             type Type = 'duration' | 'timestamp';
           }
+        }
+
+        interface Duration {
+          /**
+           * Specifies phase duration. Either `day`, `week`, `month` or `year`.
+           */
+          interval: Duration.Interval;
+
+          /**
+           * The multiplier applied to the interval.
+           */
+          interval_count?: number;
+        }
+
+        namespace Duration {
+          type Interval = 'day' | 'month' | 'week' | 'year';
         }
 
         interface InvoiceSettings {
@@ -1128,6 +1149,11 @@ declare module 'stripe' {
         discounts?: Stripe.Emptyable<Array<Phase.Discount>>;
 
         /**
+         * The number of intervals the phase should last. If set, `end_date` must not be set.
+         */
+        duration?: Phase.Duration;
+
+        /**
          * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
          */
         end_date?: number | 'now';
@@ -1143,7 +1169,7 @@ declare module 'stripe' {
         items: Array<Phase.Item>;
 
         /**
-         * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
+         * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set. This parameter is deprecated and will be removed in a future version. Use `duration` instead.
          */
         iterations?: number;
 
@@ -1425,6 +1451,22 @@ declare module 'stripe' {
 
             type Type = 'duration' | 'timestamp';
           }
+        }
+
+        interface Duration {
+          /**
+           * Specifies phase duration. Either `day`, `week`, `month` or `year`.
+           */
+          interval: Duration.Interval;
+
+          /**
+           * The multiplier applied to the interval.
+           */
+          interval_count?: number;
+        }
+
+        namespace Duration {
+          type Interval = 'day' | 'month' | 'week' | 'year';
         }
 
         interface InvoiceSettings {

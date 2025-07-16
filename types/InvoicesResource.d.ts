@@ -29,7 +29,7 @@ declare module 'stripe' {
       automatic_tax?: InvoiceCreateParams.AutomaticTax;
 
       /**
-       * The time when this invoice should be scheduled to finalize. The invoice will be finalized at this time if it is still in draft state.
+       * The time when this invoice should be scheduled to finalize (up to 5 years in the future). The invoice is finalized at this time if it's still in draft state.
        */
       automatically_finalizes_at?: number;
 
@@ -931,7 +931,7 @@ declare module 'stripe' {
       automatic_tax?: InvoiceUpdateParams.AutomaticTax;
 
       /**
-       * The time when this invoice should be scheduled to finalize. The invoice will be finalized at this time if it is still in draft state. To turn off automatic finalization, set `auto_advance` to false.
+       * The time when this invoice should be scheduled to finalize (up to 5 years in the future). The invoice is finalized at this time if it's still in draft state. To turn off automatic finalization, set `auto_advance` to false.
        */
       automatically_finalizes_at?: number;
 
@@ -3475,6 +3475,11 @@ declare module 'stripe' {
           discounts?: Stripe.Emptyable<Array<Phase.Discount>>;
 
           /**
+           * The number of intervals the phase should last. If set, `end_date` must not be set.
+           */
+          duration?: Phase.Duration;
+
+          /**
            * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
            */
           end_date?: number | 'now';
@@ -3490,7 +3495,7 @@ declare module 'stripe' {
           items: Array<Phase.Item>;
 
           /**
-           * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
+           * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set. This parameter is deprecated and will be removed in a future version. Use `duration` instead.
            */
           iterations?: number;
 
@@ -3772,6 +3777,22 @@ declare module 'stripe' {
 
               type Type = 'duration' | 'timestamp';
             }
+          }
+
+          interface Duration {
+            /**
+             * Specifies phase duration. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The multiplier applied to the interval.
+             */
+            interval_count?: number;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
           }
 
           interface InvoiceSettings {

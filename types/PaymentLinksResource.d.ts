@@ -537,7 +537,7 @@ declare module 'stripe' {
         /**
          * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object.
          */
-        price: string;
+        price?: string;
 
         /**
          * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
@@ -558,7 +558,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The maximum quantity the customer can purchase. By default this value is 99. You can specify a value up to 999.
+           * The maximum quantity the customer can purchase. By default this value is 99. You can specify a value up to 999999.
            */
           maximum?: number;
 
@@ -1668,7 +1668,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The maximum quantity the customer can purchase. By default this value is 99. You can specify a value up to 999.
+           * The maximum quantity the customer can purchase. By default this value is 99. You can specify a value up to 999999.
            */
           maximum?: number;
 
