@@ -35,7 +35,6 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementInboundTransferBankDebitReturnedEvent
       | Stripe.Events.V2MoneyManagementInboundTransferBankDebitSucceededEvent
       | Stripe.Events.V2CoreEventDestinationPingEvent
-      | Stripe.Events.V2OffSessionPaymentRequiresCaptureEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentCanceledEvent
@@ -54,6 +53,7 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementOutboundTransferPostedEvent
       | Stripe.Events.V2MoneyManagementOutboundTransferReturnedEvent
       | Stripe.Events.V2MoneyManagementOutboundTransferUpdatedEvent
+      | Stripe.Events.V2MoneyManagementPayoutMethodUpdatedEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditAvailableEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditFailedEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditReturnedEvent
@@ -808,19 +808,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Off session payment requires capture event definition.
-     */
-    export interface V2OffSessionPaymentRequiresCaptureEvent
-      extends V2.EventBase {
-      type: 'v2.off_session_payment.requires_capture';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-    }
-
-    /**
-     * Off session payment authorization attempt failed event definition.
+     * Sent after a failed authorization if there are still retries available on the OffSessionPayment.
      */
     export interface V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
       extends V2.EventBase {
@@ -832,7 +820,8 @@ declare module 'stripe' {
     }
 
     /**
-     * Off session payment authorization attempt started event definition.
+     * Sent when our internal scheduling system kicks off an attempt at authorization, whether it's a
+     * retry or an initial authorization.
      */
     export interface V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
       extends V2.EventBase {
@@ -844,7 +833,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Off session payment canceled event definition.
+     * Sent immediately following a user's call to the Off-Session Payments cancel endpoint.
      */
     export interface V2PaymentsOffSessionPaymentCanceledEvent
       extends V2.EventBase {
@@ -856,7 +845,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Off session payment created event definition.
+     * Sent immediately following a user's call to the Off-Session Payments create endpoint.
      */
     export interface V2PaymentsOffSessionPaymentCreatedEvent
       extends V2.EventBase {
@@ -868,7 +857,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Off session payment failed event definition.
+     * Sent after a failed authorization if there are no retries remaining, or if the failure is unretryable.
      */
     export interface V2PaymentsOffSessionPaymentFailedEvent
       extends V2.EventBase {
@@ -880,7 +869,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Off session payment succeeded event definition.
+     * Sent immediately after a successful authorization.
      */
     export interface V2PaymentsOffSessionPaymentSucceededEvent
       extends V2.EventBase {
@@ -1033,6 +1022,18 @@ declare module 'stripe' {
       related_object: Event.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
+    }
+
+    /**
+     * Occurs when a PayoutMethod is updated.
+     */
+    export interface V2MoneyManagementPayoutMethodUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.payout_method.updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.MoneyManagement.PayoutMethod>;
     }
 
     /**
