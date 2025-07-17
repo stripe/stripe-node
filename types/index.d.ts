@@ -26,6 +26,7 @@
 ///<reference path='./Billing/CreditGrantsResource.d.ts' />
 ///<reference path='./Billing/MeterEventAdjustmentsResource.d.ts' />
 ///<reference path='./Billing/MeterEventsResource.d.ts' />
+///<reference path='./Billing/MeterUsageResource.d.ts' />
 ///<reference path='./Billing/MetersResource.d.ts' />
 ///<reference path='./BillingPortal/ConfigurationsResource.d.ts' />
 ///<reference path='./BillingPortal/SessionsResource.d.ts' />
@@ -198,6 +199,8 @@
 ///<reference path='./Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./Billing/MeterEventSummaries.d.ts' />
 ///<reference path='./Billing/MeterEvents.d.ts' />
+///<reference path='./Billing/MeterUsage.d.ts' />
+///<reference path='./Billing/MeterUsageRows.d.ts' />
 ///<reference path='./Billing/Meters.d.ts' />
 ///<reference path='./BillingPortal/Configurations.d.ts' />
 ///<reference path='./BillingPortal/Sessions.d.ts' />
@@ -461,6 +464,7 @@ declare module 'stripe' {
       meters: Stripe.Billing.MetersResource;
       meterEvents: Stripe.Billing.MeterEventsResource;
       meterEventAdjustments: Stripe.Billing.MeterEventAdjustmentsResource;
+      meterUsage: Stripe.Billing.MeterUsageResource;
     };
     billingPortal: {
       configurations: Stripe.BillingPortal.ConfigurationsResource;
