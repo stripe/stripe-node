@@ -164,7 +164,7 @@ declare module 'stripe' {
         optional_items?: Array<SessionCreateParams.OptionalItem>;
 
         /**
-         * Where the user is coming from. This informs the optimizations that are applied to the session. For example, a session originating from a mobile app may behave more like a native app, depending on the platform. This parameter is currently not allowed if `ui_mode` is `embedded` or `custom`.
+         * Where the user is coming from. This informs the optimizations that are applied to the session. For example, a session originating from a mobile app may behave more like a native app, depending on the platform. This parameter is currently not allowed if `ui_mode` is `custom`.
          */
         origin_context?: SessionCreateParams.OriginContext;
 
