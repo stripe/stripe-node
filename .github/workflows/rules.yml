@@ -4,21 +4,27 @@ name: rules
 on:
   workflow_dispatch: {}
   pull_request:
+    # expand this list as we add rules, but be careful that rules are properly guarded with necessary null checks or state checks
     types:
       - auto_merge_enabled
+      - opened
+      - reopened
 
 jobs:
-  require_merge_commit_on_merge_script_pr:
-    name: Merge script PRs must create merge commits
+  check_auto_merge_method_if_enabled:
+    name: Check auto-merge method if enabled
+    if: ${{ github.event.pull_request.auto_merge }}
     runs-on: ubuntu-latest
     steps:
       - run: |
-          if [[ "${{ github.head_ref }}" == *"/merge-"* ]]; then
-            if [[ "${{ github.event.pull_request.auto_merge.merge_method }}" != "merge" ]]; then
-              echo "Auto-merge method must be 'merge' instead of '${{github.event.pull_request.auto_merge.merge_method}}'"
-              exit 1
-            fi
-          else
-            echo "Not a merge script PR, skipping check"
+          expected_merge_method="squash"
+          # for merge PRs, expect "merge"
+          if [ ${{ contains(github.head_ref, '/merge-') }} == "true" ]; then
+              expected_merge_method="merge"
+          fi
+
+          if [ ${{ github.event.pull_request.auto_merge.merge_method }} != $expected_merge_method ]; then
+            echo "Auto-merge method must be '$expected_merge_method' instead of '${{github.event.pull_request.auto_merge.merge_method}}'"
+            exit 1
           fi
 
