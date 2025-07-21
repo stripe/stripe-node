@@ -1100,7 +1100,7 @@ declare module 'stripe' {
               /**
                * ID of the invoice rendering template to be used for the generated invoice.
                */
-              template?: string | null;
+              template: string | null;
             }
           }
         }
