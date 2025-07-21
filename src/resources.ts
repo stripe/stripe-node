@@ -87,7 +87,6 @@ import {ReportRuns as ReportingReportRuns} from './resources/Reporting/ReportRun
 import {ReportTypes as ReportingReportTypes} from './resources/Reporting/ReportTypes.js';
 import {Requests as ForwardingRequests} from './resources/Forwarding/Requests.js';
 import {ScheduledQueryRuns as SigmaScheduledQueryRuns} from './resources/Sigma/ScheduledQueryRuns.js';
-import {Schemas as SigmaSchemas} from './resources/Sigma/Schemas.js';
 import {Secrets as AppsSecrets} from './resources/Apps/Secrets.js';
 import {Sessions as BillingPortalSessions} from './resources/BillingPortal/Sessions.js';
 import {Sessions as CheckoutSessions} from './resources/Checkout/Sessions.js';
@@ -242,7 +241,6 @@ export const Reporting = resourceNamespace('reporting', {
 });
 export const Sigma = resourceNamespace('sigma', {
   ScheduledQueryRuns: SigmaScheduledQueryRuns,
-  Schemas: SigmaSchemas,
 });
 export const Tax = resourceNamespace('tax', {
   Associations: TaxAssociations,

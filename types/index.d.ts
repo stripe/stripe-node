@@ -103,7 +103,6 @@
 ///<reference path='./SetupIntentsResource.d.ts' />
 ///<reference path='./ShippingRatesResource.d.ts' />
 ///<reference path='./Sigma/ScheduledQueryRunsResource.d.ts' />
-///<reference path='./Sigma/SchemasResource.d.ts' />
 ///<reference path='./SourcesResource.d.ts' />
 ///<reference path='./SubscriptionItemsResource.d.ts' />
 ///<reference path='./SubscriptionSchedulesResource.d.ts' />
@@ -305,7 +304,6 @@
 ///<reference path='./SetupIntents.d.ts' />
 ///<reference path='./ShippingRates.d.ts' />
 ///<reference path='./Sigma/ScheduledQueryRuns.d.ts' />
-///<reference path='./Sigma/Schemas.d.ts' />
 ///<reference path='./SourceMandateNotifications.d.ts' />
 ///<reference path='./SourceTransactions.d.ts' />
 ///<reference path='./Sources.d.ts' />
@@ -527,7 +525,6 @@ declare module 'stripe' {
     };
     sigma: {
       scheduledQueryRuns: Stripe.Sigma.ScheduledQueryRunsResource;
-      schemas: Stripe.Sigma.SchemasResource;
     };
     tax: {
       associations: Stripe.Tax.AssociationsResource;
