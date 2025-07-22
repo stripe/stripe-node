@@ -125,6 +125,31 @@ describe('utils', () => {
     });
   });
 
+  describe('jsonStringifyRequestData', () => {
+    it('JSON stringifies data', () => {
+      expect(
+        utils.jsonStringifyRequestData({
+          a: 1,
+          b: 'foo',
+        })
+      ).to.equal('{"a":1,"b":"foo"}');
+    });
+
+    it('Handles Dates', () => {
+      expect(
+        utils.jsonStringifyRequestData({
+          date: new Date('2009-02-13T23:31:30Z'),
+          created: {
+            gte: new Date('2009-02-13T23:31:30Z'),
+            lt: new Date('2044-05-01T01:28:21Z'),
+          },
+        })
+      ).to.equal(
+        '{"date":"1234567890","created":{"gte":"1234567890","lt":"2345678901"}}'
+      );
+    });
+  });
+
   describe('protoExtend', () => {
     it('Provides an extension mechanism', () => {
       function A(): any {}

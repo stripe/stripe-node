@@ -146,6 +146,8 @@ declare module 'stripe' {
 
         grabpay?: DestinationDetails.Grabpay;
 
+        id_bank_transfer?: DestinationDetails.IdBankTransfer;
+
         jp_bank_transfer?: DestinationDetails.JpBankTransfer;
 
         klarna?: DestinationDetails.Klarna;
@@ -285,6 +287,18 @@ declare module 'stripe' {
         interface Giropay {}
 
         interface Grabpay {}
+
+        interface IdBankTransfer {
+          /**
+           * The reference assigned to the refund.
+           */
+          reference: string | null;
+
+          /**
+           * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+           */
+          reference_status: string | null;
+        }
 
         interface JpBankTransfer {
           /**

@@ -119,9 +119,19 @@ declare module 'stripe' {
       giropay?: PaymentMethodCreateParams.Giropay;
 
       /**
+       * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+       */
+      gopay?: PaymentMethodCreateParams.Gopay;
+
+      /**
        * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
        */
       grabpay?: PaymentMethodCreateParams.Grabpay;
+
+      /**
+       * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+       */
+      id_bank_transfer?: PaymentMethodCreateParams.IdBankTransfer;
 
       /**
        * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -157,6 +167,11 @@ declare module 'stripe' {
        * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
        */
       link?: PaymentMethodCreateParams.Link;
+
+      /**
+       * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+       */
+      mb_way?: PaymentMethodCreateParams.MbWay;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -219,6 +234,11 @@ declare module 'stripe' {
       paypal?: PaymentMethodCreateParams.Paypal;
 
       /**
+       * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+       */
+      payto?: PaymentMethodCreateParams.Payto;
+
+      /**
        * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
        */
       pix?: PaymentMethodCreateParams.Pix;
@@ -229,9 +249,19 @@ declare module 'stripe' {
       promptpay?: PaymentMethodCreateParams.Promptpay;
 
       /**
+       * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+       */
+      qris?: PaymentMethodCreateParams.Qris;
+
+      /**
        * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
        */
       radar_options?: PaymentMethodCreateParams.RadarOptions;
+
+      /**
+       * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
+       */
+      rechnung?: PaymentMethodCreateParams.Rechnung;
 
       /**
        * If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
@@ -254,9 +284,19 @@ declare module 'stripe' {
       sepa_debit?: PaymentMethodCreateParams.SepaDebit;
 
       /**
+       * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+       */
+      shopeepay?: PaymentMethodCreateParams.Shopeepay;
+
+      /**
        * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
        */
       sofort?: PaymentMethodCreateParams.Sofort;
+
+      /**
+       * This hash contains details about the Stripe balance payment method.
+       */
+      stripe_balance?: PaymentMethodCreateParams.StripeBalance;
 
       /**
        * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -515,7 +555,20 @@ declare module 'stripe' {
 
       interface Giropay {}
 
+      interface Gopay {}
+
       interface Grabpay {}
+
+      interface IdBankTransfer {
+        /**
+         * Bank where the account is held.
+         */
+        bank?: IdBankTransfer.Bank;
+      }
+
+      namespace IdBankTransfer {
+        type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+      }
 
       interface Ideal {
         /**
@@ -580,6 +633,8 @@ declare module 'stripe' {
       interface KrCard {}
 
       interface Link {}
+
+      interface MbWay {}
 
       interface Mobilepay {}
 
@@ -672,15 +727,60 @@ declare module 'stripe' {
 
       interface Paypal {}
 
+      interface Payto {
+        /**
+         * The account number for the bank account.
+         */
+        account_number?: string;
+
+        /**
+         * Bank-State-Branch number of the bank account.
+         */
+        bsb_number?: string;
+
+        /**
+         * The PayID alias for the bank account.
+         */
+        pay_id?: string;
+      }
+
       interface Pix {}
 
       interface Promptpay {}
+
+      interface Qris {}
 
       interface RadarOptions {
         /**
          * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
          */
         session?: string;
+      }
+
+      interface Rechnung {
+        /**
+         * Customer's date of birth
+         */
+        dob: Rechnung.Dob;
+      }
+
+      namespace Rechnung {
+        interface Dob {
+          /**
+           * The day of birth, between 1 and 31.
+           */
+          day: number;
+
+          /**
+           * The month of birth, between 1 and 12.
+           */
+          month: number;
+
+          /**
+           * The four-digit year of birth.
+           */
+          year: number;
+        }
       }
 
       interface RevolutPay {}
@@ -696,6 +796,8 @@ declare module 'stripe' {
         iban: string;
       }
 
+      interface Shopeepay {}
+
       interface Sofort {
         /**
          * Two-letter ISO code representing the country the bank account is located in.
@@ -705,6 +807,22 @@ declare module 'stripe' {
 
       namespace Sofort {
         type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+      }
+
+      interface StripeBalance {
+        /**
+         * The connected account ID whose Stripe balance to use as the source of payment
+         */
+        account?: string;
+
+        /**
+         * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
+         */
+        source_type?: StripeBalance.SourceType;
+      }
+
+      namespace StripeBalance {
+        type SourceType = 'bank_account' | 'card' | 'fpx';
       }
 
       interface Swish {}
@@ -731,13 +849,16 @@ declare module 'stripe' {
         | 'eps'
         | 'fpx'
         | 'giropay'
+        | 'gopay'
         | 'grabpay'
+        | 'id_bank_transfer'
         | 'ideal'
         | 'kakao_pay'
         | 'klarna'
         | 'konbini'
         | 'kr_card'
         | 'link'
+        | 'mb_way'
         | 'mobilepay'
         | 'multibanco'
         | 'naver_pay'
@@ -748,13 +869,18 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'payto'
         | 'pix'
         | 'promptpay'
+        | 'qris'
+        | 'rechnung'
         | 'revolut_pay'
         | 'samsung_pay'
         | 'satispay'
         | 'sepa_debit'
+        | 'shopeepay'
         | 'sofort'
+        | 'stripe_balance'
         | 'swish'
         | 'twint'
         | 'us_bank_account'
@@ -843,6 +969,11 @@ declare module 'stripe' {
       pay_by_bank?: PaymentMethodUpdateParams.PayByBank;
 
       /**
+       * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+       */
+      payto?: PaymentMethodUpdateParams.Payto;
+
+      /**
        * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
        */
       us_bank_account?: PaymentMethodUpdateParams.UsBankAccount;
@@ -912,6 +1043,23 @@ declare module 'stripe' {
 
       interface PayByBank {}
 
+      interface Payto {
+        /**
+         * The account number for the bank account.
+         */
+        account_number?: string;
+
+        /**
+         * Bank-State-Branch number of the bank account.
+         */
+        bsb_number?: string;
+
+        /**
+         * The PayID alias for the bank account.
+         */
+        pay_id?: string;
+      }
+
       interface UsBankAccount {
         /**
          * Bank account holder type.
@@ -969,13 +1117,16 @@ declare module 'stripe' {
         | 'eps'
         | 'fpx'
         | 'giropay'
+        | 'gopay'
         | 'grabpay'
+        | 'id_bank_transfer'
         | 'ideal'
         | 'kakao_pay'
         | 'klarna'
         | 'konbini'
         | 'kr_card'
         | 'link'
+        | 'mb_way'
         | 'mobilepay'
         | 'multibanco'
         | 'naver_pay'
@@ -986,13 +1137,18 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'payto'
         | 'pix'
         | 'promptpay'
+        | 'qris'
+        | 'rechnung'
         | 'revolut_pay'
         | 'samsung_pay'
         | 'satispay'
         | 'sepa_debit'
+        | 'shopeepay'
         | 'sofort'
+        | 'stripe_balance'
         | 'swish'
         | 'twint'
         | 'us_bank_account'
@@ -1004,7 +1160,12 @@ declare module 'stripe' {
       /**
        * The ID of the customer to which to attach the PaymentMethod.
        */
-      customer: string;
+      customer?: string;
+
+      /**
+       * The ID of the account to which to attach the PaymentMethod.
+       */
+      customer_account?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -1081,7 +1242,11 @@ declare module 'stripe' {
        */
       attach(
         id: string,
-        params: PaymentMethodAttachParams,
+        params?: PaymentMethodAttachParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
+      attach(
+        id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 

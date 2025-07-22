@@ -94,6 +94,11 @@ declare module 'stripe' {
       metadata: Stripe.Metadata;
 
       /**
+       * Subscriptions using this price will be migrated to use the new referenced price.
+       */
+      migrate_to?: Price.MigrateTo | null;
+
+      /**
        * A brief description of the price, hidden from customers.
        */
       nickname: string | null;
@@ -237,6 +242,23 @@ declare module 'stripe' {
          * The starting unit amount which can be updated by the customer.
          */
         preset: number | null;
+      }
+
+      interface MigrateTo {
+        /**
+         * The behavior controlling at what point in the subscription lifecycle to migrate the price
+         */
+        behavior: 'at_cycle_end';
+
+        /**
+         * The unix timestamp after at which subscriptions will start to migrate to the new price.
+         */
+        effective_after: number;
+
+        /**
+         * The id of the price being migrated to
+         */
+        price: string;
       }
 
       interface Recurring {

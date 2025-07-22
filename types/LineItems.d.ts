@@ -16,6 +16,8 @@ declare module 'stripe' {
        */
       object: 'item';
 
+      adjustable_quantity?: LineItem.AdjustableQuantity | null;
+
       /**
        * Total discount amount applied. If no discounts were applied, defaults to 0.
        */
@@ -51,15 +53,34 @@ declare module 'stripe' {
        */
       discounts?: Array<LineItem.Discount>;
 
+      display?: LineItem.Display;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: Stripe.Metadata | null;
+
       /**
        * The price used to generate the line item.
        */
       price: Stripe.Price | null;
 
       /**
+       * The ID of the product for this line item.
+       *
+       * This will always be the same as `price.product`.
+       */
+      product?: string | Stripe.Product | Stripe.DeletedProduct;
+
+      /**
        * The quantity of products being purchased.
        */
       quantity: number | null;
+
+      /**
+       * The tax calculation identifiers of the line item.
+       */
+      tax_calculation_reference?: LineItem.TaxCalculationReference | null;
 
       /**
        * The taxes applied to the line item.
@@ -68,6 +89,14 @@ declare module 'stripe' {
     }
 
     namespace LineItem {
+      interface AdjustableQuantity {
+        enabled: boolean;
+
+        maximum: number | null;
+
+        minimum: number | null;
+      }
+
       interface Discount {
         /**
          * The amount discounted.
@@ -81,6 +110,14 @@ declare module 'stripe' {
          * Related guide: [Applying discounts to subscriptions](https://stripe.com/docs/billing/subscriptions/discounts)
          */
         discount: Stripe.Discount;
+      }
+
+      interface Display {
+        description: string | null;
+
+        images: Array<string>;
+
+        name: string;
       }
 
       interface Tax {
@@ -124,6 +161,18 @@ declare module 'stripe' {
           | 'standard_rated'
           | 'taxable_basis_reduced'
           | 'zero_rated';
+      }
+
+      interface TaxCalculationReference {
+        /**
+         * The calculation identifier for tax calculation response.
+         */
+        calculation_id: string | null;
+
+        /**
+         * The calculation identifier for tax calculation response line item.
+         */
+        calculation_item_id: string | null;
       }
     }
   }

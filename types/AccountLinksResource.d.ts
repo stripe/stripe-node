@@ -60,7 +60,11 @@ declare module 'stripe' {
         type FutureRequirements = 'include' | 'omit';
       }
 
-      type Type = 'account_onboarding' | 'account_update';
+      type Type =
+        | 'account_onboarding'
+        | 'account_update'
+        | 'capital_financing_offer'
+        | 'capital_financing_reporting';
     }
 
     class AccountLinksResource {

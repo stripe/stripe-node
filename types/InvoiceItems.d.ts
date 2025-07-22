@@ -59,6 +59,11 @@ declare module 'stripe' {
       customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
       /**
+       * The ID of the account who will be billed when this invoice item is billed.
+       */
+      customer_account?: string | null;
+
+      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       date: number;
@@ -92,6 +97,11 @@ declare module 'stripe' {
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
+
+      /**
+       * The margins which apply to the invoice item. When set, the `default_margins` on the invoice do not apply to this invoice item.
+       */
+      margins?: Array<string | Stripe.Margin> | null;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.

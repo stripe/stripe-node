@@ -2,14 +2,14 @@
 
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const InvoicePayments = StripeResource.extend({
+export const PaymentAttemptRecords = StripeResource.extend({
   retrieve: stripeMethod({
     method: 'GET',
-    fullPath: '/v1/invoice_payments/{invoice_payment}',
+    fullPath: '/v1/payment_attempt_records/{id}',
   }),
   list: stripeMethod({
     method: 'GET',
-    fullPath: '/v1/invoice_payments',
+    fullPath: '/v1/payment_attempt_records',
     methodType: 'list',
   }),
 });

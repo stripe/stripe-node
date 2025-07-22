@@ -51,6 +51,8 @@ declare module 'stripe' {
        */
       customer: string | Stripe.Customer;
 
+      customer_account?: string | null;
+
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */

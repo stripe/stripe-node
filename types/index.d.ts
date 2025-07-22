@@ -11,12 +11,14 @@
 ///<reference path='./crypto/crypto.d.ts' />
 // Imports: The beginning of the section generated from our OpenAPI spec
 ///<reference path='./AccountLinksResource.d.ts' />
+///<reference path='./AccountNoticesResource.d.ts' />
 ///<reference path='./AccountSessionsResource.d.ts' />
 ///<reference path='./AccountsResource.d.ts' />
 ///<reference path='./ApplePayDomainsResource.d.ts' />
 ///<reference path='./ApplicationFeesResource.d.ts' />
 ///<reference path='./Apps/SecretsResource.d.ts' />
 ///<reference path='./BalanceResource.d.ts' />
+///<reference path='./BalanceSettingsResource.d.ts' />
 ///<reference path='./BalanceTransactionsResource.d.ts' />
 ///<reference path='./Billing/AlertsResource.d.ts' />
 ///<reference path='./Billing/CreditBalanceSummaryResource.d.ts' />
@@ -27,6 +29,9 @@
 ///<reference path='./Billing/MetersResource.d.ts' />
 ///<reference path='./BillingPortal/ConfigurationsResource.d.ts' />
 ///<reference path='./BillingPortal/SessionsResource.d.ts' />
+///<reference path='./Capital/FinancingOffersResource.d.ts' />
+///<reference path='./Capital/FinancingSummaryResource.d.ts' />
+///<reference path='./Capital/FinancingTransactionsResource.d.ts' />
 ///<reference path='./ChargesResource.d.ts' />
 ///<reference path='./Checkout/SessionsResource.d.ts' />
 ///<reference path='./Climate/OrdersResource.d.ts' />
@@ -44,35 +49,45 @@
 ///<reference path='./EphemeralKeysResource.d.ts' />
 ///<reference path='./EventsResource.d.ts' />
 ///<reference path='./ExchangeRatesResource.d.ts' />
+///<reference path='./ExternalAccountsResource.d.ts' />
 ///<reference path='./FileLinksResource.d.ts' />
 ///<reference path='./FilesResource.d.ts' />
 ///<reference path='./FinancialConnections/AccountsResource.d.ts' />
+///<reference path='./FinancialConnections/InstitutionsResource.d.ts' />
 ///<reference path='./FinancialConnections/SessionsResource.d.ts' />
 ///<reference path='./FinancialConnections/TransactionsResource.d.ts' />
 ///<reference path='./Forwarding/RequestsResource.d.ts' />
+///<reference path='./FxQuotesResource.d.ts' />
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
 ///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
-///<reference path='./InvoicePaymentsResource.d.ts' />
 ///<reference path='./InvoiceRenderingTemplatesResource.d.ts' />
 ///<reference path='./InvoicesResource.d.ts' />
 ///<reference path='./Issuing/AuthorizationsResource.d.ts' />
 ///<reference path='./Issuing/CardholdersResource.d.ts' />
 ///<reference path='./Issuing/CardsResource.d.ts' />
+///<reference path='./Issuing/CreditUnderwritingRecordsResource.d.ts' />
+///<reference path='./Issuing/DisputeSettlementDetailsResource.d.ts' />
 ///<reference path='./Issuing/DisputesResource.d.ts' />
+///<reference path='./Issuing/FraudLiabilityDebitsResource.d.ts' />
 ///<reference path='./Issuing/PersonalizationDesignsResource.d.ts' />
 ///<reference path='./Issuing/PhysicalBundlesResource.d.ts' />
 ///<reference path='./Issuing/TokensResource.d.ts' />
 ///<reference path='./Issuing/TransactionsResource.d.ts' />
 ///<reference path='./MandatesResource.d.ts' />
+///<reference path='./MarginsResource.d.ts' />
+///<reference path='./OrdersResource.d.ts' />
+///<reference path='./PaymentAttemptRecordsResource.d.ts' />
 ///<reference path='./PaymentIntentsResource.d.ts' />
 ///<reference path='./PaymentLinksResource.d.ts' />
 ///<reference path='./PaymentMethodConfigurationsResource.d.ts' />
 ///<reference path='./PaymentMethodDomainsResource.d.ts' />
 ///<reference path='./PaymentMethodsResource.d.ts' />
+///<reference path='./PaymentRecordsResource.d.ts' />
 ///<reference path='./PayoutsResource.d.ts' />
 ///<reference path='./PlansResource.d.ts' />
 ///<reference path='./PricesResource.d.ts' />
+///<reference path='./Privacy/RedactionJobsResource.d.ts' />
 ///<reference path='./ProductsResource.d.ts' />
 ///<reference path='./PromotionCodesResource.d.ts' />
 ///<reference path='./QuotesResource.d.ts' />
@@ -91,7 +106,9 @@
 ///<reference path='./SubscriptionItemsResource.d.ts' />
 ///<reference path='./SubscriptionSchedulesResource.d.ts' />
 ///<reference path='./SubscriptionsResource.d.ts' />
+///<reference path='./Tax/AssociationsResource.d.ts' />
 ///<reference path='./Tax/CalculationsResource.d.ts' />
+///<reference path='./Tax/FormsResource.d.ts' />
 ///<reference path='./Tax/RegistrationsResource.d.ts' />
 ///<reference path='./Tax/SettingsResource.d.ts' />
 ///<reference path='./Tax/TransactionsResource.d.ts' />
@@ -101,6 +118,7 @@
 ///<reference path='./Terminal/ConfigurationsResource.d.ts' />
 ///<reference path='./Terminal/ConnectionTokensResource.d.ts' />
 ///<reference path='./Terminal/LocationsResource.d.ts' />
+///<reference path='./Terminal/ReaderCollectedDataResource.d.ts' />
 ///<reference path='./Terminal/ReadersResource.d.ts' />
 ///<reference path='./TestHelpers/ConfirmationTokensResource.d.ts' />
 ///<reference path='./TestHelpers/CustomersResource.d.ts' />
@@ -133,10 +151,32 @@
 ///<reference path='./V2/Billing/MeterEventSessionResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
+///<reference path='./V2/Core/AccountLinksResource.d.ts' />
+///<reference path='./V2/Core/Accounts/PersonsResource.d.ts' />
+///<reference path='./V2/Core/AccountsResource.d.ts' />
 ///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
 ///<reference path='./V2/Core/EventsResource.d.ts' />
+///<reference path='./V2/Core/Vault/GbBankAccountsResource.d.ts' />
+///<reference path='./V2/Core/Vault/UsBankAccountsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/AdjustmentsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/FinancialAccountsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/FinancialAddressesResource.d.ts' />
+///<reference path='./V2/MoneyManagement/InboundTransfersResource.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPaymentQuotesResource.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPaymentsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundSetupIntentsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundTransfersResource.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethodsBankAccountSpecResource.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethodsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/ReceivedCreditsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/ReceivedDebitsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/TransactionEntriesResource.d.ts' />
+///<reference path='./V2/MoneyManagement/TransactionsResource.d.ts' />
+///<reference path='./V2/Payments/OffSessionPaymentsResource.d.ts' />
+///<reference path='./V2/TestHelpers/FinancialAddressesResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
+///<reference path='./AccountNotices.d.ts' />
 ///<reference path='./AccountSessions.d.ts' />
 ///<reference path='./Accounts.d.ts' />
 ///<reference path='./ApplePayDomains.d.ts' />
@@ -144,6 +184,7 @@
 ///<reference path='./Applications.d.ts' />
 ///<reference path='./Apps/Secrets.d.ts' />
 ///<reference path='./Balance.d.ts' />
+///<reference path='./BalanceSettings.d.ts' />
 ///<reference path='./BalanceTransactionSources.d.ts' />
 ///<reference path='./BalanceTransactions.d.ts' />
 ///<reference path='./BankAccounts.d.ts' />
@@ -159,6 +200,9 @@
 ///<reference path='./BillingPortal/Configurations.d.ts' />
 ///<reference path='./BillingPortal/Sessions.d.ts' />
 ///<reference path='./Capabilities.d.ts' />
+///<reference path='./Capital/FinancingOffers.d.ts' />
+///<reference path='./Capital/FinancingSummary.d.ts' />
+///<reference path='./Capital/FinancingTransactions.d.ts' />
 ///<reference path='./Cards.d.ts' />
 ///<reference path='./CashBalances.d.ts' />
 ///<reference path='./Charges.d.ts' />
@@ -189,13 +233,16 @@
 ///<reference path='./FeeRefunds.d.ts' />
 ///<reference path='./FileLinks.d.ts' />
 ///<reference path='./Files.d.ts' />
+///<reference path='./FinancialConnections/AccountInferredBalances.d.ts' />
 ///<reference path='./FinancialConnections/AccountOwners.d.ts' />
 ///<reference path='./FinancialConnections/AccountOwnerships.d.ts' />
 ///<reference path='./FinancialConnections/Accounts.d.ts' />
+///<reference path='./FinancialConnections/Institutions.d.ts' />
 ///<reference path='./FinancialConnections/Sessions.d.ts' />
 ///<reference path='./FinancialConnections/Transactions.d.ts' />
 ///<reference path='./Forwarding/Requests.d.ts' />
 ///<reference path='./FundingInstructions.d.ts' />
+///<reference path='./FxQuotes.d.ts' />
 ///<reference path='./Identity/VerificationReports.d.ts' />
 ///<reference path='./Identity/VerificationSessions.d.ts' />
 ///<reference path='./InvoiceItems.d.ts' />
@@ -206,26 +253,40 @@
 ///<reference path='./Issuing/Authorizations.d.ts' />
 ///<reference path='./Issuing/Cardholders.d.ts' />
 ///<reference path='./Issuing/Cards.d.ts' />
+///<reference path='./Issuing/CreditUnderwritingRecords.d.ts' />
+///<reference path='./Issuing/DisputeSettlementDetails.d.ts' />
 ///<reference path='./Issuing/Disputes.d.ts' />
+///<reference path='./Issuing/FraudLiabilityDebits.d.ts' />
 ///<reference path='./Issuing/PersonalizationDesigns.d.ts' />
 ///<reference path='./Issuing/PhysicalBundles.d.ts' />
+///<reference path='./Issuing/Settlements.d.ts' />
 ///<reference path='./Issuing/Tokens.d.ts' />
 ///<reference path='./Issuing/Transactions.d.ts' />
 ///<reference path='./LineItems.d.ts' />
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
+///<reference path='./Margins.d.ts' />
+///<reference path='./Orders.d.ts' />
+///<reference path='./PaymentAttemptRecords.d.ts' />
+///<reference path='./PaymentIntentAmountDetailsLineItems.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
 ///<reference path='./PaymentMethodConfigurations.d.ts' />
 ///<reference path='./PaymentMethodDomains.d.ts' />
 ///<reference path='./PaymentMethods.d.ts' />
+///<reference path='./PaymentRecords.d.ts' />
 ///<reference path='./Payouts.d.ts' />
 ///<reference path='./Persons.d.ts' />
 ///<reference path='./Plans.d.ts' />
 ///<reference path='./Prices.d.ts' />
+///<reference path='./Privacy/RedactionJobValidationErrors.d.ts' />
+///<reference path='./Privacy/RedactionJobs.d.ts' />
 ///<reference path='./ProductFeatures.d.ts' />
 ///<reference path='./Products.d.ts' />
 ///<reference path='./PromotionCodes.d.ts' />
+///<reference path='./QuoteLines.d.ts' />
+///<reference path='./QuotePreviewInvoices.d.ts' />
+///<reference path='./QuotePreviewSubscriptionSchedules.d.ts' />
 ///<reference path='./Quotes.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarnings.d.ts' />
 ///<reference path='./Radar/ValueListItems.d.ts' />
@@ -245,8 +306,10 @@
 ///<reference path='./SubscriptionItems.d.ts' />
 ///<reference path='./SubscriptionSchedules.d.ts' />
 ///<reference path='./Subscriptions.d.ts' />
+///<reference path='./Tax/Associations.d.ts' />
 ///<reference path='./Tax/CalculationLineItems.d.ts' />
 ///<reference path='./Tax/Calculations.d.ts' />
+///<reference path='./Tax/Forms.d.ts' />
 ///<reference path='./Tax/Registrations.d.ts' />
 ///<reference path='./Tax/Settings.d.ts' />
 ///<reference path='./Tax/TransactionLineItems.d.ts' />
@@ -258,6 +321,7 @@
 ///<reference path='./Terminal/Configurations.d.ts' />
 ///<reference path='./Terminal/ConnectionTokens.d.ts' />
 ///<reference path='./Terminal/Locations.d.ts' />
+///<reference path='./Terminal/ReaderCollectedData.d.ts' />
 ///<reference path='./Terminal/Readers.d.ts' />
 ///<reference path='./TestHelpers/TestClocks.d.ts' />
 ///<reference path='./Tokens.d.ts' />
@@ -278,8 +342,30 @@
 ///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
+///<reference path='./V2/Core/AccountLinks.d.ts' />
+///<reference path='./V2/Core/Accounts.d.ts' />
+///<reference path='./V2/Core/Persons.d.ts' />
+///<reference path='./V2/Core/Vault/GbBankAccounts.d.ts' />
+///<reference path='./V2/Core/Vault/UsBankAccounts.d.ts' />
 ///<reference path='./V2/EventDestinations.d.ts' />
 ///<reference path='./V2/Events.d.ts' />
+///<reference path='./V2/FinancialAddressCreditSimulations.d.ts' />
+///<reference path='./V2/FinancialAddressGeneratedMicrodeposits.d.ts' />
+///<reference path='./V2/MoneyManagement/Adjustments.d.ts' />
+///<reference path='./V2/MoneyManagement/FinancialAccounts.d.ts' />
+///<reference path='./V2/MoneyManagement/FinancialAddresses.d.ts' />
+///<reference path='./V2/MoneyManagement/InboundTransfers.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPaymentQuotes.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPayments.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundSetupIntents.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundTransfers.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethods.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethodsBankAccountSpecs.d.ts' />
+///<reference path='./V2/MoneyManagement/ReceivedCredits.d.ts' />
+///<reference path='./V2/MoneyManagement/ReceivedDebits.d.ts' />
+///<reference path='./V2/MoneyManagement/TransactionEntries.d.ts' />
+///<reference path='./V2/MoneyManagement/Transactions.d.ts' />
+///<reference path='./V2/Payments/OffSessionPayments.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
@@ -302,11 +388,13 @@ declare module 'stripe' {
 
     // Fields: The beginning of the section generated from our OpenAPI spec
     accountLinks: Stripe.AccountLinksResource;
+    accountNotices: Stripe.AccountNoticesResource;
     accountSessions: Stripe.AccountSessionsResource;
     accounts: Stripe.AccountsResource;
     applePayDomains: Stripe.ApplePayDomainsResource;
     applicationFees: Stripe.ApplicationFeesResource;
     balance: Stripe.BalanceResource;
+    balanceSettings: Stripe.BalanceSettingsResource;
     balanceTransactions: Stripe.BalanceTransactionsResource;
     charges: Stripe.ChargesResource;
     confirmationTokens: Stripe.ConfirmationTokensResource;
@@ -319,18 +407,23 @@ declare module 'stripe' {
     ephemeralKeys: Stripe.EphemeralKeysResource;
     events: Stripe.EventsResource;
     exchangeRates: Stripe.ExchangeRatesResource;
+    externalAccounts: Stripe.ExternalAccountsResource;
     fileLinks: Stripe.FileLinksResource;
     files: Stripe.FilesResource;
+    fxQuotes: Stripe.FxQuotesResource;
     invoiceItems: Stripe.InvoiceItemsResource;
-    invoicePayments: Stripe.InvoicePaymentsResource;
     invoiceRenderingTemplates: Stripe.InvoiceRenderingTemplatesResource;
     invoices: Stripe.InvoicesResource;
     mandates: Stripe.MandatesResource;
+    margins: Stripe.MarginsResource;
+    orders: Stripe.OrdersResource;
+    paymentAttemptRecords: Stripe.PaymentAttemptRecordsResource;
     paymentIntents: Stripe.PaymentIntentsResource;
     paymentLinks: Stripe.PaymentLinksResource;
     paymentMethodConfigurations: Stripe.PaymentMethodConfigurationsResource;
     paymentMethodDomains: Stripe.PaymentMethodDomainsResource;
     paymentMethods: Stripe.PaymentMethodsResource;
+    paymentRecords: Stripe.PaymentRecordsResource;
     payouts: Stripe.PayoutsResource;
     plans: Stripe.PlansResource;
     prices: Stripe.PricesResource;
@@ -369,6 +462,11 @@ declare module 'stripe' {
       configurations: Stripe.BillingPortal.ConfigurationsResource;
       sessions: Stripe.BillingPortal.SessionsResource;
     };
+    capital: {
+      financingOffers: Stripe.Capital.FinancingOffersResource;
+      financingSummary: Stripe.Capital.FinancingSummaryResource;
+      financingTransactions: Stripe.Capital.FinancingTransactionsResource;
+    };
     checkout: {
       sessions: Stripe.Checkout.SessionsResource;
     };
@@ -383,6 +481,7 @@ declare module 'stripe' {
     };
     financialConnections: {
       accounts: Stripe.FinancialConnections.AccountsResource;
+      institutions: Stripe.FinancialConnections.InstitutionsResource;
       sessions: Stripe.FinancialConnections.SessionsResource;
       transactions: Stripe.FinancialConnections.TransactionsResource;
     };
@@ -397,11 +496,17 @@ declare module 'stripe' {
       authorizations: Stripe.Issuing.AuthorizationsResource;
       cards: Stripe.Issuing.CardsResource;
       cardholders: Stripe.Issuing.CardholdersResource;
+      creditUnderwritingRecords: Stripe.Issuing.CreditUnderwritingRecordsResource;
       disputes: Stripe.Issuing.DisputesResource;
+      disputeSettlementDetails: Stripe.Issuing.DisputeSettlementDetailsResource;
+      fraudLiabilityDebits: Stripe.Issuing.FraudLiabilityDebitsResource;
       personalizationDesigns: Stripe.Issuing.PersonalizationDesignsResource;
       physicalBundles: Stripe.Issuing.PhysicalBundlesResource;
       tokens: Stripe.Issuing.TokensResource;
       transactions: Stripe.Issuing.TransactionsResource;
+    };
+    privacy: {
+      redactionJobs: Stripe.Privacy.RedactionJobsResource;
     };
     radar: {
       earlyFraudWarnings: Stripe.Radar.EarlyFraudWarningsResource;
@@ -416,7 +521,9 @@ declare module 'stripe' {
       scheduledQueryRuns: Stripe.Sigma.ScheduledQueryRunsResource;
     };
     tax: {
+      associations: Stripe.Tax.AssociationsResource;
       calculations: Stripe.Tax.CalculationsResource;
+      forms: Stripe.Tax.FormsResource;
       registrations: Stripe.Tax.RegistrationsResource;
       settings: Stripe.Tax.SettingsResource;
       transactions: Stripe.Tax.TransactionsResource;
@@ -426,6 +533,7 @@ declare module 'stripe' {
       connectionTokens: Stripe.Terminal.ConnectionTokensResource;
       locations: Stripe.Terminal.LocationsResource;
       readers: Stripe.Terminal.ReadersResource;
+      readerCollectedData: Stripe.Terminal.ReaderCollectedDataResource;
     };
     testHelpers: {
       confirmationTokens: Stripe.TestHelpers.ConfirmationTokensResource;
@@ -469,8 +577,36 @@ declare module 'stripe' {
         meterEvents: Stripe.V2.Billing.MeterEventsResource;
       };
       core: {
+        accountLinks: Stripe.V2.Core.AccountLinksResource;
+        accounts: Stripe.V2.Core.AccountsResource;
         eventDestinations: Stripe.V2.Core.EventDestinationsResource;
         events: Stripe.V2.Core.EventsResource;
+        vault: {
+          gbBankAccounts: Stripe.V2.Core.Vault.GbBankAccountsResource;
+          usBankAccounts: Stripe.V2.Core.Vault.UsBankAccountsResource;
+        };
+      };
+      moneyManagement: {
+        adjustments: Stripe.V2.MoneyManagement.AdjustmentsResource;
+        financialAccounts: Stripe.V2.MoneyManagement.FinancialAccountsResource;
+        financialAddresses: Stripe.V2.MoneyManagement.FinancialAddressesResource;
+        inboundTransfers: Stripe.V2.MoneyManagement.InboundTransfersResource;
+        outboundPaymentQuotes: Stripe.V2.MoneyManagement.OutboundPaymentQuotesResource;
+        outboundPayments: Stripe.V2.MoneyManagement.OutboundPaymentsResource;
+        outboundSetupIntents: Stripe.V2.MoneyManagement.OutboundSetupIntentsResource;
+        outboundTransfers: Stripe.V2.MoneyManagement.OutboundTransfersResource;
+        payoutMethods: Stripe.V2.MoneyManagement.PayoutMethodsResource;
+        payoutMethodsBankAccountSpec: Stripe.V2.MoneyManagement.PayoutMethodsBankAccountSpecResource;
+        receivedCredits: Stripe.V2.MoneyManagement.ReceivedCreditsResource;
+        receivedDebits: Stripe.V2.MoneyManagement.ReceivedDebitsResource;
+        transactionEntries: Stripe.V2.MoneyManagement.TransactionEntriesResource;
+        transactions: Stripe.V2.MoneyManagement.TransactionsResource;
+      };
+      payment: {
+        offSessionPayments: Stripe.V2.Payments.OffSessionPaymentsResource;
+      };
+      testHelper: {
+        financialAddresses: Stripe.V2.TestHelpers.FinancialAddressesResource;
       };
     };
     // Fields: The end of the section generated from our OpenAPI spec

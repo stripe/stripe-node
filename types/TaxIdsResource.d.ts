@@ -37,6 +37,11 @@ declare module 'stripe' {
         customer?: string;
 
         /**
+         * v2 Account the tax ID belongs to. Can be used in place of `customer` when `type=customer`
+         */
+        customer_account?: string;
+
+        /**
          * Type of owner referenced.
          */
         type: Owner.Type;
@@ -189,6 +194,11 @@ declare module 'stripe' {
          * Customer the tax ID belongs to. Required when `type=customer`
          */
         customer?: string;
+
+        /**
+         * v2 Account the tax ID belongs to. Can be used in place of `customer` when `type=customer`
+         */
+        customer_account?: string;
 
         /**
          * Type of owner referenced.

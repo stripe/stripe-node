@@ -77,6 +77,11 @@ declare module 'stripe' {
         customer?: string;
 
         /**
+         * ID of an existing Account, if one exists. Has the same behavior as `customer`.
+         */
+        customer_account?: string;
+
+        /**
          * Configure whether a Checkout Session creates a [Customer](https://stripe.com/docs/api/customers) during Session confirmation.
          *
          * When a Customer is not created, you can still retrieve email, address, and other customer data entered in Checkout
@@ -705,6 +710,11 @@ declare module 'stripe' {
           dynamic_tax_rates?: Array<string>;
 
           /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.MetadataParam;
+
+          /**
            * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object. One of `price` or `price_data` is required.
            */
           price?: string;
@@ -1213,6 +1223,11 @@ declare module 'stripe' {
           paypal?: PaymentMethodOptions.Paypal;
 
           /**
+           * contains details about the PayTo payment method options.
+           */
+          payto?: PaymentMethodOptions.Payto;
+
+          /**
            * contains details about the Pix payment method options.
            */
           pix?: PaymentMethodOptions.Pix;
@@ -1484,6 +1499,11 @@ declare module 'stripe' {
             /**
              * Request ability to [capture beyond the standard authorization validity window](https://docs.stripe.com/payments/extended-authorization) for this CheckoutSession.
              */
+            request_decremental_authorization?: Card.RequestDecrementalAuthorization;
+
+            /**
+             * Request ability to [capture beyond the standard authorization validity window](https://docs.stripe.com/payments/extended-authorization) for this CheckoutSession.
+             */
             request_extended_authorization?: Card.RequestExtendedAuthorization;
 
             /**
@@ -1541,6 +1561,8 @@ declare module 'stripe' {
                */
               enabled?: boolean;
             }
+
+            type RequestDecrementalAuthorization = 'if_available' | 'never';
 
             type RequestExtendedAuthorization = 'if_available' | 'never';
 
@@ -1988,6 +2010,11 @@ declare module 'stripe' {
             reference?: string;
 
             /**
+             * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+             */
+            reference_id?: string;
+
+            /**
              * The risk correlation ID for an on-session payment using a saved PayPal payment method.
              */
             risk_correlation_id?: string;
@@ -2004,6 +2031,11 @@ declare module 'stripe' {
              * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
              */
             setup_future_usage?: Stripe.Emptyable<Paypal.SetupFutureUsage>;
+
+            /**
+             * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+             */
+            subsellers?: Array<string>;
           }
 
           namespace Paypal {
@@ -2029,6 +2061,92 @@ declare module 'stripe' {
               | 'pt-PT'
               | 'sk-SK'
               | 'sv-SE';
+
+            type SetupFutureUsage = 'none' | 'off_session';
+          }
+
+          interface Payto {
+            /**
+             * Additional fields for Mandate creation
+             */
+            mandate_options?: Payto.MandateOptions;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: Payto.SetupFutureUsage;
+          }
+
+          namespace Payto {
+            interface MandateOptions {
+              /**
+               * Amount that will be collected. It is required when `amount_type` is `fixed`.
+               */
+              amount?: number;
+
+              /**
+               * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+               */
+              amount_type?: MandateOptions.AmountType;
+
+              /**
+               * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+               */
+              end_date?: string;
+
+              /**
+               * The periodicity at which payments will be collected.
+               */
+              payment_schedule?: MandateOptions.PaymentSchedule;
+
+              /**
+               * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+               */
+              payments_per_period?: number;
+
+              /**
+               * The purpose for which payments are made. Defaults to retail.
+               */
+              purpose?: MandateOptions.Purpose;
+
+              /**
+               * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+               */
+              start_date?: string;
+            }
+
+            namespace MandateOptions {
+              type AmountType = 'fixed' | 'maximum';
+
+              type PaymentSchedule =
+                | 'adhoc'
+                | 'annual'
+                | 'daily'
+                | 'fortnightly'
+                | 'monthly'
+                | 'quarterly'
+                | 'semi_annual'
+                | 'weekly';
+
+              type Purpose =
+                | 'dependant_support'
+                | 'government'
+                | 'loan'
+                | 'mortgage'
+                | 'other'
+                | 'pension'
+                | 'personal'
+                | 'retail'
+                | 'salary'
+                | 'tax'
+                | 'utility';
+            }
 
             type SetupFutureUsage = 'none' | 'off_session';
           }
@@ -2166,7 +2284,11 @@ declare module 'stripe' {
                 | 'payment_method'
                 | 'transactions';
 
-              type Prefetch = 'balances' | 'ownership' | 'transactions';
+              type Prefetch =
+                | 'balances'
+                | 'inferred_balances'
+                | 'ownership'
+                | 'transactions';
             }
 
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
@@ -2222,6 +2344,7 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'gopay'
           | 'grabpay'
           | 'ideal'
           | 'kakao_pay'
@@ -2229,6 +2352,7 @@ declare module 'stripe' {
           | 'konbini'
           | 'kr_card'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'
@@ -2238,12 +2362,16 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'qris'
+          | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
           | 'satispay'
           | 'sepa_debit'
+          | 'shopeepay'
           | 'sofort'
           | 'swish'
           | 'twint'
@@ -2252,6 +2380,20 @@ declare module 'stripe' {
           | 'zip';
 
         interface Permissions {
+          /**
+           * Permissions for updating the Checkout Session.
+           */
+          update?: Permissions.Update;
+
+          /**
+           * Determines which entity is allowed to update the line items.
+           *
+           * Default is `client_only`. Stripe Checkout client will automatically update the line items. If set to `server_only`, only your server is allowed to update the line items.
+           *
+           * When set to `server_only`, you must add the onLineItemsChange event handler when initializing the Stripe Checkout client and manually update the line items from your server using the Stripe API.
+           */
+          update_line_items?: Permissions.UpdateLineItems;
+
           /**
            * Determines which entity is allowed to update the shipping details.
            *
@@ -2263,6 +2405,34 @@ declare module 'stripe' {
         }
 
         namespace Permissions {
+          interface Update {
+            /**
+             * Determines which entity is allowed to update the line items.
+             *
+             * Default is `client_only`. Stripe Checkout client will automatically update the line items. If set to `server_only`, only your server is allowed to update the line items.
+             *
+             * When set to `server_only`, you must add the onLineItemsChange event handler when initializing the Stripe Checkout client and manually update the line items from your server using the Stripe API.
+             */
+            line_items?: Update.LineItems;
+
+            /**
+             * Determines which entity is allowed to update the shipping details.
+             *
+             * Default is `client_only`. Stripe Checkout client will automatically update the shipping details. If set to `server_only`, only your server is allowed to update the shipping details.
+             *
+             * When set to `server_only`, you must add the onShippingDetailsChange event handler when initializing the Stripe Checkout client and manually update the shipping details from your server using the Stripe API.
+             */
+            shipping_details?: Update.ShippingDetails;
+          }
+
+          namespace Update {
+            type LineItems = 'client_only' | 'server_only';
+
+            type ShippingDetails = 'client_only' | 'server_only';
+          }
+
+          type UpdateLineItems = 'client_only' | 'server_only';
+
           type UpdateShippingDetails = 'client_only' | 'server_only';
         }
 
@@ -2909,6 +3079,23 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
+         * A list of items the customer is purchasing.
+         *
+         * When updating line items, you must retransmit the entire array of line items.
+         *
+         * To retain an existing line item, specify its `id`.
+         *
+         * To update an existing line item, specify its `id` along with the new values of the fields to update.
+         *
+         * To add a new line item, specify one of `price` or `price_data` and `quantity`.
+         *
+         * To remove an existing line item, omit the line item's ID from the retransmitted array.
+         *
+         * To reorder a line item, specify it at the desired position in the retransmitted array.
+         */
+        line_items?: Array<SessionUpdateParams.LineItem>;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
@@ -2974,6 +3161,146 @@ declare module 'stripe' {
                */
               state?: string;
             }
+          }
+        }
+
+        interface LineItem {
+          /**
+           * When set, provides configuration for this item's quantity to be adjusted by the customer during Checkout.
+           */
+          adjustable_quantity?: LineItem.AdjustableQuantity;
+
+          /**
+           * ID of an existing line item.
+           */
+          id?: string;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+          /**
+           * The ID of the [Price](https://stripe.com/docs/api/prices). One of `price` or `price_data` is required when creating a new line item.
+           */
+          price?: string;
+
+          /**
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required when creating a new line item.
+           */
+          price_data?: LineItem.PriceData;
+
+          /**
+           * The quantity of the line item being purchased. Quantity should not be defined when `recurring.usage_type=metered`.
+           */
+          quantity?: number;
+
+          /**
+           * The [tax rates](https://stripe.com/docs/api/tax_rates) which apply to this line item.
+           */
+          tax_rates?: Stripe.Emptyable<Array<string>>;
+        }
+
+        namespace LineItem {
+          interface AdjustableQuantity {
+            /**
+             * Set to true if the quantity can be adjusted to any positive integer. Setting to false will remove any previously specified constraints on quantity.
+             */
+            enabled: boolean;
+
+            /**
+             * The maximum quantity the customer can purchase for the Checkout Session. By default this value is 99. You can specify a value up to 999999.
+             */
+            maximum?: number;
+
+            /**
+             * The minimum quantity the customer must purchase for the Checkout Session. By default this value is 0.
+             */
+            minimum?: number;
+          }
+
+          interface PriceData {
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to. One of `product` or `product_data` is required.
+             */
+            product?: string;
+
+            /**
+             * Data used to generate a new [Product](https://docs.stripe.com/api/products) object inline. One of `product` or `product_data` is required.
+             */
+            product_data?: PriceData.ProductData;
+
+            /**
+             * The recurring components of a price such as `interval` and `interval_count`.
+             */
+            recurring?: PriceData.Recurring;
+
+            /**
+             * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             */
+            tax_behavior?: PriceData.TaxBehavior;
+
+            /**
+             * A non-negative integer in cents (or local equivalent) representing how much to charge. One of `unit_amount` or `unit_amount_decimal` is required.
+             */
+            unit_amount?: number;
+
+            /**
+             * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             */
+            unit_amount_decimal?: string;
+          }
+
+          namespace PriceData {
+            interface ProductData {
+              /**
+               * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
+               */
+              description?: string;
+
+              /**
+               * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
+               */
+              images?: Array<string>;
+
+              /**
+               * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+               */
+              metadata?: Stripe.MetadataParam;
+
+              /**
+               * The product's name, meant to be displayable to the customer.
+               */
+              name: string;
+
+              /**
+               * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+               */
+              tax_code?: string;
+            }
+
+            interface Recurring {
+              /**
+               * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Recurring.Interval;
+
+              /**
+               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
+               */
+              interval_count?: number;
+            }
+
+            namespace Recurring {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
           }
         }
 
@@ -3126,6 +3453,11 @@ declare module 'stripe' {
          * Only return the Checkout Sessions for the Customer specified.
          */
         customer?: string;
+
+        /**
+         * Only return the Checkout Sessions for the Account specified.
+         */
+        customer_account?: string;
 
         /**
          * Only return the Checkout Sessions for the Customer details specified.

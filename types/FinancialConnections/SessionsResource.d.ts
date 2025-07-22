@@ -27,6 +27,16 @@ declare module 'stripe' {
         filters?: SessionCreateParams.Filters;
 
         /**
+         * Settings for configuring Session-specific limits.
+         */
+        limits?: SessionCreateParams.Limits;
+
+        /**
+         * Customize manual entry behavior
+         */
+        manual_entry?: SessionCreateParams.ManualEntry;
+
+        /**
          * List of data features that you would like to retrieve upon account creation.
          */
         prefetch?: Array<SessionCreateParams.Prefetch>;
@@ -50,6 +60,11 @@ declare module 'stripe' {
           customer?: string;
 
           /**
+           * The ID of the Stripe customer Account whose accounts will be retrieved. Should only be present if `type` is `customer`.
+           */
+          customer_account?: string;
+
+          /**
            * Type of account holder to collect accounts for.
            */
           type: AccountHolder.Type;
@@ -69,6 +84,11 @@ declare module 'stripe' {
            * List of countries from which to collect accounts.
            */
           countries?: Array<string>;
+
+          /**
+           * Stripe ID of the institution with which the customer should be directed to log in.
+           */
+          institution?: string;
         }
 
         namespace Filters {
@@ -80,13 +100,35 @@ declare module 'stripe' {
             | 'savings';
         }
 
+        interface Limits {
+          /**
+           * The number of accounts that can be linked in this Session.
+           */
+          accounts: number;
+        }
+
+        interface ManualEntry {
+          /**
+           * Whether manual entry will be handled by Stripe during the Session.
+           */
+          mode?: ManualEntry.Mode;
+        }
+
+        namespace ManualEntry {
+          type Mode = 'automatic' | 'custom';
+        }
+
         type Permission =
           | 'balances'
           | 'ownership'
           | 'payment_method'
           | 'transactions';
 
-        type Prefetch = 'balances' | 'ownership' | 'transactions';
+        type Prefetch =
+          | 'balances'
+          | 'inferred_balances'
+          | 'ownership'
+          | 'transactions';
       }
 
       interface SessionRetrieveParams {

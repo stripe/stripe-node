@@ -362,6 +362,11 @@ declare module 'stripe' {
 
           interface CollectPaymentMethod {
             /**
+             * Account the payment intent belongs to.
+             */
+            account?: string;
+
+            /**
              * Represents a per-transaction override of a reader configuration
              */
             collect_config?: CollectPaymentMethod.CollectConfig;
@@ -411,6 +416,11 @@ declare module 'stripe' {
 
           interface ConfirmPaymentIntent {
             /**
+             * Account the payment intent belongs to.
+             */
+            account?: string;
+
+            /**
              * Represents a per-transaction override of a reader configuration
              */
             confirm_config?: ConfirmPaymentIntent.ConfirmConfig;
@@ -431,6 +441,11 @@ declare module 'stripe' {
           }
 
           interface ProcessPaymentIntent {
+            /**
+             * Account the payment intent belongs to.
+             */
+            account?: string;
+
             /**
              * Most recent PaymentIntent processed by the reader.
              */
@@ -502,6 +517,11 @@ declare module 'stripe' {
           }
 
           interface RefundPayment {
+            /**
+             * Account the payment intent belongs to.
+             */
+            account?: string;
+
             /**
              * The amount being refunded.
              */

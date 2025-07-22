@@ -44,6 +44,11 @@ declare module 'stripe' {
       customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
       /**
+       * ID of the account.
+       */
+      customer_account?: string | null;
+
+      /**
        * Customer balance transaction related to this credit note.
        */
       customer_balance_transaction:

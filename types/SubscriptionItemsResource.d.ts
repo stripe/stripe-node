@@ -77,6 +77,11 @@ declare module 'stripe' {
        * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
        */
       tax_rates?: Stripe.Emptyable<Array<string>>;
+
+      /**
+       * Options that configure the trial on the subscription item.
+       */
+      trial?: SubscriptionItemCreateParams.Trial;
     }
 
     namespace SubscriptionItemCreateParams {
@@ -99,9 +104,53 @@ declare module 'stripe' {
         discount?: string;
 
         /**
+         * Details to determine how long the discount should be applied for.
+         */
+        discount_end?: Discount.DiscountEnd;
+
+        /**
          * ID of the promotion code to create a new discount for.
          */
         promotion_code?: string;
+      }
+
+      namespace Discount {
+        interface DiscountEnd {
+          /**
+           * Time span for the redeemed discount.
+           */
+          duration?: DiscountEnd.Duration;
+
+          /**
+           * A precise Unix timestamp for the discount to end. Must be in the future.
+           */
+          timestamp?: number;
+
+          /**
+           * The type of calculation made to determine when the discount ends.
+           */
+          type: DiscountEnd.Type;
+        }
+
+        namespace DiscountEnd {
+          interface Duration {
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            interval_count: number;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type = 'duration' | 'timestamp';
+        }
       }
 
       type PaymentBehavior =
@@ -163,6 +212,22 @@ declare module 'stripe' {
       }
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
+
+      interface Trial {
+        /**
+         * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial. Currently only supports at most 1 price ID.
+         */
+        converts_to?: Array<string>;
+
+        /**
+         * Determines the type of trial for this item.
+         */
+        type: Trial.Type;
+      }
+
+      namespace Trial {
+        type Type = 'free' | 'paid';
+      }
     }
 
     interface SubscriptionItemRetrieveParams {
@@ -269,9 +334,53 @@ declare module 'stripe' {
         discount?: string;
 
         /**
+         * Details to determine how long the discount should be applied for.
+         */
+        discount_end?: Discount.DiscountEnd;
+
+        /**
          * ID of the promotion code to create a new discount for.
          */
         promotion_code?: string;
+      }
+
+      namespace Discount {
+        interface DiscountEnd {
+          /**
+           * Time span for the redeemed discount.
+           */
+          duration?: DiscountEnd.Duration;
+
+          /**
+           * A precise Unix timestamp for the discount to end. Must be in the future.
+           */
+          timestamp?: number;
+
+          /**
+           * The type of calculation made to determine when the discount ends.
+           */
+          type: DiscountEnd.Type;
+        }
+
+        namespace DiscountEnd {
+          interface Duration {
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            interval_count: number;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type = 'duration' | 'timestamp';
+        }
       }
 
       type PaymentBehavior =

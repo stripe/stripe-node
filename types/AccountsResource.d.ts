@@ -88,6 +88,11 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
+       * A hash to configure risk controls on the account. Please see [this page for more details](https://docs.stripe.com/connect/pausing-payments-or-payouts-on-connected-accounts).
+       */
+      risk_controls?: AccountCreateParams.RiskControls;
+
+      /**
        * Options for customizing how the account functions within Stripe.
        */
       settings?: AccountCreateParams.Settings;
@@ -244,6 +249,11 @@ declare module 'stripe' {
         au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
 
         /**
+         * The automatic_indirect_tax capability.
+         */
+        automatic_indirect_tax?: Capabilities.AutomaticIndirectTax;
+
+        /**
          * The bacs_debit_payments capability.
          */
         bacs_debit_payments?: Capabilities.BacsDebitPayments;
@@ -319,9 +329,24 @@ declare module 'stripe' {
         giropay_payments?: Capabilities.GiropayPayments;
 
         /**
+         * The gopay_payments capability.
+         */
+        gopay_payments?: Capabilities.GopayPayments;
+
+        /**
          * The grabpay_payments capability.
          */
         grabpay_payments?: Capabilities.GrabpayPayments;
+
+        /**
+         * The id_bank_transfer_payments capability.
+         */
+        id_bank_transfer_payments?: Capabilities.IdBankTransferPayments;
+
+        /**
+         * The id_bank_transfer_payments_bca capability.
+         */
+        id_bank_transfer_payments_bca?: Capabilities.IdBankTransferPaymentsBca;
 
         /**
          * The ideal_payments capability.
@@ -374,6 +399,11 @@ declare module 'stripe' {
         link_payments?: Capabilities.LinkPayments;
 
         /**
+         * The mb_way_payments capability.
+         */
+        mb_way_payments?: Capabilities.MbWayPayments;
+
+        /**
          * The mobilepay_payments capability.
          */
         mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -424,6 +454,16 @@ declare module 'stripe' {
         paynow_payments?: Capabilities.PaynowPayments;
 
         /**
+         * The paypal_payments capability.
+         */
+        paypal_payments?: Capabilities.PaypalPayments;
+
+        /**
+         * The payto_payments capability.
+         */
+        payto_payments?: Capabilities.PaytoPayments;
+
+        /**
          * The pix_payments capability.
          */
         pix_payments?: Capabilities.PixPayments;
@@ -432,6 +472,16 @@ declare module 'stripe' {
          * The promptpay_payments capability.
          */
         promptpay_payments?: Capabilities.PromptpayPayments;
+
+        /**
+         * The qris_payments capability.
+         */
+        qris_payments?: Capabilities.QrisPayments;
+
+        /**
+         * The rechnung_payments capability.
+         */
+        rechnung_payments?: Capabilities.RechnungPayments;
 
         /**
          * The revolut_pay_payments capability.
@@ -459,9 +509,19 @@ declare module 'stripe' {
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
 
         /**
+         * The shopeepay_payments capability.
+         */
+        shopeepay_payments?: Capabilities.ShopeepayPayments;
+
+        /**
          * The sofort_payments capability.
          */
         sofort_payments?: Capabilities.SofortPayments;
+
+        /**
+         * The stripe_balance_payments capability.
+         */
+        stripe_balance_payments?: Capabilities.StripeBalancePayments;
 
         /**
          * The swish_payments capability.
@@ -487,6 +547,21 @@ declare module 'stripe' {
          * The treasury capability.
          */
         treasury?: Capabilities.Treasury;
+
+        /**
+         * The treasury_evolve capability.
+         */
+        treasury_evolve?: Capabilities.TreasuryEvolve;
+
+        /**
+         * The treasury_fifth_third capability.
+         */
+        treasury_fifth_third?: Capabilities.TreasuryFifthThird;
+
+        /**
+         * The treasury_goldman_sachs capability.
+         */
+        treasury_goldman_sachs?: Capabilities.TreasuryGoldmanSachs;
 
         /**
          * The twint_payments capability.
@@ -546,6 +621,13 @@ declare module 'stripe' {
         }
 
         interface AuBecsDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface AutomaticIndirectTax {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -657,7 +739,28 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface GopayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface GrabpayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface IdBankTransferPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface IdBankTransferPaymentsBca {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -734,6 +837,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface MbWayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface MobilepayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -804,6 +914,20 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface PaypalPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface PaytoPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface PixPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -812,6 +936,20 @@ declare module 'stripe' {
         }
 
         interface PromptpayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface QrisPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface RechnungPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -853,7 +991,21 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface ShopeepayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface SofortPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface StripeBalancePayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -889,6 +1041,27 @@ declare module 'stripe' {
         }
 
         interface Treasury {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TreasuryEvolve {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TreasuryFifthThird {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TreasuryGoldmanSachs {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1143,6 +1316,16 @@ declare module 'stripe' {
 
       interface Controller {
         /**
+         * A hash of configuration describing the Connect application that controls the account.
+         */
+        application?: Controller.Application;
+
+        /**
+         * Properties of the account's dashboard.
+         */
+        dashboard?: Controller.Dashboard;
+
+        /**
          * A hash of configuration for who pays Stripe fees for product usage on this account.
          */
         fees?: Controller.Fees;
@@ -1164,6 +1347,34 @@ declare module 'stripe' {
       }
 
       namespace Controller {
+        interface Application {
+          /**
+           * Whether the controller is liable for losses on this account. For details, see [Understanding Connect Account Balances](https://stripe.com/docs/connect/account-balances).
+           */
+          loss_liable: boolean;
+
+          /**
+           * Whether the controller owns onboarding for this account.
+           */
+          onboarding_owner?: boolean;
+
+          /**
+           * Whether the controller has pricing controls for this account.
+           */
+          pricing_controls?: boolean;
+        }
+
+        interface Dashboard {
+          /**
+           * Whether this account should have access to the full Stripe Dashboard (`full`), to the Express Dashboard (`express`), or to no Stripe-hosted dashboard (`none`). Defaults to `full`.
+           */
+          type?: Dashboard.Type;
+        }
+
+        namespace Dashboard {
+          type Type = 'express' | 'full' | 'none';
+        }
+
         interface Fees {
           /**
            * A value indicating the responsible payer of Stripe fees on this account. Defaults to `account`. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior).
@@ -1559,6 +1770,36 @@ declare module 'stripe' {
         }
       }
 
+      interface RiskControls {
+        /**
+         * Represents the risk control status of charges. Please see [this page for more details](https://stripe.com/docs/connect/pausing-payments-or-payouts-on-connected-accounts).
+         */
+        charges?: RiskControls.Charges;
+
+        /**
+         * Represents the risk control status of payouts. Please see [this page for more details](https://stripe.com/docs/connect/pausing-payments-or-payouts-on-connected-accounts).
+         */
+        payouts?: RiskControls.Payouts;
+      }
+
+      namespace RiskControls {
+        interface Charges {
+          /**
+           * To request to pause a risk control, pass `true`. To request to unpause a risk control, pass `false`.
+           * There can be a delay before the risk control is paused or unpaused.
+           */
+          pause_requested?: boolean;
+        }
+
+        interface Payouts {
+          /**
+           * To request to pause a risk control, pass `true`. To request to unpause a risk control, pass `false`.
+           * There can be a delay before the risk control is paused or unpaused.
+           */
+          pause_requested?: boolean;
+        }
+      }
+
       interface Settings {
         /**
          * Settings specific to Bacs Direct Debit.
@@ -1566,9 +1807,19 @@ declare module 'stripe' {
         bacs_debit_payments?: Settings.BacsDebitPayments;
 
         /**
+         * Settings specific to bank BCA onboarding for Indonesia bank transfers payments method.
+         */
+        bank_bca_onboarding?: Settings.BankBcaOnboarding;
+
+        /**
          * Settings used to apply the account's branding to email receipts, invoices, Checkout, and other products.
          */
         branding?: Settings.Branding;
+
+        /**
+         * Settings specific to the account's use of the Capital product.
+         */
+        capital?: Settings.Capital;
 
         /**
          * Settings specific to the account's use of the Card Issuing product.
@@ -1596,6 +1847,11 @@ declare module 'stripe' {
         payouts?: Settings.Payouts;
 
         /**
+         * Settings specific to the account's tax forms.
+         */
+        tax_forms?: Settings.TaxForms;
+
+        /**
          * Settings specific to the account's Treasury FinancialAccounts.
          */
         treasury?: Settings.Treasury;
@@ -1607,6 +1863,18 @@ declare module 'stripe' {
            * The Bacs Direct Debit Display Name for this account. For payments made with Bacs Direct Debit, this name appears on the mandate as the statement descriptor. Mobile banking apps display it as the name of the business. To use custom branding, set the Bacs Direct Debit Display Name during or right after creation. Custom branding incurs an additional monthly fee for the platform. If you don't set the display name before requesting Bacs capability, it's automatically set as "Stripe" and the account is onboarded to Stripe branding, which is free.
            */
           display_name?: string;
+        }
+
+        interface BankBcaOnboarding {
+          /**
+           * Bank BCA business account holder name
+           */
+          account_holder_name?: string;
+
+          /**
+           * Bank BCA business account number
+           */
+          business_account_number?: string;
         }
 
         interface Branding {
@@ -1629,6 +1897,22 @@ declare module 'stripe' {
            * A CSS hex color value representing the secondary branding color for this account.
            */
           secondary_color?: string;
+        }
+
+        interface Capital {
+          /**
+           * Per-currency mapping of user-selected destination accounts used to pay out loans.
+           */
+          payout_destination?: {
+            [key: string]: string;
+          };
+
+          /**
+           * Per-currency mapping of all destination accounts eligible to receive Capital financing payouts.
+           */
+          payout_destination_selector?: {
+            [key: string]: Array<string>;
+          };
         }
 
         interface CardIssuing {
@@ -1794,6 +2078,13 @@ declare module 'stripe' {
           }
         }
 
+        interface TaxForms {
+          /**
+           * Whether the account opted out of receiving their tax forms by postal delivery.
+           */
+          consented_to_paperless_delivery?: boolean;
+        }
+
         interface Treasury {
           /**
            * Details on the account's acceptance of the Stripe Treasury Services Agreement.
@@ -1932,6 +2223,11 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+      /**
+       * A hash to configure risk controls on the account. Please see [this page for more details](https://docs.stripe.com/connect/pausing-payments-or-payouts-on-connected-accounts).
+       */
+      risk_controls?: AccountUpdateParams.RiskControls;
 
       /**
        * Options for customizing how the account functions within Stripe.
@@ -2123,6 +2419,11 @@ declare module 'stripe' {
         au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
 
         /**
+         * The automatic_indirect_tax capability.
+         */
+        automatic_indirect_tax?: Capabilities.AutomaticIndirectTax;
+
+        /**
          * The bacs_debit_payments capability.
          */
         bacs_debit_payments?: Capabilities.BacsDebitPayments;
@@ -2198,9 +2499,24 @@ declare module 'stripe' {
         giropay_payments?: Capabilities.GiropayPayments;
 
         /**
+         * The gopay_payments capability.
+         */
+        gopay_payments?: Capabilities.GopayPayments;
+
+        /**
          * The grabpay_payments capability.
          */
         grabpay_payments?: Capabilities.GrabpayPayments;
+
+        /**
+         * The id_bank_transfer_payments capability.
+         */
+        id_bank_transfer_payments?: Capabilities.IdBankTransferPayments;
+
+        /**
+         * The id_bank_transfer_payments_bca capability.
+         */
+        id_bank_transfer_payments_bca?: Capabilities.IdBankTransferPaymentsBca;
 
         /**
          * The ideal_payments capability.
@@ -2253,6 +2569,11 @@ declare module 'stripe' {
         link_payments?: Capabilities.LinkPayments;
 
         /**
+         * The mb_way_payments capability.
+         */
+        mb_way_payments?: Capabilities.MbWayPayments;
+
+        /**
          * The mobilepay_payments capability.
          */
         mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -2303,6 +2624,16 @@ declare module 'stripe' {
         paynow_payments?: Capabilities.PaynowPayments;
 
         /**
+         * The paypal_payments capability.
+         */
+        paypal_payments?: Capabilities.PaypalPayments;
+
+        /**
+         * The payto_payments capability.
+         */
+        payto_payments?: Capabilities.PaytoPayments;
+
+        /**
          * The pix_payments capability.
          */
         pix_payments?: Capabilities.PixPayments;
@@ -2311,6 +2642,16 @@ declare module 'stripe' {
          * The promptpay_payments capability.
          */
         promptpay_payments?: Capabilities.PromptpayPayments;
+
+        /**
+         * The qris_payments capability.
+         */
+        qris_payments?: Capabilities.QrisPayments;
+
+        /**
+         * The rechnung_payments capability.
+         */
+        rechnung_payments?: Capabilities.RechnungPayments;
 
         /**
          * The revolut_pay_payments capability.
@@ -2338,9 +2679,19 @@ declare module 'stripe' {
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
 
         /**
+         * The shopeepay_payments capability.
+         */
+        shopeepay_payments?: Capabilities.ShopeepayPayments;
+
+        /**
          * The sofort_payments capability.
          */
         sofort_payments?: Capabilities.SofortPayments;
+
+        /**
+         * The stripe_balance_payments capability.
+         */
+        stripe_balance_payments?: Capabilities.StripeBalancePayments;
 
         /**
          * The swish_payments capability.
@@ -2366,6 +2717,21 @@ declare module 'stripe' {
          * The treasury capability.
          */
         treasury?: Capabilities.Treasury;
+
+        /**
+         * The treasury_evolve capability.
+         */
+        treasury_evolve?: Capabilities.TreasuryEvolve;
+
+        /**
+         * The treasury_fifth_third capability.
+         */
+        treasury_fifth_third?: Capabilities.TreasuryFifthThird;
+
+        /**
+         * The treasury_goldman_sachs capability.
+         */
+        treasury_goldman_sachs?: Capabilities.TreasuryGoldmanSachs;
 
         /**
          * The twint_payments capability.
@@ -2425,6 +2791,13 @@ declare module 'stripe' {
         }
 
         interface AuBecsDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface AutomaticIndirectTax {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2536,7 +2909,28 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface GopayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface GrabpayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface IdBankTransferPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface IdBankTransferPaymentsBca {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2613,6 +3007,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface MbWayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface MobilepayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -2683,6 +3084,20 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface PaypalPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface PaytoPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface PixPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -2691,6 +3106,20 @@ declare module 'stripe' {
         }
 
         interface PromptpayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface QrisPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface RechnungPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2732,7 +3161,21 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface ShopeepayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface SofortPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface StripeBalancePayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2768,6 +3211,27 @@ declare module 'stripe' {
         }
 
         interface Treasury {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TreasuryEvolve {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TreasuryFifthThird {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TreasuryGoldmanSachs {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -3382,6 +3846,36 @@ declare module 'stripe' {
         }
       }
 
+      interface RiskControls {
+        /**
+         * Represents the risk control status of charges. Please see [this page for more details](https://stripe.com/docs/connect/pausing-payments-or-payouts-on-connected-accounts).
+         */
+        charges?: RiskControls.Charges;
+
+        /**
+         * Represents the risk control status of payouts. Please see [this page for more details](https://stripe.com/docs/connect/pausing-payments-or-payouts-on-connected-accounts).
+         */
+        payouts?: RiskControls.Payouts;
+      }
+
+      namespace RiskControls {
+        interface Charges {
+          /**
+           * To request to pause a risk control, pass `true`. To request to unpause a risk control, pass `false`.
+           * There can be a delay before the risk control is paused or unpaused.
+           */
+          pause_requested?: boolean;
+        }
+
+        interface Payouts {
+          /**
+           * To request to pause a risk control, pass `true`. To request to unpause a risk control, pass `false`.
+           * There can be a delay before the risk control is paused or unpaused.
+           */
+          pause_requested?: boolean;
+        }
+      }
+
       interface Settings {
         /**
          * Settings specific to Bacs Direct Debit payments.
@@ -3389,9 +3883,19 @@ declare module 'stripe' {
         bacs_debit_payments?: Settings.BacsDebitPayments;
 
         /**
+         * Settings specific to bank BCA onboarding for Indonesia bank transfers payments method.
+         */
+        bank_bca_onboarding?: Settings.BankBcaOnboarding;
+
+        /**
          * Settings used to apply the account's branding to email receipts, invoices, Checkout, and other products.
          */
         branding?: Settings.Branding;
+
+        /**
+         * Settings specific to the account's use of the Capital product.
+         */
+        capital?: Settings.Capital;
 
         /**
          * Settings specific to the account's use of the Card Issuing product.
@@ -3419,6 +3923,11 @@ declare module 'stripe' {
         payouts?: Settings.Payouts;
 
         /**
+         * Settings specific to the account's tax forms.
+         */
+        tax_forms?: Settings.TaxForms;
+
+        /**
          * Settings specific to the account's Treasury FinancialAccounts.
          */
         treasury?: Settings.Treasury;
@@ -3430,6 +3939,18 @@ declare module 'stripe' {
            * The Bacs Direct Debit Display Name for this account. For payments made with Bacs Direct Debit, this name appears on the mandate as the statement descriptor. Mobile banking apps display it as the name of the business. To use custom branding, set the Bacs Direct Debit Display Name during or right after creation. Custom branding incurs an additional monthly fee for the platform. If you don't set the display name before requesting Bacs capability, it's automatically set as "Stripe" and the account is onboarded to Stripe branding, which is free.
            */
           display_name?: string;
+        }
+
+        interface BankBcaOnboarding {
+          /**
+           * Bank BCA business account holder name
+           */
+          account_holder_name?: string;
+
+          /**
+           * Bank BCA business account number
+           */
+          business_account_number?: string;
         }
 
         interface Branding {
@@ -3452,6 +3973,22 @@ declare module 'stripe' {
            * A CSS hex color value representing the secondary branding color for this account.
            */
           secondary_color?: string;
+        }
+
+        interface Capital {
+          /**
+           * Per-currency mapping of user-selected destination accounts used to pay out loans.
+           */
+          payout_destination?: {
+            [key: string]: string;
+          };
+
+          /**
+           * Per-currency mapping of all destination accounts eligible to receive Capital financing payouts.
+           */
+          payout_destination_selector?: {
+            [key: string]: Array<string>;
+          };
         }
 
         interface CardIssuing {
@@ -3620,6 +4157,13 @@ declare module 'stripe' {
               | 'tuesday'
               | 'wednesday';
           }
+        }
+
+        interface TaxForms {
+          /**
+           * Whether the account opted out of receiving their tax forms by postal delivery.
+           */
+          consented_to_paperless_delivery?: boolean;
         }
 
         interface Treasury {

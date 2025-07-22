@@ -99,6 +99,11 @@ declare module 'stripe' {
         purchase_details?: Transaction.PurchaseDetails | null;
 
         /**
+         * The ID of the [settlement](https://stripe.com/docs/api/issuing/settlements) to which this transaction belongs.
+         */
+        settlement?: string | Stripe.Issuing.Settlement | null;
+
+        /**
          * [Token](https://stripe.com/docs/api/issuing/tokens/object) object used for this transaction. If a network token was not used for this transaction, this field will be null.
          */
         token?: string | Stripe.Issuing.Token | null;

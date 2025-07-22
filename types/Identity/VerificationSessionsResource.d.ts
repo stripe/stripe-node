@@ -35,6 +35,11 @@ declare module 'stripe' {
         related_customer?: string;
 
         /**
+         * Token referencing a Customer Account resource.
+         */
+        related_customer_account?: string;
+
+        /**
          * Tokens referencing a Person resource and it's associated account.
          */
         related_person?: VerificationSessionCreateParams.RelatedPerson;
@@ -220,6 +225,8 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         related_customer?: string;
+
+        related_customer_account?: string;
 
         /**
          * Only return VerificationSessions with this status. [Learn more about the lifecycle of sessions](https://stripe.com/docs/identity/how-sessions-work).

@@ -22,7 +22,12 @@ declare module 'stripe' {
         /**
          * ID of the customer to receive the billing credits.
          */
-        customer: string;
+        customer?: string;
+
+        /**
+         * ID of the account to receive the billing credits.
+         */
+        customer_account?: string;
 
         /**
          * The time when the billing credits become effective-when they're eligible for use. It defaults to the current timestamp if not specified.
@@ -144,6 +149,11 @@ declare module 'stripe' {
          * Only return credit grants for this customer.
          */
         customer?: string;
+
+        /**
+         * Only return credit grants for this account.
+         */
+        customer_account?: string;
 
         /**
          * Specifies which fields in the response should be expanded.

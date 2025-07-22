@@ -17,6 +17,11 @@ export const Quotes = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/quotes/{quote}/finalize',
   }),
+  listPreviewInvoiceLines: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/quotes/{quote}/preview_invoices/{preview_invoice}/lines',
+    methodType: 'list',
+  }),
   listComputedUpfrontLineItems: stripeMethod({
     method: 'GET',
     fullPath: '/v1/quotes/{quote}/computed_upfront_line_items',
@@ -27,10 +32,37 @@ export const Quotes = StripeResource.extend({
     fullPath: '/v1/quotes/{quote}/line_items',
     methodType: 'list',
   }),
+  listLines: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/quotes/{quote}/lines',
+    methodType: 'list',
+  }),
+  listPreviewInvoices: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/quotes/{quote}/preview_invoices',
+    methodType: 'list',
+  }),
+  listPreviewSubscriptionSchedules: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/quotes/{quote}/preview_subscription_schedules',
+    methodType: 'list',
+  }),
+  markDraft: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/quotes/{quote}/mark_draft',
+  }),
+  markStale: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/quotes/{quote}/mark_stale',
+  }),
   pdf: stripeMethod({
     method: 'GET',
     fullPath: '/v1/quotes/{quote}/pdf',
     host: 'files.stripe.com',
     streaming: true,
+  }),
+  reestimate: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/quotes/{quote}/reestimate',
   }),
 });

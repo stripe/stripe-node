@@ -11,7 +11,12 @@ declare module 'stripe' {
       /**
        * The ID of an existing customer for which to create the Customer Session.
        */
-      customer: string;
+      customer?: string;
+
+      /**
+       * The ID of an existing Account for which to create the Customer Session.
+       */
+      customer_account?: string;
 
       /**
        * Specifies which fields in the response should be expanded.

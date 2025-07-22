@@ -10,6 +10,11 @@ declare module 'stripe' {
         supported_currencies: Array<string>;
 
         /**
+         * The display name for the FinancialAccount. Use this field to customize the names of the FinancialAccounts for your connected accounts. Unlike the `nickname` field, `display_name` is not internal metadata and will be exposed to connected accounts.
+         */
+        display_name?: Stripe.Emptyable<string>;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -98,9 +103,18 @@ declare module 'stripe' {
           namespace FinancialAddresses {
             interface Aba {
               /**
+               * Requested bank partner
+               */
+              bank?: Aba.Bank;
+
+              /**
                * Whether the FinancialAccount should have the Feature.
                */
               requested: boolean;
+            }
+
+            namespace Aba {
+              type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
             }
           }
 
@@ -212,6 +226,11 @@ declare module 'stripe' {
 
       interface FinancialAccountUpdateParams {
         /**
+         * The display name for the FinancialAccount. Use this field to customize the names of the FinancialAccounts for your connected accounts. Unlike the `nickname` field, `display_name` is not internal metadata and will be exposed to connected accounts.
+         */
+        display_name?: Stripe.Emptyable<string>;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -305,9 +324,18 @@ declare module 'stripe' {
           namespace FinancialAddresses {
             interface Aba {
               /**
+               * Requested bank partner
+               */
+              bank?: Aba.Bank;
+
+              /**
                * Whether the FinancialAccount should have the Feature.
                */
               requested: boolean;
+            }
+
+            namespace Aba {
+              type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
             }
           }
 
@@ -561,9 +589,18 @@ declare module 'stripe' {
         namespace FinancialAddresses {
           interface Aba {
             /**
+             * Requested bank partner
+             */
+            bank?: Aba.Bank;
+
+            /**
              * Whether the FinancialAccount should have the Feature.
              */
             requested: boolean;
+          }
+
+          namespace Aba {
+            type Bank = 'evolve' | 'fifth_third' | 'goldman_sachs';
           }
         }
 

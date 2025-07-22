@@ -552,6 +552,7 @@ const stripe = new Stripe('sk_test_...', {
 If you would like to send a request to an undocumented API (for example you are in a private beta), or if you prefer to bypass the method definitions in the library and specify your request details directly, you can use the `rawRequest` method on the StripeClient object.
 
 ```javascript
+import Stripe from 'stripe';
 const client = new Stripe('sk_test_...');
 
 client.rawRequest(

@@ -111,6 +111,8 @@ declare module 'stripe' {
 
       requirements?: Account.Requirements;
 
+      risk_controls?: Account.RiskControls;
+
       /**
        * Options for customizing how the account functions within Stripe.
        */
@@ -262,6 +264,11 @@ declare module 'stripe' {
         au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
 
         /**
+         * The status of the automatic_indirect_tax capability of the account.
+         */
+        automatic_indirect_tax?: Capabilities.AutomaticIndirectTax;
+
+        /**
          * The status of the Bacs Direct Debits payments capability of the account, or whether the account can directly process Bacs Direct Debits charges.
          */
         bacs_debit_payments?: Capabilities.BacsDebitPayments;
@@ -337,9 +344,24 @@ declare module 'stripe' {
         giropay_payments?: Capabilities.GiropayPayments;
 
         /**
+         * The status of the Gopay capability of the account, or whether the account can directly process Gopay payments.
+         */
+        gopay_payments?: Capabilities.GopayPayments;
+
+        /**
          * The status of the GrabPay payments capability of the account, or whether the account can directly process GrabPay charges.
          */
         grabpay_payments?: Capabilities.GrabpayPayments;
+
+        /**
+         * The status of the Indonesia Bank Transfer payments capability of the account, or whether the account can directly process Indonesia Bank Transfer charges.
+         */
+        id_bank_transfer_payments?: Capabilities.IdBankTransferPayments;
+
+        /**
+         * The status of Bank BCA onboarding of the account.
+         */
+        id_bank_transfer_payments_bca?: Capabilities.IdBankTransferPaymentsBca;
 
         /**
          * The status of the iDEAL payments capability of the account, or whether the account can directly process iDEAL charges.
@@ -392,6 +414,11 @@ declare module 'stripe' {
         link_payments?: Capabilities.LinkPayments;
 
         /**
+         * The status of the MB WAY payments capability of the account, or whether the account can directly process MB WAY charges.
+         */
+        mb_way_payments?: Capabilities.MbWayPayments;
+
+        /**
          * The status of the MobilePay capability of the account, or whether the account can directly process MobilePay charges.
          */
         mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -442,6 +469,16 @@ declare module 'stripe' {
         paynow_payments?: Capabilities.PaynowPayments;
 
         /**
+         * The status of the PayPal payments capability of the account, or whether the account can directly process PayPal charges.
+         */
+        paypal_payments?: Capabilities.PaypalPayments;
+
+        /**
+         * The status of the PayTo capability of the account, or whether the account can directly process PayTo charges.
+         */
+        payto_payments?: Capabilities.PaytoPayments;
+
+        /**
          * The status of the pix payments capability of the account, or whether the account can directly process pix charges.
          */
         pix_payments?: Capabilities.PixPayments;
@@ -450,6 +487,16 @@ declare module 'stripe' {
          * The status of the promptpay payments capability of the account, or whether the account can directly process promptpay charges.
          */
         promptpay_payments?: Capabilities.PromptpayPayments;
+
+        /**
+         * The status of the Qris capability of the account, or whether the account can directly process Qris payments.
+         */
+        qris_payments?: Capabilities.QrisPayments;
+
+        /**
+         * The status of the Rechnung capability of the account, or whether the account can directly process Rechnung payments.
+         */
+        rechnung_payments?: Capabilities.RechnungPayments;
 
         /**
          * The status of the RevolutPay capability of the account, or whether the account can directly process RevolutPay payments.
@@ -477,9 +524,19 @@ declare module 'stripe' {
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
 
         /**
+         * The status of the ShopeePay capability of the account, or whether the account can directly process ShopeePay payments.
+         */
+        shopeepay_payments?: Capabilities.ShopeepayPayments;
+
+        /**
          * The status of the Sofort payments capability of the account, or whether the account can directly process Sofort charges.
          */
         sofort_payments?: Capabilities.SofortPayments;
+
+        /**
+         * The status of the stripe_balance payments capability of the account, or whether the account can directly process stripe_balance charges.
+         */
+        stripe_balance_payments?: Capabilities.StripeBalancePayments;
 
         /**
          * The status of the Swish capability of the account, or whether the account can directly process Swish payments.
@@ -505,6 +562,21 @@ declare module 'stripe' {
          * The status of the banking capability, or whether the account can have bank accounts.
          */
         treasury?: Capabilities.Treasury;
+
+        /**
+         * The status of the treasury_evolve capability of the account.
+         */
+        treasury_evolve?: Capabilities.TreasuryEvolve;
+
+        /**
+         * The status of the treasury_fifth_third capability of the account.
+         */
+        treasury_fifth_third?: Capabilities.TreasuryFifthThird;
+
+        /**
+         * The status of the treasury_goldman_sachs capability of the account.
+         */
+        treasury_goldman_sachs?: Capabilities.TreasuryGoldmanSachs;
 
         /**
          * The status of the TWINT capability of the account, or whether the account can directly process TWINT charges.
@@ -540,6 +612,8 @@ declare module 'stripe' {
 
         type AuBecsDebitPayments = 'active' | 'inactive' | 'pending';
 
+        type AutomaticIndirectTax = 'active' | 'inactive' | 'pending';
+
         type BacsDebitPayments = 'active' | 'inactive' | 'pending';
 
         type BancontactPayments = 'active' | 'inactive' | 'pending';
@@ -570,7 +644,13 @@ declare module 'stripe' {
 
         type GiropayPayments = 'active' | 'inactive' | 'pending';
 
+        type GopayPayments = 'active' | 'inactive' | 'pending';
+
         type GrabpayPayments = 'active' | 'inactive' | 'pending';
+
+        type IdBankTransferPayments = 'active' | 'inactive' | 'pending';
+
+        type IdBankTransferPaymentsBca = 'active' | 'inactive' | 'pending';
 
         type IdealPayments = 'active' | 'inactive' | 'pending';
 
@@ -592,6 +672,8 @@ declare module 'stripe' {
 
         type LinkPayments = 'active' | 'inactive' | 'pending';
 
+        type MbWayPayments = 'active' | 'inactive' | 'pending';
+
         type MobilepayPayments = 'active' | 'inactive' | 'pending';
 
         type MultibancoPayments = 'active' | 'inactive' | 'pending';
@@ -612,9 +694,17 @@ declare module 'stripe' {
 
         type PaynowPayments = 'active' | 'inactive' | 'pending';
 
+        type PaypalPayments = 'active' | 'inactive' | 'pending';
+
+        type PaytoPayments = 'active' | 'inactive' | 'pending';
+
         type PixPayments = 'active' | 'inactive' | 'pending';
 
         type PromptpayPayments = 'active' | 'inactive' | 'pending';
+
+        type QrisPayments = 'active' | 'inactive' | 'pending';
+
+        type RechnungPayments = 'active' | 'inactive' | 'pending';
 
         type RevolutPayPayments = 'active' | 'inactive' | 'pending';
 
@@ -626,7 +716,11 @@ declare module 'stripe' {
 
         type SepaDebitPayments = 'active' | 'inactive' | 'pending';
 
+        type ShopeepayPayments = 'active' | 'inactive' | 'pending';
+
         type SofortPayments = 'active' | 'inactive' | 'pending';
+
+        type StripeBalancePayments = 'active' | 'inactive' | 'pending';
 
         type SwishPayments = 'active' | 'inactive' | 'pending';
 
@@ -637,6 +731,12 @@ declare module 'stripe' {
         type Transfers = 'active' | 'inactive' | 'pending';
 
         type Treasury = 'active' | 'inactive' | 'pending';
+
+        type TreasuryEvolve = 'active' | 'inactive' | 'pending';
+
+        type TreasuryFifthThird = 'active' | 'inactive' | 'pending';
+
+        type TreasuryGoldmanSachs = 'active' | 'inactive' | 'pending';
 
         type TwintPayments = 'active' | 'inactive' | 'pending';
 
@@ -933,6 +1033,10 @@ declare module 'stripe' {
       }
 
       interface Controller {
+        application?: Controller.Application;
+
+        dashboard?: Controller.Dashboard;
+
         fees?: Controller.Fees;
 
         /**
@@ -956,6 +1060,34 @@ declare module 'stripe' {
       }
 
       namespace Controller {
+        interface Application {
+          /**
+           * `true` if the Connect application is responsible for negative balances and should manage credit and fraud risk on the account.
+           */
+          loss_liable: boolean;
+
+          /**
+           * `true` if the Connect application is responsible for onboarding the account.
+           */
+          onboarding_owner: boolean;
+
+          /**
+           * `true` if the Connect application is responsible for paying Stripe fees on pricing-control eligible products.
+           */
+          pricing_controls: boolean;
+        }
+
+        interface Dashboard {
+          /**
+           * Whether this account has access to the full Stripe dashboard (`full`), to the Express dashboard (`express`), or to no dashboard (`none`).
+           */
+          type: Dashboard.Type;
+        }
+
+        namespace Dashboard {
+          type Type = 'express' | 'full' | 'none';
+        }
+
         interface Fees {
           /**
            * A value indicating the responsible payer of a bundle of Stripe fees for pricing-control eligible products on this account. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior).
@@ -968,7 +1100,8 @@ declare module 'stripe' {
             | 'account'
             | 'application'
             | 'application_custom'
-            | 'application_express';
+            | 'application_express'
+            | 'application_unified_accounts_beta';
         }
 
         interface Losses {
@@ -1383,10 +1516,51 @@ declare module 'stripe' {
         }
       }
 
+      interface RiskControls {
+        charges: RiskControls.Charges;
+
+        payouts: RiskControls.Payouts;
+
+        /**
+         * Represents the rejected reason of the account. Empty if account is not rejected, or rejected by Stripe. Please see [this page for more details](https://stripe.com/docs/connect/)
+         */
+        rejected_reason?: RiskControls.RejectedReason | null;
+      }
+
+      namespace RiskControls {
+        interface Charges {
+          /**
+           * Whether a pause of the risk control has been requested.
+           */
+          pause_requested: boolean;
+        }
+
+        interface Payouts {
+          /**
+           * Whether a pause of the risk control has been requested.
+           */
+          pause_requested: boolean;
+        }
+
+        type RejectedReason =
+          | 'credit'
+          | 'fraud'
+          | 'fraud_no_intent_to_fulfill'
+          | 'fraud_other'
+          | 'fraud_payment_method_casher'
+          | 'fraud_payment_method_tester'
+          | 'other'
+          | 'terms_of_service';
+      }
+
       interface Settings {
         bacs_debit_payments?: Settings.BacsDebitPayments;
 
+        bank_bca_onboarding?: Settings.BankBcaOnboarding;
+
         branding: Settings.Branding;
+
+        capital?: Settings.Capital;
 
         card_issuing?: Settings.CardIssuing;
 
@@ -1402,6 +1576,8 @@ declare module 'stripe' {
 
         sepa_debit_payments?: Settings.SepaDebitPayments;
 
+        tax_forms?: Settings.TaxForms;
+
         treasury?: Settings.Treasury;
       }
 
@@ -1416,6 +1592,18 @@ declare module 'stripe' {
            * The Bacs Direct Debit Service user number for this account. For payments made with Bacs Direct Debit, this number is a unique identifier of the account with our banking partners.
            */
           service_user_number: string | null;
+        }
+
+        interface BankBcaOnboarding {
+          /**
+           * Bank BCA business account holder name.
+           */
+          account_holder_name?: string;
+
+          /**
+           * Bank BCA business account number.
+           */
+          business_account_number?: string;
         }
 
         interface Branding {
@@ -1438,6 +1626,22 @@ declare module 'stripe' {
            * A CSS hex color value representing the secondary branding color for this account
            */
           secondary_color: string | null;
+        }
+
+        interface Capital {
+          /**
+           * Per-currency mapping of user-selected destination accounts used to pay out loans.
+           */
+          payout_destination?: {
+            [key: string]: string;
+          };
+
+          /**
+           * Per-currency mapping of all destination accounts eligible to receive loan payouts.
+           */
+          payout_destination_selector?: {
+            [key: string]: Array<string>;
+          };
         }
 
         interface CardIssuing {
@@ -1615,6 +1819,13 @@ declare module 'stripe' {
            * SEPA creditor identifier that identifies the company making the payment.
            */
           creditor_id?: string;
+        }
+
+        interface TaxForms {
+          /**
+           * Whether the account opted out of receiving their tax forms by postal delivery.
+           */
+          consented_to_paperless_delivery: boolean;
         }
 
         interface Treasury {

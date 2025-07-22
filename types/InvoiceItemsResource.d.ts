@@ -4,11 +4,6 @@ declare module 'stripe' {
   namespace Stripe {
     interface InvoiceItemCreateParams {
       /**
-       * The ID of the customer who will be billed when this invoice item is billed.
-       */
-      customer: string;
-
-      /**
        * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. Passing in a negative `amount` will reduce the `amount_due` on the invoice.
        */
       amount?: number;
@@ -17,6 +12,16 @@ declare module 'stripe' {
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
       currency?: string;
+
+      /**
+       * The ID of the customer who will be billed when this invoice item is billed.
+       */
+      customer?: string;
+
+      /**
+       * The ID of the account who will be billed when this invoice item is billed.
+       */
+      customer_account?: string;
 
       /**
        * An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
@@ -42,6 +47,11 @@ declare module 'stripe' {
        * The ID of an existing invoice to add this invoice item to. When left blank, the invoice item will be added to the next upcoming scheduled invoice. This is useful when adding invoice items in response to an invoice.created webhook. You can only add invoice items to draft invoices and there is a maximum of 250 items per invoice.
        */
       invoice?: string;
+
+      /**
+       * The ids of the margins to apply to the invoice item. When set, the `default_margins` on the invoice do not apply to this invoice item.
+       */
+      margins?: Array<string>;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -107,9 +117,53 @@ declare module 'stripe' {
         discount?: string;
 
         /**
+         * Details to determine how long the discount should be applied for.
+         */
+        discount_end?: Discount.DiscountEnd;
+
+        /**
          * ID of the promotion code to create a new discount for.
          */
         promotion_code?: string;
+      }
+
+      namespace Discount {
+        interface DiscountEnd {
+          /**
+           * Time span for the redeemed discount.
+           */
+          duration?: DiscountEnd.Duration;
+
+          /**
+           * A precise Unix timestamp for the discount to end. Must be in the future.
+           */
+          timestamp?: number;
+
+          /**
+           * The type of calculation made to determine when the discount ends.
+           */
+          type: DiscountEnd.Type;
+        }
+
+        namespace DiscountEnd {
+          interface Duration {
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            interval_count: number;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type = 'duration' | 'timestamp';
+        }
       }
 
       interface Period {
@@ -199,6 +253,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * The ids of the margins to apply to the invoice item. When set, the `default_margins` on the invoice do not apply to this invoice item.
+       */
+      margins?: Stripe.Emptyable<Array<string>>;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
@@ -257,9 +316,53 @@ declare module 'stripe' {
         discount?: string;
 
         /**
+         * Details to determine how long the discount should be applied for.
+         */
+        discount_end?: Discount.DiscountEnd;
+
+        /**
          * ID of the promotion code to create a new discount for.
          */
         promotion_code?: string;
+      }
+
+      namespace Discount {
+        interface DiscountEnd {
+          /**
+           * Time span for the redeemed discount.
+           */
+          duration?: DiscountEnd.Duration;
+
+          /**
+           * A precise Unix timestamp for the discount to end. Must be in the future.
+           */
+          timestamp?: number;
+
+          /**
+           * The type of calculation made to determine when the discount ends.
+           */
+          type: DiscountEnd.Type;
+        }
+
+        namespace DiscountEnd {
+          interface Duration {
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            interval_count: number;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type = 'duration' | 'timestamp';
+        }
       }
 
       interface Period {
@@ -327,6 +430,11 @@ declare module 'stripe' {
       customer?: string;
 
       /**
+       * The identifier of the account whose invoice items to return. If none is provided, all invoice items will be returned.
+       */
+      customer_account?: string;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -349,7 +457,10 @@ declare module 'stripe' {
        * Creates an item to be added to a draft invoice (up to 250 items per invoice). If no invoice is specified, the item will be on the next invoice created for the customer specified.
        */
       create(
-        params: InvoiceItemCreateParams,
+        params?: InvoiceItemCreateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.InvoiceItem>>;
+      create(
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.InvoiceItem>>;
 

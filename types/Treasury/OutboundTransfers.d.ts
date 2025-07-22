@@ -79,6 +79,11 @@ declare module 'stripe' {
         metadata: Stripe.Metadata;
 
         /**
+         * Details about the network used for the OutboundTransfer.
+         */
+        network_details?: OutboundTransfer.NetworkDetails | null;
+
+        /**
          * Details about a returned OutboundTransfer. Only set when the status is `returned`.
          */
         returned_details: OutboundTransfer.ReturnedDetails | null;
@@ -197,6 +202,27 @@ declare module 'stripe' {
             type AccountType = 'checking' | 'savings';
 
             type Network = 'ach' | 'us_domestic_wire';
+          }
+        }
+
+        interface NetworkDetails {
+          /**
+           * Details about an ACH transaction.
+           */
+          ach?: NetworkDetails.Ach | null;
+
+          /**
+           * The type of flow that originated the OutboundTransfer.
+           */
+          type: 'ach';
+        }
+
+        namespace NetworkDetails {
+          interface Ach {
+            /**
+             * ACH Addenda record
+             */
+            addenda: string | null;
           }
         }
 

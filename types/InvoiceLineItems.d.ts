@@ -59,6 +59,16 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
+       * The amount of margin calculated per margin for this line item.
+       */
+      margin_amounts?: Array<InvoiceLineItem.MarginAmount> | null;
+
+      /**
+       * The margins applied to the line item. When set, the `default_margins` on the invoice do not apply to the line item. Use `expand[]=margins` to expand each margin.
+       */
+      margins?: Array<string | Stripe.Margin> | null;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription`, `metadata` reflects the current metadata from the subscription associated with the line item, unless the invoice line was directly updated with different metadata after creation.
        */
       metadata: Stripe.Metadata;
@@ -88,6 +98,11 @@ declare module 'stripe' {
       subscription: string | Stripe.Subscription | null;
 
       /**
+       * The tax calculation identifiers of the line item.
+       */
+      tax_calculation_reference?: InvoiceLineItem.TaxCalculationReference | null;
+
+      /**
        * The tax information of the line item.
        */
       taxes: Array<InvoiceLineItem.Tax> | null;
@@ -104,6 +119,18 @@ declare module 'stripe' {
          * The discount that was applied to get this discount amount.
          */
         discount: string | Stripe.Discount | Stripe.DeletedDiscount;
+      }
+
+      interface MarginAmount {
+        /**
+         * The amount, in cents (or local equivalent), of the reduction in line item amount.
+         */
+        amount: number;
+
+        /**
+         * The margin that was applied to get this margin amount.
+         */
+        margin: string | Stripe.Margin;
       }
 
       interface Parent {
@@ -254,13 +281,18 @@ declare module 'stripe' {
         discount?: string | Stripe.Discount | Stripe.DeletedDiscount;
 
         /**
+         * The margin that was applied to get this pretax credit amount.
+         */
+        margin?: string | Stripe.Margin;
+
+        /**
          * Type of the pretax credit amount referenced.
          */
         type: PretaxCreditAmount.Type;
       }
 
       namespace PretaxCreditAmount {
-        type Type = 'credit_balance_transaction' | 'discount';
+        type Type = 'credit_balance_transaction' | 'discount' | 'margin';
       }
 
       interface Pricing {
@@ -347,6 +379,18 @@ declare module 'stripe' {
         interface TaxRateDetails {
           tax_rate: string;
         }
+      }
+
+      interface TaxCalculationReference {
+        /**
+         * The calculation identifier for tax calculation response.
+         */
+        calculation_id: string | null;
+
+        /**
+         * The calculation identifier for tax calculation response line item.
+         */
+        calculation_item_id: string | null;
       }
     }
   }

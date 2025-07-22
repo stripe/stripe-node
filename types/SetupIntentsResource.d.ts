@@ -35,6 +35,13 @@ declare module 'stripe' {
       customer?: string;
 
       /**
+       * ID of the Account this SetupIntent belongs to, if one exists.
+       *
+       * If present, the SetupIntent's payment method will be attached to the Account on successful setup. Payment methods attached to other Accounts cannot be used with this SetupIntent.
+       */
+      customer_account?: string;
+
+      /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
       description?: string;
@@ -287,9 +294,19 @@ declare module 'stripe' {
         giropay?: PaymentMethodData.Giropay;
 
         /**
+         * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+         */
+        gopay?: PaymentMethodData.Gopay;
+
+        /**
          * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
          */
         grabpay?: PaymentMethodData.Grabpay;
+
+        /**
+         * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+         */
+        id_bank_transfer?: PaymentMethodData.IdBankTransfer;
 
         /**
          * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -325,6 +342,11 @@ declare module 'stripe' {
          * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
          */
         link?: PaymentMethodData.Link;
+
+        /**
+         * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+         */
+        mb_way?: PaymentMethodData.MbWay;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -382,6 +404,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+         */
+        payto?: PaymentMethodData.Payto;
+
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -392,9 +419,19 @@ declare module 'stripe' {
         promptpay?: PaymentMethodData.Promptpay;
 
         /**
+         * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+         */
+        qris?: PaymentMethodData.Qris;
+
+        /**
          * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
+
+        /**
+         * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
+         */
+        rechnung?: PaymentMethodData.Rechnung;
 
         /**
          * If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
@@ -417,9 +454,19 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodData.SepaDebit;
 
         /**
+         * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+         */
+        shopeepay?: PaymentMethodData.Shopeepay;
+
+        /**
          * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
          */
         sofort?: PaymentMethodData.Sofort;
+
+        /**
+         * This hash contains details about the Stripe balance payment method.
+         */
+        stripe_balance?: PaymentMethodData.StripeBalance;
 
         /**
          * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -633,7 +680,20 @@ declare module 'stripe' {
 
         interface Giropay {}
 
+        interface Gopay {}
+
         interface Grabpay {}
+
+        interface IdBankTransfer {
+          /**
+           * Bank where the account is held.
+           */
+          bank?: IdBankTransfer.Bank;
+        }
+
+        namespace IdBankTransfer {
+          type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+        }
 
         interface Ideal {
           /**
@@ -698,6 +758,8 @@ declare module 'stripe' {
         interface KrCard {}
 
         interface Link {}
+
+        interface MbWay {}
 
         interface Mobilepay {}
 
@@ -790,15 +852,60 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Payto {
+          /**
+           * The account number for the bank account.
+           */
+          account_number?: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number?: string;
+
+          /**
+           * The PayID alias for the bank account.
+           */
+          pay_id?: string;
+        }
+
         interface Pix {}
 
         interface Promptpay {}
+
+        interface Qris {}
 
         interface RadarOptions {
           /**
            * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
            */
           session?: string;
+        }
+
+        interface Rechnung {
+          /**
+           * Customer's date of birth
+           */
+          dob: Rechnung.Dob;
+        }
+
+        namespace Rechnung {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
         }
 
         interface RevolutPay {}
@@ -814,6 +921,8 @@ declare module 'stripe' {
           iban: string;
         }
 
+        interface Shopeepay {}
+
         interface Sofort {
           /**
            * Two-letter ISO code representing the country the bank account is located in.
@@ -823,6 +932,22 @@ declare module 'stripe' {
 
         namespace Sofort {
           type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+        }
+
+        interface StripeBalance {
+          /**
+           * The connected account ID whose Stripe balance to use as the source of payment
+           */
+          account?: string;
+
+          /**
+           * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
+           */
+          source_type?: StripeBalance.SourceType;
+        }
+
+        namespace StripeBalance {
+          type SourceType = 'bank_account' | 'card' | 'fpx';
         }
 
         interface Swish {}
@@ -848,13 +973,16 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'gopay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'kakao_pay'
           | 'klarna'
           | 'konbini'
           | 'kr_card'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'
@@ -865,13 +993,18 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'qris'
+          | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
           | 'satispay'
           | 'sepa_debit'
+          | 'shopeepay'
           | 'sofort'
+          | 'stripe_balance'
           | 'swish'
           | 'twint'
           | 'us_bank_account'
@@ -956,6 +1089,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: PaymentMethodOptions.Paypal;
+
+        /**
+         * If this is a `payto` SetupIntent, this sub-hash contains details about the PayTo payment method options.
+         */
+        payto?: PaymentMethodOptions.Payto;
 
         /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -1404,6 +1542,86 @@ declare module 'stripe' {
            * The PayPal Billing Agreement ID (BAID). This is an ID generated by PayPal which represents the mandate between the merchant and the customer.
            */
           billing_agreement_id?: string;
+
+          currency?: string;
+
+          /**
+           * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+           */
+          subsellers?: Array<string>;
+        }
+
+        interface Payto {
+          /**
+           * Additional fields for Mandate creation.
+           */
+          mandate_options?: Payto.MandateOptions;
+        }
+
+        namespace Payto {
+          interface MandateOptions {
+            /**
+             * Amount that will be collected. It is required when `amount_type` is `fixed`.
+             */
+            amount?: number;
+
+            /**
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+             */
+            end_date?: string;
+
+            /**
+             * The periodicity at which payments will be collected.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+             */
+            payments_per_period?: number;
+
+            /**
+             * The purpose for which payments are made. Defaults to retail.
+             */
+            purpose?: MandateOptions.Purpose;
+
+            /**
+             * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+             */
+            start_date?: string;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'adhoc'
+              | 'annual'
+              | 'daily'
+              | 'fortnightly'
+              | 'monthly'
+              | 'quarterly'
+              | 'semi_annual'
+              | 'weekly';
+
+            type Purpose =
+              | 'dependant_support'
+              | 'government'
+              | 'loan'
+              | 'mortgage'
+              | 'other'
+              | 'pension'
+              | 'personal'
+              | 'retail'
+              | 'salary'
+              | 'tax'
+              | 'utility';
+          }
         }
 
         interface SepaDebit {
@@ -1452,6 +1670,11 @@ declare module 'stripe' {
             filters?: FinancialConnections.Filters;
 
             /**
+             * Customize manual entry behavior
+             */
+            manual_entry?: FinancialConnections.ManualEntry;
+
+            /**
              * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
@@ -1473,10 +1696,26 @@ declare module 'stripe' {
                * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
                */
               account_subcategories?: Array<Filters.AccountSubcategory>;
+
+              /**
+               * ID of the institution to use to filter for selectable accounts.
+               */
+              institution?: string;
             }
 
             namespace Filters {
               type AccountSubcategory = 'checking' | 'savings';
+            }
+
+            interface ManualEntry {
+              /**
+               * Settings for configuring manual entry of account details.
+               */
+              mode: ManualEntry.Mode;
+            }
+
+            namespace ManualEntry {
+              type Mode = 'automatic' | 'custom';
             }
 
             type Permission =
@@ -1485,7 +1724,11 @@ declare module 'stripe' {
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'ownership' | 'transactions';
+            type Prefetch =
+              | 'balances'
+              | 'inferred_balances'
+              | 'ownership'
+              | 'transactions';
           }
 
           interface MandateOptions {
@@ -1551,6 +1794,13 @@ declare module 'stripe' {
        * If present, the SetupIntent's payment method will be attached to the Customer on successful setup. Payment methods attached to other Customers cannot be used with this SetupIntent.
        */
       customer?: string;
+
+      /**
+       * ID of the Account this SetupIntent belongs to, if one exists.
+       *
+       * If present, the SetupIntent's payment method will be attached to the Account on successful setup. Payment methods attached to other Accounts cannot be used with this SetupIntent.
+       */
+      customer_account?: string;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -1706,9 +1956,19 @@ declare module 'stripe' {
         giropay?: PaymentMethodData.Giropay;
 
         /**
+         * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+         */
+        gopay?: PaymentMethodData.Gopay;
+
+        /**
          * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
          */
         grabpay?: PaymentMethodData.Grabpay;
+
+        /**
+         * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+         */
+        id_bank_transfer?: PaymentMethodData.IdBankTransfer;
 
         /**
          * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -1744,6 +2004,11 @@ declare module 'stripe' {
          * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
          */
         link?: PaymentMethodData.Link;
+
+        /**
+         * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+         */
+        mb_way?: PaymentMethodData.MbWay;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -1801,6 +2066,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+         */
+        payto?: PaymentMethodData.Payto;
+
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -1811,9 +2081,19 @@ declare module 'stripe' {
         promptpay?: PaymentMethodData.Promptpay;
 
         /**
+         * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+         */
+        qris?: PaymentMethodData.Qris;
+
+        /**
          * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
+
+        /**
+         * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
+         */
+        rechnung?: PaymentMethodData.Rechnung;
 
         /**
          * If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
@@ -1836,9 +2116,19 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodData.SepaDebit;
 
         /**
+         * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+         */
+        shopeepay?: PaymentMethodData.Shopeepay;
+
+        /**
          * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
          */
         sofort?: PaymentMethodData.Sofort;
+
+        /**
+         * This hash contains details about the Stripe balance payment method.
+         */
+        stripe_balance?: PaymentMethodData.StripeBalance;
 
         /**
          * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -2052,7 +2342,20 @@ declare module 'stripe' {
 
         interface Giropay {}
 
+        interface Gopay {}
+
         interface Grabpay {}
+
+        interface IdBankTransfer {
+          /**
+           * Bank where the account is held.
+           */
+          bank?: IdBankTransfer.Bank;
+        }
+
+        namespace IdBankTransfer {
+          type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+        }
 
         interface Ideal {
           /**
@@ -2117,6 +2420,8 @@ declare module 'stripe' {
         interface KrCard {}
 
         interface Link {}
+
+        interface MbWay {}
 
         interface Mobilepay {}
 
@@ -2209,15 +2514,60 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Payto {
+          /**
+           * The account number for the bank account.
+           */
+          account_number?: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number?: string;
+
+          /**
+           * The PayID alias for the bank account.
+           */
+          pay_id?: string;
+        }
+
         interface Pix {}
 
         interface Promptpay {}
+
+        interface Qris {}
 
         interface RadarOptions {
           /**
            * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
            */
           session?: string;
+        }
+
+        interface Rechnung {
+          /**
+           * Customer's date of birth
+           */
+          dob: Rechnung.Dob;
+        }
+
+        namespace Rechnung {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
         }
 
         interface RevolutPay {}
@@ -2233,6 +2583,8 @@ declare module 'stripe' {
           iban: string;
         }
 
+        interface Shopeepay {}
+
         interface Sofort {
           /**
            * Two-letter ISO code representing the country the bank account is located in.
@@ -2242,6 +2594,22 @@ declare module 'stripe' {
 
         namespace Sofort {
           type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+        }
+
+        interface StripeBalance {
+          /**
+           * The connected account ID whose Stripe balance to use as the source of payment
+           */
+          account?: string;
+
+          /**
+           * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
+           */
+          source_type?: StripeBalance.SourceType;
+        }
+
+        namespace StripeBalance {
+          type SourceType = 'bank_account' | 'card' | 'fpx';
         }
 
         interface Swish {}
@@ -2267,13 +2635,16 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'gopay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'kakao_pay'
           | 'klarna'
           | 'konbini'
           | 'kr_card'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'
@@ -2284,13 +2655,18 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'qris'
+          | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
           | 'satispay'
           | 'sepa_debit'
+          | 'shopeepay'
           | 'sofort'
+          | 'stripe_balance'
           | 'swish'
           | 'twint'
           | 'us_bank_account'
@@ -2375,6 +2751,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: PaymentMethodOptions.Paypal;
+
+        /**
+         * If this is a `payto` SetupIntent, this sub-hash contains details about the PayTo payment method options.
+         */
+        payto?: PaymentMethodOptions.Payto;
 
         /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -2823,6 +3204,86 @@ declare module 'stripe' {
            * The PayPal Billing Agreement ID (BAID). This is an ID generated by PayPal which represents the mandate between the merchant and the customer.
            */
           billing_agreement_id?: string;
+
+          currency?: string;
+
+          /**
+           * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+           */
+          subsellers?: Array<string>;
+        }
+
+        interface Payto {
+          /**
+           * Additional fields for Mandate creation.
+           */
+          mandate_options?: Payto.MandateOptions;
+        }
+
+        namespace Payto {
+          interface MandateOptions {
+            /**
+             * Amount that will be collected. It is required when `amount_type` is `fixed`.
+             */
+            amount?: number;
+
+            /**
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+             */
+            end_date?: string;
+
+            /**
+             * The periodicity at which payments will be collected.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+             */
+            payments_per_period?: number;
+
+            /**
+             * The purpose for which payments are made. Defaults to retail.
+             */
+            purpose?: MandateOptions.Purpose;
+
+            /**
+             * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+             */
+            start_date?: string;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'adhoc'
+              | 'annual'
+              | 'daily'
+              | 'fortnightly'
+              | 'monthly'
+              | 'quarterly'
+              | 'semi_annual'
+              | 'weekly';
+
+            type Purpose =
+              | 'dependant_support'
+              | 'government'
+              | 'loan'
+              | 'mortgage'
+              | 'other'
+              | 'pension'
+              | 'personal'
+              | 'retail'
+              | 'salary'
+              | 'tax'
+              | 'utility';
+          }
         }
 
         interface SepaDebit {
@@ -2871,6 +3332,11 @@ declare module 'stripe' {
             filters?: FinancialConnections.Filters;
 
             /**
+             * Customize manual entry behavior
+             */
+            manual_entry?: FinancialConnections.ManualEntry;
+
+            /**
              * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
@@ -2892,10 +3358,26 @@ declare module 'stripe' {
                * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
                */
               account_subcategories?: Array<Filters.AccountSubcategory>;
+
+              /**
+               * ID of the institution to use to filter for selectable accounts.
+               */
+              institution?: string;
             }
 
             namespace Filters {
               type AccountSubcategory = 'checking' | 'savings';
+            }
+
+            interface ManualEntry {
+              /**
+               * Settings for configuring manual entry of account details.
+               */
+              mode: ManualEntry.Mode;
+            }
+
+            namespace ManualEntry {
+              type Mode = 'automatic' | 'custom';
             }
 
             type Permission =
@@ -2904,7 +3386,11 @@ declare module 'stripe' {
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'ownership' | 'transactions';
+            type Prefetch =
+              | 'balances'
+              | 'inferred_balances'
+              | 'ownership'
+              | 'transactions';
           }
 
           interface MandateOptions {
@@ -2947,6 +3433,11 @@ declare module 'stripe' {
        * Only return SetupIntents for the customer specified by this customer ID.
        */
       customer?: string;
+
+      /**
+       * Only return SetupIntents for the account specified by this customer ID.
+       */
+      customer_account?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -3174,9 +3665,19 @@ declare module 'stripe' {
         giropay?: PaymentMethodData.Giropay;
 
         /**
+         * If this is a Gopay PaymentMethod, this hash contains details about the Gopay payment method.
+         */
+        gopay?: PaymentMethodData.Gopay;
+
+        /**
          * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
          */
         grabpay?: PaymentMethodData.Grabpay;
+
+        /**
+         * If this is an `IdBankTransfer` PaymentMethod, this hash contains details about the IdBankTransfer payment method.
+         */
+        id_bank_transfer?: PaymentMethodData.IdBankTransfer;
 
         /**
          * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -3212,6 +3713,11 @@ declare module 'stripe' {
          * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
          */
         link?: PaymentMethodData.Link;
+
+        /**
+         * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+         */
+        mb_way?: PaymentMethodData.MbWay;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -3269,6 +3775,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
+         */
+        payto?: PaymentMethodData.Payto;
+
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -3279,9 +3790,19 @@ declare module 'stripe' {
         promptpay?: PaymentMethodData.Promptpay;
 
         /**
+         * If this is a `qris` PaymentMethod, this hash contains details about the QRIS payment method.
+         */
+        qris?: PaymentMethodData.Qris;
+
+        /**
          * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
+
+        /**
+         * If this is a `rechnung` PaymentMethod, this hash contains details about the Rechnung payment method.
+         */
+        rechnung?: PaymentMethodData.Rechnung;
 
         /**
          * If this is a `revolut_pay` PaymentMethod, this hash contains details about the Revolut Pay payment method.
@@ -3304,9 +3825,19 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodData.SepaDebit;
 
         /**
+         * If this is a Shopeepay PaymentMethod, this hash contains details about the Shopeepay payment method.
+         */
+        shopeepay?: PaymentMethodData.Shopeepay;
+
+        /**
          * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
          */
         sofort?: PaymentMethodData.Sofort;
+
+        /**
+         * This hash contains details about the Stripe balance payment method.
+         */
+        stripe_balance?: PaymentMethodData.StripeBalance;
 
         /**
          * If this is a `swish` PaymentMethod, this hash contains details about the Swish payment method.
@@ -3520,7 +4051,20 @@ declare module 'stripe' {
 
         interface Giropay {}
 
+        interface Gopay {}
+
         interface Grabpay {}
+
+        interface IdBankTransfer {
+          /**
+           * Bank where the account is held.
+           */
+          bank?: IdBankTransfer.Bank;
+        }
+
+        namespace IdBankTransfer {
+          type Bank = 'bca' | 'bni' | 'bri' | 'cimb' | 'permata';
+        }
 
         interface Ideal {
           /**
@@ -3585,6 +4129,8 @@ declare module 'stripe' {
         interface KrCard {}
 
         interface Link {}
+
+        interface MbWay {}
 
         interface Mobilepay {}
 
@@ -3677,15 +4223,60 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Payto {
+          /**
+           * The account number for the bank account.
+           */
+          account_number?: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number?: string;
+
+          /**
+           * The PayID alias for the bank account.
+           */
+          pay_id?: string;
+        }
+
         interface Pix {}
 
         interface Promptpay {}
+
+        interface Qris {}
 
         interface RadarOptions {
           /**
            * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
            */
           session?: string;
+        }
+
+        interface Rechnung {
+          /**
+           * Customer's date of birth
+           */
+          dob: Rechnung.Dob;
+        }
+
+        namespace Rechnung {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
         }
 
         interface RevolutPay {}
@@ -3701,6 +4292,8 @@ declare module 'stripe' {
           iban: string;
         }
 
+        interface Shopeepay {}
+
         interface Sofort {
           /**
            * Two-letter ISO code representing the country the bank account is located in.
@@ -3710,6 +4303,22 @@ declare module 'stripe' {
 
         namespace Sofort {
           type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+        }
+
+        interface StripeBalance {
+          /**
+           * The connected account ID whose Stripe balance to use as the source of payment
+           */
+          account?: string;
+
+          /**
+           * The [source_type](https://docs.stripe.com/api/balance/balance_object#balance_object-available-source_types) of the balance
+           */
+          source_type?: StripeBalance.SourceType;
+        }
+
+        namespace StripeBalance {
+          type SourceType = 'bank_account' | 'card' | 'fpx';
         }
 
         interface Swish {}
@@ -3735,13 +4344,16 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'gopay'
           | 'grabpay'
+          | 'id_bank_transfer'
           | 'ideal'
           | 'kakao_pay'
           | 'klarna'
           | 'konbini'
           | 'kr_card'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'
@@ -3752,13 +4364,18 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
+          | 'qris'
+          | 'rechnung'
           | 'revolut_pay'
           | 'samsung_pay'
           | 'satispay'
           | 'sepa_debit'
+          | 'shopeepay'
           | 'sofort'
+          | 'stripe_balance'
           | 'swish'
           | 'twint'
           | 'us_bank_account'
@@ -3843,6 +4460,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: PaymentMethodOptions.Paypal;
+
+        /**
+         * If this is a `payto` SetupIntent, this sub-hash contains details about the PayTo payment method options.
+         */
+        payto?: PaymentMethodOptions.Payto;
 
         /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -4291,6 +4913,86 @@ declare module 'stripe' {
            * The PayPal Billing Agreement ID (BAID). This is an ID generated by PayPal which represents the mandate between the merchant and the customer.
            */
           billing_agreement_id?: string;
+
+          currency?: string;
+
+          /**
+           * The Stripe connected account IDs of the sellers on the platform for this transaction (optional). Only allowed when [separate charges and transfers](https://stripe.com/docs/connect/separate-charges-and-transfers) are used.
+           */
+          subsellers?: Array<string>;
+        }
+
+        interface Payto {
+          /**
+           * Additional fields for Mandate creation.
+           */
+          mandate_options?: Payto.MandateOptions;
+        }
+
+        namespace Payto {
+          interface MandateOptions {
+            /**
+             * Amount that will be collected. It is required when `amount_type` is `fixed`.
+             */
+            amount?: number;
+
+            /**
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
+             */
+            end_date?: string;
+
+            /**
+             * The periodicity at which payments will be collected.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
+             */
+            payments_per_period?: number;
+
+            /**
+             * The purpose for which payments are made. Defaults to retail.
+             */
+            purpose?: MandateOptions.Purpose;
+
+            /**
+             * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
+             */
+            start_date?: string;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'adhoc'
+              | 'annual'
+              | 'daily'
+              | 'fortnightly'
+              | 'monthly'
+              | 'quarterly'
+              | 'semi_annual'
+              | 'weekly';
+
+            type Purpose =
+              | 'dependant_support'
+              | 'government'
+              | 'loan'
+              | 'mortgage'
+              | 'other'
+              | 'pension'
+              | 'personal'
+              | 'retail'
+              | 'salary'
+              | 'tax'
+              | 'utility';
+          }
         }
 
         interface SepaDebit {
@@ -4339,6 +5041,11 @@ declare module 'stripe' {
             filters?: FinancialConnections.Filters;
 
             /**
+             * Customize manual entry behavior
+             */
+            manual_entry?: FinancialConnections.ManualEntry;
+
+            /**
              * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
@@ -4360,10 +5067,26 @@ declare module 'stripe' {
                * The account subcategories to use to filter for selectable accounts. Valid subcategories are `checking` and `savings`.
                */
               account_subcategories?: Array<Filters.AccountSubcategory>;
+
+              /**
+               * ID of the institution to use to filter for selectable accounts.
+               */
+              institution?: string;
             }
 
             namespace Filters {
               type AccountSubcategory = 'checking' | 'savings';
+            }
+
+            interface ManualEntry {
+              /**
+               * Settings for configuring manual entry of account details.
+               */
+              mode: ManualEntry.Mode;
+            }
+
+            namespace ManualEntry {
+              type Mode = 'automatic' | 'custom';
             }
 
             type Permission =
@@ -4372,7 +5095,11 @@ declare module 'stripe' {
               | 'payment_method'
               | 'transactions';
 
-            type Prefetch = 'balances' | 'ownership' | 'transactions';
+            type Prefetch =
+              | 'balances'
+              | 'inferred_balances'
+              | 'ownership'
+              | 'transactions';
           }
 
           interface MandateOptions {

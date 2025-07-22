@@ -105,6 +105,8 @@ declare module 'stripe' {
 
       p24?: Source.P24;
 
+      paypal?: Source.Paypal;
+
       receiver?: Source.Receiver;
 
       redirect?: Source.Redirect;
@@ -236,6 +238,8 @@ declare module 'stripe' {
 
         brand?: string | null;
 
+        brand_product?: string | null;
+
         country?: string | null;
 
         cvc_check?: string | null;
@@ -275,6 +279,8 @@ declare module 'stripe' {
         authorization_response_code?: string;
 
         brand?: string | null;
+
+        brand_product?: string | null;
 
         country?: string | null;
 
@@ -479,6 +485,26 @@ declare module 'stripe' {
         reference?: string | null;
       }
 
+      interface Paypal {
+        billing_agreement?: string | null;
+
+        fingerprint?: string | null;
+
+        payer_id?: string | null;
+
+        reference_id?: string;
+
+        reference_transaction_amount?: string;
+
+        reference_transaction_charged?: boolean;
+
+        statement_descriptor?: string | null;
+
+        transaction_id?: string;
+
+        verified_email?: string | null;
+      }
+
       interface Receiver {
         /**
          * The address of the receiver source. This is the value that should be communicated to the customer to send their funds to.
@@ -680,6 +706,8 @@ declare module 'stripe' {
 
         brand?: string | null;
 
+        brand_product?: string | null;
+
         card?: string | null;
 
         country?: string | null;
@@ -728,6 +756,7 @@ declare module 'stripe' {
         | 'klarna'
         | 'multibanco'
         | 'p24'
+        | 'paypal'
         | 'sepa_credit_transfer'
         | 'sepa_debit'
         | 'sofort'

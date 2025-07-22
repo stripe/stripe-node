@@ -479,8 +479,6 @@ describe('Stripe Module', function() {
             stripe.customers.create(
               {this_is_not_a_real_param: 'foobar'},
               (err, customer) => {
-                console.log(err);
-                console.log(customer);
                 if (err) {
                   resolve('ErrorWasPassed');
                 } else {

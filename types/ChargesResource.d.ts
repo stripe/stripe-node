@@ -189,6 +189,11 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
+       * Provides industry-specific information about the charge.
+       */
+      payment_details?: ChargeUpdateParams.PaymentDetails;
+
+      /**
        * This is the email address that the receipt for this charge will be sent to. If this field is updated, then a new email receipt will be sent to the updated address.
        */
       receipt_email?: string;
@@ -214,6 +219,704 @@ declare module 'stripe' {
 
       namespace FraudDetails {
         type UserReport = 'fraudulent' | 'safe';
+      }
+
+      interface PaymentDetails {
+        /**
+         * Car rental details for this PaymentIntent.
+         */
+        car_rental?: PaymentDetails.CarRental;
+
+        /**
+         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
+         */
+        customer_reference?: Stripe.Emptyable<string>;
+
+        /**
+         * Event details for this PaymentIntent
+         */
+        event_details?: PaymentDetails.EventDetails;
+
+        /**
+         * Flight reservation details for this PaymentIntent
+         */
+        flight?: PaymentDetails.Flight;
+
+        /**
+         * Lodging reservation details for this PaymentIntent
+         */
+        lodging?: PaymentDetails.Lodging;
+
+        /**
+         * A unique value assigned by the business to identify the transaction.
+         */
+        order_reference?: Stripe.Emptyable<string>;
+
+        /**
+         * Subscription details for this PaymentIntent
+         */
+        subscription?: PaymentDetails.Subscription;
+      }
+
+      namespace PaymentDetails {
+        interface CarRental {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: CarRental.Affiliate;
+
+          /**
+           * The booking number associated with the car rental.
+           */
+          booking_number: string;
+
+          /**
+           * Class code of the car.
+           */
+          car_class_code?: string;
+
+          /**
+           * Make of the car.
+           */
+          car_make?: string;
+
+          /**
+           * Model of the car.
+           */
+          car_model?: string;
+
+          /**
+           * The name of the rental car company.
+           */
+          company?: string;
+
+          /**
+           * The customer service phone number of the car rental company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Number of days the car is being rented.
+           */
+          days_rented: number;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: CarRental.Delivery;
+
+          /**
+           * The details of the distance traveled during the rental period.
+           */
+          distance?: CarRental.Distance;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          drivers?: Array<CarRental.Driver>;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<CarRental.ExtraCharge>;
+
+          /**
+           * Indicates if the customer did not keep nor cancel their booking.
+           */
+          no_show?: boolean;
+
+          /**
+           * Car pick-up address.
+           */
+          pickup_address?: Stripe.AddressParam;
+
+          /**
+           * Car pick-up time. Measured in seconds since the Unix epoch.
+           */
+          pickup_at: number;
+
+          /**
+           * Name of the pickup location.
+           */
+          pickup_location_name?: string;
+
+          /**
+           * Rental rate.
+           */
+          rate_amount?: number;
+
+          /**
+           * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+           */
+          rate_interval?: CarRental.RateInterval;
+
+          /**
+           * The name of the person or entity renting the car.
+           */
+          renter_name?: string;
+
+          /**
+           * Car return address.
+           */
+          return_address?: Stripe.AddressParam;
+
+          /**
+           * Car return time. Measured in seconds since the Unix epoch.
+           */
+          return_at: number;
+
+          /**
+           * Name of the return location.
+           */
+          return_location_name?: string;
+
+          /**
+           * Indicates whether the goods or services are tax-exempt or tax is not collected.
+           */
+          tax_exempt?: boolean;
+
+          /**
+           * The vehicle identification number.
+           */
+          vehicle_identification_number?: string;
+        }
+
+        namespace CarRental {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Distance {
+            /**
+             * Distance traveled.
+             */
+            amount?: number;
+
+            /**
+             * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+             */
+            unit?: Distance.Unit;
+          }
+
+          namespace Distance {
+            type Unit = 'kilometers' | 'miles';
+          }
+
+          interface Driver {
+            /**
+             * Driver's identification number.
+             */
+            driver_identification_number?: string;
+
+            /**
+             * Driver's tax number.
+             */
+            driver_tax_number?: string;
+
+            /**
+             * Full name of the person or entity on the car reservation.
+             */
+            name: string;
+          }
+
+          type ExtraCharge =
+            | 'extra_mileage'
+            | 'gas'
+            | 'late_return'
+            | 'one_way_service'
+            | 'parking_violation';
+
+          type RateInterval = 'day' | 'month' | 'week';
+        }
+
+        interface EventDetails {
+          /**
+           * Indicates if the tickets are digitally checked when entering the venue.
+           */
+          access_controlled_venue?: boolean;
+
+          /**
+           * The event location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: EventDetails.Affiliate;
+
+          /**
+           * The name of the company
+           */
+          company?: string;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: EventDetails.Delivery;
+
+          /**
+           * Event end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Type of the event entertainment (concert, sports event etc)
+           */
+          genre?: string;
+
+          /**
+           * The name of the event.
+           */
+          name: string;
+
+          /**
+           * Event start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace EventDetails {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+        }
+
+        interface Flight {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Flight.Affiliate;
+
+          /**
+           * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
+           */
+          agency_number?: string;
+
+          /**
+           * The International Air Transport Association (IATA) carrier code of the carrier that issued the ticket.
+           */
+          carrier?: string;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Flight.Delivery;
+
+          /**
+           * The name of the person or entity on the reservation.
+           */
+          passenger_name?: string;
+
+          /**
+           * The details of the passengers in the travel reservation.
+           */
+          passengers?: Array<Flight.Passenger>;
+
+          /**
+           * The individual flight segments associated with the trip.
+           */
+          segments: Array<Flight.Segment>;
+
+          /**
+           * The ticket number associated with the travel reservation.
+           */
+          ticket_number?: string;
+        }
+
+        namespace Flight {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the flight reservation.
+             */
+            name: string;
+          }
+
+          interface Segment {
+            /**
+             * The flight segment amount.
+             */
+            amount?: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the arrival airport.
+             */
+            arrival_airport?: string;
+
+            /**
+             * The arrival time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            arrives_at?: number;
+
+            /**
+             * The International Air Transport Association (IATA) carrier code of the carrier operating the flight segment.
+             */
+            carrier?: string;
+
+            /**
+             * The departure time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            departs_at: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the departure airport.
+             */
+            departure_airport?: string;
+
+            /**
+             * The flight number associated with the segment
+             */
+            flight_number?: string;
+
+            /**
+             * The fare class for the segment.
+             */
+            service_class?: Segment.ServiceClass;
+          }
+
+          namespace Segment {
+            type ServiceClass =
+              | 'business'
+              | 'economy'
+              | 'first'
+              | 'premium_economy';
+          }
+        }
+
+        interface Lodging {
+          /**
+           * The lodging location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * The number of adults on the booking
+           */
+          adults?: number;
+
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Lodging.Affiliate;
+
+          /**
+           * The booking number associated with the lodging reservation.
+           */
+          booking_number?: string;
+
+          /**
+           * The lodging category
+           */
+          category?: Lodging.Category;
+
+          /**
+           * Lodging check-in time. Measured in seconds since the Unix epoch.
+           */
+          checkin_at: number;
+
+          /**
+           * Lodging check-out time. Measured in seconds since the Unix epoch.
+           */
+          checkout_at: number;
+
+          /**
+           * The customer service phone number of the lodging company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * The daily lodging room rate.
+           */
+          daily_room_rate_amount?: number;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Lodging.Delivery;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<Lodging.ExtraCharge>;
+
+          /**
+           * Indicates whether the lodging location is compliant with the Fire Safety Act.
+           */
+          fire_safety_act_compliance?: boolean;
+
+          /**
+           * The name of the lodging location.
+           */
+          name?: string;
+
+          /**
+           * Indicates if the customer did not keep their booking while failing to cancel the reservation.
+           */
+          no_show?: boolean;
+
+          /**
+           * The number of rooms on the booking
+           */
+          number_of_rooms?: number;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          passengers?: Array<Lodging.Passenger>;
+
+          /**
+           * The phone number of the lodging location.
+           */
+          property_phone_number?: string;
+
+          /**
+           * The room class for this purchase.
+           */
+          room_class?: string;
+
+          /**
+           * The number of room nights
+           */
+          room_nights?: number;
+
+          /**
+           * The total tax amount associating with the room reservation.
+           */
+          total_room_tax_amount?: number;
+
+          /**
+           * The total tax amount
+           */
+          total_tax_amount?: number;
+        }
+
+        namespace Lodging {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          type Category = 'hotel' | 'vacation_rental';
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          type ExtraCharge =
+            | 'gift_shop'
+            | 'laundry'
+            | 'mini_bar'
+            | 'other'
+            | 'restaurant'
+            | 'telephone';
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the lodging reservation.
+             */
+            name: string;
+          }
+        }
+
+        interface Subscription {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Subscription.Affiliate;
+
+          /**
+           * Info whether the subscription will be auto renewed upon expiry.
+           */
+          auto_renewal?: boolean;
+
+          /**
+           * Subscription billing details for this purchase.
+           */
+          billing_interval?: Subscription.BillingInterval;
+
+          /**
+           * Subscription end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Name of the product on subscription. e.g. Apple Music Subscription
+           */
+          name: string;
+
+          /**
+           * Subscription start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace Subscription {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface BillingInterval {
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            count: number;
+
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: BillingInterval.Interval;
+          }
+
+          namespace BillingInterval {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+        }
       }
 
       interface Shipping {
@@ -293,6 +996,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * Provides industry-specific information about the charge.
+       */
+      payment_details?: ChargeCaptureParams.PaymentDetails;
+
+      /**
        * The email address to send this charge's receipt to. This will override the previously-specified email address for this charge, if one was set. Receipts will not be sent in test mode.
        */
       receipt_email?: string;
@@ -321,6 +1029,704 @@ declare module 'stripe' {
     }
 
     namespace ChargeCaptureParams {
+      interface PaymentDetails {
+        /**
+         * Car rental details for this PaymentIntent.
+         */
+        car_rental?: PaymentDetails.CarRental;
+
+        /**
+         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
+         */
+        customer_reference?: Stripe.Emptyable<string>;
+
+        /**
+         * Event details for this PaymentIntent
+         */
+        event_details?: PaymentDetails.EventDetails;
+
+        /**
+         * Flight reservation details for this PaymentIntent
+         */
+        flight?: PaymentDetails.Flight;
+
+        /**
+         * Lodging reservation details for this PaymentIntent
+         */
+        lodging?: PaymentDetails.Lodging;
+
+        /**
+         * A unique value assigned by the business to identify the transaction.
+         */
+        order_reference?: Stripe.Emptyable<string>;
+
+        /**
+         * Subscription details for this PaymentIntent
+         */
+        subscription?: PaymentDetails.Subscription;
+      }
+
+      namespace PaymentDetails {
+        interface CarRental {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: CarRental.Affiliate;
+
+          /**
+           * The booking number associated with the car rental.
+           */
+          booking_number: string;
+
+          /**
+           * Class code of the car.
+           */
+          car_class_code?: string;
+
+          /**
+           * Make of the car.
+           */
+          car_make?: string;
+
+          /**
+           * Model of the car.
+           */
+          car_model?: string;
+
+          /**
+           * The name of the rental car company.
+           */
+          company?: string;
+
+          /**
+           * The customer service phone number of the car rental company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Number of days the car is being rented.
+           */
+          days_rented: number;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: CarRental.Delivery;
+
+          /**
+           * The details of the distance traveled during the rental period.
+           */
+          distance?: CarRental.Distance;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          drivers?: Array<CarRental.Driver>;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<CarRental.ExtraCharge>;
+
+          /**
+           * Indicates if the customer did not keep nor cancel their booking.
+           */
+          no_show?: boolean;
+
+          /**
+           * Car pick-up address.
+           */
+          pickup_address?: Stripe.AddressParam;
+
+          /**
+           * Car pick-up time. Measured in seconds since the Unix epoch.
+           */
+          pickup_at: number;
+
+          /**
+           * Name of the pickup location.
+           */
+          pickup_location_name?: string;
+
+          /**
+           * Rental rate.
+           */
+          rate_amount?: number;
+
+          /**
+           * The frequency at which the rate amount is applied. One of `day`, `week` or `month`
+           */
+          rate_interval?: CarRental.RateInterval;
+
+          /**
+           * The name of the person or entity renting the car.
+           */
+          renter_name?: string;
+
+          /**
+           * Car return address.
+           */
+          return_address?: Stripe.AddressParam;
+
+          /**
+           * Car return time. Measured in seconds since the Unix epoch.
+           */
+          return_at: number;
+
+          /**
+           * Name of the return location.
+           */
+          return_location_name?: string;
+
+          /**
+           * Indicates whether the goods or services are tax-exempt or tax is not collected.
+           */
+          tax_exempt?: boolean;
+
+          /**
+           * The vehicle identification number.
+           */
+          vehicle_identification_number?: string;
+        }
+
+        namespace CarRental {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Distance {
+            /**
+             * Distance traveled.
+             */
+            amount?: number;
+
+            /**
+             * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+             */
+            unit?: Distance.Unit;
+          }
+
+          namespace Distance {
+            type Unit = 'kilometers' | 'miles';
+          }
+
+          interface Driver {
+            /**
+             * Driver's identification number.
+             */
+            driver_identification_number?: string;
+
+            /**
+             * Driver's tax number.
+             */
+            driver_tax_number?: string;
+
+            /**
+             * Full name of the person or entity on the car reservation.
+             */
+            name: string;
+          }
+
+          type ExtraCharge =
+            | 'extra_mileage'
+            | 'gas'
+            | 'late_return'
+            | 'one_way_service'
+            | 'parking_violation';
+
+          type RateInterval = 'day' | 'month' | 'week';
+        }
+
+        interface EventDetails {
+          /**
+           * Indicates if the tickets are digitally checked when entering the venue.
+           */
+          access_controlled_venue?: boolean;
+
+          /**
+           * The event location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: EventDetails.Affiliate;
+
+          /**
+           * The name of the company
+           */
+          company?: string;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: EventDetails.Delivery;
+
+          /**
+           * Event end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Type of the event entertainment (concert, sports event etc)
+           */
+          genre?: string;
+
+          /**
+           * The name of the event.
+           */
+          name: string;
+
+          /**
+           * Event start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace EventDetails {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+        }
+
+        interface Flight {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Flight.Affiliate;
+
+          /**
+           * The agency number (i.e. International Air Transport Association (IATA) agency number) of the travel agency that made the booking.
+           */
+          agency_number?: string;
+
+          /**
+           * The International Air Transport Association (IATA) carrier code of the carrier that issued the ticket.
+           */
+          carrier?: string;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Flight.Delivery;
+
+          /**
+           * The name of the person or entity on the reservation.
+           */
+          passenger_name?: string;
+
+          /**
+           * The details of the passengers in the travel reservation.
+           */
+          passengers?: Array<Flight.Passenger>;
+
+          /**
+           * The individual flight segments associated with the trip.
+           */
+          segments: Array<Flight.Segment>;
+
+          /**
+           * The ticket number associated with the travel reservation.
+           */
+          ticket_number?: string;
+        }
+
+        namespace Flight {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the flight reservation.
+             */
+            name: string;
+          }
+
+          interface Segment {
+            /**
+             * The flight segment amount.
+             */
+            amount?: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the arrival airport.
+             */
+            arrival_airport?: string;
+
+            /**
+             * The arrival time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            arrives_at?: number;
+
+            /**
+             * The International Air Transport Association (IATA) carrier code of the carrier operating the flight segment.
+             */
+            carrier?: string;
+
+            /**
+             * The departure time for the flight segment. Measured in seconds since the Unix epoch.
+             */
+            departs_at: number;
+
+            /**
+             * The International Air Transport Association (IATA) airport code for the departure airport.
+             */
+            departure_airport?: string;
+
+            /**
+             * The flight number associated with the segment
+             */
+            flight_number?: string;
+
+            /**
+             * The fare class for the segment.
+             */
+            service_class?: Segment.ServiceClass;
+          }
+
+          namespace Segment {
+            type ServiceClass =
+              | 'business'
+              | 'economy'
+              | 'first'
+              | 'premium_economy';
+          }
+        }
+
+        interface Lodging {
+          /**
+           * The lodging location's address.
+           */
+          address?: Stripe.AddressParam;
+
+          /**
+           * The number of adults on the booking
+           */
+          adults?: number;
+
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Lodging.Affiliate;
+
+          /**
+           * The booking number associated with the lodging reservation.
+           */
+          booking_number?: string;
+
+          /**
+           * The lodging category
+           */
+          category?: Lodging.Category;
+
+          /**
+           * Lodging check-in time. Measured in seconds since the Unix epoch.
+           */
+          checkin_at: number;
+
+          /**
+           * Lodging check-out time. Measured in seconds since the Unix epoch.
+           */
+          checkout_at: number;
+
+          /**
+           * The customer service phone number of the lodging company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * The daily lodging room rate.
+           */
+          daily_room_rate_amount?: number;
+
+          /**
+           * Delivery details for this purchase.
+           */
+          delivery?: Lodging.Delivery;
+
+          /**
+           * List of additional charges being billed.
+           */
+          extra_charges?: Array<Lodging.ExtraCharge>;
+
+          /**
+           * Indicates whether the lodging location is compliant with the Fire Safety Act.
+           */
+          fire_safety_act_compliance?: boolean;
+
+          /**
+           * The name of the lodging location.
+           */
+          name?: string;
+
+          /**
+           * Indicates if the customer did not keep their booking while failing to cancel the reservation.
+           */
+          no_show?: boolean;
+
+          /**
+           * The number of rooms on the booking
+           */
+          number_of_rooms?: number;
+
+          /**
+           * The details of the passengers in the travel reservation
+           */
+          passengers?: Array<Lodging.Passenger>;
+
+          /**
+           * The phone number of the lodging location.
+           */
+          property_phone_number?: string;
+
+          /**
+           * The room class for this purchase.
+           */
+          room_class?: string;
+
+          /**
+           * The number of room nights
+           */
+          room_nights?: number;
+
+          /**
+           * The total tax amount associating with the room reservation.
+           */
+          total_room_tax_amount?: number;
+
+          /**
+           * The total tax amount
+           */
+          total_tax_amount?: number;
+        }
+
+        namespace Lodging {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          type Category = 'hotel' | 'vacation_rental';
+
+          interface Delivery {
+            /**
+             * The delivery method for the payment
+             */
+            mode?: Delivery.Mode;
+
+            /**
+             * Details of the recipient.
+             */
+            recipient?: Delivery.Recipient;
+          }
+
+          namespace Delivery {
+            type Mode = 'email' | 'phone' | 'pickup' | 'post';
+
+            interface Recipient {
+              /**
+               * The email of the recipient the ticket is delivered to.
+               */
+              email?: string;
+
+              /**
+               * The name of the recipient the ticket is delivered to.
+               */
+              name?: string;
+
+              /**
+               * The phone number of the recipient the ticket is delivered to.
+               */
+              phone?: string;
+            }
+          }
+
+          type ExtraCharge =
+            | 'gift_shop'
+            | 'laundry'
+            | 'mini_bar'
+            | 'other'
+            | 'restaurant'
+            | 'telephone';
+
+          interface Passenger {
+            /**
+             * Full name of the person or entity on the lodging reservation.
+             */
+            name: string;
+          }
+        }
+
+        interface Subscription {
+          /**
+           * Affiliate details for this purchase.
+           */
+          affiliate?: Subscription.Affiliate;
+
+          /**
+           * Info whether the subscription will be auto renewed upon expiry.
+           */
+          auto_renewal?: boolean;
+
+          /**
+           * Subscription billing details for this purchase.
+           */
+          billing_interval?: Subscription.BillingInterval;
+
+          /**
+           * Subscription end time. Measured in seconds since the Unix epoch.
+           */
+          ends_at?: number;
+
+          /**
+           * Name of the product on subscription. e.g. Apple Music Subscription
+           */
+          name: string;
+
+          /**
+           * Subscription start time. Measured in seconds since the Unix epoch.
+           */
+          starts_at?: number;
+        }
+
+        namespace Subscription {
+          interface Affiliate {
+            /**
+             * The name of the affiliate that originated the purchase.
+             */
+            name: string;
+          }
+
+          interface BillingInterval {
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            count: number;
+
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: BillingInterval.Interval;
+          }
+
+          namespace BillingInterval {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+        }
+      }
+
       interface TransferData {
         /**
          * The amount transferred to the destination account, if specified. By default, the entire charge amount is transferred to the destination account.

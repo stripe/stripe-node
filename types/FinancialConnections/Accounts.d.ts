@@ -48,6 +48,16 @@ declare module 'stripe' {
         display_name: string | null;
 
         /**
+         * The state of the most recent attempt to refresh the account's inferred balance history.
+         */
+        inferred_balances_refresh?: Account.InferredBalancesRefresh | null;
+
+        /**
+         * The ID of the Financial Connections Institution this account belongs to. Note that this relationship may sometimes change in rare circumstances (e.g. institution mergers).
+         */
+        institution?: string | Stripe.FinancialConnections.Institution | null;
+
+        /**
          * The name of the institution that holds this account.
          */
         institution_name: string;
@@ -103,7 +113,7 @@ declare module 'stripe' {
         /**
          * The list of data refresh subscriptions requested on this account.
          */
-        subscriptions: Array<'transactions'> | null;
+        subscriptions: Array<Account.Subscription> | null;
 
         /**
          * The [PaymentMethod type](https://stripe.com/docs/api/payment_methods/object#payment_method_object-type)(s) that can be created from this account.
@@ -129,6 +139,8 @@ declare module 'stripe' {
            * ID of the Stripe customer this account belongs to. Present if and only if `account_holder.type` is `customer`.
            */
           customer?: string | Stripe.Customer;
+
+          customer_account?: string;
 
           /**
            * Type of account holder that this account belongs to.
@@ -220,6 +232,27 @@ declare module 'stripe' {
 
         type Category = 'cash' | 'credit' | 'investment' | 'other';
 
+        interface InferredBalancesRefresh {
+          /**
+           * The time at which the last refresh attempt was initiated. Measured in seconds since the Unix epoch.
+           */
+          last_attempted_at: number;
+
+          /**
+           * Time at which the next inferred balance refresh can be initiated. This value will be `null` when `status` is `pending`. Measured in seconds since the Unix epoch.
+           */
+          next_refresh_available_at: number | null;
+
+          /**
+           * The status of the last refresh attempt.
+           */
+          status: InferredBalancesRefresh.Status;
+        }
+
+        namespace InferredBalancesRefresh {
+          type Status = 'failed' | 'pending' | 'succeeded';
+        }
+
         interface OwnershipRefresh {
           /**
            * The time at which the last refresh attempt was initiated. Measured in seconds since the Unix epoch.
@@ -256,6 +289,8 @@ declare module 'stripe' {
           | 'mortgage'
           | 'other'
           | 'savings';
+
+        type Subscription = 'balance' | 'inferred_balances' | 'transactions';
 
         type SupportedPaymentMethodType = 'link' | 'us_bank_account';
 

@@ -39,6 +39,11 @@ declare module 'stripe' {
         customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
         /**
+         * ID of the account receiving the billing credits
+         */
+        customer_account?: string | null;
+
+        /**
          * The time when the billing credits become effective-when they're eligible for use.
          */
         effective_at: number | null;

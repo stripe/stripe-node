@@ -38,7 +38,20 @@ export type RawErrorType =
   | 'rate_limit_error'
   | 'authentication_error'
   | 'invalid_grant'
-  | 'temporary_session_expired';
+  | 'temporary_session_expired'
+  | 'non_zero_balance'
+  | 'already_exists'
+  | 'feature_not_enabled'
+  | 'financial_account_not_open'
+  | 'blocked_by_stripe'
+  | 'already_canceled'
+  | 'not_cancelable'
+  | 'insufficient_funds'
+  | 'quota_exceeded'
+  | 'recipient_not_notifiable'
+  | 'invalid_payout_method'
+  | 'controlled_by_dashboard'
+  | 'invalid_payment_method';
 // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
 export type RequestArgs = Array<any>;
 export type StripeRequest = {
@@ -56,7 +69,7 @@ export type RequestCallback = (
   error: Error | null,
   response?: any
 ) => RequestCallbackReturn;
-export type RequestCallbackReturn = any;
+export type RequestCallbackReturn = void;
 export type RequestData = Record<string, any>;
 export type RequestEvent = {
   api_version?: string;
@@ -68,6 +81,7 @@ export type RequestEvent = {
   usage?: Array<string>;
 };
 export type RequestHeaders = Record<string, string | number | string[]>;
+export type APIMode = 'preview' | 'standard';
 export type RequestOptions = {
   settings: RequestSettings;
   streaming: boolean;
@@ -83,6 +97,7 @@ export type RequestOpts = {
   host: string | null;
   streaming: boolean;
   settings: RequestSettings;
+  apiMode?: APIMode;
   usage: Array<string>;
 };
 export type RequestSettings = {timeout?: number; maxNetworkRetries?: number};

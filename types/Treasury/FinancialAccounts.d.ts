@@ -39,6 +39,11 @@ declare module 'stripe' {
         created: number;
 
         /**
+         * The display name for the FinancialAccount. Use this field to customize the names of the FinancialAccounts for your connected accounts. Unlike the `nickname` field, `display_name` is not internal metadata and will be exposed to connected accounts.
+         */
+        display_name?: string | null;
+
+        /**
          * Encodes whether a FinancialAccount has access to a particular Feature, with a `status` enum and associated `status_details`.
          * Stripe or the platform can control Features via the requested field.
          */

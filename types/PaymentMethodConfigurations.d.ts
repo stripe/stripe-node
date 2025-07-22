@@ -81,7 +81,11 @@ declare module 'stripe' {
 
       google_pay?: PaymentMethodConfiguration.GooglePay;
 
+      gopay?: PaymentMethodConfiguration.Gopay;
+
       grabpay?: PaymentMethodConfiguration.Grabpay;
+
+      id_bank_transfer?: PaymentMethodConfiguration.IdBankTransfer;
 
       ideal?: PaymentMethodConfiguration.Ideal;
 
@@ -137,9 +141,13 @@ declare module 'stripe' {
 
       paypal?: PaymentMethodConfiguration.Paypal;
 
+      payto?: PaymentMethodConfiguration.Payto;
+
       pix?: PaymentMethodConfiguration.Pix;
 
       promptpay?: PaymentMethodConfiguration.Promptpay;
+
+      qris?: PaymentMethodConfiguration.Qris;
 
       revolut_pay?: PaymentMethodConfiguration.RevolutPay;
 
@@ -148,6 +156,8 @@ declare module 'stripe' {
       satispay?: PaymentMethodConfiguration.Satispay;
 
       sepa_debit?: PaymentMethodConfiguration.SepaDebit;
+
+      shopeepay?: PaymentMethodConfiguration.Shopeepay;
 
       sofort?: PaymentMethodConfiguration.Sofort;
 
@@ -877,6 +887,40 @@ declare module 'stripe' {
         }
       }
 
+      interface Gopay {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: Gopay.DisplayPreference;
+      }
+
+      namespace Gopay {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
       interface Grabpay {
         /**
          * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
@@ -887,6 +931,40 @@ declare module 'stripe' {
       }
 
       namespace Grabpay {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
+      interface IdBankTransfer {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: IdBankTransfer.DisplayPreference;
+      }
+
+      namespace IdBankTransfer {
         interface DisplayPreference {
           /**
            * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
@@ -1489,6 +1567,40 @@ declare module 'stripe' {
         }
       }
 
+      interface Payto {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: Payto.DisplayPreference;
+      }
+
+      namespace Payto {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
       interface Pix {
         /**
          * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
@@ -1533,6 +1645,40 @@ declare module 'stripe' {
       }
 
       namespace Promptpay {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
+      interface Qris {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: Qris.DisplayPreference;
+      }
+
+      namespace Qris {
         interface DisplayPreference {
           /**
            * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
@@ -1669,6 +1815,40 @@ declare module 'stripe' {
       }
 
       namespace SepaDebit {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
+      interface Shopeepay {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: Shopeepay.DisplayPreference;
+      }
+
+      namespace Shopeepay {
         interface DisplayPreference {
           /**
            * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.

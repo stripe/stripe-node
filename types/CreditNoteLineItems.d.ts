@@ -57,6 +57,11 @@ declare module 'stripe' {
       quantity: number | null;
 
       /**
+       * The tax calculation identifiers of the line item.
+       */
+      tax_calculation_reference?: CreditNoteLineItem.TaxCalculationReference | null;
+
+      /**
        * The tax rates which apply to the line item.
        */
       tax_rates: Array<Stripe.TaxRate>;
@@ -179,6 +184,18 @@ declare module 'stripe' {
         interface TaxRateDetails {
           tax_rate: string;
         }
+      }
+
+      interface TaxCalculationReference {
+        /**
+         * The calculation identifier for tax calculation response.
+         */
+        calculation_id: string | null;
+
+        /**
+         * The calculation identifier for tax calculation response line item.
+         */
+        calculation_item_id: string | null;
       }
 
       type Type = 'custom_line_item' | 'invoice_line_item';
