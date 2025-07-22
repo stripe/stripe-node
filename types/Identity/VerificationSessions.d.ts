@@ -250,12 +250,12 @@ declare module 'stripe' {
           /**
            * Token referencing the associated Account of the related Person resource.
            */
-          account?: string;
+          account: string;
 
           /**
            * Token referencing the related Person resource.
            */
-          person?: string;
+          person: string;
         }
 
         type Status = 'canceled' | 'processing' | 'requires_input' | 'verified';

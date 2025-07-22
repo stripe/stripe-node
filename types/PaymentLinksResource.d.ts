@@ -520,6 +520,11 @@ declare module 'stripe' {
             amount_tax_display?: Stripe.Emptyable<
               RenderingOptions.AmountTaxDisplay
             >;
+
+            /**
+             * ID of the invoice rendering template to use for this invoice.
+             */
+            template?: string;
           }
 
           namespace RenderingOptions {
@@ -537,7 +542,12 @@ declare module 'stripe' {
         /**
          * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object.
          */
-        price: string;
+        price?: string;
+
+        /**
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+         */
+        price_data?: LineItem.PriceData;
 
         /**
          * The quantity of the line item being purchased.
@@ -553,7 +563,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The maximum quantity the customer can purchase. By default this value is 99. You can specify a value up to 999.
+           * The maximum quantity the customer can purchase. By default this value is 99. You can specify a value up to 999999.
            */
           maximum?: number;
 
@@ -561,6 +571,90 @@ declare module 'stripe' {
            * The minimum quantity the customer can purchase. By default this value is 0. If there is only one item in the cart then that item's quantity cannot go down to 0.
            */
           minimum?: number;
+        }
+
+        interface PriceData {
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to. One of `product` or `product_data` is required.
+           */
+          product?: string;
+
+          /**
+           * Data used to generate a new [Product](https://docs.stripe.com/api/products) object inline. One of `product` or `product_data` is required.
+           */
+          product_data?: PriceData.ProductData;
+
+          /**
+           * The recurring components of a price such as `interval` and `interval_count`.
+           */
+          recurring?: PriceData.Recurring;
+
+          /**
+           * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           */
+          tax_behavior?: PriceData.TaxBehavior;
+
+          /**
+           * A non-negative integer in cents (or local equivalent) representing how much to charge. One of `unit_amount` or `unit_amount_decimal` is required.
+           */
+          unit_amount?: number;
+
+          /**
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           */
+          unit_amount_decimal?: string;
+        }
+
+        namespace PriceData {
+          interface ProductData {
+            /**
+             * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
+             */
+            description?: string;
+
+            /**
+             * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
+             */
+            images?: Array<string>;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             */
+            metadata?: Stripe.MetadataParam;
+
+            /**
+             * The product's name, meant to be displayable to the customer.
+             */
+            name: string;
+
+            /**
+             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+             */
+            tax_code?: string;
+          }
+
+          interface Recurring {
+            /**
+             * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Recurring.Interval;
+
+            /**
+             * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
+             */
+            interval_count?: number;
+          }
+
+          namespace Recurring {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
         }
       }
 
@@ -1540,6 +1634,11 @@ declare module 'stripe' {
             amount_tax_display?: Stripe.Emptyable<
               RenderingOptions.AmountTaxDisplay
             >;
+
+            /**
+             * ID of the invoice rendering template to use for this invoice.
+             */
+            template?: string;
           }
 
           namespace RenderingOptions {
@@ -1573,7 +1672,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The maximum quantity the customer can purchase. By default this value is 99. You can specify a value up to 999.
+           * The maximum quantity the customer can purchase. By default this value is 99. You can specify a value up to 999999.
            */
           maximum?: number;
 

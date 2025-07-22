@@ -412,12 +412,7 @@ declare module 'stripe' {
         }
       }
 
-      type Status =
-        | 'active'
-        | 'disabled'
-        | 'inactive'
-        | 'pending'
-        | 'unrequested';
+      type Status = 'active' | 'inactive' | 'pending' | 'unrequested';
     }
   }
 }

@@ -664,7 +664,7 @@ declare module 'stripe' {
           namespace Funding {
             interface Card {
               /**
-               * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+               * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
                */
               brand: string | null;
 
@@ -816,7 +816,7 @@ declare module 'stripe' {
           authorization_code: string | null;
 
           /**
-           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
            */
           brand: string | null;
 
@@ -1213,7 +1213,7 @@ declare module 'stripe' {
           amount_authorized: number | null;
 
           /**
-           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
            */
           brand: string | null;
 
@@ -1425,6 +1425,11 @@ declare module 'stripe' {
            * A public identifier for buyers using Cash App.
            */
           cashtag: string | null;
+
+          /**
+           * A unique and immutable identifier of payments assigned by Cash App
+           */
+          transaction_id: string | null;
         }
 
         interface Crypto {
@@ -2166,7 +2171,7 @@ declare module 'stripe' {
           namespace Funding {
             interface Card {
               /**
-               * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+               * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
                */
               brand: string | null;
 
@@ -2414,7 +2419,7 @@ declare module 'stripe' {
 
       interface PresentmentDetails {
         /**
-         * Amount intended to be collected by this payment, denominated in presentment_currency.
+         * Amount intended to be collected by this payment, denominated in `presentment_currency`.
          */
         presentment_amount: number;
 

@@ -142,7 +142,7 @@ declare module 'stripe' {
         mcc: string | null;
 
         /**
-         * Whether the business is a minority-owned, women-owned, and/or LGBTQI+-owned business.
+         * Whether the business is a minority-owned, women-owned, and/or LGBTQI+ -owned business.
          */
         minority_owned_business_designation: Array<
           BusinessProfile.MinorityOwnedBusinessDesignation
