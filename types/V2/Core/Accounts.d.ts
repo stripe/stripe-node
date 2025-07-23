@@ -4990,10 +4990,32 @@ declare module 'stripe' {
                  * Details on the Account's acceptance of the [Stripe Services Agreement](https://docs.stripe.com/connect/updating-accounts#tos-acceptance).
                  */
                 account: TermsOfService.Account | null;
+
+                /**
+                 * Details on the Account's acceptance of Treasury-specific terms of service.
+                 */
+                storer: TermsOfService.Storer | null;
               }
 
               namespace TermsOfService {
                 interface Account {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date: string | null;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip: string | null;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent: string | null;
+                }
+
+                interface Storer {
                   /**
                    * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                    */

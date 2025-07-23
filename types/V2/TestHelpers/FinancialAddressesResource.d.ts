@@ -34,6 +34,7 @@ declare module 'stripe' {
         class FinancialAddressesResource {
           /**
            * Simulate crediting a FinancialAddress in a Sandbox environment. This can be used to add virtual funds and increase your balance for testing.
+           * @throws Stripe.FeatureNotEnabledError
            */
           credit(
             id: string,
@@ -45,6 +46,7 @@ declare module 'stripe' {
 
           /**
            * Generates microdeposits for a FinancialAddress in a Sandbox environment.
+           * @throws Stripe.FeatureNotEnabledError
            */
           generateMicrodeposits(
             id: string,

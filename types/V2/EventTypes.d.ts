@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe.V2 {
     export type Event =
       | Stripe.Events.V2CoreAccountIncludingRequirementsUpdatedEvent
-      | Stripe.Events.V2CoreAccountLinkCompletedEvent
+      | Stripe.Events.V2CoreAccountLinkReturnedEvent
       | Stripe.Events.V2CoreAccountClosedEvent
       | Stripe.Events.V2CoreAccountCreatedEvent
       | Stripe.Events.V2CoreAccountUpdatedEvent
@@ -83,13 +83,13 @@ declare module 'stripe' {
     /**
      * Occurs when the generated AccountLink is completed.
      */
-    export interface V2CoreAccountLinkCompletedEvent extends V2.EventBase {
-      type: 'v2.core.account_link.completed';
+    export interface V2CoreAccountLinkReturnedEvent extends V2.EventBase {
+      type: 'v2.core.account_link.returned';
       // Retrieves data specific to this event.
-      data: V2CoreAccountLinkCompletedEvent.Data;
+      data: V2CoreAccountLinkReturnedEvent.Data;
     }
 
-    namespace V2CoreAccountLinkCompletedEvent {
+    namespace V2CoreAccountLinkReturnedEvent {
       export interface Data {
         /**
          * The ID of the v2 account.
@@ -99,7 +99,7 @@ declare module 'stripe' {
         /**
          * Configurations on the Account that was onboarded via the account link.
          */
-        configurations: Array<'recipient'>;
+        configurations: Array<Data.Configuration>;
 
         /**
          * Open Enum. The use case type of the account link that has been completed.
@@ -108,6 +108,12 @@ declare module 'stripe' {
       }
 
       namespace Data {
+        export type Configuration =
+          | 'customer'
+          | 'merchant'
+          | 'recipient'
+          | 'storer';
+
         export type UseCase = 'account_onboarding' | 'account_update';
       }
     }
