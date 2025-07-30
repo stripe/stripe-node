@@ -159,6 +159,11 @@ declare module 'stripe' {
         optional_items?: Array<SessionCreateParams.OptionalItem>;
 
         /**
+         * Where the user is coming from. This informs the optimizations that are applied to the session. For example, a session originating from a mobile app may behave more like a native app, depending on the platform. This parameter is currently not allowed if `ui_mode` is `custom`.
+         */
+        origin_context?: SessionCreateParams.OriginContext;
+
+        /**
          * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
          */
         payment_intent_data?: SessionCreateParams.PaymentIntentData;
@@ -685,6 +690,11 @@ declare module 'stripe' {
               amount_tax_display?: Stripe.Emptyable<
                 RenderingOptions.AmountTaxDisplay
               >;
+
+              /**
+               * ID of the invoice rendering template to use for this invoice.
+               */
+              template?: string;
             }
 
             namespace RenderingOptions {
@@ -908,6 +918,8 @@ declare module 'stripe' {
             minimum?: number;
           }
         }
+
+        type OriginContext = 'mobile_app' | 'web';
 
         interface PaymentIntentData {
           /**
@@ -2038,6 +2050,17 @@ declare module 'stripe' {
              * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
              */
             expires_after_seconds?: number;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
           }
 
           interface RevolutPay {
@@ -2232,6 +2255,7 @@ declare module 'stripe' {
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'
+          | 'nz_bank_account'
           | 'oxxo'
           | 'p24'
           | 'pay_by_bank'
@@ -2784,6 +2808,9 @@ declare module 'stripe' {
 
         namespace SubscriptionData {
           interface BillingMode {
+            /**
+             * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+             */
             type: BillingMode.Type;
           }
 

@@ -440,7 +440,7 @@ declare module 'stripe' {
 
       interface PresentmentDetails {
         /**
-         * Amount intended to be collected by this payment, denominated in presentment_currency.
+         * Amount intended to be collected by this payment, denominated in `presentment_currency`.
          */
         presentment_amount: number;
 
