@@ -1208,7 +1208,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 
       /**
-       * Updates a PaymentMethod object. A PaymentMethod must be attached a customer to be updated.
+       * Updates a PaymentMethod object. A PaymentMethod must be attached to a customer to be updated.
        */
       update(
         id: string,

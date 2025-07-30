@@ -217,6 +217,8 @@ declare module 'stripe' {
             type DefaultAllowedUpdate = 'price' | 'promotion_code' | 'quantity';
 
             interface Product {
+              adjustable_quantity: Product.AdjustableQuantity;
+
               /**
                * The list of price IDs which, when subscribed to, a subscription can be updated.
                */
@@ -226,6 +228,25 @@ declare module 'stripe' {
                * The product ID.
                */
               product: string;
+            }
+
+            namespace Product {
+              interface AdjustableQuantity {
+                /**
+                 * If true, the quantity can be adjusted to any non-negative integer.
+                 */
+                enabled: boolean;
+
+                /**
+                 * The maximum quantity that can be set for the product.
+                 */
+                maximum: number | null;
+
+                /**
+                 * The minimum quantity that can be set for the product.
+                 */
+                minimum: number;
+              }
             }
 
             type ProrationBehavior =

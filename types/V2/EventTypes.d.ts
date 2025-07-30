@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe.V2 {
     export type Event =
       | Stripe.Events.V2CoreAccountIncludingRequirementsUpdatedEvent
-      | Stripe.Events.V2CoreAccountLinkCompletedEvent
+      | Stripe.Events.V2CoreAccountLinkReturnedEvent
       | Stripe.Events.V2CoreAccountClosedEvent
       | Stripe.Events.V2CoreAccountCreatedEvent
       | Stripe.Events.V2CoreAccountUpdatedEvent
@@ -35,7 +35,6 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementInboundTransferBankDebitReturnedEvent
       | Stripe.Events.V2MoneyManagementInboundTransferBankDebitSucceededEvent
       | Stripe.Events.V2CoreEventDestinationPingEvent
-      | Stripe.Events.V2OffSessionPaymentRequiresCaptureEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentCanceledEvent
@@ -54,6 +53,7 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementOutboundTransferPostedEvent
       | Stripe.Events.V2MoneyManagementOutboundTransferReturnedEvent
       | Stripe.Events.V2MoneyManagementOutboundTransferUpdatedEvent
+      | Stripe.Events.V2MoneyManagementPayoutMethodUpdatedEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditAvailableEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditFailedEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditReturnedEvent
@@ -83,13 +83,13 @@ declare module 'stripe' {
     /**
      * Occurs when the generated AccountLink is completed.
      */
-    export interface V2CoreAccountLinkCompletedEvent extends V2.EventBase {
-      type: 'v2.core.account_link.completed';
+    export interface V2CoreAccountLinkReturnedEvent extends V2.EventBase {
+      type: 'v2.core.account_link.returned';
       // Retrieves data specific to this event.
-      data: V2CoreAccountLinkCompletedEvent.Data;
+      data: V2CoreAccountLinkReturnedEvent.Data;
     }
 
-    namespace V2CoreAccountLinkCompletedEvent {
+    namespace V2CoreAccountLinkReturnedEvent {
       export interface Data {
         /**
          * The ID of the v2 account.
@@ -99,7 +99,7 @@ declare module 'stripe' {
         /**
          * Configurations on the Account that was onboarded via the account link.
          */
-        configurations: Array<'recipient'>;
+        configurations: Array<Data.Configuration>;
 
         /**
          * Open Enum. The use case type of the account link that has been completed.
@@ -108,6 +108,12 @@ declare module 'stripe' {
       }
 
       namespace Data {
+        export type Configuration =
+          | 'customer'
+          | 'merchant'
+          | 'recipient'
+          | 'storer';
+
         export type UseCase = 'account_onboarding' | 'account_update';
       }
     }
@@ -808,19 +814,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Off session payment requires capture event definition.
-     */
-    export interface V2OffSessionPaymentRequiresCaptureEvent
-      extends V2.EventBase {
-      type: 'v2.off_session_payment.requires_capture';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-    }
-
-    /**
-     * Off session payment authorization attempt failed event definition.
+     * Sent after a failed authorization if there are still retries available on the OffSessionPayment.
      */
     export interface V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
       extends V2.EventBase {
@@ -832,7 +826,8 @@ declare module 'stripe' {
     }
 
     /**
-     * Off session payment authorization attempt started event definition.
+     * Sent when our internal scheduling system kicks off an attempt at authorization, whether it's a
+     * retry or an initial authorization.
      */
     export interface V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
       extends V2.EventBase {
@@ -844,7 +839,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Off session payment canceled event definition.
+     * Sent immediately following a user's call to the Off-Session Payments cancel endpoint.
      */
     export interface V2PaymentsOffSessionPaymentCanceledEvent
       extends V2.EventBase {
@@ -856,7 +851,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Off session payment created event definition.
+     * Sent immediately following a user's call to the Off-Session Payments create endpoint.
      */
     export interface V2PaymentsOffSessionPaymentCreatedEvent
       extends V2.EventBase {
@@ -868,7 +863,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Off session payment failed event definition.
+     * Sent after a failed authorization if there are no retries remaining, or if the failure is unretryable.
      */
     export interface V2PaymentsOffSessionPaymentFailedEvent
       extends V2.EventBase {
@@ -880,7 +875,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Off session payment succeeded event definition.
+     * Sent immediately after a successful authorization.
      */
     export interface V2PaymentsOffSessionPaymentSucceededEvent
       extends V2.EventBase {
@@ -1033,6 +1028,18 @@ declare module 'stripe' {
       related_object: Event.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
+    }
+
+    /**
+     * Occurs when a PayoutMethod is updated.
+     */
+    export interface V2MoneyManagementPayoutMethodUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.payout_method.updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.MoneyManagement.PayoutMethod>;
     }
 
     /**

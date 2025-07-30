@@ -71,6 +71,11 @@ declare module 'stripe' {
             archived: boolean;
 
             /**
+             * The type of bank account (checking or savings).
+             */
+            bank_account_type: BankAccount.BankAccountType;
+
+            /**
              * The name of the bank this bank account is in. This field is populated automatically by Stripe.
              */
             bank_name: string;
@@ -99,6 +104,10 @@ declare module 'stripe' {
              * The list of currencies supported by this bank account.
              */
             supported_currencies: Array<string>;
+          }
+
+          namespace BankAccount {
+            type BankAccountType = 'checking' | 'savings';
           }
 
           interface Card {

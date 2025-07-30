@@ -14,6 +14,11 @@ declare module 'stripe' {
       currency: string;
 
       /**
+       * Provides industry-specific information about the amount.
+       */
+      amount_details?: PaymentIntentCreateParams.AmountDetails;
+
+      /**
        * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: number;
@@ -215,6 +220,181 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentCreateParams {
+      interface AmountDetails {
+        /**
+         * The amount an item was discounted for.
+         */
+        discount_amount?: Stripe.Emptyable<number>;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         */
+        line_items?: Stripe.Emptyable<Array<AmountDetails.LineItem>>;
+
+        /**
+         * Contains information about the shipping portion of the amount.
+         */
+        shipping?: Stripe.Emptyable<AmountDetails.Shipping>;
+
+        /**
+         * Contains information about the tax portion of the amount.
+         */
+        tax?: Stripe.Emptyable<AmountDetails.Tax>;
+      }
+
+      namespace AmountDetails {
+        interface LineItem {
+          /**
+           * The amount an item was discounted for. Positive integer.
+           */
+          discount_amount?: number;
+
+          /**
+           * Payment method-specific information for line items.
+           */
+          payment_method_options?: LineItem.PaymentMethodOptions;
+
+          /**
+           * Unique identifier of the product. At most 12 characters long.
+           */
+          product_code?: string;
+
+          /**
+           * Name of the product. At most 100 characters long.
+           */
+          product_name: string;
+
+          /**
+           * Number of items of the product. Positive integer.
+           */
+          quantity: number;
+
+          /**
+           * Contains information about the tax on the item.
+           */
+          tax?: LineItem.Tax;
+
+          /**
+           * Cost of the product. Non-negative integer.
+           */
+          unit_cost: number;
+
+          /**
+           * A unit of measure for the line item, such as gallons, feet, meters, etc.
+           */
+          unit_of_measure?: string;
+        }
+
+        namespace LineItem {
+          interface PaymentMethodOptions {
+            /**
+             * This sub-hash contains line item details that are specific to `card` payment method."
+             */
+            card?: PaymentMethodOptions.Card;
+
+            /**
+             * This sub-hash contains line item details that are specific to `card_present` payment method."
+             */
+            card_present?: PaymentMethodOptions.CardPresent;
+
+            /**
+             * This sub-hash contains line item details that are specific to `klarna` payment method."
+             */
+            klarna?: PaymentMethodOptions.Klarna;
+
+            /**
+             * This sub-hash contains line item details that are specific to `paypal` payment method."
+             */
+            paypal?: PaymentMethodOptions.Paypal;
+          }
+
+          namespace PaymentMethodOptions {
+            interface Card {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface CardPresent {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface Klarna {
+              /**
+               * URL to an image for the product. Max length, 4096 characters.
+               */
+              image_url?: string;
+
+              /**
+               * URL to the product page. Max length, 4096 characters.
+               */
+              product_url?: string;
+
+              /**
+               * Reference for the subscription this line item is for.
+               */
+              subscription_reference?: string;
+            }
+
+            interface Paypal {
+              /**
+               * Type of the line item.
+               */
+              category?: Paypal.Category;
+
+              /**
+               * Description of the line item.
+               */
+              description?: string;
+
+              /**
+               * The Stripe account ID of the connected account that sells the item.
+               */
+              sold_by?: string;
+            }
+
+            namespace Paypal {
+              type Category = 'digital_goods' | 'donation' | 'physical_goods';
+            }
+          }
+
+          interface Tax {
+            /**
+             * The total tax on an item. Non-negative integer.
+             */
+            total_tax_amount: number;
+          }
+        }
+
+        interface Shipping {
+          /**
+           * Portion of the amount that is for shipping.
+           */
+          amount?: Stripe.Emptyable<number>;
+
+          /**
+           * The postal code that represents the shipping source.
+           */
+          from_postal_code?: Stripe.Emptyable<string>;
+
+          /**
+           * The postal code that represents the shipping destination.
+           */
+          to_postal_code?: Stripe.Emptyable<string>;
+        }
+
+        interface Tax {
+          /**
+           * Total portion of the amount that is for tax.
+           */
+          total_tax_amount: number;
+        }
+      }
+
       interface AutomaticPaymentMethods {
         /**
          * Controls whether this PaymentIntent will accept redirect-based payment methods.
@@ -2505,7 +2685,7 @@ declare module 'stripe' {
           cvc_token?: string;
 
           /**
-           * Installment configuration for payments attempted on this PaymentIntent (Mexico Only).
+           * Installment configuration for payments attempted on this PaymentIntent.
            *
            * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
            */
@@ -4293,6 +4473,13 @@ declare module 'stripe' {
       amount?: number;
 
       /**
+       * Provides industry-specific information about the amount.
+       */
+      amount_details?: Stripe.Emptyable<
+        PaymentIntentUpdateParams.AmountDetails
+      >;
+
+      /**
        * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: Stripe.Emptyable<number>;
@@ -4435,6 +4622,181 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentUpdateParams {
+      interface AmountDetails {
+        /**
+         * The amount an item was discounted for.
+         */
+        discount_amount?: Stripe.Emptyable<number>;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         */
+        line_items?: Stripe.Emptyable<Array<AmountDetails.LineItem>>;
+
+        /**
+         * Contains information about the shipping portion of the amount.
+         */
+        shipping?: Stripe.Emptyable<AmountDetails.Shipping>;
+
+        /**
+         * Contains information about the tax portion of the amount.
+         */
+        tax?: Stripe.Emptyable<AmountDetails.Tax>;
+      }
+
+      namespace AmountDetails {
+        interface LineItem {
+          /**
+           * The amount an item was discounted for. Positive integer.
+           */
+          discount_amount?: number;
+
+          /**
+           * Payment method-specific information for line items.
+           */
+          payment_method_options?: LineItem.PaymentMethodOptions;
+
+          /**
+           * Unique identifier of the product. At most 12 characters long.
+           */
+          product_code?: string;
+
+          /**
+           * Name of the product. At most 100 characters long.
+           */
+          product_name: string;
+
+          /**
+           * Number of items of the product. Positive integer.
+           */
+          quantity: number;
+
+          /**
+           * Contains information about the tax on the item.
+           */
+          tax?: LineItem.Tax;
+
+          /**
+           * Cost of the product. Non-negative integer.
+           */
+          unit_cost: number;
+
+          /**
+           * A unit of measure for the line item, such as gallons, feet, meters, etc.
+           */
+          unit_of_measure?: string;
+        }
+
+        namespace LineItem {
+          interface PaymentMethodOptions {
+            /**
+             * This sub-hash contains line item details that are specific to `card` payment method."
+             */
+            card?: PaymentMethodOptions.Card;
+
+            /**
+             * This sub-hash contains line item details that are specific to `card_present` payment method."
+             */
+            card_present?: PaymentMethodOptions.CardPresent;
+
+            /**
+             * This sub-hash contains line item details that are specific to `klarna` payment method."
+             */
+            klarna?: PaymentMethodOptions.Klarna;
+
+            /**
+             * This sub-hash contains line item details that are specific to `paypal` payment method."
+             */
+            paypal?: PaymentMethodOptions.Paypal;
+          }
+
+          namespace PaymentMethodOptions {
+            interface Card {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface CardPresent {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface Klarna {
+              /**
+               * URL to an image for the product. Max length, 4096 characters.
+               */
+              image_url?: string;
+
+              /**
+               * URL to the product page. Max length, 4096 characters.
+               */
+              product_url?: string;
+
+              /**
+               * Reference for the subscription this line item is for.
+               */
+              subscription_reference?: string;
+            }
+
+            interface Paypal {
+              /**
+               * Type of the line item.
+               */
+              category?: Paypal.Category;
+
+              /**
+               * Description of the line item.
+               */
+              description?: string;
+
+              /**
+               * The Stripe account ID of the connected account that sells the item.
+               */
+              sold_by?: string;
+            }
+
+            namespace Paypal {
+              type Category = 'digital_goods' | 'donation' | 'physical_goods';
+            }
+          }
+
+          interface Tax {
+            /**
+             * The total tax on an item. Non-negative integer.
+             */
+            total_tax_amount: number;
+          }
+        }
+
+        interface Shipping {
+          /**
+           * Portion of the amount that is for shipping.
+           */
+          amount?: Stripe.Emptyable<number>;
+
+          /**
+           * The postal code that represents the shipping source.
+           */
+          from_postal_code?: Stripe.Emptyable<string>;
+
+          /**
+           * The postal code that represents the shipping destination.
+           */
+          to_postal_code?: Stripe.Emptyable<string>;
+        }
+
+        interface Tax {
+          /**
+           * Total portion of the amount that is for tax.
+           */
+          total_tax_amount: number;
+        }
+      }
+
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       interface Hooks {
@@ -6689,7 +7051,7 @@ declare module 'stripe' {
           cvc_token?: string;
 
           /**
-           * Installment configuration for payments attempted on this PaymentIntent (Mexico Only).
+           * Installment configuration for payments attempted on this PaymentIntent.
            *
            * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
            */
@@ -8500,6 +8862,11 @@ declare module 'stripe' {
 
     interface PaymentIntentCaptureParams {
       /**
+       * Provides industry-specific information about the amount.
+       */
+      amount_details?: PaymentIntentCaptureParams.AmountDetails;
+
+      /**
        * The amount to capture from the PaymentIntent, which must be less than or equal to the original amount. Defaults to the full `amount_capturable` if it's not provided.
        */
       amount_to_capture?: number;
@@ -8556,6 +8923,181 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentCaptureParams {
+      interface AmountDetails {
+        /**
+         * The amount an item was discounted for.
+         */
+        discount_amount?: Stripe.Emptyable<number>;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         */
+        line_items?: Stripe.Emptyable<Array<AmountDetails.LineItem>>;
+
+        /**
+         * Contains information about the shipping portion of the amount.
+         */
+        shipping?: Stripe.Emptyable<AmountDetails.Shipping>;
+
+        /**
+         * Contains information about the tax portion of the amount.
+         */
+        tax?: Stripe.Emptyable<AmountDetails.Tax>;
+      }
+
+      namespace AmountDetails {
+        interface LineItem {
+          /**
+           * The amount an item was discounted for. Positive integer.
+           */
+          discount_amount?: number;
+
+          /**
+           * Payment method-specific information for line items.
+           */
+          payment_method_options?: LineItem.PaymentMethodOptions;
+
+          /**
+           * Unique identifier of the product. At most 12 characters long.
+           */
+          product_code?: string;
+
+          /**
+           * Name of the product. At most 100 characters long.
+           */
+          product_name: string;
+
+          /**
+           * Number of items of the product. Positive integer.
+           */
+          quantity: number;
+
+          /**
+           * Contains information about the tax on the item.
+           */
+          tax?: LineItem.Tax;
+
+          /**
+           * Cost of the product. Non-negative integer.
+           */
+          unit_cost: number;
+
+          /**
+           * A unit of measure for the line item, such as gallons, feet, meters, etc.
+           */
+          unit_of_measure?: string;
+        }
+
+        namespace LineItem {
+          interface PaymentMethodOptions {
+            /**
+             * This sub-hash contains line item details that are specific to `card` payment method."
+             */
+            card?: PaymentMethodOptions.Card;
+
+            /**
+             * This sub-hash contains line item details that are specific to `card_present` payment method."
+             */
+            card_present?: PaymentMethodOptions.CardPresent;
+
+            /**
+             * This sub-hash contains line item details that are specific to `klarna` payment method."
+             */
+            klarna?: PaymentMethodOptions.Klarna;
+
+            /**
+             * This sub-hash contains line item details that are specific to `paypal` payment method."
+             */
+            paypal?: PaymentMethodOptions.Paypal;
+          }
+
+          namespace PaymentMethodOptions {
+            interface Card {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface CardPresent {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface Klarna {
+              /**
+               * URL to an image for the product. Max length, 4096 characters.
+               */
+              image_url?: string;
+
+              /**
+               * URL to the product page. Max length, 4096 characters.
+               */
+              product_url?: string;
+
+              /**
+               * Reference for the subscription this line item is for.
+               */
+              subscription_reference?: string;
+            }
+
+            interface Paypal {
+              /**
+               * Type of the line item.
+               */
+              category?: Paypal.Category;
+
+              /**
+               * Description of the line item.
+               */
+              description?: string;
+
+              /**
+               * The Stripe account ID of the connected account that sells the item.
+               */
+              sold_by?: string;
+            }
+
+            namespace Paypal {
+              type Category = 'digital_goods' | 'donation' | 'physical_goods';
+            }
+          }
+
+          interface Tax {
+            /**
+             * The total tax on an item. Non-negative integer.
+             */
+            total_tax_amount: number;
+          }
+        }
+
+        interface Shipping {
+          /**
+           * Portion of the amount that is for shipping.
+           */
+          amount?: Stripe.Emptyable<number>;
+
+          /**
+           * The postal code that represents the shipping source.
+           */
+          from_postal_code?: Stripe.Emptyable<string>;
+
+          /**
+           * The postal code that represents the shipping destination.
+           */
+          to_postal_code?: Stripe.Emptyable<string>;
+        }
+
+        interface Tax {
+          /**
+           * Total portion of the amount that is for tax.
+           */
+          total_tax_amount: number;
+        }
+      }
+
       interface Hooks {
         /**
          * Arguments passed in automations
@@ -9289,6 +9831,13 @@ declare module 'stripe' {
 
     interface PaymentIntentConfirmParams {
       /**
+       * Provides industry-specific information about the amount.
+       */
+      amount_details?: Stripe.Emptyable<
+        PaymentIntentConfirmParams.AmountDetails
+      >;
+
+      /**
        * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: Stripe.Emptyable<number>;
@@ -9411,6 +9960,181 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentConfirmParams {
+      interface AmountDetails {
+        /**
+         * The amount an item was discounted for.
+         */
+        discount_amount?: Stripe.Emptyable<number>;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         */
+        line_items?: Stripe.Emptyable<Array<AmountDetails.LineItem>>;
+
+        /**
+         * Contains information about the shipping portion of the amount.
+         */
+        shipping?: Stripe.Emptyable<AmountDetails.Shipping>;
+
+        /**
+         * Contains information about the tax portion of the amount.
+         */
+        tax?: Stripe.Emptyable<AmountDetails.Tax>;
+      }
+
+      namespace AmountDetails {
+        interface LineItem {
+          /**
+           * The amount an item was discounted for. Positive integer.
+           */
+          discount_amount?: number;
+
+          /**
+           * Payment method-specific information for line items.
+           */
+          payment_method_options?: LineItem.PaymentMethodOptions;
+
+          /**
+           * Unique identifier of the product. At most 12 characters long.
+           */
+          product_code?: string;
+
+          /**
+           * Name of the product. At most 100 characters long.
+           */
+          product_name: string;
+
+          /**
+           * Number of items of the product. Positive integer.
+           */
+          quantity: number;
+
+          /**
+           * Contains information about the tax on the item.
+           */
+          tax?: LineItem.Tax;
+
+          /**
+           * Cost of the product. Non-negative integer.
+           */
+          unit_cost: number;
+
+          /**
+           * A unit of measure for the line item, such as gallons, feet, meters, etc.
+           */
+          unit_of_measure?: string;
+        }
+
+        namespace LineItem {
+          interface PaymentMethodOptions {
+            /**
+             * This sub-hash contains line item details that are specific to `card` payment method."
+             */
+            card?: PaymentMethodOptions.Card;
+
+            /**
+             * This sub-hash contains line item details that are specific to `card_present` payment method."
+             */
+            card_present?: PaymentMethodOptions.CardPresent;
+
+            /**
+             * This sub-hash contains line item details that are specific to `klarna` payment method."
+             */
+            klarna?: PaymentMethodOptions.Klarna;
+
+            /**
+             * This sub-hash contains line item details that are specific to `paypal` payment method."
+             */
+            paypal?: PaymentMethodOptions.Paypal;
+          }
+
+          namespace PaymentMethodOptions {
+            interface Card {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface CardPresent {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface Klarna {
+              /**
+               * URL to an image for the product. Max length, 4096 characters.
+               */
+              image_url?: string;
+
+              /**
+               * URL to the product page. Max length, 4096 characters.
+               */
+              product_url?: string;
+
+              /**
+               * Reference for the subscription this line item is for.
+               */
+              subscription_reference?: string;
+            }
+
+            interface Paypal {
+              /**
+               * Type of the line item.
+               */
+              category?: Paypal.Category;
+
+              /**
+               * Description of the line item.
+               */
+              description?: string;
+
+              /**
+               * The Stripe account ID of the connected account that sells the item.
+               */
+              sold_by?: string;
+            }
+
+            namespace Paypal {
+              type Category = 'digital_goods' | 'donation' | 'physical_goods';
+            }
+          }
+
+          interface Tax {
+            /**
+             * The total tax on an item. Non-negative integer.
+             */
+            total_tax_amount: number;
+          }
+        }
+
+        interface Shipping {
+          /**
+           * Portion of the amount that is for shipping.
+           */
+          amount?: Stripe.Emptyable<number>;
+
+          /**
+           * The postal code that represents the shipping source.
+           */
+          from_postal_code?: Stripe.Emptyable<string>;
+
+          /**
+           * The postal code that represents the shipping destination.
+           */
+          to_postal_code?: Stripe.Emptyable<string>;
+        }
+
+        interface Tax {
+          /**
+           * Total portion of the amount that is for tax.
+           */
+          total_tax_amount: number;
+        }
+      }
+
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       interface Hooks {
@@ -11681,7 +12405,7 @@ declare module 'stripe' {
           cvc_token?: string;
 
           /**
-           * Installment configuration for payments attempted on this PaymentIntent (Mexico Only).
+           * Installment configuration for payments attempted on this PaymentIntent.
            *
            * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
            */
@@ -13506,6 +14230,11 @@ declare module 'stripe' {
       amount: number;
 
       /**
+       * Provides industry-specific information about the amount.
+       */
+      amount_details?: PaymentIntentIncrementAuthorizationParams.AmountDetails;
+
+      /**
        * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: number;
@@ -13531,6 +14260,11 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
+       * Provides industry-specific information about the charge.
+       */
+      payment_details?: PaymentIntentIncrementAuthorizationParams.PaymentDetails;
+
+      /**
        * Payment method-specific configuration for this PaymentIntent.
        */
       payment_method_options?: PaymentIntentIncrementAuthorizationParams.PaymentMethodOptions;
@@ -13548,6 +14282,181 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentIncrementAuthorizationParams {
+      interface AmountDetails {
+        /**
+         * The amount an item was discounted for.
+         */
+        discount_amount?: Stripe.Emptyable<number>;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         */
+        line_items?: Stripe.Emptyable<Array<AmountDetails.LineItem>>;
+
+        /**
+         * Contains information about the shipping portion of the amount.
+         */
+        shipping?: Stripe.Emptyable<AmountDetails.Shipping>;
+
+        /**
+         * Contains information about the tax portion of the amount.
+         */
+        tax?: Stripe.Emptyable<AmountDetails.Tax>;
+      }
+
+      namespace AmountDetails {
+        interface LineItem {
+          /**
+           * The amount an item was discounted for. Positive integer.
+           */
+          discount_amount?: number;
+
+          /**
+           * Payment method-specific information for line items.
+           */
+          payment_method_options?: LineItem.PaymentMethodOptions;
+
+          /**
+           * Unique identifier of the product. At most 12 characters long.
+           */
+          product_code?: string;
+
+          /**
+           * Name of the product. At most 100 characters long.
+           */
+          product_name: string;
+
+          /**
+           * Number of items of the product. Positive integer.
+           */
+          quantity: number;
+
+          /**
+           * Contains information about the tax on the item.
+           */
+          tax?: LineItem.Tax;
+
+          /**
+           * Cost of the product. Non-negative integer.
+           */
+          unit_cost: number;
+
+          /**
+           * A unit of measure for the line item, such as gallons, feet, meters, etc.
+           */
+          unit_of_measure?: string;
+        }
+
+        namespace LineItem {
+          interface PaymentMethodOptions {
+            /**
+             * This sub-hash contains line item details that are specific to `card` payment method."
+             */
+            card?: PaymentMethodOptions.Card;
+
+            /**
+             * This sub-hash contains line item details that are specific to `card_present` payment method."
+             */
+            card_present?: PaymentMethodOptions.CardPresent;
+
+            /**
+             * This sub-hash contains line item details that are specific to `klarna` payment method."
+             */
+            klarna?: PaymentMethodOptions.Klarna;
+
+            /**
+             * This sub-hash contains line item details that are specific to `paypal` payment method."
+             */
+            paypal?: PaymentMethodOptions.Paypal;
+          }
+
+          namespace PaymentMethodOptions {
+            interface Card {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface CardPresent {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface Klarna {
+              /**
+               * URL to an image for the product. Max length, 4096 characters.
+               */
+              image_url?: string;
+
+              /**
+               * URL to the product page. Max length, 4096 characters.
+               */
+              product_url?: string;
+
+              /**
+               * Reference for the subscription this line item is for.
+               */
+              subscription_reference?: string;
+            }
+
+            interface Paypal {
+              /**
+               * Type of the line item.
+               */
+              category?: Paypal.Category;
+
+              /**
+               * Description of the line item.
+               */
+              description?: string;
+
+              /**
+               * The Stripe account ID of the connected account that sells the item.
+               */
+              sold_by?: string;
+            }
+
+            namespace Paypal {
+              type Category = 'digital_goods' | 'donation' | 'physical_goods';
+            }
+          }
+
+          interface Tax {
+            /**
+             * The total tax on an item. Non-negative integer.
+             */
+            total_tax_amount: number;
+          }
+        }
+
+        interface Shipping {
+          /**
+           * Portion of the amount that is for shipping.
+           */
+          amount?: Stripe.Emptyable<number>;
+
+          /**
+           * The postal code that represents the shipping source.
+           */
+          from_postal_code?: Stripe.Emptyable<string>;
+
+          /**
+           * The postal code that represents the shipping destination.
+           */
+          to_postal_code?: Stripe.Emptyable<string>;
+        }
+
+        interface Tax {
+          /**
+           * Total portion of the amount that is for tax.
+           */
+          total_tax_amount: number;
+        }
+      }
+
       interface Hooks {
         /**
          * Arguments passed in automations
@@ -13571,6 +14480,18 @@ declare module 'stripe' {
             calculation: Stripe.Emptyable<string>;
           }
         }
+      }
+
+      interface PaymentDetails {
+        /**
+         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
+         */
+        customer_reference?: Stripe.Emptyable<string>;
+
+        /**
+         * A unique value assigned by the business to identify the transaction.
+         */
+        order_reference?: Stripe.Emptyable<string>;
       }
 
       interface PaymentMethodOptions {
@@ -13790,6 +14711,7 @@ declare module 'stripe' {
        * Confirm that your customer intends to pay with current or provided
        * payment method. Upon confirmation, the PaymentIntent will attempt to initiate
        * a payment.
+       *
        * If the selected payment method requires additional authentication steps, the
        * PaymentIntent will transition to the requires_action status and
        * suggest additional actions via next_action. If payment fails,
@@ -13797,18 +14719,22 @@ declare module 'stripe' {
        * canceled status if the confirmation limit is reached. If
        * payment succeeds, the PaymentIntent will transition to the succeeded
        * status (or requires_capture, if capture_method is set to manual).
+       *
        * If the confirmation_method is automatic, payment may be attempted
        * using our [client SDKs](https://docs.stripe.com/docs/stripe-js/reference#stripe-handle-card-payment)
        * and the PaymentIntent's [client_secret](https://docs.stripe.com/api#payment_intent_object-client_secret).
        * After next_actions are handled by the client, no additional
        * confirmation is required to complete the payment.
+       *
        * If the confirmation_method is manual, all payment attempts must be
        * initiated using a secret key.
+       *
        * If any actions are required for the payment, the PaymentIntent will
        * return to the requires_confirmation state
        * after those actions are completed. Your server needs to then
        * explicitly re-confirm the PaymentIntent to initiate the next payment
        * attempt.
+       *
        * There is a variable upper limit on how many times a PaymentIntent can be confirmed.
        * After this limit is reached, any further calls to this endpoint will
        * transition the PaymentIntent to the canceled state.

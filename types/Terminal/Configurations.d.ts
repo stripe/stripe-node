@@ -88,7 +88,11 @@ declare module 'stripe' {
         }
 
         interface Tipping {
+          aed?: Tipping.Aed;
+
           aud?: Tipping.Aud;
+
+          bgn?: Tipping.Bgn;
 
           cad?: Tipping.Cad;
 
@@ -104,6 +108,8 @@ declare module 'stripe' {
 
           hkd?: Tipping.Hkd;
 
+          huf?: Tipping.Huf;
+
           jpy?: Tipping.Jpy;
 
           myr?: Tipping.Myr;
@@ -114,6 +120,8 @@ declare module 'stripe' {
 
           pln?: Tipping.Pln;
 
+          ron?: Tipping.Ron;
+
           sek?: Tipping.Sek;
 
           sgd?: Tipping.Sgd;
@@ -122,7 +130,41 @@ declare module 'stripe' {
         }
 
         namespace Tipping {
+          interface Aed {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts?: Array<number> | null;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages?: Array<number> | null;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
           interface Aud {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts?: Array<number> | null;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages?: Array<number> | null;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
+          interface Bgn {
             /**
              * Fixed amounts displayed when collecting a tip
              */
@@ -258,6 +300,23 @@ declare module 'stripe' {
             smart_tip_threshold?: number;
           }
 
+          interface Huf {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts?: Array<number> | null;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages?: Array<number> | null;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
           interface Jpy {
             /**
              * Fixed amounts displayed when collecting a tip
@@ -327,6 +386,23 @@ declare module 'stripe' {
           }
 
           interface Pln {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts?: Array<number> | null;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages?: Array<number> | null;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
+          interface Ron {
             /**
              * Fixed amounts displayed when collecting a tip
              */

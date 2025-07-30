@@ -378,6 +378,9 @@ declare module 'stripe' {
       }
 
       interface BillingMode {
+        /**
+         * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+         */
         type: BillingMode.Type;
       }
 
@@ -744,6 +747,11 @@ declare module 'stripe' {
           sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
 
           /**
+           * This sub-hash contains details about the UPI payment method options to pass to the invoice's PaymentIntent.
+           */
+          upi?: Stripe.Emptyable<PaymentMethodOptions.Upi>;
+
+          /**
            * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
            */
           us_bank_account?: Stripe.Emptyable<
@@ -888,6 +896,41 @@ declare module 'stripe' {
 
           interface SepaDebit {}
 
+          interface Upi {
+            /**
+             * Configuration options for setting up an eMandate
+             */
+            mandate_options?: Upi.MandateOptions;
+          }
+
+          namespace Upi {
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments.
+               */
+              amount?: number;
+
+              /**
+               * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+               */
+              amount_type?: MandateOptions.AmountType;
+
+              /**
+               * A description of the mandate or subscription that is meant to be displayed to the customer.
+               */
+              description?: string;
+
+              /**
+               * End date of the mandate or subscription. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+               */
+              end_date?: number;
+            }
+
+            namespace MandateOptions {
+              type AmountType = 'fixed' | 'maximum';
+            }
+          }
+
           interface UsBankAccount {
             /**
              * Additional fields for Financial Connections Session creation
@@ -993,6 +1036,7 @@ declare module 'stripe' {
           | 'sofort'
           | 'stripe_balance'
           | 'swish'
+          | 'upi'
           | 'us_bank_account'
           | 'wechat_pay';
 
@@ -1195,7 +1239,7 @@ declare module 'stripe' {
        *
        * Use `pending_if_incomplete` to update the subscription using [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://stripe.com/docs/billing/pending-updates-reference#supported-attributes).
        *
-       * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
+       * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://docs.stripe.com/changelog/2019-03-14) to learn more.
        */
       payment_behavior?: SubscriptionUpdateParams.PaymentBehavior;
 
@@ -1794,6 +1838,11 @@ declare module 'stripe' {
           sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
 
           /**
+           * This sub-hash contains details about the UPI payment method options to pass to the invoice's PaymentIntent.
+           */
+          upi?: Stripe.Emptyable<PaymentMethodOptions.Upi>;
+
+          /**
            * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
            */
           us_bank_account?: Stripe.Emptyable<
@@ -1938,6 +1987,41 @@ declare module 'stripe' {
 
           interface SepaDebit {}
 
+          interface Upi {
+            /**
+             * Configuration options for setting up an eMandate
+             */
+            mandate_options?: Upi.MandateOptions;
+          }
+
+          namespace Upi {
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments.
+               */
+              amount?: number;
+
+              /**
+               * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+               */
+              amount_type?: MandateOptions.AmountType;
+
+              /**
+               * A description of the mandate or subscription that is meant to be displayed to the customer.
+               */
+              description?: string;
+
+              /**
+               * End date of the mandate or subscription. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+               */
+              end_date?: number;
+            }
+
+            namespace MandateOptions {
+              type AmountType = 'fixed' | 'maximum';
+            }
+          }
+
           interface UsBankAccount {
             /**
              * Additional fields for Financial Connections Session creation
@@ -2043,6 +2127,7 @@ declare module 'stripe' {
           | 'sofort'
           | 'stripe_balance'
           | 'swish'
+          | 'upi'
           | 'us_bank_account'
           | 'wechat_pay';
 

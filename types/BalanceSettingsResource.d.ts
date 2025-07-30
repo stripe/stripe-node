@@ -52,22 +52,24 @@ declare module 'stripe' {
           interval?: Schedule.Interval;
 
           /**
-           * The day of the month when available funds are paid out, specified as a number between 1--31. Payouts nominally scheduled between the 29th and 31st of the month are instead sent on the last day of a shorter month. Required and applicable only if `interval` is `monthly`.
+           * The days of the month when available funds are paid out, specified as an array of numbers between 1--31. Payouts nominally scheduled between the 29th and 31st of the month are instead sent on the last day of a shorter month. Required and applicable only if `interval` is `monthly`.
            */
-          monthly_anchor?: number;
+          monthly_payout_days?: Array<number>;
 
           /**
-           * The day of the week when available funds are paid out (required and applicable only if `interval` is `weekly`.)
+           * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. (required and applicable only if `interval` is `weekly`.)
            */
-          weekly_anchor?: Schedule.WeeklyAnchor;
+          weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
         }
 
         namespace Schedule {
           type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
 
-          type WeeklyAnchor =
+          type WeeklyPayoutDay =
             | 'friday'
             | 'monday'
+            | 'saturday'
+            | 'sunday'
             | 'thursday'
             | 'tuesday'
             | 'wednesday';
@@ -78,7 +80,7 @@ declare module 'stripe' {
         /**
          * The number of days charge funds are held before becoming available. May also be set to `minimum`, representing the lowest available value for the account country. Default is `minimum`. The `delay_days` parameter remains at the last configured value if `payouts.schedule.interval` is `manual`. [Learn more about controlling payout delay days](https://docs.stripe.com/connect/manage-payout-schedule).
          */
-        delay_days?: number;
+        delay_days_override?: number;
       }
     }
 

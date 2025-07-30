@@ -56,20 +56,22 @@ declare module 'stripe' {
           /**
            * The day of the month funds will be paid out. Only shown if `interval` is monthly. Payouts scheduled between the 29th and 31st of the month are sent on the last day of shorter months.
            */
-          monthly_anchor?: number;
+          monthly_payout_days?: Array<number>;
 
           /**
-           * The day of the week funds will be paid out, of the style 'monday', 'tuesday', etc. Only shown if `interval` is weekly.
+           * The days of the week when available funds are paid out, specified as an array, for example, [`monday`, `tuesday`]. Only shown if `interval` is weekly.
            */
-          weekly_anchor?: Schedule.WeeklyAnchor;
+          weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
         }
 
         namespace Schedule {
           type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
 
-          type WeeklyAnchor =
+          type WeeklyPayoutDay =
             | 'friday'
             | 'monday'
+            | 'saturday'
+            | 'sunday'
             | 'thursday'
             | 'tuesday'
             | 'wednesday';

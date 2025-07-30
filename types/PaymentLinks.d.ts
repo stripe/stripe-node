@@ -509,6 +509,11 @@ declare module 'stripe' {
              * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
              */
             amount_tax_display: string | null;
+
+            /**
+             * ID of the invoice rendering template to be used for the generated invoice.
+             */
+            template: string | null;
           }
         }
       }

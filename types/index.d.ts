@@ -26,6 +26,7 @@
 ///<reference path='./Billing/CreditGrantsResource.d.ts' />
 ///<reference path='./Billing/MeterEventAdjustmentsResource.d.ts' />
 ///<reference path='./Billing/MeterEventsResource.d.ts' />
+///<reference path='./Billing/MeterUsageResource.d.ts' />
 ///<reference path='./Billing/MetersResource.d.ts' />
 ///<reference path='./BillingPortal/ConfigurationsResource.d.ts' />
 ///<reference path='./BillingPortal/SessionsResource.d.ts' />
@@ -118,6 +119,7 @@
 ///<reference path='./Terminal/ConfigurationsResource.d.ts' />
 ///<reference path='./Terminal/ConnectionTokensResource.d.ts' />
 ///<reference path='./Terminal/LocationsResource.d.ts' />
+///<reference path='./Terminal/OnboardingLinksResource.d.ts' />
 ///<reference path='./Terminal/ReaderCollectedDataResource.d.ts' />
 ///<reference path='./Terminal/ReadersResource.d.ts' />
 ///<reference path='./TestHelpers/ConfirmationTokensResource.d.ts' />
@@ -196,6 +198,8 @@
 ///<reference path='./Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./Billing/MeterEventSummaries.d.ts' />
 ///<reference path='./Billing/MeterEvents.d.ts' />
+///<reference path='./Billing/MeterUsage.d.ts' />
+///<reference path='./Billing/MeterUsageRows.d.ts' />
 ///<reference path='./Billing/Meters.d.ts' />
 ///<reference path='./BillingPortal/Configurations.d.ts' />
 ///<reference path='./BillingPortal/Sessions.d.ts' />
@@ -321,6 +325,7 @@
 ///<reference path='./Terminal/Configurations.d.ts' />
 ///<reference path='./Terminal/ConnectionTokens.d.ts' />
 ///<reference path='./Terminal/Locations.d.ts' />
+///<reference path='./Terminal/OnboardingLinks.d.ts' />
 ///<reference path='./Terminal/ReaderCollectedData.d.ts' />
 ///<reference path='./Terminal/Readers.d.ts' />
 ///<reference path='./TestHelpers/TestClocks.d.ts' />
@@ -457,6 +462,7 @@ declare module 'stripe' {
       meters: Stripe.Billing.MetersResource;
       meterEvents: Stripe.Billing.MeterEventsResource;
       meterEventAdjustments: Stripe.Billing.MeterEventAdjustmentsResource;
+      meterUsage: Stripe.Billing.MeterUsageResource;
     };
     billingPortal: {
       configurations: Stripe.BillingPortal.ConfigurationsResource;
@@ -532,6 +538,7 @@ declare module 'stripe' {
       configurations: Stripe.Terminal.ConfigurationsResource;
       connectionTokens: Stripe.Terminal.ConnectionTokensResource;
       locations: Stripe.Terminal.LocationsResource;
+      onboardingLinks: Stripe.Terminal.OnboardingLinksResource;
       readers: Stripe.Terminal.ReadersResource;
       readerCollectedData: Stripe.Terminal.ReaderCollectedDataResource;
     };
