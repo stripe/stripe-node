@@ -59,7 +59,7 @@ export function createStripe(
   platformFunctions: PlatformFunctions,
   requestSender: RequestSenderFactory = defaultRequestSenderFactory
 ): typeof Stripe {
-  Stripe.PACKAGE_VERSION = '18.3.0';
+  Stripe.PACKAGE_VERSION = '18.4.0';
   Stripe.API_VERSION = ApiVersion;
   Stripe.USER_AGENT = {
     bindings_version: Stripe.PACKAGE_VERSION,
