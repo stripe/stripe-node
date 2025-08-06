@@ -1,5 +1,10 @@
 # Changelog
 
+## 18.5.0-beta.2 - 2025-08-06
+* [#2383](https://github.com/stripe/stripe-node/pull/2383) Bring back GA invoice payments APIs that were missing in the public preview SDKs
+    * Add support for new resource `InvoicePayment`
+    * Add support for `list` and `retrieve` methods on resource `InvoicePayment`
+
 ## 18.5.0-beta.1 - 2025-07-30
 This release changes the pinned API version to `2025-07-30.preview`.
 
