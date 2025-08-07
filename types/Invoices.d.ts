@@ -817,7 +817,7 @@ declare module 'stripe' {
         network_advice_code?: string;
 
         /**
-         * For card errors resulting from a card issuer decline, a brand specific 2, 3, or 4 digit code which indicates the reason the authorization failed.
+         * For card errors resulting from a card issuer decline, a brand specific alphanumeric code which indicates the reason the authorization failed.
          */
         network_decline_code?: string;
 

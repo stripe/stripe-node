@@ -352,27 +352,27 @@ declare module 'stripe' {
 
       interface BillingCycleAnchorConfig {
         /**
-         * The day of the month the billing_cycle_anchor should be. Ranges from 1 to 31.
+         * The day of the month the anchor should be. Ranges from 1 to 31.
          */
         day_of_month: number;
 
         /**
-         * The hour of the day the billing_cycle_anchor should be. Ranges from 0 to 23.
+         * The hour of the day the anchor should be. Ranges from 0 to 23.
          */
         hour?: number;
 
         /**
-         * The minute of the hour the billing_cycle_anchor should be. Ranges from 0 to 59.
+         * The minute of the hour the anchor should be. Ranges from 0 to 59.
          */
         minute?: number;
 
         /**
-         * The month to start full cycle billing periods. Ranges from 1 to 12.
+         * The month to start full cycle periods. Ranges from 1 to 12.
          */
         month?: number;
 
         /**
-         * The second of the minute the billing_cycle_anchor should be. Ranges from 0 to 59.
+         * The second of the minute the anchor should be. Ranges from 0 to 59.
          */
         second?: number;
       }

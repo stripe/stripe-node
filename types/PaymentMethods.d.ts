@@ -97,6 +97,11 @@ declare module 'stripe' {
 
       kr_card?: PaymentMethod.KrCard;
 
+      /**
+       * The Mandate object of the most recently created Mandate associated with this payment method
+       */
+      latest_active_mandate?: Stripe.Mandate | null;
+
       link?: PaymentMethod.Link;
 
       /**

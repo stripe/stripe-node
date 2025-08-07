@@ -158,7 +158,7 @@ declare module 'stripe' {
         amount_refunded?: number;
 
         /**
-         * ID of an existing refund to link this credit note to.
+         * ID of an existing refund to link this credit note to. Required when `type` is `refund`.
          */
         refund?: string;
       }
@@ -385,7 +385,7 @@ declare module 'stripe' {
         amount_refunded?: number;
 
         /**
-         * ID of an existing refund to link this credit note to.
+         * ID of an existing refund to link this credit note to. Required when `type` is `refund`.
          */
         refund?: string;
       }
@@ -554,7 +554,7 @@ declare module 'stripe' {
         amount_refunded?: number;
 
         /**
-         * ID of an existing refund to link this credit note to.
+         * ID of an existing refund to link this credit note to. Required when `type` is `refund`.
          */
         refund?: string;
       }

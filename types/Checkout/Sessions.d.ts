@@ -343,7 +343,7 @@ declare module 'stripe' {
       namespace Session {
         interface AdaptivePricing {
           /**
-           * Whether Adaptive Pricing is enabled.
+           * If enabled, Adaptive Pricing is available on [eligible sessions](https://docs.stripe.com/payments/currencies/localize-prices/adaptive-pricing?payment-ui=stripe-hosted#restrictions).
            */
           enabled: boolean;
         }

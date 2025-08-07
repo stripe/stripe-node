@@ -164,7 +164,7 @@ declare module 'stripe' {
         optional_items?: Array<SessionCreateParams.OptionalItem>;
 
         /**
-         * Where the user is coming from. This informs the optimizations that are applied to the session. For example, a session originating from a mobile app may behave more like a native app, depending on the platform. This parameter is currently not allowed if `ui_mode` is `custom`.
+         * Where the user is coming from. This informs the optimizations that are applied to the session.
          */
         origin_context?: SessionCreateParams.OriginContext;
 
@@ -301,7 +301,7 @@ declare module 'stripe' {
       namespace SessionCreateParams {
         interface AdaptivePricing {
           /**
-           * Set to `true` to enable [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing). Defaults to your [dashboard setting](https://dashboard.stripe.com/settings/adaptive-pricing).
+           * If set to `true`, Adaptive Pricing is available on [eligible sessions](https://docs.stripe.com/payments/currencies/localize-prices/adaptive-pricing?payment-ui=stripe-hosted#restrictions). Defaults to your [dashboard setting](https://dashboard.stripe.com/settings/adaptive-pricing).
            */
           enabled?: boolean;
         }
@@ -604,9 +604,52 @@ declare module 'stripe' {
           coupon?: string;
 
           /**
+           * Data used to generate a new [Coupon](https://stripe.com/docs/api/coupon) object inline. One of `coupon` or `coupon_data` is required when updating discounts.
+           */
+          coupon_data?: Discount.CouponData;
+
+          /**
            * The ID of a promotion code to apply to this Session.
            */
           promotion_code?: string;
+        }
+
+        namespace Discount {
+          interface CouponData {
+            /**
+             * A positive integer representing the amount to subtract from an invoice total (required if `percent_off` is not passed).
+             */
+            amount_off?: number;
+
+            /**
+             * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) of the `amount_off` parameter (required if `amount_off` is passed).
+             */
+            currency?: string;
+
+            /**
+             * Specifies how long the discount will be in effect if used on a subscription. Defaults to `once`.
+             */
+            duration?: CouponData.Duration;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             */
+            metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+            /**
+             * Name of the coupon displayed to customers on, for instance invoices, or receipts. By default the `id` is shown if `name` is not set.
+             */
+            name?: string;
+
+            /**
+             * A positive float larger than 0, and smaller or equal to 100, that represents the discount the coupon will apply (required if `amount_off` is not passed).
+             */
+            percent_off?: number;
+          }
+
+          namespace CouponData {
+            type Duration = 'forever' | 'once' | 'repeating';
+          }
         }
 
         interface InvoiceCreation {
