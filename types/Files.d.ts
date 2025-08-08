@@ -86,6 +86,7 @@ declare module 'stripe' {
         | 'selfie'
         | 'sigma_scheduled_query'
         | 'tax_document_user_upload'
+        | 'terminal_android_apk'
         | 'terminal_reader_splashscreen';
     }
   }

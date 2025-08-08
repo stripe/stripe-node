@@ -4,4 +4,9 @@ import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
 export const Mandates = StripeResource.extend({
   retrieve: stripeMethod({method: 'GET', fullPath: '/v1/mandates/{mandate}'}),
+  list: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/mandates',
+    methodType: 'list',
+  }),
 });

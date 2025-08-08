@@ -463,10 +463,31 @@ declare module 'stripe' {
           transaction_id: string | null;
         }
 
-        interface Alma {}
+        interface Alma {
+          installments?: Alma.Installments;
+
+          /**
+           * The Alma transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
+        }
+
+        namespace Alma {
+          interface Installments {
+            /**
+             * The number of installments.
+             */
+            count: number;
+          }
+        }
 
         interface AmazonPay {
           funding?: AmazonPay.Funding;
+
+          /**
+           * The Amazon Pay transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
         }
 
         namespace AmazonPay {
@@ -1472,6 +1493,11 @@ declare module 'stripe' {
            * A unique identifier for the buyer as determined by the local payment processor.
            */
           buyer_id: string | null;
+
+          /**
+           * The Kakao Pay transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
         }
 
         interface Klarna {
@@ -1546,6 +1572,11 @@ declare module 'stripe' {
            * The last four digits of the card. This may not be present for American Express cards.
            */
           last4: string | null;
+
+          /**
+           * The Korean Card transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
         }
 
         namespace KrCard {
@@ -1637,6 +1668,11 @@ declare module 'stripe' {
            * A unique identifier for the buyer as determined by the local payment processor.
            */
           buyer_id: string | null;
+
+          /**
+           * The Naver Pay transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
         }
 
         interface NzBankAccount {
@@ -1734,6 +1770,11 @@ declare module 'stripe' {
            * A unique identifier for the buyer as determined by the local payment processor.
            */
           buyer_id: string | null;
+
+          /**
+           * The Payco transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
         }
 
         interface Paynow {
@@ -1865,6 +1906,11 @@ declare module 'stripe' {
 
         interface RevolutPay {
           funding?: RevolutPay.Funding;
+
+          /**
+           * The Revolut Pay transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
         }
 
         namespace RevolutPay {
@@ -1922,6 +1968,11 @@ declare module 'stripe' {
            * A unique identifier for the buyer as determined by the local payment processor.
            */
           buyer_id: string | null;
+
+          /**
+           * The Samsung Pay transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
         }
 
         interface Satispay {}

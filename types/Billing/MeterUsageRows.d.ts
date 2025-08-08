@@ -40,7 +40,7 @@ declare module 'stripe' {
         } | null;
 
         /**
-         * The unique identifier for the meter.
+         * The unique identifier for the meter. Null if no meters were provided and usage was aggregated across all meters.
          */
         meter_id: string | null;
       }

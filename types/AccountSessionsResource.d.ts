@@ -315,7 +315,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: CapitalFinancing.Features;
         }
@@ -331,7 +331,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: CapitalFinancingApplication.Features;
         }
@@ -347,7 +347,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: CapitalFinancingPromotion.Features;
         }
@@ -363,7 +363,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: CapitalOverview.Features;
         }
@@ -415,7 +415,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: Documents.Features;
         }
@@ -431,7 +431,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: ExportTaxTransactions.Features;
         }
@@ -705,7 +705,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: PaymentMethodSettings.Features;
         }
@@ -798,7 +798,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: PayoutsList.Features;
         }
@@ -814,7 +814,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: ProductTaxCodeSelector.Features;
         }
@@ -848,7 +848,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: ReportingChart.Features;
         }
@@ -864,7 +864,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: TaxRegistrations.Features;
         }
@@ -880,7 +880,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: TaxSettings.Features;
         }
@@ -896,7 +896,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: TaxThresholdMonitoring.Features;
         }
