@@ -29,15 +29,15 @@ app.post(
     try {
       const thinEvent = client.parseThinEvent(req.body, sig, webhookSecret);
 
-      // Fetch the event data to understand the failure
-      const event = await client.v2.core.events.retrieve(thinEvent.id);
-      if (event.type == 'v1.billing.meter.error_report_triggered') {
+      if (thinEvent.type == 'v1.billing.meter.error_report_triggered') {
+        // Fetch the event data to understand the failure
+        const event = await thinEvent.pull();
         const meter = await event.fetchRelatedObject();
-        const meterId = meter.id;
-        console.log(`Success! ${meterId}`);
 
-        // Record the failures and alert your team
-        // Add your logic here
+        console.log(
+          `Meter ${meter.display_name} (id: ${meter.id}) encountered an error: ${event.data.developer_message_summary}`
+        );
+        // Add additional logic here
       }
       res.sendStatus(200);
     } catch (err) {
