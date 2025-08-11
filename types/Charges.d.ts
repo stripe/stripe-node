@@ -325,7 +325,7 @@ declare module 'stripe' {
         network_advice_code: string | null;
 
         /**
-         * For charges declined by the network, a brand specific alphanumeric code which indicates the reason the authorization failed.
+         * For charges declined by the network, an alphanumeric code which indicates the reason the charge failed.
          */
         network_decline_code: string | null;
 
