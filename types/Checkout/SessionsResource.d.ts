@@ -2208,6 +2208,11 @@ declare module 'stripe' {
 
           interface Pix {
             /**
+             * Determines if the amount includes the IOF tax. Defaults to `never`.
+             */
+            amount_includes_iof?: Pix.AmountIncludesIof;
+
+            /**
              * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
              */
             expires_after_seconds?: number;
@@ -2222,6 +2227,10 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+          }
+
+          namespace Pix {
+            type AmountIncludesIof = 'always' | 'never';
           }
 
           interface RevolutPay {
