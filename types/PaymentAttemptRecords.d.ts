@@ -22,6 +22,16 @@ declare module 'stripe' {
       /**
        * A representation of an amount of money, consisting of an amount and a currency.
        */
+      amount: PaymentAttemptRecord.Amount;
+
+      /**
+       * A representation of an amount of money, consisting of an amount and a currency.
+       */
+      amount_authorized: PaymentAttemptRecord.AmountAuthorized;
+
+      /**
+       * A representation of an amount of money, consisting of an amount and a currency.
+       */
       amount_canceled: PaymentAttemptRecord.AmountCanceled;
 
       /**
@@ -37,7 +47,17 @@ declare module 'stripe' {
       /**
        * A representation of an amount of money, consisting of an amount and a currency.
        */
+      amount_refunded: PaymentAttemptRecord.AmountRefunded;
+
+      /**
+       * A representation of an amount of money, consisting of an amount and a currency.
+       */
       amount_requested: PaymentAttemptRecord.AmountRequested;
+
+      /**
+       * ID of the Connect application that created the PaymentAttemptRecord.
+       */
+      application: string | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -80,9 +100,9 @@ declare module 'stripe' {
       payment_record: string | null;
 
       /**
-       * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+       * Processor information associated with this payment.
        */
-      payment_reference: string | null;
+      processor_details: PaymentAttemptRecord.ProcessorDetails;
 
       /**
        * Indicates who reported the payment.
@@ -96,6 +116,30 @@ declare module 'stripe' {
     }
 
     namespace PaymentAttemptRecord {
+      interface Amount {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         */
+        value: number;
+      }
+
+      interface AmountAuthorized {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         */
+        value: number;
+      }
+
       interface AmountCanceled {
         /**
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -103,7 +147,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * A positive integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) for example, 100 cents for 1 USD or 100 for 100 JPY, a zero-decimal currency.
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
          */
         value: number;
       }
@@ -115,7 +159,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * A positive integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) for example, 100 cents for 1 USD or 100 for 100 JPY, a zero-decimal currency.
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
          */
         value: number;
       }
@@ -127,7 +171,19 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * A positive integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) for example, 100 cents for 1 USD or 100 for 100 JPY, a zero-decimal currency.
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         */
+        value: number;
+      }
+
+      interface AmountRefunded {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
          */
         value: number;
       }
@@ -139,7 +195,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * A positive integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) for example, 100 cents for 1 USD or 100 for 100 JPY, a zero-decimal currency.
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
          */
         value: number;
       }
@@ -2192,6 +2248,29 @@ declare module 'stripe' {
         }
 
         interface Zip {}
+      }
+
+      interface ProcessorDetails {
+        /**
+         * Custom processors represent payment processors not modeled directly in
+         * the Stripe API. This resource consists of details about the custom processor
+         * used for this payment attempt.
+         */
+        custom?: ProcessorDetails.Custom;
+
+        /**
+         * The processor used for this payment attempt.
+         */
+        type: 'custom';
+      }
+
+      namespace ProcessorDetails {
+        interface Custom {
+          /**
+           * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+           */
+          payment_reference: string;
+        }
       }
 
       type ReportedBy = 'self' | 'stripe';
