@@ -25,6 +25,13 @@ declare module 'stripe' {
         offline?: Stripe.Emptyable<ConfigurationCreateParams.Offline>;
 
         /**
+         * Configurations for reader security settings.
+         */
+        reader_security?: Stripe.Emptyable<
+          ConfigurationCreateParams.ReaderSecurity
+        >;
+
+        /**
          * Reboot time settings for readers that support customized reboot time configuration.
          */
         reboot_window?: ConfigurationCreateParams.RebootWindow;
@@ -63,6 +70,13 @@ declare module 'stripe' {
            * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
            */
           enabled: boolean;
+        }
+
+        interface ReaderSecurity {
+          /**
+           * Passcode used to access a reader's admin menu.
+           */
+          admin_menu_passcode?: Stripe.Emptyable<string>;
         }
 
         interface RebootWindow {
@@ -679,6 +693,13 @@ declare module 'stripe' {
         offline?: Stripe.Emptyable<ConfigurationUpdateParams.Offline>;
 
         /**
+         * Configurations for reader security settings.
+         */
+        reader_security?: Stripe.Emptyable<
+          ConfigurationUpdateParams.ReaderSecurity
+        >;
+
+        /**
          * Reboot time settings for readers that support customized reboot time configuration.
          */
         reboot_window?: Stripe.Emptyable<
@@ -721,6 +742,13 @@ declare module 'stripe' {
            * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
            */
           enabled: boolean;
+        }
+
+        interface ReaderSecurity {
+          /**
+           * Passcode used to access a reader's admin menu.
+           */
+          admin_menu_passcode?: Stripe.Emptyable<string>;
         }
 
         interface RebootWindow {
