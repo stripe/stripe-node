@@ -2218,6 +2218,11 @@ declare module 'stripe' {
             expires_after_seconds?: number;
 
             /**
+             * Additional fields for mandate creation.
+             */
+            mandate_options?: Pix.MandateOptions;
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -2226,11 +2231,68 @@ declare module 'stripe' {
              *
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
              */
-            setup_future_usage?: 'none';
+            setup_future_usage?: Pix.SetupFutureUsage;
           }
 
           namespace Pix {
             type AmountIncludesIof = 'always' | 'never';
+
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 250 BRL.
+               */
+              amount?: number;
+
+              /**
+               * Determines if the amount includes the IOF tax. Defaults to `never`.
+               */
+              amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+              /**
+               * Type of amount. Defaults to `maximum`.
+               */
+              amount_type?: MandateOptions.AmountType;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+               */
+              currency?: string;
+
+              /**
+               * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+               */
+              end_date?: string;
+
+              /**
+               * Schedule at which the future payments will be charged. Defaults to `weekly`.
+               */
+              payment_schedule?: MandateOptions.PaymentSchedule;
+
+              /**
+               * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+               */
+              reference?: string;
+
+              /**
+               * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+               */
+              start_date?: string;
+            }
+
+            namespace MandateOptions {
+              type AmountIncludesIof = 'always' | 'never';
+
+              type AmountType = 'fixed' | 'maximum';
+
+              type PaymentSchedule =
+                | 'halfyearly'
+                | 'monthly'
+                | 'quarterly'
+                | 'weekly'
+                | 'yearly';
+            }
+
+            type SetupFutureUsage = 'none' | 'off_session';
           }
 
           interface RevolutPay {

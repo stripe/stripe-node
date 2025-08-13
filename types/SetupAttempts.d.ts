@@ -133,6 +133,8 @@ declare module 'stripe' {
 
         payto?: PaymentMethodDetails.Payto;
 
+        pix?: PaymentMethodDetails.Pix;
+
         revolut_pay?: PaymentMethodDetails.RevolutPay;
 
         sepa_debit?: PaymentMethodDetails.SepaDebit;
@@ -529,6 +531,8 @@ declare module 'stripe' {
         interface Paypal {}
 
         interface Payto {}
+
+        interface Pix {}
 
         interface RevolutPay {}
 
