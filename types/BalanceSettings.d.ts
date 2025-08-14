@@ -15,76 +15,82 @@ declare module 'stripe' {
        */
       object: 'balance_settings';
 
-      /**
-       * A Boolean indicating if Stripe should try to reclaim negative balances from an attached bank account. See [Understanding Connect account balances](https://docs.stripe.com/connect/account-balances) for details. The default value is `false` when [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts, otherwise `true`.
-       */
-      debit_negative_balances: boolean | null;
-
-      /**
-       * Settings specific to the account's payouts.
-       */
-      payouts: BalanceSettings.Payouts | null;
-
-      settlement_timing: BalanceSettings.SettlementTiming;
+      payments: BalanceSettings.Payments;
     }
 
     namespace BalanceSettings {
-      interface Payouts {
+      interface Payments {
         /**
-         * Details on when funds from charges are available, and when they are paid out to an external account. See our [Setting Bank and Debit Card Payouts](https://stripe.com/docs/connect/bank-transfers#payout-information) documentation for details.
+         * A Boolean indicating if Stripe should try to reclaim negative balances from an attached bank account. See [Understanding Connect account balances](https://docs.stripe.com/connect/account-balances) for details. The default value is `false` when [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `application`, which includes Custom accounts, otherwise `true`.
          */
-        schedule: Payouts.Schedule | null;
+        debit_negative_balances: boolean | null;
 
         /**
-         * The text that appears on the bank account statement for payouts. If not set, this defaults to the platform's bank descriptor as set in the Dashboard.
+         * Settings specific to the account's payouts.
          */
-        statement_descriptor: string | null;
+        payouts: Payments.Payouts | null;
 
-        /**
-         * Whether the funds in this account can be paid out.
-         */
-        status: Payouts.Status;
+        settlement_timing: Payments.SettlementTiming;
       }
 
-      namespace Payouts {
-        interface Schedule {
+      namespace Payments {
+        interface Payouts {
           /**
-           * How frequently funds will be paid out. One of `manual` (payouts only created via API call), `daily`, `weekly`, or `monthly`.
+           * Details on when funds from charges are available, and when they are paid out to an external account. See our [Setting Bank and Debit Card Payouts](https://stripe.com/docs/connect/bank-transfers#payout-information) documentation for details.
            */
-          interval: Schedule.Interval | null;
+          schedule: Payouts.Schedule | null;
 
           /**
-           * The day of the month funds will be paid out. Only shown if `interval` is monthly. Payouts scheduled between the 29th and 31st of the month are sent on the last day of shorter months.
+           * The text that appears on the bank account statement for payouts. If not set, this defaults to the platform's bank descriptor as set in the Dashboard.
            */
-          monthly_payout_days?: Array<number>;
+          statement_descriptor: string | null;
 
           /**
-           * The days of the week when available funds are paid out, specified as an array, for example, [`monday`, `tuesday`]. Only shown if `interval` is weekly.
+           * Whether the funds in this account can be paid out.
            */
-          weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
+          status: Payouts.Status;
         }
 
-        namespace Schedule {
-          type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
+        namespace Payouts {
+          interface Schedule {
+            /**
+             * How frequently funds will be paid out. One of `manual` (payouts only created via API call), `daily`, `weekly`, or `monthly`.
+             */
+            interval: Schedule.Interval | null;
 
-          type WeeklyPayoutDay =
-            | 'friday'
-            | 'monday'
-            | 'saturday'
-            | 'sunday'
-            | 'thursday'
-            | 'tuesday'
-            | 'wednesday';
+            /**
+             * The day of the month funds will be paid out. Only shown if `interval` is monthly. Payouts scheduled between the 29th and 31st of the month are sent on the last day of shorter months.
+             */
+            monthly_payout_days?: Array<number>;
+
+            /**
+             * The days of the week when available funds are paid out, specified as an array, for example, [`monday`, `tuesday`]. Only shown if `interval` is weekly.
+             */
+            weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
+          }
+
+          namespace Schedule {
+            type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
+
+            type WeeklyPayoutDay =
+              | 'friday'
+              | 'monday'
+              | 'saturday'
+              | 'sunday'
+              | 'thursday'
+              | 'tuesday'
+              | 'wednesday';
+          }
+
+          type Status = 'disabled' | 'enabled';
         }
 
-        type Status = 'disabled' | 'enabled';
-      }
-
-      interface SettlementTiming {
-        /**
-         * The number of days charge funds are held before becoming available.
-         */
-        delay_days: number;
+        interface SettlementTiming {
+          /**
+           * The number of days charge funds are held before becoming available.
+           */
+          delay_days: number;
+        }
       }
     }
   }

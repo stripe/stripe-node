@@ -80,6 +80,8 @@ declare module 'stripe' {
 
         payments: Components.Payments;
 
+        payout_details: Components.PayoutDetails;
+
         payouts: Components.Payouts;
 
         payouts_list: Components.PayoutsList;
@@ -524,6 +526,19 @@ declare module 'stripe' {
              */
             refund_management: boolean;
           }
+        }
+
+        interface PayoutDetails {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: PayoutDetails.Features;
+        }
+
+        namespace PayoutDetails {
+          interface Features {}
         }
 
         interface Payouts {
