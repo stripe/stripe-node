@@ -830,7 +830,12 @@ declare module 'stripe' {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
         }
 
-        interface Billie {}
+        interface Billie {
+          /**
+           * The Billie transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
+        }
 
         interface Blik {
           /**
@@ -2414,7 +2419,12 @@ declare module 'stripe' {
           transaction_id: string | null;
         }
 
-        interface Satispay {}
+        interface Satispay {
+          /**
+           * The Satispay transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
+        }
 
         interface SepaCreditTransfer {
           /**
