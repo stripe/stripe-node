@@ -9,21 +9,7 @@ declare module 'stripe' {
       | 'rate_limit_error'
       | 'authentication_error'
       | 'invalid_grant'
-      | 'temporary_session_expired'
-      | 'non_zero_balance'
-      | 'already_exists'
-      | 'feature_not_enabled'
-      | 'financial_account_not_open'
-      | 'blocked_by_stripe'
-      | 'already_canceled'
-      | 'not_cancelable'
-      | 'insufficient_funds'
-      | 'quota_exceeded'
-      | 'recipient_not_notifiable'
-      | 'invalid_payout_method'
-      | 'controlled_by_dashboard'
-      | 'invalid_payment_method'
-      | 'rate_limit';
+      | 'temporary_session_expired';
     // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
 
     export type StripeRawError = {
@@ -138,21 +124,7 @@ declare module 'stripe' {
           | 'StripeSignatureVerificationError'
           | 'StripeIdempotencyError'
           | 'StripeInvalidGrantError'
-          | 'TemporarySessionExpiredError'
-          | 'NonZeroBalanceError'
-          | 'AlreadyExistsError'
-          | 'FeatureNotEnabledError'
-          | 'FinancialAccountNotOpenError'
-          | 'BlockedByStripeError'
-          | 'AlreadyCanceledError'
-          | 'NotCancelableError'
-          | 'InsufficientFundsError'
-          | 'QuotaExceededError'
-          | 'RecipientNotNotifiableError'
-          | 'InvalidPayoutMethodError'
-          | 'ControlledByDashboardError'
-          | 'InvalidPaymentMethodError'
-          | 'RateLimitError';
+          | 'TemporarySessionExpiredError';
         // errorClassNameEnum: The end of the section generated from our OpenAPI spec
 
         /**
@@ -301,63 +273,6 @@ declare module 'stripe' {
       export class TemporarySessionExpiredError extends StripeError {
         readonly type: 'TemporarySessionExpiredError';
         readonly rawType: 'temporary_session_expired';
-      }
-      export class NonZeroBalanceError extends StripeError {
-        readonly type: 'NonZeroBalanceError';
-        readonly rawType: 'non_zero_balance';
-      }
-      export class AlreadyExistsError extends StripeError {
-        readonly type: 'AlreadyExistsError';
-        readonly rawType: 'already_exists';
-      }
-      export class FeatureNotEnabledError extends StripeError {
-        readonly type: 'FeatureNotEnabledError';
-        readonly rawType: 'feature_not_enabled';
-      }
-      export class FinancialAccountNotOpenError extends StripeError {
-        readonly type: 'FinancialAccountNotOpenError';
-        readonly rawType: 'financial_account_not_open';
-      }
-      export class BlockedByStripeError extends StripeError {
-        readonly type: 'BlockedByStripeError';
-        readonly rawType: 'blocked_by_stripe';
-      }
-      export class AlreadyCanceledError extends StripeError {
-        readonly type: 'AlreadyCanceledError';
-        readonly rawType: 'already_canceled';
-      }
-      export class NotCancelableError extends StripeError {
-        readonly type: 'NotCancelableError';
-        readonly rawType: 'not_cancelable';
-      }
-      export class InsufficientFundsError extends StripeError {
-        readonly type: 'InsufficientFundsError';
-        readonly rawType: 'insufficient_funds';
-      }
-      export class QuotaExceededError extends StripeError {
-        readonly type: 'QuotaExceededError';
-        readonly rawType: 'quota_exceeded';
-      }
-      export class RecipientNotNotifiableError extends StripeError {
-        readonly type: 'RecipientNotNotifiableError';
-        readonly rawType: 'recipient_not_notifiable';
-      }
-      export class InvalidPayoutMethodError extends StripeError {
-        readonly type: 'InvalidPayoutMethodError';
-        readonly rawType: 'invalid_payout_method';
-      }
-      export class ControlledByDashboardError extends StripeError {
-        readonly type: 'ControlledByDashboardError';
-        readonly rawType: 'controlled_by_dashboard';
-      }
-      export class InvalidPaymentMethodError extends StripeError {
-        readonly type: 'InvalidPaymentMethodError';
-        readonly rawType: 'invalid_payment_method';
-        invalid_param: any /* TODO: support nested types in errors */;
-      }
-      export class RateLimitError extends StripeError {
-        readonly type: 'RateLimitError';
-        readonly rawType: 'rate_limit';
       }
       // errorClassDefinitions: The end of the section generated from our OpenAPI spec
     }
