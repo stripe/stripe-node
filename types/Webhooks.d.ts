@@ -2,6 +2,8 @@
 
 declare module 'stripe' {
   namespace Stripe {
+    export type WebhookEvent = Record<string, unknown>;
+
     export class Webhooks {
       /**
        * Constructs and verifies the signature of an Event from the provided details.

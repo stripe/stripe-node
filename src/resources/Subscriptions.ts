@@ -17,6 +17,10 @@ export const Subscriptions = StripeResource.extend({
     fullPath: '/v1/subscriptions',
     methodType: 'list',
   }),
+  attachCadence: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/subscriptions/{subscription}/attach_cadence',
+  }),
   cancel: stripeMethod({
     method: 'DELETE',
     fullPath: '/v1/subscriptions/{subscription_exposed_id}',

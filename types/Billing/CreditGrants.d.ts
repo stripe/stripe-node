@@ -92,6 +92,11 @@ declare module 'stripe' {
       namespace CreditGrant {
         interface Amount {
           /**
+           * The custom pricing unit amount.
+           */
+          custom_pricing_unit?: Amount.CustomPricingUnit | null;
+
+          /**
            * The monetary amount.
            */
           monetary: Amount.Monetary | null;
@@ -99,10 +104,22 @@ declare module 'stripe' {
           /**
            * The type of this amount. We currently only support `monetary` billing credits.
            */
-          type: 'monetary';
+          type: Amount.Type;
         }
 
         namespace Amount {
+          interface CustomPricingUnit {
+            /**
+             * Unique identifier for the object.
+             */
+            id: string;
+
+            /**
+             * A positive integer representing the amount.
+             */
+            value: string;
+          }
+
           interface Monetary {
             /**
              * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -114,6 +131,8 @@ declare module 'stripe' {
              */
             value: number;
           }
+
+          type Type = 'custom_pricing_unit' | 'monetary';
         }
 
         interface ApplicabilityConfig {
@@ -122,6 +141,11 @@ declare module 'stripe' {
 
         namespace ApplicabilityConfig {
           interface Scope {
+            /**
+             * The billable items that credit grants can apply to. We currently only support metered billable items. Cannot be used in combination with `price_type` or `prices`.
+             */
+            billable_items?: Array<Scope.BillableItem>;
+
             /**
              * The price type that credit grants can apply to. We currently only support the `metered` price type. This refers to prices that have a [Billing Meter](https://docs.stripe.com/api/billing/meter) attached to them. Cannot be used in combination with `prices`.
              */
@@ -134,6 +158,13 @@ declare module 'stripe' {
           }
 
           namespace Scope {
+            interface BillableItem {
+              /**
+               * Unique identifier for the object.
+               */
+              id: string | null;
+            }
+
             interface Price {
               /**
                * Unique identifier for the object.

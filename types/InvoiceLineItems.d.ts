@@ -148,6 +148,8 @@ declare module 'stripe' {
          * The type of parent that generated this line item
          */
         type: Parent.Type;
+
+        rate_card_subscription_details?: Parent.RateCardSubscriptionDetails;
       }
 
       namespace Parent {
@@ -194,6 +196,14 @@ declare module 'stripe' {
               invoice_line_items: Array<string>;
             }
           }
+        }
+
+        interface RateCardSubscriptionDetails {
+          invoice_item: string;
+
+          rate_card_subscription: string;
+
+          rate_card_version: string;
         }
 
         interface SubscriptionItemDetails {
@@ -246,7 +256,10 @@ declare module 'stripe' {
           }
         }
 
-        type Type = 'invoice_item_details' | 'subscription_item_details';
+        type Type =
+          | 'invoice_item_details'
+          | 'subscription_item_details'
+          | 'rate_card_subscription_details';
       }
 
       interface Period {
@@ -301,12 +314,14 @@ declare module 'stripe' {
         /**
          * The type of the pricing details.
          */
-        type: 'price_details';
+        type: Pricing.Type;
 
         /**
          * The unit amount (in the `currency` specified) of the item which contains a decimal value with at most 12 decimal places.
          */
         unit_amount_decimal: string | null;
+
+        rate_card_rate_details?: Pricing.RateCardRateDetails;
       }
 
       namespace Pricing {
@@ -321,6 +336,16 @@ declare module 'stripe' {
            */
           product: string;
         }
+
+        interface RateCardRateDetails {
+          rate_card: string;
+
+          rate_card_rate: string;
+
+          metered_item: string;
+        }
+
+        type Type = 'price_details' | 'rate_card_rate_details';
       }
 
       interface Tax {

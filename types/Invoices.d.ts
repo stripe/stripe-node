@@ -1086,6 +1086,11 @@ declare module 'stripe' {
 
       interface Parent {
         /**
+         * Details about the billing cadence that generated this invoice
+         */
+        billing_cadence_details?: Parent.BillingCadenceDetails | null;
+
+        /**
          * Details about the quote that generated this invoice
          */
         quote_details: Parent.QuoteDetails | null;
@@ -1102,6 +1107,13 @@ declare module 'stripe' {
       }
 
       namespace Parent {
+        interface BillingCadenceDetails {
+          /**
+           * The billing cadence that generated this invoice
+           */
+          billing_cadence: string;
+        }
+
         interface QuoteDetails {
           /**
            * The quote that generated this invoice
@@ -1150,7 +1162,10 @@ declare module 'stripe' {
           }
         }
 
-        type Type = 'quote_details' | 'subscription_details';
+        type Type =
+          | 'billing_cadence_details'
+          | 'quote_details'
+          | 'subscription_details';
       }
 
       interface PaymentSettings {

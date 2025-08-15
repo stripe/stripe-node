@@ -62,7 +62,6 @@
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
 ///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
-///<reference path='./InvoicePaymentsResource.d.ts' />
 ///<reference path='./InvoiceRenderingTemplatesResource.d.ts' />
 ///<reference path='./InvoicesResource.d.ts' />
 ///<reference path='./Issuing/AuthorizationsResource.d.ts' />
@@ -150,10 +149,33 @@
 ///<reference path='./Treasury/ReceivedDebitsResource.d.ts' />
 ///<reference path='./Treasury/TransactionEntriesResource.d.ts' />
 ///<reference path='./Treasury/TransactionsResource.d.ts' />
+///<reference path='./V2/AccountLinksResource.d.ts' />
+///<reference path='./V2/AccountsResource.d.ts' />
+///<reference path='./V2/Billing/BillSettings/VersionsResource.d.ts' />
+///<reference path='./V2/Billing/BillSettingsResource.d.ts' />
+///<reference path='./V2/Billing/CadencesResource.d.ts' />
+///<reference path='./V2/Billing/CollectionSettings/VersionsResource.d.ts' />
+///<reference path='./V2/Billing/CollectionSettingsResource.d.ts' />
+///<reference path='./V2/Billing/CustomPricingUnitsResource.d.ts' />
+///<reference path='./V2/Billing/IntentsResource.d.ts' />
+///<reference path='./V2/Billing/LicenseFees/VersionsResource.d.ts' />
+///<reference path='./V2/Billing/LicenseFeesResource.d.ts' />
+///<reference path='./V2/Billing/LicensedItemsResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventAdjustmentsResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessionResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
+///<reference path='./V2/Billing/MeteredItemsResource.d.ts' />
+///<reference path='./V2/Billing/PricingPlanSubscriptionsResource.d.ts' />
+///<reference path='./V2/Billing/PricingPlans/ComponentsResource.d.ts' />
+///<reference path='./V2/Billing/PricingPlans/VersionsResource.d.ts' />
+///<reference path='./V2/Billing/PricingPlansResource.d.ts' />
+///<reference path='./V2/Billing/ProfilesResource.d.ts' />
+///<reference path='./V2/Billing/RateCardSubscriptionsResource.d.ts' />
+///<reference path='./V2/Billing/RateCards/RatesResource.d.ts' />
+///<reference path='./V2/Billing/RateCards/VersionsResource.d.ts' />
+///<reference path='./V2/Billing/RateCardsResource.d.ts' />
+///<reference path='./V2/Billing/ServiceActionsResource.d.ts' />
 ///<reference path='./V2/Core/AccountLinksResource.d.ts' />
 ///<reference path='./V2/Core/Accounts/PersonsResource.d.ts' />
 ///<reference path='./V2/Core/AccountsResource.d.ts' />
@@ -176,6 +198,9 @@
 ///<reference path='./V2/MoneyManagement/TransactionEntriesResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionsResource.d.ts' />
 ///<reference path='./V2/Payments/OffSessionPaymentsResource.d.ts' />
+///<reference path='./V2/Reporting/ReportRunsResource.d.ts' />
+///<reference path='./V2/Reporting/ReportsResource.d.ts' />
+///<reference path='./V2/Tax/AutomaticRulesResource.d.ts' />
 ///<reference path='./V2/TestHelpers/FinancialAddressesResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
@@ -345,9 +370,32 @@
 ///<reference path='./Treasury/ReceivedDebits.d.ts' />
 ///<reference path='./Treasury/TransactionEntries.d.ts' />
 ///<reference path='./Treasury/Transactions.d.ts' />
+///<reference path='./V2/AccountLinks.d.ts' />
+///<reference path='./V2/Accounts.d.ts' />
+///<reference path='./V2/Billing/BillSettingVersions.d.ts' />
+///<reference path='./V2/Billing/BillSettings.d.ts' />
+///<reference path='./V2/Billing/Cadences.d.ts' />
+///<reference path='./V2/Billing/CollectionSettingVersions.d.ts' />
+///<reference path='./V2/Billing/CollectionSettings.d.ts' />
+///<reference path='./V2/Billing/CustomPricingUnits.d.ts' />
+///<reference path='./V2/Billing/Intents.d.ts' />
+///<reference path='./V2/Billing/LicenseFeeVersions.d.ts' />
+///<reference path='./V2/Billing/LicenseFees.d.ts' />
+///<reference path='./V2/Billing/LicensedItems.d.ts' />
 ///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
+///<reference path='./V2/Billing/MeteredItems.d.ts' />
+///<reference path='./V2/Billing/PricingPlanComponents.d.ts' />
+///<reference path='./V2/Billing/PricingPlanSubscriptions.d.ts' />
+///<reference path='./V2/Billing/PricingPlanVersions.d.ts' />
+///<reference path='./V2/Billing/PricingPlans.d.ts' />
+///<reference path='./V2/Billing/Profiles.d.ts' />
+///<reference path='./V2/Billing/RateCardRates.d.ts' />
+///<reference path='./V2/Billing/RateCardSubscriptions.d.ts' />
+///<reference path='./V2/Billing/RateCardVersions.d.ts' />
+///<reference path='./V2/Billing/RateCards.d.ts' />
+///<reference path='./V2/Billing/ServiceActions.d.ts' />
 ///<reference path='./V2/Core/AccountLinks.d.ts' />
 ///<reference path='./V2/Core/Accounts.d.ts' />
 ///<reference path='./V2/Core/Persons.d.ts' />
@@ -372,6 +420,9 @@
 ///<reference path='./V2/MoneyManagement/TransactionEntries.d.ts' />
 ///<reference path='./V2/MoneyManagement/Transactions.d.ts' />
 ///<reference path='./V2/Payments/OffSessionPayments.d.ts' />
+///<reference path='./V2/Reporting/ReportRuns.d.ts' />
+///<reference path='./V2/Reporting/Reports.d.ts' />
+///<reference path='./V2/Tax/AutomaticRules.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
@@ -418,7 +469,6 @@ declare module 'stripe' {
     files: Stripe.FilesResource;
     fxQuotes: Stripe.FxQuotesResource;
     invoiceItems: Stripe.InvoiceItemsResource;
-    invoicePayments: Stripe.InvoicePaymentsResource;
     invoiceRenderingTemplates: Stripe.InvoiceRenderingTemplatesResource;
     invoices: Stripe.InvoicesResource;
     mandates: Stripe.MandatesResource;
@@ -579,11 +629,27 @@ declare module 'stripe' {
       transactionEntries: Stripe.Treasury.TransactionEntriesResource;
     };
     v2: {
+      accountLinks: Stripe.V2.AccountLinksResource;
+      accounts: Stripe.V2.AccountsResource;
       billing: {
+        billSettings: Stripe.V2.Billing.BillSettingsResource;
+        cadences: Stripe.V2.Billing.CadencesResource;
+        collectionSettings: Stripe.V2.Billing.CollectionSettingsResource;
+        customPricingUnits: Stripe.V2.Billing.CustomPricingUnitsResource;
+        intents: Stripe.V2.Billing.IntentsResource;
+        licenseFees: Stripe.V2.Billing.LicenseFeesResource;
+        licensedItems: Stripe.V2.Billing.LicensedItemsResource;
         meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
         meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
         meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
         meterEvents: Stripe.V2.Billing.MeterEventsResource;
+        meteredItems: Stripe.V2.Billing.MeteredItemsResource;
+        pricingPlanSubscriptions: Stripe.V2.Billing.PricingPlanSubscriptionsResource;
+        pricingPlans: Stripe.V2.Billing.PricingPlansResource;
+        profiles: Stripe.V2.Billing.ProfilesResource;
+        rateCardSubscriptions: Stripe.V2.Billing.RateCardSubscriptionsResource;
+        rateCards: Stripe.V2.Billing.RateCardsResource;
+        serviceActions: Stripe.V2.Billing.ServiceActionsResource;
       };
       core: {
         accountLinks: Stripe.V2.Core.AccountLinksResource;
@@ -613,6 +679,13 @@ declare module 'stripe' {
       };
       payment: {
         offSessionPayments: Stripe.V2.Payments.OffSessionPaymentsResource;
+      };
+      reporting: {
+        reportRuns: Stripe.V2.Reporting.ReportRunsResource;
+        reports: Stripe.V2.Reporting.ReportsResource;
+      };
+      tax: {
+        automaticRules: Stripe.V2.Tax.AutomaticRulesResource;
       };
       testHelper: {
         financialAddresses: Stripe.V2.TestHelpers.FinancialAddressesResource;
@@ -700,6 +773,49 @@ declare module 'stripe' {
        */
       receivedAt?: number
     ) => Stripe.ThinEvent;
+
+    // these arguments are duplicated from the above
+    /**
+     * Parses webhook event payload into a PushedThinEvent and verifies webhook signature.
+     * To get more information on the event, call the `.pull()` method on the object returned from this function.
+     *
+     * @throws Stripe.errors.StripeSignatureVerificationError
+     */
+    parseThinEvent__experimental: (
+      /**
+       * Raw text body payload received from Stripe.
+       */
+      payload: string | Buffer,
+      /**
+       * Value of the `stripe-signature` header from Stripe.
+       * Typically a string.
+       *
+       * Note that this is typed to accept an array of strings
+       * so that it works seamlessly with express's types,
+       * but will throw if an array is passed in practice
+       * since express should never return this header as an array,
+       * only a string.
+       */
+      header: string | Buffer | Array<string>,
+      /**
+       * Your Webhook Signing Secret for this endpoint (e.g., 'whsec_...').
+       * You can get this [in your dashboard](https://dashboard.stripe.com/webhooks).
+       */
+      secret: string,
+      /**
+       * Seconds of tolerance on timestamps.
+       */
+      tolerance?: number,
+      /**
+       * Optional CryptoProvider to use for computing HMAC signatures.
+       */
+      cryptoProvider?: Stripe.CryptoProvider,
+
+      /**
+       * Optional: timestamp to use when checking signature validity. Defaults to Date.now().
+       */
+      receivedAt?: number
+    ) => Stripe.V2.PushedEvent;
   }
 
   export default Stripe;

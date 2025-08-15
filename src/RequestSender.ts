@@ -468,7 +468,8 @@ export class RequestSender {
     method: string,
     path: string,
     params?: RequestData,
-    options?: RequestOptions
+    options?: RequestOptions,
+    usage?: Array<string>
   ): Promise<any> {
     const requestPromise = new Promise<any>((resolve, reject) => {
       let opts: RequestOpts;
@@ -504,7 +505,8 @@ export class RequestSender {
           host: calculatedOptions.host,
           streaming: !!calculatedOptions.streaming,
           settings: {},
-          usage: ['raw_request'],
+          // If used internally for a non raw_request, overwrite the usage
+          usage: usage || ['raw_request'],
         };
       } catch (err) {
         reject(err);
@@ -712,8 +714,9 @@ export class RequestSender {
           apiVersion: apiVersion,
           clientUserAgent,
           method,
-          userSuppliedHeaders: options.headers,
-          userSuppliedSettings: options.settings,
+          // other callers expect null, but .headers being optional means it's undefined if not supplied. So we normalize to null.
+          userSuppliedHeaders: options.headers ?? null,
+          userSuppliedSettings: options.settings ?? {},
           stripeAccount:
             apiMode == 'v2' ? null : this._stripe.getApiField('stripeAccount'),
           stripeContext:

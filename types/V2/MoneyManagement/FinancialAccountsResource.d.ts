@@ -11,6 +11,11 @@ declare module 'stripe' {
           type: 'storage';
 
           /**
+           * A descriptive name for the FinancialAccount, up to 50 characters long. This name will be used in the Stripe Dashboard and embedded components.
+           */
+          display_name?: string;
+
+          /**
            * Metadata associated with the FinancialAccount.
            */
           metadata?: Stripe.MetadataParam;

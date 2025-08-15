@@ -63,6 +63,11 @@ declare module 'stripe' {
       namespace CreditGrantCreateParams {
         interface Amount {
           /**
+           * The custom pricing unit amount.
+           */
+          custom_pricing_unit?: Amount.CustomPricingUnit;
+
+          /**
            * The monetary amount.
            */
           monetary?: Amount.Monetary;
@@ -70,10 +75,22 @@ declare module 'stripe' {
           /**
            * The type of this amount. We currently only support `monetary` billing credits.
            */
-          type: 'monetary';
+          type: Amount.Type;
         }
 
         namespace Amount {
+          interface CustomPricingUnit {
+            /**
+             * The ID of the custom pricing unit.
+             */
+            id: string;
+
+            /**
+             * A positive integer representing the amount of the credit grant.
+             */
+            value: string;
+          }
+
           interface Monetary {
             /**
              * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) of the `value` parameter.
@@ -85,6 +102,8 @@ declare module 'stripe' {
              */
             value: number;
           }
+
+          type Type = 'custom_pricing_unit' | 'monetary';
         }
 
         interface ApplicabilityConfig {
@@ -97,6 +116,11 @@ declare module 'stripe' {
         namespace ApplicabilityConfig {
           interface Scope {
             /**
+             * A list of billable items that the credit grant can apply to. We currently only support metered billable items. Cannot be used in combination with `price_type` or `prices`.
+             */
+            billable_items?: Array<Scope.BillableItem>;
+
+            /**
              * The price type that credit grants can apply to. We currently only support the `metered` price type. Cannot be used in combination with `prices`.
              */
             price_type?: 'metered';
@@ -108,6 +132,13 @@ declare module 'stripe' {
           }
 
           namespace Scope {
+            interface BillableItem {
+              /**
+               * The billable item ID this credit grant should apply to.
+               */
+              id: string;
+            }
+
             interface Price {
               /**
                * The price ID this credit grant should apply to.

@@ -178,7 +178,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v1/accounts/acc_123',
         response:
-          '{"business_profile":{"annual_revenue":{"amount":1413853096,"currency":"usd","fiscal_year_end":"fiscal_year_end"},"estimated_worker_count":884794319,"mcc":"mcc","minority_owned_business_designation":["prefer_not_to_answer"],"monthly_estimated_revenue":{"amount":1413853096,"currency":"usd"},"name":"name","product_description":"product_description","support_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"support_email":"support_email","support_phone":"support_phone","support_url":"support_url","url":"url"},"business_type":"government_entity","capabilities":{"acss_debit_payments":"inactive","affirm_payments":"pending","afterpay_clearpay_payments":"inactive","alma_payments":"pending","amazon_pay_payments":"inactive","au_becs_debit_payments":"active","automatic_indirect_tax":"pending","bacs_debit_payments":"active","bancontact_payments":"inactive","bank_transfer_payments":"pending","billie_payments":"active","blik_payments":"inactive","boleto_payments":"inactive","card_issuing":"active","card_payments":"active","cartes_bancaires_payments":"active","cashapp_payments":"active","crypto_payments":"inactive","eps_payments":"inactive","fpx_payments":"active","gb_bank_transfer_payments":"pending","giropay_payments":"active","gopay_payments":"active","grabpay_payments":"pending","id_bank_transfer_payments":"pending","id_bank_transfer_payments_bca":"active","ideal_payments":"inactive","india_international_payments":"inactive","jcb_payments":"inactive","jp_bank_transfer_payments":"pending","kakao_pay_payments":"active","klarna_payments":"active","konbini_payments":"active","kr_card_payments":"inactive","legacy_payments":"active","link_payments":"inactive","mb_way_payments":"active","mobilepay_payments":"pending","multibanco_payments":"inactive","mx_bank_transfer_payments":"pending","naver_pay_payments":"active","nz_bank_account_becs_debit_payments":"active","oxxo_payments":"pending","p24_payments":"inactive","pay_by_bank_payments":"active","payco_payments":"inactive","paynow_payments":"active","paypal_payments":"inactive","payto_payments":"pending","pix_payments":"inactive","promptpay_payments":"active","qris_payments":"pending","rechnung_payments":"inactive","revolut_pay_payments":"inactive","samsung_pay_payments":"pending","satispay_payments":"pending","sepa_bank_transfer_payments":"pending","sepa_debit_payments":"inactive","shopeepay_payments":"active","sofort_payments":"active","stripe_balance_payments":"active","swish_payments":"inactive","tax_reporting_us_1099_k":"inactive","tax_reporting_us_1099_misc":"pending","transfers":"inactive","treasury":"pending","treasury_evolve":"inactive","treasury_fifth_third":"inactive","treasury_goldman_sachs":"active","twint_payments":"inactive","us_bank_account_ach_payments":"pending","us_bank_transfer_payments":"pending","zip_payments":"pending"},"charges_enabled":true,"company":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"address_kana":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"address_kanji":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"directors_provided":true,"directorship_declaration":{"date":"3076014","ip":"ip","user_agent":"user_agent"},"executives_provided":true,"export_license_id":"export_license_id","export_purpose_code":"export_purpose_code","name":"name","name_kana":"name_kana","name_kanji":"name_kanji","owners_provided":true,"ownership_declaration":{"date":"3076014","ip":"ip","user_agent":"user_agent"},"ownership_exemption_reason":"qualified_entity_exceeds_ownership_threshold","phone":"phone","registration_date":{"day":99228,"month":104080000,"year":3704893},"structure":"single_member_llc","tax_id_provided":true,"tax_id_registrar":"tax_id_registrar","vat_id_provided":true,"verification":{"document":{"back":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":"1028554472","expired":true,"expires_at":"833811170","file":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"id":"obj_123","livemode":true,"metadata":{"undefined":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"details":"details","details_code":"details_code","front":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":"1028554472","expired":true,"expires_at":"833811170","file":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"id":"obj_123","livemode":true,"metadata":{"undefined":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"}}}},"controller":{"application":{"loss_liable":true,"onboarding_owner":true,"pricing_controls":true},"dashboard":{"type":"express"},"fees":{"payer":"account"},"is_controller":true,"losses":{"payments":"stripe"},"requirement_collection":"application","stripe_dashboard":{"type":"express"},"type":"account"},"country":"country","created":"1028554472","default_currency":"usd","details_submitted":true,"email":"email","external_accounts":{"object":"list","has_more":false,"data":[{"account":{"business_profile":{"annual_revenue":{"amount":1413853096,"currency":"usd","fiscal_year_end":"fiscal_year_end"},"estimated_worker_count":884794319,"mcc":"mcc","minority_owned_business_designation":["prefer_not_to_answer"],"monthly_estimated_revenue":{"amount":1413853096,"currency":"usd"},"name":"name","product_description":"product_description","support_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"support_email":"support_email","support_phone":"support_phone","support_url":"support_url","url":"url"},"business_type":"government_entity","capabilities":{"acss_debit_payments":"inactive","affirm_payments":"pending","afterpay_clearpay_payments":"inactive","alma_payments":"pending","amazon_pay_payments":"inactive","au_becs_debit_payments":"active","automatic_indirect_tax":"pending","bacs_debit_payments":"active","bancontact_payments":"inactive","bank_transfer_payments":"pending","billie_payments":"active","blik_payments":"inactive","boleto_payments":"inactive","card_issuing":"active","card_payments":"active","cartes_bancaires_payments":"active","cashapp_payments":"active","crypto_payments":"inactive","eps_payments":"inactive","fpx_payments":"active","gb_bank_transfer_payments":"pending","giropay_payments":"active","gopay_payments":"active","grabpay_payments":"pending","id_bank_transfer_payments":"pending","id_bank_transfer_payments_bca":"active","ideal_payments":"inactive","india_international_payments":"inactive","jcb_payments":"inactive","jp_bank_transfer_payments":"pending","kakao_pay_payments":"active","klarna_payments":"active","konbini_payments":"active","kr_card_payments":"inactive","legacy_payments":"active","link_payments":"inactive","mb_way_payments":"active","mobilepay_payments":"pending","multibanco_payments":"inactive","mx_bank_transfer_payments":"pending","naver_pay_payments":"active","nz_bank_account_becs_debit_payments":"active","oxxo_payments":"pending","p24_payments":"inactive","pay_by_bank_payments":"active","payco_payments":"inactive","paynow_payments":"active","paypal_payments":"inactive","payto_payments":"pending","pix_payments":"inactive","promptpay_payments":"active","qris_payments":"pending","rechnung_payments":"inactive","revolut_pay_payments":"inactive","samsung_pay_payments":"pending","satispay_payments":"pending","sepa_bank_transfer_payments":"pending","sepa_debit_payments":"inactive","shopeepay_payments":"active","sofort_payments":"active","stripe_balance_payments":"active","swish_payments":"inactive","tax_reporting_us_1099_k":"inactive","tax_reporting_us_1099_misc":"pending","transfers":"inactive","treasury":"pending","treasury_evolve":"inactive","treasury_fifth_third":"inactive","treasury_goldman_sachs":"active","twint_payments":"inactive","us_bank_account_ach_payments":"pending","us_bank_transfer_payments":"pending","zip_payments":"pending"},"charges_enabled":true,"company":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"address_kana":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"address_kanji":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"directors_provided":true,"directorship_declaration":{"date":"3076014","ip":"ip","user_agent":"user_agent"},"executives_provided":true,"export_license_id":"export_license_id","export_purpose_code":"export_purpose_code","name":"name","name_kana":"name_kana","name_kanji":"name_kanji","owners_provided":true,"ownership_declaration":{"date":"3076014","ip":"ip","user_agent":"user_agent"},"ownership_exemption_reason":"qualified_entity_exceeds_ownership_threshold","phone":"phone","registration_date":{"day":99228,"month":104080000,"year":3704893},"structure":"single_member_llc","tax_id_provided":true,"tax_id_registrar":"tax_id_registrar","vat_id_provided":true,"verification":{"document":{"back":null,"details":"details","details_code":"details_code","front":null}}},"controller":{"application":{"loss_liable":true,"onboarding_owner":true,"pricing_controls":true},"dashboard":{"type":"express"},"fees":{"payer":"account"},"is_controller":true,"losses":{"payments":"stripe"},"requirement_collection":"application","stripe_dashboard":{"type":"express"},"type":"account"},"country":"country","created":"1028554472","default_currency":"usd","details_submitted":true,"email":"email","external_accounts":{"object":"list","has_more":false,"data":[null]},"future_requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":"270965154","currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"groups":{"payments_pricing":"payments_pricing"},"id":"obj_123","individual":null,"metadata":{"undefined":"metadata"},"object":"account","payouts_enabled":true,"requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":"270965154","currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"risk_controls":{"charges":{"pause_requested":true},"payouts":{"pause_requested":true},"rejected_reason":"fraud_other"},"settings":{"bacs_debit_payments":{"display_name":"display_name","service_user_number":"service_user_number"},"bank_bca_onboarding":{"account_holder_name":"account_holder_name","business_account_number":"business_account_number"},"branding":{"icon":null,"logo":null,"primary_color":"primary_color","secondary_color":"secondary_color"},"capital":{"payout_destination":{"undefined":"payout_destination"},"payout_destination_selector":{"undefined":["payout_destination_selector"]}},"card_issuing":{"tos_acceptance":{"date":"3076014","ip":"ip","user_agent":"user_agent"}},"card_payments":{"decline_on":{"avs_failure":true,"cvc_failure":true},"statement_descriptor_prefix":"statement_descriptor_prefix","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"dashboard":{"display_name":"display_name","timezone":"timezone"},"invoices":{"default_account_tax_ids":[null],"hosted_payment_method_save":"offer"},"payments":{"statement_descriptor":"statement_descriptor","statement_descriptor_kana":"statement_descriptor_kana","statement_descriptor_kanji":"statement_descriptor_kanji","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"payouts":{"debit_negative_balances":true,"schedule":{"delay_days":1647351405,"interval":"interval","monthly_anchor":1920305369,"monthly_payout_days":[656202210],"weekly_anchor":"weekly_anchor","weekly_payout_days":["sunday"]},"statement_descriptor":"statement_descriptor"},"sepa_debit_payments":{"creditor_id":"creditor_id"},"tax_forms":{"consented_to_paperless_delivery":true},"treasury":{"tos_acceptance":{"date":"3076014","ip":"ip","user_agent":"user_agent"}}},"tos_acceptance":{"date":"3076014","ip":"ip","service_agreement":"service_agreement","user_agent":"user_agent"},"type":"none"},"account_holder_name":"account_holder_name","account_holder_type":"account_holder_type","account_type":"account_type","available_payout_methods":["standard"],"bank_name":"bank_name","country":"country","currency":"usd","customer":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"balance":339185956,"cash_balance":null,"created":"1028554472","currency":"usd","customer_account":"customer_account","default_source":null,"delinquent":true,"description":"description","discount":null,"email":"email","id":"obj_123","invoice_credit_balance":{"undefined":1267696360},"invoice_prefix":"invoice_prefix","invoice_settings":{"custom_fields":[{"name":"name","value":"value"}],"default_payment_method":null,"footer":"footer","rendering_options":{"amount_tax_display":"amount_tax_display","template":"template"}},"livemode":true,"metadata":{"undefined":"metadata"},"name":"name","next_invoice_sequence":1356358751,"object":"customer","phone":"phone","preferred_locales":["preferred_locales"],"shipping":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"carrier":"carrier","name":"name","phone":"phone","tracking_number":"tracking_number"},"sources":{"object":"list","has_more":false,"data":[null]},"subscriptions":{"object":"list","has_more":false,"data":[null]},"tax":{"automatic_tax":"unrecognized_location","ip_address":"ip_address","location":{"country":"country","source":"ip_address","state":"state"}},"tax_exempt":"reverse","tax_ids":{"object":"list","has_more":false,"data":[null]},"test_clock":null},"default_for_currency":true,"fingerprint":"fingerprint","future_requirements":{"currently_due":["currently_due"],"errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"past_due":["past_due"],"pending_verification":["pending_verification"]},"id":"obj_123","last4":"last4","metadata":{"undefined":"metadata"},"object":"bank_account","requirements":{"currently_due":["currently_due"],"errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"past_due":["past_due"],"pending_verification":["pending_verification"]},"routing_number":"routing_number","status":"status"}]},"future_requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":"270965154","currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"groups":{"payments_pricing":"payments_pricing"},"id":"obj_123","individual":{"account":"account","additional_tos_acceptances":{"account":{"date":"3076014","ip":"ip","user_agent":"user_agent"}},"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"address_kana":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"address_kanji":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"created":"1028554472","dob":{"day":99228,"month":104080000,"year":3704893},"email":"email","first_name":"first_name","first_name_kana":"first_name_kana","first_name_kanji":"first_name_kanji","full_name_aliases":["full_name_aliases"],"future_requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"currently_due":["currently_due"],"errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"gender":"gender","id":"obj_123","id_number_provided":true,"id_number_secondary_provided":true,"last_name":"last_name","last_name_kana":"last_name_kana","last_name_kanji":"last_name_kanji","maiden_name":"maiden_name","metadata":{"undefined":"metadata"},"nationality":"nationality","object":"person","phone":"phone","political_exposure":"none","registered_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"relationship":{"authorizer":true,"director":true,"executive":true,"legal_guardian":true,"owner":true,"percent_ownership":760989685,"representative":true,"title":"title"},"requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"currently_due":["currently_due"],"errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"ssn_last_4_provided":true,"us_cfpb_data":{"ethnicity_details":{"ethnicity":["not_hispanic_or_latino"],"ethnicity_other":"ethnicity_other"},"race_details":{"race":["haitian"],"race_other":"race_other"},"self_identified_gender":"self_identified_gender"},"verification":{"additional_document":{"back":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":"1028554472","expired":true,"expires_at":"833811170","file":null,"id":"obj_123","livemode":true,"metadata":{"undefined":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"details":"details","details_code":"details_code","front":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":"1028554472","expired":true,"expires_at":"833811170","file":null,"id":"obj_123","livemode":true,"metadata":{"undefined":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"}},"details":"details","details_code":"details_code","document":{"back":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":"1028554472","expired":true,"expires_at":"833811170","file":null,"id":"obj_123","livemode":true,"metadata":{"undefined":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"details":"details","details_code":"details_code","front":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":"1028554472","expired":true,"expires_at":"833811170","file":null,"id":"obj_123","livemode":true,"metadata":{"undefined":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"}},"status":"status"}},"metadata":{"undefined":"metadata"},"object":"account","payouts_enabled":true,"requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":"270965154","currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"risk_controls":{"charges":{"pause_requested":true},"payouts":{"pause_requested":true},"rejected_reason":"fraud_other"},"settings":{"bacs_debit_payments":{"display_name":"display_name","service_user_number":"service_user_number"},"bank_bca_onboarding":{"account_holder_name":"account_holder_name","business_account_number":"business_account_number"},"branding":{"icon":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":"1028554472","expired":true,"expires_at":"833811170","file":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"id":"obj_123","livemode":true,"metadata":{"undefined":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"logo":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":"1028554472","expired":true,"expires_at":"833811170","file":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"id":"obj_123","livemode":true,"metadata":{"undefined":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"primary_color":"primary_color","secondary_color":"secondary_color"},"capital":{"payout_destination":{"undefined":"payout_destination"},"payout_destination_selector":{"undefined":["payout_destination_selector"]}},"card_issuing":{"tos_acceptance":{"date":"3076014","ip":"ip","user_agent":"user_agent"}},"card_payments":{"decline_on":{"avs_failure":true,"cvc_failure":true},"statement_descriptor_prefix":"statement_descriptor_prefix","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"dashboard":{"display_name":"display_name","timezone":"timezone"},"invoices":{"default_account_tax_ids":[{"country":"country","created":"1028554472","customer":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"balance":339185956,"cash_balance":{"available":{"undefined":733902135},"customer":"customer","customer_account":"customer_account","livemode":true,"object":"cash_balance","settings":{"reconciliation_mode":"manual","using_merchant_default":true}},"created":"1028554472","currency":"usd","customer_account":"customer_account","default_source":null,"delinquent":true,"description":"description","discount":{"checkout_session":"checkout_session","coupon":null,"customer":null,"customer_account":"customer_account","end":"100571","id":"obj_123","invoice":"invoice","invoice_item":"invoice_item","object":"discount","promotion_code":null,"start":"109757538","subscription":"subscription","subscription_item":"subscription_item"},"email":"email","id":"obj_123","invoice_credit_balance":{"undefined":1267696360},"invoice_prefix":"invoice_prefix","invoice_settings":{"custom_fields":[{"name":"name","value":"value"}],"default_payment_method":{"acss_debit":{"account_number":"account_number","bank_name":"bank_name","fingerprint":"fingerprint","institution_number":"institution_number","last4":"last4","transit_number":"transit_number"},"affirm":{},"afterpay_clearpay":{},"alipay":{},"allow_redisplay":"unspecified","alma":{},"amazon_pay":{},"au_becs_debit":{"bsb_number":"bsb_number","fingerprint":"fingerprint","last4":"last4"},"bacs_debit":{"fingerprint":"fingerprint","last4":"last4","sort_code":"sort_code"},"bancontact":{},"billie":{},"billing_details":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","phone":"phone","tax_id":"tax_id"},"blik":{},"boleto":{"tax_id":"tax_id"},"card":{"brand":"brand","checks":{"address_line1_check":"address_line1_check","address_postal_code_check":"address_postal_code_check","cvc_check":"cvc_check"},"country":"country","description":"description","display_brand":"display_brand","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","generated_from":{"charge":"charge","payment_method_details":{"card_present":{"amount_authorized":1406151710,"brand":"brand","brand_product":"brand_product","capture_before":"2079401320","cardholder_name":"cardholder_name","country":"country","description":"description","emv_auth_data":"emv_auth_data","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","generated_card":"generated_card","iin":"iin","incremental_authorization_supported":true,"issuer":"issuer","last4":"last4","network":"network","network_transaction_id":"network_transaction_id","offline":{"stored_at":"1692436047","type":"deferred"},"overcapture_supported":true,"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2","receipt":{"account_type":"checking","application_cryptogram":"application_cryptogram","application_preferred_name":"application_preferred_name","authorization_code":"authorization_code","authorization_response_code":"authorization_response_code","cardholder_verification_method":"cardholder_verification_method","dedicated_file_name":"dedicated_file_name","terminal_verification_results":"terminal_verification_results","transaction_status_information":"transaction_status_information"},"wallet":{"type":"samsung_pay"}},"type":"type"},"setup_attempt":null},"iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"regulated_status":"regulated","three_d_secure_usage":{"supported":true},"wallet":{"amex_express_checkout":{},"apple_pay":{},"dynamic_last4":"dynamic_last4","google_pay":{},"link":{},"masterpass":{"billing_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","shipping_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"}},"samsung_pay":{},"type":"link","visa_checkout":{"billing_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","shipping_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"}}}},"card_present":{"brand":"brand","brand_product":"brand_product","cardholder_name":"cardholder_name","country":"country","description":"description","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"offline":{"stored_at":"1692436047","type":"deferred"},"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2","wallet":{"type":"samsung_pay"}},"cashapp":{"buyer_id":"buyer_id","cashtag":"cashtag"},"created":"1028554472","crypto":{},"customer":null,"customer_account":"customer_account","customer_balance":{},"eps":{"bank":"btv_vier_lander_bank"},"fpx":{"account_holder_type":"individual","bank":"bsn"},"giropay":{},"gopay":{},"grabpay":{},"id":"obj_123","id_bank_transfer":{"bank":"bri","bank_code":"bank_code","bank_name":"bank_name","display_name":"display_name"},"ideal":{"bank":"rabobank","bic":"KNABNL2H"},"interac_present":{"brand":"brand","cardholder_name":"cardholder_name","country":"country","description":"description","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2"},"kakao_pay":{},"klarna":{"dob":{"day":99228,"month":104080000,"year":3704893}},"konbini":{},"kr_card":{"brand":"lotte","last4":"last4"},"link":{"email":"email","persistent_token":"persistent_token"},"livemode":true,"mb_way":{},"metadata":{"undefined":"metadata"},"mobilepay":{},"multibanco":{},"naver_pay":{"buyer_id":"buyer_id","funding":"points"},"nz_bank_account":{"account_holder_name":"account_holder_name","bank_code":"bank_code","bank_name":"bank_name","branch_code":"branch_code","last4":"last4","suffix":"suffix"},"object":"payment_method","oxxo":{},"p24":{"bank":"noble_pay"},"pay_by_bank":{},"payco":{},"paynow":{},"paypal":{"country":"country","fingerprint":"fingerprint","payer_email":"payer_email","payer_id":"payer_id","verified_email":"verified_email"},"payto":{"bsb_number":"bsb_number","last4":"last4","pay_id":"pay_id"},"pix":{},"promptpay":{},"qris":{},"radar_options":{"session":"session"},"rechnung":{"dob":{"day":99228,"month":104080000,"year":3704893}},"revolut_pay":{},"samsung_pay":{},"satispay":{},"sepa_debit":{"bank_code":"bank_code","branch_code":"branch_code","country":"country","fingerprint":"fingerprint","generated_from":{"charge":null,"setup_attempt":null},"last4":"last4"},"shopeepay":{},"sofort":{"country":"country"},"stripe_balance":{"account":"account","source_type":"card"},"swish":{},"twint":{},"type":"klarna","us_bank_account":{"account_holder_type":"individual","account_number":"account_number","account_type":"checking","bank_name":"bank_name","financial_connections_account":"financial_connections_account","fingerprint":"fingerprint","last4":"last4","networks":{"preferred":"preferred","supported":["ach"]},"routing_number":"routing_number","status_details":{"blocked":{"network_code":"R29","reason":"bank_account_unusable"}}},"wechat_pay":{},"zip":{}},"footer":"footer","rendering_options":{"amount_tax_display":"amount_tax_display","template":"template"}},"livemode":true,"metadata":{"undefined":"metadata"},"name":"name","next_invoice_sequence":1356358751,"object":"customer","phone":"phone","preferred_locales":["preferred_locales"],"shipping":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"carrier":"carrier","name":"name","phone":"phone","tracking_number":"tracking_number"},"sources":{"object":"list","has_more":false,"data":[null]},"subscriptions":{"object":"list","has_more":false,"data":[{"application":null,"application_fee_percent":282303517,"automatic_tax":{"disabled_reason":"requires_location_inputs","enabled":true,"liability":{"account":null,"type":"account"}},"billing_cycle_anchor":"672980850","billing_cycle_anchor_config":{"day_of_month":1361669285,"hour":3208676,"minute":1074026988,"month":104080000,"second":906279820},"billing_mode":{"type":"classic","updated_at":"295464393"},"billing_thresholds":{"amount_gte":1424546639,"reset_billing_cycle_anchor":true},"cancel_at":"476575768","cancel_at_period_end":true,"canceled_at":"1566574183","cancellation_details":{"comment":"comment","feedback":"other","reason":"payment_disputed"},"collection_method":"charge_automatically","created":"1028554472","currency":"usd","customer":null,"customer_account":"customer_account","days_until_due":555548757,"default_payment_method":null,"default_source":null,"default_tax_rates":[null],"description":"description","discounts":[null],"ended_at":"1730606040","id":"obj_123","invoice_settings":{"account_tax_ids":[null],"issuer":{"account":null,"type":"account"}},"items":{"object":"list","has_more":false,"data":[null]},"last_price_migration_error":{"errored_at":"1641242315","failed_transitions":[{"source_price":"source_price","target_price":"target_price"}],"type":"price_uniqueness_violation"},"latest_invoice":null,"livemode":true,"metadata":{"undefined":"metadata"},"next_pending_invoice_item_invoice":"1422145209","object":"subscription","on_behalf_of":null,"pause_collection":{"behavior":"mark_uncollectible","resumes_at":"556162772"},"payment_settings":{"payment_method_options":{"acss_debit":{"mandate_options":{"transaction_type":"personal"},"verification_method":"microdeposits"},"bancontact":{"preferred_language":"fr"},"card":{"mandate_options":{"amount":1413853096,"amount_type":"maximum","description":"description"},"network":"diners","request_three_d_secure":"any"},"customer_balance":{"bank_transfer":{"eu_bank_transfer":{"country":"ES"},"type":"type"},"funding_type":"bank_transfer"},"id_bank_transfer":{},"konbini":{},"sepa_debit":{},"upi":{"mandate_options":{"amount":1413853096,"amount_type":"maximum","description":"description","end_date":"1725067410"}},"us_bank_account":{"financial_connections":{"filters":{"account_subcategories":["checking"],"institution":"institution"},"permissions":["balances"],"prefetch":["inferred_balances"]},"verification_method":"microdeposits"}},"payment_method_types":["crypto"],"save_default_payment_method":"off"},"pending_invoice_item_interval":{"interval":"month","interval_count":797691627},"pending_setup_intent":null,"pending_update":{"billing_cycle_anchor":"672980850","expires_at":"833811170","prebilling_iterations":1175045469,"subscription_items":[null],"trial_end":"816100302","trial_from_plan":true},"prebilling":{"invoice":null,"period_end":"384656733","period_start":"301041764","update_behavior":"prebill"},"schedule":null,"start_date":"1573629589","status":"trialing","test_clock":null,"transfer_data":{"amount_percent":268993374,"destination":null},"trial_end":"816100302","trial_settings":{"end_behavior":{"missing_payment_method":"cancel"}},"trial_start":"1719733753"}]},"tax":{"automatic_tax":"unrecognized_location","ip_address":"ip_address","location":{"country":"country","source":"ip_address","state":"state"}},"tax_exempt":"reverse","tax_ids":{"object":"list","has_more":false,"data":[{"country":"country","created":"1028554472","customer":null,"customer_account":"customer_account","id":"obj_123","livemode":true,"object":"tax_id","owner":{"account":null,"application":null,"customer":null,"customer_account":"customer_account","type":"customer"},"type":"np_pan","value":"value","verification":{"status":"unverified","verified_address":"verified_address","verified_name":"verified_name"}}]},"test_clock":{"created":"1028554472","deletes_after":"73213179","frozen_time":"2033541876","id":"obj_123","livemode":true,"name":"name","object":"test_helpers.test_clock","status":"advancing","status_details":{"advancing":{"target_frozen_time":"833971362"}}}},"customer_account":"customer_account","id":"obj_123","livemode":true,"object":"tax_id","owner":{"account":{"business_profile":{"annual_revenue":{"amount":1413853096,"currency":"usd","fiscal_year_end":"fiscal_year_end"},"estimated_worker_count":884794319,"mcc":"mcc","minority_owned_business_designation":["prefer_not_to_answer"],"monthly_estimated_revenue":{"amount":1413853096,"currency":"usd"},"name":"name","product_description":"product_description","support_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"support_email":"support_email","support_phone":"support_phone","support_url":"support_url","url":"url"},"business_type":"government_entity","capabilities":{"acss_debit_payments":"inactive","affirm_payments":"pending","afterpay_clearpay_payments":"inactive","alma_payments":"pending","amazon_pay_payments":"inactive","au_becs_debit_payments":"active","automatic_indirect_tax":"pending","bacs_debit_payments":"active","bancontact_payments":"inactive","bank_transfer_payments":"pending","billie_payments":"active","blik_payments":"inactive","boleto_payments":"inactive","card_issuing":"active","card_payments":"active","cartes_bancaires_payments":"active","cashapp_payments":"active","crypto_payments":"inactive","eps_payments":"inactive","fpx_payments":"active","gb_bank_transfer_payments":"pending","giropay_payments":"active","gopay_payments":"active","grabpay_payments":"pending","id_bank_transfer_payments":"pending","id_bank_transfer_payments_bca":"active","ideal_payments":"inactive","india_international_payments":"inactive","jcb_payments":"inactive","jp_bank_transfer_payments":"pending","kakao_pay_payments":"active","klarna_payments":"active","konbini_payments":"active","kr_card_payments":"inactive","legacy_payments":"active","link_payments":"inactive","mb_way_payments":"active","mobilepay_payments":"pending","multibanco_payments":"inactive","mx_bank_transfer_payments":"pending","naver_pay_payments":"active","nz_bank_account_becs_debit_payments":"active","oxxo_payments":"pending","p24_payments":"inactive","pay_by_bank_payments":"active","payco_payments":"inactive","paynow_payments":"active","paypal_payments":"inactive","payto_payments":"pending","pix_payments":"inactive","promptpay_payments":"active","qris_payments":"pending","rechnung_payments":"inactive","revolut_pay_payments":"inactive","samsung_pay_payments":"pending","satispay_payments":"pending","sepa_bank_transfer_payments":"pending","sepa_debit_payments":"inactive","shopeepay_payments":"active","sofort_payments":"active","stripe_balance_payments":"active","swish_payments":"inactive","tax_reporting_us_1099_k":"inactive","tax_reporting_us_1099_misc":"pending","transfers":"inactive","treasury":"pending","treasury_evolve":"inactive","treasury_fifth_third":"inactive","treasury_goldman_sachs":"active","twint_payments":"inactive","us_bank_account_ach_payments":"pending","us_bank_transfer_payments":"pending","zip_payments":"pending"},"charges_enabled":true,"company":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"address_kana":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"address_kanji":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"directors_provided":true,"directorship_declaration":{"date":"3076014","ip":"ip","user_agent":"user_agent"},"executives_provided":true,"export_license_id":"export_license_id","export_purpose_code":"export_purpose_code","name":"name","name_kana":"name_kana","name_kanji":"name_kanji","owners_provided":true,"ownership_declaration":{"date":"3076014","ip":"ip","user_agent":"user_agent"},"ownership_exemption_reason":"qualified_entity_exceeds_ownership_threshold","phone":"phone","registration_date":{"day":99228,"month":104080000,"year":3704893},"structure":"single_member_llc","tax_id_provided":true,"tax_id_registrar":"tax_id_registrar","vat_id_provided":true,"verification":{"document":{"back":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"details":"details","details_code":"details_code","front":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"}}}},"controller":{"application":{"loss_liable":true,"onboarding_owner":true,"pricing_controls":true},"dashboard":{"type":"express"},"fees":{"payer":"account"},"is_controller":true,"losses":{"payments":"stripe"},"requirement_collection":"application","stripe_dashboard":{"type":"express"},"type":"account"},"country":"country","created":"1028554472","default_currency":"usd","details_submitted":true,"email":"email","external_accounts":{"object":"list","has_more":false,"data":[null]},"future_requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":"270965154","currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"groups":{"payments_pricing":"payments_pricing"},"id":"obj_123","individual":{"account":"account","additional_tos_acceptances":{"account":{"date":"3076014","ip":"ip","user_agent":"user_agent"}},"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"address_kana":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"address_kanji":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"created":"1028554472","dob":{"day":99228,"month":104080000,"year":3704893},"email":"email","first_name":"first_name","first_name_kana":"first_name_kana","first_name_kanji":"first_name_kanji","full_name_aliases":["full_name_aliases"],"future_requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"currently_due":["currently_due"],"errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"gender":"gender","id":"obj_123","id_number_provided":true,"id_number_secondary_provided":true,"last_name":"last_name","last_name_kana":"last_name_kana","last_name_kanji":"last_name_kanji","maiden_name":"maiden_name","metadata":{"undefined":"metadata"},"nationality":"nationality","object":"person","phone":"phone","political_exposure":"none","registered_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"relationship":{"authorizer":true,"director":true,"executive":true,"legal_guardian":true,"owner":true,"percent_ownership":760989685,"representative":true,"title":"title"},"requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"currently_due":["currently_due"],"errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"ssn_last_4_provided":true,"us_cfpb_data":{"ethnicity_details":{"ethnicity":["not_hispanic_or_latino"],"ethnicity_other":"ethnicity_other"},"race_details":{"race":["haitian"],"race_other":"race_other"},"self_identified_gender":"self_identified_gender"},"verification":{"additional_document":{"back":null,"details":"details","details_code":"details_code","front":null},"details":"details","details_code":"details_code","document":{"back":null,"details":"details","details_code":"details_code","front":null},"status":"status"}},"metadata":{"undefined":"metadata"},"object":"account","payouts_enabled":true,"requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":"270965154","currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"risk_controls":{"charges":{"pause_requested":true},"payouts":{"pause_requested":true},"rejected_reason":"fraud_other"},"settings":{"bacs_debit_payments":{"display_name":"display_name","service_user_number":"service_user_number"},"bank_bca_onboarding":{"account_holder_name":"account_holder_name","business_account_number":"business_account_number"},"branding":{"icon":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"logo":{"created":"1028554472","expires_at":"833811170","filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"primary_color":"primary_color","secondary_color":"secondary_color"},"capital":{"payout_destination":{"undefined":"payout_destination"},"payout_destination_selector":{"undefined":["payout_destination_selector"]}},"card_issuing":{"tos_acceptance":{"date":"3076014","ip":"ip","user_agent":"user_agent"}},"card_payments":{"decline_on":{"avs_failure":true,"cvc_failure":true},"statement_descriptor_prefix":"statement_descriptor_prefix","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"dashboard":{"display_name":"display_name","timezone":"timezone"},"invoices":{"default_account_tax_ids":[{"country":"country","created":"1028554472","customer":null,"customer_account":"customer_account","id":"obj_123","livemode":true,"object":"tax_id","owner":{"account":null,"application":null,"customer":null,"customer_account":"customer_account","type":"customer"},"type":"np_pan","value":"value","verification":{"status":"unverified","verified_address":"verified_address","verified_name":"verified_name"}}],"hosted_payment_method_save":"offer"},"payments":{"statement_descriptor":"statement_descriptor","statement_descriptor_kana":"statement_descriptor_kana","statement_descriptor_kanji":"statement_descriptor_kanji","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"payouts":{"debit_negative_balances":true,"schedule":{"delay_days":1647351405,"interval":"interval","monthly_anchor":1920305369,"monthly_payout_days":[656202210],"weekly_anchor":"weekly_anchor","weekly_payout_days":["sunday"]},"statement_descriptor":"statement_descriptor"},"sepa_debit_payments":{"creditor_id":"creditor_id"},"tax_forms":{"consented_to_paperless_delivery":true},"treasury":{"tos_acceptance":{"date":"3076014","ip":"ip","user_agent":"user_agent"}}},"tos_acceptance":{"date":"3076014","ip":"ip","service_agreement":"service_agreement","user_agent":"user_agent"},"type":"none"},"application":{"id":"obj_123","name":"name","object":"application"},"customer":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"balance":339185956,"cash_balance":{"available":{"undefined":733902135},"customer":"customer","customer_account":"customer_account","livemode":true,"object":"cash_balance","settings":{"reconciliation_mode":"manual","using_merchant_default":true}},"created":"1028554472","currency":"usd","customer_account":"customer_account","default_source":null,"delinquent":true,"description":"description","discount":{"checkout_session":"checkout_session","coupon":null,"customer":null,"customer_account":"customer_account","end":"100571","id":"obj_123","invoice":"invoice","invoice_item":"invoice_item","object":"discount","promotion_code":null,"start":"109757538","subscription":"subscription","subscription_item":"subscription_item"},"email":"email","id":"obj_123","invoice_credit_balance":{"undefined":1267696360},"invoice_prefix":"invoice_prefix","invoice_settings":{"custom_fields":[{"name":"name","value":"value"}],"default_payment_method":{"acss_debit":{"account_number":"account_number","bank_name":"bank_name","fingerprint":"fingerprint","institution_number":"institution_number","last4":"last4","transit_number":"transit_number"},"affirm":{},"afterpay_clearpay":{},"alipay":{},"allow_redisplay":"unspecified","alma":{},"amazon_pay":{},"au_becs_debit":{"bsb_number":"bsb_number","fingerprint":"fingerprint","last4":"last4"},"bacs_debit":{"fingerprint":"fingerprint","last4":"last4","sort_code":"sort_code"},"bancontact":{},"billie":{},"billing_details":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","phone":"phone","tax_id":"tax_id"},"blik":{},"boleto":{"tax_id":"tax_id"},"card":{"brand":"brand","checks":{"address_line1_check":"address_line1_check","address_postal_code_check":"address_postal_code_check","cvc_check":"cvc_check"},"country":"country","description":"description","display_brand":"display_brand","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","generated_from":{"charge":"charge","payment_method_details":{"card_present":{"amount_authorized":1406151710,"brand":"brand","brand_product":"brand_product","capture_before":"2079401320","cardholder_name":"cardholder_name","country":"country","description":"description","emv_auth_data":"emv_auth_data","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","generated_card":"generated_card","iin":"iin","incremental_authorization_supported":true,"issuer":"issuer","last4":"last4","network":"network","network_transaction_id":"network_transaction_id","offline":{"stored_at":"1692436047","type":"deferred"},"overcapture_supported":true,"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2","receipt":{"account_type":"checking","application_cryptogram":"application_cryptogram","application_preferred_name":"application_preferred_name","authorization_code":"authorization_code","authorization_response_code":"authorization_response_code","cardholder_verification_method":"cardholder_verification_method","dedicated_file_name":"dedicated_file_name","terminal_verification_results":"terminal_verification_results","transaction_status_information":"transaction_status_information"},"wallet":{"type":"samsung_pay"}},"type":"type"},"setup_attempt":null},"iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"regulated_status":"regulated","three_d_secure_usage":{"supported":true},"wallet":{"amex_express_checkout":{},"apple_pay":{},"dynamic_last4":"dynamic_last4","google_pay":{},"link":{},"masterpass":{"billing_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","shipping_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"}},"samsung_pay":{},"type":"link","visa_checkout":{"billing_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","shipping_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"}}}},"card_present":{"brand":"brand","brand_product":"brand_product","cardholder_name":"cardholder_name","country":"country","description":"description","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"offline":{"stored_at":"1692436047","type":"deferred"},"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2","wallet":{"type":"samsung_pay"}},"cashapp":{"buyer_id":"buyer_id","cashtag":"cashtag"},"created":"1028554472","crypto":{},"customer":null,"customer_account":"customer_account","customer_balance":{},"eps":{"bank":"btv_vier_lander_bank"},"fpx":{"account_holder_type":"individual","bank":"bsn"},"giropay":{},"gopay":{},"grabpay":{},"id":"obj_123","id_bank_transfer":{"bank":"bri","bank_code":"bank_code","bank_name":"bank_name","display_name":"display_name"},"ideal":{"bank":"rabobank","bic":"KNABNL2H"},"interac_present":{"brand":"brand","cardholder_name":"cardholder_name","country":"country","description":"description","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2"},"kakao_pay":{},"klarna":{"dob":{"day":99228,"month":104080000,"year":3704893}},"konbini":{},"kr_card":{"brand":"lotte","last4":"last4"},"link":{"email":"email","persistent_token":"persistent_token"},"livemode":true,"mb_way":{},"metadata":{"undefined":"metadata"},"mobilepay":{},"multibanco":{},"naver_pay":{"buyer_id":"buyer_id","funding":"points"},"nz_bank_account":{"account_holder_name":"account_holder_name","bank_code":"bank_code","bank_name":"bank_name","branch_code":"branch_code","last4":"last4","suffix":"suffix"},"object":"payment_method","oxxo":{},"p24":{"bank":"noble_pay"},"pay_by_bank":{},"payco":{},"paynow":{},"paypal":{"country":"country","fingerprint":"fingerprint","payer_email":"payer_email","payer_id":"payer_id","verified_email":"verified_email"},"payto":{"bsb_number":"bsb_number","last4":"last4","pay_id":"pay_id"},"pix":{},"promptpay":{},"qris":{},"radar_options":{"session":"session"},"rechnung":{"dob":{"day":99228,"month":104080000,"year":3704893}},"revolut_pay":{},"samsung_pay":{},"satispay":{},"sepa_debit":{"bank_code":"bank_code","branch_code":"branch_code","country":"country","fingerprint":"fingerprint","generated_from":{"charge":null,"setup_attempt":null},"last4":"last4"},"shopeepay":{},"sofort":{"country":"country"},"stripe_balance":{"account":"account","source_type":"card"},"swish":{},"twint":{},"type":"klarna","us_bank_account":{"account_holder_type":"individual","account_number":"account_number","account_type":"checking","bank_name":"bank_name","financial_connections_account":"financial_connections_account","fingerprint":"fingerprint","last4":"last4","networks":{"preferred":"preferred","supported":["ach"]},"routing_number":"routing_number","status_details":{"blocked":{"network_code":"R29","reason":"bank_account_unusable"}}},"wechat_pay":{},"zip":{}},"footer":"footer","rendering_options":{"amount_tax_display":"amount_tax_display","template":"template"}},"livemode":true,"metadata":{"undefined":"metadata"},"name":"name","next_invoice_sequence":1356358751,"object":"customer","phone":"phone","preferred_locales":["preferred_locales"],"shipping":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"carrier":"carrier","name":"name","phone":"phone","tracking_number":"tracking_number"},"sources":{"object":"list","has_more":false,"data":[null]},"subscriptions":{"object":"list","has_more":false,"data":[{"application":null,"application_fee_percent":282303517,"automatic_tax":{"disabled_reason":"requires_location_inputs","enabled":true,"liability":{"account":null,"type":"account"}},"billing_cycle_anchor":"672980850","billing_cycle_anchor_config":{"day_of_month":1361669285,"hour":3208676,"minute":1074026988,"month":104080000,"second":906279820},"billing_mode":{"type":"classic","updated_at":"295464393"},"billing_thresholds":{"amount_gte":1424546639,"reset_billing_cycle_anchor":true},"cancel_at":"476575768","cancel_at_period_end":true,"canceled_at":"1566574183","cancellation_details":{"comment":"comment","feedback":"other","reason":"payment_disputed"},"collection_method":"charge_automatically","created":"1028554472","currency":"usd","customer":null,"customer_account":"customer_account","days_until_due":555548757,"default_payment_method":null,"default_source":null,"default_tax_rates":[null],"description":"description","discounts":[null],"ended_at":"1730606040","id":"obj_123","invoice_settings":{"account_tax_ids":[null],"issuer":{"account":null,"type":"account"}},"items":{"object":"list","has_more":false,"data":[null]},"last_price_migration_error":{"errored_at":"1641242315","failed_transitions":[{"source_price":"source_price","target_price":"target_price"}],"type":"price_uniqueness_violation"},"latest_invoice":null,"livemode":true,"metadata":{"undefined":"metadata"},"next_pending_invoice_item_invoice":"1422145209","object":"subscription","on_behalf_of":null,"pause_collection":{"behavior":"mark_uncollectible","resumes_at":"556162772"},"payment_settings":{"payment_method_options":{"acss_debit":{"mandate_options":{"transaction_type":"personal"},"verification_method":"microdeposits"},"bancontact":{"preferred_language":"fr"},"card":{"mandate_options":{"amount":1413853096,"amount_type":"maximum","description":"description"},"network":"diners","request_three_d_secure":"any"},"customer_balance":{"bank_transfer":{"eu_bank_transfer":{"country":"ES"},"type":"type"},"funding_type":"bank_transfer"},"id_bank_transfer":{},"konbini":{},"sepa_debit":{},"upi":{"mandate_options":{"amount":1413853096,"amount_type":"maximum","description":"description","end_date":"1725067410"}},"us_bank_account":{"financial_connections":{"filters":{"account_subcategories":["checking"],"institution":"institution"},"permissions":["balances"],"prefetch":["inferred_balances"]},"verification_method":"microdeposits"}},"payment_method_types":["crypto"],"save_default_payment_method":"off"},"pending_invoice_item_interval":{"interval":"month","interval_count":797691627},"pending_setup_intent":null,"pending_update":{"billing_cycle_anchor":"672980850","expires_at":"833811170","prebilling_iterations":1175045469,"subscription_items":[null],"trial_end":"816100302","trial_from_plan":true},"prebilling":{"invoice":null,"period_end":"384656733","period_start":"301041764","update_behavior":"prebill"},"schedule":null,"start_date":"1573629589","status":"trialing","test_clock":null,"transfer_data":{"amount_percent":268993374,"destination":null},"trial_end":"816100302","trial_settings":{"end_behavior":{"missing_payment_method":"cancel"}},"trial_start":"1719733753"}]},"tax":{"automatic_tax":"unrecognized_location","ip_address":"ip_address","location":{"country":"country","source":"ip_address","state":"state"}},"tax_exempt":"reverse","tax_ids":{"object":"list","has_more":false,"data":[{"country":"country","created":"1028554472","customer":null,"customer_account":"customer_account","id":"obj_123","livemode":true,"object":"tax_id","owner":{"account":null,"application":null,"customer":null,"customer_account":"customer_account","type":"customer"},"type":"np_pan","value":"value","verification":{"status":"unverified","verified_address":"verified_address","verified_name":"verified_name"}}]},"test_clock":{"created":"1028554472","deletes_after":"73213179","frozen_time":"2033541876","id":"obj_123","livemode":true,"name":"name","object":"test_helpers.test_clock","status":"advancing","status_details":{"advancing":{"target_frozen_time":"833971362"}}}},"customer_account":"customer_account","type":"customer"},"type":"np_pan","value":"value","verification":{"status":"unverified","verified_address":"verified_address","verified_name":"verified_name"}}],"hosted_payment_method_save":"offer"},"payments":{"statement_descriptor":"statement_descriptor","statement_descriptor_kana":"statement_descriptor_kana","statement_descriptor_kanji":"statement_descriptor_kanji","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"payouts":{"debit_negative_balances":true,"schedule":{"delay_days":1647351405,"interval":"interval","monthly_anchor":1920305369,"monthly_payout_days":[656202210],"weekly_anchor":"weekly_anchor","weekly_payout_days":["sunday"]},"statement_descriptor":"statement_descriptor"},"sepa_debit_payments":{"creditor_id":"creditor_id"},"tax_forms":{"consented_to_paperless_delivery":true},"treasury":{"tos_acceptance":{"date":"3076014","ip":"ip","user_agent":"user_agent"}}},"tos_acceptance":{"date":"3076014","ip":"ip","service_agreement":"service_agreement","user_agent":"user_agent"},"type":"none"}',
+          '{"business_profile":{"annual_revenue":{"amount":1413853096,"currency":"usd","fiscal_year_end":"fiscal_year_end"},"estimated_worker_count":884794319,"mcc":"mcc","minority_owned_business_designation":["prefer_not_to_answer"],"monthly_estimated_revenue":{"amount":1413853096,"currency":"usd"},"name":"name","product_description":"product_description","support_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"support_email":"support_email","support_phone":"support_phone","support_url":"support_url","url":"url"},"business_type":"government_entity","capabilities":{"acss_debit_payments":"inactive","affirm_payments":"pending","afterpay_clearpay_payments":"inactive","alma_payments":"pending","amazon_pay_payments":"inactive","au_becs_debit_payments":"active","automatic_indirect_tax":"pending","bacs_debit_payments":"active","bancontact_payments":"inactive","bank_transfer_payments":"pending","billie_payments":"active","blik_payments":"inactive","boleto_payments":"inactive","card_issuing":"active","card_payments":"active","cartes_bancaires_payments":"active","cashapp_payments":"active","crypto_payments":"inactive","eps_payments":"inactive","fpx_payments":"active","gb_bank_transfer_payments":"pending","giropay_payments":"active","gopay_payments":"active","grabpay_payments":"pending","id_bank_transfer_payments":"pending","id_bank_transfer_payments_bca":"active","ideal_payments":"inactive","india_international_payments":"inactive","jcb_payments":"inactive","jp_bank_transfer_payments":"pending","kakao_pay_payments":"active","klarna_payments":"active","konbini_payments":"active","kr_card_payments":"inactive","legacy_payments":"active","link_payments":"inactive","mb_way_payments":"active","mobilepay_payments":"pending","multibanco_payments":"inactive","mx_bank_transfer_payments":"pending","naver_pay_payments":"active","nz_bank_account_becs_debit_payments":"active","oxxo_payments":"pending","p24_payments":"inactive","pay_by_bank_payments":"active","payco_payments":"inactive","paynow_payments":"active","paypal_payments":"inactive","payto_payments":"pending","pix_payments":"inactive","promptpay_payments":"active","qris_payments":"pending","rechnung_payments":"inactive","revolut_pay_payments":"inactive","samsung_pay_payments":"pending","satispay_payments":"pending","sepa_bank_transfer_payments":"pending","sepa_debit_payments":"inactive","shopeepay_payments":"active","sofort_payments":"active","stripe_balance_payments":"active","swish_payments":"inactive","tax_reporting_us_1099_k":"inactive","tax_reporting_us_1099_misc":"pending","transfers":"inactive","treasury":"pending","treasury_evolve":"inactive","treasury_fifth_third":"inactive","treasury_goldman_sachs":"active","twint_payments":"inactive","us_bank_account_ach_payments":"pending","us_bank_transfer_payments":"pending","zip_payments":"pending"},"charges_enabled":true,"company":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"address_kana":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"address_kanji":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"directors_provided":true,"directorship_declaration":{"date":3076014,"ip":"ip","user_agent":"user_agent"},"executives_provided":true,"export_license_id":"export_license_id","export_purpose_code":"export_purpose_code","name":"name","name_kana":"name_kana","name_kanji":"name_kanji","owners_provided":true,"ownership_declaration":{"date":3076014,"ip":"ip","user_agent":"user_agent"},"ownership_exemption_reason":"qualified_entity_exceeds_ownership_threshold","phone":"phone","registration_date":{"day":99228,"month":104080000,"year":3704893},"structure":"single_member_llc","tax_id_provided":true,"tax_id_registrar":"tax_id_registrar","vat_id_provided":true,"verification":{"document":{"back":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":1028554472,"expired":true,"expires_at":833811170,"file":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"details":"details","details_code":"details_code","front":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":1028554472,"expired":true,"expires_at":833811170,"file":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"}}}},"controller":{"application":{"loss_liable":true,"onboarding_owner":true,"pricing_controls":true},"dashboard":{"type":"express"},"fees":{"payer":"account"},"is_controller":true,"losses":{"payments":"stripe"},"requirement_collection":"application","stripe_dashboard":{"type":"express"},"type":"account"},"country":"country","created":1028554472,"default_currency":"usd","details_submitted":true,"email":"email","external_accounts":{"object":"list","has_more":false,"data":[{"account":{"business_profile":{"annual_revenue":{"amount":1413853096,"currency":"usd","fiscal_year_end":"fiscal_year_end"},"estimated_worker_count":884794319,"mcc":"mcc","minority_owned_business_designation":["prefer_not_to_answer"],"monthly_estimated_revenue":{"amount":1413853096,"currency":"usd"},"name":"name","product_description":"product_description","support_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"support_email":"support_email","support_phone":"support_phone","support_url":"support_url","url":"url"},"business_type":"government_entity","capabilities":{"acss_debit_payments":"inactive","affirm_payments":"pending","afterpay_clearpay_payments":"inactive","alma_payments":"pending","amazon_pay_payments":"inactive","au_becs_debit_payments":"active","automatic_indirect_tax":"pending","bacs_debit_payments":"active","bancontact_payments":"inactive","bank_transfer_payments":"pending","billie_payments":"active","blik_payments":"inactive","boleto_payments":"inactive","card_issuing":"active","card_payments":"active","cartes_bancaires_payments":"active","cashapp_payments":"active","crypto_payments":"inactive","eps_payments":"inactive","fpx_payments":"active","gb_bank_transfer_payments":"pending","giropay_payments":"active","gopay_payments":"active","grabpay_payments":"pending","id_bank_transfer_payments":"pending","id_bank_transfer_payments_bca":"active","ideal_payments":"inactive","india_international_payments":"inactive","jcb_payments":"inactive","jp_bank_transfer_payments":"pending","kakao_pay_payments":"active","klarna_payments":"active","konbini_payments":"active","kr_card_payments":"inactive","legacy_payments":"active","link_payments":"inactive","mb_way_payments":"active","mobilepay_payments":"pending","multibanco_payments":"inactive","mx_bank_transfer_payments":"pending","naver_pay_payments":"active","nz_bank_account_becs_debit_payments":"active","oxxo_payments":"pending","p24_payments":"inactive","pay_by_bank_payments":"active","payco_payments":"inactive","paynow_payments":"active","paypal_payments":"inactive","payto_payments":"pending","pix_payments":"inactive","promptpay_payments":"active","qris_payments":"pending","rechnung_payments":"inactive","revolut_pay_payments":"inactive","samsung_pay_payments":"pending","satispay_payments":"pending","sepa_bank_transfer_payments":"pending","sepa_debit_payments":"inactive","shopeepay_payments":"active","sofort_payments":"active","stripe_balance_payments":"active","swish_payments":"inactive","tax_reporting_us_1099_k":"inactive","tax_reporting_us_1099_misc":"pending","transfers":"inactive","treasury":"pending","treasury_evolve":"inactive","treasury_fifth_third":"inactive","treasury_goldman_sachs":"active","twint_payments":"inactive","us_bank_account_ach_payments":"pending","us_bank_transfer_payments":"pending","zip_payments":"pending"},"charges_enabled":true,"company":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"address_kana":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"address_kanji":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"directors_provided":true,"directorship_declaration":{"date":3076014,"ip":"ip","user_agent":"user_agent"},"executives_provided":true,"export_license_id":"export_license_id","export_purpose_code":"export_purpose_code","name":"name","name_kana":"name_kana","name_kanji":"name_kanji","owners_provided":true,"ownership_declaration":{"date":3076014,"ip":"ip","user_agent":"user_agent"},"ownership_exemption_reason":"qualified_entity_exceeds_ownership_threshold","phone":"phone","registration_date":{"day":99228,"month":104080000,"year":3704893},"structure":"single_member_llc","tax_id_provided":true,"tax_id_registrar":"tax_id_registrar","vat_id_provided":true,"verification":{"document":{"back":null,"details":"details","details_code":"details_code","front":null}}},"controller":{"application":{"loss_liable":true,"onboarding_owner":true,"pricing_controls":true},"dashboard":{"type":"express"},"fees":{"payer":"account"},"is_controller":true,"losses":{"payments":"stripe"},"requirement_collection":"application","stripe_dashboard":{"type":"express"},"type":"account"},"country":"country","created":1028554472,"default_currency":"usd","details_submitted":true,"email":"email","external_accounts":{"object":"list","has_more":false,"data":[null]},"future_requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":270965154,"currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"groups":{"payments_pricing":"payments_pricing"},"id":"obj_123","individual":null,"metadata":{"key":"metadata"},"object":"account","payouts_enabled":true,"requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":270965154,"currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"risk_controls":{"charges":{"pause_requested":true},"payouts":{"pause_requested":true},"rejected_reason":"fraud_other"},"settings":{"bacs_debit_payments":{"display_name":"display_name","service_user_number":"service_user_number"},"bank_bca_onboarding":{"account_holder_name":"account_holder_name","business_account_number":"business_account_number"},"branding":{"icon":null,"logo":null,"primary_color":"primary_color","secondary_color":"secondary_color"},"capital":{"payout_destination":{"key":"payout_destination"},"payout_destination_selector":{"key":["payout_destination_selector"]}},"card_issuing":{"tos_acceptance":{"date":3076014,"ip":"ip","user_agent":"user_agent"}},"card_payments":{"decline_on":{"avs_failure":true,"cvc_failure":true},"statement_descriptor_prefix":"statement_descriptor_prefix","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"dashboard":{"display_name":"display_name","timezone":"timezone"},"invoices":{"default_account_tax_ids":[null],"hosted_payment_method_save":"offer"},"payments":{"statement_descriptor":"statement_descriptor","statement_descriptor_kana":"statement_descriptor_kana","statement_descriptor_kanji":"statement_descriptor_kanji","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"payouts":{"debit_negative_balances":true,"schedule":{"delay_days":1647351405,"interval":"interval","monthly_anchor":1920305369,"monthly_payout_days":[656202210],"weekly_anchor":"weekly_anchor","weekly_payout_days":["sunday"]},"statement_descriptor":"statement_descriptor"},"sepa_debit_payments":{"creditor_id":"creditor_id"},"tax_forms":{"consented_to_paperless_delivery":true},"treasury":{"tos_acceptance":{"date":3076014,"ip":"ip","user_agent":"user_agent"}}},"tos_acceptance":{"date":3076014,"ip":"ip","service_agreement":"service_agreement","user_agent":"user_agent"},"type":"none"},"account_holder_name":"account_holder_name","account_holder_type":"account_holder_type","account_type":"account_type","available_payout_methods":["standard"],"bank_name":"bank_name","country":"country","currency":"usd","customer":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"balance":339185956,"cash_balance":null,"created":1028554472,"currency":"usd","customer_account":"customer_account","default_source":null,"delinquent":true,"description":"description","discount":null,"email":"email","id":"obj_123","invoice_credit_balance":{"key":1267696360},"invoice_prefix":"invoice_prefix","invoice_settings":{"custom_fields":[{"name":"name","value":"value"}],"default_payment_method":null,"footer":"footer","rendering_options":{"amount_tax_display":"amount_tax_display","template":"template"}},"livemode":true,"metadata":{"key":"metadata"},"name":"name","next_invoice_sequence":1356358751,"object":"customer","phone":"phone","preferred_locales":["preferred_locales"],"shipping":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"carrier":"carrier","name":"name","phone":"phone","tracking_number":"tracking_number"},"sources":{"object":"list","has_more":false,"data":[null]},"subscriptions":{"object":"list","has_more":false,"data":[null]},"tax":{"automatic_tax":"unrecognized_location","ip_address":"ip_address","location":{"country":"country","source":"ip_address","state":"state"}},"tax_exempt":"reverse","tax_ids":{"object":"list","has_more":false,"data":[null]},"test_clock":null},"default_for_currency":true,"fingerprint":"fingerprint","future_requirements":{"currently_due":["currently_due"],"errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"past_due":["past_due"],"pending_verification":["pending_verification"]},"id":"obj_123","last4":"last4","metadata":{"key":"metadata"},"object":"bank_account","requirements":{"currently_due":["currently_due"],"errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"past_due":["past_due"],"pending_verification":["pending_verification"]},"routing_number":"routing_number","status":"status"}]},"future_requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":270965154,"currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"groups":{"payments_pricing":"payments_pricing"},"id":"obj_123","individual":{"account":"account","additional_tos_acceptances":{"account":{"date":3076014,"ip":"ip","user_agent":"user_agent"}},"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"address_kana":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"address_kanji":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"created":1028554472,"dob":{"day":99228,"month":104080000,"year":3704893},"email":"email","first_name":"first_name","first_name_kana":"first_name_kana","first_name_kanji":"first_name_kanji","full_name_aliases":["full_name_aliases"],"future_requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"currently_due":["currently_due"],"errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"gender":"gender","id":"obj_123","id_number_provided":true,"id_number_secondary_provided":true,"last_name":"last_name","last_name_kana":"last_name_kana","last_name_kanji":"last_name_kanji","maiden_name":"maiden_name","metadata":{"key":"metadata"},"nationality":"nationality","object":"person","phone":"phone","political_exposure":"none","registered_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"relationship":{"authorizer":true,"director":true,"executive":true,"legal_guardian":true,"owner":true,"percent_ownership":760989685,"representative":true,"title":"title"},"requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"currently_due":["currently_due"],"errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"ssn_last_4_provided":true,"us_cfpb_data":{"ethnicity_details":{"ethnicity":["not_hispanic_or_latino"],"ethnicity_other":"ethnicity_other"},"race_details":{"race":["haitian"],"race_other":"race_other"},"self_identified_gender":"self_identified_gender"},"verification":{"additional_document":{"back":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":1028554472,"expired":true,"expires_at":833811170,"file":null,"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"details":"details","details_code":"details_code","front":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":1028554472,"expired":true,"expires_at":833811170,"file":null,"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"}},"details":"details","details_code":"details_code","document":{"back":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":1028554472,"expired":true,"expires_at":833811170,"file":null,"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"details":"details","details_code":"details_code","front":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":1028554472,"expired":true,"expires_at":833811170,"file":null,"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"}},"status":"status"}},"metadata":{"key":"metadata"},"object":"account","payouts_enabled":true,"requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":270965154,"currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"risk_controls":{"charges":{"pause_requested":true},"payouts":{"pause_requested":true},"rejected_reason":"fraud_other"},"settings":{"bacs_debit_payments":{"display_name":"display_name","service_user_number":"service_user_number"},"bank_bca_onboarding":{"account_holder_name":"account_holder_name","business_account_number":"business_account_number"},"branding":{"icon":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":1028554472,"expired":true,"expires_at":833811170,"file":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"logo":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"created":1028554472,"expired":true,"expires_at":833811170,"file":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"object":"file_link","url":"url"}]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"primary_color":"primary_color","secondary_color":"secondary_color"},"capital":{"payout_destination":{"key":"payout_destination"},"payout_destination_selector":{"key":["payout_destination_selector"]}},"card_issuing":{"tos_acceptance":{"date":3076014,"ip":"ip","user_agent":"user_agent"}},"card_payments":{"decline_on":{"avs_failure":true,"cvc_failure":true},"statement_descriptor_prefix":"statement_descriptor_prefix","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"dashboard":{"display_name":"display_name","timezone":"timezone"},"invoices":{"default_account_tax_ids":[{"country":"country","created":1028554472,"customer":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"balance":339185956,"cash_balance":{"available":{"key":733902135},"customer":"customer","customer_account":"customer_account","livemode":true,"object":"cash_balance","settings":{"reconciliation_mode":"manual","using_merchant_default":true}},"created":1028554472,"currency":"usd","customer_account":"customer_account","default_source":null,"delinquent":true,"description":"description","discount":{"checkout_session":"checkout_session","coupon":null,"customer":null,"customer_account":"customer_account","end":100571,"id":"obj_123","invoice":"invoice","invoice_item":"invoice_item","object":"discount","promotion_code":null,"start":109757538,"subscription":"subscription","subscription_item":"subscription_item"},"email":"email","id":"obj_123","invoice_credit_balance":{"key":1267696360},"invoice_prefix":"invoice_prefix","invoice_settings":{"custom_fields":[{"name":"name","value":"value"}],"default_payment_method":{"acss_debit":{"account_number":"account_number","bank_name":"bank_name","fingerprint":"fingerprint","institution_number":"institution_number","last4":"last4","transit_number":"transit_number"},"affirm":{},"afterpay_clearpay":{},"alipay":{},"allow_redisplay":"unspecified","alma":{},"amazon_pay":{},"au_becs_debit":{"bsb_number":"bsb_number","fingerprint":"fingerprint","last4":"last4"},"bacs_debit":{"fingerprint":"fingerprint","last4":"last4","sort_code":"sort_code"},"bancontact":{},"billie":{},"billing_details":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","phone":"phone","tax_id":"tax_id"},"blik":{},"boleto":{"tax_id":"tax_id"},"card":{"brand":"brand","checks":{"address_line1_check":"address_line1_check","address_postal_code_check":"address_postal_code_check","cvc_check":"cvc_check"},"country":"country","description":"description","display_brand":"display_brand","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","generated_from":{"charge":"charge","payment_method_details":{"card_present":{"amount_authorized":1406151710,"brand":"brand","brand_product":"brand_product","capture_before":2079401320,"cardholder_name":"cardholder_name","country":"country","description":"description","emv_auth_data":"emv_auth_data","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","generated_card":"generated_card","iin":"iin","incremental_authorization_supported":true,"issuer":"issuer","last4":"last4","network":"network","network_transaction_id":"network_transaction_id","offline":{"stored_at":1692436047,"type":"deferred"},"overcapture_supported":true,"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2","receipt":{"account_type":"checking","application_cryptogram":"application_cryptogram","application_preferred_name":"application_preferred_name","authorization_code":"authorization_code","authorization_response_code":"authorization_response_code","cardholder_verification_method":"cardholder_verification_method","dedicated_file_name":"dedicated_file_name","terminal_verification_results":"terminal_verification_results","transaction_status_information":"transaction_status_information"},"wallet":{"type":"samsung_pay"}},"type":"type"},"setup_attempt":null},"iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"regulated_status":"regulated","three_d_secure_usage":{"supported":true},"wallet":{"amex_express_checkout":{},"apple_pay":{},"dynamic_last4":"dynamic_last4","google_pay":{},"link":{},"masterpass":{"billing_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","shipping_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"}},"samsung_pay":{},"type":"link","visa_checkout":{"billing_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","shipping_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"}}}},"card_present":{"brand":"brand","brand_product":"brand_product","cardholder_name":"cardholder_name","country":"country","description":"description","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"offline":{"stored_at":1692436047,"type":"deferred"},"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2","wallet":{"type":"samsung_pay"}},"cashapp":{"buyer_id":"buyer_id","cashtag":"cashtag"},"created":1028554472,"crypto":{},"customer":null,"customer_account":"customer_account","customer_balance":{},"eps":{"bank":"btv_vier_lander_bank"},"fpx":{"account_holder_type":"individual","bank":"bsn"},"giropay":{},"gopay":{},"grabpay":{},"id":"obj_123","id_bank_transfer":{"bank":"bri","bank_code":"bank_code","bank_name":"bank_name","display_name":"display_name"},"ideal":{"bank":"rabobank","bic":"KNABNL2H"},"interac_present":{"brand":"brand","cardholder_name":"cardholder_name","country":"country","description":"description","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2"},"kakao_pay":{},"klarna":{"dob":{"day":99228,"month":104080000,"year":3704893}},"konbini":{},"kr_card":{"brand":"lotte","last4":"last4"},"link":{"email":"email","persistent_token":"persistent_token"},"livemode":true,"mb_way":{},"metadata":{"key":"metadata"},"mobilepay":{},"multibanco":{},"naver_pay":{"buyer_id":"buyer_id","funding":"points"},"nz_bank_account":{"account_holder_name":"account_holder_name","bank_code":"bank_code","bank_name":"bank_name","branch_code":"branch_code","last4":"last4","suffix":"suffix"},"object":"payment_method","oxxo":{},"p24":{"bank":"noble_pay"},"pay_by_bank":{},"payco":{},"paynow":{},"paypal":{"country":"country","fingerprint":"fingerprint","payer_email":"payer_email","payer_id":"payer_id","verified_email":"verified_email"},"payto":{"bsb_number":"bsb_number","last4":"last4","pay_id":"pay_id"},"pix":{},"promptpay":{},"qris":{},"radar_options":{"session":"session"},"rechnung":{"dob":{"day":99228,"month":104080000,"year":3704893}},"revolut_pay":{},"samsung_pay":{},"satispay":{},"sepa_debit":{"bank_code":"bank_code","branch_code":"branch_code","country":"country","fingerprint":"fingerprint","generated_from":{"charge":null,"setup_attempt":null},"last4":"last4"},"shopeepay":{},"sofort":{"country":"country"},"stripe_balance":{"account":"account","source_type":"card"},"swish":{},"twint":{},"type":"klarna","us_bank_account":{"account_holder_type":"individual","account_number":"account_number","account_type":"checking","bank_name":"bank_name","financial_connections_account":"financial_connections_account","fingerprint":"fingerprint","last4":"last4","networks":{"preferred":"preferred","supported":["ach"]},"routing_number":"routing_number","status_details":{"blocked":{"network_code":"R29","reason":"bank_account_unusable"}}},"wechat_pay":{},"zip":{}},"footer":"footer","rendering_options":{"amount_tax_display":"amount_tax_display","template":"template"}},"livemode":true,"metadata":{"key":"metadata"},"name":"name","next_invoice_sequence":1356358751,"object":"customer","phone":"phone","preferred_locales":["preferred_locales"],"shipping":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"carrier":"carrier","name":"name","phone":"phone","tracking_number":"tracking_number"},"sources":{"object":"list","has_more":false,"data":[null]},"subscriptions":{"object":"list","has_more":false,"data":[{"application":null,"application_fee_percent":282303517,"automatic_tax":{"disabled_reason":"requires_location_inputs","enabled":true,"liability":{"account":null,"type":"account"}},"billing_cadence":"billing_cadence","billing_cycle_anchor":672980850,"billing_cycle_anchor_config":{"day_of_month":1361669285,"hour":3208676,"minute":1074026988,"month":104080000,"second":906279820},"billing_mode":{"type":"classic","updated_at":295464393},"billing_thresholds":{"amount_gte":1424546639,"reset_billing_cycle_anchor":true},"cancel_at":476575768,"cancel_at_period_end":true,"canceled_at":1566574183,"cancellation_details":{"comment":"comment","feedback":"other","reason":"payment_disputed"},"collection_method":"charge_automatically","created":1028554472,"currency":"usd","customer":null,"customer_account":"customer_account","days_until_due":555548757,"default_payment_method":null,"default_source":null,"default_tax_rates":[null],"description":"description","discounts":[null],"ended_at":1730606040,"id":"obj_123","invoice_settings":{"account_tax_ids":[null],"issuer":{"account":null,"type":"account"}},"items":{"object":"list","has_more":false,"data":[null]},"last_price_migration_error":{"errored_at":1641242315,"failed_transitions":[{"source_price":"source_price","target_price":"target_price"}],"type":"price_uniqueness_violation"},"latest_invoice":null,"livemode":true,"metadata":{"key":"metadata"},"next_pending_invoice_item_invoice":1422145209,"object":"subscription","on_behalf_of":null,"pause_collection":{"behavior":"mark_uncollectible","resumes_at":556162772},"payment_settings":{"payment_method_options":{"acss_debit":{"mandate_options":{"transaction_type":"personal"},"verification_method":"microdeposits"},"bancontact":{"preferred_language":"fr"},"card":{"mandate_options":{"amount":1413853096,"amount_type":"maximum","description":"description"},"network":"diners","request_three_d_secure":"any"},"customer_balance":{"bank_transfer":{"eu_bank_transfer":{"country":"ES"},"type":"type"},"funding_type":"bank_transfer"},"id_bank_transfer":{},"konbini":{},"sepa_debit":{},"upi":{"mandate_options":{"amount":1413853096,"amount_type":"maximum","description":"description","end_date":1725067410}},"us_bank_account":{"financial_connections":{"filters":{"account_subcategories":["checking"],"institution":"institution"},"permissions":["balances"],"prefetch":["inferred_balances"]},"verification_method":"microdeposits"}},"payment_method_types":["crypto"],"save_default_payment_method":"off"},"pending_invoice_item_interval":{"interval":"month","interval_count":797691627},"pending_setup_intent":null,"pending_update":{"billing_cycle_anchor":672980850,"expires_at":833811170,"prebilling_iterations":1175045469,"subscription_items":[null],"trial_end":816100302,"trial_from_plan":true},"prebilling":{"invoice":null,"period_end":384656733,"period_start":301041764,"update_behavior":"prebill"},"schedule":null,"start_date":1573629589,"status":"trialing","test_clock":null,"transfer_data":{"amount_percent":268993374,"destination":null},"trial_end":816100302,"trial_settings":{"end_behavior":{"missing_payment_method":"cancel"}},"trial_start":1719733753}]},"tax":{"automatic_tax":"unrecognized_location","ip_address":"ip_address","location":{"country":"country","source":"ip_address","state":"state"}},"tax_exempt":"reverse","tax_ids":{"object":"list","has_more":false,"data":[{"country":"country","created":1028554472,"customer":null,"customer_account":"customer_account","id":"obj_123","livemode":true,"object":"tax_id","owner":{"account":null,"application":null,"customer":null,"customer_account":"customer_account","type":"customer"},"type":"np_pan","value":"value","verification":{"status":"unverified","verified_address":"verified_address","verified_name":"verified_name"}}]},"test_clock":{"created":1028554472,"deletes_after":73213179,"frozen_time":2033541876,"id":"obj_123","livemode":true,"name":"name","object":"test_helpers.test_clock","status":"advancing","status_details":{"advancing":{"target_frozen_time":833971362}}}},"customer_account":"customer_account","id":"obj_123","livemode":true,"object":"tax_id","owner":{"account":{"business_profile":{"annual_revenue":{"amount":1413853096,"currency":"usd","fiscal_year_end":"fiscal_year_end"},"estimated_worker_count":884794319,"mcc":"mcc","minority_owned_business_designation":["prefer_not_to_answer"],"monthly_estimated_revenue":{"amount":1413853096,"currency":"usd"},"name":"name","product_description":"product_description","support_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"support_email":"support_email","support_phone":"support_phone","support_url":"support_url","url":"url"},"business_type":"government_entity","capabilities":{"acss_debit_payments":"inactive","affirm_payments":"pending","afterpay_clearpay_payments":"inactive","alma_payments":"pending","amazon_pay_payments":"inactive","au_becs_debit_payments":"active","automatic_indirect_tax":"pending","bacs_debit_payments":"active","bancontact_payments":"inactive","bank_transfer_payments":"pending","billie_payments":"active","blik_payments":"inactive","boleto_payments":"inactive","card_issuing":"active","card_payments":"active","cartes_bancaires_payments":"active","cashapp_payments":"active","crypto_payments":"inactive","eps_payments":"inactive","fpx_payments":"active","gb_bank_transfer_payments":"pending","giropay_payments":"active","gopay_payments":"active","grabpay_payments":"pending","id_bank_transfer_payments":"pending","id_bank_transfer_payments_bca":"active","ideal_payments":"inactive","india_international_payments":"inactive","jcb_payments":"inactive","jp_bank_transfer_payments":"pending","kakao_pay_payments":"active","klarna_payments":"active","konbini_payments":"active","kr_card_payments":"inactive","legacy_payments":"active","link_payments":"inactive","mb_way_payments":"active","mobilepay_payments":"pending","multibanco_payments":"inactive","mx_bank_transfer_payments":"pending","naver_pay_payments":"active","nz_bank_account_becs_debit_payments":"active","oxxo_payments":"pending","p24_payments":"inactive","pay_by_bank_payments":"active","payco_payments":"inactive","paynow_payments":"active","paypal_payments":"inactive","payto_payments":"pending","pix_payments":"inactive","promptpay_payments":"active","qris_payments":"pending","rechnung_payments":"inactive","revolut_pay_payments":"inactive","samsung_pay_payments":"pending","satispay_payments":"pending","sepa_bank_transfer_payments":"pending","sepa_debit_payments":"inactive","shopeepay_payments":"active","sofort_payments":"active","stripe_balance_payments":"active","swish_payments":"inactive","tax_reporting_us_1099_k":"inactive","tax_reporting_us_1099_misc":"pending","transfers":"inactive","treasury":"pending","treasury_evolve":"inactive","treasury_fifth_third":"inactive","treasury_goldman_sachs":"active","twint_payments":"inactive","us_bank_account_ach_payments":"pending","us_bank_transfer_payments":"pending","zip_payments":"pending"},"charges_enabled":true,"company":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"address_kana":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"address_kanji":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"directors_provided":true,"directorship_declaration":{"date":3076014,"ip":"ip","user_agent":"user_agent"},"executives_provided":true,"export_license_id":"export_license_id","export_purpose_code":"export_purpose_code","name":"name","name_kana":"name_kana","name_kanji":"name_kanji","owners_provided":true,"ownership_declaration":{"date":3076014,"ip":"ip","user_agent":"user_agent"},"ownership_exemption_reason":"qualified_entity_exceeds_ownership_threshold","phone":"phone","registration_date":{"day":99228,"month":104080000,"year":3704893},"structure":"single_member_llc","tax_id_provided":true,"tax_id_registrar":"tax_id_registrar","vat_id_provided":true,"verification":{"document":{"back":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"details":"details","details_code":"details_code","front":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"}}}},"controller":{"application":{"loss_liable":true,"onboarding_owner":true,"pricing_controls":true},"dashboard":{"type":"express"},"fees":{"payer":"account"},"is_controller":true,"losses":{"payments":"stripe"},"requirement_collection":"application","stripe_dashboard":{"type":"express"},"type":"account"},"country":"country","created":1028554472,"default_currency":"usd","details_submitted":true,"email":"email","external_accounts":{"object":"list","has_more":false,"data":[null]},"future_requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":270965154,"currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"groups":{"payments_pricing":"payments_pricing"},"id":"obj_123","individual":{"account":"account","additional_tos_acceptances":{"account":{"date":3076014,"ip":"ip","user_agent":"user_agent"}},"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"address_kana":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"address_kanji":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"created":1028554472,"dob":{"day":99228,"month":104080000,"year":3704893},"email":"email","first_name":"first_name","first_name_kana":"first_name_kana","first_name_kanji":"first_name_kanji","full_name_aliases":["full_name_aliases"],"future_requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"currently_due":["currently_due"],"errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"gender":"gender","id":"obj_123","id_number_provided":true,"id_number_secondary_provided":true,"last_name":"last_name","last_name_kana":"last_name_kana","last_name_kanji":"last_name_kanji","maiden_name":"maiden_name","metadata":{"key":"metadata"},"nationality":"nationality","object":"person","phone":"phone","political_exposure":"none","registered_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"relationship":{"authorizer":true,"director":true,"executive":true,"legal_guardian":true,"owner":true,"percent_ownership":760989685,"representative":true,"title":"title"},"requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"currently_due":["currently_due"],"errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"ssn_last_4_provided":true,"us_cfpb_data":{"ethnicity_details":{"ethnicity":["not_hispanic_or_latino"],"ethnicity_other":"ethnicity_other"},"race_details":{"race":["haitian"],"race_other":"race_other"},"self_identified_gender":"self_identified_gender"},"verification":{"additional_document":{"back":null,"details":"details","details_code":"details_code","front":null},"details":"details","details_code":"details_code","document":{"back":null,"details":"details","details_code":"details_code","front":null},"status":"status"}},"metadata":{"key":"metadata"},"object":"account","payouts_enabled":true,"requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":270965154,"currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_tax_id_not_issued","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"risk_controls":{"charges":{"pause_requested":true},"payouts":{"pause_requested":true},"rejected_reason":"fraud_other"},"settings":{"bacs_debit_payments":{"display_name":"display_name","service_user_number":"service_user_number"},"bank_bca_onboarding":{"account_holder_name":"account_holder_name","business_account_number":"business_account_number"},"branding":{"icon":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"logo":{"created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"object":"file","purpose":"dispute_evidence","size":3530753,"title":"title","type":"type","url":"url"},"primary_color":"primary_color","secondary_color":"secondary_color"},"capital":{"payout_destination":{"key":"payout_destination"},"payout_destination_selector":{"key":["payout_destination_selector"]}},"card_issuing":{"tos_acceptance":{"date":3076014,"ip":"ip","user_agent":"user_agent"}},"card_payments":{"decline_on":{"avs_failure":true,"cvc_failure":true},"statement_descriptor_prefix":"statement_descriptor_prefix","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"dashboard":{"display_name":"display_name","timezone":"timezone"},"invoices":{"default_account_tax_ids":[{"country":"country","created":1028554472,"customer":null,"customer_account":"customer_account","id":"obj_123","livemode":true,"object":"tax_id","owner":{"account":null,"application":null,"customer":null,"customer_account":"customer_account","type":"customer"},"type":"np_pan","value":"value","verification":{"status":"unverified","verified_address":"verified_address","verified_name":"verified_name"}}],"hosted_payment_method_save":"offer"},"payments":{"statement_descriptor":"statement_descriptor","statement_descriptor_kana":"statement_descriptor_kana","statement_descriptor_kanji":"statement_descriptor_kanji","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"payouts":{"debit_negative_balances":true,"schedule":{"delay_days":1647351405,"interval":"interval","monthly_anchor":1920305369,"monthly_payout_days":[656202210],"weekly_anchor":"weekly_anchor","weekly_payout_days":["sunday"]},"statement_descriptor":"statement_descriptor"},"sepa_debit_payments":{"creditor_id":"creditor_id"},"tax_forms":{"consented_to_paperless_delivery":true},"treasury":{"tos_acceptance":{"date":3076014,"ip":"ip","user_agent":"user_agent"}}},"tos_acceptance":{"date":3076014,"ip":"ip","service_agreement":"service_agreement","user_agent":"user_agent"},"type":"none"},"application":{"id":"obj_123","name":"name","object":"application"},"customer":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"balance":339185956,"cash_balance":{"available":{"key":733902135},"customer":"customer","customer_account":"customer_account","livemode":true,"object":"cash_balance","settings":{"reconciliation_mode":"manual","using_merchant_default":true}},"created":1028554472,"currency":"usd","customer_account":"customer_account","default_source":null,"delinquent":true,"description":"description","discount":{"checkout_session":"checkout_session","coupon":null,"customer":null,"customer_account":"customer_account","end":100571,"id":"obj_123","invoice":"invoice","invoice_item":"invoice_item","object":"discount","promotion_code":null,"start":109757538,"subscription":"subscription","subscription_item":"subscription_item"},"email":"email","id":"obj_123","invoice_credit_balance":{"key":1267696360},"invoice_prefix":"invoice_prefix","invoice_settings":{"custom_fields":[{"name":"name","value":"value"}],"default_payment_method":{"acss_debit":{"account_number":"account_number","bank_name":"bank_name","fingerprint":"fingerprint","institution_number":"institution_number","last4":"last4","transit_number":"transit_number"},"affirm":{},"afterpay_clearpay":{},"alipay":{},"allow_redisplay":"unspecified","alma":{},"amazon_pay":{},"au_becs_debit":{"bsb_number":"bsb_number","fingerprint":"fingerprint","last4":"last4"},"bacs_debit":{"fingerprint":"fingerprint","last4":"last4","sort_code":"sort_code"},"bancontact":{},"billie":{},"billing_details":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","phone":"phone","tax_id":"tax_id"},"blik":{},"boleto":{"tax_id":"tax_id"},"card":{"brand":"brand","checks":{"address_line1_check":"address_line1_check","address_postal_code_check":"address_postal_code_check","cvc_check":"cvc_check"},"country":"country","description":"description","display_brand":"display_brand","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","generated_from":{"charge":"charge","payment_method_details":{"card_present":{"amount_authorized":1406151710,"brand":"brand","brand_product":"brand_product","capture_before":2079401320,"cardholder_name":"cardholder_name","country":"country","description":"description","emv_auth_data":"emv_auth_data","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","generated_card":"generated_card","iin":"iin","incremental_authorization_supported":true,"issuer":"issuer","last4":"last4","network":"network","network_transaction_id":"network_transaction_id","offline":{"stored_at":1692436047,"type":"deferred"},"overcapture_supported":true,"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2","receipt":{"account_type":"checking","application_cryptogram":"application_cryptogram","application_preferred_name":"application_preferred_name","authorization_code":"authorization_code","authorization_response_code":"authorization_response_code","cardholder_verification_method":"cardholder_verification_method","dedicated_file_name":"dedicated_file_name","terminal_verification_results":"terminal_verification_results","transaction_status_information":"transaction_status_information"},"wallet":{"type":"samsung_pay"}},"type":"type"},"setup_attempt":null},"iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"regulated_status":"regulated","three_d_secure_usage":{"supported":true},"wallet":{"amex_express_checkout":{},"apple_pay":{},"dynamic_last4":"dynamic_last4","google_pay":{},"link":{},"masterpass":{"billing_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","shipping_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"}},"samsung_pay":{},"type":"link","visa_checkout":{"billing_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","shipping_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"}}}},"card_present":{"brand":"brand","brand_product":"brand_product","cardholder_name":"cardholder_name","country":"country","description":"description","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"offline":{"stored_at":1692436047,"type":"deferred"},"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2","wallet":{"type":"samsung_pay"}},"cashapp":{"buyer_id":"buyer_id","cashtag":"cashtag"},"created":1028554472,"crypto":{},"customer":null,"customer_account":"customer_account","customer_balance":{},"eps":{"bank":"btv_vier_lander_bank"},"fpx":{"account_holder_type":"individual","bank":"bsn"},"giropay":{},"gopay":{},"grabpay":{},"id":"obj_123","id_bank_transfer":{"bank":"bri","bank_code":"bank_code","bank_name":"bank_name","display_name":"display_name"},"ideal":{"bank":"rabobank","bic":"KNABNL2H"},"interac_present":{"brand":"brand","cardholder_name":"cardholder_name","country":"country","description":"description","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2"},"kakao_pay":{},"klarna":{"dob":{"day":99228,"month":104080000,"year":3704893}},"konbini":{},"kr_card":{"brand":"lotte","last4":"last4"},"link":{"email":"email","persistent_token":"persistent_token"},"livemode":true,"mb_way":{},"metadata":{"key":"metadata"},"mobilepay":{},"multibanco":{},"naver_pay":{"buyer_id":"buyer_id","funding":"points"},"nz_bank_account":{"account_holder_name":"account_holder_name","bank_code":"bank_code","bank_name":"bank_name","branch_code":"branch_code","last4":"last4","suffix":"suffix"},"object":"payment_method","oxxo":{},"p24":{"bank":"noble_pay"},"pay_by_bank":{},"payco":{},"paynow":{},"paypal":{"country":"country","fingerprint":"fingerprint","payer_email":"payer_email","payer_id":"payer_id","verified_email":"verified_email"},"payto":{"bsb_number":"bsb_number","last4":"last4","pay_id":"pay_id"},"pix":{},"promptpay":{},"qris":{},"radar_options":{"session":"session"},"rechnung":{"dob":{"day":99228,"month":104080000,"year":3704893}},"revolut_pay":{},"samsung_pay":{},"satispay":{},"sepa_debit":{"bank_code":"bank_code","branch_code":"branch_code","country":"country","fingerprint":"fingerprint","generated_from":{"charge":null,"setup_attempt":null},"last4":"last4"},"shopeepay":{},"sofort":{"country":"country"},"stripe_balance":{"account":"account","source_type":"card"},"swish":{},"twint":{},"type":"klarna","us_bank_account":{"account_holder_type":"individual","account_number":"account_number","account_type":"checking","bank_name":"bank_name","financial_connections_account":"financial_connections_account","fingerprint":"fingerprint","last4":"last4","networks":{"preferred":"preferred","supported":["ach"]},"routing_number":"routing_number","status_details":{"blocked":{"network_code":"R29","reason":"bank_account_unusable"}}},"wechat_pay":{},"zip":{}},"footer":"footer","rendering_options":{"amount_tax_display":"amount_tax_display","template":"template"}},"livemode":true,"metadata":{"key":"metadata"},"name":"name","next_invoice_sequence":1356358751,"object":"customer","phone":"phone","preferred_locales":["preferred_locales"],"shipping":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"carrier":"carrier","name":"name","phone":"phone","tracking_number":"tracking_number"},"sources":{"object":"list","has_more":false,"data":[null]},"subscriptions":{"object":"list","has_more":false,"data":[{"application":null,"application_fee_percent":282303517,"automatic_tax":{"disabled_reason":"requires_location_inputs","enabled":true,"liability":{"account":null,"type":"account"}},"billing_cadence":"billing_cadence","billing_cycle_anchor":672980850,"billing_cycle_anchor_config":{"day_of_month":1361669285,"hour":3208676,"minute":1074026988,"month":104080000,"second":906279820},"billing_mode":{"type":"classic","updated_at":295464393},"billing_thresholds":{"amount_gte":1424546639,"reset_billing_cycle_anchor":true},"cancel_at":476575768,"cancel_at_period_end":true,"canceled_at":1566574183,"cancellation_details":{"comment":"comment","feedback":"other","reason":"payment_disputed"},"collection_method":"charge_automatically","created":1028554472,"currency":"usd","customer":null,"customer_account":"customer_account","days_until_due":555548757,"default_payment_method":null,"default_source":null,"default_tax_rates":[null],"description":"description","discounts":[null],"ended_at":1730606040,"id":"obj_123","invoice_settings":{"account_tax_ids":[null],"issuer":{"account":null,"type":"account"}},"items":{"object":"list","has_more":false,"data":[null]},"last_price_migration_error":{"errored_at":1641242315,"failed_transitions":[{"source_price":"source_price","target_price":"target_price"}],"type":"price_uniqueness_violation"},"latest_invoice":null,"livemode":true,"metadata":{"key":"metadata"},"next_pending_invoice_item_invoice":1422145209,"object":"subscription","on_behalf_of":null,"pause_collection":{"behavior":"mark_uncollectible","resumes_at":556162772},"payment_settings":{"payment_method_options":{"acss_debit":{"mandate_options":{"transaction_type":"personal"},"verification_method":"microdeposits"},"bancontact":{"preferred_language":"fr"},"card":{"mandate_options":{"amount":1413853096,"amount_type":"maximum","description":"description"},"network":"diners","request_three_d_secure":"any"},"customer_balance":{"bank_transfer":{"eu_bank_transfer":{"country":"ES"},"type":"type"},"funding_type":"bank_transfer"},"id_bank_transfer":{},"konbini":{},"sepa_debit":{},"upi":{"mandate_options":{"amount":1413853096,"amount_type":"maximum","description":"description","end_date":1725067410}},"us_bank_account":{"financial_connections":{"filters":{"account_subcategories":["checking"],"institution":"institution"},"permissions":["balances"],"prefetch":["inferred_balances"]},"verification_method":"microdeposits"}},"payment_method_types":["crypto"],"save_default_payment_method":"off"},"pending_invoice_item_interval":{"interval":"month","interval_count":797691627},"pending_setup_intent":null,"pending_update":{"billing_cycle_anchor":672980850,"expires_at":833811170,"prebilling_iterations":1175045469,"subscription_items":[null],"trial_end":816100302,"trial_from_plan":true},"prebilling":{"invoice":null,"period_end":384656733,"period_start":301041764,"update_behavior":"prebill"},"schedule":null,"start_date":1573629589,"status":"trialing","test_clock":null,"transfer_data":{"amount_percent":268993374,"destination":null},"trial_end":816100302,"trial_settings":{"end_behavior":{"missing_payment_method":"cancel"}},"trial_start":1719733753}]},"tax":{"automatic_tax":"unrecognized_location","ip_address":"ip_address","location":{"country":"country","source":"ip_address","state":"state"}},"tax_exempt":"reverse","tax_ids":{"object":"list","has_more":false,"data":[{"country":"country","created":1028554472,"customer":null,"customer_account":"customer_account","id":"obj_123","livemode":true,"object":"tax_id","owner":{"account":null,"application":null,"customer":null,"customer_account":"customer_account","type":"customer"},"type":"np_pan","value":"value","verification":{"status":"unverified","verified_address":"verified_address","verified_name":"verified_name"}}]},"test_clock":{"created":1028554472,"deletes_after":73213179,"frozen_time":2033541876,"id":"obj_123","livemode":true,"name":"name","object":"test_helpers.test_clock","status":"advancing","status_details":{"advancing":{"target_frozen_time":833971362}}}},"customer_account":"customer_account","type":"customer"},"type":"np_pan","value":"value","verification":{"status":"unverified","verified_address":"verified_address","verified_name":"verified_name"}}],"hosted_payment_method_save":"offer"},"payments":{"statement_descriptor":"statement_descriptor","statement_descriptor_kana":"statement_descriptor_kana","statement_descriptor_kanji":"statement_descriptor_kanji","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"payouts":{"debit_negative_balances":true,"schedule":{"delay_days":1647351405,"interval":"interval","monthly_anchor":1920305369,"monthly_payout_days":[656202210],"weekly_anchor":"weekly_anchor","weekly_payout_days":["sunday"]},"statement_descriptor":"statement_descriptor"},"sepa_debit_payments":{"creditor_id":"creditor_id"},"tax_forms":{"consented_to_paperless_delivery":true},"treasury":{"tos_acceptance":{"date":3076014,"ip":"ip","user_agent":"user_agent"}}},"tos_acceptance":{"date":3076014,"ip":"ip","service_agreement":"service_agreement","user_agent":"user_agent"},"type":"none"}',
       },
     ]);
     const account = await stripe.accounts.retrieve('acc_123');
@@ -575,7 +575,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/events/ll_123',
         response:
-          '{"context":"context","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":{"type":"request","request":{"id":"obj_123","idempotency_key":"idempotency_key"}},"type":"type","livemode":true}',
+          '{"changes":{"key":{}},"context":"context","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":{"type":"request","request":{"id":"obj_123","idempotency_key":"idempotency_key"}},"type":"type","livemode":true}',
       },
     ]);
     const event = await stripe.v2.core.events.retrieve('ll_123');
@@ -2172,14 +2172,6 @@ describe('Generated tests', function() {
     expect(quote).not.to.be.null;
   });
 
-  it('test_quotes_preview_invoices_lines_get', async function() {
-    const invoiceLineItems = await stripe.quotes.listPreviewInvoiceLines(
-      'qt_xyz',
-      'in_xyz'
-    );
-    expect(invoiceLineItems).not.to.be.null;
-  });
-
   it('test_radar_early_fraud_warnings_get', async function() {
     const earlyFraudWarnings = await stripe.radar.earlyFraudWarnings.list({
       limit: 3,
@@ -2698,11 +2690,6 @@ describe('Generated tests', function() {
   it('test_tax_codes_get_2', async function() {
     const taxCode = await stripe.taxCodes.retrieve('txcd_xxxxxxxxxxxxx');
     expect(taxCode).not.to.be.null;
-  });
-
-  it('test_tax_forms_pdf_get', async function() {
-    const file = await stripe.tax.forms.pdf('form_xxxxxxxxxxxxx');
-    expect(file).not.to.be.null;
   });
 
   it('test_tax_ids_delete', async function() {
@@ -3907,6 +3894,741 @@ describe('Generated tests', function() {
     expect(webhookEndpoint).not.to.be.null;
   });
 
+  it('test_v2_account_link_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/account_links',
+        response:
+          '{"account":"account","created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","object":"account_link","url":"url","use_case":{"type":"account_onboarding","account_onboarding":null,"account_update":null},"livemode":true}',
+      },
+    ]);
+    const accountLink = await stripe.v2.accountLinks.create({
+      account: 'account',
+      use_case: {
+        type: 'account_onboarding',
+        account_onboarding: {
+          configurations: ['recipient'],
+          refresh_url: 'refresh_url',
+          return_url: 'return_url',
+        },
+        account_update: {
+          configurations: ['recipient'],
+          refresh_url: 'refresh_url',
+          return_url: 'return_url',
+        },
+      },
+    });
+    expect(accountLink).not.to.be.null;
+  });
+
+  it('test_v2_account_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/accounts',
+        response:
+          '{"data":[{"applied_configurations":["storer"],"configuration":null,"created":"1970-01-12T21:42:34.472Z","email":null,"id":"obj_123","legal_entity_data":null,"metadata":null,"name":null,"object":"account","requirements":null,"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const accounts = await stripe.v2.accounts.list();
+    expect(accounts).not.to.be.null;
+  });
+
+  it('test_v2_account_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/accounts',
+        response:
+          '{"applied_configurations":["storer"],"configuration":null,"created":"1970-01-12T21:42:34.472Z","email":null,"id":"obj_123","legal_entity_data":null,"metadata":null,"name":null,"object":"account","requirements":null,"livemode":true}',
+      },
+    ]);
+    const account = await stripe.v2.accounts.create();
+    expect(account).not.to.be.null;
+  });
+
+  it('test_v2_account_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/accounts/id_123',
+        response:
+          '{"applied_configurations":["storer"],"configuration":null,"created":"1970-01-12T21:42:34.472Z","email":null,"id":"obj_123","legal_entity_data":null,"metadata":null,"name":null,"object":"account","requirements":null,"livemode":true}',
+      },
+    ]);
+    const account = await stripe.v2.accounts.retrieve('id_123');
+    expect(account).not.to.be.null;
+  });
+
+  it('test_v2_account_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/accounts/id_123',
+        response:
+          '{"applied_configurations":["storer"],"configuration":null,"created":"1970-01-12T21:42:34.472Z","email":null,"id":"obj_123","legal_entity_data":null,"metadata":null,"name":null,"object":"account","requirements":null,"livemode":true}',
+      },
+    ]);
+    const account = await stripe.v2.accounts.update('id_123');
+    expect(account).not.to.be.null;
+  });
+
+  it('test_v2_account_post_3', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/accounts/id_123/close',
+        response:
+          '{"applied_configurations":["storer"],"configuration":null,"created":"1970-01-12T21:42:34.472Z","email":null,"id":"obj_123","legal_entity_data":null,"metadata":null,"name":null,"object":"account","requirements":null,"livemode":true}',
+      },
+    ]);
+    const account = await stripe.v2.accounts.close('id_123');
+    expect(account).not.to.be.null;
+  });
+
+  it('test_v2_billing_bill_setting_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/bill_settings',
+        response:
+          '{"data":[{"calculation":null,"created":"1970-01-12T21:42:34.472Z","display_name":null,"id":"obj_123","invoice":null,"invoice_rendering_template":null,"latest_version":"latest_version","live_version":"live_version","lookup_key":null,"object":"v2.billing.bill_setting","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const billSettings = await stripe.v2.billing.billSettings.list();
+    expect(billSettings).not.to.be.null;
+  });
+
+  it('test_v2_billing_bill_setting_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/bill_settings',
+        response:
+          '{"calculation":null,"created":"1970-01-12T21:42:34.472Z","display_name":null,"id":"obj_123","invoice":null,"invoice_rendering_template":null,"latest_version":"latest_version","live_version":"live_version","lookup_key":null,"object":"v2.billing.bill_setting","livemode":true}',
+      },
+    ]);
+    const billSetting = await stripe.v2.billing.billSettings.create();
+    expect(billSetting).not.to.be.null;
+  });
+
+  it('test_v2_billing_bill_setting_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/bill_settings/id_123',
+        response:
+          '{"calculation":null,"created":"1970-01-12T21:42:34.472Z","display_name":null,"id":"obj_123","invoice":null,"invoice_rendering_template":null,"latest_version":"latest_version","live_version":"live_version","lookup_key":null,"object":"v2.billing.bill_setting","livemode":true}',
+      },
+    ]);
+    const billSetting = await stripe.v2.billing.billSettings.retrieve('id_123');
+    expect(billSetting).not.to.be.null;
+  });
+
+  it('test_v2_billing_bill_setting_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/bill_settings/id_123',
+        response:
+          '{"calculation":null,"created":"1970-01-12T21:42:34.472Z","display_name":null,"id":"obj_123","invoice":null,"invoice_rendering_template":null,"latest_version":"latest_version","live_version":"live_version","lookup_key":null,"object":"v2.billing.bill_setting","livemode":true}',
+      },
+    ]);
+    const billSetting = await stripe.v2.billing.billSettings.update('id_123');
+    expect(billSetting).not.to.be.null;
+  });
+
+  it('test_v2_billing_bill_settings_version_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/bill_settings/bill_setting_id_123/versions',
+        response:
+          '{"data":[{"calculation":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","invoice":null,"invoice_rendering_template":null,"object":"v2.billing.bill_setting_version","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const billSettingVersions = await stripe.v2.billing.billSettings.versions.list(
+      'bill_setting_id_123'
+    );
+    expect(billSettingVersions).not.to.be.null;
+  });
+
+  it('test_v2_billing_bill_settings_version_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/bill_settings/bill_setting_id_123/versions/id_123',
+        response:
+          '{"calculation":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","invoice":null,"invoice_rendering_template":null,"object":"v2.billing.bill_setting_version","livemode":true}',
+      },
+    ]);
+    const billSettingVersion = await stripe.v2.billing.billSettings.versions.retrieve(
+      'bill_setting_id_123',
+      'id_123'
+    );
+    expect(billSettingVersion).not.to.be.null;
+  });
+
+  it('test_v2_billing_cadence_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/cadences',
+        response:
+          '{"data":[{"billing_cycle":{"interval_count":797691627,"type":"week","day":null,"month":null,"week":null,"year":null},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","invoice_discount_rules":null,"metadata":null,"next_billing_date":null,"object":"v2.billing.cadence","payer":{"billing_profile":null,"customer":null,"type":"customer"},"settings":null,"status":"active","test_clock":null,"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const cadences = await stripe.v2.billing.cadences.list();
+    expect(cadences).not.to.be.null;
+  });
+
+  it('test_v2_billing_cadence_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/cadences',
+        response:
+          '{"billing_cycle":{"interval_count":797691627,"type":"week","day":null,"month":null,"week":null,"year":null},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","invoice_discount_rules":null,"metadata":null,"next_billing_date":null,"object":"v2.billing.cadence","payer":{"billing_profile":null,"customer":null,"type":"customer"},"settings":null,"status":"active","test_clock":null,"livemode":true}',
+      },
+    ]);
+    const cadence = await stripe.v2.billing.cadences.create({
+      billing_cycle: {
+        interval_count: 797691627,
+        type: 'week',
+        day: {
+          time: {
+            hour: 3208676,
+            minute: 1074026988,
+          },
+        },
+        month: {
+          day_of_month: 1361669285,
+          time: {
+            hour: 3208676,
+            minute: 1074026988,
+          },
+        },
+        week: {
+          day_of_week: 43636807,
+          time: {
+            hour: 3208676,
+            minute: 1074026988,
+          },
+        },
+        year: {
+          day_of_month: 1361669285,
+          month_of_year: 82933018,
+          time: {
+            hour: 3208676,
+            minute: 1074026988,
+          },
+        },
+      },
+      payer: {
+        billing_profile: 'billing_profile',
+        customer: 'customer',
+        type: 'customer',
+      },
+    });
+    expect(cadence).not.to.be.null;
+  });
+
+  it('test_v2_billing_cadence_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/cadences/id_123',
+        response:
+          '{"billing_cycle":{"interval_count":797691627,"type":"week","day":null,"month":null,"week":null,"year":null},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","invoice_discount_rules":null,"metadata":null,"next_billing_date":null,"object":"v2.billing.cadence","payer":{"billing_profile":null,"customer":null,"type":"customer"},"settings":null,"status":"active","test_clock":null,"livemode":true}',
+      },
+    ]);
+    const cadence = await stripe.v2.billing.cadences.retrieve('id_123');
+    expect(cadence).not.to.be.null;
+  });
+
+  it('test_v2_billing_cadence_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/cadences/id_123',
+        response:
+          '{"billing_cycle":{"interval_count":797691627,"type":"week","day":null,"month":null,"week":null,"year":null},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","invoice_discount_rules":null,"metadata":null,"next_billing_date":null,"object":"v2.billing.cadence","payer":{"billing_profile":null,"customer":null,"type":"customer"},"settings":null,"status":"active","test_clock":null,"livemode":true}',
+      },
+    ]);
+    const cadence = await stripe.v2.billing.cadences.update('id_123');
+    expect(cadence).not.to.be.null;
+  });
+
+  it('test_v2_billing_cadence_post_3', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/cadences/id_123/cancel',
+        response:
+          '{"billing_cycle":{"interval_count":797691627,"type":"week","day":null,"month":null,"week":null,"year":null},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","invoice_discount_rules":null,"metadata":null,"next_billing_date":null,"object":"v2.billing.cadence","payer":{"billing_profile":null,"customer":null,"type":"customer"},"settings":null,"status":"active","test_clock":null,"livemode":true}',
+      },
+    ]);
+    const cadence = await stripe.v2.billing.cadences.cancel('id_123');
+    expect(cadence).not.to.be.null;
+  });
+
+  it('test_v2_billing_collection_setting_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/collection_settings',
+        response:
+          '{"data":[{"collection_method":null,"created":"1970-01-12T21:42:34.472Z","display_name":null,"id":"obj_123","latest_version":"latest_version","live_version":"live_version","lookup_key":null,"object":"v2.billing.collection_setting","payment_method_configuration":null,"payment_method_options":null,"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const collectionSettings = await stripe.v2.billing.collectionSettings.list();
+    expect(collectionSettings).not.to.be.null;
+  });
+
+  it('test_v2_billing_collection_setting_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/collection_settings',
+        response:
+          '{"collection_method":null,"created":"1970-01-12T21:42:34.472Z","display_name":null,"id":"obj_123","latest_version":"latest_version","live_version":"live_version","lookup_key":null,"object":"v2.billing.collection_setting","payment_method_configuration":null,"payment_method_options":null,"livemode":true}',
+      },
+    ]);
+    const collectionSetting = await stripe.v2.billing.collectionSettings.create();
+    expect(collectionSetting).not.to.be.null;
+  });
+
+  it('test_v2_billing_collection_setting_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/collection_settings/id_123',
+        response:
+          '{"collection_method":null,"created":"1970-01-12T21:42:34.472Z","display_name":null,"id":"obj_123","latest_version":"latest_version","live_version":"live_version","lookup_key":null,"object":"v2.billing.collection_setting","payment_method_configuration":null,"payment_method_options":null,"livemode":true}',
+      },
+    ]);
+    const collectionSetting = await stripe.v2.billing.collectionSettings.retrieve(
+      'id_123'
+    );
+    expect(collectionSetting).not.to.be.null;
+  });
+
+  it('test_v2_billing_collection_setting_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/collection_settings/id_123',
+        response:
+          '{"collection_method":null,"created":"1970-01-12T21:42:34.472Z","display_name":null,"id":"obj_123","latest_version":"latest_version","live_version":"live_version","lookup_key":null,"object":"v2.billing.collection_setting","payment_method_configuration":null,"payment_method_options":null,"livemode":true}',
+      },
+    ]);
+    const collectionSetting = await stripe.v2.billing.collectionSettings.update(
+      'id_123'
+    );
+    expect(collectionSetting).not.to.be.null;
+  });
+
+  it('test_v2_billing_collection_settings_version_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path:
+          '/v2/billing/collection_settings/collection_setting_id_123/versions',
+        response:
+          '{"data":[{"collection_method":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.billing.collection_setting_version","payment_method_configuration":null,"payment_method_options":null,"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const collectionSettingVersions = await stripe.v2.billing.collectionSettings.versions.list(
+      'collection_setting_id_123'
+    );
+    expect(collectionSettingVersions).not.to.be.null;
+  });
+
+  it('test_v2_billing_collection_settings_version_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path:
+          '/v2/billing/collection_settings/collection_setting_id_123/versions/id_123',
+        response:
+          '{"collection_method":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.billing.collection_setting_version","payment_method_configuration":null,"payment_method_options":null,"livemode":true}',
+      },
+    ]);
+    const collectionSettingVersion = await stripe.v2.billing.collectionSettings.versions.retrieve(
+      'collection_setting_id_123',
+      'id_123'
+    );
+    expect(collectionSettingVersion).not.to.be.null;
+  });
+
+  it('test_v2_billing_custom_pricing_unit_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/custom_pricing_units',
+        response:
+          '{"data":[{"active":true,"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.custom_pricing_unit","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const customPricingUnits = await stripe.v2.billing.customPricingUnits.list();
+    expect(customPricingUnits).not.to.be.null;
+  });
+
+  it('test_v2_billing_custom_pricing_unit_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/custom_pricing_units',
+        response:
+          '{"active":true,"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.custom_pricing_unit","livemode":true}',
+      },
+    ]);
+    const customPricingUnit = await stripe.v2.billing.customPricingUnits.create(
+      {
+        display_name: 'display_name',
+      }
+    );
+    expect(customPricingUnit).not.to.be.null;
+  });
+
+  it('test_v2_billing_custom_pricing_unit_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/custom_pricing_units/id_123',
+        response:
+          '{"active":true,"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.custom_pricing_unit","livemode":true}',
+      },
+    ]);
+    const customPricingUnit = await stripe.v2.billing.customPricingUnits.retrieve(
+      'id_123'
+    );
+    expect(customPricingUnit).not.to.be.null;
+  });
+
+  it('test_v2_billing_custom_pricing_unit_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/custom_pricing_units/id_123',
+        response:
+          '{"active":true,"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.custom_pricing_unit","livemode":true}',
+      },
+    ]);
+    const customPricingUnit = await stripe.v2.billing.customPricingUnits.update(
+      'id_123'
+    );
+    expect(customPricingUnit).not.to.be.null;
+  });
+
+  it('test_v2_billing_intent_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/intents',
+        response:
+          '{"data":[{"amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","effective_at":"on_reserve","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"canceled_at":null,"committed_at":null,"drafted_at":null,"reserved_at":null},"livemode":true,"cadence":null}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const intents = await stripe.v2.billing.intents.list();
+    expect(intents).not.to.be.null;
+  });
+
+  it('test_v2_billing_intent_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/intents',
+        response:
+          '{"amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","effective_at":"on_reserve","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"canceled_at":null,"committed_at":null,"drafted_at":null,"reserved_at":null},"livemode":true,"cadence":null}',
+      },
+    ]);
+    const intent = await stripe.v2.billing.intents.create({
+      actions: [
+        {
+          type: 'apply',
+          apply: {
+            type: 'invoice_discount_rule',
+            invoice_discount_rule: {
+              applies_to: 'cadence',
+              type: 'percent_off',
+              percent_off: {
+                maximum_applications: {
+                  type: 'indefinite',
+                },
+                percent_off: 'percent_off',
+              },
+            },
+          },
+          deactivate: {
+            pricing_plan_subscription_details: {
+              pricing_plan_subscription: 'pricing_plan_subscription',
+            },
+            proration_behavior: 'none',
+            type: 'pricing_plan_subscription_details',
+          },
+          modify: {
+            pricing_plan_subscription_details: {
+              component_configurations: [
+                {
+                  quantity: 1285004149,
+                  lookup_key: 'lookup_key',
+                  pricing_plan_component: 'pricing_plan_component',
+                },
+              ],
+              new_pricing_plan: 'new_pricing_plan',
+              new_pricing_plan_version: 'new_pricing_plan_version',
+              pricing_plan_subscription: 'pricing_plan_subscription',
+            },
+            proration_behavior: 'none',
+            type: 'pricing_plan_subscription_details',
+          },
+          remove: {
+            type: 'invoice_discount_rule',
+            invoice_discount_rule: 'invoice_discount_rule',
+          },
+          subscribe: {
+            proration_behavior: 'none',
+            type: 'pricing_plan_subscription_details',
+            pricing_plan_subscription_details: {
+              component_configurations: [
+                {
+                  quantity: 1285004149,
+                  lookup_key: 'lookup_key',
+                  pricing_plan_component: 'pricing_plan_component',
+                },
+              ],
+              metadata: {
+                key: 'metadata',
+              },
+              pricing_plan: 'pricing_plan',
+              pricing_plan_version: 'pricing_plan_version',
+            },
+          },
+        },
+      ],
+      currency: 'usd',
+      effective_at: 'on_reserve',
+    });
+    expect(intent).not.to.be.null;
+  });
+
+  it('test_v2_billing_intent_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/intents/id_123',
+        response:
+          '{"amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","effective_at":"on_reserve","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"canceled_at":null,"committed_at":null,"drafted_at":null,"reserved_at":null},"livemode":true,"cadence":null}',
+      },
+    ]);
+    const intent = await stripe.v2.billing.intents.retrieve('id_123');
+    expect(intent).not.to.be.null;
+  });
+
+  it('test_v2_billing_intent_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/intents/id_123/cancel',
+        response:
+          '{"amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","effective_at":"on_reserve","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"canceled_at":null,"committed_at":null,"drafted_at":null,"reserved_at":null},"livemode":true,"cadence":null}',
+      },
+    ]);
+    const intent = await stripe.v2.billing.intents.cancel('id_123');
+    expect(intent).not.to.be.null;
+  });
+
+  it('test_v2_billing_intent_post_3', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/intents/id_123/commit',
+        response:
+          '{"amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","effective_at":"on_reserve","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"canceled_at":null,"committed_at":null,"drafted_at":null,"reserved_at":null},"livemode":true,"cadence":null}',
+      },
+    ]);
+    const intent = await stripe.v2.billing.intents.commit('id_123');
+    expect(intent).not.to.be.null;
+  });
+
+  it('test_v2_billing_intent_post_4', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/intents/id_123/release_reservation',
+        response:
+          '{"amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","effective_at":"on_reserve","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"canceled_at":null,"committed_at":null,"drafted_at":null,"reserved_at":null},"livemode":true,"cadence":null}',
+      },
+    ]);
+    const intent = await stripe.v2.billing.intents.releaseReservation('id_123');
+    expect(intent).not.to.be.null;
+  });
+
+  it('test_v2_billing_intent_post_5', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/intents/id_123/reserve',
+        response:
+          '{"amount_details":{"currency":"usd","discount":"discount","shipping":"shipping","subtotal":"subtotal","tax":"tax","total":"total"},"created":"1970-01-12T21:42:34.472Z","currency":"usd","effective_at":"on_reserve","id":"obj_123","object":"v2.billing.intent","status":"draft","status_transitions":{"canceled_at":null,"committed_at":null,"drafted_at":null,"reserved_at":null},"livemode":true,"cadence":null}',
+      },
+    ]);
+    const intent = await stripe.v2.billing.intents.reserve('id_123');
+    expect(intent).not.to.be.null;
+  });
+
+  it('test_v2_billing_license_fee_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/license_fees?lookup_keys=lookup_keys',
+        response:
+          '{"data":[{"active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","licensed_item":{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.licensed_item","tax_details":null,"unit_label":null,"livemode":true},"live_version":"live_version","lookup_key":null,"metadata":null,"object":"v2.billing.license_fee","service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive","tiering_mode":null,"tiers":[{"flat_amount":null,"unit_amount":null,"up_to_decimal":null,"up_to_inf":null}],"transform_quantity":null,"unit_amount":null,"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const licenseFees = await stripe.v2.billing.licenseFees.list({
+      lookup_keys: ['lookup_keys'],
+    });
+    expect(licenseFees).not.to.be.null;
+  });
+
+  it('test_v2_billing_license_fee_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/license_fees',
+        response:
+          '{"active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","licensed_item":{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.licensed_item","tax_details":null,"unit_label":null,"livemode":true},"live_version":"live_version","lookup_key":null,"metadata":null,"object":"v2.billing.license_fee","service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive","tiering_mode":null,"tiers":[{"flat_amount":null,"unit_amount":null,"up_to_decimal":null,"up_to_inf":null}],"transform_quantity":null,"unit_amount":null,"livemode":true}',
+      },
+    ]);
+    const licenseFee = await stripe.v2.billing.licenseFees.create({
+      currency: 'usd',
+      display_name: 'display_name',
+      licensed_item: 'licensed_item',
+      service_interval: 'month',
+      service_interval_count: 1375336415,
+      tax_behavior: 'exclusive',
+    });
+    expect(licenseFee).not.to.be.null;
+  });
+
+  it('test_v2_billing_license_fee_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/license_fees/id_123',
+        response:
+          '{"active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","licensed_item":{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.licensed_item","tax_details":null,"unit_label":null,"livemode":true},"live_version":"live_version","lookup_key":null,"metadata":null,"object":"v2.billing.license_fee","service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive","tiering_mode":null,"tiers":[{"flat_amount":null,"unit_amount":null,"up_to_decimal":null,"up_to_inf":null}],"transform_quantity":null,"unit_amount":null,"livemode":true}',
+      },
+    ]);
+    const licenseFee = await stripe.v2.billing.licenseFees.retrieve('id_123');
+    expect(licenseFee).not.to.be.null;
+  });
+
+  it('test_v2_billing_license_fee_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/license_fees/id_123',
+        response:
+          '{"active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","licensed_item":{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.licensed_item","tax_details":null,"unit_label":null,"livemode":true},"live_version":"live_version","lookup_key":null,"metadata":null,"object":"v2.billing.license_fee","service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive","tiering_mode":null,"tiers":[{"flat_amount":null,"unit_amount":null,"up_to_decimal":null,"up_to_inf":null}],"transform_quantity":null,"unit_amount":null,"livemode":true}',
+      },
+    ]);
+    const licenseFee = await stripe.v2.billing.licenseFees.update('id_123', {
+      display_name: 'display_name',
+    });
+    expect(licenseFee).not.to.be.null;
+  });
+
+  it('test_v2_billing_license_fees_version_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/license_fees/license_fee_id_123/versions',
+        response:
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","license_fee_id":"license_fee_id","object":"v2.billing.license_fee_version","tiering_mode":null,"tiers":[{"flat_amount":null,"unit_amount":null,"up_to_decimal":null,"up_to_inf":null}],"transform_quantity":null,"unit_amount":null,"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const licenseFeeVersions = await stripe.v2.billing.licenseFees.versions.list(
+      'license_fee_id_123'
+    );
+    expect(licenseFeeVersions).not.to.be.null;
+  });
+
+  it('test_v2_billing_license_fees_version_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/license_fees/license_fee_id_123/versions/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","license_fee_id":"license_fee_id","object":"v2.billing.license_fee_version","tiering_mode":null,"tiers":[{"flat_amount":null,"unit_amount":null,"up_to_decimal":null,"up_to_inf":null}],"transform_quantity":null,"unit_amount":null,"livemode":true}',
+      },
+    ]);
+    const licenseFeeVersion = await stripe.v2.billing.licenseFees.versions.retrieve(
+      'license_fee_id_123',
+      'id_123'
+    );
+    expect(licenseFeeVersion).not.to.be.null;
+  });
+
+  it('test_v2_billing_licensed_item_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/licensed_items',
+        response:
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.licensed_item","tax_details":null,"unit_label":null,"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const licensedItems = await stripe.v2.billing.licensedItems.list();
+    expect(licensedItems).not.to.be.null;
+  });
+
+  it('test_v2_billing_licensed_item_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/licensed_items',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.licensed_item","tax_details":null,"unit_label":null,"livemode":true}',
+      },
+    ]);
+    const licensedItem = await stripe.v2.billing.licensedItems.create({
+      display_name: 'display_name',
+    });
+    expect(licensedItem).not.to.be.null;
+  });
+
+  it('test_v2_billing_licensed_item_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/licensed_items/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.licensed_item","tax_details":null,"unit_label":null,"livemode":true}',
+      },
+    ]);
+    const licensedItem = await stripe.v2.billing.licensedItems.retrieve(
+      'id_123'
+    );
+    expect(licensedItem).not.to.be.null;
+  });
+
+  it('test_v2_billing_licensed_item_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/licensed_items/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.licensed_item","tax_details":null,"unit_label":null,"livemode":true}',
+      },
+    ]);
+    const licensedItem = await stripe.v2.billing.licensedItems.update('id_123');
+    expect(licensedItem).not.to.be.null;
+  });
+
   it('test_v2_billing_meter_event_adjustment_post', async function() {
     const stripe = testUtils.createMockClient([
       {
@@ -3955,7 +4677,7 @@ describe('Generated tests', function() {
           event_name: 'event_name',
           identifier: 'identifier',
           payload: {
-            undefined: 'payload',
+            key: 'payload',
           },
           timestamp: '1970-01-01T15:18:46.294Z',
         },
@@ -3970,16 +4692,582 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/billing/meter_events',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","event_name":"event_name","identifier":"identifier","object":"v2.billing.meter_event","payload":{"undefined":"payload"},"timestamp":"1970-01-01T15:18:46.294Z","livemode":true}',
+          '{"created":"1970-01-12T21:42:34.472Z","event_name":"event_name","identifier":"identifier","object":"v2.billing.meter_event","payload":{"key":"payload"},"timestamp":"1970-01-01T15:18:46.294Z","livemode":true}',
       },
     ]);
     const meterEvent = await stripe.v2.billing.meterEvents.create({
       event_name: 'event_name',
       payload: {
-        undefined: 'payload',
+        key: 'payload',
       },
     });
     expect(meterEvent).not.to.be.null;
+  });
+
+  it('test_v2_billing_metered_item_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/metered_items',
+        response:
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","invoice_presentation_dimensions":["invoice_presentation_dimensions"],"lookup_key":null,"metadata":null,"meter":"meter","meter_segment_conditions":[{"dimension":"dimension","value":"value"}],"object":"v2.billing.metered_item","tax_details":null,"unit_label":null,"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const meteredItems = await stripe.v2.billing.meteredItems.list();
+    expect(meteredItems).not.to.be.null;
+  });
+
+  it('test_v2_billing_metered_item_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/metered_items',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","invoice_presentation_dimensions":["invoice_presentation_dimensions"],"lookup_key":null,"metadata":null,"meter":"meter","meter_segment_conditions":[{"dimension":"dimension","value":"value"}],"object":"v2.billing.metered_item","tax_details":null,"unit_label":null,"livemode":true}',
+      },
+    ]);
+    const meteredItem = await stripe.v2.billing.meteredItems.create({
+      display_name: 'display_name',
+      meter: 'meter',
+    });
+    expect(meteredItem).not.to.be.null;
+  });
+
+  it('test_v2_billing_metered_item_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/metered_items/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","invoice_presentation_dimensions":["invoice_presentation_dimensions"],"lookup_key":null,"metadata":null,"meter":"meter","meter_segment_conditions":[{"dimension":"dimension","value":"value"}],"object":"v2.billing.metered_item","tax_details":null,"unit_label":null,"livemode":true}',
+      },
+    ]);
+    const meteredItem = await stripe.v2.billing.meteredItems.retrieve('id_123');
+    expect(meteredItem).not.to.be.null;
+  });
+
+  it('test_v2_billing_metered_item_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/metered_items/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","invoice_presentation_dimensions":["invoice_presentation_dimensions"],"lookup_key":null,"metadata":null,"meter":"meter","meter_segment_conditions":[{"dimension":"dimension","value":"value"}],"object":"v2.billing.metered_item","tax_details":null,"unit_label":null,"livemode":true}',
+      },
+    ]);
+    const meteredItem = await stripe.v2.billing.meteredItems.update('id_123');
+    expect(meteredItem).not.to.be.null;
+  });
+
+  it('test_v2_billing_pricing_plan_subscription_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/pricing_plan_subscriptions',
+        response:
+          '{"data":[{"billing_cadence":"billing_cadence","collection_status":"past_due","collection_status_transitions":{"awaiting_customer_action_at":null,"current_at":null,"past_due_at":null,"paused_at":null,"unpaid_at":null},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.billing.pricing_plan_subscription","pricing_plan":"pricing_plan","pricing_plan_version":"pricing_plan_version","servicing_status":"pending","servicing_status_transitions":{"activated_at":null,"canceled_at":null,"paused_at":null},"test_clock":null,"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const pricingPlanSubscriptions = await stripe.v2.billing.pricingPlanSubscriptions.list();
+    expect(pricingPlanSubscriptions).not.to.be.null;
+  });
+
+  it('test_v2_billing_pricing_plan_subscription_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/pricing_plan_subscriptions/id_123',
+        response:
+          '{"billing_cadence":"billing_cadence","collection_status":"past_due","collection_status_transitions":{"awaiting_customer_action_at":null,"current_at":null,"past_due_at":null,"paused_at":null,"unpaid_at":null},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.billing.pricing_plan_subscription","pricing_plan":"pricing_plan","pricing_plan_version":"pricing_plan_version","servicing_status":"pending","servicing_status_transitions":{"activated_at":null,"canceled_at":null,"paused_at":null},"test_clock":null,"livemode":true}',
+      },
+    ]);
+    const pricingPlanSubscription = await stripe.v2.billing.pricingPlanSubscriptions.retrieve(
+      'id_123'
+    );
+    expect(pricingPlanSubscription).not.to.be.null;
+  });
+
+  it('test_v2_billing_pricing_plan_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/pricing_plans',
+        response:
+          '{"data":[{"active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","description":null,"display_name":"display_name","id":"obj_123","latest_version":"latest_version","live_version":null,"lookup_key":null,"metadata":null,"object":"v2.billing.pricing_plan","tax_behavior":"exclusive","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const pricingPlans = await stripe.v2.billing.pricingPlans.list();
+    expect(pricingPlans).not.to.be.null;
+  });
+
+  it('test_v2_billing_pricing_plan_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/pricing_plans',
+        response:
+          '{"active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","description":null,"display_name":"display_name","id":"obj_123","latest_version":"latest_version","live_version":null,"lookup_key":null,"metadata":null,"object":"v2.billing.pricing_plan","tax_behavior":"exclusive","livemode":true}',
+      },
+    ]);
+    const pricingPlan = await stripe.v2.billing.pricingPlans.create({
+      currency: 'usd',
+      display_name: 'display_name',
+      tax_behavior: 'exclusive',
+    });
+    expect(pricingPlan).not.to.be.null;
+  });
+
+  it('test_v2_billing_pricing_plan_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/pricing_plans/id_123',
+        response:
+          '{"active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","description":null,"display_name":"display_name","id":"obj_123","latest_version":"latest_version","live_version":null,"lookup_key":null,"metadata":null,"object":"v2.billing.pricing_plan","tax_behavior":"exclusive","livemode":true}',
+      },
+    ]);
+    const pricingPlan = await stripe.v2.billing.pricingPlans.retrieve('id_123');
+    expect(pricingPlan).not.to.be.null;
+  });
+
+  it('test_v2_billing_pricing_plan_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/pricing_plans/id_123',
+        response:
+          '{"active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","description":null,"display_name":"display_name","id":"obj_123","latest_version":"latest_version","live_version":null,"lookup_key":null,"metadata":null,"object":"v2.billing.pricing_plan","tax_behavior":"exclusive","livemode":true}',
+      },
+    ]);
+    const pricingPlan = await stripe.v2.billing.pricingPlans.update('id_123');
+    expect(pricingPlan).not.to.be.null;
+  });
+
+  it('test_v2_billing_pricing_plans_component_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/pricing_plans/pricing_plan_id_123/components',
+        response:
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.pricing_plan_component","pricing_plan":"pricing_plan","pricing_plan_version":"pricing_plan_version","type":"license_fee","livemode":true,"license_fee":null,"rate_card":null,"service_action":null}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const pricingPlanComponents = await stripe.v2.billing.pricingPlans.components.list(
+      'pricing_plan_id_123'
+    );
+    expect(pricingPlanComponents).not.to.be.null;
+  });
+
+  it('test_v2_billing_pricing_plans_component_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/pricing_plans/pricing_plan_id_123/components',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.pricing_plan_component","pricing_plan":"pricing_plan","pricing_plan_version":"pricing_plan_version","type":"license_fee","livemode":true,"license_fee":null,"rate_card":null,"service_action":null}',
+      },
+    ]);
+    const pricingPlanComponent = await stripe.v2.billing.pricingPlans.components.create(
+      'pricing_plan_id_123',
+      {
+        type: 'license_fee',
+      }
+    );
+    expect(pricingPlanComponent).not.to.be.null;
+  });
+
+  it('test_v2_billing_pricing_plans_component_delete', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'DELETE',
+        path: '/v2/billing/pricing_plans/pricing_plan_id_123/components/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.pricing_plan_component","pricing_plan":"pricing_plan","pricing_plan_version":"pricing_plan_version","type":"license_fee","livemode":true,"license_fee":null,"rate_card":null,"service_action":null}',
+      },
+    ]);
+    const pricingPlanComponent = await stripe.v2.billing.pricingPlans.components.del(
+      'pricing_plan_id_123',
+      'id_123'
+    );
+    expect(pricingPlanComponent).not.to.be.null;
+  });
+
+  it('test_v2_billing_pricing_plans_component_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/pricing_plans/pricing_plan_id_123/components/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.pricing_plan_component","pricing_plan":"pricing_plan","pricing_plan_version":"pricing_plan_version","type":"license_fee","livemode":true,"license_fee":null,"rate_card":null,"service_action":null}',
+      },
+    ]);
+    const pricingPlanComponent = await stripe.v2.billing.pricingPlans.components.retrieve(
+      'pricing_plan_id_123',
+      'id_123'
+    );
+    expect(pricingPlanComponent).not.to.be.null;
+  });
+
+  it('test_v2_billing_pricing_plans_component_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/pricing_plans/pricing_plan_id_123/components/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.pricing_plan_component","pricing_plan":"pricing_plan","pricing_plan_version":"pricing_plan_version","type":"license_fee","livemode":true,"license_fee":null,"rate_card":null,"service_action":null}',
+      },
+    ]);
+    const pricingPlanComponent = await stripe.v2.billing.pricingPlans.components.update(
+      'pricing_plan_id_123',
+      'id_123'
+    );
+    expect(pricingPlanComponent).not.to.be.null;
+  });
+
+  it('test_v2_billing_pricing_plans_version_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/pricing_plans/pricing_plan_id_123/versions',
+        response:
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","end_date":"1970-01-20T23:11:07.410Z","id":"obj_123","object":"v2.billing.pricing_plan_version","pricing_plan":"pricing_plan","start_date":"1970-01-19T05:07:09.589Z","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const pricingPlanVersions = await stripe.v2.billing.pricingPlans.versions.list(
+      'pricing_plan_id_123'
+    );
+    expect(pricingPlanVersions).not.to.be.null;
+  });
+
+  it('test_v2_billing_pricing_plans_version_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/pricing_plans/pricing_plan_id_123/versions/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","end_date":"1970-01-20T23:11:07.410Z","id":"obj_123","object":"v2.billing.pricing_plan_version","pricing_plan":"pricing_plan","start_date":"1970-01-19T05:07:09.589Z","livemode":true}',
+      },
+    ]);
+    const pricingPlanVersion = await stripe.v2.billing.pricingPlans.versions.retrieve(
+      'pricing_plan_id_123',
+      'id_123'
+    );
+    expect(pricingPlanVersion).not.to.be.null;
+  });
+
+  it('test_v2_billing_profile_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/profiles?lookup_keys=lookup_keys',
+        response:
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","customer":null,"default_payment_method":null,"display_name":null,"id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.profile","status":"active","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const profiles = await stripe.v2.billing.profiles.list({
+      lookup_keys: ['lookup_keys'],
+    });
+    expect(profiles).not.to.be.null;
+  });
+
+  it('test_v2_billing_profile_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/profiles',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","customer":null,"default_payment_method":null,"display_name":null,"id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.profile","status":"active","livemode":true}',
+      },
+    ]);
+    const profile = await stripe.v2.billing.profiles.create({
+      customer: 'customer',
+    });
+    expect(profile).not.to.be.null;
+  });
+
+  it('test_v2_billing_profile_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/profiles/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","customer":null,"default_payment_method":null,"display_name":null,"id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.profile","status":"active","livemode":true}',
+      },
+    ]);
+    const profile = await stripe.v2.billing.profiles.retrieve('id_123');
+    expect(profile).not.to.be.null;
+  });
+
+  it('test_v2_billing_profile_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/profiles/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","customer":null,"default_payment_method":null,"display_name":null,"id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.profile","status":"active","livemode":true}',
+      },
+    ]);
+    const profile = await stripe.v2.billing.profiles.update('id_123');
+    expect(profile).not.to.be.null;
+  });
+
+  it('test_v2_billing_rate_card_subscription_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/rate_card_subscriptions',
+        response:
+          '{"data":[{"billing_cadence":"billing_cadence","collection_status":null,"collection_status_transitions":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.billing.rate_card_subscription","rate_card":"rate_card","rate_card_version":"rate_card_version","servicing_status":null,"servicing_status_transitions":null,"test_clock":null,"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const rateCardSubscriptions = await stripe.v2.billing.rateCardSubscriptions.list();
+    expect(rateCardSubscriptions).not.to.be.null;
+  });
+
+  it('test_v2_billing_rate_card_subscription_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/rate_card_subscriptions',
+        response:
+          '{"billing_cadence":"billing_cadence","collection_status":null,"collection_status_transitions":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.billing.rate_card_subscription","rate_card":"rate_card","rate_card_version":"rate_card_version","servicing_status":null,"servicing_status_transitions":null,"test_clock":null,"livemode":true}',
+      },
+    ]);
+    const rateCardSubscription = await stripe.v2.billing.rateCardSubscriptions.create(
+      {
+        billing_cadence: 'billing_cadence',
+        rate_card: 'rate_card',
+      }
+    );
+    expect(rateCardSubscription).not.to.be.null;
+  });
+
+  it('test_v2_billing_rate_card_subscription_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/rate_card_subscriptions/id_123',
+        response:
+          '{"billing_cadence":"billing_cadence","collection_status":null,"collection_status_transitions":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.billing.rate_card_subscription","rate_card":"rate_card","rate_card_version":"rate_card_version","servicing_status":null,"servicing_status_transitions":null,"test_clock":null,"livemode":true}',
+      },
+    ]);
+    const rateCardSubscription = await stripe.v2.billing.rateCardSubscriptions.retrieve(
+      'id_123'
+    );
+    expect(rateCardSubscription).not.to.be.null;
+  });
+
+  it('test_v2_billing_rate_card_subscription_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/rate_card_subscriptions/id_123',
+        response:
+          '{"billing_cadence":"billing_cadence","collection_status":null,"collection_status_transitions":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.billing.rate_card_subscription","rate_card":"rate_card","rate_card_version":"rate_card_version","servicing_status":null,"servicing_status_transitions":null,"test_clock":null,"livemode":true}',
+      },
+    ]);
+    const rateCardSubscription = await stripe.v2.billing.rateCardSubscriptions.update(
+      'id_123'
+    );
+    expect(rateCardSubscription).not.to.be.null;
+  });
+
+  it('test_v2_billing_rate_card_subscription_post_3', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/rate_card_subscriptions/id_123/cancel',
+        response:
+          '{"billing_cadence":"billing_cadence","collection_status":null,"collection_status_transitions":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.billing.rate_card_subscription","rate_card":"rate_card","rate_card_version":"rate_card_version","servicing_status":null,"servicing_status_transitions":null,"test_clock":null,"livemode":true}',
+      },
+    ]);
+    const rateCardSubscription = await stripe.v2.billing.rateCardSubscriptions.cancel(
+      'id_123'
+    );
+    expect(rateCardSubscription).not.to.be.null;
+  });
+
+  it('test_v2_billing_rate_card_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/rate_cards',
+        response:
+          '{"data":[{"active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","live_version":"live_version","metadata":null,"object":"v2.billing.rate_card","service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const rateCards = await stripe.v2.billing.rateCards.list();
+    expect(rateCards).not.to.be.null;
+  });
+
+  it('test_v2_billing_rate_card_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/rate_cards',
+        response:
+          '{"active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","live_version":"live_version","metadata":null,"object":"v2.billing.rate_card","service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive","livemode":true}',
+      },
+    ]);
+    const rateCard = await stripe.v2.billing.rateCards.create({
+      currency: 'usd',
+      display_name: 'display_name',
+      service_interval: 'month',
+      service_interval_count: 1375336415,
+      tax_behavior: 'exclusive',
+    });
+    expect(rateCard).not.to.be.null;
+  });
+
+  it('test_v2_billing_rate_card_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/rate_cards/id_123',
+        response:
+          '{"active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","live_version":"live_version","metadata":null,"object":"v2.billing.rate_card","service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive","livemode":true}',
+      },
+    ]);
+    const rateCard = await stripe.v2.billing.rateCards.retrieve('id_123');
+    expect(rateCard).not.to.be.null;
+  });
+
+  it('test_v2_billing_rate_card_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/rate_cards/id_123',
+        response:
+          '{"active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","live_version":"live_version","metadata":null,"object":"v2.billing.rate_card","service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive","livemode":true}',
+      },
+    ]);
+    const rateCard = await stripe.v2.billing.rateCards.update('id_123');
+    expect(rateCard).not.to.be.null;
+  });
+
+  it('test_v2_billing_rate_cards_rate_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/rate_cards/rate_card_id_123/rates',
+        response:
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","custom_pricing_unit_amount":null,"id":"obj_123","metadata":null,"metered_item":{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","invoice_presentation_dimensions":["invoice_presentation_dimensions"],"lookup_key":null,"metadata":null,"meter":"meter","meter_segment_conditions":[{"dimension":"dimension","value":"value"}],"object":"v2.billing.metered_item","tax_details":null,"unit_label":null,"livemode":true},"object":"v2.billing.rate_card_rate","rate_card":"rate_card","rate_card_version":"rate_card_version","tiering_mode":null,"tiers":[{"flat_amount":null,"unit_amount":null,"up_to_decimal":null,"up_to_inf":null}],"transform_quantity":null,"unit_amount":null,"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const rateCardRates = await stripe.v2.billing.rateCards.rates.list(
+      'rate_card_id_123'
+    );
+    expect(rateCardRates).not.to.be.null;
+  });
+
+  it('test_v2_billing_rate_cards_rate_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/rate_cards/rate_card_id_123/rates',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","custom_pricing_unit_amount":null,"id":"obj_123","metadata":null,"metered_item":{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","invoice_presentation_dimensions":["invoice_presentation_dimensions"],"lookup_key":null,"metadata":null,"meter":"meter","meter_segment_conditions":[{"dimension":"dimension","value":"value"}],"object":"v2.billing.metered_item","tax_details":null,"unit_label":null,"livemode":true},"object":"v2.billing.rate_card_rate","rate_card":"rate_card","rate_card_version":"rate_card_version","tiering_mode":null,"tiers":[{"flat_amount":null,"unit_amount":null,"up_to_decimal":null,"up_to_inf":null}],"transform_quantity":null,"unit_amount":null,"livemode":true}',
+      },
+    ]);
+    const rateCardRate = await stripe.v2.billing.rateCards.rates.create(
+      'rate_card_id_123'
+    );
+    expect(rateCardRate).not.to.be.null;
+  });
+
+  it('test_v2_billing_rate_cards_rate_delete', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'DELETE',
+        path: '/v2/billing/rate_cards/rate_card_id_123/rates/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","custom_pricing_unit_amount":null,"id":"obj_123","metadata":null,"metered_item":{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","invoice_presentation_dimensions":["invoice_presentation_dimensions"],"lookup_key":null,"metadata":null,"meter":"meter","meter_segment_conditions":[{"dimension":"dimension","value":"value"}],"object":"v2.billing.metered_item","tax_details":null,"unit_label":null,"livemode":true},"object":"v2.billing.rate_card_rate","rate_card":"rate_card","rate_card_version":"rate_card_version","tiering_mode":null,"tiers":[{"flat_amount":null,"unit_amount":null,"up_to_decimal":null,"up_to_inf":null}],"transform_quantity":null,"unit_amount":null,"livemode":true}',
+      },
+    ]);
+    const rateCardRate = await stripe.v2.billing.rateCards.rates.del(
+      'rate_card_id_123',
+      'id_123'
+    );
+    expect(rateCardRate).not.to.be.null;
+  });
+
+  it('test_v2_billing_rate_cards_rate_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/rate_cards/rate_card_id_123/rates/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","custom_pricing_unit_amount":null,"id":"obj_123","metadata":null,"metered_item":{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","invoice_presentation_dimensions":["invoice_presentation_dimensions"],"lookup_key":null,"metadata":null,"meter":"meter","meter_segment_conditions":[{"dimension":"dimension","value":"value"}],"object":"v2.billing.metered_item","tax_details":null,"unit_label":null,"livemode":true},"object":"v2.billing.rate_card_rate","rate_card":"rate_card","rate_card_version":"rate_card_version","tiering_mode":null,"tiers":[{"flat_amount":null,"unit_amount":null,"up_to_decimal":null,"up_to_inf":null}],"transform_quantity":null,"unit_amount":null,"livemode":true}',
+      },
+    ]);
+    const rateCardRate = await stripe.v2.billing.rateCards.rates.retrieve(
+      'rate_card_id_123',
+      'id_123'
+    );
+    expect(rateCardRate).not.to.be.null;
+  });
+
+  it('test_v2_billing_rate_cards_version_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/rate_cards/rate_card_id_123/versions',
+        response:
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.billing.rate_card_version","rate_card_id":"rate_card_id","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const rateCardVersions = await stripe.v2.billing.rateCards.versions.list(
+      'rate_card_id_123'
+    );
+    expect(rateCardVersions).not.to.be.null;
+  });
+
+  it('test_v2_billing_rate_cards_version_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/rate_cards/rate_card_id_123/versions/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.billing.rate_card_version","rate_card_id":"rate_card_id","livemode":true}',
+      },
+    ]);
+    const rateCardVersion = await stripe.v2.billing.rateCards.versions.retrieve(
+      'rate_card_id_123',
+      'id_123'
+    );
+    expect(rateCardVersion).not.to.be.null;
+  });
+
+  it('test_v2_billing_service_action_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/service_actions',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","lookup_key":null,"object":"v2.billing.service_action","service_interval":"month","service_interval_count":1375336415,"type":"credit_grant","livemode":true,"credit_grant":null,"credit_grant_per_tenant":null}',
+      },
+    ]);
+    const serviceAction = await stripe.v2.billing.serviceActions.create({
+      service_interval: 'month',
+      service_interval_count: 1375336415,
+      type: 'credit_grant',
+    });
+    expect(serviceAction).not.to.be.null;
+  });
+
+  it('test_v2_billing_service_action_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/service_actions/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","lookup_key":null,"object":"v2.billing.service_action","service_interval":"month","service_interval_count":1375336415,"type":"credit_grant","livemode":true,"credit_grant":null,"credit_grant_per_tenant":null}',
+      },
+    ]);
+    const serviceAction = await stripe.v2.billing.serviceActions.retrieve(
+      'id_123'
+    );
+    expect(serviceAction).not.to.be.null;
   });
 
   it('test_v2_core_account_link_post', async function() {
@@ -4273,7 +5561,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/core/event_destinations/id_123/ping',
         response:
-          '{"context":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":null,"type":"type","livemode":true}',
+          '{"changes":{"key":{}},"context":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":null,"type":"type","livemode":true}',
       },
     ]);
     const event = await stripe.v2.core.eventDestinations.ping('id_123');
@@ -4286,7 +5574,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/events?object_id=object_id',
         response:
-          '{"data":[{"context":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":null,"type":"type","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"changes":{"key":{}},"context":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":null,"type":"type","livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const events = await stripe.v2.core.events.list({
@@ -4301,7 +5589,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/events/id_123',
         response:
-          '{"context":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":null,"type":"type","livemode":true}',
+          '{"changes":{"key":{}},"context":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":null,"type":"type","livemode":true}',
       },
     ]);
     const event = await stripe.v2.core.events.retrieve('id_123');
@@ -4480,7 +5768,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/financial_accounts',
         response:
-          '{"data":[{"balance":{"available":{"undefined":{"currency":"USD","value":35}},"inbound_pending":{"undefined":{"currency":"USD","value":11}},"outbound_pending":{"undefined":{"currency":"USD","value":60}}},"country":"af","created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.money_management.financial_account","other":null,"status":"closed","status_details":null,"storage":null,"type":"other","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"balance":{"available":{"key":{"currency":"USD","value":35}},"inbound_pending":{"key":{"currency":"USD","value":11}},"outbound_pending":{"key":{"currency":"USD","value":60}}},"country":"af","created":"1970-01-12T21:42:34.472Z","display_name":null,"id":"obj_123","metadata":null,"object":"v2.money_management.financial_account","other":null,"status":"closed","status_details":null,"storage":null,"type":"other","livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const financialAccounts = await stripe.v2.moneyManagement.financialAccounts.list();
@@ -4493,7 +5781,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/money_management/financial_accounts',
         response:
-          '{"balance":{"available":{"undefined":{"currency":"USD","value":35}},"inbound_pending":{"undefined":{"currency":"USD","value":11}},"outbound_pending":{"undefined":{"currency":"USD","value":60}}},"country":"af","created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.money_management.financial_account","other":null,"status":"closed","status_details":null,"storage":null,"type":"other","livemode":true}',
+          '{"balance":{"available":{"key":{"currency":"USD","value":35}},"inbound_pending":{"key":{"currency":"USD","value":11}},"outbound_pending":{"key":{"currency":"USD","value":60}}},"country":"af","created":"1970-01-12T21:42:34.472Z","display_name":null,"id":"obj_123","metadata":null,"object":"v2.money_management.financial_account","other":null,"status":"closed","status_details":null,"storage":null,"type":"other","livemode":true}',
       },
     ]);
     const financialAccount = await stripe.v2.moneyManagement.financialAccounts.create(
@@ -4510,7 +5798,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/financial_accounts/id_123',
         response:
-          '{"balance":{"available":{"undefined":{"currency":"USD","value":35}},"inbound_pending":{"undefined":{"currency":"USD","value":11}},"outbound_pending":{"undefined":{"currency":"USD","value":60}}},"country":"af","created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.money_management.financial_account","other":null,"status":"closed","status_details":null,"storage":null,"type":"other","livemode":true}',
+          '{"balance":{"available":{"key":{"currency":"USD","value":35}},"inbound_pending":{"key":{"currency":"USD","value":11}},"outbound_pending":{"key":{"currency":"USD","value":60}}},"country":"af","created":"1970-01-12T21:42:34.472Z","display_name":null,"id":"obj_123","metadata":null,"object":"v2.money_management.financial_account","other":null,"status":"closed","status_details":null,"storage":null,"type":"other","livemode":true}',
       },
     ]);
     const financialAccount = await stripe.v2.moneyManagement.financialAccounts.retrieve(
@@ -4525,7 +5813,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/money_management/financial_accounts/id_123/close',
         response:
-          '{"balance":{"available":{"undefined":{"currency":"USD","value":35}},"inbound_pending":{"undefined":{"currency":"USD","value":11}},"outbound_pending":{"undefined":{"currency":"USD","value":60}}},"country":"af","created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.money_management.financial_account","other":null,"status":"closed","status_details":null,"storage":null,"type":"other","livemode":true}',
+          '{"balance":{"available":{"key":{"currency":"USD","value":35}},"inbound_pending":{"key":{"currency":"USD","value":11}},"outbound_pending":{"key":{"currency":"USD","value":60}}},"country":"af","created":"1970-01-12T21:42:34.472Z","display_name":null,"id":"obj_123","metadata":null,"object":"v2.money_management.financial_account","other":null,"status":"closed","status_details":null,"storage":null,"type":"other","livemode":true}',
       },
     ]);
     const financialAccount = await stripe.v2.moneyManagement.financialAccounts.close(
@@ -4642,7 +5930,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/money_management/outbound_payment_quotes',
         response:
-          '{"amount":{"currency":"USD","value":96},"created":"1970-01-12T21:42:34.472Z","delivery_options":null,"estimated_fees":[{"amount":{"currency":"USD","value":96},"type":"cross_border_payout_fee"}],"from":{"debited":{"currency":"USD","value":55},"financial_account":"financial_account"},"fx_quote":{"lock_duration":"five_minutes","lock_expires_at":"1970-01-18T15:15:29.586Z","lock_status":"active","rates":{"undefined":{"exchange_rate":"exchange_rate"}},"to_currency":"usd"},"id":"obj_123","object":"v2.money_management.outbound_payment_quote","to":{"credited":{"currency":"USD","value":68},"payout_method":"payout_method","recipient":"recipient"},"livemode":true}',
+          '{"amount":{"currency":"USD","value":96},"created":"1970-01-12T21:42:34.472Z","delivery_options":null,"estimated_fees":[{"amount":{"currency":"USD","value":96},"type":"cross_border_payout_fee"}],"from":{"debited":{"currency":"USD","value":55},"financial_account":"financial_account"},"fx_quote":{"lock_duration":"five_minutes","lock_expires_at":"1970-01-18T15:15:29.586Z","lock_status":"active","rates":{"key":{"exchange_rate":"exchange_rate"}},"to_currency":"usd"},"id":"obj_123","object":"v2.money_management.outbound_payment_quote","to":{"credited":{"currency":"USD","value":68},"payout_method":"payout_method","recipient":"recipient"},"livemode":true}',
       },
     ]);
     const outboundPaymentQuote = await stripe.v2.moneyManagement.outboundPaymentQuotes.create(
@@ -4671,7 +5959,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/outbound_payment_quotes/id_123',
         response:
-          '{"amount":{"currency":"USD","value":96},"created":"1970-01-12T21:42:34.472Z","delivery_options":null,"estimated_fees":[{"amount":{"currency":"USD","value":96},"type":"cross_border_payout_fee"}],"from":{"debited":{"currency":"USD","value":55},"financial_account":"financial_account"},"fx_quote":{"lock_duration":"five_minutes","lock_expires_at":"1970-01-18T15:15:29.586Z","lock_status":"active","rates":{"undefined":{"exchange_rate":"exchange_rate"}},"to_currency":"usd"},"id":"obj_123","object":"v2.money_management.outbound_payment_quote","to":{"credited":{"currency":"USD","value":68},"payout_method":"payout_method","recipient":"recipient"},"livemode":true}',
+          '{"amount":{"currency":"USD","value":96},"created":"1970-01-12T21:42:34.472Z","delivery_options":null,"estimated_fees":[{"amount":{"currency":"USD","value":96},"type":"cross_border_payout_fee"}],"from":{"debited":{"currency":"USD","value":55},"financial_account":"financial_account"},"fx_quote":{"lock_duration":"five_minutes","lock_expires_at":"1970-01-18T15:15:29.586Z","lock_status":"active","rates":{"key":{"exchange_rate":"exchange_rate"}},"to_currency":"usd"},"id":"obj_123","object":"v2.money_management.outbound_payment_quote","to":{"credited":{"currency":"USD","value":68},"payout_method":"payout_method","recipient":"recipient"},"livemode":true}',
       },
     ]);
     const outboundPaymentQuote = await stripe.v2.moneyManagement.outboundPaymentQuotes.retrieve(
@@ -4958,7 +6246,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/money_management/payout_methods_bank_account_spec',
         response:
-          '{"countries":{"undefined":{"fields":[{"local_name":"local_name","local_name_human":{"content":"content","localization_key":"localization_key"},"max_length":1111390753,"min_length":711577229,"placeholder":"placeholder","stripe_name":"stripe_name","validation_regex":"validation_regex"}]}},"object":"v2.money_management.payout_methods_bank_account_spec","livemode":true}',
+          '{"countries":{"key":{"fields":[{"local_name":"local_name","local_name_human":{"content":"content","localization_key":"localization_key"},"max_length":1111390753,"min_length":711577229,"placeholder":"placeholder","stripe_name":"stripe_name","validation_regex":"validation_regex"}]}},"object":"v2.money_management.payout_methods_bank_account_spec","livemode":true}',
       },
     ]);
     const payoutMethodsBankAccountSpec = await stripe.v2.moneyManagement.payoutMethodsBankAccountSpec.retrieve();
@@ -5083,7 +6371,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/payments/off_session_payments',
         response:
-          '{"data":[{"amount_requested":{"currency":"USD","value":47},"cadence":"unscheduled","compartment_id":"compartment_id","created":"1970-01-12T21:42:34.472Z","customer":"customer","failure_reason":null,"id":"obj_123","last_authorization_attempt_error":null,"latest_payment_attempt_record":null,"livemode":true,"metadata":{"undefined":"metadata"},"object":"v2.payments.off_session_payment","on_behalf_of":null,"payment_method":"payment_method","payment_record":null,"retry_details":{"attempts":542738246,"retry_strategy":"none"},"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"pending","test_clock":null,"transfer_data":null}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"amount_requested":{"currency":"USD","value":47},"cadence":"unscheduled","compartment_id":"compartment_id","created":"1970-01-12T21:42:34.472Z","customer":"customer","failure_reason":null,"id":"obj_123","last_authorization_attempt_error":null,"latest_payment_attempt_record":null,"livemode":true,"metadata":{"key":"metadata"},"object":"v2.payments.off_session_payment","on_behalf_of":null,"payment_method":"payment_method","payment_record":null,"retry_details":{"attempts":542738246,"retry_strategy":"none"},"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"pending","test_clock":null,"transfer_data":null}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const offSessionPayments = await stripe.v2.payment.offSessionPayments.list();
@@ -5096,7 +6384,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/payments/off_session_payments',
         response:
-          '{"amount_requested":{"currency":"USD","value":47},"cadence":"unscheduled","compartment_id":"compartment_id","created":"1970-01-12T21:42:34.472Z","customer":"customer","failure_reason":null,"id":"obj_123","last_authorization_attempt_error":null,"latest_payment_attempt_record":null,"livemode":true,"metadata":{"undefined":"metadata"},"object":"v2.payments.off_session_payment","on_behalf_of":null,"payment_method":"payment_method","payment_record":null,"retry_details":{"attempts":542738246,"retry_strategy":"none"},"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"pending","test_clock":null,"transfer_data":null}',
+          '{"amount_requested":{"currency":"USD","value":47},"cadence":"unscheduled","compartment_id":"compartment_id","created":"1970-01-12T21:42:34.472Z","customer":"customer","failure_reason":null,"id":"obj_123","last_authorization_attempt_error":null,"latest_payment_attempt_record":null,"livemode":true,"metadata":{"key":"metadata"},"object":"v2.payments.off_session_payment","on_behalf_of":null,"payment_method":"payment_method","payment_record":null,"retry_details":{"attempts":542738246,"retry_strategy":"none"},"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"pending","test_clock":null,"transfer_data":null}',
       },
     ]);
     const offSessionPayment = await stripe.v2.payment.offSessionPayments.create(
@@ -5108,7 +6396,7 @@ describe('Generated tests', function() {
         cadence: 'unscheduled',
         customer: 'customer',
         metadata: {
-          undefined: 'metadata',
+          key: 'metadata',
         },
         payment_method: 'payment_method',
       }
@@ -5122,7 +6410,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/payments/off_session_payments/id_123',
         response:
-          '{"amount_requested":{"currency":"USD","value":47},"cadence":"unscheduled","compartment_id":"compartment_id","created":"1970-01-12T21:42:34.472Z","customer":"customer","failure_reason":null,"id":"obj_123","last_authorization_attempt_error":null,"latest_payment_attempt_record":null,"livemode":true,"metadata":{"undefined":"metadata"},"object":"v2.payments.off_session_payment","on_behalf_of":null,"payment_method":"payment_method","payment_record":null,"retry_details":{"attempts":542738246,"retry_strategy":"none"},"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"pending","test_clock":null,"transfer_data":null}',
+          '{"amount_requested":{"currency":"USD","value":47},"cadence":"unscheduled","compartment_id":"compartment_id","created":"1970-01-12T21:42:34.472Z","customer":"customer","failure_reason":null,"id":"obj_123","last_authorization_attempt_error":null,"latest_payment_attempt_record":null,"livemode":true,"metadata":{"key":"metadata"},"object":"v2.payments.off_session_payment","on_behalf_of":null,"payment_method":"payment_method","payment_record":null,"retry_details":{"attempts":542738246,"retry_strategy":"none"},"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"pending","test_clock":null,"transfer_data":null}',
       },
     ]);
     const offSessionPayment = await stripe.v2.payment.offSessionPayments.retrieve(
@@ -5137,13 +6425,137 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/payments/off_session_payments/id_123/cancel',
         response:
-          '{"amount_requested":{"currency":"USD","value":47},"cadence":"unscheduled","compartment_id":"compartment_id","created":"1970-01-12T21:42:34.472Z","customer":"customer","failure_reason":null,"id":"obj_123","last_authorization_attempt_error":null,"latest_payment_attempt_record":null,"livemode":true,"metadata":{"undefined":"metadata"},"object":"v2.payments.off_session_payment","on_behalf_of":null,"payment_method":"payment_method","payment_record":null,"retry_details":{"attempts":542738246,"retry_strategy":"none"},"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"pending","test_clock":null,"transfer_data":null}',
+          '{"amount_requested":{"currency":"USD","value":47},"cadence":"unscheduled","compartment_id":"compartment_id","created":"1970-01-12T21:42:34.472Z","customer":"customer","failure_reason":null,"id":"obj_123","last_authorization_attempt_error":null,"latest_payment_attempt_record":null,"livemode":true,"metadata":{"key":"metadata"},"object":"v2.payments.off_session_payment","on_behalf_of":null,"payment_method":"payment_method","payment_record":null,"retry_details":{"attempts":542738246,"retry_strategy":"none"},"statement_descriptor":null,"statement_descriptor_suffix":null,"status":"pending","test_clock":null,"transfer_data":null}',
       },
     ]);
     const offSessionPayment = await stripe.v2.payment.offSessionPayments.cancel(
       'id_123'
     );
     expect(offSessionPayment).not.to.be.null;
+  });
+
+  it('test_v2_reporting_report_run_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/reporting/report_runs',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.reporting.report_run","report":"report","report_name":"report_name","report_parameters":{"key":{"array_value":null,"string_value":null,"timestamp_value":null}},"result":null,"result_options":null,"status":"failed","status_details":{"key":{"error_code":null,"error_message":null}},"livemode":true}',
+      },
+    ]);
+    const reportRun = await stripe.v2.reporting.reportRuns.create({
+      report: 'report',
+      report_parameters: {
+        key: {
+          array_value: {
+            items: ['items'],
+          },
+          string_value: 'string_value',
+          timestamp_value: '1970-01-14T02:07:39.256Z',
+        },
+      },
+    });
+    expect(reportRun).not.to.be.null;
+  });
+
+  it('test_v2_reporting_report_run_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/reporting/report_runs/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.reporting.report_run","report":"report","report_name":"report_name","report_parameters":{"key":{"array_value":null,"string_value":null,"timestamp_value":null}},"result":null,"result_options":null,"status":"failed","status_details":{"key":{"error_code":null,"error_message":null}},"livemode":true}',
+      },
+    ]);
+    const reportRun = await stripe.v2.reporting.reportRuns.retrieve('id_123');
+    expect(reportRun).not.to.be.null;
+  });
+
+  it('test_v2_reporting_report_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/reporting/reports/id_123',
+        response:
+          '{"id":"obj_123","name":"name","object":"v2.reporting.report","parameters":{"key":{"array_details":null,"description":"description","enum_details":null,"required":true,"timestamp_details":null,"type":"string"}},"livemode":true}',
+      },
+    ]);
+    const report = await stripe.v2.reporting.reports.retrieve('id_123');
+    expect(report).not.to.be.null;
+  });
+
+  it('test_v2_tax_automatic_rule_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/tax/automatic_rules',
+        response:
+          '{"billable_item":"billable_item","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.automatic_rule","status":"active","tax_code":"tax_code","livemode":true}',
+      },
+    ]);
+    const automaticRule = await stripe.v2.tax.automaticRules.create({
+      billable_item: 'billable_item',
+      tax_code: 'tax_code',
+    });
+    expect(automaticRule).not.to.be.null;
+  });
+
+  it('test_v2_tax_automatic_rule_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/tax/automatic_rules/find?billable_item=billable_item',
+        response:
+          '{"billable_item":"billable_item","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.automatic_rule","status":"active","tax_code":"tax_code","livemode":true}',
+      },
+    ]);
+    const automaticRule = await stripe.v2.tax.automaticRules.find({
+      billable_item: 'billable_item',
+    });
+    expect(automaticRule).not.to.be.null;
+  });
+
+  it('test_v2_tax_automatic_rule_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/tax/automatic_rules/id_123',
+        response:
+          '{"billable_item":"billable_item","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.automatic_rule","status":"active","tax_code":"tax_code","livemode":true}',
+      },
+    ]);
+    const automaticRule = await stripe.v2.tax.automaticRules.retrieve('id_123');
+    expect(automaticRule).not.to.be.null;
+  });
+
+  it('test_v2_tax_automatic_rule_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/tax/automatic_rules/id_123',
+        response:
+          '{"billable_item":"billable_item","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.automatic_rule","status":"active","tax_code":"tax_code","livemode":true}',
+      },
+    ]);
+    const automaticRule = await stripe.v2.tax.automaticRules.update('id_123', {
+      tax_code: 'tax_code',
+    });
+    expect(automaticRule).not.to.be.null;
+  });
+
+  it('test_v2_tax_automatic_rule_post_3', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/tax/automatic_rules/id_123/deactivate',
+        response:
+          '{"billable_item":"billable_item","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.automatic_rule","status":"active","tax_code":"tax_code","livemode":true}',
+      },
+    ]);
+    const automaticRule = await stripe.v2.tax.automaticRules.deactivate(
+      'id_123'
+    );
+    expect(automaticRule).not.to.be.null;
   });
 
   it('test_v2_test_helpers_financial_address_post', async function() {
@@ -5202,7 +6614,7 @@ describe('Generated tests', function() {
           {
             event_name: 'event_name',
             payload: {
-              undefined: 'payload',
+              key: 'payload',
             },
           },
         ],
@@ -5516,6 +6928,32 @@ describe('Generated tests', function() {
 
       (err) => {
         expect(err).to.be.instanceOf(InvalidPaymentMethodError);
+      }
+    );
+  });
+
+  it('test_rate_limit_error', async function() {
+    const {RateLimitError} = require('../../src/Error.js');
+
+    nock('https://api.stripe.com')
+      .post('/v2/reporting/report_runs')
+      .reply(400, {
+        error: {
+          type: 'rate_limit',
+          code: 'report_run_rate_limit_exceeded',
+        },
+      });
+
+    await realStripe.v2.reporting.reportRuns.create(
+      {
+        report: 'report',
+        report_parameters: {
+          key: {},
+        },
+      },
+
+      (err) => {
+        expect(err).to.be.instanceOf(RateLimitError);
       }
     );
   });

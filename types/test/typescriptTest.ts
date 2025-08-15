@@ -9,7 +9,7 @@
 import Stripe from 'stripe';
 
 let stripe = new Stripe('sk_test_123', {
-  apiVersion: '2025-07-30.preview',
+  apiVersion: '2025-08-04.private',
 });
 
 stripe = new Stripe('sk_test_123');
@@ -26,7 +26,7 @@ stripe = new Stripe('sk_test_123', {
 
 // Check config object.
 stripe = new Stripe('sk_test_123', {
-  apiVersion: '2025-07-30.preview',
+  apiVersion: '2025-08-04.private',
   typescript: true,
   maxNetworkRetries: 1,
   timeout: 1000,
@@ -44,7 +44,7 @@ stripe = new Stripe('sk_test_123', {
     description: 'test',
   };
   const opts: Stripe.RequestOptions = {
-    apiVersion: '2025-07-30.preview',
+    apiVersion: '2025-08-04.private',
   };
   const customer: Stripe.Customer = await stripe.customers.create(params, opts);
 

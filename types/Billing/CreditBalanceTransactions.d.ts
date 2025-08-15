@@ -76,6 +76,11 @@ declare module 'stripe' {
         namespace Credit {
           interface Amount {
             /**
+             * The custom pricing unit amount.
+             */
+            custom_pricing_unit?: Amount.CustomPricingUnit | null;
+
+            /**
              * The monetary amount.
              */
             monetary: Amount.Monetary | null;
@@ -83,10 +88,22 @@ declare module 'stripe' {
             /**
              * The type of this amount. We currently only support `monetary` billing credits.
              */
-            type: 'monetary';
+            type: Amount.Type;
           }
 
           namespace Amount {
+            interface CustomPricingUnit {
+              /**
+               * Unique identifier for the object.
+               */
+              id: string;
+
+              /**
+               * A positive integer representing the amount.
+               */
+              value: string;
+            }
+
             interface Monetary {
               /**
                * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -98,6 +115,8 @@ declare module 'stripe' {
                */
               value: number;
             }
+
+            type Type = 'custom_pricing_unit' | 'monetary';
           }
 
           interface CreditsApplicationInvoiceVoided {
@@ -132,6 +151,11 @@ declare module 'stripe' {
         namespace Debit {
           interface Amount {
             /**
+             * The custom pricing unit amount.
+             */
+            custom_pricing_unit?: Amount.CustomPricingUnit | null;
+
+            /**
              * The monetary amount.
              */
             monetary: Amount.Monetary | null;
@@ -139,10 +163,22 @@ declare module 'stripe' {
             /**
              * The type of this amount. We currently only support `monetary` billing credits.
              */
-            type: 'monetary';
+            type: Amount.Type;
           }
 
           namespace Amount {
+            interface CustomPricingUnit {
+              /**
+               * Unique identifier for the object.
+               */
+              id: string;
+
+              /**
+               * A positive integer representing the amount.
+               */
+              value: string;
+            }
+
             interface Monetary {
               /**
                * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -154,6 +190,8 @@ declare module 'stripe' {
                */
               value: number;
             }
+
+            type Type = 'custom_pricing_unit' | 'monetary';
           }
 
           interface CreditsApplied {

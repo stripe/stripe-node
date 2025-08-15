@@ -1,8 +1,10 @@
 // File generated from our OpenAPI spec
 
 import {resourceNamespace} from './ResourceNamespace.js';
+import {AccountLinks as V2AccountLinks} from './resources/V2/AccountLinks.js';
 import {AccountLinks as V2CoreAccountLinks} from './resources/V2/Core/AccountLinks.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
+import {Accounts as V2Accounts} from './resources/V2/Accounts.js';
 import {Accounts as V2CoreAccounts} from './resources/V2/Core/Accounts.js';
 import {ActiveEntitlements as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
 import {Adjustments as V2MoneyManagementAdjustments} from './resources/V2/MoneyManagement/Adjustments.js';
@@ -10,10 +12,14 @@ import {Alerts as BillingAlerts} from './resources/Billing/Alerts.js';
 import {Associations as TaxAssociations} from './resources/Tax/Associations.js';
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
+import {AutomaticRules as V2TaxAutomaticRules} from './resources/V2/Tax/AutomaticRules.js';
+import {BillSettings as V2BillingBillSettings} from './resources/V2/Billing/BillSettings.js';
+import {Cadences as V2BillingCadences} from './resources/V2/Billing/Cadences.js';
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
 import {Cardholders as IssuingCardholders} from './resources/Issuing/Cardholders.js';
 import {Cards as TestHelpersIssuingCards} from './resources/TestHelpers/Issuing/Cards.js';
 import {Cards as IssuingCards} from './resources/Issuing/Cards.js';
+import {CollectionSettings as V2BillingCollectionSettings} from './resources/V2/Billing/CollectionSettings.js';
 import {Configurations as BillingPortalConfigurations} from './resources/BillingPortal/Configurations.js';
 import {Configurations as TerminalConfigurations} from './resources/Terminal/Configurations.js';
 import {ConfirmationTokens as TestHelpersConfirmationTokens} from './resources/TestHelpers/ConfirmationTokens.js';
@@ -23,6 +29,7 @@ import {CreditBalanceTransactions as BillingCreditBalanceTransactions} from './r
 import {CreditGrants as BillingCreditGrants} from './resources/Billing/CreditGrants.js';
 import {CreditReversals as TreasuryCreditReversals} from './resources/Treasury/CreditReversals.js';
 import {CreditUnderwritingRecords as IssuingCreditUnderwritingRecords} from './resources/Issuing/CreditUnderwritingRecords.js';
+import {CustomPricingUnits as V2BillingCustomPricingUnits} from './resources/V2/Billing/CustomPricingUnits.js';
 import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Customers.js';
 import {DebitReversals as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
 import {DisputeSettlementDetails as IssuingDisputeSettlementDetails} from './resources/Issuing/DisputeSettlementDetails.js';
@@ -45,6 +52,9 @@ import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resourc
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {InboundTransfers as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
 import {Institutions as FinancialConnectionsInstitutions} from './resources/FinancialConnections/Institutions.js';
+import {Intents as V2BillingIntents} from './resources/V2/Billing/Intents.js';
+import {LicenseFees as V2BillingLicenseFees} from './resources/V2/Billing/LicenseFees.js';
+import {LicensedItems as V2BillingLicensedItems} from './resources/V2/Billing/LicensedItems.js';
 import {Locations as TerminalLocations} from './resources/Terminal/Locations.js';
 import {MeterEventAdjustments as BillingMeterEventAdjustments} from './resources/Billing/MeterEventAdjustments.js';
 import {MeterEventAdjustments as V2BillingMeterEventAdjustments} from './resources/V2/Billing/MeterEventAdjustments.js';
@@ -53,6 +63,7 @@ import {MeterEventStream as V2BillingMeterEventStream} from './resources/V2/Bill
 import {MeterEvents as BillingMeterEvents} from './resources/Billing/MeterEvents.js';
 import {MeterEvents as V2BillingMeterEvents} from './resources/V2/Billing/MeterEvents.js';
 import {MeterUsage as BillingMeterUsage} from './resources/Billing/MeterUsage.js';
+import {MeteredItems as V2BillingMeteredItems} from './resources/V2/Billing/MeteredItems.js';
 import {Meters as BillingMeters} from './resources/Billing/Meters.js';
 import {OffSessionPayments as V2PaymentsOffSessionPayments} from './resources/V2/Payments/OffSessionPayments.js';
 import {OnboardingLinks as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
@@ -70,7 +81,12 @@ import {PayoutMethodsBankAccountSpec as V2MoneyManagementPayoutMethodsBankAccoun
 import {PersonalizationDesigns as TestHelpersIssuingPersonalizationDesigns} from './resources/TestHelpers/Issuing/PersonalizationDesigns.js';
 import {PersonalizationDesigns as IssuingPersonalizationDesigns} from './resources/Issuing/PersonalizationDesigns.js';
 import {PhysicalBundles as IssuingPhysicalBundles} from './resources/Issuing/PhysicalBundles.js';
+import {PricingPlanSubscriptions as V2BillingPricingPlanSubscriptions} from './resources/V2/Billing/PricingPlanSubscriptions.js';
+import {PricingPlans as V2BillingPricingPlans} from './resources/V2/Billing/PricingPlans.js';
 import {Products as ClimateProducts} from './resources/Climate/Products.js';
+import {Profiles as V2BillingProfiles} from './resources/V2/Billing/Profiles.js';
+import {RateCardSubscriptions as V2BillingRateCardSubscriptions} from './resources/V2/Billing/RateCardSubscriptions.js';
+import {RateCards as V2BillingRateCards} from './resources/V2/Billing/RateCards.js';
 import {ReaderCollectedData as TerminalReaderCollectedData} from './resources/Terminal/ReaderCollectedData.js';
 import {Readers as TestHelpersTerminalReaders} from './resources/TestHelpers/Terminal/Readers.js';
 import {Readers as TerminalReaders} from './resources/Terminal/Readers.js';
@@ -84,10 +100,13 @@ import {RedactionJobs as PrivacyRedactionJobs} from './resources/Privacy/Redacti
 import {Refunds as TestHelpersRefunds} from './resources/TestHelpers/Refunds.js';
 import {Registrations as TaxRegistrations} from './resources/Tax/Registrations.js';
 import {ReportRuns as ReportingReportRuns} from './resources/Reporting/ReportRuns.js';
+import {ReportRuns as V2ReportingReportRuns} from './resources/V2/Reporting/ReportRuns.js';
 import {ReportTypes as ReportingReportTypes} from './resources/Reporting/ReportTypes.js';
+import {Reports as V2ReportingReports} from './resources/V2/Reporting/Reports.js';
 import {Requests as ForwardingRequests} from './resources/Forwarding/Requests.js';
 import {ScheduledQueryRuns as SigmaScheduledQueryRuns} from './resources/Sigma/ScheduledQueryRuns.js';
 import {Secrets as AppsSecrets} from './resources/Apps/Secrets.js';
+import {ServiceActions as V2BillingServiceActions} from './resources/V2/Billing/ServiceActions.js';
 import {Sessions as BillingPortalSessions} from './resources/BillingPortal/Sessions.js';
 import {Sessions as CheckoutSessions} from './resources/Checkout/Sessions.js';
 import {Sessions as FinancialConnectionsSessions} from './resources/FinancialConnections/Sessions.js';
@@ -134,7 +153,6 @@ export {FileLinks} from './resources/FileLinks.js';
 export {Files} from './resources/Files.js';
 export {FxQuotes} from './resources/FxQuotes.js';
 export {InvoiceItems} from './resources/InvoiceItems.js';
-export {InvoicePayments} from './resources/InvoicePayments.js';
 export {InvoiceRenderingTemplates} from './resources/InvoiceRenderingTemplates.js';
 export {Invoices} from './resources/Invoices.js';
 export {Mandates} from './resources/Mandates.js';
@@ -294,11 +312,27 @@ export const Treasury = resourceNamespace('treasury', {
   Transactions: TreasuryTransactions,
 });
 export const V2 = resourceNamespace('v2', {
+  AccountLinks: V2AccountLinks,
+  Accounts: V2Accounts,
   Billing: resourceNamespace('billing', {
+    BillSettings: V2BillingBillSettings,
+    Cadences: V2BillingCadences,
+    CollectionSettings: V2BillingCollectionSettings,
+    CustomPricingUnits: V2BillingCustomPricingUnits,
+    Intents: V2BillingIntents,
+    LicenseFees: V2BillingLicenseFees,
+    LicensedItems: V2BillingLicensedItems,
     MeterEventAdjustments: V2BillingMeterEventAdjustments,
     MeterEventSession: V2BillingMeterEventSession,
     MeterEventStream: V2BillingMeterEventStream,
     MeterEvents: V2BillingMeterEvents,
+    MeteredItems: V2BillingMeteredItems,
+    PricingPlanSubscriptions: V2BillingPricingPlanSubscriptions,
+    PricingPlans: V2BillingPricingPlans,
+    Profiles: V2BillingProfiles,
+    RateCardSubscriptions: V2BillingRateCardSubscriptions,
+    RateCards: V2BillingRateCards,
+    ServiceActions: V2BillingServiceActions,
   }),
   Core: resourceNamespace('core', {
     AccountLinks: V2CoreAccountLinks,
@@ -329,6 +363,11 @@ export const V2 = resourceNamespace('v2', {
   Payment: resourceNamespace('payment', {
     OffSessionPayments: V2PaymentsOffSessionPayments,
   }),
+  Reporting: resourceNamespace('reporting', {
+    ReportRuns: V2ReportingReportRuns,
+    Reports: V2ReportingReports,
+  }),
+  Tax: resourceNamespace('tax', {AutomaticRules: V2TaxAutomaticRules}),
   TestHelper: resourceNamespace('testHelper', {
     FinancialAddresses: V2TestHelpersFinancialAddresses,
   }),

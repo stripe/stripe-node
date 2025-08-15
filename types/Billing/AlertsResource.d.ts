@@ -7,12 +7,17 @@ declare module 'stripe' {
         /**
          * The type of alert to create.
          */
-        alert_type: 'usage_threshold';
+        alert_type: AlertCreateParams.AlertType;
 
         /**
          * The title of the alert.
          */
         title: string;
+
+        /**
+         * The configuration of the credit balance threshold.
+         */
+        credit_balance_threshold?: AlertCreateParams.CreditBalanceThreshold;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -26,6 +31,84 @@ declare module 'stripe' {
       }
 
       namespace AlertCreateParams {
+        type AlertType = 'credit_balance_threshold' | 'usage_threshold';
+
+        interface CreditBalanceThreshold {
+          /**
+           * The filters allows limiting the scope of this credit balance alert. You must specify a customer filter at this time.
+           */
+          filters?: Array<CreditBalanceThreshold.Filter>;
+
+          /**
+           * Defines at which value the alert will fire.
+           */
+          lte: CreditBalanceThreshold.Lte;
+
+          /**
+           * Whether the alert should only fire only once, or once per billing cycle.
+           */
+          recurrence: 'one_time';
+        }
+
+        namespace CreditBalanceThreshold {
+          interface Filter {
+            /**
+             * Limit the scope to this credit balance alert only to this customer.
+             */
+            customer?: string;
+
+            /**
+             * What type of filter is being applied to this credit balance alert.
+             */
+            type: 'customer';
+          }
+
+          interface Lte {
+            /**
+             * Specify the type of this balance. We currently only support `monetary` billing credits.
+             */
+            balance_type: Lte.BalanceType;
+
+            /**
+             * The custom pricing unit amount.
+             */
+            custom_pricing_unit?: Lte.CustomPricingUnit;
+
+            /**
+             * The monetary amount.
+             */
+            monetary?: Lte.Monetary;
+          }
+
+          namespace Lte {
+            type BalanceType = 'custom_pricing_unit' | 'monetary';
+
+            interface CustomPricingUnit {
+              /**
+               * The ID of the custom pricing unit.
+               */
+              id: string;
+
+              /**
+               * A positive decimal string representing the amount of the custom pricing unit threshold.
+               */
+              value: string;
+            }
+
+            interface Monetary {
+              /**
+               * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) of the `value` parameter.
+               */
+              currency: string;
+
+              /**
+               * An integer representing the amount of the threshold.
+               */
+              value: number;
+            }
+          }
+        }
+
         interface UsageThreshold {
           /**
            * The filters allows limiting the scope of this usage alert. You can only specify up to one filter at this time.
@@ -74,7 +157,12 @@ declare module 'stripe' {
         /**
          * Filter results to only include this type of alert.
          */
-        alert_type?: 'usage_threshold';
+        alert_type?: AlertListParams.AlertType;
+
+        /**
+         * Filter results to only include alerts for the given customer.
+         */
+        customer?: string;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -85,6 +173,10 @@ declare module 'stripe' {
          * Filter results to only include alerts with the given meter.
          */
         meter?: string;
+      }
+
+      namespace AlertListParams {
+        type AlertType = 'credit_balance_threshold' | 'usage_threshold';
       }
 
       interface AlertActivateParams {

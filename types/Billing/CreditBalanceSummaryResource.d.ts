@@ -46,6 +46,11 @@ declare module 'stripe' {
         namespace Filter {
           interface ApplicabilityScope {
             /**
+             * A list of billable items that the credit grant can apply to. We currently only support metered billable items. Cannot be used in combination with `price_type` or `prices`.
+             */
+            billable_items?: Array<ApplicabilityScope.BillableItem>;
+
+            /**
              * The price type that credit grants can apply to. We currently only support the `metered` price type. Cannot be used in combination with `prices`.
              */
             price_type?: 'metered';
@@ -57,6 +62,13 @@ declare module 'stripe' {
           }
 
           namespace ApplicabilityScope {
+            interface BillableItem {
+              /**
+               * The billable item ID this credit grant should apply to.
+               */
+              id: string;
+            }
+
             interface Price {
               /**
                * The price ID this credit grant should apply to.

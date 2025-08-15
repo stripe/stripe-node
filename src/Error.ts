@@ -61,6 +61,8 @@ export const generateV2Error = (
       return new ControlledByDashboardError(rawStripeError);
     case 'invalid_payment_method':
       return new InvalidPaymentMethodError(rawStripeError);
+    case 'rate_limit':
+      return new RateLimitError(rawStripeError);
     // switchCases: The end of the section generated from our OpenAPI spec
   }
 
@@ -329,6 +331,11 @@ export class InvalidPaymentMethodError extends StripeError {
     super(rawStripeError, 'InvalidPaymentMethodError');
     // @ts-ignore
     this.invalid_param = this.raw.invalid_param;
+  }
+}
+export class RateLimitError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'RateLimitError');
   }
 }
 // classDefinitions: The end of the section generated from our OpenAPI spec

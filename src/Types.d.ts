@@ -51,7 +51,8 @@ export type RawErrorType =
   | 'recipient_not_notifiable'
   | 'invalid_payout_method'
   | 'controlled_by_dashboard'
-  | 'invalid_payment_method';
+  | 'invalid_payment_method'
+  | 'rate_limit';
 // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
 export type RequestArgs = Array<any>;
 export type StripeRequest = {
@@ -83,9 +84,10 @@ export type RequestEvent = {
 export type RequestHeaders = Record<string, string | number | string[]>;
 export type APIMode = 'preview' | 'standard';
 export type RequestOptions = {
-  settings: RequestSettings;
-  streaming: boolean;
-  headers: RequestHeaders;
+  settings?: RequestSettings;
+  streaming?: boolean;
+  headers?: RequestHeaders;
+  stripeAccount?: string;
 };
 export type RequestOpts = {
   authenticator: RequestAuthenticator | null;
@@ -125,6 +127,12 @@ export type StripeConstructor = {
 };
 declare const Stripe: StripeConstructor;
 export type StripeObject = {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  parseThinEvent__experimental(
+    payload: string,
+    header: any,
+    secret: string
+  ): unknown;
   getClientUserAgentSeeded: (
     seed: Record<string, string | boolean | null>,
     callback: (userAgent: string) => void
@@ -186,8 +194,8 @@ export type StripeObject = {
   rawRequest: (
     method: string,
     path: string,
-    data: RequestData,
-    options: RequestOptions
+    data?: RequestData,
+    options?: RequestOptions
   ) => Promise<any>;
 };
 export type RequestSender = {
@@ -195,7 +203,8 @@ export type RequestSender = {
     method: string,
     path: string,
     params?: RequestData,
-    options?: RequestOptions
+    options?: RequestOptions,
+    usage?: Array<string>
   ): Promise<any>;
   _request(
     method: string,

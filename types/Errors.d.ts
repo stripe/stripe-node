@@ -22,7 +22,8 @@ declare module 'stripe' {
       | 'recipient_not_notifiable'
       | 'invalid_payout_method'
       | 'controlled_by_dashboard'
-      | 'invalid_payment_method';
+      | 'invalid_payment_method'
+      | 'rate_limit';
     // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
 
     export type StripeRawError = {
@@ -150,7 +151,8 @@ declare module 'stripe' {
           | 'RecipientNotNotifiableError'
           | 'InvalidPayoutMethodError'
           | 'ControlledByDashboardError'
-          | 'InvalidPaymentMethodError';
+          | 'InvalidPaymentMethodError'
+          | 'RateLimitError';
         // errorClassNameEnum: The end of the section generated from our OpenAPI spec
 
         /**
@@ -352,6 +354,10 @@ declare module 'stripe' {
         readonly type: 'InvalidPaymentMethodError';
         readonly rawType: 'invalid_payment_method';
         invalid_param: any /* TODO: support nested types in errors */;
+      }
+      export class RateLimitError extends StripeError {
+        readonly type: 'RateLimitError';
+        readonly rawType: 'rate_limit';
       }
       // errorClassDefinitions: The end of the section generated from our OpenAPI spec
     }

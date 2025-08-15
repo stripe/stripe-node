@@ -20,7 +20,12 @@ declare module 'stripe' {
         /**
          * Defines the type of the alert.
          */
-        alert_type: 'usage_threshold';
+        alert_type: Alert.AlertType;
+
+        /**
+         * Encapsulates configuration of the alert to monitor billing credit balance.
+         */
+        credit_balance_threshold?: Alert.CreditBalanceThreshold | null;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -44,6 +49,78 @@ declare module 'stripe' {
       }
 
       namespace Alert {
+        type AlertType = 'credit_balance_threshold' | 'usage_threshold';
+
+        interface CreditBalanceThreshold {
+          /**
+           * The filters allow limiting the scope of this credit balance alert. You must specify only a customer filter at this time.
+           */
+          filters: Array<CreditBalanceThreshold.Filter> | null;
+
+          lte: CreditBalanceThreshold.Lte;
+
+          /**
+           * Defines how the alert will behave.
+           */
+          recurrence: 'one_time';
+        }
+
+        namespace CreditBalanceThreshold {
+          interface Filter {
+            /**
+             * Limit the scope of the alert to this customer ID
+             */
+            customer: string | Stripe.Customer | null;
+
+            type: 'customer';
+          }
+
+          interface Lte {
+            /**
+             * The type of this balance. We currently only support `monetary` amounts.
+             */
+            balance_type: Lte.BalanceType;
+
+            /**
+             * The custom pricing unit amount.
+             */
+            custom_pricing_unit?: Lte.CustomPricingUnit | null;
+
+            /**
+             * The monetary amount.
+             */
+            monetary: Lte.Monetary | null;
+          }
+
+          namespace Lte {
+            type BalanceType = 'custom_pricing_unit' | 'monetary';
+
+            interface CustomPricingUnit {
+              /**
+               * Unique identifier for the object.
+               */
+              id: string;
+
+              /**
+               * A positive decimal string representing the amount.
+               */
+              value: string;
+            }
+
+            interface Monetary {
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+
+              /**
+               * A positive integer representing the amount.
+               */
+              value: number;
+            }
+          }
+        }
+
         type Status = 'active' | 'archived' | 'inactive';
 
         interface UsageThreshold {

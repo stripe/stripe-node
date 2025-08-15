@@ -67,6 +67,8 @@ declare module 'stripe' {
          */
         cancel_url: string | null;
 
+        checkout_items?: Array<Session.CheckoutItem>;
+
         /**
          * A unique string to reference the Checkout Session. This can be a
          * customer ID, a cart ID, or similar, and can be used to reconcile the
@@ -343,7 +345,7 @@ declare module 'stripe' {
       namespace Session {
         interface AdaptivePricing {
           /**
-           * Whether Adaptive Pricing is enabled.
+           * If enabled, Adaptive Pricing is available on [eligible sessions](https://docs.stripe.com/payments/currencies/localize-prices/adaptive-pricing?payment-ui=stripe-hosted#restrictions).
            */
           enabled: boolean;
         }
@@ -424,6 +426,28 @@ declare module 'stripe' {
         }
 
         type BillingAddressCollection = 'auto' | 'required';
+
+        interface CheckoutItem {
+          key: string;
+
+          type: 'checkout_item';
+
+          rate_card_subscription_item?: CheckoutItem.RateCardSubscriptionItem;
+        }
+
+        namespace CheckoutItem {
+          interface RateCardSubscriptionItem {
+            rate_card: string;
+
+            metadata?: Stripe.Metadata;
+
+            rate_card_version: string;
+
+            billing_cadence?: string;
+
+            rate_card_subscription?: string;
+          }
+        }
 
         interface CollectedInformation {
           /**
