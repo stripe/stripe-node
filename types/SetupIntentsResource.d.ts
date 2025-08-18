@@ -1639,7 +1639,7 @@ declare module 'stripe' {
         namespace Pix {
           interface MandateOptions {
             /**
-             * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 250 BRL.
+             * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
              */
             amount?: number;
 
@@ -3370,7 +3370,7 @@ declare module 'stripe' {
         namespace Pix {
           interface MandateOptions {
             /**
-             * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 250 BRL.
+             * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
              */
             amount?: number;
 
@@ -5148,7 +5148,7 @@ declare module 'stripe' {
         namespace Pix {
           interface MandateOptions {
             /**
-             * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 250 BRL.
+             * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
              */
             amount?: number;
 
