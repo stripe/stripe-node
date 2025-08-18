@@ -65,6 +65,13 @@ declare module 'stripe' {
       error_on_requires_action?: boolean;
 
       /**
+       * The list of payment method types to exclude from use with this payment.
+       */
+      excluded_payment_method_types?: Array<
+        PaymentIntentCreateParams.ExcludedPaymentMethodType
+      >;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -207,6 +214,55 @@ declare module 'stripe' {
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       type ConfirmationMethod = 'automatic' | 'manual';
+
+      type ExcludedPaymentMethodType =
+        | 'acss_debit'
+        | 'affirm'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'alma'
+        | 'amazon_pay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'billie'
+        | 'blik'
+        | 'boleto'
+        | 'card'
+        | 'cashapp'
+        | 'crypto'
+        | 'customer_balance'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'grabpay'
+        | 'ideal'
+        | 'kakao_pay'
+        | 'klarna'
+        | 'konbini'
+        | 'kr_card'
+        | 'mobilepay'
+        | 'multibanco'
+        | 'naver_pay'
+        | 'nz_bank_account'
+        | 'oxxo'
+        | 'p24'
+        | 'pay_by_bank'
+        | 'payco'
+        | 'paynow'
+        | 'paypal'
+        | 'pix'
+        | 'promptpay'
+        | 'revolut_pay'
+        | 'samsung_pay'
+        | 'satispay'
+        | 'sepa_debit'
+        | 'sofort'
+        | 'swish'
+        | 'twint'
+        | 'us_bank_account'
+        | 'wechat_pay'
+        | 'zip';
 
       interface MandateData {
         /**
@@ -2617,6 +2673,11 @@ declare module 'stripe' {
 
         interface Pix {
           /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: Pix.AmountIncludesIof;
+
+          /**
            * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
            */
           expires_after_seconds?: number;
@@ -2638,6 +2699,10 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        namespace Pix {
+          type AmountIncludesIof = 'always' | 'never';
         }
 
         interface Promptpay {
@@ -5519,6 +5584,11 @@ declare module 'stripe' {
 
         interface Pix {
           /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: Pix.AmountIncludesIof;
+
+          /**
            * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
            */
           expires_after_seconds?: number;
@@ -5540,6 +5610,10 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        namespace Pix {
+          type AmountIncludesIof = 'always' | 'never';
         }
 
         interface Promptpay {
@@ -8532,6 +8606,11 @@ declare module 'stripe' {
 
         interface Pix {
           /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: Pix.AmountIncludesIof;
+
+          /**
            * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
            */
           expires_after_seconds?: number;
@@ -8553,6 +8632,10 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        namespace Pix {
+          type AmountIncludesIof = 'always' | 'never';
         }
 
         interface Promptpay {

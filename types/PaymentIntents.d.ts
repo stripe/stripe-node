@@ -112,6 +112,13 @@ declare module 'stripe' {
       description: string | null;
 
       /**
+       * The list of payment method types to exclude from use with this payment.
+       */
+      excluded_payment_method_types: Array<
+        PaymentIntent.ExcludedPaymentMethodType
+      > | null;
+
+      /**
        * The payment error encountered in the previous PaymentIntent confirmation. It will be cleared if the PaymentIntent is later updated for any reason.
        */
       last_payment_error: PaymentIntent.LastPaymentError | null;
@@ -277,6 +284,55 @@ declare module 'stripe' {
 
       type ConfirmationMethod = 'automatic' | 'manual';
 
+      type ExcludedPaymentMethodType =
+        | 'acss_debit'
+        | 'affirm'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'alma'
+        | 'amazon_pay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'billie'
+        | 'blik'
+        | 'boleto'
+        | 'card'
+        | 'cashapp'
+        | 'crypto'
+        | 'customer_balance'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'grabpay'
+        | 'ideal'
+        | 'kakao_pay'
+        | 'klarna'
+        | 'konbini'
+        | 'kr_card'
+        | 'mobilepay'
+        | 'multibanco'
+        | 'naver_pay'
+        | 'nz_bank_account'
+        | 'oxxo'
+        | 'p24'
+        | 'pay_by_bank'
+        | 'payco'
+        | 'paynow'
+        | 'paypal'
+        | 'pix'
+        | 'promptpay'
+        | 'revolut_pay'
+        | 'samsung_pay'
+        | 'satispay'
+        | 'sepa_debit'
+        | 'sofort'
+        | 'swish'
+        | 'twint'
+        | 'us_bank_account'
+        | 'wechat_pay'
+        | 'zip';
+
       interface LastPaymentError {
         /**
          * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines) if they provide one.
@@ -314,7 +370,7 @@ declare module 'stripe' {
         network_advice_code?: string;
 
         /**
-         * For card errors resulting from a card issuer decline, a brand specific 2, 3, or 4 digit code which indicates the reason the authorization failed.
+         * For payments declined by the network, an alphanumeric code which indicates the reason the payment failed.
          */
         network_decline_code?: string;
 
@@ -435,6 +491,7 @@ declare module 'stripe' {
           | 'coupon_expired'
           | 'customer_max_payment_methods'
           | 'customer_max_subscriptions'
+          | 'customer_session_expired'
           | 'customer_tax_location_invalid'
           | 'debit_not_authorized'
           | 'email_invalid'
@@ -452,6 +509,7 @@ declare module 'stripe' {
           | 'incorrect_cvc'
           | 'incorrect_number'
           | 'incorrect_zip'
+          | 'india_recurring_payment_mandate_canceled'
           | 'instant_payouts_config_disabled'
           | 'instant_payouts_currency_disabled'
           | 'instant_payouts_limit_exceeded'
@@ -2431,6 +2489,11 @@ declare module 'stripe' {
 
         interface Pix {
           /**
+           * Determines if the amount includes the IOF tax.
+           */
+          amount_includes_iof?: Pix.AmountIncludesIof;
+
+          /**
            * The number of seconds (between 10 and 1209600) after which Pix payment will expire.
            */
           expires_after_seconds: number | null;
@@ -2450,6 +2513,10 @@ declare module 'stripe' {
            * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
            */
           setup_future_usage?: 'none';
+        }
+
+        namespace Pix {
+          type AmountIncludesIof = 'always' | 'never';
         }
 
         interface Promptpay {

@@ -159,7 +159,7 @@ declare module 'stripe' {
         optional_items?: Array<SessionCreateParams.OptionalItem>;
 
         /**
-         * Where the user is coming from. This informs the optimizations that are applied to the session. For example, a session originating from a mobile app may behave more like a native app, depending on the platform. This parameter is currently not allowed if `ui_mode` is `custom`.
+         * Where the user is coming from. This informs the optimizations that are applied to the session.
          */
         origin_context?: SessionCreateParams.OriginContext;
 
@@ -296,7 +296,7 @@ declare module 'stripe' {
       namespace SessionCreateParams {
         interface AdaptivePricing {
           /**
-           * Set to `true` to enable [Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing). Defaults to your [dashboard setting](https://dashboard.stripe.com/settings/adaptive-pricing).
+           * If set to `true`, Adaptive Pricing is available on [eligible sessions](https://docs.stripe.com/payments/currencies/localize-prices/adaptive-pricing?payment-ui=stripe-hosted#restrictions). Defaults to your [dashboard setting](https://dashboard.stripe.com/settings/adaptive-pricing).
            */
           enabled?: boolean;
         }
@@ -2047,6 +2047,11 @@ declare module 'stripe' {
 
           interface Pix {
             /**
+             * Determines if the amount includes the IOF tax. Defaults to `never`.
+             */
+            amount_includes_iof?: Pix.AmountIncludesIof;
+
+            /**
              * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
              */
             expires_after_seconds?: number;
@@ -2061,6 +2066,10 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+          }
+
+          namespace Pix {
+            type AmountIncludesIof = 'always' | 'never';
           }
 
           interface RevolutPay {

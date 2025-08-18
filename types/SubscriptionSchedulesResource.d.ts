@@ -332,6 +332,16 @@ declare module 'stripe' {
           discounts?: Array<AddInvoiceItem.Discount>;
 
           /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.MetadataParam;
+
+          /**
+           * The period associated with this invoice item. Defaults to the period of the underlying subscription that surrounds the start of the phase.
+           */
+          period?: AddInvoiceItem.Period;
+
+          /**
            * The ID of the price object. One of `price` or `price_data` is required.
            */
           price?: string;
@@ -368,6 +378,52 @@ declare module 'stripe' {
              * ID of the promotion code to create a new discount for.
              */
             promotion_code?: string;
+          }
+
+          interface Period {
+            /**
+             * End of the invoice item period.
+             */
+            end: Period.End;
+
+            /**
+             * Start of the invoice item period.
+             */
+            start: Period.Start;
+          }
+
+          namespace Period {
+            interface End {
+              /**
+               * A precise Unix timestamp for the end of the invoice item period. Must be greater than or equal to `period.start`.
+               */
+              timestamp?: number;
+
+              /**
+               * Select how to calculate the end of the invoice item period.
+               */
+              type: End.Type;
+            }
+
+            namespace End {
+              type Type = 'min_item_period_end' | 'phase_end' | 'timestamp';
+            }
+
+            interface Start {
+              /**
+               * A precise Unix timestamp for the start of the invoice item period. Must be less than or equal to `period.end`.
+               */
+              timestamp?: number;
+
+              /**
+               * Select how to calculate the start of the invoice item period.
+               */
+              type: Start.Type;
+            }
+
+            namespace Start {
+              type Type = 'max_item_period_start' | 'phase_start' | 'timestamp';
+            }
           }
 
           interface PriceData {
@@ -971,6 +1027,16 @@ declare module 'stripe' {
           discounts?: Array<AddInvoiceItem.Discount>;
 
           /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.MetadataParam;
+
+          /**
+           * The period associated with this invoice item. Defaults to the period of the underlying subscription that surrounds the start of the phase.
+           */
+          period?: AddInvoiceItem.Period;
+
+          /**
            * The ID of the price object. One of `price` or `price_data` is required.
            */
           price?: string;
@@ -1007,6 +1073,52 @@ declare module 'stripe' {
              * ID of the promotion code to create a new discount for.
              */
             promotion_code?: string;
+          }
+
+          interface Period {
+            /**
+             * End of the invoice item period.
+             */
+            end: Period.End;
+
+            /**
+             * Start of the invoice item period.
+             */
+            start: Period.Start;
+          }
+
+          namespace Period {
+            interface End {
+              /**
+               * A precise Unix timestamp for the end of the invoice item period. Must be greater than or equal to `period.start`.
+               */
+              timestamp?: number;
+
+              /**
+               * Select how to calculate the end of the invoice item period.
+               */
+              type: End.Type;
+            }
+
+            namespace End {
+              type Type = 'min_item_period_end' | 'phase_end' | 'timestamp';
+            }
+
+            interface Start {
+              /**
+               * A precise Unix timestamp for the start of the invoice item period. Must be less than or equal to `period.end`.
+               */
+              timestamp?: number;
+
+              /**
+               * Select how to calculate the start of the invoice item period.
+               */
+              type: Start.Type;
+            }
+
+            namespace Start {
+              type Type = 'max_item_period_start' | 'phase_start' | 'timestamp';
+            }
           }
 
           interface PriceData {

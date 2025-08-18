@@ -63,6 +63,11 @@ declare module 'stripe' {
         metadata: Stripe.Metadata | null;
 
         /**
+         * The name of the configuration.
+         */
+        name: string | null;
+
+        /**
          * Time at which the object was last updated. Measured in seconds since the Unix epoch.
          */
         updated: number;

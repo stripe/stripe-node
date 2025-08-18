@@ -87,7 +87,7 @@ declare module 'stripe' {
       reason: string;
 
       /**
-       * Current status of dispute. Possible values are `warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `won`, or `lost`.
+       * The current status of a dispute. Possible values include:`warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `won`, `lost`, or `prevented`.
        */
       status: Dispute.Status;
     }
@@ -470,7 +470,12 @@ declare module 'stripe' {
         }
 
         namespace Card {
-          type CaseType = 'chargeback' | 'compliance' | 'inquiry';
+          type CaseType =
+            | 'block'
+            | 'chargeback'
+            | 'compliance'
+            | 'inquiry'
+            | 'resolution';
         }
 
         interface Klarna {
