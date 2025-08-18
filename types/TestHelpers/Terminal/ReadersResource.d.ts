@@ -41,7 +41,7 @@ declare module 'stripe' {
             /**
              * Card security code.
              */
-            cvc?: string;
+            cvc: string;
 
             /**
              * Two-digit number representing the card's expiration month.
