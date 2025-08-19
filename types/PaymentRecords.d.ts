@@ -1835,6 +1835,16 @@ declare module 'stripe' {
 
         interface Paynow {
           /**
+           * ID of the [location](https://stripe.com/docs/api/terminal/locations) that this transaction's reader is assigned to.
+           */
+          location?: string;
+
+          /**
+           * ID of the [reader](https://stripe.com/docs/api/terminal/readers) this transaction was made on.
+           */
+          reader?: string;
+
+          /**
            * Reference number associated with this PayNow payment
            */
           reference: string | null;
