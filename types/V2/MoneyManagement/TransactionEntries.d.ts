@@ -87,6 +87,7 @@ declare module 'stripe' {
           namespace TransactionDetails {
             type Category =
               | 'adjustment'
+              | 'currency_conversion'
               | 'inbound_transfer'
               | 'outbound_payment'
               | 'outbound_transfer'
@@ -105,6 +106,11 @@ declare module 'stripe' {
                * If applicable, the ID of the Adjustment that created this Transaction.
                */
               adjustment: string | null;
+
+              /**
+               * In the future, this will be the ID of the currency conversion that created this Transaction. For now, this field is always null.
+               */
+              currency_conversion: string | null;
 
               /**
                * If applicable, the ID of the FeeTransaction that created this Transaction.
@@ -140,6 +146,7 @@ declare module 'stripe' {
             namespace Flow {
               type Type =
                 | 'adjustment'
+                | 'currency_conversion'
                 | 'fee_transaction'
                 | 'inbound_transfer'
                 | 'outbound_payment'

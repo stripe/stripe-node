@@ -2464,10 +2464,13 @@ declare module 'stripe' {
                 type Type =
                   | 'ae_crn'
                   | 'ae_vat'
+                  | 'ao_nif'
                   | 'at_fn'
                   | 'au_abn'
                   | 'au_acn'
                   | 'au_in'
+                  | 'az_tin'
+                  | 'bd_etin'
                   | 'be_cbe'
                   | 'bg_uic'
                   | 'br_cnpj'
@@ -2477,11 +2480,14 @@ declare module 'stripe' {
                   | 'ca_rid'
                   | 'ch_chid'
                   | 'ch_uid'
+                  | 'cr_cpj'
+                  | 'cr_nite'
                   | 'cy_tic'
                   | 'cz_ico'
                   | 'de_hrn'
                   | 'de_vat'
                   | 'dk_cvr'
+                  | 'do_rcn'
                   | 'ee_rk'
                   | 'es_cif'
                   | 'fi_yt'
@@ -2490,6 +2496,7 @@ declare module 'stripe' {
                   | 'gb_crn'
                   | 'gi_crn'
                   | 'gr_gemi'
+                  | 'gt_nit'
                   | 'hk_br'
                   | 'hk_cr'
                   | 'hk_mbs'
@@ -2498,6 +2505,7 @@ declare module 'stripe' {
                   | 'it_rea'
                   | 'it_vat'
                   | 'jp_cn'
+                  | 'kz_bin'
                   | 'li_uid'
                   | 'lt_ccrn'
                   | 'lu_rcs'
@@ -2507,12 +2515,17 @@ declare module 'stripe' {
                   | 'my_brn'
                   | 'my_coid'
                   | 'my_sst'
+                  | 'mz_nuit'
                   | 'nl_kvk'
                   | 'no_orgnr'
                   | 'nz_bn'
+                  | 'pe_ruc'
+                  | 'pk_ntn'
                   | 'pl_regon'
                   | 'pt_vat'
                   | 'ro_cui'
+                  | 'sa_crn'
+                  | 'sa_tin'
                   | 'se_orgnr'
                   | 'sg_uen'
                   | 'si_msp'
@@ -4297,12 +4310,28 @@ declare module 'stripe' {
               namespace IdNumber {
                 type Type =
                   | 'ae_eid'
+                  | 'ao_nif'
+                  | 'az_tin'
+                  | 'bd_brc'
+                  | 'bd_etin'
+                  | 'bd_nid'
                   | 'br_cpf'
+                  | 'cr_cpf'
+                  | 'cr_dimex'
+                  | 'cr_nite'
                   | 'de_stn'
+                  | 'do_rcn'
+                  | 'gt_nit'
                   | 'hk_id'
+                  | 'kz_iin'
                   | 'mx_rfc'
                   | 'my_nric'
+                  | 'mz_nuit'
                   | 'nl_bsn'
+                  | 'pe_dni'
+                  | 'pk_cnic'
+                  | 'pk_snic'
+                  | 'sa_tin'
                   | 'sg_fin'
                   | 'sg_nric'
                   | 'th_lc'
@@ -5335,6 +5364,11 @@ declare module 'stripe' {
           namespace Configuration {
             interface Customer {
               /**
+               * Represents the state of the configuration, and can be updated to deactivate or re-apply a configuration.
+               */
+              applied?: boolean;
+
+              /**
                * Automatic indirect tax settings to be used when automatic tax calculation is enabled on the customer's invoices, subscriptions, checkout sessions, or payment links. Surfaces if automatic tax calculation is possible given the current customer location information.
                */
               automatic_indirect_tax?: Customer.AutomaticIndirectTax;
@@ -5502,6 +5536,11 @@ declare module 'stripe' {
             }
 
             interface Merchant {
+              /**
+               * Represents the state of the configuration, and can be updated to deactivate or re-apply a configuration.
+               */
+              applied?: boolean;
+
               /**
                * Settings used for Bacs debit payments.
                */
@@ -6452,6 +6491,11 @@ declare module 'stripe' {
 
             interface Recipient {
               /**
+               * Represents the state of the configuration, and can be updated to deactivate or re-apply a configuration.
+               */
+              applied?: boolean;
+
+              /**
                * Capabilities to request on the Recipient Configuration.
                */
               capabilities?: Recipient.Capabilities;
@@ -6535,6 +6579,11 @@ declare module 'stripe' {
             }
 
             interface Storer {
+              /**
+               * Represents the state of the configuration, and can be updated to deactivate or re-apply a configuration.
+               */
+              applied?: boolean;
+
               /**
                * Capabilities to request on the Storer Configuration.
                */
@@ -7744,10 +7793,13 @@ declare module 'stripe' {
                 type Type =
                   | 'ae_crn'
                   | 'ae_vat'
+                  | 'ao_nif'
                   | 'at_fn'
                   | 'au_abn'
                   | 'au_acn'
                   | 'au_in'
+                  | 'az_tin'
+                  | 'bd_etin'
                   | 'be_cbe'
                   | 'bg_uic'
                   | 'br_cnpj'
@@ -7757,11 +7809,14 @@ declare module 'stripe' {
                   | 'ca_rid'
                   | 'ch_chid'
                   | 'ch_uid'
+                  | 'cr_cpj'
+                  | 'cr_nite'
                   | 'cy_tic'
                   | 'cz_ico'
                   | 'de_hrn'
                   | 'de_vat'
                   | 'dk_cvr'
+                  | 'do_rcn'
                   | 'ee_rk'
                   | 'es_cif'
                   | 'fi_yt'
@@ -7770,6 +7825,7 @@ declare module 'stripe' {
                   | 'gb_crn'
                   | 'gi_crn'
                   | 'gr_gemi'
+                  | 'gt_nit'
                   | 'hk_br'
                   | 'hk_cr'
                   | 'hk_mbs'
@@ -7778,6 +7834,7 @@ declare module 'stripe' {
                   | 'it_rea'
                   | 'it_vat'
                   | 'jp_cn'
+                  | 'kz_bin'
                   | 'li_uid'
                   | 'lt_ccrn'
                   | 'lu_rcs'
@@ -7787,12 +7844,17 @@ declare module 'stripe' {
                   | 'my_brn'
                   | 'my_coid'
                   | 'my_sst'
+                  | 'mz_nuit'
                   | 'nl_kvk'
                   | 'no_orgnr'
                   | 'nz_bn'
+                  | 'pe_ruc'
+                  | 'pk_ntn'
                   | 'pl_regon'
                   | 'pt_vat'
                   | 'ro_cui'
+                  | 'sa_crn'
+                  | 'sa_tin'
                   | 'se_orgnr'
                   | 'sg_uen'
                   | 'si_msp'
@@ -9577,12 +9639,28 @@ declare module 'stripe' {
               namespace IdNumber {
                 type Type =
                   | 'ae_eid'
+                  | 'ao_nif'
+                  | 'az_tin'
+                  | 'bd_brc'
+                  | 'bd_etin'
+                  | 'bd_nid'
                   | 'br_cpf'
+                  | 'cr_cpf'
+                  | 'cr_dimex'
+                  | 'cr_nite'
                   | 'de_stn'
+                  | 'do_rcn'
+                  | 'gt_nit'
                   | 'hk_id'
+                  | 'kz_iin'
                   | 'mx_rfc'
                   | 'my_nric'
+                  | 'mz_nuit'
                   | 'nl_bsn'
+                  | 'pe_dni'
+                  | 'pk_cnic'
+                  | 'pk_snic'
+                  | 'sa_tin'
                   | 'sg_fin'
                   | 'sg_nric'
                   | 'th_lc'
