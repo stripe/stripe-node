@@ -5184,53 +5184,23 @@ describe('Generated tests', function() {
     expect(financialAddressGeneratedMicrodeposits).not.to.be.null;
   });
 
-  it('test_temporary_session_expired_error', async function() {
-    const {TemporarySessionExpiredError} = require('../../src/Error.js');
-
-    nock('https://meter-events.stripe.com')
-      .post('/v2/billing/meter_event_stream')
-      .reply(400, {
-        error: {
-          type: 'temporary_session_expired',
-          code: 'billing_meter_event_session_expired',
-        },
-      });
-
-    await realStripe.v2.billing.meterEventStream.create(
-      {
-        events: [
-          {
-            event_name: 'event_name',
-            payload: {
-              key: 'payload',
-            },
-          },
-        ],
-      },
-
-      (err) => {
-        expect(err).to.be.instanceOf(TemporarySessionExpiredError);
-      }
-    );
-  });
-
-  it('test_non_zero_balance_error', async function() {
-    const {NonZeroBalanceError} = require('../../src/Error.js');
+  it('test_already_canceled_error', async function() {
+    const {AlreadyCanceledError} = require('../../src/Error.js');
 
     nock('https://api.stripe.com')
-      .post('/v2/money_management/financial_accounts/id_123/close')
+      .post('/v2/money_management/outbound_payments/id_123/cancel')
       .reply(400, {
         error: {
-          type: 'non_zero_balance',
-          code: 'closing_financial_account_with_non_zero_balances',
+          type: 'already_canceled',
+          code: 'outbound_payment_already_canceled',
         },
       });
 
-    await realStripe.v2.moneyManagement.financialAccounts.close(
+    await realStripe.v2.moneyManagement.outboundPayments.cancel(
       'id_123',
 
       (err) => {
-        expect(err).to.be.instanceOf(NonZeroBalanceError);
+        expect(err).to.be.instanceOf(AlreadyCanceledError);
       }
     );
   });
@@ -5254,6 +5224,50 @@ describe('Generated tests', function() {
 
       (err) => {
         expect(err).to.be.instanceOf(AlreadyExistsError);
+      }
+    );
+  });
+
+  it('test_blocked_by_stripe_error', async function() {
+    const {BlockedByStripeError} = require('../../src/Error.js');
+
+    nock('https://api.stripe.com')
+      .post('/v2/core/vault/us_bank_accounts')
+      .reply(400, {
+        error: {
+          type: 'blocked_by_stripe',
+          code: 'inbound_transfer_not_allowed',
+        },
+      });
+
+    await realStripe.v2.core.vault.usBankAccounts.create(
+      {
+        account_number: 'account_number',
+      },
+
+      (err) => {
+        expect(err).to.be.instanceOf(BlockedByStripeError);
+      }
+    );
+  });
+
+  it('test_controlled_by_dashboard_error', async function() {
+    const {ControlledByDashboardError} = require('../../src/Error.js');
+
+    nock('https://api.stripe.com')
+      .post('/v2/core/vault/us_bank_accounts/id_123/archive')
+      .reply(400, {
+        error: {
+          type: 'controlled_by_dashboard',
+          code: 'bank_account_cannot_be_archived',
+        },
+      });
+
+    await realStripe.v2.core.vault.usBankAccounts.archive(
+      'id_123',
+
+      (err) => {
+        expect(err).to.be.instanceOf(ControlledByDashboardError);
       }
     );
   });
@@ -5305,71 +5319,6 @@ describe('Generated tests', function() {
     );
   });
 
-  it('test_blocked_by_stripe_error', async function() {
-    const {BlockedByStripeError} = require('../../src/Error.js');
-
-    nock('https://api.stripe.com')
-      .post('/v2/core/vault/us_bank_accounts')
-      .reply(400, {
-        error: {
-          type: 'blocked_by_stripe',
-          code: 'inbound_transfer_not_allowed',
-        },
-      });
-
-    await realStripe.v2.core.vault.usBankAccounts.create(
-      {
-        account_number: 'account_number',
-      },
-
-      (err) => {
-        expect(err).to.be.instanceOf(BlockedByStripeError);
-      }
-    );
-  });
-
-  it('test_already_canceled_error', async function() {
-    const {AlreadyCanceledError} = require('../../src/Error.js');
-
-    nock('https://api.stripe.com')
-      .post('/v2/money_management/outbound_payments/id_123/cancel')
-      .reply(400, {
-        error: {
-          type: 'already_canceled',
-          code: 'outbound_payment_already_canceled',
-        },
-      });
-
-    await realStripe.v2.moneyManagement.outboundPayments.cancel(
-      'id_123',
-
-      (err) => {
-        expect(err).to.be.instanceOf(AlreadyCanceledError);
-      }
-    );
-  });
-
-  it('test_not_cancelable_error', async function() {
-    const {NotCancelableError} = require('../../src/Error.js');
-
-    nock('https://api.stripe.com')
-      .post('/v2/money_management/outbound_payments/id_123/cancel')
-      .reply(400, {
-        error: {
-          type: 'not_cancelable',
-          code: 'outbound_payment_not_cancelable',
-        },
-      });
-
-    await realStripe.v2.moneyManagement.outboundPayments.cancel(
-      'id_123',
-
-      (err) => {
-        expect(err).to.be.instanceOf(NotCancelableError);
-      }
-    );
-  });
-
   it('test_insufficient_funds_error', async function() {
     const {InsufficientFundsError} = require('../../src/Error.js');
 
@@ -5399,6 +5348,88 @@ describe('Generated tests', function() {
 
       (err) => {
         expect(err).to.be.instanceOf(InsufficientFundsError);
+      }
+    );
+  });
+
+  it('test_invalid_payment_method_error', async function() {
+    const {InvalidPaymentMethodError} = require('../../src/Error.js');
+
+    nock('https://api.stripe.com')
+      .post('/v2/core/vault/us_bank_accounts')
+      .reply(400, {
+        error: {
+          type: 'invalid_payment_method',
+          code: 'invalid_us_bank_account',
+        },
+      });
+
+    await realStripe.v2.core.vault.usBankAccounts.create(
+      {
+        account_number: 'account_number',
+      },
+
+      (err) => {
+        expect(err).to.be.instanceOf(InvalidPaymentMethodError);
+      }
+    );
+  });
+
+  it('test_invalid_payout_method_error', async function() {
+    const {InvalidPayoutMethodError} = require('../../src/Error.js');
+
+    nock('https://api.stripe.com')
+      .post('/v2/money_management/outbound_setup_intents')
+      .reply(400, {
+        error: {
+          type: 'invalid_payout_method',
+          code: 'invalid_payout_method',
+        },
+      });
+
+    await realStripe.v2.moneyManagement.outboundSetupIntents.create((err) => {
+      expect(err).to.be.instanceOf(InvalidPayoutMethodError);
+    });
+  });
+
+  it('test_non_zero_balance_error', async function() {
+    const {NonZeroBalanceError} = require('../../src/Error.js');
+
+    nock('https://api.stripe.com')
+      .post('/v2/money_management/financial_accounts/id_123/close')
+      .reply(400, {
+        error: {
+          type: 'non_zero_balance',
+          code: 'closing_financial_account_with_non_zero_balances',
+        },
+      });
+
+    await realStripe.v2.moneyManagement.financialAccounts.close(
+      'id_123',
+
+      (err) => {
+        expect(err).to.be.instanceOf(NonZeroBalanceError);
+      }
+    );
+  });
+
+  it('test_not_cancelable_error', async function() {
+    const {NotCancelableError} = require('../../src/Error.js');
+
+    nock('https://api.stripe.com')
+      .post('/v2/money_management/outbound_payments/id_123/cancel')
+      .reply(400, {
+        error: {
+          type: 'not_cancelable',
+          code: 'outbound_payment_not_cancelable',
+        },
+      });
+
+    await realStripe.v2.moneyManagement.outboundPayments.cancel(
+      'id_123',
+
+      (err) => {
+        expect(err).to.be.instanceOf(NotCancelableError);
       }
     );
   });
@@ -5459,63 +5490,32 @@ describe('Generated tests', function() {
     );
   });
 
-  it('test_invalid_payout_method_error', async function() {
-    const {InvalidPayoutMethodError} = require('../../src/Error.js');
+  it('test_temporary_session_expired_error', async function() {
+    const {TemporarySessionExpiredError} = require('../../src/Error.js');
 
-    nock('https://api.stripe.com')
-      .post('/v2/money_management/outbound_setup_intents')
+    nock('https://meter-events.stripe.com')
+      .post('/v2/billing/meter_event_stream')
       .reply(400, {
         error: {
-          type: 'invalid_payout_method',
-          code: 'invalid_payout_method',
+          type: 'temporary_session_expired',
+          code: 'billing_meter_event_session_expired',
         },
       });
 
-    await realStripe.v2.moneyManagement.outboundSetupIntents.create((err) => {
-      expect(err).to.be.instanceOf(InvalidPayoutMethodError);
-    });
-  });
-
-  it('test_controlled_by_dashboard_error', async function() {
-    const {ControlledByDashboardError} = require('../../src/Error.js');
-
-    nock('https://api.stripe.com')
-      .post('/v2/core/vault/us_bank_accounts/id_123/archive')
-      .reply(400, {
-        error: {
-          type: 'controlled_by_dashboard',
-          code: 'bank_account_cannot_be_archived',
-        },
-      });
-
-    await realStripe.v2.core.vault.usBankAccounts.archive(
-      'id_123',
-
-      (err) => {
-        expect(err).to.be.instanceOf(ControlledByDashboardError);
-      }
-    );
-  });
-
-  it('test_invalid_payment_method_error', async function() {
-    const {InvalidPaymentMethodError} = require('../../src/Error.js');
-
-    nock('https://api.stripe.com')
-      .post('/v2/core/vault/us_bank_accounts')
-      .reply(400, {
-        error: {
-          type: 'invalid_payment_method',
-          code: 'invalid_us_bank_account',
-        },
-      });
-
-    await realStripe.v2.core.vault.usBankAccounts.create(
+    await realStripe.v2.billing.meterEventStream.create(
       {
-        account_number: 'account_number',
+        events: [
+          {
+            event_name: 'event_name',
+            payload: {
+              key: 'payload',
+            },
+          },
+        ],
       },
 
       (err) => {
-        expect(err).to.be.instanceOf(InvalidPaymentMethodError);
+        expect(err).to.be.instanceOf(TemporarySessionExpiredError);
       }
     );
   });
