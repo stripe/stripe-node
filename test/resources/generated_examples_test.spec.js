@@ -3907,6 +3907,24 @@ describe('Generated tests', function() {
     expect(webhookEndpoint).not.to.be.null;
   });
 
+  it('test_v2_billing_meter_event_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/billing/meter_events',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","event_name":"event_name","identifier":"identifier","object":"v2.billing.meter_event","payload":{"key":"payload"},"timestamp":"1970-01-01T15:18:46.294Z","livemode":true}',
+      },
+    ]);
+    const meterEvent = await stripe.v2.billing.meterEvents.create({
+      event_name: 'event_name',
+      payload: {
+        key: 'payload',
+      },
+    });
+    expect(meterEvent).not.to.be.null;
+  });
+
   it('test_v2_billing_meter_event_adjustment_post', async function() {
     const stripe = testUtils.createMockClient([
       {
@@ -3962,60 +3980,6 @@ describe('Generated tests', function() {
       ],
     });
     expect(emptyObject).to.eql({});
-  });
-
-  it('test_v2_billing_meter_event_post', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'POST',
-        path: '/v2/billing/meter_events',
-        response:
-          '{"created":"1970-01-12T21:42:34.472Z","event_name":"event_name","identifier":"identifier","object":"v2.billing.meter_event","payload":{"key":"payload"},"timestamp":"1970-01-01T15:18:46.294Z","livemode":true}',
-      },
-    ]);
-    const meterEvent = await stripe.v2.billing.meterEvents.create({
-      event_name: 'event_name',
-      payload: {
-        key: 'payload',
-      },
-    });
-    expect(meterEvent).not.to.be.null;
-  });
-
-  it('test_v2_core_account_link_post', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'POST',
-        path: '/v2/core/account_links',
-        response:
-          '{"account":"account","created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","object":"v2.core.account_link","url":"url","use_case":{"type":"account_onboarding","account_onboarding":null,"account_update":null},"livemode":true}',
-      },
-    ]);
-    const accountLink = await stripe.v2.core.accountLinks.create({
-      account: 'account',
-      use_case: {
-        type: 'account_onboarding',
-        account_onboarding: {
-          collection_options: {
-            fields: 'eventually_due',
-            future_requirements: 'include',
-          },
-          configurations: ['storer'],
-          refresh_url: 'refresh_url',
-          return_url: 'return_url',
-        },
-        account_update: {
-          collection_options: {
-            fields: 'eventually_due',
-            future_requirements: 'include',
-          },
-          configurations: ['storer'],
-          refresh_url: 'refresh_url',
-          return_url: 'return_url',
-        },
-      },
-    });
-    expect(accountLink).not.to.be.null;
   });
 
   it('test_v2_core_account_get', async function() {
@@ -4161,6 +4125,70 @@ describe('Generated tests', function() {
     expect(person).not.to.be.null;
   });
 
+  it('test_v2_core_account_link_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/account_links',
+        response:
+          '{"account":"account","created":"1970-01-12T21:42:34.472Z","expires_at":"1970-01-10T15:36:51.170Z","object":"v2.core.account_link","url":"url","use_case":{"type":"account_onboarding","account_onboarding":null,"account_update":null},"livemode":true}',
+      },
+    ]);
+    const accountLink = await stripe.v2.core.accountLinks.create({
+      account: 'account',
+      use_case: {
+        type: 'account_onboarding',
+        account_onboarding: {
+          collection_options: {
+            fields: 'eventually_due',
+            future_requirements: 'include',
+          },
+          configurations: ['storer'],
+          refresh_url: 'refresh_url',
+          return_url: 'return_url',
+        },
+        account_update: {
+          collection_options: {
+            fields: 'eventually_due',
+            future_requirements: 'include',
+          },
+          configurations: ['storer'],
+          refresh_url: 'refresh_url',
+          return_url: 'return_url',
+        },
+      },
+    });
+    expect(accountLink).not.to.be.null;
+  });
+
+  it('test_v2_core_event_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/events?object_id=object_id',
+        response:
+          '{"data":[{"context":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":null,"type":"type","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const events = await stripe.v2.core.events.list({
+      object_id: 'object_id',
+    });
+    expect(events).not.to.be.null;
+  });
+
+  it('test_v2_core_event_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/events/id_123',
+        response:
+          '{"context":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":null,"type":"type","livemode":true}',
+      },
+    ]);
+    const event = await stripe.v2.core.events.retrieve('id_123');
+    expect(event).not.to.be.null;
+  });
+
   it('test_v2_core_event_destination_get', async function() {
     const stripe = testUtils.createMockClient([
       {
@@ -4277,34 +4305,6 @@ describe('Generated tests', function() {
       },
     ]);
     const event = await stripe.v2.core.eventDestinations.ping('id_123');
-    expect(event).not.to.be.null;
-  });
-
-  it('test_v2_core_event_get', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/core/events?object_id=object_id',
-        response:
-          '{"data":[{"context":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":null,"type":"type","livemode":true}],"next_page_url":null,"previous_page_url":null}',
-      },
-    ]);
-    const events = await stripe.v2.core.events.list({
-      object_id: 'object_id',
-    });
-    expect(events).not.to.be.null;
-  });
-
-  it('test_v2_core_event_get_2', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/core/events/id_123',
-        response:
-          '{"context":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":null,"type":"type","livemode":true}',
-      },
-    ]);
-    const event = await stripe.v2.core.events.retrieve('id_123');
     expect(event).not.to.be.null;
   });
 
@@ -4636,50 +4636,6 @@ describe('Generated tests', function() {
     expect(inboundTransfer).not.to.be.null;
   });
 
-  it('test_v2_money_management_outbound_payment_quote_post', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'POST',
-        path: '/v2/money_management/outbound_payment_quotes',
-        response:
-          '{"amount":{"currency":"USD","value":96},"created":"1970-01-12T21:42:34.472Z","delivery_options":null,"estimated_fees":[{"amount":{"currency":"USD","value":96},"type":"cross_border_payout_fee"}],"from":{"debited":{"currency":"USD","value":55},"financial_account":"financial_account"},"fx_quote":{"lock_duration":"five_minutes","lock_expires_at":"1970-01-18T15:15:29.586Z","lock_status":"active","rates":{"key":{"exchange_rate":"exchange_rate"}},"to_currency":"usd"},"id":"obj_123","object":"v2.money_management.outbound_payment_quote","to":{"credited":{"currency":"USD","value":68},"payout_method":"payout_method","recipient":"recipient"},"livemode":true}',
-      },
-    ]);
-    const outboundPaymentQuote = await stripe.v2.moneyManagement.outboundPaymentQuotes.create(
-      {
-        amount: {
-          value: 96,
-          currency: 'USD',
-        },
-        from: {
-          currency: 'usd',
-          financial_account: 'financial_account',
-        },
-        to: {
-          currency: 'usd',
-          payout_method: 'payout_method',
-          recipient: 'recipient',
-        },
-      }
-    );
-    expect(outboundPaymentQuote).not.to.be.null;
-  });
-
-  it('test_v2_money_management_outbound_payment_quote_get', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/money_management/outbound_payment_quotes/id_123',
-        response:
-          '{"amount":{"currency":"USD","value":96},"created":"1970-01-12T21:42:34.472Z","delivery_options":null,"estimated_fees":[{"amount":{"currency":"USD","value":96},"type":"cross_border_payout_fee"}],"from":{"debited":{"currency":"USD","value":55},"financial_account":"financial_account"},"fx_quote":{"lock_duration":"five_minutes","lock_expires_at":"1970-01-18T15:15:29.586Z","lock_status":"active","rates":{"key":{"exchange_rate":"exchange_rate"}},"to_currency":"usd"},"id":"obj_123","object":"v2.money_management.outbound_payment_quote","to":{"credited":{"currency":"USD","value":68},"payout_method":"payout_method","recipient":"recipient"},"livemode":true}',
-      },
-    ]);
-    const outboundPaymentQuote = await stripe.v2.moneyManagement.outboundPaymentQuotes.retrieve(
-      'id_123'
-    );
-    expect(outboundPaymentQuote).not.to.be.null;
-  });
-
   it('test_v2_money_management_outbound_payment_get', async function() {
     const stripe = testUtils.createMockClient([
       {
@@ -4750,6 +4706,50 @@ describe('Generated tests', function() {
       'id_123'
     );
     expect(outboundPayment).not.to.be.null;
+  });
+
+  it('test_v2_money_management_outbound_payment_quote_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/money_management/outbound_payment_quotes',
+        response:
+          '{"amount":{"currency":"USD","value":96},"created":"1970-01-12T21:42:34.472Z","delivery_options":null,"estimated_fees":[{"amount":{"currency":"USD","value":96},"type":"cross_border_payout_fee"}],"from":{"debited":{"currency":"USD","value":55},"financial_account":"financial_account"},"fx_quote":{"lock_duration":"five_minutes","lock_expires_at":"1970-01-18T15:15:29.586Z","lock_status":"active","rates":{"key":{"exchange_rate":"exchange_rate"}},"to_currency":"usd"},"id":"obj_123","object":"v2.money_management.outbound_payment_quote","to":{"credited":{"currency":"USD","value":68},"payout_method":"payout_method","recipient":"recipient"},"livemode":true}',
+      },
+    ]);
+    const outboundPaymentQuote = await stripe.v2.moneyManagement.outboundPaymentQuotes.create(
+      {
+        amount: {
+          value: 96,
+          currency: 'USD',
+        },
+        from: {
+          currency: 'usd',
+          financial_account: 'financial_account',
+        },
+        to: {
+          currency: 'usd',
+          payout_method: 'payout_method',
+          recipient: 'recipient',
+        },
+      }
+    );
+    expect(outboundPaymentQuote).not.to.be.null;
+  });
+
+  it('test_v2_money_management_outbound_payment_quote_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/money_management/outbound_payment_quotes/id_123',
+        response:
+          '{"amount":{"currency":"USD","value":96},"created":"1970-01-12T21:42:34.472Z","delivery_options":null,"estimated_fees":[{"amount":{"currency":"USD","value":96},"type":"cross_border_payout_fee"}],"from":{"debited":{"currency":"USD","value":55},"financial_account":"financial_account"},"fx_quote":{"lock_duration":"five_minutes","lock_expires_at":"1970-01-18T15:15:29.586Z","lock_status":"active","rates":{"key":{"exchange_rate":"exchange_rate"}},"to_currency":"usd"},"id":"obj_123","object":"v2.money_management.outbound_payment_quote","to":{"credited":{"currency":"USD","value":68},"payout_method":"payout_method","recipient":"recipient"},"livemode":true}',
+      },
+    ]);
+    const outboundPaymentQuote = await stripe.v2.moneyManagement.outboundPaymentQuotes.retrieve(
+      'id_123'
+    );
+    expect(outboundPaymentQuote).not.to.be.null;
   });
 
   it('test_v2_money_management_outbound_setup_intent_get', async function() {
@@ -5021,34 +5021,6 @@ describe('Generated tests', function() {
     expect(receivedDebit).not.to.be.null;
   });
 
-  it('test_v2_money_management_transaction_entry_get', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/money_management/transaction_entries',
-        response:
-          '{"data":[{"balance_impact":{"available":{"currency":"USD","value":35},"inbound_pending":{"currency":"USD","value":11},"outbound_pending":{"currency":"USD","value":60}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","object":"v2.money_management.transaction_entry","transaction":"transaction","transaction_details":{"category":"received_debit","financial_account":"financial_account","flow":{"type":"fee_transaction","adjustment":null,"currency_conversion":null,"fee_transaction":null,"inbound_transfer":null,"outbound_payment":null,"outbound_transfer":null,"received_credit":null,"received_debit":null}},"livemode":true}],"next_page_url":null,"previous_page_url":null}',
-      },
-    ]);
-    const transactionEntries = await stripe.v2.moneyManagement.transactionEntries.list();
-    expect(transactionEntries).not.to.be.null;
-  });
-
-  it('test_v2_money_management_transaction_entry_get_2', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/money_management/transaction_entries/id_123',
-        response:
-          '{"balance_impact":{"available":{"currency":"USD","value":35},"inbound_pending":{"currency":"USD","value":11},"outbound_pending":{"currency":"USD","value":60}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","object":"v2.money_management.transaction_entry","transaction":"transaction","transaction_details":{"category":"received_debit","financial_account":"financial_account","flow":{"type":"fee_transaction","adjustment":null,"currency_conversion":null,"fee_transaction":null,"inbound_transfer":null,"outbound_payment":null,"outbound_transfer":null,"received_credit":null,"received_debit":null}},"livemode":true}',
-      },
-    ]);
-    const transactionEntry = await stripe.v2.moneyManagement.transactionEntries.retrieve(
-      'id_123'
-    );
-    expect(transactionEntry).not.to.be.null;
-  });
-
   it('test_v2_money_management_transaction_get', async function() {
     const stripe = testUtils.createMockClient([
       {
@@ -5075,6 +5047,34 @@ describe('Generated tests', function() {
       'id_123'
     );
     expect(transaction).not.to.be.null;
+  });
+
+  it('test_v2_money_management_transaction_entry_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/money_management/transaction_entries',
+        response:
+          '{"data":[{"balance_impact":{"available":{"currency":"USD","value":35},"inbound_pending":{"currency":"USD","value":11},"outbound_pending":{"currency":"USD","value":60}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","object":"v2.money_management.transaction_entry","transaction":"transaction","transaction_details":{"category":"received_debit","financial_account":"financial_account","flow":{"type":"fee_transaction","adjustment":null,"currency_conversion":null,"fee_transaction":null,"inbound_transfer":null,"outbound_payment":null,"outbound_transfer":null,"received_credit":null,"received_debit":null}},"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const transactionEntries = await stripe.v2.moneyManagement.transactionEntries.list();
+    expect(transactionEntries).not.to.be.null;
+  });
+
+  it('test_v2_money_management_transaction_entry_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/money_management/transaction_entries/id_123',
+        response:
+          '{"balance_impact":{"available":{"currency":"USD","value":35},"inbound_pending":{"currency":"USD","value":11},"outbound_pending":{"currency":"USD","value":60}},"created":"1970-01-12T21:42:34.472Z","effective_at":"1970-01-03T20:38:28.043Z","id":"obj_123","object":"v2.money_management.transaction_entry","transaction":"transaction","transaction_details":{"category":"received_debit","financial_account":"financial_account","flow":{"type":"fee_transaction","adjustment":null,"currency_conversion":null,"fee_transaction":null,"inbound_transfer":null,"outbound_payment":null,"outbound_transfer":null,"received_credit":null,"received_debit":null}},"livemode":true}',
+      },
+    ]);
+    const transactionEntry = await stripe.v2.moneyManagement.transactionEntries.retrieve(
+      'id_123'
+    );
+    expect(transactionEntry).not.to.be.null;
   });
 
   it('test_v2_payments_off_session_payment_get', async function() {

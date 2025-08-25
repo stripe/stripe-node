@@ -580,16 +580,16 @@ declare module 'stripe' {
     };
     v2: {
       billing: {
+        meterEvents: Stripe.V2.Billing.MeterEventsResource;
         meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
         meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
         meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
-        meterEvents: Stripe.V2.Billing.MeterEventsResource;
       };
       core: {
-        accountLinks: Stripe.V2.Core.AccountLinksResource;
         accounts: Stripe.V2.Core.AccountsResource;
-        eventDestinations: Stripe.V2.Core.EventDestinationsResource;
+        accountLinks: Stripe.V2.Core.AccountLinksResource;
         events: Stripe.V2.Core.EventsResource;
+        eventDestinations: Stripe.V2.Core.EventDestinationsResource;
         vault: {
           gbBankAccounts: Stripe.V2.Core.Vault.GbBankAccountsResource;
           usBankAccounts: Stripe.V2.Core.Vault.UsBankAccountsResource;
@@ -600,16 +600,16 @@ declare module 'stripe' {
         financialAccounts: Stripe.V2.MoneyManagement.FinancialAccountsResource;
         financialAddresses: Stripe.V2.MoneyManagement.FinancialAddressesResource;
         inboundTransfers: Stripe.V2.MoneyManagement.InboundTransfersResource;
-        outboundPaymentQuotes: Stripe.V2.MoneyManagement.OutboundPaymentQuotesResource;
         outboundPayments: Stripe.V2.MoneyManagement.OutboundPaymentsResource;
+        outboundPaymentQuotes: Stripe.V2.MoneyManagement.OutboundPaymentQuotesResource;
         outboundSetupIntents: Stripe.V2.MoneyManagement.OutboundSetupIntentsResource;
         outboundTransfers: Stripe.V2.MoneyManagement.OutboundTransfersResource;
         payoutMethods: Stripe.V2.MoneyManagement.PayoutMethodsResource;
         payoutMethodsBankAccountSpec: Stripe.V2.MoneyManagement.PayoutMethodsBankAccountSpecResource;
         receivedCredits: Stripe.V2.MoneyManagement.ReceivedCreditsResource;
         receivedDebits: Stripe.V2.MoneyManagement.ReceivedDebitsResource;
-        transactionEntries: Stripe.V2.MoneyManagement.TransactionEntriesResource;
         transactions: Stripe.V2.MoneyManagement.TransactionsResource;
+        transactionEntries: Stripe.V2.MoneyManagement.TransactionEntriesResource;
       };
       payment: {
         offSessionPayments: Stripe.V2.Payments.OffSessionPaymentsResource;
