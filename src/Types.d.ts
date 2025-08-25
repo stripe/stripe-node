@@ -38,6 +38,20 @@ export type RawErrorType =
   | 'rate_limit_error'
   | 'authentication_error'
   | 'invalid_grant'
+  | 'already_canceled'
+  | 'already_exists'
+  | 'blocked_by_stripe'
+  | 'controlled_by_dashboard'
+  | 'feature_not_enabled'
+  | 'financial_account_not_open'
+  | 'insufficient_funds'
+  | 'invalid_payment_method'
+  | 'invalid_payout_method'
+  | 'non_zero_balance'
+  | 'not_cancelable'
+  | 'quota_exceeded'
+  | 'rate_limit'
+  | 'recipient_not_notifiable'
   | 'temporary_session_expired';
 // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
 export type RequestArgs = Array<any>;

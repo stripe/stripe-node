@@ -149,12 +149,57 @@
 ///<reference path='./Treasury/ReceivedDebitsResource.d.ts' />
 ///<reference path='./Treasury/TransactionEntriesResource.d.ts' />
 ///<reference path='./Treasury/TransactionsResource.d.ts' />
+///<reference path='./V2/Billing/BillSettings/VersionsResource.d.ts' />
+///<reference path='./V2/Billing/BillSettingsResource.d.ts' />
+///<reference path='./V2/Billing/CadencesResource.d.ts' />
+///<reference path='./V2/Billing/CollectionSettings/VersionsResource.d.ts' />
+///<reference path='./V2/Billing/CollectionSettingsResource.d.ts' />
+///<reference path='./V2/Billing/CustomPricingUnitsResource.d.ts' />
+///<reference path='./V2/Billing/IntentsResource.d.ts' />
+///<reference path='./V2/Billing/LicenseFees/VersionsResource.d.ts' />
+///<reference path='./V2/Billing/LicenseFeesResource.d.ts' />
+///<reference path='./V2/Billing/LicensedItemsResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventAdjustmentsResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessionResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
+///<reference path='./V2/Billing/MeteredItemsResource.d.ts' />
+///<reference path='./V2/Billing/PricingPlanSubscriptionsResource.d.ts' />
+///<reference path='./V2/Billing/PricingPlans/ComponentsResource.d.ts' />
+///<reference path='./V2/Billing/PricingPlans/VersionsResource.d.ts' />
+///<reference path='./V2/Billing/PricingPlansResource.d.ts' />
+///<reference path='./V2/Billing/ProfilesResource.d.ts' />
+///<reference path='./V2/Billing/RateCardSubscriptionsResource.d.ts' />
+///<reference path='./V2/Billing/RateCards/RatesResource.d.ts' />
+///<reference path='./V2/Billing/RateCards/VersionsResource.d.ts' />
+///<reference path='./V2/Billing/RateCardsResource.d.ts' />
+///<reference path='./V2/Billing/ServiceActionsResource.d.ts' />
+///<reference path='./V2/Core/AccountLinksResource.d.ts' />
+///<reference path='./V2/Core/Accounts/PersonsResource.d.ts' />
+///<reference path='./V2/Core/AccountsResource.d.ts' />
 ///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
 ///<reference path='./V2/Core/EventsResource.d.ts' />
+///<reference path='./V2/Core/Vault/GbBankAccountsResource.d.ts' />
+///<reference path='./V2/Core/Vault/UsBankAccountsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/AdjustmentsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/FinancialAccountsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/FinancialAddressesResource.d.ts' />
+///<reference path='./V2/MoneyManagement/InboundTransfersResource.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPaymentQuotesResource.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPaymentsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundSetupIntentsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundTransfersResource.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethodsBankAccountSpecResource.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethodsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/ReceivedCreditsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/ReceivedDebitsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/TransactionEntriesResource.d.ts' />
+///<reference path='./V2/MoneyManagement/TransactionsResource.d.ts' />
+///<reference path='./V2/Payments/OffSessionPaymentsResource.d.ts' />
+///<reference path='./V2/Reporting/ReportRunsResource.d.ts' />
+///<reference path='./V2/Reporting/ReportsResource.d.ts' />
+///<reference path='./V2/Tax/AutomaticRulesResource.d.ts' />
+///<reference path='./V2/TestHelpers/FinancialAddressesResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./AccountNotices.d.ts' />
@@ -323,11 +368,57 @@
 ///<reference path='./Treasury/ReceivedDebits.d.ts' />
 ///<reference path='./Treasury/TransactionEntries.d.ts' />
 ///<reference path='./Treasury/Transactions.d.ts' />
+///<reference path='./V2/Billing/BillSettingVersions.d.ts' />
+///<reference path='./V2/Billing/BillSettings.d.ts' />
+///<reference path='./V2/Billing/Cadences.d.ts' />
+///<reference path='./V2/Billing/CollectionSettingVersions.d.ts' />
+///<reference path='./V2/Billing/CollectionSettings.d.ts' />
+///<reference path='./V2/Billing/CustomPricingUnits.d.ts' />
+///<reference path='./V2/Billing/Intents.d.ts' />
+///<reference path='./V2/Billing/LicenseFeeVersions.d.ts' />
+///<reference path='./V2/Billing/LicenseFees.d.ts' />
+///<reference path='./V2/Billing/LicensedItems.d.ts' />
 ///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
+///<reference path='./V2/Billing/MeteredItems.d.ts' />
+///<reference path='./V2/Billing/PricingPlanComponents.d.ts' />
+///<reference path='./V2/Billing/PricingPlanSubscriptions.d.ts' />
+///<reference path='./V2/Billing/PricingPlanVersions.d.ts' />
+///<reference path='./V2/Billing/PricingPlans.d.ts' />
+///<reference path='./V2/Billing/Profiles.d.ts' />
+///<reference path='./V2/Billing/RateCardRates.d.ts' />
+///<reference path='./V2/Billing/RateCardSubscriptions.d.ts' />
+///<reference path='./V2/Billing/RateCardVersions.d.ts' />
+///<reference path='./V2/Billing/RateCards.d.ts' />
+///<reference path='./V2/Billing/ServiceActions.d.ts' />
+///<reference path='./V2/Core/AccountLinks.d.ts' />
+///<reference path='./V2/Core/Accounts.d.ts' />
+///<reference path='./V2/Core/Persons.d.ts' />
+///<reference path='./V2/Core/Vault/GbBankAccounts.d.ts' />
+///<reference path='./V2/Core/Vault/UsBankAccounts.d.ts' />
 ///<reference path='./V2/EventDestinations.d.ts' />
 ///<reference path='./V2/Events.d.ts' />
+///<reference path='./V2/FinancialAddressCreditSimulations.d.ts' />
+///<reference path='./V2/FinancialAddressGeneratedMicrodeposits.d.ts' />
+///<reference path='./V2/MoneyManagement/Adjustments.d.ts' />
+///<reference path='./V2/MoneyManagement/FinancialAccounts.d.ts' />
+///<reference path='./V2/MoneyManagement/FinancialAddresses.d.ts' />
+///<reference path='./V2/MoneyManagement/InboundTransfers.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPaymentQuotes.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundPayments.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundSetupIntents.d.ts' />
+///<reference path='./V2/MoneyManagement/OutboundTransfers.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethods.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethodsBankAccountSpecs.d.ts' />
+///<reference path='./V2/MoneyManagement/ReceivedCredits.d.ts' />
+///<reference path='./V2/MoneyManagement/ReceivedDebits.d.ts' />
+///<reference path='./V2/MoneyManagement/TransactionEntries.d.ts' />
+///<reference path='./V2/MoneyManagement/Transactions.d.ts' />
+///<reference path='./V2/Payments/OffSessionPayments.d.ts' />
+///<reference path='./V2/Reporting/ReportRuns.d.ts' />
+///<reference path='./V2/Reporting/Reports.d.ts' />
+///<reference path='./V2/Tax/AutomaticRules.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
@@ -535,14 +626,63 @@ declare module 'stripe' {
     };
     v2: {
       billing: {
+        billSettings: Stripe.V2.Billing.BillSettingsResource;
+        cadences: Stripe.V2.Billing.CadencesResource;
+        collectionSettings: Stripe.V2.Billing.CollectionSettingsResource;
+        customPricingUnits: Stripe.V2.Billing.CustomPricingUnitsResource;
+        intents: Stripe.V2.Billing.IntentsResource;
+        licenseFees: Stripe.V2.Billing.LicenseFeesResource;
+        licensedItems: Stripe.V2.Billing.LicensedItemsResource;
         meterEvents: Stripe.V2.Billing.MeterEventsResource;
         meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
         meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
         meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
+        meteredItems: Stripe.V2.Billing.MeteredItemsResource;
+        pricingPlans: Stripe.V2.Billing.PricingPlansResource;
+        pricingPlanSubscriptions: Stripe.V2.Billing.PricingPlanSubscriptionsResource;
+        profiles: Stripe.V2.Billing.ProfilesResource;
+        rateCards: Stripe.V2.Billing.RateCardsResource;
+        rateCardSubscriptions: Stripe.V2.Billing.RateCardSubscriptionsResource;
+        serviceActions: Stripe.V2.Billing.ServiceActionsResource;
       };
       core: {
+        accounts: Stripe.V2.Core.AccountsResource;
+        accountLinks: Stripe.V2.Core.AccountLinksResource;
         events: Stripe.V2.Core.EventsResource;
         eventDestinations: Stripe.V2.Core.EventDestinationsResource;
+        vault: {
+          gbBankAccounts: Stripe.V2.Core.Vault.GbBankAccountsResource;
+          usBankAccounts: Stripe.V2.Core.Vault.UsBankAccountsResource;
+        };
+      };
+      moneyManagement: {
+        adjustments: Stripe.V2.MoneyManagement.AdjustmentsResource;
+        financialAccounts: Stripe.V2.MoneyManagement.FinancialAccountsResource;
+        financialAddresses: Stripe.V2.MoneyManagement.FinancialAddressesResource;
+        inboundTransfers: Stripe.V2.MoneyManagement.InboundTransfersResource;
+        outboundPayments: Stripe.V2.MoneyManagement.OutboundPaymentsResource;
+        outboundPaymentQuotes: Stripe.V2.MoneyManagement.OutboundPaymentQuotesResource;
+        outboundSetupIntents: Stripe.V2.MoneyManagement.OutboundSetupIntentsResource;
+        outboundTransfers: Stripe.V2.MoneyManagement.OutboundTransfersResource;
+        payoutMethods: Stripe.V2.MoneyManagement.PayoutMethodsResource;
+        payoutMethodsBankAccountSpec: Stripe.V2.MoneyManagement.PayoutMethodsBankAccountSpecResource;
+        receivedCredits: Stripe.V2.MoneyManagement.ReceivedCreditsResource;
+        receivedDebits: Stripe.V2.MoneyManagement.ReceivedDebitsResource;
+        transactions: Stripe.V2.MoneyManagement.TransactionsResource;
+        transactionEntries: Stripe.V2.MoneyManagement.TransactionEntriesResource;
+      };
+      payment: {
+        offSessionPayments: Stripe.V2.Payments.OffSessionPaymentsResource;
+      };
+      reporting: {
+        reports: Stripe.V2.Reporting.ReportsResource;
+        reportRuns: Stripe.V2.Reporting.ReportRunsResource;
+      };
+      tax: {
+        automaticRules: Stripe.V2.Tax.AutomaticRulesResource;
+      };
+      testHelper: {
+        financialAddresses: Stripe.V2.TestHelpers.FinancialAddressesResource;
       };
     };
     // Fields: The end of the section generated from our OpenAPI spec

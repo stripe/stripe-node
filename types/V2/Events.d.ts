@@ -4,6 +4,8 @@ declare module 'stripe' {
   namespace Stripe {
     namespace V2 {
       namespace Event {
+        interface Changes {}
+
         interface Reason {
           /**
            * Event reason type.
@@ -44,6 +46,11 @@ declare module 'stripe' {
          * String representing the object's type. Objects of the same type share the same value of the object field.
          */
         object: 'v2.core.event';
+
+        /**
+         * Before and after changes for the primary related object.
+         */
+        changes: Event.Changes;
 
         /**
          * Authentication context needed to fetch the event or related object.
