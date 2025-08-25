@@ -463,14 +463,14 @@ declare module 'stripe' {
     };
     v2: {
       billing: {
+        meterEvents: Stripe.V2.Billing.MeterEventsResource;
         meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
         meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
         meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
-        meterEvents: Stripe.V2.Billing.MeterEventsResource;
       };
       core: {
-        eventDestinations: Stripe.V2.Core.EventDestinationsResource;
         events: Stripe.V2.Core.EventsResource;
+        eventDestinations: Stripe.V2.Core.EventDestinationsResource;
       };
     };
     // Fields: The end of the section generated from our OpenAPI spec
