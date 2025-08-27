@@ -547,6 +547,10 @@ const stripe = new Stripe('sk_test_...', {
 });
 ```
 
+### Private Preview SDKs
+
+Stripe has features in the [private preview phase](https://docs.stripe.com/release-phases) that can be accessed via versions of this package that have the `-alpha.X` suffix like `15.2.0-alpha.2`. These are invite-only features. Once invited, you can install the private preview SDKs by following the same instructions as for the [public preview SDKs](https://github.com/stripe/stripe-node?tab=readme-ov-file#public-preview-sdks) above and replacing the term `beta` with `alpha`.
+
 ### Custom requests
 
 If you would like to send a request to an undocumented API (for example you are in a private beta), or if you prefer to bypass the method definitions in the library and specify your request details directly, you can use the `rawRequest` method on the StripeClient object.
