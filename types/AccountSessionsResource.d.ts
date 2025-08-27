@@ -132,6 +132,16 @@ declare module 'stripe' {
         payments?: Components.Payments;
 
         /**
+         * Configuration for the [payout details](https://docs.stripe.com/connect/supported-embedded-components/payout-details/) embedded component.
+         */
+        payout_details?: Components.PayoutDetails;
+
+        /**
+         * Configuration for the [payout reconciliation report](https://docs.stripe.com/connect/supported-embedded-components/financial-reports#payout-reconciliation-report) embedded component.
+         */
+        payout_reconciliation_report?: Components.PayoutReconciliationReport;
+
+        /**
          * Configuration for the [payouts](https://docs.stripe.com/connect/supported-embedded-components/payouts/) embedded component.
          */
         payouts?: Components.Payouts;
@@ -748,6 +758,38 @@ declare module 'stripe' {
              */
             refund_management?: boolean;
           }
+        }
+
+        interface PayoutDetails {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * An empty list, because this embedded component has no features.
+           */
+          features?: PayoutDetails.Features;
+        }
+
+        namespace PayoutDetails {
+          interface Features {}
+        }
+
+        interface PayoutReconciliationReport {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * An empty list, because this embedded component has no features.
+           */
+          features?: PayoutReconciliationReport.Features;
+        }
+
+        namespace PayoutReconciliationReport {
+          interface Features {}
         }
 
         interface Payouts {

@@ -11,6 +11,11 @@ declare module 'stripe' {
           amount_tip?: number;
 
           /**
+           * Simulated data for the card payment method.
+           */
+          card?: ReaderPresentPaymentMethodParams.Card;
+
+          /**
            * Simulated data for the card_present payment method.
            */
           card_present?: ReaderPresentPaymentMethodParams.CardPresent;
@@ -32,6 +37,28 @@ declare module 'stripe' {
         }
 
         namespace ReaderPresentPaymentMethodParams {
+          interface Card {
+            /**
+             * Card security code.
+             */
+            cvc?: string;
+
+            /**
+             * Two-digit number representing the card's expiration month.
+             */
+            exp_month: number;
+
+            /**
+             * Two- or four-digit number representing the card's expiration year.
+             */
+            exp_year: number;
+
+            /**
+             * The card number, as a string without any separators.
+             */
+            number: string;
+          }
+
           interface CardPresent {
             /**
              * The card number, as a string without any separators.
@@ -46,7 +73,7 @@ declare module 'stripe' {
             number?: string;
           }
 
-          type Type = 'card_present' | 'interac_present';
+          type Type = 'card' | 'card_present' | 'interac_present';
         }
       }
 

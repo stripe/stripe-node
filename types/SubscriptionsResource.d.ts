@@ -211,6 +211,16 @@ declare module 'stripe' {
         discounts?: Array<AddInvoiceItem.Discount>;
 
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
+         * The period associated with this invoice item. Defaults to the current period of the subscription.
+         */
+        period?: AddInvoiceItem.Period;
+
+        /**
          * The ID of the price object. One of `price` or `price_data` is required.
          */
         price?: string;
@@ -357,27 +367,27 @@ declare module 'stripe' {
 
       interface BillingCycleAnchorConfig {
         /**
-         * The day of the month the billing_cycle_anchor should be. Ranges from 1 to 31.
+         * The day of the month the anchor should be. Ranges from 1 to 31.
          */
         day_of_month: number;
 
         /**
-         * The hour of the day the billing_cycle_anchor should be. Ranges from 0 to 23.
+         * The hour of the day the anchor should be. Ranges from 0 to 23.
          */
         hour?: number;
 
         /**
-         * The minute of the hour the billing_cycle_anchor should be. Ranges from 0 to 59.
+         * The minute of the hour the anchor should be. Ranges from 0 to 59.
          */
         minute?: number;
 
         /**
-         * The month to start full cycle billing periods. Ranges from 1 to 12.
+         * The month to start full cycle periods. Ranges from 1 to 12.
          */
         month?: number;
 
         /**
-         * The second of the minute the billing_cycle_anchor should be. Ranges from 0 to 59.
+         * The second of the minute the anchor should be. Ranges from 0 to 59.
          */
         second?: number;
       }
@@ -1304,6 +1314,16 @@ declare module 'stripe' {
         discounts?: Array<AddInvoiceItem.Discount>;
 
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
+         * The period associated with this invoice item. Defaults to the current period of the subscription.
+         */
+        period?: AddInvoiceItem.Period;
+
+        /**
          * The ID of the price object. One of `price` or `price_data` is required.
          */
         price?: string;
@@ -2223,12 +2243,12 @@ declare module 'stripe' {
       created?: Stripe.RangeQueryParam | number;
 
       /**
-       * Only return subscriptions whose current_period_end falls within the given date interval.
+       * Only return subscriptions whose minimum item current_period_end falls within the given date interval.
        */
       current_period_end?: Stripe.RangeQueryParam | number;
 
       /**
-       * Only return subscriptions whose current_period_start falls within the given date interval.
+       * Only return subscriptions whose maximum item current_period_start falls within the given date interval.
        */
       current_period_start?: Stripe.RangeQueryParam | number;
 

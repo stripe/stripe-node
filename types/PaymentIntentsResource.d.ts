@@ -79,6 +79,13 @@ declare module 'stripe' {
       error_on_requires_action?: boolean;
 
       /**
+       * The list of payment method types to exclude from use with this payment.
+       */
+      excluded_payment_method_types?: Array<
+        PaymentIntentCreateParams.ExcludedPaymentMethodType
+      >;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -3967,6 +3974,11 @@ declare module 'stripe' {
 
         interface Pix {
           /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: Pix.AmountIncludesIof;
+
+          /**
            * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
            */
           expires_after_seconds?: number;
@@ -3988,6 +4000,10 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        namespace Pix {
+          type AmountIncludesIof = 'always' | 'never';
         }
 
         interface Promptpay {
@@ -8333,6 +8349,11 @@ declare module 'stripe' {
 
         interface Pix {
           /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: Pix.AmountIncludesIof;
+
+          /**
            * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
            */
           expires_after_seconds?: number;
@@ -8354,6 +8375,10 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        namespace Pix {
+          type AmountIncludesIof = 'always' | 'never';
         }
 
         interface Promptpay {
@@ -13687,6 +13712,11 @@ declare module 'stripe' {
 
         interface Pix {
           /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: Pix.AmountIncludesIof;
+
+          /**
            * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
            */
           expires_after_seconds?: number;
@@ -13708,6 +13738,10 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        namespace Pix {
+          type AmountIncludesIof = 'always' | 'never';
         }
 
         interface Promptpay {
