@@ -537,8 +537,6 @@ npm install stripe@<replace-with-the-version-of-your-choice> --save
 > **Note**
 > There can be breaking changes between two versions of the public preview SDKs without a bump in the major version. Therefore we recommend pinning the package version to a specific version in your package.json file. This way you can install the same version each time without breaking changes unless you are intentionally looking for the latest public preview SDK.
 
-The versions tab on the [stripe page on npm](https://www.npmjs.com/package/stripe) lists the current tags in use. The `beta` tag here corresponds to the the latest public preview SDK.
-
 Some preview features require a name and version to be set in the `Stripe-Version` header like `feature_beta=v3`. If your preview feature has this requirement, use the `apiVersion` property of `config` object to set it:
 
 ```js
