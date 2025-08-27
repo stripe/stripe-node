@@ -325,7 +325,7 @@ declare module 'stripe' {
         network_advice_code: string | null;
 
         /**
-         * For charges declined by the network, a brand specific 2, 3, or 4 digit code which indicates the reason the authorization failed.
+         * For charges declined by the network, an alphanumeric code which indicates the reason the charge failed.
          */
         network_decline_code: string | null;
 
@@ -335,7 +335,7 @@ declare module 'stripe' {
         network_status: string | null;
 
         /**
-         * An enumerated value providing a more detailed explanation of the outcome's `type`. Charges blocked by Radar's default block rule have the value `highest_risk_level`. Charges placed in review by Radar's default review rule have the value `elevated_risk_level`. Charges authorized, blocked, or placed in review by custom rules have the value `rule`. See [understanding declines](https://stripe.com/docs/declines) for more details.
+         * An enumerated value providing a more detailed explanation of the outcome's `type`. Charges blocked by Radar's default block rule have the value `highest_risk_level`. Charges placed in review by Radar's default review rule have the value `elevated_risk_level`. Charges blocked because the payment is unlikely to be authorized have the value `low_probability_of_authorization`. Charges authorized, blocked, or placed in review by custom rules have the value `rule`. See [understanding declines](https://stripe.com/docs/declines) for more details.
          */
         reason: string | null;
 
@@ -645,10 +645,31 @@ declare module 'stripe' {
           transaction_id: string | null;
         }
 
-        interface Alma {}
+        interface Alma {
+          installments?: Alma.Installments;
+
+          /**
+           * The Alma transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
+        }
+
+        namespace Alma {
+          interface Installments {
+            /**
+             * The number of installments.
+             */
+            count: number;
+          }
+        }
 
         interface AmazonPay {
           funding?: AmazonPay.Funding;
+
+          /**
+           * The Amazon Pay transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
         }
 
         namespace AmazonPay {
@@ -788,7 +809,12 @@ declare module 'stripe' {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
         }
 
-        interface Billie {}
+        interface Billie {
+          /**
+           * The Billie transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
+        }
 
         interface Blik {
           /**
@@ -1817,6 +1843,11 @@ declare module 'stripe' {
            * A unique identifier for the buyer as determined by the local payment processor.
            */
           buyer_id: string | null;
+
+          /**
+           * The Kakao Pay transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
         }
 
         interface Klarna {
@@ -1891,6 +1922,11 @@ declare module 'stripe' {
            * The last four digits of the card. This may not be present for American Express cards.
            */
           last4: string | null;
+
+          /**
+           * The Korean Card transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
         }
 
         namespace KrCard {
@@ -1980,6 +2016,11 @@ declare module 'stripe' {
            * A unique identifier for the buyer as determined by the local payment processor.
            */
           buyer_id: string | null;
+
+          /**
+           * The Naver Pay transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
         }
 
         interface NzBankAccount {
@@ -2077,9 +2118,24 @@ declare module 'stripe' {
            * A unique identifier for the buyer as determined by the local payment processor.
            */
           buyer_id: string | null;
+
+          /**
+           * The Payco transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
         }
 
         interface Paynow {
+          /**
+           * ID of the [location](https://stripe.com/docs/api/terminal/locations) that this transaction's reader is assigned to.
+           */
+          location?: string;
+
+          /**
+           * ID of the [reader](https://stripe.com/docs/api/terminal/readers) this transaction was made on.
+           */
+          reader?: string;
+
           /**
            * Reference number associated with this PayNow payment
            */
@@ -2156,6 +2212,11 @@ declare module 'stripe' {
 
         interface RevolutPay {
           funding?: RevolutPay.Funding;
+
+          /**
+           * The Revolut Pay transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
         }
 
         namespace RevolutPay {
@@ -2208,9 +2269,19 @@ declare module 'stripe' {
            * A unique identifier for the buyer as determined by the local payment processor.
            */
           buyer_id: string | null;
+
+          /**
+           * The Samsung Pay transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
         }
 
-        interface Satispay {}
+        interface Satispay {
+          /**
+           * The Satispay transaction ID associated with this payment.
+           */
+          transaction_id: string | null;
+        }
 
         interface SepaCreditTransfer {
           /**

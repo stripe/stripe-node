@@ -27,7 +27,7 @@ declare module 'stripe' {
       }): (...args: any[]) => Response<ResponseObject>; //eslint-disable-line @typescript-eslint/no-explicit-any
       static MAX_BUFFERED_REQUEST_METRICS: number;
     }
-    export type LatestApiVersion = '2025-07-30.basil';
+    export type LatestApiVersion = '2025-08-27.basil';
     export const API_VERSION: string;
     export type HttpAgent = Agent;
     export type HttpProtocol = 'http' | 'https';

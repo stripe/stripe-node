@@ -338,7 +338,7 @@ declare module 'stripe' {
       namespace Session {
         interface AdaptivePricing {
           /**
-           * Whether Adaptive Pricing is enabled.
+           * If enabled, Adaptive Pricing is available on [eligible sessions](https://docs.stripe.com/payments/currencies/localize-prices/adaptive-pricing?payment-ui=stripe-hosted#restrictions).
            */
           enabled: boolean;
         }
@@ -1795,6 +1795,11 @@ declare module 'stripe' {
 
           interface Pix {
             /**
+             * Determines if the amount includes the IOF tax.
+             */
+            amount_includes_iof?: Pix.AmountIncludesIof;
+
+            /**
              * The number of seconds after which Pix payment will expire.
              */
             expires_after_seconds: number | null;
@@ -1809,6 +1814,10 @@ declare module 'stripe' {
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+          }
+
+          namespace Pix {
+            type AmountIncludesIof = 'always' | 'never';
           }
 
           interface RevolutPay {

@@ -32,6 +32,11 @@ declare module 'stripe' {
         account_onboarding?: Components.AccountOnboarding;
 
         /**
+         * Configuration for the [balance report](https://docs.stripe.com/connect/supported-embedded-components/financial-reports#balance-report) embedded component.
+         */
+        balance_report?: Components.BalanceReport;
+
+        /**
          * Configuration for the [balances](https://docs.stripe.com/connect/supported-embedded-components/balances/) embedded component.
          */
         balances?: Components.Balances;
@@ -90,6 +95,16 @@ declare module 'stripe' {
          * Configuration for the [payments](https://docs.stripe.com/connect/supported-embedded-components/payments/) embedded component.
          */
         payments?: Components.Payments;
+
+        /**
+         * Configuration for the [payout details](https://docs.stripe.com/connect/supported-embedded-components/payout-details/) embedded component.
+         */
+        payout_details?: Components.PayoutDetails;
+
+        /**
+         * Configuration for the [payout reconciliation report](https://docs.stripe.com/connect/supported-embedded-components/financial-reports#payout-reconciliation-report) embedded component.
+         */
+        payout_reconciliation_report?: Components.PayoutReconciliationReport;
 
         /**
          * Configuration for the [payouts](https://docs.stripe.com/connect/supported-embedded-components/payouts/) embedded component.
@@ -163,6 +178,22 @@ declare module 'stripe' {
              */
             external_account_collection?: boolean;
           }
+        }
+
+        interface BalanceReport {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * An empty list, because this embedded component has no features.
+           */
+          features?: BalanceReport.Features;
+        }
+
+        namespace BalanceReport {
+          interface Features {}
         }
 
         interface Balances {
@@ -249,7 +280,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: Documents.Features;
         }
@@ -552,6 +583,38 @@ declare module 'stripe' {
           }
         }
 
+        interface PayoutDetails {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * An empty list, because this embedded component has no features.
+           */
+          features?: PayoutDetails.Features;
+        }
+
+        namespace PayoutDetails {
+          interface Features {}
+        }
+
+        interface PayoutReconciliationReport {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * An empty list, because this embedded component has no features.
+           */
+          features?: PayoutReconciliationReport.Features;
+        }
+
+        namespace PayoutReconciliationReport {
+          interface Features {}
+        }
+
         interface Payouts {
           /**
            * Whether the embedded component is enabled.
@@ -600,7 +663,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: PayoutsList.Features;
         }
@@ -616,7 +679,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: TaxRegistrations.Features;
         }
@@ -632,7 +695,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: TaxSettings.Features;
         }

@@ -113,6 +113,11 @@ declare module 'stripe' {
       original_payout: string | Stripe.Payout | null;
 
       /**
+       * ID of the v2 FinancialAccount the funds are sent to.
+       */
+      payout_method: string | null;
+
+      /**
        * If `completed`, you can use the [Balance Transactions API](https://stripe.com/docs/api/balance_transactions/list#balance_transaction_list-payout) to list all balance transactions that are paid out in this payout.
        */
       reconciliation_status: Payout.ReconciliationStatus;
