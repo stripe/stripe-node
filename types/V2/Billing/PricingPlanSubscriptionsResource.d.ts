@@ -10,7 +10,7 @@ declare module 'stripe' {
       namespace Billing {
         interface PricingPlanSubscriptionListParams {
           /**
-           * Filter by Cadence ID. Mutually exclusive with `payer`, `pricing_plan`, and `pricing_plan_version`.
+           * Filter by Billing Cadence ID. Mutually exclusive with `payer`, `pricing_plan`, and `pricing_plan_version`.
            */
           billing_cadence?: string;
 
@@ -30,7 +30,7 @@ declare module 'stripe' {
           pricing_plan?: string;
 
           /**
-           * Filter by PricingPlanVersion ID. Mutually exlcusive with `billing_cadence`, `payer`, and `pricing_plan`.
+           * Filter by Pricing Plan Version ID. Mutually exlcusive with `billing_cadence`, `payer`, and `pricing_plan`.
            */
           pricing_plan_version?: string;
 
@@ -43,7 +43,7 @@ declare module 'stripe' {
         namespace PricingPlanSubscriptionListParams {
           interface Payer {
             /**
-             * The ID of the Customer object. If provided, only PricingPlanSubscriptions that are subscribed on the Cadences with the specified Payer will be returned.
+             * The ID of the Customer object. If provided, only Pricing Plan Subscriptions that are subscribed on the cadences with the specified payer will be returned.
              */
             customer?: string;
 
@@ -60,7 +60,7 @@ declare module 'stripe' {
       namespace Billing {
         class PricingPlanSubscriptionsResource {
           /**
-           * Retrieve a PricingPlanSubscription object.
+           * Retrieve a Pricing Plan Subscription object.
            */
           retrieve(
             id: string,
@@ -77,7 +77,7 @@ declare module 'stripe' {
           >;
 
           /**
-           * List all PricingPlanSubscription objects.
+           * List all Pricing Plan Subscription objects.
            */
           list(
             params?: PricingPlanSubscriptionListParams,

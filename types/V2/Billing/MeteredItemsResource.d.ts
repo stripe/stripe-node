@@ -12,7 +12,7 @@ declare module 'stripe' {
           display_name: string;
 
           /**
-           * ID of the Meter that measures usage for this MeteredItem.
+           * ID of the Meter that measures usage for this Metered Item.
            */
           meter: string;
 
@@ -29,7 +29,7 @@ declare module 'stripe' {
           lookup_key?: string;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -62,7 +62,7 @@ declare module 'stripe' {
             dimension: string;
 
             /**
-             * To count usage towards this MeteredItem, the dimension must have this value.
+             * To count usage towards this metered item, the dimension must have this value.
              */
             value: string;
           }
@@ -96,7 +96,7 @@ declare module 'stripe' {
           lookup_key?: string | null;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -131,13 +131,19 @@ declare module 'stripe' {
            * Optionally set the maximum number of results per page. Defaults to 20.
            */
           limit?: number;
+
+          /**
+           * Filter by lookup keys.
+           * You can specify up to 10 lookup keys.
+           */
+          lookup_keys?: Array<string>;
         }
       }
 
       namespace Billing {
         class MeteredItemsResource {
           /**
-           * Create a MeteredItem object.
+           * Create a Metered Item object.
            */
           create(
             params: MeteredItemCreateParams,
@@ -145,7 +151,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.MeteredItem>>;
 
           /**
-           * Retrieve a MeteredItem object.
+           * Retrieve a Metered Item object.
            */
           retrieve(
             id: string,
@@ -158,7 +164,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.MeteredItem>>;
 
           /**
-           * Update a MeteredItem object. At least one of the fields is required.
+           * Update a Metered Item object. At least one of the fields is required.
            */
           update(
             id: string,
@@ -167,7 +173,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.MeteredItem>>;
 
           /**
-           * List all MeteredItem objects in reverse chronological order of creation.
+           * List all Metered Item objects in reverse chronological order of creation.
            */
           list(
             params?: MeteredItemListParams,

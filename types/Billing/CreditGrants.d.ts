@@ -110,6 +110,11 @@ declare module 'stripe' {
         namespace Amount {
           interface CustomPricingUnit {
             /**
+             * The custom pricing unit object.
+             */
+            custom_pricing_unit_details: CustomPricingUnit.CustomPricingUnitDetails | null;
+
+            /**
              * Unique identifier for the object.
              */
             id: string;
@@ -118,6 +123,40 @@ declare module 'stripe' {
              * A positive integer representing the amount.
              */
             value: string;
+          }
+
+          namespace CustomPricingUnit {
+            interface CustomPricingUnitDetails {
+              /**
+               * Time at which the object was created. Measured in seconds since the Unix epoch.
+               */
+              created: number;
+
+              /**
+               * The name of the custom pricing unit.
+               */
+              display_name: string;
+
+              /**
+               * Unique identifier for the object.
+               */
+              id: string;
+
+              /**
+               * A lookup key for the custom pricing unit.
+               */
+              lookup_key: string | null;
+
+              /**
+               * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+               */
+              metadata: Stripe.Metadata;
+
+              /**
+               * The status of the custom pricing unit.
+               */
+              status: string;
+            }
           }
 
           interface Monetary {

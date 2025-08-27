@@ -37,6 +37,11 @@ declare module 'stripe' {
           display_name: string | null;
 
           /**
+           * Email delivery settings.
+           */
+          email_delivery: CollectionSetting.EmailDelivery | null;
+
+          /**
            * The latest version of the current settings object. This will be
            * Updated every time an attribute of the settings is updated.
            */
@@ -72,6 +77,27 @@ declare module 'stripe' {
 
         namespace CollectionSetting {
           type CollectionMethod = 'automatic' | 'send_invoice';
+
+          interface EmailDelivery {
+            /**
+             * Controls emails for when the payment is due. For example after the invoice is finilized and transition to Open state.
+             */
+            payment_due: EmailDelivery.PaymentDue | null;
+          }
+
+          namespace EmailDelivery {
+            interface PaymentDue {
+              /**
+               * If true an email for the invoice would be generated and sent out.
+               */
+              enabled: boolean;
+
+              /**
+               * If true the payment link to hosted invocie page would be included in email and PDF of the invoice.
+               */
+              include_payment_link: boolean;
+            }
+          }
 
           interface PaymentMethodOptions {
             /**

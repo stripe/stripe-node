@@ -42,6 +42,11 @@ declare module 'stripe' {
         app_viewport?: Components.AppViewport;
 
         /**
+         * Configuration for the [balance report](https://docs.stripe.com/connect/supported-embedded-components/financial-reports#balance-report) embedded component.
+         */
+        balance_report?: Components.BalanceReport;
+
+        /**
          * Configuration for the [balances](https://docs.stripe.com/connect/supported-embedded-components/balances/) embedded component.
          */
         balances?: Components.Balances;
@@ -275,6 +280,22 @@ declare module 'stripe' {
              */
             allowed_apps?: Stripe.Emptyable<Array<string>>;
           }
+        }
+
+        interface BalanceReport {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * An empty list, because this embedded component has no features.
+           */
+          features?: BalanceReport.Features;
+        }
+
+        namespace BalanceReport {
+          interface Features {}
         }
 
         interface Balances {

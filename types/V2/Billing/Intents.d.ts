@@ -9,7 +9,7 @@ declare module 'stripe' {
          */
         interface Intent {
           /**
-           * Unique identifier for the BillingIntent.
+           * Unique identifier for the object.
            */
           id: string;
 
@@ -19,7 +19,7 @@ declare module 'stripe' {
           object: 'v2.billing.intent';
 
           /**
-           * Breakdown of the amount for this BillingIntent.
+           * Breakdown of the amount for this Billing Intent.
            */
           amount_details: Intent.AmountDetails;
 
@@ -34,14 +34,9 @@ declare module 'stripe' {
           created: string;
 
           /**
-           * Three-letter ISO currency code, in lowercase.
+           * Three-letter ISO currency code, in lowercase. Must be a supported currency.
            */
           currency: string;
-
-          /**
-           * When the BillingIntent will take effect.
-           */
-          effective_at: Intent.EffectiveAt;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -49,12 +44,12 @@ declare module 'stripe' {
           livemode: boolean;
 
           /**
-           * Current status of the BillingIntent.
+           * Current status of the Billing Intent.
            */
           status: Intent.Status;
 
           /**
-           * Timestamps for status transitions of the BillingIntent.
+           * Timestamps for status transitions of the Billing Intent.
            */
           status_transitions: Intent.StatusTransitions;
         }
@@ -62,7 +57,7 @@ declare module 'stripe' {
         namespace Intent {
           interface AmountDetails {
             /**
-             * Three-letter ISO currency code, in lowercase.
+             * Three-letter ISO currency code, in lowercase. Must be a supported currency.
              */
             currency: string;
 
@@ -87,36 +82,31 @@ declare module 'stripe' {
             tax: string;
 
             /**
-             * Total amount for the BillingIntent.
+             * Total amount for the Billing Intent.
              */
             total: string;
           }
-
-          type EffectiveAt =
-            | 'current_billing_period_start'
-            | 'on_commit'
-            | 'on_reserve';
 
           type Status = 'canceled' | 'committed' | 'draft' | 'reserved';
 
           interface StatusTransitions {
             /**
-             * Time at which the BillingIntent was canceled.
+             * Time at which the Billing Intent was canceled.
              */
             canceled_at: string | null;
 
             /**
-             * Time at which the BillingIntent was committed.
+             * Time at which the Billing Intent was committed.
              */
             committed_at: string | null;
 
             /**
-             * Time at which the BillingIntent was drafted.
+             * Time at which the Billing Intent was drafted.
              */
             drafted_at: string | null;
 
             /**
-             * Time at which the BillingIntent was reserved.
+             * Time at which the Billing Intent was reserved.
              */
             reserved_at: string | null;
           }

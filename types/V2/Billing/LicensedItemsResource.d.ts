@@ -19,7 +19,7 @@ declare module 'stripe' {
           lookup_key?: string;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -66,7 +66,7 @@ declare module 'stripe' {
           lookup_key?: string | null;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -99,13 +99,19 @@ declare module 'stripe' {
            * Optionally set the maximum number of results per page. Defaults to 20.
            */
           limit?: number;
+
+          /**
+           * Filter by lookup keys.
+           * You can specify up to 10 lookup keys.
+           */
+          lookup_keys?: Array<string>;
         }
       }
 
       namespace Billing {
         class LicensedItemsResource {
           /**
-           * Create a LicensedItem object.
+           * Create a Licensed Item object.
            */
           create(
             params: LicensedItemCreateParams,
@@ -113,7 +119,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.LicensedItem>>;
 
           /**
-           * Retrieve a LicensedItem object.
+           * Retrieve a Licensed Item object.
            */
           retrieve(
             id: string,
@@ -126,7 +132,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.LicensedItem>>;
 
           /**
-           * Update a LicensedItem object. At least one of the fields is required.
+           * Update a Licensed Item object. At least one of the fields is required.
            */
           update(
             id: string,
@@ -135,7 +141,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.LicensedItem>>;
 
           /**
-           * List all LicensedItem objects in reverse chronological order of creation.
+           * List all Licensed Item objects in reverse chronological order of creation.
            */
           list(
             params?: LicensedItemListParams,

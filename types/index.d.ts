@@ -62,6 +62,7 @@
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
 ///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
+///<reference path='./InvoicePaymentsResource.d.ts' />
 ///<reference path='./InvoiceRenderingTemplatesResource.d.ts' />
 ///<reference path='./InvoicesResource.d.ts' />
 ///<reference path='./Issuing/AuthorizationsResource.d.ts' />
@@ -149,15 +150,15 @@
 ///<reference path='./Treasury/ReceivedDebitsResource.d.ts' />
 ///<reference path='./Treasury/TransactionEntriesResource.d.ts' />
 ///<reference path='./Treasury/TransactionsResource.d.ts' />
-///<reference path='./V2/AccountLinksResource.d.ts' />
-///<reference path='./V2/AccountsResource.d.ts' />
 ///<reference path='./V2/Billing/BillSettings/VersionsResource.d.ts' />
 ///<reference path='./V2/Billing/BillSettingsResource.d.ts' />
 ///<reference path='./V2/Billing/CadencesResource.d.ts' />
 ///<reference path='./V2/Billing/CollectionSettings/VersionsResource.d.ts' />
 ///<reference path='./V2/Billing/CollectionSettingsResource.d.ts' />
 ///<reference path='./V2/Billing/CustomPricingUnitsResource.d.ts' />
+///<reference path='./V2/Billing/Intents/ActionsResource.d.ts' />
 ///<reference path='./V2/Billing/IntentsResource.d.ts' />
+///<reference path='./V2/Billing/LicenseFeeSubscriptionsResource.d.ts' />
 ///<reference path='./V2/Billing/LicenseFees/VersionsResource.d.ts' />
 ///<reference path='./V2/Billing/LicenseFeesResource.d.ts' />
 ///<reference path='./V2/Billing/LicensedItemsResource.d.ts' />
@@ -179,6 +180,7 @@
 ///<reference path='./V2/Core/AccountLinksResource.d.ts' />
 ///<reference path='./V2/Core/Accounts/PersonsResource.d.ts' />
 ///<reference path='./V2/Core/AccountsResource.d.ts' />
+///<reference path='./V2/Core/ClaimableSandboxesResource.d.ts' />
 ///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
 ///<reference path='./V2/Core/EventsResource.d.ts' />
 ///<reference path='./V2/Core/Vault/GbBankAccountsResource.d.ts' />
@@ -370,15 +372,15 @@
 ///<reference path='./Treasury/ReceivedDebits.d.ts' />
 ///<reference path='./Treasury/TransactionEntries.d.ts' />
 ///<reference path='./Treasury/Transactions.d.ts' />
-///<reference path='./V2/AccountLinks.d.ts' />
-///<reference path='./V2/Accounts.d.ts' />
 ///<reference path='./V2/Billing/BillSettingVersions.d.ts' />
 ///<reference path='./V2/Billing/BillSettings.d.ts' />
 ///<reference path='./V2/Billing/Cadences.d.ts' />
 ///<reference path='./V2/Billing/CollectionSettingVersions.d.ts' />
 ///<reference path='./V2/Billing/CollectionSettings.d.ts' />
 ///<reference path='./V2/Billing/CustomPricingUnits.d.ts' />
+///<reference path='./V2/Billing/IntentActions.d.ts' />
 ///<reference path='./V2/Billing/Intents.d.ts' />
+///<reference path='./V2/Billing/LicenseFeeSubscriptions.d.ts' />
 ///<reference path='./V2/Billing/LicenseFeeVersions.d.ts' />
 ///<reference path='./V2/Billing/LicenseFees.d.ts' />
 ///<reference path='./V2/Billing/LicensedItems.d.ts' />
@@ -398,6 +400,7 @@
 ///<reference path='./V2/Billing/ServiceActions.d.ts' />
 ///<reference path='./V2/Core/AccountLinks.d.ts' />
 ///<reference path='./V2/Core/Accounts.d.ts' />
+///<reference path='./V2/Core/ClaimableSandboxes.d.ts' />
 ///<reference path='./V2/Core/Persons.d.ts' />
 ///<reference path='./V2/Core/Vault/GbBankAccounts.d.ts' />
 ///<reference path='./V2/Core/Vault/UsBankAccounts.d.ts' />
@@ -469,6 +472,7 @@ declare module 'stripe' {
     files: Stripe.FilesResource;
     fxQuotes: Stripe.FxQuotesResource;
     invoiceItems: Stripe.InvoiceItemsResource;
+    invoicePayments: Stripe.InvoicePaymentsResource;
     invoiceRenderingTemplates: Stripe.InvoiceRenderingTemplatesResource;
     invoices: Stripe.InvoicesResource;
     mandates: Stripe.MandatesResource;
@@ -629,8 +633,6 @@ declare module 'stripe' {
       transactionEntries: Stripe.Treasury.TransactionEntriesResource;
     };
     v2: {
-      accountLinks: Stripe.V2.AccountLinksResource;
-      accounts: Stripe.V2.AccountsResource;
       billing: {
         billSettings: Stripe.V2.Billing.BillSettingsResource;
         cadences: Stripe.V2.Billing.CadencesResource;
@@ -638,24 +640,26 @@ declare module 'stripe' {
         customPricingUnits: Stripe.V2.Billing.CustomPricingUnitsResource;
         intents: Stripe.V2.Billing.IntentsResource;
         licenseFees: Stripe.V2.Billing.LicenseFeesResource;
+        licenseFeeSubscriptions: Stripe.V2.Billing.LicenseFeeSubscriptionsResource;
         licensedItems: Stripe.V2.Billing.LicensedItemsResource;
+        meterEvents: Stripe.V2.Billing.MeterEventsResource;
         meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
         meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
         meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
-        meterEvents: Stripe.V2.Billing.MeterEventsResource;
         meteredItems: Stripe.V2.Billing.MeteredItemsResource;
-        pricingPlanSubscriptions: Stripe.V2.Billing.PricingPlanSubscriptionsResource;
         pricingPlans: Stripe.V2.Billing.PricingPlansResource;
+        pricingPlanSubscriptions: Stripe.V2.Billing.PricingPlanSubscriptionsResource;
         profiles: Stripe.V2.Billing.ProfilesResource;
-        rateCardSubscriptions: Stripe.V2.Billing.RateCardSubscriptionsResource;
         rateCards: Stripe.V2.Billing.RateCardsResource;
+        rateCardSubscriptions: Stripe.V2.Billing.RateCardSubscriptionsResource;
         serviceActions: Stripe.V2.Billing.ServiceActionsResource;
       };
       core: {
-        accountLinks: Stripe.V2.Core.AccountLinksResource;
         accounts: Stripe.V2.Core.AccountsResource;
-        eventDestinations: Stripe.V2.Core.EventDestinationsResource;
+        accountLinks: Stripe.V2.Core.AccountLinksResource;
+        claimableSandboxes: Stripe.V2.Core.ClaimableSandboxesResource;
         events: Stripe.V2.Core.EventsResource;
+        eventDestinations: Stripe.V2.Core.EventDestinationsResource;
         vault: {
           gbBankAccounts: Stripe.V2.Core.Vault.GbBankAccountsResource;
           usBankAccounts: Stripe.V2.Core.Vault.UsBankAccountsResource;
@@ -666,23 +670,23 @@ declare module 'stripe' {
         financialAccounts: Stripe.V2.MoneyManagement.FinancialAccountsResource;
         financialAddresses: Stripe.V2.MoneyManagement.FinancialAddressesResource;
         inboundTransfers: Stripe.V2.MoneyManagement.InboundTransfersResource;
-        outboundPaymentQuotes: Stripe.V2.MoneyManagement.OutboundPaymentQuotesResource;
         outboundPayments: Stripe.V2.MoneyManagement.OutboundPaymentsResource;
+        outboundPaymentQuotes: Stripe.V2.MoneyManagement.OutboundPaymentQuotesResource;
         outboundSetupIntents: Stripe.V2.MoneyManagement.OutboundSetupIntentsResource;
         outboundTransfers: Stripe.V2.MoneyManagement.OutboundTransfersResource;
         payoutMethods: Stripe.V2.MoneyManagement.PayoutMethodsResource;
         payoutMethodsBankAccountSpec: Stripe.V2.MoneyManagement.PayoutMethodsBankAccountSpecResource;
         receivedCredits: Stripe.V2.MoneyManagement.ReceivedCreditsResource;
         receivedDebits: Stripe.V2.MoneyManagement.ReceivedDebitsResource;
-        transactionEntries: Stripe.V2.MoneyManagement.TransactionEntriesResource;
         transactions: Stripe.V2.MoneyManagement.TransactionsResource;
+        transactionEntries: Stripe.V2.MoneyManagement.TransactionEntriesResource;
       };
       payment: {
         offSessionPayments: Stripe.V2.Payments.OffSessionPaymentsResource;
       };
       reporting: {
-        reportRuns: Stripe.V2.Reporting.ReportRunsResource;
         reports: Stripe.V2.Reporting.ReportsResource;
+        reportRuns: Stripe.V2.Reporting.ReportRunsResource;
       };
       tax: {
         automaticRules: Stripe.V2.Tax.AutomaticRulesResource;

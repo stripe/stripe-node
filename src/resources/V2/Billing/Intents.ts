@@ -1,8 +1,13 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {Actions} from './Intents/Actions.js';
 const stripeMethod = StripeResource.method;
 export const Intents = StripeResource.extend({
+  constructor: function(...args: any) {
+    StripeResource.apply(this, args);
+    this.actions = new Actions(...args);
+  },
   create: stripeMethod({method: 'POST', fullPath: '/v2/billing/intents'}),
   retrieve: stripeMethod({method: 'GET', fullPath: '/v2/billing/intents/{id}'}),
   list: stripeMethod({

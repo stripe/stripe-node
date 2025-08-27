@@ -42,6 +42,8 @@ declare module 'stripe' {
 
         offline?: Configuration.Offline;
 
+        reader_security?: Configuration.ReaderSecurity;
+
         reboot_window?: Configuration.RebootWindow;
 
         stripe_s700?: Configuration.StripeS700;
@@ -66,6 +68,13 @@ declare module 'stripe' {
            * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
            */
           enabled: boolean | null;
+        }
+
+        interface ReaderSecurity {
+          /**
+           * Passcode used to access a reader's admin menu.
+           */
+          admin_menu_passcode: string;
         }
 
         interface RebootWindow {

@@ -24,7 +24,7 @@ declare module 'stripe' {
         namespace RateCards {
           class VersionsResource {
             /**
-             * Retrieve a specific version of a RateCard object.
+             * Retrieve a specific version of a Rate Card object.
              */
             retrieve(
               rateCardId: string,
@@ -39,7 +39,7 @@ declare module 'stripe' {
             ): Promise<Stripe.Response<Stripe.V2.Billing.RateCardVersion>>;
 
             /**
-             * List the versions of a RateCard object. Results are sorted in reverse chronological order (most recent first).
+             * List the versions of a Rate Card object. Results are sorted in reverse chronological order (most recent first).
              */
             list(
               id: string,

@@ -20,6 +20,11 @@ declare module 'stripe' {
           display_name?: string;
 
           /**
+           * Email delivery setting.
+           */
+          email_delivery?: CollectionSettingCreateParams.EmailDelivery;
+
+          /**
            * A lookup key used to retrieve settings dynamically from a static string.
            * This may be up to 200 characters.
            */
@@ -38,6 +43,27 @@ declare module 'stripe' {
 
         namespace CollectionSettingCreateParams {
           type CollectionMethod = 'automatic' | 'send_invoice';
+
+          interface EmailDelivery {
+            /**
+             * Controls emails for when the payment is due. For example after the invoice is finilized and transition to Open state.
+             */
+            payment_due?: EmailDelivery.PaymentDue;
+          }
+
+          namespace EmailDelivery {
+            interface PaymentDue {
+              /**
+               * If true an email for the invoice would be generated and sent out.
+               */
+              enabled: boolean;
+
+              /**
+               * If true the payment link to hosted invocie page would be included in email and PDF of the invoice.
+               */
+              include_payment_link: boolean;
+            }
+          }
 
           interface PaymentMethodOptions {
             /**
@@ -294,6 +320,11 @@ declare module 'stripe' {
           display_name?: string;
 
           /**
+           * Email delivery settings.
+           */
+          email_delivery?: CollectionSettingUpdateParams.EmailDelivery | null;
+
+          /**
            * Optionally change the live version of the CollectionSetting. Billing Cadences and other objects that refer to this
            * CollectionSetting will use this version when no overrides are set. Providing `live_version = "latest"` will set the
            * CollectionSetting's `live_version` to its latest version.
@@ -319,6 +350,27 @@ declare module 'stripe' {
 
         namespace CollectionSettingUpdateParams {
           type CollectionMethod = 'automatic' | 'send_invoice';
+
+          interface EmailDelivery {
+            /**
+             * Controls emails for when the payment is due. For example after the invoice is finilized and transition to Open state.
+             */
+            payment_due?: EmailDelivery.PaymentDue;
+          }
+
+          namespace EmailDelivery {
+            interface PaymentDue {
+              /**
+               * If true an email for the invoice would be generated and sent out.
+               */
+              enabled: boolean;
+
+              /**
+               * If true the payment link to hosted invocie page would be included in email and PDF of the invoice.
+               */
+              include_payment_link: boolean;
+            }
+          }
 
           interface PaymentMethodOptions {
             /**

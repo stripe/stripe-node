@@ -9,7 +9,7 @@ declare module 'stripe' {
          */
         interface PricingPlanSubscription {
           /**
-           * Unique identifier for the PricingPlanSubscription.
+           * Unique identifier for the object.
            */
           id: string;
 
@@ -19,7 +19,7 @@ declare module 'stripe' {
           object: 'v2.billing.pricing_plan_subscription';
 
           /**
-           * The ID of the Cadence this subscription is billed on.
+           * The ID of the Billing Cadence this subscription is billed on.
            */
           billing_cadence: string;
 
@@ -44,17 +44,17 @@ declare module 'stripe' {
           livemode: boolean;
 
           /**
-           * Set of key-value pairs that you can attach to an object.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata: Stripe.Metadata | null;
 
           /**
-           * The ID of the PricingPlan for this subscription.
+           * The ID of the Pricing Plan for this subscription.
            */
           pricing_plan: string;
 
           /**
-           * The ID of the PricingPlanVersion for this subscription.
+           * The ID of the Pricing Plan Version for this subscription.
            */
           pricing_plan_version: string;
 
@@ -69,7 +69,7 @@ declare module 'stripe' {
           servicing_status_transitions: PricingPlanSubscription.ServicingStatusTransitions;
 
           /**
-           * The ID of the TestClock of the associated Cadence, if any.
+           * The ID of the Test Clock of the associated Billing Cadence, if any.
            */
           test_clock: string | null;
         }

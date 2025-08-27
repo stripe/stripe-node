@@ -9,7 +9,7 @@ declare module 'stripe' {
          */
         interface RateCardVersion {
           /**
-           * The ID of the RateCardVersion.
+           * Unique identifier for the object.
            */
           id: string;
 
@@ -29,7 +29,7 @@ declare module 'stripe' {
           livemode: boolean;
 
           /**
-           * The ID of the RateCard that this version belongs to.
+           * The ID of the Rate Card that this version belongs to.
            */
           rate_card_id: string;
         }

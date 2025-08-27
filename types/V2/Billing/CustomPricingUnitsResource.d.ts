@@ -7,19 +7,19 @@ declare module 'stripe' {
         interface CustomPricingUnitCreateParams {
           /**
            * Description that customers will see in the invoice line item.
-           * Maximum length of 250 characters.
+           * Maximum length of 10 characters.
            */
           display_name: string;
 
           /**
-           * An internal key you can use to search for a particular CustomPricingUnit item.
+           * An internal key you can use to search for a particular custom pricing unit item.
            * Must be unique among items.
            * Maximum length of 200 characters.
            */
           lookup_key?: string;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata?: Stripe.MetadataParam;
         }
@@ -32,9 +32,19 @@ declare module 'stripe' {
       namespace Billing {
         interface CustomPricingUnitUpdateParams {
           /**
-           * Whether the CustomPricingUnit is active.
+           * Whether the Custom Pricing Unit is active.
            */
           active?: boolean;
+
+          /**
+           * Description that customers will see in the invoice line item.
+           */
+          display_name?: string;
+
+          /**
+           * An internal key you can use to search for a particular CustomPricingUnit item.
+           */
+          lookup_key?: string | null;
 
           /**
            * Set of key-value pairs that you can attach to an object.
@@ -46,7 +56,7 @@ declare module 'stripe' {
       namespace Billing {
         interface CustomPricingUnitListParams {
           /**
-           * Filter for active/inactive CustomPricingUnits. Mutually exclusive with `lookup_keys`.
+           * Filter for active/inactive custom pricing units. Mutually exclusive with `lookup_keys`.
            */
           active?: boolean;
 
@@ -66,7 +76,7 @@ declare module 'stripe' {
       namespace Billing {
         class CustomPricingUnitsResource {
           /**
-           * Create a CustomPricingUnit object.
+           * Create a Custom Pricing Unit object.
            */
           create(
             params: CustomPricingUnitCreateParams,
@@ -74,7 +84,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.CustomPricingUnit>>;
 
           /**
-           * Retrieve a CustomPricingUnit object.
+           * Retrieve a Custom Pricing Unit object.
            */
           retrieve(
             id: string,
@@ -87,7 +97,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.CustomPricingUnit>>;
 
           /**
-           * Update a CustomPricingUnit object.
+           * Update a Custom Pricing Unit object.
            */
           update(
             id: string,
@@ -96,7 +106,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.CustomPricingUnit>>;
 
           /**
-           * List all CustomPricingUnit objects.
+           * List all Custom Pricing Unit objects.
            */
           list(
             params?: CustomPricingUnitListParams,

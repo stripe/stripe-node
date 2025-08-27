@@ -504,6 +504,8 @@ declare module 'stripe' {
       interface NextAction {
         cashapp_handle_redirect_or_display_qr_code?: NextAction.CashappHandleRedirectOrDisplayQrCode;
 
+        pix_display_qr_code?: NextAction.PixDisplayQrCode;
+
         redirect_to_url?: NextAction.RedirectToUrl;
 
         /**
@@ -551,6 +553,33 @@ declare module 'stripe' {
              */
             image_url_svg: string;
           }
+        }
+
+        interface PixDisplayQrCode {
+          /**
+           * The raw data string used to generate QR code, it should be used together with QR code library.
+           */
+          data?: string;
+
+          /**
+           * The date (unix timestamp) when the PIX expires.
+           */
+          expires_at?: number;
+
+          /**
+           * The URL to the hosted pix instructions page, which allows customers to view the pix QR code.
+           */
+          hosted_instructions_url?: string;
+
+          /**
+           * The image_url_png string used to render png QR code
+           */
+          image_url_png?: string;
+
+          /**
+           * The image_url_svg string used to render svg QR code
+           */
+          image_url_svg?: string;
         }
 
         interface RedirectToUrl {
@@ -619,6 +648,8 @@ declare module 'stripe' {
         paypal?: PaymentMethodOptions.Paypal;
 
         payto?: PaymentMethodOptions.Payto;
+
+        pix?: PaymentMethodOptions.Pix;
 
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
@@ -896,6 +927,67 @@ declare module 'stripe' {
               | 'salary'
               | 'tax'
               | 'utility';
+          }
+        }
+
+        interface Pix {
+          mandate_options?: Pix.MandateOptions;
+        }
+
+        namespace Pix {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount?: number;
+
+            /**
+             * Determines if the amount includes the IOF tax.
+             */
+            amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+            /**
+             * Type of amount.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+             */
+            currency?: string;
+
+            /**
+             * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`.
+             */
+            end_date?: string;
+
+            /**
+             * Schedule at which the future payments will be charged.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * Subscription name displayed to buyers in their bank app.
+             */
+            reference?: string;
+
+            /**
+             * Start date of the mandate, in `YYYY-MM-DD`.
+             */
+            start_date?: string;
+          }
+
+          namespace MandateOptions {
+            type AmountIncludesIof = 'always' | 'never';
+
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'halfyearly'
+              | 'monthly'
+              | 'quarterly'
+              | 'weekly'
+              | 'yearly';
           }
         }
 

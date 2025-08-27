@@ -37,7 +37,12 @@ declare module 'stripe' {
           tax_behavior: RateCardCreateParams.TaxBehavior;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * An internal key you can use to search for a particular RateCard. Maximum length of 200 characters.
+           */
+          lookup_key?: string;
+
+          /**
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata?: Stripe.MetadataParam;
         }
@@ -74,7 +79,12 @@ declare module 'stripe' {
           live_version?: string;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * An internal key you can use to search for a particular RateCard. Maximum length of 200 characters.
+           */
+          lookup_key?: string;
+
+          /**
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata?: Stripe.MetadataParam;
         }
@@ -91,6 +101,12 @@ declare module 'stripe' {
            * Optionally set the maximum number of results per page. Defaults to 20.
            */
           limit?: number;
+
+          /**
+           * Filter by lookup keys.
+           * You can specify up to 10 lookup keys.
+           */
+          lookup_keys?: Array<string>;
         }
       }
 
@@ -100,7 +116,7 @@ declare module 'stripe' {
           versions: Stripe.V2.Billing.RateCards.VersionsResource;
 
           /**
-           * Create a RateCard object.
+           * Create a Rate Card object.
            */
           create(
             params: RateCardCreateParams,
@@ -108,7 +124,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.RateCard>>;
 
           /**
-           * Retrieve the latest version of a RateCard object.
+           * Retrieve the latest version of a Rate Card object.
            */
           retrieve(
             id: string,
@@ -121,7 +137,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.RateCard>>;
 
           /**
-           * Update a RateCard object.
+           * Update a Rate Card object.
            */
           update(
             id: string,
@@ -130,7 +146,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.RateCard>>;
 
           /**
-           * List all RateCard objects.
+           * List all Rate Card objects.
            */
           list(
             params?: RateCardListParams,

@@ -21,8 +21,7 @@ declare module 'stripe' {
           include?: Array<'invoice_discount_rules'>;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful
-           * for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -89,9 +88,14 @@ declare module 'stripe' {
                 /**
                  * The minute at which the billing cycle ends.
                  * Must be an integer between 0 and 59, inclusive.
-                 * Will default to the minute the cadence was created in UTC timezone.
                  */
-                minute?: number;
+                minute: number;
+
+                /**
+                 * The second at which the billing cycle ends.
+                 * Must be an integer between 0 and 59, inclusive.
+                 */
+                second: number;
               }
             }
 
@@ -124,9 +128,14 @@ declare module 'stripe' {
                 /**
                  * The minute at which the billing cycle ends.
                  * Must be an integer between 0 and 59, inclusive.
-                 * Will default to the minute the cadence was created in UTC timezone.
                  */
-                minute?: number;
+                minute: number;
+
+                /**
+                 * The second at which the billing cycle ends.
+                 * Must be an integer between 0 and 59, inclusive.
+                 */
+                second: number;
               }
             }
 
@@ -161,9 +170,14 @@ declare module 'stripe' {
                 /**
                  * The minute at which the billing cycle ends.
                  * Must be an integer between 0 and 59, inclusive.
-                 * Will default to the minute the cadence was created in UTC timezone.
                  */
-                minute?: number;
+                minute: number;
+
+                /**
+                 * The second at which the billing cycle ends.
+                 * Must be an integer between 0 and 59, inclusive.
+                 */
+                second: number;
               }
             }
 
@@ -202,9 +216,14 @@ declare module 'stripe' {
                 /**
                  * The minute at which the billing cycle ends.
                  * Must be an integer between 0 and 59, inclusive.
-                 * Will default to the minute the cadence was created in UTC timezone.
                  */
-                minute?: number;
+                minute: number;
+
+                /**
+                 * The second at which the billing cycle ends.
+                 * Must be an integer between 0 and 59, inclusive.
+                 */
+                second: number;
               }
             }
           }
@@ -246,7 +265,7 @@ declare module 'stripe' {
           namespace Settings {
             interface Bill {
               /**
-               * The ID of the referenced Settings object.
+               * The ID of the referenced settings object.
                */
               id: string;
 
@@ -259,7 +278,7 @@ declare module 'stripe' {
 
             interface Collection {
               /**
-               * The ID of the referenced Settings object.
+               * The ID of the referenced settings object.
                */
               id: string;
 
@@ -290,7 +309,7 @@ declare module 'stripe' {
           include?: Array<'invoice_discount_rules'>;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -328,7 +347,7 @@ declare module 'stripe' {
           namespace Settings {
             interface Bill {
               /**
-               * The ID of the referenced Settings object.
+               * The ID of the referenced settings object.
                */
               id: string;
 
@@ -343,7 +362,7 @@ declare module 'stripe' {
 
             interface Collection {
               /**
-               * The ID of the referenced Settings object.
+               * The ID of the referenced settings object.
                */
               id: string;
 
@@ -372,12 +391,12 @@ declare module 'stripe' {
           limit?: number;
 
           /**
-           * If provided, only Cadences that specifically reference the payer will be returned. Mutually exclusive with `test_clock`.
+           * If provided, only cadences that specifically reference the payer will be returned. Mutually exclusive with `test_clock`.
            */
           payer?: CadenceListParams.Payer;
 
           /**
-           * If provided, only Cadences that specifically reference the provided test clock ID (via the
+           * If provided, only cadences that specifically reference the provided test clock ID (via the
            * customer's test clock) will be returned.
            * Mutually exclusive with `payer`.
            */
@@ -387,7 +406,7 @@ declare module 'stripe' {
         namespace CadenceListParams {
           interface Payer {
             /**
-             * The ID of the Customer object. If provided, only Cadences that specifically reference the provided customer ID will be returned.
+             * The ID of the Customer object. If provided, only cadences that specifically reference the provided customer ID will be returned.
              */
             customer?: string;
 
@@ -411,7 +430,7 @@ declare module 'stripe' {
       namespace Billing {
         class CadencesResource {
           /**
-           * Create a billing Cadence object.
+           * Create a Billing Cadence object.
            */
           create(
             params: CadenceCreateParams,
@@ -419,7 +438,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.Cadence>>;
 
           /**
-           * Retrieve a billing Cadence object.
+           * Retrieve a Billing Cadence object.
            */
           retrieve(
             id: string,
@@ -432,7 +451,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.Cadence>>;
 
           /**
-           * Update a billing Cadence object.
+           * Update a Billing Cadence object.
            */
           update(
             id: string,
@@ -441,7 +460,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.Cadence>>;
 
           /**
-           * List all the billing Cadences.
+           * List Billing Cadences.
            */
           list(
             params?: CadenceListParams,
@@ -452,7 +471,7 @@ declare module 'stripe' {
           ): ApiListPromise<Stripe.V2.Billing.Cadence>;
 
           /**
-           * Cancel the billing cadence.
+           * Cancel the Billing Cadence.
            */
           cancel(
             id: string,

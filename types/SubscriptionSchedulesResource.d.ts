@@ -456,6 +456,52 @@ declare module 'stripe' {
             }
           }
 
+          interface Period {
+            /**
+             * End of the invoice item period.
+             */
+            end: Period.End;
+
+            /**
+             * Start of the invoice item period.
+             */
+            start: Period.Start;
+          }
+
+          namespace Period {
+            interface End {
+              /**
+               * A precise Unix timestamp for the end of the invoice item period. Must be greater than or equal to `period.start`.
+               */
+              timestamp?: number;
+
+              /**
+               * Select how to calculate the end of the invoice item period.
+               */
+              type: End.Type;
+            }
+
+            namespace End {
+              type Type = 'min_item_period_end' | 'phase_end' | 'timestamp';
+            }
+
+            interface Start {
+              /**
+               * A precise Unix timestamp for the start of the invoice item period. Must be less than or equal to `period.end`.
+               */
+              timestamp?: number;
+
+              /**
+               * Select how to calculate the start of the invoice item period.
+               */
+              type: Start.Type;
+            }
+
+            namespace Start {
+              type Type = 'max_item_period_start' | 'phase_start' | 'timestamp';
+            }
+          }
+
           interface PriceData {
             /**
              * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -1331,6 +1377,52 @@ declare module 'stripe' {
               }
 
               type Type = 'duration' | 'timestamp';
+            }
+          }
+
+          interface Period {
+            /**
+             * End of the invoice item period.
+             */
+            end: Period.End;
+
+            /**
+             * Start of the invoice item period.
+             */
+            start: Period.Start;
+          }
+
+          namespace Period {
+            interface End {
+              /**
+               * A precise Unix timestamp for the end of the invoice item period. Must be greater than or equal to `period.start`.
+               */
+              timestamp?: number;
+
+              /**
+               * Select how to calculate the end of the invoice item period.
+               */
+              type: End.Type;
+            }
+
+            namespace End {
+              type Type = 'min_item_period_end' | 'phase_end' | 'timestamp';
+            }
+
+            interface Start {
+              /**
+               * A precise Unix timestamp for the start of the invoice item period. Must be less than or equal to `period.end`.
+               */
+              timestamp?: number;
+
+              /**
+               * Select how to calculate the start of the invoice item period.
+               */
+              type: Start.Type;
+            }
+
+            namespace Start {
+              type Type = 'max_item_period_start' | 'phase_start' | 'timestamp';
             }
           }
 

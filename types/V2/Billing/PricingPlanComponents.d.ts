@@ -9,7 +9,7 @@ declare module 'stripe' {
          */
         interface PricingPlanComponent {
           /**
-           * Unique identifier for the PricingPlanComponent.
+           * Unique identifier for the object.
            */
           id: string;
 
@@ -24,7 +24,7 @@ declare module 'stripe' {
           created: string;
 
           /**
-           * Details if this component is a LicenseFee.
+           * Details if this component is a License Fee.
            */
           license_fee: PricingPlanComponent.LicenseFee | null;
 
@@ -39,27 +39,27 @@ declare module 'stripe' {
           lookup_key: string | null;
 
           /**
-           * Set of key-value pairs that you can attach to an object.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata: Stripe.Metadata | null;
 
           /**
-           * The ID of the PricingPlan this component belongs to.
+           * The ID of the Pricing Plan this component belongs to.
            */
           pricing_plan: string;
 
           /**
-           * The ID of the PricingPlanVersion this component belongs to.
+           * The ID of the Pricing Plan Version this component belongs to.
            */
           pricing_plan_version: string;
 
           /**
-           * Details if this component is a RateCard.
+           * Details if this component is a Rate Card.
            */
           rate_card: PricingPlanComponent.RateCard | null;
 
           /**
-           * Details if this component is a ServiceAction.
+           * Details if this component is a Service Action.
            */
           service_action: PricingPlanComponent.ServiceAction | null;
 
@@ -72,38 +72,33 @@ declare module 'stripe' {
         namespace PricingPlanComponent {
           interface LicenseFee {
             /**
-             * The ID of the LicenseFee.
+             * The ID of the License Fee.
              */
             id: string;
 
             /**
-             * The version of the LicenseFee.
+             * The version of the LicenseFee. Defaults to 'latest', if not specified.
              */
-            version: string;
+            version: string | null;
           }
 
           interface RateCard {
             /**
-             * The ID of the RateCard.
+             * The ID of the Rate Card.
              */
             id: string;
 
             /**
-             * The version of the RateCard.
+             * The version of the RateCard. Defaults to 'latest', if not specified.
              */
-            version: string;
+            version: string | null;
           }
 
           interface ServiceAction {
             /**
-             * The ID of the ServiceAction.
+             * The ID of the service action.
              */
             id: string;
-
-            /**
-             * The version of the ServiceAction.
-             */
-            version: string;
           }
 
           type Type = 'license_fee' | 'rate_card' | 'service_action';

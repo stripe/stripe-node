@@ -5,12 +5,12 @@ declare module 'stripe' {
     namespace V2 {
       namespace Billing {
         /**
-         * A MeteredItem represents a billable item whose pricing is based on usage, measured by a Meter. You can use RateCards
-         * to specify the pricing and create Subscriptions to these items.
+         * A Metered Item represents a billable item whose pricing is based on usage, measured by a meter. You can use rate cards
+         * to specify the pricing and create subscriptions to these items.
          */
         interface MeteredItem {
           /**
-           * The ID of the MeteredItem.
+           * Unique identifier for the object.
            */
           id: string;
 
@@ -47,12 +47,12 @@ declare module 'stripe' {
           lookup_key: string | null;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata: Stripe.Metadata | null;
 
           /**
-           * ID of the Meter that measures usage for this MeteredItem.
+           * ID of the Meter that measures usage for this Metered Item.
            */
           meter: string;
 
@@ -83,7 +83,7 @@ declare module 'stripe' {
             dimension: string;
 
             /**
-             * To count usage towards this MeteredItem, the dimension must have this value.
+             * To count usage towards this metered item, the dimension must have this value.
              */
             value: string;
           }
