@@ -528,7 +528,7 @@ const stripe = new Stripe('sk_test_...', {
 Stripe has features in the [public preview phase](https://docs.stripe.com/release-phases) that can be accessed via versions of this package that have the `-beta.X` suffix like `15.2.0-beta.2`.
 We would love for you to try these as we incrementally release new features and improve them based on your feedback.
 
-To install, choose the version that includes support for the preview feature you are interested in by reviewing the [releases page](https://github.com/stripe/stripe-node/releases/) and use it in the below command
+To install, pick the latest version with the `beta` suffix by reviewing the [releases page](https://github.com/stripe/stripe-node/releases/) and use it in the below command
 
 ```
 npm install stripe@<replace-with-the-version-of-your-choice> --save
