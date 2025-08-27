@@ -4686,11 +4686,11 @@ describe('Generated tests', function() {
     expect(emptyObject).to.eql({});
   });
 
-  it('test_v2_billing_meter_event_post', async function() {
+  it('test_v2_core_event_get', async function() {
     const stripe = testUtils.createMockClient([
       {
-        method: 'POST',
-        path: '/v2/billing/meter_events',
+        method: 'GET',
+        path: '/v2/core/events?object_id=object_id',
         response:
           '{"created":"1970-01-12T21:42:34.472Z","event_name":"event_name","identifier":"identifier","object":"v2.billing.meter_event","payload":{"key":"payload"},"timestamp":"1970-01-01T15:18:46.294Z","livemode":true}',
       },
@@ -4701,7 +4701,20 @@ describe('Generated tests', function() {
         key: 'payload',
       },
     });
-    expect(meterEvent).not.to.be.null;
+    expect(events).not.to.be.null;
+  });
+
+  it('test_v2_core_event_get_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/events/id_123',
+        response:
+          '{"context":null,"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":null,"type":"type","livemode":true}',
+      },
+    ]);
+    const event = await stripe.v2.core.events.retrieve('id_123');
+    expect(event).not.to.be.null;
   });
 
   it('test_v2_billing_metered_item_get', async function() {

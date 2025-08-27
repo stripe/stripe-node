@@ -20,6 +20,16 @@ declare module 'stripe' {
         cardholder?: string;
 
         /**
+         * The desired expiration month (1-12) for this card if [specifying a custom expiration date](https://docs.stripe.com/issuing/cards/virtual/issue-cards?testing-method=with-code#exp-dates).
+         */
+        exp_month?: number;
+
+        /**
+         * The desired 4-digit expiration year for this card if [specifying a custom expiration date](https://docs.stripe.com/issuing/cards/virtual/issue-cards?testing-method=with-code#exp-dates).
+         */
+        exp_year?: number;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;

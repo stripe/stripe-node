@@ -3563,6 +3563,16 @@ declare module 'stripe' {
             discounts?: Array<AddInvoiceItem.Discount>;
 
             /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             */
+            metadata?: Stripe.MetadataParam;
+
+            /**
+             * The period associated with this invoice item. Defaults to the period of the underlying subscription that surrounds the start of the phase.
+             */
+            period?: AddInvoiceItem.Period;
+
+            /**
              * The ID of the price object. One of `price` or `price_data` is required.
              */
             price?: string;

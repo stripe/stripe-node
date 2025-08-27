@@ -20,7 +20,7 @@ let meterEventSession: null | any = null;
 async function refreshMeterEventSession() {
   if (
     meterEventSession === null ||
-    new Date(meterEventSession.expires_at * 1000) <= new Date()
+    new Date(meterEventSession.expires_at) <= new Date()
   ) {
     // Create a new meter event session in case the existing session expired
     const client = new Stripe(apiKey);
