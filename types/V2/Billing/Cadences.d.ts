@@ -9,7 +9,7 @@ declare module 'stripe' {
          */
         interface Cadence {
           /**
-           * The ID of the billing Cadence object.
+           * Unique identifier for the object.
            */
           id: string;
 
@@ -39,7 +39,7 @@ declare module 'stripe' {
           livemode: boolean;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata: Stripe.Metadata | null;
 
@@ -64,7 +64,7 @@ declare module 'stripe' {
           status: Cadence.Status;
 
           /**
-           * The ID of the TestClock.
+           * The ID of the Test Clock.
            */
           test_clock: string | null;
         }
@@ -124,6 +124,12 @@ declare module 'stripe' {
                  * Must be an integer between 0 and 59, inclusive.
                  */
                 minute: number;
+
+                /**
+                 * The second at which the billing cycle ends.
+                 * Must be an integer between 0 and 59, inclusive.
+                 */
+                second: number | null;
               }
             }
 
@@ -155,6 +161,12 @@ declare module 'stripe' {
                  * Must be an integer between 0 and 59, inclusive.
                  */
                 minute: number;
+
+                /**
+                 * The second at which the billing cycle ends.
+                 * Must be an integer between 0 and 59, inclusive.
+                 */
+                second: number | null;
               }
             }
 
@@ -187,6 +199,12 @@ declare module 'stripe' {
                  * Must be an integer between 0 and 59, inclusive.
                  */
                 minute: number;
+
+                /**
+                 * The second at which the billing cycle ends.
+                 * Must be an integer between 0 and 59, inclusive.
+                 */
+                second: number | null;
               }
             }
 
@@ -223,13 +241,19 @@ declare module 'stripe' {
                  * Must be an integer between 0 and 59, inclusive.
                  */
                 minute: number;
+
+                /**
+                 * The second at which the billing cycle ends.
+                 * Must be an integer between 0 and 59, inclusive.
+                 */
+                second: number | null;
               }
             }
           }
 
           interface InvoiceDiscountRule {
             /**
-             * The ID of the inline discount applied to the cadence.
+             * Unique identifier for the object.
              */
             id: string;
 
@@ -299,7 +323,7 @@ declare module 'stripe' {
           namespace Settings {
             interface Bill {
               /**
-               * The ID of the referenced Settings object.
+               * The ID of the referenced settings object.
                */
               id: string;
 
@@ -311,7 +335,7 @@ declare module 'stripe' {
 
             interface Collection {
               /**
-               * The ID of the referenced Settings object.
+               * The ID of the referenced settings object.
                */
               id: string;
 

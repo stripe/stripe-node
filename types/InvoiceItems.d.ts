@@ -144,6 +144,16 @@ declare module 'stripe' {
     namespace InvoiceItem {
       interface Parent {
         /**
+         * Details about the license fee subscription that generated this invoice item
+         */
+        license_fee_subscription_details?: Parent.LicenseFeeSubscriptionDetails | null;
+
+        /**
+         * Details about the rate card subscription that generated this invoice item
+         */
+        rate_card_subscription_details?: Parent.RateCardSubscriptionDetails | null;
+
+        /**
          * Details about the subscription that generated this invoice item
          */
         subscription_details: Parent.SubscriptionDetails | null;
@@ -151,10 +161,54 @@ declare module 'stripe' {
         /**
          * The type of parent that generated this invoice item
          */
-        type: 'subscription_details';
+        type: Parent.Type;
       }
 
       namespace Parent {
+        interface LicenseFeeSubscriptionDetails {
+          /**
+           * The license fee subscription that generated this invoice item
+           */
+          license_fee_subscription: string;
+
+          /**
+           * The license fee version that generated this invoice item
+           */
+          license_fee_version: string;
+
+          /**
+           * The pricing plan subscription that manages the license fee subscription
+           */
+          pricing_plan_subscription: string;
+
+          /**
+           * The pricing plan version at the time this invoice item was generated
+           */
+          pricing_plan_version: string;
+        }
+
+        interface RateCardSubscriptionDetails {
+          /**
+           * The pricing plan subscription that manages the rate card subscription
+           */
+          pricing_plan_subscription?: string | null;
+
+          /**
+           * The pricing plan version at the time this invoice item was generated
+           */
+          pricing_plan_version?: string | null;
+
+          /**
+           * The rate card subscription that generated this invoice item
+           */
+          rate_card_subscription: string;
+
+          /**
+           * The rate card version that generated this invoice item
+           */
+          rate_card_version: string;
+        }
+
         interface SubscriptionDetails {
           /**
            * The subscription that generated this invoice item
@@ -166,6 +220,11 @@ declare module 'stripe' {
            */
           subscription_item?: string;
         }
+
+        type Type =
+          | 'license_fee_subscription_details'
+          | 'rate_card_subscription_details'
+          | 'subscription_details';
       }
 
       interface Period {
@@ -181,12 +240,16 @@ declare module 'stripe' {
       }
 
       interface Pricing {
+        license_fee_details?: Pricing.LicenseFeeDetails;
+
         price_details?: Pricing.PriceDetails;
+
+        rate_card_rate_details?: Pricing.RateCardRateDetails;
 
         /**
          * The type of the pricing details.
          */
-        type: 'price_details';
+        type: Pricing.Type;
 
         /**
          * The unit amount (in the `currency` specified) of the item which contains a decimal value with at most 12 decimal places.
@@ -195,6 +258,23 @@ declare module 'stripe' {
       }
 
       namespace Pricing {
+        interface LicenseFeeDetails {
+          /**
+           * The ID of the license fee this item is associated with
+           */
+          license_fee: string;
+
+          /**
+           * The version of the license fee this item is associated with
+           */
+          license_fee_version: string;
+
+          /**
+           * The ID of the licensed item this item is associated with
+           */
+          licensed_item: string;
+        }
+
         interface PriceDetails {
           /**
            * The ID of the price this item is associated with.
@@ -206,6 +286,28 @@ declare module 'stripe' {
            */
           product: string;
         }
+
+        interface RateCardRateDetails {
+          /**
+           * The ID of billable item this item is associated with
+           */
+          metered_item: string;
+
+          /**
+           * The ID of the rate card this item is associated with
+           */
+          rate_card: string;
+
+          /**
+           * The ID of the rate card rate this item is associated with
+           */
+          rate_card_rate: string;
+        }
+
+        type Type =
+          | 'license_fee_details'
+          | 'price_details'
+          | 'rate_card_rate_details';
       }
     }
   }

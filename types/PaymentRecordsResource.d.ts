@@ -66,9 +66,9 @@ declare module 'stripe' {
       outcome?: PaymentRecordReportPaymentParams.Outcome;
 
       /**
-       * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+       * Processor information for this payment.
        */
-      payment_reference?: string;
+      processor_details?: PaymentRecordReportPaymentParams.ProcessorDetails;
 
       /**
        * Shipping information for this payment.
@@ -84,7 +84,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * A positive integer representing the amount in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) for example, 100 cents for 1 USD or 100 for 100 JPY, a zero-decimal currency.
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
          */
         value: number;
       }
@@ -184,6 +184,27 @@ declare module 'stripe' {
            * The custom payment method type associated with this payment.
            */
           type?: string;
+        }
+      }
+
+      interface ProcessorDetails {
+        /**
+         * Information about the custom processor used to make this payment.
+         */
+        custom?: ProcessorDetails.Custom;
+
+        /**
+         * The type of the processor details. An additional hash is included on processor_details with a name matching this value. It contains additional information specific to the processor.
+         */
+        type: 'custom';
+      }
+
+      namespace ProcessorDetails {
+        interface Custom {
+          /**
+           * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+           */
+          payment_reference: string;
         }
       }
 

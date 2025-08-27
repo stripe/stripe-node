@@ -276,7 +276,7 @@ declare module 'stripe' {
       namespace Billing {
         class ServiceActionsResource {
           /**
-           * Create a ServiceAction object.
+           * Create a Service Action object.
            */
           create(
             params: ServiceActionCreateParams,
@@ -284,7 +284,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.ServiceAction>>;
 
           /**
-           * Retrieve a ServiceAction object.
+           * Retrieve a Service Action object.
            */
           retrieve(
             id: string,

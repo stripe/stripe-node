@@ -9,7 +9,7 @@ declare module 'stripe' {
          */
         interface ServiceAction {
           /**
-           * Unique identifier for the ServiceAction.
+           * Unique identifier for the object.
            */
           id: string;
 

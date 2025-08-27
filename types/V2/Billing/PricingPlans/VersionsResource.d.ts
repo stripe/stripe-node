@@ -24,7 +24,7 @@ declare module 'stripe' {
         namespace PricingPlans {
           class VersionsResource {
             /**
-             * Retrieve a specific version of a PricingPlan.
+             * Retrieve a specific Pricing Plan Version of a Pricing Plan.
              */
             retrieve(
               pricingPlanId: string,
@@ -39,7 +39,7 @@ declare module 'stripe' {
             ): Promise<Stripe.Response<Stripe.V2.Billing.PricingPlanVersion>>;
 
             /**
-             * List all versions of a PricingPlan.
+             * List all Pricing Plan Versions of a Pricing Plan.
              */
             list(
               id: string,

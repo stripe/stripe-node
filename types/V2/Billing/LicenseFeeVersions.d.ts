@@ -9,7 +9,7 @@ declare module 'stripe' {
          */
         interface LicenseFeeVersion {
           /**
-           * The ID of the LicenseFeeVersion.
+           * Unique identifier for the object.
            */
           id: string;
 
@@ -24,7 +24,7 @@ declare module 'stripe' {
           created: string;
 
           /**
-           * The ID of the parent LicenseFee.
+           * The ID of the parent License Fee.
            */
           license_fee_id: string;
 

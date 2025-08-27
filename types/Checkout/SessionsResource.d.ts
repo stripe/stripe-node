@@ -366,14 +366,40 @@ declare module 'stripe' {
         type BillingAddressCollection = 'auto' | 'required';
 
         interface CheckoutItem {
-          key: string;
-
-          type: 'checkout_item';
+          type: CheckoutItem.Type;
 
           rate_card_subscription_item?: CheckoutItem.RateCardSubscriptionItem;
+
+          pricing_plan_subscription_item?: CheckoutItem.PricingPlanSubscriptionItem;
         }
 
         namespace CheckoutItem {
+          interface PricingPlanSubscriptionItem {
+            pricing_plan: string;
+
+            pricing_plan_version?: string;
+
+            metadata?: Stripe.MetadataParam;
+
+            component_configurations?: {
+              [key: string]: PricingPlanSubscriptionItem.ComponentConfigurations;
+            };
+          }
+
+          namespace PricingPlanSubscriptionItem {
+            interface ComponentConfigurations {
+              type: 'license_fee_component';
+
+              license_fee_component?: ComponentConfigurations.LicenseFeeComponent;
+            }
+
+            namespace ComponentConfigurations {
+              interface LicenseFeeComponent {
+                quantity: number;
+              }
+            }
+          }
+
           interface RateCardSubscriptionItem {
             rate_card: string;
 
@@ -381,6 +407,10 @@ declare module 'stripe' {
 
             rate_card_version?: string;
           }
+
+          type Type =
+            | 'rate_card_subscription_item'
+            | 'pricing_plan_subscription_item';
         }
 
         interface ConsentCollection {
@@ -624,9 +654,52 @@ declare module 'stripe' {
           coupon?: string;
 
           /**
+           * Data used to generate a new [Coupon](https://stripe.com/docs/api/coupon) object inline. One of `coupon` or `coupon_data` is required when updating discounts.
+           */
+          coupon_data?: Discount.CouponData;
+
+          /**
            * The ID of a promotion code to apply to this Session.
            */
           promotion_code?: string;
+        }
+
+        namespace Discount {
+          interface CouponData {
+            /**
+             * A positive integer representing the amount to subtract from an invoice total (required if `percent_off` is not passed).
+             */
+            amount_off?: number;
+
+            /**
+             * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) of the `amount_off` parameter (required if `amount_off` is passed).
+             */
+            currency?: string;
+
+            /**
+             * Specifies how long the discount will be in effect if used on a subscription. Defaults to `once`.
+             */
+            duration?: CouponData.Duration;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             */
+            metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+            /**
+             * Name of the coupon displayed to customers on, for instance invoices, or receipts. By default the `id` is shown if `name` is not set.
+             */
+            name?: string;
+
+            /**
+             * A positive float larger than 0, and smaller or equal to 100, that represents the discount the coupon will apply (required if `amount_off` is not passed).
+             */
+            percent_off?: number;
+          }
+
+          namespace CouponData {
+            type Duration = 'forever' | 'once' | 'repeating';
+          }
         }
 
         interface InvoiceCreation {
@@ -2195,6 +2268,11 @@ declare module 'stripe' {
             expires_after_seconds?: number;
 
             /**
+             * Additional fields for mandate creation.
+             */
+            mandate_options?: Pix.MandateOptions;
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -2203,11 +2281,68 @@ declare module 'stripe' {
              *
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
              */
-            setup_future_usage?: 'none';
+            setup_future_usage?: Pix.SetupFutureUsage;
           }
 
           namespace Pix {
             type AmountIncludesIof = 'always' | 'never';
+
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
+               */
+              amount?: number;
+
+              /**
+               * Determines if the amount includes the IOF tax. Defaults to `never`.
+               */
+              amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+              /**
+               * Type of amount. Defaults to `maximum`.
+               */
+              amount_type?: MandateOptions.AmountType;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+               */
+              currency?: string;
+
+              /**
+               * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+               */
+              end_date?: string;
+
+              /**
+               * Schedule at which the future payments will be charged. Defaults to `weekly`.
+               */
+              payment_schedule?: MandateOptions.PaymentSchedule;
+
+              /**
+               * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+               */
+              reference?: string;
+
+              /**
+               * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+               */
+              start_date?: string;
+            }
+
+            namespace MandateOptions {
+              type AmountIncludesIof = 'always' | 'never';
+
+              type AmountType = 'fixed' | 'maximum';
+
+              type PaymentSchedule =
+                | 'halfyearly'
+                | 'monthly'
+                | 'quarterly'
+                | 'weekly'
+                | 'yearly';
+            }
+
+            type SetupFutureUsage = 'none' | 'off_session';
           }
 
           interface RevolutPay {

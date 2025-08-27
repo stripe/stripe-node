@@ -9,7 +9,7 @@ declare module 'stripe' {
          */
         interface LicenseFee {
           /**
-           * The ID of the LicenseFee.
+           * Unique identifier for the object.
            */
           id: string;
 
@@ -19,7 +19,7 @@ declare module 'stripe' {
           object: 'v2.billing.license_fee';
 
           /**
-           * Whether this LicenseFee is active. Inactive LicenseFees cannot be used in new activations or be modified.
+           * Whether this License Fee is active. Inactive License Fees cannot be used in new activations or be modified.
            */
           active: boolean;
 
@@ -29,29 +29,29 @@ declare module 'stripe' {
           created: string;
 
           /**
-           * The currency of this LicenseFee.
+           * Three-letter ISO currency code, in lowercase. Must be a supported currency.
            */
           currency: string;
 
           /**
-           * A customer-facing name for the LicenseFee.
+           * A customer-facing name for the license fee.
            * This name is used in Stripe-hosted products like the Customer Portal and Checkout. It does not show up on Invoices.
            * Maximum length of 250 characters.
            */
           display_name: string;
 
           /**
-           * The ID of the LicenseFee's most recently created version.
+           * The ID of the license fee's most recently created version.
            */
           latest_version: string;
 
           /**
-           * The LicensedItem that this license fee binds to.
+           * The Licensed Item that this License Fee binds to.
            */
           licensed_item: Stripe.V2.Billing.LicensedItem;
 
           /**
-           * The ID of the version that will be used by all Subscriptions when no specific version is specified.
+           * The ID of the License Fee Version that will be used by all subscriptions when no specific version is specified.
            */
           live_version: string;
 
@@ -61,12 +61,12 @@ declare module 'stripe' {
           livemode: boolean;
 
           /**
-           * An internal key you can use to search for a particular LicenseFee. Maximum length of 200 characters.
+           * An internal key you can use to search for a particular License Fee. Maximum length of 200 characters.
            */
           lookup_key: string | null;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata: Stripe.Metadata | null;
 

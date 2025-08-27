@@ -9,7 +9,7 @@ declare module 'stripe' {
          */
         interface PricingPlanVersion {
           /**
-           * Unique identifier for the PricingPlanVersion.
+           * Unique identifier for the object.
            */
           id: string;
 
@@ -24,9 +24,9 @@ declare module 'stripe' {
           created: string;
 
           /**
-           * The timestamp when this version became inactive.
+           * The timestamp when this version became inactive. Null if it's the latest version.
            */
-          end_date: string;
+          end_date: string | null;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

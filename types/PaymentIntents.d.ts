@@ -121,6 +121,13 @@ declare module 'stripe' {
       description: string | null;
 
       /**
+       * The list of payment method types to exclude from use with this payment.
+       */
+      excluded_payment_method_types: Array<
+        PaymentIntent.ExcludedPaymentMethodType
+      > | null;
+
+      /**
        * The FX Quote used for the PaymentIntent.
        */
       fx_quote?: string | null;
@@ -337,6 +344,63 @@ declare module 'stripe' {
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       type ConfirmationMethod = 'automatic' | 'manual';
+
+      type ExcludedPaymentMethodType =
+        | 'acss_debit'
+        | 'affirm'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'alma'
+        | 'amazon_pay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'billie'
+        | 'blik'
+        | 'boleto'
+        | 'card'
+        | 'cashapp'
+        | 'crypto'
+        | 'customer_balance'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'gopay'
+        | 'grabpay'
+        | 'id_bank_transfer'
+        | 'ideal'
+        | 'kakao_pay'
+        | 'klarna'
+        | 'konbini'
+        | 'kr_card'
+        | 'mb_way'
+        | 'mobilepay'
+        | 'multibanco'
+        | 'naver_pay'
+        | 'nz_bank_account'
+        | 'oxxo'
+        | 'p24'
+        | 'pay_by_bank'
+        | 'payco'
+        | 'paynow'
+        | 'paypal'
+        | 'payto'
+        | 'pix'
+        | 'promptpay'
+        | 'qris'
+        | 'rechnung'
+        | 'revolut_pay'
+        | 'samsung_pay'
+        | 'satispay'
+        | 'sepa_debit'
+        | 'shopeepay'
+        | 'sofort'
+        | 'stripe_balance'
+        | 'swish'
+        | 'twint'
+        | 'us_bank_account'
+        | 'wechat_pay'
+        | 'zip';
 
       interface Hooks {
         inputs?: Hooks.Inputs;
@@ -3144,6 +3208,8 @@ declare module 'stripe' {
            */
           expires_at: number | null;
 
+          mandate_options?: Pix.MandateOptions;
+
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -3153,11 +3219,68 @@ declare module 'stripe' {
            *
            * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: Pix.SetupFutureUsage;
         }
 
         namespace Pix {
           type AmountIncludesIof = 'always' | 'never';
+
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount?: number;
+
+            /**
+             * Determines if the amount includes the IOF tax.
+             */
+            amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+            /**
+             * Type of amount.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+             */
+            currency?: string;
+
+            /**
+             * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`.
+             */
+            end_date?: string;
+
+            /**
+             * Schedule at which the future payments will be charged.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * Subscription name displayed to buyers in their bank app.
+             */
+            reference?: string;
+
+            /**
+             * Start date of the mandate, in `YYYY-MM-DD`.
+             */
+            start_date?: string;
+          }
+
+          namespace MandateOptions {
+            type AmountIncludesIof = 'always' | 'never';
+
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'halfyearly'
+              | 'monthly'
+              | 'quarterly'
+              | 'weekly'
+              | 'yearly';
+          }
+
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Promptpay {

@@ -43,11 +43,6 @@ declare module 'stripe' {
            * Defines at which value the alert will fire.
            */
           lte: CreditBalanceThreshold.Lte;
-
-          /**
-           * Whether the alert should only fire only once, or once per billing cycle.
-           */
-          recurrence: 'one_time';
         }
 
         namespace CreditBalanceThreshold {
@@ -60,7 +55,11 @@ declare module 'stripe' {
             /**
              * What type of filter is being applied to this credit balance alert.
              */
-            type: 'customer';
+            type: Filter.Type;
+          }
+
+          namespace Filter {
+            type Type = 'customer' | 'tenant';
           }
 
           interface Lte {

@@ -6,24 +6,24 @@ declare module 'stripe' {
       namespace Billing {
         interface LicenseFeeCreateParams {
           /**
-           * The currency of this LicenseFee.
+           * Three-letter ISO currency code, in lowercase. Must be a supported currency.
            */
           currency: string;
 
           /**
-           * A customer-facing name for the LicenseFee.
+           * A customer-facing name for the License Fee.
            * This name is used in Stripe-hosted products like the Customer Portal and Checkout. It does not show up on Invoices.
            * Maximum length of 250 characters.
            */
           display_name: string;
 
           /**
-           * The LicensedItem that this rate binds to.
+           * The Licensed Item that this License Fee binds to.
            */
           licensed_item: string;
 
           /**
-           * The interval for assessing service. For example, a monthly LicenseFee with a rate of $1 for the first 10 "workloads"
+           * The interval for assessing service. For example, a monthly license fee with a rate of $1 for the first 10 "workloads"
            * and $2 thereafter means "$1 per workload up to 10 workloads during a month of service." This is similar to but
            * distinct from billing interval; the service interval deals with the rate at which the customer accumulates fees,
            * while the billing interval in Cadence deals with the rate the customer is billed.
@@ -42,12 +42,12 @@ declare module 'stripe' {
           tax_behavior: LicenseFeeCreateParams.TaxBehavior;
 
           /**
-           * An internal key you can use to search for a particular LicenseFee. Maximum length of 200 characters.
+           * An internal key you can use to search for a particular license fee. Maximum length of 200 characters.
            */
           lookup_key?: string;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -131,25 +131,25 @@ declare module 'stripe' {
       namespace Billing {
         interface LicenseFeeUpdateParams {
           /**
-           * A customer-facing name for the LicenseFee.
+           * A customer-facing name for the License Fee.
            * This name is used in Stripe-hosted products like the Customer Portal and Checkout. It does not show up on Invoices.
            * Maximum length of 250 characters.
            */
           display_name: string;
 
           /**
-           * Changes the version that new LicenseFee will use. Providing `live_version = "latest"` will set the
-           * LicenseFee's `live_version` to its latest version.
+           * Changes the version that new license fee will use. Providing `live_version = "latest"` will set the
+           * license fee's `live_version` to its latest version.
            */
           live_version?: string;
 
           /**
-           * An internal key you can use to search for a particular LicenseFee. Maximum length of 200 characters.
+           * An internal key you can use to search for a particular license fee. Maximum length of 200 characters.
            */
           lookup_key?: string;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -247,7 +247,7 @@ declare module 'stripe' {
           versions: Stripe.V2.Billing.LicenseFees.VersionsResource;
 
           /**
-           * Create a LicenseFee object.
+           * Create a License Fee object.
            */
           create(
             params: LicenseFeeCreateParams,
@@ -255,7 +255,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.LicenseFee>>;
 
           /**
-           * Retrieve a LicenseFee object.
+           * Retrieve a License Fee object.
            */
           retrieve(
             id: string,
@@ -268,7 +268,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.LicenseFee>>;
 
           /**
-           * Update a LicenseFee object.
+           * Update a License Fee object.
            */
           update(
             id: string,
@@ -277,7 +277,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.LicenseFee>>;
 
           /**
-           * List all LicenseFee objects.
+           * List all License Fee objects.
            */
           list(
             params: LicenseFeeListParams,

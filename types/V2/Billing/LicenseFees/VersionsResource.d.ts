@@ -24,7 +24,7 @@ declare module 'stripe' {
         namespace LicenseFees {
           class VersionsResource {
             /**
-             * Retrieve a LicenseFeeVersion object.
+             * Retrieve a License Fee Version object.
              */
             retrieve(
               licenseFeeId: string,
@@ -39,7 +39,7 @@ declare module 'stripe' {
             ): Promise<Stripe.Response<Stripe.V2.Billing.LicenseFeeVersion>>;
 
             /**
-             * List all versions of a LicenseFee objects.
+             * List all versions of a License Fee object.
              */
             list(
               id: string,

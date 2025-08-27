@@ -12,7 +12,7 @@ declare module 'stripe' {
             type: ComponentCreateParams.Type;
 
             /**
-             * Details if this component is a LicenseFee.
+             * Details if this component is a License Fee.
              */
             license_fee?: ComponentCreateParams.LicenseFee;
 
@@ -22,17 +22,17 @@ declare module 'stripe' {
             lookup_key?: string;
 
             /**
-             * Set of key-value pairs that you can attach to an object.
+             * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
              */
             metadata?: Stripe.MetadataParam;
 
             /**
-             * Details if this component is a RateCard.
+             * Details if this component is a Rate Card.
              */
             rate_card?: ComponentCreateParams.RateCard;
 
             /**
-             * Details if this component is a ServiceAction.
+             * Details if this component is a Service Action.
              */
             service_action?: ComponentCreateParams.ServiceAction;
           }
@@ -40,38 +40,33 @@ declare module 'stripe' {
           namespace ComponentCreateParams {
             interface LicenseFee {
               /**
-               * The ID of the LicenseFee.
+               * The ID of the License Fee.
                */
               id: string;
 
               /**
-               * The version of the LicenseFee.
+               * The version of the LicenseFee. Defaults to 'latest', if not specified.
                */
-              version: string;
+              version?: string;
             }
 
             interface RateCard {
               /**
-               * The ID of the RateCard.
+               * The ID of the Rate Card.
                */
               id: string;
 
               /**
-               * The version of the RateCard.
+               * The version of the RateCard. Defaults to 'latest', if not specified.
                */
-              version: string;
+              version?: string;
             }
 
             interface ServiceAction {
               /**
-               * The ID of the ServiceAction.
+               * The ID of the service action.
                */
               id: string;
-
-              /**
-               * The version of the ServiceAction.
-               */
-              version: string;
             }
 
             type Type = 'license_fee' | 'rate_card' | 'service_action';
@@ -116,7 +111,7 @@ declare module 'stripe' {
             lookup_keys?: Array<string>;
 
             /**
-             * The ID of the PricingPlanVersion to list components for. Will use the latest version if not provided.
+             * The ID of the Pricing Plan Version to list components for. Will use the latest version if not provided.
              * Mutually exclusive with `lookup_keys`.
              */
             pricing_plan_version?: string;
@@ -134,7 +129,7 @@ declare module 'stripe' {
         namespace PricingPlans {
           class ComponentsResource {
             /**
-             * Create a PricingPlanComponent object.
+             * Create a Pricing Plan Component object.
              */
             create(
               id: string,
@@ -143,7 +138,7 @@ declare module 'stripe' {
             ): Promise<Stripe.Response<Stripe.V2.Billing.PricingPlanComponent>>;
 
             /**
-             * Retrieve a PricingPlanComponent object.
+             * Retrieve a Pricing Plan Component object.
              */
             retrieve(
               pricingPlanId: string,
@@ -158,7 +153,7 @@ declare module 'stripe' {
             ): Promise<Stripe.Response<Stripe.V2.Billing.PricingPlanComponent>>;
 
             /**
-             * Update a PricingPlanComponent object.
+             * Update a Pricing Plan Component object.
              */
             update(
               pricingPlanId: string,
@@ -168,7 +163,7 @@ declare module 'stripe' {
             ): Promise<Stripe.Response<Stripe.V2.Billing.PricingPlanComponent>>;
 
             /**
-             * List all PricingPlanComponent objects for a PricingPlan.
+             * List all Pricing Plan Component objects for a Pricing Plan.
              */
             list(
               id: string,
@@ -181,7 +176,7 @@ declare module 'stripe' {
             ): ApiListPromise<Stripe.V2.Billing.PricingPlanComponent>;
 
             /**
-             * Remove a PricingPlanComponent from the latest version of a PricingPlan.
+             * Remove a Pricing Plan Component from the latest version of a Pricing Plan.
              */
             del(
               pricingPlanId: string,

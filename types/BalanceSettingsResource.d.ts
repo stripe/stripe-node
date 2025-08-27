@@ -11,76 +11,85 @@ declare module 'stripe' {
 
     interface BalanceSettingsUpdateParams {
       /**
-       * A Boolean indicating whether Stripe should try to reclaim negative balances from an attached bank account. For details, see [Understanding Connect Account Balances](https://docs.stripe.com/connect/account-balances).
+       * Settings that apply to the [Payments Balance](https://docs.stripe.com/api/balance).
        */
-      debit_negative_balances?: boolean;
+      payments: BalanceSettingsUpdateParams.Payments;
 
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
-
-      /**
-       * Settings specific to the account's payouts.
-       */
-      payouts?: BalanceSettingsUpdateParams.Payouts;
-
-      /**
-       * Settings related to the account's balance settlement timing.
-       */
-      settlement_timing?: BalanceSettingsUpdateParams.SettlementTiming;
     }
 
     namespace BalanceSettingsUpdateParams {
-      interface Payouts {
+      interface Payments {
         /**
-         * Details on when funds from charges are available, and when they are paid out to an external account. For details, see our [Setting Bank and Debit Card Payouts](https://docs.stripe.com/connect/bank-transfers#payout-information) documentation.
+         * A Boolean indicating whether Stripe should try to reclaim negative balances from an attached bank account. For details, see [Understanding Connect Account Balances](https://docs.stripe.com/connect/account-balances).
          */
-        schedule?: Payouts.Schedule;
+        debit_negative_balances?: boolean;
 
         /**
-         * The text that appears on the bank account statement for payouts. If not set, this defaults to the platform's bank descriptor as set in the Dashboard.
+         * Settings specific to the account's payouts.
          */
-        statement_descriptor?: string;
+        payouts?: Payments.Payouts;
+
+        /**
+         * Settings related to the account's balance settlement timing.
+         */
+        settlement_timing?: Payments.SettlementTiming;
       }
 
-      namespace Payouts {
-        interface Schedule {
+      namespace Payments {
+        interface Payouts {
           /**
-           * How frequently available funds are paid out. One of: `daily`, `manual`, `weekly`, or `monthly`. Default is `daily`.
+           * Details on when funds from charges are available, and when they are paid out to an external account. For details, see our [Setting Bank and Debit Card Payouts](https://docs.stripe.com/connect/bank-transfers#payout-information) documentation.
            */
-          interval?: Schedule.Interval;
+          schedule?: Payouts.Schedule;
 
           /**
-           * The days of the month when available funds are paid out, specified as an array of numbers between 1--31. Payouts nominally scheduled between the 29th and 31st of the month are instead sent on the last day of a shorter month. Required and applicable only if `interval` is `monthly`.
+           * The text that appears on the bank account statement for payouts. If not set, this defaults to the platform's bank descriptor as set in the Dashboard.
            */
-          monthly_payout_days?: Array<number>;
-
-          /**
-           * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. (required and applicable only if `interval` is `weekly`.)
-           */
-          weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
+          statement_descriptor?: string;
         }
 
-        namespace Schedule {
-          type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
+        namespace Payouts {
+          interface Schedule {
+            /**
+             * How frequently available funds are paid out. One of: `daily`, `manual`, `weekly`, or `monthly`. Default is `daily`.
+             */
+            interval?: Schedule.Interval;
 
-          type WeeklyPayoutDay =
-            | 'friday'
-            | 'monday'
-            | 'saturday'
-            | 'sunday'
-            | 'thursday'
-            | 'tuesday'
-            | 'wednesday';
+            /**
+             * The days of the month when available funds are paid out, specified as an array of numbers between 1--31. Payouts nominally scheduled between the 29th and 31st of the month are instead sent on the last day of a shorter month. Required and applicable only if `interval` is `monthly`.
+             */
+            monthly_payout_days?: Array<number>;
+
+            /**
+             * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. (required and applicable only if `interval` is `weekly`.)
+             */
+            weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
+          }
+
+          namespace Schedule {
+            type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
+
+            type WeeklyPayoutDay =
+              | 'friday'
+              | 'monday'
+              | 'saturday'
+              | 'sunday'
+              | 'thursday'
+              | 'tuesday'
+              | 'wednesday';
+          }
         }
-      }
 
-      interface SettlementTiming {
-        /**
-         * The number of days charge funds are held before becoming available. May also be set to `minimum`, representing the lowest available value for the account country. Default is `minimum`. The `delay_days` parameter remains at the last configured value if `payouts.schedule.interval` is `manual`. [Learn more about controlling payout delay days](https://docs.stripe.com/connect/manage-payout-schedule).
-         */
-        delay_days_override?: number;
+        interface SettlementTiming {
+          /**
+           * The number of days charge funds are held before becoming available. May also be set to `minimum`, representing the lowest available value for the account country. Default is `minimum`. The `delay_days` parameter remains at the last configured value if `payouts.schedule.interval` is `manual`. [Learn more about controlling payout delay days](https://docs.stripe.com/connect/manage-payout-schedule).
+           */
+          delay_days_override?: number;
+        }
       }
     }
 
@@ -102,7 +111,7 @@ declare module 'stripe' {
        *  Related guide: [Making API calls for connected accounts](https://docs.stripe.com/connect/authentication)
        */
       update(
-        params?: BalanceSettingsUpdateParams,
+        params: BalanceSettingsUpdateParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.BalanceSettings>>;
     }

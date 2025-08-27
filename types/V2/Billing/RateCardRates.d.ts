@@ -9,7 +9,7 @@ declare module 'stripe' {
          */
         interface RateCardRate {
           /**
-           * The ID of the RateCardRate.
+           * Unique identifier for the object.
            */
           id: string;
 
@@ -34,22 +34,22 @@ declare module 'stripe' {
           livemode: boolean;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata: Stripe.Metadata | null;
 
           /**
-           * The MeteredItem that this rate binds to.
+           * The Metered Item that this rate binds to.
            */
           metered_item: Stripe.V2.Billing.MeteredItem;
 
           /**
-           * The ID of the RateCard it belongs to.
+           * The ID of the Rate Card it belongs to.
            */
           rate_card: string;
 
           /**
-           * The ID of the RateCard version it was created on.
+           * The ID of the Rate Card Version it was created on.
            */
           rate_card_version: string;
 

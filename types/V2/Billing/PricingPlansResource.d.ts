@@ -31,7 +31,7 @@ declare module 'stripe' {
           lookup_key?: string;
 
           /**
-           * Set of key-value pairs that you can attach to a PricingPlan.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata?: Stripe.MetadataParam;
         }
@@ -105,7 +105,7 @@ declare module 'stripe' {
           versions: Stripe.V2.Billing.PricingPlans.VersionsResource;
 
           /**
-           * Create a PricingPlan object.
+           * Create a Pricing Plan object.
            */
           create(
             params: PricingPlanCreateParams,
@@ -113,7 +113,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.PricingPlan>>;
 
           /**
-           * Retrieve a PricingPlan object.
+           * Retrieve a Pricing Plan object.
            */
           retrieve(
             id: string,
@@ -126,7 +126,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.PricingPlan>>;
 
           /**
-           * Update a PricingPlan object.
+           * Update a Pricing Plan object.
            */
           update(
             id: string,
@@ -135,7 +135,7 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.PricingPlan>>;
 
           /**
-           * List all PricingPlan objects.
+           * List all Pricing Plan objects.
            */
           list(
             params?: PricingPlanListParams,

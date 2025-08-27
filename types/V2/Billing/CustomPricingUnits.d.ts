@@ -9,7 +9,7 @@ declare module 'stripe' {
          */
         interface CustomPricingUnit {
           /**
-           * The ID of the custom pricing unit.
+           * Unique identifier for the object.
            */
           id: string;
 
@@ -19,7 +19,7 @@ declare module 'stripe' {
           object: 'v2.billing.custom_pricing_unit';
 
           /**
-           * Whether the CustomPricingUnit is active.
+           * Whether the custom pricing unit is active.
            */
           active: boolean;
 
@@ -30,7 +30,7 @@ declare module 'stripe' {
 
           /**
            * Description that customers will see in the invoice line item.
-           * Maximum length of 250 characters.
+           * Maximum length of 10 characters.
            */
           display_name: string;
 
@@ -40,13 +40,13 @@ declare module 'stripe' {
           livemode: boolean;
 
           /**
-           * An internal key you can use to search for a particular CustomPricingUnit item.
+           * An internal key you can use to search for a particular Custom Pricing Unit.
            * Maximum length of 200 characters.
            */
           lookup_key: string | null;
 
           /**
-           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata: Stripe.Metadata | null;
         }

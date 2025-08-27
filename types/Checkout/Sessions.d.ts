@@ -428,18 +428,48 @@ declare module 'stripe' {
         type BillingAddressCollection = 'auto' | 'required';
 
         interface CheckoutItem {
-          key: string;
-
-          type: 'checkout_item';
+          type: CheckoutItem.Type;
 
           rate_card_subscription_item?: CheckoutItem.RateCardSubscriptionItem;
+
+          pricing_plan_subscription_item?: CheckoutItem.PricingPlanSubscriptionItem;
         }
 
         namespace CheckoutItem {
+          interface PricingPlanSubscriptionItem {
+            pricing_plan: string;
+
+            pricing_plan_version: string;
+
+            metadata: Stripe.Metadata;
+
+            component_configurations: {
+              [key: string]: PricingPlanSubscriptionItem.ComponentConfigurations;
+            };
+
+            pricing_plan_subscription?: string;
+
+            billing_cadence?: string;
+          }
+
+          namespace PricingPlanSubscriptionItem {
+            interface ComponentConfigurations {
+              type: 'license_fee_component';
+
+              license_fee_component?: ComponentConfigurations.LicenseFeeComponent;
+            }
+
+            namespace ComponentConfigurations {
+              interface LicenseFeeComponent {
+                quantity: number;
+              }
+            }
+          }
+
           interface RateCardSubscriptionItem {
             rate_card: string;
 
-            metadata?: Stripe.Metadata;
+            metadata: Stripe.Metadata;
 
             rate_card_version: string;
 
@@ -447,6 +477,10 @@ declare module 'stripe' {
 
             rate_card_subscription?: string;
           }
+
+          type Type =
+            | 'rate_card_subscription_item'
+            | 'pricing_plan_subscription_item';
         }
 
         interface CollectedInformation {
@@ -2077,6 +2111,8 @@ declare module 'stripe' {
              */
             expires_after_seconds: number | null;
 
+            mandate_options?: Pix.MandateOptions;
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -2086,11 +2122,68 @@ declare module 'stripe' {
              *
              * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
              */
-            setup_future_usage?: 'none';
+            setup_future_usage?: Pix.SetupFutureUsage;
           }
 
           namespace Pix {
             type AmountIncludesIof = 'always' | 'never';
+
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments.
+               */
+              amount?: number;
+
+              /**
+               * Determines if the amount includes the IOF tax.
+               */
+              amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+              /**
+               * Type of amount.
+               */
+              amount_type?: MandateOptions.AmountType;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+               */
+              currency?: string;
+
+              /**
+               * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`.
+               */
+              end_date?: string;
+
+              /**
+               * Schedule at which the future payments will be charged.
+               */
+              payment_schedule?: MandateOptions.PaymentSchedule;
+
+              /**
+               * Subscription name displayed to buyers in their bank app.
+               */
+              reference?: string;
+
+              /**
+               * Start date of the mandate, in `YYYY-MM-DD`.
+               */
+              start_date?: string;
+            }
+
+            namespace MandateOptions {
+              type AmountIncludesIof = 'always' | 'never';
+
+              type AmountType = 'fixed' | 'maximum';
+
+              type PaymentSchedule =
+                | 'halfyearly'
+                | 'monthly'
+                | 'quarterly'
+                | 'weekly'
+                | 'yearly';
+            }
+
+            type SetupFutureUsage = 'none' | 'off_session';
           }
 
           interface RevolutPay {

@@ -23,9 +23,24 @@ declare module 'stripe' {
         created: number;
 
         /**
+         * Currency for the threshold value
+         */
+        currency?: string | null;
+
+        /**
+         * Custom pricing unit for the threshold value
+         */
+        custom_pricing_unit?: string | null;
+
+        /**
          * ID of customer for which the alert triggered
          */
         customer: string;
+
+        /**
+         * External customer ID for the customer for which the alert triggered
+         */
+        external_customer_id?: string | null;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -35,7 +50,7 @@ declare module 'stripe' {
         /**
          * The value triggering the alert
          */
-        value: number;
+        value: string;
       }
     }
   }
