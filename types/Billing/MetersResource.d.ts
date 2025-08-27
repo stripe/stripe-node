@@ -25,7 +25,7 @@ declare module 'stripe' {
         customer_mapping?: MeterCreateParams.CustomerMapping;
 
         /**
-         * The time window to pre-aggregate meter events for, if any.
+         * The time window which meter events have been pre-aggregated for, if any.
          */
         event_time_window?: MeterCreateParams.EventTimeWindow;
 

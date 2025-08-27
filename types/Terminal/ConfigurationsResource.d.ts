@@ -25,6 +25,13 @@ declare module 'stripe' {
         offline?: Stripe.Emptyable<ConfigurationCreateParams.Offline>;
 
         /**
+         * Configurations for reader security settings.
+         */
+        reader_security?: Stripe.Emptyable<
+          ConfigurationCreateParams.ReaderSecurity
+        >;
+
+        /**
          * Reboot time settings for readers that support customized reboot time configuration.
          */
         reboot_window?: ConfigurationCreateParams.RebootWindow;
@@ -63,6 +70,13 @@ declare module 'stripe' {
            * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
            */
           enabled: boolean;
+        }
+
+        interface ReaderSecurity {
+          /**
+           * Passcode used to access a reader's admin menu.
+           */
+          admin_menu_passcode?: Stripe.Emptyable<string>;
         }
 
         interface RebootWindow {
@@ -144,6 +158,11 @@ declare module 'stripe' {
            * Tipping configuration for JPY
            */
           jpy?: Tipping.Jpy;
+
+          /**
+           * Tipping configuration for MXN
+           */
+          mxn?: Tipping.Mxn;
 
           /**
            * Tipping configuration for MYR
@@ -375,6 +394,23 @@ declare module 'stripe' {
           }
 
           interface Jpy {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts?: Array<number>;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages?: Array<number>;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
+          interface Mxn {
             /**
              * Fixed amounts displayed when collecting a tip
              */
@@ -657,6 +693,13 @@ declare module 'stripe' {
         offline?: Stripe.Emptyable<ConfigurationUpdateParams.Offline>;
 
         /**
+         * Configurations for reader security settings.
+         */
+        reader_security?: Stripe.Emptyable<
+          ConfigurationUpdateParams.ReaderSecurity
+        >;
+
+        /**
          * Reboot time settings for readers that support customized reboot time configuration.
          */
         reboot_window?: Stripe.Emptyable<
@@ -699,6 +742,13 @@ declare module 'stripe' {
            * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
            */
           enabled: boolean;
+        }
+
+        interface ReaderSecurity {
+          /**
+           * Passcode used to access a reader's admin menu.
+           */
+          admin_menu_passcode?: Stripe.Emptyable<string>;
         }
 
         interface RebootWindow {
@@ -780,6 +830,11 @@ declare module 'stripe' {
            * Tipping configuration for JPY
            */
           jpy?: Tipping.Jpy;
+
+          /**
+           * Tipping configuration for MXN
+           */
+          mxn?: Tipping.Mxn;
 
           /**
            * Tipping configuration for MYR
@@ -1011,6 +1066,23 @@ declare module 'stripe' {
           }
 
           interface Jpy {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts?: Array<number>;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages?: Array<number>;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
+          interface Mxn {
             /**
              * Fixed amounts displayed when collecting a tip
              */

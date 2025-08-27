@@ -1096,6 +1096,11 @@ declare module 'stripe' {
         payto?: PaymentMethodOptions.Payto;
 
         /**
+         * If this is a `pix` SetupIntent, this sub-hash contains details about the Pix payment method options.
+         */
+        pix?: PaymentMethodOptions.Pix;
+
+        /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
@@ -1621,6 +1626,70 @@ declare module 'stripe' {
               | 'salary'
               | 'tax'
               | 'utility';
+          }
+        }
+
+        interface Pix {
+          /**
+           * Additional fields for mandate creation.
+           */
+          mandate_options?: Pix.MandateOptions;
+        }
+
+        namespace Pix {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
+             */
+            amount?: number;
+
+            /**
+             * Determines if the amount includes the IOF tax. Defaults to `never`.
+             */
+            amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+            /**
+             * Type of amount. Defaults to `maximum`.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+             */
+            currency?: string;
+
+            /**
+             * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+             */
+            end_date?: string;
+
+            /**
+             * Schedule at which the future payments will be charged. Defaults to `weekly`.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+             */
+            reference?: string;
+
+            /**
+             * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+             */
+            start_date?: string;
+          }
+
+          namespace MandateOptions {
+            type AmountIncludesIof = 'always' | 'never';
+
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'halfyearly'
+              | 'monthly'
+              | 'quarterly'
+              | 'weekly'
+              | 'yearly';
           }
         }
 
@@ -2758,6 +2827,11 @@ declare module 'stripe' {
         payto?: PaymentMethodOptions.Payto;
 
         /**
+         * If this is a `pix` SetupIntent, this sub-hash contains details about the Pix payment method options.
+         */
+        pix?: PaymentMethodOptions.Pix;
+
+        /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
@@ -3283,6 +3357,70 @@ declare module 'stripe' {
               | 'salary'
               | 'tax'
               | 'utility';
+          }
+        }
+
+        interface Pix {
+          /**
+           * Additional fields for mandate creation.
+           */
+          mandate_options?: Pix.MandateOptions;
+        }
+
+        namespace Pix {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
+             */
+            amount?: number;
+
+            /**
+             * Determines if the amount includes the IOF tax. Defaults to `never`.
+             */
+            amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+            /**
+             * Type of amount. Defaults to `maximum`.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+             */
+            currency?: string;
+
+            /**
+             * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+             */
+            end_date?: string;
+
+            /**
+             * Schedule at which the future payments will be charged. Defaults to `weekly`.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+             */
+            reference?: string;
+
+            /**
+             * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+             */
+            start_date?: string;
+          }
+
+          namespace MandateOptions {
+            type AmountIncludesIof = 'always' | 'never';
+
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'halfyearly'
+              | 'monthly'
+              | 'quarterly'
+              | 'weekly'
+              | 'yearly';
           }
         }
 
@@ -4467,6 +4605,11 @@ declare module 'stripe' {
         payto?: PaymentMethodOptions.Payto;
 
         /**
+         * If this is a `pix` SetupIntent, this sub-hash contains details about the Pix payment method options.
+         */
+        pix?: PaymentMethodOptions.Pix;
+
+        /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
@@ -4992,6 +5135,70 @@ declare module 'stripe' {
               | 'salary'
               | 'tax'
               | 'utility';
+          }
+        }
+
+        interface Pix {
+          /**
+           * Additional fields for mandate creation.
+           */
+          mandate_options?: Pix.MandateOptions;
+        }
+
+        namespace Pix {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
+             */
+            amount?: number;
+
+            /**
+             * Determines if the amount includes the IOF tax. Defaults to `never`.
+             */
+            amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+            /**
+             * Type of amount. Defaults to `maximum`.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+             */
+            currency?: string;
+
+            /**
+             * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+             */
+            end_date?: string;
+
+            /**
+             * Schedule at which the future payments will be charged. Defaults to `weekly`.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+             */
+            reference?: string;
+
+            /**
+             * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+             */
+            start_date?: string;
+          }
+
+          namespace MandateOptions {
+            type AmountIncludesIof = 'always' | 'never';
+
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'halfyearly'
+              | 'monthly'
+              | 'quarterly'
+              | 'weekly'
+              | 'yearly';
           }
         }
 

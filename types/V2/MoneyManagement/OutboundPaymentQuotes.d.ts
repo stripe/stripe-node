@@ -5,7 +5,7 @@ declare module 'stripe' {
     namespace V2 {
       namespace MoneyManagement {
         /**
-         * OutboundPaymentQuote represents a quote
+         * OutboundPaymentQuote represents a quote that provides fee and amount estimates for OutboundPayment.
          */
         interface OutboundPaymentQuote {
           /**

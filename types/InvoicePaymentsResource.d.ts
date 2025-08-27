@@ -38,6 +38,9 @@ declare module 'stripe' {
          */
         payment_intent?: string;
 
+        /**
+         * Only return invoice payments associated by this payment record ID.
+         */
         payment_record?: string;
 
         /**

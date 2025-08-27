@@ -79,6 +79,13 @@ declare module 'stripe' {
       error_on_requires_action?: boolean;
 
       /**
+       * The list of payment method types to exclude from use with this payment.
+       */
+      excluded_payment_method_types?: Array<
+        PaymentIntentCreateParams.ExcludedPaymentMethodType
+      >;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -416,6 +423,63 @@ declare module 'stripe' {
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       type ConfirmationMethod = 'automatic' | 'manual';
+
+      type ExcludedPaymentMethodType =
+        | 'acss_debit'
+        | 'affirm'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'alma'
+        | 'amazon_pay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'billie'
+        | 'blik'
+        | 'boleto'
+        | 'card'
+        | 'cashapp'
+        | 'crypto'
+        | 'customer_balance'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'gopay'
+        | 'grabpay'
+        | 'id_bank_transfer'
+        | 'ideal'
+        | 'kakao_pay'
+        | 'klarna'
+        | 'konbini'
+        | 'kr_card'
+        | 'mb_way'
+        | 'mobilepay'
+        | 'multibanco'
+        | 'naver_pay'
+        | 'nz_bank_account'
+        | 'oxxo'
+        | 'p24'
+        | 'pay_by_bank'
+        | 'payco'
+        | 'paynow'
+        | 'paypal'
+        | 'payto'
+        | 'pix'
+        | 'promptpay'
+        | 'qris'
+        | 'rechnung'
+        | 'revolut_pay'
+        | 'samsung_pay'
+        | 'satispay'
+        | 'sepa_debit'
+        | 'shopeepay'
+        | 'sofort'
+        | 'stripe_balance'
+        | 'swish'
+        | 'twint'
+        | 'us_bank_account'
+        | 'wechat_pay'
+        | 'zip';
 
       interface Hooks {
         /**
@@ -3967,6 +4031,11 @@ declare module 'stripe' {
 
         interface Pix {
           /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: Pix.AmountIncludesIof;
+
+          /**
            * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
            */
           expires_after_seconds?: number;
@@ -3975,6 +4044,11 @@ declare module 'stripe' {
            * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
            */
           expires_at?: number;
+
+          /**
+           * Additional fields for mandate creation. Only applicable when `setup_future_usage=off_session`.
+           */
+          mandate_options?: Pix.MandateOptions;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -3987,7 +4061,68 @@ declare module 'stripe' {
            *
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: Pix.SetupFutureUsage;
+        }
+
+        namespace Pix {
+          type AmountIncludesIof = 'always' | 'never';
+
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
+             */
+            amount?: number;
+
+            /**
+             * Determines if the amount includes the IOF tax. Defaults to `never`.
+             */
+            amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+            /**
+             * Type of amount. Defaults to `maximum`.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+             */
+            currency?: string;
+
+            /**
+             * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+             */
+            end_date?: string;
+
+            /**
+             * Schedule at which the future payments will be charged. Defaults to `weekly`.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+             */
+            reference?: string;
+
+            /**
+             * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+             */
+            start_date?: string;
+          }
+
+          namespace MandateOptions {
+            type AmountIncludesIof = 'always' | 'never';
+
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'halfyearly'
+              | 'monthly'
+              | 'quarterly'
+              | 'weekly'
+              | 'yearly';
+          }
+
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Promptpay {
@@ -8333,6 +8468,11 @@ declare module 'stripe' {
 
         interface Pix {
           /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: Pix.AmountIncludesIof;
+
+          /**
            * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
            */
           expires_after_seconds?: number;
@@ -8341,6 +8481,11 @@ declare module 'stripe' {
            * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
            */
           expires_at?: number;
+
+          /**
+           * Additional fields for mandate creation. Only applicable when `setup_future_usage=off_session`.
+           */
+          mandate_options?: Pix.MandateOptions;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -8353,7 +8498,68 @@ declare module 'stripe' {
            *
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: Pix.SetupFutureUsage;
+        }
+
+        namespace Pix {
+          type AmountIncludesIof = 'always' | 'never';
+
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
+             */
+            amount?: number;
+
+            /**
+             * Determines if the amount includes the IOF tax. Defaults to `never`.
+             */
+            amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+            /**
+             * Type of amount. Defaults to `maximum`.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+             */
+            currency?: string;
+
+            /**
+             * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+             */
+            end_date?: string;
+
+            /**
+             * Schedule at which the future payments will be charged. Defaults to `weekly`.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+             */
+            reference?: string;
+
+            /**
+             * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+             */
+            start_date?: string;
+          }
+
+          namespace MandateOptions {
+            type AmountIncludesIof = 'always' | 'never';
+
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'halfyearly'
+              | 'monthly'
+              | 'quarterly'
+              | 'weekly'
+              | 'yearly';
+          }
+
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Promptpay {
@@ -13687,6 +13893,11 @@ declare module 'stripe' {
 
         interface Pix {
           /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: Pix.AmountIncludesIof;
+
+          /**
            * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
            */
           expires_after_seconds?: number;
@@ -13695,6 +13906,11 @@ declare module 'stripe' {
            * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
            */
           expires_at?: number;
+
+          /**
+           * Additional fields for mandate creation. Only applicable when `setup_future_usage=off_session`.
+           */
+          mandate_options?: Pix.MandateOptions;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -13707,7 +13923,68 @@ declare module 'stripe' {
            *
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
-          setup_future_usage?: 'none';
+          setup_future_usage?: Pix.SetupFutureUsage;
+        }
+
+        namespace Pix {
+          type AmountIncludesIof = 'always' | 'never';
+
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments. Required when `amount_type=fixed`. If not provided for `amount_type=maximum`, defaults to 40000.
+             */
+            amount?: number;
+
+            /**
+             * Determines if the amount includes the IOF tax. Defaults to `never`.
+             */
+            amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+            /**
+             * Type of amount. Defaults to `maximum`.
+             */
+            amount_type?: MandateOptions.AmountType;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Only `brl` is supported currently.
+             */
+            currency?: string;
+
+            /**
+             * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+             */
+            end_date?: string;
+
+            /**
+             * Schedule at which the future payments will be charged. Defaults to `weekly`.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * Subscription name displayed to buyers in their bank app. Defaults to the displayable business name.
+             */
+            reference?: string;
+
+            /**
+             * Start date of the mandate, in `YYYY-MM-DD`. Start date should be at least 3 days in the future. Defaults to 3 days after the current date.
+             */
+            start_date?: string;
+          }
+
+          namespace MandateOptions {
+            type AmountIncludesIof = 'always' | 'never';
+
+            type AmountType = 'fixed' | 'maximum';
+
+            type PaymentSchedule =
+              | 'halfyearly'
+              | 'monthly'
+              | 'quarterly'
+              | 'weekly'
+              | 'yearly';
+          }
+
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Promptpay {

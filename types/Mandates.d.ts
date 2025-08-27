@@ -85,7 +85,17 @@ declare module 'stripe' {
         type Type = 'offline' | 'online';
       }
 
-      interface MultiUse {}
+      interface MultiUse {
+        /**
+         * The amount of the payment on a multi use mandate.
+         */
+        amount?: number;
+
+        /**
+         * The currency of the payment on a multi use mandate.
+         */
+        currency?: string;
+      }
 
       interface PaymentMethodDetails {
         acss_debit?: PaymentMethodDetails.AcssDebit;
@@ -115,6 +125,8 @@ declare module 'stripe' {
         paypal?: PaymentMethodDetails.Paypal;
 
         payto?: PaymentMethodDetails.Payto;
+
+        pix?: PaymentMethodDetails.Pix;
 
         revolut_pay?: PaymentMethodDetails.RevolutPay;
 
@@ -302,6 +314,51 @@ declare module 'stripe' {
             | 'salary'
             | 'tax'
             | 'utility';
+        }
+
+        interface Pix {
+          /**
+           * Determines if the amount includes the IOF tax.
+           */
+          amount_includes_iof?: Pix.AmountIncludesIof;
+
+          /**
+           * Type of amount.
+           */
+          amount_type?: Pix.AmountType;
+
+          /**
+           * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`.
+           */
+          end_date?: string;
+
+          /**
+           * Schedule at which the future payments will be charged.
+           */
+          payment_schedule?: Pix.PaymentSchedule;
+
+          /**
+           * Subscription name displayed to buyers in their bank app.
+           */
+          reference?: string;
+
+          /**
+           * Start date of the mandate, in `YYYY-MM-DD`.
+           */
+          start_date?: string;
+        }
+
+        namespace Pix {
+          type AmountIncludesIof = 'always' | 'never';
+
+          type AmountType = 'fixed' | 'maximum';
+
+          type PaymentSchedule =
+            | 'halfyearly'
+            | 'monthly'
+            | 'quarterly'
+            | 'weekly'
+            | 'yearly';
         }
 
         interface RevolutPay {}

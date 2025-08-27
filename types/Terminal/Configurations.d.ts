@@ -42,6 +42,8 @@ declare module 'stripe' {
 
         offline?: Configuration.Offline;
 
+        reader_security?: Configuration.ReaderSecurity;
+
         reboot_window?: Configuration.RebootWindow;
 
         stripe_s700?: Configuration.StripeS700;
@@ -66,6 +68,13 @@ declare module 'stripe' {
            * Determines whether to allow transactions to be collected while reader is offline. Defaults to false.
            */
           enabled: boolean | null;
+        }
+
+        interface ReaderSecurity {
+          /**
+           * Passcode used to access a reader's admin menu.
+           */
+          admin_menu_passcode: string;
         }
 
         interface RebootWindow {
@@ -111,6 +120,8 @@ declare module 'stripe' {
           huf?: Tipping.Huf;
 
           jpy?: Tipping.Jpy;
+
+          mxn?: Tipping.Mxn;
 
           myr?: Tipping.Myr;
 
@@ -318,6 +329,23 @@ declare module 'stripe' {
           }
 
           interface Jpy {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts?: Array<number> | null;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages?: Array<number> | null;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
+          interface Mxn {
             /**
              * Fixed amounts displayed when collecting a tip
              */

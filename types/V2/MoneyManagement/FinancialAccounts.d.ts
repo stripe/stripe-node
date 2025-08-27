@@ -34,6 +34,11 @@ declare module 'stripe' {
           created: string;
 
           /**
+           * A descriptive name for the FinancialAccount, up to 50 characters long. This name will be used in the Stripe Dashboard and embedded components.
+           */
+          display_name: string | null;
+
+          /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
            */
           livemode: boolean;

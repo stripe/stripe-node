@@ -3,27 +3,28 @@
 declare module 'stripe' {
   namespace Stripe.V2 {
     export type Event =
-      | Stripe.Events.V2CoreAccountIncludingRequirementsUpdatedEvent
-      | Stripe.Events.V2CoreAccountLinkReturnedEvent
+      | Stripe.Events.V1BillingMeterErrorReportTriggeredEvent
+      | Stripe.Events.V1BillingMeterNoMeterFoundEvent
       | Stripe.Events.V2CoreAccountClosedEvent
       | Stripe.Events.V2CoreAccountCreatedEvent
       | Stripe.Events.V2CoreAccountUpdatedEvent
-      | Stripe.Events.V2CoreAccountIncludingDefaultsUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationCustomerUpdatedEvent
-      | Stripe.Events.V2CoreAccountIncludingIdentityUpdatedEvent
-      | Stripe.Events.V2CoreAccountPersonCreatedEvent
-      | Stripe.Events.V2CoreAccountPersonDeletedEvent
-      | Stripe.Events.V2CoreAccountPersonUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationMerchantUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationRecipientUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationStorerUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingDefaultsUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingIdentityUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingRequirementsUpdatedEvent
+      | Stripe.Events.V2CoreAccountLinkReturnedEvent
+      | Stripe.Events.V2CoreAccountPersonCreatedEvent
+      | Stripe.Events.V2CoreAccountPersonDeletedEvent
+      | Stripe.Events.V2CoreAccountPersonUpdatedEvent
+      | Stripe.Events.V2CoreEventDestinationPingEvent
       | Stripe.Events.V2MoneyManagementAdjustmentCreatedEvent
-      | Stripe.Events.V1BillingMeterErrorReportTriggeredEvent
-      | Stripe.Events.V1BillingMeterNoMeterFoundEvent
       | Stripe.Events.V2MoneyManagementFinancialAccountCreatedEvent
       | Stripe.Events.V2MoneyManagementFinancialAccountUpdatedEvent
       | Stripe.Events.V2MoneyManagementFinancialAddressActivatedEvent
@@ -34,13 +35,6 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementInboundTransferBankDebitQueuedEvent
       | Stripe.Events.V2MoneyManagementInboundTransferBankDebitReturnedEvent
       | Stripe.Events.V2MoneyManagementInboundTransferBankDebitSucceededEvent
-      | Stripe.Events.V2CoreEventDestinationPingEvent
-      | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
-      | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
-      | Stripe.Events.V2PaymentsOffSessionPaymentCanceledEvent
-      | Stripe.Events.V2PaymentsOffSessionPaymentCreatedEvent
-      | Stripe.Events.V2PaymentsOffSessionPaymentFailedEvent
-      | Stripe.Events.V2PaymentsOffSessionPaymentSucceededEvent
       | Stripe.Events.V2MoneyManagementOutboundPaymentCanceledEvent
       | Stripe.Events.V2MoneyManagementOutboundPaymentCreatedEvent
       | Stripe.Events.V2MoneyManagementOutboundPaymentFailedEvent
@@ -64,408 +58,16 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementReceivedDebitSucceededEvent
       | Stripe.Events.V2MoneyManagementReceivedDebitUpdatedEvent
       | Stripe.Events.V2MoneyManagementTransactionCreatedEvent
-      | Stripe.Events.V2MoneyManagementTransactionUpdatedEvent;
+      | Stripe.Events.V2MoneyManagementTransactionUpdatedEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentCanceledEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentCreatedEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentFailedEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentSucceededEvent;
   }
 
   namespace Stripe.Events {
-    /**
-     * Occurs when an Account's requirements are updated.
-     */
-    export interface V2CoreAccountIncludingRequirementsUpdatedEvent
-      extends V2.EventBase {
-      type: 'v2.core.account[requirements].updated';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Account>;
-    }
-
-    /**
-     * Occurs when the generated AccountLink is completed.
-     */
-    export interface V2CoreAccountLinkReturnedEvent extends V2.EventBase {
-      type: 'v2.core.account_link.returned';
-      // Retrieves data specific to this event.
-      data: V2CoreAccountLinkReturnedEvent.Data;
-    }
-
-    namespace V2CoreAccountLinkReturnedEvent {
-      export interface Data {
-        /**
-         * The ID of the v2 account.
-         */
-        account_id: string;
-
-        /**
-         * Configurations on the Account that was onboarded via the account link.
-         */
-        configurations: Array<Data.Configuration>;
-
-        /**
-         * Open Enum. The use case type of the account link that has been completed.
-         */
-        use_case: Data.UseCase;
-      }
-
-      namespace Data {
-        export type Configuration =
-          | 'customer'
-          | 'merchant'
-          | 'recipient'
-          | 'storer';
-
-        export type UseCase = 'account_onboarding' | 'account_update';
-      }
-    }
-
-    /**
-     * This event occurs when an account is closed.
-     */
-    export interface V2CoreAccountClosedEvent extends V2.EventBase {
-      type: 'v2.core.account.closed';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Account>;
-    }
-
-    /**
-     * Occurs when an Account is created.
-     */
-    export interface V2CoreAccountCreatedEvent extends V2.EventBase {
-      type: 'v2.core.account.created';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Account>;
-    }
-
-    /**
-     * Occurs when an Account is updated.
-     */
-    export interface V2CoreAccountUpdatedEvent extends V2.EventBase {
-      type: 'v2.core.account.updated';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Account>;
-    }
-
-    /**
-     * This event occurs when account defaults are created or updated.
-     */
-    export interface V2CoreAccountIncludingDefaultsUpdatedEvent
-      extends V2.EventBase {
-      type: 'v2.core.account[defaults].updated';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Account>;
-    }
-
-    /**
-     * Occurs when the status of an Account's customer configuration capability is updated.
-     */
-    export interface V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent
-      extends V2.EventBase {
-      type: 'v2.core.account[configuration.customer].capability_status_updated';
-      // Retrieves data specific to this event.
-      data: V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent.Data;
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Account>;
-    }
-
-    namespace V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent {
-      export interface Data {
-        /**
-         * Open Enum. The capability which had its status updated.
-         */
-        updated_capability: 'automatic_indirect_tax';
-      }
-    }
-
-    /**
-     * Occurs when an Account's customer configuration is updated.
-     */
-    export interface V2CoreAccountIncludingConfigurationCustomerUpdatedEvent
-      extends V2.EventBase {
-      type: 'v2.core.account[configuration.customer].updated';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Account>;
-    }
-
-    /**
-     * Occurs when an Identity is updated.
-     */
-    export interface V2CoreAccountIncludingIdentityUpdatedEvent
-      extends V2.EventBase {
-      type: 'v2.core.account[identity].updated';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Account>;
-    }
-
-    /**
-     * Occurs when a Person is created.
-     */
-    export interface V2CoreAccountPersonCreatedEvent extends V2.EventBase {
-      type: 'v2.core.account_person.created';
-      // Retrieves data specific to this event.
-      data: V2CoreAccountPersonCreatedEvent.Data;
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Person>;
-    }
-
-    namespace V2CoreAccountPersonCreatedEvent {
-      export interface Data {
-        /**
-         * The ID of the v2 account.
-         */
-        account_id: string;
-      }
-    }
-
-    /**
-     * Occurs when a Person is deleted.
-     */
-    export interface V2CoreAccountPersonDeletedEvent extends V2.EventBase {
-      type: 'v2.core.account_person.deleted';
-      // Retrieves data specific to this event.
-      data: V2CoreAccountPersonDeletedEvent.Data;
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Person>;
-    }
-
-    namespace V2CoreAccountPersonDeletedEvent {
-      export interface Data {
-        /**
-         * The ID of the v2 account.
-         */
-        account_id: string;
-      }
-    }
-
-    /**
-     * Occurs when a Person is updated.
-     */
-    export interface V2CoreAccountPersonUpdatedEvent extends V2.EventBase {
-      type: 'v2.core.account_person.updated';
-      // Retrieves data specific to this event.
-      data: V2CoreAccountPersonUpdatedEvent.Data;
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Person>;
-    }
-
-    namespace V2CoreAccountPersonUpdatedEvent {
-      export interface Data {
-        /**
-         * The ID of the v2 account.
-         */
-        account_id: string;
-      }
-    }
-
-    /**
-     * Occurs when the status of an Account's merchant configuration capability is updated.
-     */
-    export interface V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent
-      extends V2.EventBase {
-      type: 'v2.core.account[configuration.merchant].capability_status_updated';
-      // Retrieves data specific to this event.
-      data: V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent.Data;
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Account>;
-    }
-
-    namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent {
-      export interface Data {
-        /**
-         * Open Enum. The capability which had its status updated.
-         */
-        updated_capability: Data.UpdatedCapability;
-      }
-
-      namespace Data {
-        export type UpdatedCapability =
-          | 'ach_debit_payments'
-          | 'acss_debit_payments'
-          | 'affirm_payments'
-          | 'afterpay_clearpay_payments'
-          | 'alma_payments'
-          | 'amazon_pay_payments'
-          | 'au_becs_debit_payments'
-          | 'bacs_debit_payments'
-          | 'bancontact_payments'
-          | 'blik_payments'
-          | 'boleto_payments'
-          | 'card_payments'
-          | 'cartes_bancaires_payments'
-          | 'cashapp_payments'
-          | 'eps_payments'
-          | 'fpx_payments'
-          | 'gb_bank_transfer_payments'
-          | 'grabpay_payments'
-          | 'ideal_payments'
-          | 'jcb_payments'
-          | 'jp_bank_transfer_payments'
-          | 'kakao_pay_payments'
-          | 'klarna_payments'
-          | 'konbini_payments'
-          | 'kr_card_payments'
-          | 'link_payments'
-          | 'mobilepay_payments'
-          | 'multibanco_payments'
-          | 'mx_bank_transfer_payments'
-          | 'naver_pay_payments'
-          | 'oxxo_payments'
-          | 'p24_payments'
-          | 'payco_payments'
-          | 'paynow_payments'
-          | 'stripe_balance.payouts'
-          | 'pay_by_bank_payments'
-          | 'promptpay_payments'
-          | 'revolut_pay_payments'
-          | 'samsung_pay_payments'
-          | 'sepa_bank_transfer_payments'
-          | 'sepa_debit_payments'
-          | 'swish_payments'
-          | 'twint_payments'
-          | 'us_bank_transfer_payments'
-          | 'zip_payments';
-      }
-    }
-
-    /**
-     * Occurs when an Account's merchant configuration is updated.
-     */
-    export interface V2CoreAccountIncludingConfigurationMerchantUpdatedEvent
-      extends V2.EventBase {
-      type: 'v2.core.account[configuration.merchant].updated';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Account>;
-    }
-
-    /**
-     * Occurs when the status of an Account's recipient configuration capability is updated.
-     */
-    export interface V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent
-      extends V2.EventBase {
-      type: 'v2.core.account[configuration.recipient].capability_status_updated';
-      // Retrieves data specific to this event.
-      data: V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent.Data;
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Account>;
-    }
-
-    namespace V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent {
-      export interface Data {
-        /**
-         * Open Enum. The capability which had its status updated.
-         */
-        updated_capability: Data.UpdatedCapability;
-      }
-
-      namespace Data {
-        export type UpdatedCapability =
-          | 'bank_accounts.local'
-          | 'bank_accounts.wire'
-          | 'cards'
-          | 'stripe_balance.payouts'
-          | 'stripe_balance.stripe_transfers'
-          | 'stripe.transfers';
-      }
-    }
-
-    /**
-     * Occurs when a Recipient's configuration is updated.
-     */
-    export interface V2CoreAccountIncludingConfigurationRecipientUpdatedEvent
-      extends V2.EventBase {
-      type: 'v2.core.account[configuration.recipient].updated';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Account>;
-    }
-
-    /**
-     * Occurs when the status of an Account's storer configuration capability is updated.
-     */
-    export interface V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent
-      extends V2.EventBase {
-      type: 'v2.core.account[configuration.storer].capability_status_updated';
-      // Retrieves data specific to this event.
-      data: V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent.Data;
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Account>;
-    }
-
-    namespace V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent {
-      export interface Data {
-        /**
-         * Open Enum. The capability which had its status updated.
-         */
-        updated_capability: Data.UpdatedCapability;
-      }
-
-      namespace Data {
-        export type UpdatedCapability =
-          | 'financial_addressses.bank_accounts'
-          | 'holds_currencies.eur'
-          | 'holds_currencies.gbp'
-          | 'holds_currencies.usd'
-          | 'inbound_transfers.bank_accounts'
-          | 'outbound_payments.bank_accounts'
-          | 'outbound_payments.cards'
-          | 'outbound_payments.financial_accounts'
-          | 'outbound_transfers.bank_accounts'
-          | 'outbound_transfers.financial_accounts';
-      }
-    }
-
-    /**
-     * Occurs when a Storer's configuration is updated.
-     */
-    export interface V2CoreAccountIncludingConfigurationStorerUpdatedEvent
-      extends V2.EventBase {
-      type: 'v2.core.account[configuration.storer].updated';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Account>;
-    }
-
-    /**
-     * Occurs when an Adjustment is created.
-     */
-    export interface V2MoneyManagementAdjustmentCreatedEvent
-      extends V2.EventBase {
-      type: 'v2.money_management.adjustment.created';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.MoneyManagement.Adjustment>;
-    }
-
     /**
      * Occurs when a Meter has invalid async usage events.
      */
@@ -672,6 +274,415 @@ declare module 'stripe' {
     }
 
     /**
+     * This event occurs when an account is closed.
+     */
+    export interface V2CoreAccountClosedEvent extends V2.EventBase {
+      type: 'v2.core.account.closed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    /**
+     * Occurs when an Account is created.
+     */
+    export interface V2CoreAccountCreatedEvent extends V2.EventBase {
+      type: 'v2.core.account.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    /**
+     * Occurs when an Account is updated.
+     */
+    export interface V2CoreAccountUpdatedEvent extends V2.EventBase {
+      type: 'v2.core.account.updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    /**
+     * Occurs when the status of an Account's customer configuration capability is updated.
+     */
+    export interface V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.customer].capability_status_updated';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    namespace V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent {
+      export interface Data {
+        /**
+         * Open Enum. The capability which had its status updated.
+         */
+        updated_capability: 'automatic_indirect_tax';
+      }
+    }
+
+    /**
+     * Occurs when an Account's customer configuration is updated.
+     */
+    export interface V2CoreAccountIncludingConfigurationCustomerUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.customer].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    /**
+     * Occurs when the status of an Account's merchant configuration capability is updated.
+     */
+    export interface V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.merchant].capability_status_updated';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent {
+      export interface Data {
+        /**
+         * Open Enum. The capability which had its status updated.
+         */
+        updated_capability: Data.UpdatedCapability;
+      }
+
+      namespace Data {
+        export type UpdatedCapability =
+          | 'ach_debit_payments'
+          | 'acss_debit_payments'
+          | 'affirm_payments'
+          | 'afterpay_clearpay_payments'
+          | 'alma_payments'
+          | 'amazon_pay_payments'
+          | 'au_becs_debit_payments'
+          | 'bacs_debit_payments'
+          | 'bancontact_payments'
+          | 'blik_payments'
+          | 'boleto_payments'
+          | 'card_payments'
+          | 'cartes_bancaires_payments'
+          | 'cashapp_payments'
+          | 'eps_payments'
+          | 'fpx_payments'
+          | 'gb_bank_transfer_payments'
+          | 'grabpay_payments'
+          | 'ideal_payments'
+          | 'jcb_payments'
+          | 'jp_bank_transfer_payments'
+          | 'kakao_pay_payments'
+          | 'klarna_payments'
+          | 'konbini_payments'
+          | 'kr_card_payments'
+          | 'link_payments'
+          | 'mobilepay_payments'
+          | 'multibanco_payments'
+          | 'mx_bank_transfer_payments'
+          | 'naver_pay_payments'
+          | 'oxxo_payments'
+          | 'p24_payments'
+          | 'payco_payments'
+          | 'paynow_payments'
+          | 'stripe_balance.payouts'
+          | 'pay_by_bank_payments'
+          | 'promptpay_payments'
+          | 'revolut_pay_payments'
+          | 'samsung_pay_payments'
+          | 'sepa_bank_transfer_payments'
+          | 'sepa_debit_payments'
+          | 'swish_payments'
+          | 'twint_payments'
+          | 'us_bank_transfer_payments'
+          | 'zip_payments';
+      }
+    }
+
+    /**
+     * Occurs when an Account's merchant configuration is updated.
+     */
+    export interface V2CoreAccountIncludingConfigurationMerchantUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.merchant].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    /**
+     * Occurs when the status of an Account's recipient configuration capability is updated.
+     */
+    export interface V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.recipient].capability_status_updated';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    namespace V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent {
+      export interface Data {
+        /**
+         * Open Enum. The capability which had its status updated.
+         */
+        updated_capability: Data.UpdatedCapability;
+      }
+
+      namespace Data {
+        export type UpdatedCapability =
+          | 'bank_accounts.local'
+          | 'bank_accounts.wire'
+          | 'cards'
+          | 'stripe_balance.payouts'
+          | 'stripe_balance.stripe_transfers'
+          | 'stripe.transfers';
+      }
+    }
+
+    /**
+     * Occurs when a Recipient's configuration is updated.
+     */
+    export interface V2CoreAccountIncludingConfigurationRecipientUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.recipient].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    /**
+     * Occurs when the status of an Account's storer configuration capability is updated.
+     */
+    export interface V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.storer].capability_status_updated';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    namespace V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent {
+      export interface Data {
+        /**
+         * Open Enum. The capability which had its status updated.
+         */
+        updated_capability: Data.UpdatedCapability;
+      }
+
+      namespace Data {
+        export type UpdatedCapability =
+          | 'financial_addressses.bank_accounts'
+          | 'holds_currencies.eur'
+          | 'holds_currencies.gbp'
+          | 'holds_currencies.usd'
+          | 'inbound_transfers.bank_accounts'
+          | 'outbound_payments.bank_accounts'
+          | 'outbound_payments.cards'
+          | 'outbound_payments.financial_accounts'
+          | 'outbound_transfers.bank_accounts'
+          | 'outbound_transfers.financial_accounts';
+      }
+    }
+
+    /**
+     * Occurs when a Storer's configuration is updated.
+     */
+    export interface V2CoreAccountIncludingConfigurationStorerUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[configuration.storer].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    /**
+     * This event occurs when account defaults are created or updated.
+     */
+    export interface V2CoreAccountIncludingDefaultsUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[defaults].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    /**
+     * Occurs when an Identity is updated.
+     */
+    export interface V2CoreAccountIncludingIdentityUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[identity].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    /**
+     * Occurs when an Account's requirements are updated.
+     */
+    export interface V2CoreAccountIncludingRequirementsUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.account[requirements].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+
+    /**
+     * Occurs when the generated AccountLink is completed.
+     */
+    export interface V2CoreAccountLinkReturnedEvent extends V2.EventBase {
+      type: 'v2.core.account_link.returned';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountLinkReturnedEvent.Data;
+    }
+
+    namespace V2CoreAccountLinkReturnedEvent {
+      export interface Data {
+        /**
+         * The ID of the v2 account.
+         */
+        account_id: string;
+
+        /**
+         * Configurations on the Account that was onboarded via the account link.
+         */
+        configurations: Array<Data.Configuration>;
+
+        /**
+         * Open Enum. The use case type of the account link that has been completed.
+         */
+        use_case: Data.UseCase;
+      }
+
+      namespace Data {
+        export type Configuration =
+          | 'customer'
+          | 'merchant'
+          | 'recipient'
+          | 'storer';
+
+        export type UseCase = 'account_onboarding' | 'account_update';
+      }
+    }
+
+    /**
+     * Occurs when a Person is created.
+     */
+    export interface V2CoreAccountPersonCreatedEvent extends V2.EventBase {
+      type: 'v2.core.account_person.created';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountPersonCreatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Person>;
+    }
+
+    namespace V2CoreAccountPersonCreatedEvent {
+      export interface Data {
+        /**
+         * The ID of the v2 account.
+         */
+        account_id: string;
+      }
+    }
+
+    /**
+     * Occurs when a Person is deleted.
+     */
+    export interface V2CoreAccountPersonDeletedEvent extends V2.EventBase {
+      type: 'v2.core.account_person.deleted';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountPersonDeletedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Person>;
+    }
+
+    namespace V2CoreAccountPersonDeletedEvent {
+      export interface Data {
+        /**
+         * The ID of the v2 account.
+         */
+        account_id: string;
+      }
+    }
+
+    /**
+     * Occurs when a Person is updated.
+     */
+    export interface V2CoreAccountPersonUpdatedEvent extends V2.EventBase {
+      type: 'v2.core.account_person.updated';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountPersonUpdatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Person>;
+    }
+
+    namespace V2CoreAccountPersonUpdatedEvent {
+      export interface Data {
+        /**
+         * The ID of the v2 account.
+         */
+        account_id: string;
+      }
+    }
+
+    /**
+     * A ping event used to test the connection to an EventDestination.
+     */
+    export interface V2CoreEventDestinationPingEvent extends V2.EventBase {
+      type: 'v2.core.event_destination.ping';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.EventDestination>;
+    }
+
+    /**
+     * Occurs when an Adjustment is created.
+     */
+    export interface V2MoneyManagementAdjustmentCreatedEvent
+      extends V2.EventBase {
+      type: 'v2.money_management.adjustment.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.MoneyManagement.Adjustment>;
+    }
+
+    /**
      * Occurs when a FinancialAccount is created.
      */
     export interface V2MoneyManagementFinancialAccountCreatedEvent
@@ -800,90 +811,6 @@ declare module 'stripe' {
       related_object: Event.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.InboundTransfer>;
-    }
-
-    /**
-     * A ping event used to test the connection to an EventDestination.
-     */
-    export interface V2CoreEventDestinationPingEvent extends V2.EventBase {
-      type: 'v2.core.event_destination.ping';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.EventDestination>;
-    }
-
-    /**
-     * Sent after a failed authorization if there are still retries available on the OffSessionPayment.
-     */
-    export interface V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
-      extends V2.EventBase {
-      type: 'v2.payments.off_session_payment.authorization_attempt_failed';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-    }
-
-    /**
-     * Sent when our internal scheduling system kicks off an attempt at authorization, whether it's a
-     * retry or an initial authorization.
-     */
-    export interface V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
-      extends V2.EventBase {
-      type: 'v2.payments.off_session_payment.authorization_attempt_started';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-    }
-
-    /**
-     * Sent immediately following a user's call to the Off-Session Payments cancel endpoint.
-     */
-    export interface V2PaymentsOffSessionPaymentCanceledEvent
-      extends V2.EventBase {
-      type: 'v2.payments.off_session_payment.canceled';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-    }
-
-    /**
-     * Sent immediately following a user's call to the Off-Session Payments create endpoint.
-     */
-    export interface V2PaymentsOffSessionPaymentCreatedEvent
-      extends V2.EventBase {
-      type: 'v2.payments.off_session_payment.created';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-    }
-
-    /**
-     * Sent after a failed authorization if there are no retries remaining, or if the failure is unretryable.
-     */
-    export interface V2PaymentsOffSessionPaymentFailedEvent
-      extends V2.EventBase {
-      type: 'v2.payments.off_session_payment.failed';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-    }
-
-    /**
-     * Sent immediately after a successful authorization.
-     */
-    export interface V2PaymentsOffSessionPaymentSucceededEvent
-      extends V2.EventBase {
-      type: 'v2.payments.off_session_payment.succeeded';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
     }
 
     /**
@@ -1183,6 +1110,79 @@ declare module 'stripe' {
       related_object: Event.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.Transaction>;
+    }
+
+    /**
+     * Sent after a failed authorization if there are still retries available on the OffSessionPayment.
+     */
+    export interface V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
+      extends V2.EventBase {
+      type: 'v2.payments.off_session_payment.authorization_attempt_failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+
+    /**
+     * Sent when our internal scheduling system kicks off an attempt at authorization, whether it's a
+     * retry or an initial authorization.
+     */
+    export interface V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
+      extends V2.EventBase {
+      type: 'v2.payments.off_session_payment.authorization_attempt_started';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+
+    /**
+     * Sent immediately following a user's call to the Off-Session Payments cancel endpoint.
+     */
+    export interface V2PaymentsOffSessionPaymentCanceledEvent
+      extends V2.EventBase {
+      type: 'v2.payments.off_session_payment.canceled';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+
+    /**
+     * Sent immediately following a user's call to the Off-Session Payments create endpoint.
+     */
+    export interface V2PaymentsOffSessionPaymentCreatedEvent
+      extends V2.EventBase {
+      type: 'v2.payments.off_session_payment.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+
+    /**
+     * Sent after a failed authorization if there are no retries remaining, or if the failure is unretryable.
+     */
+    export interface V2PaymentsOffSessionPaymentFailedEvent
+      extends V2.EventBase {
+      type: 'v2.payments.off_session_payment.failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+
+    /**
+     * Sent immediately after a successful authorization.
+     */
+    export interface V2PaymentsOffSessionPaymentSucceededEvent
+      extends V2.EventBase {
+      type: 'v2.payments.off_session_payment.succeeded';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
     }
   }
 }
