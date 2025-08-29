@@ -70,7 +70,7 @@ format-check: (prettier "--check")
 # propagate automatic changes; should be run after generation
 # in practice, that means it runs after formatting, since that's the only recipe that the generator calls
 _update-api-version:
-    ./scripts/updateAPIVersion.js
+    cp src/apiVersion.ts types/apiVersion.d.ts
 
 # called by tooling
 [private]
