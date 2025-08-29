@@ -5,7 +5,7 @@ declare module 'stripe' {
     namespace V2 {
       namespace MoneyManagement {
         /**
-         * The Financial Account is the container that allows for the configuration of money movement.
+         * A FinancialAccount represents a balance and can be used as the source or destination for the money management (`/v2/money_management`) APIs.
          */
         interface FinancialAccount {
           /**
@@ -44,7 +44,7 @@ declare module 'stripe' {
           livemode: boolean;
 
           /**
-           * Metadata associated with the FinancialAccount
+           * Metadata associated with the FinancialAccount.
            */
           metadata: Stripe.Metadata | null;
 
