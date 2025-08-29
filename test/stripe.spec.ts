@@ -723,7 +723,7 @@ describe('Stripe Module', function() {
     });
   });
 
-  describe('parseThinEvent', () => {
+  describe('parseEventNotification', () => {
     const secret = 'whsec_test_secret';
 
     it('can parse event from JSON payload', () => {
@@ -737,7 +737,7 @@ describe('Stripe Module', function() {
         payload,
         secret,
       });
-      const event = stripe.parseThinEvent(payload, header, secret);
+      const event = stripe.parseEventNotification(payload, header, secret);
 
       expect(event.type).to.equal(jsonPayload.type);
       expect(event.data).to.equal(jsonPayload.data);
@@ -748,7 +748,7 @@ describe('Stripe Module', function() {
       const payload = JSON.stringify({event_type: 'account.created'});
 
       expect(() => {
-        stripe.parseThinEvent(payload, 'bad sigheader', secret);
+        stripe.parseEventNotification(payload, 'bad sigheader', secret);
       }).to.throw(StripeSignatureVerificationError);
     });
 
@@ -795,18 +795,22 @@ describe('Stripe Module', function() {
               secret,
             });
 
-            const event = stripe.parseThinEvent(payload, header, secret);
+            const event = stripe.parseEventNotification(
+              payload,
+              header,
+              secret
+            );
 
-            expect(event.pull).to.be.a('function');
+            expect(event.fetchEvent).to.be.a('function');
             expect(event.fetch_related_object).not.to.be.a('function');
-            const pulled = await event.pull();
+            const pulled = await event.fetchEvent();
             expect(pulled.data).to.equal(jsonWithData.data);
             // Have to call another requests for metrics to be sent.
-            await event.pull();
+            await event.fetchEvent();
             expect(telemetryHeader).to.exist;
             expect(
               JSON.parse(telemetryHeader).last_request_metrics.usage
-            ).to.deep.equal(['pushed_event_pull']);
+            ).to.deep.equal(['fetch_event']);
 
             closeServer();
             done();
@@ -854,11 +858,15 @@ describe('Stripe Module', function() {
               secret,
             });
 
-            const event = stripe.parseThinEvent(payload, header, secret);
+            const event = stripe.parseEventNotification(
+              payload,
+              header,
+              secret
+            );
 
-            expect(event.pull).to.be.a('function');
+            expect(event.fetchEvent).to.be.a('function');
             expect(event.fetch_related_object).not.to.be.a('function');
-            const pulled = await event.pull();
+            const pulled = await event.fetchEvent();
             expect(pulled.data).to.equal(jsonWithData.data);
 
             closeServer();
@@ -915,7 +923,11 @@ describe('Stripe Module', function() {
               secret,
             });
 
-            const event = stripe.parseThinEvent(payload, header, secret);
+            const event = stripe.parseEventNotification(
+              payload,
+              header,
+              secret
+            );
 
             expect(event.fetchRelatedObject).to.be.a('function');
             const relatedObj = await event.fetchRelatedObject();
@@ -925,7 +937,7 @@ describe('Stripe Module', function() {
             await event.fetchRelatedObject();
             expect(
               JSON.parse(telemetryHeader).last_request_metrics.usage
-            ).to.deep.equal(['pushed_event_fetch_related_object']);
+            ).to.deep.equal(['fetch_related_object']);
 
             closeServer();
             done();
@@ -970,7 +982,11 @@ describe('Stripe Module', function() {
               secret,
             });
 
-            const event = stripe.parseThinEvent(payload, header, secret);
+            const event = stripe.parseEventNotification(
+              payload,
+              header,
+              secret
+            );
 
             expect(event.fetchRelatedObject).to.be.a('function');
             const relatedObj = await event.fetchRelatedObject();

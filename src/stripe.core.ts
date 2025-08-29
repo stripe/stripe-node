@@ -485,7 +485,7 @@ export function createStripe(
       return config;
     },
 
-    parseThinEvent(
+    parseEventNotification(
       payload: string | Uint8Array,
       header: string | Uint8Array,
       secret: string,
@@ -495,7 +495,7 @@ export function createStripe(
       // this return type is ignored?? picks up types from `types/index.d.ts` instead
     ): unknown {
       // parses and validates the event payload all in one go
-      const thinEvent = this.webhooks.constructEvent(
+      const eventNotification = this.webhooks.constructEvent(
         payload,
         header,
         secret,
@@ -504,35 +504,33 @@ export function createStripe(
         receivedAt
       );
 
-      thinEvent.pull = (): Promise<unknown> => {
+      eventNotification.fetchEvent = (): Promise<unknown> => {
         return this._requestSender._rawRequest(
           'GET',
-          `/v2/core/events/${thinEvent.id}`,
+          `/v2/core/events/${eventNotification.id}`,
           undefined,
           {
-            stripeContext: thinEvent.context as string,
+            stripeContext: eventNotification.context as string,
           },
-          ['pushed_event_pull']
+          ['fetch_event']
         );
       };
 
-      if (thinEvent.related_object) {
-        thinEvent.fetchRelatedObject = (): Promise<unknown> => {
+      if (eventNotification.related_object) {
+        eventNotification.fetchRelatedObject = (): Promise<unknown> => {
           return this._requestSender._rawRequest(
             'GET',
-            // rawRequest takes a path, but events give a full URL
-            // this assumes that the event's URL matches client's base URL
-            new URL(thinEvent.related_object.url).pathname,
+            eventNotification.related_object.url,
             undefined,
             {
-              stripeContext: thinEvent.context,
+              stripeContext: eventNotification.context,
             },
-            ['pushed_event_fetch_related_object']
+            ['fetch_related_object']
           );
         };
       }
 
-      return thinEvent;
+      return eventNotification;
     },
   } as StripeObject;
 

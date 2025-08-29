@@ -7,10 +7,10 @@ declare module 'stripe' {
       | Stripe.Events.V1BillingMeterNoMeterFoundEvent
       | Stripe.Events.V2CoreEventDestinationPingEvent;
 
-    export type PushedEvent =
-      | Stripe.Events.PushedV1BillingMeterErrorReportTriggeredEvent
-      | Stripe.Events.PushedV1BillingMeterNoMeterFoundEvent
-      | Stripe.Events.PushedV2CoreEventDestinationPingEvent;
+    export type EventNotification =
+      | Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification
+      | Stripe.Events.V1BillingMeterNoMeterFoundEventNotification
+      | Stripe.Events.V2CoreEventDestinationPingEventNotification;
   }
 
   namespace Stripe.Events {
@@ -23,18 +23,18 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V1BillingMeterErrorReportTriggeredEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<Billing.Meter>;
     }
-    export interface PushedV1BillingMeterErrorReportTriggeredEvent
+    export interface V1BillingMeterErrorReportTriggeredEventNotification
       extends V2.EventBase {
       type: 'v1.billing.meter.error_report_triggered';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<Billing.Meter>;
-      pull(): Promise<V1BillingMeterErrorReportTriggeredEvent>;
+      fetchEvent(): Promise<V1BillingMeterErrorReportTriggeredEvent>;
     }
 
     namespace V1BillingMeterErrorReportTriggeredEvent {
@@ -136,10 +136,10 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V1BillingMeterNoMeterFoundEvent.Data;
     }
-    export interface PushedV1BillingMeterNoMeterFoundEvent
+    export interface V1BillingMeterNoMeterFoundEventNotification
       extends V2.EventBase {
       type: 'v1.billing.meter.no_meter_found';
-      pull(): Promise<V1BillingMeterNoMeterFoundEvent>;
+      fetchEvent(): Promise<V1BillingMeterNoMeterFoundEvent>;
     }
 
     namespace V1BillingMeterNoMeterFoundEvent {
@@ -239,18 +239,18 @@ declare module 'stripe' {
     export interface V2CoreEventDestinationPingEvent extends V2.EventBase {
       type: 'v2.core.event_destination.ping';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.EventDestination>;
     }
-    export interface PushedV2CoreEventDestinationPingEvent
+    export interface V2CoreEventDestinationPingEventNotification
       extends V2.EventBase {
       type: 'v2.core.event_destination.ping';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.EventDestination>;
-      pull(): Promise<V2CoreEventDestinationPingEvent>;
+      fetchEvent(): Promise<V2CoreEventDestinationPingEvent>;
     }
   }
 }
