@@ -2295,6 +2295,10 @@ declare module 'stripe' {
             type SetupFutureUsage = 'none' | 'off_session';
           }
 
+          namespace Pix {
+            type AmountIncludesIof = 'always' | 'never';
+          }
+
           interface RevolutPay {
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
