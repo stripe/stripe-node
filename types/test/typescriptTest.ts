@@ -8,8 +8,10 @@
 ///<reference types=".." />
 import Stripe from 'stripe';
 
+import {ApiVersion} from '../apiVersion';
+
 let stripe = new Stripe('sk_test_123', {
-  apiVersion: '2025-08-27.basil',
+  apiVersion: ApiVersion,
 });
 
 stripe = new Stripe('sk_test_123');
@@ -26,7 +28,7 @@ stripe = new Stripe('sk_test_123', {
 
 // Check config object.
 stripe = new Stripe('sk_test_123', {
-  apiVersion: '2025-08-27.basil',
+  apiVersion: ApiVersion,
   typescript: true,
   maxNetworkRetries: 1,
   timeout: 1000,
@@ -44,7 +46,7 @@ stripe = new Stripe('sk_test_123', {
     description: 'test',
   };
   const opts: Stripe.RequestOptions = {
-    apiVersion: '2025-08-27.basil',
+    apiVersion: ApiVersion,
   };
   const customer: Stripe.Customer = await stripe.customers.create(params, opts);
 
