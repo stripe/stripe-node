@@ -65,6 +65,13 @@ declare module 'stripe' {
       error_on_requires_action?: boolean;
 
       /**
+       * The list of payment method types to exclude from use with this payment.
+       */
+      excluded_payment_method_types?: Array<
+        PaymentIntentCreateParams.ExcludedPaymentMethodType
+      >;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -207,6 +214,55 @@ declare module 'stripe' {
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       type ConfirmationMethod = 'automatic' | 'manual';
+
+      type ExcludedPaymentMethodType =
+        | 'acss_debit'
+        | 'affirm'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'alma'
+        | 'amazon_pay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'billie'
+        | 'blik'
+        | 'boleto'
+        | 'card'
+        | 'cashapp'
+        | 'crypto'
+        | 'customer_balance'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'grabpay'
+        | 'ideal'
+        | 'kakao_pay'
+        | 'klarna'
+        | 'konbini'
+        | 'kr_card'
+        | 'mobilepay'
+        | 'multibanco'
+        | 'naver_pay'
+        | 'nz_bank_account'
+        | 'oxxo'
+        | 'p24'
+        | 'pay_by_bank'
+        | 'payco'
+        | 'paynow'
+        | 'paypal'
+        | 'pix'
+        | 'promptpay'
+        | 'revolut_pay'
+        | 'samsung_pay'
+        | 'satispay'
+        | 'sepa_debit'
+        | 'sofort'
+        | 'swish'
+        | 'twint'
+        | 'us_bank_account'
+        | 'wechat_pay'
+        | 'zip';
 
       interface MandateData {
         /**
@@ -1585,7 +1641,7 @@ declare module 'stripe' {
           cvc_token?: string;
 
           /**
-           * Installment configuration for payments attempted on this PaymentIntent (Mexico Only).
+           * Installment configuration for payments attempted on this PaymentIntent.
            *
            * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
            */
@@ -2617,6 +2673,11 @@ declare module 'stripe' {
 
         interface Pix {
           /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: Pix.AmountIncludesIof;
+
+          /**
            * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
            */
           expires_after_seconds?: number;
@@ -2638,6 +2699,10 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        namespace Pix {
+          type AmountIncludesIof = 'always' | 'never';
         }
 
         interface Promptpay {
@@ -4487,7 +4552,7 @@ declare module 'stripe' {
           cvc_token?: string;
 
           /**
-           * Installment configuration for payments attempted on this PaymentIntent (Mexico Only).
+           * Installment configuration for payments attempted on this PaymentIntent.
            *
            * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
            */
@@ -5519,6 +5584,11 @@ declare module 'stripe' {
 
         interface Pix {
           /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: Pix.AmountIncludesIof;
+
+          /**
            * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
            */
           expires_after_seconds?: number;
@@ -5540,6 +5610,10 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        namespace Pix {
+          type AmountIncludesIof = 'always' | 'never';
         }
 
         interface Promptpay {
@@ -7500,7 +7574,7 @@ declare module 'stripe' {
           cvc_token?: string;
 
           /**
-           * Installment configuration for payments attempted on this PaymentIntent (Mexico Only).
+           * Installment configuration for payments attempted on this PaymentIntent.
            *
            * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
            */
@@ -8532,6 +8606,11 @@ declare module 'stripe' {
 
         interface Pix {
           /**
+           * Determines if the amount includes the IOF tax. Defaults to `never`.
+           */
+          amount_includes_iof?: Pix.AmountIncludesIof;
+
+          /**
            * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
            */
           expires_after_seconds?: number;
@@ -8553,6 +8632,10 @@ declare module 'stripe' {
            * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        namespace Pix {
+          type AmountIncludesIof = 'always' | 'never';
         }
 
         interface Promptpay {
@@ -9116,6 +9199,7 @@ declare module 'stripe' {
        * Confirm that your customer intends to pay with current or provided
        * payment method. Upon confirmation, the PaymentIntent will attempt to initiate
        * a payment.
+       *
        * If the selected payment method requires additional authentication steps, the
        * PaymentIntent will transition to the requires_action status and
        * suggest additional actions via next_action. If payment fails,
@@ -9123,18 +9207,22 @@ declare module 'stripe' {
        * canceled status if the confirmation limit is reached. If
        * payment succeeds, the PaymentIntent will transition to the succeeded
        * status (or requires_capture, if capture_method is set to manual).
+       *
        * If the confirmation_method is automatic, payment may be attempted
        * using our [client SDKs](https://docs.stripe.com/docs/stripe-js/reference#stripe-handle-card-payment)
        * and the PaymentIntent's [client_secret](https://docs.stripe.com/api#payment_intent_object-client_secret).
        * After next_actions are handled by the client, no additional
        * confirmation is required to complete the payment.
+       *
        * If the confirmation_method is manual, all payment attempts must be
        * initiated using a secret key.
+       *
        * If any actions are required for the payment, the PaymentIntent will
        * return to the requires_confirmation state
        * after those actions are completed. Your server needs to then
        * explicitly re-confirm the PaymentIntent to initiate the next payment
        * attempt.
+       *
        * There is a variable upper limit on how many times a PaymentIntent can be confirmed.
        * After this limit is reached, any further calls to this endpoint will
        * transition the PaymentIntent to the canceled state.

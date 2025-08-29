@@ -3,6 +3,8 @@
 
 import {Agent} from 'http';
 
+import {ApiVersion} from './apiVersion';
+
 declare module 'stripe' {
   namespace Stripe {
     type StripeResourceClass = typeof StripeResource;
@@ -27,7 +29,8 @@ declare module 'stripe' {
       }): (...args: any[]) => Response<ResponseObject>; //eslint-disable-line @typescript-eslint/no-explicit-any
       static MAX_BUFFERED_REQUEST_METRICS: number;
     }
-    export type LatestApiVersion = '2025-06-30.basil';
+    export type LatestApiVersion = typeof ApiVersion;
+    export const API_VERSION: string;
     export type HttpAgent = Agent;
     export type HttpProtocol = 'http' | 'https';
 

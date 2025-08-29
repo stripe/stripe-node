@@ -50,6 +50,8 @@ declare module 'stripe' {
 
         account_onboarding: Components.AccountOnboarding;
 
+        balance_report: Components.BalanceReport;
+
         balances: Components.Balances;
 
         disputes_list: Components.DisputesList;
@@ -59,6 +61,8 @@ declare module 'stripe' {
         financial_account: Components.FinancialAccount;
 
         financial_account_transactions: Components.FinancialAccountTransactions;
+
+        instant_payouts_promotion: Components.InstantPayoutsPromotion;
 
         issuing_card: Components.IssuingCard;
 
@@ -71,6 +75,10 @@ declare module 'stripe' {
         payment_disputes: Components.PaymentDisputes;
 
         payments: Components.Payments;
+
+        payout_details: Components.PayoutDetails;
+
+        payout_reconciliation_report: Components.PayoutReconciliationReport;
 
         payouts: Components.Payouts;
 
@@ -126,6 +134,19 @@ declare module 'stripe' {
              */
             external_account_collection: boolean;
           }
+        }
+
+        interface BalanceReport {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: BalanceReport.Features;
+        }
+
+        namespace BalanceReport {
+          interface Features {}
         }
 
         interface Balances {
@@ -260,6 +281,34 @@ declare module 'stripe' {
              * Whether to allow card spend dispute management features.
              */
             card_spend_dispute_management: boolean;
+          }
+        }
+
+        interface InstantPayoutsPromotion {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: InstantPayoutsPromotion.Features;
+        }
+
+        namespace InstantPayoutsPromotion {
+          interface Features {
+            /**
+             * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to `true` and `disable_stripe_user_authentication` defaults to `false`.
+             */
+            disable_stripe_user_authentication: boolean;
+
+            /**
+             * Whether external account collection is enabled. This feature can only be `false` for accounts where you're responsible for collecting updated information when requirements are due or change, like Custom accounts. The default value for this feature is `true`.
+             */
+            external_account_collection: boolean;
+
+            /**
+             * Whether to allow creation of instant payouts. Defaults to `true` when `controller.losses.payments` is set to `stripe` for the account, otherwise `false`.
+             */
+            instant_payouts: boolean;
           }
         }
 
@@ -449,6 +498,32 @@ declare module 'stripe' {
              */
             refund_management: boolean;
           }
+        }
+
+        interface PayoutDetails {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: PayoutDetails.Features;
+        }
+
+        namespace PayoutDetails {
+          interface Features {}
+        }
+
+        interface PayoutReconciliationReport {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: PayoutReconciliationReport.Features;
+        }
+
+        namespace PayoutReconciliationReport {
+          interface Features {}
         }
 
         interface Payouts {

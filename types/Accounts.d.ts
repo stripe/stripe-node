@@ -142,7 +142,7 @@ declare module 'stripe' {
         mcc: string | null;
 
         /**
-         * Whether the business is a minority-owned, women-owned, and/or LGBTQI+-owned business.
+         * Whether the business is a minority-owned, women-owned, and/or LGBTQI+ -owned business.
          */
         minority_owned_business_designation: Array<
           BusinessProfile.MinorityOwnedBusinessDesignation
@@ -910,7 +910,7 @@ declare module 'stripe' {
         namespace Verification {
           interface Document {
             /**
-             * The back of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`.
+             * The back of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`. Note that `additional_verification` files are [not downloadable](https://docs.stripe.com/file-upload#uploading-a-file).
              */
             back: string | Stripe.File | null;
 
@@ -925,7 +925,7 @@ declare module 'stripe' {
             details_code: string | null;
 
             /**
-             * The front of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`.
+             * The front of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`. Note that `additional_verification` files are [not downloadable](https://docs.stripe.com/file-upload#uploading-a-file).
              */
             front: string | Stripe.File | null;
           }

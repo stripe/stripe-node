@@ -33,6 +33,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
+
+        /**
+         * The name of the configuration.
+         */
+        name?: Stripe.Emptyable<string>;
       }
 
       namespace ConfigurationCreateParams {
@@ -208,6 +213,11 @@ declare module 'stripe' {
 
             interface Product {
               /**
+               * Control whether the quantity of the product can be adjusted.
+               */
+              adjustable_quantity?: Product.AdjustableQuantity;
+
+              /**
                * The list of price IDs for the product that a subscription can be updated to.
                */
               prices: Array<string>;
@@ -216,6 +226,25 @@ declare module 'stripe' {
                * The product id.
                */
               product: string;
+            }
+
+            namespace Product {
+              interface AdjustableQuantity {
+                /**
+                 * Set to true if the quantity can be adjusted to any non-negative integer.
+                 */
+                enabled: boolean;
+
+                /**
+                 * The maximum quantity that can be set for the product.
+                 */
+                maximum?: number;
+
+                /**
+                 * The minimum quantity that can be set for the product.
+                 */
+                minimum?: number;
+              }
             }
 
             type ProrationBehavior =
@@ -295,6 +324,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * The name of the configuration.
+         */
+        name?: Stripe.Emptyable<string>;
       }
 
       namespace ConfigurationUpdateParams {
@@ -470,6 +504,11 @@ declare module 'stripe' {
 
             interface Product {
               /**
+               * Control whether the quantity of the product can be adjusted.
+               */
+              adjustable_quantity?: Product.AdjustableQuantity;
+
+              /**
                * The list of price IDs for the product that a subscription can be updated to.
                */
               prices: Array<string>;
@@ -478,6 +517,25 @@ declare module 'stripe' {
                * The product id.
                */
               product: string;
+            }
+
+            namespace Product {
+              interface AdjustableQuantity {
+                /**
+                 * Set to true if the quantity can be adjusted to any non-negative integer.
+                 */
+                enabled: boolean;
+
+                /**
+                 * The maximum quantity that can be set for the product.
+                 */
+                maximum?: number;
+
+                /**
+                 * The minimum quantity that can be set for the product.
+                 */
+                minimum?: number;
+              }
             }
 
             type ProrationBehavior =

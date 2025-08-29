@@ -531,16 +531,52 @@ declare module 'stripe' {
         namespace CountryOptions {
           interface Ae {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Ae.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
           }
 
+          namespace Ae {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
+          }
+
           interface Al {
+            /**
+             * Options for the standard registration.
+             */
+            standard?: Al.Standard;
+
             /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Al {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Am {
@@ -552,9 +588,27 @@ declare module 'stripe' {
 
           interface Ao {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Ao.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Ao {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface At {
@@ -578,7 +632,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -586,16 +643,52 @@ declare module 'stripe' {
 
           interface Au {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Au.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
           }
 
+          namespace Au {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
+          }
+
           interface Aw {
+            /**
+             * Options for the standard registration.
+             */
+            standard?: Aw.Standard;
+
             /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Aw {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Az {
@@ -607,23 +700,77 @@ declare module 'stripe' {
 
           interface Ba {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Ba.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Ba {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Bb {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Bb.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
           }
 
+          namespace Bb {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
+          }
+
           interface Bd {
+            /**
+             * Options for the standard registration.
+             */
+            standard?: Bd.Standard;
+
             /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Bd {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Be {
@@ -647,7 +794,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -655,9 +805,27 @@ declare module 'stripe' {
 
           interface Bf {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Bf.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Bf {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Bg {
@@ -681,7 +849,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -689,9 +860,27 @@ declare module 'stripe' {
 
           interface Bh {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Bh.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Bh {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Bj {
@@ -703,9 +892,27 @@ declare module 'stripe' {
 
           interface Bs {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Bs.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Bs {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface By {
@@ -740,16 +947,52 @@ declare module 'stripe' {
 
           interface Cd {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Cd.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
           }
 
+          namespace Cd {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
+          }
+
           interface Ch {
+            /**
+             * Options for the standard registration.
+             */
+            standard?: Ch.Standard;
+
             /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Ch {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Cl {
@@ -808,7 +1051,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -835,7 +1081,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -862,7 +1111,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -889,7 +1141,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -923,7 +1178,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -957,7 +1215,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -965,9 +1226,27 @@ declare module 'stripe' {
 
           interface Et {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Et.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Et {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Fi {
@@ -991,7 +1270,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1018,7 +1300,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1026,9 +1311,27 @@ declare module 'stripe' {
 
           interface Gb {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Gb.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Gb {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Ge {
@@ -1040,9 +1343,27 @@ declare module 'stripe' {
 
           interface Gn {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Gn.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Gn {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Gr {
@@ -1066,7 +1387,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1093,7 +1417,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1120,7 +1447,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1154,7 +1484,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1169,9 +1502,27 @@ declare module 'stripe' {
 
           interface Is {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Is.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Is {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface It {
@@ -1195,7 +1546,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1203,9 +1557,27 @@ declare module 'stripe' {
 
           interface Jp {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Jp.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Jp {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Ke {
@@ -1271,7 +1643,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1298,7 +1673,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1325,7 +1703,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1347,23 +1728,77 @@ declare module 'stripe' {
 
           interface Me {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Me.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Me {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Mk {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Mk.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
           }
 
+          namespace Mk {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
+          }
+
           interface Mr {
+            /**
+             * Options for the standard registration.
+             */
+            standard?: Mr.Standard;
+
             /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Mr {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Mt {
@@ -1387,7 +1822,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1435,7 +1873,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1443,9 +1884,27 @@ declare module 'stripe' {
 
           interface No {
             /**
+             * Options for the standard registration.
+             */
+            standard?: No.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace No {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Np {
@@ -1457,16 +1916,52 @@ declare module 'stripe' {
 
           interface Nz {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Nz.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
           }
 
+          namespace Nz {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
+          }
+
           interface Om {
+            /**
+             * Options for the standard registration.
+             */
+            standard?: Om.Standard;
+
             /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Om {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Pe {
@@ -1504,7 +1999,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1531,7 +2029,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1558,7 +2059,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1566,9 +2070,27 @@ declare module 'stripe' {
 
           interface Rs {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Rs.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Rs {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Ru {
@@ -1606,7 +2128,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1614,9 +2139,27 @@ declare module 'stripe' {
 
           interface Sg {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Sg.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Sg {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Si {
@@ -1640,7 +2183,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1667,7 +2213,10 @@ declare module 'stripe' {
             }
 
             namespace Standard {
-              type PlaceOfSupplyScheme = 'small_seller' | 'standard';
+              type PlaceOfSupplyScheme =
+                | 'inbound_goods'
+                | 'small_seller'
+                | 'standard';
             }
 
             type Type = 'ioss' | 'oss_non_union' | 'oss_union' | 'standard';
@@ -1682,9 +2231,27 @@ declare module 'stripe' {
 
           interface Sr {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Sr.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Sr {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Th {
@@ -1809,9 +2376,27 @@ declare module 'stripe' {
 
           interface Uy {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Uy.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Uy {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Uz {
@@ -1830,9 +2415,27 @@ declare module 'stripe' {
 
           interface Za {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Za.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Za {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
 
           interface Zm {
@@ -1844,9 +2447,27 @@ declare module 'stripe' {
 
           interface Zw {
             /**
+             * Options for the standard registration.
+             */
+            standard?: Zw.Standard;
+
+            /**
              * Type of registration to be created in `country`.
              */
             type: 'standard';
+          }
+
+          namespace Zw {
+            interface Standard {
+              /**
+               * Place of supply scheme used in an standard registration.
+               */
+              place_of_supply_scheme?: Standard.PlaceOfSupplyScheme;
+            }
+
+            namespace Standard {
+              type PlaceOfSupplyScheme = 'inbound_goods' | 'standard';
+            }
           }
         }
       }

@@ -14,7 +14,7 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
-       * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
+       * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action. Defaults to false.
        */
       auto_advance?: boolean;
 
@@ -24,7 +24,7 @@ declare module 'stripe' {
       automatic_tax?: InvoiceCreateParams.AutomaticTax;
 
       /**
-       * The time when this invoice should be scheduled to finalize. The invoice will be finalized at this time if it is still in draft state.
+       * The time when this invoice should be scheduled to finalize (up to 5 years in the future). The invoice is finalized at this time if it's still in draft state.
        */
       automatically_finalizes_at?: number;
 
@@ -356,7 +356,7 @@ declare module 'stripe' {
 
           interface Card {
             /**
-             * Installment configuration for payments attempted on this invoice (Mexico Only).
+             * Installment configuration for payments attempted on this invoice.
              *
              * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
              */
@@ -783,7 +783,7 @@ declare module 'stripe' {
       automatic_tax?: InvoiceUpdateParams.AutomaticTax;
 
       /**
-       * The time when this invoice should be scheduled to finalize. The invoice will be finalized at this time if it is still in draft state. To turn off automatic finalization, set `auto_advance` to false.
+       * The time when this invoice should be scheduled to finalize (up to 5 years in the future). The invoice is finalized at this time if it's still in draft state. To turn off automatic finalization, set `auto_advance` to false.
        */
       automatically_finalizes_at?: number;
 
@@ -1078,7 +1078,7 @@ declare module 'stripe' {
 
           interface Card {
             /**
-             * Installment configuration for payments attempted on this invoice (Mexico Only).
+             * Installment configuration for payments attempted on this invoice.
              *
              * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
              */
@@ -2317,6 +2317,9 @@ declare module 'stripe' {
 
       namespace ScheduleDetails {
         interface BillingMode {
+          /**
+           * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+           */
           type: BillingMode.Type;
         }
 
@@ -2383,6 +2386,11 @@ declare module 'stripe' {
           discounts?: Stripe.Emptyable<Array<Phase.Discount>>;
 
           /**
+           * The number of intervals the phase should last. If set, `end_date` must not be set.
+           */
+          duration?: Phase.Duration;
+
+          /**
            * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
            */
           end_date?: number | 'now';
@@ -2398,7 +2406,7 @@ declare module 'stripe' {
           items: Array<Phase.Item>;
 
           /**
-           * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
+           * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set. This parameter is deprecated and will be removed in a future version. Use `duration` instead.
            */
           iterations?: number;
 
@@ -2446,6 +2454,16 @@ declare module 'stripe' {
             discounts?: Array<AddInvoiceItem.Discount>;
 
             /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             */
+            metadata?: Stripe.MetadataParam;
+
+            /**
+             * The period associated with this invoice item. Defaults to the period of the underlying subscription that surrounds the start of the phase.
+             */
+            period?: AddInvoiceItem.Period;
+
+            /**
              * The ID of the price object. One of `price` or `price_data` is required.
              */
             price?: string;
@@ -2482,6 +2500,55 @@ declare module 'stripe' {
                * ID of the promotion code to create a new discount for.
                */
               promotion_code?: string;
+            }
+
+            interface Period {
+              /**
+               * End of the invoice item period.
+               */
+              end: Period.End;
+
+              /**
+               * Start of the invoice item period.
+               */
+              start: Period.Start;
+            }
+
+            namespace Period {
+              interface End {
+                /**
+                 * A precise Unix timestamp for the end of the invoice item period. Must be greater than or equal to `period.start`.
+                 */
+                timestamp?: number;
+
+                /**
+                 * Select how to calculate the end of the invoice item period.
+                 */
+                type: End.Type;
+              }
+
+              namespace End {
+                type Type = 'min_item_period_end' | 'phase_end' | 'timestamp';
+              }
+
+              interface Start {
+                /**
+                 * A precise Unix timestamp for the start of the invoice item period. Must be less than or equal to `period.end`.
+                 */
+                timestamp?: number;
+
+                /**
+                 * Select how to calculate the start of the invoice item period.
+                 */
+                type: Start.Type;
+              }
+
+              namespace Start {
+                type Type =
+                  | 'max_item_period_start'
+                  | 'phase_start'
+                  | 'timestamp';
+              }
             }
 
             interface PriceData {
@@ -2577,6 +2644,22 @@ declare module 'stripe' {
              * ID of the promotion code to create a new discount for.
              */
             promotion_code?: string;
+          }
+
+          interface Duration {
+            /**
+             * Specifies phase duration. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The multiplier applied to the interval.
+             */
+            interval_count?: number;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
           }
 
           interface InvoiceSettings {
@@ -2772,7 +2855,7 @@ declare module 'stripe' {
         /**
          * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
          */
-        cancel_at?: Stripe.Emptyable<number>;
+        cancel_at?: Stripe.Emptyable<number | SubscriptionDetails.CancelAt>;
 
         /**
          * Indicate whether this subscription should cancel at the end of the current period (`current_period_end`). Defaults to `false`.
@@ -2824,12 +2907,17 @@ declare module 'stripe' {
         type BillingCycleAnchor = 'now' | 'unchanged';
 
         interface BillingMode {
+          /**
+           * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+           */
           type: BillingMode.Type;
         }
 
         namespace BillingMode {
           type Type = 'classic' | 'flexible';
         }
+
+        type CancelAt = 'max_period_end' | 'min_period_end';
 
         interface Item {
           /**

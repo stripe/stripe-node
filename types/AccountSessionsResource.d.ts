@@ -32,6 +32,11 @@ declare module 'stripe' {
         account_onboarding?: Components.AccountOnboarding;
 
         /**
+         * Configuration for the [balance report](https://docs.stripe.com/connect/supported-embedded-components/financial-reports#balance-report) embedded component.
+         */
+        balance_report?: Components.BalanceReport;
+
+        /**
          * Configuration for the [balances](https://docs.stripe.com/connect/supported-embedded-components/balances/) embedded component.
          */
         balances?: Components.Balances;
@@ -55,6 +60,11 @@ declare module 'stripe' {
          * Configuration for the [financial account transactions](https://docs.stripe.com/connect/supported-embedded-components/financial-account-transactions/) embedded component.
          */
         financial_account_transactions?: Components.FinancialAccountTransactions;
+
+        /**
+         * Configuration for the [instant payouts promotion](https://docs.stripe.com/connect/supported-embedded-components/instant-payouts-promotion/) embedded component.
+         */
+        instant_payouts_promotion?: Components.InstantPayoutsPromotion;
 
         /**
          * Configuration for the [issuing card](https://docs.stripe.com/connect/supported-embedded-components/issuing-card/) embedded component.
@@ -85,6 +95,16 @@ declare module 'stripe' {
          * Configuration for the [payments](https://docs.stripe.com/connect/supported-embedded-components/payments/) embedded component.
          */
         payments?: Components.Payments;
+
+        /**
+         * Configuration for the [payout details](https://docs.stripe.com/connect/supported-embedded-components/payout-details/) embedded component.
+         */
+        payout_details?: Components.PayoutDetails;
+
+        /**
+         * Configuration for the [payout reconciliation report](https://docs.stripe.com/connect/supported-embedded-components/financial-reports#payout-reconciliation-report) embedded component.
+         */
+        payout_reconciliation_report?: Components.PayoutReconciliationReport;
 
         /**
          * Configuration for the [payouts](https://docs.stripe.com/connect/supported-embedded-components/payouts/) embedded component.
@@ -158,6 +178,22 @@ declare module 'stripe' {
              */
             external_account_collection?: boolean;
           }
+        }
+
+        interface BalanceReport {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * An empty list, because this embedded component has no features.
+           */
+          features?: BalanceReport.Features;
+        }
+
+        namespace BalanceReport {
+          interface Features {}
         }
 
         interface Balances {
@@ -244,7 +280,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: Documents.Features;
         }
@@ -307,6 +343,37 @@ declare module 'stripe' {
              * Whether to allow card spend dispute management features.
              */
             card_spend_dispute_management?: boolean;
+          }
+        }
+
+        interface InstantPayoutsPromotion {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * The list of features enabled in the embedded component.
+           */
+          features?: InstantPayoutsPromotion.Features;
+        }
+
+        namespace InstantPayoutsPromotion {
+          interface Features {
+            /**
+             * Whether Stripe user authentication is disabled. This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account. The default value is the opposite of the `external_account_collection` value. For example, if you don't set `external_account_collection`, it defaults to `true` and `disable_stripe_user_authentication` defaults to `false`.
+             */
+            disable_stripe_user_authentication?: boolean;
+
+            /**
+             * Whether external account collection is enabled. This feature can only be `false` for accounts where you're responsible for collecting updated information when requirements are due or change, like Custom accounts. The default value for this feature is `true`.
+             */
+            external_account_collection?: boolean;
+
+            /**
+             * Whether to allow creation of instant payouts. Defaults to `true` when `controller.losses.payments` is set to `stripe` for the account, otherwise `false`.
+             */
+            instant_payouts?: boolean;
           }
         }
 
@@ -516,6 +583,38 @@ declare module 'stripe' {
           }
         }
 
+        interface PayoutDetails {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * An empty list, because this embedded component has no features.
+           */
+          features?: PayoutDetails.Features;
+        }
+
+        namespace PayoutDetails {
+          interface Features {}
+        }
+
+        interface PayoutReconciliationReport {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * An empty list, because this embedded component has no features.
+           */
+          features?: PayoutReconciliationReport.Features;
+        }
+
+        namespace PayoutReconciliationReport {
+          interface Features {}
+        }
+
         interface Payouts {
           /**
            * Whether the embedded component is enabled.
@@ -564,7 +663,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: PayoutsList.Features;
         }
@@ -580,7 +679,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: TaxRegistrations.Features;
         }
@@ -596,7 +695,7 @@ declare module 'stripe' {
           enabled: boolean;
 
           /**
-           * The list of features enabled in the embedded component.
+           * An empty list, because this embedded component has no features.
            */
           features?: TaxSettings.Features;
         }
