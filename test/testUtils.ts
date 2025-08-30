@@ -35,8 +35,7 @@ export const getTestServerStripe = (
   callback: (
     err: Error | null,
     stripe: StripeClient,
-    closeServer: () => void,
-    address: string
+    closeServer: () => void
   ) => void
 ): void => {
   let nPreviousRequests = 0;
@@ -61,14 +60,9 @@ export const getTestServerStripe = (
       httpAgent: testingHttpAgent,
       ...clientOptions,
     });
-    return callback(
-      null,
-      stripe,
-      () => {
-        server.close();
-      },
-      `${protocol}://${host}:${port}`
-    );
+    return callback(null, stripe, () => {
+      server.close();
+    });
   });
 };
 

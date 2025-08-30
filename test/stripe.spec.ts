@@ -479,8 +479,6 @@ describe('Stripe Module', function() {
             stripe.customers.create(
               {this_is_not_a_real_param: 'foobar'},
               (err, customer) => {
-                console.log(err);
-                console.log(customer);
                 if (err) {
                   resolve('ErrorWasPassed');
                 } else {
@@ -752,7 +750,7 @@ describe('Stripe Module', function() {
       }).to.throw(StripeSignatureVerificationError);
     });
 
-    it('should parse webhook with a functioning pull method', (done) => {
+    it('should parse webhook with a functioning fetchEvent method', (done) => {
       const jsonPayload = {
         id: 'evt_123',
         type: 'account.created',
@@ -802,7 +800,7 @@ describe('Stripe Module', function() {
             );
 
             expect(event.fetchEvent).to.be.a('function');
-            expect(event.fetch_related_object).not.to.be.a('function');
+            expect(event.fetchRelatedObject).not.to.be.a('function');
             const pulled = await event.fetchEvent();
             expect(pulled.data).to.equal(jsonWithData.data);
             // Have to call another requests for metrics to be sent.
@@ -905,14 +903,14 @@ describe('Stripe Module', function() {
           shouldStayOpen = false;
           return ret;
         },
-        async (err, stripe, closeServer, address) => {
+        async (err, stripe, closeServer) => {
           if (err) return done(err);
           const jsonPayload = {
             id: 'evt_123',
             type: 'account.created',
             related_object: {
               id: '123',
-              url: `${address}/api/whatever/obj_123`,
+              url: `/api/whatever/obj_123`,
             },
           };
 
@@ -963,7 +961,7 @@ describe('Stripe Module', function() {
           }
           res.end();
         },
-        async (err, stripe, closeServer, address) => {
+        async (err, stripe, closeServer) => {
           if (err) return done(err);
           const jsonPayload = {
             id: 'evt_123',
@@ -971,7 +969,7 @@ describe('Stripe Module', function() {
             context: 'acct_123',
             related_object: {
               id: '123',
-              url: `${address}/api/whatever/obj_123`,
+              url: `/api/whatever/obj_123`,
             },
           };
 
@@ -1130,7 +1128,6 @@ describe('Stripe Module', function() {
       return getTestServerStripe(
         {},
         (req, res) => {
-          console.log(req.headers);
           expect(req.headers.foo).to.equal('bar');
           res.write(JSON.stringify(returnedCustomer));
           res.end();
