@@ -1806,8 +1806,6 @@ declare module 'stripe' {
             type WeeklyPayoutDay =
               | 'friday'
               | 'monday'
-              | 'saturday'
-              | 'sunday'
               | 'thursday'
               | 'tuesday'
               | 'wednesday';

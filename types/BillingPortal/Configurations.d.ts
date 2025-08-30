@@ -216,6 +216,11 @@ declare module 'stripe' {
             proration_behavior: SubscriptionUpdate.ProrationBehavior;
 
             schedule_at_period_end: SubscriptionUpdate.ScheduleAtPeriodEnd;
+
+            /**
+             * Determines how handle updates to trialing subscriptions. Valid values are `end_trial` and `continue_trial`. Defaults to a value of `end_trial` if you don't set it during creation.
+             */
+            trial_update_behavior: SubscriptionUpdate.TrialUpdateBehavior;
           }
 
           namespace SubscriptionUpdate {
@@ -278,6 +283,8 @@ declare module 'stripe' {
                 type Type = 'decreasing_item_amount' | 'shortening_interval';
               }
             }
+
+            type TrialUpdateBehavior = 'continue_trial' | 'end_trial';
           }
         }
 
