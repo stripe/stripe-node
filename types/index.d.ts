@@ -21,12 +21,12 @@
 ///<reference path='./BalanceSettingsResource.d.ts' />
 ///<reference path='./BalanceTransactionsResource.d.ts' />
 ///<reference path='./Billing/AlertsResource.d.ts' />
+///<reference path='./Billing/Analytics/MeterUsageResource.d.ts' />
 ///<reference path='./Billing/CreditBalanceSummaryResource.d.ts' />
 ///<reference path='./Billing/CreditBalanceTransactionsResource.d.ts' />
 ///<reference path='./Billing/CreditGrantsResource.d.ts' />
 ///<reference path='./Billing/MeterEventAdjustmentsResource.d.ts' />
 ///<reference path='./Billing/MeterEventsResource.d.ts' />
-///<reference path='./Billing/MeterUsageResource.d.ts' />
 ///<reference path='./Billing/MetersResource.d.ts' />
 ///<reference path='./BillingPortal/ConfigurationsResource.d.ts' />
 ///<reference path='./BillingPortal/SessionsResource.d.ts' />
@@ -193,14 +193,14 @@
 ///<reference path='./BankAccounts.d.ts' />
 ///<reference path='./Billing/AlertTriggereds.d.ts' />
 ///<reference path='./Billing/Alerts.d.ts' />
+///<reference path='./Billing/Analytics/MeterUsage.d.ts' />
+///<reference path='./Billing/Analytics/MeterUsageRows.d.ts' />
 ///<reference path='./Billing/CreditBalanceSummary.d.ts' />
 ///<reference path='./Billing/CreditBalanceTransactions.d.ts' />
 ///<reference path='./Billing/CreditGrants.d.ts' />
 ///<reference path='./Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./Billing/MeterEventSummaries.d.ts' />
 ///<reference path='./Billing/MeterEvents.d.ts' />
-///<reference path='./Billing/MeterUsage.d.ts' />
-///<reference path='./Billing/MeterUsageRows.d.ts' />
 ///<reference path='./Billing/Meters.d.ts' />
 ///<reference path='./BillingPortal/Configurations.d.ts' />
 ///<reference path='./BillingPortal/Sessions.d.ts' />
@@ -464,7 +464,9 @@ declare module 'stripe' {
       meters: Stripe.Billing.MetersResource;
       meterEvents: Stripe.Billing.MeterEventsResource;
       meterEventAdjustments: Stripe.Billing.MeterEventAdjustmentsResource;
-      meterUsage: Stripe.Billing.MeterUsageResource;
+      analytics: {
+        meterUsage: Stripe.Billing.Analytics.MeterUsageResource;
+      };
     };
     billingPortal: {
       configurations: Stripe.BillingPortal.ConfigurationsResource;

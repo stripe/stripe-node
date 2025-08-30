@@ -954,19 +954,9 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
-       */
-      link?: PaymentMethodUpdateParams.Link;
-
-      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
-
-      /**
-       * If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment method.
-       */
-      pay_by_bank?: PaymentMethodUpdateParams.PayByBank;
 
       /**
        * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
@@ -1038,10 +1028,6 @@ declare module 'stripe' {
           type Preferred = 'cartes_bancaires' | 'mastercard' | 'visa';
         }
       }
-
-      interface Link {}
-
-      interface PayByBank {}
 
       interface Payto {
         /**

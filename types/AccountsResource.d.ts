@@ -2045,12 +2045,12 @@ declare module 'stripe' {
             monthly_payout_days?: Array<number>;
 
             /**
-             * The day of the week when available funds are paid out, specified as `monday`, `tuesday`, etc. (required and applicable only if `interval` is `weekly`.)
+             * The day of the week when available funds are paid out, specified as `monday`, `tuesday`, etc. Required and applicable only if `interval` is `weekly`.
              */
             weekly_anchor?: Schedule.WeeklyAnchor;
 
             /**
-             * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. (required and applicable only if `interval` is `weekly` and `weekly_anchor` is not set.)
+             * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. Required and applicable only if `interval` is `weekly`.
              */
             weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
           }
@@ -4126,12 +4126,12 @@ declare module 'stripe' {
             monthly_payout_days?: Array<number>;
 
             /**
-             * The day of the week when available funds are paid out, specified as `monday`, `tuesday`, etc. (required and applicable only if `interval` is `weekly`.)
+             * The day of the week when available funds are paid out, specified as `monday`, `tuesday`, etc. Required and applicable only if `interval` is `weekly`.
              */
             weekly_anchor?: Schedule.WeeklyAnchor;
 
             /**
-             * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. (required and applicable only if `interval` is `weekly` and `weekly_anchor` is not set.)
+             * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. Required and applicable only if `interval` is `weekly`.
              */
             weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
           }
