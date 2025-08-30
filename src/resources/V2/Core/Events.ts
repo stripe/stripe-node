@@ -56,7 +56,7 @@ export const Events = StripeResource.extend({
           fullPath: pulledEvent.related_object.url,
         }).apply(this, [
           {
-            stripeAccount: pulledEvent.context,
+            stripeContext: pulledEvent.context,
           },
         ]),
     };

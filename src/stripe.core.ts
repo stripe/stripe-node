@@ -485,16 +485,17 @@ export function createStripe(
       return config;
     },
 
-    parseThinEvent(
+    parseEventNotification(
       payload: string | Uint8Array,
       header: string | Uint8Array,
       secret: string,
       tolerance?: number,
       cryptoProvider?: CryptoProvider,
       receivedAt?: number
-    ): WebhookEvent {
+      // this return type is ignored?? picks up types from `types/index.d.ts` instead
+    ): unknown {
       // parses and validates the event payload all in one go
-      return this.webhooks.constructEvent(
+      const eventNotification = this.webhooks.constructEvent(
         payload,
         header,
         secret,
@@ -502,6 +503,34 @@ export function createStripe(
         cryptoProvider,
         receivedAt
       );
+
+      eventNotification.fetchEvent = (): Promise<unknown> => {
+        return this._requestSender._rawRequest(
+          'GET',
+          `/v2/core/events/${eventNotification.id}`,
+          undefined,
+          {
+            stripeContext: eventNotification.context as string,
+          },
+          ['fetch_event']
+        );
+      };
+
+      if (eventNotification.related_object) {
+        eventNotification.fetchRelatedObject = (): Promise<unknown> => {
+          return this._requestSender._rawRequest(
+            'GET',
+            eventNotification.related_object.url,
+            undefined,
+            {
+              stripeContext: eventNotification.context,
+            },
+            ['fetch_related_object']
+          );
+        };
+      }
+
+      return eventNotification;
     },
   } as StripeObject;
 
