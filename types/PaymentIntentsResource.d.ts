@@ -463,6 +463,7 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'paypay'
         | 'payto'
         | 'pix'
         | 'promptpay'
@@ -1467,6 +1468,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+         */
+        paypay?: PaymentMethodData.Paypay;
+
+        /**
          * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
          */
         payto?: PaymentMethodData.Payto;
@@ -1915,6 +1921,8 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Paypay {}
+
         interface Payto {
           /**
            * The account number for the bank account.
@@ -2056,6 +2064,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'paypay'
           | 'payto'
           | 'pix'
           | 'promptpay'
@@ -2323,6 +2332,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
+
+        /**
+         * If this is a `paypay` PaymentMethod, this sub-hash contains details about the PayPay payment method options.
+         */
+        paypay?: Stripe.Emptyable<PaymentMethodOptions.Paypay>;
 
         /**
          * If this is a `payto` PaymentMethod, this sub-hash contains details about the PayTo payment method options.
@@ -3944,6 +3958,17 @@ declare module 'stripe' {
             | 'sv-SE';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Paypay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
         }
 
         interface Payto {
@@ -5904,6 +5929,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+         */
+        paypay?: PaymentMethodData.Paypay;
+
+        /**
          * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
          */
         payto?: PaymentMethodData.Payto;
@@ -6352,6 +6382,8 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Paypay {}
+
         interface Payto {
           /**
            * The account number for the bank account.
@@ -6493,6 +6525,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'paypay'
           | 'payto'
           | 'pix'
           | 'promptpay'
@@ -6760,6 +6793,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
+
+        /**
+         * If this is a `paypay` PaymentMethod, this sub-hash contains details about the PayPay payment method options.
+         */
+        paypay?: Stripe.Emptyable<PaymentMethodOptions.Paypay>;
 
         /**
          * If this is a `payto` PaymentMethod, this sub-hash contains details about the PayTo payment method options.
@@ -8381,6 +8419,17 @@ declare module 'stripe' {
             | 'sv-SE';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Paypay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
         }
 
         interface Payto {
@@ -11329,6 +11378,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+         */
+        paypay?: PaymentMethodData.Paypay;
+
+        /**
          * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
          */
         payto?: PaymentMethodData.Payto;
@@ -11777,6 +11831,8 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Paypay {}
+
         interface Payto {
           /**
            * The account number for the bank account.
@@ -11918,6 +11974,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'paypay'
           | 'payto'
           | 'pix'
           | 'promptpay'
@@ -12185,6 +12242,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
+
+        /**
+         * If this is a `paypay` PaymentMethod, this sub-hash contains details about the PayPay payment method options.
+         */
+        paypay?: Stripe.Emptyable<PaymentMethodOptions.Paypay>;
 
         /**
          * If this is a `payto` PaymentMethod, this sub-hash contains details about the PayTo payment method options.
@@ -13806,6 +13868,17 @@ declare module 'stripe' {
             | 'sv-SE';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Paypay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
         }
 
         interface Payto {
