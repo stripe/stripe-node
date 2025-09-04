@@ -384,6 +384,7 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'paypay'
         | 'payto'
         | 'pix'
         | 'promptpay'
@@ -1909,6 +1910,8 @@ declare module 'stripe' {
 
         paypal?: PaymentMethodOptions.Paypal;
 
+        paypay?: PaymentMethodOptions.Paypay;
+
         payto?: PaymentMethodOptions.Payto;
 
         pix?: PaymentMethodOptions.Pix;
@@ -3113,6 +3116,8 @@ declare module 'stripe' {
 
           type SetupFutureUsage = 'none' | 'off_session';
         }
+
+        interface Paypay {}
 
         interface Payto {
           mandate_options?: Payto.MandateOptions;

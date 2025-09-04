@@ -229,6 +229,11 @@ declare module 'stripe' {
       paypal?: PaymentMethodConfigurationCreateParams.Paypal;
 
       /**
+       * Customers can pay with PayPay online or using the PayPay app.
+       */
+      paypay?: PaymentMethodConfigurationCreateParams.Paypay;
+
+      /**
        * PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables customers in Australia to pay by providing their bank account details. Customers must accept a mandate authorizing you to debit their account. Check this [page](https://docs.stripe.com/payments/payto) for more details.
        */
       payto?: PaymentMethodConfigurationCreateParams.Payto;
@@ -1145,6 +1150,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Paypay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Paypay.DisplayPreference;
+      }
+
+      namespace Paypay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Payto {
         /**
          * Whether or not the payment method should be displayed.
@@ -1678,6 +1703,11 @@ declare module 'stripe' {
        * PayPal, a digital wallet popular with customers in Europe, allows your customers worldwide to pay using their PayPal account. Check this [page](https://stripe.com/docs/payments/paypal) for more details.
        */
       paypal?: PaymentMethodConfigurationUpdateParams.Paypal;
+
+      /**
+       * Customers can pay with PayPay online or using the PayPay app.
+       */
+      paypay?: PaymentMethodConfigurationUpdateParams.Paypay;
 
       /**
        * PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables customers in Australia to pay by providing their bank account details. Customers must accept a mandate authorizing you to debit their account. Check this [page](https://docs.stripe.com/payments/payto) for more details.
@@ -2584,6 +2614,26 @@ declare module 'stripe' {
       }
 
       namespace Paypal {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Paypay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Paypay.DisplayPreference;
+      }
+
+      namespace Paypay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.

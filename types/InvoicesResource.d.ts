@@ -347,7 +347,7 @@ declare module 'stripe' {
         payment_method_options?: PaymentSettings.PaymentMethodOptions;
 
         /**
-         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice). Should not be specified with payment_method_configuration
+         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice).
          */
         payment_method_types?: Stripe.Emptyable<
           Array<PaymentSettings.PaymentMethodType>
@@ -389,6 +389,11 @@ declare module 'stripe' {
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+          /**
+           * If paying by `pix`, this sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+           */
+          pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
 
           /**
            * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
@@ -541,6 +546,17 @@ declare module 'stripe' {
 
           interface Konbini {}
 
+          interface Pix {
+            /**
+             * Determines if the amount includes the IOF tax. Defaults to `never`.
+             */
+            amount_includes_iof?: Pix.AmountIncludesIof;
+          }
+
+          namespace Pix {
+            type AmountIncludesIof = 'always' | 'never';
+          }
+
           interface SepaDebit {}
 
           interface Upi {
@@ -676,6 +692,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_credit_transfer'
@@ -1207,7 +1224,7 @@ declare module 'stripe' {
         payment_method_options?: PaymentSettings.PaymentMethodOptions;
 
         /**
-         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice). Should not be specified with payment_method_configuration
+         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice).
          */
         payment_method_types?: Stripe.Emptyable<
           Array<PaymentSettings.PaymentMethodType>
@@ -1249,6 +1266,11 @@ declare module 'stripe' {
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+          /**
+           * If paying by `pix`, this sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+           */
+          pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
 
           /**
            * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
@@ -1401,6 +1423,17 @@ declare module 'stripe' {
 
           interface Konbini {}
 
+          interface Pix {
+            /**
+             * Determines if the amount includes the IOF tax. Defaults to `never`.
+             */
+            amount_includes_iof?: Pix.AmountIncludesIof;
+          }
+
+          namespace Pix {
+            type AmountIncludesIof = 'always' | 'never';
+          }
+
           interface SepaDebit {}
 
           interface Upi {
@@ -1536,6 +1569,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_credit_transfer'
@@ -3563,7 +3597,7 @@ declare module 'stripe' {
             metadata?: Stripe.MetadataParam;
 
             /**
-             * The period associated with this invoice item. Defaults to the period of the underlying subscription that surrounds the start of the phase.
+             * The period associated with this invoice item. If not set, `period.start.type` defaults to `max_item_period_start` and `period.end.type` defaults to `min_item_period_end`.
              */
             period?: AddInvoiceItem.Period;
 
