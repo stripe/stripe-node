@@ -798,6 +798,11 @@ declare module 'stripe' {
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
           /**
+           * This sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+           */
+          pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
+
+          /**
            * This sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
            */
           sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
@@ -950,6 +955,48 @@ declare module 'stripe' {
 
           interface Konbini {}
 
+          interface Pix {
+            /**
+             * Configuration options for setting up a mandate
+             */
+            mandate_options?: Pix.MandateOptions;
+          }
+
+          namespace Pix {
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments. If not provided, defaults to 40000.
+               */
+              amount?: number;
+
+              /**
+               * Determines if the amount includes the IOF tax. Defaults to `never`.
+               */
+              amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+              /**
+               * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled.
+               */
+              end_date?: string;
+
+              /**
+               * Schedule at which the future payments will be charged. Defaults to `weekly`.
+               */
+              payment_schedule?: MandateOptions.PaymentSchedule;
+            }
+
+            namespace MandateOptions {
+              type AmountIncludesIof = 'always' | 'never';
+
+              type PaymentSchedule =
+                | 'halfyearly'
+                | 'monthly'
+                | 'quarterly'
+                | 'weekly'
+                | 'yearly';
+            }
+          }
+
           interface SepaDebit {}
 
           interface Upi {
@@ -1085,6 +1132,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_credit_transfer'
@@ -1945,6 +1993,11 @@ declare module 'stripe' {
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
           /**
+           * This sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+           */
+          pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
+
+          /**
            * This sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
            */
           sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
@@ -2097,6 +2150,48 @@ declare module 'stripe' {
 
           interface Konbini {}
 
+          interface Pix {
+            /**
+             * Configuration options for setting up a mandate
+             */
+            mandate_options?: Pix.MandateOptions;
+          }
+
+          namespace Pix {
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments. If not provided, defaults to 40000.
+               */
+              amount?: number;
+
+              /**
+               * Determines if the amount includes the IOF tax. Defaults to `never`.
+               */
+              amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+              /**
+               * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled.
+               */
+              end_date?: string;
+
+              /**
+               * Schedule at which the future payments will be charged. Defaults to `weekly`.
+               */
+              payment_schedule?: MandateOptions.PaymentSchedule;
+            }
+
+            namespace MandateOptions {
+              type AmountIncludesIof = 'always' | 'never';
+
+              type PaymentSchedule =
+                | 'halfyearly'
+                | 'monthly'
+                | 'quarterly'
+                | 'weekly'
+                | 'yearly';
+            }
+          }
+
           interface SepaDebit {}
 
           interface Upi {
@@ -2232,6 +2327,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_credit_transfer'

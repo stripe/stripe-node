@@ -505,6 +505,11 @@ declare module 'stripe' {
           konbini: PaymentMethodOptions.Konbini | null;
 
           /**
+           * This sub-hash contains details about the Pix payment method options to pass to invoices created by the subscription.
+           */
+          pix?: PaymentMethodOptions.Pix | null;
+
+          /**
            * This sub-hash contains details about the SEPA Direct Debit payment method options to pass to invoices created by the subscription.
            */
           sepa_debit: PaymentMethodOptions.SepaDebit | null;
@@ -647,6 +652,45 @@ declare module 'stripe' {
 
           interface Konbini {}
 
+          interface Pix {
+            mandate_options?: Pix.MandateOptions;
+          }
+
+          namespace Pix {
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments.
+               */
+              amount: number | null;
+
+              /**
+               * Determines if the amount includes the IOF tax.
+               */
+              amount_includes_iof: MandateOptions.AmountIncludesIof | null;
+
+              /**
+               * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`.
+               */
+              end_date: string | null;
+
+              /**
+               * Schedule at which the future payments will be charged.
+               */
+              payment_schedule: MandateOptions.PaymentSchedule | null;
+            }
+
+            namespace MandateOptions {
+              type AmountIncludesIof = 'always' | 'never';
+
+              type PaymentSchedule =
+                | 'halfyearly'
+                | 'monthly'
+                | 'quarterly'
+                | 'weekly'
+                | 'yearly';
+            }
+          }
+
           interface SepaDebit {}
 
           interface Upi {
@@ -773,6 +817,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_credit_transfer'

@@ -391,6 +391,11 @@ declare module 'stripe' {
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
           /**
+           * If paying by `pix`, this sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+           */
+          pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
+
+          /**
            * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
            */
           sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
@@ -541,6 +546,17 @@ declare module 'stripe' {
 
           interface Konbini {}
 
+          interface Pix {
+            /**
+             * Determines if the amount includes the IOF tax. Defaults to `never`.
+             */
+            amount_includes_iof?: Pix.AmountIncludesIof;
+          }
+
+          namespace Pix {
+            type AmountIncludesIof = 'always' | 'never';
+          }
+
           interface SepaDebit {}
 
           interface Upi {
@@ -676,6 +692,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_credit_transfer'
@@ -1251,6 +1268,11 @@ declare module 'stripe' {
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
           /**
+           * If paying by `pix`, this sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+           */
+          pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
+
+          /**
            * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
            */
           sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
@@ -1401,6 +1423,17 @@ declare module 'stripe' {
 
           interface Konbini {}
 
+          interface Pix {
+            /**
+             * Determines if the amount includes the IOF tax. Defaults to `never`.
+             */
+            amount_includes_iof?: Pix.AmountIncludesIof;
+          }
+
+          namespace Pix {
+            type AmountIncludesIof = 'always' | 'never';
+          }
+
           interface SepaDebit {}
 
           interface Upi {
@@ -1536,6 +1569,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_credit_transfer'
