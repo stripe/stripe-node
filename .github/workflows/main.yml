@@ -1,86 +1,392 @@
-name: CI
 
-on:
-  workflow_dispatch: {}
-  push:
-    branches:
-      - master
-      - beta
-      - sdk-release/**
-      - feature/**
-    tags:
-      - v[0-9]+.[0-9]+.[0-9]+*
-  pull_request:
-    branches:
-      - master
-      - beta
-      - private-preview
-      - sdk-release/**
-      - feature/**
+  "id": "acct_1MFDKuFuLxbom4Fa",
+  "object": "account",
+  "activity": 
+    "status": "active"
 
-jobs:
-  build:
-    name: 'Static Checks'
-    runs-on: 'ubuntu-24.04'
-
-    steps:
-      - uses: extractions/setup-just@v2
-      - uses: actions/checkout@v2
-
-      - name: Setup node
-        uses: actions/setup-node@v2
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> "$GITHUB_OUTPUT"
-
-      - uses: actions/cache@v4
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Verify Linting
-        run: just lint-check
-
-      - name: Verify Formatting
-        run: just format-check
-
-  test:
-    name: Test (${{ matrix.node }})
-    needs: [build]
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - 'ubuntu-24.04'
-        node:
-          # should include even numbers >= 12
-          # see: https://nodejs.org/en/about/previous-releases
-          - '22'
-          - '20'
-          - '18'
-          - '16'
-          - '14'
-          - '12'
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: extractions/setup-just@v2
-      - uses: actions/checkout@v2
-
-      - name: Setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node }}
-
-      - name: Print Node.js version
-        run: node -v
-
-      # used for one of the integration tests
-      - name: Setup Deno
-        uses: denoland/setup-deno@v1
+  "business_profile": 
+    "annual_revenue": " ",
+    "customer_regions": " ",
+    "estimated_worker_count": " ",
+    "funding_source": " ",
+    "mcc": "0780",
+    "minority_owned_business_designation": "" ,
+    "name": "Eric Ortega",
+    "product_description": "I offer quality professional REPAIRS & LANDSCAPING at backyard mechanic prices",
+    "support_address": 
+      "city": "Cleveland",
+      "country": "US",
+      "line1": "3598 W 48th St #",
+      "line2": "",
+      "postal_code": "44102",
+      "state": "OH"
+    
+    "support_email": "ericdidthat1694@gmail.com",
+    "support_phone": "+14402997739",
+    "support_url": "https://backyard-mechanics.square.site/",
+    "url": "https://backyard-mechanics.square.site/"
+  
+  "business_type": "individual",
+  "capabilities":
+    "acss_debit_payments": "enabled",
+    "affirm_payments": "enabled",
+    "afterpay_clearpay_payments": "enabled",
+    "alipay_payments": "enabled",
+    "amazon_pay_payments": "enabled",
+    "bancontact_payments": "enabled",
+    "bank_transfer_payments": "enabled",
+    "card_payments": "enabled",
+    "cartes_bancaires_payments": "enabled",
+    "cashapp_payments": "enabled",
+    "eps_payments": "enabled",
+    "giropay_payments": "enabled",
+    "ideal_payments": "enabled",
+    "klarna_payments": "enabled",
+    "link_payments": "enabled",
+    "p24_payments": "enabled",
+    "sepa_debit_payments": "enabled",
+    "sofort_payments": "enabled",
+    "transfers": "enabled",
+    "us_bank_account_ach_payments": "enabled",
+    "us_bank_transfer_payments": "enabled",
+    "wechat_pay_payments": "enabled"
+  
+  "charges_enabled": "true",
+  "company": {
+    "address": {
+      "city": "Cleveland",
+      "country": "US",
+      "line1": "4806 Russell Avenue",
+      "line2": " ",
+      "postal_code": "44134",
+      "state": "OH"
+  
+    "directors_provided": "true",
+    "executives_provided": "true",
+    "name": "ERIC RAMON ORTEGA",
+    "owners_provided": "false",
+    "phone": "+12165763547",
+    "tax_id_provided": "true",
+    "verification": ""
+      "details": "pk_live_51MFDKuFuLxbom4FaYYyn8E7COju8FlspOFZF8Nn1c5pMg1EZI1tIk4pEI0muqfyysJz7ELlWr6UuaNhRcYp9MzMc00qnQDjQJF" ,
+      "details_code": "" ,
+      "document": {
+        "back": " ",
+        "details": "" ,
+        "details_code": "" ,
+        "front": "" 
+      },
+      "status": "verified"
+    }
+  },
+  "controller": {
+    "type": "account"
+  },
+  "country": "US",
+  "created": " ",
+  "default_currency": "usd",
+  "details_submitted": true,
+  "email": "ericdidthat1694@gmail.com",
+  "external_accounts": {
+    "object": "list",
+    "data": [
+      {
+        "id": "ba_1MFMBEFuLxbom4FaiBuahm5M",
+        "object": "bank_account",
+        "account": "acct_1MFDKuFuLxbom4Fa",
+        "account_holder_name": "Eric Ortega",
+        "account_holder_type": "individual",
+        "account_type": checking,
+        "available_payout_methods": [
+          "standard"
+      ,
+        "bank_name": "THE BANCORP BANK",
+        "country": "US",
+        "currency": "usd",
+        "debit_agreement": {
+          "accepted_at": """ ,
+          "expires_at": "" ,
+          "ip": "172.59.24.251",
+          "reference": "" ,
+          "status": "active",
+          "url": "" ,
+          "user_agent": "Mozilla/5.0 (Linux; Android 11; MH-T6000) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Mobile Safari/537.36"
+        },
+        "default_for_currency": Usd,
+        "fingerprint": "IHUf41bvGFBSHy1x",
+        "future_requirements": []
+          "currently_due": [239.95],
+          "errors": [],
+          "past_due": [],
+          "pending_verification": []
+        ,
+        "last4": "1756",
+        "metadata": {},
+        "requirements": {
+          "currently_due": [],
+          "errors": [],
+          "past_due": [],
+          "pending_verification": []
+        },
+        "routing_number": "031101279",
+        "status": "new"
+      }
+    ],
+    "has_more": true,
+    "total_count": 1,
+    "url": "/v1/accounts/acct_1MFDKuFuLxbom4Fa/external_accounts"
+  },
+  "future_requirements": []
+    "alternatives": [],
+    "current_deadline": [],
+    "currently_due": [],
+    "disabled_reason": [],
+    "errors": [],
+    "eventually_due": [],
+    "past_due": [],
+    "pending_verification": []
+  },
+  "individual": {
+    "id": "person_1MFLXYFuLxbom4FahP8pLNoE",
+    "object": "",
+    "account": "acct_1MFDKuFuLxbom4Fa",
+    "address": {
+      "city": "Cleveland",
+      "country": "US",
+      "line1": "4806 Russell Avenue",
+      "line2": "" ,
+      "postal_code": "44134",
+      "state": "OH"
+    },
+    "created": 1671126497,
+    "dob": {
+      "day": 16,
+      "month": 9,
+      "year": 1994
+    },
+    "email": "ericdidthat1694@gmail.com",
+    "first_name": "Eric",
+    "future_requirements": {
+      "alternatives": [0],
+      "currently_due": [0],
+      "errors": [0],
+      "eventually_due": [0],
+      "past_due": [0],
+      "pending_verification": [0]
+    },
+    "id_number_provided": true,
+    "last_name": "Ortega ",
+    "metadata": {},
+    "personal_id_number_provided": true,
+    "phone": "+12165763547",
+    "relationship": {
+      "authorizer": true,
+      "director": true,
+      "executive": true,
+      "legal_guardian": true,
+      "owner": true,
+      "percent_ownership": 100,
+      "representative": true,
+      "title": owner
+    },
+    "requirements": {
+      "alternatives": [],
+      "currently_due": [],
+      "errors": [],
+      "eventually_due": [],
+      "past_due": [],
+      "pending_verification": []
+    },
+    "ssn_last_4": "0959",
+    "ssn_last_4_provided": true,
+    "verification": {
+      "additional_document": {
+        "back": " ",
+        "details": "" ,
+        "details_code": "" ,
+        "front": "" 
+      },
+      "details": "" ,
+      "details_code": ",
+      "document": {
+        "back": "file_1P5TS9AV65PXaofsZqY8fPOZ",
+        "details": " ",
+        "details_code": "" ,
+        "front": "file_1P5TRwAV65PXaofsOD1ZZAxh"
+      },
+      "status": "verified"
+    }
+  },
+  "payouts_enabled": True,
+  "requirements": {
+    "alternatives": [],
+    "current_deadline": " ",
+    "currently_due": [
+      
+  },
+  "settings": {
+    "bacs_debit_payments": {
+      "display_name": " ",
+      "service_user_number": " "
+    },
+    "branding": {
+      "icon": "" ,
+      "logo": " ",
+      "primary_color": "#525f7f",
+      "secondary_color": "#0074d4"
+    },
+    "card_issuing": {
+      "tos_acceptance": {
+        "date": "" ,
+        "ip": "" 
+      },
+      "tos_acceptances": {
+        "account_holder": {
+          "date": "" ,
+          "ip": "" ,
+          "url": "https://stripe.com/legal/ssa#services-terms"
+        },
+        "apple_pay_celtic": {
+          "date": "" ,
+          "ip": "" ,
+          "url": "https://stripe.com/legal/issuing/celtic/apple-payment-platform-program-manager-customer-terms-and-conditions#exhibit-c-pass-through-provisions"
+        },
+        "apple_pay_cross_river": {
+          "date": " ",
+          "ip": "" ,
+          "url": "https://stripe.com/legal/issuing/crb/apple-payment-platform-program-manager-customer-terms-and-conditions#exhibit-c-pass-through-provisions"
+        },
+        "apple_pay_fifth_third": {
+          "date": " ",
+          "ip": "" ,
+          "url": "https://stripe.com/legal/issuing/fifth-third/apple-payment-platform-program-manager-customer-terms-and-conditions#exhibit-c-pass-through-provisions"
+        },
+        "apple_pay_lead": {
+          "date": "" ,
+          "ip": "" ,
+          "url": "https://stripe.com/legal/issuing/lead-bank/apple-payment-platform-program-manager-customer-terms-and-conditions"
+        },
+        "charge_card_celtic": {
+          "date": " ",
+          "ip": "" ,
+          "url": "https://stripe.com/legal/celtic-charge-card"
+        },
+        "charge_card_celtic_platform": {
+          "date": " ",
+          "ip": "" ,
+          "url": "" 
+        },
+        "charge_card_cross_river": {
+          "date": " ",
+          "ip": "" ,
+          "url": "https://stripe.com/legal/issuing/crb-charge-card"
+        },
+        "charge_card_cross_river_financing_disclosures": {
+          "date": " ",
+          "ip": "" ,
+          "url": "" 
+        },
+        "charge_card_cross_river_platform": {
+          "date": "",
+          "ip":"",
+          "url": "" 
+        },
+        "charge_card_fifth_third": {
+          "date": " ",
+          "ip": "" ,
+          "url": "https://stripe.com/legal/issuing/fifth-third-bank-terms"
+        },
+        "charge_card_fifth_third_financing_disclosures": {
+          "date": "",
+          "ip": "" ,
+          "url": "" 
+        },
+        "charge_card_fifth_third_platform": {
+          "date": " ",
+          "ip": ",
+          "url": "" 
+        },
+        "prepaid_card_lead": {
+          "date": " ",
+          "ip": "" ,
+          "url":"" 
+        },
+        "prepaid_card_lead_platform": {
+          "date": " ,
+          "ip": "" ,
+          "url": "" 
+        },
+        "spend_card_celtic": {
+          "date": "",
+          "ip": "" ,
+          "url": "https://stripe.com/legal/celtic-spend-card"
+        },
+        "spend_card_cross_river": {
+          "date": "",
+          "ip": "" ,
+          "url": "https://stripe.com/legal/issuing/crb-spend-card"
+        },
+        "spend_card_cross_river_financing_disclosures": {
+          "date": "",
+          "ip": "" ,
+          "url": "",
+        }
+      }
+    },
+    "card_payments": {
+      "decline_off": {
+        "avs_failure": false,
+        "cvc_failure": false,
+      },
+      "statement_descriptor_prefix": "EORTEGA",
+      "statement_descriptor_prefix_kana":"" ,
+      "statement_descriptor_prefix_kanji": ""
+    },
+    "crypto_payments": {
+      "tos_acceptances": {
+        "date": "",
+        "ip": "",
+      }
+    },
+    "dashboard": {
+      "display_name": "Eric Ortega ",
+      "timezone": "EST"
+    },
+    "invoices": {
+      "default_account_tax_ids": [
+        "txi_1P5TfXFuLxbom4FaeCJiGBUg"
+      ],
+      "hosted_payment_method_save": "always"
+    },
+    "konbini_payments": {},
+    "payments": {
+      "statement_descriptor": "ERIC ORTEGA",
+      "statement_descriptor_kana": {""},
+      "statement_descriptor_kanji": {"" 
+    },
+    "payouts": {
+      "debit_negative_balances": false,
+      "schedule": {
+        "delay_days": 0,
+        "interval": "manual"
+      },
+      "statement_descriptor": "E.r.o"
+    },
+    "sepa_debit_payments": {""},
+    "treasury": {""}
+      "tos_acceptance": {""}
+        "date": "" ,
+        "ip": "" 
+      }
+    }
+  },
+  "tos_acceptance": {
+    "date": 1671129201,
+    "ip": "172.59.24.251",
+    "user_agent": "Mozilla/5.0 (Linux; Android 11; MH-T6000) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Mobile Safari/537.36"
+  },
+  "type": "standard"
+}        uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
 
