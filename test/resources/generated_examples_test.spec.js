@@ -4033,7 +4033,7 @@ describe('Generated tests', function() {
       {
         method: 'DELETE',
         path: '/v2/core/event_destinations/id_123',
-        response: '{"id":"abc_123","object":"some.object.tag","deleted":true}',
+        response: '{"id":"abc_123","object":"some.object.tag"}',
       },
     ]);
     const deleted = await stripe.v2.core.eventDestinations.del('id_123');
