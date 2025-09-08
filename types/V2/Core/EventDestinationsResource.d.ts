@@ -225,11 +225,11 @@ declare module 'stripe' {
             id: string,
             params?: EventDestinationDeleteParams,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.DeletedObject>>;
+          ): Promise<Stripe.Response<Stripe.V2.EventDestination>>;
           del(
             id: string,
             options?: RequestOptions
-          ): Promise<Stripe.Response<Stripe.V2.DeletedObject>>;
+          ): Promise<Stripe.Response<Stripe.V2.EventDestination>>;
 
           /**
            * Disable an event destination.

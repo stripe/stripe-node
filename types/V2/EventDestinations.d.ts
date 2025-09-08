@@ -20,7 +20,7 @@ declare module 'stripe' {
         /**
          * Amazon EventBridge configuration.
          */
-        amazon_eventbridge?: EventDestination.AmazonEventbridge;
+        amazon_eventbridge: EventDestination.AmazonEventbridge | null;
 
         /**
          * Time at which the object was created.
@@ -45,7 +45,7 @@ declare module 'stripe' {
         /**
          * Where events should be routed from.
          */
-        events_from?: Array<EventDestination.EventsFrom>;
+        events_from: Array<EventDestination.EventsFrom> | null;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -55,7 +55,7 @@ declare module 'stripe' {
         /**
          * Metadata.
          */
-        metadata?: Stripe.Metadata;
+        metadata: Stripe.Metadata | null;
 
         /**
          * Event destination name.
@@ -65,7 +65,7 @@ declare module 'stripe' {
         /**
          * If using the snapshot event payload, the API version events are rendered as.
          */
-        snapshot_api_version?: string;
+        snapshot_api_version: string | null;
 
         /**
          * Status. It can be set to either enabled or disabled.
@@ -75,7 +75,7 @@ declare module 'stripe' {
         /**
          * Additional information about event destination status.
          */
-        status_details?: EventDestination.StatusDetails;
+        status_details: EventDestination.StatusDetails | null;
 
         /**
          * Event destination type.
@@ -90,7 +90,7 @@ declare module 'stripe' {
         /**
          * Webhook endpoint configuration.
          */
-        webhook_endpoint?: EventDestination.WebhookEndpoint;
+        webhook_endpoint: EventDestination.WebhookEndpoint | null;
       }
 
       namespace EventDestination {
@@ -129,7 +129,7 @@ declare module 'stripe' {
           /**
            * Details about why the event destination has been disabled.
            */
-          disabled?: StatusDetails.Disabled;
+          disabled: StatusDetails.Disabled | null;
         }
 
         namespace StatusDetails {
@@ -151,12 +151,12 @@ declare module 'stripe' {
           /**
            * The signing secret of the webhook endpoint, only includable on creation.
            */
-          signing_secret?: string;
+          signing_secret: string | null;
 
           /**
            * The URL of the webhook endpoint, includable.
            */
-          url?: string;
+          url: string | null;
         }
       }
     }
