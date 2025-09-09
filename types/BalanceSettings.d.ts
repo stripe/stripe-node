@@ -36,6 +36,13 @@ declare module 'stripe' {
       namespace Payments {
         interface Payouts {
           /**
+           * The minimum balance amount to retain per currency after automatic payouts. Only funds that exceed these amounts are paid out. Learn more about the [minimum balances for automatic payouts](https://docs.stripe.com/payouts/minimum-balances-for-automatic-payouts).
+           */
+          minimum_balance_by_currency: {
+            [key: string]: number;
+          } | null;
+
+          /**
            * Details on when funds from charges are available, and when they are paid out to an external account. See our [Setting Bank and Debit Card Payouts](https://stripe.com/docs/connect/bank-transfers#payout-information) documentation for details.
            */
           schedule: Payouts.Schedule | null;
