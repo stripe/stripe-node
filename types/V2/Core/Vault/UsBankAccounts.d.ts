@@ -42,7 +42,7 @@ declare module 'stripe' {
             /**
              * The fedwire routing number of the bank account.
              */
-            fedwire_routing_number: string | null;
+            fedwire_routing_number?: string;
 
             /**
              * The last 4 digits of the account number.
@@ -57,7 +57,7 @@ declare module 'stripe' {
             /**
              * The ACH routing number of the bank account.
              */
-            routing_number: string | null;
+            routing_number?: string;
           }
 
           namespace UsBankAccount {

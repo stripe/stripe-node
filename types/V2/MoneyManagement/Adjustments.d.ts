@@ -21,7 +21,7 @@ declare module 'stripe' {
           /**
            * If applicable, contains information about the original flow linked to this Adjustment.
            */
-          adjusted_flow: Adjustment.AdjustedFlow | null;
+          adjusted_flow?: Adjustment.AdjustedFlow;
 
           /**
            * The amount of the Adjustment.
@@ -36,7 +36,7 @@ declare module 'stripe' {
           /**
            * Description of the Adjustment and what it was used for.
            */
-          description: string | null;
+          description?: string;
 
           /**
            * The FinancialAccount that this adjustment is for.
@@ -51,7 +51,7 @@ declare module 'stripe' {
           /**
            * A link to the Stripe-hosted receipt that is provided when money movement is considered regulated under Stripe's money transmission licenses. The receipt link remains active for 60 days from the Adjustment creation date. After this period, the link will expire and the receipt url value will be null.
            */
-          receipt_url: string | null;
+          receipt_url?: string;
         }
 
         namespace Adjustment {
@@ -64,32 +64,32 @@ declare module 'stripe' {
             /**
              * If applicable, the ID of the Adjustment linked to this Adjustment.
              */
-            adjustment: string | null;
+            adjustment?: string;
 
             /**
              * If applicable, the ID of the InboundTransfer linked to this Adjustment.
              */
-            inbound_transfer: string | null;
+            inbound_transfer?: string;
 
             /**
              * If applicable, the ID of the OutboundPayment linked to this Adjustment.
              */
-            outbound_payment: string | null;
+            outbound_payment?: string;
 
             /**
              * If applicable, the ID of the OutboundTransfer linked to this Adjustment.
              */
-            outbound_transfer: string | null;
+            outbound_transfer?: string;
 
             /**
              * If applicable, the ID of the ReceivedCredit linked to this Adjustment.
              */
-            received_credit: string | null;
+            received_credit?: string;
 
             /**
              * If applicable, the ID of the ReceivedDebit linked to this Adjustment.
              */
-            received_debit: string | null;
+            received_debit?: string;
           }
 
           namespace AdjustedFlow {

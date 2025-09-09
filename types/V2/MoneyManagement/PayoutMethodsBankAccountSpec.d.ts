@@ -74,8 +74,14 @@ declare module 'stripe' {
 
             namespace Field {
               interface LocalNameHuman {
+                /**
+                 * The default content of the localizable string.
+                 */
                 content: string;
 
+                /**
+                 * A unique key representing the instance of this localizable string.
+                 */
                 localization_key: string;
               }
             }

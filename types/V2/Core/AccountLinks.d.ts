@@ -54,12 +54,12 @@ declare module 'stripe' {
             /**
              * Indicates that the AccountLink provided should onboard an account.
              */
-            account_onboarding: UseCase.AccountOnboarding | null;
+            account_onboarding?: UseCase.AccountOnboarding;
 
             /**
              * Indicates that the AccountLink provided should update a previously onboarded account.
              */
-            account_update: UseCase.AccountUpdate | null;
+            account_update?: UseCase.AccountUpdate;
           }
 
           namespace UseCase {
@@ -67,7 +67,7 @@ declare module 'stripe' {
               /**
                * Specifies the requirements that Stripe collects from v2/core/accounts in the Onboarding flow.
                */
-              collection_options: AccountOnboarding.CollectionOptions | null;
+              collection_options?: AccountOnboarding.CollectionOptions;
 
               /**
                * Open Enum. A v2/core/account can be configured to enable certain functionality. The configuration param targets the v2/core/account_link to collect information for the specified v2/core/account configuration/s.
@@ -82,7 +82,7 @@ declare module 'stripe' {
               /**
                * The URL that the user will be redirected to upon completing the linked flow.
                */
-              return_url: string | null;
+              return_url?: string;
             }
 
             namespace AccountOnboarding {
@@ -90,12 +90,12 @@ declare module 'stripe' {
                 /**
                  * Specifies whether the platform collects only currently_due requirements (`currently_due`) or both currently_due and eventually_due requirements (`eventually_due`). If you don't specify collection_options, the default value is currently_due.
                  */
-                fields: CollectionOptions.Fields | null;
+                fields?: CollectionOptions.Fields;
 
                 /**
                  * Specifies whether the platform collects future_requirements in addition to requirements in Connect Onboarding. The default value is `omit`.
                  */
-                future_requirements: CollectionOptions.FutureRequirements | null;
+                future_requirements?: CollectionOptions.FutureRequirements;
               }
 
               namespace CollectionOptions {
@@ -115,7 +115,7 @@ declare module 'stripe' {
               /**
                * Specifies the requirements that Stripe collects from v2/core/accounts in the Onboarding flow.
                */
-              collection_options: AccountUpdate.CollectionOptions | null;
+              collection_options?: AccountUpdate.CollectionOptions;
 
               /**
                * Open Enum. A v2/account can be configured to enable certain functionality. The configuration param targets the v2/account_link to collect information for the specified v2/account configuration/s.
@@ -130,7 +130,7 @@ declare module 'stripe' {
               /**
                * The URL that the user will be redirected to upon completing the linked flow.
                */
-              return_url: string | null;
+              return_url?: string;
             }
 
             namespace AccountUpdate {
@@ -138,12 +138,12 @@ declare module 'stripe' {
                 /**
                  * Specifies whether the platform collects only currently_due requirements (`currently_due`) or both currently_due and eventually_due requirements (`eventually_due`). If you don't specify collection_options, the default value is currently_due.
                  */
-                fields: CollectionOptions.Fields | null;
+                fields?: CollectionOptions.Fields;
 
                 /**
                  * Specifies whether the platform collects future_requirements in addition to requirements in Connect Onboarding. The default value is `omit`.
                  */
-                future_requirements: CollectionOptions.FutureRequirements | null;
+                future_requirements?: CollectionOptions.FutureRequirements;
               }
 
               namespace CollectionOptions {
