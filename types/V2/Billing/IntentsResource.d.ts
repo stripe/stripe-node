@@ -159,6 +159,7 @@ declare module 'stripe' {
 
               namespace EffectiveAt {
                 type Type =
+                  | 'current_billing_period_end'
                   | 'current_billing_period_start'
                   | 'on_reserve'
                   | 'timestamp';

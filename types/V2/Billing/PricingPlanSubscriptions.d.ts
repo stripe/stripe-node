@@ -126,6 +126,16 @@ declare module 'stripe' {
              * When the servicing status transitioned to paused.
              */
             paused_at: string | null;
+
+            /**
+             * When the servicing is scheduled to transition to activate.
+             */
+            will_activate_at: string | null;
+
+            /**
+             * When the servicing is scheduled to cancel.
+             */
+            will_cancel_at: string | null;
           }
         }
       }
