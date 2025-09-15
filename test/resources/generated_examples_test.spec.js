@@ -2571,7 +2571,6 @@ describe('Generated tests', function() {
               quantity: 1,
             },
           ],
-          iterations: 12,
         },
       ],
     });
