@@ -863,6 +863,9 @@ declare module 'stripe' {
             | 'visa';
 
           interface NetworkToken {
+            /**
+             * Indicates if Stripe used a network token, either user provided or Stripe managed when processing the transaction.
+             */
             used: boolean;
           }
 
