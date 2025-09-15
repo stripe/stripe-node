@@ -1098,7 +1098,7 @@ declare module 'stripe' {
 
         interface BillingMode {
           /**
-           * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+           * Controls the calculation and orchestration of prorations and invoices for subscriptions. If no value is passed, the default is `flexible`.
            */
           type: BillingMode.Type;
         }

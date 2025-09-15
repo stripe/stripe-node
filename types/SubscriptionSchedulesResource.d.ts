@@ -69,7 +69,7 @@ declare module 'stripe' {
 
       interface BillingMode {
         /**
-         * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+         * Controls the calculation and orchestration of prorations and invoices for subscriptions. If no value is passed, the default is `flexible`.
          */
         type: BillingMode.Type;
       }
@@ -304,11 +304,6 @@ declare module 'stripe' {
          * List of configuration items, each with an attached price, to apply during this phase of the subscription schedule.
          */
         items: Array<Phase.Item>;
-
-        /**
-         * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set. This parameter is deprecated and will be removed in a future version. Use `duration` instead.
-         */
-        iterations?: number;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual keys in the subscription's `metadata` can be unset by posting an empty value to them in the phase's `metadata`. To unset all keys in the subscription's `metadata`, update the subscription directly or unset every key individually from the phase's `metadata`.
@@ -1223,11 +1218,6 @@ declare module 'stripe' {
          * List of configuration items, each with an attached price, to apply during this phase of the subscription schedule.
          */
         items: Array<Phase.Item>;
-
-        /**
-         * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set. This parameter is deprecated and will be removed in a future version. Use `duration` instead.
-         */
-        iterations?: number;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual keys in the subscription's `metadata` can be unset by posting an empty value to them in the phase's `metadata`. To unset all keys in the subscription's `metadata`, update the subscription directly or unset every key individually from the phase's `metadata`.

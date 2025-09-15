@@ -11,14 +11,14 @@ declare module 'stripe' {
 
     interface BalanceSettingsUpdateParams {
       /**
-       * Settings that apply to the [Payments Balance](https://docs.stripe.com/api/balance).
-       */
-      payments: BalanceSettingsUpdateParams.Payments;
-
-      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Settings that apply to the [Payments Balance](https://docs.stripe.com/api/balance).
+       */
+      payments?: BalanceSettingsUpdateParams.Payments;
     }
 
     namespace BalanceSettingsUpdateParams {
@@ -91,9 +91,9 @@ declare module 'stripe' {
 
         interface SettlementTiming {
           /**
-           * The number of days charge funds are held before becoming available. The default value is `minimum`, representing the lowest available value for the account. The maximum value is 31. The `delay_days` parameter remains at the last configured value if `payouts.schedule.interval` is `manual`. [Learn more about controlling delay days](https://docs.stripe.com/connect/manage-payout-schedule).
+           * Change `delay_days` for this account, which determines the number of days charge funds are held before becoming available. The maximum value is 31. Passing an empty string to `delay_days_override` will return `delay_days` to the default, which is the lowest available value for the account. [Learn more about controlling delay days](https://docs.stripe.com/connect/manage-payout-schedule).
            */
-          delay_days_override?: number;
+          delay_days_override?: Stripe.Emptyable<number>;
         }
       }
     }
@@ -116,7 +116,7 @@ declare module 'stripe' {
        *  Related guide: [Making API calls for connected accounts](https://docs.stripe.com/connect/authentication)
        */
       update(
-        params: BalanceSettingsUpdateParams,
+        params?: BalanceSettingsUpdateParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.BalanceSettings>>;
     }
