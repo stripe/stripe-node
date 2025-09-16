@@ -2558,6 +2558,9 @@ declare module 'stripe' {
 
     namespace SubscriptionMigrateParams {
       interface BillingMode {
+        /**
+         * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+         */
         type: 'flexible';
       }
     }
