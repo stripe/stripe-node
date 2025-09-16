@@ -229,7 +229,7 @@ declare module 'stripe' {
     namespace PaymentIntentCreateParams {
       interface AmountDetails {
         /**
-         * The amount an item was discounted for.
+         * The total discount applied on the transaction.
          */
         discount_amount?: Stripe.Emptyable<number>;
 
@@ -4784,7 +4784,7 @@ declare module 'stripe' {
     namespace PaymentIntentUpdateParams {
       interface AmountDetails {
         /**
-         * The amount an item was discounted for.
+         * The total discount applied on the transaction.
          */
         discount_amount?: Stripe.Emptyable<number>;
 
@@ -9180,7 +9180,7 @@ declare module 'stripe' {
     namespace PaymentIntentCaptureParams {
       interface AmountDetails {
         /**
-         * The amount an item was discounted for.
+         * The total discount applied on the transaction.
          */
         discount_amount?: Stripe.Emptyable<number>;
 
@@ -10217,7 +10217,7 @@ declare module 'stripe' {
     namespace PaymentIntentConfirmParams {
       interface AmountDetails {
         /**
-         * The amount an item was discounted for.
+         * The total discount applied on the transaction.
          */
         discount_amount?: Stripe.Emptyable<number>;
 
@@ -14634,7 +14634,7 @@ declare module 'stripe' {
     namespace PaymentIntentIncrementAuthorizationParams {
       interface AmountDetails {
         /**
-         * The amount an item was discounted for.
+         * The total discount applied on the transaction.
          */
         discount_amount?: Stripe.Emptyable<number>;
 

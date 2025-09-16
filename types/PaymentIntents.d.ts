@@ -264,7 +264,7 @@ declare module 'stripe' {
     namespace PaymentIntent {
       interface AmountDetails {
         /**
-         * The amount an item was discounted for.
+         * The total discount applied on the transaction.
          */
         discount_amount?: number;
 
