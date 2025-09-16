@@ -156,6 +156,11 @@ declare module 'stripe' {
         discounts: Array<Session.Discount> | null;
 
         /**
+         * A list of the types of payment methods (e.g., `card`) that should be excluded from this Checkout Session. This should only be used when payment methods for this Checkout Session are managed through the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+         */
+        excluded_payment_method_types?: Array<string>;
+
+        /**
          * The timestamp at which the Checkout Session will expire.
          */
         expires_at: number;
