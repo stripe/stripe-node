@@ -5443,7 +5443,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/core/claimable_sandboxes',
         response:
-          '{"api_keys":{"mcp":null,"publishable":"publishable","secret":"secret"},"claim_url":"claim_url","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.claimable_sandbox","prefill":{"country":"af","email":"email","name":"name"},"livemode":true}',
+          '{"claim_url":null,"claimed_at":null,"created":"1970-01-12T21:42:34.472Z","expires_at":null,"id":"obj_123","object":"v2.core.claimable_sandbox","prefill":{"country":"af","email":"email","name":"name"},"sandbox_details":{"account":"account","api_keys":null,"owner_account":null},"status":"claimed","livemode":true}',
       },
     ]);
     const claimableSandbox = await stripe.v2.core.claimableSandboxes.create({
@@ -5454,6 +5454,21 @@ describe('Generated tests', function() {
         name: 'name',
       },
     });
+    expect(claimableSandbox).not.to.be.null;
+  });
+
+  it('test_v2_core_claimable_sandbox_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/claimable_sandboxes/id_123',
+        response:
+          '{"claim_url":null,"claimed_at":null,"created":"1970-01-12T21:42:34.472Z","expires_at":null,"id":"obj_123","object":"v2.core.claimable_sandbox","prefill":{"country":"af","email":"email","name":"name"},"sandbox_details":{"account":"account","api_keys":null,"owner_account":null},"status":"claimed","livemode":true}',
+      },
+    ]);
+    const claimableSandbox = await stripe.v2.core.claimableSandboxes.retrieve(
+      'id_123'
+    );
     expect(claimableSandbox).not.to.be.null;
   });
 

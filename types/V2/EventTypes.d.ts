@@ -60,6 +60,10 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreAccountPersonCreatedEvent
       | Stripe.Events.V2CoreAccountPersonDeletedEvent
       | Stripe.Events.V2CoreAccountPersonUpdatedEvent
+      | Stripe.Events.V2CoreClaimableSandboxClaimedEvent
+      | Stripe.Events.V2CoreClaimableSandboxExpiredEvent
+      | Stripe.Events.V2CoreClaimableSandboxExpiringEvent
+      | Stripe.Events.V2CoreClaimableSandboxSandboxDetailsOwnerAccountUpdatedEvent
       | Stripe.Events.V2CoreEventDestinationPingEvent
       | Stripe.Events.V2CoreHealthApiErrorFiringEvent
       | Stripe.Events.V2CoreHealthApiErrorResolvedEvent
@@ -181,6 +185,10 @@ declare module 'stripe' {
       | Stripe.Events.PushedV2CoreAccountPersonCreatedEvent
       | Stripe.Events.PushedV2CoreAccountPersonDeletedEvent
       | Stripe.Events.PushedV2CoreAccountPersonUpdatedEvent
+      | Stripe.Events.PushedV2CoreClaimableSandboxClaimedEvent
+      | Stripe.Events.PushedV2CoreClaimableSandboxExpiredEvent
+      | Stripe.Events.PushedV2CoreClaimableSandboxExpiringEvent
+      | Stripe.Events.PushedV2CoreClaimableSandboxSandboxDetailsOwnerAccountUpdatedEvent
       | Stripe.Events.PushedV2CoreEventDestinationPingEvent
       | Stripe.Events.PushedV2CoreHealthApiErrorFiringEvent
       | Stripe.Events.PushedV2CoreHealthApiErrorResolvedEvent
@@ -1886,6 +1894,89 @@ declare module 'stripe' {
          */
         account_id: string;
       }
+    }
+
+    /**
+     * Occurs when a claimable sandbox is claimed.
+     */
+    export interface V2CoreClaimableSandboxClaimedEvent extends V2.EventBase {
+      type: 'v2.core.claimable_sandbox.claimed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.ClaimableSandbox>;
+    }
+    export interface PushedV2CoreClaimableSandboxClaimedEvent
+      extends V2.EventBase {
+      type: 'v2.core.claimable_sandbox.claimed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.ClaimableSandbox>;
+      pull(): Promise<V2CoreClaimableSandboxClaimedEvent>;
+    }
+
+    /**
+     * Occurs when a claimable sandbox expires.
+     */
+    export interface V2CoreClaimableSandboxExpiredEvent extends V2.EventBase {
+      type: 'v2.core.claimable_sandbox.expired';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.ClaimableSandbox>;
+    }
+    export interface PushedV2CoreClaimableSandboxExpiredEvent
+      extends V2.EventBase {
+      type: 'v2.core.claimable_sandbox.expired';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.ClaimableSandbox>;
+      pull(): Promise<V2CoreClaimableSandboxExpiredEvent>;
+    }
+
+    /**
+     * Occurs when a claimable sandbox is expiring in 7 days.
+     */
+    export interface V2CoreClaimableSandboxExpiringEvent extends V2.EventBase {
+      type: 'v2.core.claimable_sandbox.expiring';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.ClaimableSandbox>;
+    }
+    export interface PushedV2CoreClaimableSandboxExpiringEvent
+      extends V2.EventBase {
+      type: 'v2.core.claimable_sandbox.expiring';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.ClaimableSandbox>;
+      pull(): Promise<V2CoreClaimableSandboxExpiringEvent>;
+    }
+
+    /**
+     * Occurs when a claimable sandbox is activated by the user with the intention to go live and your Stripe app is installed on the live account.
+     */
+    export interface V2CoreClaimableSandboxSandboxDetailsOwnerAccountUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.claimable_sandbox.sandbox_details_owner_account_updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.ClaimableSandbox>;
+    }
+    export interface PushedV2CoreClaimableSandboxSandboxDetailsOwnerAccountUpdatedEvent
+      extends V2.EventBase {
+      type: 'v2.core.claimable_sandbox.sandbox_details_owner_account_updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.ClaimableSandbox>;
+      pull(): Promise<
+        V2CoreClaimableSandboxSandboxDetailsOwnerAccountUpdatedEvent
+      >;
     }
 
     /**
