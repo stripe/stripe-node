@@ -3220,6 +3220,11 @@ declare module 'stripe' {
 
       interface SessionUpdateParams {
         /**
+         * Settings for automatic tax lookup for this session and resulting payments, invoices, and subscriptions.
+         */
+        automatic_tax?: SessionUpdateParams.AutomaticTax;
+
+        /**
          * Information about the customer collected within the Checkout Session. Can only be set when updating `embedded` or `custom` sessions.
          */
         collected_information?: SessionUpdateParams.CollectedInformation;
@@ -3233,6 +3238,11 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+
+        /**
+         * Generate a post-purchase Invoice for one-time payments.
+         */
+        invoice_creation?: SessionUpdateParams.InvoiceCreation;
 
         /**
          * A list of items the customer is purchasing.
@@ -3270,6 +3280,31 @@ declare module 'stripe' {
       }
 
       namespace SessionUpdateParams {
+        interface AutomaticTax {
+          /**
+           * The account that's liable for tax. If set, the business address and tax registrations required to perform the tax calculation are loaded from this account. The tax transaction is returned in the report of the connected account.
+           */
+          liability?: AutomaticTax.Liability;
+        }
+
+        namespace AutomaticTax {
+          interface Liability {
+            /**
+             * The connected account being referenced when `type` is `account`.
+             */
+            account?: string;
+
+            /**
+             * Type of the account referenced in the request.
+             */
+            type: Liability.Type;
+          }
+
+          namespace Liability {
+            type Type = 'account' | 'self';
+          }
+        }
+
         interface CollectedInformation {
           /**
            * The shipping details to apply to this Session.
@@ -3372,6 +3407,40 @@ declare module 'stripe' {
 
           namespace CouponData {
             type Duration = 'forever' | 'once' | 'repeating';
+          }
+        }
+
+        interface InvoiceCreation {
+          /**
+           * Parameters passed when creating invoices for payment-mode Checkout Sessions.
+           */
+          invoice_data?: InvoiceCreation.InvoiceData;
+        }
+
+        namespace InvoiceCreation {
+          interface InvoiceData {
+            /**
+             * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+             */
+            issuer?: InvoiceData.Issuer;
+          }
+
+          namespace InvoiceData {
+            interface Issuer {
+              /**
+               * The connected account being referenced when `type` is `account`.
+               */
+              account?: string;
+
+              /**
+               * Type of the account referenced in the request.
+               */
+              type: Issuer.Type;
+            }
+
+            namespace Issuer {
+              type Type = 'account' | 'self';
+            }
           }
         }
 
@@ -3655,6 +3724,11 @@ declare module 'stripe' {
 
         interface SubscriptionData {
           /**
+           * All invoices will be billed using the specified settings.
+           */
+          invoice_settings?: SubscriptionData.InvoiceSettings;
+
+          /**
            * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. Has to be at least 48 hours in the future.
            */
           trial_end?: number;
@@ -3663,6 +3737,33 @@ declare module 'stripe' {
            * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
            */
           trial_period_days?: Stripe.Emptyable<number>;
+        }
+
+        namespace SubscriptionData {
+          interface InvoiceSettings {
+            /**
+             * The connected account that issues the invoice. The invoice is presented with the branding and support information of the specified account.
+             */
+            issuer?: InvoiceSettings.Issuer;
+          }
+
+          namespace InvoiceSettings {
+            interface Issuer {
+              /**
+               * The connected account being referenced when `type` is `account`.
+               */
+              account?: string;
+
+              /**
+               * Type of the account referenced in the request.
+               */
+              type: Issuer.Type;
+            }
+
+            namespace Issuer {
+              type Type = 'account' | 'self';
+            }
+          }
         }
       }
 
