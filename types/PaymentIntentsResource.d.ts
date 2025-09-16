@@ -4678,6 +4678,13 @@ declare module 'stripe' {
       description?: string;
 
       /**
+       * The list of payment method types to exclude from use with this payment.
+       */
+      excluded_payment_method_types?: Stripe.Emptyable<
+        Array<PaymentIntentUpdateParams.ExcludedPaymentMethodType>
+      >;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -4958,6 +4965,64 @@ declare module 'stripe' {
       }
 
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
+
+      type ExcludedPaymentMethodType =
+        | 'acss_debit'
+        | 'affirm'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'alma'
+        | 'amazon_pay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'billie'
+        | 'blik'
+        | 'boleto'
+        | 'card'
+        | 'cashapp'
+        | 'crypto'
+        | 'customer_balance'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'gopay'
+        | 'grabpay'
+        | 'id_bank_transfer'
+        | 'ideal'
+        | 'kakao_pay'
+        | 'klarna'
+        | 'konbini'
+        | 'kr_card'
+        | 'mb_way'
+        | 'mobilepay'
+        | 'multibanco'
+        | 'naver_pay'
+        | 'nz_bank_account'
+        | 'oxxo'
+        | 'p24'
+        | 'pay_by_bank'
+        | 'payco'
+        | 'paynow'
+        | 'paypal'
+        | 'paypay'
+        | 'payto'
+        | 'pix'
+        | 'promptpay'
+        | 'qris'
+        | 'rechnung'
+        | 'revolut_pay'
+        | 'samsung_pay'
+        | 'satispay'
+        | 'sepa_debit'
+        | 'shopeepay'
+        | 'sofort'
+        | 'stripe_balance'
+        | 'swish'
+        | 'twint'
+        | 'us_bank_account'
+        | 'wechat_pay'
+        | 'zip';
 
       interface Hooks {
         /**
@@ -10115,6 +10180,13 @@ declare module 'stripe' {
       error_on_requires_action?: boolean;
 
       /**
+       * The list of payment method types to exclude from use with this payment.
+       */
+      excluded_payment_method_types?: Stripe.Emptyable<
+        Array<PaymentIntentConfirmParams.ExcludedPaymentMethodType>
+      >;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -10391,6 +10463,64 @@ declare module 'stripe' {
       }
 
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
+
+      type ExcludedPaymentMethodType =
+        | 'acss_debit'
+        | 'affirm'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'alma'
+        | 'amazon_pay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'billie'
+        | 'blik'
+        | 'boleto'
+        | 'card'
+        | 'cashapp'
+        | 'crypto'
+        | 'customer_balance'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'gopay'
+        | 'grabpay'
+        | 'id_bank_transfer'
+        | 'ideal'
+        | 'kakao_pay'
+        | 'klarna'
+        | 'konbini'
+        | 'kr_card'
+        | 'mb_way'
+        | 'mobilepay'
+        | 'multibanco'
+        | 'naver_pay'
+        | 'nz_bank_account'
+        | 'oxxo'
+        | 'p24'
+        | 'pay_by_bank'
+        | 'payco'
+        | 'paynow'
+        | 'paypal'
+        | 'paypay'
+        | 'payto'
+        | 'pix'
+        | 'promptpay'
+        | 'qris'
+        | 'rechnung'
+        | 'revolut_pay'
+        | 'samsung_pay'
+        | 'satispay'
+        | 'sepa_debit'
+        | 'shopeepay'
+        | 'sofort'
+        | 'stripe_balance'
+        | 'swish'
+        | 'twint'
+        | 'us_bank_account'
+        | 'wechat_pay'
+        | 'zip';
 
       interface Hooks {
         /**
