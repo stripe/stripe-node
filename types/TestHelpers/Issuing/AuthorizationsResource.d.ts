@@ -676,7 +676,6 @@ declare module 'stripe' {
             namespace MerchantDisputeRisk {
               type RiskLevel =
                 | 'elevated'
-                | 'high'
                 | 'highest'
                 | 'normal'
                 | 'not_assessed'
