@@ -26,7 +26,7 @@ declare module 'stripe' {
           /**
            * This object stores details about the originating banking transaction that resulted in the ReceivedDebit. Present if `type` field value is `bank_transfer`.
            */
-          bank_transfer: ReceivedDebit.BankTransfer | null;
+          bank_transfer?: ReceivedDebit.BankTransfer;
 
           /**
            * The time at which the ReceivedDebit was created.
@@ -37,7 +37,7 @@ declare module 'stripe' {
           /**
            * Freeform string sent by the originator of the ReceivedDebit.
            */
-          description: string | null;
+          description?: string;
 
           /**
            * Financial Account on which funds for ReceivedDebit were debited.
@@ -52,7 +52,7 @@ declare module 'stripe' {
           /**
            * A link to the Stripe-hosted receipt for this ReceivedDebit.
            */
-          receipt_url: string | null;
+          receipt_url?: string;
 
           /**
            * Open Enum. The status of the ReceivedDebit.
@@ -62,12 +62,12 @@ declare module 'stripe' {
           /**
            * Detailed information about the status of the ReceivedDebit.
            */
-          status_details: ReceivedDebit.StatusDetails | null;
+          status_details?: ReceivedDebit.StatusDetails;
 
           /**
            * The time at which the ReceivedDebit transitioned to a particular status.
            */
-          status_transitions: ReceivedDebit.StatusTransitions | null;
+          status_transitions?: ReceivedDebit.StatusTransitions;
 
           /**
            * Open Enum. The type of the ReceivedDebit.
@@ -90,7 +90,7 @@ declare module 'stripe' {
             /**
              * The statement descriptor set by the originator of the debit.
              */
-            statement_descriptor: string | null;
+            statement_descriptor?: string;
 
             /**
              * The payment method used to originate the debit.
@@ -103,7 +103,7 @@ declare module 'stripe' {
               /**
                * The name of the bank the debit originated from.
                */
-              bank_name: string | null;
+              bank_name?: string;
 
               /**
                * Open Enum. The bank network the debit was originated on.
@@ -113,7 +113,7 @@ declare module 'stripe' {
               /**
                * The routing number of the bank that originated the debit.
                */
-              routing_number: string | null;
+              routing_number?: string;
             }
           }
 
@@ -153,19 +153,19 @@ declare module 'stripe' {
              * The time when the ReceivedDebit was marked as `canceled`.
              * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
              */
-            canceled_at: string | null;
+            canceled_at?: string;
 
             /**
              * The time when the ReceivedDebit was marked as `failed`.
              * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
              */
-            failed_at: string | null;
+            failed_at?: string;
 
             /**
              * The time when the ReceivedDebit was marked as `succeeded`.
              * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
              */
-            succeeded_at: string | null;
+            succeeded_at?: string;
           }
 
           type Type = 'bank_transfer' | 'external_debit';

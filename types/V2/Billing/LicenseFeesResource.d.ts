@@ -135,7 +135,7 @@ declare module 'stripe' {
            * This name is used in Stripe-hosted products like the Customer Portal and Checkout. It does not show up on Invoices.
            * Maximum length of 250 characters.
            */
-          display_name?: string;
+          display_name: string;
 
           /**
            * Changes the version that new license fee will use. Providing `live_version = "latest"` will set the
@@ -272,7 +272,7 @@ declare module 'stripe' {
            */
           update(
             id: string,
-            params?: LicenseFeeUpdateParams,
+            params: LicenseFeeUpdateParams,
             options?: RequestOptions
           ): Promise<Stripe.Response<Stripe.V2.Billing.LicenseFee>>;
 

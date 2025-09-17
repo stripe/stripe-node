@@ -21,7 +21,7 @@ declare module 'stripe' {
           /**
            * Settings related to calculating a bill.
            */
-          calculation: BillSettingVersion.Calculation | null;
+          calculation?: BillSettingVersion.Calculation;
 
           /**
            * Timestamp of when the object was created.
@@ -31,12 +31,12 @@ declare module 'stripe' {
           /**
            * Settings related to invoice behavior.
            */
-          invoice: BillSettingVersion.Invoice | null;
+          invoice?: BillSettingVersion.Invoice;
 
           /**
            * The ID of the invoice rendering template to be used when generating invoices.
            */
-          invoice_rendering_template: string | null;
+          invoice_rendering_template?: string;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -49,7 +49,7 @@ declare module 'stripe' {
             /**
              * Settings for calculating tax.
              */
-            tax: Calculation.Tax | null;
+            tax?: Calculation.Tax;
           }
 
           namespace Calculation {
@@ -69,7 +69,7 @@ declare module 'stripe' {
             /**
              * The amount of time until the invoice will be overdue for payment.
              */
-            time_until_due: Invoice.TimeUntilDue | null;
+            time_until_due?: Invoice.TimeUntilDue;
           }
 
           namespace Invoice {

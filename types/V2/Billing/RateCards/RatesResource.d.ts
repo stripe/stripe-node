@@ -195,12 +195,12 @@ declare module 'stripe' {
               id: string,
               params?: RateDeleteParams,
               options?: RequestOptions
-            ): Promise<Stripe.Response<Stripe.V2.Billing.RateCardRate>>;
+            ): Promise<Stripe.Response<Stripe.V2.DeletedObject>>;
             del(
               rateCardId: string,
               id: string,
               options?: RequestOptions
-            ): Promise<Stripe.Response<Stripe.V2.Billing.RateCardRate>>;
+            ): Promise<Stripe.Response<Stripe.V2.DeletedObject>>;
           }
         }
       }

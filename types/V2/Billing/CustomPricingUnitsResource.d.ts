@@ -44,7 +44,7 @@ declare module 'stripe' {
           /**
            * An internal key you can use to search for a particular CustomPricingUnit item.
            */
-          lookup_key?: string | null;
+          lookup_key?: string;
 
           /**
            * Set of key-value pairs that you can attach to an object.

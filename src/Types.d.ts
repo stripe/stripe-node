@@ -50,7 +50,6 @@ export type RawErrorType =
   | 'non_zero_balance'
   | 'not_cancelable'
   | 'quota_exceeded'
-  | 'rate_limit'
   | 'recipient_not_notifiable'
   | 'temporary_session_expired';
 // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec

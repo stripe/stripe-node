@@ -322,7 +322,7 @@ declare module 'stripe' {
           /**
            * Email delivery settings.
            */
-          email_delivery?: CollectionSettingUpdateParams.EmailDelivery | null;
+          email_delivery?: CollectionSettingUpdateParams.EmailDelivery;
 
           /**
            * Optionally change the live version of the CollectionSetting. Billing Cadences and other objects that refer to this

@@ -21,7 +21,6 @@ declare module 'stripe' {
       | 'non_zero_balance'
       | 'not_cancelable'
       | 'quota_exceeded'
-      | 'rate_limit'
       | 'recipient_not_notifiable'
       | 'temporary_session_expired';
     // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
@@ -150,7 +149,6 @@ declare module 'stripe' {
           | 'NonZeroBalanceError'
           | 'NotCancelableError'
           | 'QuotaExceededError'
-          | 'RateLimitError'
           | 'RecipientNotNotifiableError'
           | 'TemporarySessionExpiredError';
         // errorClassNameEnum: The end of the section generated from our OpenAPI spec
@@ -346,10 +344,6 @@ declare module 'stripe' {
       export class QuotaExceededError extends StripeError {
         readonly type: 'QuotaExceededError';
         readonly rawType: 'quota_exceeded';
-      }
-      export class RateLimitError extends StripeError {
-        readonly type: 'RateLimitError';
-        readonly rawType: 'rate_limit';
       }
       export class RecipientNotNotifiableError extends StripeError {
         readonly type: 'RecipientNotNotifiableError';

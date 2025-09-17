@@ -47,7 +47,7 @@ declare module 'stripe' {
           /**
            * A hosted transaction receipt URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
            */
-          receipt_url: string | null;
+          receipt_url?: string;
 
           /**
            * A nested object containing information about the destination of the InboundTransfer.
@@ -83,7 +83,7 @@ declare module 'stripe' {
               /**
                * The destination US bank account identifier. eg "usba_***".
                */
-              us_bank_account: string | null;
+              us_bank_account?: string;
             }
           }
 
@@ -128,27 +128,27 @@ declare module 'stripe' {
             /**
              * The history entry for a failed InboundTransfer.
              */
-            bank_debit_failed: TransferHistory.BankDebitFailed | null;
+            bank_debit_failed?: TransferHistory.BankDebitFailed;
 
             /**
              * The history entry for a processing InboundTransfer.
              */
-            bank_debit_processing: TransferHistory.BankDebitProcessing | null;
+            bank_debit_processing?: TransferHistory.BankDebitProcessing;
 
             /**
              * The history entry for a queued InboundTransfer.
              */
-            bank_debit_queued: TransferHistory.BankDebitQueued | null;
+            bank_debit_queued?: TransferHistory.BankDebitQueued;
 
             /**
              * The history entry for a returned InboundTransfer.
              */
-            bank_debit_returned: TransferHistory.BankDebitReturned | null;
+            bank_debit_returned?: TransferHistory.BankDebitReturned;
 
             /**
              * The history entry for a succeeded InboundTransfer.
              */
-            bank_debit_succeeded: TransferHistory.BankDebitSucceeded | null;
+            bank_debit_succeeded?: TransferHistory.BankDebitSucceeded;
           }
 
           namespace TransferHistory {

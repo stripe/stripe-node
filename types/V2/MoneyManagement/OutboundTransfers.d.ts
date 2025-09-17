@@ -37,18 +37,18 @@ declare module 'stripe' {
           /**
            * Delivery options to be used to send the OutboundTransfer.
            */
-          delivery_options: OutboundTransfer.DeliveryOptions | null;
+          delivery_options?: OutboundTransfer.DeliveryOptions;
 
           /**
            * An arbitrary string attached to the OutboundTransfer. Often useful for displaying to users.
            */
-          description: string | null;
+          description?: string;
 
           /**
            * The date when funds are expected to arrive in the payout method. This field is not set if the payout method is in a `failed`, `canceled`, or `returned` state.
            * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
            */
-          expected_arrival_date: string | null;
+          expected_arrival_date?: string;
 
           /**
            * The FinancialAccount that funds were pulled from.
@@ -63,12 +63,12 @@ declare module 'stripe' {
           /**
            * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
-          metadata: Stripe.Metadata | null;
+          metadata?: Stripe.Metadata;
 
           /**
            * A link to the Stripe-hosted receipt for this OutboundTransfer. The receipt link remains active for 60 days from the OutboundTransfer creation date. After this period, the link will expire and the receipt url value will be null.
            */
-          receipt_url: string | null;
+          receipt_url?: string;
 
           /**
            * The description that appears on the receiving end for an OutboundTransfer (for example, bank statement for external bank transfer). It will default to `STRIPE` if not set on the account settings.
@@ -86,12 +86,12 @@ declare module 'stripe' {
           /**
            * Status details for an OutboundTransfer in a `failed` or `returned` state.
            */
-          status_details: OutboundTransfer.StatusDetails | null;
+          status_details?: OutboundTransfer.StatusDetails;
 
           /**
            * Hash containing timestamps of when the object transitioned to a particular status.
            */
-          status_transitions: OutboundTransfer.StatusTransitions | null;
+          status_transitions?: OutboundTransfer.StatusTransitions;
 
           /**
            * To which payout method the OutboundTransfer was sent.
@@ -109,7 +109,7 @@ declare module 'stripe' {
             /**
              * Open Enum. Method for bank account.
              */
-            bank_account: DeliveryOptions.BankAccount | null;
+            bank_account?: DeliveryOptions.BankAccount;
           }
 
           namespace DeliveryOptions {
@@ -139,12 +139,12 @@ declare module 'stripe' {
             /**
              * The `failed` status reason.
              */
-            failed: StatusDetails.Failed | null;
+            failed?: StatusDetails.Failed;
 
             /**
              * The `returned` status reason.
              */
-            returned: StatusDetails.Returned | null;
+            returned?: StatusDetails.Returned;
           }
 
           namespace StatusDetails {
@@ -193,25 +193,25 @@ declare module 'stripe' {
              * Timestamp describing when an OutboundTransfer changed status to `canceled`.
              * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
              */
-            canceled_at: string | null;
+            canceled_at?: string;
 
             /**
              * Timestamp describing when an OutboundTransfer changed status to `failed`.
              * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
              */
-            failed_at: string | null;
+            failed_at?: string;
 
             /**
              * Timestamp describing when an OutboundTransfer changed status to `posted`.
              * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
              */
-            posted_at: string | null;
+            posted_at?: string;
 
             /**
              * Timestamp describing when an OutboundTransfer changed status to `returned`.
              * Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
              */
-            returned_at: string | null;
+            returned_at?: string;
           }
 
           interface To {
@@ -238,7 +238,7 @@ declare module 'stripe' {
             /**
              * The trace ID value if `trace_id.status` is `supported`, otherwise empty.
              */
-            value: string | null;
+            value?: string;
           }
 
           namespace TraceId {
