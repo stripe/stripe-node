@@ -109,6 +109,14 @@ declare module 'stripe' {
               day_of_month: number;
 
               /**
+               * The month to anchor the billing on for a type="month" billing cycle from
+               * 1-12. If not provided, this will default to the month the cadence was created.
+               * This setting can only be used for monthly billing cycles with `interval_count` of 2, 3, 4 or 6.
+               * All occurrences will be calculated from month provided.
+               */
+              month_of_year?: number;
+
+              /**
                * The time at which the billing cycle ends.
                * This field is optional, and if not provided, it will default to
                * the time at which the cadence was created in UTC timezone.

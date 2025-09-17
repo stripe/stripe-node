@@ -25,19 +25,25 @@ declare module 'stripe' {
           object: 'v2.core.claimable_sandbox';
 
           /**
-           * Keys that can be used to set up an integration for this sandbox and operate on the account.
+           * URL for user to claim sandbox into their existing Stripe account.
+           * The value will be null if the sandbox status is `claimed` or `expired`.
            */
-          api_keys: ClaimableSandbox.ApiKeys;
+          claim_url: string | null;
 
           /**
-           * URL for user to claim sandbox into their existing Stripe account.
+           * The timestamp the sandbox was claimed. The value will be null if the sandbox status is not `claimed`.
            */
-          claim_url: string;
+          claimed_at: string | null;
 
           /**
            * When the sandbox is created.
            */
           created: string;
+
+          /**
+           * The timestamp the sandbox will expire. The value will be null if the sandbox is `claimed`.
+           */
+          expires_at: string | null;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -48,27 +54,19 @@ declare module 'stripe' {
            * Values prefilled during the creation of the sandbox.
            */
           prefill: ClaimableSandbox.Prefill;
+
+          /**
+           * Data about the Stripe sandbox object.
+           */
+          sandbox_details: ClaimableSandbox.SandboxDetails;
+
+          /**
+           * Status of the sandbox. One of `unclaimed`, `expired`, `claimed`.
+           */
+          status: ClaimableSandbox.Status;
         }
 
         namespace ClaimableSandbox {
-          interface ApiKeys {
-            /**
-             * Used to communicate with [Stripe's MCP server](https://docs.stripe.com/mcp).
-             * This allows LLM agents to securely operate on a Stripe account.
-             */
-            mcp: string | null;
-
-            /**
-             * Publicly accessible in a web or mobile app client-side code.
-             */
-            publishable: string;
-
-            /**
-             * Should be stored securely in server-side code (such as an environment variable).
-             */
-            secret: string;
-          }
-
           interface Prefill {
             /**
              * Country in which the account holder resides, or in which the business is legally established.
@@ -342,6 +340,46 @@ declare module 'stripe' {
               | 'zm'
               | 'zw';
           }
+
+          interface SandboxDetails {
+            /**
+             * The sandbox's Stripe account ID.
+             */
+            account: string;
+
+            /**
+             * Keys that can be used to set up an integration for this sandbox and operate on the account.
+             */
+            api_keys: SandboxDetails.ApiKeys | null;
+
+            /**
+             * The livemode sandbox Stripe account ID. This field is only set if the user activates their sandbox
+             * and chooses to install your platform's Stripe App in their live account.
+             */
+            owner_account: string | null;
+          }
+
+          namespace SandboxDetails {
+            interface ApiKeys {
+              /**
+               * Used to communicate with [Stripe's MCP server](https://docs.stripe.com/mcp).
+               * This allows LLM agents to securely operate on a Stripe account.
+               */
+              mcp: string | null;
+
+              /**
+               * Publicly accessible in a web or mobile app client-side code.
+               */
+              publishable: string;
+
+              /**
+               * Should be stored securely in server-side code (such as an environment variable).
+               */
+              secret: string;
+            }
+          }
+
+          type Status = 'claimed' | 'expired' | 'unclaimed';
         }
       }
     }

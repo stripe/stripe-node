@@ -142,6 +142,12 @@ declare module 'stripe' {
               day_of_month: number;
 
               /**
+               * The month to anchor the billing on for a type="month" billing cycle from
+               * 1-12. Occurrences are calculated from the month anchor.
+               */
+              month_of_year: number | null;
+
+              /**
                * The time at which the billing cycle ends.
                */
               time: Month.Time;

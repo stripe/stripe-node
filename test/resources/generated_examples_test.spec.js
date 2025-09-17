@@ -4012,6 +4012,7 @@ describe('Generated tests', function() {
         },
         month: {
           day_of_month: 1361669285,
+          month_of_year: 82933018,
           time: {
             hour: 3208676,
             minute: 1074026988,
@@ -4278,7 +4279,7 @@ describe('Generated tests', function() {
             },
             effective_at: {
               timestamp: '1970-01-01T15:18:46.294Z',
-              type: 'current_billing_period_start',
+              type: 'on_reserve',
             },
             pricing_plan_subscription_details: {
               pricing_plan_subscription: 'pricing_plan_subscription',
@@ -4510,9 +4511,7 @@ describe('Generated tests', function() {
           '{"active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","licensed_item":{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","lookup_key":null,"metadata":null,"object":"v2.billing.licensed_item","tax_details":null,"unit_label":null,"livemode":true},"live_version":"live_version","lookup_key":null,"metadata":null,"object":"v2.billing.license_fee","service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive","tiering_mode":null,"tiers":[{"flat_amount":null,"unit_amount":null,"up_to_decimal":null,"up_to_inf":null}],"transform_quantity":null,"unit_amount":null,"livemode":true}',
       },
     ]);
-    const licenseFee = await stripe.v2.billing.licenseFees.update('id_123', {
-      display_name: 'display_name',
-    });
+    const licenseFee = await stripe.v2.billing.licenseFees.update('id_123');
     expect(licenseFee).not.to.be.null;
   });
 
@@ -4922,7 +4921,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/billing/pricing_plan_subscriptions',
         response:
-          '{"data":[{"billing_cadence":"billing_cadence","collection_status":"past_due","collection_status_transitions":{"awaiting_customer_action_at":null,"current_at":null,"past_due_at":null,"paused_at":null,"unpaid_at":null},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.billing.pricing_plan_subscription","pricing_plan":"pricing_plan","pricing_plan_version":"pricing_plan_version","servicing_status":"pending","servicing_status_transitions":{"activated_at":null,"canceled_at":null,"paused_at":null},"test_clock":null,"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"billing_cadence":"billing_cadence","collection_status":"past_due","collection_status_transitions":{"awaiting_customer_action_at":null,"current_at":null,"past_due_at":null,"paused_at":null,"unpaid_at":null},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.billing.pricing_plan_subscription","pricing_plan":"pricing_plan","pricing_plan_version":"pricing_plan_version","servicing_status":"pending","servicing_status_transitions":{"activated_at":null,"canceled_at":null,"paused_at":null,"will_activate_at":null,"will_cancel_at":null},"test_clock":null,"livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const pricingPlanSubscriptions = await stripe.v2.billing.pricingPlanSubscriptions.list();
@@ -4935,7 +4934,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/billing/pricing_plan_subscriptions/id_123',
         response:
-          '{"billing_cadence":"billing_cadence","collection_status":"past_due","collection_status_transitions":{"awaiting_customer_action_at":null,"current_at":null,"past_due_at":null,"paused_at":null,"unpaid_at":null},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.billing.pricing_plan_subscription","pricing_plan":"pricing_plan","pricing_plan_version":"pricing_plan_version","servicing_status":"pending","servicing_status_transitions":{"activated_at":null,"canceled_at":null,"paused_at":null},"test_clock":null,"livemode":true}',
+          '{"billing_cadence":"billing_cadence","collection_status":"past_due","collection_status_transitions":{"awaiting_customer_action_at":null,"current_at":null,"past_due_at":null,"paused_at":null,"unpaid_at":null},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","metadata":null,"object":"v2.billing.pricing_plan_subscription","pricing_plan":"pricing_plan","pricing_plan_version":"pricing_plan_version","servicing_status":"pending","servicing_status_transitions":{"activated_at":null,"canceled_at":null,"paused_at":null,"will_activate_at":null,"will_cancel_at":null},"test_clock":null,"livemode":true}',
       },
     ]);
     const pricingPlanSubscription = await stripe.v2.billing.pricingPlanSubscriptions.retrieve(
@@ -5444,7 +5443,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/core/claimable_sandboxes',
         response:
-          '{"api_keys":{"mcp":null,"publishable":"publishable","secret":"secret"},"claim_url":"claim_url","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.claimable_sandbox","prefill":{"country":"af","email":"email","name":"name"},"livemode":true}',
+          '{"claim_url":null,"claimed_at":null,"created":"1970-01-12T21:42:34.472Z","expires_at":null,"id":"obj_123","object":"v2.core.claimable_sandbox","prefill":{"country":"af","email":"email","name":"name"},"sandbox_details":{"account":"account","api_keys":null,"owner_account":null},"status":"claimed","livemode":true}',
       },
     ]);
     const claimableSandbox = await stripe.v2.core.claimableSandboxes.create({
@@ -5455,6 +5454,21 @@ describe('Generated tests', function() {
         name: 'name',
       },
     });
+    expect(claimableSandbox).not.to.be.null;
+  });
+
+  it('test_v2_core_claimable_sandbox_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/claimable_sandboxes/id_123',
+        response:
+          '{"claim_url":null,"claimed_at":null,"created":"1970-01-12T21:42:34.472Z","expires_at":null,"id":"obj_123","object":"v2.core.claimable_sandbox","prefill":{"country":"af","email":"email","name":"name"},"sandbox_details":{"account":"account","api_keys":null,"owner_account":null},"status":"claimed","livemode":true}',
+      },
+    ]);
+    const claimableSandbox = await stripe.v2.core.claimableSandboxes.retrieve(
+      'id_123'
+    );
     expect(claimableSandbox).not.to.be.null;
   });
 
