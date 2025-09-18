@@ -13,12 +13,12 @@ declare module 'stripe' {
           /**
            * The timestamp from when to stop aggregating meter events (exclusive). Must be aligned with minute boundaries.
            */
-          ends_at: number;
+          end_time: number;
 
           /**
            * The timestamp from when to start aggregating meter events (inclusive). Must be aligned with minute boundaries.
            */
-          starts_at: number;
+          start_time: number;
 
           /**
            * Specifies which fields in the response should be expanded.
@@ -58,7 +58,7 @@ declare module 'stripe' {
             /**
              * Meter id to query usage for.
              */
-            meter: string;
+            meter_id: string;
 
             /**
              * Key-value pairs used to filter usage events by high cardinality tenant dimension values. If specified, usage will be filtered for matching usage events.

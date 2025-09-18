@@ -21,6 +21,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * Intended submission method for the dispute.
+       */
+      intended_submission_method?: DisputeUpdateParams.IntendedSubmissionMethod;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
@@ -300,6 +305,12 @@ declare module 'stripe' {
           }
         }
       }
+
+      type IntendedSubmissionMethod =
+        | 'manual'
+        | 'prefer_manual'
+        | 'prefer_smart_disputes'
+        | 'smart_disputes';
     }
 
     interface DisputeListParams extends PaginationParams {

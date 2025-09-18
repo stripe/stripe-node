@@ -55,6 +55,11 @@ declare module 'stripe' {
       evidence_details: Dispute.EvidenceDetails;
 
       /**
+       * Intended submission method for the dispute.
+       */
+      intended_submission_method?: Dispute.IntendedSubmissionMethod | null;
+
+      /**
        * If true, it's still possible to refund the disputed payment. After the payment has been fully refunded, no further funds are withdrawn from your Stripe account as a result of this dispute.
        */
       is_charge_refundable: boolean;
@@ -433,6 +438,12 @@ declare module 'stripe' {
 
         type SubmissionMethod = 'manual' | 'not_submitted' | 'smart_disputes';
       }
+
+      type IntendedSubmissionMethod =
+        | 'manual'
+        | 'prefer_manual'
+        | 'prefer_smart_disputes'
+        | 'smart_disputes';
 
       interface PaymentMethodDetails {
         amazon_pay?: PaymentMethodDetails.AmazonPay;

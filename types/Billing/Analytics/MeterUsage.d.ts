@@ -14,16 +14,19 @@ declare module 'stripe' {
           object: 'billing.analytics.meter_usage';
 
           /**
-           * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+           * The aggregated meter usage data for the specified customer and time range.
            */
-          livemode: boolean;
+          data: Array<Stripe.Billing.Analytics.MeterUsageRow>;
 
           /**
            * Timestamp indicating how fresh the data is. Measured in seconds since the Unix epoch.
            */
-          refreshed_at: number;
+          data_refreshed_at: number;
 
-          rows: ApiList<Stripe.Billing.Analytics.MeterUsageRow>;
+          /**
+           * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+           */
+          livemode: boolean;
         }
       }
     }

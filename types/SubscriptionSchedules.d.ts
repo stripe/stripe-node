@@ -130,6 +130,11 @@ declare module 'stripe' {
 
       interface BillingMode {
         /**
+         * Configure behavior for flexible billing mode
+         */
+        flexible: BillingMode.Flexible | null;
+
+        /**
          * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
          */
         type: BillingMode.Type;
@@ -141,6 +146,13 @@ declare module 'stripe' {
       }
 
       namespace BillingMode {
+        interface Flexible {
+          /**
+           * When true, proration line items will show accurate discount amounts and use gross amounts, making them consistent with non-proration line items.
+           */
+          consistent_proration_discount_amounts?: boolean;
+        }
+
         type Type = 'classic' | 'flexible';
       }
 

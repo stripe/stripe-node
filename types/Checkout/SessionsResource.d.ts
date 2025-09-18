@@ -3166,12 +3166,24 @@ declare module 'stripe' {
         namespace SubscriptionData {
           interface BillingMode {
             /**
+             * Configure behavior for flexible billing mode.
+             */
+            flexible?: BillingMode.Flexible;
+
+            /**
              * Controls the calculation and orchestration of prorations and invoices for subscriptions. If no value is passed, the default is `flexible`.
              */
             type: BillingMode.Type;
           }
 
           namespace BillingMode {
+            interface Flexible {
+              /**
+               * Set to `true` to display gross amounts, net amounts, and discount amounts consistently between prorations and non-proration items on invoices, line items, and invoice items. Once set to `true`, you can't change it back to `false`.
+               */
+              consistent_proration_discount_amounts?: boolean;
+            }
+
             type Type = 'classic' | 'flexible';
           }
 
@@ -3401,12 +3413,12 @@ declare module 'stripe' {
               country: string;
 
               /**
-               * Address line 1 (e.g., street, PO Box, or company name).
+               * Address line 1, such as the street, PO Box, or company name.
                */
               line1: string;
 
               /**
-               * Address line 2 (e.g., apartment, suite, unit, or building).
+               * Address line 2, such as the apartment, suite, unit, or building.
                */
               line2?: string;
 

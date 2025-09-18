@@ -19,6 +19,21 @@ declare module 'stripe' {
           object: 'billing.analytics.meter_usage_row';
 
           /**
+           * Timestamp indicating the end of the bucket. Measured in seconds since the Unix epoch.
+           */
+          bucket_end_time: number;
+
+          /**
+           * Timestamp indicating the start of the bucket. Measured in seconds since the Unix epoch.
+           */
+          bucket_start_time: number;
+
+          /**
+           * The aggregated meter usage value for the specified bucket.
+           */
+          bucket_value: number;
+
+          /**
            * A set of key-value pairs representing the dimensions of the meter usage.
            */
           dimensions: {
@@ -26,24 +41,9 @@ declare module 'stripe' {
           } | null;
 
           /**
-           * Timestamp indicating the end of the bucket. Measured in seconds since the Unix epoch.
-           */
-          ends_at: number;
-
-          /**
            * The unique identifier for the meter. Null if no meters were provided and usage was aggregated across all meters.
            */
-          meter: string | null;
-
-          /**
-           * Timestamp indicating the start of the bucket. Measured in seconds since the Unix epoch.
-           */
-          starts_at: number;
-
-          /**
-           * The aggregated meter usage value for the specified bucket.
-           */
-          value: number;
+          meter_id: string | null;
         }
       }
     }
