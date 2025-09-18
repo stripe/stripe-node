@@ -62,6 +62,8 @@ declare module 'stripe' {
          */
         billing_address_collection: Session.BillingAddressCollection | null;
 
+        branding_settings?: Session.BrandingSettings;
+
         /**
          * If set, Checkout displays a back button and customers will be directed to this URL if they decide to cancel payment and return to your website.
          */
@@ -431,6 +433,51 @@ declare module 'stripe' {
         }
 
         type BillingAddressCollection = 'auto' | 'required';
+
+        interface BrandingSettings {
+          /**
+           * A hex color value starting with `#` representing the background color for the Checkout Session.
+           */
+          background_color: string;
+
+          /**
+           * The border style for the Checkout Session. Must be one of `rounded`, `rectangular`, or `pill`.
+           */
+          border_style: BrandingSettings.BorderStyle;
+
+          /**
+           * A hex color value starting with `#` representing the button color for the Checkout Session.
+           */
+          button_color: string;
+
+          /**
+           * The display name shown on the Checkout Session.
+           */
+          display_name: string;
+
+          /**
+           * The font family for the Checkout Session. Must be one of the [supported font families](https://docs.stripe.com/payments/checkout/customization/appearance?payment-ui=stripe-hosted#font-compatibility).
+           */
+          font_family: string;
+
+          /**
+           * The icon for the Checkout Session. You cannot set both `logo` and `icon`.
+           */
+          icon: BrandingSettings.Icon | null;
+
+          /**
+           * The logo for the Checkout Session. You cannot set both `logo` and `icon`.
+           */
+          logo: BrandingSettings.Logo | null;
+        }
+
+        namespace BrandingSettings {
+          type BorderStyle = 'pill' | 'rectangular' | 'rounded';
+
+          interface Icon {}
+
+          interface Logo {}
+        }
 
         interface CollectedInformation {
           /**

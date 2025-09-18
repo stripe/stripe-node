@@ -30,6 +30,11 @@ declare module 'stripe' {
         billing_address_collection?: SessionCreateParams.BillingAddressCollection;
 
         /**
+         * The branding settings for the Checkout Session. This parameter is not allowed if ui_mode is `custom`.
+         */
+        branding_settings?: SessionCreateParams.BrandingSettings;
+
+        /**
          * If set, Checkout displays a back button and customers will be directed to this URL if they decide to cancel payment and return to your website. This parameter is not allowed if ui_mode is `embedded` or `custom`.
          */
         cancel_url?: string;
@@ -378,6 +383,117 @@ declare module 'stripe' {
         }
 
         type BillingAddressCollection = 'auto' | 'required';
+
+        interface BrandingSettings {
+          /**
+           * A hex color value starting with `#` representing the background color for the Checkout Session.
+           */
+          background_color?: Stripe.Emptyable<string>;
+
+          /**
+           * The border style for the Checkout Session.
+           */
+          border_style?: Stripe.Emptyable<BrandingSettings.BorderStyle>;
+
+          /**
+           * A hex color value starting with `#` representing the button color for the Checkout Session.
+           */
+          button_color?: Stripe.Emptyable<string>;
+
+          /**
+           * A string to override the business name shown on the Checkout Session.
+           */
+          display_name?: string;
+
+          /**
+           * The font family for the Checkout Session corresponding to one of the [supported font families](https://docs.stripe.com/payments/checkout/customization/appearance?payment-ui=stripe-hosted#font-compatibility).
+           */
+          font_family?: Stripe.Emptyable<BrandingSettings.FontFamily>;
+
+          /**
+           * The icon for the Checkout Session. You cannot set both `logo` and `icon`.
+           */
+          icon?: BrandingSettings.Icon;
+
+          /**
+           * The logo for the Checkout Session. You cannot set both `logo` and `icon`.
+           */
+          logo?: BrandingSettings.Logo;
+        }
+
+        namespace BrandingSettings {
+          type BorderStyle = 'pill' | 'rectangular' | 'rounded';
+
+          type FontFamily =
+            | 'be_vietnam_pro'
+            | 'bitter'
+            | 'chakra_petch'
+            | 'default'
+            | 'hahmlet'
+            | 'inconsolata'
+            | 'inter'
+            | 'lato'
+            | 'lora'
+            | 'm_plus_1_code'
+            | 'montserrat'
+            | 'noto_sans'
+            | 'noto_sans_jp'
+            | 'noto_serif'
+            | 'nunito'
+            | 'open_sans'
+            | 'pridi'
+            | 'pt_sans'
+            | 'pt_serif'
+            | 'raleway'
+            | 'roboto'
+            | 'roboto_slab'
+            | 'source_sans_pro'
+            | 'titillium_web'
+            | 'ubuntu_mono'
+            | 'zen_maru_gothic';
+
+          interface Icon {
+            /**
+             * The ID of a [File upload](https://stripe.com/docs/api/files) representing the icon. Purpose must be `business_icon`. Required if `type` is `file` and disallowed otherwise.
+             */
+            file?: string;
+
+            /**
+             * The type of image for the icon. Must be one of `file` or `url`.
+             */
+            type: Icon.Type;
+
+            /**
+             * The URL of the image. Required if `type` is `url` and disallowed otherwise.
+             */
+            url?: string;
+          }
+
+          namespace Icon {
+            type Type = 'file' | 'url';
+          }
+
+          interface Logo {
+            /**
+             * The ID of a [File upload](https://stripe.com/docs/api/files) representing the logo. Purpose must be `business_logo`. Required if `type` is `file` and disallowed otherwise.
+             */
+            file?: string;
+
+            /**
+             * The type of image for the logo. Must be one of `file` or `url`.
+             */
+            type: Logo.Type;
+
+            /**
+             * The URL of the image. Required if `type` is `url` and disallowed otherwise.
+             */
+            url?: string;
+          }
+
+          namespace Logo {
+            type Type = 'file' | 'url';
+          }
+        }
 
         interface ConsentCollection {
           /**
