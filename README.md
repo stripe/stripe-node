@@ -525,13 +525,21 @@ const stripe = new Stripe('sk_test_...', {
 
 ### Public Preview SDKs
 
-Stripe has features in the [public preview phase](https://docs.stripe.com/release-phases) that can be accessed via versions of this package that have the `-beta.X` suffix like `15.2.0-beta.2`.
+Stripe has features in the [public preview phase](https://docs.stripe.com/release-phases) that can be accessed via versions of this package that have the `-beta.X` suffix like `18.6.0-beta.1`.
 We would love for you to try these as we incrementally release new features and improve them based on your feedback.
 
-To install, pick the latest version with the `beta` suffix by reviewing the [releases page](https://github.com/stripe/stripe-node/releases/) and use it in the below command
+The easiest way to install a public-preview release is to use the dedicated npm tag:
 
 ```
-npm install stripe@<replace-with-the-version-of-your-choice> --save
+npm install stripe@public-preview --save
+```
+
+Or, to install a specific version from the [releases page](https://github.com/stripe/stripe-node/releases/), you can specify that version explicitly:
+
+```
+npm install stripe@<some-version>
+# for example:
+# npm install stripe@18.6.0-beta.1
 ```
 
 > **Note**
@@ -547,7 +555,11 @@ const stripe = new Stripe('sk_test_...', {
 
 ### Private Preview SDKs
 
-Stripe has features in the [private preview phase](https://docs.stripe.com/release-phases) that can be accessed via versions of this package that have the `-alpha.X` suffix like `15.2.0-alpha.2`. These are invite-only features. Once invited, you can install the private preview SDKs by following the same instructions as for the [public preview SDKs](https://github.com/stripe/stripe-node?tab=readme-ov-file#public-preview-sdks) above and replacing the term `beta` with `alpha`.
+Stripe has features in the [private preview phase](https://docs.stripe.com/release-phases) that can be accessed via versions of this package that have the `-alpha.X` suffix like `18.6.0-alpha.1`. These are invite-only features. Once invited, you can install the private preview SDKs by following the same instructions as for the [public preview SDKs](https://github.com/stripe/stripe-node?tab=readme-ov-file#public-preview-sdks) above and replacing the term `public-preview` with `private-preview`:
+
+```
+npm install stripe@private-preview --save
+```
 
 ### Custom requests
 
