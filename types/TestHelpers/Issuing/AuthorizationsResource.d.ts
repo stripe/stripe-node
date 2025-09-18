@@ -654,7 +654,6 @@ declare module 'stripe' {
             namespace CardTestingRisk {
               type RiskLevel =
                 | 'elevated'
-                | 'high'
                 | 'highest'
                 | 'normal'
                 | 'not_assessed'
