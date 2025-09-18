@@ -95,6 +95,11 @@ declare module 'stripe' {
            * The number of days charge funds are held before becoming available.
            */
           delay_days: number;
+
+          /**
+           * The number of days charge funds are held before becoming available. If present, overrides the default, or minimum available, for the account.
+           */
+          delay_days_override?: number;
         }
       }
     }
