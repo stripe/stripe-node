@@ -58,6 +58,8 @@ declare module 'stripe' {
        */
       promotion_code: string | Stripe.PromotionCode | null;
 
+      source: DeletedDiscount.Source;
+
       /**
        * Date that the coupon was applied.
        */
@@ -72,6 +74,17 @@ declare module 'stripe' {
        * The subscription item that this coupon is applied to, if it is applied to a particular subscription item.
        */
       subscription_item: string | null;
+    }
+
+    namespace DeletedDiscount {
+      interface Source {
+        /**
+         * The coupon that was redeemed to create this discount.
+         */
+        coupon: string | Stripe.Coupon | null;
+
+        type: 'coupon';
+      }
     }
 
     /**
@@ -138,6 +151,8 @@ declare module 'stripe' {
        */
       promotion_code: string | Stripe.PromotionCode | null;
 
+      source: Discount.Source;
+
       /**
        * Date that the coupon was applied.
        */
@@ -152,6 +167,17 @@ declare module 'stripe' {
        * The subscription item that this coupon is applied to, if it is applied to a particular subscription item.
        */
       subscription_item: string | null;
+    }
+
+    namespace Discount {
+      interface Source {
+        /**
+         * The coupon that was redeemed to create this discount.
+         */
+        coupon: string | Stripe.Coupon | null;
+
+        type: 'coupon';
+      }
     }
   }
 }
