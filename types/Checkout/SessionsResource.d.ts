@@ -160,6 +160,15 @@ declare module 'stripe' {
         mode?: SessionCreateParams.Mode;
 
         /**
+         * Controls name collection settings for the session.
+         *
+         * You can configure Checkout to collect your customers' business names, individual names, or both. Each name field can be either required or optional.
+         *
+         * If a [Customer](https://stripe.com/docs/api/customers) is created or provided, the names can be saved to the Customer object as well.
+         */
+        name_collection?: SessionCreateParams.NameCollection;
+
+        /**
          * A list of optional items the customer can add to their order at checkout. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices).
          *
          * There is a maximum of 10 optional items allowed on a Checkout Session, and the existing limits on the number of line items allowed on a Checkout Session apply to the combined number of line items and optional items.
@@ -998,6 +1007,44 @@ declare module 'stripe' {
           | 'zh-TW';
 
         type Mode = 'payment' | 'setup' | 'subscription';
+
+        interface NameCollection {
+          /**
+           * Controls settings applied for collecting the customer's business name on the session.
+           */
+          business?: NameCollection.Business;
+
+          /**
+           * Controls settings applied for collecting the customer's individual name on the session.
+           */
+          individual?: NameCollection.Individual;
+        }
+
+        namespace NameCollection {
+          interface Business {
+            /**
+             * Enable business name collection on the Checkout Session. Defaults to `false`.
+             */
+            enabled: boolean;
+
+            /**
+             * Whether the customer is required to provide a business name before completing the Checkout Session. Defaults to `false`.
+             */
+            optional?: boolean;
+          }
+
+          interface Individual {
+            /**
+             * Enable individual name collection on the Checkout Session. Defaults to `false`.
+             */
+            enabled: boolean;
+
+            /**
+             * Whether the customer is required to provide their name before completing the Checkout Session. Defaults to `false`.
+             */
+            optional?: boolean;
+          }
+        }
 
         interface OptionalItem {
           /**

@@ -200,6 +200,8 @@ declare module 'stripe' {
          */
         mode: Session.Mode;
 
+        name_collection?: Session.NameCollection;
+
         /**
          * The optional items presented to the customer at checkout.
          */
@@ -434,12 +436,17 @@ declare module 'stripe' {
           /**
            * Customer's business name for this Checkout Session
            */
-          business_name?: string | null;
+          business_name: string | null;
 
           /**
            * Customer's email for this Checkout Session
            */
           email?: string | null;
+
+          /**
+           * Customer's individual name for this Checkout Session
+           */
+          individual_name: string | null;
 
           /**
            * Customer's phone number for this Checkout Session
@@ -681,10 +688,20 @@ declare module 'stripe' {
           address: Stripe.Address | null;
 
           /**
+           * The customer's business name after a completed Checkout Session.
+           */
+          business_name: string | null;
+
+          /**
            * The email associated with the Customer, if one exists, on the Checkout Session after a completed Checkout Session or at time of session expiry.
            * Otherwise, if the customer has consented to promotional content, this value is the most recent valid email provided by the customer on the Checkout form.
            */
           email: string | null;
+
+          /**
+           * The customer's individual name after a completed Checkout Session.
+           */
+          individual_name: string | null;
 
           /**
            * The customer's name after a completed Checkout Session. Note: This property is populated only for sessions on or after March 30, 2022.
@@ -1154,6 +1171,38 @@ declare module 'stripe' {
           | 'zh-TW';
 
         type Mode = 'payment' | 'setup' | 'subscription';
+
+        interface NameCollection {
+          business?: NameCollection.Business;
+
+          individual?: NameCollection.Individual;
+        }
+
+        namespace NameCollection {
+          interface Business {
+            /**
+             * Indicates whether business name collection is enabled for the session
+             */
+            enabled: boolean;
+
+            /**
+             * Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
+             */
+            optional: boolean;
+          }
+
+          interface Individual {
+            /**
+             * Indicates whether individual name collection is enabled for the session
+             */
+            enabled: boolean;
+
+            /**
+             * Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
+             */
+            optional: boolean;
+          }
+        }
 
         interface OptionalItem {
           adjustable_quantity: OptionalItem.AdjustableQuantity | null;
