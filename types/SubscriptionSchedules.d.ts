@@ -378,6 +378,11 @@ declare module 'stripe' {
          * When the trial ends within the phase.
          */
         trial_end: number | null;
+
+        /**
+         * Whether this phase is a trial phase.
+         */
+        trial?: boolean;
       }
 
       namespace Phase {
