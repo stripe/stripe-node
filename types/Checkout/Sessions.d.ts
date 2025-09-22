@@ -474,9 +474,47 @@ declare module 'stripe' {
         namespace BrandingSettings {
           type BorderStyle = 'pill' | 'rectangular' | 'rounded';
 
-          interface Icon {}
+          interface Icon {
+            /**
+             * The ID of a [File upload](https://stripe.com/docs/api/files) representing the icon. Purpose must be `business_icon`. Required if `type` is `file` and disallowed otherwise.
+             */
+            file?: string;
 
-          interface Logo {}
+            /**
+             * The type of image for the icon. Must be one of `file` or `url`.
+             */
+            type: Icon.Type;
+
+            /**
+             * The URL of the image. Present when `type` is `url`.
+             */
+            url?: string;
+          }
+
+          namespace Icon {
+            type Type = 'file' | 'url';
+          }
+
+          interface Logo {
+            /**
+             * The ID of a [File upload](https://stripe.com/docs/api/files) representing the logo. Purpose must be `business_logo`. Required if `type` is `file` and disallowed otherwise.
+             */
+            file?: string;
+
+            /**
+             * The type of image for the logo. Must be one of `file` or `url`.
+             */
+            type: Logo.Type;
+
+            /**
+             * The URL of the image. Present when `type` is `url`.
+             */
+            url?: string;
+          }
+
+          namespace Logo {
+            type Type = 'file' | 'url';
+          }
         }
 
         interface CollectedInformation {
