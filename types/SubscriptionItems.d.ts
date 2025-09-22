@@ -40,7 +40,7 @@ declare module 'stripe' {
       /**
        * The time period the subscription item has been billed for.
        */
-      billed_until: number | null;
+      billed_until?: number | null;
 
       /**
        * Define thresholds at which an invoice will be sent, and the related subscription advanced to a new billing period

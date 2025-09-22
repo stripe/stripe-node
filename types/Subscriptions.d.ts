@@ -52,7 +52,7 @@ declare module 'stripe' {
       /**
        * Billing schedules for this subscription.
        */
-      billing_schedules: Array<Subscription.BillingSchedule>;
+      billing_schedules?: Array<Subscription.BillingSchedule>;
 
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
