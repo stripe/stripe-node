@@ -529,7 +529,7 @@ declare module 'stripe' {
         /**
          * Evidence that could be provided to improve the SmartDisputes packet
          */
-        recommended_evidence: Array<string> | null;
+        recommended_evidence: Array<Array<string>> | null;
 
         /**
          * Smart Disputes auto representment packet availability status.
