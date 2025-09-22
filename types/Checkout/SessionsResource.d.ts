@@ -1374,6 +1374,11 @@ declare module 'stripe' {
           alipay?: PaymentMethodOptions.Alipay;
 
           /**
+           * contains details about the Alma payment method options.
+           */
+          alma?: PaymentMethodOptions.Alma;
+
+          /**
            * contains details about the AmazonPay payment method options.
            */
           amazon_pay?: PaymentMethodOptions.AmazonPay;
@@ -1394,6 +1399,11 @@ declare module 'stripe' {
           bancontact?: PaymentMethodOptions.Bancontact;
 
           /**
+           * contains details about the Billie payment method options.
+           */
+          billie?: PaymentMethodOptions.Billie;
+
+          /**
            * contains details about the Boleto payment method options.
            */
           boleto?: PaymentMethodOptions.Boleto;
@@ -1412,6 +1422,11 @@ declare module 'stripe' {
            * contains details about the Customer Balance payment method options.
            */
           customer_balance?: PaymentMethodOptions.CustomerBalance;
+
+          /**
+           * contains details about the DemoPay payment method options.
+           */
+          demo_pay?: PaymentMethodOptions.DemoPay;
 
           /**
            * contains details about the EPS payment method options.
@@ -1529,6 +1544,11 @@ declare module 'stripe' {
           samsung_pay?: PaymentMethodOptions.SamsungPay;
 
           /**
+           * contains details about the Satispay payment method options.
+           */
+          satispay?: PaymentMethodOptions.Satispay;
+
+          /**
            * contains details about the Sepa Debit payment method options.
            */
           sepa_debit?: PaymentMethodOptions.SepaDebit;
@@ -1635,6 +1655,11 @@ declare module 'stripe' {
 
           interface Affirm {
             /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -1647,6 +1672,11 @@ declare module 'stripe' {
           }
 
           interface AfterpayClearpay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -1672,7 +1702,19 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface Alma {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+          }
+
           interface AmazonPay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -1754,6 +1796,13 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface Billie {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+          }
+
           interface Boleto {
             /**
              * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday at 23:59 America/Sao_Paulo time.
@@ -1777,6 +1826,11 @@ declare module 'stripe' {
           }
 
           interface Card {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
             /**
              * Installment options for card payments
              */
@@ -1880,6 +1934,11 @@ declare module 'stripe' {
 
           interface Cashapp {
             /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -1964,6 +2023,23 @@ declare module 'stripe' {
                 | 'mx_bank_transfer'
                 | 'us_bank_transfer';
             }
+          }
+
+          interface DemoPay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: DemoPay.SetupFutureUsage;
+          }
+
+          namespace DemoPay {
+            type SetupFutureUsage = 'none' | 'off_session';
           }
 
           interface Eps {
@@ -2054,6 +2130,11 @@ declare module 'stripe' {
           }
 
           interface Klarna {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -2158,6 +2239,11 @@ declare module 'stripe' {
 
           interface Link {
             /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -2174,6 +2260,11 @@ declare module 'stripe' {
           }
 
           interface Mobilepay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -2528,6 +2619,11 @@ declare module 'stripe' {
 
           interface RevolutPay {
             /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -2544,6 +2640,13 @@ declare module 'stripe' {
           }
 
           interface SamsungPay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+          }
+
+          interface Satispay {
             /**
              * Controls when the funds will be captured from the customer's account.
              */
@@ -3347,9 +3450,13 @@ declare module 'stripe' {
           namespace BillingMode {
             interface Flexible {
               /**
-               * Set to `true` to display gross amounts, net amounts, and discount amounts consistently between prorations and non-proration items on invoices, line items, and invoice items. Once set to `true`, you can't change it back to `false`.
+               * Controls how invoices and invoice items display proration amounts and discount amounts.
                */
-              consistent_proration_discount_amounts?: boolean;
+              proration_discounts?: Flexible.ProrationDiscounts;
+            }
+
+            namespace Flexible {
+              type ProrationDiscounts = 'included' | 'itemized';
             }
 
             type Type = 'classic' | 'flexible';

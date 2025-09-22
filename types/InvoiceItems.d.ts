@@ -111,7 +111,7 @@ declare module 'stripe' {
       /**
        * The amount after discounts, but before credits and taxes. This field is `null` for `discountable=true` items.
        */
-      net_amount: number | null;
+      net_amount?: number;
 
       /**
        * The parent that generated this invoice item.

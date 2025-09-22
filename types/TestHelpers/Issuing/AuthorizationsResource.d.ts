@@ -655,6 +655,7 @@ declare module 'stripe' {
               type RiskLevel =
                 | 'elevated'
                 | 'highest'
+                | 'low'
                 | 'normal'
                 | 'not_assessed'
                 | 'unknown';
@@ -676,6 +677,7 @@ declare module 'stripe' {
               type RiskLevel =
                 | 'elevated'
                 | 'highest'
+                | 'low'
                 | 'normal'
                 | 'not_assessed'
                 | 'unknown';

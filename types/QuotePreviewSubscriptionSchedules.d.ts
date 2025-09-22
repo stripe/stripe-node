@@ -169,9 +169,13 @@ declare module 'stripe' {
       namespace BillingMode {
         interface Flexible {
           /**
-           * When true, proration line items will show accurate discount amounts and use gross amounts, making them consistent with non-proration line items.
+           * Controls how invoices and invoice items display proration amounts and discount amounts.
            */
-          consistent_proration_discount_amounts?: boolean;
+          proration_discounts?: Flexible.ProrationDiscounts;
+        }
+
+        namespace Flexible {
+          type ProrationDiscounts = 'included' | 'itemized';
         }
 
         type Type = 'classic' | 'flexible';

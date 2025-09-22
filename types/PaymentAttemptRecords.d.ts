@@ -2333,7 +2333,7 @@ declare module 'stripe' {
           /**
            * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
            */
-          payment_reference: string;
+          payment_reference: string | null;
         }
       }
 

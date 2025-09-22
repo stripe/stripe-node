@@ -3459,9 +3459,13 @@ declare module 'stripe' {
         namespace BillingMode {
           interface Flexible {
             /**
-             * Set to `true` to display gross amounts, net amounts, and discount amounts consistently between prorations and non-proration items on invoices, line items, and invoice items. Once set to `true`, you can't change it back to `false`.
+             * Controls how invoices and invoice items display proration amounts and discount amounts.
              */
-            consistent_proration_discount_amounts?: boolean;
+            proration_discounts?: Flexible.ProrationDiscounts;
+          }
+
+          namespace Flexible {
+            type ProrationDiscounts = 'included' | 'itemized';
           }
 
           type Type = 'classic' | 'flexible';
@@ -4256,6 +4260,13 @@ declare module 'stripe' {
         billing_mode?: SubscriptionDetails.BillingMode;
 
         /**
+         * Sets the billing schedules for the subscription.
+         */
+        billing_schedules?: Stripe.Emptyable<
+          Array<SubscriptionDetails.BillingSchedule>
+        >;
+
+        /**
          * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
          */
         cancel_at?: Stripe.Emptyable<number | SubscriptionDetails.CancelAt>;
@@ -4329,12 +4340,84 @@ declare module 'stripe' {
         namespace BillingMode {
           interface Flexible {
             /**
-             * Set to `true` to display gross amounts, net amounts, and discount amounts consistently between prorations and non-proration items on invoices, line items, and invoice items. Once set to `true`, you can't change it back to `false`.
+             * Controls how invoices and invoice items display proration amounts and discount amounts.
              */
-            consistent_proration_discount_amounts?: boolean;
+            proration_discounts?: Flexible.ProrationDiscounts;
+          }
+
+          namespace Flexible {
+            type ProrationDiscounts = 'included' | 'itemized';
           }
 
           type Type = 'classic' | 'flexible';
+        }
+
+        interface BillingSchedule {
+          /**
+           * Configure billing schedule differently for individual subscription items.
+           */
+          applies_to?: Array<BillingSchedule.AppliesTo>;
+
+          /**
+           * The end date for the billing schedule.
+           */
+          bill_until?: BillingSchedule.BillUntil;
+
+          /**
+           * Specify a key for the billing schedule. Must be unique to this field, alphanumeric, and up to 200 characters. If not provided, a unique key will be generated.
+           */
+          key?: string;
+        }
+
+        namespace BillingSchedule {
+          interface AppliesTo {
+            /**
+             * The ID of the price object.
+             */
+            price?: string;
+
+            /**
+             * Controls which subscription items the billing schedule applies to.
+             */
+            type: 'price';
+          }
+
+          interface BillUntil {
+            /**
+             * Specifies the billing period.
+             */
+            duration?: BillUntil.Duration;
+
+            /**
+             * The end date of the billing schedule.
+             */
+            timestamp?: number;
+
+            /**
+             * Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
+             */
+            type: BillUntil.Type;
+          }
+
+          namespace BillUntil {
+            interface Duration {
+              /**
+               * Specifies billing duration. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The multiplier applied to the interval.
+               */
+              interval_count?: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type Type = 'duration' | 'timestamp';
+          }
         }
 
         type CancelAt = 'max_period_end' | 'min_period_end';

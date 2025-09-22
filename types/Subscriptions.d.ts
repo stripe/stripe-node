@@ -50,6 +50,11 @@ declare module 'stripe' {
       billing_mode: Subscription.BillingMode;
 
       /**
+       * Billing schedules for this subscription.
+       */
+      billing_schedules: Array<Subscription.BillingSchedule>;
+
+      /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
        */
       billing_thresholds: Subscription.BillingThresholds | null;
@@ -335,12 +340,89 @@ declare module 'stripe' {
       namespace BillingMode {
         interface Flexible {
           /**
-           * When true, proration line items will show accurate discount amounts and use gross amounts, making them consistent with non-proration line items.
+           * Controls how invoices and invoice items display proration amounts and discount amounts.
            */
-          consistent_proration_discount_amounts?: boolean;
+          proration_discounts?: Flexible.ProrationDiscounts;
+        }
+
+        namespace Flexible {
+          type ProrationDiscounts = 'included' | 'itemized';
         }
 
         type Type = 'classic' | 'flexible';
+      }
+
+      interface BillingSchedule {
+        /**
+         * Specifies which subscription items the billing schedule applies to.
+         */
+        applies_to: Array<BillingSchedule.AppliesTo> | null;
+
+        /**
+         * Specifies the billing period.
+         */
+        bill_until: BillingSchedule.BillUntil;
+
+        /**
+         * Unique identifier for the billing schedule.
+         */
+        key: string;
+      }
+
+      namespace BillingSchedule {
+        interface AppliesTo {
+          /**
+           * The billing schedule will apply to the subscription item with the given price ID.
+           */
+          price: string | Stripe.Price | null;
+
+          /**
+           * Controls which subscription items the billing schedule applies to.
+           */
+          type: 'price';
+        }
+
+        interface BillUntil {
+          /**
+           * The timestamp the billing schedule will apply until.
+           */
+          computed_timestamp: number;
+
+          /**
+           * Specifies the billing period.
+           */
+          duration: BillUntil.Duration | null;
+
+          /**
+           * If specified, the billing schedule will apply until the specified timestamp.
+           */
+          timestamp: number | null;
+
+          /**
+           * Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
+           */
+          type: BillUntil.Type;
+        }
+
+        namespace BillUntil {
+          interface Duration {
+            /**
+             * Specifies billing duration. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The multiplier applied to the interval.
+             */
+            interval_count: number | null;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type = 'duration' | 'timestamp';
+        }
       }
 
       interface BillingThresholds {
