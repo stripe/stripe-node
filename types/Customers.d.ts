@@ -28,6 +28,11 @@ declare module 'stripe' {
       balance: number;
 
       /**
+       * The customer's business name.
+       */
+      business_name?: string;
+
+      /**
        * The current funds being held by Stripe on behalf of the customer. You can apply these funds towards payment intents when the source is "cash_balance". The `settings[reconciliation_mode]` field describes if these funds apply to these payment intents manually or automatically.
        */
       cash_balance?: Stripe.CashBalance | null;
@@ -77,6 +82,11 @@ declare module 'stripe' {
        * The customer's email address.
        */
       email: string | null;
+
+      /**
+       * The customer's individual name.
+       */
+      individual_name?: string;
 
       /**
        * The current multi-currency balances, if any, that's stored on the customer. If positive in a currency, the customer has a credit to apply to their next invoice denominated in that currency. If negative, the customer has an amount owed that's added to their next invoice denominated in that currency. These balances don't apply to unpaid invoices. They solely track amounts that Stripe hasn't successfully applied to any invoice. Stripe only applies a balance in a specific currency to an invoice after that invoice (which is in the same currency) finalizes.

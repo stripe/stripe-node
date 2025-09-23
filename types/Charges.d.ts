@@ -4,8 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     /**
      * The `Charge` object represents a single attempt to move money into your Stripe account.
-     * PaymentIntent confirmation is the most common way to create Charges, but transferring
-     * money to a different Stripe account through Connect also creates Charges.
+     * PaymentIntent confirmation is the most common way to create Charges, but [Account Debits](https://stripe.com/docs/connect/account-debits) may also create Charges.
      * Some legacy payment flows create Charges directly, which is not recommended for new integrations.
      */
     interface Charge {
@@ -450,6 +449,8 @@ declare module 'stripe' {
 
         link?: PaymentMethodDetails.Link;
 
+        mb_way?: PaymentMethodDetails.MbWay;
+
         mobilepay?: PaymentMethodDetails.Mobilepay;
 
         multibanco?: PaymentMethodDetails.Multibanco;
@@ -469,6 +470,8 @@ declare module 'stripe' {
         paynow?: PaymentMethodDetails.Paynow;
 
         paypal?: PaymentMethodDetails.Paypal;
+
+        paypay?: PaymentMethodDetails.Paypay;
 
         pix?: PaymentMethodDetails.Pix;
 
@@ -1963,6 +1966,8 @@ declare module 'stripe' {
           country: string | null;
         }
 
+        interface MbWay {}
+
         interface Mobilepay {
           /**
            * Internal card details
@@ -2195,6 +2200,8 @@ declare module 'stripe' {
             type Status = 'eligible' | 'not_eligible' | 'partially_eligible';
           }
         }
+
+        interface Paypay {}
 
         interface Pix {
           /**

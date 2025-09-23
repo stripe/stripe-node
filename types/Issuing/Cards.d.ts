@@ -108,6 +108,11 @@ declare module 'stripe' {
         replacement_reason: Card.ReplacementReason | null;
 
         /**
+         * Text separate from cardholder name, printed on the card.
+         */
+        second_line: string | null;
+
+        /**
          * Where and how the card will be shipped.
          */
         shipping: Card.Shipping | null;

@@ -392,6 +392,11 @@ declare module 'stripe' {
         link_payments?: Capabilities.LinkPayments;
 
         /**
+         * The status of the MB WAY payments capability of the account, or whether the account can directly process MB WAY charges.
+         */
+        mb_way_payments?: Capabilities.MbWayPayments;
+
+        /**
          * The status of the MobilePay capability of the account, or whether the account can directly process MobilePay charges.
          */
         mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -440,6 +445,11 @@ declare module 'stripe' {
          * The status of the paynow payments capability of the account, or whether the account can directly process paynow charges.
          */
         paynow_payments?: Capabilities.PaynowPayments;
+
+        /**
+         * The status of the Paypay capability of the account, or whether the account can directly process Paypay payments.
+         */
+        paypay_payments?: Capabilities.PaypayPayments;
 
         /**
          * The status of the pix payments capability of the account, or whether the account can directly process pix charges.
@@ -592,6 +602,8 @@ declare module 'stripe' {
 
         type LinkPayments = 'active' | 'inactive' | 'pending';
 
+        type MbWayPayments = 'active' | 'inactive' | 'pending';
+
         type MobilepayPayments = 'active' | 'inactive' | 'pending';
 
         type MultibancoPayments = 'active' | 'inactive' | 'pending';
@@ -611,6 +623,8 @@ declare module 'stripe' {
         type PaycoPayments = 'active' | 'inactive' | 'pending';
 
         type PaynowPayments = 'active' | 'inactive' | 'pending';
+
+        type PaypayPayments = 'active' | 'inactive' | 'pending';
 
         type PixPayments = 'active' | 'inactive' | 'pending';
 
@@ -1089,6 +1103,7 @@ declare module 'stripe' {
 
         namespace Error {
           type Code =
+            | 'external_request'
             | 'information_missing'
             | 'invalid_address_city_state_postal_code'
             | 'invalid_address_highway_contract_box'
@@ -1131,6 +1146,7 @@ declare module 'stripe' {
             | 'invalid_url_website_incomplete_under_construction'
             | 'invalid_url_website_other'
             | 'invalid_value_other'
+            | 'unsupported_business_type'
             | 'verification_directors_mismatch'
             | 'verification_document_address_mismatch'
             | 'verification_document_address_missing'
@@ -1285,6 +1301,7 @@ declare module 'stripe' {
 
         namespace Error {
           type Code =
+            | 'external_request'
             | 'information_missing'
             | 'invalid_address_city_state_postal_code'
             | 'invalid_address_highway_contract_box'
@@ -1327,6 +1344,7 @@ declare module 'stripe' {
             | 'invalid_url_website_incomplete_under_construction'
             | 'invalid_url_website_other'
             | 'invalid_value_other'
+            | 'unsupported_business_type'
             | 'verification_directors_mismatch'
             | 'verification_document_address_mismatch'
             | 'verification_document_address_missing'
@@ -1602,8 +1620,6 @@ declare module 'stripe' {
             type WeeklyPayoutDay =
               | 'friday'
               | 'monday'
-              | 'saturday'
-              | 'sunday'
               | 'thursday'
               | 'tuesday'
               | 'wednesday';

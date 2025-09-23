@@ -82,9 +82,11 @@ declare module 'stripe' {
 
     namespace Review {
       type ClosedReason =
+        | 'acknowledged'
         | 'approved'
         | 'canceled'
         | 'disputed'
+        | 'payment_never_settled'
         | 'redacted'
         | 'refunded'
         | 'refunded_as_fraud';

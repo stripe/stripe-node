@@ -310,6 +310,7 @@ declare module 'stripe' {
         | 'klarna'
         | 'konbini'
         | 'kr_card'
+        | 'mb_way'
         | 'mobilepay'
         | 'multibanco'
         | 'naver_pay'
@@ -320,6 +321,7 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'paypay'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'
@@ -497,6 +499,8 @@ declare module 'stripe' {
           | 'email_invalid'
           | 'expired_card'
           | 'financial_connections_account_inactive'
+          | 'financial_connections_account_pending_account_numbers'
+          | 'financial_connections_account_unavailable_account_numbers'
           | 'financial_connections_no_successful_transaction_refresh'
           | 'forwarding_api_inactive'
           | 'forwarding_api_invalid_parameter'
@@ -1458,6 +1462,8 @@ declare module 'stripe' {
 
         link?: PaymentMethodOptions.Link;
 
+        mb_way?: PaymentMethodOptions.MbWay;
+
         mobilepay?: PaymentMethodOptions.Mobilepay;
 
         multibanco?: PaymentMethodOptions.Multibanco;
@@ -1477,6 +1483,8 @@ declare module 'stripe' {
         paynow?: PaymentMethodOptions.Paynow;
 
         paypal?: PaymentMethodOptions.Paypal;
+
+        paypay?: PaymentMethodOptions.Paypay;
 
         pix?: PaymentMethodOptions.Pix;
 
@@ -2327,6 +2335,19 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface MbWay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+           *
+           * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+           *
+           * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface Mobilepay {
           /**
            * Controls when the funds will be captured from the customer's account.
@@ -2486,6 +2507,8 @@ declare module 'stripe' {
         namespace Paypal {
           type SetupFutureUsage = 'none' | 'off_session';
         }
+
+        interface Paypay {}
 
         interface Pix {
           /**

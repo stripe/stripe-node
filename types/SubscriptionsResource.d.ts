@@ -34,7 +34,7 @@ declare module 'stripe' {
       billing_cycle_anchor?: number;
 
       /**
-       * Mutually exclusive with billing_cycle_anchor and only valid with monthly and yearly price intervals. When provided, the billing_cycle_anchor is set to the next occurence of the day_of_month at the hour, minute, and second UTC.
+       * Mutually exclusive with billing_cycle_anchor and only valid with monthly and yearly price intervals. When provided, the billing_cycle_anchor is set to the next occurrence of the day_of_month at the hour, minute, and second UTC.
        */
       billing_cycle_anchor_config?: SubscriptionCreateParams.BillingCycleAnchorConfig;
 
@@ -201,7 +201,7 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * The period associated with this invoice item. Defaults to the current period of the subscription.
+         * The period associated with this invoice item. If not set, `period.start.type` defaults to `max_item_period_start` and `period.end.type` defaults to `min_item_period_end`.
          */
         period?: AddInvoiceItem.Period;
 
@@ -381,12 +381,28 @@ declare module 'stripe' {
 
       interface BillingMode {
         /**
-         * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+         * Configure behavior for flexible billing mode.
+         */
+        flexible?: BillingMode.Flexible;
+
+        /**
+         * Controls the calculation and orchestration of prorations and invoices for subscriptions. If no value is passed, the default is `flexible`.
          */
         type: BillingMode.Type;
       }
 
       namespace BillingMode {
+        interface Flexible {
+          /**
+           * Controls how invoices and invoice items display proration amounts and discount amounts.
+           */
+          proration_discounts?: Flexible.ProrationDiscounts;
+        }
+
+        namespace Flexible {
+          type ProrationDiscounts = 'included' | 'itemized';
+        }
+
         type Type = 'classic' | 'flexible';
       }
 
@@ -1114,7 +1130,7 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * The period associated with this invoice item. Defaults to the current period of the subscription.
+         * The period associated with this invoice item. If not set, `period.start.type` defaults to `max_item_period_start` and `period.end.type` defaults to `min_item_period_end`.
          */
         period?: AddInvoiceItem.Period;
 
@@ -2001,7 +2017,28 @@ declare module 'stripe' {
 
     namespace SubscriptionMigrateParams {
       interface BillingMode {
+        /**
+         * Configure behavior for flexible billing mode.
+         */
+        flexible?: BillingMode.Flexible;
+
+        /**
+         * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+         */
         type: 'flexible';
+      }
+
+      namespace BillingMode {
+        interface Flexible {
+          /**
+           * Controls how invoices and invoice items display proration amounts and discount amounts.
+           */
+          proration_discounts?: Flexible.ProrationDiscounts;
+        }
+
+        namespace Flexible {
+          type ProrationDiscounts = 'included' | 'itemized';
+        }
       }
     }
 

@@ -3,6 +3,8 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
+     * [Deprecated] The `ExchangeRate` APIs are deprecated. Please use the [FX Quotes API](https://docs.stripe.com/payments/currencies/localize-prices/fx-quotes-api) instead.
+     *
      * `ExchangeRate` objects allow you to determine the rates that Stripe is currently
      * using to convert from one currency to another. Since this number is variable
      * throughout the day, there are various reasons why you might want to know the current
