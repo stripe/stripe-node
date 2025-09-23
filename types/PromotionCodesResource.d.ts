@@ -59,12 +59,12 @@ declare module 'stripe' {
     namespace PromotionCodeCreateParams {
       interface Promotion {
         /**
-         * If the promotion type is 'coupon', the coupon for this promotion code.
+         * If promotion `type` is `coupon`, the coupon for this promotion code.
          */
         coupon?: string;
 
         /**
-         * Specifies the type of promotion code.
+         * Specifies the type of promotion.
          */
         type: 'coupon';
       }
