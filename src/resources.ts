@@ -100,9 +100,7 @@ import {RedactionJobs as PrivacyRedactionJobs} from './resources/Privacy/Redacti
 import {Refunds as TestHelpersRefunds} from './resources/TestHelpers/Refunds.js';
 import {Registrations as TaxRegistrations} from './resources/Tax/Registrations.js';
 import {ReportRuns as ReportingReportRuns} from './resources/Reporting/ReportRuns.js';
-import {ReportRuns as V2ReportingReportRuns} from './resources/V2/Reporting/ReportRuns.js';
 import {ReportTypes as ReportingReportTypes} from './resources/Reporting/ReportTypes.js';
-import {Reports as V2ReportingReports} from './resources/V2/Reporting/Reports.js';
 import {Requests as ForwardingRequests} from './resources/Forwarding/Requests.js';
 import {ScheduledQueryRuns as SigmaScheduledQueryRuns} from './resources/Sigma/ScheduledQueryRuns.js';
 import {Secrets as AppsSecrets} from './resources/Apps/Secrets.js';
@@ -363,10 +361,6 @@ export const V2 = resourceNamespace('v2', {
   }),
   Payment: resourceNamespace('payment', {
     OffSessionPayments: V2PaymentsOffSessionPayments,
-  }),
-  Reporting: resourceNamespace('reporting', {
-    ReportRuns: V2ReportingReportRuns,
-    Reports: V2ReportingReports,
   }),
   Tax: resourceNamespace('tax', {AutomaticRules: V2TaxAutomaticRules}),
   TestHelper: resourceNamespace('testHelper', {

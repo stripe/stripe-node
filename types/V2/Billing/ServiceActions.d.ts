@@ -26,12 +26,12 @@ declare module 'stripe' {
           /**
            * Details for the credit grant. Provided only if `type` is "credit_grant".
            */
-          credit_grant: ServiceAction.CreditGrant | null;
+          credit_grant?: ServiceAction.CreditGrant;
 
           /**
            * Details for the credit grant per tenant. Provided only if `type` is "credit_grant_per_tenant".
            */
-          credit_grant_per_tenant: ServiceAction.CreditGrantPerTenant | null;
+          credit_grant_per_tenant?: ServiceAction.CreditGrantPerTenant;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -41,7 +41,7 @@ declare module 'stripe' {
           /**
            * An internal key you can use to search for this service action.
            */
-          lookup_key: string | null;
+          lookup_key?: string;
 
           /**
            * The interval for assessing service.
@@ -72,11 +72,6 @@ declare module 'stripe' {
             applicability_config: CreditGrant.ApplicabilityConfig;
 
             /**
-             * The category of the credit grant.
-             */
-            category: CreditGrant.Category | null;
-
-            /**
              * The expiry configuration for the credit grant.
              */
             expiry_config: CreditGrant.ExpiryConfig;
@@ -85,11 +80,6 @@ declare module 'stripe' {
              * A descriptive name shown in dashboard.
              */
             name: string;
-
-            /**
-             * The desired priority for applying this credit grant. If not specified, it will be set to the default value of 50. The highest priority is 0 and the lowest is 100.
-             */
-            priority: number | null;
           }
 
           namespace CreditGrant {
@@ -102,12 +92,12 @@ declare module 'stripe' {
               /**
                * The custom pricing unit amount of the credit grant. Required if `type` is `custom_pricing_unit`.
                */
-              custom_pricing_unit: Amount.CustomPricingUnit | null;
+              custom_pricing_unit?: Amount.CustomPricingUnit;
 
               /**
                * The monetary amount of the credit grant. Required if `type` is `monetary`.
                */
-              monetary: V2.Amount | null;
+              monetary?: V2.Amount;
             }
 
             namespace Amount {
@@ -138,16 +128,14 @@ declare module 'stripe' {
                 /**
                  * The billable items to apply the credit grant to.
                  */
-                billable_items: Array<string> | null;
+                billable_items?: Array<string>;
 
                 /**
                  * The price type that credit grants can apply to. We currently only support the `metered` price type. This will apply to metered prices and rate cards. Cannot be used in combination with `billable_items`.
                  */
-                price_type: 'metered' | null;
+                price_type?: 'metered';
               }
             }
-
-            type Category = 'paid' | 'promotional';
 
             interface ExpiryConfig {
               /**
@@ -169,11 +157,6 @@ declare module 'stripe' {
             applicability_config: CreditGrantPerTenant.ApplicabilityConfig;
 
             /**
-             * The category of the credit grant.
-             */
-            category: CreditGrantPerTenant.Category | null;
-
-            /**
              * The expiry configuration for the credit grant.
              */
             expiry_config: CreditGrantPerTenant.ExpiryConfig;
@@ -182,11 +165,6 @@ declare module 'stripe' {
              * Customer-facing name for the credit grant.
              */
             name: string;
-
-            /**
-             * The desired priority for applying this credit grant. If not specified, it will be set to the default value of 50. The highest priority is 0 and the lowest is 100.
-             */
-            priority: number | null;
           }
 
           namespace CreditGrantPerTenant {
@@ -199,12 +177,12 @@ declare module 'stripe' {
               /**
                * The custom pricing unit amount of the credit grant. Required if `type` is `custom_pricing_unit`.
                */
-              custom_pricing_unit: Amount.CustomPricingUnit | null;
+              custom_pricing_unit?: Amount.CustomPricingUnit;
 
               /**
                * The monetary amount of the credit grant. Required if `type` is `monetary`.
                */
-              monetary: V2.Amount | null;
+              monetary?: V2.Amount;
             }
 
             namespace Amount {
@@ -235,16 +213,14 @@ declare module 'stripe' {
                 /**
                  * The billable items to apply the credit grant to.
                  */
-                billable_items: Array<string> | null;
+                billable_items?: Array<string>;
 
                 /**
                  * The price type that credit grants can apply to. We currently only support the `metered` price type. This will apply to metered prices and rate cards. Cannot be used in combination with `billable_items`.
                  */
-                price_type: 'metered' | null;
+                price_type?: 'metered';
               }
             }
-
-            type Category = 'paid' | 'promotional';
 
             interface ExpiryConfig {
               /**

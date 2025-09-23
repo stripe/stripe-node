@@ -44,12 +44,12 @@ declare module 'stripe' {
            * An internal key you can use to search for a particular billable item.
            * Maximum length of 200 characters.
            */
-          lookup_key: string | null;
+          lookup_key?: string;
 
           /**
            * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
-          metadata: Stripe.Metadata | null;
+          metadata?: Stripe.Metadata;
 
           /**
            * ID of the Meter that measures usage for this Metered Item.
@@ -64,7 +64,7 @@ declare module 'stripe' {
           /**
            * Stripe Tax details.
            */
-          tax_details: MeteredItem.TaxDetails | null;
+          tax_details?: MeteredItem.TaxDetails;
 
           /**
            * The unit to use when displaying prices for this billable item in places like Checkout. For example, set this field
@@ -72,7 +72,7 @@ declare module 'stripe' {
            * million events".
            * Maximum length of 100 characters.
            */
-          unit_label: string | null;
+          unit_label?: string;
         }
 
         namespace MeteredItem {

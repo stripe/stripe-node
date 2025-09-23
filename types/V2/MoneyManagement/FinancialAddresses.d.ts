@@ -28,12 +28,12 @@ declare module 'stripe' {
            * It contains all necessary banking details with which to perform money movements with the FinancialAddress.
            * This field is only available for FinancialAddresses with an active status.
            */
-          credentials: FinancialAddress.Credentials | null;
+          credentials?: FinancialAddress.Credentials;
 
           /**
            * Open Enum. The currency the FinancialAddress supports.
            */
-          currency: FinancialAddress.Currency;
+          currency: string;
 
           /**
            * A ID of the FinancialAccount this FinancialAddress corresponds to.
@@ -61,12 +61,12 @@ declare module 'stripe' {
             /**
              * The credentials of the UK Bank Account for the FinancialAddress. This contains unique banking details such as the sort code, account number, etc. of a UK bank account.
              */
-            gb_bank_account: Credentials.GbBankAccount | null;
+            gb_bank_account?: Credentials.GbBankAccount;
 
             /**
              * The credentials of the US Bank Account for the FinancialAddress. This contains unique banking details such as the routing number, account number, etc. of a US bank account.
              */
-            us_bank_account: Credentials.UsBankAccount | null;
+            us_bank_account?: Credentials.UsBankAccount;
           }
 
           namespace Credentials {
@@ -79,7 +79,7 @@ declare module 'stripe' {
               /**
                * The account number of the UK Bank Account.
                */
-              account_number: string | null;
+              account_number?: string;
 
               /**
                * The last four digits of the UK Bank Account number. This will always be returned.
@@ -99,12 +99,12 @@ declare module 'stripe' {
               /**
                * The account number of the US Bank Account.
                */
-              account_number: string | null;
+              account_number?: string;
 
               /**
                * The name of the Bank.
                */
-              bank_name: string | null;
+              bank_name?: string;
 
               /**
                * The last four digits of the US Bank Account number. This will always be returned.
@@ -120,191 +120,9 @@ declare module 'stripe' {
               /**
                * The swift code of the bank or financial institution.
                */
-              swift_code: string | null;
+              swift_code?: string;
             }
           }
-
-          type Currency =
-            | 'aed'
-            | 'afn'
-            | 'all'
-            | 'amd'
-            | 'ang'
-            | 'aoa'
-            | 'ars'
-            | 'aud'
-            | 'awg'
-            | 'azn'
-            | 'bam'
-            | 'bbd'
-            | 'bdt'
-            | 'bgn'
-            | 'bhd'
-            | 'bif'
-            | 'bmd'
-            | 'bnd'
-            | 'bob'
-            | 'bov'
-            | 'brl'
-            | 'bsd'
-            | 'btn'
-            | 'bwp'
-            | 'byn'
-            | 'byr'
-            | 'bzd'
-            | 'cad'
-            | 'cdf'
-            | 'che'
-            | 'chf'
-            | 'chw'
-            | 'clf'
-            | 'clp'
-            | 'cny'
-            | 'cop'
-            | 'cou'
-            | 'crc'
-            | 'cuc'
-            | 'cup'
-            | 'cve'
-            | 'czk'
-            | 'djf'
-            | 'dkk'
-            | 'dop'
-            | 'dzd'
-            | 'eek'
-            | 'egp'
-            | 'ern'
-            | 'etb'
-            | 'eur'
-            | 'fjd'
-            | 'fkp'
-            | 'gbp'
-            | 'gel'
-            | 'ghc'
-            | 'ghs'
-            | 'gip'
-            | 'gmd'
-            | 'gnf'
-            | 'gtq'
-            | 'gyd'
-            | 'hkd'
-            | 'hnl'
-            | 'hrk'
-            | 'htg'
-            | 'huf'
-            | 'idr'
-            | 'ils'
-            | 'inr'
-            | 'iqd'
-            | 'irr'
-            | 'isk'
-            | 'jmd'
-            | 'jod'
-            | 'jpy'
-            | 'kes'
-            | 'kgs'
-            | 'khr'
-            | 'kmf'
-            | 'kpw'
-            | 'krw'
-            | 'kwd'
-            | 'kyd'
-            | 'kzt'
-            | 'lak'
-            | 'lbp'
-            | 'lkr'
-            | 'lrd'
-            | 'lsl'
-            | 'ltl'
-            | 'lvl'
-            | 'lyd'
-            | 'mad'
-            | 'mdl'
-            | 'mga'
-            | 'mkd'
-            | 'mmk'
-            | 'mnt'
-            | 'mop'
-            | 'mro'
-            | 'mru'
-            | 'mur'
-            | 'mvr'
-            | 'mwk'
-            | 'mxn'
-            | 'mxv'
-            | 'myr'
-            | 'mzn'
-            | 'nad'
-            | 'ngn'
-            | 'nio'
-            | 'nok'
-            | 'npr'
-            | 'nzd'
-            | 'omr'
-            | 'pab'
-            | 'pen'
-            | 'pgk'
-            | 'php'
-            | 'pkr'
-            | 'pln'
-            | 'pyg'
-            | 'qar'
-            | 'ron'
-            | 'rsd'
-            | 'rub'
-            | 'rwf'
-            | 'sar'
-            | 'sbd'
-            | 'scr'
-            | 'sdg'
-            | 'sek'
-            | 'sgd'
-            | 'shp'
-            | 'sle'
-            | 'sll'
-            | 'sos'
-            | 'srd'
-            | 'ssp'
-            | 'std'
-            | 'stn'
-            | 'svc'
-            | 'syp'
-            | 'szl'
-            | 'thb'
-            | 'tjs'
-            | 'tmt'
-            | 'tnd'
-            | 'top'
-            | 'try'
-            | 'ttd'
-            | 'twd'
-            | 'tzs'
-            | 'uah'
-            | 'ugx'
-            | 'usd'
-            | 'usdb'
-            | 'usdc'
-            | 'usn'
-            | 'uyi'
-            | 'uyu'
-            | 'uzs'
-            | 'vef'
-            | 'ves'
-            | 'vnd'
-            | 'vuv'
-            | 'wst'
-            | 'xaf'
-            | 'xcd'
-            | 'xcg'
-            | 'xof'
-            | 'xpf'
-            | 'yer'
-            | 'zar'
-            | 'zmk'
-            | 'zmw'
-            | 'zwd'
-            | 'zwg'
-            | 'zwl';
 
           type Status = 'active' | 'archived' | 'failed' | 'pending';
         }

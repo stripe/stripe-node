@@ -24,7 +24,7 @@ declare module 'stripe' {
            * Stripe will email your payer profile an invoice with payment instructions.
            * Defaults to automatic.
            */
-          collection_method: CollectionSettingVersion.CollectionMethod | null;
+          collection_method?: CollectionSettingVersion.CollectionMethod;
 
           /**
            * Timestamp of when the object was created.
@@ -34,7 +34,7 @@ declare module 'stripe' {
           /**
            * Email delivery settings.
            */
-          email_delivery: CollectionSettingVersion.EmailDelivery | null;
+          email_delivery?: CollectionSettingVersion.EmailDelivery;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -44,12 +44,12 @@ declare module 'stripe' {
           /**
            * The ID of the PaymentMethodConfiguration object, which controls which payment methods are displayed to your customers.
            */
-          payment_method_configuration: string | null;
+          payment_method_configuration?: string;
 
           /**
            * Payment Method specific configuration stored on the object.
            */
-          payment_method_options: CollectionSettingVersion.PaymentMethodOptions | null;
+          payment_method_options?: CollectionSettingVersion.PaymentMethodOptions;
         }
 
         namespace CollectionSettingVersion {
@@ -59,7 +59,7 @@ declare module 'stripe' {
             /**
              * Controls emails for when the payment is due. For example after the invoice is finilized and transition to Open state.
              */
-            payment_due: EmailDelivery.PaymentDue | null;
+            payment_due?: EmailDelivery.PaymentDue;
           }
 
           namespace EmailDelivery {
@@ -80,37 +80,37 @@ declare module 'stripe' {
             /**
              * This sub-hash contains details about the Canadian pre-authorized debit payment method options.
              */
-            acss_debit: PaymentMethodOptions.AcssDebit | null;
+            acss_debit?: PaymentMethodOptions.AcssDebit;
 
             /**
              * This sub-hash contains details about the Bancontact payment method.
              */
-            bancontact: PaymentMethodOptions.Bancontact | null;
+            bancontact?: PaymentMethodOptions.Bancontact;
 
             /**
              * This sub-hash contains details about the Card payment method options.
              */
-            card: PaymentMethodOptions.Card | null;
+            card?: PaymentMethodOptions.Card;
 
             /**
              * This sub-hash contains details about the Bank transfer payment method options.
              */
-            customer_balance: PaymentMethodOptions.CustomerBalance | null;
+            customer_balance?: PaymentMethodOptions.CustomerBalance;
 
             /**
              * This sub-hash contains details about the Konbini payment method options.
              */
-            konbini: PaymentMethodOptions.Konbini | null;
+            konbini?: PaymentMethodOptions.Konbini;
 
             /**
              * This sub-hash contains details about the SEPA Direct Debit payment method options.
              */
-            sepa_debit: PaymentMethodOptions.SepaDebit | null;
+            sepa_debit?: PaymentMethodOptions.SepaDebit;
 
             /**
              * This sub-hash contains details about the ACH direct debit payment method options.
              */
-            us_bank_account: PaymentMethodOptions.UsBankAccount | null;
+            us_bank_account?: PaymentMethodOptions.UsBankAccount;
           }
 
           namespace PaymentMethodOptions {
@@ -118,12 +118,12 @@ declare module 'stripe' {
               /**
                * Additional fields for Mandate creation.
                */
-              mandate_options: AcssDebit.MandateOptions | null;
+              mandate_options?: AcssDebit.MandateOptions;
 
               /**
                * Verification method.
                */
-              verification_method: AcssDebit.VerificationMethod | null;
+              verification_method?: AcssDebit.VerificationMethod;
             }
 
             namespace AcssDebit {
@@ -131,7 +131,7 @@ declare module 'stripe' {
                 /**
                  * Transaction type of the mandate.
                  */
-                transaction_type: MandateOptions.TransactionType | null;
+                transaction_type?: MandateOptions.TransactionType;
               }
 
               namespace MandateOptions {
@@ -148,7 +148,7 @@ declare module 'stripe' {
               /**
                * Preferred language of the Bancontact authorization page that the customer is redirected to.
                */
-              preferred_language: Bancontact.PreferredLanguage | null;
+              preferred_language?: Bancontact.PreferredLanguage;
             }
 
             namespace Bancontact {
@@ -159,12 +159,12 @@ declare module 'stripe' {
               /**
                * Configuration options for setting up an eMandate for cards issued in India.
                */
-              mandate_options: Card.MandateOptions | null;
+              mandate_options?: Card.MandateOptions;
 
               /**
                * Selected network to process the payment on. Depends on the available networks of the card.
                */
-              network: string | null;
+              network?: string;
 
               /**
                * An advanced option 3D Secure. We strongly recommend that you rely on our SCA Engine to automatically prompt your customers
@@ -172,7 +172,7 @@ declare module 'stripe' {
                * However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option.
                * Read our guide on [manually requesting 3D Secure](https://docs.corp.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
                */
-              request_three_d_secure: Card.RequestThreeDSecure | null;
+              request_three_d_secure?: Card.RequestThreeDSecure;
             }
 
             namespace Card {
@@ -180,17 +180,17 @@ declare module 'stripe' {
                 /**
                  * Amount to be charged for future payments.
                  */
-                amount: number | null;
+                amount?: number;
 
                 /**
                  * The AmountType for the mandate. One of `fixed` or `maximum`.
                  */
-                amount_type: MandateOptions.AmountType | null;
+                amount_type?: MandateOptions.AmountType;
 
                 /**
                  * A description of the mandate that is meant to be displayed to the customer.
                  */
-                description: string | null;
+                description?: string;
               }
 
               namespace MandateOptions {
@@ -204,12 +204,12 @@ declare module 'stripe' {
               /**
                * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
                */
-              bank_transfer: CustomerBalance.BankTransfer | null;
+              bank_transfer?: CustomerBalance.BankTransfer;
 
               /**
                * The funding method type to be used when there are not enough funds in the customer balance. Currently the only supported value is `bank_transfer`.
                */
-              funding_type: 'bank_transfer' | null;
+              funding_type?: 'bank_transfer';
             }
 
             namespace CustomerBalance {
@@ -217,12 +217,12 @@ declare module 'stripe' {
                 /**
                  * Configuration for `eu_bank_transfer` funding type. Required if `type` is `eu_bank_transfer`.
                  */
-                eu_bank_transfer: BankTransfer.EuBankTransfer | null;
+                eu_bank_transfer?: BankTransfer.EuBankTransfer;
 
                 /**
                  * The bank transfer type that can be used for funding.
                  */
-                type: BankTransfer.Type | null;
+                type?: BankTransfer.Type;
               }
 
               namespace BankTransfer {
@@ -267,7 +267,7 @@ declare module 'stripe' {
                 /**
                  * Provide filters for the linked accounts that the customer can select for the payment method.
                  */
-                filters: FinancialConnections.Filters | null;
+                filters?: FinancialConnections.Filters;
 
                 /**
                  * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included.

@@ -47,17 +47,17 @@ declare module 'stripe' {
           /**
            * The reason why the OffSessionPayment failed.
            */
-          failure_reason: OffSessionPayment.FailureReason | null;
+          failure_reason?: OffSessionPayment.FailureReason;
 
           /**
            * The payment error encountered in the previous attempt to authorize the payment.
            */
-          last_authorization_attempt_error: string | null;
+          last_authorization_attempt_error?: string;
 
           /**
            * Payment attempt record for the latest attempt, if one exists.
            */
-          latest_payment_attempt_record: string | null;
+          latest_payment_attempt_record?: string;
 
           /**
            * Has the value true if the object exists in live mode or the value false if the object exists in test mode.
@@ -75,7 +75,7 @@ declare module 'stripe' {
           /**
            * The account (if any) for which the funds of the OffSessionPayment are intended.
            */
-          on_behalf_of: string | null;
+          on_behalf_of?: string;
 
           /**
            * ID of the payment method used in this OffSessionPayment.
@@ -85,7 +85,7 @@ declare module 'stripe' {
           /**
            * Payment record associated with the OffSessionPayment.
            */
-          payment_record: string | null;
+          payment_record?: string;
 
           /**
            * Details about the OffSessionPayment retries.
@@ -98,14 +98,14 @@ declare module 'stripe' {
            * For information about requirements, including the 22-character limit, see the
            * [Statement Descriptor docs](https://docs.stripe.com/get-started/account/statement-descriptors).
            */
-          statement_descriptor: string | null;
+          statement_descriptor?: string;
 
           /**
            * Provides information about a card charge. Concatenated to the account's
            * [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static)
            * to form the complete statement descriptor that appears on the customer's statement.
            */
-          statement_descriptor_suffix: string | null;
+          statement_descriptor_suffix?: string;
 
           /**
            * Status of this OffSessionPayment, one of `pending`, `pending_retry`, `processing`,
@@ -116,12 +116,12 @@ declare module 'stripe' {
           /**
            * Test clock that can be used to advance the retry attempts in a sandbox.
            */
-          test_clock: string | null;
+          test_clock?: string;
 
           /**
            * The data that automatically creates a Transfer after the payment finalizes. Learn more about the use case for [connected accounts](https://docs.corp.stripe.com/payments/connected-accounts).
            */
-          transfer_data: OffSessionPayment.TransferData | null;
+          transfer_data?: OffSessionPayment.TransferData;
         }
 
         namespace OffSessionPayment {
@@ -164,7 +164,7 @@ declare module 'stripe' {
              * and must be a positive integer representing how much to transfer in the smallest
              * currency unit (e.g., 100 cents to charge $1.00).
              */
-            amount: number | null;
+            amount?: number;
 
             /**
              * The account (if any) that the payment is attributed to for tax reporting, and

@@ -50,7 +50,7 @@ declare module 'stripe' {
         /**
          * Before and after changes for the primary related object.
          */
-        changes: Event.Changes;
+        changes?: Event.Changes;
 
         /**
          * Authentication context needed to fetch the event or related object.

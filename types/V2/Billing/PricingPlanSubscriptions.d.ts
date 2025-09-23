@@ -46,7 +46,7 @@ declare module 'stripe' {
           /**
            * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
-          metadata: Stripe.Metadata | null;
+          metadata?: Stripe.Metadata;
 
           /**
            * The ID of the Pricing Plan for this subscription.
@@ -71,7 +71,7 @@ declare module 'stripe' {
           /**
            * The ID of the Test Clock of the associated Billing Cadence, if any.
            */
-          test_clock: string | null;
+          test_clock?: string;
         }
 
         namespace PricingPlanSubscription {
@@ -86,27 +86,27 @@ declare module 'stripe' {
             /**
              * When the collection status transitioned to awaiting customer action.
              */
-            awaiting_customer_action_at: string | null;
+            awaiting_customer_action_at?: string;
 
             /**
              * When the collection status transitioned to current.
              */
-            current_at: string | null;
+            current_at?: string;
 
             /**
              * When the collection status transitioned to past due.
              */
-            past_due_at: string | null;
+            past_due_at?: string;
 
             /**
              * When the collection status transitioned to paused.
              */
-            paused_at: string | null;
+            paused_at?: string;
 
             /**
              * When the collection status transitioned to unpaid.
              */
-            unpaid_at: string | null;
+            unpaid_at?: string;
           }
 
           type ServicingStatus = 'active' | 'canceled' | 'paused' | 'pending';
@@ -115,27 +115,17 @@ declare module 'stripe' {
             /**
              * When the servicing status transitioned to activated.
              */
-            activated_at: string | null;
+            activated_at?: string;
 
             /**
              * When the servicing status transitioned to canceled.
              */
-            canceled_at: string | null;
+            canceled_at?: string;
 
             /**
              * When the servicing status transitioned to paused.
              */
-            paused_at: string | null;
-
-            /**
-             * When the servicing is scheduled to transition to activate.
-             */
-            will_activate_at: string | null;
-
-            /**
-             * When the servicing is scheduled to cancel.
-             */
-            will_cancel_at: string | null;
+            paused_at?: string;
           }
         }
       }
