@@ -408,6 +408,76 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
     }
 
+    interface PaymentRecordReportPaymentAttemptInformationalParams {
+      /**
+       * Customer information for this payment.
+       */
+      customer_details?: PaymentRecordReportPaymentAttemptInformationalParams.CustomerDetails;
+
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users.
+       */
+      description?: Stripe.Emptyable<string>;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+      /**
+       * Shipping information for this payment.
+       */
+      shipping_details?: Stripe.Emptyable<
+        PaymentRecordReportPaymentAttemptInformationalParams.ShippingDetails
+      >;
+    }
+
+    namespace PaymentRecordReportPaymentAttemptInformationalParams {
+      interface CustomerDetails {
+        /**
+         * The customer who made the payment.
+         */
+        customer?: string;
+
+        /**
+         * The customer's phone number.
+         */
+        email?: string;
+
+        /**
+         * The customer's name.
+         */
+        name?: string;
+
+        /**
+         * The customer's phone number.
+         */
+        phone?: string;
+      }
+
+      interface ShippingDetails {
+        /**
+         * The physical shipping address.
+         */
+        address?: Stripe.AddressParam;
+
+        /**
+         * The shipping recipient's name.
+         */
+        name?: string;
+
+        /**
+         * The shipping recipient's phone number.
+         */
+        phone?: string;
+      }
+    }
+
     class PaymentRecordsResource {
       /**
        * Retrieves a Payment Record with the given ID
@@ -469,6 +539,19 @@ declare module 'stripe' {
       reportPaymentAttemptGuaranteed(
         id: string,
         params: PaymentRecordReportPaymentAttemptGuaranteedParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentRecord>>;
+
+      /**
+       * Report informational updates on the specified Payment Record.
+       */
+      reportPaymentAttemptInformational(
+        id: string,
+        params?: PaymentRecordReportPaymentAttemptInformationalParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentRecord>>;
+      reportPaymentAttemptInformational(
+        id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentRecord>>;
     }

@@ -112,12 +112,12 @@ declare module 'stripe' {
                    * The business type given by the bank for this account, in case of a MATCH or PARTIAL_MATCH.
                    * Closed enum.
                    */
-                  business_type: Matched.BusinessType | null;
+                  business_type?: Matched.BusinessType;
 
                   /**
                    * The name given by the bank for this account, in case of a MATCH or PARTIAL_MATCH.
                    */
-                  name: string | null;
+                  name?: string;
                 }
 
                 namespace Matched {

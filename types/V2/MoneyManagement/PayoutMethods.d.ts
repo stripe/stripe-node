@@ -26,12 +26,12 @@ declare module 'stripe' {
           /**
            * The PayoutMethodBankAccount object details.
            */
-          bank_account: PayoutMethod.BankAccount | null;
+          bank_account?: PayoutMethod.BankAccount;
 
           /**
            * The PayoutMethodCard object details.
            */
-          card: PayoutMethod.Card | null;
+          card?: PayoutMethod.Card;
 
           /**
            * Created timestamp.
@@ -41,7 +41,7 @@ declare module 'stripe' {
           /**
            * ID of the underlying active OutboundSetupIntent object, if any.
            */
-          latest_outbound_setup_intent: string | null;
+          latest_outbound_setup_intent?: string;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -98,7 +98,7 @@ declare module 'stripe' {
             /**
              * The routing number of the bank account, if present.
              */
-            routing_number: string | null;
+            routing_number?: string;
 
             /**
              * The list of currencies supported by this bank account.

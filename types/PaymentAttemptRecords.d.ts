@@ -331,6 +331,8 @@ declare module 'stripe' {
 
         paypal?: PaymentMethodDetails.Paypal;
 
+        paypay?: PaymentMethodDetails.Paypay;
+
         payto?: PaymentMethodDetails.Payto;
 
         pix?: PaymentMethodDetails.Pix;
@@ -803,6 +805,11 @@ declare module 'stripe' {
            * Populated if this transaction used 3D Secure authentication.
            */
           three_d_secure: Card.ThreeDSecure | null;
+
+          /**
+           * If this Card is part of a card wallet, this contains the details of the card wallet.
+           */
+          wallet: Card.Wallet | null;
         }
 
         namespace Card {
@@ -861,6 +868,9 @@ declare module 'stripe' {
             | 'visa';
 
           interface NetworkToken {
+            /**
+             * Indicates if Stripe used a network token, either user provided or Stripe managed when processing the transaction.
+             */
             used: boolean;
           }
 
@@ -895,6 +905,33 @@ declare module 'stripe' {
               | 'rejected';
 
             type Version = '1.0.2' | '2.1.0' | '2.2.0';
+          }
+
+          interface Wallet {
+            apple_pay?: Wallet.ApplePay;
+
+            /**
+             * (For tokenized numbers only.) The last four digits of the device account number.
+             */
+            dynamic_last4?: string;
+
+            google_pay?: Wallet.GooglePay;
+
+            /**
+             * The type of the card wallet, one of `apple_pay` or `google_pay`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
+             */
+            type: string;
+          }
+
+          namespace Wallet {
+            interface ApplePay {
+              /**
+               * Type of the apple_pay transaction, one of `apple_pay` or `apple_pay_later`.
+               */
+              type: string;
+            }
+
+            interface GooglePay {}
           }
         }
 
@@ -1935,6 +1972,8 @@ declare module 'stripe' {
           }
         }
 
+        interface Paypay {}
+
         interface Payto {
           /**
            * Bank-State-Branch number of the bank account.
@@ -2294,7 +2333,7 @@ declare module 'stripe' {
           /**
            * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
            */
-          payment_reference: string;
+          payment_reference: string | null;
         }
       }
 

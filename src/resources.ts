@@ -52,7 +52,7 @@ import {MeterEventSession as V2BillingMeterEventSession} from './resources/V2/Bi
 import {MeterEventStream as V2BillingMeterEventStream} from './resources/V2/Billing/MeterEventStream.js';
 import {MeterEvents as BillingMeterEvents} from './resources/Billing/MeterEvents.js';
 import {MeterEvents as V2BillingMeterEvents} from './resources/V2/Billing/MeterEvents.js';
-import {MeterUsage as BillingMeterUsage} from './resources/Billing/MeterUsage.js';
+import {MeterUsage as BillingAnalyticsMeterUsage} from './resources/Billing/Analytics/MeterUsage.js';
 import {Meters as BillingMeters} from './resources/Billing/Meters.js';
 import {OffSessionPayments as V2PaymentsOffSessionPayments} from './resources/V2/Payments/OffSessionPayments.js';
 import {OnboardingLinks as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
@@ -178,8 +178,10 @@ export const Billing = resourceNamespace('billing', {
   CreditGrants: BillingCreditGrants,
   MeterEventAdjustments: BillingMeterEventAdjustments,
   MeterEvents: BillingMeterEvents,
-  MeterUsage: BillingMeterUsage,
   Meters: BillingMeters,
+  Analytics: resourceNamespace('analytics', {
+    MeterUsage: BillingAnalyticsMeterUsage,
+  }),
 });
 export const BillingPortal = resourceNamespace('billingPortal', {
   Configurations: BillingPortalConfigurations,

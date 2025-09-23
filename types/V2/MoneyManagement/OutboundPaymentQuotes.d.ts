@@ -32,7 +32,7 @@ declare module 'stripe' {
           /**
            * Delivery options to be used to send the OutboundPayment.
            */
-          delivery_options: OutboundPaymentQuote.DeliveryOptions | null;
+          delivery_options?: OutboundPaymentQuote.DeliveryOptions;
 
           /**
            * The estimated fees for the OutboundPaymentQuote.
@@ -65,7 +65,7 @@ declare module 'stripe' {
             /**
              * Open Enum. Method for bank account.
              */
-            bank_account: DeliveryOptions.BankAccount | null;
+            bank_account?: DeliveryOptions.BankAccount;
           }
 
           namespace DeliveryOptions {

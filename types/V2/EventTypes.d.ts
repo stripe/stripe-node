@@ -603,7 +603,7 @@ declare module 'stripe' {
       // Object containing the reference to API resource relevant to the event.
       related_object: Event.RelatedObject;
       // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Person>;
+      fetchRelatedObject(): Promise<V2.Core.AccountPerson>;
     }
 
     namespace V2CoreAccountPersonCreatedEvent {
@@ -625,7 +625,7 @@ declare module 'stripe' {
       // Object containing the reference to API resource relevant to the event.
       related_object: Event.RelatedObject;
       // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Person>;
+      fetchRelatedObject(): Promise<V2.Core.AccountPerson>;
     }
 
     namespace V2CoreAccountPersonDeletedEvent {
@@ -647,7 +647,7 @@ declare module 'stripe' {
       // Object containing the reference to API resource relevant to the event.
       related_object: Event.RelatedObject;
       // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.Person>;
+      fetchRelatedObject(): Promise<V2.Core.AccountPerson>;
     }
 
     namespace V2CoreAccountPersonUpdatedEvent {

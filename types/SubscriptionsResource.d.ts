@@ -29,7 +29,7 @@ declare module 'stripe' {
       billing_cycle_anchor?: number;
 
       /**
-       * Mutually exclusive with billing_cycle_anchor and only valid with monthly and yearly price intervals. When provided, the billing_cycle_anchor is set to the next occurence of the day_of_month at the hour, minute, and second UTC.
+       * Mutually exclusive with billing_cycle_anchor and only valid with monthly and yearly price intervals. When provided, the billing_cycle_anchor is set to the next occurrence of the day_of_month at the hour, minute, and second UTC.
        */
       billing_cycle_anchor_config?: SubscriptionCreateParams.BillingCycleAnchorConfig;
 
@@ -37,6 +37,11 @@ declare module 'stripe' {
        * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
        */
       billing_mode?: SubscriptionCreateParams.BillingMode;
+
+      /**
+       * Sets the billing schedules for the subscription.
+       */
+      billing_schedules?: Array<SubscriptionCreateParams.BillingSchedule>;
 
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
@@ -211,7 +216,7 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * The period associated with this invoice item. Defaults to the current period of the subscription.
+         * The period associated with this invoice item. If not set, `period.start.type` defaults to `max_item_period_start` and `period.end.type` defaults to `min_item_period_end`.
          */
         period?: AddInvoiceItem.Period;
 
@@ -435,13 +440,97 @@ declare module 'stripe' {
 
       interface BillingMode {
         /**
-         * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+         * Configure behavior for flexible billing mode.
+         */
+        flexible?: BillingMode.Flexible;
+
+        /**
+         * Controls the calculation and orchestration of prorations and invoices for subscriptions. If no value is passed, the default is `flexible`.
          */
         type: BillingMode.Type;
       }
 
       namespace BillingMode {
+        interface Flexible {
+          /**
+           * Controls how invoices and invoice items display proration amounts and discount amounts.
+           */
+          proration_discounts?: Flexible.ProrationDiscounts;
+        }
+
+        namespace Flexible {
+          type ProrationDiscounts = 'included' | 'itemized';
+        }
+
         type Type = 'classic' | 'flexible';
+      }
+
+      interface BillingSchedule {
+        /**
+         * Configure billing schedule differently for individual subscription items.
+         */
+        applies_to?: Array<BillingSchedule.AppliesTo>;
+
+        /**
+         * The end date for the billing schedule.
+         */
+        bill_until: BillingSchedule.BillUntil;
+
+        /**
+         * Specify a key for the billing schedule. Must be unique to this field, alphanumeric, and up to 200 characters. If not provided, a unique key will be generated.
+         */
+        key?: string;
+      }
+
+      namespace BillingSchedule {
+        interface AppliesTo {
+          /**
+           * The ID of the price object.
+           */
+          price?: string;
+
+          /**
+           * Controls which subscription items the billing schedule applies to.
+           */
+          type: 'price';
+        }
+
+        interface BillUntil {
+          /**
+           * Specifies the billing period.
+           */
+          duration?: BillUntil.Duration;
+
+          /**
+           * The end date of the billing schedule.
+           */
+          timestamp?: number;
+
+          /**
+           * Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
+           */
+          type: BillUntil.Type;
+        }
+
+        namespace BillUntil {
+          interface Duration {
+            /**
+             * Specifies billing duration. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The multiplier applied to the interval.
+             */
+            interval_count?: number;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type = 'duration' | 'timestamp';
+        }
       }
 
       interface BillingThresholds {
@@ -798,6 +887,11 @@ declare module 'stripe' {
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
           /**
+           * This sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+           */
+          pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
+
+          /**
            * This sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
            */
           sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
@@ -950,6 +1044,48 @@ declare module 'stripe' {
 
           interface Konbini {}
 
+          interface Pix {
+            /**
+             * Configuration options for setting up a mandate
+             */
+            mandate_options?: Pix.MandateOptions;
+          }
+
+          namespace Pix {
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments. If not provided, defaults to 40000.
+               */
+              amount?: number;
+
+              /**
+               * Determines if the amount includes the IOF tax. Defaults to `never`.
+               */
+              amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+              /**
+               * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled.
+               */
+              end_date?: string;
+
+              /**
+               * Schedule at which the future payments will be charged. Defaults to `weekly`.
+               */
+              payment_schedule?: MandateOptions.PaymentSchedule;
+            }
+
+            namespace MandateOptions {
+              type AmountIncludesIof = 'always' | 'never';
+
+              type PaymentSchedule =
+                | 'halfyearly'
+                | 'monthly'
+                | 'quarterly'
+                | 'weekly'
+                | 'yearly';
+            }
+          }
+
           interface SepaDebit {}
 
           interface Upi {
@@ -1085,6 +1221,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_credit_transfer'
@@ -1193,6 +1330,13 @@ declare module 'stripe' {
        * Either `now` or `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time (in UTC). For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
        */
       billing_cycle_anchor?: SubscriptionUpdateParams.BillingCycleAnchor;
+
+      /**
+       * Sets the billing schedules for the subscription.
+       */
+      billing_schedules?: Stripe.Emptyable<
+        Array<SubscriptionUpdateParams.BillingSchedule>
+      >;
 
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
@@ -1360,7 +1504,7 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * The period associated with this invoice item. Defaults to the current period of the subscription.
+         * The period associated with this invoice item. If not set, `period.start.type` defaults to `max_item_period_start` and `period.end.type` defaults to `min_item_period_end`.
          */
         period?: AddInvoiceItem.Period;
 
@@ -1556,6 +1700,74 @@ declare module 'stripe' {
       }
 
       type BillingCycleAnchor = 'now' | 'unchanged';
+
+      interface BillingSchedule {
+        /**
+         * Configure billing schedule differently for individual subscription items.
+         */
+        applies_to?: Array<BillingSchedule.AppliesTo>;
+
+        /**
+         * The end date for the billing schedule.
+         */
+        bill_until?: BillingSchedule.BillUntil;
+
+        /**
+         * Specify a key for the billing schedule. Must be unique to this field, alphanumeric, and up to 200 characters. If not provided, a unique key will be generated.
+         */
+        key?: string;
+      }
+
+      namespace BillingSchedule {
+        interface AppliesTo {
+          /**
+           * The ID of the price object.
+           */
+          price?: string;
+
+          /**
+           * Controls which subscription items the billing schedule applies to.
+           */
+          type: 'price';
+        }
+
+        interface BillUntil {
+          /**
+           * Specifies the billing period.
+           */
+          duration?: BillUntil.Duration;
+
+          /**
+           * The end date of the billing schedule.
+           */
+          timestamp?: number;
+
+          /**
+           * Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
+           */
+          type: BillUntil.Type;
+        }
+
+        namespace BillUntil {
+          interface Duration {
+            /**
+             * Specifies billing duration. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The multiplier applied to the interval.
+             */
+            interval_count?: number;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type = 'duration' | 'timestamp';
+        }
+      }
 
       interface BillingThresholds {
         /**
@@ -1945,6 +2157,11 @@ declare module 'stripe' {
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
           /**
+           * This sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+           */
+          pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
+
+          /**
            * This sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
            */
           sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
@@ -2097,6 +2314,48 @@ declare module 'stripe' {
 
           interface Konbini {}
 
+          interface Pix {
+            /**
+             * Configuration options for setting up a mandate
+             */
+            mandate_options?: Pix.MandateOptions;
+          }
+
+          namespace Pix {
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments. If not provided, defaults to 40000.
+               */
+              amount?: number;
+
+              /**
+               * Determines if the amount includes the IOF tax. Defaults to `never`.
+               */
+              amount_includes_iof?: MandateOptions.AmountIncludesIof;
+
+              /**
+               * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`. If not provided, the mandate will be active until canceled.
+               */
+              end_date?: string;
+
+              /**
+               * Schedule at which the future payments will be charged. Defaults to `weekly`.
+               */
+              payment_schedule?: MandateOptions.PaymentSchedule;
+            }
+
+            namespace MandateOptions {
+              type AmountIncludesIof = 'always' | 'never';
+
+              type PaymentSchedule =
+                | 'halfyearly'
+                | 'monthly'
+                | 'quarterly'
+                | 'weekly'
+                | 'yearly';
+            }
+          }
+
           interface SepaDebit {}
 
           interface Upi {
@@ -2232,6 +2491,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_credit_transfer'
@@ -2462,7 +2722,28 @@ declare module 'stripe' {
 
     namespace SubscriptionMigrateParams {
       interface BillingMode {
+        /**
+         * Configure behavior for flexible billing mode.
+         */
+        flexible?: BillingMode.Flexible;
+
+        /**
+         * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+         */
         type: 'flexible';
+      }
+
+      namespace BillingMode {
+        interface Flexible {
+          /**
+           * Controls how invoices and invoice items display proration amounts and discount amounts.
+           */
+          proration_discounts?: Flexible.ProrationDiscounts;
+        }
+
+        namespace Flexible {
+          type ProrationDiscounts = 'included' | 'itemized';
+        }
       }
     }
 

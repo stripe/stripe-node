@@ -31,10 +31,10 @@ declare module 'stripe' {
           /**
            * Specifies which actions needs to be taken next to continue setup of the credential.
            */
-          next_action: OutboundSetupIntent.NextAction | null;
+          next_action?: OutboundSetupIntent.NextAction;
 
           /**
-           * Information about the payout method that's created and linked to this outbound setup intent.
+           * Use the PayoutMethods API to list and interact with PayoutMethod objects.
            */
           payout_method: Stripe.V2.MoneyManagement.PayoutMethod;
 
@@ -59,7 +59,7 @@ declare module 'stripe' {
             /**
              * Confirmation of Payee details.
              */
-            confirmation_of_payee: NextAction.ConfirmationOfPayee | null;
+            confirmation_of_payee?: NextAction.ConfirmationOfPayee;
           }
 
           namespace NextAction {

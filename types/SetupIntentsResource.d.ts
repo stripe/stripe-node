@@ -404,6 +404,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+         */
+        paypay?: PaymentMethodData.Paypay;
+
+        /**
          * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
          */
         payto?: PaymentMethodData.Payto;
@@ -852,6 +857,8 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Paypay {}
+
         interface Payto {
           /**
            * The account number for the bank account.
@@ -993,6 +1000,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'paypay'
           | 'payto'
           | 'pix'
           | 'promptpay'
@@ -2135,6 +2143,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+         */
+        paypay?: PaymentMethodData.Paypay;
+
+        /**
          * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
          */
         payto?: PaymentMethodData.Payto;
@@ -2583,6 +2596,8 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Paypay {}
+
         interface Payto {
           /**
            * The account number for the bank account.
@@ -2724,6 +2739,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'paypay'
           | 'payto'
           | 'pix'
           | 'promptpay'
@@ -3913,6 +3929,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+         */
+        paypay?: PaymentMethodData.Paypay;
+
+        /**
          * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
          */
         payto?: PaymentMethodData.Payto;
@@ -4361,6 +4382,8 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Paypay {}
+
         interface Payto {
           /**
            * The account number for the bank account.
@@ -4502,6 +4525,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'paypay'
           | 'payto'
           | 'pix'
           | 'promptpay'

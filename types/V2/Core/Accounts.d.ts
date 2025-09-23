@@ -26,12 +26,12 @@ declare module 'stripe' {
           /**
            * An Account Configuration which allows the Account to take on a key persona across Stripe products.
            */
-          configuration: Account.Configuration | null;
+          configuration?: Account.Configuration;
 
           /**
            * The default contact email address for the Account. Required when configuring the account as a merchant or recipient.
            */
-          contact_email: string | null;
+          contact_email?: string;
 
           /**
            * Time at which the object was created. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
@@ -41,22 +41,22 @@ declare module 'stripe' {
           /**
            * A value indicating the Stripe dashboard this Account has access to. This will depend on which configurations are enabled for this account.
            */
-          dashboard: Account.Dashboard | null;
+          dashboard?: Account.Dashboard;
 
           /**
            * Default values to be used on Account Configurations.
            */
-          defaults: Account.Defaults | null;
+          defaults?: Account.Defaults;
 
           /**
            * A descriptive name for the Account. This name will be surfaced in the Stripe Dashboard and on any invoices sent to the Account.
            */
-          display_name: string | null;
+          display_name?: string;
 
           /**
            * Information about the company, individual, and business represented by the Account.
            */
-          identity: Account.Identity | null;
+          identity?: Account.Identity;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -66,12 +66,12 @@ declare module 'stripe' {
           /**
            * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
-          metadata: Stripe.Metadata | null;
+          metadata?: Stripe.Metadata;
 
           /**
            * Information about the requirements for the Account, including what information needs to be collected, and by when.
            */
-          requirements: Account.Requirements | null;
+          requirements?: Account.Requirements;
         }
 
         namespace Account {
@@ -85,22 +85,22 @@ declare module 'stripe' {
             /**
              * The Customer Configuration allows the Account to be used in inbound payment flows.
              */
-            customer: Configuration.Customer | null;
+            customer?: Configuration.Customer;
 
             /**
              * The Merchant configuration allows the Account to act as a connected account and collect payments facilitated by a Connect platform. You can add this configuration to your connected accounts only if you've completed onboarding as a Connect platform.
              */
-            merchant: Configuration.Merchant | null;
+            merchant?: Configuration.Merchant;
 
             /**
              * The Recipient Configuration allows the Account to receive funds.
              */
-            recipient: Configuration.Recipient | null;
+            recipient?: Configuration.Recipient;
 
             /**
              * The Storer Configuration allows the Account to store and move funds using stored-value FinancialAccounts.
              */
-            storer: Configuration.Storer | null;
+            storer?: Configuration.Storer;
           }
 
           namespace Configuration {
@@ -113,27 +113,27 @@ declare module 'stripe' {
               /**
                * Automatic indirect tax settings to be used when automatic tax calculation is enabled on the customer's invoices, subscriptions, checkout sessions, or payment links. Surfaces if automatic tax calculation is possible given the current customer location information.
                */
-              automatic_indirect_tax: Customer.AutomaticIndirectTax | null;
+              automatic_indirect_tax?: Customer.AutomaticIndirectTax;
 
               /**
                * Billing settings - default settings used for this customer in Billing flows such as Invoices and Subscriptions.
                */
-              billing: Customer.Billing | null;
+              billing?: Customer.Billing;
 
               /**
                * Capabilities that have been requested on the Customer Configuration.
                */
-              capabilities: Customer.Capabilities | null;
+              capabilities?: Customer.Capabilities;
 
               /**
                * The customer's shipping information. Appears on invoices emailed to this customer.
                */
-              shipping: Customer.Shipping | null;
+              shipping?: Customer.Shipping;
 
               /**
                * ID of the test clock to attach to the customer. Can only be set on testmode Accounts, and when the Customer Configuration is first set on an Account.
                */
-              test_clock: string | null;
+              test_clock?: string;
             }
 
             namespace Customer {
@@ -141,22 +141,22 @@ declare module 'stripe' {
                 /**
                  * Describes the customer's tax exemption status, which is `none`, `exempt`, or `reverse`. When set to reverse, invoice and receipt PDFs include the following text: “Reverse charge”.
                  */
-                exempt: AutomaticIndirectTax.Exempt | null;
+                exempt?: AutomaticIndirectTax.Exempt;
 
                 /**
                  * A recent IP address of the customer used for tax reporting and tax location inference.
                  */
-                ip_address: string | null;
+                ip_address?: string;
 
                 /**
                  * The customer's identified tax location - uses `location_source`. Will only be rendered if the `automatic_indirect_tax` feature is requested and `active`.
                  */
-                location: AutomaticIndirectTax.Location | null;
+                location?: AutomaticIndirectTax.Location;
 
                 /**
                  * The data source used to identify the customer's tax location - defaults to 'identity_address'. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions.
                  */
-                location_source: AutomaticIndirectTax.LocationSource | null;
+                location_source?: AutomaticIndirectTax.LocationSource;
               }
 
               namespace AutomaticIndirectTax {
@@ -166,267 +166,12 @@ declare module 'stripe' {
                   /**
                    * The identified tax country of the customer.
                    */
-                  country: Location.Country | null;
+                  country?: string;
 
                   /**
                    * The identified tax state, county, province, or region of the customer.
                    */
-                  state: string | null;
-                }
-
-                namespace Location {
-                  type Country =
-                    | 'ad'
-                    | 'ae'
-                    | 'af'
-                    | 'ag'
-                    | 'ai'
-                    | 'al'
-                    | 'am'
-                    | 'ao'
-                    | 'aq'
-                    | 'ar'
-                    | 'as'
-                    | 'at'
-                    | 'au'
-                    | 'aw'
-                    | 'ax'
-                    | 'az'
-                    | 'ba'
-                    | 'bb'
-                    | 'bd'
-                    | 'be'
-                    | 'bf'
-                    | 'bg'
-                    | 'bh'
-                    | 'bi'
-                    | 'bj'
-                    | 'bl'
-                    | 'bm'
-                    | 'bn'
-                    | 'bo'
-                    | 'bq'
-                    | 'br'
-                    | 'bs'
-                    | 'bt'
-                    | 'bv'
-                    | 'bw'
-                    | 'by'
-                    | 'bz'
-                    | 'ca'
-                    | 'cc'
-                    | 'cd'
-                    | 'cf'
-                    | 'cg'
-                    | 'ch'
-                    | 'ci'
-                    | 'ck'
-                    | 'cl'
-                    | 'cm'
-                    | 'cn'
-                    | 'co'
-                    | 'cr'
-                    | 'cu'
-                    | 'cv'
-                    | 'cw'
-                    | 'cx'
-                    | 'cy'
-                    | 'cz'
-                    | 'de'
-                    | 'dj'
-                    | 'dk'
-                    | 'dm'
-                    | 'do'
-                    | 'dz'
-                    | 'ec'
-                    | 'ee'
-                    | 'eg'
-                    | 'eh'
-                    | 'er'
-                    | 'es'
-                    | 'et'
-                    | 'fi'
-                    | 'fj'
-                    | 'fk'
-                    | 'fm'
-                    | 'fo'
-                    | 'fr'
-                    | 'ga'
-                    | 'gb'
-                    | 'gd'
-                    | 'ge'
-                    | 'gf'
-                    | 'gg'
-                    | 'gh'
-                    | 'gi'
-                    | 'gl'
-                    | 'gm'
-                    | 'gn'
-                    | 'gp'
-                    | 'gq'
-                    | 'gr'
-                    | 'gs'
-                    | 'gt'
-                    | 'gu'
-                    | 'gw'
-                    | 'gy'
-                    | 'hk'
-                    | 'hm'
-                    | 'hn'
-                    | 'hr'
-                    | 'ht'
-                    | 'hu'
-                    | 'id'
-                    | 'ie'
-                    | 'il'
-                    | 'im'
-                    | 'in'
-                    | 'io'
-                    | 'iq'
-                    | 'ir'
-                    | 'is'
-                    | 'it'
-                    | 'je'
-                    | 'jm'
-                    | 'jo'
-                    | 'jp'
-                    | 'ke'
-                    | 'kg'
-                    | 'kh'
-                    | 'ki'
-                    | 'km'
-                    | 'kn'
-                    | 'kp'
-                    | 'kr'
-                    | 'kw'
-                    | 'ky'
-                    | 'kz'
-                    | 'la'
-                    | 'lb'
-                    | 'lc'
-                    | 'li'
-                    | 'lk'
-                    | 'lr'
-                    | 'ls'
-                    | 'lt'
-                    | 'lu'
-                    | 'lv'
-                    | 'ly'
-                    | 'ma'
-                    | 'mc'
-                    | 'md'
-                    | 'me'
-                    | 'mf'
-                    | 'mg'
-                    | 'mh'
-                    | 'mk'
-                    | 'ml'
-                    | 'mm'
-                    | 'mn'
-                    | 'mo'
-                    | 'mp'
-                    | 'mq'
-                    | 'mr'
-                    | 'ms'
-                    | 'mt'
-                    | 'mu'
-                    | 'mv'
-                    | 'mw'
-                    | 'mx'
-                    | 'my'
-                    | 'mz'
-                    | 'na'
-                    | 'nc'
-                    | 'ne'
-                    | 'nf'
-                    | 'ng'
-                    | 'ni'
-                    | 'nl'
-                    | 'no'
-                    | 'np'
-                    | 'nr'
-                    | 'nu'
-                    | 'nz'
-                    | 'om'
-                    | 'pa'
-                    | 'pe'
-                    | 'pf'
-                    | 'pg'
-                    | 'ph'
-                    | 'pk'
-                    | 'pl'
-                    | 'pm'
-                    | 'pn'
-                    | 'pr'
-                    | 'ps'
-                    | 'pt'
-                    | 'pw'
-                    | 'py'
-                    | 'qa'
-                    | 'qz'
-                    | 're'
-                    | 'ro'
-                    | 'rs'
-                    | 'ru'
-                    | 'rw'
-                    | 'sa'
-                    | 'sb'
-                    | 'sc'
-                    | 'sd'
-                    | 'se'
-                    | 'sg'
-                    | 'sh'
-                    | 'si'
-                    | 'sj'
-                    | 'sk'
-                    | 'sl'
-                    | 'sm'
-                    | 'sn'
-                    | 'so'
-                    | 'sr'
-                    | 'ss'
-                    | 'st'
-                    | 'sv'
-                    | 'sx'
-                    | 'sy'
-                    | 'sz'
-                    | 'tc'
-                    | 'td'
-                    | 'tf'
-                    | 'tg'
-                    | 'th'
-                    | 'tj'
-                    | 'tk'
-                    | 'tl'
-                    | 'tm'
-                    | 'tn'
-                    | 'to'
-                    | 'tr'
-                    | 'tt'
-                    | 'tv'
-                    | 'tw'
-                    | 'tz'
-                    | 'ua'
-                    | 'ug'
-                    | 'um'
-                    | 'us'
-                    | 'uy'
-                    | 'uz'
-                    | 'va'
-                    | 'vc'
-                    | 've'
-                    | 'vg'
-                    | 'vi'
-                    | 'vn'
-                    | 'vu'
-                    | 'wf'
-                    | 'ws'
-                    | 'xx'
-                    | 'ye'
-                    | 'yt'
-                    | 'za'
-                    | 'zm'
-                    | 'zw';
+                  state?: string;
                 }
 
                 type LocationSource =
@@ -439,12 +184,12 @@ declare module 'stripe' {
                 /**
                  * ID of a payment method that's attached to the customer, to be used as the customer's default payment method for invoices and subscriptions.
                  */
-                default_payment_method: string | null;
+                default_payment_method?: string;
 
                 /**
                  * Default settings used on invoices for this customer.
                  */
-                invoice: Billing.Invoice | null;
+                invoice?: Billing.Invoice;
               }
 
               namespace Billing {
@@ -457,22 +202,22 @@ declare module 'stripe' {
                   /**
                    * Default footer to be displayed on invoices for this customer.
                    */
-                  footer: string | null;
+                  footer?: string;
 
                   /**
                    * The sequence to be used on the customer's next invoice. Defaults to 1.
                    */
-                  next_sequence: number | null;
+                  next_sequence?: number;
 
                   /**
                    * The prefix for the customer used to generate unique invoice numbers. Must be 3–12 uppercase letters or numbers.
                    */
-                  prefix: string | null;
+                  prefix?: string;
 
                   /**
                    * Default options for invoice PDF rendering for this customer.
                    */
-                  rendering: Invoice.Rendering | null;
+                  rendering?: Invoice.Rendering;
                 }
 
                 namespace Invoice {
@@ -492,12 +237,12 @@ declare module 'stripe' {
                     /**
                      * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of exclude_tax or include_inclusive_tax. include_inclusive_tax will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. exclude_tax will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
                      */
-                    amount_tax_display: Rendering.AmountTaxDisplay | null;
+                    amount_tax_display?: Rendering.AmountTaxDisplay;
 
                     /**
                      * ID of the invoice rendering template to use for future invoices.
                      */
-                    template: string | null;
+                    template?: string;
                   }
 
                   namespace Rendering {
@@ -512,7 +257,7 @@ declare module 'stripe' {
                 /**
                  * Generates requirements for enabling automatic indirect tax calculation on this customer's invoices or subscriptions. Recommended to request this capability if planning to enable automatic tax calculation on this customer's invoices or subscriptions. Uses the `location_source` field.
                  */
-                automatic_indirect_tax: Capabilities.AutomaticIndirectTax | null;
+                automatic_indirect_tax?: Capabilities.AutomaticIndirectTax;
               }
 
               namespace Capabilities {
@@ -574,17 +319,51 @@ declare module 'stripe' {
                 /**
                  * Customer shipping address.
                  */
-                address: Stripe.Address | null;
+                address?: Shipping.Address;
 
                 /**
                  * Customer name.
                  */
-                name: string | null;
+                name?: string;
 
                 /**
                  * Customer phone (including extension).
                  */
-                phone: string | null;
+                phone?: string;
+              }
+
+              namespace Shipping {
+                interface Address {
+                  /**
+                   * City, district, suburb, town, or village.
+                   */
+                  city?: string;
+
+                  /**
+                   * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+                   */
+                  country?: string;
+
+                  /**
+                   * Address line 1 (e.g., street, PO Box, or company name).
+                   */
+                  line1?: string;
+
+                  /**
+                   * Address line 2 (e.g., apartment, suite, unit, or building).
+                   */
+                  line2?: string;
+
+                  /**
+                   * ZIP or postal code.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * State, county, province, or region.
+                   */
+                  state?: string;
+                }
               }
             }
 
@@ -597,42 +376,42 @@ declare module 'stripe' {
               /**
                * Settings used for Bacs debit payments.
                */
-              bacs_debit_payments: Merchant.BacsDebitPayments | null;
+              bacs_debit_payments?: Merchant.BacsDebitPayments;
 
               /**
                * Settings used to apply the merchant's branding to email receipts, invoices, Checkout, and other products.
                */
-              branding: Merchant.Branding | null;
+              branding?: Merchant.Branding;
 
               /**
                * Capabilities that have been requested on the Merchant Configuration.
                */
-              capabilities: Merchant.Capabilities | null;
+              capabilities?: Merchant.Capabilities;
 
               /**
                * Card payments settings.
                */
-              card_payments: Merchant.CardPayments | null;
+              card_payments?: Merchant.CardPayments;
 
               /**
                * The merchant category code for the merchant. MCCs are used to classify businesses based on the goods or services they provide.
                */
-              mcc: string | null;
+              mcc?: string;
 
               /**
                * Settings used for SEPA debit payments.
                */
-              sepa_debit_payments: Merchant.SepaDebitPayments | null;
+              sepa_debit_payments?: Merchant.SepaDebitPayments;
 
               /**
                * Statement descriptor.
                */
-              statement_descriptor: Merchant.StatementDescriptor | null;
+              statement_descriptor?: Merchant.StatementDescriptor;
 
               /**
                * Publicly available contact information for sending support issues to.
                */
-              support: Merchant.Support | null;
+              support?: Merchant.Support;
             }
 
             namespace Merchant {
@@ -640,261 +419,261 @@ declare module 'stripe' {
                 /**
                  * Display name for Bacs debit payments.
                  */
-                display_name: string | null;
+                display_name?: string;
 
                 /**
                  * Service user number for Bacs debit payments.
                  */
-                service_user_number: string | null;
+                service_user_number?: string;
               }
 
               interface Branding {
                 /**
                  * ID of a [file upload](https://docs.stripe.com/api/persons/update#create_file): An icon for the merchant. Must be square and at least 128px x 128px.
                  */
-                icon: string | null;
+                icon?: string;
 
                 /**
                  * ID of a [file upload](https://docs.stripe.com/api/persons/update#create_file): A logo for the merchant that will be used in Checkout instead of the icon and without the merchant's name next to it if provided. Must be at least 128px x 128px.
                  */
-                logo: string | null;
+                logo?: string;
 
                 /**
                  * A CSS hex color value representing the primary branding color for the merchant.
                  */
-                primary_color: string | null;
+                primary_color?: string;
 
                 /**
                  * A CSS hex color value representing the secondary branding color for the merchant.
                  */
-                secondary_color: string | null;
+                secondary_color?: string;
               }
 
               interface Capabilities {
                 /**
                  * Allow the merchant to process ACH debit payments.
                  */
-                ach_debit_payments: Capabilities.AchDebitPayments | null;
+                ach_debit_payments?: Capabilities.AchDebitPayments;
 
                 /**
                  * Allow the merchant to process ACSS debit payments.
                  */
-                acss_debit_payments: Capabilities.AcssDebitPayments | null;
+                acss_debit_payments?: Capabilities.AcssDebitPayments;
 
                 /**
                  * Allow the merchant to process Affirm payments.
                  */
-                affirm_payments: Capabilities.AffirmPayments | null;
+                affirm_payments?: Capabilities.AffirmPayments;
 
                 /**
                  * Allow the merchant to process Afterpay/Clearpay payments.
                  */
-                afterpay_clearpay_payments: Capabilities.AfterpayClearpayPayments | null;
+                afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
 
                 /**
                  * Allow the merchant to process Alma payments.
                  */
-                alma_payments: Capabilities.AlmaPayments | null;
+                alma_payments?: Capabilities.AlmaPayments;
 
                 /**
                  * Allow the merchant to process Amazon Pay payments.
                  */
-                amazon_pay_payments: Capabilities.AmazonPayPayments | null;
+                amazon_pay_payments?: Capabilities.AmazonPayPayments;
 
                 /**
                  * Allow the merchant to process Australian BECS Direct Debit payments.
                  */
-                au_becs_debit_payments: Capabilities.AuBecsDebitPayments | null;
+                au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
 
                 /**
                  * Allow the merchant to process BACS Direct Debit payments.
                  */
-                bacs_debit_payments: Capabilities.BacsDebitPayments | null;
+                bacs_debit_payments?: Capabilities.BacsDebitPayments;
 
                 /**
                  * Allow the merchant to process Bancontact payments.
                  */
-                bancontact_payments: Capabilities.BancontactPayments | null;
+                bancontact_payments?: Capabilities.BancontactPayments;
 
                 /**
                  * Allow the merchant to process BLIK payments.
                  */
-                blik_payments: Capabilities.BlikPayments | null;
+                blik_payments?: Capabilities.BlikPayments;
 
                 /**
                  * Allow the merchant to process Boleto payments.
                  */
-                boleto_payments: Capabilities.BoletoPayments | null;
+                boleto_payments?: Capabilities.BoletoPayments;
 
                 /**
                  * Allow the merchant to collect card payments.
                  */
-                card_payments: Capabilities.CardPayments | null;
+                card_payments?: Capabilities.CardPayments;
 
                 /**
                  * Allow the merchant to process Cartes Bancaires payments.
                  */
-                cartes_bancaires_payments: Capabilities.CartesBancairesPayments | null;
+                cartes_bancaires_payments?: Capabilities.CartesBancairesPayments;
 
                 /**
                  * Allow the merchant to process Cash App payments.
                  */
-                cashapp_payments: Capabilities.CashappPayments | null;
+                cashapp_payments?: Capabilities.CashappPayments;
 
                 /**
                  * Allow the merchant to process EPS payments.
                  */
-                eps_payments: Capabilities.EpsPayments | null;
+                eps_payments?: Capabilities.EpsPayments;
 
                 /**
                  * Allow the merchant to process FPX payments.
                  */
-                fpx_payments: Capabilities.FpxPayments | null;
+                fpx_payments?: Capabilities.FpxPayments;
 
                 /**
                  * Allow the merchant to process UK bank transfer payments.
                  */
-                gb_bank_transfer_payments: Capabilities.GbBankTransferPayments | null;
+                gb_bank_transfer_payments?: Capabilities.GbBankTransferPayments;
 
                 /**
                  * Allow the merchant to process GrabPay payments.
                  */
-                grabpay_payments: Capabilities.GrabpayPayments | null;
+                grabpay_payments?: Capabilities.GrabpayPayments;
 
                 /**
                  * Allow the merchant to process iDEAL payments.
                  */
-                ideal_payments: Capabilities.IdealPayments | null;
+                ideal_payments?: Capabilities.IdealPayments;
 
                 /**
                  * Allow the merchant to process JCB card payments.
                  */
-                jcb_payments: Capabilities.JcbPayments | null;
+                jcb_payments?: Capabilities.JcbPayments;
 
                 /**
                  * Allow the merchant to process Japanese bank transfer payments.
                  */
-                jp_bank_transfer_payments: Capabilities.JpBankTransferPayments | null;
+                jp_bank_transfer_payments?: Capabilities.JpBankTransferPayments;
 
                 /**
                  * Allow the merchant to process Kakao Pay payments.
                  */
-                kakao_pay_payments: Capabilities.KakaoPayPayments | null;
+                kakao_pay_payments?: Capabilities.KakaoPayPayments;
 
                 /**
                  * Allow the merchant to process Klarna payments.
                  */
-                klarna_payments: Capabilities.KlarnaPayments | null;
+                klarna_payments?: Capabilities.KlarnaPayments;
 
                 /**
                  * Allow the merchant to process Konbini convenience store payments.
                  */
-                konbini_payments: Capabilities.KonbiniPayments | null;
+                konbini_payments?: Capabilities.KonbiniPayments;
 
                 /**
                  * Allow the merchant to process Korean card payments.
                  */
-                kr_card_payments: Capabilities.KrCardPayments | null;
+                kr_card_payments?: Capabilities.KrCardPayments;
 
                 /**
                  * Allow the merchant to process Link payments.
                  */
-                link_payments: Capabilities.LinkPayments | null;
+                link_payments?: Capabilities.LinkPayments;
 
                 /**
                  * Allow the merchant to process MobilePay payments.
                  */
-                mobilepay_payments: Capabilities.MobilepayPayments | null;
+                mobilepay_payments?: Capabilities.MobilepayPayments;
 
                 /**
                  * Allow the merchant to process Multibanco payments.
                  */
-                multibanco_payments: Capabilities.MultibancoPayments | null;
+                multibanco_payments?: Capabilities.MultibancoPayments;
 
                 /**
                  * Allow the merchant to process Mexican bank transfer payments.
                  */
-                mx_bank_transfer_payments: Capabilities.MxBankTransferPayments | null;
+                mx_bank_transfer_payments?: Capabilities.MxBankTransferPayments;
 
                 /**
                  * Allow the merchant to process Naver Pay payments.
                  */
-                naver_pay_payments: Capabilities.NaverPayPayments | null;
+                naver_pay_payments?: Capabilities.NaverPayPayments;
 
                 /**
                  * Allow the merchant to process OXXO payments.
                  */
-                oxxo_payments: Capabilities.OxxoPayments | null;
+                oxxo_payments?: Capabilities.OxxoPayments;
 
                 /**
                  * Allow the merchant to process Przelewy24 (P24) payments.
                  */
-                p24_payments: Capabilities.P24Payments | null;
+                p24_payments?: Capabilities.P24Payments;
 
                 /**
                  * Allow the merchant to process Pay by Bank payments.
                  */
-                pay_by_bank_payments: Capabilities.PayByBankPayments | null;
+                pay_by_bank_payments?: Capabilities.PayByBankPayments;
 
                 /**
                  * Allow the merchant to process PAYCO payments.
                  */
-                payco_payments: Capabilities.PaycoPayments | null;
+                payco_payments?: Capabilities.PaycoPayments;
 
                 /**
                  * Allow the merchant to process PayNow payments.
                  */
-                paynow_payments: Capabilities.PaynowPayments | null;
+                paynow_payments?: Capabilities.PaynowPayments;
 
                 /**
                  * Allow the merchant to process PromptPay payments.
                  */
-                promptpay_payments: Capabilities.PromptpayPayments | null;
+                promptpay_payments?: Capabilities.PromptpayPayments;
 
                 /**
                  * Allow the merchant to process Revolut Pay payments.
                  */
-                revolut_pay_payments: Capabilities.RevolutPayPayments | null;
+                revolut_pay_payments?: Capabilities.RevolutPayPayments;
 
                 /**
                  * Allow the merchant to process Samsung Pay payments.
                  */
-                samsung_pay_payments: Capabilities.SamsungPayPayments | null;
+                samsung_pay_payments?: Capabilities.SamsungPayPayments;
 
                 /**
                  * Allow the merchant to process SEPA bank transfer payments.
                  */
-                sepa_bank_transfer_payments: Capabilities.SepaBankTransferPayments | null;
+                sepa_bank_transfer_payments?: Capabilities.SepaBankTransferPayments;
 
                 /**
                  * Allow the merchant to process SEPA Direct Debit payments.
                  */
-                sepa_debit_payments: Capabilities.SepaDebitPayments | null;
+                sepa_debit_payments?: Capabilities.SepaDebitPayments;
 
                 /**
                  * Capabilities that enable the merchant to manage their Stripe Balance (/v1/balance).
                  */
-                stripe_balance: Capabilities.StripeBalance | null;
+                stripe_balance?: Capabilities.StripeBalance;
 
                 /**
                  * Allow the merchant to process Swish payments.
                  */
-                swish_payments: Capabilities.SwishPayments | null;
+                swish_payments?: Capabilities.SwishPayments;
 
                 /**
                  * Allow the merchant to process TWINT payments.
                  */
-                twint_payments: Capabilities.TwintPayments | null;
+                twint_payments?: Capabilities.TwintPayments;
 
                 /**
                  * Allow the merchant to process US bank transfer payments.
                  */
-                us_bank_transfer_payments: Capabilities.UsBankTransferPayments | null;
+                us_bank_transfer_payments?: Capabilities.UsBankTransferPayments;
 
                 /**
                  * Allow the merchant to process Zip payments.
                  */
-                zip_payments: Capabilities.ZipPayments | null;
+                zip_payments?: Capabilities.ZipPayments;
               }
 
               namespace Capabilities {
@@ -3022,7 +2801,7 @@ declare module 'stripe' {
                   /**
                    * Allows the account to do payouts using their Stripe Balance (/v1/balance).
                    */
-                  payouts: StripeBalance.Payouts | null;
+                  payouts?: StripeBalance.Payouts;
                 }
 
                 namespace StripeBalance {
@@ -3297,7 +3076,7 @@ declare module 'stripe' {
                 /**
                  * Automatically declines certain charge types regardless of whether the card issuer accepted or declined the charge.
                  */
-                decline_on: CardPayments.DeclineOn | null;
+                decline_on?: CardPayments.DeclineOn;
               }
 
               namespace CardPayments {
@@ -3305,12 +3084,12 @@ declare module 'stripe' {
                   /**
                    * Whether Stripe automatically declines charges with an incorrect ZIP or postal code. This setting only applies when a ZIP or postal code is provided and they fail bank verification.
                    */
-                  avs_failure: boolean | null;
+                  avs_failure?: boolean;
 
                   /**
                    * Whether Stripe automatically declines charges with an incorrect CVC. This setting only applies when a CVC is provided and it fails bank verification.
                    */
-                  cvc_failure: boolean | null;
+                  cvc_failure?: boolean;
                 }
               }
 
@@ -3318,41 +3097,41 @@ declare module 'stripe' {
                 /**
                  * Creditor ID for SEPA debit payments.
                  */
-                creditor_id: string | null;
+                creditor_id?: string;
               }
 
               interface StatementDescriptor {
                 /**
                  * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a statement_descriptor_prefix, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the statement_descriptor text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
                  */
-                descriptor: string | null;
+                descriptor?: string;
 
                 /**
                  * Default text that appears on statements for card charges outside of Japan, prefixing any dynamic statement_descriptor_suffix specified on the charge. To maximize space for the dynamic part of the descriptor, keep this text short. If you don't specify this value, statement_descriptor is used as the prefix. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
                  */
-                prefix: string | null;
+                prefix?: string;
               }
 
               interface Support {
                 /**
                  * A publicly available mailing address for sending support issues to.
                  */
-                address: Support.Address | null;
+                address?: Support.Address;
 
                 /**
                  * A publicly available email address for sending support issues to.
                  */
-                email: string | null;
+                email?: string;
 
                 /**
                  * A publicly available phone number to call with support issues.
                  */
-                phone: string | null;
+                phone?: string;
 
                 /**
                  * A publicly available website for handling support issues.
                  */
-                url: string | null;
+                url?: string;
               }
 
               namespace Support {
@@ -3360,292 +3139,37 @@ declare module 'stripe' {
                   /**
                    * City, district, suburb, town, or village.
                    */
-                  city: string | null;
+                  city?: string;
 
                   /**
                    * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                    */
-                  country: Address.Country | null;
+                  country?: string;
 
                   /**
                    * Address line 1 (e.g., street, PO Box, or company name).
                    */
-                  line1: string | null;
+                  line1?: string;
 
                   /**
                    * Address line 2 (e.g., apartment, suite, unit, or building).
                    */
-                  line2: string | null;
+                  line2?: string;
 
                   /**
                    * ZIP or postal code.
                    */
-                  postal_code: string | null;
+                  postal_code?: string;
 
                   /**
                    * State, county, province, or region.
                    */
-                  state: string | null;
+                  state?: string;
 
                   /**
                    * Town or cho-me.
                    */
-                  town: string | null;
-                }
-
-                namespace Address {
-                  type Country =
-                    | 'ad'
-                    | 'ae'
-                    | 'af'
-                    | 'ag'
-                    | 'ai'
-                    | 'al'
-                    | 'am'
-                    | 'ao'
-                    | 'aq'
-                    | 'ar'
-                    | 'as'
-                    | 'at'
-                    | 'au'
-                    | 'aw'
-                    | 'ax'
-                    | 'az'
-                    | 'ba'
-                    | 'bb'
-                    | 'bd'
-                    | 'be'
-                    | 'bf'
-                    | 'bg'
-                    | 'bh'
-                    | 'bi'
-                    | 'bj'
-                    | 'bl'
-                    | 'bm'
-                    | 'bn'
-                    | 'bo'
-                    | 'bq'
-                    | 'br'
-                    | 'bs'
-                    | 'bt'
-                    | 'bv'
-                    | 'bw'
-                    | 'by'
-                    | 'bz'
-                    | 'ca'
-                    | 'cc'
-                    | 'cd'
-                    | 'cf'
-                    | 'cg'
-                    | 'ch'
-                    | 'ci'
-                    | 'ck'
-                    | 'cl'
-                    | 'cm'
-                    | 'cn'
-                    | 'co'
-                    | 'cr'
-                    | 'cu'
-                    | 'cv'
-                    | 'cw'
-                    | 'cx'
-                    | 'cy'
-                    | 'cz'
-                    | 'de'
-                    | 'dj'
-                    | 'dk'
-                    | 'dm'
-                    | 'do'
-                    | 'dz'
-                    | 'ec'
-                    | 'ee'
-                    | 'eg'
-                    | 'eh'
-                    | 'er'
-                    | 'es'
-                    | 'et'
-                    | 'fi'
-                    | 'fj'
-                    | 'fk'
-                    | 'fm'
-                    | 'fo'
-                    | 'fr'
-                    | 'ga'
-                    | 'gb'
-                    | 'gd'
-                    | 'ge'
-                    | 'gf'
-                    | 'gg'
-                    | 'gh'
-                    | 'gi'
-                    | 'gl'
-                    | 'gm'
-                    | 'gn'
-                    | 'gp'
-                    | 'gq'
-                    | 'gr'
-                    | 'gs'
-                    | 'gt'
-                    | 'gu'
-                    | 'gw'
-                    | 'gy'
-                    | 'hk'
-                    | 'hm'
-                    | 'hn'
-                    | 'hr'
-                    | 'ht'
-                    | 'hu'
-                    | 'id'
-                    | 'ie'
-                    | 'il'
-                    | 'im'
-                    | 'in'
-                    | 'io'
-                    | 'iq'
-                    | 'ir'
-                    | 'is'
-                    | 'it'
-                    | 'je'
-                    | 'jm'
-                    | 'jo'
-                    | 'jp'
-                    | 'ke'
-                    | 'kg'
-                    | 'kh'
-                    | 'ki'
-                    | 'km'
-                    | 'kn'
-                    | 'kp'
-                    | 'kr'
-                    | 'kw'
-                    | 'ky'
-                    | 'kz'
-                    | 'la'
-                    | 'lb'
-                    | 'lc'
-                    | 'li'
-                    | 'lk'
-                    | 'lr'
-                    | 'ls'
-                    | 'lt'
-                    | 'lu'
-                    | 'lv'
-                    | 'ly'
-                    | 'ma'
-                    | 'mc'
-                    | 'md'
-                    | 'me'
-                    | 'mf'
-                    | 'mg'
-                    | 'mh'
-                    | 'mk'
-                    | 'ml'
-                    | 'mm'
-                    | 'mn'
-                    | 'mo'
-                    | 'mp'
-                    | 'mq'
-                    | 'mr'
-                    | 'ms'
-                    | 'mt'
-                    | 'mu'
-                    | 'mv'
-                    | 'mw'
-                    | 'mx'
-                    | 'my'
-                    | 'mz'
-                    | 'na'
-                    | 'nc'
-                    | 'ne'
-                    | 'nf'
-                    | 'ng'
-                    | 'ni'
-                    | 'nl'
-                    | 'no'
-                    | 'np'
-                    | 'nr'
-                    | 'nu'
-                    | 'nz'
-                    | 'om'
-                    | 'pa'
-                    | 'pe'
-                    | 'pf'
-                    | 'pg'
-                    | 'ph'
-                    | 'pk'
-                    | 'pl'
-                    | 'pm'
-                    | 'pn'
-                    | 'pr'
-                    | 'ps'
-                    | 'pt'
-                    | 'pw'
-                    | 'py'
-                    | 'qa'
-                    | 'qz'
-                    | 're'
-                    | 'ro'
-                    | 'rs'
-                    | 'ru'
-                    | 'rw'
-                    | 'sa'
-                    | 'sb'
-                    | 'sc'
-                    | 'sd'
-                    | 'se'
-                    | 'sg'
-                    | 'sh'
-                    | 'si'
-                    | 'sj'
-                    | 'sk'
-                    | 'sl'
-                    | 'sm'
-                    | 'sn'
-                    | 'so'
-                    | 'sr'
-                    | 'ss'
-                    | 'st'
-                    | 'sv'
-                    | 'sx'
-                    | 'sy'
-                    | 'sz'
-                    | 'tc'
-                    | 'td'
-                    | 'tf'
-                    | 'tg'
-                    | 'th'
-                    | 'tj'
-                    | 'tk'
-                    | 'tl'
-                    | 'tm'
-                    | 'tn'
-                    | 'to'
-                    | 'tr'
-                    | 'tt'
-                    | 'tv'
-                    | 'tw'
-                    | 'tz'
-                    | 'ua'
-                    | 'ug'
-                    | 'um'
-                    | 'us'
-                    | 'uy'
-                    | 'uz'
-                    | 'va'
-                    | 'vc'
-                    | 've'
-                    | 'vg'
-                    | 'vi'
-                    | 'vn'
-                    | 'vu'
-                    | 'wf'
-                    | 'ws'
-                    | 'xx'
-                    | 'ye'
-                    | 'yt'
-                    | 'za'
-                    | 'zm'
-                    | 'zw';
+                  town?: string;
                 }
               }
             }
@@ -3659,12 +3183,12 @@ declare module 'stripe' {
               /**
                * Capabilities that have been requested on the Recipient Configuration.
                */
-              capabilities: Recipient.Capabilities | null;
+              capabilities?: Recipient.Capabilities;
 
               /**
                * The payout method to be used as a default outbound destination. This will allow the PayoutMethod to be omitted on OutboundPayments made through the dashboard.
                */
-              default_outbound_destination: Recipient.DefaultOutboundDestination | null;
+              default_outbound_destination?: Recipient.DefaultOutboundDestination;
             }
 
             namespace Recipient {
@@ -3672,17 +3196,17 @@ declare module 'stripe' {
                 /**
                  * Capabilities that enable OutboundPayments to a bank account linked to this Account.
                  */
-                bank_accounts: Capabilities.BankAccounts | null;
+                bank_accounts?: Capabilities.BankAccounts;
 
                 /**
                  * Capability that enable OutboundPayments to a debit card linked to this Account.
                  */
-                cards: Capabilities.Cards | null;
+                cards?: Capabilities.Cards;
 
                 /**
                  * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
                  */
-                stripe_balance: Capabilities.StripeBalance | null;
+                stripe_balance?: Capabilities.StripeBalance;
               }
 
               namespace Capabilities {
@@ -3690,12 +3214,12 @@ declare module 'stripe' {
                   /**
                    * Enables this Account to receive OutboundPayments to linked bank accounts over local networks.
                    */
-                  local: BankAccounts.Local | null;
+                  local?: BankAccounts.Local;
 
                   /**
                    * Enables this Account to receive OutboundPayments to linked bank accounts over wire.
                    */
-                  wire: BankAccounts.Wire | null;
+                  wire?: BankAccounts.Wire;
                 }
 
                 namespace BankAccounts {
@@ -3863,12 +3387,12 @@ declare module 'stripe' {
                   /**
                    * Allows the account to do payouts using their Stripe Balance (/v1/balance).
                    */
-                  payouts: StripeBalance.Payouts | null;
+                  payouts?: StripeBalance.Payouts;
 
                   /**
                    * Allows the account to receive /v1/transfers into their Stripe Balance (/v1/balance).
                    */
-                  stripe_transfers: StripeBalance.StripeTransfers | null;
+                  stripe_transfers?: StripeBalance.StripeTransfers;
                 }
 
                 namespace StripeBalance {
@@ -4066,7 +3590,7 @@ declare module 'stripe' {
               /**
                * Capabilities that have been requested on the Storer Configuration.
                */
-              capabilities: Storer.Capabilities | null;
+              capabilities?: Storer.Capabilities;
             }
 
             namespace Storer {
@@ -4074,27 +3598,27 @@ declare module 'stripe' {
                 /**
                  * Can provision a financial address to credit/debit a FinancialAccount.
                  */
-                financial_addresses: Capabilities.FinancialAddresses | null;
+                financial_addresses?: Capabilities.FinancialAddresses;
 
                 /**
                  * Can hold storage-type funds on Stripe.
                  */
-                holds_currencies: Capabilities.HoldsCurrencies | null;
+                holds_currencies?: Capabilities.HoldsCurrencies;
 
                 /**
                  * Can pull funds from an external source, owned by yourself, to a FinancialAccount.
                  */
-                inbound_transfers: Capabilities.InboundTransfers | null;
+                inbound_transfers?: Capabilities.InboundTransfers;
 
                 /**
                  * Can send funds from a FinancialAccount to a destination owned by someone else.
                  */
-                outbound_payments: Capabilities.OutboundPayments | null;
+                outbound_payments?: Capabilities.OutboundPayments;
 
                 /**
                  * Can send funds from a FinancialAccount to a destination owned by yourself.
                  */
-                outbound_transfers: Capabilities.OutboundTransfers | null;
+                outbound_transfers?: Capabilities.OutboundTransfers;
               }
 
               namespace Capabilities {
@@ -4102,7 +3626,7 @@ declare module 'stripe' {
                   /**
                    * Can provision a bank-account like financial address (VBAN) to credit/debit a FinancialAccount.
                    */
-                  bank_accounts: FinancialAddresses.BankAccounts | null;
+                  bank_accounts?: FinancialAddresses.BankAccounts;
                 }
 
                 namespace FinancialAddresses {
@@ -4164,7 +3688,7 @@ declare module 'stripe' {
                   /**
                    * Can hold storage-type funds on Stripe in GBP.
                    */
-                  gbp: HoldsCurrencies.Gbp | null;
+                  gbp?: HoldsCurrencies.Gbp;
                 }
 
                 namespace HoldsCurrencies {
@@ -4226,7 +3750,7 @@ declare module 'stripe' {
                   /**
                    * Can pull funds from an external bank account, owned by yourself, to a FinancialAccount.
                    */
-                  bank_accounts: InboundTransfers.BankAccounts | null;
+                  bank_accounts?: InboundTransfers.BankAccounts;
                 }
 
                 namespace InboundTransfers {
@@ -4288,17 +3812,17 @@ declare module 'stripe' {
                   /**
                    * Can send funds from a FinancialAccount to a bank account, owned by someone else.
                    */
-                  bank_accounts: OutboundPayments.BankAccounts | null;
+                  bank_accounts?: OutboundPayments.BankAccounts;
 
                   /**
                    * Can send funds from a FinancialAccount to a debit card, owned by someone else.
                    */
-                  cards: OutboundPayments.Cards | null;
+                  cards?: OutboundPayments.Cards;
 
                   /**
                    * Can send funds from a FinancialAccount to another FinancialAccount, owned by someone else.
                    */
-                  financial_accounts: OutboundPayments.FinancialAccounts | null;
+                  financial_accounts?: OutboundPayments.FinancialAccounts;
                 }
 
                 namespace OutboundPayments {
@@ -4466,12 +3990,12 @@ declare module 'stripe' {
                   /**
                    * Can send funds from a FinancialAccount, to a bank account, owned by yourself.
                    */
-                  bank_accounts: OutboundTransfers.BankAccounts | null;
+                  bank_accounts?: OutboundTransfers.BankAccounts;
 
                   /**
                    * Can send funds from a FinancialAccount to another FinancialAccount, owned by yourself.
                    */
-                  financial_accounts: OutboundTransfers.FinancialAccounts | null;
+                  financial_accounts?: OutboundTransfers.FinancialAccounts;
                 }
 
                 namespace OutboundTransfers {
@@ -4591,202 +4115,20 @@ declare module 'stripe' {
             /**
              * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
              */
-            currency: Defaults.Currency | null;
+            currency?: string;
 
             /**
              * The Account's preferred locales (languages), ordered by preference.
              */
-            locales: Array<Defaults.Locale> | null;
+            locales?: Array<Defaults.Locale>;
 
             /**
              * Default responsibilities held by either Stripe or the platform.
              */
-            responsibilities: Defaults.Responsibilities | null;
+            responsibilities?: Defaults.Responsibilities;
           }
 
           namespace Defaults {
-            type Currency =
-              | 'aed'
-              | 'afn'
-              | 'all'
-              | 'amd'
-              | 'ang'
-              | 'aoa'
-              | 'ars'
-              | 'aud'
-              | 'awg'
-              | 'azn'
-              | 'bam'
-              | 'bbd'
-              | 'bdt'
-              | 'bgn'
-              | 'bhd'
-              | 'bif'
-              | 'bmd'
-              | 'bnd'
-              | 'bob'
-              | 'bov'
-              | 'brl'
-              | 'bsd'
-              | 'btn'
-              | 'bwp'
-              | 'byn'
-              | 'byr'
-              | 'bzd'
-              | 'cad'
-              | 'cdf'
-              | 'che'
-              | 'chf'
-              | 'chw'
-              | 'clf'
-              | 'clp'
-              | 'cny'
-              | 'cop'
-              | 'cou'
-              | 'crc'
-              | 'cuc'
-              | 'cup'
-              | 'cve'
-              | 'czk'
-              | 'djf'
-              | 'dkk'
-              | 'dop'
-              | 'dzd'
-              | 'eek'
-              | 'egp'
-              | 'ern'
-              | 'etb'
-              | 'eur'
-              | 'fjd'
-              | 'fkp'
-              | 'gbp'
-              | 'gel'
-              | 'ghc'
-              | 'ghs'
-              | 'gip'
-              | 'gmd'
-              | 'gnf'
-              | 'gtq'
-              | 'gyd'
-              | 'hkd'
-              | 'hnl'
-              | 'hrk'
-              | 'htg'
-              | 'huf'
-              | 'idr'
-              | 'ils'
-              | 'inr'
-              | 'iqd'
-              | 'irr'
-              | 'isk'
-              | 'jmd'
-              | 'jod'
-              | 'jpy'
-              | 'kes'
-              | 'kgs'
-              | 'khr'
-              | 'kmf'
-              | 'kpw'
-              | 'krw'
-              | 'kwd'
-              | 'kyd'
-              | 'kzt'
-              | 'lak'
-              | 'lbp'
-              | 'lkr'
-              | 'lrd'
-              | 'lsl'
-              | 'ltl'
-              | 'lvl'
-              | 'lyd'
-              | 'mad'
-              | 'mdl'
-              | 'mga'
-              | 'mkd'
-              | 'mmk'
-              | 'mnt'
-              | 'mop'
-              | 'mro'
-              | 'mru'
-              | 'mur'
-              | 'mvr'
-              | 'mwk'
-              | 'mxn'
-              | 'mxv'
-              | 'myr'
-              | 'mzn'
-              | 'nad'
-              | 'ngn'
-              | 'nio'
-              | 'nok'
-              | 'npr'
-              | 'nzd'
-              | 'omr'
-              | 'pab'
-              | 'pen'
-              | 'pgk'
-              | 'php'
-              | 'pkr'
-              | 'pln'
-              | 'pyg'
-              | 'qar'
-              | 'ron'
-              | 'rsd'
-              | 'rub'
-              | 'rwf'
-              | 'sar'
-              | 'sbd'
-              | 'scr'
-              | 'sdg'
-              | 'sek'
-              | 'sgd'
-              | 'shp'
-              | 'sle'
-              | 'sll'
-              | 'sos'
-              | 'srd'
-              | 'ssp'
-              | 'std'
-              | 'stn'
-              | 'svc'
-              | 'syp'
-              | 'szl'
-              | 'thb'
-              | 'tjs'
-              | 'tmt'
-              | 'tnd'
-              | 'top'
-              | 'try'
-              | 'ttd'
-              | 'twd'
-              | 'tzs'
-              | 'uah'
-              | 'ugx'
-              | 'usd'
-              | 'usdb'
-              | 'usdc'
-              | 'usn'
-              | 'uyi'
-              | 'uyu'
-              | 'uzs'
-              | 'vef'
-              | 'ves'
-              | 'vnd'
-              | 'vuv'
-              | 'wst'
-              | 'xaf'
-              | 'xcd'
-              | 'xcg'
-              | 'xof'
-              | 'xpf'
-              | 'yer'
-              | 'zar'
-              | 'zmk'
-              | 'zmw'
-              | 'zwd'
-              | 'zwg'
-              | 'zwl';
-
             type Locale =
               | 'ar-SA'
               | 'bg'
@@ -4896,27 +4238,27 @@ declare module 'stripe' {
             /**
              * Attestations from the identity's key people, e.g. owners, executives, directors.
              */
-            attestations: Identity.Attestations | null;
+            attestations?: Identity.Attestations;
 
             /**
              * Information about the company or business.
              */
-            business_details: Identity.BusinessDetails | null;
+            business_details?: Identity.BusinessDetails;
 
             /**
              * The country in which the account holder resides, or in which the business is legally established. This should be an [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code.
              */
-            country: Identity.Country | null;
+            country?: string;
 
             /**
              * The entity type.
              */
-            entity_type: Identity.EntityType | null;
+            entity_type?: Identity.EntityType;
 
             /**
              * Information about the individual represented by the Account. This property is `null` unless `entity_type` is set to `individual`.
              */
-            individual: Identity.Individual | null;
+            individual?: Identity.Individual;
           }
 
           namespace Identity {
@@ -4924,22 +4266,22 @@ declare module 'stripe' {
               /**
                * This hash is used to attest that the directors information provided to Stripe is both current and correct.
                */
-              directorship_declaration: Attestations.DirectorshipDeclaration | null;
+              directorship_declaration?: Attestations.DirectorshipDeclaration;
 
               /**
                * This hash is used to attest that the beneficial owner information provided to Stripe is both current and correct.
                */
-              ownership_declaration: Attestations.OwnershipDeclaration | null;
+              ownership_declaration?: Attestations.OwnershipDeclaration;
 
               /**
                * Attestation that all Persons with a specific Relationship value have been provided.
                */
-              persons_provided: Attestations.PersonsProvided | null;
+              persons_provided?: Attestations.PersonsProvided;
 
               /**
                * Attestations of accepted terms of service agreements.
                */
-              terms_of_service: Attestations.TermsOfService | null;
+              terms_of_service?: Attestations.TermsOfService;
             }
 
             namespace Attestations {
@@ -4947,56 +4289,56 @@ declare module 'stripe' {
                 /**
                  * The time marking when the director attestation was made. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                  */
-                date: string | null;
+                date?: string;
 
                 /**
                  * The IP address from which the director attestation was made.
                  */
-                ip: string | null;
+                ip?: string;
 
                 /**
                  * The user agent of the browser from which the director attestation was made.
                  */
-                user_agent: string | null;
+                user_agent?: string;
               }
 
               interface OwnershipDeclaration {
                 /**
                  * The time marking when the beneficial owner attestation was made. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                  */
-                date: string | null;
+                date?: string;
 
                 /**
                  * The IP address from which the beneficial owner attestation was made.
                  */
-                ip: string | null;
+                ip?: string;
 
                 /**
                  * The user agent of the browser from which the beneficial owner attestation was made.
                  */
-                user_agent: string | null;
+                user_agent?: string;
               }
 
               interface PersonsProvided {
                 /**
                  * Whether the company's directors have been provided. Set this Boolean to true after creating all the company's directors with the [Persons API](https://docs.stripe.com/api/v2/core/accounts/createperson).
                  */
-                directors: boolean | null;
+                directors?: boolean;
 
                 /**
                  * Whether the company's executives have been provided. Set this Boolean to true after creating all the company's executives with the [Persons API](https://docs.stripe.com/api/v2/core/accounts/createperson).
                  */
-                executives: boolean | null;
+                executives?: boolean;
 
                 /**
                  * Whether the company's owners have been provided. Set this Boolean to true after creating all the company's owners with the [Persons API](https://docs.stripe.com/api/v2/core/accounts/createperson).
                  */
-                owners: boolean | null;
+                owners?: boolean;
 
                 /**
                  * Reason for why the company is exempt from providing ownership information.
                  */
-                ownership_exemption_reason: PersonsProvided.OwnershipExemptionReason | null;
+                ownership_exemption_reason?: PersonsProvided.OwnershipExemptionReason;
               }
 
               namespace PersonsProvided {
@@ -5009,12 +4351,12 @@ declare module 'stripe' {
                 /**
                  * Details on the Account's acceptance of the [Stripe Services Agreement](https://docs.stripe.com/connect/updating-accounts#tos-acceptance).
                  */
-                account: TermsOfService.Account | null;
+                account?: TermsOfService.Account;
 
                 /**
                  * Details on the Account's acceptance of Treasury-specific terms of service.
                  */
-                storer: TermsOfService.Storer | null;
+                storer?: TermsOfService.Storer;
               }
 
               namespace TermsOfService {
@@ -5022,34 +4364,34 @@ declare module 'stripe' {
                   /**
                    * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                    */
-                  date: string | null;
+                  date?: string;
 
                   /**
                    * The IP address from which the Account's representative accepted the terms of service.
                    */
-                  ip: string | null;
+                  ip?: string;
 
                   /**
                    * The user agent of the browser from which the Account's representative accepted the terms of service.
                    */
-                  user_agent: string | null;
+                  user_agent?: string;
                 }
 
                 interface Storer {
                   /**
                    * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                    */
-                  date: string | null;
+                  date?: string;
 
                   /**
                    * The IP address from which the Account's representative accepted the terms of service.
                    */
-                  ip: string | null;
+                  ip?: string;
 
                   /**
                    * The user agent of the browser from which the Account's representative accepted the terms of service.
                    */
-                  user_agent: string | null;
+                  user_agent?: string;
                 }
               }
             }
@@ -5058,72 +4400,72 @@ declare module 'stripe' {
               /**
                * The company's primary address.
                */
-              address: BusinessDetails.Address | null;
+              address?: BusinessDetails.Address;
 
               /**
                * The business gross annual revenue for its preceding fiscal year.
                */
-              annual_revenue: BusinessDetails.AnnualRevenue | null;
+              annual_revenue?: BusinessDetails.AnnualRevenue;
 
               /**
                * Documents that may be submitted to satisfy various informational requests.
                */
-              documents: BusinessDetails.Documents | null;
+              documents?: BusinessDetails.Documents;
 
               /**
                * The company's legal name.
                */
-              doing_business_as: string | null;
+              doing_business_as?: string;
 
               /**
                * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
                */
-              estimated_worker_count: number | null;
+              estimated_worker_count?: number;
 
               /**
                * The provided ID numbers of a business entity.
                */
-              id_numbers: Array<BusinessDetails.IdNumber> | null;
+              id_numbers?: Array<BusinessDetails.IdNumber>;
 
               /**
                * An estimate of the monthly revenue of the business.
                */
-              monthly_estimated_revenue: BusinessDetails.MonthlyEstimatedRevenue | null;
+              monthly_estimated_revenue?: BusinessDetails.MonthlyEstimatedRevenue;
 
               /**
                * The company's phone number (used for verification).
                */
-              phone: string | null;
+              phone?: string;
 
               /**
                * Internal-only description of the product sold or service provided by the business. It's used by Stripe for risk and underwriting purposes.
                */
-              product_description: string | null;
+              product_description?: string;
 
               /**
                * The business legal name.
                */
-              registered_name: string | null;
+              registered_name?: string;
 
               /**
                * The business registration address of the business entity in non latin script.
                */
-              script_addresses: BusinessDetails.ScriptAddresses | null;
+              script_addresses?: BusinessDetails.ScriptAddresses;
 
               /**
                * The business legal name in non latin script.
                */
-              script_names: BusinessDetails.ScriptNames | null;
+              script_names?: BusinessDetails.ScriptNames;
 
               /**
                * The category identifying the legal structure of the business.
                */
-              structure: BusinessDetails.Structure | null;
+              structure?: BusinessDetails.Structure;
 
               /**
                * The business's publicly available website.
                */
-              url: string | null;
+              url?: string;
             }
 
             namespace BusinessDetails {
@@ -5131,356 +4473,101 @@ declare module 'stripe' {
                 /**
                  * City, district, suburb, town, or village.
                  */
-                city: string | null;
+                city?: string;
 
                 /**
                  * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                  */
-                country: Address.Country | null;
+                country?: string;
 
                 /**
                  * Address line 1 (e.g., street, PO Box, or company name).
                  */
-                line1: string | null;
+                line1?: string;
 
                 /**
                  * Address line 2 (e.g., apartment, suite, unit, or building).
                  */
-                line2: string | null;
+                line2?: string;
 
                 /**
                  * ZIP or postal code.
                  */
-                postal_code: string | null;
+                postal_code?: string;
 
                 /**
                  * State, county, province, or region.
                  */
-                state: string | null;
+                state?: string;
 
                 /**
                  * Town or cho-me.
                  */
-                town: string | null;
-              }
-
-              namespace Address {
-                type Country =
-                  | 'ad'
-                  | 'ae'
-                  | 'af'
-                  | 'ag'
-                  | 'ai'
-                  | 'al'
-                  | 'am'
-                  | 'ao'
-                  | 'aq'
-                  | 'ar'
-                  | 'as'
-                  | 'at'
-                  | 'au'
-                  | 'aw'
-                  | 'ax'
-                  | 'az'
-                  | 'ba'
-                  | 'bb'
-                  | 'bd'
-                  | 'be'
-                  | 'bf'
-                  | 'bg'
-                  | 'bh'
-                  | 'bi'
-                  | 'bj'
-                  | 'bl'
-                  | 'bm'
-                  | 'bn'
-                  | 'bo'
-                  | 'bq'
-                  | 'br'
-                  | 'bs'
-                  | 'bt'
-                  | 'bv'
-                  | 'bw'
-                  | 'by'
-                  | 'bz'
-                  | 'ca'
-                  | 'cc'
-                  | 'cd'
-                  | 'cf'
-                  | 'cg'
-                  | 'ch'
-                  | 'ci'
-                  | 'ck'
-                  | 'cl'
-                  | 'cm'
-                  | 'cn'
-                  | 'co'
-                  | 'cr'
-                  | 'cu'
-                  | 'cv'
-                  | 'cw'
-                  | 'cx'
-                  | 'cy'
-                  | 'cz'
-                  | 'de'
-                  | 'dj'
-                  | 'dk'
-                  | 'dm'
-                  | 'do'
-                  | 'dz'
-                  | 'ec'
-                  | 'ee'
-                  | 'eg'
-                  | 'eh'
-                  | 'er'
-                  | 'es'
-                  | 'et'
-                  | 'fi'
-                  | 'fj'
-                  | 'fk'
-                  | 'fm'
-                  | 'fo'
-                  | 'fr'
-                  | 'ga'
-                  | 'gb'
-                  | 'gd'
-                  | 'ge'
-                  | 'gf'
-                  | 'gg'
-                  | 'gh'
-                  | 'gi'
-                  | 'gl'
-                  | 'gm'
-                  | 'gn'
-                  | 'gp'
-                  | 'gq'
-                  | 'gr'
-                  | 'gs'
-                  | 'gt'
-                  | 'gu'
-                  | 'gw'
-                  | 'gy'
-                  | 'hk'
-                  | 'hm'
-                  | 'hn'
-                  | 'hr'
-                  | 'ht'
-                  | 'hu'
-                  | 'id'
-                  | 'ie'
-                  | 'il'
-                  | 'im'
-                  | 'in'
-                  | 'io'
-                  | 'iq'
-                  | 'ir'
-                  | 'is'
-                  | 'it'
-                  | 'je'
-                  | 'jm'
-                  | 'jo'
-                  | 'jp'
-                  | 'ke'
-                  | 'kg'
-                  | 'kh'
-                  | 'ki'
-                  | 'km'
-                  | 'kn'
-                  | 'kp'
-                  | 'kr'
-                  | 'kw'
-                  | 'ky'
-                  | 'kz'
-                  | 'la'
-                  | 'lb'
-                  | 'lc'
-                  | 'li'
-                  | 'lk'
-                  | 'lr'
-                  | 'ls'
-                  | 'lt'
-                  | 'lu'
-                  | 'lv'
-                  | 'ly'
-                  | 'ma'
-                  | 'mc'
-                  | 'md'
-                  | 'me'
-                  | 'mf'
-                  | 'mg'
-                  | 'mh'
-                  | 'mk'
-                  | 'ml'
-                  | 'mm'
-                  | 'mn'
-                  | 'mo'
-                  | 'mp'
-                  | 'mq'
-                  | 'mr'
-                  | 'ms'
-                  | 'mt'
-                  | 'mu'
-                  | 'mv'
-                  | 'mw'
-                  | 'mx'
-                  | 'my'
-                  | 'mz'
-                  | 'na'
-                  | 'nc'
-                  | 'ne'
-                  | 'nf'
-                  | 'ng'
-                  | 'ni'
-                  | 'nl'
-                  | 'no'
-                  | 'np'
-                  | 'nr'
-                  | 'nu'
-                  | 'nz'
-                  | 'om'
-                  | 'pa'
-                  | 'pe'
-                  | 'pf'
-                  | 'pg'
-                  | 'ph'
-                  | 'pk'
-                  | 'pl'
-                  | 'pm'
-                  | 'pn'
-                  | 'pr'
-                  | 'ps'
-                  | 'pt'
-                  | 'pw'
-                  | 'py'
-                  | 'qa'
-                  | 'qz'
-                  | 're'
-                  | 'ro'
-                  | 'rs'
-                  | 'ru'
-                  | 'rw'
-                  | 'sa'
-                  | 'sb'
-                  | 'sc'
-                  | 'sd'
-                  | 'se'
-                  | 'sg'
-                  | 'sh'
-                  | 'si'
-                  | 'sj'
-                  | 'sk'
-                  | 'sl'
-                  | 'sm'
-                  | 'sn'
-                  | 'so'
-                  | 'sr'
-                  | 'ss'
-                  | 'st'
-                  | 'sv'
-                  | 'sx'
-                  | 'sy'
-                  | 'sz'
-                  | 'tc'
-                  | 'td'
-                  | 'tf'
-                  | 'tg'
-                  | 'th'
-                  | 'tj'
-                  | 'tk'
-                  | 'tl'
-                  | 'tm'
-                  | 'tn'
-                  | 'to'
-                  | 'tr'
-                  | 'tt'
-                  | 'tv'
-                  | 'tw'
-                  | 'tz'
-                  | 'ua'
-                  | 'ug'
-                  | 'um'
-                  | 'us'
-                  | 'uy'
-                  | 'uz'
-                  | 'va'
-                  | 'vc'
-                  | 've'
-                  | 'vg'
-                  | 'vi'
-                  | 'vn'
-                  | 'vu'
-                  | 'wf'
-                  | 'ws'
-                  | 'xx'
-                  | 'ye'
-                  | 'yt'
-                  | 'za'
-                  | 'zm'
-                  | 'zw';
+                town?: string;
               }
 
               interface AnnualRevenue {
                 /**
                  * A non-negative integer representing the amount in the smallest currency unit.
                  */
-                amount: Amount | null;
+                amount?: Amount;
 
                 /**
                  * The close-out date of the preceding fiscal year in ISO 8601 format. E.g. 2023-12-31 for the 31st of December, 2023.
                  */
-                fiscal_year_end: string | null;
+                fiscal_year_end?: string;
               }
 
               interface Documents {
                 /**
                  * One or more documents that support the Bank account ownership verification requirement. Must be a document associated with the account's primary active bank account that displays the last 4 digits of the account number, either a statement or a check.
                  */
-                bank_account_ownership_verification: Documents.BankAccountOwnershipVerification | null;
+                bank_account_ownership_verification?: Documents.BankAccountOwnershipVerification;
 
                 /**
                  * One or more documents that demonstrate proof of a company's license to operate.
                  */
-                company_license: Documents.CompanyLicense | null;
+                company_license?: Documents.CompanyLicense;
 
                 /**
                  * One or more documents showing the company's Memorandum of Association.
                  */
-                company_memorandum_of_association: Documents.CompanyMemorandumOfAssociation | null;
+                company_memorandum_of_association?: Documents.CompanyMemorandumOfAssociation;
 
                 /**
                  * Certain countries only: One or more documents showing the ministerial decree legalizing the company's establishment.
                  */
-                company_ministerial_decree: Documents.CompanyMinisterialDecree | null;
+                company_ministerial_decree?: Documents.CompanyMinisterialDecree;
 
                 /**
                  * One or more documents that demonstrate proof of a company's registration with the appropriate local authorities.
                  */
-                company_registration_verification: Documents.CompanyRegistrationVerification | null;
+                company_registration_verification?: Documents.CompanyRegistrationVerification;
 
                 /**
                  * One or more documents that demonstrate proof of a company's tax ID.
                  */
-                company_tax_id_verification: Documents.CompanyTaxIdVerification | null;
+                company_tax_id_verification?: Documents.CompanyTaxIdVerification;
 
                 /**
                  * A document verifying the business.
                  */
-                primary_verification: Documents.PrimaryVerification | null;
+                primary_verification?: Documents.PrimaryVerification;
 
                 /**
                  * One or more documents that demonstrate proof of address.
                  */
-                proof_of_address: Documents.ProofOfAddress | null;
+                proof_of_address?: Documents.ProofOfAddress;
 
                 /**
                  * One or more documents showing the company's proof of registration with the national business registry.
                  */
-                proof_of_registration: Documents.ProofOfRegistration | null;
+                proof_of_registration?: Documents.ProofOfRegistration;
 
                 /**
                  * One or more documents that demonstrate proof of ultimate beneficial ownership.
                  */
-                proof_of_ultimate_beneficial_ownership: Documents.ProofOfUltimateBeneficialOwnership | null;
+                proof_of_ultimate_beneficial_ownership?: Documents.ProofOfUltimateBeneficialOwnership;
               }
 
               namespace Documents {
@@ -5573,7 +4660,7 @@ declare module 'stripe' {
                     /**
                      * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                      */
-                    back: string | null;
+                    back?: string;
 
                     /**
                      * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
@@ -5623,7 +4710,7 @@ declare module 'stripe' {
                 /**
                  * The registrar of the ID number (Only valid for DE ID number types).
                  */
-                registrar: string | null;
+                registrar?: string;
 
                 /**
                  * Open Enum. The ID number type of a business entity.
@@ -5711,19 +4798,19 @@ declare module 'stripe' {
                 /**
                  * A non-negative integer representing the amount in the smallest currency unit.
                  */
-                amount: Amount | null;
+                amount?: Amount;
               }
 
               interface ScriptAddresses {
                 /**
                  * Kana Address.
                  */
-                kana: ScriptAddresses.Kana | null;
+                kana?: ScriptAddresses.Kana;
 
                 /**
                  * Kanji Address.
                  */
-                kanji: ScriptAddresses.Kanji | null;
+                kanji?: ScriptAddresses.Kanji;
               }
 
               namespace ScriptAddresses {
@@ -5731,584 +4818,74 @@ declare module 'stripe' {
                   /**
                    * City, district, suburb, town, or village.
                    */
-                  city: string | null;
+                  city?: string;
 
                   /**
                    * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                    */
-                  country: Kana.Country | null;
+                  country?: string;
 
                   /**
                    * Address line 1 (e.g., street, PO Box, or company name).
                    */
-                  line1: string | null;
+                  line1?: string;
 
                   /**
                    * Address line 2 (e.g., apartment, suite, unit, or building).
                    */
-                  line2: string | null;
+                  line2?: string;
 
                   /**
                    * ZIP or postal code.
                    */
-                  postal_code: string | null;
+                  postal_code?: string;
 
                   /**
                    * State, county, province, or region.
                    */
-                  state: string | null;
+                  state?: string;
 
                   /**
                    * Town or cho-me.
                    */
-                  town: string | null;
-                }
-
-                namespace Kana {
-                  type Country =
-                    | 'ad'
-                    | 'ae'
-                    | 'af'
-                    | 'ag'
-                    | 'ai'
-                    | 'al'
-                    | 'am'
-                    | 'ao'
-                    | 'aq'
-                    | 'ar'
-                    | 'as'
-                    | 'at'
-                    | 'au'
-                    | 'aw'
-                    | 'ax'
-                    | 'az'
-                    | 'ba'
-                    | 'bb'
-                    | 'bd'
-                    | 'be'
-                    | 'bf'
-                    | 'bg'
-                    | 'bh'
-                    | 'bi'
-                    | 'bj'
-                    | 'bl'
-                    | 'bm'
-                    | 'bn'
-                    | 'bo'
-                    | 'bq'
-                    | 'br'
-                    | 'bs'
-                    | 'bt'
-                    | 'bv'
-                    | 'bw'
-                    | 'by'
-                    | 'bz'
-                    | 'ca'
-                    | 'cc'
-                    | 'cd'
-                    | 'cf'
-                    | 'cg'
-                    | 'ch'
-                    | 'ci'
-                    | 'ck'
-                    | 'cl'
-                    | 'cm'
-                    | 'cn'
-                    | 'co'
-                    | 'cr'
-                    | 'cu'
-                    | 'cv'
-                    | 'cw'
-                    | 'cx'
-                    | 'cy'
-                    | 'cz'
-                    | 'de'
-                    | 'dj'
-                    | 'dk'
-                    | 'dm'
-                    | 'do'
-                    | 'dz'
-                    | 'ec'
-                    | 'ee'
-                    | 'eg'
-                    | 'eh'
-                    | 'er'
-                    | 'es'
-                    | 'et'
-                    | 'fi'
-                    | 'fj'
-                    | 'fk'
-                    | 'fm'
-                    | 'fo'
-                    | 'fr'
-                    | 'ga'
-                    | 'gb'
-                    | 'gd'
-                    | 'ge'
-                    | 'gf'
-                    | 'gg'
-                    | 'gh'
-                    | 'gi'
-                    | 'gl'
-                    | 'gm'
-                    | 'gn'
-                    | 'gp'
-                    | 'gq'
-                    | 'gr'
-                    | 'gs'
-                    | 'gt'
-                    | 'gu'
-                    | 'gw'
-                    | 'gy'
-                    | 'hk'
-                    | 'hm'
-                    | 'hn'
-                    | 'hr'
-                    | 'ht'
-                    | 'hu'
-                    | 'id'
-                    | 'ie'
-                    | 'il'
-                    | 'im'
-                    | 'in'
-                    | 'io'
-                    | 'iq'
-                    | 'ir'
-                    | 'is'
-                    | 'it'
-                    | 'je'
-                    | 'jm'
-                    | 'jo'
-                    | 'jp'
-                    | 'ke'
-                    | 'kg'
-                    | 'kh'
-                    | 'ki'
-                    | 'km'
-                    | 'kn'
-                    | 'kp'
-                    | 'kr'
-                    | 'kw'
-                    | 'ky'
-                    | 'kz'
-                    | 'la'
-                    | 'lb'
-                    | 'lc'
-                    | 'li'
-                    | 'lk'
-                    | 'lr'
-                    | 'ls'
-                    | 'lt'
-                    | 'lu'
-                    | 'lv'
-                    | 'ly'
-                    | 'ma'
-                    | 'mc'
-                    | 'md'
-                    | 'me'
-                    | 'mf'
-                    | 'mg'
-                    | 'mh'
-                    | 'mk'
-                    | 'ml'
-                    | 'mm'
-                    | 'mn'
-                    | 'mo'
-                    | 'mp'
-                    | 'mq'
-                    | 'mr'
-                    | 'ms'
-                    | 'mt'
-                    | 'mu'
-                    | 'mv'
-                    | 'mw'
-                    | 'mx'
-                    | 'my'
-                    | 'mz'
-                    | 'na'
-                    | 'nc'
-                    | 'ne'
-                    | 'nf'
-                    | 'ng'
-                    | 'ni'
-                    | 'nl'
-                    | 'no'
-                    | 'np'
-                    | 'nr'
-                    | 'nu'
-                    | 'nz'
-                    | 'om'
-                    | 'pa'
-                    | 'pe'
-                    | 'pf'
-                    | 'pg'
-                    | 'ph'
-                    | 'pk'
-                    | 'pl'
-                    | 'pm'
-                    | 'pn'
-                    | 'pr'
-                    | 'ps'
-                    | 'pt'
-                    | 'pw'
-                    | 'py'
-                    | 'qa'
-                    | 'qz'
-                    | 're'
-                    | 'ro'
-                    | 'rs'
-                    | 'ru'
-                    | 'rw'
-                    | 'sa'
-                    | 'sb'
-                    | 'sc'
-                    | 'sd'
-                    | 'se'
-                    | 'sg'
-                    | 'sh'
-                    | 'si'
-                    | 'sj'
-                    | 'sk'
-                    | 'sl'
-                    | 'sm'
-                    | 'sn'
-                    | 'so'
-                    | 'sr'
-                    | 'ss'
-                    | 'st'
-                    | 'sv'
-                    | 'sx'
-                    | 'sy'
-                    | 'sz'
-                    | 'tc'
-                    | 'td'
-                    | 'tf'
-                    | 'tg'
-                    | 'th'
-                    | 'tj'
-                    | 'tk'
-                    | 'tl'
-                    | 'tm'
-                    | 'tn'
-                    | 'to'
-                    | 'tr'
-                    | 'tt'
-                    | 'tv'
-                    | 'tw'
-                    | 'tz'
-                    | 'ua'
-                    | 'ug'
-                    | 'um'
-                    | 'us'
-                    | 'uy'
-                    | 'uz'
-                    | 'va'
-                    | 'vc'
-                    | 've'
-                    | 'vg'
-                    | 'vi'
-                    | 'vn'
-                    | 'vu'
-                    | 'wf'
-                    | 'ws'
-                    | 'xx'
-                    | 'ye'
-                    | 'yt'
-                    | 'za'
-                    | 'zm'
-                    | 'zw';
+                  town?: string;
                 }
 
                 interface Kanji {
                   /**
                    * City, district, suburb, town, or village.
                    */
-                  city: string | null;
+                  city?: string;
 
                   /**
                    * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                    */
-                  country: Kanji.Country | null;
+                  country?: string;
 
                   /**
                    * Address line 1 (e.g., street, PO Box, or company name).
                    */
-                  line1: string | null;
+                  line1?: string;
 
                   /**
                    * Address line 2 (e.g., apartment, suite, unit, or building).
                    */
-                  line2: string | null;
+                  line2?: string;
 
                   /**
                    * ZIP or postal code.
                    */
-                  postal_code: string | null;
+                  postal_code?: string;
 
                   /**
                    * State, county, province, or region.
                    */
-                  state: string | null;
+                  state?: string;
 
                   /**
                    * Town or cho-me.
                    */
-                  town: string | null;
-                }
-
-                namespace Kanji {
-                  type Country =
-                    | 'ad'
-                    | 'ae'
-                    | 'af'
-                    | 'ag'
-                    | 'ai'
-                    | 'al'
-                    | 'am'
-                    | 'ao'
-                    | 'aq'
-                    | 'ar'
-                    | 'as'
-                    | 'at'
-                    | 'au'
-                    | 'aw'
-                    | 'ax'
-                    | 'az'
-                    | 'ba'
-                    | 'bb'
-                    | 'bd'
-                    | 'be'
-                    | 'bf'
-                    | 'bg'
-                    | 'bh'
-                    | 'bi'
-                    | 'bj'
-                    | 'bl'
-                    | 'bm'
-                    | 'bn'
-                    | 'bo'
-                    | 'bq'
-                    | 'br'
-                    | 'bs'
-                    | 'bt'
-                    | 'bv'
-                    | 'bw'
-                    | 'by'
-                    | 'bz'
-                    | 'ca'
-                    | 'cc'
-                    | 'cd'
-                    | 'cf'
-                    | 'cg'
-                    | 'ch'
-                    | 'ci'
-                    | 'ck'
-                    | 'cl'
-                    | 'cm'
-                    | 'cn'
-                    | 'co'
-                    | 'cr'
-                    | 'cu'
-                    | 'cv'
-                    | 'cw'
-                    | 'cx'
-                    | 'cy'
-                    | 'cz'
-                    | 'de'
-                    | 'dj'
-                    | 'dk'
-                    | 'dm'
-                    | 'do'
-                    | 'dz'
-                    | 'ec'
-                    | 'ee'
-                    | 'eg'
-                    | 'eh'
-                    | 'er'
-                    | 'es'
-                    | 'et'
-                    | 'fi'
-                    | 'fj'
-                    | 'fk'
-                    | 'fm'
-                    | 'fo'
-                    | 'fr'
-                    | 'ga'
-                    | 'gb'
-                    | 'gd'
-                    | 'ge'
-                    | 'gf'
-                    | 'gg'
-                    | 'gh'
-                    | 'gi'
-                    | 'gl'
-                    | 'gm'
-                    | 'gn'
-                    | 'gp'
-                    | 'gq'
-                    | 'gr'
-                    | 'gs'
-                    | 'gt'
-                    | 'gu'
-                    | 'gw'
-                    | 'gy'
-                    | 'hk'
-                    | 'hm'
-                    | 'hn'
-                    | 'hr'
-                    | 'ht'
-                    | 'hu'
-                    | 'id'
-                    | 'ie'
-                    | 'il'
-                    | 'im'
-                    | 'in'
-                    | 'io'
-                    | 'iq'
-                    | 'ir'
-                    | 'is'
-                    | 'it'
-                    | 'je'
-                    | 'jm'
-                    | 'jo'
-                    | 'jp'
-                    | 'ke'
-                    | 'kg'
-                    | 'kh'
-                    | 'ki'
-                    | 'km'
-                    | 'kn'
-                    | 'kp'
-                    | 'kr'
-                    | 'kw'
-                    | 'ky'
-                    | 'kz'
-                    | 'la'
-                    | 'lb'
-                    | 'lc'
-                    | 'li'
-                    | 'lk'
-                    | 'lr'
-                    | 'ls'
-                    | 'lt'
-                    | 'lu'
-                    | 'lv'
-                    | 'ly'
-                    | 'ma'
-                    | 'mc'
-                    | 'md'
-                    | 'me'
-                    | 'mf'
-                    | 'mg'
-                    | 'mh'
-                    | 'mk'
-                    | 'ml'
-                    | 'mm'
-                    | 'mn'
-                    | 'mo'
-                    | 'mp'
-                    | 'mq'
-                    | 'mr'
-                    | 'ms'
-                    | 'mt'
-                    | 'mu'
-                    | 'mv'
-                    | 'mw'
-                    | 'mx'
-                    | 'my'
-                    | 'mz'
-                    | 'na'
-                    | 'nc'
-                    | 'ne'
-                    | 'nf'
-                    | 'ng'
-                    | 'ni'
-                    | 'nl'
-                    | 'no'
-                    | 'np'
-                    | 'nr'
-                    | 'nu'
-                    | 'nz'
-                    | 'om'
-                    | 'pa'
-                    | 'pe'
-                    | 'pf'
-                    | 'pg'
-                    | 'ph'
-                    | 'pk'
-                    | 'pl'
-                    | 'pm'
-                    | 'pn'
-                    | 'pr'
-                    | 'ps'
-                    | 'pt'
-                    | 'pw'
-                    | 'py'
-                    | 'qa'
-                    | 'qz'
-                    | 're'
-                    | 'ro'
-                    | 'rs'
-                    | 'ru'
-                    | 'rw'
-                    | 'sa'
-                    | 'sb'
-                    | 'sc'
-                    | 'sd'
-                    | 'se'
-                    | 'sg'
-                    | 'sh'
-                    | 'si'
-                    | 'sj'
-                    | 'sk'
-                    | 'sl'
-                    | 'sm'
-                    | 'sn'
-                    | 'so'
-                    | 'sr'
-                    | 'ss'
-                    | 'st'
-                    | 'sv'
-                    | 'sx'
-                    | 'sy'
-                    | 'sz'
-                    | 'tc'
-                    | 'td'
-                    | 'tf'
-                    | 'tg'
-                    | 'th'
-                    | 'tj'
-                    | 'tk'
-                    | 'tl'
-                    | 'tm'
-                    | 'tn'
-                    | 'to'
-                    | 'tr'
-                    | 'tt'
-                    | 'tv'
-                    | 'tw'
-                    | 'tz'
-                    | 'ua'
-                    | 'ug'
-                    | 'um'
-                    | 'us'
-                    | 'uy'
-                    | 'uz'
-                    | 'va'
-                    | 'vc'
-                    | 've'
-                    | 'vg'
-                    | 'vi'
-                    | 'vn'
-                    | 'vu'
-                    | 'wf'
-                    | 'ws'
-                    | 'xx'
-                    | 'ye'
-                    | 'yt'
-                    | 'za'
-                    | 'zm'
-                    | 'zw';
+                  town?: string;
                 }
               }
 
@@ -6316,12 +4893,12 @@ declare module 'stripe' {
                 /**
                  * Kana name.
                  */
-                kana: ScriptNames.Kana | null;
+                kana?: ScriptNames.Kana;
 
                 /**
                  * Kanji name.
                  */
-                kanji: ScriptNames.Kanji | null;
+                kanji?: ScriptNames.Kanji;
               }
 
               namespace ScriptNames {
@@ -6329,14 +4906,14 @@ declare module 'stripe' {
                   /**
                    * Registered name of the business.
                    */
-                  registered_name: string | null;
+                  registered_name?: string;
                 }
 
                 interface Kanji {
                   /**
                    * Registered name of the business.
                    */
-                  registered_name: string | null;
+                  registered_name?: string;
                 }
               }
 
@@ -6370,259 +4947,6 @@ declare module 'stripe' {
                 | 'unincorporated_partnership';
             }
 
-            type Country =
-              | 'ad'
-              | 'ae'
-              | 'af'
-              | 'ag'
-              | 'ai'
-              | 'al'
-              | 'am'
-              | 'ao'
-              | 'aq'
-              | 'ar'
-              | 'as'
-              | 'at'
-              | 'au'
-              | 'aw'
-              | 'ax'
-              | 'az'
-              | 'ba'
-              | 'bb'
-              | 'bd'
-              | 'be'
-              | 'bf'
-              | 'bg'
-              | 'bh'
-              | 'bi'
-              | 'bj'
-              | 'bl'
-              | 'bm'
-              | 'bn'
-              | 'bo'
-              | 'bq'
-              | 'br'
-              | 'bs'
-              | 'bt'
-              | 'bv'
-              | 'bw'
-              | 'by'
-              | 'bz'
-              | 'ca'
-              | 'cc'
-              | 'cd'
-              | 'cf'
-              | 'cg'
-              | 'ch'
-              | 'ci'
-              | 'ck'
-              | 'cl'
-              | 'cm'
-              | 'cn'
-              | 'co'
-              | 'cr'
-              | 'cu'
-              | 'cv'
-              | 'cw'
-              | 'cx'
-              | 'cy'
-              | 'cz'
-              | 'de'
-              | 'dj'
-              | 'dk'
-              | 'dm'
-              | 'do'
-              | 'dz'
-              | 'ec'
-              | 'ee'
-              | 'eg'
-              | 'eh'
-              | 'er'
-              | 'es'
-              | 'et'
-              | 'fi'
-              | 'fj'
-              | 'fk'
-              | 'fm'
-              | 'fo'
-              | 'fr'
-              | 'ga'
-              | 'gb'
-              | 'gd'
-              | 'ge'
-              | 'gf'
-              | 'gg'
-              | 'gh'
-              | 'gi'
-              | 'gl'
-              | 'gm'
-              | 'gn'
-              | 'gp'
-              | 'gq'
-              | 'gr'
-              | 'gs'
-              | 'gt'
-              | 'gu'
-              | 'gw'
-              | 'gy'
-              | 'hk'
-              | 'hm'
-              | 'hn'
-              | 'hr'
-              | 'ht'
-              | 'hu'
-              | 'id'
-              | 'ie'
-              | 'il'
-              | 'im'
-              | 'in'
-              | 'io'
-              | 'iq'
-              | 'ir'
-              | 'is'
-              | 'it'
-              | 'je'
-              | 'jm'
-              | 'jo'
-              | 'jp'
-              | 'ke'
-              | 'kg'
-              | 'kh'
-              | 'ki'
-              | 'km'
-              | 'kn'
-              | 'kp'
-              | 'kr'
-              | 'kw'
-              | 'ky'
-              | 'kz'
-              | 'la'
-              | 'lb'
-              | 'lc'
-              | 'li'
-              | 'lk'
-              | 'lr'
-              | 'ls'
-              | 'lt'
-              | 'lu'
-              | 'lv'
-              | 'ly'
-              | 'ma'
-              | 'mc'
-              | 'md'
-              | 'me'
-              | 'mf'
-              | 'mg'
-              | 'mh'
-              | 'mk'
-              | 'ml'
-              | 'mm'
-              | 'mn'
-              | 'mo'
-              | 'mp'
-              | 'mq'
-              | 'mr'
-              | 'ms'
-              | 'mt'
-              | 'mu'
-              | 'mv'
-              | 'mw'
-              | 'mx'
-              | 'my'
-              | 'mz'
-              | 'na'
-              | 'nc'
-              | 'ne'
-              | 'nf'
-              | 'ng'
-              | 'ni'
-              | 'nl'
-              | 'no'
-              | 'np'
-              | 'nr'
-              | 'nu'
-              | 'nz'
-              | 'om'
-              | 'pa'
-              | 'pe'
-              | 'pf'
-              | 'pg'
-              | 'ph'
-              | 'pk'
-              | 'pl'
-              | 'pm'
-              | 'pn'
-              | 'pr'
-              | 'ps'
-              | 'pt'
-              | 'pw'
-              | 'py'
-              | 'qa'
-              | 'qz'
-              | 're'
-              | 'ro'
-              | 'rs'
-              | 'ru'
-              | 'rw'
-              | 'sa'
-              | 'sb'
-              | 'sc'
-              | 'sd'
-              | 'se'
-              | 'sg'
-              | 'sh'
-              | 'si'
-              | 'sj'
-              | 'sk'
-              | 'sl'
-              | 'sm'
-              | 'sn'
-              | 'so'
-              | 'sr'
-              | 'ss'
-              | 'st'
-              | 'sv'
-              | 'sx'
-              | 'sy'
-              | 'sz'
-              | 'tc'
-              | 'td'
-              | 'tf'
-              | 'tg'
-              | 'th'
-              | 'tj'
-              | 'tk'
-              | 'tl'
-              | 'tm'
-              | 'tn'
-              | 'to'
-              | 'tr'
-              | 'tt'
-              | 'tv'
-              | 'tw'
-              | 'tz'
-              | 'ua'
-              | 'ug'
-              | 'um'
-              | 'us'
-              | 'uy'
-              | 'uz'
-              | 'va'
-              | 'vc'
-              | 've'
-              | 'vg'
-              | 'vi'
-              | 'vn'
-              | 'vu'
-              | 'wf'
-              | 'ws'
-              | 'xx'
-              | 'ye'
-              | 'yt'
-              | 'za'
-              | 'zm'
-              | 'zw';
-
             type EntityType =
               | 'company'
               | 'government_entity'
@@ -6638,22 +4962,22 @@ declare module 'stripe' {
               /**
                * Additional addresses associated with the individual.
                */
-              additional_addresses: Array<Individual.AdditionalAddress> | null;
+              additional_addresses?: Array<Individual.AdditionalAddress>;
 
               /**
                * Additional names (e.g. aliases) associated with the individual.
                */
-              additional_names: Array<Individual.AdditionalName> | null;
+              additional_names?: Array<Individual.AdditionalName>;
 
               /**
                * Terms of service acceptances.
                */
-              additional_terms_of_service: Individual.AdditionalTermsOfService | null;
+              additional_terms_of_service?: Individual.AdditionalTermsOfService;
 
               /**
                * The individual's residential address.
                */
-              address: Individual.Address | null;
+              address?: Individual.Address;
 
               /**
                * Time at which the object was created. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
@@ -6663,22 +4987,22 @@ declare module 'stripe' {
               /**
                * The individual's date of birth.
                */
-              date_of_birth: Individual.DateOfBirth | null;
+              date_of_birth?: Individual.DateOfBirth;
 
               /**
                * Documents that may be submitted to satisfy various informational requests.
                */
-              documents: Individual.Documents | null;
+              documents?: Individual.Documents;
 
               /**
                * The individual's email address.
                */
-              email: string | null;
+              email?: string;
 
               /**
                * The individual's first name.
                */
-              given_name: string | null;
+              given_name?: string;
 
               /**
                * Unique identifier for the object.
@@ -6688,22 +5012,22 @@ declare module 'stripe' {
               /**
                * The identification numbers (e.g., SSN) associated with the individual.
                */
-              id_numbers: Array<Individual.IdNumber> | null;
+              id_numbers?: Array<Individual.IdNumber>;
 
               /**
                * The individual's gender (International regulations require either "male” or "female").
                */
-              legal_gender: Individual.LegalGender | null;
+              legal_gender?: Individual.LegalGender;
 
               /**
                * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
                */
-              metadata: Stripe.Metadata | null;
+              metadata?: Stripe.Metadata;
 
               /**
                * The countries where the individual is a national. Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                */
-              nationalities: Array<Individual.Nationality> | null;
+              nationalities?: Array<string>;
 
               /**
                * String representing the object's type. Objects of the same type share the same value.
@@ -6713,32 +5037,32 @@ declare module 'stripe' {
               /**
                * The individual's phone number.
                */
-              phone: string | null;
+              phone?: string;
 
               /**
                * Indicates if the individual or any of their representatives, family members, or other closely related persons, declares that they hold or have held an important public job or function, in any jurisdiction.
                */
-              political_exposure: Individual.PoliticalExposure | null;
+              political_exposure?: Individual.PoliticalExposure;
 
               /**
                * The relationship that this individual has with the Account's identity.
                */
-              relationship: Individual.Relationship | null;
+              relationship?: Individual.Relationship;
 
               /**
                * The script addresses (e.g., non-Latin characters) associated with the individual.
                */
-              script_addresses: Individual.ScriptAddresses | null;
+              script_addresses?: Individual.ScriptAddresses;
 
               /**
                * The script names (e.g. non-Latin characters) associated with the individual.
                */
-              script_names: Individual.ScriptNames | null;
+              script_names?: Individual.ScriptNames;
 
               /**
                * The individual's last name.
                */
-              surname: string | null;
+              surname?: string;
 
               /**
                * Time at which the object was last updated.
@@ -6751,27 +5075,27 @@ declare module 'stripe' {
                 /**
                  * City, district, suburb, town, or village.
                  */
-                city: string | null;
+                city?: string;
 
                 /**
                  * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                  */
-                country: AdditionalAddress.Country | null;
+                country?: string;
 
                 /**
                  * Address line 1 (e.g., street, PO Box, or company name).
                  */
-                line1: string | null;
+                line1?: string;
 
                 /**
                  * Address line 2 (e.g., apartment, suite, unit, or building).
                  */
-                line2: string | null;
+                line2?: string;
 
                 /**
                  * ZIP or postal code.
                  */
-                postal_code: string | null;
+                postal_code?: string;
 
                 /**
                  * Purpose of additional address.
@@ -6781,279 +5105,24 @@ declare module 'stripe' {
                 /**
                  * State, county, province, or region.
                  */
-                state: string | null;
+                state?: string;
 
                 /**
                  * Town or cho-me.
                  */
-                town: string | null;
-              }
-
-              namespace AdditionalAddress {
-                type Country =
-                  | 'ad'
-                  | 'ae'
-                  | 'af'
-                  | 'ag'
-                  | 'ai'
-                  | 'al'
-                  | 'am'
-                  | 'ao'
-                  | 'aq'
-                  | 'ar'
-                  | 'as'
-                  | 'at'
-                  | 'au'
-                  | 'aw'
-                  | 'ax'
-                  | 'az'
-                  | 'ba'
-                  | 'bb'
-                  | 'bd'
-                  | 'be'
-                  | 'bf'
-                  | 'bg'
-                  | 'bh'
-                  | 'bi'
-                  | 'bj'
-                  | 'bl'
-                  | 'bm'
-                  | 'bn'
-                  | 'bo'
-                  | 'bq'
-                  | 'br'
-                  | 'bs'
-                  | 'bt'
-                  | 'bv'
-                  | 'bw'
-                  | 'by'
-                  | 'bz'
-                  | 'ca'
-                  | 'cc'
-                  | 'cd'
-                  | 'cf'
-                  | 'cg'
-                  | 'ch'
-                  | 'ci'
-                  | 'ck'
-                  | 'cl'
-                  | 'cm'
-                  | 'cn'
-                  | 'co'
-                  | 'cr'
-                  | 'cu'
-                  | 'cv'
-                  | 'cw'
-                  | 'cx'
-                  | 'cy'
-                  | 'cz'
-                  | 'de'
-                  | 'dj'
-                  | 'dk'
-                  | 'dm'
-                  | 'do'
-                  | 'dz'
-                  | 'ec'
-                  | 'ee'
-                  | 'eg'
-                  | 'eh'
-                  | 'er'
-                  | 'es'
-                  | 'et'
-                  | 'fi'
-                  | 'fj'
-                  | 'fk'
-                  | 'fm'
-                  | 'fo'
-                  | 'fr'
-                  | 'ga'
-                  | 'gb'
-                  | 'gd'
-                  | 'ge'
-                  | 'gf'
-                  | 'gg'
-                  | 'gh'
-                  | 'gi'
-                  | 'gl'
-                  | 'gm'
-                  | 'gn'
-                  | 'gp'
-                  | 'gq'
-                  | 'gr'
-                  | 'gs'
-                  | 'gt'
-                  | 'gu'
-                  | 'gw'
-                  | 'gy'
-                  | 'hk'
-                  | 'hm'
-                  | 'hn'
-                  | 'hr'
-                  | 'ht'
-                  | 'hu'
-                  | 'id'
-                  | 'ie'
-                  | 'il'
-                  | 'im'
-                  | 'in'
-                  | 'io'
-                  | 'iq'
-                  | 'ir'
-                  | 'is'
-                  | 'it'
-                  | 'je'
-                  | 'jm'
-                  | 'jo'
-                  | 'jp'
-                  | 'ke'
-                  | 'kg'
-                  | 'kh'
-                  | 'ki'
-                  | 'km'
-                  | 'kn'
-                  | 'kp'
-                  | 'kr'
-                  | 'kw'
-                  | 'ky'
-                  | 'kz'
-                  | 'la'
-                  | 'lb'
-                  | 'lc'
-                  | 'li'
-                  | 'lk'
-                  | 'lr'
-                  | 'ls'
-                  | 'lt'
-                  | 'lu'
-                  | 'lv'
-                  | 'ly'
-                  | 'ma'
-                  | 'mc'
-                  | 'md'
-                  | 'me'
-                  | 'mf'
-                  | 'mg'
-                  | 'mh'
-                  | 'mk'
-                  | 'ml'
-                  | 'mm'
-                  | 'mn'
-                  | 'mo'
-                  | 'mp'
-                  | 'mq'
-                  | 'mr'
-                  | 'ms'
-                  | 'mt'
-                  | 'mu'
-                  | 'mv'
-                  | 'mw'
-                  | 'mx'
-                  | 'my'
-                  | 'mz'
-                  | 'na'
-                  | 'nc'
-                  | 'ne'
-                  | 'nf'
-                  | 'ng'
-                  | 'ni'
-                  | 'nl'
-                  | 'no'
-                  | 'np'
-                  | 'nr'
-                  | 'nu'
-                  | 'nz'
-                  | 'om'
-                  | 'pa'
-                  | 'pe'
-                  | 'pf'
-                  | 'pg'
-                  | 'ph'
-                  | 'pk'
-                  | 'pl'
-                  | 'pm'
-                  | 'pn'
-                  | 'pr'
-                  | 'ps'
-                  | 'pt'
-                  | 'pw'
-                  | 'py'
-                  | 'qa'
-                  | 'qz'
-                  | 're'
-                  | 'ro'
-                  | 'rs'
-                  | 'ru'
-                  | 'rw'
-                  | 'sa'
-                  | 'sb'
-                  | 'sc'
-                  | 'sd'
-                  | 'se'
-                  | 'sg'
-                  | 'sh'
-                  | 'si'
-                  | 'sj'
-                  | 'sk'
-                  | 'sl'
-                  | 'sm'
-                  | 'sn'
-                  | 'so'
-                  | 'sr'
-                  | 'ss'
-                  | 'st'
-                  | 'sv'
-                  | 'sx'
-                  | 'sy'
-                  | 'sz'
-                  | 'tc'
-                  | 'td'
-                  | 'tf'
-                  | 'tg'
-                  | 'th'
-                  | 'tj'
-                  | 'tk'
-                  | 'tl'
-                  | 'tm'
-                  | 'tn'
-                  | 'to'
-                  | 'tr'
-                  | 'tt'
-                  | 'tv'
-                  | 'tw'
-                  | 'tz'
-                  | 'ua'
-                  | 'ug'
-                  | 'um'
-                  | 'us'
-                  | 'uy'
-                  | 'uz'
-                  | 'va'
-                  | 'vc'
-                  | 've'
-                  | 'vg'
-                  | 'vi'
-                  | 'vn'
-                  | 'vu'
-                  | 'wf'
-                  | 'ws'
-                  | 'xx'
-                  | 'ye'
-                  | 'yt'
-                  | 'za'
-                  | 'zm'
-                  | 'zw';
+                town?: string;
               }
 
               interface AdditionalName {
                 /**
                  * The individual's full name.
                  */
-                full_name: string | null;
+                full_name?: string;
 
                 /**
                  * The individual's first or given name.
                  */
-                given_name: string | null;
+                given_name?: string;
 
                 /**
                  * The purpose or type of the additional name.
@@ -7063,7 +5132,7 @@ declare module 'stripe' {
                 /**
                  * The individual's last or family name.
                  */
-                surname: string | null;
+                surname?: string;
               }
 
               namespace AdditionalName {
@@ -7074,7 +5143,7 @@ declare module 'stripe' {
                 /**
                  * Stripe terms of service agreement.
                  */
-                account: AdditionalTermsOfService.Account | null;
+                account?: AdditionalTermsOfService.Account;
               }
 
               namespace AdditionalTermsOfService {
@@ -7082,17 +5151,17 @@ declare module 'stripe' {
                   /**
                    * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                    */
-                  date: string | null;
+                  date?: string;
 
                   /**
                    * The IP address from which the Account's representative accepted the terms of service.
                    */
-                  ip: string | null;
+                  ip?: string;
 
                   /**
                    * The user agent of the browser from which the Account's representative accepted the terms of service.
                    */
-                  user_agent: string | null;
+                  user_agent?: string;
                 }
               }
 
@@ -7100,292 +5169,37 @@ declare module 'stripe' {
                 /**
                  * City, district, suburb, town, or village.
                  */
-                city: string | null;
+                city?: string;
 
                 /**
                  * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                  */
-                country: Address.Country | null;
+                country?: string;
 
                 /**
                  * Address line 1 (e.g., street, PO Box, or company name).
                  */
-                line1: string | null;
+                line1?: string;
 
                 /**
                  * Address line 2 (e.g., apartment, suite, unit, or building).
                  */
-                line2: string | null;
+                line2?: string;
 
                 /**
                  * ZIP or postal code.
                  */
-                postal_code: string | null;
+                postal_code?: string;
 
                 /**
                  * State, county, province, or region.
                  */
-                state: string | null;
+                state?: string;
 
                 /**
                  * Town or cho-me.
                  */
-                town: string | null;
-              }
-
-              namespace Address {
-                type Country =
-                  | 'ad'
-                  | 'ae'
-                  | 'af'
-                  | 'ag'
-                  | 'ai'
-                  | 'al'
-                  | 'am'
-                  | 'ao'
-                  | 'aq'
-                  | 'ar'
-                  | 'as'
-                  | 'at'
-                  | 'au'
-                  | 'aw'
-                  | 'ax'
-                  | 'az'
-                  | 'ba'
-                  | 'bb'
-                  | 'bd'
-                  | 'be'
-                  | 'bf'
-                  | 'bg'
-                  | 'bh'
-                  | 'bi'
-                  | 'bj'
-                  | 'bl'
-                  | 'bm'
-                  | 'bn'
-                  | 'bo'
-                  | 'bq'
-                  | 'br'
-                  | 'bs'
-                  | 'bt'
-                  | 'bv'
-                  | 'bw'
-                  | 'by'
-                  | 'bz'
-                  | 'ca'
-                  | 'cc'
-                  | 'cd'
-                  | 'cf'
-                  | 'cg'
-                  | 'ch'
-                  | 'ci'
-                  | 'ck'
-                  | 'cl'
-                  | 'cm'
-                  | 'cn'
-                  | 'co'
-                  | 'cr'
-                  | 'cu'
-                  | 'cv'
-                  | 'cw'
-                  | 'cx'
-                  | 'cy'
-                  | 'cz'
-                  | 'de'
-                  | 'dj'
-                  | 'dk'
-                  | 'dm'
-                  | 'do'
-                  | 'dz'
-                  | 'ec'
-                  | 'ee'
-                  | 'eg'
-                  | 'eh'
-                  | 'er'
-                  | 'es'
-                  | 'et'
-                  | 'fi'
-                  | 'fj'
-                  | 'fk'
-                  | 'fm'
-                  | 'fo'
-                  | 'fr'
-                  | 'ga'
-                  | 'gb'
-                  | 'gd'
-                  | 'ge'
-                  | 'gf'
-                  | 'gg'
-                  | 'gh'
-                  | 'gi'
-                  | 'gl'
-                  | 'gm'
-                  | 'gn'
-                  | 'gp'
-                  | 'gq'
-                  | 'gr'
-                  | 'gs'
-                  | 'gt'
-                  | 'gu'
-                  | 'gw'
-                  | 'gy'
-                  | 'hk'
-                  | 'hm'
-                  | 'hn'
-                  | 'hr'
-                  | 'ht'
-                  | 'hu'
-                  | 'id'
-                  | 'ie'
-                  | 'il'
-                  | 'im'
-                  | 'in'
-                  | 'io'
-                  | 'iq'
-                  | 'ir'
-                  | 'is'
-                  | 'it'
-                  | 'je'
-                  | 'jm'
-                  | 'jo'
-                  | 'jp'
-                  | 'ke'
-                  | 'kg'
-                  | 'kh'
-                  | 'ki'
-                  | 'km'
-                  | 'kn'
-                  | 'kp'
-                  | 'kr'
-                  | 'kw'
-                  | 'ky'
-                  | 'kz'
-                  | 'la'
-                  | 'lb'
-                  | 'lc'
-                  | 'li'
-                  | 'lk'
-                  | 'lr'
-                  | 'ls'
-                  | 'lt'
-                  | 'lu'
-                  | 'lv'
-                  | 'ly'
-                  | 'ma'
-                  | 'mc'
-                  | 'md'
-                  | 'me'
-                  | 'mf'
-                  | 'mg'
-                  | 'mh'
-                  | 'mk'
-                  | 'ml'
-                  | 'mm'
-                  | 'mn'
-                  | 'mo'
-                  | 'mp'
-                  | 'mq'
-                  | 'mr'
-                  | 'ms'
-                  | 'mt'
-                  | 'mu'
-                  | 'mv'
-                  | 'mw'
-                  | 'mx'
-                  | 'my'
-                  | 'mz'
-                  | 'na'
-                  | 'nc'
-                  | 'ne'
-                  | 'nf'
-                  | 'ng'
-                  | 'ni'
-                  | 'nl'
-                  | 'no'
-                  | 'np'
-                  | 'nr'
-                  | 'nu'
-                  | 'nz'
-                  | 'om'
-                  | 'pa'
-                  | 'pe'
-                  | 'pf'
-                  | 'pg'
-                  | 'ph'
-                  | 'pk'
-                  | 'pl'
-                  | 'pm'
-                  | 'pn'
-                  | 'pr'
-                  | 'ps'
-                  | 'pt'
-                  | 'pw'
-                  | 'py'
-                  | 'qa'
-                  | 'qz'
-                  | 're'
-                  | 'ro'
-                  | 'rs'
-                  | 'ru'
-                  | 'rw'
-                  | 'sa'
-                  | 'sb'
-                  | 'sc'
-                  | 'sd'
-                  | 'se'
-                  | 'sg'
-                  | 'sh'
-                  | 'si'
-                  | 'sj'
-                  | 'sk'
-                  | 'sl'
-                  | 'sm'
-                  | 'sn'
-                  | 'so'
-                  | 'sr'
-                  | 'ss'
-                  | 'st'
-                  | 'sv'
-                  | 'sx'
-                  | 'sy'
-                  | 'sz'
-                  | 'tc'
-                  | 'td'
-                  | 'tf'
-                  | 'tg'
-                  | 'th'
-                  | 'tj'
-                  | 'tk'
-                  | 'tl'
-                  | 'tm'
-                  | 'tn'
-                  | 'to'
-                  | 'tr'
-                  | 'tt'
-                  | 'tv'
-                  | 'tw'
-                  | 'tz'
-                  | 'ua'
-                  | 'ug'
-                  | 'um'
-                  | 'us'
-                  | 'uy'
-                  | 'uz'
-                  | 'va'
-                  | 'vc'
-                  | 've'
-                  | 'vg'
-                  | 'vi'
-                  | 'vn'
-                  | 'vu'
-                  | 'wf'
-                  | 'ws'
-                  | 'xx'
-                  | 'ye'
-                  | 'yt'
-                  | 'za'
-                  | 'zm'
-                  | 'zw';
+                town?: string;
               }
 
               interface DateOfBirth {
@@ -7409,27 +5223,27 @@ declare module 'stripe' {
                 /**
                  * One or more documents that demonstrate proof that this person is authorized to represent the company.
                  */
-                company_authorization: Documents.CompanyAuthorization | null;
+                company_authorization?: Documents.CompanyAuthorization;
 
                 /**
                  * One or more documents showing the person's passport page with photo and personal data.
                  */
-                passport: Documents.Passport | null;
+                passport?: Documents.Passport;
 
                 /**
                  * An identifying document showing the person's name, either a passport or local ID card.
                  */
-                primary_verification: Documents.PrimaryVerification | null;
+                primary_verification?: Documents.PrimaryVerification;
 
                 /**
                  * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
                  */
-                secondary_verification: Documents.SecondaryVerification | null;
+                secondary_verification?: Documents.SecondaryVerification;
 
                 /**
                  * One or more documents showing the person's visa required for living in the country where they are residing.
                  */
-                visa: Documents.Visa | null;
+                visa?: Documents.Visa;
               }
 
               namespace Documents {
@@ -7474,7 +5288,7 @@ declare module 'stripe' {
                     /**
                      * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                      */
-                    back: string | null;
+                    back?: string;
 
                     /**
                      * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
@@ -7500,7 +5314,7 @@ declare module 'stripe' {
                     /**
                      * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the back of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
                      */
-                    back: string | null;
+                    back?: string;
 
                     /**
                      * A [file upload](https://docs.stripe.com/api/persons/update#create_file) token representing the front of the verification document. The purpose of the uploaded file should be 'identity_document'. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
@@ -7566,313 +5380,60 @@ declare module 'stripe' {
 
               type LegalGender = 'female' | 'male';
 
-              type Nationality =
-                | 'ad'
-                | 'ae'
-                | 'af'
-                | 'ag'
-                | 'ai'
-                | 'al'
-                | 'am'
-                | 'ao'
-                | 'aq'
-                | 'ar'
-                | 'as'
-                | 'at'
-                | 'au'
-                | 'aw'
-                | 'ax'
-                | 'az'
-                | 'ba'
-                | 'bb'
-                | 'bd'
-                | 'be'
-                | 'bf'
-                | 'bg'
-                | 'bh'
-                | 'bi'
-                | 'bj'
-                | 'bl'
-                | 'bm'
-                | 'bn'
-                | 'bo'
-                | 'bq'
-                | 'br'
-                | 'bs'
-                | 'bt'
-                | 'bv'
-                | 'bw'
-                | 'by'
-                | 'bz'
-                | 'ca'
-                | 'cc'
-                | 'cd'
-                | 'cf'
-                | 'cg'
-                | 'ch'
-                | 'ci'
-                | 'ck'
-                | 'cl'
-                | 'cm'
-                | 'cn'
-                | 'co'
-                | 'cr'
-                | 'cu'
-                | 'cv'
-                | 'cw'
-                | 'cx'
-                | 'cy'
-                | 'cz'
-                | 'de'
-                | 'dj'
-                | 'dk'
-                | 'dm'
-                | 'do'
-                | 'dz'
-                | 'ec'
-                | 'ee'
-                | 'eg'
-                | 'eh'
-                | 'er'
-                | 'es'
-                | 'et'
-                | 'fi'
-                | 'fj'
-                | 'fk'
-                | 'fm'
-                | 'fo'
-                | 'fr'
-                | 'ga'
-                | 'gb'
-                | 'gd'
-                | 'ge'
-                | 'gf'
-                | 'gg'
-                | 'gh'
-                | 'gi'
-                | 'gl'
-                | 'gm'
-                | 'gn'
-                | 'gp'
-                | 'gq'
-                | 'gr'
-                | 'gs'
-                | 'gt'
-                | 'gu'
-                | 'gw'
-                | 'gy'
-                | 'hk'
-                | 'hm'
-                | 'hn'
-                | 'hr'
-                | 'ht'
-                | 'hu'
-                | 'id'
-                | 'ie'
-                | 'il'
-                | 'im'
-                | 'in'
-                | 'io'
-                | 'iq'
-                | 'ir'
-                | 'is'
-                | 'it'
-                | 'je'
-                | 'jm'
-                | 'jo'
-                | 'jp'
-                | 'ke'
-                | 'kg'
-                | 'kh'
-                | 'ki'
-                | 'km'
-                | 'kn'
-                | 'kp'
-                | 'kr'
-                | 'kw'
-                | 'ky'
-                | 'kz'
-                | 'la'
-                | 'lb'
-                | 'lc'
-                | 'li'
-                | 'lk'
-                | 'lr'
-                | 'ls'
-                | 'lt'
-                | 'lu'
-                | 'lv'
-                | 'ly'
-                | 'ma'
-                | 'mc'
-                | 'md'
-                | 'me'
-                | 'mf'
-                | 'mg'
-                | 'mh'
-                | 'mk'
-                | 'ml'
-                | 'mm'
-                | 'mn'
-                | 'mo'
-                | 'mp'
-                | 'mq'
-                | 'mr'
-                | 'ms'
-                | 'mt'
-                | 'mu'
-                | 'mv'
-                | 'mw'
-                | 'mx'
-                | 'my'
-                | 'mz'
-                | 'na'
-                | 'nc'
-                | 'ne'
-                | 'nf'
-                | 'ng'
-                | 'ni'
-                | 'nl'
-                | 'no'
-                | 'np'
-                | 'nr'
-                | 'nu'
-                | 'nz'
-                | 'om'
-                | 'pa'
-                | 'pe'
-                | 'pf'
-                | 'pg'
-                | 'ph'
-                | 'pk'
-                | 'pl'
-                | 'pm'
-                | 'pn'
-                | 'pr'
-                | 'ps'
-                | 'pt'
-                | 'pw'
-                | 'py'
-                | 'qa'
-                | 'qz'
-                | 're'
-                | 'ro'
-                | 'rs'
-                | 'ru'
-                | 'rw'
-                | 'sa'
-                | 'sb'
-                | 'sc'
-                | 'sd'
-                | 'se'
-                | 'sg'
-                | 'sh'
-                | 'si'
-                | 'sj'
-                | 'sk'
-                | 'sl'
-                | 'sm'
-                | 'sn'
-                | 'so'
-                | 'sr'
-                | 'ss'
-                | 'st'
-                | 'sv'
-                | 'sx'
-                | 'sy'
-                | 'sz'
-                | 'tc'
-                | 'td'
-                | 'tf'
-                | 'tg'
-                | 'th'
-                | 'tj'
-                | 'tk'
-                | 'tl'
-                | 'tm'
-                | 'tn'
-                | 'to'
-                | 'tr'
-                | 'tt'
-                | 'tv'
-                | 'tw'
-                | 'tz'
-                | 'ua'
-                | 'ug'
-                | 'um'
-                | 'us'
-                | 'uy'
-                | 'uz'
-                | 'va'
-                | 'vc'
-                | 've'
-                | 'vg'
-                | 'vi'
-                | 'vn'
-                | 'vu'
-                | 'wf'
-                | 'ws'
-                | 'xx'
-                | 'ye'
-                | 'yt'
-                | 'za'
-                | 'zm'
-                | 'zw';
-
               type PoliticalExposure = 'existing' | 'none';
 
               interface Relationship {
                 /**
                  * Whether the individual is an authorizer of the Account's legal entity.
                  */
-                authorizer: boolean | null;
+                authorizer?: boolean;
 
                 /**
                  * Whether the individual is a director of the Account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
                  */
-                director: boolean | null;
+                director?: boolean;
 
                 /**
                  * Whether the individual has significant responsibility to control, manage, or direct the organization.
                  */
-                executive: boolean | null;
+                executive?: boolean;
 
                 /**
                  * Whether the individual is the legal guardian of the Account's representative.
                  */
-                legal_guardian: boolean | null;
+                legal_guardian?: boolean;
 
                 /**
                  * Whether the individual is an owner of the Account's legal entity.
                  */
-                owner: boolean | null;
+                owner?: boolean;
 
                 /**
                  * The percent owned by the individual of the Account's legal entity.
                  */
-                percent_ownership: string | null;
+                percent_ownership?: string;
 
                 /**
                  * Whether the individual is authorized as the primary representative of the Account. This is the person nominated by the business to provide information about themselves, and general information about the account. There can only be one representative at any given time. At the time the account is created, this person should be set to the person responsible for opening the account.
                  */
-                representative: boolean | null;
+                representative?: boolean;
 
                 /**
                  * The individual's title (e.g., CEO, Support Engineer).
                  */
-                title: string | null;
+                title?: string;
               }
 
               interface ScriptAddresses {
                 /**
                  * Kana Address.
                  */
-                kana: ScriptAddresses.Kana | null;
+                kana?: ScriptAddresses.Kana;
 
                 /**
                  * Kanji Address.
                  */
-                kanji: ScriptAddresses.Kanji | null;
+                kanji?: ScriptAddresses.Kanji;
               }
 
               namespace ScriptAddresses {
@@ -7880,584 +5441,74 @@ declare module 'stripe' {
                   /**
                    * City, district, suburb, town, or village.
                    */
-                  city: string | null;
+                  city?: string;
 
                   /**
                    * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                    */
-                  country: Kana.Country | null;
+                  country?: string;
 
                   /**
                    * Address line 1 (e.g., street, PO Box, or company name).
                    */
-                  line1: string | null;
+                  line1?: string;
 
                   /**
                    * Address line 2 (e.g., apartment, suite, unit, or building).
                    */
-                  line2: string | null;
+                  line2?: string;
 
                   /**
                    * ZIP or postal code.
                    */
-                  postal_code: string | null;
+                  postal_code?: string;
 
                   /**
                    * State, county, province, or region.
                    */
-                  state: string | null;
+                  state?: string;
 
                   /**
                    * Town or cho-me.
                    */
-                  town: string | null;
-                }
-
-                namespace Kana {
-                  type Country =
-                    | 'ad'
-                    | 'ae'
-                    | 'af'
-                    | 'ag'
-                    | 'ai'
-                    | 'al'
-                    | 'am'
-                    | 'ao'
-                    | 'aq'
-                    | 'ar'
-                    | 'as'
-                    | 'at'
-                    | 'au'
-                    | 'aw'
-                    | 'ax'
-                    | 'az'
-                    | 'ba'
-                    | 'bb'
-                    | 'bd'
-                    | 'be'
-                    | 'bf'
-                    | 'bg'
-                    | 'bh'
-                    | 'bi'
-                    | 'bj'
-                    | 'bl'
-                    | 'bm'
-                    | 'bn'
-                    | 'bo'
-                    | 'bq'
-                    | 'br'
-                    | 'bs'
-                    | 'bt'
-                    | 'bv'
-                    | 'bw'
-                    | 'by'
-                    | 'bz'
-                    | 'ca'
-                    | 'cc'
-                    | 'cd'
-                    | 'cf'
-                    | 'cg'
-                    | 'ch'
-                    | 'ci'
-                    | 'ck'
-                    | 'cl'
-                    | 'cm'
-                    | 'cn'
-                    | 'co'
-                    | 'cr'
-                    | 'cu'
-                    | 'cv'
-                    | 'cw'
-                    | 'cx'
-                    | 'cy'
-                    | 'cz'
-                    | 'de'
-                    | 'dj'
-                    | 'dk'
-                    | 'dm'
-                    | 'do'
-                    | 'dz'
-                    | 'ec'
-                    | 'ee'
-                    | 'eg'
-                    | 'eh'
-                    | 'er'
-                    | 'es'
-                    | 'et'
-                    | 'fi'
-                    | 'fj'
-                    | 'fk'
-                    | 'fm'
-                    | 'fo'
-                    | 'fr'
-                    | 'ga'
-                    | 'gb'
-                    | 'gd'
-                    | 'ge'
-                    | 'gf'
-                    | 'gg'
-                    | 'gh'
-                    | 'gi'
-                    | 'gl'
-                    | 'gm'
-                    | 'gn'
-                    | 'gp'
-                    | 'gq'
-                    | 'gr'
-                    | 'gs'
-                    | 'gt'
-                    | 'gu'
-                    | 'gw'
-                    | 'gy'
-                    | 'hk'
-                    | 'hm'
-                    | 'hn'
-                    | 'hr'
-                    | 'ht'
-                    | 'hu'
-                    | 'id'
-                    | 'ie'
-                    | 'il'
-                    | 'im'
-                    | 'in'
-                    | 'io'
-                    | 'iq'
-                    | 'ir'
-                    | 'is'
-                    | 'it'
-                    | 'je'
-                    | 'jm'
-                    | 'jo'
-                    | 'jp'
-                    | 'ke'
-                    | 'kg'
-                    | 'kh'
-                    | 'ki'
-                    | 'km'
-                    | 'kn'
-                    | 'kp'
-                    | 'kr'
-                    | 'kw'
-                    | 'ky'
-                    | 'kz'
-                    | 'la'
-                    | 'lb'
-                    | 'lc'
-                    | 'li'
-                    | 'lk'
-                    | 'lr'
-                    | 'ls'
-                    | 'lt'
-                    | 'lu'
-                    | 'lv'
-                    | 'ly'
-                    | 'ma'
-                    | 'mc'
-                    | 'md'
-                    | 'me'
-                    | 'mf'
-                    | 'mg'
-                    | 'mh'
-                    | 'mk'
-                    | 'ml'
-                    | 'mm'
-                    | 'mn'
-                    | 'mo'
-                    | 'mp'
-                    | 'mq'
-                    | 'mr'
-                    | 'ms'
-                    | 'mt'
-                    | 'mu'
-                    | 'mv'
-                    | 'mw'
-                    | 'mx'
-                    | 'my'
-                    | 'mz'
-                    | 'na'
-                    | 'nc'
-                    | 'ne'
-                    | 'nf'
-                    | 'ng'
-                    | 'ni'
-                    | 'nl'
-                    | 'no'
-                    | 'np'
-                    | 'nr'
-                    | 'nu'
-                    | 'nz'
-                    | 'om'
-                    | 'pa'
-                    | 'pe'
-                    | 'pf'
-                    | 'pg'
-                    | 'ph'
-                    | 'pk'
-                    | 'pl'
-                    | 'pm'
-                    | 'pn'
-                    | 'pr'
-                    | 'ps'
-                    | 'pt'
-                    | 'pw'
-                    | 'py'
-                    | 'qa'
-                    | 'qz'
-                    | 're'
-                    | 'ro'
-                    | 'rs'
-                    | 'ru'
-                    | 'rw'
-                    | 'sa'
-                    | 'sb'
-                    | 'sc'
-                    | 'sd'
-                    | 'se'
-                    | 'sg'
-                    | 'sh'
-                    | 'si'
-                    | 'sj'
-                    | 'sk'
-                    | 'sl'
-                    | 'sm'
-                    | 'sn'
-                    | 'so'
-                    | 'sr'
-                    | 'ss'
-                    | 'st'
-                    | 'sv'
-                    | 'sx'
-                    | 'sy'
-                    | 'sz'
-                    | 'tc'
-                    | 'td'
-                    | 'tf'
-                    | 'tg'
-                    | 'th'
-                    | 'tj'
-                    | 'tk'
-                    | 'tl'
-                    | 'tm'
-                    | 'tn'
-                    | 'to'
-                    | 'tr'
-                    | 'tt'
-                    | 'tv'
-                    | 'tw'
-                    | 'tz'
-                    | 'ua'
-                    | 'ug'
-                    | 'um'
-                    | 'us'
-                    | 'uy'
-                    | 'uz'
-                    | 'va'
-                    | 'vc'
-                    | 've'
-                    | 'vg'
-                    | 'vi'
-                    | 'vn'
-                    | 'vu'
-                    | 'wf'
-                    | 'ws'
-                    | 'xx'
-                    | 'ye'
-                    | 'yt'
-                    | 'za'
-                    | 'zm'
-                    | 'zw';
+                  town?: string;
                 }
 
                 interface Kanji {
                   /**
                    * City, district, suburb, town, or village.
                    */
-                  city: string | null;
+                  city?: string;
 
                   /**
                    * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                    */
-                  country: Kanji.Country | null;
+                  country?: string;
 
                   /**
                    * Address line 1 (e.g., street, PO Box, or company name).
                    */
-                  line1: string | null;
+                  line1?: string;
 
                   /**
                    * Address line 2 (e.g., apartment, suite, unit, or building).
                    */
-                  line2: string | null;
+                  line2?: string;
 
                   /**
                    * ZIP or postal code.
                    */
-                  postal_code: string | null;
+                  postal_code?: string;
 
                   /**
                    * State, county, province, or region.
                    */
-                  state: string | null;
+                  state?: string;
 
                   /**
                    * Town or cho-me.
                    */
-                  town: string | null;
-                }
-
-                namespace Kanji {
-                  type Country =
-                    | 'ad'
-                    | 'ae'
-                    | 'af'
-                    | 'ag'
-                    | 'ai'
-                    | 'al'
-                    | 'am'
-                    | 'ao'
-                    | 'aq'
-                    | 'ar'
-                    | 'as'
-                    | 'at'
-                    | 'au'
-                    | 'aw'
-                    | 'ax'
-                    | 'az'
-                    | 'ba'
-                    | 'bb'
-                    | 'bd'
-                    | 'be'
-                    | 'bf'
-                    | 'bg'
-                    | 'bh'
-                    | 'bi'
-                    | 'bj'
-                    | 'bl'
-                    | 'bm'
-                    | 'bn'
-                    | 'bo'
-                    | 'bq'
-                    | 'br'
-                    | 'bs'
-                    | 'bt'
-                    | 'bv'
-                    | 'bw'
-                    | 'by'
-                    | 'bz'
-                    | 'ca'
-                    | 'cc'
-                    | 'cd'
-                    | 'cf'
-                    | 'cg'
-                    | 'ch'
-                    | 'ci'
-                    | 'ck'
-                    | 'cl'
-                    | 'cm'
-                    | 'cn'
-                    | 'co'
-                    | 'cr'
-                    | 'cu'
-                    | 'cv'
-                    | 'cw'
-                    | 'cx'
-                    | 'cy'
-                    | 'cz'
-                    | 'de'
-                    | 'dj'
-                    | 'dk'
-                    | 'dm'
-                    | 'do'
-                    | 'dz'
-                    | 'ec'
-                    | 'ee'
-                    | 'eg'
-                    | 'eh'
-                    | 'er'
-                    | 'es'
-                    | 'et'
-                    | 'fi'
-                    | 'fj'
-                    | 'fk'
-                    | 'fm'
-                    | 'fo'
-                    | 'fr'
-                    | 'ga'
-                    | 'gb'
-                    | 'gd'
-                    | 'ge'
-                    | 'gf'
-                    | 'gg'
-                    | 'gh'
-                    | 'gi'
-                    | 'gl'
-                    | 'gm'
-                    | 'gn'
-                    | 'gp'
-                    | 'gq'
-                    | 'gr'
-                    | 'gs'
-                    | 'gt'
-                    | 'gu'
-                    | 'gw'
-                    | 'gy'
-                    | 'hk'
-                    | 'hm'
-                    | 'hn'
-                    | 'hr'
-                    | 'ht'
-                    | 'hu'
-                    | 'id'
-                    | 'ie'
-                    | 'il'
-                    | 'im'
-                    | 'in'
-                    | 'io'
-                    | 'iq'
-                    | 'ir'
-                    | 'is'
-                    | 'it'
-                    | 'je'
-                    | 'jm'
-                    | 'jo'
-                    | 'jp'
-                    | 'ke'
-                    | 'kg'
-                    | 'kh'
-                    | 'ki'
-                    | 'km'
-                    | 'kn'
-                    | 'kp'
-                    | 'kr'
-                    | 'kw'
-                    | 'ky'
-                    | 'kz'
-                    | 'la'
-                    | 'lb'
-                    | 'lc'
-                    | 'li'
-                    | 'lk'
-                    | 'lr'
-                    | 'ls'
-                    | 'lt'
-                    | 'lu'
-                    | 'lv'
-                    | 'ly'
-                    | 'ma'
-                    | 'mc'
-                    | 'md'
-                    | 'me'
-                    | 'mf'
-                    | 'mg'
-                    | 'mh'
-                    | 'mk'
-                    | 'ml'
-                    | 'mm'
-                    | 'mn'
-                    | 'mo'
-                    | 'mp'
-                    | 'mq'
-                    | 'mr'
-                    | 'ms'
-                    | 'mt'
-                    | 'mu'
-                    | 'mv'
-                    | 'mw'
-                    | 'mx'
-                    | 'my'
-                    | 'mz'
-                    | 'na'
-                    | 'nc'
-                    | 'ne'
-                    | 'nf'
-                    | 'ng'
-                    | 'ni'
-                    | 'nl'
-                    | 'no'
-                    | 'np'
-                    | 'nr'
-                    | 'nu'
-                    | 'nz'
-                    | 'om'
-                    | 'pa'
-                    | 'pe'
-                    | 'pf'
-                    | 'pg'
-                    | 'ph'
-                    | 'pk'
-                    | 'pl'
-                    | 'pm'
-                    | 'pn'
-                    | 'pr'
-                    | 'ps'
-                    | 'pt'
-                    | 'pw'
-                    | 'py'
-                    | 'qa'
-                    | 'qz'
-                    | 're'
-                    | 'ro'
-                    | 'rs'
-                    | 'ru'
-                    | 'rw'
-                    | 'sa'
-                    | 'sb'
-                    | 'sc'
-                    | 'sd'
-                    | 'se'
-                    | 'sg'
-                    | 'sh'
-                    | 'si'
-                    | 'sj'
-                    | 'sk'
-                    | 'sl'
-                    | 'sm'
-                    | 'sn'
-                    | 'so'
-                    | 'sr'
-                    | 'ss'
-                    | 'st'
-                    | 'sv'
-                    | 'sx'
-                    | 'sy'
-                    | 'sz'
-                    | 'tc'
-                    | 'td'
-                    | 'tf'
-                    | 'tg'
-                    | 'th'
-                    | 'tj'
-                    | 'tk'
-                    | 'tl'
-                    | 'tm'
-                    | 'tn'
-                    | 'to'
-                    | 'tr'
-                    | 'tt'
-                    | 'tv'
-                    | 'tw'
-                    | 'tz'
-                    | 'ua'
-                    | 'ug'
-                    | 'um'
-                    | 'us'
-                    | 'uy'
-                    | 'uz'
-                    | 'va'
-                    | 'vc'
-                    | 've'
-                    | 'vg'
-                    | 'vi'
-                    | 'vn'
-                    | 'vu'
-                    | 'wf'
-                    | 'ws'
-                    | 'xx'
-                    | 'ye'
-                    | 'yt'
-                    | 'za'
-                    | 'zm'
-                    | 'zw';
+                  town?: string;
                 }
               }
 
@@ -8465,12 +5516,12 @@ declare module 'stripe' {
                 /**
                  * Persons name in kana script.
                  */
-                kana: ScriptNames.Kana | null;
+                kana?: ScriptNames.Kana;
 
                 /**
                  * Persons name in kanji script.
                  */
-                kanji: ScriptNames.Kanji | null;
+                kanji?: ScriptNames.Kanji;
               }
 
               namespace ScriptNames {
@@ -8478,24 +5529,24 @@ declare module 'stripe' {
                   /**
                    * The person's first or given name.
                    */
-                  given_name: string | null;
+                  given_name?: string;
 
                   /**
                    * The person's last or family name.
                    */
-                  surname: string | null;
+                  surname?: string;
                 }
 
                 interface Kanji {
                   /**
                    * The person's first or given name.
                    */
-                  given_name: string | null;
+                  given_name?: string;
 
                   /**
                    * The person's last or family name.
                    */
-                  surname: string | null;
+                  surname?: string;
                 }
               }
             }
@@ -8510,12 +5561,12 @@ declare module 'stripe' {
             /**
              * A list of requirements for the Account.
              */
-            entries: Array<Requirements.Entry> | null;
+            entries?: Array<Requirements.Entry>;
 
             /**
              * An object containing an overview of requirements for the Account.
              */
-            summary: Requirements.Summary | null;
+            summary?: Requirements.Summary;
           }
 
           namespace Requirements {
@@ -8550,7 +5601,7 @@ declare module 'stripe' {
               /**
                * A reference to the location of the requirement.
                */
-              reference: Entry.Reference | null;
+              reference?: Entry.Reference;
 
               /**
                * A list of reasons why Stripe is collecting the requirement.
@@ -8677,9 +5728,7 @@ declare module 'stripe' {
                 /**
                  * The Capabilities that will be restricted if the requirement is not collected and satisfactory to Stripe.
                  */
-                restricts_capabilities: Array<
-                  Impact.RestrictsCapability
-                > | null;
+                restricts_capabilities?: Array<Impact.RestrictsCapability>;
               }
 
               namespace Impact {
@@ -8798,12 +5847,12 @@ declare module 'stripe' {
                 /**
                  * If `inquiry` is the type, the inquiry token.
                  */
-                inquiry: string | null;
+                inquiry?: string;
 
                 /**
                  * If `resource` is the type, the resource token.
                  */
-                resource: string | null;
+                resource?: string;
 
                 /**
                  * The type of the reference. An additional hash is included with a name matching the type. It contains additional information specific to the type.
@@ -8834,7 +5883,7 @@ declare module 'stripe' {
               /**
                * The soonest date and time a requirement on the Account will become `past due`. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
                */
-              minimum_deadline: Summary.MinimumDeadline | null;
+              minimum_deadline?: Summary.MinimumDeadline;
             }
 
             namespace Summary {
@@ -8847,7 +5896,7 @@ declare module 'stripe' {
                 /**
                  * The soonest RFC3339 date & time UTC value a requirement can impact the Account.
                  */
-                time: string | null;
+                time?: string;
               }
 
               namespace MinimumDeadline {
