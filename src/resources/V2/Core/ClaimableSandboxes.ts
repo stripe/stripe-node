@@ -7,8 +7,4 @@ export const ClaimableSandboxes = StripeResource.extend({
     method: 'POST',
     fullPath: '/v2/core/claimable_sandboxes',
   }),
-  retrieve: stripeMethod({
-    method: 'GET',
-    fullPath: '/v2/core/claimable_sandboxes/{id}',
-  }),
 });

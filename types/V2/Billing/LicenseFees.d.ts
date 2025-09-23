@@ -46,7 +46,8 @@ declare module 'stripe' {
           latest_version: string;
 
           /**
-           * The Licensed Item that this License Fee binds to.
+           * A Licensed Item represents a billable item whose pricing is based on license fees. You can use license fees
+           * to specify the pricing and create subscriptions to these items.
            */
           licensed_item: Stripe.V2.Billing.LicensedItem;
 
@@ -63,12 +64,12 @@ declare module 'stripe' {
           /**
            * An internal key you can use to search for a particular License Fee. Maximum length of 200 characters.
            */
-          lookup_key: string | null;
+          lookup_key?: string;
 
           /**
            * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
-          metadata: Stripe.Metadata | null;
+          metadata?: Stripe.Metadata;
 
           /**
            * The interval for assessing service.
@@ -91,7 +92,7 @@ declare module 'stripe' {
            * quantity within a period determines the per-unit price. In graduated tiering, the pricing changes as the quantity
            * grows into new tiers. Can only be set if `tiers` is set.
            */
-          tiering_mode: LicenseFee.TieringMode | null;
+          tiering_mode?: LicenseFee.TieringMode;
 
           /**
            * Each element represents a pricing tier. Cannot be set if `unit_amount` is provided.
@@ -101,13 +102,13 @@ declare module 'stripe' {
           /**
            * Apply a transformation to the reported usage or set quantity before computing the amount billed.
            */
-          transform_quantity: LicenseFee.TransformQuantity | null;
+          transform_quantity?: LicenseFee.TransformQuantity;
 
           /**
            * The per-unit amount to be charged, represented as a decimal string in minor currency units with at most 12 decimal
            * places. Cannot be set if `tiers` is provided.
            */
-          unit_amount: string | null;
+          unit_amount?: string;
         }
 
         namespace LicenseFee {
@@ -119,24 +120,24 @@ declare module 'stripe' {
             /**
              * Price for the entire tier, represented as a decimal string in minor currency units with at most 12 decimal places.
              */
-            flat_amount: string | null;
+            flat_amount?: string;
 
             /**
              * Per-unit price for units included in this tier, represented as a decimal string in minor currency units with at
              * most 12 decimal places.
              */
-            unit_amount: string | null;
+            unit_amount?: string;
 
             /**
              * Up to and including this quantity will be contained in the tier. Only one of `up_to_decimal` and `up_to_inf` may
              * be set.
              */
-            up_to_decimal: string | null;
+            up_to_decimal?: string;
 
             /**
              * No upper bound to this tier. Only one of `up_to_decimal` and `up_to_inf` may be set.
              */
-            up_to_inf: 'inf' | null;
+            up_to_inf?: 'inf';
           }
 
           type TieringMode = 'graduated' | 'volume';

@@ -26,7 +26,7 @@ declare module 'stripe' {
           /**
            * The timestamp when this version became inactive. Null if it's the latest version.
            */
-          end_date: string | null;
+          end_date?: string;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

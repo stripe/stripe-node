@@ -200,8 +200,6 @@
 ///<reference path='./V2/MoneyManagement/TransactionEntriesResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionsResource.d.ts' />
 ///<reference path='./V2/Payments/OffSessionPaymentsResource.d.ts' />
-///<reference path='./V2/Reporting/ReportRunsResource.d.ts' />
-///<reference path='./V2/Reporting/ReportsResource.d.ts' />
 ///<reference path='./V2/Tax/AutomaticRulesResource.d.ts' />
 ///<reference path='./V2/TestHelpers/FinancialAddressesResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
@@ -399,11 +397,12 @@
 ///<reference path='./V2/Billing/RateCards.d.ts' />
 ///<reference path='./V2/Billing/ServiceActions.d.ts' />
 ///<reference path='./V2/Core/AccountLinks.d.ts' />
+///<reference path='./V2/Core/AccountPersons.d.ts' />
 ///<reference path='./V2/Core/Accounts.d.ts' />
 ///<reference path='./V2/Core/ClaimableSandboxes.d.ts' />
-///<reference path='./V2/Core/Persons.d.ts' />
 ///<reference path='./V2/Core/Vault/GbBankAccounts.d.ts' />
 ///<reference path='./V2/Core/Vault/UsBankAccounts.d.ts' />
+///<reference path='./V2/DeletedObject.d.ts' />
 ///<reference path='./V2/EventDestinations.d.ts' />
 ///<reference path='./V2/Events.d.ts' />
 ///<reference path='./V2/FinancialAddressCreditSimulations.d.ts' />
@@ -417,14 +416,12 @@
 ///<reference path='./V2/MoneyManagement/OutboundSetupIntents.d.ts' />
 ///<reference path='./V2/MoneyManagement/OutboundTransfers.d.ts' />
 ///<reference path='./V2/MoneyManagement/PayoutMethods.d.ts' />
-///<reference path='./V2/MoneyManagement/PayoutMethodsBankAccountSpecs.d.ts' />
+///<reference path='./V2/MoneyManagement/PayoutMethodsBankAccountSpec.d.ts' />
 ///<reference path='./V2/MoneyManagement/ReceivedCredits.d.ts' />
 ///<reference path='./V2/MoneyManagement/ReceivedDebits.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionEntries.d.ts' />
 ///<reference path='./V2/MoneyManagement/Transactions.d.ts' />
 ///<reference path='./V2/Payments/OffSessionPayments.d.ts' />
-///<reference path='./V2/Reporting/ReportRuns.d.ts' />
-///<reference path='./V2/Reporting/Reports.d.ts' />
 ///<reference path='./V2/Tax/AutomaticRules.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
@@ -683,10 +680,6 @@ declare module 'stripe' {
       };
       payment: {
         offSessionPayments: Stripe.V2.Payments.OffSessionPaymentsResource;
-      };
-      reporting: {
-        reports: Stripe.V2.Reporting.ReportsResource;
-        reportRuns: Stripe.V2.Reporting.ReportRunsResource;
       };
       tax: {
         automaticRules: Stripe.V2.Tax.AutomaticRulesResource;

@@ -26,7 +26,7 @@ declare module 'stripe' {
           /**
            * Details if this component is a License Fee.
            */
-          license_fee: PricingPlanComponent.LicenseFee | null;
+          license_fee?: PricingPlanComponent.LicenseFee;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -36,12 +36,12 @@ declare module 'stripe' {
           /**
            * An internal key you can use to search for a particular PricingPlanComponent.
            */
-          lookup_key: string | null;
+          lookup_key?: string;
 
           /**
            * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
-          metadata: Stripe.Metadata | null;
+          metadata?: Stripe.Metadata;
 
           /**
            * The ID of the Pricing Plan this component belongs to.
@@ -56,12 +56,12 @@ declare module 'stripe' {
           /**
            * Details if this component is a Rate Card.
            */
-          rate_card: PricingPlanComponent.RateCard | null;
+          rate_card?: PricingPlanComponent.RateCard;
 
           /**
            * Details if this component is a Service Action.
            */
-          service_action: PricingPlanComponent.ServiceAction | null;
+          service_action?: PricingPlanComponent.ServiceAction;
 
           /**
            * The type of the PricingPlanComponent.
@@ -79,7 +79,7 @@ declare module 'stripe' {
             /**
              * The version of the LicenseFee. Defaults to 'latest', if not specified.
              */
-            version: string | null;
+            version?: string;
           }
 
           interface RateCard {
@@ -91,7 +91,7 @@ declare module 'stripe' {
             /**
              * The version of the RateCard. Defaults to 'latest', if not specified.
              */
-            version: string | null;
+            version?: string;
           }
 
           interface ServiceAction {

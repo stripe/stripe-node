@@ -109,14 +109,6 @@ declare module 'stripe' {
               day_of_month: number;
 
               /**
-               * The month to anchor the billing on for a type="month" billing cycle from
-               * 1-12. If not provided, this will default to the month the cadence was created.
-               * This setting can only be used for monthly billing cycles with `interval_count` of 2, 3, 4 or 6.
-               * All occurrences will be calculated from month provided.
-               */
-              month_of_year?: number;
-
-              /**
                * The time at which the billing cycle ends.
                * This field is optional, and if not provided, it will default to
                * the time at which the cadence was created in UTC timezone.
@@ -344,12 +336,12 @@ declare module 'stripe' {
             /**
              * Settings that configure bills generation, which includes calculating totals, tax, and presenting invoices. If null is provided, the current bill settings will be removed from the billing cadence.
              */
-            bill?: Settings.Bill | null;
+            bill?: Settings.Bill;
 
             /**
              * Settings that configure and manage the behavior of collecting payments. If null is provided, the current collection settings will be removed from the billing cadence.
              */
-            collection?: Settings.Collection | null;
+            collection?: Settings.Collection;
           }
 
           namespace Settings {
@@ -365,7 +357,7 @@ declare module 'stripe' {
                * Using a specific version here will prevent the settings from updating, and is discouraged for cadences.
                * To clear a pinned version, set the version to null.
                */
-              version?: string | null;
+              version?: string;
             }
 
             interface Collection {
@@ -380,7 +372,7 @@ declare module 'stripe' {
                * Using a specific version here will prevent the settings from updating, and is discouraged for cadences.
                * To clear a pinned version, set the version to null.
                */
-              version?: string | null;
+              version?: string;
             }
           }
         }

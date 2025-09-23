@@ -107,42 +107,42 @@ declare module 'stripe' {
             /**
              * If applicable, the ID of the Adjustment that created this Transaction.
              */
-            adjustment: string | null;
+            adjustment?: string;
 
             /**
              * In the future, this will be the ID of the currency conversion that created this Transaction. For now, this field is always null.
              */
-            currency_conversion: string | null;
+            currency_conversion?: string;
 
             /**
              * If applicable, the ID of the FeeTransaction that created this Transaction.
              */
-            fee_transaction: string | null;
+            fee_transaction?: string;
 
             /**
              * If applicable, the ID of the InboundTransfer that created this Transaction.
              */
-            inbound_transfer: string | null;
+            inbound_transfer?: string;
 
             /**
              * If applicable, the ID of the OutboundPayment that created this Transaction.
              */
-            outbound_payment: string | null;
+            outbound_payment?: string;
 
             /**
              * If applicable, the ID of the OutboundTransfer that created this Transaction.
              */
-            outbound_transfer: string | null;
+            outbound_transfer?: string;
 
             /**
              * If applicable, the ID of the ReceivedCredit that created this Transaction.
              */
-            received_credit: string | null;
+            received_credit?: string;
 
             /**
              * If applicable, the ID of the ReceivedDebit that created this Transaction.
              */
-            received_debit: string | null;
+            received_debit?: string;
           }
 
           namespace Flow {
@@ -163,12 +163,12 @@ declare module 'stripe' {
             /**
              * The time at which the Transaction became posted. Only present if status == posted.
              */
-            posted_at: string | null;
+            posted_at?: string;
 
             /**
              * The time at which the Transaction became void. Only present if status == void.
              */
-            void_at: string | null;
+            void_at?: string;
           }
         }
       }

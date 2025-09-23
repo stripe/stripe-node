@@ -93,7 +93,7 @@ declare module 'stripe' {
            * Maximum length of 200 characters.
            * To remove the lookup_key from the object, set it to null in the request.
            */
-          lookup_key?: string | null;
+          lookup_key?: string;
 
           /**
            * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -112,7 +112,7 @@ declare module 'stripe' {
            * Maximum length of 100 characters.
            * To remove the unit_label from the object, set it to null in the request.
            */
-          unit_label?: string | null;
+          unit_label?: string;
         }
 
         namespace MeteredItemUpdateParams {

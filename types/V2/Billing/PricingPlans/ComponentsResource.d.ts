@@ -183,12 +183,12 @@ declare module 'stripe' {
               id: string,
               params?: ComponentDeleteParams,
               options?: RequestOptions
-            ): Promise<Stripe.Response<Stripe.V2.Billing.PricingPlanComponent>>;
+            ): Promise<Stripe.Response<Stripe.V2.DeletedObject>>;
             del(
               pricingPlanId: string,
               id: string,
               options?: RequestOptions
-            ): Promise<Stripe.Response<Stripe.V2.Billing.PricingPlanComponent>>;
+            ): Promise<Stripe.Response<Stripe.V2.DeletedObject>>;
           }
         }
       }

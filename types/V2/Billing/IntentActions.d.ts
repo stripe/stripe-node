@@ -21,7 +21,7 @@ declare module 'stripe' {
           /**
            * Details for an apply action.
            */
-          apply: IntentAction.Apply | null;
+          apply?: IntentAction.Apply;
 
           /**
            * Time at which the object was created.
@@ -31,7 +31,7 @@ declare module 'stripe' {
           /**
            * Details for a deactivate action.
            */
-          deactivate: IntentAction.Deactivate | null;
+          deactivate?: IntentAction.Deactivate;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -41,17 +41,17 @@ declare module 'stripe' {
           /**
            * Details for a modify action.
            */
-          modify: IntentAction.Modify | null;
+          modify?: IntentAction.Modify;
 
           /**
            * Details for a remove action.
            */
-          remove: IntentAction.Remove | null;
+          remove?: IntentAction.Remove;
 
           /**
            * Details for a subscribe action.
            */
-          subscribe: IntentAction.Subscribe | null;
+          subscribe?: IntentAction.Subscribe;
 
           /**
            * Type of the Billing Intent Action.
@@ -69,7 +69,7 @@ declare module 'stripe' {
             /**
              * Details for applying a discount rule to future invoices.
              */
-            invoice_discount_rule: Apply.InvoiceDiscountRule | null;
+            invoice_discount_rule?: Apply.InvoiceDiscountRule;
           }
 
           namespace Apply {
@@ -82,7 +82,7 @@ declare module 'stripe' {
               /**
                * The ID of the created discount rule. This is only present once the Billing Intent is committed and the discount rule is created.
                */
-              invoice_discount_rule: string | null;
+              invoice_discount_rule?: string;
 
               /**
                * Type of the discount rule.
@@ -92,7 +92,7 @@ declare module 'stripe' {
               /**
                * Configuration for percentage off discount.
                */
-              percent_off: InvoiceDiscountRule.PercentOff | null;
+              percent_off?: InvoiceDiscountRule.PercentOff;
             }
 
             namespace InvoiceDiscountRule {
@@ -138,7 +138,7 @@ declare module 'stripe' {
             /**
              * Details for deactivating a Pricing Plan Subscription.
              */
-            pricing_plan_subscription_details: Deactivate.PricingPlanSubscriptionDetails | null;
+            pricing_plan_subscription_details?: Deactivate.PricingPlanSubscriptionDetails;
           }
 
           namespace Deactivate {
@@ -146,7 +146,7 @@ declare module 'stripe' {
               /**
                * This controls the proration adjustment for the partial servicing period.
                */
-              proration_behavior: BillingDetails.ProrationBehavior | null;
+              proration_behavior?: BillingDetails.ProrationBehavior;
             }
 
             namespace BillingDetails {
@@ -157,7 +157,7 @@ declare module 'stripe' {
               /**
                * The timestamp at which the deactivate action will take effect. Only present if type is timestamp.
                */
-              timestamp: string | null;
+              timestamp?: string;
 
               /**
                * When the deactivate action will take effect.
@@ -167,7 +167,6 @@ declare module 'stripe' {
 
             namespace EffectiveAt {
               type Type =
-                | 'current_billing_period_end'
                 | 'current_billing_period_start'
                 | 'on_reserve'
                 | 'timestamp';
@@ -204,7 +203,7 @@ declare module 'stripe' {
             /**
              * Details for modifying a Pricing Plan Subscription.
              */
-            pricing_plan_subscription_details: Modify.PricingPlanSubscriptionDetails | null;
+            pricing_plan_subscription_details?: Modify.PricingPlanSubscriptionDetails;
           }
 
           namespace Modify {
@@ -212,7 +211,7 @@ declare module 'stripe' {
               /**
                * This controls the proration adjustment for the partial servicing period.
                */
-              proration_behavior: BillingDetails.ProrationBehavior | null;
+              proration_behavior?: BillingDetails.ProrationBehavior;
             }
 
             namespace BillingDetails {
@@ -223,7 +222,7 @@ declare module 'stripe' {
               /**
                * The timestamp at which the modify action will take effect. Only present if type is timestamp.
                */
-              timestamp: string | null;
+              timestamp?: string;
 
               /**
                * When the modify action will take effect.
@@ -267,17 +266,17 @@ declare module 'stripe' {
                 /**
                  * Quantity of the component to be used.
                  */
-                quantity: number | null;
+                quantity?: number;
 
                 /**
                  * Lookup key for the pricing plan component.
                  */
-                lookup_key: string | null;
+                lookup_key?: string;
 
                 /**
                  * ID of the pricing plan component.
                  */
-                pricing_plan_component: string | null;
+                pricing_plan_component?: string;
               }
             }
 
@@ -295,7 +294,7 @@ declare module 'stripe' {
             /**
              * The ID of the discount rule to remove for future invoices.
              */
-            invoice_discount_rule: string | null;
+            invoice_discount_rule?: string;
           }
 
           interface Subscribe {
@@ -317,12 +316,12 @@ declare module 'stripe' {
             /**
              * Details for subscribing to a Pricing Plan.
              */
-            pricing_plan_subscription_details: Subscribe.PricingPlanSubscriptionDetails | null;
+            pricing_plan_subscription_details?: Subscribe.PricingPlanSubscriptionDetails;
 
             /**
              * Details for subscribing to a V1 subscription.
              */
-            v1_subscription_details: Subscribe.V1SubscriptionDetails | null;
+            v1_subscription_details?: Subscribe.V1SubscriptionDetails;
           }
 
           namespace Subscribe {
@@ -330,7 +329,7 @@ declare module 'stripe' {
               /**
                * This controls the proration adjustment for the partial servicing period.
                */
-              proration_behavior: BillingDetails.ProrationBehavior | null;
+              proration_behavior?: BillingDetails.ProrationBehavior;
             }
 
             namespace BillingDetails {
@@ -341,7 +340,7 @@ declare module 'stripe' {
               /**
                * The timestamp at which the subscribe action will take effect. Only present if type is timestamp.
                */
-              timestamp: string | null;
+              timestamp?: string;
 
               /**
                * When the subscribe action will take effect.
@@ -367,7 +366,7 @@ declare module 'stripe' {
               /**
                * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
                */
-              metadata: Stripe.Metadata | null;
+              metadata?: Stripe.Metadata;
 
               /**
                * ID of the Pricing Plan to subscribe to.
@@ -377,7 +376,7 @@ declare module 'stripe' {
               /**
                * ID of the created Pricing Plan Subscription. This is only present once the Billing Intent is committed and the Pricing Plan Subscription is created.
                */
-              pricing_plan_subscription: string | null;
+              pricing_plan_subscription?: string;
 
               /**
                * Version of the Pricing Plan to use.
@@ -390,17 +389,17 @@ declare module 'stripe' {
                 /**
                  * Quantity of the component to be used.
                  */
-                quantity: number | null;
+                quantity?: number;
 
                 /**
                  * Lookup key for the pricing plan component.
                  */
-                lookup_key: string | null;
+                lookup_key?: string;
 
                 /**
                  * ID of the pricing plan component.
                  */
-                pricing_plan_component: string | null;
+                pricing_plan_component?: string;
               }
             }
 
@@ -413,7 +412,7 @@ declare module 'stripe' {
                * The subscription's description, meant to be displayable to the customer.
                * Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
                */
-              description: string | null;
+              description?: string;
 
               /**
                * A list of up to 20 subscription items, each with an attached price.
@@ -423,7 +422,7 @@ declare module 'stripe' {
               /**
                * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
                */
-              metadata: Stripe.Metadata | null;
+              metadata?: Stripe.Metadata;
             }
 
             namespace V1SubscriptionDetails {
@@ -431,7 +430,7 @@ declare module 'stripe' {
                 /**
                  * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
                  */
-                metadata: Stripe.Metadata | null;
+                metadata?: Stripe.Metadata;
 
                 /**
                  * The ID of the price object.
@@ -441,7 +440,7 @@ declare module 'stripe' {
                 /**
                  * Quantity for this item. If not provided, will default to 1.
                  */
-                quantity: number | null;
+                quantity?: number;
               }
             }
           }

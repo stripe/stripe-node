@@ -26,7 +26,7 @@ declare module 'stripe' {
           /**
            * ID of an existing Cadence to use.
            */
-          cadence: string | null;
+          cadence?: string;
 
           /**
            * Time at which the object was created.
@@ -93,22 +93,22 @@ declare module 'stripe' {
             /**
              * Time at which the Billing Intent was canceled.
              */
-            canceled_at: string | null;
+            canceled_at?: string;
 
             /**
              * Time at which the Billing Intent was committed.
              */
-            committed_at: string | null;
+            committed_at?: string;
 
             /**
              * Time at which the Billing Intent was drafted.
              */
-            drafted_at: string | null;
+            drafted_at?: string;
 
             /**
              * Time at which the Billing Intent was reserved.
              */
-            reserved_at: string | null;
+            reserved_at?: string;
           }
         }
       }

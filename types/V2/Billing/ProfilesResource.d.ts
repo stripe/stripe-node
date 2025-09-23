@@ -50,14 +50,14 @@ declare module 'stripe' {
            * Maximum length of 250 characters.
            * To remove the display_name from the object, set it to null in the request.
            */
-          display_name?: string | null;
+          display_name?: string;
 
           /**
            * An internal key you can use to search for a particular billing profile. It must be unique among billing profiles for a given customer.
            * Maximum length of 200 characters.
            * To remove the lookup_key from the object, set it to null in the request.
            */
-          lookup_key?: string | null;
+          lookup_key?: string;
 
           /**
            * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.

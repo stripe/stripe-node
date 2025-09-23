@@ -26,18 +26,18 @@ declare module 'stripe' {
           /**
            * The ID of the customer object.
            */
-          customer: string | null;
+          customer?: string;
 
           /**
            * The ID of the payment method object.
            */
-          default_payment_method: string | null;
+          default_payment_method?: string;
 
           /**
            * A customer-facing name for the billing profile.
            * Maximum length of 250 characters.
            */
-          display_name: string | null;
+          display_name?: string;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -48,12 +48,12 @@ declare module 'stripe' {
            * An internal key you can use to search for a particular billing profile.
            * Maximum length of 200 characters.
            */
-          lookup_key: string | null;
+          lookup_key?: string;
 
           /**
            * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
-          metadata: Stripe.Metadata | null;
+          metadata?: Stripe.Metadata;
 
           /**
            * The current status of the billing profile.

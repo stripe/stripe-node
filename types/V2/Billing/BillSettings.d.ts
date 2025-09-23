@@ -21,7 +21,7 @@ declare module 'stripe' {
           /**
            * Settings related to calculating a bill.
            */
-          calculation: BillSetting.Calculation | null;
+          calculation?: BillSetting.Calculation;
 
           /**
            * Timestamp of when the object was created.
@@ -31,17 +31,17 @@ declare module 'stripe' {
           /**
            * An optional field for adding a display name for the BillSetting object.
            */
-          display_name: string | null;
+          display_name?: string;
 
           /**
            * Settings related to invoice behavior.
            */
-          invoice: BillSetting.Invoice | null;
+          invoice?: BillSetting.Invoice;
 
           /**
            * The ID of the invoice rendering template to be used when generating invoices.
            */
-          invoice_rendering_template: string | null;
+          invoice_rendering_template?: string;
 
           /**
            * The latest version of the current settings object. This will be
@@ -64,7 +64,7 @@ declare module 'stripe' {
            * A lookup key used to retrieve settings dynamically from a static string.
            * This may be up to 200 characters.
            */
-          lookup_key: string | null;
+          lookup_key?: string;
         }
 
         namespace BillSetting {
@@ -72,7 +72,7 @@ declare module 'stripe' {
             /**
              * Settings for calculating tax.
              */
-            tax: Calculation.Tax | null;
+            tax?: Calculation.Tax;
           }
 
           namespace Calculation {
@@ -92,7 +92,7 @@ declare module 'stripe' {
             /**
              * The amount of time until the invoice will be overdue for payment.
              */
-            time_until_due: Invoice.TimeUntilDue | null;
+            time_until_due?: Invoice.TimeUntilDue;
           }
 
           namespace Invoice {

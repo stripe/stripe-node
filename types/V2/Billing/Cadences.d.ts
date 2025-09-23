@@ -31,7 +31,7 @@ declare module 'stripe' {
           /**
            * The discount rules applied to all invoices for the cadence.
            */
-          invoice_discount_rules: Array<Cadence.InvoiceDiscountRule> | null;
+          invoice_discount_rules?: Array<Cadence.InvoiceDiscountRule>;
 
           /**
            * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -41,12 +41,12 @@ declare module 'stripe' {
           /**
            * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
-          metadata: Stripe.Metadata | null;
+          metadata?: Stripe.Metadata;
 
           /**
            * The date that the billing cadence will next bill. Null if the cadence is not active.
            */
-          next_billing_date: string | null;
+          next_billing_date?: string;
 
           /**
            * The payer determines the entity financially responsible for the bill.
@@ -56,7 +56,7 @@ declare module 'stripe' {
           /**
            * The settings associated with the cadence.
            */
-          settings: Cadence.Settings | null;
+          settings?: Cadence.Settings;
 
           /**
            * The current status of the cadence.
@@ -66,7 +66,7 @@ declare module 'stripe' {
           /**
            * The ID of the Test Clock.
            */
-          test_clock: string | null;
+          test_clock?: string;
         }
 
         namespace Cadence {
@@ -84,22 +84,22 @@ declare module 'stripe' {
             /**
              * Specific configuration for determining billing dates when type=day.
              */
-            day: BillingCycle.Day | null;
+            day?: BillingCycle.Day;
 
             /**
              * Specific configuration for determining billing dates when type=month.
              */
-            month: BillingCycle.Month | null;
+            month?: BillingCycle.Month;
 
             /**
              * Specific configuration for determining billing dates when type=week.
              */
-            week: BillingCycle.Week | null;
+            week?: BillingCycle.Week;
 
             /**
              * Specific configuration for determining billing dates when type=year.
              */
-            year: BillingCycle.Year | null;
+            year?: BillingCycle.Year;
           }
 
           namespace BillingCycle {
@@ -129,7 +129,7 @@ declare module 'stripe' {
                  * The second at which the billing cycle ends.
                  * Must be an integer between 0 and 59, inclusive.
                  */
-                second: number | null;
+                second?: number;
               }
             }
 
@@ -140,12 +140,6 @@ declare module 'stripe' {
                * this will anchor to the last day of the month.
                */
               day_of_month: number;
-
-              /**
-               * The month to anchor the billing on for a type="month" billing cycle from
-               * 1-12. Occurrences are calculated from the month anchor.
-               */
-              month_of_year: number | null;
 
               /**
                * The time at which the billing cycle ends.
@@ -172,7 +166,7 @@ declare module 'stripe' {
                  * The second at which the billing cycle ends.
                  * Must be an integer between 0 and 59, inclusive.
                  */
-                second: number | null;
+                second?: number;
               }
             }
 
@@ -210,7 +204,7 @@ declare module 'stripe' {
                  * The second at which the billing cycle ends.
                  * Must be an integer between 0 and 59, inclusive.
                  */
-                second: number | null;
+                second?: number;
               }
             }
 
@@ -252,7 +246,7 @@ declare module 'stripe' {
                  * The second at which the billing cycle ends.
                  * Must be an integer between 0 and 59, inclusive.
                  */
-                second: number | null;
+                second?: number;
               }
             }
           }
@@ -271,7 +265,7 @@ declare module 'stripe' {
             /**
              * Details if the discount is a percentage off.
              */
-            percent_off: InvoiceDiscountRule.PercentOff | null;
+            percent_off?: InvoiceDiscountRule.PercentOff;
           }
 
           namespace InvoiceDiscountRule {
@@ -301,12 +295,12 @@ declare module 'stripe' {
             /**
              * The ID of the Billing Profile object which determines how a bill will be paid.
              */
-            billing_profile: string | null;
+            billing_profile?: string;
 
             /**
              * The ID of the Customer object.
              */
-            customer: string | null;
+            customer?: string;
 
             /**
              * A string identifying the type of the payer. Currently the only supported value is `customer`.
@@ -318,12 +312,12 @@ declare module 'stripe' {
             /**
              * Settings that configure bills generation, which includes calculating totals, tax, and presenting invoices.
              */
-            bill: Settings.Bill | null;
+            bill?: Settings.Bill;
 
             /**
              * Settings that configure and manage the behavior of collecting payments.
              */
-            collection: Settings.Collection | null;
+            collection?: Settings.Collection;
           }
 
           namespace Settings {
@@ -336,7 +330,7 @@ declare module 'stripe' {
               /**
                * Returns the Settings Version when the cadence is pinned to a specific version.
                */
-              version: string | null;
+              version?: string;
             }
 
             interface Collection {
@@ -348,7 +342,7 @@ declare module 'stripe' {
               /**
                * Returns the Settings Version when the cadence is pinned to a specific version.
                */
-              version: string | null;
+              version?: string;
             }
           }
 

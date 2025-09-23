@@ -60,12 +60,12 @@ declare module 'stripe' {
           /**
            * An internal key you can use to search for a particular RateCard. Maximum length of 200 characters.
            */
-          lookup_key: string | null;
+          lookup_key?: string;
 
           /**
            * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
-          metadata: Stripe.Metadata | null;
+          metadata?: Stripe.Metadata;
 
           /**
            * The interval for assessing service. For example, a monthly Rate Card with a rate of $1 for the first 10 "workloads"
