@@ -15,7 +15,7 @@ declare module 'stripe' {
           /**
            * Information on the API request that instigated the event.
            */
-          request: Reason.Request | null;
+          request?: Reason.Request;
         }
 
         namespace Reason {
@@ -55,7 +55,7 @@ declare module 'stripe' {
         /**
          * Authentication context needed to fetch the event or related object.
          */
-        context: string | null;
+        context?: string;
 
         /**
          * Time at which the object was created.
@@ -70,7 +70,7 @@ declare module 'stripe' {
         /**
          * Reason for the event.
          */
-        reason: Event.Reason | null;
+        reason?: Event.Reason;
 
         /**
          * The type of the event.
