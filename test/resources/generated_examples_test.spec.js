@@ -2095,15 +2095,6 @@ describe('Generated tests', function() {
   });
 
   it('test_promotion_codes_post', async function() {
-    const promotionCode = await stripe.promotionCodes.create({
-      promotion: {
-        coupon: 'Z4OV52SU',
-      },
-    });
-    expect(promotionCode).not.to.be.null;
-  });
-
-  it('test_promotion_codes_post_2', async function() {
     const promotionCode = await stripe.promotionCodes.update(
       'promo_xxxxxxxxxxxxx',
       {
