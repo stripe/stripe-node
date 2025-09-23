@@ -73,7 +73,7 @@ declare module 'stripe' {
     namespace PromotionCode {
       interface Promotion {
         /**
-         * If promotion type is 'coupon', the coupon for this promotion.
+         * If promotion `type` is `coupon`, the coupon for this promotion.
          */
         coupon: string | Stripe.Coupon | null;
 
