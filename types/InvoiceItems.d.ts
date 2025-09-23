@@ -99,6 +99,11 @@ declare module 'stripe' {
       metadata: Stripe.Metadata | null;
 
       /**
+       * The amount after discounts, but before credits and taxes. This field is `null` for `discountable=true` items.
+       */
+      net_amount?: number;
+
+      /**
        * The parent that generated this invoice item.
        */
       parent: InvoiceItem.Parent | null;
@@ -114,6 +119,8 @@ declare module 'stripe' {
        * Whether the invoice item was created automatically as a proration adjustment when the customer switched plans.
        */
       proration: boolean;
+
+      proration_details?: InvoiceItem.ProrationDetails;
 
       /**
        * Quantity of units for the invoice item. If the invoice item is a proration, the quantity of the subscription that the proration was computed for.
@@ -195,6 +202,27 @@ declare module 'stripe' {
            * The ID of the product this item is associated with.
            */
           product: string;
+        }
+      }
+
+      interface ProrationDetails {
+        /**
+         * Discount amounts applied when the proration was created.
+         */
+        discount_amounts: Array<ProrationDetails.DiscountAmount>;
+      }
+
+      namespace ProrationDetails {
+        interface DiscountAmount {
+          /**
+           * The amount, in cents (or local equivalent), of the discount.
+           */
+          amount: number;
+
+          /**
+           * The discount that was applied to get this discount amount.
+           */
+          discount: string | Stripe.Discount | Stripe.DeletedDiscount;
         }
       }
     }

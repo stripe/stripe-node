@@ -43,7 +43,7 @@ declare module 'stripe' {
           meter: string;
 
           /**
-           * Whether the alert should only fire only once, or once per billing cycle.
+           * Defines how the alert will behave.
            */
           recurrence: 'one_time';
         }

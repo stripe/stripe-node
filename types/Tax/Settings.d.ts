@@ -37,6 +37,11 @@ declare module 'stripe' {
       namespace Settings {
         interface Defaults {
           /**
+           * The tax calculation provider this account uses. Defaults to `stripe` when not using a [third-party provider](https://docs.stripe.com/tax/third-party-apps).
+           */
+          provider: Defaults.Provider;
+
+          /**
            * Default [tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#tax-behavior) used to specify whether the price is considered inclusive of taxes or exclusive of taxes. If the item's price has a tax behavior set, it will take precedence over the default tax behavior.
            */
           tax_behavior: Defaults.TaxBehavior | null;
@@ -48,6 +53,8 @@ declare module 'stripe' {
         }
 
         namespace Defaults {
+          type Provider = 'anrok' | 'avalara' | 'sphere' | 'stripe';
+
           type TaxBehavior = 'exclusive' | 'inclusive' | 'inferred_by_currency';
         }
 

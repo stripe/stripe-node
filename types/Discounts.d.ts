@@ -22,13 +22,6 @@ declare module 'stripe' {
       checkout_session: string | null;
 
       /**
-       * A coupon contains information about a percent-off or amount-off discount you
-       * might want to apply to a customer. Coupons may be applied to [subscriptions](https://stripe.com/docs/api#subscriptions), [invoices](https://stripe.com/docs/api#invoices),
-       * [checkout sessions](https://stripe.com/docs/api/checkout/sessions), [quotes](https://stripe.com/docs/api#quotes), and more. Coupons do not work with conventional one-off [charges](https://stripe.com/docs/api#create_charge) or [payment intents](https://stripe.com/docs/api/payment_intents).
-       */
-      coupon: Stripe.Coupon;
-
-      /**
        * The ID of the customer associated with this discount.
        */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
@@ -53,6 +46,8 @@ declare module 'stripe' {
        */
       promotion_code: string | Stripe.PromotionCode | null;
 
+      source: DeletedDiscount.Source;
+
       /**
        * Date that the coupon was applied.
        */
@@ -67,6 +62,20 @@ declare module 'stripe' {
        * The subscription item that this coupon is applied to, if it is applied to a particular subscription item.
        */
       subscription_item: string | null;
+    }
+
+    namespace DeletedDiscount {
+      interface Source {
+        /**
+         * The coupon that was redeemed to create this discount.
+         */
+        coupon: string | Stripe.Coupon | null;
+
+        /**
+         * The source type of the discount.
+         */
+        type: 'coupon';
+      }
     }
 
     /**
@@ -90,13 +99,6 @@ declare module 'stripe' {
        * The Checkout session that this coupon is applied to, if it is applied to a particular session in payment mode. Will not be present for subscription mode.
        */
       checkout_session: string | null;
-
-      /**
-       * A coupon contains information about a percent-off or amount-off discount you
-       * might want to apply to a customer. Coupons may be applied to [subscriptions](https://stripe.com/docs/api#subscriptions), [invoices](https://stripe.com/docs/api#invoices),
-       * [checkout sessions](https://stripe.com/docs/api/checkout/sessions), [quotes](https://stripe.com/docs/api#quotes), and more. Coupons do not work with conventional one-off [charges](https://stripe.com/docs/api#create_charge) or [payment intents](https://stripe.com/docs/api/payment_intents).
-       */
-      coupon: Stripe.Coupon;
 
       /**
        * The ID of the customer associated with this discount.
@@ -128,6 +130,8 @@ declare module 'stripe' {
        */
       promotion_code: string | Stripe.PromotionCode | null;
 
+      source: Discount.Source;
+
       /**
        * Date that the coupon was applied.
        */
@@ -142,6 +146,20 @@ declare module 'stripe' {
        * The subscription item that this coupon is applied to, if it is applied to a particular subscription item.
        */
       subscription_item: string | null;
+    }
+
+    namespace Discount {
+      interface Source {
+        /**
+         * The coupon that was redeemed to create this discount.
+         */
+        coupon: string | Stripe.Coupon | null;
+
+        /**
+         * The source type of the discount.
+         */
+        type: 'coupon';
+      }
     }
   }
 }

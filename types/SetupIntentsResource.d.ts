@@ -327,6 +327,11 @@ declare module 'stripe' {
         link?: PaymentMethodData.Link;
 
         /**
+         * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+         */
+        mb_way?: PaymentMethodData.MbWay;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -380,6 +385,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this hash contains details about the PayPal payment method.
          */
         paypal?: PaymentMethodData.Paypal;
+
+        /**
+         * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+         */
+        paypay?: PaymentMethodData.Paypay;
 
         /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
@@ -699,6 +709,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface MbWay {}
+
         interface Mobilepay {}
 
         interface Multibanco {}
@@ -790,6 +802,8 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Paypay {}
+
         interface Pix {}
 
         interface Promptpay {}
@@ -855,6 +869,7 @@ declare module 'stripe' {
           | 'konbini'
           | 'kr_card'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'
@@ -865,6 +880,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'paypay'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
@@ -1746,6 +1762,11 @@ declare module 'stripe' {
         link?: PaymentMethodData.Link;
 
         /**
+         * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+         */
+        mb_way?: PaymentMethodData.MbWay;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -1799,6 +1820,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this hash contains details about the PayPal payment method.
          */
         paypal?: PaymentMethodData.Paypal;
+
+        /**
+         * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+         */
+        paypay?: PaymentMethodData.Paypay;
 
         /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
@@ -2118,6 +2144,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface MbWay {}
+
         interface Mobilepay {}
 
         interface Multibanco {}
@@ -2209,6 +2237,8 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Paypay {}
+
         interface Pix {}
 
         interface Promptpay {}
@@ -2274,6 +2304,7 @@ declare module 'stripe' {
           | 'konbini'
           | 'kr_card'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'
@@ -2284,6 +2315,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'paypay'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
@@ -3214,6 +3246,11 @@ declare module 'stripe' {
         link?: PaymentMethodData.Link;
 
         /**
+         * If this is a MB WAY PaymentMethod, this hash contains details about the MB WAY payment method.
+         */
+        mb_way?: PaymentMethodData.MbWay;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -3267,6 +3304,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this hash contains details about the PayPal payment method.
          */
         paypal?: PaymentMethodData.Paypal;
+
+        /**
+         * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+         */
+        paypay?: PaymentMethodData.Paypay;
 
         /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
@@ -3586,6 +3628,8 @@ declare module 'stripe' {
 
         interface Link {}
 
+        interface MbWay {}
+
         interface Mobilepay {}
 
         interface Multibanco {}
@@ -3677,6 +3721,8 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Paypay {}
+
         interface Pix {}
 
         interface Promptpay {}
@@ -3742,6 +3788,7 @@ declare module 'stripe' {
           | 'konbini'
           | 'kr_card'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'
@@ -3752,6 +3799,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'paypay'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'

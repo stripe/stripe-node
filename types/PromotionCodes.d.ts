@@ -3,8 +3,8 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * A Promotion Code represents a customer-redeemable code for a [coupon](https://stripe.com/docs/api#coupons).
-     * You can create multiple codes for a single coupon.
+     * A Promotion Code represents a customer-redeemable code for an underlying promotion.
+     * You can create multiple codes for a single promotion.
      *
      * If you enable promotion codes in your [customer portal configuration](https://stripe.com/docs/customer-management/configure-portal), then customers can redeem a code themselves when updating a subscription in the portal.
      * Customers can also view the currently active promotion codes and coupons on each of their subscriptions in the portal.
@@ -29,13 +29,6 @@ declare module 'stripe' {
        * The customer-facing code. Regardless of case, this code must be unique across all active promotion codes for each customer. Valid characters are lower case letters (a-z), upper case letters (A-Z), and digits (0-9).
        */
       code: string;
-
-      /**
-       * A coupon contains information about a percent-off or amount-off discount you
-       * might want to apply to a customer. Coupons may be applied to [subscriptions](https://stripe.com/docs/api#subscriptions), [invoices](https://stripe.com/docs/api#invoices),
-       * [checkout sessions](https://stripe.com/docs/api/checkout/sessions), [quotes](https://stripe.com/docs/api#quotes), and more. Coupons do not work with conventional one-off [charges](https://stripe.com/docs/api#create_charge) or [payment intents](https://stripe.com/docs/api/payment_intents).
-       */
-      coupon: Stripe.Coupon;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -67,6 +60,8 @@ declare module 'stripe' {
        */
       metadata: Stripe.Metadata | null;
 
+      promotion: PromotionCode.Promotion;
+
       restrictions: PromotionCode.Restrictions;
 
       /**
@@ -76,6 +71,18 @@ declare module 'stripe' {
     }
 
     namespace PromotionCode {
+      interface Promotion {
+        /**
+         * If promotion `type` is `coupon`, the coupon for this promotion.
+         */
+        coupon: string | Stripe.Coupon | null;
+
+        /**
+         * The type of promotion.
+         */
+        type: 'coupon';
+      }
+
       interface Restrictions {
         /**
          * Promotion code restrictions defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).

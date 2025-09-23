@@ -7,17 +7,37 @@ declare module 'stripe' {
         /**
          * The full address of the location.
          */
-        address: LocationCreateParams.Address;
+        address?: LocationCreateParams.Address;
 
         /**
-         * A name for the location. Maximum length is 1000 characters.
+         * The Kana variation of the full address of the location (Japan only).
          */
-        display_name: string;
+        address_kana?: Stripe.JapanAddressParam;
+
+        /**
+         * The Kanji variation of the full address of the location (Japan only).
+         */
+        address_kanji?: Stripe.JapanAddressParam;
 
         /**
          * The ID of a configuration that will be used to customize all readers in this location.
          */
         configuration_overrides?: string;
+
+        /**
+         * A name for the location. Maximum length is 1000 characters.
+         */
+        display_name?: string;
+
+        /**
+         * The Kana variation of the name for the location (Japan only). Maximum length is 1000 characters.
+         */
+        display_name_kana?: string;
+
+        /**
+         * The Kanji variation of the name for the location (Japan only). Maximum length is 1000 characters.
+         */
+        display_name_kanji?: string;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -28,6 +48,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * The phone number for the location.
+         */
+        phone?: string;
       }
 
       namespace LocationCreateParams {
@@ -43,12 +68,12 @@ declare module 'stripe' {
           country: string;
 
           /**
-           * Address line 1 (e.g., street, PO Box, or company name).
+           * Address line 1, such as the street, PO Box, or company name.
            */
           line1?: string;
 
           /**
-           * Address line 2 (e.g., apartment, suite, unit, or building).
+           * Address line 2, such as the apartment, suite, unit, or building.
            */
           line2?: string;
 
@@ -78,6 +103,16 @@ declare module 'stripe' {
         address?: Stripe.AddressParam;
 
         /**
+         * The Kana variation of the full address of the location (Japan only).
+         */
+        address_kana?: Stripe.JapanAddressParam;
+
+        /**
+         * The Kanji variation of the full address of the location (Japan only).
+         */
+        address_kanji?: Stripe.JapanAddressParam;
+
+        /**
          * The ID of a configuration that will be used to customize all readers in this location.
          */
         configuration_overrides?: Stripe.Emptyable<string>;
@@ -88,6 +123,16 @@ declare module 'stripe' {
         display_name?: Stripe.Emptyable<string>;
 
         /**
+         * The Kana variation of the name for the location (Japan only).
+         */
+        display_name_kana?: Stripe.Emptyable<string>;
+
+        /**
+         * The Kanji variation of the name for the location (Japan only).
+         */
+        display_name_kanji?: Stripe.Emptyable<string>;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -96,6 +141,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * The phone number for the location.
+         */
+        phone?: Stripe.Emptyable<string>;
       }
 
       interface LocationListParams extends PaginationParams {
@@ -113,7 +163,10 @@ declare module 'stripe' {
          * For further details, including which address fields are required in each country, see the [Manage locations](https://docs.stripe.com/docs/terminal/fleet/locations) guide.
          */
         create(
-          params: LocationCreateParams,
+          params?: LocationCreateParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Terminal.Location>>;
+        create(
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Terminal.Location>>;
 

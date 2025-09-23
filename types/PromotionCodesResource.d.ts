@@ -4,9 +4,9 @@ declare module 'stripe' {
   namespace Stripe {
     interface PromotionCodeCreateParams {
       /**
-       * The coupon for this promotion code.
+       * The promotion referenced by this promotion code.
        */
-      coupon: string;
+      promotion: PromotionCodeCreateParams.Promotion;
 
       /**
        * Whether the promotion code is currently active.
@@ -52,6 +52,18 @@ declare module 'stripe' {
     }
 
     namespace PromotionCodeCreateParams {
+      interface Promotion {
+        /**
+         * If promotion `type` is `coupon`, the coupon for this promotion code.
+         */
+        coupon?: string;
+
+        /**
+         * Specifies the type of promotion.
+         */
+        type: 'coupon';
+      }
+
       interface Restrictions {
         /**
          * Promotion codes defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
@@ -169,7 +181,7 @@ declare module 'stripe' {
 
     class PromotionCodesResource {
       /**
-       * A promotion code points to a coupon. You can optionally restrict the code to a specific customer, redemption limit, and expiration date.
+       * A promotion code points to an underlying promotion. You can optionally restrict the code to a specific customer, redemption limit, and expiration date.
        */
       create(
         params: PromotionCodeCreateParams,

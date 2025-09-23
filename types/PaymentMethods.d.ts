@@ -98,6 +98,8 @@ declare module 'stripe' {
        */
       livemode: boolean;
 
+      mb_way?: PaymentMethod.MbWay;
+
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
@@ -122,6 +124,8 @@ declare module 'stripe' {
       paynow?: PaymentMethod.Paynow;
 
       paypal?: PaymentMethod.Paypal;
+
+      paypay?: PaymentMethod.Paypay;
 
       pix?: PaymentMethod.Pix;
 
@@ -1197,6 +1201,8 @@ declare module 'stripe' {
         persistent_token?: string;
       }
 
+      interface MbWay {}
+
       interface Mobilepay {}
 
       interface Multibanco {}
@@ -1312,6 +1318,8 @@ declare module 'stripe' {
         payer_id: string | null;
       }
 
+      interface Paypay {}
+
       interface Pix {}
 
       interface Promptpay {}
@@ -1415,6 +1423,7 @@ declare module 'stripe' {
         | 'konbini'
         | 'kr_card'
         | 'link'
+        | 'mb_way'
         | 'mobilepay'
         | 'multibanco'
         | 'naver_pay'
@@ -1425,6 +1434,7 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'paypay'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'
