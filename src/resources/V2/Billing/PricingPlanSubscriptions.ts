@@ -7,6 +7,10 @@ export const PricingPlanSubscriptions = StripeResource.extend({
     method: 'GET',
     fullPath: '/v2/billing/pricing_plan_subscriptions/{id}',
   }),
+  update: stripeMethod({
+    method: 'POST',
+    fullPath: '/v2/billing/pricing_plan_subscriptions/{id}',
+  }),
   list: stripeMethod({
     method: 'GET',
     fullPath: '/v2/billing/pricing_plan_subscriptions',

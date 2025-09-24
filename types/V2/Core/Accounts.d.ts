@@ -3186,7 +3186,7 @@ declare module 'stripe' {
               capabilities?: Recipient.Capabilities;
 
               /**
-               * The payout method to be used as a default outbound destination. This will allow the PayoutMethod to be omitted on OutboundPayments made through the dashboard.
+               * The payout method to be used as a default outbound destination. This will allow the PayoutMethod to be omitted on OutboundPayments made through the dashboard or APIs.
                */
               default_outbound_destination?: Recipient.DefaultOutboundDestination;
             }
@@ -3202,6 +3202,11 @@ declare module 'stripe' {
                  * Capability that enable OutboundPayments to a debit card linked to this Account.
                  */
                 cards?: Capabilities.Cards;
+
+                /**
+                 * Capability that enable OutboundPayments to a crypto wallet linked to this Account.
+                 */
+                crypto_wallets?: Capabilities.CryptoWallets;
 
                 /**
                  * Capabilities that enable the recipient to manage their Stripe Balance (/v1/balance).
@@ -3383,6 +3388,59 @@ declare module 'stripe' {
                   }
                 }
 
+                interface CryptoWallets {
+                  /**
+                   * Whether the Capability has been requested.
+                   */
+                  requested: boolean;
+
+                  /**
+                   * The status of the Capability.
+                   */
+                  status: CryptoWallets.Status;
+
+                  /**
+                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   */
+                  status_details: Array<CryptoWallets.StatusDetail>;
+                }
+
+                namespace CryptoWallets {
+                  type Status =
+                    | 'active'
+                    | 'pending'
+                    | 'restricted'
+                    | 'unsupported';
+
+                  interface StatusDetail {
+                    /**
+                     * Machine-readable code explaining the reason for the Capability to be in its current status.
+                     */
+                    code: StatusDetail.Code;
+
+                    /**
+                     * Machine-readable code explaining how to make the Capability active.
+                     */
+                    resolution: StatusDetail.Resolution;
+                  }
+
+                  namespace StatusDetail {
+                    type Code =
+                      | 'determining_status'
+                      | 'requirements_past_due'
+                      | 'requirements_pending_verification'
+                      | 'restricted_other'
+                      | 'unsupported_business'
+                      | 'unsupported_country'
+                      | 'unsupported_entity_type';
+
+                    type Resolution =
+                      | 'contact_stripe'
+                      | 'no_resolution'
+                      | 'provide_info';
+                  }
+                }
+
                 interface StripeBalance {
                   /**
                    * Allows the account to do payouts using their Stripe Balance (/v1/balance).
@@ -3529,6 +3587,7 @@ declare module 'stripe' {
                   | 'ca_bank_account'
                   | 'ch_bank_account'
                   | 'ci_bank_account'
+                  | 'crypto_wallet'
                   | 'cy_bank_account'
                   | 'cz_bank_account'
                   | 'de_bank_account'
@@ -4123,6 +4182,11 @@ declare module 'stripe' {
             locales?: Array<Defaults.Locale>;
 
             /**
+             * Account profile information.
+             */
+            profile?: Defaults.Profile;
+
+            /**
              * Default responsibilities held by either Stripe or the platform.
              */
             responsibilities?: Defaults.Responsibilities;
@@ -4214,6 +4278,23 @@ declare module 'stripe' {
               | 'zh-Hant-TW'
               | 'zh-HK'
               | 'zh-TW';
+
+            interface Profile {
+              /**
+               * The business's publicly-available website.
+               */
+              business_url?: string;
+
+              /**
+               * The company's legal name.
+               */
+              doing_business_as?: string;
+
+              /**
+               * Internal-only description of the product sold or service provided by the business. It's used by Stripe for risk and underwriting purposes.
+               */
+              product_description?: string;
+            }
 
             interface Responsibilities {
               /**
@@ -4413,11 +4494,6 @@ declare module 'stripe' {
               documents?: BusinessDetails.Documents;
 
               /**
-               * The company's legal name.
-               */
-              doing_business_as?: string;
-
-              /**
                * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
                */
               estimated_worker_count?: number;
@@ -4438,11 +4514,6 @@ declare module 'stripe' {
               phone?: string;
 
               /**
-               * Internal-only description of the product sold or service provided by the business. It's used by Stripe for risk and underwriting purposes.
-               */
-              product_description?: string;
-
-              /**
                * The business legal name.
                */
               registered_name?: string;
@@ -4461,11 +4532,6 @@ declare module 'stripe' {
                * The category identifying the legal structure of the business.
                */
               structure?: BusinessDetails.Structure;
-
-              /**
-               * The business's publicly available website.
-               */
-              url?: string;
             }
 
             namespace BusinessDetails {
@@ -5769,6 +5835,7 @@ declare module 'stripe' {
                     | 'card_payments'
                     | 'cartes_bancaires_payments'
                     | 'cashapp_payments'
+                    | 'crypto'
                     | 'eps_payments'
                     | 'financial_addresses.bank_accounts'
                     | 'fpx_payments'

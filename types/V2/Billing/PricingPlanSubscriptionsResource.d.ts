@@ -8,6 +8,20 @@ declare module 'stripe' {
       }
 
       namespace Billing {
+        interface PricingPlanSubscriptionUpdateParams {
+          /**
+           * When set to true, the `servicing_status_transition.will_cancel_at` field will be cleared.
+           */
+          clear_cancel_at?: boolean;
+
+          /**
+           * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           */
+          metadata?: Stripe.MetadataParam;
+        }
+      }
+
+      namespace Billing {
         interface PricingPlanSubscriptionListParams {
           /**
            * Filter by Billing Cadence ID. Mutually exclusive with `payer`, `pricing_plan`, and `pricing_plan_version`.
@@ -71,6 +85,17 @@ declare module 'stripe' {
           >;
           retrieve(
             id: string,
+            options?: RequestOptions
+          ): Promise<
+            Stripe.Response<Stripe.V2.Billing.PricingPlanSubscription>
+          >;
+
+          /**
+           * Update a Pricing Plan Subscription object.
+           */
+          update(
+            id: string,
+            params?: PricingPlanSubscriptionUpdateParams,
             options?: RequestOptions
           ): Promise<
             Stripe.Response<Stripe.V2.Billing.PricingPlanSubscription>

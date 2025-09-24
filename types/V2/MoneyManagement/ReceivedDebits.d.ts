@@ -83,6 +83,11 @@ declare module 'stripe' {
             financial_address: string;
 
             /**
+             * Open Enum. Indicates the origin type through which this debit was initiated.
+             */
+            origin_type: 'us_bank_account';
+
+            /**
              * Open Enum. The type of the payment method used to originate the debit.
              */
             payment_method_type: 'us_bank_account';

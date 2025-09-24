@@ -65,6 +65,7 @@ import {MeterEvents as V2BillingMeterEvents} from './resources/V2/Billing/MeterE
 import {MeterUsage as BillingMeterUsage} from './resources/Billing/MeterUsage.js';
 import {MeteredItems as V2BillingMeteredItems} from './resources/V2/Billing/MeteredItems.js';
 import {Meters as BillingMeters} from './resources/Billing/Meters.js';
+import {MoneyManagement as V2TestHelpersMoneyManagement} from './resources/V2/TestHelpers/MoneyManagement.js';
 import {OffSessionPayments as V2PaymentsOffSessionPayments} from './resources/V2/Payments/OffSessionPayments.js';
 import {OnboardingLinks as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
 import {Orders as ClimateOrders} from './resources/Climate/Orders.js';
@@ -96,6 +97,7 @@ import {ReceivedCredits as V2MoneyManagementReceivedCredits} from './resources/V
 import {ReceivedDebits as TestHelpersTreasuryReceivedDebits} from './resources/TestHelpers/Treasury/ReceivedDebits.js';
 import {ReceivedDebits as TreasuryReceivedDebits} from './resources/Treasury/ReceivedDebits.js';
 import {ReceivedDebits as V2MoneyManagementReceivedDebits} from './resources/V2/MoneyManagement/ReceivedDebits.js';
+import {RecipientVerifications as V2MoneyManagementRecipientVerifications} from './resources/V2/MoneyManagement/RecipientVerifications.js';
 import {RedactionJobs as PrivacyRedactionJobs} from './resources/Privacy/RedactionJobs.js';
 import {Refunds as TestHelpersRefunds} from './resources/TestHelpers/Refunds.js';
 import {Registrations as TaxRegistrations} from './resources/Tax/Registrations.js';
@@ -356,6 +358,7 @@ export const V2 = resourceNamespace('v2', {
     PayoutMethodsBankAccountSpec: V2MoneyManagementPayoutMethodsBankAccountSpec,
     ReceivedCredits: V2MoneyManagementReceivedCredits,
     ReceivedDebits: V2MoneyManagementReceivedDebits,
+    RecipientVerifications: V2MoneyManagementRecipientVerifications,
     TransactionEntries: V2MoneyManagementTransactionEntries,
     Transactions: V2MoneyManagementTransactions,
   }),
@@ -365,5 +368,6 @@ export const V2 = resourceNamespace('v2', {
   Tax: resourceNamespace('tax', {AutomaticRules: V2TaxAutomaticRules}),
   TestHelper: resourceNamespace('testHelper', {
     FinancialAddresses: V2TestHelpersFinancialAddresses,
+    MoneyManagement: V2TestHelpersMoneyManagement,
   }),
 });

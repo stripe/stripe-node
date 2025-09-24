@@ -22,12 +22,6 @@ declare module 'stripe' {
             metered_item?: string;
 
             /**
-             * The ID of the price object to take price information from. The price must have the same interval as the rate card.
-             * Updates to the Price will not be reflected in the Rate Card or its rates.
-             */
-            price?: string;
-
-            /**
              * Defines whether the tiered price should be graduated or volume-based. In volume-based tiering, the maximum
              * quantity within a period determines the per-unit price. In graduated tiering, the pricing changes as the quantity
              * grows into new tiers. Can only be set if `tiers` is set.

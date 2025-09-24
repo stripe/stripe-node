@@ -40,6 +40,11 @@ declare module 'stripe' {
              * The type specific details of the card payout method.
              */
             card?: PayoutMethodData.Card;
+
+            /**
+             * The type specific details of the crypto wallet payout method.
+             */
+            crypto_wallet?: PayoutMethodData.CryptoWallet;
           }
 
           namespace PayoutMethodData {
@@ -96,7 +101,36 @@ declare module 'stripe' {
               number: string;
             }
 
-            type Type = 'bank_account' | 'card';
+            interface CryptoWallet {
+              /**
+               * Crypto wallet address.
+               */
+              address: string;
+
+              /**
+               * Optional field, required if network supports memos (only "stellar" currently).
+               */
+              memo?: string;
+
+              /**
+               * Which rail we should use to make an Outbound money movement to this wallet.
+               */
+              network: CryptoWallet.Network;
+            }
+
+            namespace CryptoWallet {
+              type Network =
+                | 'arbitrum'
+                | 'avalanche_c_chain'
+                | 'base'
+                | 'ethereum'
+                | 'optimism'
+                | 'polygon'
+                | 'solana'
+                | 'stellar';
+            }
+
+            type Type = 'bank_account' | 'card' | 'crypto_wallet';
           }
 
           type UsageIntent = 'payment' | 'transfer';
@@ -193,7 +227,7 @@ declare module 'stripe' {
               number?: string;
             }
 
-            type Type = 'bank_account' | 'card';
+            type Type = 'bank_account' | 'card' | 'crypto_wallet';
           }
         }
       }

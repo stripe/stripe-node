@@ -81,6 +81,11 @@ declare module 'stripe' {
         namespace RateCardRate {
           interface CustomPricingUnitAmount {
             /**
+             * The Custom Pricing Unit object.
+             */
+            custom_pricing_unit_details?: Stripe.V2.Billing.CustomPricingUnit;
+
+            /**
              * The id of the custom pricing unit.
              */
             id: string;

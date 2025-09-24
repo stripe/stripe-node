@@ -18,7 +18,12 @@ declare module 'stripe' {
           /**
            * Additional resource to include in the response.
            */
-          include?: Array<'invoice_discount_rules'>;
+          include?: Array<CadenceCreateParams.Include>;
+
+          /**
+           * A lookup key used to retrieve cadences dynamically from a static string. Maximum length of 200 characters.
+           */
+          lookup_key?: string;
 
           /**
            * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -107,6 +112,14 @@ declare module 'stripe' {
                * this will default to the day the cadence was created.
                */
               day_of_month: number;
+
+              /**
+               * The month to anchor the billing on for a type="month" billing cycle from
+               * 1-12. If not provided, this will default to the month the cadence was created.
+               * This setting can only be used for monthly billing cycles with `interval_count` of 2, 3, 4 or 6.
+               * All occurrences will be calculated from month provided.
+               */
+              month_of_year?: number;
 
               /**
                * The time at which the billing cycle ends.
@@ -228,22 +241,13 @@ declare module 'stripe' {
             }
           }
 
+          type Include = 'invoice_discount_rules' | 'settings_data';
+
           interface Payer {
             /**
-             * The ID of the Billing Profile object which determines how a bill will be paid. If provided, the created cadence will be
-             * associated with the provided Billing Profile. If not provided, a new Billing Profile will be created and associated with the cadence.
+             * The ID of the Billing Profile object which determines how a bill will be paid.
              */
-            billing_profile?: string;
-
-            /**
-             * The ID of the Customer object.
-             */
-            customer?: string;
-
-            /**
-             * A string identifying the type of the payer. Currently the only supported value is `customer`.
-             */
-            type?: 'customer';
+            billing_profile: string;
           }
 
           interface Settings {
@@ -297,7 +301,11 @@ declare module 'stripe' {
           /**
            * Additional resource to include in the response.
            */
-          include?: Array<'invoice_discount_rules'>;
+          include?: Array<CadenceRetrieveParams.Include>;
+        }
+
+        namespace CadenceRetrieveParams {
+          type Include = 'invoice_discount_rules' | 'settings_data';
         }
       }
 
@@ -306,7 +314,12 @@ declare module 'stripe' {
           /**
            * Additional resource to include in the response.
            */
-          include?: Array<'invoice_discount_rules'>;
+          include?: Array<CadenceUpdateParams.Include>;
+
+          /**
+           * A lookup key used to retrieve cadences dynamically from a static string. Maximum length of 200 characters.
+           */
+          lookup_key?: string;
 
           /**
            * Set of [key-value pairs](https://docs.stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -325,6 +338,8 @@ declare module 'stripe' {
         }
 
         namespace CadenceUpdateParams {
+          type Include = 'invoice_discount_rules' | 'settings_data';
+
           interface Payer {
             /**
              * The ID of the Billing Profile object which determines how a bill will be paid.
@@ -383,7 +398,7 @@ declare module 'stripe' {
           /**
            * Additional resource to include in the response.
            */
-          include?: Array<'invoice_discount_rules'>;
+          include?: Array<CadenceListParams.Include>;
 
           /**
            * Optionally set the maximum number of results per page. Defaults to 20.
@@ -391,7 +406,13 @@ declare module 'stripe' {
           limit?: number;
 
           /**
-           * If provided, only cadences that specifically reference the payer will be returned. Mutually exclusive with `test_clock`.
+           * Only return the cadences with these lookup_keys, if any exist. You can specify up to 10 lookup_keys.
+           * Mutually exclusive with `test_clock` and `payer`.
+           */
+          lookup_keys?: Array<string>;
+
+          /**
+           * If provided, only cadences that specifically reference the payer will be returned. Mutually exclusive with `test_clock` and `lookup_keys`.
            */
           payer?: CadenceListParams.Payer;
 
@@ -404,6 +425,8 @@ declare module 'stripe' {
         }
 
         namespace CadenceListParams {
+          type Include = 'invoice_discount_rules' | 'settings_data';
+
           interface Payer {
             /**
              * The ID of the Customer object. If provided, only cadences that specifically reference the provided customer ID will be returned.
@@ -423,7 +446,11 @@ declare module 'stripe' {
           /**
            * Additional resource to include in the response.
            */
-          include?: Array<'invoice_discount_rules'>;
+          include?: Array<CadenceCancelParams.Include>;
+        }
+
+        namespace CadenceCancelParams {
+          type Include = 'invoice_discount_rules' | 'settings_data';
         }
       }
 

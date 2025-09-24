@@ -34,6 +34,11 @@ declare module 'stripe' {
            * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata?: Stripe.MetadataParam;
+
+          /**
+           * The recipient verification id for this OutboundTransfer. Only required for countries with regulatory mandates to verify recipient names before OutboundTransfer creation.
+           */
+          recipient_verification?: string;
         }
 
         namespace OutboundTransferCreateParams {

@@ -71,6 +71,11 @@ declare module 'stripe' {
           receipt_url?: string;
 
           /**
+           * The recipient verification id for this OutboundTransfer. Only required for countries with regulatory mandates to verify recipient names before OutboundTransfer creation.
+           */
+          recipient_verification?: string;
+
+          /**
            * The description that appears on the receiving end for an OutboundTransfer (for example, bank statement for external bank transfer). It will default to `STRIPE` if not set on the account settings.
            */
           statement_descriptor: string;

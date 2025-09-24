@@ -44,6 +44,11 @@ declare module 'stripe' {
            * Details about the notification settings for the OutboundPayment recipient.
            */
           recipient_notification?: OutboundPaymentCreateParams.RecipientNotification;
+
+          /**
+           * The recipient verification id for this OutboundPayment. Only required for countries with regulatory mandates to verify recipient names before OutboundPayment creation.
+           */
+          recipient_verification?: string;
         }
 
         namespace OutboundPaymentCreateParams {

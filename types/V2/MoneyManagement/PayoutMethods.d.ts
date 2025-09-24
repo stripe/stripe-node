@@ -39,6 +39,11 @@ declare module 'stripe' {
           created: string;
 
           /**
+           * The PayoutMethodCryptoWallet object details.
+           */
+          crypto_wallet?: PayoutMethod.CryptoWallet;
+
+          /**
            * ID of the underlying active OutboundSetupIntent object, if any.
            */
           latest_outbound_setup_intent?: string;
@@ -134,7 +139,43 @@ declare module 'stripe' {
             last4: string;
           }
 
-          type Type = 'bank_account' | 'card';
+          interface CryptoWallet {
+            /**
+             * Destination wallet address.
+             */
+            address: string;
+
+            /**
+             * Whether the crypto wallet was archived. Crypto wallets can be archived through the /archive API,
+             * and they will not be automatically archived by Stripe. Archived crypto wallets cannot be used as
+             * payout method and will not appear in the payout method list.
+             */
+            archived: boolean;
+
+            /**
+             * Optional field, required if network supports memos (only "stellar" currently).
+             */
+            memo?: string;
+
+            /**
+             * Which rail is being used to make an outbound money movement to this wallet.
+             */
+            network: CryptoWallet.Network;
+          }
+
+          namespace CryptoWallet {
+            type Network =
+              | 'arbitrum'
+              | 'avalanche_c_chain'
+              | 'base'
+              | 'ethereum'
+              | 'optimism'
+              | 'polygon'
+              | 'solana'
+              | 'stellar';
+          }
+
+          type Type = 'bank_account' | 'card' | 'crypto_wallet';
 
           interface UsageStatus {
             /**

@@ -49,6 +49,11 @@ declare module 'stripe' {
             applicability_config: CreditGrant.ApplicabilityConfig;
 
             /**
+             * The category of the credit grant.
+             */
+            category?: CreditGrant.Category;
+
+            /**
              * The expiry configuration for the credit grant.
              */
             expiry_config: CreditGrant.ExpiryConfig;
@@ -57,6 +62,11 @@ declare module 'stripe' {
              * A descriptive name shown in dashboard.
              */
             name: string;
+
+            /**
+             * The desired priority for applying this credit grant. If not specified, it will be set to the default value of 50. The highest priority is 0 and the lowest is 100.
+             */
+            priority?: number;
           }
 
           namespace CreditGrant {
@@ -114,6 +124,8 @@ declare module 'stripe' {
               }
             }
 
+            type Category = 'paid' | 'promotional';
+
             interface ExpiryConfig {
               /**
                * The type of the expiry configuration. We currently support `end_of_service_period`.
@@ -134,6 +146,11 @@ declare module 'stripe' {
             applicability_config: CreditGrantPerTenant.ApplicabilityConfig;
 
             /**
+             * The category of the credit grant.
+             */
+            category?: CreditGrantPerTenant.Category;
+
+            /**
              * The expiry configuration for the credit grant.
              */
             expiry_config: CreditGrantPerTenant.ExpiryConfig;
@@ -147,6 +164,11 @@ declare module 'stripe' {
              * Customer-facing name for the credit grant.
              */
             name: string;
+
+            /**
+             * The desired priority for applying this credit grant. If not specified, it will be set to the default value of 50. The highest priority is 0 and the lowest is 100.
+             */
+            priority?: number;
           }
 
           namespace CreditGrantPerTenant {
@@ -203,6 +225,8 @@ declare module 'stripe' {
                 price_type?: 'metered';
               }
             }
+
+            type Category = 'paid' | 'promotional';
 
             interface ExpiryConfig {
               /**
@@ -274,6 +298,41 @@ declare module 'stripe' {
       }
 
       namespace Billing {
+        interface ServiceActionUpdateParams {
+          /**
+           * Details for the credit grant. Can only be set if the service action's `type` is `credit_grant`.
+           */
+          credit_grant?: ServiceActionUpdateParams.CreditGrant;
+
+          /**
+           * Details for the credit grant per tenant. Can only be set if the service action's `type` is `credit_grant_per_tenant`.
+           */
+          credit_grant_per_tenant?: ServiceActionUpdateParams.CreditGrantPerTenant;
+
+          /**
+           * An internal key you can use to search for this service action. Maximum length of 200 characters.
+           */
+          lookup_key?: string;
+        }
+
+        namespace ServiceActionUpdateParams {
+          interface CreditGrant {
+            /**
+             * A descriptive name shown in dashboard.
+             */
+            name?: string;
+          }
+
+          interface CreditGrantPerTenant {
+            /**
+             * A descriptive name shown in dashboard.
+             */
+            name?: string;
+          }
+        }
+      }
+
+      namespace Billing {
         class ServiceActionsResource {
           /**
            * Create a Service Action object.
@@ -293,6 +352,15 @@ declare module 'stripe' {
           ): Promise<Stripe.Response<Stripe.V2.Billing.ServiceAction>>;
           retrieve(
             id: string,
+            options?: RequestOptions
+          ): Promise<Stripe.Response<Stripe.V2.Billing.ServiceAction>>;
+
+          /**
+           * Update a ServiceAction object.
+           */
+          update(
+            id: string,
+            params?: ServiceActionUpdateParams,
             options?: RequestOptions
           ): Promise<Stripe.Response<Stripe.V2.Billing.ServiceAction>>;
         }

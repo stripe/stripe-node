@@ -6,14 +6,33 @@ declare module 'stripe' {
       namespace MoneyManagement {
         interface FinancialAddressCreateParams {
           /**
-           * Open Enum. The currency the FinancialAddress should support. Currently, only the `usd` and `gbp` values are supported.
-           */
-          currency: string;
-
-          /**
            * The ID of the FinancialAccount the new FinancialAddress should be associated with.
            */
           financial_account: string;
+
+          /**
+           * The type of FinancialAddress details to provision.
+           */
+          type: FinancialAddressCreateParams.Type;
+
+          /**
+           * Optional SEPA Bank account options, used to configure the type of SEPA Bank account to create, such as the originating country.
+           */
+          sepa_bank_account?: FinancialAddressCreateParams.SepaBankAccount;
+        }
+
+        namespace FinancialAddressCreateParams {
+          interface SepaBankAccount {
+            /**
+             * The originating country of the SEPA Bank account.
+             */
+            country: string;
+          }
+
+          type Type =
+            | 'gb_bank_account'
+            | 'sepa_bank_account'
+            | 'us_bank_account';
         }
       }
 
@@ -28,6 +47,7 @@ declare module 'stripe' {
         namespace FinancialAddressRetrieveParams {
           type Include =
             | 'credentials.gb_bank_account.account_number'
+            | 'credentials.sepa_bank_account.iban'
             | 'credentials.us_bank_account.account_number';
         }
       }
@@ -53,6 +73,7 @@ declare module 'stripe' {
         namespace FinancialAddressListParams {
           type Include =
             | 'credentials.gb_bank_account.account_number'
+            | 'credentials.sepa_bank_account.iban'
             | 'credentials.us_bank_account.account_number';
         }
       }

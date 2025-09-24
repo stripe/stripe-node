@@ -11,7 +11,7 @@ declare module 'stripe' {
           enable_mcp_access: boolean;
 
           /**
-           * Values that are prefilled when a user claims the sandbox.
+           * Values that are prefilled when a user claims the sandbox. When a user claims the sandbox, they will be able to update these values.
            */
           prefill: ClaimableSandboxCreateParams.Prefill;
         }
@@ -39,6 +39,10 @@ declare module 'stripe' {
       }
 
       namespace Core {
+        interface ClaimableSandboxRetrieveParams {}
+      }
+
+      namespace Core {
         class ClaimableSandboxesResource {
           /**
            * Create an anonymous, claimable sandbox. This sandbox can be prefilled with data. The response will include
@@ -46,6 +50,21 @@ declare module 'stripe' {
            */
           create(
             params: ClaimableSandboxCreateParams,
+            options?: RequestOptions
+          ): Promise<Stripe.Response<Stripe.V2.Core.ClaimableSandbox>>;
+
+          /**
+           * Retrieves the details of a claimable sandbox that was previously been created.
+           * Supply the unique claimable sandbox ID that was returned from your creation request,
+           * and Stripe will return the corresponding sandbox information.
+           */
+          retrieve(
+            id: string,
+            params?: ClaimableSandboxRetrieveParams,
+            options?: RequestOptions
+          ): Promise<Stripe.Response<Stripe.V2.Core.ClaimableSandbox>>;
+          retrieve(
+            id: string,
             options?: RequestOptions
           ): Promise<Stripe.Response<Stripe.V2.Core.ClaimableSandbox>>;
         }
