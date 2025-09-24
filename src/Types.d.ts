@@ -84,9 +84,14 @@ export type RequestEvent = {
 export type RequestHeaders = Record<string, string | number | string[]>;
 export type APIMode = 'preview' | 'standard';
 export type RequestOptions = {
-  settings: RequestSettings;
-  streaming: boolean;
-  headers: RequestHeaders;
+  settings?: RequestSettings;
+  streaming?: boolean;
+  headers?: RequestHeaders;
+  stripeContext?: string;
+  /**
+   * NOTE: prefer sending `stripeContext` instead of `stripeAccount` for new code. They're currently identical, but we will eventually discourage and (later) drop support for `stripeAccount`.
+   */
+  stripeAccount?: string;
 };
 export type RequestOpts = {
   authenticator: RequestAuthenticator | null;
@@ -196,7 +201,8 @@ export type RequestSender = {
     method: string,
     path: string,
     params?: RequestData,
-    options?: RequestOptions
+    options?: RequestOptions,
+    usage?: Array<string>
   ): Promise<any>;
   _request(
     method: string,
