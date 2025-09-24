@@ -257,7 +257,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v1.billing.meter.error_report_triggered';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<Billing.Meter>;
       pull(): Promise<V1BillingMeterErrorReportTriggeredEvent>;
@@ -465,14 +465,14 @@ declare module 'stripe' {
     export interface V2BillingCadenceBilledEvent extends V2.EventBase {
       type: 'v2.billing.cadence.billed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.Cadence>;
     }
     export interface PushedV2BillingCadenceBilledEvent extends V2.EventBase {
       type: 'v2.billing.cadence.billed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.Cadence>;
       pull(): Promise<V2BillingCadenceBilledEvent>;
@@ -484,14 +484,14 @@ declare module 'stripe' {
     export interface V2BillingCadenceCanceledEvent extends V2.EventBase {
       type: 'v2.billing.cadence.canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.Cadence>;
     }
     export interface PushedV2BillingCadenceCanceledEvent extends V2.EventBase {
       type: 'v2.billing.cadence.canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.Cadence>;
       pull(): Promise<V2BillingCadenceCanceledEvent>;
@@ -505,14 +505,14 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2BillingCadenceCreatedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.Cadence>;
     }
     export interface PushedV2BillingCadenceCreatedEvent extends V2.EventBase {
       type: 'v2.billing.cadence.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.Cadence>;
       pull(): Promise<V2BillingCadenceCreatedEvent>;
@@ -533,14 +533,14 @@ declare module 'stripe' {
     export interface V2BillingCadenceErroredEvent extends V2.EventBase {
       type: 'v2.billing.cadence.errored';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.Cadence>;
     }
     export interface PushedV2BillingCadenceErroredEvent extends V2.EventBase {
       type: 'v2.billing.cadence.errored';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.Cadence>;
       pull(): Promise<V2BillingCadenceErroredEvent>;
@@ -552,7 +552,7 @@ declare module 'stripe' {
     export interface V2BillingLicenseFeeCreatedEvent extends V2.EventBase {
       type: 'v2.billing.license_fee.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.LicenseFee>;
     }
@@ -560,7 +560,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.license_fee.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.LicenseFee>;
       pull(): Promise<V2BillingLicenseFeeCreatedEvent>;
@@ -572,7 +572,7 @@ declare module 'stripe' {
     export interface V2BillingLicenseFeeUpdatedEvent extends V2.EventBase {
       type: 'v2.billing.license_fee.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.LicenseFee>;
     }
@@ -580,7 +580,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.license_fee.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.LicenseFee>;
       pull(): Promise<V2BillingLicenseFeeUpdatedEvent>;
@@ -595,7 +595,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2BillingLicenseFeeVersionCreatedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.LicenseFeeVersion>;
     }
@@ -603,7 +603,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.license_fee_version.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.LicenseFeeVersion>;
       pull(): Promise<V2BillingLicenseFeeVersionCreatedEvent>;
@@ -624,7 +624,7 @@ declare module 'stripe' {
     export interface V2BillingLicensedItemCreatedEvent extends V2.EventBase {
       type: 'v2.billing.licensed_item.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.LicensedItem>;
     }
@@ -632,7 +632,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.licensed_item.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.LicensedItem>;
       pull(): Promise<V2BillingLicensedItemCreatedEvent>;
@@ -644,7 +644,7 @@ declare module 'stripe' {
     export interface V2BillingLicensedItemUpdatedEvent extends V2.EventBase {
       type: 'v2.billing.licensed_item.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.LicensedItem>;
     }
@@ -652,7 +652,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.licensed_item.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.LicensedItem>;
       pull(): Promise<V2BillingLicensedItemUpdatedEvent>;
@@ -664,7 +664,7 @@ declare module 'stripe' {
     export interface V2BillingMeteredItemCreatedEvent extends V2.EventBase {
       type: 'v2.billing.metered_item.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.MeteredItem>;
     }
@@ -672,7 +672,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.metered_item.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.MeteredItem>;
       pull(): Promise<V2BillingMeteredItemCreatedEvent>;
@@ -684,7 +684,7 @@ declare module 'stripe' {
     export interface V2BillingMeteredItemUpdatedEvent extends V2.EventBase {
       type: 'v2.billing.metered_item.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.MeteredItem>;
     }
@@ -692,7 +692,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.metered_item.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.MeteredItem>;
       pull(): Promise<V2BillingMeteredItemUpdatedEvent>;
@@ -704,7 +704,7 @@ declare module 'stripe' {
     export interface V2BillingPricingPlanCreatedEvent extends V2.EventBase {
       type: 'v2.billing.pricing_plan.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlan>;
     }
@@ -712,7 +712,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlan>;
       pull(): Promise<V2BillingPricingPlanCreatedEvent>;
@@ -724,7 +724,7 @@ declare module 'stripe' {
     export interface V2BillingPricingPlanUpdatedEvent extends V2.EventBase {
       type: 'v2.billing.pricing_plan.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlan>;
     }
@@ -732,7 +732,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlan>;
       pull(): Promise<V2BillingPricingPlanUpdatedEvent>;
@@ -747,7 +747,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2BillingPricingPlanComponentCreatedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanComponent>;
     }
@@ -755,7 +755,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_component.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanComponent>;
       pull(): Promise<V2BillingPricingPlanComponentCreatedEvent>;
@@ -779,7 +779,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2BillingPricingPlanComponentUpdatedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanComponent>;
     }
@@ -787,7 +787,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_component.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanComponent>;
       pull(): Promise<V2BillingPricingPlanComponentUpdatedEvent>;
@@ -809,7 +809,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.collection_awaiting_customer_action';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
     }
@@ -817,7 +817,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.collection_awaiting_customer_action';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
       pull(): Promise<
@@ -832,7 +832,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.collection_current';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
     }
@@ -840,7 +840,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.collection_current';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
       pull(): Promise<V2BillingPricingPlanSubscriptionCollectionCurrentEvent>;
@@ -853,7 +853,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.collection_past_due';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
     }
@@ -861,7 +861,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.collection_past_due';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
       pull(): Promise<V2BillingPricingPlanSubscriptionCollectionPastDueEvent>;
@@ -874,7 +874,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.collection_paused';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
     }
@@ -882,7 +882,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.collection_paused';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
       pull(): Promise<V2BillingPricingPlanSubscriptionCollectionPausedEvent>;
@@ -895,7 +895,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.collection_unpaid';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
     }
@@ -903,7 +903,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.collection_unpaid';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
       pull(): Promise<V2BillingPricingPlanSubscriptionCollectionUnpaidEvent>;
@@ -916,7 +916,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.servicing_activated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
     }
@@ -924,7 +924,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.servicing_activated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
       pull(): Promise<V2BillingPricingPlanSubscriptionServicingActivatedEvent>;
@@ -937,7 +937,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.servicing_canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
     }
@@ -945,7 +945,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.servicing_canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
       pull(): Promise<V2BillingPricingPlanSubscriptionServicingCanceledEvent>;
@@ -958,7 +958,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.servicing_paused';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
     }
@@ -966,7 +966,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_subscription.servicing_paused';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanSubscription>;
       pull(): Promise<V2BillingPricingPlanSubscriptionServicingPausedEvent>;
@@ -981,7 +981,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2BillingPricingPlanVersionCreatedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanVersion>;
     }
@@ -989,7 +989,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.pricing_plan_version.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.PricingPlanVersion>;
       pull(): Promise<V2BillingPricingPlanVersionCreatedEvent>;
@@ -1012,14 +1012,14 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2BillingRateCardCreatedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCard>;
     }
     export interface PushedV2BillingRateCardCreatedEvent extends V2.EventBase {
       type: 'v2.billing.rate_card.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCard>;
       pull(): Promise<V2BillingRateCardCreatedEvent>;
@@ -1040,14 +1040,14 @@ declare module 'stripe' {
     export interface V2BillingRateCardUpdatedEvent extends V2.EventBase {
       type: 'v2.billing.rate_card.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCard>;
     }
     export interface PushedV2BillingRateCardUpdatedEvent extends V2.EventBase {
       type: 'v2.billing.rate_card.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCard>;
       pull(): Promise<V2BillingRateCardUpdatedEvent>;
@@ -1061,7 +1061,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2BillingRateCardRateCreatedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardRate>;
     }
@@ -1069,7 +1069,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_rate.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardRate>;
       pull(): Promise<V2BillingRateCardRateCreatedEvent>;
@@ -1106,7 +1106,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.activated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
     }
@@ -1114,7 +1114,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.activated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
       pull(): Promise<V2BillingRateCardSubscriptionActivatedEvent>;
@@ -1127,7 +1127,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
     }
@@ -1135,7 +1135,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
       pull(): Promise<V2BillingRateCardSubscriptionCanceledEvent>;
@@ -1148,7 +1148,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.collection_awaiting_customer_action';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
     }
@@ -1156,7 +1156,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.collection_awaiting_customer_action';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
       pull(): Promise<
@@ -1171,7 +1171,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.collection_current';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
     }
@@ -1179,7 +1179,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.collection_current';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
       pull(): Promise<V2BillingRateCardSubscriptionCollectionCurrentEvent>;
@@ -1192,7 +1192,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.collection_past_due';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
     }
@@ -1200,7 +1200,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.collection_past_due';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
       pull(): Promise<V2BillingRateCardSubscriptionCollectionPastDueEvent>;
@@ -1213,7 +1213,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.collection_paused';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
     }
@@ -1221,7 +1221,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.collection_paused';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
       pull(): Promise<V2BillingRateCardSubscriptionCollectionPausedEvent>;
@@ -1234,7 +1234,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.collection_unpaid';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
     }
@@ -1242,7 +1242,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.collection_unpaid';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
       pull(): Promise<V2BillingRateCardSubscriptionCollectionUnpaidEvent>;
@@ -1255,7 +1255,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.servicing_activated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
     }
@@ -1263,7 +1263,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.servicing_activated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
       pull(): Promise<V2BillingRateCardSubscriptionServicingActivatedEvent>;
@@ -1276,7 +1276,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.servicing_canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
     }
@@ -1284,7 +1284,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.servicing_canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
       pull(): Promise<V2BillingRateCardSubscriptionServicingCanceledEvent>;
@@ -1297,7 +1297,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.servicing_paused';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
     }
@@ -1305,7 +1305,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_subscription.servicing_paused';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardSubscription>;
       pull(): Promise<V2BillingRateCardSubscriptionServicingPausedEvent>;
@@ -1319,7 +1319,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2BillingRateCardVersionCreatedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardVersion>;
     }
@@ -1327,7 +1327,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.billing.rate_card_version.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Billing.RateCardVersion>;
       pull(): Promise<V2BillingRateCardVersionCreatedEvent>;
@@ -1348,14 +1348,14 @@ declare module 'stripe' {
     export interface V2CoreAccountClosedEvent extends V2.EventBase {
       type: 'v2.core.account.closed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
     }
     export interface PushedV2CoreAccountClosedEvent extends V2.EventBase {
       type: 'v2.core.account.closed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       pull(): Promise<V2CoreAccountClosedEvent>;
@@ -1367,14 +1367,14 @@ declare module 'stripe' {
     export interface V2CoreAccountCreatedEvent extends V2.EventBase {
       type: 'v2.core.account.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
     }
     export interface PushedV2CoreAccountCreatedEvent extends V2.EventBase {
       type: 'v2.core.account.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       pull(): Promise<V2CoreAccountCreatedEvent>;
@@ -1386,14 +1386,14 @@ declare module 'stripe' {
     export interface V2CoreAccountUpdatedEvent extends V2.EventBase {
       type: 'v2.core.account.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
     }
     export interface PushedV2CoreAccountUpdatedEvent extends V2.EventBase {
       type: 'v2.core.account.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       pull(): Promise<V2CoreAccountUpdatedEvent>;
@@ -1408,7 +1408,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
     }
@@ -1416,7 +1416,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[configuration.customer].capability_status_updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       pull(): Promise<
@@ -1440,7 +1440,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[configuration.customer].updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
     }
@@ -1448,7 +1448,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[configuration.customer].updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       pull(): Promise<V2CoreAccountIncludingConfigurationCustomerUpdatedEvent>;
@@ -1463,7 +1463,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
     }
@@ -1471,7 +1471,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[configuration.merchant].capability_status_updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       pull(): Promise<
@@ -1544,7 +1544,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[configuration.merchant].updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
     }
@@ -1552,7 +1552,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[configuration.merchant].updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       pull(): Promise<V2CoreAccountIncludingConfigurationMerchantUpdatedEvent>;
@@ -1567,7 +1567,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
     }
@@ -1575,7 +1575,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[configuration.recipient].capability_status_updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       pull(): Promise<
@@ -1609,7 +1609,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[configuration.recipient].updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
     }
@@ -1617,7 +1617,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[configuration.recipient].updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       pull(): Promise<V2CoreAccountIncludingConfigurationRecipientUpdatedEvent>;
@@ -1632,7 +1632,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
     }
@@ -1640,7 +1640,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[configuration.storer].capability_status_updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       pull(): Promise<
@@ -1678,7 +1678,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[configuration.storer].updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
     }
@@ -1686,7 +1686,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[configuration.storer].updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       pull(): Promise<V2CoreAccountIncludingConfigurationStorerUpdatedEvent>;
@@ -1699,7 +1699,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[defaults].updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
     }
@@ -1707,7 +1707,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[defaults].updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       pull(): Promise<V2CoreAccountIncludingDefaultsUpdatedEvent>;
@@ -1720,7 +1720,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[identity].updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
     }
@@ -1728,7 +1728,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[identity].updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       pull(): Promise<V2CoreAccountIncludingIdentityUpdatedEvent>;
@@ -1741,7 +1741,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[requirements].updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
     }
@@ -1749,7 +1749,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account[requirements].updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       pull(): Promise<V2CoreAccountIncludingRequirementsUpdatedEvent>;
@@ -1805,7 +1805,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2CoreAccountPersonCreatedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.AccountPerson>;
     }
@@ -1813,7 +1813,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account_person.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.AccountPerson>;
       pull(): Promise<V2CoreAccountPersonCreatedEvent>;
@@ -1836,7 +1836,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2CoreAccountPersonDeletedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.AccountPerson>;
     }
@@ -1844,7 +1844,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account_person.deleted';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.AccountPerson>;
       pull(): Promise<V2CoreAccountPersonDeletedEvent>;
@@ -1867,7 +1867,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2CoreAccountPersonUpdatedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.AccountPerson>;
     }
@@ -1875,7 +1875,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.account_person.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.AccountPerson>;
       pull(): Promise<V2CoreAccountPersonUpdatedEvent>;
@@ -1904,7 +1904,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.core.event_destination.ping';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.EventDestination>;
       pull(): Promise<V2CoreEventDestinationPingEvent>;
@@ -3266,7 +3266,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.adjustment.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.Adjustment>;
     }
@@ -3274,7 +3274,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.adjustment.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.Adjustment>;
       pull(): Promise<V2MoneyManagementAdjustmentCreatedEvent>;
@@ -3287,7 +3287,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.financial_account.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.FinancialAccount>;
     }
@@ -3295,7 +3295,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.financial_account.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.FinancialAccount>;
       pull(): Promise<V2MoneyManagementFinancialAccountCreatedEvent>;
@@ -3308,7 +3308,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.financial_account.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.FinancialAccount>;
     }
@@ -3316,7 +3316,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.financial_account.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.FinancialAccount>;
       pull(): Promise<V2MoneyManagementFinancialAccountUpdatedEvent>;
@@ -3329,7 +3329,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.financial_address.activated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.FinancialAddress>;
     }
@@ -3337,7 +3337,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.financial_address.activated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.FinancialAddress>;
       pull(): Promise<V2MoneyManagementFinancialAddressActivatedEvent>;
@@ -3350,7 +3350,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.financial_address.failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.FinancialAddress>;
     }
@@ -3358,7 +3358,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.financial_address.failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.FinancialAddress>;
       pull(): Promise<V2MoneyManagementFinancialAddressFailedEvent>;
@@ -3373,7 +3373,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2MoneyManagementInboundTransferAvailableEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.InboundTransfer>;
     }
@@ -3381,7 +3381,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.inbound_transfer.available';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.InboundTransfer>;
       pull(): Promise<V2MoneyManagementInboundTransferAvailableEvent>;
@@ -3403,7 +3403,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.inbound_transfer.bank_debit_failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.InboundTransfer>;
     }
@@ -3411,7 +3411,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.inbound_transfer.bank_debit_failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.InboundTransfer>;
       pull(): Promise<V2MoneyManagementInboundTransferBankDebitFailedEvent>;
@@ -3424,7 +3424,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.inbound_transfer.bank_debit_processing';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.InboundTransfer>;
     }
@@ -3432,7 +3432,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.inbound_transfer.bank_debit_processing';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.InboundTransfer>;
       pull(): Promise<V2MoneyManagementInboundTransferBankDebitProcessingEvent>;
@@ -3445,7 +3445,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.inbound_transfer.bank_debit_queued';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.InboundTransfer>;
     }
@@ -3453,7 +3453,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.inbound_transfer.bank_debit_queued';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.InboundTransfer>;
       pull(): Promise<V2MoneyManagementInboundTransferBankDebitQueuedEvent>;
@@ -3466,7 +3466,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.inbound_transfer.bank_debit_returned';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.InboundTransfer>;
     }
@@ -3474,7 +3474,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.inbound_transfer.bank_debit_returned';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.InboundTransfer>;
       pull(): Promise<V2MoneyManagementInboundTransferBankDebitReturnedEvent>;
@@ -3487,7 +3487,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.inbound_transfer.bank_debit_succeeded';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.InboundTransfer>;
     }
@@ -3495,7 +3495,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.inbound_transfer.bank_debit_succeeded';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.InboundTransfer>;
       pull(): Promise<V2MoneyManagementInboundTransferBankDebitSucceededEvent>;
@@ -3508,7 +3508,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_payment.canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundPayment>;
     }
@@ -3516,7 +3516,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_payment.canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundPayment>;
       pull(): Promise<V2MoneyManagementOutboundPaymentCanceledEvent>;
@@ -3529,7 +3529,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_payment.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundPayment>;
     }
@@ -3537,7 +3537,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_payment.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundPayment>;
       pull(): Promise<V2MoneyManagementOutboundPaymentCreatedEvent>;
@@ -3550,7 +3550,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_payment.failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundPayment>;
     }
@@ -3558,7 +3558,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_payment.failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundPayment>;
       pull(): Promise<V2MoneyManagementOutboundPaymentFailedEvent>;
@@ -3571,7 +3571,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_payment.posted';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundPayment>;
     }
@@ -3579,7 +3579,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_payment.posted';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundPayment>;
       pull(): Promise<V2MoneyManagementOutboundPaymentPostedEvent>;
@@ -3592,7 +3592,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_payment.returned';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundPayment>;
     }
@@ -3600,7 +3600,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_payment.returned';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundPayment>;
       pull(): Promise<V2MoneyManagementOutboundPaymentReturnedEvent>;
@@ -3613,7 +3613,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_payment.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundPayment>;
     }
@@ -3621,7 +3621,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_payment.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundPayment>;
       pull(): Promise<V2MoneyManagementOutboundPaymentUpdatedEvent>;
@@ -3634,7 +3634,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_transfer.canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
     }
@@ -3642,7 +3642,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_transfer.canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
       pull(): Promise<V2MoneyManagementOutboundTransferCanceledEvent>;
@@ -3655,7 +3655,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_transfer.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
     }
@@ -3663,7 +3663,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_transfer.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
       pull(): Promise<V2MoneyManagementOutboundTransferCreatedEvent>;
@@ -3676,7 +3676,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_transfer.failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
     }
@@ -3684,7 +3684,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_transfer.failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
       pull(): Promise<V2MoneyManagementOutboundTransferFailedEvent>;
@@ -3697,7 +3697,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_transfer.posted';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
     }
@@ -3705,7 +3705,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_transfer.posted';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
       pull(): Promise<V2MoneyManagementOutboundTransferPostedEvent>;
@@ -3718,7 +3718,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_transfer.returned';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
     }
@@ -3726,7 +3726,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_transfer.returned';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
       pull(): Promise<V2MoneyManagementOutboundTransferReturnedEvent>;
@@ -3739,7 +3739,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_transfer.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
     }
@@ -3747,7 +3747,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.outbound_transfer.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
       pull(): Promise<V2MoneyManagementOutboundTransferUpdatedEvent>;
@@ -3760,7 +3760,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.payout_method.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.PayoutMethod>;
     }
@@ -3768,7 +3768,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.payout_method.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.PayoutMethod>;
       pull(): Promise<V2MoneyManagementPayoutMethodUpdatedEvent>;
@@ -3783,7 +3783,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V2MoneyManagementReceivedCreditAvailableEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedCredit>;
     }
@@ -3791,7 +3791,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_credit.available';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedCredit>;
       pull(): Promise<V2MoneyManagementReceivedCreditAvailableEvent>;
@@ -3813,7 +3813,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_credit.failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedCredit>;
     }
@@ -3821,7 +3821,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_credit.failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedCredit>;
       pull(): Promise<V2MoneyManagementReceivedCreditFailedEvent>;
@@ -3834,7 +3834,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_credit.returned';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedCredit>;
     }
@@ -3842,7 +3842,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_credit.returned';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedCredit>;
       pull(): Promise<V2MoneyManagementReceivedCreditReturnedEvent>;
@@ -3855,7 +3855,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_credit.succeeded';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedCredit>;
     }
@@ -3863,7 +3863,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_credit.succeeded';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedCredit>;
       pull(): Promise<V2MoneyManagementReceivedCreditSucceededEvent>;
@@ -3876,7 +3876,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_debit.canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedDebit>;
     }
@@ -3884,7 +3884,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_debit.canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedDebit>;
       pull(): Promise<V2MoneyManagementReceivedDebitCanceledEvent>;
@@ -3897,7 +3897,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_debit.failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedDebit>;
     }
@@ -3905,7 +3905,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_debit.failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedDebit>;
       pull(): Promise<V2MoneyManagementReceivedDebitFailedEvent>;
@@ -3918,7 +3918,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_debit.pending';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedDebit>;
     }
@@ -3926,7 +3926,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_debit.pending';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedDebit>;
       pull(): Promise<V2MoneyManagementReceivedDebitPendingEvent>;
@@ -3939,7 +3939,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_debit.succeeded';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedDebit>;
     }
@@ -3947,7 +3947,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_debit.succeeded';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedDebit>;
       pull(): Promise<V2MoneyManagementReceivedDebitSucceededEvent>;
@@ -3960,7 +3960,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_debit.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedDebit>;
     }
@@ -3968,7 +3968,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.received_debit.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.ReceivedDebit>;
       pull(): Promise<V2MoneyManagementReceivedDebitUpdatedEvent>;
@@ -3981,7 +3981,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.transaction.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.Transaction>;
     }
@@ -3989,7 +3989,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.transaction.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.Transaction>;
       pull(): Promise<V2MoneyManagementTransactionCreatedEvent>;
@@ -4002,7 +4002,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.transaction.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.Transaction>;
     }
@@ -4010,7 +4010,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.money_management.transaction.updated';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.Transaction>;
       pull(): Promise<V2MoneyManagementTransactionUpdatedEvent>;
@@ -4023,7 +4023,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.payments.off_session_payment.authorization_attempt_failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
     }
@@ -4031,7 +4031,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.payments.off_session_payment.authorization_attempt_failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
       pull(): Promise<
@@ -4047,7 +4047,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.payments.off_session_payment.authorization_attempt_started';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
     }
@@ -4055,7 +4055,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.payments.off_session_payment.authorization_attempt_started';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
       pull(): Promise<
@@ -4070,7 +4070,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.payments.off_session_payment.canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
     }
@@ -4078,7 +4078,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.payments.off_session_payment.canceled';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
       pull(): Promise<V2PaymentsOffSessionPaymentCanceledEvent>;
@@ -4091,7 +4091,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.payments.off_session_payment.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
     }
@@ -4099,7 +4099,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.payments.off_session_payment.created';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
       pull(): Promise<V2PaymentsOffSessionPaymentCreatedEvent>;
@@ -4112,7 +4112,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.payments.off_session_payment.failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
     }
@@ -4120,7 +4120,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.payments.off_session_payment.failed';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
       pull(): Promise<V2PaymentsOffSessionPaymentFailedEvent>;
@@ -4133,7 +4133,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.payments.off_session_payment.succeeded';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
     }
@@ -4141,7 +4141,7 @@ declare module 'stripe' {
       extends V2.EventBase {
       type: 'v2.payments.off_session_payment.succeeded';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
       pull(): Promise<V2PaymentsOffSessionPaymentSucceededEvent>;
