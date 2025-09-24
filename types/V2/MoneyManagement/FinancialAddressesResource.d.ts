@@ -6,14 +6,21 @@ declare module 'stripe' {
       namespace MoneyManagement {
         interface FinancialAddressCreateParams {
           /**
-           * Open Enum. The currency the FinancialAddress should support. Currently, only the `usd` and `gbp` values are supported.
-           */
-          currency: string;
-
-          /**
            * The ID of the FinancialAccount the new FinancialAddress should be associated with.
            */
           financial_account: string;
+
+          /**
+           * The type of FinancialAddress details to provision.
+           */
+          type: FinancialAddressCreateParams.Type;
+        }
+
+        namespace FinancialAddressCreateParams {
+          type Type =
+            | 'gb_bank_account'
+            | 'sepa_bank_account'
+            | 'us_bank_account';
         }
       }
 

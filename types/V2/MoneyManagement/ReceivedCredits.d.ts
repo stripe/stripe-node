@@ -29,7 +29,7 @@ declare module 'stripe' {
           balance_transfer?: ReceivedCredit.BalanceTransfer;
 
           /**
-           * This object stores details about the originating banking transaction that resulted in the ReceivedCredit. Present if `type` field value is `external_credit`.
+           * This object stores details about the originating banking transaction that resulted in the ReceivedCredit. Present if `type` field value is `bank_transfer`.
            */
           bank_transfer?: ReceivedCredit.BankTransfer;
 
@@ -119,9 +119,9 @@ declare module 'stripe' {
             financial_address: string;
 
             /**
-             * Open Enum. Indicates the type of source via from which external funds originated.
+             * Open Enum. Indicates the origin of source from which external funds originated from.
              */
-            payment_method_type: BankTransfer.PaymentMethodType;
+            origin_type: BankTransfer.OriginType;
 
             /**
              * Freeform string set by originator of the external ReceivedCredit.
@@ -129,12 +129,17 @@ declare module 'stripe' {
             statement_descriptor?: string;
 
             /**
-             * Hash containing the transaction bank details. Present if `payment_method_type` field value is `gb_bank_account`.
+             * Hash containing the transaction bank details. Present if `origin_type` field value is `gb_bank_account`.
              */
             gb_bank_account?: BankTransfer.GbBankAccount;
 
             /**
-             * Hash containing the transaction bank details. Present if `payment_method_type` field value is `us_bank_account`.
+             * Hash containing the transaction bank details. Present if `origin_type` field value is `sepa_bank_account`.
+             */
+            sepa_bank_account?: BankTransfer.SepaBankAccount;
+
+            /**
+             * Hash containing the transaction bank details. Present if `origin_type` field value is `us_bank_account`.
              */
             us_bank_account?: BankTransfer.UsBankAccount;
           }
@@ -167,7 +172,42 @@ declare module 'stripe' {
               sort_code?: string;
             }
 
-            type PaymentMethodType = 'gb_bank_account' | 'us_bank_account';
+            type OriginType =
+              | 'gb_bank_account'
+              | 'sepa_bank_account'
+              | 'us_bank_account';
+
+            interface SepaBankAccount {
+              /**
+               * The account holder name of the bank account the transfer was received from.
+               */
+              account_holder_name?: string;
+
+              /**
+               * The bank name the transfer was received from.
+               */
+              bank_name?: string;
+
+              /**
+               * The BIC of the SEPA account.
+               */
+              bic?: string;
+
+              /**
+               * The origination country of the bank transfer.
+               */
+              country?: string;
+
+              /**
+               * The IBAN that originated the transfer.
+               */
+              iban?: string;
+
+              /**
+               * The money transmission network used to send funds for this ReceivedCredit.
+               */
+              network: 'sepa_credit_transfer';
+            }
 
             interface UsBankAccount {
               /**

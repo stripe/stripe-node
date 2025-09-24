@@ -107,17 +107,17 @@ declare module 'stripe' {
 
           interface FxQuote {
             /**
-             * The duration the exchange rate lock remains valid from creation time. Allowed value is five_minutes.
+             * The duration the exchange rate lock remains valid from creation time. Allowed value is five_minutes or none.
              */
-            lock_duration: 'five_minutes';
+            lock_duration: FxQuote.LockDuration;
 
             /**
-             * Time at which the rate lock will expire, measured in seconds since the Unix epoch.
+             * Time at which the rate lock will expire, measured in seconds since the Unix epoch. Null when rate locking is not supported.
              */
-            lock_expires_at: string;
+            lock_expires_at?: string;
 
             /**
-             * Lock status of the quote. Transitions from active to expired once past the lock_expires_at timestamp. Value can be active or expired.
+             * Lock status of the quote. Transitions from active to expired once past the lock_expires_at timestamp. Value can be active, expired or none.
              */
             lock_status: FxQuote.LockStatus;
 
@@ -135,7 +135,9 @@ declare module 'stripe' {
           }
 
           namespace FxQuote {
-            type LockStatus = 'active' | 'expired';
+            type LockDuration = 'five_minutes' | 'none';
+
+            type LockStatus = 'active' | 'expired' | 'none';
 
             interface Rates {
               /**

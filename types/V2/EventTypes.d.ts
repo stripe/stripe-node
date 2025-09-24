@@ -5,6 +5,7 @@ declare module 'stripe' {
     export type Event =
       | Stripe.Events.V1BillingMeterErrorReportTriggeredEvent
       | Stripe.Events.V1BillingMeterNoMeterFoundEvent
+      | Stripe.Events.V2BillingBillSettingUpdatedEvent
       | Stripe.Events.V2CoreAccountClosedEvent
       | Stripe.Events.V2CoreAccountCreatedEvent
       | Stripe.Events.V2CoreAccountUpdatedEvent
@@ -274,6 +275,28 @@ declare module 'stripe' {
     }
 
     /**
+     * This event occurs when a bill setting is updated.
+     */
+    export interface V2BillingBillSettingUpdatedEvent extends V2.EventBase {
+      type: 'v2.billing.bill_setting.updated';
+      // Retrieves data specific to this event.
+      data: V2BillingBillSettingUpdatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: Event.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Billing.BillSetting>;
+    }
+
+    namespace V2BillingBillSettingUpdatedEvent {
+      export interface Data {
+        /**
+         * Timestamp of when the object was updated.
+         */
+        updated: string;
+      }
+    }
+
+    /**
      * This event occurs when an account is closed.
      */
     export interface V2CoreAccountClosedEvent extends V2.EventBase {
@@ -495,14 +518,18 @@ declare module 'stripe' {
       namespace Data {
         export type UpdatedCapability =
           | 'financial_addressses.bank_accounts'
+          | 'financial_addressses.crypto_wallets'
           | 'holds_currencies.eur'
           | 'holds_currencies.gbp'
           | 'holds_currencies.usd'
+          | 'holds_currencies.usdc'
           | 'inbound_transfers.bank_accounts'
           | 'outbound_payments.bank_accounts'
           | 'outbound_payments.cards'
+          | 'outbound_payments.crypto_wallets'
           | 'outbound_payments.financial_accounts'
           | 'outbound_transfers.bank_accounts'
+          | 'outbound_transfers.crypto_wallets'
           | 'outbound_transfers.financial_accounts';
       }
     }

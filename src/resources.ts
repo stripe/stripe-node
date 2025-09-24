@@ -10,10 +10,13 @@ import {Alerts as BillingAlerts} from './resources/Billing/Alerts.js';
 import {Associations as TaxAssociations} from './resources/Tax/Associations.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
+import {BillSettings as V2BillingBillSettings} from './resources/V2/Billing/BillSettings.js';
+import {Cadences as V2BillingCadences} from './resources/V2/Billing/Cadences.js';
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
 import {Cardholders as IssuingCardholders} from './resources/Issuing/Cardholders.js';
 import {Cards as IssuingCards} from './resources/Issuing/Cards.js';
 import {Cards as TestHelpersIssuingCards} from './resources/TestHelpers/Issuing/Cards.js';
+import {CollectionSettings as V2BillingCollectionSettings} from './resources/V2/Billing/CollectionSettings.js';
 import {Configurations as BillingPortalConfigurations} from './resources/BillingPortal/Configurations.js';
 import {Configurations as TerminalConfigurations} from './resources/Terminal/Configurations.js';
 import {ConfirmationTokens as TestHelpersConfirmationTokens} from './resources/TestHelpers/ConfirmationTokens.js';
@@ -71,6 +74,7 @@ import {PersonalizationDesigns as IssuingPersonalizationDesigns} from './resourc
 import {PersonalizationDesigns as TestHelpersIssuingPersonalizationDesigns} from './resources/TestHelpers/Issuing/PersonalizationDesigns.js';
 import {PhysicalBundles as IssuingPhysicalBundles} from './resources/Issuing/PhysicalBundles.js';
 import {Products as ClimateProducts} from './resources/Climate/Products.js';
+import {Profiles as V2BillingProfiles} from './resources/V2/Billing/Profiles.js';
 import {ReaderCollectedData as TerminalReaderCollectedData} from './resources/Terminal/ReaderCollectedData.js';
 import {Readers as TerminalReaders} from './resources/Terminal/Readers.js';
 import {Readers as TestHelpersTerminalReaders} from './resources/TestHelpers/Terminal/Readers.js';
@@ -297,10 +301,14 @@ export const Treasury = resourceNamespace('treasury', {
 });
 export const V2 = resourceNamespace('v2', {
   Billing: resourceNamespace('billing', {
+    BillSettings: V2BillingBillSettings,
+    Cadences: V2BillingCadences,
+    CollectionSettings: V2BillingCollectionSettings,
     MeterEventAdjustments: V2BillingMeterEventAdjustments,
     MeterEventSession: V2BillingMeterEventSession,
     MeterEventStream: V2BillingMeterEventStream,
     MeterEvents: V2BillingMeterEvents,
+    Profiles: V2BillingProfiles,
   }),
   Core: resourceNamespace('core', {
     AccountLinks: V2CoreAccountLinks,

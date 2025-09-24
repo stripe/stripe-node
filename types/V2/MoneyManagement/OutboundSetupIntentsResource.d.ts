@@ -96,7 +96,7 @@ declare module 'stripe' {
               number: string;
             }
 
-            type Type = 'bank_account' | 'card';
+            type Type = 'bank_account' | 'card' | 'crypto_wallet';
           }
 
           type UsageIntent = 'payment' | 'transfer';
@@ -193,7 +193,7 @@ declare module 'stripe' {
               number?: string;
             }
 
-            type Type = 'bank_account' | 'card';
+            type Type = 'bank_account' | 'card' | 'crypto_wallet';
           }
         }
       }

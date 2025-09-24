@@ -150,10 +150,16 @@
 ///<reference path='./Treasury/ReceivedDebitsResource.d.ts' />
 ///<reference path='./Treasury/TransactionEntriesResource.d.ts' />
 ///<reference path='./Treasury/TransactionsResource.d.ts' />
+///<reference path='./V2/Billing/BillSettings/VersionsResource.d.ts' />
+///<reference path='./V2/Billing/BillSettingsResource.d.ts' />
+///<reference path='./V2/Billing/CadencesResource.d.ts' />
+///<reference path='./V2/Billing/CollectionSettings/VersionsResource.d.ts' />
+///<reference path='./V2/Billing/CollectionSettingsResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventAdjustmentsResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessionResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
+///<reference path='./V2/Billing/ProfilesResource.d.ts' />
 ///<reference path='./V2/Core/AccountLinksResource.d.ts' />
 ///<reference path='./V2/Core/Accounts/PersonsResource.d.ts' />
 ///<reference path='./V2/Core/AccountsResource.d.ts' />
@@ -345,9 +351,15 @@
 ///<reference path='./Treasury/ReceivedDebits.d.ts' />
 ///<reference path='./Treasury/TransactionEntries.d.ts' />
 ///<reference path='./Treasury/Transactions.d.ts' />
+///<reference path='./V2/Billing/BillSettingVersions.d.ts' />
+///<reference path='./V2/Billing/BillSettings.d.ts' />
+///<reference path='./V2/Billing/Cadences.d.ts' />
+///<reference path='./V2/Billing/CollectionSettingVersions.d.ts' />
+///<reference path='./V2/Billing/CollectionSettings.d.ts' />
 ///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
+///<reference path='./V2/Billing/Profiles.d.ts' />
 ///<reference path='./V2/Core/AccountLinks.d.ts' />
 ///<reference path='./V2/Core/AccountPersons.d.ts' />
 ///<reference path='./V2/Core/Accounts.d.ts' />
@@ -583,10 +595,14 @@ declare module 'stripe' {
     };
     v2: {
       billing: {
+        billSettings: Stripe.V2.Billing.BillSettingsResource;
+        cadences: Stripe.V2.Billing.CadencesResource;
+        collectionSettings: Stripe.V2.Billing.CollectionSettingsResource;
         meterEvents: Stripe.V2.Billing.MeterEventsResource;
         meterEventAdjustments: Stripe.V2.Billing.MeterEventAdjustmentsResource;
         meterEventSession: Stripe.V2.Billing.MeterEventSessionResource;
         meterEventStream: Stripe.V2.Billing.MeterEventStreamResource;
+        profiles: Stripe.V2.Billing.ProfilesResource;
       };
       core: {
         accounts: Stripe.V2.Core.AccountsResource;
