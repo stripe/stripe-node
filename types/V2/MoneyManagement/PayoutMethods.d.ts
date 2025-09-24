@@ -134,7 +134,7 @@ declare module 'stripe' {
             last4: string;
           }
 
-          type Type = 'bank_account' | 'card';
+          type Type = 'bank_account' | 'card' | 'crypto_wallet';
 
           interface UsageStatus {
             /**

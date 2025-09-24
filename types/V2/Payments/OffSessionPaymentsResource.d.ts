@@ -34,9 +34,29 @@ declare module 'stripe' {
           payment_method: string;
 
           /**
+           * Provides industry-specific information about the amount.
+           */
+          amount_details?: OffSessionPaymentCreateParams.AmountDetails;
+
+          /**
+           * This hash contains details about the Mandate to create.
+           */
+          mandate_data?: OffSessionPaymentCreateParams.MandateData;
+
+          /**
            * The account (if any) for which the funds of the OffSessionPayment are intended.
            */
           on_behalf_of?: string;
+
+          /**
+           * Payment method options for the off-session payment.
+           */
+          payment_method_options?: OffSessionPaymentCreateParams.PaymentMethodOptions;
+
+          /**
+           * Details about the payments orchestration configuration.
+           */
+          payments_orchestration?: OffSessionPaymentCreateParams.PaymentsOrchestration;
 
           /**
            * Details about the OffSessionPayment retries.
@@ -70,9 +90,152 @@ declare module 'stripe' {
         }
 
         namespace OffSessionPaymentCreateParams {
+          interface AmountDetails {
+            /**
+             * The amount the total transaction was discounted for.
+             */
+            discount_amount?: number;
+
+            /**
+             * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+             */
+            line_items: Array<AmountDetails.LineItem>;
+
+            /**
+             * Contains information about the shipping portion of the amount.
+             */
+            shipping?: AmountDetails.Shipping;
+
+            /**
+             * Contains information about the tax portion of the amount.
+             */
+            tax?: AmountDetails.Tax;
+          }
+
+          namespace AmountDetails {
+            interface LineItem {
+              /**
+               * The amount an item was discounted for. Positive integer.
+               */
+              discount_amount?: number;
+
+              /**
+               * Unique identifier of the product. At most 12 characters long.
+               */
+              product_code?: string;
+
+              /**
+               * Name of the product. At most 100 characters long.
+               */
+              product_name: string;
+
+              /**
+               * Number of items of the product. Positive integer.
+               */
+              quantity: number;
+
+              /**
+               * Contains information about the tax on the item.
+               */
+              tax?: LineItem.Tax;
+
+              /**
+               * Cost of the product. Non-negative integer.
+               */
+              unit_cost: number;
+            }
+
+            namespace LineItem {
+              interface Tax {
+                /**
+                 * Total portion of the amount that is for tax.
+                 */
+                total_tax_amount?: number;
+              }
+            }
+
+            interface Shipping {
+              /**
+               * Portion of the amount that is for shipping.
+               */
+              amount?: number;
+
+              /**
+               * The postal code that represents the shipping source.
+               */
+              from_postal_code?: string;
+
+              /**
+               * The postal code that represents the shipping destination.
+               */
+              to_postal_code?: string;
+            }
+
+            interface Tax {
+              /**
+               * Total portion of the amount that is for tax.
+               */
+              total_tax_amount?: number;
+            }
+          }
+
           type Cadence = 'recurring' | 'unscheduled';
 
+          interface MandateData {
+            /**
+             * This hash contains details about the customer acceptance of the Mandate.
+             */
+            customer_acceptance: MandateData.CustomerAcceptance;
+          }
+
+          namespace MandateData {
+            interface CustomerAcceptance {
+              /**
+               * The time at which the customer accepted the Mandate.
+               */
+              accepted_at?: string;
+
+              /**
+               * The type of customer acceptance information included with the Mandate.
+               */
+              type: 'offline';
+            }
+          }
+
+          interface PaymentMethodOptions {
+            /**
+             * Payment method options for the card payment type.
+             */
+            card?: PaymentMethodOptions.Card;
+          }
+
+          namespace PaymentMethodOptions {
+            interface Card {
+              /**
+               * If you are making a Credential On File transaction with a previously saved card, you should pass the Network Transaction ID
+               * from a prior initial authorization on Stripe (from a successful SetupIntent or a PaymentIntent with `setup_future_usage` set),
+               * or one that you have obtained from another payment processor. This is a token from the network which uniquely identifies the transaction.
+               * Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data.
+               * Note that you should pass in a Network Transaction ID if you have one, regardless of whether this is a
+               * Customer-Initiated Transaction (CIT) or a Merchant-Initiated Transaction (MIT).
+               */
+              network_transaction_id: string;
+            }
+          }
+
+          interface PaymentsOrchestration {
+            /**
+             * True when you want to enable payments orchestration for this off-session payment. False otherwise.
+             */
+            enabled: boolean;
+          }
+
           interface RetryDetails {
+            /**
+             * The pre-configured retry policy to use for the payment.
+             */
+            retry_policy?: string;
+
             /**
              * Indicates the strategy for how you want Stripe to retry the payment.
              */
@@ -80,7 +243,7 @@ declare module 'stripe' {
           }
 
           namespace RetryDetails {
-            type RetryStrategy = 'none' | 'smart';
+            type RetryStrategy = 'heuristic' | 'none' | 'scheduled' | 'smart';
           }
 
           interface TransferData {

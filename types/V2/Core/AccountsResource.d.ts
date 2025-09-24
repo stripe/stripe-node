@@ -1168,6 +1168,11 @@ declare module 'stripe' {
             locales?: Array<Defaults.Locale>;
 
             /**
+             * Account profile information.
+             */
+            profile?: Defaults.Profile;
+
+            /**
              * Default responsibilities held by either Stripe or the platform.
              */
             responsibilities?: Defaults.Responsibilities;
@@ -1259,6 +1264,23 @@ declare module 'stripe' {
               | 'zh-Hant-TW'
               | 'zh-HK'
               | 'zh-TW';
+
+            interface Profile {
+              /**
+               * The business's publicly-available website.
+               */
+              business_url?: string;
+
+              /**
+               * The name which is used by the business.
+               */
+              doing_business_as?: string;
+
+              /**
+               * Internal-only description of the product sold or service provided by the business. It's used by Stripe for risk and underwriting purposes.
+               */
+              product_description?: string;
+            }
 
             interface Responsibilities {
               /**
@@ -1458,11 +1480,6 @@ declare module 'stripe' {
               documents?: BusinessDetails.Documents;
 
               /**
-               * The name which is used by the business.
-               */
-              doing_business_as?: string;
-
-              /**
                * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
                */
               estimated_worker_count?: number;
@@ -1483,11 +1500,6 @@ declare module 'stripe' {
               phone?: string;
 
               /**
-               * Internal-only description of the product sold or service provided by the business. It's used by Stripe for risk and underwriting purposes.
-               */
-              product_description?: string;
-
-              /**
                * The business legal name.
                */
               registered_name?: string;
@@ -1506,11 +1518,6 @@ declare module 'stripe' {
                * The category identifying the legal structure of the business.
                */
               structure?: BusinessDetails.Structure;
-
-              /**
-               * The business's publicly available website.
-               */
-              url?: string;
             }
 
             namespace BusinessDetails {
@@ -3479,7 +3486,7 @@ declare module 'stripe' {
               capabilities?: Recipient.Capabilities;
 
               /**
-               * The payout method id to be used as a default outbound destination. This will allow the PayoutMethod to be omitted on OutboundPayments made through API or sending payouts via dashboard. Can also be explicitly set to `null` to clear the existing default outbound destination.
+               * The payout method id to be used as a default outbound destination. This will allow the PayoutMethod to be omitted on OutboundPayments made through API or sending payouts via dashboard. Can also be explicitly set to `null` to clear the existing default outbound destination. For further details about creating an Outbound Destination, see [Collect recipient's payment details](https://docs.corp.stripe.com/global-payouts-private-preview/quickstart?dashboard-or-api=api#collect-bank-account-details).
                */
               default_outbound_destination?: string;
             }
@@ -3730,6 +3737,11 @@ declare module 'stripe' {
             locales?: Array<Defaults.Locale>;
 
             /**
+             * Account profile information.
+             */
+            profile?: Defaults.Profile;
+
+            /**
              * Default responsibilities held by either Stripe or the platform.
              */
             responsibilities?: Defaults.Responsibilities;
@@ -3821,6 +3833,23 @@ declare module 'stripe' {
               | 'zh-Hant-TW'
               | 'zh-HK'
               | 'zh-TW';
+
+            interface Profile {
+              /**
+               * The business's publicly-available website.
+               */
+              business_url?: string;
+
+              /**
+               * The name which is used by the business.
+               */
+              doing_business_as?: string;
+
+              /**
+               * Internal-only description of the product sold or service provided by the business. It's used by Stripe for risk and underwriting purposes.
+               */
+              product_description?: string;
+            }
 
             interface Responsibilities {
               /**
@@ -4020,11 +4049,6 @@ declare module 'stripe' {
               documents?: BusinessDetails.Documents;
 
               /**
-               * The name which is used by the business.
-               */
-              doing_business_as?: string;
-
-              /**
                * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
                */
               estimated_worker_count?: number;
@@ -4045,11 +4069,6 @@ declare module 'stripe' {
               phone?: string;
 
               /**
-               * Internal-only description of the product sold or service provided by the business. It's used by Stripe for risk and underwriting purposes.
-               */
-              product_description?: string;
-
-              /**
                * The business legal name.
                */
               registered_name?: string;
@@ -4068,11 +4087,6 @@ declare module 'stripe' {
                * The category identifying the legal structure of the business.
                */
               structure?: BusinessDetails.Structure;
-
-              /**
-               * The business's publicly available website.
-               */
-              url?: string;
             }
 
             namespace BusinessDetails {
@@ -4933,6 +4947,7 @@ declare module 'stripe' {
 
           /**
            * Retrieves the details of an Account.
+           * @throws Stripe.RateLimitError
            */
           retrieve(
             id: string,
@@ -4946,6 +4961,7 @@ declare module 'stripe' {
 
           /**
            * Updates the details of an Account.
+           * @throws Stripe.RateLimitError
            */
           update(
             id: string,
