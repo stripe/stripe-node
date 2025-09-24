@@ -6,7 +6,7 @@ declare module 'stripe' {
       namespace Billing {
         interface MeterEventStreamCreateParams {
           /**
-           * List of meter events to include in the request.
+           * List of meter events to include in the request. Supports up to 100 events per request.
            */
           events: Array<MeterEventStreamCreateParams.Event>;
         }
