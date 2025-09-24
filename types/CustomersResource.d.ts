@@ -14,6 +14,11 @@ declare module 'stripe' {
       balance?: number;
 
       /**
+       * The customer's business name. This may be up to *150 characters*.
+       */
+      business_name?: Stripe.Emptyable<string>;
+
+      /**
        * Balance information and default balance settings for this customer.
        */
       cash_balance?: CustomerCreateParams.CashBalance;
@@ -32,6 +37,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * The customer's full name. This may be up to *150 characters*.
+       */
+      individual_name?: Stripe.Emptyable<string>;
 
       /**
        * The prefix for the customer used to generate unique invoice numbers. Must be 3–12 uppercase letters or numbers.
@@ -357,6 +367,11 @@ declare module 'stripe' {
       balance?: number;
 
       /**
+       * The customer's business name. This may be up to *150 characters*.
+       */
+      business_name?: Stripe.Emptyable<string>;
+
+      /**
        * Balance information and default balance settings for this customer.
        */
       cash_balance?: CustomerUpdateParams.CashBalance;
@@ -384,6 +399,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * The customer's full name. This may be up to *150 characters*.
+       */
+      individual_name?: Stripe.Emptyable<string>;
 
       /**
        * The prefix for the customer used to generate unique invoice numbers. Must be 3–12 uppercase letters or numbers.
@@ -887,6 +907,7 @@ declare module 'stripe' {
         | 'konbini'
         | 'kr_card'
         | 'link'
+        | 'mb_way'
         | 'mobilepay'
         | 'multibanco'
         | 'naver_pay'
@@ -897,6 +918,7 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'paypay'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'

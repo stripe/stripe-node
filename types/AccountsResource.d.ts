@@ -374,6 +374,11 @@ declare module 'stripe' {
         link_payments?: Capabilities.LinkPayments;
 
         /**
+         * The mb_way_payments capability.
+         */
+        mb_way_payments?: Capabilities.MbWayPayments;
+
+        /**
          * The mobilepay_payments capability.
          */
         mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -422,6 +427,11 @@ declare module 'stripe' {
          * The paynow_payments capability.
          */
         paynow_payments?: Capabilities.PaynowPayments;
+
+        /**
+         * The paypay_payments capability.
+         */
+        paypay_payments?: Capabilities.PaypayPayments;
 
         /**
          * The pix_payments capability.
@@ -734,6 +744,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface MbWayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface MobilepayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -798,6 +815,13 @@ declare module 'stripe' {
         }
 
         interface PaynowPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface PaypayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1761,12 +1785,12 @@ declare module 'stripe' {
             monthly_payout_days?: Array<number>;
 
             /**
-             * The day of the week when available funds are paid out, specified as `monday`, `tuesday`, etc. (required and applicable only if `interval` is `weekly`.)
+             * The day of the week when available funds are paid out, specified as `monday`, `tuesday`, etc. Required and applicable only if `interval` is `weekly`.
              */
             weekly_anchor?: Schedule.WeeklyAnchor;
 
             /**
-             * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. (required and applicable only if `interval` is `weekly` and `weekly_anchor` is not set.)
+             * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. Required and applicable only if `interval` is `weekly`.
              */
             weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
           }
@@ -1786,8 +1810,6 @@ declare module 'stripe' {
             type WeeklyPayoutDay =
               | 'friday'
               | 'monday'
-              | 'saturday'
-              | 'sunday'
               | 'thursday'
               | 'tuesday'
               | 'wednesday';
@@ -2253,6 +2275,11 @@ declare module 'stripe' {
         link_payments?: Capabilities.LinkPayments;
 
         /**
+         * The mb_way_payments capability.
+         */
+        mb_way_payments?: Capabilities.MbWayPayments;
+
+        /**
          * The mobilepay_payments capability.
          */
         mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -2301,6 +2328,11 @@ declare module 'stripe' {
          * The paynow_payments capability.
          */
         paynow_payments?: Capabilities.PaynowPayments;
+
+        /**
+         * The paypay_payments capability.
+         */
+        paypay_payments?: Capabilities.PaypayPayments;
 
         /**
          * The pix_payments capability.
@@ -2613,6 +2645,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface MbWayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface MobilepayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -2677,6 +2716,13 @@ declare module 'stripe' {
         }
 
         interface PaynowPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface PaypayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -3589,12 +3635,12 @@ declare module 'stripe' {
             monthly_payout_days?: Array<number>;
 
             /**
-             * The day of the week when available funds are paid out, specified as `monday`, `tuesday`, etc. (required and applicable only if `interval` is `weekly`.)
+             * The day of the week when available funds are paid out, specified as `monday`, `tuesday`, etc. Required and applicable only if `interval` is `weekly`.
              */
             weekly_anchor?: Schedule.WeeklyAnchor;
 
             /**
-             * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. (required and applicable only if `interval` is `weekly` and `weekly_anchor` is not set.)
+             * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. Required and applicable only if `interval` is `weekly`.
              */
             weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
           }
@@ -3614,8 +3660,6 @@ declare module 'stripe' {
             type WeeklyPayoutDay =
               | 'friday'
               | 'monday'
-              | 'saturday'
-              | 'sunday'
               | 'thursday'
               | 'tuesday'
               | 'wednesday';

@@ -18,6 +18,8 @@ declare module 'stripe' {
          */
         object: 'terminal.configuration';
 
+        bbpos_wisepad3?: Configuration.BbposWisepad3;
+
         bbpos_wisepos_e?: Configuration.BbposWiseposE;
 
         /**
@@ -54,6 +56,13 @@ declare module 'stripe' {
       }
 
       namespace Configuration {
+        interface BbposWisepad3 {
+          /**
+           * A File ID representing an image to display on the reader
+           */
+          splashscreen?: string | Stripe.File;
+        }
+
         interface BbposWiseposE {
           /**
            * A File ID representing an image to display on the reader

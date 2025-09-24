@@ -73,7 +73,7 @@ declare module 'stripe' {
       available_payout_methods?: Array<Card.AvailablePayoutMethod> | null;
 
       /**
-       * Card brand. Can be `American Express`, `Diners Club`, `Discover`, `Eftpos Australia`, `Girocard`, `JCB`, `MasterCard`, `UnionPay`, `Visa`, or `Unknown`.
+       * Card brand. Can be `American Express`, `Cartes Bancaires`, `Diners Club`, `Discover`, `Eftpos Australia`, `Girocard`, `JCB`, `MasterCard`, `UnionPay`, `Visa`, or `Unknown`.
        */
       brand: string;
 

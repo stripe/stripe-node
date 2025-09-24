@@ -82,6 +82,7 @@ export {Accounts} from './resources/Accounts.js';
 export {ApplePayDomains} from './resources/ApplePayDomains.js';
 export {ApplicationFees} from './resources/ApplicationFees.js';
 export {Balance} from './resources/Balance.js';
+export {BalanceSettings} from './resources/BalanceSettings.js';
 export {BalanceTransactions} from './resources/BalanceTransactions.js';
 export {Charges} from './resources/Charges.js';
 export {ConfirmationTokens} from './resources/ConfirmationTokens.js';
