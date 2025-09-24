@@ -6,6 +6,7 @@ import {
 } from './net/HttpClient.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import {HttpClientResponseError} from './RequestSender.js';
+import {StripeContext} from './StripeContext.ts';
 
 export type AppInfo = {name?: string} & Record<string, unknown>;
 export type ApiMode = 'v1' | 'v2';
@@ -155,7 +156,7 @@ export type StripeObject = {
     httpClient: HttpClientInterface;
     dev: boolean;
     stripeAccount: string | null;
-    stripeContext: string | null;
+    stripeContext: string | StripeContext | null;
   };
   _authenticator?: RequestAuthenticator;
   _emitter: EventEmitter;
@@ -259,7 +260,7 @@ export type UserProvidedConfig = {
   maxNetworkRetries?: number;
   httpClient?: HttpClientInterface;
   stripeAccount?: string;
-  stripeContext?: string;
+  stripeContext?: string | StripeContext;
   typescript?: boolean;
   telemetry?: boolean;
   appInfo?: AppInfo;

@@ -8,6 +8,7 @@
 ///<reference path='./EventTypes.d.ts' />
 ///<reference path='./UpcomingInvoices.d.ts' />
 ///<reference path='./ThinEvent.d.ts' />
+///<reference path='./StripeContext.d.ts' />
 ///<reference path='./crypto/crypto.d.ts' />
 // Imports: The beginning of the section generated from our OpenAPI spec
 ///<reference path='./AccountLinksResource.d.ts' />

@@ -1,5 +1,7 @@
 // This is a manually maintained file
 
+import {StripeContext} from '../src/StripeContext.ts';
+
 declare module 'stripe' {
   namespace Stripe {
     namespace Event {

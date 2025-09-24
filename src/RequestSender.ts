@@ -8,6 +8,7 @@ import {
   generateV1Error,
   generateV2Error,
 } from './Error.js';
+import {StripeContext} from './StripeContext.js';
 import {
   StripeObject,
   RequestHeaders,
@@ -360,7 +361,7 @@ export class RequestSender {
     userSuppliedHeaders: RequestHeaders | null;
     userSuppliedSettings: RequestSettings;
     stripeAccount: string | null;
-    stripeContext: string | null;
+    stripeContext: string | StripeContext | null;
     apiMode: ApiMode;
   }): RequestHeaders {
     const defaultHeaders = {
@@ -371,7 +372,7 @@ export class RequestSender {
       'X-Stripe-Client-Telemetry': this._getTelemetryHeader(),
       'Stripe-Version': apiVersion,
       'Stripe-Account': stripeAccount,
-      'Stripe-Context': stripeContext,
+      'Stripe-Context': stripeContext?.toString(),
       'Idempotency-Key': this._defaultIdempotencyKey(
         method,
         userSuppliedSettings,

@@ -1,6 +1,7 @@
 import * as _Error from './Error.js';
 import {RequestSender} from './RequestSender.js';
 import {StripeResource} from './StripeResource.js';
+import {StripeContext} from './StripeContext.ts';
 import {
   AppInfo,
   RequestAuthenticator,

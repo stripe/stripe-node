@@ -188,7 +188,7 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
             "Can't specify both stripeAccount and stripeContext."
           );
         }
-        opts.headers['Stripe-Context'] = params.stripeContext as string;
+        opts.headers['Stripe-Context'] = params.stripeContext.toString();
       }
       if (params.apiVersion) {
         opts.headers['Stripe-Version'] = params.apiVersion as string;

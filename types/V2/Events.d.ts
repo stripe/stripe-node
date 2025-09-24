@@ -48,7 +48,7 @@ declare module 'stripe' {
         /**
          * Authentication context needed to fetch the event or related object.
          */
-        context?: string;
+        context?: StripeContext;
 
         /**
          * Time at which the object was created.

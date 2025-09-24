@@ -4,6 +4,7 @@ import {
   CryptoProviderOnlySupportsAsyncError,
 } from './crypto/CryptoProvider.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
+import {StripeContext} from './StripeContext.ts';
 
 type WebhookHeader = string | Uint8Array;
 type WebhookParsedHeader = {
@@ -109,6 +110,12 @@ export function createWebhooks(
         payload instanceof Uint8Array
           ? JSON.parse(new TextDecoder('utf8').decode(payload))
           : JSON.parse(payload);
+
+      // Transform context string to StripeContext if present
+      if (jsonPayload.context) {
+        jsonPayload.context = StripeContext.parse(jsonPayload.context);
+      }
+
       return jsonPayload;
     },
 
@@ -137,6 +144,12 @@ export function createWebhooks(
         payload instanceof Uint8Array
           ? JSON.parse(new TextDecoder('utf8').decode(payload))
           : JSON.parse(payload);
+
+      // Transform context string to StripeContext if present
+      if (jsonPayload.context) {
+        jsonPayload.context = StripeContext.parse(jsonPayload.context);
+      }
+
       return jsonPayload;
     },
 
