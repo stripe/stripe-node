@@ -206,6 +206,11 @@ declare module 'stripe' {
              * Setting to control when an update should be scheduled at the end of the period instead of applying immediately.
              */
             schedule_at_period_end?: SubscriptionUpdate.ScheduleAtPeriodEnd;
+
+            /**
+             * The behavior when updating a subscription that is trialing.
+             */
+            trial_update_behavior?: SubscriptionUpdate.TrialUpdateBehavior;
           }
 
           namespace SubscriptionUpdate {
@@ -271,6 +276,8 @@ declare module 'stripe' {
                 type Type = 'decreasing_item_amount' | 'shortening_interval';
               }
             }
+
+            type TrialUpdateBehavior = 'continue_trial' | 'end_trial';
           }
         }
 
@@ -497,6 +504,11 @@ declare module 'stripe' {
              * Setting to control when an update should be scheduled at the end of the period instead of applying immediately.
              */
             schedule_at_period_end?: SubscriptionUpdate.ScheduleAtPeriodEnd;
+
+            /**
+             * The behavior when updating a subscription that is trialing.
+             */
+            trial_update_behavior?: SubscriptionUpdate.TrialUpdateBehavior;
           }
 
           namespace SubscriptionUpdate {
@@ -564,6 +576,8 @@ declare module 'stripe' {
                 type Type = 'decreasing_item_amount' | 'shortening_interval';
               }
             }
+
+            type TrialUpdateBehavior = 'continue_trial' | 'end_trial';
           }
         }
 

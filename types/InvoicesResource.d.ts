@@ -347,7 +347,7 @@ declare module 'stripe' {
         payment_method_options?: PaymentSettings.PaymentMethodOptions;
 
         /**
-         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice). Should not be specified with payment_method_configuration
+         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice).
          */
         payment_method_types?: Stripe.Emptyable<
           Array<PaymentSettings.PaymentMethodType>
@@ -1207,7 +1207,7 @@ declare module 'stripe' {
         payment_method_options?: PaymentSettings.PaymentMethodOptions;
 
         /**
-         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice). Should not be specified with payment_method_configuration
+         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice).
          */
         payment_method_types?: Stripe.Emptyable<
           Array<PaymentSettings.PaymentMethodType>
@@ -2021,6 +2021,11 @@ declare module 'stripe' {
              * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
              */
             tax_code?: string;
+
+            /**
+             * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
+             */
+            unit_label?: string;
           }
 
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
@@ -3412,12 +3417,28 @@ declare module 'stripe' {
 
         interface BillingMode {
           /**
-           * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+           * Configure behavior for flexible billing mode.
+           */
+          flexible?: BillingMode.Flexible;
+
+          /**
+           * Controls the calculation and orchestration of prorations and invoices for subscriptions. If no value is passed, the default is `flexible`.
            */
           type: BillingMode.Type;
         }
 
         namespace BillingMode {
+          interface Flexible {
+            /**
+             * Controls how invoices and invoice items display proration amounts and discount amounts.
+             */
+            proration_discounts?: Flexible.ProrationDiscounts;
+          }
+
+          namespace Flexible {
+            type ProrationDiscounts = 'included' | 'itemized';
+          }
+
           type Type = 'classic' | 'flexible';
         }
 
@@ -3500,11 +3521,6 @@ declare module 'stripe' {
           items: Array<Phase.Item>;
 
           /**
-           * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set. This parameter is deprecated and will be removed in a future version. Use `duration` instead.
-           */
-          iterations?: number;
-
-          /**
            * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual keys in the subscription's `metadata` can be unset by posting an empty value to them in the phase's `metadata`. To unset all keys in the subscription's `metadata`, update the subscription directly or unset every key individually from the phase's `metadata`.
            */
           metadata?: Stripe.MetadataParam;
@@ -3568,7 +3584,7 @@ declare module 'stripe' {
             metadata?: Stripe.MetadataParam;
 
             /**
-             * The period associated with this invoice item. Defaults to the period of the underlying subscription that surrounds the start of the phase.
+             * The period associated with this invoice item. If not set, `period.start.type` defaults to `max_item_period_start` and `period.end.type` defaults to `min_item_period_end`.
              */
             period?: AddInvoiceItem.Period;
 
@@ -4275,12 +4291,28 @@ declare module 'stripe' {
 
         interface BillingMode {
           /**
-           * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+           * Configure behavior for flexible billing mode.
+           */
+          flexible?: BillingMode.Flexible;
+
+          /**
+           * Controls the calculation and orchestration of prorations and invoices for subscriptions. If no value is passed, the default is `flexible`.
            */
           type: BillingMode.Type;
         }
 
         namespace BillingMode {
+          interface Flexible {
+            /**
+             * Controls how invoices and invoice items display proration amounts and discount amounts.
+             */
+            proration_discounts?: Flexible.ProrationDiscounts;
+          }
+
+          namespace Flexible {
+            type ProrationDiscounts = 'included' | 'itemized';
+          }
+
           type Type = 'classic' | 'flexible';
         }
 
@@ -4829,6 +4861,11 @@ declare module 'stripe' {
              * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
              */
             tax_code?: string;
+
+            /**
+             * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
+             */
+            unit_label?: string;
           }
 
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
@@ -5160,6 +5197,11 @@ declare module 'stripe' {
            * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
            */
           tax_code?: string;
+
+          /**
+           * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
+           */
+          unit_label?: string;
         }
 
         type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';

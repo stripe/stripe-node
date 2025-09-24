@@ -4653,6 +4653,13 @@ declare module 'stripe' {
       description?: string;
 
       /**
+       * The list of payment method types to exclude from use with this payment.
+       */
+      excluded_payment_method_types?: Stripe.Emptyable<
+        Array<PaymentIntentUpdateParams.ExcludedPaymentMethodType>
+      >;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -10064,6 +10071,13 @@ declare module 'stripe' {
        * Set to `true` to fail the payment attempt if the PaymentIntent transitions into `requires_action`. This parameter is intended for simpler integrations that do not handle customer actions, like [saving cards without authentication](https://stripe.com/docs/payments/save-card-without-authentication).
        */
       error_on_requires_action?: boolean;
+
+      /**
+       * The list of payment method types to exclude from use with this payment.
+       */
+      excluded_payment_method_types?: Stripe.Emptyable<
+        Array<PaymentIntentConfirmParams.ExcludedPaymentMethodType>
+      >;
 
       /**
        * Specifies which fields in the response should be expanded.

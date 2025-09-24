@@ -489,6 +489,11 @@ declare module 'stripe' {
 
         interface Klarna {
           /**
+           * Chargeback loss reason mapped by Stripe from Klarna's chargeback loss reason
+           */
+          chargeback_loss_reason_code?: string;
+
+          /**
            * The reason for the dispute as defined by Klarna
            */
           reason_code: string | null;

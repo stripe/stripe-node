@@ -1514,6 +1514,8 @@ declare module 'stripe' {
           pay_id: string | null;
         }
 
+        interface Paypay {}
+
         interface Pix {}
 
         interface Promptpay {}

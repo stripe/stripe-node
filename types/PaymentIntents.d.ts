@@ -3192,6 +3192,8 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface Paypay {}
+
         interface Pix {
           /**
            * Determines if the amount includes the IOF tax.

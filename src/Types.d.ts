@@ -86,6 +86,10 @@ export type RequestOptions = {
   settings?: RequestSettings;
   streaming?: boolean;
   headers?: RequestHeaders;
+  stripeContext?: string;
+  /**
+   * NOTE: prefer sending `stripeContext` instead of `stripeAccount` for new code. They're currently identical, but we will eventually discourage and (later) drop support for `stripeAccount`.
+   */
   stripeAccount?: string;
 };
 export type RequestOpts = {

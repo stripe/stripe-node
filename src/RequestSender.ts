@@ -505,7 +505,7 @@ export class RequestSender {
           host: calculatedOptions.host,
           streaming: !!calculatedOptions.streaming,
           settings: {},
-          // If used internally for a non raw_request, overwrite the usage
+          // We use this for thin event internals, so we should record the more specific `usage`, when available
           usage: usage || ['raw_request'],
         };
       } catch (err) {

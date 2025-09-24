@@ -249,7 +249,7 @@ declare module 'stripe' {
       // Retrieves data specific to this event.
       data: V1BillingMeterErrorReportTriggeredEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<Billing.Meter>;
     }
@@ -1896,7 +1896,7 @@ declare module 'stripe' {
     export interface V2CoreEventDestinationPingEvent extends V2.EventBase {
       type: 'v2.core.event_destination.ping';
       // Object containing the reference to API resource relevant to the event.
-      related_object: Event.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.EventDestination>;
     }

@@ -62,6 +62,8 @@ declare module 'stripe' {
          */
         billing_address_collection: Session.BillingAddressCollection | null;
 
+        branding_settings?: Session.BrandingSettings;
+
         /**
          * If set, Checkout displays a back button and customers will be directed to this URL if they decide to cancel payment and return to your website.
          */
@@ -158,6 +160,11 @@ declare module 'stripe' {
         discounts: Array<Session.Discount> | null;
 
         /**
+         * A list of the types of payment methods (e.g., `card`) that should be excluded from this Checkout Session. This should only be used when payment methods for this Checkout Session are managed through the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+         */
+        excluded_payment_method_types?: Array<string>;
+
+        /**
          * The timestamp at which the Checkout Session will expire.
          */
         expires_at: number;
@@ -196,6 +203,8 @@ declare module 'stripe' {
          * The mode of the Checkout Session.
          */
         mode: Session.Mode;
+
+        name_collection?: Session.NameCollection;
 
         /**
          * The optional items presented to the customer at checkout.
@@ -734,10 +743,20 @@ declare module 'stripe' {
           address: Stripe.Address | null;
 
           /**
+           * The customer's business name after a completed Checkout Session.
+           */
+          business_name: string | null;
+
+          /**
            * The email associated with the Customer, if one exists, on the Checkout Session after a completed Checkout Session or at time of session expiry.
            * Otherwise, if the customer has consented to promotional content, this value is the most recent valid email provided by the customer on the Checkout form.
            */
           email: string | null;
+
+          /**
+           * The customer's individual name after a completed Checkout Session.
+           */
+          individual_name: string | null;
 
           /**
            * The customer's name after a completed Checkout Session. Note: This property is populated only for sessions on or after March 30, 2022.
@@ -1208,6 +1227,38 @@ declare module 'stripe' {
 
         type Mode = 'payment' | 'setup' | 'subscription';
 
+        interface NameCollection {
+          business?: NameCollection.Business;
+
+          individual?: NameCollection.Individual;
+        }
+
+        namespace NameCollection {
+          interface Business {
+            /**
+             * Indicates whether business name collection is enabled for the session
+             */
+            enabled: boolean;
+
+            /**
+             * Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
+             */
+            optional: boolean;
+          }
+
+          interface Individual {
+            /**
+             * Indicates whether individual name collection is enabled for the session
+             */
+            enabled: boolean;
+
+            /**
+             * Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
+             */
+            optional: boolean;
+          }
+        }
+
         interface OptionalItem {
           adjustable_quantity: OptionalItem.AdjustableQuantity | null;
 
@@ -1260,6 +1311,8 @@ declare module 'stripe' {
 
           alipay?: PaymentMethodOptions.Alipay;
 
+          alma?: PaymentMethodOptions.Alma;
+
           amazon_pay?: PaymentMethodOptions.AmazonPay;
 
           au_becs_debit?: PaymentMethodOptions.AuBecsDebit;
@@ -1267,6 +1320,8 @@ declare module 'stripe' {
           bacs_debit?: PaymentMethodOptions.BacsDebit;
 
           bancontact?: PaymentMethodOptions.Bancontact;
+
+          billie?: PaymentMethodOptions.Billie;
 
           boleto?: PaymentMethodOptions.Boleto;
 
@@ -1319,6 +1374,8 @@ declare module 'stripe' {
           revolut_pay?: PaymentMethodOptions.RevolutPay;
 
           samsung_pay?: PaymentMethodOptions.SamsungPay;
+
+          satispay?: PaymentMethodOptions.Satispay;
 
           sepa_debit?: PaymentMethodOptions.SepaDebit;
 
@@ -1405,6 +1462,11 @@ declare module 'stripe' {
 
           interface Affirm {
             /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -1417,6 +1479,11 @@ declare module 'stripe' {
           }
 
           interface AfterpayClearpay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -1442,7 +1509,19 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface Alma {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+          }
+
           interface AmazonPay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -1521,6 +1600,13 @@ declare module 'stripe' {
             setup_future_usage?: 'none';
           }
 
+          interface Billie {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+          }
+
           interface Boleto {
             /**
              * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto voucher will expire on Wednesday at 23:59 America/Sao_Paulo time.
@@ -1544,6 +1630,11 @@ declare module 'stripe' {
           }
 
           interface Card {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
             installments?: Card.Installments;
 
             /**
@@ -1639,6 +1730,11 @@ declare module 'stripe' {
           }
 
           interface Cashapp {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -1809,6 +1905,11 @@ declare module 'stripe' {
 
           interface Klarna {
             /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -1866,6 +1967,11 @@ declare module 'stripe' {
 
           interface Link {
             /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -1882,6 +1988,11 @@ declare module 'stripe' {
           }
 
           interface Mobilepay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -2188,6 +2299,11 @@ declare module 'stripe' {
 
           interface RevolutPay {
             /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
@@ -2204,6 +2320,13 @@ declare module 'stripe' {
           }
 
           interface SamsungPay {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
+            capture_method?: 'manual';
+          }
+
+          interface Satispay {
             /**
              * Controls when the funds will be captured from the customer's account.
              */
