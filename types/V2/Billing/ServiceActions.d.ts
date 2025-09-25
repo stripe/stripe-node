@@ -72,6 +72,11 @@ declare module 'stripe' {
             applicability_config: CreditGrant.ApplicabilityConfig;
 
             /**
+             * The category of the credit grant.
+             */
+            category?: CreditGrant.Category;
+
+            /**
              * The expiry configuration for the credit grant.
              */
             expiry_config: CreditGrant.ExpiryConfig;
@@ -80,6 +85,11 @@ declare module 'stripe' {
              * A descriptive name shown in dashboard.
              */
             name: string;
+
+            /**
+             * The desired priority for applying this credit grant. If not specified, it will be set to the default value of 50. The highest priority is 0 and the lowest is 100.
+             */
+            priority?: number;
           }
 
           namespace CreditGrant {
@@ -103,6 +113,11 @@ declare module 'stripe' {
             namespace Amount {
               interface CustomPricingUnit {
                 /**
+                 * The Custom Pricing Unit object.
+                 */
+                custom_pricing_unit_details?: Stripe.V2.Billing.CustomPricingUnit;
+
+                /**
                  * The id of the custom pricing unit.
                  */
                 id: string;
@@ -137,6 +152,8 @@ declare module 'stripe' {
               }
             }
 
+            type Category = 'paid' | 'promotional';
+
             interface ExpiryConfig {
               /**
                * The type of the expiry configuration. We currently support `end_of_service_period`.
@@ -157,6 +174,11 @@ declare module 'stripe' {
             applicability_config: CreditGrantPerTenant.ApplicabilityConfig;
 
             /**
+             * The category of the credit grant.
+             */
+            category?: CreditGrantPerTenant.Category;
+
+            /**
              * The expiry configuration for the credit grant.
              */
             expiry_config: CreditGrantPerTenant.ExpiryConfig;
@@ -165,6 +187,11 @@ declare module 'stripe' {
              * Customer-facing name for the credit grant.
              */
             name: string;
+
+            /**
+             * The desired priority for applying this credit grant. If not specified, it will be set to the default value of 50. The highest priority is 0 and the lowest is 100.
+             */
+            priority?: number;
           }
 
           namespace CreditGrantPerTenant {
@@ -188,6 +215,11 @@ declare module 'stripe' {
             namespace Amount {
               interface CustomPricingUnit {
                 /**
+                 * The Custom Pricing Unit object.
+                 */
+                custom_pricing_unit_details?: Stripe.V2.Billing.CustomPricingUnit;
+
+                /**
                  * The id of the custom pricing unit.
                  */
                 id: string;
@@ -221,6 +253,8 @@ declare module 'stripe' {
                 price_type?: 'metered';
               }
             }
+
+            type Category = 'paid' | 'promotional';
 
             interface ExpiryConfig {
               /**

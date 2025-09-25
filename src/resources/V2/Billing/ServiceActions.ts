@@ -11,4 +11,8 @@ export const ServiceActions = StripeResource.extend({
     method: 'GET',
     fullPath: '/v2/billing/service_actions/{id}',
   }),
+  update: stripeMethod({
+    method: 'POST',
+    fullPath: '/v2/billing/service_actions/{id}',
+  }),
 });

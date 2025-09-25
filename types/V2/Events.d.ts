@@ -76,6 +76,11 @@ declare module 'stripe' {
          * The type of the event.
          */
         type: string;
+
+        /**
+         * For interop events, this is the snapshot event ID.
+         */
+        v1_event_id?: string;
       }
     }
   }

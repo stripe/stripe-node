@@ -197,11 +197,13 @@
 ///<reference path='./V2/MoneyManagement/PayoutMethodsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/ReceivedCreditsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/ReceivedDebitsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/RecipientVerificationsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionEntriesResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionsResource.d.ts' />
 ///<reference path='./V2/Payments/OffSessionPaymentsResource.d.ts' />
 ///<reference path='./V2/Tax/AutomaticRulesResource.d.ts' />
 ///<reference path='./V2/TestHelpers/FinancialAddressesResource.d.ts' />
+///<reference path='./V2/TestHelpers/MoneyManagementResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./AccountNotices.d.ts' />
@@ -419,6 +421,7 @@
 ///<reference path='./V2/MoneyManagement/PayoutMethodsBankAccountSpec.d.ts' />
 ///<reference path='./V2/MoneyManagement/ReceivedCredits.d.ts' />
 ///<reference path='./V2/MoneyManagement/ReceivedDebits.d.ts' />
+///<reference path='./V2/MoneyManagement/RecipientVerifications.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionEntries.d.ts' />
 ///<reference path='./V2/MoneyManagement/Transactions.d.ts' />
 ///<reference path='./V2/Payments/OffSessionPayments.d.ts' />
@@ -675,6 +678,7 @@ declare module 'stripe' {
         payoutMethodsBankAccountSpec: Stripe.V2.MoneyManagement.PayoutMethodsBankAccountSpecResource;
         receivedCredits: Stripe.V2.MoneyManagement.ReceivedCreditsResource;
         receivedDebits: Stripe.V2.MoneyManagement.ReceivedDebitsResource;
+        recipientVerifications: Stripe.V2.MoneyManagement.RecipientVerificationsResource;
         transactions: Stripe.V2.MoneyManagement.TransactionsResource;
         transactionEntries: Stripe.V2.MoneyManagement.TransactionEntriesResource;
       };
@@ -686,6 +690,7 @@ declare module 'stripe' {
       };
       testHelper: {
         financialAddresses: Stripe.V2.TestHelpers.FinancialAddressesResource;
+        moneyManagement: Stripe.V2.TestHelpers.MoneyManagementResource;
       };
     };
     // Fields: The end of the section generated from our OpenAPI spec

@@ -22,7 +22,12 @@ declare module 'stripe' {
         }
 
         namespace FinancialAddressCreditParams {
-          type Network = 'ach' | 'fps' | 'rtp' | 'wire';
+          type Network =
+            | 'ach'
+            | 'fps'
+            | 'rtp'
+            | 'sepa_credit_transfer'
+            | 'wire';
         }
       }
 
