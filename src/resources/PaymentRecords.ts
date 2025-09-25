@@ -24,4 +24,8 @@ export const PaymentRecords = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/payment_records/{id}/report_payment_attempt_guaranteed',
   }),
+  reportPaymentAttemptInformational: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/payment_records/{id}/report_payment_attempt_informational',
+  }),
 });

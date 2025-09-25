@@ -264,7 +264,7 @@ declare module 'stripe' {
     namespace PaymentIntent {
       interface AmountDetails {
         /**
-         * The amount an item was discounted for.
+         * The total discount applied on the transaction.
          */
         discount_amount?: number;
 
@@ -384,6 +384,7 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'paypay'
         | 'payto'
         | 'pix'
         | 'promptpay'
@@ -585,6 +586,8 @@ declare module 'stripe' {
           | 'email_invalid'
           | 'expired_card'
           | 'financial_connections_account_inactive'
+          | 'financial_connections_account_pending_account_numbers'
+          | 'financial_connections_account_unavailable_account_numbers'
           | 'financial_connections_institution_unavailable'
           | 'financial_connections_no_successful_transaction_refresh'
           | 'forwarding_api_inactive'
@@ -1909,6 +1912,8 @@ declare module 'stripe' {
 
         paypal?: PaymentMethodOptions.Paypal;
 
+        paypay?: PaymentMethodOptions.Paypay;
+
         payto?: PaymentMethodOptions.Payto;
 
         pix?: PaymentMethodOptions.Pix;
@@ -2473,12 +2478,12 @@ declare module 'stripe' {
               country?: string;
 
               /**
-               * Address line 1 (e.g., street, PO Box, or company name).
+               * Address line 1, such as the street, PO Box, or company name.
                */
               line1?: string;
 
               /**
-               * Address line 2 (e.g., apartment, suite, unit, or building).
+               * Address line 2, such as the apartment, suite, unit, or building.
                */
               line2?: string;
 
@@ -3113,6 +3118,8 @@ declare module 'stripe' {
 
           type SetupFutureUsage = 'none' | 'off_session';
         }
+
+        interface Paypay {}
 
         interface Payto {
           mandate_options?: Payto.MandateOptions;

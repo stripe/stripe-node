@@ -944,6 +944,8 @@ declare module 'stripe' {
           | 'email_invalid'
           | 'expired_card'
           | 'financial_connections_account_inactive'
+          | 'financial_connections_account_pending_account_numbers'
+          | 'financial_connections_account_unavailable_account_numbers'
           | 'financial_connections_institution_unavailable'
           | 'financial_connections_no_successful_transaction_refresh'
           | 'forwarding_api_inactive'
@@ -1220,6 +1222,11 @@ declare module 'stripe' {
           konbini: PaymentMethodOptions.Konbini | null;
 
           /**
+           * If paying by `pix`, this sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+           */
+          pix?: PaymentMethodOptions.Pix | null;
+
+          /**
            * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
            */
           sepa_debit: PaymentMethodOptions.SepaDebit | null;
@@ -1327,6 +1334,17 @@ declare module 'stripe' {
           interface IdBankTransfer {}
 
           interface Konbini {}
+
+          interface Pix {
+            /**
+             * Determines if the amount includes the IOF tax.
+             */
+            amount_includes_iof: Pix.AmountIncludesIof | null;
+          }
+
+          namespace Pix {
+            type AmountIncludesIof = 'always' | 'never';
+          }
 
           interface SepaDebit {}
 
@@ -1454,6 +1472,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_credit_transfer'

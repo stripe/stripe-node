@@ -636,6 +636,11 @@ declare module 'stripe' {
              * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
              */
             tax_code?: string;
+
+            /**
+             * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
+             */
+            unit_label?: string;
           }
 
           interface Recurring {
@@ -781,6 +786,7 @@ declare module 'stripe' {
         | 'pay_by_bank'
         | 'paynow'
         | 'paypal'
+        | 'paypay'
         | 'payto'
         | 'pix'
         | 'promptpay'
@@ -1750,6 +1756,7 @@ declare module 'stripe' {
         | 'pay_by_bank'
         | 'paynow'
         | 'paypal'
+        | 'paypay'
         | 'payto'
         | 'pix'
         | 'promptpay'

@@ -41,6 +41,11 @@ declare module 'stripe' {
           fleet?: AuthorizationCreateParams.Fleet;
 
           /**
+           * Probability that this transaction can be disputed in the event of fraud. Assessed by comparing the characteristics of the authorization to card network rules.
+           */
+          fraud_disputability_likelihood?: AuthorizationCreateParams.FraudDisputabilityLikelihood;
+
+          /**
            * Information about fuel that was purchased with this transaction.
            */
           fuel?: AuthorizationCreateParams.Fuel;
@@ -69,6 +74,11 @@ declare module 'stripe' {
            * Details about the authorization, such as identifiers, set by the card network.
            */
           network_data?: AuthorizationCreateParams.NetworkData;
+
+          /**
+           * Stripe's assessment of the fraud risk for this authorization.
+           */
+          risk_assessment?: AuthorizationCreateParams.RiskAssessment;
 
           /**
            * Verifications that Stripe performed on information that the cardholder provided to the merchant.
@@ -206,6 +216,12 @@ declare module 'stripe' {
               | 'non_fuel_transaction'
               | 'self_service';
           }
+
+          type FraudDisputabilityLikelihood =
+            | 'neutral'
+            | 'unknown'
+            | 'very_likely'
+            | 'very_unlikely';
 
           interface Fuel {
             /**
@@ -603,6 +619,69 @@ declare module 'stripe' {
              * Identifier assigned to the acquirer by the card network.
              */
             acquiring_institution_id?: string;
+          }
+
+          interface RiskAssessment {
+            /**
+             * Stripe's assessment of this authorization's likelihood of being card testing activity.
+             */
+            card_testing_risk?: RiskAssessment.CardTestingRisk;
+
+            /**
+             * The dispute risk of the merchant (the seller on a purchase) on an authorization based on all Stripe Issuing activity.
+             */
+            merchant_dispute_risk?: RiskAssessment.MerchantDisputeRisk;
+          }
+
+          namespace RiskAssessment {
+            interface CardTestingRisk {
+              /**
+               * The % of declines due to a card number not existing in the past hour, taking place at the same merchant. Higher rates correspond to a greater probability of card testing activity, meaning bad actors may be attempting different card number combinations to guess a correct one. Takes on values between 0 and 100.
+               */
+              invalid_account_number_decline_rate_past_hour?: number;
+
+              /**
+               * The % of declines due to incorrect verification data (like CVV or expiry) in the past hour, taking place at the same merchant. Higher rates correspond to a greater probability of bad actors attempting to utilize valid card credentials at merchants with verification requirements. Takes on values between 0 and 100.
+               */
+              invalid_credentials_decline_rate_past_hour?: number;
+
+              /**
+               * The likelihood that this authorization is associated with card testing activity. This is assessed by evaluating decline activity over the last hour.
+               */
+              risk_level: CardTestingRisk.RiskLevel;
+            }
+
+            namespace CardTestingRisk {
+              type RiskLevel =
+                | 'elevated'
+                | 'highest'
+                | 'low'
+                | 'normal'
+                | 'not_assessed'
+                | 'unknown';
+            }
+
+            interface MerchantDisputeRisk {
+              /**
+               * The dispute rate observed across all Stripe Issuing authorizations for this merchant. For example, a value of 50 means 50% of authorizations from this merchant on Stripe Issuing have resulted in a dispute. Higher values mean a higher likelihood the authorization is disputed. Takes on values between 0 and 100.
+               */
+              dispute_rate?: number;
+
+              /**
+               * The likelihood that authorizations from this merchant will result in a dispute based on their history on Stripe Issuing.
+               */
+              risk_level: MerchantDisputeRisk.RiskLevel;
+            }
+
+            namespace MerchantDisputeRisk {
+              type RiskLevel =
+                | 'elevated'
+                | 'highest'
+                | 'low'
+                | 'normal'
+                | 'not_assessed'
+                | 'unknown';
+            }
           }
 
           interface VerificationData {

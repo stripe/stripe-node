@@ -4,10 +4,6 @@ declare module 'stripe' {
   namespace Stripe {
     /**
      * Options for customizing account balances and payout settings for a Stripe platform's connected accounts.
-     *
-     * This API is only available for users enrolled in the public preview for Accounts v2 on Stripe Connect.
-     * If you are not in this preview, please use the [Accounts v1 API](https://docs.stripe.com/api/accounts?api-version=2025-03-31.basil)
-     * to manage your connected accounts' balance settings instead.
      */
     interface BalanceSettings {
       /**
@@ -35,6 +31,13 @@ declare module 'stripe' {
 
       namespace Payments {
         interface Payouts {
+          /**
+           * The minimum balance amount to retain per currency after automatic payouts. Only funds that exceed these amounts are paid out. Learn more about the [minimum balances for automatic payouts](https://docs.stripe.com/payouts/minimum-balances-for-automatic-payouts).
+           */
+          minimum_balance_by_currency: {
+            [key: string]: number;
+          } | null;
+
           /**
            * Details on when funds from charges are available, and when they are paid out to an external account. See our [Setting Bank and Debit Card Payouts](https://stripe.com/docs/connect/bank-transfers#payout-information) documentation for details.
            */
@@ -75,8 +78,6 @@ declare module 'stripe' {
             type WeeklyPayoutDay =
               | 'friday'
               | 'monday'
-              | 'saturday'
-              | 'sunday'
               | 'thursday'
               | 'tuesday'
               | 'wednesday';
@@ -90,6 +91,11 @@ declare module 'stripe' {
            * The number of days charge funds are held before becoming available.
            */
           delay_days: number;
+
+          /**
+           * The number of days charge funds are held before becoming available. If present, overrides the default, or minimum available, for the account.
+           */
+          delay_days_override?: number;
         }
       }
     }

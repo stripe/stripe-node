@@ -11,14 +11,14 @@ declare module 'stripe' {
 
     interface BalanceSettingsUpdateParams {
       /**
-       * Settings that apply to the [Payments Balance](https://docs.stripe.com/api/balance).
-       */
-      payments: BalanceSettingsUpdateParams.Payments;
-
-      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Settings that apply to the [Payments Balance](https://docs.stripe.com/api/balance).
+       */
+      payments?: BalanceSettingsUpdateParams.Payments;
     }
 
     namespace BalanceSettingsUpdateParams {
@@ -41,6 +41,13 @@ declare module 'stripe' {
 
       namespace Payments {
         interface Payouts {
+          /**
+           * The minimum balance amount to retain per currency after automatic payouts. Only funds that exceed these amounts are paid out. Learn more about the [minimum balances for automatic payouts](https://docs.stripe.com/payouts/minimum-balances-for-automatic-payouts).
+           */
+          minimum_balance_by_currency?: Stripe.Emptyable<{
+            [key: string]: Stripe.Emptyable<number>;
+          }>;
+
           /**
            * Details on when funds from charges are available, and when they are paid out to an external account. For details, see our [Setting Bank and Debit Card Payouts](https://docs.stripe.com/connect/bank-transfers#payout-information) documentation.
            */
@@ -65,7 +72,7 @@ declare module 'stripe' {
             monthly_payout_days?: Array<number>;
 
             /**
-             * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. (required and applicable only if `interval` is `weekly`.)
+             * The days of the week when available funds are paid out, specified as an array, e.g., [`monday`, `tuesday`]. Required and applicable only if `interval` is `weekly`.
              */
             weekly_payout_days?: Array<Schedule.WeeklyPayoutDay>;
           }
@@ -76,8 +83,6 @@ declare module 'stripe' {
             type WeeklyPayoutDay =
               | 'friday'
               | 'monday'
-              | 'saturday'
-              | 'sunday'
               | 'thursday'
               | 'tuesday'
               | 'wednesday';
@@ -86,9 +91,9 @@ declare module 'stripe' {
 
         interface SettlementTiming {
           /**
-           * The number of days charge funds are held before becoming available. May also be set to `minimum`, representing the lowest available value for the account country. Default is `minimum`. The `delay_days` parameter remains at the last configured value if `payouts.schedule.interval` is `manual`. [Learn more about controlling payout delay days](https://docs.stripe.com/connect/manage-payout-schedule).
+           * Change `delay_days` for this account, which determines the number of days charge funds are held before becoming available. The maximum value is 31. Passing an empty string to `delay_days_override` will return `delay_days` to the default, which is the lowest available value for the account. [Learn more about controlling delay days](https://docs.stripe.com/connect/manage-payout-schedule).
            */
-          delay_days_override?: number;
+          delay_days_override?: Stripe.Emptyable<number>;
         }
       }
     }
@@ -111,7 +116,7 @@ declare module 'stripe' {
        *  Related guide: [Making API calls for connected accounts](https://docs.stripe.com/connect/authentication)
        */
       update(
-        params: BalanceSettingsUpdateParams,
+        params?: BalanceSettingsUpdateParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.BalanceSettings>>;
     }

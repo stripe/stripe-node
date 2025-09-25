@@ -234,6 +234,11 @@ declare module 'stripe' {
       paypal?: PaymentMethodCreateParams.Paypal;
 
       /**
+       * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+       */
+      paypay?: PaymentMethodCreateParams.Paypay;
+
+      /**
        * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
        */
       payto?: PaymentMethodCreateParams.Payto;
@@ -727,6 +732,8 @@ declare module 'stripe' {
 
       interface Paypal {}
 
+      interface Paypay {}
+
       interface Payto {
         /**
          * The account number for the bank account.
@@ -869,6 +876,7 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'paypay'
         | 'payto'
         | 'pix'
         | 'promptpay'
@@ -954,19 +962,9 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
-       */
-      link?: PaymentMethodUpdateParams.Link;
-
-      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
-
-      /**
-       * If this is a `pay_by_bank` PaymentMethod, this hash contains details about the PayByBank payment method.
-       */
-      pay_by_bank?: PaymentMethodUpdateParams.PayByBank;
 
       /**
        * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
@@ -1038,10 +1036,6 @@ declare module 'stripe' {
           type Preferred = 'cartes_bancaires' | 'mastercard' | 'visa';
         }
       }
-
-      interface Link {}
-
-      interface PayByBank {}
 
       interface Payto {
         /**
@@ -1137,6 +1131,7 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'paypay'
         | 'payto'
         | 'pix'
         | 'promptpay'

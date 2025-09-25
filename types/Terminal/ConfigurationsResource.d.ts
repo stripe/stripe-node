@@ -5,6 +5,11 @@ declare module 'stripe' {
     namespace Terminal {
       interface ConfigurationCreateParams {
         /**
+         * An object containing device type specific settings for BBPOS WisePad 3 readers
+         */
+        bbpos_wisepad3?: ConfigurationCreateParams.BbposWisepad3;
+
+        /**
          * An object containing device type specific settings for BBPOS WisePOS E readers
          */
         bbpos_wisepos_e?: ConfigurationCreateParams.BbposWiseposE;
@@ -58,6 +63,13 @@ declare module 'stripe' {
       }
 
       namespace ConfigurationCreateParams {
+        interface BbposWisepad3 {
+          /**
+           * A File ID representing an image you would like displayed on the reader.
+           */
+          splashscreen?: Stripe.Emptyable<string>;
+        }
+
         interface BbposWiseposE {
           /**
            * A File ID representing an image to display on the reader
@@ -671,6 +683,13 @@ declare module 'stripe' {
 
       interface ConfigurationUpdateParams {
         /**
+         * An object containing device type specific settings for BBPOS WisePad 3 readers
+         */
+        bbpos_wisepad3?: Stripe.Emptyable<
+          ConfigurationUpdateParams.BbposWisepad3
+        >;
+
+        /**
          * An object containing device type specific settings for BBPOS WisePOS E readers
          */
         bbpos_wisepos_e?: Stripe.Emptyable<
@@ -730,6 +749,13 @@ declare module 'stripe' {
       }
 
       namespace ConfigurationUpdateParams {
+        interface BbposWisepad3 {
+          /**
+           * A File ID representing an image you would like displayed on the reader.
+           */
+          splashscreen?: Stripe.Emptyable<string>;
+        }
+
         interface BbposWiseposE {
           /**
            * A File ID representing an image to display on the reader
