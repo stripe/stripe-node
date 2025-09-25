@@ -48,6 +48,11 @@ declare module 'stripe' {
         namespace CreditBalanceThreshold {
           interface Filter {
             /**
+             * The credit grants for which to configure the credit balance alert.
+             */
+            credit_grants?: Filter.CreditGrants;
+
+            /**
              * Limit the scope to this credit balance alert only to this customer.
              */
             customer?: string;
@@ -59,6 +64,57 @@ declare module 'stripe' {
           }
 
           namespace Filter {
+            interface CreditGrants {
+              /**
+               * The applicability configuration for this credit grants filter.
+               */
+              applicability_config: CreditGrants.ApplicabilityConfig;
+            }
+
+            namespace CreditGrants {
+              interface ApplicabilityConfig {
+                /**
+                 * Specify the scope of this applicability config.
+                 */
+                scope: ApplicabilityConfig.Scope;
+              }
+
+              namespace ApplicabilityConfig {
+                interface Scope {
+                  /**
+                   * A list of billable items that the credit grant can apply to. We currently only support metered billable items. Cannot be used in combination with `price_type` or `prices`.
+                   */
+                  billable_items?: Array<Scope.BillableItem>;
+
+                  /**
+                   * The price type that credit grants can apply to. We currently only support the `metered` price type. Cannot be used in combination with `prices`.
+                   */
+                  price_type?: 'metered';
+
+                  /**
+                   * A list of prices that the credit grant can apply to. We currently only support the `metered` prices. Cannot be used in combination with `price_type`.
+                   */
+                  prices?: Array<Scope.Price>;
+                }
+
+                namespace Scope {
+                  interface BillableItem {
+                    /**
+                     * The billable item ID this credit grant should apply to.
+                     */
+                    id: string;
+                  }
+
+                  interface Price {
+                    /**
+                     * The price ID this credit grant should apply to.
+                     */
+                    id: string;
+                  }
+                }
+              }
+            }
+
             type Type = 'customer' | 'tenant';
           }
 
@@ -125,7 +181,7 @@ declare module 'stripe' {
           meter: string;
 
           /**
-           * Whether the alert should only fire only once, or once per billing cycle.
+           * Defines how the alert will behave.
            */
           recurrence: 'one_time';
         }

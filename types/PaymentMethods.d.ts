@@ -136,6 +136,8 @@ declare module 'stripe' {
 
       paypal?: PaymentMethod.Paypal;
 
+      paypay?: PaymentMethod.Paypay;
+
       payto?: PaymentMethod.Payto;
 
       pix?: PaymentMethod.Pix;
@@ -1369,6 +1371,8 @@ declare module 'stripe' {
         verified_email?: string | null;
       }
 
+      interface Paypay {}
+
       interface Payto {
         /**
          * Bank-State-Branch number of the bank account.
@@ -1545,6 +1549,7 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'paypay'
         | 'payto'
         | 'pix'
         | 'promptpay'

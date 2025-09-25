@@ -4,8 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     /**
      * The `Charge` object represents a single attempt to move money into your Stripe account.
-     * PaymentIntent confirmation is the most common way to create Charges, but transferring
-     * money to a different Stripe account through Connect also creates Charges.
+     * PaymentIntent confirmation is the most common way to create Charges, but [Account Debits](https://stripe.com/docs/connect/account-debits) may also create Charges.
      * Some legacy payment flows create Charges directly, which is not recommended for new integrations.
      */
     interface Charge {
@@ -475,6 +474,8 @@ declare module 'stripe' {
         paynow?: PaymentMethodDetails.Paynow;
 
         paypal?: PaymentMethodDetails.Paypal;
+
+        paypay?: PaymentMethodDetails.Paypay;
 
         payto?: PaymentMethodDetails.Payto;
 
@@ -2218,6 +2219,16 @@ declare module 'stripe' {
 
         interface Paynow {
           /**
+           * ID of the [location](https://stripe.com/docs/api/terminal/locations) that this transaction's reader is assigned to.
+           */
+          location?: string;
+
+          /**
+           * ID of the [reader](https://stripe.com/docs/api/terminal/readers) this transaction was made on.
+           */
+          reader?: string;
+
+          /**
            * Reference number associated with this PayNow payment
            */
           reference: string | null;
@@ -2302,6 +2313,8 @@ declare module 'stripe' {
             type Status = 'eligible' | 'not_eligible' | 'partially_eligible';
           }
         }
+
+        interface Paypay {}
 
         interface Payto {
           /**

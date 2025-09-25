@@ -347,7 +347,7 @@ declare module 'stripe' {
         payment_method_options?: PaymentSettings.PaymentMethodOptions;
 
         /**
-         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice). Should not be specified with payment_method_configuration
+         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice).
          */
         payment_method_types?: Stripe.Emptyable<
           Array<PaymentSettings.PaymentMethodType>
@@ -389,6 +389,11 @@ declare module 'stripe' {
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+          /**
+           * If paying by `pix`, this sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+           */
+          pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
 
           /**
            * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
@@ -541,6 +546,17 @@ declare module 'stripe' {
 
           interface Konbini {}
 
+          interface Pix {
+            /**
+             * Determines if the amount includes the IOF tax. Defaults to `never`.
+             */
+            amount_includes_iof?: Pix.AmountIncludesIof;
+          }
+
+          namespace Pix {
+            type AmountIncludesIof = 'always' | 'never';
+          }
+
           interface SepaDebit {}
 
           interface Upi {
@@ -676,6 +692,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_credit_transfer'
@@ -1207,7 +1224,7 @@ declare module 'stripe' {
         payment_method_options?: PaymentSettings.PaymentMethodOptions;
 
         /**
-         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice). Should not be specified with payment_method_configuration
+         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice).
          */
         payment_method_types?: Stripe.Emptyable<
           Array<PaymentSettings.PaymentMethodType>
@@ -1249,6 +1266,11 @@ declare module 'stripe' {
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+          /**
+           * If paying by `pix`, this sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
+           */
+          pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
 
           /**
            * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Direct Debit payment method options to pass to the invoice's PaymentIntent.
@@ -1401,6 +1423,17 @@ declare module 'stripe' {
 
           interface Konbini {}
 
+          interface Pix {
+            /**
+             * Determines if the amount includes the IOF tax. Defaults to `never`.
+             */
+            amount_includes_iof?: Pix.AmountIncludesIof;
+          }
+
+          namespace Pix {
+            type AmountIncludesIof = 'always' | 'never';
+          }
+
           interface SepaDebit {}
 
           interface Upi {
@@ -1536,6 +1569,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_credit_transfer'
@@ -1756,6 +1790,11 @@ declare module 'stripe' {
     }
 
     interface InvoiceListParams extends PaginationParams {
+      /**
+       * Only return invoices for the cadence specified by this billing cadence ID.
+       */
+      billing_cadence?: string;
+
       /**
        * The collection method of the invoice to retrieve. Either `charge_automatically` or `send_invoice`.
        */
@@ -2021,6 +2060,11 @@ declare module 'stripe' {
              * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
              */
             tax_code?: string;
+
+            /**
+             * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
+             */
+            unit_label?: string;
           }
 
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
@@ -3412,12 +3456,28 @@ declare module 'stripe' {
 
         interface BillingMode {
           /**
-           * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+           * Configure behavior for flexible billing mode.
+           */
+          flexible?: BillingMode.Flexible;
+
+          /**
+           * Controls the calculation and orchestration of prorations and invoices for subscriptions. If no value is passed, the default is `flexible`.
            */
           type: BillingMode.Type;
         }
 
         namespace BillingMode {
+          interface Flexible {
+            /**
+             * Controls how invoices and invoice items display proration amounts and discount amounts.
+             */
+            proration_discounts?: Flexible.ProrationDiscounts;
+          }
+
+          namespace Flexible {
+            type ProrationDiscounts = 'included' | 'itemized';
+          }
+
           type Type = 'classic' | 'flexible';
         }
 
@@ -3500,11 +3560,6 @@ declare module 'stripe' {
           items: Array<Phase.Item>;
 
           /**
-           * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set. This parameter is deprecated and will be removed in a future version. Use `duration` instead.
-           */
-          iterations?: number;
-
-          /**
            * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual keys in the subscription's `metadata` can be unset by posting an empty value to them in the phase's `metadata`. To unset all keys in the subscription's `metadata`, update the subscription directly or unset every key individually from the phase's `metadata`.
            */
           metadata?: Stripe.MetadataParam;
@@ -3568,7 +3623,7 @@ declare module 'stripe' {
             metadata?: Stripe.MetadataParam;
 
             /**
-             * The period associated with this invoice item. Defaults to the period of the underlying subscription that surrounds the start of the phase.
+             * The period associated with this invoice item. If not set, `period.start.type` defaults to `max_item_period_start` and `period.end.type` defaults to `min_item_period_end`.
              */
             period?: AddInvoiceItem.Period;
 
@@ -4215,6 +4270,13 @@ declare module 'stripe' {
         billing_mode?: SubscriptionDetails.BillingMode;
 
         /**
+         * Sets the billing schedules for the subscription.
+         */
+        billing_schedules?: Stripe.Emptyable<
+          Array<SubscriptionDetails.BillingSchedule>
+        >;
+
+        /**
          * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
          */
         cancel_at?: Stripe.Emptyable<number | SubscriptionDetails.CancelAt>;
@@ -4275,13 +4337,97 @@ declare module 'stripe' {
 
         interface BillingMode {
           /**
-           * Controls the calculation and orchestration of prorations and invoices for subscriptions.
+           * Configure behavior for flexible billing mode.
+           */
+          flexible?: BillingMode.Flexible;
+
+          /**
+           * Controls the calculation and orchestration of prorations and invoices for subscriptions. If no value is passed, the default is `flexible`.
            */
           type: BillingMode.Type;
         }
 
         namespace BillingMode {
+          interface Flexible {
+            /**
+             * Controls how invoices and invoice items display proration amounts and discount amounts.
+             */
+            proration_discounts?: Flexible.ProrationDiscounts;
+          }
+
+          namespace Flexible {
+            type ProrationDiscounts = 'included' | 'itemized';
+          }
+
           type Type = 'classic' | 'flexible';
+        }
+
+        interface BillingSchedule {
+          /**
+           * Configure billing schedule differently for individual subscription items.
+           */
+          applies_to?: Array<BillingSchedule.AppliesTo>;
+
+          /**
+           * The end date for the billing schedule.
+           */
+          bill_until?: BillingSchedule.BillUntil;
+
+          /**
+           * Specify a key for the billing schedule. Must be unique to this field, alphanumeric, and up to 200 characters. If not provided, a unique key will be generated.
+           */
+          key?: string;
+        }
+
+        namespace BillingSchedule {
+          interface AppliesTo {
+            /**
+             * The ID of the price object.
+             */
+            price?: string;
+
+            /**
+             * Controls which subscription items the billing schedule applies to.
+             */
+            type: 'price';
+          }
+
+          interface BillUntil {
+            /**
+             * Specifies the billing period.
+             */
+            duration?: BillUntil.Duration;
+
+            /**
+             * The end date of the billing schedule.
+             */
+            timestamp?: number;
+
+            /**
+             * Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
+             */
+            type: BillUntil.Type;
+          }
+
+          namespace BillUntil {
+            interface Duration {
+              /**
+               * Specifies billing duration. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The multiplier applied to the interval.
+               */
+              interval_count?: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type Type = 'duration' | 'timestamp';
+          }
         }
 
         type CancelAt = 'max_period_end' | 'min_period_end';
@@ -4829,6 +4975,11 @@ declare module 'stripe' {
              * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
              */
             tax_code?: string;
+
+            /**
+             * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
+             */
+            unit_label?: string;
           }
 
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
@@ -5160,6 +5311,11 @@ declare module 'stripe' {
            * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
            */
           tax_code?: string;
+
+          /**
+           * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
+           */
+          unit_label?: string;
         }
 
         type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';

@@ -229,7 +229,7 @@ declare module 'stripe' {
     namespace PaymentIntentCreateParams {
       interface AmountDetails {
         /**
-         * The amount an item was discounted for.
+         * The total discount applied on the transaction.
          */
         discount_amount?: Stripe.Emptyable<number>;
 
@@ -463,6 +463,7 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'paypay'
         | 'payto'
         | 'pix'
         | 'promptpay'
@@ -1467,6 +1468,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+         */
+        paypay?: PaymentMethodData.Paypay;
+
+        /**
          * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
          */
         payto?: PaymentMethodData.Payto;
@@ -1915,6 +1921,8 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Paypay {}
+
         interface Payto {
           /**
            * The account number for the bank account.
@@ -2056,6 +2064,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'paypay'
           | 'payto'
           | 'pix'
           | 'promptpay'
@@ -2323,6 +2332,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
+
+        /**
+         * If this is a `paypay` PaymentMethod, this sub-hash contains details about the PayPay payment method options.
+         */
+        paypay?: Stripe.Emptyable<PaymentMethodOptions.Paypay>;
 
         /**
          * If this is a `payto` PaymentMethod, this sub-hash contains details about the PayTo payment method options.
@@ -3946,6 +3960,17 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface Paypay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+        }
+
         interface Payto {
           /**
            * Additional fields for Mandate creation. Only `purpose` field is configurable for PayTo PaymentIntent with `setup_future_usage=none`. Other fields are only applicable to PayTo PaymentIntent with `setup_future_usage=off_session`
@@ -4653,6 +4678,13 @@ declare module 'stripe' {
       description?: string;
 
       /**
+       * The list of payment method types to exclude from use with this payment.
+       */
+      excluded_payment_method_types?: Stripe.Emptyable<
+        Array<PaymentIntentUpdateParams.ExcludedPaymentMethodType>
+      >;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -4759,7 +4791,7 @@ declare module 'stripe' {
     namespace PaymentIntentUpdateParams {
       interface AmountDetails {
         /**
-         * The amount an item was discounted for.
+         * The total discount applied on the transaction.
          */
         discount_amount?: Stripe.Emptyable<number>;
 
@@ -4933,6 +4965,64 @@ declare module 'stripe' {
       }
 
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
+
+      type ExcludedPaymentMethodType =
+        | 'acss_debit'
+        | 'affirm'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'alma'
+        | 'amazon_pay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'billie'
+        | 'blik'
+        | 'boleto'
+        | 'card'
+        | 'cashapp'
+        | 'crypto'
+        | 'customer_balance'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'gopay'
+        | 'grabpay'
+        | 'id_bank_transfer'
+        | 'ideal'
+        | 'kakao_pay'
+        | 'klarna'
+        | 'konbini'
+        | 'kr_card'
+        | 'mb_way'
+        | 'mobilepay'
+        | 'multibanco'
+        | 'naver_pay'
+        | 'nz_bank_account'
+        | 'oxxo'
+        | 'p24'
+        | 'pay_by_bank'
+        | 'payco'
+        | 'paynow'
+        | 'paypal'
+        | 'paypay'
+        | 'payto'
+        | 'pix'
+        | 'promptpay'
+        | 'qris'
+        | 'rechnung'
+        | 'revolut_pay'
+        | 'samsung_pay'
+        | 'satispay'
+        | 'sepa_debit'
+        | 'shopeepay'
+        | 'sofort'
+        | 'stripe_balance'
+        | 'swish'
+        | 'twint'
+        | 'us_bank_account'
+        | 'wechat_pay'
+        | 'zip';
 
       interface Hooks {
         /**
@@ -5904,6 +5994,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+         */
+        paypay?: PaymentMethodData.Paypay;
+
+        /**
          * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
          */
         payto?: PaymentMethodData.Payto;
@@ -6352,6 +6447,8 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Paypay {}
+
         interface Payto {
           /**
            * The account number for the bank account.
@@ -6493,6 +6590,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'paypay'
           | 'payto'
           | 'pix'
           | 'promptpay'
@@ -6760,6 +6858,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
+
+        /**
+         * If this is a `paypay` PaymentMethod, this sub-hash contains details about the PayPay payment method options.
+         */
+        paypay?: Stripe.Emptyable<PaymentMethodOptions.Paypay>;
 
         /**
          * If this is a `payto` PaymentMethod, this sub-hash contains details about the PayTo payment method options.
@@ -8383,6 +8486,17 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface Paypay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+        }
+
         interface Payto {
           /**
            * Additional fields for Mandate creation. Only `purpose` field is configurable for PayTo PaymentIntent with `setup_future_usage=none`. Other fields are only applicable to PayTo PaymentIntent with `setup_future_usage=off_session`
@@ -9131,7 +9245,7 @@ declare module 'stripe' {
     namespace PaymentIntentCaptureParams {
       interface AmountDetails {
         /**
-         * The amount an item was discounted for.
+         * The total discount applied on the transaction.
          */
         discount_amount?: Stripe.Emptyable<number>;
 
@@ -10066,6 +10180,13 @@ declare module 'stripe' {
       error_on_requires_action?: boolean;
 
       /**
+       * The list of payment method types to exclude from use with this payment.
+       */
+      excluded_payment_method_types?: Stripe.Emptyable<
+        Array<PaymentIntentConfirmParams.ExcludedPaymentMethodType>
+      >;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -10168,7 +10289,7 @@ declare module 'stripe' {
     namespace PaymentIntentConfirmParams {
       interface AmountDetails {
         /**
-         * The amount an item was discounted for.
+         * The total discount applied on the transaction.
          */
         discount_amount?: Stripe.Emptyable<number>;
 
@@ -10342,6 +10463,64 @@ declare module 'stripe' {
       }
 
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
+
+      type ExcludedPaymentMethodType =
+        | 'acss_debit'
+        | 'affirm'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'alma'
+        | 'amazon_pay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'billie'
+        | 'blik'
+        | 'boleto'
+        | 'card'
+        | 'cashapp'
+        | 'crypto'
+        | 'customer_balance'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'gopay'
+        | 'grabpay'
+        | 'id_bank_transfer'
+        | 'ideal'
+        | 'kakao_pay'
+        | 'klarna'
+        | 'konbini'
+        | 'kr_card'
+        | 'mb_way'
+        | 'mobilepay'
+        | 'multibanco'
+        | 'naver_pay'
+        | 'nz_bank_account'
+        | 'oxxo'
+        | 'p24'
+        | 'pay_by_bank'
+        | 'payco'
+        | 'paynow'
+        | 'paypal'
+        | 'paypay'
+        | 'payto'
+        | 'pix'
+        | 'promptpay'
+        | 'qris'
+        | 'rechnung'
+        | 'revolut_pay'
+        | 'samsung_pay'
+        | 'satispay'
+        | 'sepa_debit'
+        | 'shopeepay'
+        | 'sofort'
+        | 'stripe_balance'
+        | 'swish'
+        | 'twint'
+        | 'us_bank_account'
+        | 'wechat_pay'
+        | 'zip';
 
       interface Hooks {
         /**
@@ -11329,6 +11508,11 @@ declare module 'stripe' {
         paypal?: PaymentMethodData.Paypal;
 
         /**
+         * If this is a `paypay` PaymentMethod, this hash contains details about the PayPay payment method.
+         */
+        paypay?: PaymentMethodData.Paypay;
+
+        /**
          * If this is a `payto` PaymentMethod, this hash contains details about the PayTo payment method.
          */
         payto?: PaymentMethodData.Payto;
@@ -11777,6 +11961,8 @@ declare module 'stripe' {
 
         interface Paypal {}
 
+        interface Paypay {}
+
         interface Payto {
           /**
            * The account number for the bank account.
@@ -11918,6 +12104,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'paypay'
           | 'payto'
           | 'pix'
           | 'promptpay'
@@ -12185,6 +12372,11 @@ declare module 'stripe' {
          * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
          */
         paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
+
+        /**
+         * If this is a `paypay` PaymentMethod, this sub-hash contains details about the PayPay payment method options.
+         */
+        paypay?: Stripe.Emptyable<PaymentMethodOptions.Paypay>;
 
         /**
          * If this is a `payto` PaymentMethod, this sub-hash contains details about the PayTo payment method options.
@@ -13808,6 +14000,17 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
+        interface Paypay {
+          /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+        }
+
         interface Payto {
           /**
            * Additional fields for Mandate creation. Only `purpose` field is configurable for PayTo PaymentIntent with `setup_future_usage=none`. Other fields are only applicable to PayTo PaymentIntent with `setup_future_usage=off_session`
@@ -14561,7 +14764,7 @@ declare module 'stripe' {
     namespace PaymentIntentIncrementAuthorizationParams {
       interface AmountDetails {
         /**
-         * The amount an item was discounted for.
+         * The total discount applied on the transaction.
          */
         discount_amount?: Stripe.Emptyable<number>;
 

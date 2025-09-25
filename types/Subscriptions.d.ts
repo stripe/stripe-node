@@ -55,6 +55,11 @@ declare module 'stripe' {
       billing_mode: Subscription.BillingMode;
 
       /**
+       * Billing schedules for this subscription.
+       */
+      billing_schedules?: Array<Subscription.BillingSchedule>;
+
+      /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
        */
       billing_thresholds: Subscription.BillingThresholds | null;
@@ -322,6 +327,11 @@ declare module 'stripe' {
 
       interface BillingMode {
         /**
+         * Configure behavior for flexible billing mode
+         */
+        flexible: BillingMode.Flexible | null;
+
+        /**
          * Controls how prorations and invoices for subscriptions are calculated and orchestrated.
          */
         type: BillingMode.Type;
@@ -333,7 +343,91 @@ declare module 'stripe' {
       }
 
       namespace BillingMode {
+        interface Flexible {
+          /**
+           * Controls how invoices and invoice items display proration amounts and discount amounts.
+           */
+          proration_discounts?: Flexible.ProrationDiscounts;
+        }
+
+        namespace Flexible {
+          type ProrationDiscounts = 'included' | 'itemized';
+        }
+
         type Type = 'classic' | 'flexible';
+      }
+
+      interface BillingSchedule {
+        /**
+         * Specifies which subscription items the billing schedule applies to.
+         */
+        applies_to: Array<BillingSchedule.AppliesTo> | null;
+
+        /**
+         * Specifies the billing period.
+         */
+        bill_until: BillingSchedule.BillUntil;
+
+        /**
+         * Unique identifier for the billing schedule.
+         */
+        key: string;
+      }
+
+      namespace BillingSchedule {
+        interface AppliesTo {
+          /**
+           * The billing schedule will apply to the subscription item with the given price ID.
+           */
+          price: string | Stripe.Price | null;
+
+          /**
+           * Controls which subscription items the billing schedule applies to.
+           */
+          type: 'price';
+        }
+
+        interface BillUntil {
+          /**
+           * The timestamp the billing schedule will apply until.
+           */
+          computed_timestamp: number;
+
+          /**
+           * Specifies the billing period.
+           */
+          duration: BillUntil.Duration | null;
+
+          /**
+           * If specified, the billing schedule will apply until the specified timestamp.
+           */
+          timestamp: number | null;
+
+          /**
+           * Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
+           */
+          type: BillUntil.Type;
+        }
+
+        namespace BillUntil {
+          interface Duration {
+            /**
+             * Specifies billing duration. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The multiplier applied to the interval.
+             */
+            interval_count: number | null;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type = 'duration' | 'timestamp';
+        }
       }
 
       interface BillingThresholds {
@@ -510,6 +604,11 @@ declare module 'stripe' {
           konbini: PaymentMethodOptions.Konbini | null;
 
           /**
+           * This sub-hash contains details about the Pix payment method options to pass to invoices created by the subscription.
+           */
+          pix?: PaymentMethodOptions.Pix | null;
+
+          /**
            * This sub-hash contains details about the SEPA Direct Debit payment method options to pass to invoices created by the subscription.
            */
           sepa_debit: PaymentMethodOptions.SepaDebit | null;
@@ -652,6 +751,45 @@ declare module 'stripe' {
 
           interface Konbini {}
 
+          interface Pix {
+            mandate_options?: Pix.MandateOptions;
+          }
+
+          namespace Pix {
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments.
+               */
+              amount: number | null;
+
+              /**
+               * Determines if the amount includes the IOF tax.
+               */
+              amount_includes_iof: MandateOptions.AmountIncludesIof | null;
+
+              /**
+               * Date when the mandate expires and no further payments will be charged, in `YYYY-MM-DD`.
+               */
+              end_date: string | null;
+
+              /**
+               * Schedule at which the future payments will be charged.
+               */
+              payment_schedule: MandateOptions.PaymentSchedule | null;
+            }
+
+            namespace MandateOptions {
+              type AmountIncludesIof = 'always' | 'never';
+
+              type PaymentSchedule =
+                | 'halfyearly'
+                | 'monthly'
+                | 'quarterly'
+                | 'weekly'
+                | 'yearly';
+            }
+          }
+
           interface SepaDebit {}
 
           interface Upi {
@@ -778,6 +916,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'pix'
           | 'promptpay'
           | 'revolut_pay'
           | 'sepa_credit_transfer'

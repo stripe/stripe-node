@@ -474,6 +474,11 @@ declare module 'stripe' {
         paypal_payments?: Capabilities.PaypalPayments;
 
         /**
+         * The status of the Paypay capability of the account, or whether the account can directly process Paypay payments.
+         */
+        paypay_payments?: Capabilities.PaypayPayments;
+
+        /**
          * The status of the PayTo capability of the account, or whether the account can directly process PayTo charges.
          */
         payto_payments?: Capabilities.PaytoPayments;
@@ -695,6 +700,8 @@ declare module 'stripe' {
         type PaynowPayments = 'active' | 'inactive' | 'pending';
 
         type PaypalPayments = 'active' | 'inactive' | 'pending';
+
+        type PaypayPayments = 'active' | 'inactive' | 'pending';
 
         type PaytoPayments = 'active' | 'inactive' | 'pending';
 
@@ -1222,6 +1229,7 @@ declare module 'stripe' {
 
         namespace Error {
           type Code =
+            | 'external_request'
             | 'information_missing'
             | 'invalid_address_city_state_postal_code'
             | 'invalid_address_highway_contract_box'
@@ -1264,6 +1272,7 @@ declare module 'stripe' {
             | 'invalid_url_website_incomplete_under_construction'
             | 'invalid_url_website_other'
             | 'invalid_value_other'
+            | 'unsupported_business_type'
             | 'verification_directors_mismatch'
             | 'verification_document_address_mismatch'
             | 'verification_document_address_missing'
@@ -1418,6 +1427,7 @@ declare module 'stripe' {
 
         namespace Error {
           type Code =
+            | 'external_request'
             | 'information_missing'
             | 'invalid_address_city_state_postal_code'
             | 'invalid_address_highway_contract_box'
@@ -1460,6 +1470,7 @@ declare module 'stripe' {
             | 'invalid_url_website_incomplete_under_construction'
             | 'invalid_url_website_other'
             | 'invalid_value_other'
+            | 'unsupported_business_type'
             | 'verification_directors_mismatch'
             | 'verification_document_address_mismatch'
             | 'verification_document_address_missing'
@@ -1806,8 +1817,6 @@ declare module 'stripe' {
             type WeeklyPayoutDay =
               | 'friday'
               | 'monday'
-              | 'saturday'
-              | 'sunday'
               | 'thursday'
               | 'tuesday'
               | 'wednesday';

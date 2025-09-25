@@ -20,6 +20,16 @@ declare module 'stripe' {
         cardholder?: string;
 
         /**
+         * The desired expiration month (1-12) for this card if [specifying a custom expiration date](https://docs.stripe.com/issuing/cards/virtual/issue-cards?testing-method=with-code#exp-dates).
+         */
+        exp_month?: number;
+
+        /**
+         * The desired 4-digit expiration year for this card if [specifying a custom expiration date](https://docs.stripe.com/issuing/cards/virtual/issue-cards?testing-method=with-code#exp-dates).
+         */
+        exp_year?: number;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -140,12 +150,12 @@ declare module 'stripe' {
             country: string;
 
             /**
-             * Address line 1 (e.g., street, PO Box, or company name).
+             * Address line 1, such as the street, PO Box, or company name.
              */
             line1: string;
 
             /**
-             * Address line 2 (e.g., apartment, suite, unit, or building).
+             * Address line 2, such as the apartment, suite, unit, or building.
              */
             line2?: string;
 
@@ -1249,12 +1259,12 @@ declare module 'stripe' {
             country: string;
 
             /**
-             * Address line 1 (e.g., street, PO Box, or company name).
+             * Address line 1, such as the street, PO Box, or company name.
              */
             line1: string;
 
             /**
-             * Address line 2 (e.g., apartment, suite, unit, or building).
+             * Address line 2, such as the apartment, suite, unit, or building.
              */
             line2?: string;
 

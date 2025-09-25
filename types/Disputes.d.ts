@@ -55,6 +55,11 @@ declare module 'stripe' {
       evidence_details: Dispute.EvidenceDetails;
 
       /**
+       * Intended submission method for the dispute.
+       */
+      intended_submission_method?: Dispute.IntendedSubmissionMethod | null;
+
+      /**
        * If true, it's still possible to refund the disputed payment. After the payment has been fully refunded, no further funds are withdrawn from your Stripe account as a result of this dispute.
        */
       is_charge_refundable: boolean;
@@ -434,6 +439,12 @@ declare module 'stripe' {
         type SubmissionMethod = 'manual' | 'not_submitted' | 'smart_disputes';
       }
 
+      type IntendedSubmissionMethod =
+        | 'manual'
+        | 'prefer_manual'
+        | 'prefer_smart_disputes'
+        | 'smart_disputes';
+
       interface PaymentMethodDetails {
         amazon_pay?: PaymentMethodDetails.AmazonPay;
 
@@ -489,6 +500,11 @@ declare module 'stripe' {
 
         interface Klarna {
           /**
+           * Chargeback loss reason mapped by Stripe from Klarna's chargeback loss reason
+           */
+          chargeback_loss_reason_code?: string;
+
+          /**
            * The reason for the dispute as defined by Klarna
            */
           reason_code: string | null;
@@ -513,7 +529,7 @@ declare module 'stripe' {
         /**
          * Evidence that could be provided to improve the SmartDisputes packet
          */
-        recommended_evidence: Array<string> | null;
+        recommended_evidence: Array<Array<string>> | null;
 
         /**
          * Smart Disputes auto representment packet availability status.

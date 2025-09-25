@@ -109,6 +109,11 @@ declare module 'stripe' {
       fpx?: PaymentMethodConfigurationCreateParams.Fpx;
 
       /**
+       * Meal vouchers in France, or “titres-restaurant”, is a local benefits program commonly offered by employers for their employees to purchase prepared food and beverages on working days. Check this [page](https://stripe.com/docs/payments/benefits/fr-meal-vouchers) for more details.
+       */
+      fr_meal_voucher_conecs?: PaymentMethodConfigurationCreateParams.FrMealVoucherConecs;
+
+      /**
        * giropay is a German payment method based on online banking, introduced in 2006. It allows customers to complete transactions online using their online banking environment, with funds debited from their bank account. Depending on their bank, customers confirm payments on giropay using a second factor of authentication or a PIN. giropay accounts for 10% of online checkouts in Germany. Check this [page](https://stripe.com/docs/payments/giropay) for more details.
        */
       giropay?: PaymentMethodConfigurationCreateParams.Giropay;
@@ -227,6 +232,11 @@ declare module 'stripe' {
        * PayPal, a digital wallet popular with customers in Europe, allows your customers worldwide to pay using their PayPal account. Check this [page](https://stripe.com/docs/payments/paypal) for more details.
        */
       paypal?: PaymentMethodConfigurationCreateParams.Paypal;
+
+      /**
+       * Customers can pay with PayPay online or using the PayPay app.
+       */
+      paypay?: PaymentMethodConfigurationCreateParams.Paypay;
 
       /**
        * PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables customers in Australia to pay by providing their bank account details. Customers must accept a mandate authorizing you to debit their account. Check this [page](https://docs.stripe.com/payments/payto) for more details.
@@ -705,6 +715,26 @@ declare module 'stripe' {
         }
       }
 
+      interface FrMealVoucherConecs {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: FrMealVoucherConecs.DisplayPreference;
+      }
+
+      namespace FrMealVoucherConecs {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Giropay {
         /**
          * Whether or not the payment method should be displayed.
@@ -1145,6 +1175,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Paypay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Paypay.DisplayPreference;
+      }
+
+      namespace Paypay {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Payto {
         /**
          * Whether or not the payment method should be displayed.
@@ -1565,6 +1615,11 @@ declare module 'stripe' {
       fpx?: PaymentMethodConfigurationUpdateParams.Fpx;
 
       /**
+       * Meal vouchers in France, or “titres-restaurant”, is a local benefits program commonly offered by employers for their employees to purchase prepared food and beverages on working days. Check this [page](https://stripe.com/docs/payments/benefits/fr-meal-vouchers) for more details.
+       */
+      fr_meal_voucher_conecs?: PaymentMethodConfigurationUpdateParams.FrMealVoucherConecs;
+
+      /**
        * giropay is a German payment method based on online banking, introduced in 2006. It allows customers to complete transactions online using their online banking environment, with funds debited from their bank account. Depending on their bank, customers confirm payments on giropay using a second factor of authentication or a PIN. giropay accounts for 10% of online checkouts in Germany. Check this [page](https://stripe.com/docs/payments/giropay) for more details.
        */
       giropay?: PaymentMethodConfigurationUpdateParams.Giropay;
@@ -1678,6 +1733,11 @@ declare module 'stripe' {
        * PayPal, a digital wallet popular with customers in Europe, allows your customers worldwide to pay using their PayPal account. Check this [page](https://stripe.com/docs/payments/paypal) for more details.
        */
       paypal?: PaymentMethodConfigurationUpdateParams.Paypal;
+
+      /**
+       * Customers can pay with PayPay online or using the PayPay app.
+       */
+      paypay?: PaymentMethodConfigurationUpdateParams.Paypay;
 
       /**
        * PayTo is a [real-time](https://docs.stripe.com/payments/real-time) payment method that enables customers in Australia to pay by providing their bank account details. Customers must accept a mandate authorizing you to debit their account. Check this [page](https://docs.stripe.com/payments/payto) for more details.
@@ -2156,6 +2216,26 @@ declare module 'stripe' {
         }
       }
 
+      interface FrMealVoucherConecs {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: FrMealVoucherConecs.DisplayPreference;
+      }
+
+      namespace FrMealVoucherConecs {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface Giropay {
         /**
          * Whether or not the payment method should be displayed.
@@ -2584,6 +2664,26 @@ declare module 'stripe' {
       }
 
       namespace Paypal {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Paypay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Paypay.DisplayPreference;
+      }
+
+      namespace Paypay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
