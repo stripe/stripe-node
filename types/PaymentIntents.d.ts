@@ -321,7 +321,6 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
-        | 'paypay'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'
@@ -1484,8 +1483,6 @@ declare module 'stripe' {
 
         paypal?: PaymentMethodOptions.Paypal;
 
-        paypay?: PaymentMethodOptions.Paypay;
-
         pix?: PaymentMethodOptions.Pix;
 
         promptpay?: PaymentMethodOptions.Promptpay;
@@ -2507,8 +2504,6 @@ declare module 'stripe' {
         namespace Paypal {
           type SetupFutureUsage = 'none' | 'off_session';
         }
-
-        interface Paypay {}
 
         interface Pix {
           /**

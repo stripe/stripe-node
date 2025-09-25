@@ -447,11 +447,6 @@ declare module 'stripe' {
         paynow_payments?: Capabilities.PaynowPayments;
 
         /**
-         * The status of the Paypay capability of the account, or whether the account can directly process Paypay payments.
-         */
-        paypay_payments?: Capabilities.PaypayPayments;
-
-        /**
          * The status of the pix payments capability of the account, or whether the account can directly process pix charges.
          */
         pix_payments?: Capabilities.PixPayments;
@@ -623,8 +618,6 @@ declare module 'stripe' {
         type PaycoPayments = 'active' | 'inactive' | 'pending';
 
         type PaynowPayments = 'active' | 'inactive' | 'pending';
-
-        type PaypayPayments = 'active' | 'inactive' | 'pending';
 
         type PixPayments = 'active' | 'inactive' | 'pending';
 

@@ -471,8 +471,6 @@ declare module 'stripe' {
 
         paypal?: PaymentMethodDetails.Paypal;
 
-        paypay?: PaymentMethodDetails.Paypay;
-
         pix?: PaymentMethodDetails.Pix;
 
         promptpay?: PaymentMethodDetails.Promptpay;
@@ -2200,8 +2198,6 @@ declare module 'stripe' {
             type Status = 'eligible' | 'not_eligible' | 'partially_eligible';
           }
         }
-
-        interface Paypay {}
 
         interface Pix {
           /**
