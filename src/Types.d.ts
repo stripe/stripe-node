@@ -127,12 +127,6 @@ export type StripeConstructor = {
 };
 declare const Stripe: StripeConstructor;
 export type StripeObject = {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  parseThinEvent__experimental(
-    payload: string,
-    header: any,
-    secret: string
-  ): unknown;
   getClientUserAgentSeeded: (
     seed: Record<string, string | boolean | null>,
     callback: (userAgent: string) => void
