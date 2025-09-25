@@ -43,9 +43,6 @@ declare module 'stripe' {
       | Stripe.Events.V1CreditNoteVoidedEvent
       | Stripe.Events.V1CustomerCreatedEvent
       | Stripe.Events.V1CustomerDeletedEvent
-      | Stripe.Events.V1CustomerDiscountCreatedEvent
-      | Stripe.Events.V1CustomerDiscountDeletedEvent
-      | Stripe.Events.V1CustomerDiscountUpdatedEvent
       | Stripe.Events.V1CustomerSubscriptionCreatedEvent
       | Stripe.Events.V1CustomerSubscriptionDeletedEvent
       | Stripe.Events.V1CustomerSubscriptionPausedEvent
@@ -359,9 +356,6 @@ declare module 'stripe' {
       | Stripe.Events.V1CreditNoteVoidedEventNotification
       | Stripe.Events.V1CustomerCreatedEventNotification
       | Stripe.Events.V1CustomerDeletedEventNotification
-      | Stripe.Events.V1CustomerDiscountCreatedEventNotification
-      | Stripe.Events.V1CustomerDiscountDeletedEventNotification
-      | Stripe.Events.V1CustomerDiscountUpdatedEventNotification
       | Stripe.Events.V1CustomerSubscriptionCreatedEventNotification
       | Stripe.Events.V1CustomerSubscriptionDeletedEventNotification
       | Stripe.Events.V1CustomerSubscriptionPausedEventNotification
@@ -1601,66 +1595,6 @@ declare module 'stripe' {
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<Customer>;
       fetchEvent(): Promise<V1CustomerDeletedEvent>;
-    }
-
-    /**
-     * Occurs whenever a coupon is attached to a customer.
-     */
-    export interface V1CustomerDiscountCreatedEvent extends V2.EventBase {
-      type: 'v1.customer.discount.created';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<Discount>;
-    }
-    export interface V1CustomerDiscountCreatedEventNotification
-      extends V2.EventBase {
-      type: 'v1.customer.discount.created';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<Discount>;
-      fetchEvent(): Promise<V1CustomerDiscountCreatedEvent>;
-    }
-
-    /**
-     * Occurs whenever a coupon is removed from a customer.
-     */
-    export interface V1CustomerDiscountDeletedEvent extends V2.EventBase {
-      type: 'v1.customer.discount.deleted';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<Discount>;
-    }
-    export interface V1CustomerDiscountDeletedEventNotification
-      extends V2.EventBase {
-      type: 'v1.customer.discount.deleted';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<Discount>;
-      fetchEvent(): Promise<V1CustomerDiscountDeletedEvent>;
-    }
-
-    /**
-     * Occurs whenever a customer is switched from one coupon to another.
-     */
-    export interface V1CustomerDiscountUpdatedEvent extends V2.EventBase {
-      type: 'v1.customer.discount.updated';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<Discount>;
-    }
-    export interface V1CustomerDiscountUpdatedEventNotification
-      extends V2.EventBase {
-      type: 'v1.customer.discount.updated';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<Discount>;
-      fetchEvent(): Promise<V1CustomerDiscountUpdatedEvent>;
     }
 
     /**
