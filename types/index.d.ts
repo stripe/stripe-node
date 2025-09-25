@@ -7,7 +7,7 @@
 ///<reference path='./Webhooks.d.ts' />
 ///<reference path='./EventTypes.d.ts' />
 ///<reference path='./UpcomingInvoices.d.ts' />
-///<reference path='./ThinEvent.d.ts' />
+///<reference path='./V2/EventMisc.d.ts' />
 ///<reference path='./crypto/crypto.d.ts' />
 // Imports: The beginning of the section generated from our OpenAPI spec
 ///<reference path='./AccountLinksResource.d.ts' />
@@ -678,13 +678,12 @@ declare module 'stripe' {
     ): Promise<Stripe.Response<unknown>>;
 
     /**
-     * Parses webhook event payload into a ThinEvent and verifies webhook signature.
-     * To get more information on the event, pass the id from the returned object to
-     * `stripe.v2.core.events.retrieve()`
+     * Parses webhook event payload into a EventNotification and verifies webhook signature.
+     * To get more information on the event, call `.fetchEvent()`. You can also cast to a `Stripe.V2.UnknownEventNotification` to represent event notifications we don't have types for. It's not included in the return type of this function because it breaks narrowing.
      *
      * @throws Stripe.errors.StripeSignatureVerificationError
      */
-    parseThinEvent: (
+    parseEventNotification: (
       /**
        * Raw text body payload received from Stripe.
        */
@@ -718,7 +717,7 @@ declare module 'stripe' {
        * Optional: timestamp to use when checking signature validity. Defaults to Date.now().
        */
       receivedAt?: number
-    ) => Stripe.ThinEvent;
+    ) => Stripe.V2.EventNotification;
   }
 
   export default Stripe;
