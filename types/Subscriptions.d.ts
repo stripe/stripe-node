@@ -35,6 +35,11 @@ declare module 'stripe' {
       automatic_tax: Subscription.AutomaticTax;
 
       /**
+       * The Billing Cadence which controls the timing of recurring invoice generation for this subscription.If unset, the subscription will bill according to its own configured schedule and create its own invoices.If set, this subscription will be billed by the cadence instead, potentially sharing invoices with the other subscriptions linked to that Cadence.
+       */
+      billing_cadence?: string;
+
+      /**
        * The reference point that aligns future [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle) dates. It sets the day of week for `week` intervals, the day of month for `month` and `year` intervals, and the month of year for `year` intervals. The timestamp is in UTC format.
        */
       billing_cycle_anchor: number;

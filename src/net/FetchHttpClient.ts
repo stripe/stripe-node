@@ -141,7 +141,7 @@ export class FetchHttpClient extends HttpClient implements HttpClientInterface {
       {
         method,
         headers: parseHeadersForFetch(headers),
-        body: typeof body === 'object' ? JSON.stringify(body) : body,
+        body: body,
       },
       timeout
     );
