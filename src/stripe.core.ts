@@ -503,60 +503,6 @@ export function createStripe(
         receivedAt
       );
     },
-
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    parseThinEvent__experimental(
-      payload: string | Uint8Array,
-      header: string | Uint8Array,
-      secret: string,
-      tolerance?: number,
-      cryptoProvider?: CryptoProvider,
-      receivedAt?: number
-      // this return type is ignored?? picks up types from `types/index.d.ts` instead
-    ): WebhookEvent {
-      // parses and validates the event payload all in one go
-      // ideally would call the method above, but it's inaceessible
-      const thinEvent = this.webhooks.constructEvent(
-        payload,
-        header,
-        secret,
-        tolerance,
-        cryptoProvider,
-        receivedAt
-      );
-
-      thinEvent.pull = (): Promise<WebhookEvent> => {
-        // all the resources, like v2, get added later, but TS doesn't know about them yet
-        // hence the use of `any`
-        return this._requestSender._rawRequest(
-          'GET',
-          '/v2/core/events/' + thinEvent.id,
-          undefined,
-          {
-            stripeAccount: thinEvent.context as string,
-          },
-          ['pull_event']
-        );
-      };
-
-      if (thinEvent.related_object) {
-        thinEvent.fetchRelatedObject = (): Promise<any> => {
-          return this._requestSender._rawRequest(
-            'GET',
-            // rawRequest takes a path, but events give a full URL
-            // this assumes that the event's URL matches client's base URL
-            new URL(thinEvent.related_object.url).pathname,
-            undefined,
-            {
-              stripeAccount: thinEvent.context,
-            },
-            ['pushed_event_fetch_related_object']
-          );
-        };
-      }
-
-      return thinEvent;
-    },
   } as StripeObject;
 
   return Stripe;
