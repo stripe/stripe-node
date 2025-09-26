@@ -1,5 +1,7 @@
 // File generated from our OpenAPI spec
 
+import {StripeContext} from '../../src/StripeContext';
+
 declare module 'stripe' {
   namespace Stripe {
     namespace V2 {
@@ -48,7 +50,7 @@ declare module 'stripe' {
         /**
          * Authentication context needed to fetch the event or related object.
          */
-        context?: string;
+        context?: StripeContext;
 
         /**
          * Time at which the object was created.

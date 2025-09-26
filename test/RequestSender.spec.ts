@@ -20,11 +20,49 @@ import {
   getSpyableStripe,
   getTestServerStripe,
 } from './testUtils.js';
+import {StripeContext} from '../src/StripeContext.js';
 
 const stripe = getSpyableStripe();
 
 describe('RequestSender', () => {
   const sender = new RequestSender(stripe, 0);
+
+  describe('_normalizeStripeContext', () => {
+    it('returns the req string if it exists, representation of the context if it exists', () => {
+      const result = sender._normalizeStripeContext('req', 'client');
+      expect(result).to.equal('req');
+    });
+
+    it('returns client if the request context is an empty string', () => {
+      // only empty Context unsets
+      const result = sender._normalizeStripeContext('', 'client');
+      expect(result).to.equal('client');
+    });
+
+    it('returns the client context if optsContext is not provided', () => {
+      const result = sender._normalizeStripeContext(undefined, 'client');
+      expect(result).to.equal('client');
+    });
+    it('returns the client context if optsContext is not provided', () => {
+      const result = sender._normalizeStripeContext(null, 'client');
+      expect(result).to.equal('client');
+    });
+
+    it('returns nothing if an empty context is sent', () => {
+      const result = sender._normalizeStripeContext(
+        new StripeContext(),
+        'client'
+      );
+      expect(result).to.equal(null);
+    });
+    it('returns nothing if an empty context is sent', () => {
+      const result = sender._normalizeStripeContext(
+        new StripeContext(['asdf']),
+        null
+      );
+      expect(result).to.equal('asdf');
+    });
+  });
 
   describe('_makeHeaders', () => {
     it('sets the Stripe-Version header if an API version is provided', () => {
@@ -34,6 +72,14 @@ describe('RequestSender', () => {
     it('does not the set the Stripe-Version header if no API version is provided', () => {
       const headers = sender._makeHeaders({});
       expect(headers).to.not.include.keys('Stripe-Version');
+    });
+    it('does not the set the Stripe-Context header if no value is provided', () => {
+      const headers = sender._makeHeaders({});
+      expect(headers).to.not.include.keys('Stripe-Context');
+    });
+    it('does not the set the Stripe-Context header if null is provided', () => {
+      const headers = sender._makeHeaders({stripeContext: null});
+      expect(headers).to.not.include.keys('Stripe-Context');
     });
     describe('idempotency keys', () => {
       it('only creates creates an idempotency key if a v1 request wil retry', () => {

@@ -4,6 +4,7 @@
 import {Agent} from 'http';
 
 import {ApiVersion} from './apiVersion';
+import {StripeContext} from '../src/StripeContext';
 
 declare module 'stripe' {
   namespace Stripe {
@@ -112,14 +113,14 @@ declare module 'stripe' {
       appInfo?: AppInfo;
 
       /**
-       * An account id on whose behalf you wish to make every request.
+       * An account id on whose behalf you wish to make every request. Prefer `stripeContext` for new code.
        */
       stripeAccount?: string;
 
       /**
        * An account on whose behalf you wish to make every request. See https://docs.corp.stripe.com/context for more information.
        */
-      stripeContext?: string;
+      stripeContext?: string | StripeContext;
     }
 
     export interface RequestOptions {
@@ -135,14 +136,14 @@ declare module 'stripe' {
       idempotencyKey?: string;
 
       /**
-       * An account id on whose behalf you wish to make a request.
+       * An account id on whose behalf you wish to make a request. Prefer `stripeContext` for new code.
        */
       stripeAccount?: string;
 
       /**
        * An account on whose behalf you wish to make a request. See https://docs.corp.stripe.com/context for more information.
        */
-      stripeContext?: string;
+      stripeContext?: string | StripeContext;
 
       /**
        * The [API Version](https://stripe.com/docs/upgrades) to use for a given request (e.g., '2020-03-02').
