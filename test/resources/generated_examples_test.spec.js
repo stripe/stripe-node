@@ -915,7 +915,7 @@ describe('Generated tests', function() {
       'cus_123',
       'card_123',
       {
-        account_holder_name: 'Kamil',
+        name: 'Kamil',
       }
     );
     expect(customerSource).not.to.be.null;
