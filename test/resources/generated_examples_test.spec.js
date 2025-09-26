@@ -915,7 +915,7 @@ describe('Generated tests', function() {
       'cus_123',
       'card_123',
       {
-        account_holder_name: 'Kamil',
+        name: 'Kamil',
       }
     );
     expect(customerSource).not.to.be.null;
@@ -5464,6 +5464,27 @@ describe('Generated tests', function() {
     ]);
     const offSessionPayment = await stripe.v2.payment.offSessionPayments.cancel(
       'id_123'
+    );
+    expect(offSessionPayment).not.to.be.null;
+  });
+
+  it('test_v2_payments_off_session_payment_post_3', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/payments/off_session_payments/id_123/capture',
+        response:
+          '{"amount_requested":{"currency":"USD","value":47},"cadence":"unscheduled","compartment_id":"compartment_id","created":"1970-01-12T21:42:34.472Z","customer":"customer","id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"object":"v2.payments.off_session_payment","payment_method":"payment_method","payments_orchestration":{"enabled":true},"retry_details":{"attempts":542738246,"retry_strategy":"scheduled"},"status":"pending"}',
+      },
+    ]);
+    const offSessionPayment = await stripe.v2.payment.offSessionPayments.capture(
+      'id_123',
+      {
+        amount_to_capture: 1374310455,
+        metadata: {
+          key: 'metadata',
+        },
+      }
     );
     expect(offSessionPayment).not.to.be.null;
   });

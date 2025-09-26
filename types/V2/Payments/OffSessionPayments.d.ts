@@ -19,6 +19,11 @@ declare module 'stripe' {
           object: 'v2.payments.off_session_payment';
 
           /**
+           * The amount available to be captured.
+           */
+          amount_capturable?: Amount;
+
+          /**
            * Provides industry-specific information about the amount.
            */
           amount_details?: OffSessionPayment.AmountDetails;
@@ -32,6 +37,16 @@ declare module 'stripe' {
            * The frequency of the underlying payment.
            */
           cadence: OffSessionPayment.Cadence;
+
+          /**
+           * Details about the capture configuration for the OffSessionPayment.
+           */
+          capture?: OffSessionPayment.Capture;
+
+          /**
+           * Whether the OffSessionPayment should be captured automatically or manually.
+           */
+          capture_method?: OffSessionPayment.CaptureMethod;
 
           /**
            * ID of the owning compartment.
@@ -225,6 +240,24 @@ declare module 'stripe' {
           }
 
           type Cadence = 'recurring' | 'unscheduled';
+
+          interface Capture {
+            /**
+             * The timestamp when this payment is no longer eligible to be captured.
+             */
+            capture_before?: string;
+
+            /**
+             * The method to use to capture the payment.
+             */
+            capture_method: Capture.CaptureMethod;
+          }
+
+          namespace Capture {
+            type CaptureMethod = 'automatic' | 'manual';
+          }
+
+          type CaptureMethod = 'automatic' | 'manual';
 
           type FailureReason =
             | 'authorization_expired'
