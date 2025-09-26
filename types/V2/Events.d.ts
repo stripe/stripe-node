@@ -1,9 +1,33 @@
 // File generated from our OpenAPI spec
 
-import {StripeContext} from '../../src/StripeContext';
-
 declare module 'stripe' {
   namespace Stripe {
+    class StripeContext {
+      constructor(segments?: string[]);
+
+      /**
+       * Gets a copy of the segments of this Context.
+       */
+      readonly segments: Array<string>;
+
+      /**
+       * Creates a new StripeContext with an additional segment appended.
+       */
+      push(segment: string): StripeContext;
+
+      /**
+       * Creates a new StripeContext with the last segment removed.
+       */
+      pop(): StripeContext;
+
+      /**
+       * Converts this context to its string representation.
+       */
+      toString(): string;
+
+      static parse(contextStr?: string | null): StripeContext;
+    }
+
     namespace V2 {
       namespace Event {
         interface Reason {

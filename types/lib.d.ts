@@ -4,7 +4,6 @@
 import {Agent} from 'http';
 
 import {ApiVersion} from './apiVersion';
-import {StripeContext} from '../src/StripeContext';
 
 declare module 'stripe' {
   namespace Stripe {
