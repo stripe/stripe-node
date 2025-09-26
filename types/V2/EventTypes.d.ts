@@ -313,6 +313,7 @@ declare module 'stripe' {
       | Stripe.Events.V2PaymentsOffSessionPaymentCanceledEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentCreatedEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentFailedEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentRequiresCaptureEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentSucceededEvent;
 
     export type EventNotification =
@@ -626,6 +627,7 @@ declare module 'stripe' {
       | Stripe.Events.V2PaymentsOffSessionPaymentCanceledEventNotification
       | Stripe.Events.V2PaymentsOffSessionPaymentCreatedEventNotification
       | Stripe.Events.V2PaymentsOffSessionPaymentFailedEventNotification
+      | Stripe.Events.V2PaymentsOffSessionPaymentRequiresCaptureEventNotification
       | Stripe.Events.V2PaymentsOffSessionPaymentSucceededEventNotification;
   }
 
@@ -8521,6 +8523,27 @@ declare module 'stripe' {
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
       fetchEvent(): Promise<V2PaymentsOffSessionPaymentFailedEvent>;
+    }
+
+    /**
+     * Off-Session payment requires capture event definition.
+     */
+    export interface V2PaymentsOffSessionPaymentRequiresCaptureEvent
+      extends V2.EventBase {
+      type: 'v2.payments.off_session_payment.requires_capture';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+    export interface V2PaymentsOffSessionPaymentRequiresCaptureEventNotification
+      extends V2.EventBase {
+      type: 'v2.payments.off_session_payment.requires_capture';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+      fetchEvent(): Promise<V2PaymentsOffSessionPaymentRequiresCaptureEvent>;
     }
 
     /**
