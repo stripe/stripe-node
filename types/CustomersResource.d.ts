@@ -918,7 +918,6 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
-        | 'paypay'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'

@@ -263,8 +263,6 @@ declare module 'stripe' {
 
         paypal?: PaymentMethodPreview.Paypal;
 
-        paypay?: PaymentMethodPreview.Paypay;
-
         pix?: PaymentMethodPreview.Pix;
 
         promptpay?: PaymentMethodPreview.Promptpay;
@@ -1451,8 +1449,6 @@ declare module 'stripe' {
           payer_id: string | null;
         }
 
-        interface Paypay {}
-
         interface Pix {}
 
         interface Promptpay {}
@@ -1560,7 +1556,6 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
-          | 'paypay'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'

@@ -508,6 +508,7 @@ declare module 'stripe' {
       type Status =
         | 'lost'
         | 'needs_response'
+        | 'prevented'
         | 'under_review'
         | 'warning_closed'
         | 'warning_needs_response'

@@ -618,7 +618,6 @@ declare module 'stripe' {
         | 'pay_by_bank'
         | 'paynow'
         | 'paypal'
-        | 'paypay'
         | 'pix'
         | 'promptpay'
         | 'satispay'

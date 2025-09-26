@@ -224,11 +224,6 @@ declare module 'stripe' {
       paypal?: PaymentMethodConfigurationCreateParams.Paypal;
 
       /**
-       * Customers can pay with PayPay online or using the PayPay app.
-       */
-      paypay?: PaymentMethodConfigurationCreateParams.Paypay;
-
-      /**
        * Pix is a payment method popular in Brazil. When paying with Pix, customers authenticate and approve payments by scanning a QR code in their preferred banking app. Check this [page](https://docs.stripe.com/payments/pix) for more details.
        */
       pix?: PaymentMethodConfigurationCreateParams.Pix;
@@ -1110,26 +1105,6 @@ declare module 'stripe' {
         }
       }
 
-      interface Paypay {
-        /**
-         * Whether or not the payment method should be displayed.
-         */
-        display_preference?: Paypay.DisplayPreference;
-      }
-
-      namespace Paypay {
-        interface DisplayPreference {
-          /**
-           * The account's preference for whether or not to display this payment method.
-           */
-          preference?: DisplayPreference.Preference;
-        }
-
-        namespace DisplayPreference {
-          type Preference = 'none' | 'off' | 'on';
-        }
-      }
-
       interface Pix {
         /**
          * Whether or not the payment method should be displayed.
@@ -1598,11 +1573,6 @@ declare module 'stripe' {
        * PayPal, a digital wallet popular with customers in Europe, allows your customers worldwide to pay using their PayPal account. Check this [page](https://stripe.com/docs/payments/paypal) for more details.
        */
       paypal?: PaymentMethodConfigurationUpdateParams.Paypal;
-
-      /**
-       * Customers can pay with PayPay online or using the PayPay app.
-       */
-      paypay?: PaymentMethodConfigurationUpdateParams.Paypay;
 
       /**
        * Pix is a payment method popular in Brazil. When paying with Pix, customers authenticate and approve payments by scanning a QR code in their preferred banking app. Check this [page](https://docs.stripe.com/payments/pix) for more details.
@@ -2474,26 +2444,6 @@ declare module 'stripe' {
       }
 
       namespace Paypal {
-        interface DisplayPreference {
-          /**
-           * The account's preference for whether or not to display this payment method.
-           */
-          preference?: DisplayPreference.Preference;
-        }
-
-        namespace DisplayPreference {
-          type Preference = 'none' | 'off' | 'on';
-        }
-      }
-
-      interface Paypay {
-        /**
-         * Whether or not the payment method should be displayed.
-         */
-        display_preference?: Paypay.DisplayPreference;
-      }
-
-      namespace Paypay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
