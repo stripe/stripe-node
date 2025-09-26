@@ -20,4 +20,8 @@ export const OffSessionPayments = StripeResource.extend({
     method: 'POST',
     fullPath: '/v2/payments/off_session_payments/{id}/cancel',
   }),
+  capture: stripeMethod({
+    method: 'POST',
+    fullPath: '/v2/payments/off_session_payments/{id}/capture',
+  }),
 });
