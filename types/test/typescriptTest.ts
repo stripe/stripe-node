@@ -33,6 +33,7 @@ stripe = new Stripe('sk_test_123', {
   maxNetworkRetries: 1,
   timeout: 1000,
   host: 'api.example.com',
+  stripeContext: new Stripe.StripeContext(['acct_123']),
   port: 123,
   telemetry: true,
   httpClient: Stripe.createNodeHttpClient(),
@@ -305,3 +306,45 @@ stripe.files.create({
   },
   file_link_data: {create: true},
 });
+
+const v1Event = {} as Stripe.AccountApplicationAuthorizedEvent;
+// v1 event context is a string
+const v1Context: string | undefined = v1Event.context;
+
+const v2Event = {} as Stripe.Events.V1BillingMeterErrorReportTriggeredEvent;
+// v2 is also a string
+const v2Context: string | undefined = v2Event.context;
+
+// but event notification is a context object
+const v2EventNotif = {} as Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification;
+const v2ContextObj: Stripe.StripeContext | undefined = v2EventNotif.context;
+
+async (): Promise<void> => {
+  // parsing event notifications
+  const eventNotification = stripe.parseEventNotification('', '', '');
+
+  if (eventNotification.type === 'v1.billing.meter.error_report_triggered') {
+    eventNotification.related_object;
+    const m: Stripe.Billing.Meter = await eventNotification.fetchRelatedObject();
+    const e: Stripe.Events.V1BillingMeterErrorReportTriggeredEvent = await eventNotification.fetchEvent();
+    const d: Stripe.Events.V1BillingMeterErrorReportTriggeredEvent.Data =
+      e.data;
+  } else if (eventNotification.type === 'v1.billing.meter.no_meter_found') {
+    // @ts-expect-error - shouldn't be available
+    eventNotification.related_object;
+    const e: Stripe.Events.V1BillingMeterNoMeterFoundEvent = await eventNotification.fetchEvent();
+  }
+};
+
+{
+  // v1 event resource
+  let a: Stripe.EventBase;
+  // v2 event resource
+  let b: Stripe.V2.Core.EventBase;
+  let c: Stripe.V2.Core.EventNotification;
+  let d: Stripe.Events.UnknownEventNotification;
+  let e: Stripe.Events.V1BillingMeterErrorReportTriggeredEvent;
+  let f: Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification;
+  // union of all V2 Events
+  let g: Stripe.V2.Core.Event;
+}

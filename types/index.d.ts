@@ -280,9 +280,9 @@
 ///<reference path='./V2/Billing/MeterEventAdjustments.d.ts' />
 ///<reference path='./V2/Billing/MeterEventSessions.d.ts' />
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
+///<reference path='./V2/Core/EventDestinations.d.ts' />
+///<reference path='./V2/Core/Events.d.ts' />
 ///<reference path='./V2/DeletedObject.d.ts' />
-///<reference path='./V2/EventDestinations.d.ts' />
-///<reference path='./V2/Events.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
@@ -557,7 +557,7 @@ declare module 'stripe' {
        * Optional: timestamp to use when checking signature validity. Defaults to Date.now().
        */
       receivedAt?: number
-    ) => Stripe.V2.EventNotification;
+    ) => Stripe.V2.Core.EventNotification;
   }
 
   export default Stripe;
