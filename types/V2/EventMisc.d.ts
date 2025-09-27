@@ -1,35 +1,72 @@
 declare module 'stripe' {
-  namespace Stripe.V2.Events {
-    /**
-     * Object containing the reference to API resource relevant to the event.
-     */
-    export interface RelatedObject {
-      /**
-       * Unique identifier for the object relevant to the event.
-       */
-      id: string;
+  namespace Stripe {
+    class StripeContext {
+      constructor(segments?: string[]);
 
       /**
-       * Type of the object relevant to the event.
+       * Gets a copy of the segments of this Context.
        */
-      type: string;
+      readonly segments: Array<string>;
 
       /**
-       * URL to retrieve the resource.
+       * Creates a new StripeContext with an additional segment appended.
        */
-      url: string;
+      push(segment: string): StripeContext;
+
+      /**
+       * Creates a new StripeContext with the last segment removed.
+       */
+      pop(): StripeContext;
+
+      /**
+       * Converts this context to its string representation.
+       */
+      toString(): string;
+
+      static parse(contextStr?: string | null): StripeContext;
     }
-  }
-  namespace Stripe.V2 {
-    /**
-     * Represents the shape of an EventNotification that the SDK didn't know about when it was generated.
-     */
-    export interface UnknownEventNotification extends V2.EventBase {
+
+    namespace V2.Core {
+      export interface EventNotificationBase
+        extends Omit<EventBase, 'context'> {
+        context?: StripeContext;
+      }
+    }
+
+    namespace V2.Events {
+      /**
+       * Represents the shape of an EventNotification that the SDK didn't know about when it was generated.
+       */
+      export interface UnknownEventNotification
+        extends V2.Core.EventNotificationBase {
+        /**
+         * Object containing the reference to API resource relevant to the event.
+         */
+        related_object: V2.Core.Events.RelatedObject | null;
+        fetchRelatedObject: () => Promise<unknown>;
+      }
+    }
+
+    namespace V2.Core.Events {
       /**
        * Object containing the reference to API resource relevant to the event.
        */
-      related_object: Events.RelatedObject | null;
-      fetchRelatedObject: () => Promise<unknown>;
+      export interface RelatedObject {
+        /**
+         * Unique identifier for the object relevant to the event.
+         */
+        id: string;
+
+        /**
+         * Type of the object relevant to the event.
+         */
+        type: string;
+
+        /**
+         * URL to retrieve the resource.
+         */
+        url: string;
+      }
     }
   }
 }
