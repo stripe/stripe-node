@@ -26,14 +26,7 @@ declare module 'stripe' {
       static parse(contextStr?: string | null): StripeContext;
     }
 
-    namespace V2.Core {
-      export interface EventNotificationBase
-        extends Omit<EventBase, 'context'> {
-        context?: StripeContext;
-      }
-    }
-
-    namespace V2.Events {
+    namespace Events {
       /**
        * Represents the shape of an EventNotification that the SDK didn't know about when it was generated.
        */
@@ -47,25 +40,32 @@ declare module 'stripe' {
       }
     }
 
-    namespace V2.Core.Events {
-      /**
-       * Object containing the reference to API resource relevant to the event.
-       */
-      export interface RelatedObject {
-        /**
-         * Unique identifier for the object relevant to the event.
-         */
-        id: string;
+    namespace V2.Core {
+      export interface EventNotificationBase
+        extends Omit<EventBase, 'context'> {
+        context?: StripeContext;
+      }
 
+      namespace Events {
         /**
-         * Type of the object relevant to the event.
+         * Object containing the reference to API resource relevant to the event.
          */
-        type: string;
+        export interface RelatedObject {
+          /**
+           * Unique identifier for the object relevant to the event.
+           */
+          id: string;
 
-        /**
-         * URL to retrieve the resource.
-         */
-        url: string;
+          /**
+           * Type of the object relevant to the event.
+           */
+          type: string;
+
+          /**
+           * URL to retrieve the resource.
+           */
+          url: string;
+        }
       }
     }
   }

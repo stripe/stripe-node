@@ -335,3 +335,16 @@ async (): Promise<void> => {
     const e: Stripe.Events.V1BillingMeterNoMeterFoundEvent = await eventNotification.fetchEvent();
   }
 };
+
+{
+  // v1 event resource
+  let a: Stripe.EventBase;
+  // v2 event resource
+  let b: Stripe.V2.Core.EventBase;
+  let c: Stripe.V2.Core.EventNotification;
+  let d: Stripe.Events.UnknownEventNotification;
+  let e: Stripe.Events.V1BillingMeterErrorReportTriggeredEvent;
+  let f: Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification;
+  // union of all V2 Events
+  let g: Stripe.V2.Core.Event;
+}
