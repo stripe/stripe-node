@@ -8,6 +8,7 @@ import {
   generateV1Error,
   generateV2Error,
 } from './Error.js';
+import {StripeContext} from './StripeContext.js';
 import {
   StripeObject,
   RequestHeaders,
@@ -50,6 +51,17 @@ export class RequestSender {
   constructor(stripe: StripeObject, maxBufferedRequestMetric: number) {
     this._stripe = stripe;
     this._maxBufferedRequestMetric = maxBufferedRequestMetric;
+  }
+
+  private _normalizeStripeContext(
+    optsContext?: string | StripeContext | null,
+    clientContext?: string | StripeContext | null
+  ): string | null {
+    if (optsContext) {
+      return optsContext.toString() || null; // return null for empty strings
+    }
+
+    return clientContext?.toString() || null; // return null for empty strings
   }
 
   _addHeadersDirectlyToObject(obj: any, headers: RequestHeaders): void {
@@ -718,9 +730,11 @@ export class RequestSender {
           userSuppliedHeaders: options.headers ?? null,
           userSuppliedSettings: options.settings ?? {},
           stripeAccount:
-            apiMode == 'v2' ? null : this._stripe.getApiField('stripeAccount'),
-          stripeContext:
-            apiMode == 'v2' ? this._stripe.getApiField('stripeContext') : null,
+            options.stripeAccount ?? this._stripe.getApiField('stripeAccount'),
+          stripeContext: this._normalizeStripeContext(
+            options.stripeContext,
+            this._stripe.getApiField('stripeContext')
+          ),
           apiMode: apiMode,
         });
 
