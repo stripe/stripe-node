@@ -50,8 +50,6 @@ declare module 'stripe' {
 
         account_onboarding: Components.AccountOnboarding;
 
-        balance_report: Components.BalanceReport;
-
         balances: Components.Balances;
 
         disputes_list: Components.DisputesList;
@@ -77,8 +75,6 @@ declare module 'stripe' {
         payments: Components.Payments;
 
         payout_details: Components.PayoutDetails;
-
-        payout_reconciliation_report: Components.PayoutReconciliationReport;
 
         payouts: Components.Payouts;
 
@@ -134,19 +130,6 @@ declare module 'stripe' {
              */
             external_account_collection: boolean;
           }
-        }
-
-        interface BalanceReport {
-          /**
-           * Whether the embedded component is enabled.
-           */
-          enabled: boolean;
-
-          features: BalanceReport.Features;
-        }
-
-        namespace BalanceReport {
-          interface Features {}
         }
 
         interface Balances {
@@ -510,19 +493,6 @@ declare module 'stripe' {
         }
 
         namespace PayoutDetails {
-          interface Features {}
-        }
-
-        interface PayoutReconciliationReport {
-          /**
-           * Whether the embedded component is enabled.
-           */
-          enabled: boolean;
-
-          features: PayoutReconciliationReport.Features;
-        }
-
-        namespace PayoutReconciliationReport {
           interface Features {}
         }
 
