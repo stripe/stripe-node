@@ -35,6 +35,7 @@ assert(Stripe.errors.StripeInvalidGrantError);
 assert(Stripe.errors.StripeUnknownError);
 
 assert(Stripe.StripeResource);
+assert(Stripe.StripeContext);
 assert(Stripe.StripeResource.method);
 assert(Stripe.StripeResource.extend);
 assert(Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS);
@@ -43,14 +44,14 @@ assert(Stripe.webhooks);
 assert(Stripe.resources);
 
 const stripe = new Stripe(process.argv[2], {
-    host: process.env.STRIPE_MOCK_HOST || 'localhost',
-    port: process.env.STRIPE_MOCK_PORT || 12111,
-    protocol: 'http',
+  host: process.env.STRIPE_MOCK_HOST || 'localhost',
+  port: process.env.STRIPE_MOCK_PORT || 12111,
+  protocol: 'http',
 });
 const defaultStripe = new DefaultStripe(process.argv[2], {
-    host: process.env.STRIPE_MOCK_HOST || 'localhost',
-    port: process.env.STRIPE_MOCK_PORT || 12111,
-    protocol: 'http',
+  host: process.env.STRIPE_MOCK_HOST || 'localhost',
+  port: process.env.STRIPE_MOCK_PORT || 12111,
+  protocol: 'http',
 });
 
 assert(stripe._platformFunctions);
@@ -74,7 +75,7 @@ try {
   });
 } catch (e) {
   if (e instanceof stripe.errors.StripeError) {
-    console.log("Caught StripeError");
+    console.log('Caught StripeError');
   } else {
     throw e;
   }
@@ -85,13 +86,12 @@ async function exampleFunction(args) {
     await stripe.paymentIntents.create(args);
   } catch (e) {
     if (e instanceof stripe.errors.StripeInvalidRequestError) {
-      console.log("Caught StripeInvalidRequestError");
+      console.log('Caught StripeInvalidRequestError');
     } else {
       throw e;
     }
   }
 }
-
 
 // Test that http is monkey-patchable (motivation: https://github.com/stripe/stripe-node/issues/1844)
 async function exampleMonkeyPatchFunction() {
@@ -107,7 +107,7 @@ async function exampleMonkeyPatchFunction() {
       payment_method: 'pm_card_visa',
     });
   } catch (e) {
-    assert (e instanceof stripe.errors.StripeConnectionError);
+    assert(e instanceof stripe.errors.StripeConnectionError);
     if (e.detail.message === 'foo') {
       return;
     } else {
@@ -123,12 +123,14 @@ exampleFunction({
   amount: 2000,
   confirm: true,
   payment_method: 'pm_card_visa',
-}).then(() => {
-  return exampleMonkeyPatchFunction()
-}).then(() => {
-  process.exit(0);
-}).catch((e) => {
-  console.error(e);
-  process.exit(1);
-}
-);
+})
+  .then(() => {
+    return exampleMonkeyPatchFunction();
+  })
+  .then(() => {
+    process.exit(0);
+  })
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
