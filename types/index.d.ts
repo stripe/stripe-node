@@ -363,11 +363,11 @@
 ///<reference path='./V2/Core/AccountLinks.d.ts' />
 ///<reference path='./V2/Core/AccountPersons.d.ts' />
 ///<reference path='./V2/Core/Accounts.d.ts' />
+///<reference path='./V2/Core/EventDestinations.d.ts' />
+///<reference path='./V2/Core/Events.d.ts' />
 ///<reference path='./V2/Core/Vault/GbBankAccounts.d.ts' />
 ///<reference path='./V2/Core/Vault/UsBankAccounts.d.ts' />
 ///<reference path='./V2/DeletedObject.d.ts' />
-///<reference path='./V2/EventDestinations.d.ts' />
-///<reference path='./V2/Events.d.ts' />
 ///<reference path='./V2/FinancialAddressCreditSimulations.d.ts' />
 ///<reference path='./V2/FinancialAddressGeneratedMicrodeposits.d.ts' />
 ///<reference path='./V2/MoneyManagement/Adjustments.d.ts' />
