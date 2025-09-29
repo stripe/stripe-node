@@ -17,6 +17,7 @@ import {
 } from './testUtils.js';
 import Stripe = require('../src/stripe.cjs.node.js');
 import crypto = require('crypto');
+import {StripeContext} from '../src/StripeContext.js';
 
 const stripe = getStripeMockClient();
 
@@ -630,13 +631,13 @@ describe('Stripe Module', function() {
         );
       });
       afterEach(() => closeServer());
-      it('is not sent on v1 call', (callback) => {
+      it('is sent on v1 call', (callback) => {
         stripeClient.customers.create((err) => {
           closeServer();
           if (err) {
             return callback(err);
           }
-          expect(headers['stripe-context']).to.equal(undefined);
+          expect(headers['stripe-context']).to.equal('ctx_123');
           return callback();
         });
       });
@@ -740,6 +741,7 @@ describe('Stripe Module', function() {
       expect(event.type).to.equal(jsonPayload.type);
       expect(event.data).to.equal(jsonPayload.data);
       expect(event.related_object.id).to.equal(jsonPayload.related_object.id);
+      expect(event.context).to.be.undefined;
     });
 
     it('throws an error for invalid signatures', () => {
@@ -862,6 +864,8 @@ describe('Stripe Module', function() {
               secret
             );
 
+            expect(event.context).to.be.instanceOf(StripeContext);
+            expect(event.context.toString()).to.equal('acct_123');
             expect(event.fetchEvent).to.be.a('function');
             expect(event.fetch_related_object).not.to.be.a('function');
             const pulled = await event.fetchEvent();

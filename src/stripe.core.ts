@@ -1,6 +1,7 @@
 import * as _Error from './Error.js';
 import {RequestSender} from './RequestSender.js';
 import {StripeResource} from './StripeResource.js';
+import {StripeContext} from './StripeContext.js';
 import {
   AppInfo,
   RequestAuthenticator,
@@ -9,7 +10,7 @@ import {
   RequestData,
   RequestOptions,
 } from './Types.js';
-import {WebhookEvent, createWebhooks} from './Webhooks.js';
+import {createWebhooks} from './Webhooks.js';
 import {ApiVersion} from './apiVersion.js';
 import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
@@ -70,6 +71,7 @@ export function createStripe(
     ...determineProcessUserAgentProperties(),
   };
   Stripe.StripeResource = StripeResource;
+  Stripe.StripeContext = StripeContext;
   Stripe.resources = resources;
   Stripe.HttpClient = HttpClient;
   Stripe.HttpClientResponse = HttpClientResponse;
@@ -504,13 +506,20 @@ export function createStripe(
         receivedAt
       );
 
+      // Parse string context into StripeContext object if present
+      if (eventNotification.context) {
+        eventNotification.context = StripeContext.parse(
+          eventNotification.context
+        );
+      }
+
       eventNotification.fetchEvent = (): Promise<unknown> => {
         return this._requestSender._rawRequest(
           'GET',
           `/v2/core/events/${eventNotification.id}`,
           undefined,
           {
-            stripeContext: eventNotification.context as string,
+            stripeContext: eventNotification.context,
           },
           ['fetch_event']
         );
