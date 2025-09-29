@@ -717,7 +717,7 @@ declare module 'stripe' {
        * Optional: timestamp to use when checking signature validity. Defaults to Date.now().
        */
       receivedAt?: number
-    ) => Stripe.V2.EventNotification;
+    ) => Stripe.V2.Core.EventNotification;
   }
 
   export default Stripe;
