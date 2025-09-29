@@ -6,6 +6,7 @@ import {
 } from './net/HttpClient.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import {HttpClientResponseError} from './RequestSender.js';
+import {StripeContext} from './StripeContext.js';
 
 export type AppInfo = {name?: string} & Record<string, unknown>;
 export type ApiMode = 'v1' | 'v2';
@@ -87,7 +88,7 @@ export type RequestOptions = {
   settings?: RequestSettings;
   streaming?: boolean;
   headers?: RequestHeaders;
-  stripeContext?: string;
+  stripeContext?: string | StripeContext;
   /**
    * NOTE: prefer sending `stripeContext` instead of `stripeAccount` for new code. They're currently identical, but we will eventually discourage and (later) drop support for `stripeAccount`.
    */
@@ -176,7 +177,7 @@ export type StripeObject = {
     httpClient: HttpClientInterface;
     dev: boolean;
     stripeAccount: string | null;
-    stripeContext: string | null;
+    stripeContext: string | StripeContext | null;
   };
   _authenticator?: RequestAuthenticator;
   _emitter: EventEmitter;
@@ -281,7 +282,7 @@ export type UserProvidedConfig = {
   maxNetworkRetries?: number;
   httpClient?: HttpClientInterface;
   stripeAccount?: string;
-  stripeContext?: string;
+  stripeContext?: string | StripeContext;
   typescript?: boolean;
   telemetry?: boolean;
   appInfo?: AppInfo;
