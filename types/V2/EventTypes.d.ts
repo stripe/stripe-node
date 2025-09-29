@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 declare module 'stripe' {
-  namespace Stripe.V2.Core {
+  namespace Stripe.V2 {
     export type Event =
       | Stripe.Events.V1BillingMeterErrorReportTriggeredEvent
       | Stripe.Events.V1BillingMeterNoMeterFoundEvent
@@ -18,20 +18,20 @@ declare module 'stripe' {
      * Occurs when a Meter has invalid async usage events.
      */
     export interface V1BillingMeterErrorReportTriggeredEvent
-      extends V2.Core.EventBase {
+      extends V2.EventBase {
       type: 'v1.billing.meter.error_report_triggered';
       // Retrieves data specific to this event.
       data: V1BillingMeterErrorReportTriggeredEvent.Data;
       // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<Billing.Meter>;
     }
     export interface V1BillingMeterErrorReportTriggeredEventNotification
-      extends V2.Core.EventNotificationBase {
+      extends V2.EventBase {
       type: 'v1.billing.meter.error_report_triggered';
       // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<Billing.Meter>;
       fetchEvent(): Promise<V1BillingMeterErrorReportTriggeredEvent>;
@@ -131,13 +131,13 @@ declare module 'stripe' {
     /**
      * Occurs when a Meter's id is missing or invalid in async usage events.
      */
-    export interface V1BillingMeterNoMeterFoundEvent extends V2.Core.EventBase {
+    export interface V1BillingMeterNoMeterFoundEvent extends V2.EventBase {
       type: 'v1.billing.meter.no_meter_found';
       // Retrieves data specific to this event.
       data: V1BillingMeterNoMeterFoundEvent.Data;
     }
     export interface V1BillingMeterNoMeterFoundEventNotification
-      extends V2.Core.EventNotificationBase {
+      extends V2.EventBase {
       type: 'v1.billing.meter.no_meter_found';
       fetchEvent(): Promise<V1BillingMeterNoMeterFoundEvent>;
     }
@@ -236,20 +236,20 @@ declare module 'stripe' {
     /**
      * A ping event used to test the connection to an EventDestination.
      */
-    export interface V2CoreEventDestinationPingEvent extends V2.Core.EventBase {
+    export interface V2CoreEventDestinationPingEvent extends V2.EventBase {
       type: 'v2.core.event_destination.ping';
       // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.EventDestination>;
+      fetchRelatedObject(): Promise<V2.EventDestination>;
     }
     export interface V2CoreEventDestinationPingEventNotification
-      extends V2.Core.EventNotificationBase {
+      extends V2.EventBase {
       type: 'v2.core.event_destination.ping';
       // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
+      related_object: V2.Events.RelatedObject;
       // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Core.EventDestination>;
+      fetchRelatedObject(): Promise<V2.EventDestination>;
       fetchEvent(): Promise<V2CoreEventDestinationPingEvent>;
     }
   }
