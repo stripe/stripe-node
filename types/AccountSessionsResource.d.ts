@@ -32,11 +32,6 @@ declare module 'stripe' {
         account_onboarding?: Components.AccountOnboarding;
 
         /**
-         * Configuration for the [balance report](https://docs.stripe.com/connect/supported-embedded-components/financial-reports#balance-report) embedded component.
-         */
-        balance_report?: Components.BalanceReport;
-
-        /**
          * Configuration for the [balances](https://docs.stripe.com/connect/supported-embedded-components/balances/) embedded component.
          */
         balances?: Components.Balances;
@@ -100,11 +95,6 @@ declare module 'stripe' {
          * Configuration for the [payout details](https://docs.stripe.com/connect/supported-embedded-components/payout-details/) embedded component.
          */
         payout_details?: Components.PayoutDetails;
-
-        /**
-         * Configuration for the [payout reconciliation report](https://docs.stripe.com/connect/supported-embedded-components/financial-reports#payout-reconciliation-report) embedded component.
-         */
-        payout_reconciliation_report?: Components.PayoutReconciliationReport;
 
         /**
          * Configuration for the [payouts](https://docs.stripe.com/connect/supported-embedded-components/payouts/) embedded component.
@@ -178,22 +168,6 @@ declare module 'stripe' {
              */
             external_account_collection?: boolean;
           }
-        }
-
-        interface BalanceReport {
-          /**
-           * Whether the embedded component is enabled.
-           */
-          enabled: boolean;
-
-          /**
-           * An empty list, because this embedded component has no features.
-           */
-          features?: BalanceReport.Features;
-        }
-
-        namespace BalanceReport {
-          interface Features {}
         }
 
         interface Balances {
@@ -596,22 +570,6 @@ declare module 'stripe' {
         }
 
         namespace PayoutDetails {
-          interface Features {}
-        }
-
-        interface PayoutReconciliationReport {
-          /**
-           * Whether the embedded component is enabled.
-           */
-          enabled: boolean;
-
-          /**
-           * An empty list, because this embedded component has no features.
-           */
-          features?: PayoutReconciliationReport.Features;
-        }
-
-        namespace PayoutReconciliationReport {
           interface Features {}
         }
 
