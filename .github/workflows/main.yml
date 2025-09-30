@@ -57,14 +57,12 @@ jobs:
         os:
           - 'ubuntu-24.04'
         node:
-          # should include even numbers >= 12
-          # see: https://nodejs.org/en/about/previous-releases
+          # should include even numbers >= 16
+          # see: https://docs.stripe.com/sdks/versioning?server=node#stripe-sdk-language-version-support-policy
           - '22'
           - '20'
           - '18'
           - '16'
-          - '14'
-          - '12'
     runs-on: ${{ matrix.os }}
     steps:
       - uses: extractions/setup-just@v2

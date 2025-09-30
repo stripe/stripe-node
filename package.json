@@ -22,7 +22,7 @@
   },
   "bugs": "https://github.com/stripe/stripe-node/issues",
   "engines": {
-    "node": ">=12.*"
+    "node": ">=16"
   },
   "main": "cjs/stripe.cjs.node.js",
   "types": "types/index.d.ts",
@@ -31,7 +31,7 @@
     "@types/chai-as-promised": "^7.1.5",
     "@types/mocha": "^10.0.1",
     "@types/qs": "^6.9.7",
-    "@types/node": ">=12.0.0",
+    "@types/node": "~22",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "chai": "^4.3.6",
@@ -59,7 +59,7 @@
     "qs": "^6.11.0"
   },
   "peerDependencies": {
-    "@types/node": ">=12.x.x"
+    "@types/node": ">=16"
   },
   "peerDependenciesMeta": {
     "@types/node": {
