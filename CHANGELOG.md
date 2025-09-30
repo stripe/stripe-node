@@ -1,5 +1,77 @@
 # Changelog
 
+## 19.0.0 - 2025-09-30
+This release changes the pinned API version to `2025-09-30.basil` and contains breaking changes (prefixed with ⚠️ below)
+
+* [#2427](https://github.com/stripe/stripe-node/pull/2427) Move `V2.Event` API resources to `V2.Core.Events`
+  - ⚠️ Move the below event related interfaces and types from `Stripe.V2` to `Stripe.V2.Core`. This enables us to correctly match the API path to the namespace
+       - `Stripe.V2.EventDestination` -> `Stripe.V2.Core.EventDestination`
+       - `Stripe.V2.Event` -> `Stripe.V2.Core.Event`
+       - `Stripe.V2.EventBase` ->  `Stripe.V2.Core.EventBase`
+       - `Stripe.V2.Events.RelatedObject`  ->  `Stripe.V2.Core.Events.RelatedObject`
+* [#2370](https://github.com/stripe/stripe-node/pull/2370) Add strongly typed EventNotifications
+  We've overhauled how V2 Events are handled in the SDK! This approach should provide a lot more information at authoring and compile time, leading to more robust integrations. As part of this process, there are a number of changes to be aware of.
+  - ⚠️ Rename function `StripeClient.parseThinEvent` to `StripeClient.parseEventNotification` and remove the `Stripe.ThinEvent` interface.
+      - This function now returns a `Stripe.V2.EventNotification` which is a union of all possible event notifications instead of `Stripe.ThinEvent`. When applicable, these event notifications will have the `relatedObject` field and a function `fetchRelatedObject()`. They also have a `fetchEvent()` method to retrieve their corresponding event.
+      - If this union type does not cover a new event notification that you parsed, you can cast it to `UnknownEventNotification` to then access the `relatedObject` field and the function `fetchRelatedObject()`
+* [#2432](https://github.com/stripe/stripe-node/pull/2432) Drop support for Node < 16 & clarify policy
+  - Publish our new [language version support policy](https://docs.stripe.com/sdks/versioning?server=node#stripe-sdk-language-version-support-policy) and add a link to the README.
+  - ⚠️ Drop support for Node versions < 16
+  - Node 16 support is deprecated and will be removed in the next scheduled major release (March 2026)
+* [#2426](https://github.com/stripe/stripe-node/pull/2426) Add `StripeContext` object
+  - Add the `StripeContext` class.  It can be used anywhere the [context](https://docs.stripe.com/context) option is supplied and gets serialized to a string when making requests.
+  - ⚠️ Change `EventNotification` (formerly known as `ThinEvent`)'s `context` property from `string` to `StripeContext`
+  - ⚠️ We no longer remove the stripe-context header from /v1 requests and the stripe-account header from /v2 requests. The server may reject a request with both of these headers, so if you're sending both, remove any reference to stripeAccount (since the headers are identical, but context is preferred)
+* [#2398](https://github.com/stripe/stripe-node/pull/2398) ⚠️ Build SDK w/ V2 OpenAPI spec
+  - ⚠️ The delete methods for v2 APIs (the ones in the `StripeClient.v2` namespace) now return a `V2DeletedObject` which has the id of the object that has been deleted and a string representing the type of the object that has been deleted.
+  - ⚠️ Change the types of nullable properties in objects returned by v2 APIs (the ones in the `StripeClient.v2` namespace) from a null union to optional (e.g. `prop: string | null` -> `prop?: string`).
+* [#2420](https://github.com/stripe/stripe-node/pull/2420) Fixed file uploading in Bun runtimes
+  * Fixed issue ([#2416](https://github.com/stripe/stripe-node/issues/2416)) with file uploads in runtimes using `FetchHttpClient` (e.g. Bun). This bug affected Node SDK versions between 18.1.0 to 18.5.0.
+* [#2405](https://github.com/stripe/stripe-node/pull/2405) support more npm tags
+  - ⚠️ Starting with this release, we'll no longer be tagging releases with `beta` npm tag. Instead, we'll use `latest`, `public-preview`, or `private-preview` to more closely align with Stripe's [release phases](https://docs.stripe.com/release-phases)
+
+* [#2402](https://github.com/stripe/stripe-node/pull/2402), [#2413](https://github.com/stripe/stripe-node/pull/2413), [#2430](https://github.com/stripe/stripe-node/pull/2430), [#2428](https://github.com/stripe/stripe-node/pull/2428) Update generated code based on incoming API changes in the `2025-09-30.basil` API version.
+  * ⚠️ Remove support for `balance_report` and `payout_reconciliation_report` on `AccountSession.components` and `AccountSessionCreateParams.components`
+  * ⚠️ Remove support for values `saturday` and `sunday` from enums `Account.settings.payouts.schedule.weekly_payout_days`, `AccountCreateParams.settings.payouts.schedule.weekly_payout_days`, and `AccountUpdateParams.settings.payouts.schedule.weekly_payout_days`
+    * Add support for new values `external_request` and `unsupported_business_type` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `BankAccount.future_requirements.errors[].code`, `BankAccount.requirements.errors[].code`, `Capability.future_requirements.errors[].code`, `Capability.requirements.errors[].code`, `Person.future_requirements.errors[].code`, and `Person.requirements.errors[].code`
+    * Remove support for `link` and `pay_by_bank` on `PaymentMethodUpdateParams`
+  * ⚠️ Remove support for `coupon` on `Discount`, `PromotionCodeCreateParams`, and `PromotionCode`. Use `Discount.source.coupon`, `PromotionCodeCreateParams.promotion.coupon` and `PromotionCode.coupon` instead.
+  * Change `Invoice.id` to be required.
+  * Add support for new value `prevented` on enum `Dispute.status`
+  * Add support for new resource `BalanceSettings`
+  * Add support for `retrieve` and `update` methods on resource `BalanceSettings`
+  * Add support for `mb_way_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+  * Add support for `source` on `Discount`
+  * Add support for `trial_update_behavior` on `BillingPortal.Configuration.features.subscription_update`, `BillingPortal.ConfigurationCreateParams.features.subscription_update`, and `BillingPortal.ConfigurationUpdateParams.features.subscription_update`
+  * Add support for `mb_way` on `Charge.payment_method_details`, `ConfirmationToken.payment_method_preview`, `ConfirmationTokenCreateParams.testHelpers.payment_method_data`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, `PaymentMethod`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentCreateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_data`
+  * Add support for `branding_settings` and `name_collection` on `Checkout.SessionCreateParams` and `Checkout.Session`
+  * Add support for `excluded_payment_method_types` on `Checkout.SessionCreateParams`, `Checkout.Session`, `PaymentIntentConfirmParams`, and `PaymentIntentUpdateParams`
+  * Add support for `unit_label` on `Checkout.SessionCreateParams.line_items[].price_data.product_data`, `InvoiceAddLinesParams.lines[].price_data.product_data`, `InvoiceLineItemUpdateParams.price_data.product_data`, `InvoiceUpdateLinesParams.lines[].price_data.product_data`, and `PaymentLinkCreateParams.line_items[].price_data.product_data`
+  * Add support for `alma`, `billie`, and `satispay` on `Checkout.Session.payment_method_options` and `Checkout.SessionCreateParams.payment_method_options`
+  * Add support for `demo_pay` on `Checkout.SessionCreateParams.payment_method_options`
+  * Add support for `capture_method` on `Checkout.Session.payment_method_options.affirm`, `Checkout.Session.payment_method_options.afterpay_clearpay`, `Checkout.Session.payment_method_options.amazon_pay`, `Checkout.Session.payment_method_options.card`, `Checkout.Session.payment_method_options.cashapp`, `Checkout.Session.payment_method_options.klarna`, `Checkout.Session.payment_method_options.link`, `Checkout.Session.payment_method_options.mobilepay`, `Checkout.Session.payment_method_options.revolut_pay`, `Checkout.SessionCreateParams.payment_method_options.affirm`, `Checkout.SessionCreateParams.payment_method_options.afterpay_clearpay`, `Checkout.SessionCreateParams.payment_method_options.amazon_pay`, `Checkout.SessionCreateParams.payment_method_options.card`, `Checkout.SessionCreateParams.payment_method_options.cashapp`, `Checkout.SessionCreateParams.payment_method_options.klarna`, `Checkout.SessionCreateParams.payment_method_options.link`, `Checkout.SessionCreateParams.payment_method_options.mobilepay`, and `Checkout.SessionCreateParams.payment_method_options.revolut_pay`
+  * Add support for `flexible` on `Checkout.SessionCreateParams.subscription_data.billing_mode`, `InvoiceCreatePreviewParams.schedule_details.billing_mode`, `InvoiceCreatePreviewParams.subscription_details.billing_mode`, `Quote.subscription_data.billing_mode`, `QuoteCreateParams.subscription_data.billing_mode`, `Subscription.billing_mode`, `SubscriptionCreateParams.billing_mode`, `SubscriptionMigrateParams.billing_mode`, `SubscriptionSchedule.billing_mode`, and `SubscriptionScheduleCreateParams.billing_mode`
+  * Add support for `business_name` and `individual_name` on `Checkout.Session.collected_information`, `Checkout.Session.customer_details`, `CustomerCreateParams`, `CustomerUpdateParams`, and `Customer`
+  * Add support for new values `mb_way` on enums `ConfirmationTokenCreateParams.testHelpers.payment_method_data.type`, `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `SetupIntentConfirmParams.payment_method_data.type`, `SetupIntentCreateParams.payment_method_data.type`, and `SetupIntentUpdateParams.payment_method_data.type`
+  * Add support for new values `mb_way` on enums `ConfirmationToken.payment_method_preview.type` and `PaymentMethod.type`
+  * Add support for new values `mb_way` on enums `CustomerListPaymentMethodsParams.type`, `PaymentMethodCreateParams.type`, and `PaymentMethodListParams.type`
+  * Add support for `chargeback_loss_reason_code` on `Dispute.payment_method_details.klarna`
+  * Add support for `net_amount` and `proration_details` on `InvoiceItem`
+  * Remove support for `iterations` on `InvoiceCreatePreviewParams.schedule_details.phases[]`, `SubscriptionScheduleCreateParams.phases[]`, and `SubscriptionScheduleUpdateParams.phases[]`
+  * Add support for `fraud_disputability_likelihood` and `risk_assessment` on `Issuing.AuthorizationCreateParams.testHelpers`
+  * Add support for `second_line` on `Issuing.Card`
+  * Add support for new values `mb_way` on enums `PaymentIntent.excluded_payment_method_types` and `PaymentIntentCreateParams.excluded_payment_method_types`
+  * Add support for `fr_meal_voucher_conecs` on `PaymentMethodConfigurationCreateParams` and `PaymentMethodConfigurationUpdateParams`
+  * Add support for `promotion` on `PromotionCodeCreateParams` and `PromotionCode`
+  * Add support for new values `acknowledged` and `payment_never_settled` on enum `Review.closed_reason`
+  * Add support for `provider` on `Tax.Settings.defaults`
+  * Add support for `bbpos_wisepad3` on `Terminal.ConfigurationCreateParams`, `Terminal.ConfigurationUpdateParams`, and `Terminal.Configuration`
+  * Add support for `address_kana`, `address_kanji`, `display_name_kana`, `display_name_kanji`, and `phone` on `Terminal.LocationCreateParams`, `Terminal.LocationUpdateParams`, and `Terminal.Location`
+  * Change `Terminal.LocationCreateParams.address` to be optional
+  * Change `Terminal.LocationCreateParams.display_name` to be optional
+  * Add support for new value `2025-09-30.clover` on enum `WebhookEndpointCreateParams.api_version`
+  * Add support for error codes `financial_connections_account_pending_account_numbers` and `financial_connections_account_unavailable_account_numbers` on `Invoice.last_finalization_error`, `PaymentIntent.last_payment_error`, `SetupAttempt.setup_error`, `SetupIntent.last_setup_error`, and `StripeError`
+
 ## 18.6.0-beta.1 - 2025-08-27
 This release changes the pinned API version to `2025-08-27.preview`.
 
@@ -38,8 +110,10 @@ This release changes the pinned API version to `2025-08-27.preview`.
   * Add support for error codes `customer_session_expired` and `india_recurring_payment_mandate_canceled` on `QuotePreviewInvoice.last_finalization_error`
 
 ## 18.5.0 - 2025-08-27
+This release changes the pinned API version to `2025-08-27.basil`.
+
 * [#2392](https://github.com/stripe/stripe-node/pull/2392) Add section on private preview SDKs in readme
-* [#2384](https://github.com/stripe/stripe-node/pull/2384) Update generated code. This release changes the pinned API version to `2025-08-27.basil`.
+* [#2384](https://github.com/stripe/stripe-node/pull/2384) Update generated code.
   * Add support for `balance_report`, `payout_details`, and `payout_reconciliation_report` on `AccountSession.components` and `AccountSessionCreateParams.components`
   * Add support for `name` on `BillingPortal.ConfigurationCreateParams`, `BillingPortal.ConfigurationUpdateParams`, and `BillingPortal.Configuration`
   * Add support for `installments` on `Charge.payment_method_details.alma`
