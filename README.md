@@ -16,9 +16,9 @@ See the [`stripe-node` API docs](https://stripe.com/docs/api?lang=node) for Node
 
 ## Requirements
 
-Per our [Language Version Support Policy](https://docs.stripe.com/sdks/versioning?server=node#stripe-sdk-language-version-support-policy), we currently support all LTS versions of **Node.js 16+**.
+Per our [Language Version Support Policy](https://docs.stripe.com/sdks/versioning?lang=node#stripe-sdk-language-version-support-policy), we currently support all LTS versions of **Node.js 16+**.
 
-Support for Node 16 is deprecated and will be removed in an upcoming major version. Read more and see the full schedule in the docs: https://docs.stripe.com/sdks/versioning?server=node#stripe-sdk-language-version-support-policy
+Support for Node 16 is deprecated and will be removed in an upcoming major version. Read more and see the full schedule in the docs: https://docs.stripe.com/sdks/versioning?lang=node#stripe-sdk-language-version-support-policy
 
 ## Installation
 
