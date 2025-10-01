@@ -67,7 +67,7 @@ This release changes the pinned API version to `2025-09-30.preview`. It is built
   * Add support for error codes `financial_connections_account_pending_account_numbers` and `financial_connections_account_unavailable_account_numbers` on `QuotePreviewInvoice.last_finalization_error`
 
 ## 19.0.0 - 2025-09-30
-This release changes the pinned API version to `2025-09-30.basil` and contains breaking changes (prefixed with ⚠️ below)
+This release changes the pinned API version to `2025-09-30.clover` and contains breaking changes (prefixed with ⚠️ below)
 
 * [#2427](https://github.com/stripe/stripe-node/pull/2427) Move `V2.Event` API resources to `V2.Core.Events`
   - ⚠️ Move the below event related interfaces and types from `Stripe.V2` to `Stripe.V2.Core`. This enables us to correctly match the API path to the namespace
@@ -96,7 +96,7 @@ This release changes the pinned API version to `2025-09-30.basil` and contains b
 * [#2405](https://github.com/stripe/stripe-node/pull/2405) support more npm tags
   - ⚠️ Starting with this release, we'll no longer be tagging releases with `beta` npm tag. Instead, we'll use `latest`, `public-preview`, or `private-preview` to more closely align with Stripe's [release phases](https://docs.stripe.com/release-phases)
 
-* [#2402](https://github.com/stripe/stripe-node/pull/2402), [#2413](https://github.com/stripe/stripe-node/pull/2413), [#2430](https://github.com/stripe/stripe-node/pull/2430), [#2428](https://github.com/stripe/stripe-node/pull/2428) Update generated code based on incoming API changes in the `2025-09-30.basil` API version.
+* [#2402](https://github.com/stripe/stripe-node/pull/2402), [#2413](https://github.com/stripe/stripe-node/pull/2413), [#2430](https://github.com/stripe/stripe-node/pull/2430), [#2428](https://github.com/stripe/stripe-node/pull/2428) Update generated code based on incoming API changes in the `2025-09-30.clover` API version.
   * ⚠️ Remove support for `balance_report` and `payout_reconciliation_report` on `AccountSession.components` and `AccountSessionCreateParams.components`
   * ⚠️ Remove support for values `saturday` and `sunday` from enums `Account.settings.payouts.schedule.weekly_payout_days`, `AccountCreateParams.settings.payouts.schedule.weekly_payout_days`, and `AccountUpdateParams.settings.payouts.schedule.weekly_payout_days`
     * Add support for new values `external_request` and `unsupported_business_type` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `BankAccount.future_requirements.errors[].code`, `BankAccount.requirements.errors[].code`, `Capability.future_requirements.errors[].code`, `Capability.requirements.errors[].code`, `Person.future_requirements.errors[].code`, and `Person.requirements.errors[].code`
