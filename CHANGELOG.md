@@ -14,7 +14,7 @@ This release changes the pinned API version to `2025-09-30.clover` and contains 
       - This function now returns a `Stripe.V2.EventNotification` which is a union of all possible event notifications instead of `Stripe.ThinEvent`. When applicable, these event notifications will have the `relatedObject` field and a function `fetchRelatedObject()`. They also have a `fetchEvent()` method to retrieve their corresponding event.
       - If this union type does not cover a new event notification that you parsed, you can cast it to `UnknownEventNotification` to then access the `relatedObject` field and the function `fetchRelatedObject()`
 * [#2432](https://github.com/stripe/stripe-node/pull/2432) Drop support for Node < 16 & clarify policy
-  - Publish our new [language version support policy](https://docs.stripe.com/sdks/versioning?server=node#stripe-sdk-language-version-support-policy) and add a link to the README.
+  - Publish our new [language version support policy](https://docs.stripe.com/sdks/versioning?lang=node#stripe-sdk-language-version-support-policy) and add a link to the README.
   - ⚠️ Drop support for Node versions < 16
   - Node 16 support is deprecated and will be removed in the next scheduled major release (March 2026)
 * [#2426](https://github.com/stripe/stripe-node/pull/2426) Add `StripeContext` object
