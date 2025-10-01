@@ -1,5 +1,111 @@
 # Changelog
 
+## 19.1.0-alpha.1 - 2025-09-30
+This release changes the pinned API version to `2025-09-30.preview`. It is built on top of SDK version 19.0.0 and 19.1.0-beta.1 which contain breaking changes. Please review the changelog for these versions if upgrading from older SDK versions.
+
+* [#2417](https://github.com/stripe/stripe-node/pull/2417) parseThinEvent__experimental is no longer needed
+  * ⚠️ Remove the `StripeClient.parseThinEvent__experimental` and `PushedThinEvent` classes. They've been replaced with `StripeClient.parseEventNotification` and the *`EventNotification` classes respectively.
+* [#2409](https://github.com/stripe/stripe-node/pull/2409) Update generated code for private-preview
+  * Add support for new resource `V2.MoneyManagement.RecipientVerification`
+  * Add support for `acknowledge`, `create`, `recipient_verifications`, and `retrieve` methods on resource `V2.MoneyManagement.RecipientVerification`
+  * Add support for `update` method on resources `V2.Billing.PricingPlanSubscription` and `V2.Billing.ServiceAction`
+  * Add support for `crypto_wallets` on `V2.Account.configuration.recipient_data.features`, `V2.AccountCreateParams.configuration.recipient_data.features`, `V2.AccountUpdateParams.configuration.recipient_data.features`, `V2.Core.Account.configuration.recipient.capabilities`, `V2.Core.AccountCreateParams.configuration.recipient.capabilities`, and `V2.Core.AccountUpdateParams.configuration.recipient.capabilities`
+  * Add support for new value `crypto` on enum `V2.Core.Account.requirements.entries[].impact.restricts_capabilities[].capability`
+  * Add support for new value `crypto_wallet` on enum `V2.Account.configuration.recipient_data.default_outbound_destination.type`
+  * Add support for new value `crypto_wallets` on enum `V2.Account.configuration.supportable_features.recipient_data`
+  * Add support for new value `crypto_wallets` on enum `V2.Account.requirements[].impact.required_for_features`
+  * Add support for `lookup_key` on `V2.Billing.CadenceCreateParams`, `V2.Billing.CadenceUpdateParams`, and `V2.Billing.Cadence`
+  * Add support for `settings_data` on `V2.Billing.Cadence`
+  * Change type of `V2.Billing.Cadence.payer.billing_profile` from `string | null` to `string`
+  * Add support for `v1_event_id` on `V2.Core.Event`
+  * Add support for `recipient_verification` on `V2.MoneyManagement.OutboundPaymentCreateParams`, `V2.MoneyManagement.OutboundPayment`, `V2.MoneyManagement.OutboundTransferCreateParams`, and `V2.MoneyManagement.OutboundTransfer`
+  * Add support for `crypto_wallet` on `V2.MoneyManagement.OutboundSetupIntentCreateParams.payout_method_data` and `V2.MoneyManagement.PayoutMethod`
+  * Add support for `custom_pricing_unit_details` on `V2.Billing.RateCardRate.custom_pricing_unit_amount`, `V2.Billing.ServiceAction.credit_grant.amount.custom_pricing_unit`, and `V2.Billing.ServiceAction.credit_grant_per_tenant.amount.custom_pricing_unit`
+  * Add support for `origin_type` on `V2.MoneyManagement.ReceivedDebit.bank_transfer`
+  * Add support for new value `sepa_credit_transfer` on enum `V2.FinancialAddressCreditSimulationCreditParams.network`
+  * Add support for new value `credentials.sepa_bank_account.iban` on enums `V2.MoneyManagement.FinancialAddressListParams.include` and `V2.MoneyManagement.FinancialAddressRetrieveParams.include`
+  * Add support for `sepa_bank_account` on `V2.MoneyManagement.FinancialAddressCreateParams`
+  * Remove support for `price` on `V2.Billing.RateCardRateCreateParams`
+  * Change `V2.Billing.LicenseFeeUpdateParams.display_name` to be optional
+  * Add support for `lookup_keys` on `V2.Billing.CadenceListParams`
+  * Change type of `V2.Billing.CadenceCancelParams.include`, `V2.Billing.CadenceCreateParams.include`, `V2.Billing.CadenceListParams.include`, `V2.Billing.CadenceRetrieveParams.include`, and `V2.Billing.CadenceUpdateParams.include` from `literal('invoice_discount_rules')` to `enum('invoice_discount_rules'|'settings_data')`
+  * Remove support for `customer` and `type` on `V2.Billing.CadenceCreateParams.payer`
+  * Change `V2.Billing.CadenceCreateParams.payer.billing_profile` to be required
+  * Add support for new value `crypto_wallets` on enum `EventsAccountConfigurationRecipientDataFeatureStatusUpdatedEvent.feature_name`
+  * Add support for new value `crypto_wallets_v2` on enum `EventsV2CoreAccountIncludingConfigurationRecipientCapabilityStatusUpdatedEvent.updated_capability`
+  * Remove support for `alert_id` on `EventsV2CoreHealthApiErrorResolvedEvent`, `EventsV2CoreHealthApiLatencyResolvedEvent`, `EventsV2CoreHealthAuthorizationRateDropResolvedEvent`, `EventsV2CoreHealthIssuingAuthorizationRequestTimeoutResolvedEvent`, `EventsV2CoreHealthPaymentMethodErrorResolvedEvent`, `EventsV2CoreHealthTrafficVolumeDropResolvedEvent`, and `EventsV2CoreHealthWebhookLatencyResolvedEvent`
+  * Add support for thin event `V1AccountUpdatedEvent` with related object `V2.Account`
+  * Add support for thin events `V1ApplicationFeeCreatedEvent`, `V1ApplicationFeeRefundedEvent`, `V1BillingPortalConfigurationCreatedEvent`, `V1BillingPortalConfigurationUpdatedEvent`, `V1CapabilityUpdatedEvent`, `V1ChargeCapturedEvent`, `V1ChargeDisputeClosedEvent`, `V1ChargeDisputeCreatedEvent`, `V1ChargeDisputeFundsReinstatedEvent`, `V1ChargeDisputeFundsWithdrawnEvent`, `V1ChargeDisputeUpdatedEvent`, `V1ChargeExpiredEvent`, `V1ChargeFailedEvent`, `V1ChargePendingEvent`, `V1ChargeRefundUpdatedEvent`, `V1ChargeRefundedEvent`, `V1ChargeSucceededEvent`, `V1ChargeUpdatedEvent`, `V1CheckoutSessionAsyncPaymentFailedEvent`, `V1CheckoutSessionAsyncPaymentSucceededEvent`, `V1CheckoutSessionCompletedEvent`, `V1CheckoutSessionExpiredEvent`, `V1ClimateOrderCanceledEvent`, `V1ClimateOrderCreatedEvent`, `V1ClimateOrderDelayedEvent`, `V1ClimateOrderDeliveredEvent`, `V1ClimateOrderProductSubstitutedEvent`, `V1ClimateProductCreatedEvent`, `V1ClimateProductPricingUpdatedEvent`, `V1CouponCreatedEvent`, `V1CouponDeletedEvent`, `V1CouponUpdatedEvent`, `V1CreditNoteCreatedEvent`, `V1CreditNoteUpdatedEvent`, `V1CreditNoteVoidedEvent`, `V1CustomerCreatedEvent`, `V1CustomerDeletedEvent`, `V1CustomerDiscountCreatedEvent`, `V1CustomerDiscountDeletedEvent`, `V1CustomerDiscountUpdatedEvent`, `V1CustomerSubscriptionCreatedEvent`, `V1CustomerSubscriptionDeletedEvent`, `V1CustomerSubscriptionPausedEvent`, `V1CustomerSubscriptionPendingUpdateAppliedEvent`, `V1CustomerSubscriptionPendingUpdateExpiredEvent`, `V1CustomerSubscriptionResumedEvent`, `V1CustomerSubscriptionTrialWillEndEvent`, `V1CustomerSubscriptionUpdatedEvent`, `V1CustomerTaxIdCreatedEvent`, `V1CustomerTaxIdDeletedEvent`, `V1CustomerTaxIdUpdatedEvent`, `V1CustomerUpdatedEvent`, `V1FileCreatedEvent`, `V1FinancialConnectionsAccountCreatedEvent`, `V1FinancialConnectionsAccountDeactivatedEvent`, `V1FinancialConnectionsAccountDisconnectedEvent`, `V1FinancialConnectionsAccountReactivatedEvent`, `V1FinancialConnectionsAccountRefreshedBalanceEvent`, `V1FinancialConnectionsAccountRefreshedOwnershipEvent`, `V1FinancialConnectionsAccountRefreshedTransactionsEvent`, `V1IdentityVerificationSessionCanceledEvent`, `V1IdentityVerificationSessionCreatedEvent`, `V1IdentityVerificationSessionProcessingEvent`, `V1IdentityVerificationSessionRedactedEvent`, `V1IdentityVerificationSessionRequiresInputEvent`, `V1IdentityVerificationSessionVerifiedEvent`, `V1InvoiceCreatedEvent`, `V1InvoiceDeletedEvent`, `V1InvoiceFinalizationFailedEvent`, `V1InvoiceFinalizedEvent`, `V1InvoiceMarkedUncollectibleEvent`, `V1InvoiceOverdueEvent`, `V1InvoiceOverpaidEvent`, `V1InvoicePaidEvent`, `V1InvoicePaymentActionRequiredEvent`, `V1InvoicePaymentFailedEvent`, `V1InvoicePaymentPaidEvent`, `V1InvoicePaymentSucceededEvent`, `V1InvoiceSentEvent`, `V1InvoiceUpcomingEvent`, `V1InvoiceUpdatedEvent`, `V1InvoiceVoidedEvent`, `V1InvoiceWillBeDueEvent`, `V1InvoiceitemCreatedEvent`, `V1InvoiceitemDeletedEvent`, `V1IssuingAuthorizationCreatedEvent`, `V1IssuingAuthorizationRequestEvent`, `V1IssuingAuthorizationUpdatedEvent`, `V1IssuingCardCreatedEvent`, `V1IssuingCardUpdatedEvent`, `V1IssuingCardholderCreatedEvent`, `V1IssuingCardholderUpdatedEvent`, `V1IssuingDisputeClosedEvent`, `V1IssuingDisputeCreatedEvent`, `V1IssuingDisputeFundsReinstatedEvent`, `V1IssuingDisputeFundsRescindedEvent`, `V1IssuingDisputeSubmittedEvent`, `V1IssuingDisputeUpdatedEvent`, `V1IssuingPersonalizationDesignActivatedEvent`, `V1IssuingPersonalizationDesignDeactivatedEvent`, `V1IssuingPersonalizationDesignRejectedEvent`, `V1IssuingPersonalizationDesignUpdatedEvent`, `V1IssuingTokenCreatedEvent`, `V1IssuingTokenUpdatedEvent`, `V1IssuingTransactionCreatedEvent`, `V1IssuingTransactionPurchaseDetailsReceiptUpdatedEvent`, `V1IssuingTransactionUpdatedEvent`, `V1MandateUpdatedEvent`, `V1PaymentIntentAmountCapturableUpdatedEvent`, `V1PaymentIntentCanceledEvent`, `V1PaymentIntentCreatedEvent`, `V1PaymentIntentPartiallyFundedEvent`, `V1PaymentIntentPaymentFailedEvent`, `V1PaymentIntentProcessingEvent`, `V1PaymentIntentRequiresActionEvent`, `V1PaymentIntentSucceededEvent`, `V1PaymentLinkCreatedEvent`, `V1PaymentLinkUpdatedEvent`, `V1PaymentMethodAttachedEvent`, `V1PaymentMethodAutomaticallyUpdatedEvent`, `V1PaymentMethodDetachedEvent`, `V1PaymentMethodUpdatedEvent`, `V1PayoutCanceledEvent`, `V1PayoutCreatedEvent`, `V1PayoutFailedEvent`, `V1PayoutPaidEvent`, `V1PayoutReconciliationCompletedEvent`, `V1PayoutUpdatedEvent`, `V1PersonCreatedEvent`, `V1PersonDeletedEvent`, `V1PersonUpdatedEvent`, `V1PlanCreatedEvent`, `V1PlanDeletedEvent`, `V1PlanUpdatedEvent`, `V1PriceCreatedEvent`, `V1PriceDeletedEvent`, `V1PriceUpdatedEvent`, `V1ProductCreatedEvent`, `V1ProductDeletedEvent`, `V1ProductUpdatedEvent`, `V1PromotionCodeCreatedEvent`, `V1PromotionCodeUpdatedEvent`, `V1QuoteAcceptedEvent`, `V1QuoteCanceledEvent`, `V1QuoteCreatedEvent`, `V1QuoteFinalizedEvent`, `V1RadarEarlyFraudWarningCreatedEvent`, `V1RadarEarlyFraudWarningUpdatedEvent`, `V1RefundCreatedEvent`, `V1RefundFailedEvent`, `V1RefundUpdatedEvent`, `V1ReviewClosedEvent`, `V1ReviewOpenedEvent`, `V1SetupIntentCanceledEvent`, `V1SetupIntentCreatedEvent`, `V1SetupIntentRequiresActionEvent`, `V1SetupIntentSetupFailedEvent`, `V1SetupIntentSucceededEvent`, `V1SigmaScheduledQueryRunCreatedEvent`, `V1SourceCanceledEvent`, `V1SourceChargeableEvent`, `V1SourceFailedEvent`, `V1SourceRefundAttributesRequiredEvent`, `V1SubscriptionScheduleAbortedEvent`, `V1SubscriptionScheduleCanceledEvent`, `V1SubscriptionScheduleCompletedEvent`, `V1SubscriptionScheduleCreatedEvent`, `V1SubscriptionScheduleExpiringEvent`, `V1SubscriptionScheduleReleasedEvent`, `V1SubscriptionScheduleUpdatedEvent`, `V1TaxRateCreatedEvent`, `V1TaxRateUpdatedEvent`, `V1TerminalReaderActionFailedEvent`, `V1TerminalReaderActionSucceededEvent`, `V1TerminalReaderActionUpdatedEvent`, `V1TestHelpersTestClockAdvancingEvent`, `V1TestHelpersTestClockCreatedEvent`, `V1TestHelpersTestClockDeletedEvent`, `V1TestHelpersTestClockInternalFailureEvent`, `V1TestHelpersTestClockReadyEvent`, `V1TopupCanceledEvent`, `V1TopupCreatedEvent`, `V1TopupFailedEvent`, `V1TopupReversedEvent`, `V1TopupSucceededEvent`, `V1TransferCreatedEvent`, `V1TransferReversedEvent`, `V1TransferUpdatedEvent`, `V2CoreHealthIssuingAuthorizationRequestErrorsFiringEvent`, and `V2CoreHealthIssuingAuthorizationRequestErrorsResolvedEvent`
+  * Add support for thin event `V2CoreClaimableSandboxCreatedEvent` with related object `V2.Core.ClaimableSandbox`
+  * Add support for thin events `V2MoneyManagementRecipientVerificationCreatedEvent` and `V2MoneyManagementRecipientVerificationUpdatedEvent` with related object `V2.MoneyManagement.RecipientVerification`
+  * Add support for error code `account_rate_limit_exceeded` on `RateLimitError`
+
+## 19.1.0-beta.1 - 2025-09-30
+This release changes the pinned API version to `2025-09-30.preview`. It is built on top of SDK version 19.0.0 which contains breaking changes. Please review the [changelog for 19.0.0](https://github.com/stripe/stripe-go/blob/master/CHANGELOG.md#1900---2025-09-30) if upgrading from older SDK versions.
+
+* [#2422](https://github.com/stripe/stripe-node/pull/2422) Update generated code for beta
+  * Add support for `attach_cadence` method on resource `Subscription`
+  * Add support for `billing_cadence` on `InvoiceCreatePreviewParams`, `SubscriptionCreateParams`, `SubscriptionUpdateParams`, and `Subscription`
+  * Add support for `billing_cadence_details` on `Invoice.parent` and `QuotePreviewInvoice.parent`
+  * Add support for new value `billing_cadence_details` on enums `Invoice.parent.type` and `QuotePreviewInvoice.parent.type`
+* [#2410](https://github.com/stripe/stripe-node/pull/2410) Update generated code for beta
+  * Add support for new resources `V2.Billing.BillSettingVersion`, `V2.Billing.BillSetting`, `V2.Billing.Cadence`, `V2.Billing.CollectionSettingVersion`, `V2.Billing.CollectionSetting`, and `V2.Billing.Profile`
+  * Add support for `create`, `list`, `retrieve`, and `update` methods on resources `V2.Billing.BillSetting`, `V2.Billing.CollectionSetting`, and `V2.Billing.Profile`
+  * Add support for `list` and `retrieve` methods on resources `V2.Billing.BillSettingVersion` and `V2.Billing.CollectionSettingVersion`
+  * Add support for `cancel`, `create`, `list`, `retrieve`, and `update` methods on resource `V2.Billing.Cadence`
+  * Add support for new value `crypto_wallet` on enum `V2.Core.Account.configuration.recipient.default_outbound_destination.type`
+  * Add support for `profile` on `V2.Core.Account.defaults`, `V2.Core.AccountCreateParams.defaults`, and `V2.Core.AccountUpdateParams.defaults`
+  * Add support for `i_p` on `V2.Core.Account.identity.attestations.directorship_declaration`, `V2.Core.Account.identity.attestations.ownership_declaration`, `V2.Core.Account.identity.attestations.terms_of_service.account`, `V2.Core.Account.identity.attestations.terms_of_service.storer`, `V2.Core.Account.identity.individual.additional_terms_of_service.account`, `V2.Core.AccountCreateParams.identity.attestations.terms_of_service.account`, `V2.Core.AccountCreateParams.identity.attestations.terms_of_service.storer`, `V2.Core.AccountUpdateParams.identity.attestations.terms_of_service.account`, `V2.Core.AccountUpdateParams.identity.attestations.terms_of_service.storer`, `V2.Core.Person.additional_terms_of_service.account`, `V2.Core.PersonCreateParams.additional_terms_of_service.account`, and `V2.Core.PersonUpdateParams.additional_terms_of_service.account`
+  * Remove support for `ip` on `V2.Core.Account.identity.attestations.directorship_declaration`, `V2.Core.Account.identity.attestations.ownership_declaration`, `V2.Core.Account.identity.attestations.terms_of_service.account`, `V2.Core.Account.identity.attestations.terms_of_service.storer`, `V2.Core.Account.identity.individual.additional_terms_of_service.account`, `V2.Core.AccountCreateParams.identity.attestations.terms_of_service.account`, `V2.Core.AccountCreateParams.identity.attestations.terms_of_service.storer`, `V2.Core.AccountUpdateParams.identity.attestations.terms_of_service.account`, `V2.Core.AccountUpdateParams.identity.attestations.terms_of_service.storer`, `V2.Core.Person.additional_terms_of_service.account`, `V2.Core.PersonCreateParams.additional_terms_of_service.account`, and `V2.Core.PersonUpdateParams.additional_terms_of_service.account`
+  * Remove support for `doing_business_as`, `product_description`, and `url` on `V2.Core.Account.identity.business_details`, `V2.Core.AccountCreateParams.identity.business_details`, and `V2.Core.AccountUpdateParams.identity.business_details`
+  * Add support for `settlement_currency` on `V2.MoneyManagement.FinancialAddress`
+  * Add support for `sepa_bank_account` on `V2.MoneyManagement.FinancialAddress.credentials` and `V2.MoneyManagement.ReceivedCredit.bank_transfer`
+  * Add support for new value `sepa_bank_account` on enum `V2.MoneyManagement.FinancialAddress.credentials.type`
+  * Add support for `amount_details` and `payments_orchestration` on `V2.Payments.OffSessionPaymentCreateParams` and `V2.Payments.OffSessionPayment`
+  * Add support for new value `authorization_expired` on enum `V2.Payments.OffSessionPayment.failure_reason`
+  * Add support for `retry_policy` on `V2.Payments.OffSessionPayment.retry_details` and `V2.Payments.OffSessionPaymentCreateParams.retry_details`
+  * Add support for new values `heuristic` and `scheduled` on enums `V2.Payments.OffSessionPayment.retry_details.retry_strategy` and `V2.Payments.OffSessionPaymentCreateParams.retry_details.retry_strategy`
+  * Change type of `V2.MoneyManagement.OutboundPaymentQuote.fx_quote.lock_duration` from `literal('five_minutes')` to `enum('five_minutes'|'none')`
+  * Change type of `V2.MoneyManagement.OutboundPaymentQuote.fx_quote.lock_expires_at` from `DateTime` to `DateTime | null`
+  * Add support for new value `none` on enum `V2.MoneyManagement.OutboundPaymentQuote.fx_quote.lock_status`
+  * Add support for new value `crypto_wallet` on enums `V2.MoneyManagement.OutboundSetupIntentCreateParams.payout_method_data.type`, `V2.MoneyManagement.OutboundSetupIntentUpdateParams.payout_method_data.type`, and `V2.MoneyManagement.PayoutMethod.type`
+  * Add support for `origin_type` on `V2.MoneyManagement.ReceivedCredit.bank_transfer`
+  * Remove support for `payment_method_type` on `V2.MoneyManagement.ReceivedCredit.bank_transfer`
+  * Add support for new value `prevented` on enum `Dispute.status`
+  * Add support for `mandate_data` and `payment_method_options` on `V2.Payments.OffSessionPaymentCreateParams`
+  * Add support for `type` on `V2.MoneyManagement.FinancialAddressCreateParams`
+  * Remove support for `currency` on `V2.MoneyManagement.FinancialAddressCreateParams`
+  * Add support for new values `financial_addressses.crypto_wallets`, `holds_currencies.usdc`, `outbound_payments.crypto_wallets`, and `outbound_transfers.crypto_wallets` on enum `EventsV2CoreAccountIncludingConfigurationStorerCapabilityStatusUpdatedEvent.updated_capability`
+  * Add support for thin event `V2BillingBillSettingUpdatedEvent` with related object `V2.Billing.BillSetting`
+  * Add support for error type `RateLimitError`
+  * Add support for error code `invalid_payout_method_crypto_wallet` on `InvalidPayoutMethodError`
+* [#2397](https://github.com/stripe/stripe-node/pull/2397) Update generated code for beta
+  * Add support for new resources `Billing.Analytics.MeterUsageRow` and `Billing.Analytics.MeterUsage`
+  * Remove support for resources `Billing.MeterUsageRow` and `Billing.MeterUsage`
+  * Add support for `retrieve` method on resource `Billing.Analytics.MeterUsage`
+  * Remove support for `retrieve` method on resource `Billing.MeterUsage`
+  * Add support for `report_payment_attempt_informational` method on resource `PaymentRecord`
+  * Add support for `minimum_balance_by_currency` on `BalanceSettingUpdateParams.payments.payouts` and `BalanceSettings.payments.payouts`
+  * Remove support for values `saturday` and `sunday` from enums `BalanceSettingUpdateParams.payments.payouts.schedule.weekly_payout_days` and `BalanceSettings.payments.payouts.schedule.weekly_payout_days`
+  * Change type of `BalanceSettingUpdateParams.payments.settlement_timing.delay_days_override` from `longInteger` to `emptyable(longInteger)`
+  * Change `BalanceSettingUpdateParams.payments` to be optional
+  * Add support for `delay_days_override` on `BalanceSettings.payments.settlement_timing`
+  * Add support for `automatic_tax` and `invoice_creation` on `Checkout.SessionUpdateParams`
+  * Add support for `unit_label` on `Checkout.SessionUpdateParams.line_items[].price_data.product_data`
+  * Add support for `invoice_settings` on `Checkout.SessionUpdateParams.subscription_data`
+  * Change `Checkout.Session.collected_information.business_name` to be required
+  * Add support for `intended_submission_method` on `DisputeUpdateParams` and `Dispute`
+  * Change type of `Dispute.smart_disputes.recommended_evidence` from `string` to `array(string)`
+  * Add support for `pix` on `Invoice.payment_settings.payment_method_options`, `InvoiceCreateParams.payment_settings.payment_method_options`, `InvoiceUpdateParams.payment_settings.payment_method_options`, `QuotePreviewInvoice.payment_settings.payment_method_options`, `Subscription.payment_settings.payment_method_options`, `SubscriptionCreateParams.payment_settings.payment_method_options`, and `SubscriptionUpdateParams.payment_settings.payment_method_options`
+  * Add support for new value `pix` on enums `Invoice.payment_settings.payment_method_types`, `InvoiceCreateParams.payment_settings.payment_method_types`, `InvoiceUpdateParams.payment_settings.payment_method_types`, `QuotePreviewInvoice.payment_settings.payment_method_types`, `Subscription.payment_settings.payment_method_types`, `SubscriptionCreateParams.payment_settings.payment_method_types`, and `SubscriptionUpdateParams.payment_settings.payment_method_types`
+  * Add support for `billing_schedules` on `InvoiceCreatePreviewParams.subscription_details`, `SubscriptionCreateParams`, `SubscriptionUpdateParams`, and `Subscription`
+  * Add support for `paypay` on `PaymentAttemptRecord.payment_method_details` and `PaymentRecord.payment_method_details`
+  * Add support for `wallet` on `PaymentAttemptRecord.payment_method_details.card` and `PaymentRecord.payment_method_details.card`
+  * Change type of `PaymentAttemptRecord.processor_details.custom.payment_reference` and `PaymentRecord.processor_details.custom.payment_reference` from `string` to `string | null`
+  * Add support for `flexible` on `QuotePreviewSubscriptionSchedule.billing_mode`
+  * Add support for `billed_until` on `SubscriptionItem`
+  * Add support for error codes `financial_connections_account_pending_account_numbers` and `financial_connections_account_unavailable_account_numbers` on `QuotePreviewInvoice.last_finalization_error`
+
 ## 19.0.0 - 2025-09-30
 This release changes the pinned API version to `2025-09-30.basil` and contains breaking changes (prefixed with ⚠️ below)
 
@@ -72,43 +178,6 @@ This release changes the pinned API version to `2025-09-30.basil` and contains b
   * Add support for new value `2025-09-30.clover` on enum `WebhookEndpointCreateParams.api_version`
   * Add support for error codes `financial_connections_account_pending_account_numbers` and `financial_connections_account_unavailable_account_numbers` on `Invoice.last_finalization_error`, `PaymentIntent.last_payment_error`, `SetupAttempt.setup_error`, `SetupIntent.last_setup_error`, and `StripeError`
 
-## 18.6.0-beta.1 - 2025-08-27
-This release changes the pinned API version to `2025-08-27.preview`.
-
-* [#2381](https://github.com/stripe/stripe-node/pull/2381) Update generated code for beta
-  * Add support for `list` and `retrieve` methods on resource `InvoicePayment`
-  * Add support for `list` method on resource `Mandate`
-  * Add support for `applied` on `V2.Core.Account.configuration.customer`, `V2.Core.Account.configuration.merchant`, `V2.Core.Account.configuration.recipient`, `V2.Core.Account.configuration.storer`, `V2.Core.AccountUpdateParams.configuration.customer`, `V2.Core.AccountUpdateParams.configuration.merchant`, `V2.Core.AccountUpdateParams.configuration.recipient`, and `V2.Core.AccountUpdateParams.configuration.storer`
-  * Add support for new values `ao_nif`, `az_tin`, `bd_etin`, `cr_cpj`, `cr_nite`, `do_rcn`, `gt_nit`, `kz_bin`, `mz_nuit`, `pe_ruc`, `pk_ntn`, `sa_crn`, and `sa_tin` on enums `V2.Core.Account.identity.business_details.id_numbers[].type`, `V2.Core.AccountCreateParams.identity.business_details.id_numbers[].type`, and `V2.Core.AccountUpdateParams.identity.business_details.id_numbers[].type`
-  * Add support for new values `ao_nif`, `az_tin`, `bd_brc`, `bd_etin`, `bd_nid`, `cr_cpf`, `cr_dimex`, `cr_nite`, `do_rcn`, `gt_nit`, `kz_iin`, `mz_nuit`, `pe_dni`, `pk_cnic`, `pk_snic`, and `sa_tin` on enums `V2.Core.Account.identity.individual.id_numbers[].type`, `V2.Core.AccountCreateParams.identity.individual.id_numbers[].type`, `V2.Core.AccountUpdateParams.identity.individual.id_numbers[].type`, `V2.Core.Person.id_numbers[].type`, `V2.Core.PersonCreateParams.id_numbers[].type`, and `V2.Core.PersonUpdateParams.id_numbers[].type`
-  * Change type of `Billing.AlertTriggered.value` from `longInteger` to `decimal_string`
-  * Add support for `display_name` on `V2.MoneyManagement.FinancialAccountCreateParams` and `V2.MoneyManagement.FinancialAccount`
-  * Add support for new value `currency_conversion` on enums `V2.MoneyManagement.Transaction.category` and `V2.MoneyManagement.TransactionEntry.transaction_details.category`
-  * Add support for `currency_conversion` on `V2.MoneyManagement.Transaction.flow` and `V2.MoneyManagement.TransactionEntry.transaction_details.flow`
-  * Add support for new value `currency_conversion` on enums `V2.MoneyManagement.Transaction.flow.type` and `V2.MoneyManagement.TransactionEntry.transaction_details.flow.type`
-  * Add support for `payments` on `BalanceSettingUpdateParams` and `BalanceSettings`
-  * Remove support for `debit_negative_balances`, `payouts`, and `settlement_timing` on `BalanceSettingUpdateParams` and `BalanceSettings`
-  * Add support for `mandate` on `Charge.payment_method_details.pix`, `PaymentAttemptRecord.payment_method_details.pix`, and `PaymentRecord.payment_method_details.pix`
-  * Add support for `coupon_data` on `Checkout.SessionCreateParams.discounts[]`
-  * Add support for `mandate_options` on `Checkout.Session.payment_method_options.pix`, `Checkout.SessionCreateParams.payment_method_options.pix`, `PaymentIntent.payment_method_options.pix`, `PaymentIntentConfirmParams.payment_method_options.pix`, `PaymentIntentCreateParams.payment_method_options.pix`, and `PaymentIntentUpdateParams.payment_method_options.pix`
-  * Change type of `Checkout.Session.payment_method_options.pix.setup_future_usage`, `Checkout.SessionCreateParams.payment_method_options.pix.setup_future_usage`, `PaymentIntent.payment_method_options.pix.setup_future_usage`, `PaymentIntentConfirmParams.payment_method_options.pix.setup_future_usage`, `PaymentIntentCreateParams.payment_method_options.pix.setup_future_usage`, and `PaymentIntentUpdateParams.payment_method_options.pix.setup_future_usage` from `literal('none')` to `enum('none'|'off_session')`
-  * Add support for `amount` on `Mandate.multi_use`, `PaymentAttemptRecord`, and `PaymentRecord`
-  * Add support for `currency` on `Mandate.multi_use`
-  * Add support for `pix` on `Mandate.payment_method_details`, `SetupAttempt.payment_method_details`, `SetupIntent.payment_method_options`, `SetupIntentConfirmParams.payment_method_options`, `SetupIntentCreateParams.payment_method_options`, and `SetupIntentUpdateParams.payment_method_options`
-  * Add support for `limit` on `PaymentAttemptRecordListParams`
-  * Add support for `amount_authorized`, `amount_refunded`, and `application` on `PaymentAttemptRecord` and `PaymentRecord`
-  * Add support for `processor_details` on `PaymentAttemptRecord`, `PaymentRecordReportPaymentParams`, and `PaymentRecord`
-  * Remove support for `payment_reference` on `PaymentAttemptRecord`, `PaymentRecordReportPaymentParams`, and `PaymentRecord`
-  * Add support for `installments` on `PaymentAttemptRecord.payment_method_details.alma` and `PaymentRecord.payment_method_details.alma`
-  * Add support for `transaction_id` on `PaymentAttemptRecord.payment_method_details.alma`, `PaymentAttemptRecord.payment_method_details.amazon_pay`, `PaymentAttemptRecord.payment_method_details.billie`, `PaymentAttemptRecord.payment_method_details.kakao_pay`, `PaymentAttemptRecord.payment_method_details.kr_card`, `PaymentAttemptRecord.payment_method_details.naver_pay`, `PaymentAttemptRecord.payment_method_details.payco`, `PaymentAttemptRecord.payment_method_details.revolut_pay`, `PaymentAttemptRecord.payment_method_details.samsung_pay`, `PaymentAttemptRecord.payment_method_details.satispay`, `PaymentRecord.payment_method_details.alma`, `PaymentRecord.payment_method_details.amazon_pay`, `PaymentRecord.payment_method_details.billie`, `PaymentRecord.payment_method_details.kakao_pay`, `PaymentRecord.payment_method_details.kr_card`, `PaymentRecord.payment_method_details.naver_pay`, `PaymentRecord.payment_method_details.payco`, `PaymentRecord.payment_method_details.revolut_pay`, `PaymentRecord.payment_method_details.samsung_pay`, and `PaymentRecord.payment_method_details.satispay`
-  * Add support for `location` and `reader` on `PaymentAttemptRecord.payment_method_details.paynow` and `PaymentRecord.payment_method_details.paynow`
-  * Add support for `latest_active_mandate` on `PaymentMethod`
-  * Change `Payout.payout_method` to be required
-  * Add support for `metadata` and `period` on `QuotePreviewSubscriptionSchedule.phases[].add_invoice_items[]`
-  * Add support for `pix_display_qr_code` on `SetupIntent.next_action`
-  * Add support for `reader_security` on `Terminal.ConfigurationCreateParams`, `Terminal.ConfigurationUpdateParams`, and `Terminal.Configuration`
-  * Add support for error codes `customer_session_expired` and `india_recurring_payment_mandate_canceled` on `QuotePreviewInvoice.last_finalization_error`
-
 ## 18.6.0-alpha.2 - 2025-09-17
 
 * [#2404](https://github.com/stripe/stripe-node/pull/2404) Update generated code for private-preview
@@ -126,7 +195,8 @@ This release changes the pinned API version to `2025-08-27.preview`.
     * Remove support for thin event `V2BillingCadenceErroredEvent` with related object `V2.Billing.Cadence`
 
 ## 18.6.0-alpha.1 - 2025-08-27
-* [#2393](https://github.com/stripe/stripe-node/pull/2393) Use the right API version 2025-08-27.preview
+It is built on top of SDK version 18.6.0-beta.1 which contains breaking changes. Please review the changelog for it if upgrading from older SDK versions.
+
 * [#2390](https://github.com/stripe/stripe-node/pull/2390) Update generated code for private-preview
   * Add support for `attach_cadence` method on resource `Subscription`
   * Add support for `currency` and `external_customer_id` on `Billing.AlertTriggered`
@@ -172,6 +242,43 @@ This release changes the pinned API version to `2025-08-27.preview`.
   * Add support for thin events `V2CoreHealthApiErrorFiringEvent`, `V2CoreHealthApiErrorResolvedEvent`, `V2CoreHealthApiLatencyFiringEvent`, `V2CoreHealthApiLatencyResolvedEvent`, `V2CoreHealthAuthorizationRateDropFiringEvent`, `V2CoreHealthAuthorizationRateDropResolvedEvent`, `V2CoreHealthEventGenerationFailureResolvedEvent`, `V2CoreHealthFraudRateIncreasedEvent`, `V2CoreHealthIssuingAuthorizationRequestTimeoutFiringEvent`, `V2CoreHealthIssuingAuthorizationRequestTimeoutResolvedEvent`, `V2CoreHealthPaymentMethodErrorFiringEvent`, `V2CoreHealthPaymentMethodErrorResolvedEvent`, `V2CoreHealthTrafficVolumeDropFiringEvent`, `V2CoreHealthTrafficVolumeDropResolvedEvent`, `V2CoreHealthWebhookLatencyFiringEvent`, and `V2CoreHealthWebhookLatencyResolvedEvent`
   * Add support for thin events `V2ReportingReportRunCreatedEvent`, `V2ReportingReportRunFailedEvent`, `V2ReportingReportRunSucceededEvent`, and `V2ReportingReportRunUpdatedEvent` with related object `V2.Reporting.ReportRun`
   * Add support for error type `RateLimitError`
+
+## 18.6.0-beta.1 - 2025-08-27
+This release changes the pinned API version to `2025-08-27.preview`.
+
+* [#2381](https://github.com/stripe/stripe-node/pull/2381) Update generated code for beta
+  * Add support for `list` and `retrieve` methods on resource `InvoicePayment`
+  * Add support for `list` method on resource `Mandate`
+  * Add support for `applied` on `V2.Core.Account.configuration.customer`, `V2.Core.Account.configuration.merchant`, `V2.Core.Account.configuration.recipient`, `V2.Core.Account.configuration.storer`, `V2.Core.AccountUpdateParams.configuration.customer`, `V2.Core.AccountUpdateParams.configuration.merchant`, `V2.Core.AccountUpdateParams.configuration.recipient`, and `V2.Core.AccountUpdateParams.configuration.storer`
+  * Add support for new values `ao_nif`, `az_tin`, `bd_etin`, `cr_cpj`, `cr_nite`, `do_rcn`, `gt_nit`, `kz_bin`, `mz_nuit`, `pe_ruc`, `pk_ntn`, `sa_crn`, and `sa_tin` on enums `V2.Core.Account.identity.business_details.id_numbers[].type`, `V2.Core.AccountCreateParams.identity.business_details.id_numbers[].type`, and `V2.Core.AccountUpdateParams.identity.business_details.id_numbers[].type`
+  * Add support for new values `ao_nif`, `az_tin`, `bd_brc`, `bd_etin`, `bd_nid`, `cr_cpf`, `cr_dimex`, `cr_nite`, `do_rcn`, `gt_nit`, `kz_iin`, `mz_nuit`, `pe_dni`, `pk_cnic`, `pk_snic`, and `sa_tin` on enums `V2.Core.Account.identity.individual.id_numbers[].type`, `V2.Core.AccountCreateParams.identity.individual.id_numbers[].type`, `V2.Core.AccountUpdateParams.identity.individual.id_numbers[].type`, `V2.Core.Person.id_numbers[].type`, `V2.Core.PersonCreateParams.id_numbers[].type`, and `V2.Core.PersonUpdateParams.id_numbers[].type`
+  * Change type of `Billing.AlertTriggered.value` from `longInteger` to `decimal_string`
+  * Add support for `display_name` on `V2.MoneyManagement.FinancialAccountCreateParams` and `V2.MoneyManagement.FinancialAccount`
+  * Add support for new value `currency_conversion` on enums `V2.MoneyManagement.Transaction.category` and `V2.MoneyManagement.TransactionEntry.transaction_details.category`
+  * Add support for `currency_conversion` on `V2.MoneyManagement.Transaction.flow` and `V2.MoneyManagement.TransactionEntry.transaction_details.flow`
+  * Add support for new value `currency_conversion` on enums `V2.MoneyManagement.Transaction.flow.type` and `V2.MoneyManagement.TransactionEntry.transaction_details.flow.type`
+  * Add support for `payments` on `BalanceSettingUpdateParams` and `BalanceSettings`
+  * Remove support for `debit_negative_balances`, `payouts`, and `settlement_timing` on `BalanceSettingUpdateParams` and `BalanceSettings`
+  * Add support for `mandate` on `Charge.payment_method_details.pix`, `PaymentAttemptRecord.payment_method_details.pix`, and `PaymentRecord.payment_method_details.pix`
+  * Add support for `coupon_data` on `Checkout.SessionCreateParams.discounts[]`
+  * Add support for `mandate_options` on `Checkout.Session.payment_method_options.pix`, `Checkout.SessionCreateParams.payment_method_options.pix`, `PaymentIntent.payment_method_options.pix`, `PaymentIntentConfirmParams.payment_method_options.pix`, `PaymentIntentCreateParams.payment_method_options.pix`, and `PaymentIntentUpdateParams.payment_method_options.pix`
+  * Change type of `Checkout.Session.payment_method_options.pix.setup_future_usage`, `Checkout.SessionCreateParams.payment_method_options.pix.setup_future_usage`, `PaymentIntent.payment_method_options.pix.setup_future_usage`, `PaymentIntentConfirmParams.payment_method_options.pix.setup_future_usage`, `PaymentIntentCreateParams.payment_method_options.pix.setup_future_usage`, and `PaymentIntentUpdateParams.payment_method_options.pix.setup_future_usage` from `literal('none')` to `enum('none'|'off_session')`
+  * Add support for `amount` on `Mandate.multi_use`, `PaymentAttemptRecord`, and `PaymentRecord`
+  * Add support for `currency` on `Mandate.multi_use`
+  * Add support for `pix` on `Mandate.payment_method_details`, `SetupAttempt.payment_method_details`, `SetupIntent.payment_method_options`, `SetupIntentConfirmParams.payment_method_options`, `SetupIntentCreateParams.payment_method_options`, and `SetupIntentUpdateParams.payment_method_options`
+  * Add support for `limit` on `PaymentAttemptRecordListParams`
+  * Add support for `amount_authorized`, `amount_refunded`, and `application` on `PaymentAttemptRecord` and `PaymentRecord`
+  * Add support for `processor_details` on `PaymentAttemptRecord`, `PaymentRecordReportPaymentParams`, and `PaymentRecord`
+  * Remove support for `payment_reference` on `PaymentAttemptRecord`, `PaymentRecordReportPaymentParams`, and `PaymentRecord`
+  * Add support for `installments` on `PaymentAttemptRecord.payment_method_details.alma` and `PaymentRecord.payment_method_details.alma`
+  * Add support for `transaction_id` on `PaymentAttemptRecord.payment_method_details.alma`, `PaymentAttemptRecord.payment_method_details.amazon_pay`, `PaymentAttemptRecord.payment_method_details.billie`, `PaymentAttemptRecord.payment_method_details.kakao_pay`, `PaymentAttemptRecord.payment_method_details.kr_card`, `PaymentAttemptRecord.payment_method_details.naver_pay`, `PaymentAttemptRecord.payment_method_details.payco`, `PaymentAttemptRecord.payment_method_details.revolut_pay`, `PaymentAttemptRecord.payment_method_details.samsung_pay`, `PaymentAttemptRecord.payment_method_details.satispay`, `PaymentRecord.payment_method_details.alma`, `PaymentRecord.payment_method_details.amazon_pay`, `PaymentRecord.payment_method_details.billie`, `PaymentRecord.payment_method_details.kakao_pay`, `PaymentRecord.payment_method_details.kr_card`, `PaymentRecord.payment_method_details.naver_pay`, `PaymentRecord.payment_method_details.payco`, `PaymentRecord.payment_method_details.revolut_pay`, `PaymentRecord.payment_method_details.samsung_pay`, and `PaymentRecord.payment_method_details.satispay`
+  * Add support for `location` and `reader` on `PaymentAttemptRecord.payment_method_details.paynow` and `PaymentRecord.payment_method_details.paynow`
+  * Add support for `latest_active_mandate` on `PaymentMethod`
+  * Change `Payout.payout_method` to be required
+  * Add support for `metadata` and `period` on `QuotePreviewSubscriptionSchedule.phases[].add_invoice_items[]`
+  * Add support for `pix_display_qr_code` on `SetupIntent.next_action`
+  * Add support for `reader_security` on `Terminal.ConfigurationCreateParams`, `Terminal.ConfigurationUpdateParams`, and `Terminal.Configuration`
+  * Add support for error codes `customer_session_expired` and `india_recurring_payment_mandate_canceled` on `QuotePreviewInvoice.last_finalization_error`
 
 ## 18.5.0 - 2025-08-27
 This release changes the pinned API version to `2025-08-27.basil`.
