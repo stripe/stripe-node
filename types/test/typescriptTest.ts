@@ -333,6 +333,13 @@ async (): Promise<void> => {
     // @ts-expect-error - shouldn't be available
     eventNotification.related_object;
     const e: Stripe.Events.V1BillingMeterNoMeterFoundEvent = await eventNotification.fetchEvent();
+    // @ts-expect-error - isn't a known type
+  } else if (eventNotification.type === 'some.unknown.event') {
+    const e = eventNotification as Stripe.Events.UnknownEventNotification;
+    e.fetchEvent();
+    // these exist, but may be null
+    e.related_object;
+    e.fetchRelatedObject();
   }
 };
 

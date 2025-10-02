@@ -36,7 +36,15 @@ declare module 'stripe' {
          * Object containing the reference to API resource relevant to the event.
          */
         related_object: V2.Core.Events.RelatedObject | null;
+        /**
+         * Fetches the full object corresponding to the `related_object` field.
+         * Returns `null` if there is no `related_object`.
+         */
         fetchRelatedObject: () => Promise<unknown>;
+        /**
+         * Fetches the full Event object corresponding to this notification.
+         */
+        fetchEvent: () => Promise<V2.Core.EventBase>;
       }
     }
 
