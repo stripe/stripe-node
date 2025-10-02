@@ -8,6 +8,9 @@
  *   - if it is a v1.billing.meter.error_report_triggered event type, call
  *     event.fetchRelatedObject to retrieve the Billing Meter object associated
  *     with the event.
+ *  - if it is a v1.billing.meter.no_meter_found event type, just log the event
+ *  - if it is an unknown event type, cast to Stripe.Events.UnknownEventNotification
+ *    and log that we received an unknown event type.
  */
 
 import {Stripe} from 'stripe';
