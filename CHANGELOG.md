@@ -1,5 +1,8 @@
 # Changelog
 
+## 19.2.0-beta.1 - 2025-10-03
+* Contains bug fixes and improvements from [v19.1.0](https://github.com/stripe/stripe-node/blob/master/CHANGELOG.md#1910---2025-10-03).
+
 ## 19.1.0-beta.1 - 2025-09-30
 This release changes the pinned API version to `2025-09-30.preview`. It is built on top of SDK version 19.0.0 which contains breaking changes. Please review the [changelog for 19.0.0](https://github.com/stripe/stripe-go/blob/master/CHANGELOG.md#1900---2025-09-30) if upgrading from older SDK versions.
 
