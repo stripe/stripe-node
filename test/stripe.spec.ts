@@ -802,7 +802,10 @@ describe('Stripe Module', function() {
             );
 
             expect(event.fetchEvent).to.be.a('function');
-            expect(event.fetchRelatedObject).not.to.be.a('function');
+            // this is always present, but hidden in the types if there's no object
+            // not easy to add conditionally because we don't know at runtime if we have a type for the event or not
+            expect(event.fetchRelatedObject).to.be.a('function');
+            expect(await event.fetchRelatedObject()).to.be.null;
             const pulled = await event.fetchEvent();
             expect(pulled.data).to.equal(jsonWithData.data);
             // Have to call another requests for metrics to be sent.
