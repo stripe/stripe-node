@@ -525,19 +525,21 @@ export function createStripe(
         );
       };
 
-      if (eventNotification.related_object) {
-        eventNotification.fetchRelatedObject = (): Promise<unknown> => {
-          return this._requestSender._rawRequest(
-            'GET',
-            eventNotification.related_object.url,
-            undefined,
-            {
-              stripeContext: eventNotification.context,
-            },
-            ['fetch_related_object']
-          );
-        };
-      }
+      eventNotification.fetchRelatedObject = (): Promise<unknown> => {
+        if (!eventNotification.related_object) {
+          return Promise.resolve(null);
+        }
+
+        return this._requestSender._rawRequest(
+          'GET',
+          eventNotification.related_object.url,
+          undefined,
+          {
+            stripeContext: eventNotification.context,
+          },
+          ['fetch_related_object']
+        );
+      };
 
       return eventNotification;
     },

@@ -58,7 +58,7 @@ jobs:
           - 'ubuntu-24.04'
         node:
           # should include even numbers >= 16
-          # see: https://docs.stripe.com/sdks/versioning?server=node#stripe-sdk-language-version-support-policy
+          # see: https://docs.stripe.com/sdks/versioning?lang=node#stripe-sdk-language-version-support-policy
           - '22'
           - '20'
           - '18'
@@ -118,19 +118,16 @@ jobs:
       - run: sudo apt-get install -y oathtool
       - name: Publish to NPM
         run: |
-          set -ex
+          set -euxo pipefail
           npm config set //registry.npmjs.org/:_authToken $NPM_AUTH_TOKEN
           # print the NPM user name for validation
           npm whoami
-          cat package.json
-          cat package.json | jq -r '.version'
-          < package.json | jq -r '.version'
-
           VERSION=$(cat package.json | jq -r '.version')
           # use the tag correlating to this release channel
           NPM_TAG=$(cat package.json | jq -r '.version | if contains("beta") then "public-preview" else if contains("alpha") then "private-preview" else "latest" end end')
           echo "Publishing $VERSION with $NPM_TAG tag."
-          set +ex
+          # stop debug logging now, so we don't log the OTP
+          set +x
           npm publish --otp="$(oathtool -b --totp $NPM_OTP)" --tag $NPM_TAG
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
