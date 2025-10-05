@@ -8,6 +8,20 @@ This release changes the pinned API version to `2025-09-30.preview`. It is built
 
 * [#2417](https://github.com/stripe/stripe-node/pull/2417) parseThinEvent__experimental is no longer needed
   * ⚠️ Remove the `StripeClient.parseThinEvent__experimental` and `PushedThinEvent` classes. They've been replaced with `StripeClient.parseEventNotification` and the *`EventNotification` classes respectively.
+* [#2419](https://github.com/stripe/stripe-node/pull/2419) Update generated code for private-preview
+  * Add support for `paypay_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+  * Remove support for values `saturday` and `sunday` from enums `Account.settings.payouts.schedule.weekly_payout_days`, `AccountCreateParams.settings.payouts.schedule.weekly_payout_days`, `AccountUpdateParams.settings.payouts.schedule.weekly_payout_days`
+  * Add support for `credit_grants` on `Billing.AlertCreateParams.credit_balance_threshold.filters[]`
+  * Add support for `paypay` on `Charge.payment_method_details`, `ConfirmationToken.payment_method_preview`, `ConfirmationTokenCreateParams.testHelpers.payment_method_data`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodConfigurationCreateParams`, `PaymentMethodConfigurationUpdateParams`, `PaymentMethodConfiguration`, `PaymentMethodCreateParams`, `PaymentMethod`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentCreateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_data`
+  * Add support for `location` and `reader` on `Charge.payment_method_details.paynow`
+  * Add support for new value `paypay` on enum `Checkout.SessionCreateParams.payment_method_types`
+  * Add support for new value `paypay` on enums `ConfirmationTokenCreateParams.testHelpers.payment_method_data.type`, `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `SetupIntentConfirmParams.payment_method_data.type`, `SetupIntentCreateParams.payment_method_data.type`, and `SetupIntentUpdateParams.payment_method_data.type`
+  * Add support for new value `paypay` on enums `ConfirmationToken.payment_method_preview.type` and `PaymentMethod.type`
+  * Add support for new value `paypay` on enums `CustomerListPaymentMethodsParams.type`, `PaymentMethodCreateParams.type`, and `PaymentMethodListParams.type`
+  * Add support for new value `paypay` on enums `PaymentIntent.excluded_payment_method_types` and `PaymentIntentCreateParams.excluded_payment_method_types`
+  * Add support for new value `paypay` on enums `PaymentLink.payment_method_types`, `PaymentLinkCreateParams.payment_method_types`, and `PaymentLinkUpdateParams.payment_method_types`
+  * Add support for `billing_cadence` on `InvoiceListParams`
+  * Add support for `payment_record_refund` and `type` on `CreditNote.refunds[]`, `CreditNoteCreateParams.refunds[]`, `CreditNotePreviewLinesParams.refunds[]`, and `CreditNotePreviewParams.refunds[]`
 * [#2409](https://github.com/stripe/stripe-node/pull/2409) Update generated code for private-preview
   * Add support for new resource `V2.MoneyManagement.RecipientVerification`
   * Add support for `acknowledge`, `create`, `recipient_verifications`, and `retrieve` methods on resource `V2.MoneyManagement.RecipientVerification`
@@ -29,7 +43,6 @@ This release changes the pinned API version to `2025-09-30.preview`. It is built
   * Add support for new value `credentials.sepa_bank_account.iban` on enums `V2.MoneyManagement.FinancialAddressListParams.include` and `V2.MoneyManagement.FinancialAddressRetrieveParams.include`
   * Add support for `sepa_bank_account` on `V2.MoneyManagement.FinancialAddressCreateParams`
   * Remove support for `price` on `V2.Billing.RateCardRateCreateParams`
-  * Change `V2.Billing.LicenseFeeUpdateParams.display_name` to be optional
   * Add support for `lookup_keys` on `V2.Billing.CadenceListParams`
   * Change type of `V2.Billing.CadenceCancelParams.include`, `V2.Billing.CadenceCreateParams.include`, `V2.Billing.CadenceListParams.include`, `V2.Billing.CadenceRetrieveParams.include`, and `V2.Billing.CadenceUpdateParams.include` from `literal('invoice_discount_rules')` to `enum('invoice_discount_rules'|'settings_data')`
   * Remove support for `customer` and `type` on `V2.Billing.CadenceCreateParams.payer`
@@ -185,14 +198,14 @@ This release changes the pinned API version to `2025-09-30.clover` and contains 
 
 * [#2404](https://github.com/stripe/stripe-node/pull/2404) Update generated code for private-preview
     * Add support for `retrieve` method on resource `V2.Core.ClaimableSandbox`
-    * Add support for `month_of_year` on `V2.Billing.Cadence#create.billing_cycle.month` and `V2.Billing.Cadence.billing_cycle.month`
+    * Add support for `month_of_year` on `V2.Billing.Cadence.billing_cycle.month` and `V2.Billing.CadenceCreateParams.billing_cycle.month`
     * Add support for `claimed_at`, `expires_at`, `sandbox_details`, and `status` on `V2.Core.ClaimableSandbox`
     * Remove support for `api_keys` on `V2.Core.ClaimableSandbox`
-    * Change type of `V2.Core.ClaimableSandbox.claim_url` from `string` to `nullable(string)`
-    * Add support for new value `current_billing_period_end` on enums `V2.Billing.Intent#create.actions[].deactivate.effective_at.type` and `V2.Billing.IntentAction.deactivate.effective_at.type`
+    * Change type of `V2.Core.ClaimableSandbox.claim_url` from `string` to `string | null`
+    * Add support for new value `current_billing_period_end` on enums `V2.Billing.IntentAction.deactivate.effective_at.type` and `V2.Billing.IntentCreateParams.actions[].deactivate.effective_at.type`
     * Add support for `will_activate_at` and `will_cancel_at` on `V2.Billing.PricingPlanSubscription.servicing_status_transitions` and `V2.Billing.RateCardSubscription.servicing_status_transitions`
-    * Add support for `category` and `priority` on `V2.Billing.ServiceAction#create.credit_grant_per_tenant`, `V2.Billing.ServiceAction#create.credit_grant`, `V2.Billing.ServiceAction.credit_grant_per_tenant`, and `V2.Billing.ServiceAction.credit_grant`
-    * Change `V2.Billing.LicenseFee#update.display_name` to be optional
+    * Add support for `category` and `priority` on `V2.Billing.ServiceAction.credit_grant_per_tenant`, `V2.Billing.ServiceAction.credit_grant`, `V2.Billing.ServiceActionCreateParams.credit_grant_per_tenant`, and `V2.Billing.ServiceActionCreateParams.credit_grant`
+    * Change `V2.Billing.LicenseFeeUpdateParams.display_name` to be optional
     * Add support for `invoices` on `EventsV2BillingCadenceBilledEvent`
     * Add support for thin events `V2CoreClaimableSandboxClaimedEvent`, `V2CoreClaimableSandboxExpiredEvent`, `V2CoreClaimableSandboxExpiringEvent`, and `V2CoreClaimableSandboxSandboxDetailsOwnerAccountUpdatedEvent` with related object `V2.Core.ClaimableSandbox`
     * Remove support for thin event `V2BillingCadenceErroredEvent` with related object `V2.Billing.Cadence`
