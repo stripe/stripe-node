@@ -38,7 +38,8 @@ app.post(
 
       // TS will narrow event based on the `type` property
       if (eventNotification.type == 'v1.billing.meter.error_report_triggered') {
-        // this this block, eventNotification is correctly a Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification
+        // this this block, eventNotification is correctly
+        // a Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification
 
         // there's basic info about the related object in the notification
         console.log(
@@ -53,10 +54,11 @@ app.post(
         const event = await eventNotification.fetchEvent();
         console.log(`More info: ${event.data.developer_message_summary}`);
       } else if (eventNotification.type === 'v1.billing.meter.no_meter_found') {
-        // in this block, eventNotification is correctly a Stripe.Events.V1BillingMeterNoMeterFoundEventNotification
+        // in this block, eventNotification is correctly
+        // a Stripe.Events.V1BillingMeterNoMeterFoundEventNotification
 
-        // that interface doesn't define `fetchRelatedObject()` because the event has no related object
-        // so this line would correctly give a type error:
+        // that interface doesn't define `fetchRelatedObject()` because the event
+        // has no related object. so this line would correctly give a type error:
         // eventNotification.fetchRelatedObject();
 
         // but fetching the event always works:
@@ -64,9 +66,10 @@ app.post(
         console.log(
           `Err: No meter found: ${event.data.developer_message_summary}`
         );
-        // the above approach works for all event types that predate the SDK version you're using
-        // but, you may also need to handle event types that the SDK doesn't know about
-        // in that case, you ignore the type mismatch and cast to UnknownEventNotification
+        // Events that were introduced after this SDK version release are
+        // represented as `UnknownEventNotification`s.
+        // They're valid, the SDK just doesn't have corresponding classes for them.
+        // In that case, you ignore the type mismatch and cast to UnknownEventNotification
         // @ts-expect-error
       } else if (eventNotification.type === 'some.new.event') {
         const unknownEvent = eventNotification as Stripe.Events.UnknownEventNotification;
