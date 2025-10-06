@@ -21,6 +21,10 @@ export const PaymentMethods = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/payment_methods/{payment_method}/attach',
   }),
+  checkBalance: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/payment_methods/{payment_method}/check_balance',
+  }),
   detach: stripeMethod({
     method: 'POST',
     fullPath: '/v1/payment_methods/{payment_method}/detach',

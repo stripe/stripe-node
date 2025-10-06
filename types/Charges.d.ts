@@ -868,6 +868,8 @@ declare module 'stripe' {
            */
           authorization_code: string | null;
 
+          benefits?: Card.Benefits;
+
           /**
            * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
            */
@@ -991,6 +993,13 @@ declare module 'stripe' {
         }
 
         namespace Card {
+          interface Benefits {
+            /**
+             * Issuer of the benefit card utilized on this payment
+             */
+            issuer: string | null;
+          }
+
           interface Checks {
             /**
              * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.

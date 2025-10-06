@@ -1168,6 +1168,13 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
+    interface PaymentMethodCheckBalanceParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface PaymentMethodDetachParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -1244,6 +1251,19 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
+
+      /**
+       * Retrieves a payment method's balance.
+       */
+      checkBalance(
+        id: string,
+        params?: PaymentMethodCheckBalanceParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentMethodBalance>>;
+      checkBalance(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentMethodBalance>>;
 
       /**
        * Detaches a PaymentMethod object from a Customer. After a PaymentMethod is detached, it can no longer be used for a payment or re-attached to a Customer.

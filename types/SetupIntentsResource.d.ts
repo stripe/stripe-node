@@ -105,6 +105,11 @@ declare module 'stripe' {
       return_url?: string;
 
       /**
+       * Provides industry-specific information about the SetupIntent.
+       */
+      setup_details?: SetupIntentCreateParams.SetupDetails;
+
+      /**
        * If you populate this hash, this SetupIntent generates a `single_use` mandate after successful completion.
        *
        * Single-use mandates are only valid for the following payment methods: `acss_debit`, `alipay`, `au_becs_debit`, `bacs_debit`, `bancontact`, `boleto`, `ideal`, `link`, `sepa_debit`, and `us_bank_account`.
@@ -1830,6 +1835,31 @@ declare module 'stripe' {
         }
       }
 
+      interface SetupDetails {
+        /**
+         * Benefit details for this SetupIntent
+         */
+        benefit?: SetupDetails.Benefit;
+      }
+
+      namespace SetupDetails {
+        interface Benefit {
+          /**
+           * French meal voucher benefit details for this SetupIntent.
+           */
+          fr_meal_voucher?: Benefit.FrMealVoucher;
+        }
+
+        namespace Benefit {
+          interface FrMealVoucher {
+            /**
+             * The 14-digit SIRET of the meal voucher acceptor.
+             */
+            siret: string;
+          }
+        }
+      }
+
       interface SingleUse {
         /**
          * Amount the customer is granting permission to collect later. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
@@ -1926,6 +1956,11 @@ declare module 'stripe' {
        * The list of payment method types (for example, card) that this SetupIntent can set up. If you don't provide this, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods). A list of valid payment method types can be found [here](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type).
        */
       payment_method_types?: Array<string>;
+
+      /**
+       * Provides industry-specific information about the SetupIntent.
+       */
+      setup_details?: SetupIntentUpdateParams.SetupDetails;
     }
 
     namespace SetupIntentUpdateParams {
@@ -3568,6 +3603,31 @@ declare module 'stripe' {
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
       }
+
+      interface SetupDetails {
+        /**
+         * Benefit details for this SetupIntent
+         */
+        benefit?: SetupDetails.Benefit;
+      }
+
+      namespace SetupDetails {
+        interface Benefit {
+          /**
+           * French meal voucher benefit details for this SetupIntent.
+           */
+          fr_meal_voucher?: Benefit.FrMealVoucher;
+        }
+
+        namespace Benefit {
+          interface FrMealVoucher {
+            /**
+             * The 14-digit SIRET of the meal voucher acceptor.
+             */
+            siret: string;
+          }
+        }
+      }
     }
 
     interface SetupIntentListParams extends PaginationParams {
@@ -3660,6 +3720,11 @@ declare module 'stripe' {
        * This parameter is only used for cards and other redirect-based payment methods.
        */
       return_url?: string;
+
+      /**
+       * Provides industry-specific information about the SetupIntent.
+       */
+      setup_details?: SetupIntentConfirmParams.SetupDetails;
 
       /**
        * Set to `true` when confirming server-side and using Stripe.js, iOS, or Android client-side SDKs to handle the next actions.
@@ -5352,6 +5417,31 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+      }
+
+      interface SetupDetails {
+        /**
+         * Benefit details for this SetupIntent
+         */
+        benefit?: SetupDetails.Benefit;
+      }
+
+      namespace SetupDetails {
+        interface Benefit {
+          /**
+           * French meal voucher benefit details for this SetupIntent.
+           */
+          fr_meal_voucher?: Benefit.FrMealVoucher;
+        }
+
+        namespace Benefit {
+          interface FrMealVoucher {
+            /**
+             * The 14-digit SIRET of the meal voucher acceptor.
+             */
+            siret: string;
+          }
         }
       }
     }

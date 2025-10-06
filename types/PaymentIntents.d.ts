@@ -1486,6 +1486,8 @@ declare module 'stripe' {
       }
 
       interface PaymentDetails {
+        benefit?: PaymentDetails.Benefit;
+
         car_rental?: PaymentDetails.CarRental;
 
         /**
@@ -1504,6 +1506,19 @@ declare module 'stripe' {
       }
 
       namespace PaymentDetails {
+        interface Benefit {
+          fr_meal_voucher?: Benefit.FrMealVoucher;
+        }
+
+        namespace Benefit {
+          interface FrMealVoucher {
+            /**
+             * The 14-digit SIRET of the meal voucher acceptor.
+             */
+            siret?: string;
+          }
+        }
+
         interface CarRental {
           affiliate?: CarRental.Affiliate;
 

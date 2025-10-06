@@ -431,6 +431,8 @@ declare module 'stripe' {
         }
 
         interface Card {
+          benefits?: Card.Benefits;
+
           /**
            * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
            */
@@ -520,6 +522,18 @@ declare module 'stripe' {
         }
 
         namespace Card {
+          interface Benefits {
+            /**
+             * Issuer of this benefit card
+             */
+            issuer: string | null;
+
+            /**
+             * Available benefit programs for this card
+             */
+            programs: Array<string> | null;
+          }
+
           interface Checks {
             /**
              * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.

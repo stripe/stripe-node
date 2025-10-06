@@ -72,6 +72,8 @@ declare module 'stripe' {
        */
       available_payout_methods?: Array<Card.AvailablePayoutMethod> | null;
 
+      benefits?: Card.Benefits;
+
       /**
        * Card brand. Can be `American Express`, `Cartes Bancaires`, `Diners Club`, `Discover`, `Eftpos Australia`, `Girocard`, `JCB`, `MasterCard`, `UnionPay`, `Visa`, or `Unknown`.
        */
@@ -191,6 +193,18 @@ declare module 'stripe' {
       type AllowRedisplay = 'always' | 'limited' | 'unspecified';
 
       type AvailablePayoutMethod = 'instant' | 'standard';
+
+      interface Benefits {
+        /**
+         * Issuer of this benefit card
+         */
+        issuer: string | null;
+
+        /**
+         * Available benefit programs for this card
+         */
+        programs: Array<string> | null;
+      }
 
       interface Networks {
         /**
