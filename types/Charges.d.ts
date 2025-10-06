@@ -2368,7 +2368,12 @@ declare module 'stripe' {
 
         interface Qris {}
 
-        interface Rechnung {}
+        interface Rechnung {
+          /**
+           * Payment portal URL.
+           */
+          payment_portal_url: string | null;
+        }
 
         interface RevolutPay {
           funding?: RevolutPay.Funding;
