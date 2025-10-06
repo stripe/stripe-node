@@ -60,7 +60,7 @@ export function createStripe(
   platformFunctions: PlatformFunctions,
   requestSender: RequestSenderFactory = defaultRequestSenderFactory
 ): typeof Stripe {
-  Stripe.PACKAGE_VERSION = '19.0.0';
+  Stripe.PACKAGE_VERSION = '19.1.0';
   Stripe.API_VERSION = ApiVersion;
   Stripe.USER_AGENT = {
     bindings_version: Stripe.PACKAGE_VERSION,
@@ -525,19 +525,21 @@ export function createStripe(
         );
       };
 
-      if (eventNotification.related_object) {
-        eventNotification.fetchRelatedObject = (): Promise<unknown> => {
-          return this._requestSender._rawRequest(
-            'GET',
-            eventNotification.related_object.url,
-            undefined,
-            {
-              stripeContext: eventNotification.context,
-            },
-            ['fetch_related_object']
-          );
-        };
-      }
+      eventNotification.fetchRelatedObject = (): Promise<unknown> => {
+        if (!eventNotification.related_object) {
+          return Promise.resolve(null);
+        }
+
+        return this._requestSender._rawRequest(
+          'GET',
+          eventNotification.related_object.url,
+          undefined,
+          {
+            stripeContext: eventNotification.context,
+          },
+          ['fetch_related_object']
+        );
+      };
 
       return eventNotification;
     },
