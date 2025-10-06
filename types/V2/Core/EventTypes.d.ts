@@ -191,7 +191,6 @@ declare module 'stripe' {
       | Stripe.Events.V1TransferCreatedEvent
       | Stripe.Events.V1TransferReversedEvent
       | Stripe.Events.V1TransferUpdatedEvent
-      | Stripe.Events.V2BillingBillSettingUpdatedEvent
       | Stripe.Events.V2BillingCadenceBilledEvent
       | Stripe.Events.V2BillingCadenceCanceledEvent
       | Stripe.Events.V2BillingCadenceCreatedEvent
@@ -505,7 +504,6 @@ declare module 'stripe' {
       | Stripe.Events.V1TransferCreatedEventNotification
       | Stripe.Events.V1TransferReversedEventNotification
       | Stripe.Events.V1TransferUpdatedEventNotification
-      | Stripe.Events.V2BillingBillSettingUpdatedEventNotification
       | Stripe.Events.V2BillingCadenceBilledEventNotification
       | Stripe.Events.V2BillingCadenceCanceledEventNotification
       | Stripe.Events.V2BillingCadenceCreatedEventNotification
@@ -4645,38 +4643,6 @@ declare module 'stripe' {
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<Transfer>;
       fetchEvent(): Promise<V1TransferUpdatedEvent>;
-    }
-
-    /**
-     * This event occurs when a bill setting is updated.
-     */
-    export interface V2BillingBillSettingUpdatedEvent
-      extends V2.Core.EventBase {
-      type: 'v2.billing.bill_setting.updated';
-      // Retrieves data specific to this event.
-      data: V2BillingBillSettingUpdatedEvent.Data;
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Billing.BillSetting>;
-    }
-    export interface V2BillingBillSettingUpdatedEventNotification
-      extends V2.Core.EventNotificationBase {
-      type: 'v2.billing.bill_setting.updated';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Billing.BillSetting>;
-      fetchEvent(): Promise<V2BillingBillSettingUpdatedEvent>;
-    }
-
-    namespace V2BillingBillSettingUpdatedEvent {
-      export interface Data {
-        /**
-         * Timestamp of when the object was updated.
-         */
-        updated: string;
-      }
     }
 
     /**
