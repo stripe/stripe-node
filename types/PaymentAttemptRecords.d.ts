@@ -1184,7 +1184,7 @@ declare module 'stripe' {
         }
 
         namespace Crypto {
-          type Network = 'base' | 'ethereum' | 'polygon';
+          type Network = 'base' | 'ethereum' | 'polygon' | 'solana';
 
           type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
         }
