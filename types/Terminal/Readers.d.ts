@@ -70,11 +70,6 @@ declare module 'stripe' {
         label: string;
 
         /**
-         * The last time this reader reported to Stripe backend.
-         */
-        last_seen_at: number | null;
-
-        /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;

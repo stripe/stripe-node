@@ -560,11 +560,6 @@ declare module 'stripe' {
 
       interface PaymentDetails {
         /**
-         * Benefit details for this PaymentIntent
-         */
-        benefit?: PaymentDetails.Benefit;
-
-        /**
          * Car rental details for this PaymentIntent.
          */
         car_rental?: PaymentDetails.CarRental;
@@ -598,6 +593,11 @@ declare module 'stripe' {
          * Subscription details for this PaymentIntent
          */
         subscription?: PaymentDetails.Subscription;
+
+        /**
+         * Benefit details for this PaymentIntent
+         */
+        benefit?: PaymentDetails.Benefit;
       }
 
       namespace PaymentDetails {
@@ -5107,11 +5107,6 @@ declare module 'stripe' {
 
       interface PaymentDetails {
         /**
-         * Benefit details for this PaymentIntent
-         */
-        benefit?: PaymentDetails.Benefit;
-
-        /**
          * Car rental details for this PaymentIntent.
          */
         car_rental?: PaymentDetails.CarRental;
@@ -5145,6 +5140,11 @@ declare module 'stripe' {
          * Subscription details for this PaymentIntent
          */
         subscription?: PaymentDetails.Subscription;
+
+        /**
+         * Benefit details for this PaymentIntent
+         */
+        benefit?: PaymentDetails.Benefit;
       }
 
       namespace PaymentDetails {
@@ -10642,11 +10642,6 @@ declare module 'stripe' {
 
       interface PaymentDetails {
         /**
-         * Benefit details for this PaymentIntent
-         */
-        benefit?: PaymentDetails.Benefit;
-
-        /**
          * Car rental details for this PaymentIntent.
          */
         car_rental?: PaymentDetails.CarRental;
@@ -10680,6 +10675,11 @@ declare module 'stripe' {
          * Subscription details for this PaymentIntent
          */
         subscription?: PaymentDetails.Subscription;
+
+        /**
+         * Benefit details for this PaymentIntent
+         */
+        benefit?: PaymentDetails.Benefit;
       }
 
       namespace PaymentDetails {

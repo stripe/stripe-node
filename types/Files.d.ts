@@ -83,7 +83,6 @@ declare module 'stripe' {
         | 'identity_document_downloadable'
         | 'issuing_regulatory_reporting'
         | 'pci_document'
-        | 'platform_terms_of_service'
         | 'selfie'
         | 'sigma_scheduled_query'
         | 'tax_document_user_upload'

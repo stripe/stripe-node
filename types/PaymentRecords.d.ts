@@ -1179,7 +1179,7 @@ declare module 'stripe' {
         }
 
         namespace Crypto {
-          type Network = 'base' | 'ethereum' | 'polygon' | 'solana';
+          type Network = 'base' | 'ethereum' | 'polygon';
 
           type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
         }
@@ -2012,12 +2012,7 @@ declare module 'stripe' {
 
         interface Qris {}
 
-        interface Rechnung {
-          /**
-           * Payment portal URL.
-           */
-          payment_portal_url: string | null;
-        }
+        interface Rechnung {}
 
         interface RevolutPay {
           funding?: RevolutPay.Funding;

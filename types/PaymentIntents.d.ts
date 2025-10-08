@@ -1486,8 +1486,6 @@ declare module 'stripe' {
       }
 
       interface PaymentDetails {
-        benefit?: PaymentDetails.Benefit;
-
         car_rental?: PaymentDetails.CarRental;
 
         /**
@@ -1503,6 +1501,8 @@ declare module 'stripe' {
         order_reference?: string | null;
 
         subscription?: PaymentDetails.Subscription;
+
+        benefit?: PaymentDetails.Benefit;
       }
 
       namespace PaymentDetails {

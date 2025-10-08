@@ -124,8 +124,6 @@ declare module 'stripe' {
 
           gbp?: Tipping.Gbp;
 
-          gip?: Tipping.Gip;
-
           hkd?: Tipping.Hkd;
 
           huf?: Tipping.Huf;
@@ -289,23 +287,6 @@ declare module 'stripe' {
           }
 
           interface Gbp {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number> | null;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number> | null;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Gip {
             /**
              * Fixed amounts displayed when collecting a tip
              */
