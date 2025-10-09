@@ -5292,7 +5292,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/accounts',
         response:
-          '{"data":[{"applied_configurations":["storer"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"applied_configurations":["card_creator"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account","livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const accounts = await stripe.v2.core.accounts.list();
@@ -5305,7 +5305,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/core/accounts',
         response:
-          '{"applied_configurations":["storer"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account","livemode":true}',
+          '{"applied_configurations":["card_creator"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account","livemode":true}',
       },
     ]);
     const account = await stripe.v2.core.accounts.create();
@@ -5318,7 +5318,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/accounts/id_123',
         response:
-          '{"applied_configurations":["storer"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account","livemode":true}',
+          '{"applied_configurations":["card_creator"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account","livemode":true}',
       },
     ]);
     const account = await stripe.v2.core.accounts.retrieve('id_123');
@@ -5331,7 +5331,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/core/accounts/id_123',
         response:
-          '{"applied_configurations":["storer"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account","livemode":true}',
+          '{"applied_configurations":["card_creator"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account","livemode":true}',
       },
     ]);
     const account = await stripe.v2.core.accounts.update('id_123');
@@ -5344,7 +5344,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/core/accounts/id_123/close',
         response:
-          '{"applied_configurations":["storer"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account","livemode":true}',
+          '{"applied_configurations":["card_creator"],"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.account","livemode":true}',
       },
     ]);
     const account = await stripe.v2.core.accounts.close('id_123');
