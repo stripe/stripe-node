@@ -228,11 +228,6 @@ declare module 'stripe' {
         car_rental?: PaymentDetails.CarRental;
 
         /**
-         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
-         */
-        customer_reference?: Stripe.Emptyable<string>;
-
-        /**
          * Event details for this PaymentIntent
          */
         event_details?: PaymentDetails.EventDetails;
@@ -246,11 +241,6 @@ declare module 'stripe' {
          * Lodging reservation details for this PaymentIntent
          */
         lodging?: PaymentDetails.Lodging;
-
-        /**
-         * A unique value assigned by the business to identify the transaction.
-         */
-        order_reference?: Stripe.Emptyable<string>;
 
         /**
          * Subscription details for this PaymentIntent
@@ -1036,11 +1026,6 @@ declare module 'stripe' {
         car_rental?: PaymentDetails.CarRental;
 
         /**
-         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
-         */
-        customer_reference?: Stripe.Emptyable<string>;
-
-        /**
          * Event details for this PaymentIntent
          */
         event_details?: PaymentDetails.EventDetails;
@@ -1054,11 +1039,6 @@ declare module 'stripe' {
          * Lodging reservation details for this PaymentIntent
          */
         lodging?: PaymentDetails.Lodging;
-
-        /**
-         * A unique value assigned by the business to identify the transaction.
-         */
-        order_reference?: Stripe.Emptyable<string>;
 
         /**
          * Subscription details for this PaymentIntent
