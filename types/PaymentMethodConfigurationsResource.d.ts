@@ -89,6 +89,11 @@ declare module 'stripe' {
       cashapp?: PaymentMethodConfigurationCreateParams.Cashapp;
 
       /**
+       * [Stablecoin payments](https://stripe.com/docs/payments/stablecoin-payments) enable customers to pay in stablecoins like USDC from 100s of wallets including Phantom and Metamask.
+       */
+      crypto?: PaymentMethodConfigurationCreateParams.Crypto;
+
+      /**
        * Uses a customer's [cash balance](https://stripe.com/docs/payments/customer-balance) for the payment. The cash balance can be funded via a bank transfer. Check this [page](https://stripe.com/docs/payments/bank-transfers) for more details.
        */
       customer_balance?: PaymentMethodConfigurationCreateParams.CustomerBalance;
@@ -648,6 +653,26 @@ declare module 'stripe' {
       }
 
       namespace Cashapp {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Crypto {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Crypto.DisplayPreference;
+      }
+
+      namespace Crypto {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -1620,6 +1645,11 @@ declare module 'stripe' {
       cashapp?: PaymentMethodConfigurationUpdateParams.Cashapp;
 
       /**
+       * [Stablecoin payments](https://stripe.com/docs/payments/stablecoin-payments) enable customers to pay in stablecoins like USDC from 100s of wallets including Phantom and Metamask.
+       */
+      crypto?: PaymentMethodConfigurationUpdateParams.Crypto;
+
+      /**
        * Uses a customer's [cash balance](https://stripe.com/docs/payments/customer-balance) for the payment. The cash balance can be funded via a bank transfer. Check this [page](https://stripe.com/docs/payments/bank-transfers) for more details.
        */
       customer_balance?: PaymentMethodConfigurationUpdateParams.CustomerBalance;
@@ -2174,6 +2204,26 @@ declare module 'stripe' {
       }
 
       namespace Cashapp {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface Crypto {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Crypto.DisplayPreference;
+      }
+
+      namespace Crypto {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
