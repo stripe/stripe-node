@@ -191,7 +191,6 @@ declare module 'stripe' {
       | Stripe.Events.V1TransferCreatedEvent
       | Stripe.Events.V1TransferReversedEvent
       | Stripe.Events.V1TransferUpdatedEvent
-      | Stripe.Events.V2BillingBillSettingUpdatedEvent
       | Stripe.Events.V2BillingCadenceBilledEvent
       | Stripe.Events.V2BillingCadenceCanceledEvent
       | Stripe.Events.V2BillingCadenceCreatedEvent
@@ -232,6 +231,8 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreAccountClosedEvent
       | Stripe.Events.V2CoreAccountCreatedEvent
       | Stripe.Events.V2CoreAccountUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingConfigurationCardCreatorCapabilityStatusUpdatedEvent
+      | Stripe.Events.V2CoreAccountIncludingConfigurationCardCreatorUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationCustomerUpdatedEvent
       | Stripe.Events.V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEvent
@@ -505,7 +506,6 @@ declare module 'stripe' {
       | Stripe.Events.V1TransferCreatedEventNotification
       | Stripe.Events.V1TransferReversedEventNotification
       | Stripe.Events.V1TransferUpdatedEventNotification
-      | Stripe.Events.V2BillingBillSettingUpdatedEventNotification
       | Stripe.Events.V2BillingCadenceBilledEventNotification
       | Stripe.Events.V2BillingCadenceCanceledEventNotification
       | Stripe.Events.V2BillingCadenceCreatedEventNotification
@@ -546,6 +546,8 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreAccountClosedEventNotification
       | Stripe.Events.V2CoreAccountCreatedEventNotification
       | Stripe.Events.V2CoreAccountUpdatedEventNotification
+      | Stripe.Events.V2CoreAccountIncludingConfigurationCardCreatorCapabilityStatusUpdatedEventNotification
+      | Stripe.Events.V2CoreAccountIncludingConfigurationCardCreatorUpdatedEventNotification
       | Stripe.Events.V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEventNotification
       | Stripe.Events.V2CoreAccountIncludingConfigurationCustomerUpdatedEventNotification
       | Stripe.Events.V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpdatedEventNotification
@@ -4648,38 +4650,6 @@ declare module 'stripe' {
     }
 
     /**
-     * This event occurs when a bill setting is updated.
-     */
-    export interface V2BillingBillSettingUpdatedEvent
-      extends V2.Core.EventBase {
-      type: 'v2.billing.bill_setting.updated';
-      // Retrieves data specific to this event.
-      data: V2BillingBillSettingUpdatedEvent.Data;
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Billing.BillSetting>;
-    }
-    export interface V2BillingBillSettingUpdatedEventNotification
-      extends V2.Core.EventNotificationBase {
-      type: 'v2.billing.bill_setting.updated';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Billing.BillSetting>;
-      fetchEvent(): Promise<V2BillingBillSettingUpdatedEvent>;
-    }
-
-    namespace V2BillingBillSettingUpdatedEvent {
-      export interface Data {
-        /**
-         * Timestamp of when the object was updated.
-         */
-        updated: string;
-      }
-    }
-
-    /**
      * Occurs when a billing Cadence generates an invoice.
      */
     export interface V2BillingCadenceBilledEvent extends V2.Core.EventBase {
@@ -5647,6 +5617,73 @@ declare module 'stripe' {
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.Account>;
       fetchEvent(): Promise<V2CoreAccountUpdatedEvent>;
+    }
+
+    /**
+     * Occurs when the status of an Account's card creator configuration capability is updated.
+     */
+    export interface V2CoreAccountIncludingConfigurationCardCreatorCapabilityStatusUpdatedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.core.account[configuration.card_creator].capability_status_updated';
+      // Retrieves data specific to this event.
+      data: V2CoreAccountIncludingConfigurationCardCreatorCapabilityStatusUpdatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+    export interface V2CoreAccountIncludingConfigurationCardCreatorCapabilityStatusUpdatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.account[configuration.card_creator].capability_status_updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+      fetchEvent(): Promise<
+        V2CoreAccountIncludingConfigurationCardCreatorCapabilityStatusUpdatedEvent
+      >;
+    }
+
+    namespace V2CoreAccountIncludingConfigurationCardCreatorCapabilityStatusUpdatedEvent {
+      export interface Data {
+        /**
+         * Open Enum. The capability which had its status updated.
+         */
+        updated_capability: Data.UpdatedCapability;
+      }
+
+      namespace Data {
+        export type UpdatedCapability =
+          | 'commercial.celtic.charge_card'
+          | 'commercial.celtic.spend_card'
+          | 'commercial.cross_river_bank.charge_card'
+          | 'commercial.cross_river_bank.spend_card'
+          | 'commercial.stripe.charge_card'
+          | 'commercial.stripe.prepaid_card';
+      }
+    }
+
+    /**
+     * Occurs when a Card Creator's configuration is updated.
+     */
+    export interface V2CoreAccountIncludingConfigurationCardCreatorUpdatedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.core.account[configuration.card_creator].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+    }
+    export interface V2CoreAccountIncludingConfigurationCardCreatorUpdatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.account[configuration.card_creator].updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Core.Account>;
+      fetchEvent(): Promise<
+        V2CoreAccountIncludingConfigurationCardCreatorUpdatedEvent
+      >;
     }
 
     /**

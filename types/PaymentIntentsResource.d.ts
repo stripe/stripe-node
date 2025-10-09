@@ -593,9 +593,30 @@ declare module 'stripe' {
          * Subscription details for this PaymentIntent
          */
         subscription?: PaymentDetails.Subscription;
+
+        /**
+         * Benefit details for this PaymentIntent
+         */
+        benefit?: PaymentDetails.Benefit;
       }
 
       namespace PaymentDetails {
+        interface Benefit {
+          /**
+           * French meal voucher benefit details for this PaymentIntent.
+           */
+          fr_meal_voucher?: Benefit.FrMealVoucher;
+        }
+
+        namespace Benefit {
+          interface FrMealVoucher {
+            /**
+             * The 14-digit SIRET of the meal voucher acceptor.
+             */
+            siret: string;
+          }
+        }
+
         interface CarRental {
           /**
            * Affiliate details for this purchase.
@@ -5119,9 +5140,30 @@ declare module 'stripe' {
          * Subscription details for this PaymentIntent
          */
         subscription?: PaymentDetails.Subscription;
+
+        /**
+         * Benefit details for this PaymentIntent
+         */
+        benefit?: PaymentDetails.Benefit;
       }
 
       namespace PaymentDetails {
+        interface Benefit {
+          /**
+           * French meal voucher benefit details for this PaymentIntent.
+           */
+          fr_meal_voucher?: Benefit.FrMealVoucher;
+        }
+
+        namespace Benefit {
+          interface FrMealVoucher {
+            /**
+             * The 14-digit SIRET of the meal voucher acceptor.
+             */
+            siret: string;
+          }
+        }
+
         interface CarRental {
           /**
            * Affiliate details for this purchase.
@@ -10633,9 +10675,30 @@ declare module 'stripe' {
          * Subscription details for this PaymentIntent
          */
         subscription?: PaymentDetails.Subscription;
+
+        /**
+         * Benefit details for this PaymentIntent
+         */
+        benefit?: PaymentDetails.Benefit;
       }
 
       namespace PaymentDetails {
+        interface Benefit {
+          /**
+           * French meal voucher benefit details for this PaymentIntent.
+           */
+          fr_meal_voucher?: Benefit.FrMealVoucher;
+        }
+
+        namespace Benefit {
+          interface FrMealVoucher {
+            /**
+             * The 14-digit SIRET of the meal voucher acceptor.
+             */
+            siret: string;
+          }
+        }
+
         interface CarRental {
           /**
            * Affiliate details for this purchase.

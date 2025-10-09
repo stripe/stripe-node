@@ -1501,9 +1501,24 @@ declare module 'stripe' {
         order_reference?: string | null;
 
         subscription?: PaymentDetails.Subscription;
+
+        benefit?: PaymentDetails.Benefit;
       }
 
       namespace PaymentDetails {
+        interface Benefit {
+          fr_meal_voucher?: Benefit.FrMealVoucher;
+        }
+
+        namespace Benefit {
+          interface FrMealVoucher {
+            /**
+             * The 14-digit SIRET of the meal voucher acceptor.
+             */
+            siret?: string;
+          }
+        }
+
         interface CarRental {
           affiliate?: CarRental.Affiliate;
 

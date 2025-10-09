@@ -49,6 +49,11 @@ declare module 'stripe' {
         namespace AccountCreateParams {
           interface Configuration {
             /**
+             * The CardCreator Configuration allows the Account to create and issue cards to users.
+             */
+            card_creator?: Configuration.CardCreator;
+
+            /**
              * The Customer Configuration allows the Account to be used in inbound payment flows.
              */
             customer?: Configuration.Customer;
@@ -70,6 +75,127 @@ declare module 'stripe' {
           }
 
           namespace Configuration {
+            interface CardCreator {
+              /**
+               * Capabilities to request on the CardCreator Configuration.
+               */
+              capabilities?: CardCreator.Capabilities;
+            }
+
+            namespace CardCreator {
+              interface Capabilities {
+                /**
+                 * Can create cards for commercial issuing use cases.
+                 */
+                commercial?: Capabilities.Commercial;
+              }
+
+              namespace Capabilities {
+                interface Commercial {
+                  /**
+                   * Can create commercial issuing cards with Celtic as BIN sponsor.
+                   */
+                  celtic?: Commercial.Celtic;
+
+                  /**
+                   * Can create commercial issuing cards with Cross River Bank as BIN sponsor.
+                   */
+                  cross_river_bank?: Commercial.CrossRiverBank;
+
+                  /**
+                   * Can create commercial issuing cards with Stripe as BIN sponsor.
+                   */
+                  stripe?: Commercial.Stripe;
+                }
+
+                namespace Commercial {
+                  interface Celtic {
+                    /**
+                     * Can create commercial issuing charge cards with Celtic as BIN sponsor.
+                     */
+                    charge_card?: Celtic.ChargeCard;
+
+                    /**
+                     * Can create commercial issuing spend cards with Celtic as BIN sponsor.
+                     */
+                    spend_card?: Celtic.SpendCard;
+                  }
+
+                  namespace Celtic {
+                    interface ChargeCard {
+                      /**
+                       * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                       */
+                      requested: boolean;
+                    }
+
+                    interface SpendCard {
+                      /**
+                       * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                       */
+                      requested: boolean;
+                    }
+                  }
+
+                  interface CrossRiverBank {
+                    /**
+                     * Can create commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                     */
+                    charge_card?: CrossRiverBank.ChargeCard;
+
+                    /**
+                     * Can create commercial issuing spend cards with Cross River Bank as BIN sponsor.
+                     */
+                    spend_card?: CrossRiverBank.SpendCard;
+                  }
+
+                  namespace CrossRiverBank {
+                    interface ChargeCard {
+                      /**
+                       * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                       */
+                      requested: boolean;
+                    }
+
+                    interface SpendCard {
+                      /**
+                       * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                       */
+                      requested: boolean;
+                    }
+                  }
+
+                  interface Stripe {
+                    /**
+                     * Can create commercial issuing charge cards with Stripe as BIN sponsor.
+                     */
+                    charge_card?: Stripe.ChargeCard;
+
+                    /**
+                     * Can create commercial issuing prepaid cards with Stripe as BIN sponsor.
+                     */
+                    prepaid_card?: Stripe.PrepaidCard;
+                  }
+
+                  namespace Stripe {
+                    interface ChargeCard {
+                      /**
+                       * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                       */
+                      requested: boolean;
+                    }
+
+                    interface PrepaidCard {
+                      /**
+                       * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+              }
+            }
+
             interface Customer {
               /**
                * Automatic indirect tax settings to be used when automatic tax calculation is enabled on the customer's invoices, subscriptions, checkout sessions, or payment links. Surfaces if automatic tax calculation is possible given the current customer location information.
@@ -1433,6 +1559,11 @@ declare module 'stripe' {
                 account?: TermsOfService.Account;
 
                 /**
+                 * Details on the Account's acceptance of Issuing-specific terms of service.
+                 */
+                card_creator?: TermsOfService.CardCreator;
+
+                /**
                  * Details on the Account's acceptance of Treasury-specific terms of service.
                  */
                 storer?: TermsOfService.Storer;
@@ -1454,6 +1585,359 @@ declare module 'stripe' {
                    * The user agent of the browser from which the Account's representative accepted the terms of service.
                    */
                   user_agent?: string;
+                }
+
+                interface CardCreator {
+                  /**
+                   * Terms of service acceptances to create cards for commercial issuing use cases.
+                   */
+                  commercial?: CardCreator.Commercial;
+                }
+
+                namespace CardCreator {
+                  interface Commercial {
+                    /**
+                     * Terms of service acceptances for Stripe commercial card issuing.
+                     */
+                    account_holder?: Commercial.AccountHolder;
+
+                    /**
+                     * Terms of service acceptances for commercial issuing cards with Celtic as BIN sponsor.
+                     */
+                    celtic?: Commercial.Celtic;
+
+                    /**
+                     * Terms of service acceptances for commercial issuing cards with Cross River Bank as BIN sponsor.
+                     */
+                    cross_river_bank?: Commercial.CrossRiverBank;
+                  }
+
+                  namespace Commercial {
+                    interface AccountHolder {
+                      /**
+                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                       */
+                      date: string;
+
+                      /**
+                       * The IP address from which the Account's representative accepted the terms of service.
+                       */
+                      ip: string;
+
+                      /**
+                       * The user agent of the browser from which the Account's representative accepted the terms of service.
+                       */
+                      user_agent?: string;
+                    }
+
+                    interface Celtic {
+                      /**
+                       * Terms of service acceptances for commercial issuing Apple Pay cards with Celtic as BIN sponsor.
+                       */
+                      apple_pay?: Celtic.ApplePay;
+
+                      /**
+                       * Terms of service acceptances for commercial issuing charge cards with Celtic as BIN sponsor.
+                       */
+                      charge_card?: Celtic.ChargeCard;
+
+                      /**
+                       * Terms of service acceptances for commercial issuing spend cards with Celtic as BIN sponsor.
+                       */
+                      spend_card?: Celtic.SpendCard;
+                    }
+
+                    namespace Celtic {
+                      interface ApplePay {
+                        /**
+                         * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                         */
+                        date: string;
+
+                        /**
+                         * The IP address from which the Account's representative accepted the terms of service.
+                         */
+                        ip: string;
+
+                        /**
+                         * The user agent of the browser from which the Account's representative accepted the terms of service.
+                         */
+                        user_agent?: string;
+                      }
+
+                      interface ChargeCard {
+                        /**
+                         * Bank terms of service acceptance for commercial issuing charge cards with Celtic as BIN sponsor.
+                         */
+                        bank_terms?: ChargeCard.BankTerms;
+
+                        /**
+                         * Platform terms of service acceptance for commercial issuing charge cards with Celtic as BIN sponsor.
+                         */
+                        platform?: ChargeCard.Platform;
+                      }
+
+                      namespace ChargeCard {
+                        interface BankTerms {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+
+                        interface Platform {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+                      }
+
+                      interface SpendCard {
+                        /**
+                         * Bank terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
+                         */
+                        bank_terms?: SpendCard.BankTerms;
+
+                        /**
+                         * Financial disclosures terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
+                         */
+                        financing_disclosures?: SpendCard.FinancingDisclosures;
+
+                        /**
+                         * Platform terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
+                         */
+                        platform?: SpendCard.Platform;
+                      }
+
+                      namespace SpendCard {
+                        interface BankTerms {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+
+                        interface FinancingDisclosures {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+
+                        interface Platform {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+                      }
+                    }
+
+                    interface CrossRiverBank {
+                      /**
+                       * Terms of service acceptances for commercial issuing Apple Pay cards with Cross River Bank as BIN sponsor.
+                       */
+                      apple_pay?: CrossRiverBank.ApplePay;
+
+                      /**
+                       * Terms of service acceptances for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                       */
+                      charge_card?: CrossRiverBank.ChargeCard;
+
+                      /**
+                       * Terms of service acceptances for commercial issuing spend cards with Cross River Bank as BIN sponsor.
+                       */
+                      spend_card?: CrossRiverBank.SpendCard;
+                    }
+
+                    namespace CrossRiverBank {
+                      interface ApplePay {
+                        /**
+                         * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                         */
+                        date: string;
+
+                        /**
+                         * The IP address from which the Account's representative accepted the terms of service.
+                         */
+                        ip: string;
+
+                        /**
+                         * The user agent of the browser from which the Account's representative accepted the terms of service.
+                         */
+                        user_agent?: string;
+                      }
+
+                      interface ChargeCard {
+                        /**
+                         * Bank terms of service acceptance for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                         */
+                        bank_terms?: ChargeCard.BankTerms;
+
+                        /**
+                         * Financial disclosures terms of service acceptance for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                         */
+                        financing_disclosures?: ChargeCard.FinancingDisclosures;
+
+                        /**
+                         * Platform terms of service acceptance for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                         */
+                        platform?: ChargeCard.Platform;
+                      }
+
+                      namespace ChargeCard {
+                        interface BankTerms {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+
+                        interface FinancingDisclosures {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+
+                        interface Platform {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+                      }
+
+                      interface SpendCard {
+                        /**
+                         * Bank terms of service acceptance for commercial issuing spend cards with Cross River Bank as BIN sponsor.
+                         */
+                        bank_terms?: SpendCard.BankTerms;
+
+                        /**
+                         * Financial disclosures terms of service acceptance for commercial issuing spend cards with Cross River Bank as BIN sponsor.
+                         */
+                        financing_disclosures?: SpendCard.FinancingDisclosures;
+                      }
+
+                      namespace SpendCard {
+                        interface BankTerms {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+
+                        interface FinancingDisclosures {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+                      }
+                    }
+                  }
                 }
 
                 interface Storer {
@@ -2556,6 +3040,7 @@ declare module 'stripe' {
           }
 
           type Include =
+            | 'configuration.card_creator'
             | 'configuration.customer'
             | 'configuration.merchant'
             | 'configuration.recipient'
@@ -2576,6 +3061,7 @@ declare module 'stripe' {
 
         namespace AccountRetrieveParams {
           type Include =
+            | 'configuration.card_creator'
             | 'configuration.customer'
             | 'configuration.merchant'
             | 'configuration.recipient'
@@ -2632,6 +3118,11 @@ declare module 'stripe' {
         namespace AccountUpdateParams {
           interface Configuration {
             /**
+             * The CardCreator Configuration allows the Account to create and issue cards to users.
+             */
+            card_creator?: Configuration.CardCreator;
+
+            /**
              * The Customer Configuration allows the Account to be charged.
              */
             customer?: Configuration.Customer;
@@ -2653,6 +3144,132 @@ declare module 'stripe' {
           }
 
           namespace Configuration {
+            interface CardCreator {
+              /**
+               * Represents the state of the configuration, and can be updated to deactivate or re-apply a configuration.
+               */
+              applied?: boolean;
+
+              /**
+               * Capabilities to request on the CardCreator Configuration.
+               */
+              capabilities?: CardCreator.Capabilities;
+            }
+
+            namespace CardCreator {
+              interface Capabilities {
+                /**
+                 * Can create cards for commercial issuing use cases.
+                 */
+                commercial?: Capabilities.Commercial;
+              }
+
+              namespace Capabilities {
+                interface Commercial {
+                  /**
+                   * Can create commercial issuing cards with Celtic as BIN sponsor.
+                   */
+                  celtic?: Commercial.Celtic;
+
+                  /**
+                   * Can create commercial issuing cards with Cross River Bank as BIN sponsor.
+                   */
+                  cross_river_bank?: Commercial.CrossRiverBank;
+
+                  /**
+                   * Can create commercial issuing cards with Stripe as BIN sponsor.
+                   */
+                  stripe?: Commercial.Stripe;
+                }
+
+                namespace Commercial {
+                  interface Celtic {
+                    /**
+                     * Can create commercial issuing charge cards with Celtic as BIN sponsor.
+                     */
+                    charge_card?: Celtic.ChargeCard;
+
+                    /**
+                     * Can create commercial issuing spend cards with Celtic as BIN sponsor.
+                     */
+                    spend_card?: Celtic.SpendCard;
+                  }
+
+                  namespace Celtic {
+                    interface ChargeCard {
+                      /**
+                       * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                       */
+                      requested?: boolean;
+                    }
+
+                    interface SpendCard {
+                      /**
+                       * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                       */
+                      requested?: boolean;
+                    }
+                  }
+
+                  interface CrossRiverBank {
+                    /**
+                     * Can create commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                     */
+                    charge_card?: CrossRiverBank.ChargeCard;
+
+                    /**
+                     * Can create commercial issuing spend cards with Cross River Bank as BIN sponsor.
+                     */
+                    spend_card?: CrossRiverBank.SpendCard;
+                  }
+
+                  namespace CrossRiverBank {
+                    interface ChargeCard {
+                      /**
+                       * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                       */
+                      requested?: boolean;
+                    }
+
+                    interface SpendCard {
+                      /**
+                       * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                       */
+                      requested?: boolean;
+                    }
+                  }
+
+                  interface Stripe {
+                    /**
+                     * Can create commercial issuing charge cards with Stripe as BIN sponsor.
+                     */
+                    charge_card?: Stripe.ChargeCard;
+
+                    /**
+                     * Can create commercial issuing prepaid cards with Stripe as BIN sponsor.
+                     */
+                    prepaid_card?: Stripe.PrepaidCard;
+                  }
+
+                  namespace Stripe {
+                    interface ChargeCard {
+                      /**
+                       * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                       */
+                      requested?: boolean;
+                    }
+
+                    interface PrepaidCard {
+                      /**
+                       * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                       */
+                      requested?: boolean;
+                    }
+                  }
+                }
+              }
+            }
+
             interface Customer {
               /**
                * Represents the state of the configuration, and can be updated to deactivate or re-apply a configuration.
@@ -4014,6 +4631,11 @@ declare module 'stripe' {
                 account?: TermsOfService.Account;
 
                 /**
+                 * Details on the Account's acceptance of Issuing-specific terms of service.
+                 */
+                card_creator?: TermsOfService.CardCreator;
+
+                /**
                  * Details on the Account's acceptance of Treasury-specific terms of service.
                  */
                 storer?: TermsOfService.Storer;
@@ -4035,6 +4657,359 @@ declare module 'stripe' {
                    * The user agent of the browser from which the Account's representative accepted the terms of service.
                    */
                   user_agent?: string;
+                }
+
+                interface CardCreator {
+                  /**
+                   * Terms of service acceptances to create cards for commercial issuing use cases.
+                   */
+                  commercial?: CardCreator.Commercial;
+                }
+
+                namespace CardCreator {
+                  interface Commercial {
+                    /**
+                     * Terms of service acceptances for Stripe commercial card issuing.
+                     */
+                    account_holder?: Commercial.AccountHolder;
+
+                    /**
+                     * Terms of service acceptances for commercial issuing cards with Celtic as BIN sponsor.
+                     */
+                    celtic?: Commercial.Celtic;
+
+                    /**
+                     * Terms of service acceptances for commercial issuing cards with Cross River Bank as BIN sponsor.
+                     */
+                    cross_river_bank?: Commercial.CrossRiverBank;
+                  }
+
+                  namespace Commercial {
+                    interface AccountHolder {
+                      /**
+                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                       */
+                      date?: string;
+
+                      /**
+                       * The IP address from which the Account's representative accepted the terms of service.
+                       */
+                      ip?: string;
+
+                      /**
+                       * The user agent of the browser from which the Account's representative accepted the terms of service.
+                       */
+                      user_agent?: string;
+                    }
+
+                    interface Celtic {
+                      /**
+                       * Terms of service acceptances for commercial issuing Apple Pay cards with Celtic as BIN sponsor.
+                       */
+                      apple_pay?: Celtic.ApplePay;
+
+                      /**
+                       * Terms of service acceptances for commercial issuing charge cards with Celtic as BIN sponsor.
+                       */
+                      charge_card?: Celtic.ChargeCard;
+
+                      /**
+                       * Terms of service acceptances for commercial issuing spend cards with Celtic as BIN sponsor.
+                       */
+                      spend_card?: Celtic.SpendCard;
+                    }
+
+                    namespace Celtic {
+                      interface ApplePay {
+                        /**
+                         * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                         */
+                        date?: string;
+
+                        /**
+                         * The IP address from which the Account's representative accepted the terms of service.
+                         */
+                        ip?: string;
+
+                        /**
+                         * The user agent of the browser from which the Account's representative accepted the terms of service.
+                         */
+                        user_agent?: string;
+                      }
+
+                      interface ChargeCard {
+                        /**
+                         * Bank terms of service acceptance for commercial issuing charge cards with Celtic as BIN sponsor.
+                         */
+                        bank_terms?: ChargeCard.BankTerms;
+
+                        /**
+                         * Platform terms of service acceptance for commercial issuing charge cards with Celtic as BIN sponsor.
+                         */
+                        platform?: ChargeCard.Platform;
+                      }
+
+                      namespace ChargeCard {
+                        interface BankTerms {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date?: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip?: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+
+                        interface Platform {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date?: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip?: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+                      }
+
+                      interface SpendCard {
+                        /**
+                         * Bank terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
+                         */
+                        bank_terms?: SpendCard.BankTerms;
+
+                        /**
+                         * Financial disclosures terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
+                         */
+                        financing_disclosures?: SpendCard.FinancingDisclosures;
+
+                        /**
+                         * Platform terms of service acceptance for commercial issuing spend cards with Celtic as BIN sponsor.
+                         */
+                        platform?: SpendCard.Platform;
+                      }
+
+                      namespace SpendCard {
+                        interface BankTerms {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date?: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip?: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+
+                        interface FinancingDisclosures {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date?: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip?: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+
+                        interface Platform {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date?: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip?: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+                      }
+                    }
+
+                    interface CrossRiverBank {
+                      /**
+                       * Terms of service acceptances for commercial issuing Apple Pay cards with Cross River Bank as BIN sponsor.
+                       */
+                      apple_pay?: CrossRiverBank.ApplePay;
+
+                      /**
+                       * Terms of service acceptances for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                       */
+                      charge_card?: CrossRiverBank.ChargeCard;
+
+                      /**
+                       * Terms of service acceptances for commercial issuing spend cards with Cross River Bank as BIN sponsor.
+                       */
+                      spend_card?: CrossRiverBank.SpendCard;
+                    }
+
+                    namespace CrossRiverBank {
+                      interface ApplePay {
+                        /**
+                         * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                         */
+                        date?: string;
+
+                        /**
+                         * The IP address from which the Account's representative accepted the terms of service.
+                         */
+                        ip?: string;
+
+                        /**
+                         * The user agent of the browser from which the Account's representative accepted the terms of service.
+                         */
+                        user_agent?: string;
+                      }
+
+                      interface ChargeCard {
+                        /**
+                         * Bank terms of service acceptance for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                         */
+                        bank_terms?: ChargeCard.BankTerms;
+
+                        /**
+                         * Financial disclosures terms of service acceptance for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                         */
+                        financing_disclosures?: ChargeCard.FinancingDisclosures;
+
+                        /**
+                         * Platform terms of service acceptance for commercial issuing charge cards with Cross River Bank as BIN sponsor.
+                         */
+                        platform?: ChargeCard.Platform;
+                      }
+
+                      namespace ChargeCard {
+                        interface BankTerms {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date?: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip?: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+
+                        interface FinancingDisclosures {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date?: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip?: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+
+                        interface Platform {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date?: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip?: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+                      }
+
+                      interface SpendCard {
+                        /**
+                         * Bank terms of service acceptance for commercial issuing spend cards with Cross River Bank as BIN sponsor.
+                         */
+                        bank_terms?: SpendCard.BankTerms;
+
+                        /**
+                         * Financial disclosures terms of service acceptance for commercial issuing spend cards with Cross River Bank as BIN sponsor.
+                         */
+                        financing_disclosures?: SpendCard.FinancingDisclosures;
+                      }
+
+                      namespace SpendCard {
+                        interface BankTerms {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date?: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip?: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+
+                        interface FinancingDisclosures {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date?: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip?: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+                      }
+                    }
+                  }
                 }
 
                 interface Storer {
@@ -4911,6 +5886,7 @@ declare module 'stripe' {
           }
 
           type Include =
+            | 'configuration.card_creator'
             | 'configuration.customer'
             | 'configuration.merchant'
             | 'configuration.recipient'
@@ -4947,6 +5923,7 @@ declare module 'stripe' {
 
         namespace AccountCloseParams {
           type AppliedConfiguration =
+            | 'card_creator'
             | 'customer'
             | 'merchant'
             | 'recipient'

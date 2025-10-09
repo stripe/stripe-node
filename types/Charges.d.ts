@@ -988,9 +988,18 @@ declare module 'stripe' {
            * If this Card is part of a card wallet, this contains the details of the card wallet.
            */
           wallet: Card.Wallet | null;
+
+          benefits?: Card.Benefits;
         }
 
         namespace Card {
+          interface Benefits {
+            /**
+             * Issuer of the benefit card utilized on this payment
+             */
+            issuer: string | null;
+          }
+
           interface Checks {
             /**
              * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.

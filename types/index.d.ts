@@ -303,6 +303,7 @@
 ///<reference path='./PaymentIntentAmountDetailsLineItems.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
+///<reference path='./PaymentMethodBalances.d.ts' />
 ///<reference path='./PaymentMethodConfigurations.d.ts' />
 ///<reference path='./PaymentMethodDomains.d.ts' />
 ///<reference path='./PaymentMethods.d.ts' />
