@@ -478,6 +478,85 @@ declare module 'stripe' {
       }
     }
 
+    interface PaymentRecordReportRefundParams {
+      /**
+       * The outcome of the reported refund.
+       */
+      outcome: 'refunded';
+
+      /**
+       * Processor information for this refund.
+       */
+      processor_details: PaymentRecordReportRefundParams.ProcessorDetails;
+
+      /**
+       * Information about the payment attempt refund.
+       */
+      refunded: PaymentRecordReportRefundParams.Refunded;
+
+      /**
+       * A positive integer in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) representing how much of this payment to refund. Can refund only up to the remaining, unrefunded amount of the payment.
+       */
+      amount?: PaymentRecordReportRefundParams.Amount;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * When the reported refund was initiated. Measured in seconds since the Unix epoch.
+       */
+      initiated_at?: number;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+    }
+
+    namespace PaymentRecordReportRefundParams {
+      interface Amount {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         */
+        value: number;
+      }
+
+      interface ProcessorDetails {
+        /**
+         * Information about the custom processor used to make this refund.
+         */
+        custom?: ProcessorDetails.Custom;
+
+        /**
+         * The type of the processor details. An additional hash is included on processor_details with a name matching this value. It contains additional information specific to the processor.
+         */
+        type: 'custom';
+      }
+
+      namespace ProcessorDetails {
+        interface Custom {
+          /**
+           * A reference to the external refund. This field must be unique across all refunds.
+           */
+          refund_reference: string;
+        }
+      }
+
+      interface Refunded {
+        /**
+         * When the reported refund completed. Measured in seconds since the Unix epoch.
+         */
+        refunded_at: number;
+      }
+    }
+
     class PaymentRecordsResource {
       /**
        * Retrieves a Payment Record with the given ID
@@ -552,6 +631,16 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.PaymentRecord>>;
       reportPaymentAttemptInformational(
         id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentRecord>>;
+
+      /**
+       * Report that the most recent payment attempt on the specified Payment Record
+       *  was refunded.
+       */
+      reportRefund(
+        id: string,
+        params: PaymentRecordReportRefundParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentRecord>>;
     }

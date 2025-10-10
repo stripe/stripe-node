@@ -107,7 +107,7 @@ declare module 'stripe' {
 
       interface ReaderCollectInputsParams {
         /**
-         * List of inputs to be collected using the Reader
+         * List of inputs to be collected from the customer using the Reader. Maximum 5 inputs.
          */
         inputs: Array<ReaderCollectInputsParams.Input>;
 
@@ -158,12 +158,12 @@ declare module 'stripe' {
             description?: string;
 
             /**
-             * The skip button text
+             * Custom text for the skip button. Maximum 14 characters.
              */
             skip_button?: string;
 
             /**
-             * The submit button text
+             * Custom text for the submit button. Maximum 30 characters.
              */
             submit_button?: string;
 
@@ -188,7 +188,7 @@ declare module 'stripe' {
               id: string;
 
               /**
-               * The style of the button which will be shown for this choice
+               * The style of the button which will be shown for this choice. Can be `primary` or `secondary`.
                */
               style?: Choice.Style;
 
@@ -205,17 +205,17 @@ declare module 'stripe' {
 
           interface Toggle {
             /**
-             * The default value of the toggle
+             * The default value of the toggle. Can be `enabled` or `disabled`.
              */
             default_value?: Toggle.DefaultValue;
 
             /**
-             * The description which will be displayed for the toggle
+             * The description which will be displayed for the toggle. Maximum 50 characters. At least one of title or description must be provided.
              */
             description?: string;
 
             /**
-             * The title which will be displayed for the toggle
+             * The title which will be displayed for the toggle. Maximum 50 characters. At least one of title or description must be provided.
              */
             title?: string;
           }
@@ -236,12 +236,12 @@ declare module 'stripe' {
 
       interface ReaderCollectPaymentMethodParams {
         /**
-         * PaymentIntent ID.
+         * The ID of the PaymentIntent to collect a payment method for.
          */
         payment_intent: string;
 
         /**
-         * Configuration overrides.
+         * Configuration overrides for this collection, such as tipping, surcharging, and customer cancellation settings.
          */
         collect_config?: ReaderCollectPaymentMethodParams.CollectConfig;
 
@@ -288,12 +288,12 @@ declare module 'stripe' {
 
       interface ReaderConfirmPaymentIntentParams {
         /**
-         * PaymentIntent ID.
+         * The ID of the PaymentIntent to confirm.
          */
         payment_intent: string;
 
         /**
-         * Configuration overrides.
+         * Configuration overrides for this confirmation, such as surcharge settings and return URL.
          */
         confirm_config?: ReaderConfirmPaymentIntentParams.ConfirmConfig;
 
@@ -314,7 +314,7 @@ declare module 'stripe' {
 
       interface ReaderProcessPaymentIntentParams {
         /**
-         * PaymentIntent ID
+         * The ID of the PaymentIntent to process on the reader.
          */
         payment_intent: string;
 
@@ -324,7 +324,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * Configuration overrides
+         * Configuration overrides for this transaction, such as tipping and customer cancellation settings.
          */
         process_config?: ReaderProcessPaymentIntentParams.ProcessConfig;
       }
@@ -376,7 +376,7 @@ declare module 'stripe' {
         allow_redisplay: ReaderProcessSetupIntentParams.AllowRedisplay;
 
         /**
-         * SetupIntent ID
+         * The ID of the SetupIntent to process on the reader.
          */
         setup_intent: string;
 
@@ -386,7 +386,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * Configuration overrides
+         * Configuration overrides for this setup, such as MOTO and customer cancellation settings.
          */
         process_config?: ReaderProcessSetupIntentParams.ProcessConfig;
       }
@@ -434,7 +434,7 @@ declare module 'stripe' {
         refund_application_fee?: boolean;
 
         /**
-         * Configuration overrides
+         * Configuration overrides for this refund, such as customer cancellation settings.
          */
         refund_payment_config?: ReaderRefundPaymentParams.RefundPaymentConfig;
 
@@ -455,12 +455,12 @@ declare module 'stripe' {
 
       interface ReaderSetReaderDisplayParams {
         /**
-         * Type
+         * Type of information to display. Only `cart` is currently supported.
          */
         type: 'cart';
 
         /**
-         * Cart
+         * Cart details to display on the reader screen, including line items, amounts, and currency.
          */
         cart?: ReaderSetReaderDisplayParams.Cart;
 
@@ -478,17 +478,17 @@ declare module 'stripe' {
           currency: string;
 
           /**
-           * Array of line items that were purchased.
+           * Array of line items to display.
            */
           line_items: Array<Cart.LineItem>;
 
           /**
-           * The amount of tax in cents.
+           * The amount of tax in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
            */
           tax?: number;
 
           /**
-           * Total balance of cart due in cents.
+           * Total balance of cart due in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
            */
           total: number;
         }
@@ -496,7 +496,7 @@ declare module 'stripe' {
         namespace Cart {
           interface LineItem {
             /**
-             * The price of the item in cents.
+             * The price of the item in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
              */
             amount: number;
 
@@ -579,7 +579,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Terminal.DeletedReader>>;
 
         /**
-         * Cancels the current reader action.
+         * Cancels the current reader action. See [Programmatic Cancellation](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven#programmatic-cancellation) for more details.
          */
         cancelAction(
           id: string,
@@ -592,7 +592,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 
         /**
-         * Initiates an input collection flow on a Reader.
+         * Initiates an [input collection flow](https://docs.stripe.com/docs/terminal/features/collect-inputs) on a Reader to display input forms and collect information from your customers.
          */
         collectInputs(
           id: string,
@@ -601,7 +601,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 
         /**
-         * Initiates a payment flow on a Reader and updates the PaymentIntent with card details before manual confirmation.
+         * Initiates a payment flow on a Reader and updates the PaymentIntent with card details before manual confirmation. See [Collecting a Payment method](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven&process=inspect#collect-a-paymentmethod) for more details.
          */
         collectPaymentMethod(
           id: string,
@@ -610,7 +610,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 
         /**
-         * Finalizes a payment on a Reader.
+         * Finalizes a payment on a Reader. See [Confirming a Payment](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven&process=inspect#confirm-the-paymentintent) for more details.
          */
         confirmPaymentIntent(
           id: string,
@@ -619,7 +619,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 
         /**
-         * Initiates a payment flow on a Reader.
+         * Initiates a payment flow on a Reader. See [process the payment](https://docs.stripe.com/docs/terminal/payments/collect-card-payment?terminal-sdk-platform=server-driven&process=immediately#process-payment) for more details.
          */
         processPaymentIntent(
           id: string,
@@ -628,7 +628,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 
         /**
-         * Initiates a setup intent flow on a Reader.
+         * Initiates a SetupIntent flow on a Reader. See [Save directly without charging](https://docs.stripe.com/docs/terminal/features/saving-payment-details/save-directly) for more details.
          */
         processSetupIntent(
           id: string,
@@ -637,7 +637,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 
         /**
-         * Initiates a refund on a Reader
+         * Initiates an in-person refund on a Reader. See [Refund an Interac Payment](https://docs.stripe.com/docs/terminal/payments/regional?integration-country=CA#refund-an-interac-payment) for more details.
          */
         refundPayment(
           id: string,
@@ -650,7 +650,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 
         /**
-         * Sets reader display to show cart details.
+         * Sets the reader display to show [cart details](https://docs.stripe.com/docs/terminal/features/display).
          */
         setReaderDisplay(
           id: string,

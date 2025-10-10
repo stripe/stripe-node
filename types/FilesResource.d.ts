@@ -52,6 +52,7 @@ declare module 'stripe' {
         | 'identity_document'
         | 'issuing_regulatory_reporting'
         | 'pci_document'
+        | 'platform_terms_of_service'
         | 'tax_document_user_upload'
         | 'terminal_android_apk'
         | 'terminal_reader_splashscreen';
@@ -96,6 +97,7 @@ declare module 'stripe' {
         | 'identity_document_downloadable'
         | 'issuing_regulatory_reporting'
         | 'pci_document'
+        | 'platform_terms_of_service'
         | 'selfie'
         | 'sigma_scheduled_query'
         | 'tax_document_user_upload'
