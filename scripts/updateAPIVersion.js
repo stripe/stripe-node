@@ -1,60 +1,49 @@
-#!/usr/bin/env node
+// Usage: node scripts/updateAPIVersion.js 2020-08-27
 
-/**
- * Reads the current API version from src/apiVersion.ts and updates all
- * references to it in the types/ directory.
- */
+'use strict';
 
-/* eslint-disable no-sync,no-nested-ternary */
 const fs = require('fs');
 const path = require('path');
 
-const read = (file) => fs.readFileSync(path.resolve(file)).toString();
-const write = (file, str) => fs.writeFileSync(path.resolve(file), str);
-const edit = (file, cb) => write(file, cb(read(file)));
-
-const API_VERSION = '2[0-9][2-9][0-9]-[0-9]{2}-[0-9]{2}.[a-z]+';
-
-const main = () => {
-  const matches = [
-    ...read('src/apiVersion.ts').matchAll(/ApiVersion = '([^']*)'/g),
-  ];
-  if (matches.length !== 1) {
-    throw new Error(
-      `Expected src/apiVersion.ts to include 1 match for ApiVersion = '...' but found ${matches.length}`
-    );
-  }
-  const apiVersion = matches[0][1];
-
-  const replaceAPIVersion = (file, pattern) =>
-    edit(file, (text) => {
-      const parts = pattern.split('API_VERSION');
-      return text.replace(
-        new RegExp(parts.map((x) => `(${x})`).join(API_VERSION), 'g'),
-        parts.length === 0
-          ? apiVersion
-          : parts.length === 1
-          ? `$1${apiVersion}`
-          : parts.length === 2
-          ? `$1${apiVersion}$2`
-          : 'UNEXPECTED'
-      );
-    });
-
-  replaceAPIVersion(
-    'types/lib.d.ts',
-    'export type LatestApiVersion = [\'"]API_VERSION[\'"]'
-  );
-  replaceAPIVersion(
-    'types/test/typescriptTest.ts',
-    '///<reference types=["\']\\.\\./API_VERSION[\'"]'
-  );
-  replaceAPIVersion(
-    'types/test/typescriptTest.ts',
-    'apiVersion: [\'"]API_VERSION[\'"]'
-  );
-};
-
-if (require.main === module) {
-  main();
+const specPath = process.argv[2];
+if (!specPath) {
+  throw new Error('Please provide a path to the spec to update to.');
 }
+
+// Prevent path traversal by ensuring the spec path is within the CWD.
+// We resolve the path and its real, canonical form to prevent symlink attacks.
+const resolvedSpecPath = path.resolve(process.cwd(), specPath);
+const realCwd = fs.realpathSync(process.cwd());
+let realSpecPath;
+try {
+  realSpecPath = fs.realpathSync(resolvedSpecPath);
+} catch (err) {
+  // Re-throw not found errors with a more helpful message.
+  if (err.code === 'ENOENT') {
+    throw new Error(`Could not find spec file at path: ${specPath}`);
+  }
+  throw err;
+}
+
+if (!realSpecPath.startsWith(realCwd + path.sep) && realSpecPath !== realCwd) {
+  throw new Error(
+    `Potential path traversal detected. ` +
+      `Spec path must be within the current working directory.`
+  );
+}
+
+const openapi = require(realSpecPath);
+
+const apiVersion = openapi.info.version;
+if (!apiVersion) {
+  throw new Error('Could not find an API version in the spec.');
+}
+
+const packagePath = path.join(__dirname, '/../package.json');
+const packageFile = require(packagePath);
+
+packageFile.stripe.apiVersion = apiVersion;
+
+fs.writeFileSync(packagePath, JSON.stringify(packageFile, null, 2) + '\n');
+
+console.log(`Updated API version to ${apiVersion}!`);
