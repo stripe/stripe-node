@@ -1,60 +1,62 @@
 #!/usr/bin/env node
+'use strict';
 
-/**
- * Reads the current API version from src/apiVersion.ts and updates all
- * references to it in the types/ directory.
- */
-
-/* eslint-disable no-sync,no-nested-ternary */
 const fs = require('fs');
 const path = require('path');
 
-const read = (file) => fs.readFileSync(path.resolve(file)).toString();
-const write = (file, str) => fs.writeFileSync(path.resolve(file), str);
-const edit = (file, cb) => write(file, cb(read(file)));
+const specPath = path.join(__dirname, '..', 'openapi');
 
-const API_VERSION = '2[0-9][2-9][0-9]-[0-9]{2}-[0-9]{2}.[a-z]+';
+// Load current version from openapi.json
+const openapi = require(path.join(specPath, 'openapi.json'));
+const version = openapi.info.version;
 
-const main = () => {
-  const matches = [
-    ...read('src/apiVersion.ts').matchAll(/ApiVersion = '([^']*)'/g),
-  ];
-  if (matches.length !== 1) {
-    throw new Error(
-      `Expected src/apiVersion.ts to include 1 match for ApiVersion = '...' but found ${matches.length}`
-    );
-  }
-  const apiVersion = matches[0][1];
+const newVersion = process.argv[2];
 
-  const replaceAPIVersion = (file, pattern) =>
-    edit(file, (text) => {
-      const parts = pattern.split('API_VERSION');
-      return text.replace(
-        new RegExp(parts.map((x) => `(${x})`).join(API_VERSION), 'g'),
-        parts.length === 0
-          ? apiVersion
-          : parts.length === 1
-          ? `$1${apiVersion}`
-          : parts.length === 2
-          ? `$1${apiVersion}$2`
-          : 'UNEXPECTED'
-      );
-    });
-
-  replaceAPIVersion(
-    'types/lib.d.ts',
-    'export type LatestApiVersion = [\'"]API_VERSION[\'"]'
-  );
-  replaceAPIVersion(
-    'types/test/typescriptTest.ts',
-    '///<reference types=["\']\\.\\./API_VERSION[\'"]'
-  );
-  replaceAPIVersion(
-    'types/test/typescriptTest.ts',
-    'apiVersion: [\'"]API_VERSION[\'"]'
-  );
-};
-
-if (require.main === module) {
-  main();
+if (!newVersion) {
+  console.error('Please provide a version');
+  process.exit(1);
 }
+
+// Sanitize version input to prevent path traversal
+// Only allow alphanumeric characters, dots, hyphens, and underscores
+const versionPattern = /^[a-zA-Z0-9._-]+$/;
+if (!versionPattern.test(newVersion)) {
+  console.error(
+    `Invalid version "${newVersion}". Version must only contain alphanumeric characters, dots, hyphens, and underscores.`
+  );
+  process.exit(1);
+}
+
+// Additional check to prevent directory traversal patterns
+if (newVersion.includes('..') || newVersion.includes('/') || newVersion.includes('\\')) {
+  console.error(
+    `Invalid version "${newVersion}". Version must not contain path separators or directory traversal patterns.`
+  );
+  process.exit(1);
+}
+
+const newVersionPath = path.join(specPath, `openapi/${newVersion}.json`);
+
+if (!fs.existsSync(newVersionPath)) {
+  console.error(`Version ${newVersion} not found at ${newVersionPath}`);
+  process.exit(1);
+}
+
+// Update openapi.json
+openapi.info.version = newVersion;
+fs.writeFileSync(
+  path.join(specPath, 'openapi.json'),
+  JSON.stringify(openapi, null, 2)
+);
+
+// Update lib/apiVersion.js
+const apiVersionPath = path.join(__dirname, '..', 'lib', 'apiVersion.js');
+const apiVersionContent = `// File generated from our OpenAPI spec
+
+'use strict';
+
+module.exports = '${newVersion}';
+`;
+fs.writeFileSync(apiVersionPath, apiVersionContent);
+
+console.log(`Updated API version to ${newVersion}`);
