@@ -12,6 +12,11 @@ declare module 'stripe' {
 
       interface VerificationReportListParams extends PaginationParams {
         /**
+         * Only return VerificationReports that were blocked by this BlocklistEntry id.
+         */
+        blocked_by_entry?: string;
+
+        /**
          * A string to reference this user. This can be a customer ID, a session ID, or similar, and can be used to reconcile this verification with your internal systems.
          */
         client_reference_id?: string;

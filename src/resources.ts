@@ -12,6 +12,7 @@ import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Autho
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
 import {AutomaticRules as V2TaxAutomaticRules} from './resources/V2/Tax/AutomaticRules.js';
 import {BillSettings as V2BillingBillSettings} from './resources/V2/Billing/BillSettings.js';
+import {BlocklistEntries as IdentityBlocklistEntries} from './resources/Identity/BlocklistEntries.js';
 import {Cadences as V2BillingCadences} from './resources/V2/Billing/Cadences.js';
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
 import {Cardholders as IssuingCardholders} from './resources/Issuing/Cardholders.js';
@@ -233,6 +234,7 @@ export const Forwarding = resourceNamespace('forwarding', {
   Requests: ForwardingRequests,
 });
 export const Identity = resourceNamespace('identity', {
+  BlocklistEntries: IdentityBlocklistEntries,
   VerificationReports: IdentityVerificationReports,
   VerificationSessions: IdentityVerificationSessions,
 });

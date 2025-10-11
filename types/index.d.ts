@@ -59,6 +59,7 @@
 ///<reference path='./FinancialConnections/TransactionsResource.d.ts' />
 ///<reference path='./Forwarding/RequestsResource.d.ts' />
 ///<reference path='./FxQuotesResource.d.ts' />
+///<reference path='./Identity/BlocklistEntriesResource.d.ts' />
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
 ///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
@@ -275,6 +276,7 @@
 ///<reference path='./Forwarding/Requests.d.ts' />
 ///<reference path='./FundingInstructions.d.ts' />
 ///<reference path='./FxQuotes.d.ts' />
+///<reference path='./Identity/BlocklistEntries.d.ts' />
 ///<reference path='./Identity/VerificationReports.d.ts' />
 ///<reference path='./Identity/VerificationSessions.d.ts' />
 ///<reference path='./InvoiceItems.d.ts' />
@@ -554,6 +556,7 @@ declare module 'stripe' {
       requests: Stripe.Forwarding.RequestsResource;
     };
     identity: {
+      blocklistEntries: Stripe.Identity.BlocklistEntriesResource;
       verificationReports: Stripe.Identity.VerificationReportsResource;
       verificationSessions: Stripe.Identity.VerificationSessionsResource;
     };
