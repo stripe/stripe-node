@@ -1491,14 +1491,14 @@ declare module 'stripe' {
         /**
          * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
          */
-        customer_reference?: string | null;
+        customer_reference: string | null;
 
         event_details?: PaymentDetails.EventDetails;
 
         /**
          * A unique value assigned by the business to identify the transaction.
          */
-        order_reference?: string | null;
+        order_reference: string | null;
 
         subscription?: PaymentDetails.Subscription;
       }
