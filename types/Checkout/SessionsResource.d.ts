@@ -401,7 +401,7 @@ declare module 'stripe' {
           button_color?: Stripe.Emptyable<string>;
 
           /**
-           * A string to override the business name shown on the Checkout Session.
+           * A string to override the business name shown on the Checkout Session. This only shows at the top of the Checkout page, and your business name still appears in terms, receipts, and other places.
            */
           display_name?: string;
 
@@ -411,12 +411,12 @@ declare module 'stripe' {
           font_family?: Stripe.Emptyable<BrandingSettings.FontFamily>;
 
           /**
-           * The icon for the Checkout Session. You cannot set both `logo` and `icon`.
+           * The icon for the Checkout Session. For best results, use a square image.
            */
           icon?: BrandingSettings.Icon;
 
           /**
-           * The logo for the Checkout Session. You cannot set both `logo` and `icon`.
+           * The logo for the Checkout Session.
            */
           logo?: BrandingSettings.Logo;
         }
