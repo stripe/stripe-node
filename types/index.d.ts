@@ -44,6 +44,7 @@
 ///<reference path='./CreditNotesResource.d.ts' />
 ///<reference path='./CustomerSessionsResource.d.ts' />
 ///<reference path='./CustomersResource.d.ts' />
+///<reference path='./DelegatedCheckout/RequestedSessionsResource.d.ts' />
 ///<reference path='./DisputesResource.d.ts' />
 ///<reference path='./Entitlements/ActiveEntitlementsResource.d.ts' />
 ///<reference path='./Entitlements/FeaturesResource.d.ts' />
@@ -254,6 +255,7 @@
 ///<reference path='./CustomerSessions.d.ts' />
 ///<reference path='./CustomerSources.d.ts' />
 ///<reference path='./Customers.d.ts' />
+///<reference path='./DelegatedCheckout/RequestedSessions.d.ts' />
 ///<reference path='./Discounts.d.ts' />
 ///<reference path='./Disputes.d.ts' />
 ///<reference path='./Entitlements/ActiveEntitlementSummaries.d.ts' />
@@ -541,6 +543,9 @@ declare module 'stripe' {
       orders: Stripe.Climate.OrdersResource;
       products: Stripe.Climate.ProductsResource;
       suppliers: Stripe.Climate.SuppliersResource;
+    };
+    delegatedCheckout: {
+      requestedSessions: Stripe.DelegatedCheckout.RequestedSessionsResource;
     };
     entitlements: {
       activeEntitlements: Stripe.Entitlements.ActiveEntitlementsResource;

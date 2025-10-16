@@ -6,7 +6,7 @@ declare module 'stripe' {
       /**
        * A BlocklistEntry represents an entry in our identity verification blocklist.
        * It helps prevent fraudulent users from repeatedly attempting verification with similar information.
-       * When you create a BlocklistEntry, we store data from a previous verification attempt,
+       * When you create a BlocklistEntry, we store data from a specified VerificationReport,
        * such as document details or facial biometrics.
        * This allows us to compare future verification attempts against these entries.
        * If a match is found, we categorize the new verification as unverified.
@@ -45,11 +45,6 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * Redaction status of the BlocklistEntry. If the BlocklistEntry isn't redacted, this field is null.
-         */
-        redaction: BlocklistEntry.Redaction | null;
-
-        /**
          * The current status of the BlocklistEntry.
          */
         status: BlocklistEntry.Status;
@@ -74,17 +69,6 @@ declare module 'stripe' {
       }
 
       namespace BlocklistEntry {
-        interface Redaction {
-          /**
-           * Indicates whether this object and its related objects have been redacted or not.
-           */
-          status: Redaction.Status;
-        }
-
-        namespace Redaction {
-          type Status = 'processing' | 'redacted';
-        }
-
         type Status = 'active' | 'disabled' | 'redacted';
 
         type Type = 'document' | 'selfie';

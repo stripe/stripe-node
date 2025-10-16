@@ -104,6 +104,7 @@ import {Refunds as TestHelpersRefunds} from './resources/TestHelpers/Refunds.js'
 import {Registrations as TaxRegistrations} from './resources/Tax/Registrations.js';
 import {ReportRuns as ReportingReportRuns} from './resources/Reporting/ReportRuns.js';
 import {ReportTypes as ReportingReportTypes} from './resources/Reporting/ReportTypes.js';
+import {RequestedSessions as DelegatedCheckoutRequestedSessions} from './resources/DelegatedCheckout/RequestedSessions.js';
 import {Requests as ForwardingRequests} from './resources/Forwarding/Requests.js';
 import {ScheduledQueryRuns as SigmaScheduledQueryRuns} from './resources/Sigma/ScheduledQueryRuns.js';
 import {Secrets as AppsSecrets} from './resources/Apps/Secrets.js';
@@ -219,6 +220,9 @@ export const Climate = resourceNamespace('climate', {
   Orders: ClimateOrders,
   Products: ClimateProducts,
   Suppliers: ClimateSuppliers,
+});
+export const DelegatedCheckout = resourceNamespace('delegatedCheckout', {
+  RequestedSessions: DelegatedCheckoutRequestedSessions,
 });
 export const Entitlements = resourceNamespace('entitlements', {
   ActiveEntitlements: EntitlementsActiveEntitlements,
