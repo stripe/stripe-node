@@ -81,6 +81,8 @@ declare module 'stripe' {
           image_url: string | null;
 
           product_url: string | null;
+
+          reference: string | null;
         }
 
         interface Paypal {
