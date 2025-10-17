@@ -161,6 +161,11 @@ declare module 'stripe' {
            * Sex as it appears in the document.
            */
           unparsed_sex?: string | null;
+
+          /**
+           * If document was not verified due to extracted data being on the blocklist, this is the token of the BlocklistEntry that blocked it
+           */
+          blocked_by_entry?: string | Stripe.Identity.BlocklistEntry | null;
         }
 
         namespace Document {
@@ -454,6 +459,11 @@ declare module 'stripe' {
            * Status of this `selfie` check.
            */
           status: Selfie.Status;
+
+          /**
+           * If selfie was not verified due to being on the blocklist, this is the token of the BlocklistEntry that blocked it
+           */
+          blocked_by_entry?: string | Stripe.Identity.BlocklistEntry | null;
         }
 
         namespace Selfie {

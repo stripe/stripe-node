@@ -44,6 +44,7 @@
 ///<reference path='./CreditNotesResource.d.ts' />
 ///<reference path='./CustomerSessionsResource.d.ts' />
 ///<reference path='./CustomersResource.d.ts' />
+///<reference path='./DelegatedCheckout/RequestedSessionsResource.d.ts' />
 ///<reference path='./DisputesResource.d.ts' />
 ///<reference path='./Entitlements/ActiveEntitlementsResource.d.ts' />
 ///<reference path='./Entitlements/FeaturesResource.d.ts' />
@@ -59,6 +60,7 @@
 ///<reference path='./FinancialConnections/TransactionsResource.d.ts' />
 ///<reference path='./Forwarding/RequestsResource.d.ts' />
 ///<reference path='./FxQuotesResource.d.ts' />
+///<reference path='./Identity/BlocklistEntriesResource.d.ts' />
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
 ///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
@@ -253,6 +255,7 @@
 ///<reference path='./CustomerSessions.d.ts' />
 ///<reference path='./CustomerSources.d.ts' />
 ///<reference path='./Customers.d.ts' />
+///<reference path='./DelegatedCheckout/RequestedSessions.d.ts' />
 ///<reference path='./Discounts.d.ts' />
 ///<reference path='./Disputes.d.ts' />
 ///<reference path='./Entitlements/ActiveEntitlementSummaries.d.ts' />
@@ -275,6 +278,7 @@
 ///<reference path='./Forwarding/Requests.d.ts' />
 ///<reference path='./FundingInstructions.d.ts' />
 ///<reference path='./FxQuotes.d.ts' />
+///<reference path='./Identity/BlocklistEntries.d.ts' />
 ///<reference path='./Identity/VerificationReports.d.ts' />
 ///<reference path='./Identity/VerificationSessions.d.ts' />
 ///<reference path='./InvoiceItems.d.ts' />
@@ -540,6 +544,9 @@ declare module 'stripe' {
       products: Stripe.Climate.ProductsResource;
       suppliers: Stripe.Climate.SuppliersResource;
     };
+    delegatedCheckout: {
+      requestedSessions: Stripe.DelegatedCheckout.RequestedSessionsResource;
+    };
     entitlements: {
       activeEntitlements: Stripe.Entitlements.ActiveEntitlementsResource;
       features: Stripe.Entitlements.FeaturesResource;
@@ -554,6 +561,7 @@ declare module 'stripe' {
       requests: Stripe.Forwarding.RequestsResource;
     };
     identity: {
+      blocklistEntries: Stripe.Identity.BlocklistEntriesResource;
       verificationReports: Stripe.Identity.VerificationReportsResource;
       verificationSessions: Stripe.Identity.VerificationSessionsResource;
     };
