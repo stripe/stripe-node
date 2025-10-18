@@ -342,6 +342,11 @@ declare module 'stripe' {
               product_url?: string;
 
               /**
+               * Unique reference for this line item to correlate it with your system's internal records. The field is displayed in the Klarna Consumer App if passed.
+               */
+              reference?: string;
+
+              /**
                * Reference for the subscription this line item is for.
                */
               subscription_reference?: string;
@@ -4904,6 +4909,11 @@ declare module 'stripe' {
               product_url?: string;
 
               /**
+               * Unique reference for this line item to correlate it with your system's internal records. The field is displayed in the Klarna Consumer App if passed.
+               */
+              reference?: string;
+
+              /**
                * Reference for the subscription this line item is for.
                */
               subscription_reference?: string;
@@ -9358,6 +9368,11 @@ declare module 'stripe' {
               product_url?: string;
 
               /**
+               * Unique reference for this line item to correlate it with your system's internal records. The field is displayed in the Klarna Consumer App if passed.
+               */
+              reference?: string;
+
+              /**
                * Reference for the subscription this line item is for.
                */
               subscription_reference?: string;
@@ -10400,6 +10415,11 @@ declare module 'stripe' {
                * URL to the product page. Max length, 4096 characters.
                */
               product_url?: string;
+
+              /**
+               * Unique reference for this line item to correlate it with your system's internal records. The field is displayed in the Klarna Consumer App if passed.
+               */
+              reference?: string;
 
               /**
                * Reference for the subscription this line item is for.
@@ -14875,6 +14895,11 @@ declare module 'stripe' {
                * URL to the product page. Max length, 4096 characters.
                */
               product_url?: string;
+
+              /**
+               * Unique reference for this line item to correlate it with your system's internal records. The field is displayed in the Klarna Consumer App if passed.
+               */
+              reference?: string;
 
               /**
                * Reference for the subscription this line item is for.

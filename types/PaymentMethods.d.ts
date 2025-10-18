@@ -64,6 +64,8 @@ declare module 'stripe' {
 
       crypto?: PaymentMethod.Crypto;
 
+      custom?: PaymentMethod.Custom;
+
       /**
        * The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
        */
@@ -913,6 +915,37 @@ declare module 'stripe' {
 
       interface Crypto {}
 
+      interface Custom {
+        /**
+         * Display name of the Dashboard-only CustomPaymentMethodType.
+         */
+        display_name: string | null;
+
+        /**
+         * Contains information about the Dashboard-only CustomPaymentMethodType logo.
+         */
+        logo: Custom.Logo | null;
+
+        /**
+         * ID of the Dashboard-only CustomPaymentMethodType. Not expandable.
+         */
+        type: string;
+      }
+
+      namespace Custom {
+        interface Logo {
+          /**
+           * Content type of the Dashboard-only CustomPaymentMethodType logo.
+           */
+          content_type: string | null;
+
+          /**
+           * URL of the Dashboard-only CustomPaymentMethodType logo.
+           */
+          url: string;
+        }
+      }
+
       interface CustomerBalance {}
 
       interface Eps {
@@ -1524,6 +1557,7 @@ declare module 'stripe' {
         | 'card_present'
         | 'cashapp'
         | 'crypto'
+        | 'custom'
         | 'customer_balance'
         | 'eps'
         | 'fpx'
