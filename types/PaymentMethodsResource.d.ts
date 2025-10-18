@@ -89,6 +89,11 @@ declare module 'stripe' {
       crypto?: PaymentMethodCreateParams.Crypto;
 
       /**
+       * If this is a `custom` PaymentMethod, this hash contains details about the Custom payment method.
+       */
+      custom?: PaymentMethodCreateParams.Custom;
+
+      /**
        * The `Customer` to whom the original PaymentMethod is attached.
        */
       customer?: string;
@@ -477,6 +482,13 @@ declare module 'stripe' {
 
       interface Crypto {}
 
+      interface Custom {
+        /**
+         * ID of the Dashboard-only CustomPaymentMethodType. This field is used by Stripe products' internal code to support CPMs.
+         */
+        type: string;
+      }
+
       interface CustomerBalance {}
 
       interface Eps {
@@ -852,6 +864,7 @@ declare module 'stripe' {
         | 'card'
         | 'cashapp'
         | 'crypto'
+        | 'custom'
         | 'customer_balance'
         | 'eps'
         | 'fpx'
@@ -1107,6 +1120,7 @@ declare module 'stripe' {
         | 'card'
         | 'cashapp'
         | 'crypto'
+        | 'custom'
         | 'customer_balance'
         | 'eps'
         | 'fpx'
