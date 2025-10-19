@@ -17,7 +17,7 @@ To identify files with purely generated code, look for the comment `File generat
 
 ## Compatibility with supported language and runtime versions
 
-This project supports [many different langauge and runtime versions](README.md#requirements) and we are unable to accept any contribution that does not work on _all_ supported versions. If, after discussing the approach in the associated issue, your change must use an API / feature that isn't available in all supported versions, please call this out explicitly in the issue or pull request so we can help figure out the best way forward.
+This project supports [many different language and runtime versions](README.md#requirements) and we are unable to accept any contribution that does not work on _all_ supported versions. If, after discussing the approach in the associated issue, your change must use an API / feature that isn't available in all supported versions, please call this out explicitly in the issue or pull request so we can help figure out the best way forward.
 
 ## Set up your dev environment
 
