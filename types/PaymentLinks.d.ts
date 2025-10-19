@@ -246,7 +246,7 @@ declare module 'stripe' {
         promotions: ConsentCollection.Promotions | null;
 
         /**
-         * If set to `required`, it requires cutomers to accept the terms of service before being able to pay. If set to `none`, customers won't be shown a checkbox to accept the terms of service.
+         * If set to `required`, it requires customers to accept the terms of service before being able to pay. If set to `none`, customers won't be shown a checkbox to accept the terms of service.
          */
         terms_of_service: ConsentCollection.TermsOfService | null;
       }
