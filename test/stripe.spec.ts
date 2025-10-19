@@ -242,7 +242,7 @@ describe('Stripe Module', function() {
         ).to.eventually.have.property('uname', 'fo%C3%B8name');
       });
 
-      it('sets uname to UNKOWN in case of an error', () => {
+      it('sets uname to UNKNOWN in case of an error', () => {
         const stripe = createStripe(
           getMockPlatformFunctions((cmd: string, cb: any): void => {
             cb(new Error('security'), null);
