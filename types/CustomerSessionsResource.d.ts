@@ -50,6 +50,11 @@ declare module 'stripe' {
          * Configuration for the pricing table.
          */
         pricing_table?: Components.PricingTable;
+
+        /**
+         * Configuration for the Tax ID Element.
+         */
+        tax_id_element?: Components.TaxIdElement;
       }
 
       namespace Components {
@@ -246,6 +251,42 @@ declare module 'stripe' {
            * Whether the pricing table is enabled.
            */
           enabled: boolean;
+        }
+
+        interface TaxIdElement {
+          /**
+           * Whether the Tax ID Element is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * This hash defines whether the Tax ID Element supports certain features.
+           */
+          features?: TaxIdElement.Features;
+        }
+
+        namespace TaxIdElement {
+          interface Features {
+            /**
+             * Controls whether the Tax ID Element displays saved tax IDs for the customer. This parameter defaults to `disabled`.
+             *
+             * When enabled, the Tax ID Element will show existing tax IDs associated with the customer, allowing them to select from previously saved tax identification numbers.
+             */
+            tax_id_redisplay?: Features.TaxIdRedisplay;
+
+            /**
+             * Controls whether the Tax ID Element allows merchants to save new tax IDs for their customer. This parameter defaults to `disabled`.
+             *
+             * When enabled, customers can enter and save new tax identification numbers during the payment flow, which will be stored securely and associated with their customer object for future use.
+             */
+            tax_id_save?: Features.TaxIdSave;
+          }
+
+          namespace Features {
+            type TaxIdRedisplay = 'disabled' | 'enabled';
+
+            type TaxIdSave = 'disabled' | 'enabled';
+          }
         }
       }
     }
