@@ -148,6 +148,8 @@ declare module 'stripe' {
        */
       on_behalf_of: string | Stripe.Account | null;
 
+      payment_details?: PaymentIntent.PaymentDetails;
+
       /**
        * ID of the payment method used in this PaymentIntent.
        */
@@ -240,10 +242,48 @@ declare module 'stripe' {
 
     namespace PaymentIntent {
       interface AmountDetails {
+        /**
+         * The total discount applied on the transaction.
+         */
+        discount_amount?: number;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         */
+        line_items?: ApiList<Stripe.PaymentIntentAmountDetailsLineItem>;
+
+        shipping?: AmountDetails.Shipping;
+
+        tax?: AmountDetails.Tax;
+
         tip?: AmountDetails.Tip;
       }
 
       namespace AmountDetails {
+        interface Shipping {
+          /**
+           * Portion of the amount that is for shipping.
+           */
+          amount: number | null;
+
+          /**
+           * The postal code that represents the shipping source.
+           */
+          from_postal_code: string | null;
+
+          /**
+           * The postal code that represents the shipping destination.
+           */
+          to_postal_code: string | null;
+        }
+
+        interface Tax {
+          /**
+           * Total portion of the amount that is for tax.
+           */
+          total_tax_amount: number | null;
+        }
+
         interface Tip {
           /**
            * Portion of the amount that corresponds to a tip.
@@ -559,6 +599,7 @@ declare module 'stripe' {
           | 'payment_intent_mandate_invalid'
           | 'payment_intent_payment_attempt_expired'
           | 'payment_intent_payment_attempt_failed'
+          | 'payment_intent_rate_limit_exceeded'
           | 'payment_intent_unexpected_state'
           | 'payment_method_bank_account_already_verified'
           | 'payment_method_bank_account_blocked'
@@ -1390,6 +1431,18 @@ declare module 'stripe' {
            */
           native_url: string;
         }
+      }
+
+      interface PaymentDetails {
+        /**
+         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
+         */
+        customer_reference: string | null;
+
+        /**
+         * A unique value assigned by the business to identify the transaction.
+         */
+        order_reference: string | null;
       }
 
       interface PaymentMethodConfigurationDetails {

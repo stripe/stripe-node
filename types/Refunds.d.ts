@@ -134,6 +134,8 @@ declare module 'stripe' {
 
         cashapp?: DestinationDetails.Cashapp;
 
+        crypto?: DestinationDetails.Crypto;
+
         customer_cash_balance?: DestinationDetails.CustomerCashBalance;
 
         eps?: DestinationDetails.Eps;
@@ -253,6 +255,13 @@ declare module 'stripe' {
         }
 
         interface Cashapp {}
+
+        interface Crypto {
+          /**
+           * The transaction hash of the refund.
+           */
+          reference: string | null;
+        }
 
         interface CustomerCashBalance {}
 

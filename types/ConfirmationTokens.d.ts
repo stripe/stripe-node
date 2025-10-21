@@ -1533,6 +1533,7 @@ declare module 'stripe' {
           | 'card_present'
           | 'cashapp'
           | 'crypto'
+          | 'custom'
           | 'customer_balance'
           | 'eps'
           | 'fpx'

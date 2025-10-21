@@ -84,6 +84,11 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
+       * Controls settings applied for collecting the customer's name.
+       */
+      name_collection?: PaymentLinkCreateParams.NameCollection;
+
+      /**
        * The account on behalf of which to charge.
        */
       on_behalf_of?: string;
@@ -663,6 +668,44 @@ declare module 'stripe' {
         }
       }
 
+      interface NameCollection {
+        /**
+         * Controls settings applied for collecting the customer's business name.
+         */
+        business?: NameCollection.Business;
+
+        /**
+         * Controls settings applied for collecting the customer's individual name.
+         */
+        individual?: NameCollection.Individual;
+      }
+
+      namespace NameCollection {
+        interface Business {
+          /**
+           * Enable business name collection on the payment link. Defaults to `false`.
+           */
+          enabled: boolean;
+
+          /**
+           * Whether the customer is required to provide their business name before checking out. Defaults to `false`.
+           */
+          optional?: boolean;
+        }
+
+        interface Individual {
+          /**
+           * Enable individual name collection on the payment link. Defaults to `false`.
+           */
+          enabled: boolean;
+
+          /**
+           * Whether the customer is required to provide their full name before checking out. Defaults to `false`.
+           */
+          optional?: boolean;
+        }
+      }
+
       interface OptionalItem {
         /**
          * When set, provides configuration for the customer to adjust the quantity of the line item created when a customer chooses to add this optional item to their order.
@@ -777,6 +820,7 @@ declare module 'stripe' {
         | 'klarna'
         | 'konbini'
         | 'link'
+        | 'mb_way'
         | 'mobilepay'
         | 'multibanco'
         | 'oxxo'
@@ -1259,6 +1303,13 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
+       * Controls settings applied for collecting the customer's name.
+       */
+      name_collection?: Stripe.Emptyable<
+        PaymentLinkUpdateParams.NameCollection
+      >;
+
+      /**
        * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
        */
       payment_intent_data?: PaymentLinkUpdateParams.PaymentIntentData;
@@ -1688,6 +1739,44 @@ declare module 'stripe' {
         }
       }
 
+      interface NameCollection {
+        /**
+         * Controls settings applied for collecting the customer's business name.
+         */
+        business?: NameCollection.Business;
+
+        /**
+         * Controls settings applied for collecting the customer's individual name.
+         */
+        individual?: NameCollection.Individual;
+      }
+
+      namespace NameCollection {
+        interface Business {
+          /**
+           * Enable business name collection on the payment link. Defaults to `false`.
+           */
+          enabled: boolean;
+
+          /**
+           * Whether the customer is required to provide their business name before checking out. Defaults to `false`.
+           */
+          optional?: boolean;
+        }
+
+        interface Individual {
+          /**
+           * Enable individual name collection on the payment link. Defaults to `false`.
+           */
+          enabled: boolean;
+
+          /**
+           * Whether the customer is required to provide their full name before checking out. Defaults to `false`.
+           */
+          optional?: boolean;
+        }
+      }
+
       interface PaymentIntentData {
         /**
          * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -1740,6 +1829,7 @@ declare module 'stripe' {
         | 'klarna'
         | 'konbini'
         | 'link'
+        | 'mb_way'
         | 'mobilepay'
         | 'multibanco'
         | 'oxxo'

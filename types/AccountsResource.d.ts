@@ -1025,6 +1025,11 @@ declare module 'stripe' {
         registration_number?: string;
 
         /**
+         * This hash is used to attest that the representative is authorized to act as the representative of their legal entity.
+         */
+        representative_declaration?: Company.RepresentativeDeclaration;
+
+        /**
          * The category identifying the legal structure of the company or legal entity. See [Business structure](https://docs.stripe.com/connect/identity-verification#business-structure) for more details. Pass an empty string to unset this value.
          */
         structure?: Stripe.Emptyable<Company.Structure>;
@@ -1104,6 +1109,23 @@ declare module 'stripe' {
            * The four-digit year of registration.
            */
           year: number;
+        }
+
+        interface RepresentativeDeclaration {
+          /**
+           * The Unix timestamp marking when the representative declaration attestation was made.
+           */
+          date?: number;
+
+          /**
+           * The IP address from which the representative declaration attestation was made.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the representative declaration attestation was made.
+           */
+          user_agent?: string;
         }
 
         type Structure =
@@ -2954,6 +2976,11 @@ declare module 'stripe' {
         registration_number?: string;
 
         /**
+         * This hash is used to attest that the representative is authorized to act as the representative of their legal entity.
+         */
+        representative_declaration?: Company.RepresentativeDeclaration;
+
+        /**
          * The category identifying the legal structure of the company or legal entity. See [Business structure](https://docs.stripe.com/connect/identity-verification#business-structure) for more details. Pass an empty string to unset this value.
          */
         structure?: Stripe.Emptyable<Company.Structure>;
@@ -3033,6 +3060,23 @@ declare module 'stripe' {
            * The four-digit year of registration.
            */
           year: number;
+        }
+
+        interface RepresentativeDeclaration {
+          /**
+           * The Unix timestamp marking when the representative declaration attestation was made.
+           */
+          date?: number;
+
+          /**
+           * The IP address from which the representative declaration attestation was made.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the representative declaration attestation was made.
+           */
+          user_agent?: string;
         }
 
         type Structure =

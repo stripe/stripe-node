@@ -39,9 +39,18 @@ declare module 'stripe' {
         payment_intent?: string;
 
         /**
+         * Only return invoice payments associated by this payment record ID.
+         */
+        payment_record?: string;
+
+        /**
          * Only return invoice payments associated by this payment type.
          */
-        type: 'payment_intent';
+        type: Payment.Type;
+      }
+
+      namespace Payment {
+        type Type = 'payment_intent' | 'payment_record';
       }
 
       type Status = 'canceled' | 'open' | 'paid';
