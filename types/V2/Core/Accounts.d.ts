@@ -24,6 +24,11 @@ declare module 'stripe' {
           applied_configurations: Array<Account.AppliedConfiguration>;
 
           /**
+           * A value indicating if the Account has been closed.
+           */
+          closed?: boolean;
+
+          /**
            * An Account Configuration which allows the Account to take on a key persona across Stripe products.
            */
           configuration?: Account.Configuration;
@@ -177,6 +182,7 @@ declare module 'stripe' {
                 type LocationSource =
                   | 'identity_address'
                   | 'ip_address'
+                  | 'payment_method'
                   | 'shipping_address';
               }
 
@@ -4309,7 +4315,11 @@ declare module 'stripe' {
             }
 
             namespace Responsibilities {
-              type FeesCollector = 'application' | 'stripe';
+              type FeesCollector =
+                | 'application'
+                | 'application_custom'
+                | 'application_express'
+                | 'stripe';
 
               type LossesCollector = 'application' | 'stripe';
             }

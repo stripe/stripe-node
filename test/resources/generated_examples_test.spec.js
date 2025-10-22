@@ -4500,14 +4500,12 @@ describe('Generated tests', function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
-        path: '/v2/core/events?object_id=object_id',
+        path: '/v2/core/events',
         response:
           '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","type":"type","livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
-    const events = await stripe.v2.core.events.list({
-      object_id: 'object_id',
-    });
+    const events = await stripe.v2.core.events.list();
     expect(events).not.to.be.null;
   });
 
@@ -4908,6 +4906,21 @@ describe('Generated tests', function() {
   });
 
   it('test_v2_money_management_financial_account_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/money_management/financial_accounts/id_123',
+        response:
+          '{"balance":{"available":{"key":{"currency":"USD","value":35}},"inbound_pending":{"key":{"currency":"USD","value":11}},"outbound_pending":{"key":{"currency":"USD","value":60}}},"country":"country","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.money_management.financial_account","status":"closed","type":"other","livemode":true}',
+      },
+    ]);
+    const financialAccount = await stripe.v2.moneyManagement.financialAccounts.update(
+      'id_123'
+    );
+    expect(financialAccount).not.to.be.null;
+  });
+
+  it('test_v2_money_management_financial_account_post_3', async function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -5689,7 +5702,7 @@ describe('Generated tests', function() {
       .reply(400, {
         error: {
           type: 'feature_not_enabled',
-          code: 'recipient_feature_not_active',
+          code: 'outbound_flow_from_closed_financial_account_unsupported',
         },
       });
 

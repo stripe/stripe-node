@@ -121,6 +121,7 @@ declare module 'stripe' {
                 type LocationSource =
                   | 'identity_address'
                   | 'ip_address'
+                  | 'payment_method'
                   | 'shipping_address';
               }
 
@@ -1307,7 +1308,11 @@ declare module 'stripe' {
             }
 
             namespace Responsibilities {
-              type FeesCollector = 'application' | 'stripe';
+              type FeesCollector =
+                | 'application'
+                | 'application_custom'
+                | 'application_express'
+                | 'stripe';
 
               type LossesCollector = 'application' | 'stripe';
             }
@@ -2736,6 +2741,7 @@ declare module 'stripe' {
                 type LocationSource =
                   | 'identity_address'
                   | 'ip_address'
+                  | 'payment_method'
                   | 'shipping_address';
 
                 type ValidateLocation = 'auto' | 'deferred' | 'immediately';
@@ -3910,7 +3916,11 @@ declare module 'stripe' {
             }
 
             namespace Responsibilities {
-              type FeesCollector = 'application' | 'stripe';
+              type FeesCollector =
+                | 'application'
+                | 'application_custom'
+                | 'application_express'
+                | 'stripe';
 
               type LossesCollector = 'application' | 'stripe';
             }
@@ -4973,6 +4983,11 @@ declare module 'stripe' {
           applied_configurations?: Array<string>;
 
           /**
+           * Filter by whether the account is closed. If omitted, returns only Accounts that are not closed.
+           */
+          closed?: boolean;
+
+          /**
            * The upper limit on the number of accounts returned by the List Account request.
            */
           limit?: number;
@@ -5049,7 +5064,7 @@ declare module 'stripe' {
           ): ApiListPromise<Stripe.V2.Core.Account>;
 
           /**
-           * Removes access to the Account and its associated resources.
+           * Removes access to the Account and its associated resources. Closed Accounts can no longer be operated on, but limited information can still be retrieved through the API in order to be able to track their history.
            */
           close(
             id: string,

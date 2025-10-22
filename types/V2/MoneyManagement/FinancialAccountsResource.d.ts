@@ -41,6 +41,20 @@ declare module 'stripe' {
       }
 
       namespace MoneyManagement {
+        interface FinancialAccountUpdateParams {
+          /**
+           * A descriptive name for the FinancialAccount, up to 50 characters long. This name will be used in the Stripe Dashboard and embedded components.
+           */
+          display_name?: string;
+
+          /**
+           * Metadata associated with the FinancialAccount.
+           */
+          metadata?: Stripe.MetadataParam;
+        }
+      }
+
+      namespace MoneyManagement {
         interface FinancialAccountListParams {
           /**
            * The page limit.
@@ -107,6 +121,17 @@ declare module 'stripe' {
           >;
           retrieve(
             id: string,
+            options?: RequestOptions
+          ): Promise<
+            Stripe.Response<Stripe.V2.MoneyManagement.FinancialAccount>
+          >;
+
+          /**
+           * Updates an existing FinancialAccount.
+           */
+          update(
+            id: string,
+            params?: FinancialAccountUpdateParams,
             options?: RequestOptions
           ): Promise<
             Stripe.Response<Stripe.V2.MoneyManagement.FinancialAccount>
