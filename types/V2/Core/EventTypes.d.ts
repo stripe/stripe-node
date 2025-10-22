@@ -1668,6 +1668,8 @@ declare module 'stripe' {
     export interface V2MoneyManagementTransactionCreatedEvent
       extends V2.Core.EventBase {
       type: 'v2.money_management.transaction.created';
+      // Retrieves data specific to this event.
+      data: V2MoneyManagementTransactionCreatedEvent.Data;
       // Object containing the reference to API resource relevant to the event.
       related_object: V2.Core.Events.RelatedObject;
       // Retrieves the object associated with the event.
@@ -1681,6 +1683,15 @@ declare module 'stripe' {
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.Transaction>;
       fetchEvent(): Promise<V2MoneyManagementTransactionCreatedEvent>;
+    }
+
+    namespace V2MoneyManagementTransactionCreatedEvent {
+      export interface Data {
+        /**
+         * Id of the v1 Transaction corresponding to this Transaction.
+         */
+        v1_id?: string;
+      }
     }
 
     /**
