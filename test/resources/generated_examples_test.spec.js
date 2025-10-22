@@ -4957,6 +4957,21 @@ describe('Generated tests', function() {
     expect(pricingPlanSubscription).not.to.be.null;
   });
 
+  it('test_v2_billing_pricing_plan_subscriptions_component_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/billing/pricing_plan_subscriptions/id_123/components',
+        response:
+          '{"components":[{"pricing_plan_component":"pricing_plan_component","type":"license_fee_subscription"}],"object":"v2.billing.pricing_plan_subscription_components","livemode":true}',
+      },
+    ]);
+    const pricingPlanSubscriptionComponents = await stripe.v2.billing.pricingPlanSubscriptions.components.retrieve(
+      'id_123'
+    );
+    expect(pricingPlanSubscriptionComponents).not.to.be.null;
+  });
+
   it('test_v2_billing_profile_get', async function() {
     const stripe = testUtils.createMockClient([
       {
@@ -5503,14 +5518,12 @@ describe('Generated tests', function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
-        path: '/v2/core/events?object_id=object_id',
+        path: '/v2/core/events',
         response:
           '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","type":"type","livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
-    const events = await stripe.v2.core.events.list({
-      object_id: 'object_id',
-    });
+    const events = await stripe.v2.core.events.list();
     expect(events).not.to.be.null;
   });
 
@@ -5643,6 +5656,19 @@ describe('Generated tests', function() {
     expect(event).not.to.be.null;
   });
 
+  it('test_v2_core_vault_gb_bank_account_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/vault/gb_bank_accounts',
+        response:
+          '{"data":[{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","confirmation_of_payee":{"result":{"created":"1970-01-12T21:42:34.472Z","match_result":"unavailable","matched":{},"message":"message","provided":{"business_type":"personal","name":"name"}},"status":"awaiting_acknowledgement"},"created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.gb_bank_account","sort_code":"sort_code","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const gbBankAccounts = await stripe.v2.core.vault.gbBankAccounts.list();
+    expect(gbBankAccounts).not.to.be.null;
+  });
+
   it('test_v2_core_vault_gb_bank_account_post', async function() {
     const stripe = testUtils.createMockClient([
       {
@@ -5659,7 +5685,7 @@ describe('Generated tests', function() {
     expect(gbBankAccount).not.to.be.null;
   });
 
-  it('test_v2_core_vault_gb_bank_account_get', async function() {
+  it('test_v2_core_vault_gb_bank_account_get_2', async function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
@@ -5721,13 +5747,26 @@ describe('Generated tests', function() {
     expect(gbBankAccount).not.to.be.null;
   });
 
+  it('test_v2_core_vault_us_bank_account_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/core/vault/us_bank_accounts',
+        response:
+          '{"data":[{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.us_bank_account","verification":{"status":"verification_failed"},"livemode":true}],"next_page_url":null,"previous_page_url":null}',
+      },
+    ]);
+    const usBankAccounts = await stripe.v2.core.vault.usBankAccounts.list();
+    expect(usBankAccounts).not.to.be.null;
+  });
+
   it('test_v2_core_vault_us_bank_account_post', async function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
         path: '/v2/core/vault/us_bank_accounts',
         response:
-          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.us_bank_account","livemode":true}',
+          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.us_bank_account","verification":{"status":"verification_failed"},"livemode":true}',
       },
     ]);
     const usBankAccount = await stripe.v2.core.vault.usBankAccounts.create({
@@ -5736,13 +5775,13 @@ describe('Generated tests', function() {
     expect(usBankAccount).not.to.be.null;
   });
 
-  it('test_v2_core_vault_us_bank_account_get', async function() {
+  it('test_v2_core_vault_us_bank_account_get_2', async function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
         path: '/v2/core/vault/us_bank_accounts/id_123',
         response:
-          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.us_bank_account","livemode":true}',
+          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.us_bank_account","verification":{"status":"verification_failed"},"livemode":true}',
       },
     ]);
     const usBankAccount = await stripe.v2.core.vault.usBankAccounts.retrieve(
@@ -5757,7 +5796,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/core/vault/us_bank_accounts/id_123',
         response:
-          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.us_bank_account","livemode":true}',
+          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.us_bank_account","verification":{"status":"verification_failed"},"livemode":true}',
       },
     ]);
     const usBankAccount = await stripe.v2.core.vault.usBankAccounts.update(
@@ -5772,10 +5811,40 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/core/vault/us_bank_accounts/id_123/archive',
         response:
-          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.us_bank_account","livemode":true}',
+          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.us_bank_account","verification":{"status":"verification_failed"},"livemode":true}',
       },
     ]);
     const usBankAccount = await stripe.v2.core.vault.usBankAccounts.archive(
+      'id_123'
+    );
+    expect(usBankAccount).not.to.be.null;
+  });
+
+  it('test_v2_core_vault_us_bank_account_post_4', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/vault/us_bank_accounts/id_123/confirm_microdeposits',
+        response:
+          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.us_bank_account","verification":{"status":"verification_failed"},"livemode":true}',
+      },
+    ]);
+    const usBankAccount = await stripe.v2.core.vault.usBankAccounts.confirmMicrodeposits(
+      'id_123'
+    );
+    expect(usBankAccount).not.to.be.null;
+  });
+
+  it('test_v2_core_vault_us_bank_account_post_5', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/core/vault/us_bank_accounts/id_123/send_microdeposits',
+        response:
+          '{"archived":true,"bank_account_type":"savings","bank_name":"bank_name","created":"1970-01-12T21:42:34.472Z","id":"obj_123","last4":"last4","object":"v2.core.vault.us_bank_account","verification":{"status":"verification_failed"},"livemode":true}',
+      },
+    ]);
+    const usBankAccount = await stripe.v2.core.vault.usBankAccounts.sendMicrodeposits(
       'id_123'
     );
     expect(usBankAccount).not.to.be.null;
@@ -5855,6 +5924,21 @@ describe('Generated tests', function() {
   });
 
   it('test_v2_money_management_financial_account_post_2', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/money_management/financial_accounts/id_123',
+        response:
+          '{"balance":{"available":{"key":{"currency":"USD","value":35}},"inbound_pending":{"key":{"currency":"USD","value":11}},"outbound_pending":{"key":{"currency":"USD","value":60}}},"country":"country","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.money_management.financial_account","status":"closed","type":"other","livemode":true}',
+      },
+    ]);
+    const financialAccount = await stripe.v2.moneyManagement.financialAccounts.update(
+      'id_123'
+    );
+    expect(financialAccount).not.to.be.null;
+  });
+
+  it('test_v2_money_management_financial_account_post_3', async function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'POST',
@@ -6775,7 +6859,7 @@ describe('Generated tests', function() {
       .reply(400, {
         error: {
           type: 'feature_not_enabled',
-          code: 'recipient_feature_not_active',
+          code: 'outbound_flow_from_closed_financial_account_unsupported',
         },
       });
 

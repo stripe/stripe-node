@@ -183,9 +183,9 @@ declare module 'stripe' {
           /**
            * Creates an OutboundPayment.
            * @throws Stripe.InsufficientFundsError
+           * @throws Stripe.FeatureNotEnabledError
            * @throws Stripe.QuotaExceededError
            * @throws Stripe.RecipientNotNotifiableError
-           * @throws Stripe.FeatureNotEnabledError
            */
           create(
             params: OutboundPaymentCreateParams,
