@@ -1098,7 +1098,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Filters the list by the object `type` field. Unfiltered, the list returns all payment method types except `custom`. If your integration expects only one type of payment method in the response, specify that type value in the request to reduce your payload.
+       * An optional filter on the list, based on the object `type` field. Without the filter, the list includes all current and future payment method types. If your integration expects only one type of payment method in the response, make sure to provide a type value in the request.
        */
       type?: PaymentMethodListParams.Type;
     }
