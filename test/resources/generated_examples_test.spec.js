@@ -3975,14 +3975,12 @@ describe('Generated tests', function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
-        path: '/v2/core/events?object_id=object_id',
+        path: '/v2/core/events',
         response:
           '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","type":"type","livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
-    const events = await stripe.v2.core.events.list({
-      object_id: 'object_id',
-    });
+    const events = await stripe.v2.core.events.list();
     expect(events).not.to.be.null;
   });
 
