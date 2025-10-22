@@ -330,11 +330,6 @@ declare module 'stripe' {
           email?: string;
 
           /**
-           * The fulfillment option to select.
-           */
-          fulfillment_option?: FulfillmentDetails.FulfillmentOption;
-
-          /**
            * The customer's name.
            */
           name?: string;
@@ -343,6 +338,11 @@ declare module 'stripe' {
            * The customer's phone number.
            */
           phone?: string;
+
+          /**
+           * The fulfillment option to select.
+           */
+          selected_fulfillment_option?: FulfillmentDetails.SelectedFulfillmentOption;
         }
 
         namespace FulfillmentDetails {
@@ -378,11 +378,11 @@ declare module 'stripe' {
             state: string;
           }
 
-          interface FulfillmentOption {
+          interface SelectedFulfillmentOption {
             /**
              * The shipping fulfillment option.
              */
-            shipping: FulfillmentOption.Shipping;
+            shipping: SelectedFulfillmentOption.Shipping;
 
             /**
              * The type of fulfillment option.
@@ -390,7 +390,7 @@ declare module 'stripe' {
             type: string;
           }
 
-          namespace FulfillmentOption {
+          namespace SelectedFulfillmentOption {
             interface Shipping {
               /**
                * The shipping option identifer.

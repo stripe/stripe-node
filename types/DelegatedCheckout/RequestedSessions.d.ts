@@ -122,11 +122,6 @@ declare module 'stripe' {
           email: string | null;
 
           /**
-           * The fulfillment option.
-           */
-          fulfillment_option: FulfillmentDetails.FulfillmentOption | null;
-
-          /**
            * The fulfillment options.
            */
           fulfillment_options: Array<
@@ -142,21 +137,14 @@ declare module 'stripe' {
            * The phone number for the fulfillment details.
            */
           phone: string | null;
+
+          /**
+           * The fulfillment option.
+           */
+          selected_fulfillment_option: FulfillmentDetails.SelectedFulfillmentOption | null;
         }
 
         namespace FulfillmentDetails {
-          interface FulfillmentOption {
-            /**
-             * The shipping option.
-             */
-            shipping: FulfillmentOption.Shipping | null;
-
-            /**
-             * The type of the selected fulfillment option.
-             */
-            type: string;
-          }
-
           interface FulfillmentOption {
             /**
              * The shipping option.
@@ -170,13 +158,6 @@ declare module 'stripe' {
           }
 
           namespace FulfillmentOption {
-            interface Shipping {
-              /**
-               * The shipping option.
-               */
-              shipping_option: string | null;
-            }
-
             interface Shipping {
               /**
                * The shipping options.
@@ -216,6 +197,27 @@ declare module 'stripe' {
                  */
                 shipping_amount: number;
               }
+            }
+          }
+
+          interface SelectedFulfillmentOption {
+            /**
+             * The shipping option.
+             */
+            shipping: SelectedFulfillmentOption.Shipping | null;
+
+            /**
+             * The type of the selected fulfillment option.
+             */
+            type: string;
+          }
+
+          namespace SelectedFulfillmentOption {
+            interface Shipping {
+              /**
+               * The shipping option.
+               */
+              shipping_option: string | null;
             }
           }
         }
