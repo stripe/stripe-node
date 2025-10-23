@@ -26,6 +26,13 @@ declare module 'stripe' {
         aggregated_value: number;
 
         /**
+         * Key-value pairs of dimension values for event summaries with grouping on dimensions.
+         */
+        dimensions?: {
+          [key: string]: string;
+        } | null;
+
+        /**
          * End timestamp for this event summary (exclusive). Must be aligned with minute boundaries.
          */
         end_time: number;

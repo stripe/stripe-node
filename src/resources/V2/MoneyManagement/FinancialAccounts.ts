@@ -11,6 +11,10 @@ export const FinancialAccounts = StripeResource.extend({
     method: 'GET',
     fullPath: '/v2/money_management/financial_accounts/{id}',
   }),
+  update: stripeMethod({
+    method: 'POST',
+    fullPath: '/v2/money_management/financial_accounts/{id}',
+  }),
   list: stripeMethod({
     method: 'GET',
     fullPath: '/v2/money_management/financial_accounts',
