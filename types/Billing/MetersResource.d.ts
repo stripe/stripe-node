@@ -25,11 +25,6 @@ declare module 'stripe' {
         customer_mapping?: MeterCreateParams.CustomerMapping;
 
         /**
-         * Set of keys that will be used to group meter events by. Each key must be present in the event payload.
-         */
-        dimension_payload_keys?: Array<string>;
-
-        /**
          * The time window which meter events have been pre-aggregated for, if any.
          */
         event_time_window?: MeterCreateParams.EventTimeWindow;
@@ -136,18 +131,6 @@ declare module 'stripe' {
          * The timestamp from when to start aggregating meter events (inclusive). Must be aligned with minute boundaries.
          */
         start_time: number;
-
-        /**
-         * Key-value pairs used to filter meter events by dimension values. If specified, event summaries will be generated with only matching meter events.
-         */
-        dimension_filters?: {
-          [key: string]: string;
-        };
-
-        /**
-         * List of dimension payload keys to group by. If specified, event summaries will be grouped by the given dimension payload key values.
-         */
-        dimension_group_by_keys?: Array<string>;
 
         /**
          * Specifies which fields in the response should be expanded.

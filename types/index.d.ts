@@ -169,7 +169,6 @@
 ///<reference path='./V2/Billing/MeterEventStreamResource.d.ts' />
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
 ///<reference path='./V2/Billing/MeteredItemsResource.d.ts' />
-///<reference path='./V2/Billing/PricingPlanSubscriptions/ComponentsResource.d.ts' />
 ///<reference path='./V2/Billing/PricingPlanSubscriptionsResource.d.ts' />
 ///<reference path='./V2/Billing/PricingPlans/ComponentsResource.d.ts' />
 ///<reference path='./V2/Billing/PricingPlans/VersionsResource.d.ts' />
@@ -395,7 +394,6 @@
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
 ///<reference path='./V2/Billing/MeteredItems.d.ts' />
 ///<reference path='./V2/Billing/PricingPlanComponents.d.ts' />
-///<reference path='./V2/Billing/PricingPlanSubscriptionComponents.d.ts' />
 ///<reference path='./V2/Billing/PricingPlanSubscriptions.d.ts' />
 ///<reference path='./V2/Billing/PricingPlanVersions.d.ts' />
 ///<reference path='./V2/Billing/PricingPlans.d.ts' />

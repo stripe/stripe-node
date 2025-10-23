@@ -247,7 +247,6 @@ declare module 'stripe' {
                 type LocationSource =
                   | 'identity_address'
                   | 'ip_address'
-                  | 'payment_method'
                   | 'shipping_address';
               }
 
@@ -1195,22 +1194,10 @@ declare module 'stripe' {
                    * Can hold storage-type funds on Stripe in GBP.
                    */
                   gbp?: HoldsCurrencies.Gbp;
-
-                  /**
-                   * Can hold storage-type funds on Stripe in USD.
-                   */
-                  usd?: HoldsCurrencies.Usd;
                 }
 
                 namespace HoldsCurrencies {
                   interface Gbp {
-                    /**
-                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                     */
-                    requested: boolean;
-                  }
-
-                  interface Usd {
                     /**
                      * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                      */
@@ -1446,11 +1433,7 @@ declare module 'stripe' {
             }
 
             namespace Responsibilities {
-              type FeesCollector =
-                | 'application'
-                | 'application_custom'
-                | 'application_express'
-                | 'stripe';
+              type FeesCollector = 'application' | 'stripe';
 
               type LossesCollector = 'application' | 'stripe';
             }
@@ -1458,7 +1441,7 @@ declare module 'stripe' {
 
           interface Identity {
             /**
-             * Attestations from the identity's key people, e.g. owners, executives, directors, representatives.
+             * Attestations from the identity's key people, e.g. owners, executives, directors.
              */
             attestations?: Identity.Attestations;
 
@@ -1499,11 +1482,6 @@ declare module 'stripe' {
                * Attestation that all Persons with a specific Relationship value have been provided.
                */
               persons_provided?: Attestations.PersonsProvided;
-
-              /**
-               * This hash is used to attest that the representative is authorized to act as the representative of their legal entity.
-               */
-              representative_declaration?: Attestations.RepresentativeDeclaration;
 
               /**
                * Attestations of accepted terms of service agreements.
@@ -1572,23 +1550,6 @@ declare module 'stripe' {
                 type OwnershipExemptionReason =
                   | 'qualified_entity_exceeds_ownership_threshold'
                   | 'qualifies_as_financial_institution';
-              }
-
-              interface RepresentativeDeclaration {
-                /**
-                 * The time marking when the representative attestation was made. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                 */
-                date?: string;
-
-                /**
-                 * The IP address from which the representative attestation was made.
-                 */
-                ip?: string;
-
-                /**
-                 * The user agent of the browser from which the representative attestation was made.
-                 */
-                user_agent?: string;
               }
 
               interface TermsOfService {
@@ -3370,7 +3331,6 @@ declare module 'stripe' {
                 type LocationSource =
                   | 'identity_address'
                   | 'ip_address'
-                  | 'payment_method'
                   | 'shipping_address';
 
                 type ValidateLocation = 'auto' | 'deferred' | 'immediately';
@@ -4306,22 +4266,10 @@ declare module 'stripe' {
                    * Can hold storage-type funds on Stripe in GBP.
                    */
                   gbp?: HoldsCurrencies.Gbp;
-
-                  /**
-                   * Can hold storage-type funds on Stripe in USD.
-                   */
-                  usd?: HoldsCurrencies.Usd;
                 }
 
                 namespace HoldsCurrencies {
                   interface Gbp {
-                    /**
-                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
-                     */
-                    requested?: boolean;
-                  }
-
-                  interface Usd {
                     /**
                      * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                      */
@@ -4557,11 +4505,7 @@ declare module 'stripe' {
             }
 
             namespace Responsibilities {
-              type FeesCollector =
-                | 'application'
-                | 'application_custom'
-                | 'application_express'
-                | 'stripe';
+              type FeesCollector = 'application' | 'stripe';
 
               type LossesCollector = 'application' | 'stripe';
             }
@@ -4569,7 +4513,7 @@ declare module 'stripe' {
 
           interface Identity {
             /**
-             * Attestations from the identity's key people, e.g. owners, executives, directors, representatives.
+             * Attestations from the identity's key people, e.g. owners, executives, directors.
              */
             attestations?: Identity.Attestations;
 
@@ -4610,11 +4554,6 @@ declare module 'stripe' {
                * Attestation that all Persons with a specific Relationship value have been provided.
                */
               persons_provided?: Attestations.PersonsProvided;
-
-              /**
-               * This hash is used to attest that the representative is authorized to act as the representative of their legal entity.
-               */
-              representative_declaration?: Attestations.RepresentativeDeclaration;
 
               /**
                * Attestations of accepted terms of service agreements.
@@ -4683,23 +4622,6 @@ declare module 'stripe' {
                 type OwnershipExemptionReason =
                   | 'qualified_entity_exceeds_ownership_threshold'
                   | 'qualifies_as_financial_institution';
-              }
-
-              interface RepresentativeDeclaration {
-                /**
-                 * The time marking when the representative attestation was made. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                 */
-                date?: string;
-
-                /**
-                 * The IP address from which the representative attestation was made.
-                 */
-                ip?: string;
-
-                /**
-                 * The user agent of the browser from which the representative attestation was made.
-                 */
-                user_agent?: string;
               }
 
               interface TermsOfService {
@@ -5983,11 +5905,6 @@ declare module 'stripe' {
           applied_configurations?: Array<string>;
 
           /**
-           * Filter by whether the account is closed. If omitted, returns only Accounts that are not closed.
-           */
-          closed?: boolean;
-
-          /**
            * The upper limit on the number of accounts returned by the List Account request.
            */
           limit?: number;
@@ -6065,7 +5982,7 @@ declare module 'stripe' {
           ): ApiListPromise<Stripe.V2.Core.Account>;
 
           /**
-           * Removes access to the Account and its associated resources. Closed Accounts can no longer be operated on, but limited information can still be retrieved through the API in order to be able to track their history.
+           * Removes access to the Account and its associated resources.
            */
           close(
             id: string,

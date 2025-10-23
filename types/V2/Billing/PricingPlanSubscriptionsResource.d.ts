@@ -73,8 +73,6 @@ declare module 'stripe' {
 
       namespace Billing {
         class PricingPlanSubscriptionsResource {
-          components: Stripe.V2.Billing.PricingPlanSubscriptions.ComponentsResource;
-
           /**
            * Retrieve a Pricing Plan Subscription object.
            */

@@ -15,21 +15,8 @@ export const UsBankAccounts = StripeResource.extend({
     method: 'POST',
     fullPath: '/v2/core/vault/us_bank_accounts/{id}',
   }),
-  list: stripeMethod({
-    method: 'GET',
-    fullPath: '/v2/core/vault/us_bank_accounts',
-    methodType: 'list',
-  }),
   archive: stripeMethod({
     method: 'POST',
     fullPath: '/v2/core/vault/us_bank_accounts/{id}/archive',
-  }),
-  confirmMicrodeposits: stripeMethod({
-    method: 'POST',
-    fullPath: '/v2/core/vault/us_bank_accounts/{id}/confirm_microdeposits',
-  }),
-  sendMicrodeposits: stripeMethod({
-    method: 'POST',
-    fullPath: '/v2/core/vault/us_bank_accounts/{id}/send_microdeposits',
   }),
 });

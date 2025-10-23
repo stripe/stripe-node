@@ -24,11 +24,6 @@ declare module 'stripe' {
           applied_configurations: Array<Account.AppliedConfiguration>;
 
           /**
-           * A value indicating if the Account has been closed.
-           */
-          closed?: boolean;
-
-          /**
            * An Account Configuration which allows the Account to take on a key persona across Stripe products.
            */
           configuration?: Account.Configuration;
@@ -590,7 +585,6 @@ declare module 'stripe' {
                 type LocationSource =
                   | 'identity_address'
                   | 'ip_address'
-                  | 'payment_method'
                   | 'shipping_address';
               }
 
@@ -4162,11 +4156,6 @@ declare module 'stripe' {
                    * Can hold storage-type funds on Stripe in GBP.
                    */
                   gbp?: HoldsCurrencies.Gbp;
-
-                  /**
-                   * Can hold storage-type funds on Stripe in USD.
-                   */
-                  usd?: HoldsCurrencies.Usd;
                 }
 
                 namespace HoldsCurrencies {
@@ -4188,59 +4177,6 @@ declare module 'stripe' {
                   }
 
                   namespace Gbp {
-                    type Status =
-                      | 'active'
-                      | 'pending'
-                      | 'restricted'
-                      | 'unsupported';
-
-                    interface StatusDetail {
-                      /**
-                       * Machine-readable code explaining the reason for the Capability to be in its current status.
-                       */
-                      code: StatusDetail.Code;
-
-                      /**
-                       * Machine-readable code explaining how to make the Capability active.
-                       */
-                      resolution: StatusDetail.Resolution;
-                    }
-
-                    namespace StatusDetail {
-                      type Code =
-                        | 'determining_status'
-                        | 'requirements_past_due'
-                        | 'requirements_pending_verification'
-                        | 'restricted_other'
-                        | 'unsupported_business'
-                        | 'unsupported_country'
-                        | 'unsupported_entity_type';
-
-                      type Resolution =
-                        | 'contact_stripe'
-                        | 'no_resolution'
-                        | 'provide_info';
-                    }
-                  }
-
-                  interface Usd {
-                    /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
-                     * The status of the Capability.
-                     */
-                    status: Usd.Status;
-
-                    /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
-                     */
-                    status_details: Array<Usd.StatusDetail>;
-                  }
-
-                  namespace Usd {
                     type Status =
                       | 'active'
                       | 'pending'
@@ -4781,11 +4717,7 @@ declare module 'stripe' {
             }
 
             namespace Responsibilities {
-              type FeesCollector =
-                | 'application'
-                | 'application_custom'
-                | 'application_express'
-                | 'stripe';
+              type FeesCollector = 'application' | 'stripe';
 
               type LossesCollector = 'application' | 'stripe';
             }
@@ -4793,7 +4725,7 @@ declare module 'stripe' {
 
           interface Identity {
             /**
-             * Attestations from the identity's key people, e.g. owners, executives, directors, representatives.
+             * Attestations from the identity's key people, e.g. owners, executives, directors.
              */
             attestations?: Identity.Attestations;
 
@@ -4834,11 +4766,6 @@ declare module 'stripe' {
                * Attestation that all Persons with a specific Relationship value have been provided.
                */
               persons_provided?: Attestations.PersonsProvided;
-
-              /**
-               * This hash is used to attest that the representative is authorized to act as the representative of their legal entity.
-               */
-              representative_declaration?: Attestations.RepresentativeDeclaration;
 
               /**
                * Attestations of accepted terms of service agreements.
@@ -4907,23 +4834,6 @@ declare module 'stripe' {
                 type OwnershipExemptionReason =
                   | 'qualified_entity_exceeds_ownership_threshold'
                   | 'qualifies_as_financial_institution';
-              }
-
-              interface RepresentativeDeclaration {
-                /**
-                 * The time marking when the representative attestation was made. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
-                 */
-                date?: string;
-
-                /**
-                 * The IP address from which the representative attestation was made.
-                 */
-                ip?: string;
-
-                /**
-                 * The user agent of the browser from which the representative attestation was made.
-                 */
-                user_agent?: string;
               }
 
               interface TermsOfService {
@@ -6769,7 +6679,6 @@ declare module 'stripe' {
                     | 'gb_bank_transfer_payments'
                     | 'grabpay_payments'
                     | 'holds_currencies.gbp'
-                    | 'holds_currencies.usd'
                     | 'ideal_payments'
                     | 'inbound_transfers.financial_accounts'
                     | 'jcb_payments'

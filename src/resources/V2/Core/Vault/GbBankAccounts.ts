@@ -11,11 +11,6 @@ export const GbBankAccounts = StripeResource.extend({
     method: 'GET',
     fullPath: '/v2/core/vault/gb_bank_accounts/{id}',
   }),
-  list: stripeMethod({
-    method: 'GET',
-    fullPath: '/v2/core/vault/gb_bank_accounts',
-    methodType: 'list',
-  }),
   acknowledgeConfirmationOfPayee: stripeMethod({
     method: 'POST',
     fullPath:

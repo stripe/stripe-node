@@ -29,11 +29,6 @@ declare module 'stripe' {
         default_aggregation: Meter.DefaultAggregation;
 
         /**
-         * Set of keys that will be used to group meter events by.
-         */
-        dimension_payload_keys?: Array<string> | null;
-
-        /**
          * The meter's name.
          */
         display_name: string;

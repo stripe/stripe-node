@@ -57,45 +57,7 @@ declare module 'stripe' {
 
       namespace Core {
         namespace Vault {
-          interface UsBankAccountListParams {
-            /**
-             * Optionally set the maximum number of results per page. Defaults to 10.
-             */
-            limit?: number;
-
-            /**
-             * Optionally filter by verification status. Mutually exclusive with `unverified`, `verified`, `awaiting_verification`, and `verification_failed`.
-             */
-            verification_status?: string;
-          }
-        }
-      }
-
-      namespace Core {
-        namespace Vault {
           interface UsBankAccountArchiveParams {}
-        }
-      }
-
-      namespace Core {
-        namespace Vault {
-          interface UsBankAccountConfirmMicrodepositsParams {
-            /**
-             * Two amounts received through Send Microdeposits must match the input to Confirm Microdeposits to verify US Bank Account.
-             */
-            amounts?: Array<number>;
-
-            /**
-             * Descriptor code received through Send Microdeposits must match the input to Confirm Microdeposits to verify US Bank Account.
-             */
-            descriptor_code?: string;
-          }
-        }
-      }
-
-      namespace Core {
-        namespace Vault {
-          interface UsBankAccountSendMicrodepositsParams {}
         }
       }
 
@@ -139,17 +101,6 @@ declare module 'stripe' {
             ): Promise<Stripe.Response<Stripe.V2.Core.Vault.UsBankAccount>>;
 
             /**
-             * List USBankAccount objects. Optionally filter by verification status.
-             */
-            list(
-              params?: UsBankAccountListParams,
-              options?: RequestOptions
-            ): ApiListPromise<Stripe.V2.Core.Vault.UsBankAccount>;
-            list(
-              options?: RequestOptions
-            ): ApiListPromise<Stripe.V2.Core.Vault.UsBankAccount>;
-
-            /**
              * Archive a USBankAccount object. USBankAccount objects will not be automatically archived by Stripe.
              * Archived USBankAccount objects cannot be used as outbound destinations
              * and will not appear in the outbound destination list.
@@ -161,32 +112,6 @@ declare module 'stripe' {
               options?: RequestOptions
             ): Promise<Stripe.Response<Stripe.V2.Core.Vault.UsBankAccount>>;
             archive(
-              id: string,
-              options?: RequestOptions
-            ): Promise<Stripe.Response<Stripe.V2.Core.Vault.UsBankAccount>>;
-
-            /**
-             * Confirm microdeposits amounts or descriptor code that you have received from the Send Microdeposits request. Once you correctly confirm this, this US Bank Account will be verified and eligible to transfer funds with.
-             */
-            confirmMicrodeposits(
-              id: string,
-              params?: UsBankAccountConfirmMicrodepositsParams,
-              options?: RequestOptions
-            ): Promise<Stripe.Response<Stripe.V2.Core.Vault.UsBankAccount>>;
-            confirmMicrodeposits(
-              id: string,
-              options?: RequestOptions
-            ): Promise<Stripe.Response<Stripe.V2.Core.Vault.UsBankAccount>>;
-
-            /**
-             * Send microdeposits in order to verify your US Bank Account so it is eligible to transfer funds. This will start the verification process and you must Confirm Microdeposits to successfully verify your US Bank Account.
-             */
-            sendMicrodeposits(
-              id: string,
-              params?: UsBankAccountSendMicrodepositsParams,
-              options?: RequestOptions
-            ): Promise<Stripe.Response<Stripe.V2.Core.Vault.UsBankAccount>>;
-            sendMicrodeposits(
               id: string,
               options?: RequestOptions
             ): Promise<Stripe.Response<Stripe.V2.Core.Vault.UsBankAccount>>;
