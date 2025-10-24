@@ -3,7 +3,6 @@
 * [#2453](https://github.com/stripe/stripe-node/pull/2453) add missing fetchEvent type for UnknownEventNotification
   
   - Add missing `fetchEvent()` declaration to the `Stripe.Events.UnknownEventNotification` interface
-
   - Tweak `Stripe.Events.fetchRelatedObject` so that it's always defined and returns `null` if there's no `related_object`. This fixes the situation where the `UnknownEventNotification` says that `fetchRelatedObject()` is defined, but calling it throws an error.
 * [#2447](https://github.com/stripe/stripe-node/pull/2447) Update param in deprecation docs link
 * [#2444](https://github.com/stripe/stripe-node/pull/2444) Update CHANGELOG.md to point to right API version
@@ -3521,7 +3520,7 @@ Major pull requests included in this release (cf. [#742](https://github.com/stri
 
 - [#719](https://github.com/stripe/stripe-node/pull/719) Define 'type' as a property on errors rather than a getter
 - [#709](https://github.com/stripe/stripe-node/pull/709) README: imply context of stripe-node
-- [#717](https://github.com/stripe/stripe-node/pull/717) Contributor Covenant
+- [#717](https://github.com/stripe/stripe-node/pull/717) Contributor Convenant
 
 ## 7.10.0 - 2019-10-08
 
@@ -3543,7 +3542,7 @@ Major pull requests included in this release (cf. [#742](https://github.com/stri
 ## 7.7.0 - 2019-08-09
 
 - [#675](https://github.com/stripe/stripe-node/pull/675) Remove subscription schedule revisions
-  - This is technically a breaking change. We've chosen to release it as a minor version bump because the associated API is unused.
+  - This is technically a breaking change. We've chosen to release it as a minor vesion bump because the associated API is unused.
 
 ## 7.6.2 - 2019-08-09
 
