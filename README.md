@@ -10,6 +10,34 @@ applications written in server-side JavaScript.
 
 For collecting customer and payment information in the browser, use [Stripe.js][stripe-js].
 
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Usage with TypeScript](#usage-with-typescript)
+  - [Using Promises](#using-promises)
+  - [Usage with Deno](#usage-with-deno)
+- [Configuration](#configuration)
+  - [Initialize with config object](#initialize-with-config-object)
+  - [Configuring Timeout](#configuring-timeout)
+  - [Configuring For Connect](#configuring-for-connect)
+  - [Configuring a Proxy](#configuring-a-proxy)
+  - [Network retries](#network-retries)
+  - [Examining Responses](#examining-responses)
+  - [`request` and `response` events](#request-and-response-events)
+  - [Webhook signing](#webhook-signing)
+  - [Writing a Plugin](#writing-a-plugin)
+  - [Auto-pagination](#auto-pagination)
+  - [Telemetry](#telemetry)
+  - [Public Preview SDKs](#public-preview-sdks)
+  - [Private Preview SDKs](#private-preview-sdks)
+  - [Custom requests](#custom-requests)
+- [Support](#support)
+- [More Information](#more-information)
+- [Development](#development)
+
 ## Documentation
 
 See the [`stripe-node` API docs](https://stripe.com/docs/api?lang=node) for Node.js.
