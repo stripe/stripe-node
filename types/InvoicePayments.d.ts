@@ -81,6 +81,11 @@ declare module 'stripe' {
         payment_intent?: string | Stripe.PaymentIntent;
 
         /**
+         * ID of the PaymentRecord associated with this payment when `type` is `payment_record`.
+         */
+        payment_record?: string | Stripe.PaymentRecord;
+
+        /**
          * Type of payment object associated with this invoice payment.
          */
         type: Payment.Type;

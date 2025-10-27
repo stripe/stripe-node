@@ -40,6 +40,13 @@ declare module 'stripe' {
       description?: string;
 
       /**
+       * The list of payment method types to exclude from use with this SetupIntent.
+       */
+      excluded_payment_method_types?: Array<
+        SetupIntentCreateParams.ExcludedPaymentMethodType
+      >;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -133,6 +140,56 @@ declare module 'stripe' {
       namespace AutomaticPaymentMethods {
         type AllowRedirects = 'always' | 'never';
       }
+
+      type ExcludedPaymentMethodType =
+        | 'acss_debit'
+        | 'affirm'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'alma'
+        | 'amazon_pay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'billie'
+        | 'blik'
+        | 'boleto'
+        | 'card'
+        | 'cashapp'
+        | 'crypto'
+        | 'customer_balance'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'grabpay'
+        | 'ideal'
+        | 'kakao_pay'
+        | 'klarna'
+        | 'konbini'
+        | 'kr_card'
+        | 'mb_way'
+        | 'mobilepay'
+        | 'multibanco'
+        | 'naver_pay'
+        | 'nz_bank_account'
+        | 'oxxo'
+        | 'p24'
+        | 'pay_by_bank'
+        | 'payco'
+        | 'paynow'
+        | 'paypal'
+        | 'pix'
+        | 'promptpay'
+        | 'revolut_pay'
+        | 'samsung_pay'
+        | 'satispay'
+        | 'sepa_debit'
+        | 'sofort'
+        | 'swish'
+        | 'twint'
+        | 'us_bank_account'
+        | 'wechat_pay'
+        | 'zip';
 
       type FlowDirection = 'inbound' | 'outbound';
 
@@ -1566,6 +1623,13 @@ declare module 'stripe' {
       description?: string;
 
       /**
+       * The list of payment method types to exclude from use with this SetupIntent.
+       */
+      excluded_payment_method_types?: Stripe.Emptyable<
+        Array<SetupIntentUpdateParams.ExcludedPaymentMethodType>
+      >;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -1610,6 +1674,56 @@ declare module 'stripe' {
     }
 
     namespace SetupIntentUpdateParams {
+      type ExcludedPaymentMethodType =
+        | 'acss_debit'
+        | 'affirm'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'alma'
+        | 'amazon_pay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'billie'
+        | 'blik'
+        | 'boleto'
+        | 'card'
+        | 'cashapp'
+        | 'crypto'
+        | 'customer_balance'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'grabpay'
+        | 'ideal'
+        | 'kakao_pay'
+        | 'klarna'
+        | 'konbini'
+        | 'kr_card'
+        | 'mb_way'
+        | 'mobilepay'
+        | 'multibanco'
+        | 'naver_pay'
+        | 'nz_bank_account'
+        | 'oxxo'
+        | 'p24'
+        | 'pay_by_bank'
+        | 'payco'
+        | 'paynow'
+        | 'paypal'
+        | 'pix'
+        | 'promptpay'
+        | 'revolut_pay'
+        | 'samsung_pay'
+        | 'satispay'
+        | 'sepa_debit'
+        | 'sofort'
+        | 'swish'
+        | 'twint'
+        | 'us_bank_account'
+        | 'wechat_pay'
+        | 'zip';
+
       type FlowDirection = 'inbound' | 'outbound';
 
       interface PaymentMethodData {

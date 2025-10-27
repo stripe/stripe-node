@@ -158,9 +158,35 @@ declare module 'stripe' {
         amount_refunded?: number;
 
         /**
+         * The PaymentRecord refund details to link to this credit note. Required when `type` is `payment_record_refund`.
+         */
+        payment_record_refund?: Refund.PaymentRecordRefund;
+
+        /**
          * ID of an existing refund to link this credit note to. Required when `type` is `refund`.
          */
         refund?: string;
+
+        /**
+         * Type of the refund, one of `refund` or `payment_record_refund`. Defaults to `refund`.
+         */
+        type?: Refund.Type;
+      }
+
+      namespace Refund {
+        interface PaymentRecordRefund {
+          /**
+           * The ID of the PaymentRecord with the refund to link to this credit note.
+           */
+          payment_record: string;
+
+          /**
+           * The PaymentRecord refund group to link to this credit note. For refunds processed off-Stripe, this will correspond to the `processor_details.custom.refund_reference` field provided when reporting the refund on the PaymentRecord.
+           */
+          refund_group: string;
+        }
+
+        type Type = 'payment_record_refund' | 'refund';
       }
 
       interface ShippingCost {
@@ -380,9 +406,35 @@ declare module 'stripe' {
         amount_refunded?: number;
 
         /**
+         * The PaymentRecord refund details to link to this credit note. Required when `type` is `payment_record_refund`.
+         */
+        payment_record_refund?: Refund.PaymentRecordRefund;
+
+        /**
          * ID of an existing refund to link this credit note to. Required when `type` is `refund`.
          */
         refund?: string;
+
+        /**
+         * Type of the refund, one of `refund` or `payment_record_refund`. Defaults to `refund`.
+         */
+        type?: Refund.Type;
+      }
+
+      namespace Refund {
+        interface PaymentRecordRefund {
+          /**
+           * The ID of the PaymentRecord with the refund to link to this credit note.
+           */
+          payment_record: string;
+
+          /**
+           * The PaymentRecord refund group to link to this credit note. For refunds processed off-Stripe, this will correspond to the `processor_details.custom.refund_reference` field provided when reporting the refund on the PaymentRecord.
+           */
+          refund_group: string;
+        }
+
+        type Type = 'payment_record_refund' | 'refund';
       }
 
       interface ShippingCost {
@@ -549,9 +601,35 @@ declare module 'stripe' {
         amount_refunded?: number;
 
         /**
+         * The PaymentRecord refund details to link to this credit note. Required when `type` is `payment_record_refund`.
+         */
+        payment_record_refund?: Refund.PaymentRecordRefund;
+
+        /**
          * ID of an existing refund to link this credit note to. Required when `type` is `refund`.
          */
         refund?: string;
+
+        /**
+         * Type of the refund, one of `refund` or `payment_record_refund`. Defaults to `refund`.
+         */
+        type?: Refund.Type;
+      }
+
+      namespace Refund {
+        interface PaymentRecordRefund {
+          /**
+           * The ID of the PaymentRecord with the refund to link to this credit note.
+           */
+          payment_record: string;
+
+          /**
+           * The PaymentRecord refund group to link to this credit note. For refunds processed off-Stripe, this will correspond to the `processor_details.custom.refund_reference` field provided when reporting the refund on the PaymentRecord.
+           */
+          refund_group: string;
+        }
+
+        type Type = 'payment_record_refund' | 'refund';
       }
 
       interface ShippingCost {

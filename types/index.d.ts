@@ -66,11 +66,13 @@
 ///<reference path='./Issuing/TokensResource.d.ts' />
 ///<reference path='./Issuing/TransactionsResource.d.ts' />
 ///<reference path='./MandatesResource.d.ts' />
+///<reference path='./PaymentAttemptRecordsResource.d.ts' />
 ///<reference path='./PaymentIntentsResource.d.ts' />
 ///<reference path='./PaymentLinksResource.d.ts' />
 ///<reference path='./PaymentMethodConfigurationsResource.d.ts' />
 ///<reference path='./PaymentMethodDomainsResource.d.ts' />
 ///<reference path='./PaymentMethodsResource.d.ts' />
+///<reference path='./PaymentRecordsResource.d.ts' />
 ///<reference path='./PayoutsResource.d.ts' />
 ///<reference path='./PlansResource.d.ts' />
 ///<reference path='./PricesResource.d.ts' />
@@ -216,11 +218,14 @@
 ///<reference path='./LineItems.d.ts' />
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
+///<reference path='./PaymentAttemptRecords.d.ts' />
+///<reference path='./PaymentIntentAmountDetailsLineItems.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
 ///<reference path='./PaymentMethodConfigurations.d.ts' />
 ///<reference path='./PaymentMethodDomains.d.ts' />
 ///<reference path='./PaymentMethods.d.ts' />
+///<reference path='./PaymentRecords.d.ts' />
 ///<reference path='./Payouts.d.ts' />
 ///<reference path='./Persons.d.ts' />
 ///<reference path='./Plans.d.ts' />
@@ -330,11 +335,13 @@ declare module 'stripe' {
     invoiceRenderingTemplates: Stripe.InvoiceRenderingTemplatesResource;
     invoices: Stripe.InvoicesResource;
     mandates: Stripe.MandatesResource;
+    paymentAttemptRecords: Stripe.PaymentAttemptRecordsResource;
     paymentIntents: Stripe.PaymentIntentsResource;
     paymentLinks: Stripe.PaymentLinksResource;
     paymentMethodConfigurations: Stripe.PaymentMethodConfigurationsResource;
     paymentMethodDomains: Stripe.PaymentMethodDomainsResource;
     paymentMethods: Stripe.PaymentMethodsResource;
+    paymentRecords: Stripe.PaymentRecordsResource;
     payouts: Stripe.PayoutsResource;
     plans: Stripe.PlansResource;
     prices: Stripe.PricesResource;

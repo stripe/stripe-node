@@ -105,6 +105,8 @@ declare module 'stripe' {
        */
       metadata: Stripe.Metadata;
 
+      name_collection?: PaymentLink.NameCollection;
+
       /**
        * The account on behalf of which to charge. See the [Connect documentation](https://support.stripe.com/questions/sending-invoices-on-behalf-of-connected-accounts) for details.
        */
@@ -518,6 +520,38 @@ declare module 'stripe' {
         }
       }
 
+      interface NameCollection {
+        business?: NameCollection.Business;
+
+        individual?: NameCollection.Individual;
+      }
+
+      namespace NameCollection {
+        interface Business {
+          /**
+           * Indicates whether business name collection is enabled for the payment link.
+           */
+          enabled: boolean;
+
+          /**
+           * Whether the customer is required to complete the field before checking out. Defaults to `false`.
+           */
+          optional: boolean;
+        }
+
+        interface Individual {
+          /**
+           * Indicates whether individual name collection is enabled for the payment link.
+           */
+          enabled: boolean;
+
+          /**
+           * Whether the customer is required to complete the field before checking out. Defaults to `false`.
+           */
+          optional: boolean;
+        }
+      }
+
       interface OptionalItem {
         adjustable_quantity: OptionalItem.AdjustableQuantity | null;
 
@@ -611,6 +645,7 @@ declare module 'stripe' {
         | 'klarna'
         | 'konbini'
         | 'link'
+        | 'mb_way'
         | 'mobilepay'
         | 'multibanco'
         | 'oxxo'

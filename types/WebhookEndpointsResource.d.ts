@@ -156,7 +156,8 @@ declare module 'stripe' {
         | '2025-06-30.basil'
         | '2025-07-30.basil'
         | '2025-08-27.basil'
-        | '2025-09-30.clover';
+        | '2025-09-30.clover'
+        | '2025-10-29.clover';
 
       type EnabledEvent =
         | '*'
@@ -170,6 +171,7 @@ declare module 'stripe' {
         | 'application_fee.refund.updated'
         | 'application_fee.refunded'
         | 'balance.available'
+        | 'balance_settings.updated'
         | 'billing.alert.triggered'
         | 'billing_portal.configuration.created'
         | 'billing_portal.configuration.updated'
@@ -252,6 +254,7 @@ declare module 'stripe' {
         | 'invoice.overpaid'
         | 'invoice.paid'
         | 'invoice.payment_action_required'
+        | 'invoice.payment_attempt_required'
         | 'invoice.payment_failed'
         | 'invoice.payment_succeeded'
         | 'invoice.sent'
@@ -463,6 +466,7 @@ declare module 'stripe' {
         | 'application_fee.refund.updated'
         | 'application_fee.refunded'
         | 'balance.available'
+        | 'balance_settings.updated'
         | 'billing.alert.triggered'
         | 'billing_portal.configuration.created'
         | 'billing_portal.configuration.updated'
@@ -545,6 +549,7 @@ declare module 'stripe' {
         | 'invoice.overpaid'
         | 'invoice.paid'
         | 'invoice.payment_action_required'
+        | 'invoice.payment_attempt_required'
         | 'invoice.payment_failed'
         | 'invoice.payment_succeeded'
         | 'invoice.sent'

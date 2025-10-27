@@ -12,14 +12,39 @@ declare module 'stripe' {
       namespace Core {
         interface EventListParams {
           /**
-           * Primary object ID used to retrieve related events.
+           * Filter for events created after the specified timestamp.
            */
-          object_id: string;
+          gt?: string;
+
+          /**
+           * Filter for events created at or after the specified timestamp.
+           */
+          gte?: string;
 
           /**
            * The page size.
            */
           limit?: number;
+
+          /**
+           * Filter for events created before the specified timestamp.
+           */
+          lt?: string;
+
+          /**
+           * Filter for events created at or before the specified timestamp.
+           */
+          lte?: string;
+
+          /**
+           * Primary object ID used to retrieve related events.
+           */
+          object_id?: string;
+
+          /**
+           * An array of up to 20 strings containing specific event names.
+           */
+          types?: Array<string>;
         }
       }
 
@@ -42,9 +67,10 @@ declare module 'stripe' {
            * List events, going back up to 30 days.
            */
           list(
-            params: EventListParams,
+            params?: EventListParams,
             options?: RequestOptions
           ): ApiListPromise<Stripe.V2.Core.Event>;
+          list(options?: RequestOptions): ApiListPromise<Stripe.V2.Core.Event>;
         }
       }
     }

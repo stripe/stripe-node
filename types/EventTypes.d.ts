@@ -13,6 +13,7 @@ declare module 'stripe' {
       | ApplicationFeeRefundUpdatedEvent
       | ApplicationFeeRefundedEvent
       | BalanceAvailableEvent
+      | BalanceSettingsUpdatedEvent
       | BillingAlertTriggeredEvent
       | BillingCreditBalanceTransactionCreatedEvent
       | BillingCreditGrantCreatedEvent
@@ -102,6 +103,7 @@ declare module 'stripe' {
       | InvoiceOverpaidEvent
       | InvoicePaidEvent
       | InvoicePaymentActionRequiredEvent
+      | InvoicePaymentAttemptRequiredEvent
       | InvoicePaymentFailedEvent
       | InvoicePaymentSucceededEvent
       | InvoiceSentEvent
@@ -412,6 +414,22 @@ declare module 'stripe' {
         object: Stripe.Balance;
 
         previous_attributes?: Partial<Stripe.Balance>;
+      }
+    }
+
+    /**
+     * Occurs whenever a balance settings status or property has changed.
+     */
+    interface BalanceSettingsUpdatedEvent extends EventBase {
+      type: 'balance_settings.updated';
+      data: BalanceSettingsUpdatedEvent.Data;
+    }
+
+    namespace BalanceSettingsUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.BalanceSettings;
+
+        previous_attributes?: Partial<Stripe.BalanceSettings>;
       }
     }
 
@@ -1838,6 +1856,22 @@ declare module 'stripe' {
     }
 
     namespace InvoicePaymentActionRequiredEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.Invoice;
+
+        previous_attributes?: Partial<Stripe.Invoice>;
+      }
+    }
+
+    /**
+     * Occurs when an invoice requires a payment using a payment method that cannot be processed by Stripe.
+     */
+    interface InvoicePaymentAttemptRequiredEvent extends EventBase {
+      type: 'invoice.payment_attempt_required';
+      data: InvoicePaymentAttemptRequiredEvent.Data;
+    }
+
+    namespace InvoicePaymentAttemptRequiredEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.Invoice;
 

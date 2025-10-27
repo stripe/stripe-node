@@ -730,6 +730,11 @@ declare module 'stripe' {
         registration_date?: Company.RegistrationDate;
 
         /**
+         * This hash is used to attest that the representative is authorized to act as the representative of their legal entity.
+         */
+        representative_declaration?: Company.RepresentativeDeclaration | null;
+
+        /**
          * The category identifying the legal structure of the company or legal entity. Also available for accounts where [controller.requirement_collection](https://docs.stripe.com/api/accounts/object#account_object-controller-requirement_collection) is `stripe`. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details.
          */
         structure?: Company.Structure;
@@ -883,6 +888,23 @@ declare module 'stripe' {
            * The four-digit year of registration.
            */
           year: number | null;
+        }
+
+        interface RepresentativeDeclaration {
+          /**
+           * The Unix timestamp marking when the representative declaration attestation was made.
+           */
+          date: number | null;
+
+          /**
+           * The IP address from which the representative declaration attestation was made.
+           */
+          ip: string | null;
+
+          /**
+           * The user-agent string from the browser where the representative declaration attestation was made.
+           */
+          user_agent: string | null;
         }
 
         type Structure =

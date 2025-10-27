@@ -157,7 +157,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.FinancialConnections.Account>>;
 
         /**
-         * Subscribes to periodic refreshes of data associated with a Financial Connections Account.
+         * Subscribes to periodic refreshes of data associated with a Financial Connections Account. When the account status is active, data is typically refreshed once a day.
          */
         subscribe(
           id: string,

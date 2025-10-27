@@ -37,6 +37,11 @@ export const PaymentIntents = StripeResource.extend({
     method: 'POST',
     fullPath: '/v1/payment_intents/{intent}/increment_authorization',
   }),
+  listAmountDetailsLineItems: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/payment_intents/{intent}/amount_details_line_items',
+    methodType: 'list',
+  }),
   search: stripeMethod({
     method: 'GET',
     fullPath: '/v1/payment_intents/search',
