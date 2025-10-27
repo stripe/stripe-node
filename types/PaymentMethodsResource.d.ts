@@ -89,6 +89,11 @@ declare module 'stripe' {
       crypto?: PaymentMethodCreateParams.Crypto;
 
       /**
+       * If this is a `custom` PaymentMethod, this hash contains details about the Custom payment method.
+       */
+      custom?: PaymentMethodCreateParams.Custom;
+
+      /**
        * The `Customer` to whom the original PaymentMethod is attached.
        */
       customer?: string;
@@ -477,6 +482,13 @@ declare module 'stripe' {
 
       interface Crypto {}
 
+      interface Custom {
+        /**
+         * ID of the Dashboard-only CustomPaymentMethodType. This field is used by Stripe products' internal code to support CPMs.
+         */
+        type: string;
+      }
+
       interface CustomerBalance {}
 
       interface Eps {
@@ -852,6 +864,7 @@ declare module 'stripe' {
         | 'card'
         | 'cashapp'
         | 'crypto'
+        | 'custom'
         | 'customer_balance'
         | 'eps'
         | 'fpx'
@@ -1085,7 +1098,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * An optional filter on the list, based on the object `type` field. Without the filter, the list includes all current and future payment method types. If your integration expects only one type of payment method in the response, make sure to provide a type value in the request.
+       * Filters the list by the object `type` field. Unfiltered, the list returns all payment method types except `custom`. If your integration expects only one type of payment method in the response, specify that type value in the request to reduce your payload.
        */
       type?: PaymentMethodListParams.Type;
     }
@@ -1107,6 +1120,7 @@ declare module 'stripe' {
         | 'card'
         | 'cashapp'
         | 'crypto'
+        | 'custom'
         | 'customer_balance'
         | 'eps'
         | 'fpx'

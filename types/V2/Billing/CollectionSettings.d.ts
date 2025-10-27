@@ -80,7 +80,7 @@ declare module 'stripe' {
 
           interface EmailDelivery {
             /**
-             * Controls emails for when the payment is due. For example after the invoice is finilized and transition to Open state.
+             * Controls emails for when the payment is due. For example after the invoice is finalized and transitions to Open state.
              */
             payment_due?: EmailDelivery.PaymentDue;
           }
@@ -93,7 +93,7 @@ declare module 'stripe' {
               enabled: boolean;
 
               /**
-               * If true the payment link to hosted invocie page would be included in email and PDF of the invoice.
+               * If true the payment link to hosted invoice page would be included in email and PDF of the invoice.
                */
               include_payment_link: boolean;
             }

@@ -58,10 +58,56 @@ declare module 'stripe' {
              * The ACH routing number of the bank account.
              */
             routing_number?: string;
+
+            /**
+             * The bank account verification details.
+             */
+            verification: UsBankAccount.Verification;
           }
 
           namespace UsBankAccount {
             type BankAccountType = 'checking' | 'savings';
+
+            interface Verification {
+              /**
+               * The microdeposit verification details if the status is awaiting verification.
+               */
+              microdeposit_verification_details?: Verification.MicrodepositVerificationDetails;
+
+              /**
+               * The bank account verification status.
+               */
+              status: Verification.Status;
+            }
+
+            namespace Verification {
+              interface MicrodepositVerificationDetails {
+                /**
+                 * Time when microdeposits will expire and have to be re-sent.
+                 */
+                expires: string;
+
+                /**
+                 * Microdeposit type can be amounts or descriptor_type.
+                 */
+                microdeposit_type: MicrodepositVerificationDetails.MicrodepositType;
+
+                /**
+                 * Time when microdeposits were sent.
+                 */
+                sent: string;
+              }
+
+              namespace MicrodepositVerificationDetails {
+                type MicrodepositType = 'amounts' | 'descriptor_code';
+              }
+
+              type Status =
+                | 'awaiting_verification'
+                | 'unverified'
+                | 'verification_failed'
+                | 'verified';
+            }
           }
         }
       }

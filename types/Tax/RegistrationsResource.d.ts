@@ -478,6 +478,11 @@ declare module 'stripe' {
           tr?: CountryOptions.Tr;
 
           /**
+           * Options for the registration in TW.
+           */
+          tw?: CountryOptions.Tw;
+
+          /**
            * Options for the registration in TZ.
            */
           tz?: CountryOptions.Tz;
@@ -2269,6 +2274,13 @@ declare module 'stripe' {
           }
 
           interface Tr {
+            /**
+             * Type of registration to be created in `country`.
+             */
+            type: 'simplified';
+          }
+
+          interface Tw {
             /**
              * Type of registration to be created in `country`.
              */

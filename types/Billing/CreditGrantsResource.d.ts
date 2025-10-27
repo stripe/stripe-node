@@ -15,9 +15,9 @@ declare module 'stripe' {
         applicability_config: CreditGrantCreateParams.ApplicabilityConfig;
 
         /**
-         * The category of this credit grant.
+         * The category of this credit grant. It defaults to `paid` if not specified.
          */
-        category: CreditGrantCreateParams.Category;
+        category?: CreditGrantCreateParams.Category;
 
         /**
          * ID of the customer to receive the billing credits.

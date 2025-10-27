@@ -65,6 +65,17 @@ declare module 'stripe' {
 
       namespace Core {
         namespace Vault {
+          interface GbBankAccountListParams {
+            /**
+             * Optionally set the maximum number of results per page. Defaults to 10.
+             */
+            limit?: number;
+          }
+        }
+      }
+
+      namespace Core {
+        namespace Vault {
           interface GbBankAccountAcknowledgeConfirmationOfPayeeParams {}
         }
       }
@@ -118,6 +129,17 @@ declare module 'stripe' {
               id: string,
               options?: RequestOptions
             ): Promise<Stripe.Response<Stripe.V2.Core.Vault.GbBankAccount>>;
+
+            /**
+             * List objects that can be used as destinations for outbound money movement via OutboundPayment.
+             */
+            list(
+              params?: GbBankAccountListParams,
+              options?: RequestOptions
+            ): ApiListPromise<Stripe.V2.Core.Vault.GbBankAccount>;
+            list(
+              options?: RequestOptions
+            ): ApiListPromise<Stripe.V2.Core.Vault.GbBankAccount>;
 
             /**
              * Confirm that you have received the result of the Confirmation of Payee request, and that you are okay with
