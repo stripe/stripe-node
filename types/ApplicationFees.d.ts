@@ -98,15 +98,10 @@ declare module 'stripe' {
          * Type of object that created the application fee.
          */
         type: FeeSource.Type;
-
-        /**
-         * Transfer ID that created this application fee.
-         */
-        transfer?: string;
       }
 
       namespace FeeSource {
-        type Type = 'charge' | 'payout' | 'transfer';
+        type Type = 'charge' | 'payout';
       }
     }
   }

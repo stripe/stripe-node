@@ -44,8 +44,6 @@ declare module 'stripe' {
       pending: Array<Balance.Pending>;
 
       refund_and_dispute_prefunding?: Balance.RefundAndDisputePrefunding;
-
-      transit_balances_total?: Balance.TransitBalancesTotal;
     }
 
     namespace Balance {
@@ -274,86 +272,6 @@ declare module 'stripe' {
       }
 
       namespace RefundAndDisputePrefunding {
-        interface Available {
-          /**
-           * Balance amount.
-           */
-          amount: number;
-
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency: string;
-
-          source_types?: Available.SourceTypes;
-        }
-
-        namespace Available {
-          interface SourceTypes {
-            /**
-             * Amount coming from [legacy US ACH payments](https://docs.stripe.com/ach-deprecated).
-             */
-            bank_account?: number;
-
-            /**
-             * Amount coming from most payment methods, including cards as well as [non-legacy bank debits](https://docs.stripe.com/payments/bank-debits).
-             */
-            card?: number;
-
-            /**
-             * Amount coming from [FPX](https://docs.stripe.com/payments/fpx), a Malaysian payment method.
-             */
-            fpx?: number;
-          }
-        }
-
-        interface Pending {
-          /**
-           * Balance amount.
-           */
-          amount: number;
-
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency: string;
-
-          source_types?: Pending.SourceTypes;
-        }
-
-        namespace Pending {
-          interface SourceTypes {
-            /**
-             * Amount coming from [legacy US ACH payments](https://docs.stripe.com/ach-deprecated).
-             */
-            bank_account?: number;
-
-            /**
-             * Amount coming from most payment methods, including cards as well as [non-legacy bank debits](https://docs.stripe.com/payments/bank-debits).
-             */
-            card?: number;
-
-            /**
-             * Amount coming from [FPX](https://docs.stripe.com/payments/fpx), a Malaysian payment method.
-             */
-            fpx?: number;
-          }
-        }
-      }
-
-      interface TransitBalancesTotal {
-        /**
-         * Funds that are available for use.
-         */
-        available: Array<TransitBalancesTotal.Available>;
-
-        /**
-         * Funds that are pending
-         */
-        pending: Array<TransitBalancesTotal.Pending>;
-      }
-
-      namespace TransitBalancesTotal {
         interface Available {
           /**
            * Balance amount.

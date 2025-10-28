@@ -18,8 +18,6 @@ declare module 'stripe' {
        */
       amount?: number;
 
-      application_fee_amount?: number;
-
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */

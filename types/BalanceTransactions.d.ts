@@ -94,8 +94,7 @@ declare module 'stripe' {
       type BalanceType =
         | 'issuing'
         | 'payments'
-        | 'refund_and_dispute_prefunding'
-        | 'transit';
+        | 'refund_and_dispute_prefunding';
 
       interface FeeDetail {
         /**
