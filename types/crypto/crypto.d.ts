@@ -20,7 +20,7 @@ declare module 'stripe' {
       computeHMACSignature: (payload: string, secret: string) => string;
 
       /**
-       * Asynchrnously computes a SHA-256 HMAC with a given secret and a payload
+       * Asynchronously computes a SHA-256 HMAC with a given secret and a payload
        * (encoded in UTF-8). The output HMAC should be encoded in hexadecimal
        * and respect the contract of computeHMACSignature.
        */
