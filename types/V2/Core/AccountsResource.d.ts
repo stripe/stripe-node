@@ -4068,6 +4068,11 @@ declare module 'stripe' {
                 account?: TermsOfService.Account;
 
                 /**
+                 * Details on the Account's acceptance of Crypto-storer-specific terms of service.
+                 */
+                crypto_storer?: TermsOfService.CryptoStorer;
+
+                /**
                  * Details on the Account's acceptance of Treasury-specific terms of service.
                  */
                 storer?: TermsOfService.Storer;
@@ -4075,6 +4080,23 @@ declare module 'stripe' {
 
               namespace TermsOfService {
                 interface Account {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
+                interface CryptoStorer {
                   /**
                    * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                    */
