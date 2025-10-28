@@ -82,7 +82,7 @@ describe('RequestSender', () => {
       expect(headers).to.not.include.keys('Stripe-Context');
     });
     describe('idempotency keys', () => {
-      it('only creates creates an idempotency key if a v1 request wil retry', () => {
+      it('only creates creates an idempotency key if a v1 request will retry', () => {
         const headers = sender._makeHeaders({
           method: 'POST',
           userSuppliedSettings: {maxNetworkRetries: 3},
@@ -91,7 +91,7 @@ describe('RequestSender', () => {
         expect(headers['Idempotency-Key']).matches(/^stripe-node-retry/);
       });
       // should probably always create an IK; until then, codify the behavior
-      it("skips idempotency genration for v1 reqeust if we're not retrying the request", () => {
+      it("skips idempotency generation for v1 request if we're not retrying the request", () => {
         const headers = sender._makeHeaders({
           method: 'POST',
           userSuppliedSettings: {maxNetworkRetries: 0},
@@ -172,7 +172,7 @@ describe('RequestSender', () => {
 
     describe('_request', () => {
       // eslint-disable-next-line no-warning-comments
-      // TODO(xavdid): re-add this test with a different enpoint that verifies the same thing
+      // TODO(xavdid): re-add this test with a different endpoint that verifies the same thing
       // it('encodes data for GET requests as query params', (done) => {
       //   const data = {
       //     customer: 'cus_123',
@@ -1007,7 +1007,7 @@ describe('RequestSender', () => {
         });
       });
 
-      it('should retry when a header says it should, even on status codes we ordinarily wouldnt', (done) => {
+      it("should retry when a header says it should, even on status codes we ordinarily wouldn't", (done) => {
         nock(`https://${options.host}`)
           .post(options.path, options.params)
           .reply(
