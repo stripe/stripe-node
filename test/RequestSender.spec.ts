@@ -1007,7 +1007,7 @@ describe('RequestSender', () => {
         });
       });
 
-      it('should retry when a header says it should, even on status codes we ordinarily wouldn't, (done) => {
+      it("should retry when a header says it should, even on status codes we ordinarily wouldn't", (done) => {
         nock(`https://${options.host}`)
           .post(options.path, options.params)
           .reply(
