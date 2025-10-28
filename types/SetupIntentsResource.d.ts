@@ -1644,7 +1644,7 @@ declare module 'stripe' {
             amount?: number;
 
             /**
-             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
              */
             amount_type?: MandateOptions.AmountType;
 
@@ -1654,7 +1654,7 @@ declare module 'stripe' {
             end_date?: string;
 
             /**
-             * The periodicity at which payments will be collected. Defaults to `adhoc`.
+             * The periodicity at which payments will be collected.
              */
             payment_schedule?: MandateOptions.PaymentSchedule;
 
@@ -1664,7 +1664,7 @@ declare module 'stripe' {
             payments_per_period?: number;
 
             /**
-             * The purpose for which payments are made. Has a default value based on your merchant category code.
+             * The purpose for which payments are made. Defaults to retail.
              */
             purpose?: MandateOptions.Purpose;
 
@@ -3448,7 +3448,7 @@ declare module 'stripe' {
             amount?: number;
 
             /**
-             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
              */
             amount_type?: MandateOptions.AmountType;
 
@@ -3458,7 +3458,7 @@ declare module 'stripe' {
             end_date?: string;
 
             /**
-             * The periodicity at which payments will be collected. Defaults to `adhoc`.
+             * The periodicity at which payments will be collected.
              */
             payment_schedule?: MandateOptions.PaymentSchedule;
 
@@ -3468,7 +3468,7 @@ declare module 'stripe' {
             payments_per_period?: number;
 
             /**
-             * The purpose for which payments are made. Has a default value based on your merchant category code.
+             * The purpose for which payments are made. Defaults to retail.
              */
             purpose?: MandateOptions.Purpose;
 
@@ -5234,7 +5234,7 @@ declare module 'stripe' {
             amount?: number;
 
             /**
-             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
              */
             amount_type?: MandateOptions.AmountType;
 
@@ -5244,7 +5244,7 @@ declare module 'stripe' {
             end_date?: string;
 
             /**
-             * The periodicity at which payments will be collected. Defaults to `adhoc`.
+             * The periodicity at which payments will be collected.
              */
             payment_schedule?: MandateOptions.PaymentSchedule;
 
@@ -5254,7 +5254,7 @@ declare module 'stripe' {
             payments_per_period?: number;
 
             /**
-             * The purpose for which payments are made. Has a default value based on your merchant category code.
+             * The purpose for which payments are made. Defaults to retail.
              */
             purpose?: MandateOptions.Purpose;
 

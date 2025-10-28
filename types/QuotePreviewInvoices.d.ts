@@ -131,7 +131,7 @@ declare module 'stripe' {
        * * `subscription_cycle`: A subscription advanced into a new period.
        * * `subscription_threshold`: A subscription reached a billing threshold.
        * * `subscription_update`: A subscription was updated.
-       * * `upcoming`: Reserved for upcoming invoices created through the Create Preview Invoice API or when an `invoice.upcoming` event is generated for an upcoming invoice on a subscription.
+       * * `upcoming`: Reserved for simulated invoices, per the upcoming invoice endpoint.
        */
       billing_reason: QuotePreviewInvoice.BillingReason | null;
 
