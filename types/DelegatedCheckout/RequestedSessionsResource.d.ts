@@ -50,11 +50,6 @@ declare module 'stripe' {
         payment_method_data?: RequestedSessionCreateParams.PaymentMethodData;
 
         /**
-         * The risk details for this requested session.
-         */
-        risk_details?: RequestedSessionCreateParams.RiskDetails;
-
-        /**
          * The setup future usage for this requested session.
          */
         setup_future_usage?: 'on_session';
@@ -227,42 +222,6 @@ declare module 'stripe' {
              * The number of the card.
              */
             number: string;
-          }
-        }
-
-        interface RiskDetails {
-          /**
-           * The client device metadata details for this requested session.
-           */
-          client_device_metadata_details?: RiskDetails.ClientDeviceMetadataDetails;
-        }
-
-        namespace RiskDetails {
-          interface ClientDeviceMetadataDetails {
-            /**
-             * The radar session.
-             */
-            radar_session?: string;
-
-            /**
-             * The referrer of the client device.
-             */
-            referrer?: string;
-
-            /**
-             * The remote IP address of the client device.
-             */
-            remote_ip?: string;
-
-            /**
-             * The time on page in seconds.
-             */
-            time_on_page?: number;
-
-            /**
-             * The user agent of the client device.
-             */
-            user_agent?: string;
           }
         }
 
@@ -520,6 +479,49 @@ declare module 'stripe' {
          * The PaymentMethod to use with the requested session.
          */
         payment_method?: string;
+
+        /**
+         * Risk details/signals associated with the requested session
+         */
+        risk_details?: RequestedSessionConfirmParams.RiskDetails;
+      }
+
+      namespace RequestedSessionConfirmParams {
+        interface RiskDetails {
+          /**
+           * The client device metadata details for this requested session.
+           */
+          client_device_metadata_details?: RiskDetails.ClientDeviceMetadataDetails;
+        }
+
+        namespace RiskDetails {
+          interface ClientDeviceMetadataDetails {
+            /**
+             * The radar session.
+             */
+            radar_session?: string;
+
+            /**
+             * The referrer of the client device.
+             */
+            referrer?: string;
+
+            /**
+             * The remote IP address of the client device.
+             */
+            remote_ip?: string;
+
+            /**
+             * The time on page in milliseconds.
+             */
+            time_on_page_ms?: number;
+
+            /**
+             * The user agent of the client device.
+             */
+            user_agent?: string;
+          }
+        }
       }
 
       interface RequestedSessionExpireParams {

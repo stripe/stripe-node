@@ -68,7 +68,7 @@ declare module 'stripe' {
 
           interface InteracPresent {
             /**
-             * Card Number
+             * The Interac card number.
              */
             number?: string;
           }

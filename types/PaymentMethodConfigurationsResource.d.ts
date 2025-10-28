@@ -89,6 +89,11 @@ declare module 'stripe' {
       cashapp?: PaymentMethodConfigurationCreateParams.Cashapp;
 
       /**
+       * [Stablecoin payments](https://stripe.com/docs/payments/stablecoin-payments) enable customers to pay in stablecoins like USDC from 100s of wallets including Phantom and Metamask.
+       */
+      crypto?: PaymentMethodConfigurationCreateParams.Crypto;
+
+      /**
        * Uses a customer's [cash balance](https://stripe.com/docs/payments/customer-balance) for the payment. The cash balance can be funded via a bank transfer. Check this [page](https://stripe.com/docs/payments/bank-transfers) for more details.
        */
       customer_balance?: PaymentMethodConfigurationCreateParams.CustomerBalance;
@@ -172,6 +177,11 @@ declare module 'stripe' {
        * [Link](https://stripe.com/docs/payments/link) is a payment method network. With Link, users save their payment details once, then reuse that information to pay with one click for any business on the network.
        */
       link?: PaymentMethodConfigurationCreateParams.Link;
+
+      /**
+       * MB WAY is the most popular wallet in Portugal. After entering their phone number in your checkout, customers approve the payment directly in their MB WAY app. Check this [page](https://stripe.com/docs/payments/mb-way) for more details.
+       */
+      mb_way?: PaymentMethodConfigurationCreateParams.MbWay;
 
       /**
        * MobilePay is a [single-use](https://stripe.com/docs/payments/payment-methods#usage) card wallet payment method used in Denmark and Finland. It allows customers to [authenticate and approve](https://stripe.com/docs/payments/payment-methods#customer-actions) payments using the MobilePay app. Check this [page](https://stripe.com/docs/payments/mobilepay) for more details.
@@ -655,6 +665,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Crypto {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Crypto.DisplayPreference;
+      }
+
+      namespace Crypto {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface CustomerBalance {
         /**
          * Whether or not the payment method should be displayed.
@@ -963,6 +993,26 @@ declare module 'stripe' {
       }
 
       namespace Link {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface MbWay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: MbWay.DisplayPreference;
+      }
+
+      namespace MbWay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
@@ -1595,6 +1645,11 @@ declare module 'stripe' {
       cashapp?: PaymentMethodConfigurationUpdateParams.Cashapp;
 
       /**
+       * [Stablecoin payments](https://stripe.com/docs/payments/stablecoin-payments) enable customers to pay in stablecoins like USDC from 100s of wallets including Phantom and Metamask.
+       */
+      crypto?: PaymentMethodConfigurationUpdateParams.Crypto;
+
+      /**
        * Uses a customer's [cash balance](https://stripe.com/docs/payments/customer-balance) for the payment. The cash balance can be funded via a bank transfer. Check this [page](https://stripe.com/docs/payments/bank-transfers) for more details.
        */
       customer_balance?: PaymentMethodConfigurationUpdateParams.CustomerBalance;
@@ -1678,6 +1733,11 @@ declare module 'stripe' {
        * [Link](https://stripe.com/docs/payments/link) is a payment method network. With Link, users save their payment details once, then reuse that information to pay with one click for any business on the network.
        */
       link?: PaymentMethodConfigurationUpdateParams.Link;
+
+      /**
+       * MB WAY is the most popular wallet in Portugal. After entering their phone number in your checkout, customers approve the payment directly in their MB WAY app. Check this [page](https://stripe.com/docs/payments/mb-way) for more details.
+       */
+      mb_way?: PaymentMethodConfigurationUpdateParams.MbWay;
 
       /**
        * MobilePay is a [single-use](https://stripe.com/docs/payments/payment-methods#usage) card wallet payment method used in Denmark and Finland. It allows customers to [authenticate and approve](https://stripe.com/docs/payments/payment-methods#customer-actions) payments using the MobilePay app. Check this [page](https://stripe.com/docs/payments/mobilepay) for more details.
@@ -2156,6 +2216,26 @@ declare module 'stripe' {
         }
       }
 
+      interface Crypto {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: Crypto.DisplayPreference;
+      }
+
+      namespace Crypto {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
       interface CustomerBalance {
         /**
          * Whether or not the payment method should be displayed.
@@ -2464,6 +2544,26 @@ declare module 'stripe' {
       }
 
       namespace Link {
+        interface DisplayPreference {
+          /**
+           * The account's preference for whether or not to display this payment method.
+           */
+          preference?: DisplayPreference.Preference;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+        }
+      }
+
+      interface MbWay {
+        /**
+         * Whether or not the payment method should be displayed.
+         */
+        display_preference?: MbWay.DisplayPreference;
+      }
+
+      namespace MbWay {
         interface DisplayPreference {
           /**
            * The account's preference for whether or not to display this payment method.
