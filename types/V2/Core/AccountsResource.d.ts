@@ -1143,6 +1143,56 @@ declare module 'stripe' {
                * Capabilities to request on the Storer Configuration.
                */
               capabilities?: Storer.Capabilities;
+
+              /**
+               * List of high-risk activities the business is involved in.
+               */
+              high_risk_activities?: Array<Storer.HighRiskActivity>;
+
+              /**
+               * An explanation of the high risk activities that the business performs.
+               */
+              high_risk_activities_description?: string;
+
+              /**
+               * Description of the money services offered by the business.
+               */
+              money_services_description?: string;
+
+              /**
+               * Does the business operate in any prohibited countries.
+               */
+              operates_in_prohibited_countries?: boolean;
+
+              /**
+               * Does the business participate in any regulated activity.
+               */
+              participates_in_regulated_activity?: boolean;
+
+              /**
+               * Primary purpose of the stored funds.
+               */
+              purpose_of_funds?: Storer.PurposeOfFunds;
+
+              /**
+               * Description of the purpose of the stored funds.
+               */
+              purpose_of_funds_description?: string;
+
+              /**
+               * Details of the regulated activity if the business participates in one.
+               */
+              regulated_activity?: Storer.RegulatedActivity;
+
+              /**
+               * The source of funds for the business, e.g. profits, income, venture capital, etc.
+               */
+              source_of_funds?: Storer.SourceOfFunds;
+
+              /**
+               * Description of the source of funds for the business' account.
+               */
+              source_of_funds_description?: string;
             }
 
             namespace Storer {
@@ -1179,10 +1229,22 @@ declare module 'stripe' {
                    * Can provision a bank-account-like financial address (VBAN) to credit/debit a FinancialAccount.
                    */
                   bank_accounts?: FinancialAddresses.BankAccounts;
+
+                  /**
+                   * Can provision a crypto wallet like financial address to credit a FinancialAccount.
+                   */
+                  crypto_wallets?: FinancialAddresses.CryptoWallets;
                 }
 
                 namespace FinancialAddresses {
                   interface BankAccounts {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  interface CryptoWallets {
                     /**
                      * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                      */
@@ -1200,6 +1262,11 @@ declare module 'stripe' {
                    * Can hold storage-type funds on Stripe in USD.
                    */
                   usd?: HoldsCurrencies.Usd;
+
+                  /**
+                   * Can hold storage-type funds on Stripe in USDC.
+                   */
+                  usdc?: HoldsCurrencies.Usdc;
                 }
 
                 namespace HoldsCurrencies {
@@ -1211,6 +1278,13 @@ declare module 'stripe' {
                   }
 
                   interface Usd {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  interface Usdc {
                     /**
                      * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                      */
@@ -1246,6 +1320,11 @@ declare module 'stripe' {
                   cards?: OutboundPayments.Cards;
 
                   /**
+                   * Can send funds from a FinancialAccount to a crypto wallet owned by someone else.
+                   */
+                  crypto_wallets?: OutboundPayments.CryptoWallets;
+
+                  /**
                    * Can send funds from a FinancialAccount to another FinancialAccount owned by someone else.
                    */
                   financial_accounts?: OutboundPayments.FinancialAccounts;
@@ -1260,6 +1339,13 @@ declare module 'stripe' {
                   }
 
                   interface Cards {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  interface CryptoWallets {
                     /**
                      * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                      */
@@ -1281,6 +1367,11 @@ declare module 'stripe' {
                   bank_accounts?: OutboundTransfers.BankAccounts;
 
                   /**
+                   * Can send funds from a FinancialAccount to a crypto wallet owned by yourself.
+                   */
+                  crypto_wallets?: OutboundTransfers.CryptoWallets;
+
+                  /**
                    * Can send funds from a FinancialAccount to another FinancialAccount owned by yourself.
                    */
                   financial_accounts?: OutboundTransfers.FinancialAccounts;
@@ -1288,6 +1379,13 @@ declare module 'stripe' {
 
                 namespace OutboundTransfers {
                   interface BankAccounts {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
+                  interface CryptoWallets {
                     /**
                      * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                      */
@@ -1302,6 +1400,74 @@ declare module 'stripe' {
                   }
                 }
               }
+
+              type HighRiskActivity =
+                | 'adult_entertainment'
+                | 'gambling'
+                | 'hold_client_funds'
+                | 'investment_services'
+                | 'lending_banking'
+                | 'marijuana_or_related_services'
+                | 'money_services'
+                | 'nicotine_tobacco_or_related_services'
+                | 'none'
+                | 'operate_foreign_exchange_virtual_currencies_brokerage_otc'
+                | 'pharmaceuticals'
+                | 'precious_metals_precious_stones_jewelry'
+                | 'safe_deposit_box_rentals'
+                | 'third_party_payment_processing'
+                | 'weapons_firearms_and_explosives';
+
+              type PurposeOfFunds =
+                | 'charitable_donations'
+                | 'ecommerce_retail_payments'
+                | 'investment_purposes'
+                | 'other'
+                | 'payments_to_friends_or_family_abroad'
+                | 'payroll'
+                | 'personal_or_living_expenses'
+                | 'protect_wealth'
+                | 'purchase_goods_and_services'
+                | 'receive_payments_for_goods_and_services'
+                | 'tax_optimization'
+                | 'third_party_money_transmission'
+                | 'treasury_management';
+
+              interface RegulatedActivity {
+                /**
+                 * A detailed description of the regulated activities the business is licensed to conduct.
+                 */
+                description?: string;
+
+                /**
+                 * The license number or registration number assigned by the business's primary regulator.
+                 */
+                license_number?: string;
+
+                /**
+                 * The country of the primary regulatory authority that oversees the business's regulated activities.
+                 */
+                primary_regulatory_authority_country?: string;
+
+                /**
+                 * The name of the primary regulatory authority that oversees the business's regulated activities.
+                 */
+                primary_regulatory_authority_name?: string;
+              }
+
+              type SourceOfFunds =
+                | 'business_loans'
+                | 'grants'
+                | 'inter_company_funds'
+                | 'investment_proceeds'
+                | 'legal_settlement'
+                | 'owners_capital'
+                | 'pension_retirement'
+                | 'sales_of_assets'
+                | 'sales_of_goods_and_services'
+                | 'tax_refund'
+                | 'third_party_funds'
+                | 'treasury_reserves';
             }
           }
 
@@ -1601,6 +1767,11 @@ declare module 'stripe' {
                  * Details on the Account's acceptance of Issuing-specific terms of service.
                  */
                 card_creator?: TermsOfService.CardCreator;
+
+                /**
+                 * Details on the Account's acceptance of Crypto-storer-specific terms of service.
+                 */
+                crypto_storer?: TermsOfService.CryptoStorer;
 
                 /**
                  * Details on the Account's acceptance of Treasury-specific terms of service.
@@ -1979,6 +2150,23 @@ declare module 'stripe' {
                   }
                 }
 
+                interface CryptoStorer {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
                 interface Storer {
                   /**
                    * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
@@ -2008,6 +2196,11 @@ declare module 'stripe' {
                * The business gross annual revenue for its preceding fiscal year.
                */
               annual_revenue?: BusinessDetails.AnnualRevenue;
+
+              /**
+               * A detailed description of the business's compliance and anti-money laundering controls and practices.
+               */
+              compliance_screening_description?: string;
 
               /**
                * A document verifying the business.
@@ -4254,6 +4447,56 @@ declare module 'stripe' {
                * Capabilities to request on the Storer Configuration.
                */
               capabilities?: Storer.Capabilities;
+
+              /**
+               * List of high-risk activities the business is involved in.
+               */
+              high_risk_activities?: Array<Storer.HighRiskActivity>;
+
+              /**
+               * An explanation of the high risk activities that the business performs.
+               */
+              high_risk_activities_description?: string;
+
+              /**
+               * Description of the money services offered by the business.
+               */
+              money_services_description?: string;
+
+              /**
+               * Does the business operate in any prohibited countries.
+               */
+              operates_in_prohibited_countries?: boolean;
+
+              /**
+               * Does the business participate in any regulated activity.
+               */
+              participates_in_regulated_activity?: boolean;
+
+              /**
+               * Primary purpose of the stored funds.
+               */
+              purpose_of_funds?: Storer.PurposeOfFunds;
+
+              /**
+               * Description of the purpose of the stored funds.
+               */
+              purpose_of_funds_description?: string;
+
+              /**
+               * Details of the regulated activity if the business participates in one.
+               */
+              regulated_activity?: Storer.RegulatedActivity;
+
+              /**
+               * The source of funds for the business, e.g. profits, income, venture capital, etc.
+               */
+              source_of_funds?: Storer.SourceOfFunds;
+
+              /**
+               * Description of the source of funds for the business' account.
+               */
+              source_of_funds_description?: string;
             }
 
             namespace Storer {
@@ -4290,10 +4533,22 @@ declare module 'stripe' {
                    * Can provision a bank-account-like financial address (VBAN) to credit/debit a FinancialAccount.
                    */
                   bank_accounts?: FinancialAddresses.BankAccounts;
+
+                  /**
+                   * Can provision a crypto wallet like financial address to credit a FinancialAccount.
+                   */
+                  crypto_wallets?: FinancialAddresses.CryptoWallets;
                 }
 
                 namespace FinancialAddresses {
                   interface BankAccounts {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  interface CryptoWallets {
                     /**
                      * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                      */
@@ -4311,6 +4566,11 @@ declare module 'stripe' {
                    * Can hold storage-type funds on Stripe in USD.
                    */
                   usd?: HoldsCurrencies.Usd;
+
+                  /**
+                   * Can hold storage-type funds on Stripe in USDC.
+                   */
+                  usdc?: HoldsCurrencies.Usdc;
                 }
 
                 namespace HoldsCurrencies {
@@ -4322,6 +4582,13 @@ declare module 'stripe' {
                   }
 
                   interface Usd {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  interface Usdc {
                     /**
                      * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                      */
@@ -4357,6 +4624,11 @@ declare module 'stripe' {
                   cards?: OutboundPayments.Cards;
 
                   /**
+                   * Can send funds from a FinancialAccount to a crypto wallet owned by someone else.
+                   */
+                  crypto_wallets?: OutboundPayments.CryptoWallets;
+
+                  /**
                    * Can send funds from a FinancialAccount to another FinancialAccount owned by someone else.
                    */
                   financial_accounts?: OutboundPayments.FinancialAccounts;
@@ -4371,6 +4643,13 @@ declare module 'stripe' {
                   }
 
                   interface Cards {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  interface CryptoWallets {
                     /**
                      * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                      */
@@ -4392,6 +4671,11 @@ declare module 'stripe' {
                   bank_accounts?: OutboundTransfers.BankAccounts;
 
                   /**
+                   * Can send funds from a FinancialAccount to a crypto wallet owned by yourself.
+                   */
+                  crypto_wallets?: OutboundTransfers.CryptoWallets;
+
+                  /**
                    * Can send funds from a FinancialAccount to another FinancialAccount owned by yourself.
                    */
                   financial_accounts?: OutboundTransfers.FinancialAccounts;
@@ -4399,6 +4683,13 @@ declare module 'stripe' {
 
                 namespace OutboundTransfers {
                   interface BankAccounts {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
+                  interface CryptoWallets {
                     /**
                      * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                      */
@@ -4413,6 +4704,74 @@ declare module 'stripe' {
                   }
                 }
               }
+
+              type HighRiskActivity =
+                | 'adult_entertainment'
+                | 'gambling'
+                | 'hold_client_funds'
+                | 'investment_services'
+                | 'lending_banking'
+                | 'marijuana_or_related_services'
+                | 'money_services'
+                | 'nicotine_tobacco_or_related_services'
+                | 'none'
+                | 'operate_foreign_exchange_virtual_currencies_brokerage_otc'
+                | 'pharmaceuticals'
+                | 'precious_metals_precious_stones_jewelry'
+                | 'safe_deposit_box_rentals'
+                | 'third_party_payment_processing'
+                | 'weapons_firearms_and_explosives';
+
+              type PurposeOfFunds =
+                | 'charitable_donations'
+                | 'ecommerce_retail_payments'
+                | 'investment_purposes'
+                | 'other'
+                | 'payments_to_friends_or_family_abroad'
+                | 'payroll'
+                | 'personal_or_living_expenses'
+                | 'protect_wealth'
+                | 'purchase_goods_and_services'
+                | 'receive_payments_for_goods_and_services'
+                | 'tax_optimization'
+                | 'third_party_money_transmission'
+                | 'treasury_management';
+
+              interface RegulatedActivity {
+                /**
+                 * A detailed description of the regulated activities the business is licensed to conduct.
+                 */
+                description?: string;
+
+                /**
+                 * The license number or registration number assigned by the business's primary regulator.
+                 */
+                license_number?: string;
+
+                /**
+                 * The country of the primary regulatory authority that oversees the business's regulated activities.
+                 */
+                primary_regulatory_authority_country?: string;
+
+                /**
+                 * The name of the primary regulatory authority that oversees the business's regulated activities.
+                 */
+                primary_regulatory_authority_name?: string;
+              }
+
+              type SourceOfFunds =
+                | 'business_loans'
+                | 'grants'
+                | 'inter_company_funds'
+                | 'investment_proceeds'
+                | 'legal_settlement'
+                | 'owners_capital'
+                | 'pension_retirement'
+                | 'sales_of_assets'
+                | 'sales_of_goods_and_services'
+                | 'tax_refund'
+                | 'third_party_funds'
+                | 'treasury_reserves';
             }
           }
 
@@ -4712,6 +5071,11 @@ declare module 'stripe' {
                  * Details on the Account's acceptance of Issuing-specific terms of service.
                  */
                 card_creator?: TermsOfService.CardCreator;
+
+                /**
+                 * Details on the Account's acceptance of Crypto-storer-specific terms of service.
+                 */
+                crypto_storer?: TermsOfService.CryptoStorer;
 
                 /**
                  * Details on the Account's acceptance of Treasury-specific terms of service.
@@ -5090,6 +5454,23 @@ declare module 'stripe' {
                   }
                 }
 
+                interface CryptoStorer {
+                  /**
+                   * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                   */
+                  date?: string;
+
+                  /**
+                   * The IP address from which the Account's representative accepted the terms of service.
+                   */
+                  ip?: string;
+
+                  /**
+                   * The user agent of the browser from which the Account's representative accepted the terms of service.
+                   */
+                  user_agent?: string;
+                }
+
                 interface Storer {
                   /**
                    * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
@@ -5119,6 +5500,11 @@ declare module 'stripe' {
                * The business gross annual revenue for its preceding fiscal year.
                */
               annual_revenue?: BusinessDetails.AnnualRevenue;
+
+              /**
+               * A detailed description of the business's compliance and anti-money laundering controls and practices.
+               */
+              compliance_screening_description?: string;
 
               /**
                * A document verifying the business.
