@@ -17,7 +17,9 @@ declare module 'stripe' {
       object: 'payment_intent_amount_details_line_item';
 
       /**
-       * The amount an item was discounted for. Positive integer.
+       * The discount applied on this line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+       *
+       * This field is mutually exclusive with the `amount_details[discount_amount]` field.
        */
       discount_amount: number | null;
 
@@ -27,17 +29,19 @@ declare module 'stripe' {
       payment_method_options: PaymentIntentAmountDetailsLineItem.PaymentMethodOptions | null;
 
       /**
-       * Unique identifier of the product. At most 12 characters long.
+       * The product code of the line item, such as an SKU. Required for L3 rates. At most 12 characters long.
        */
       product_code: string | null;
 
       /**
-       * Name of the product. At most 100 characters long.
+       * The product name of the line item. Required for L3 rates. At most 1024 characters long.
+       *
+       * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
        */
       product_name: string;
 
       /**
-       * Number of items of the product. Positive integer.
+       * The quantity of items. Required for L3 rates. An integer greater than 0.
        */
       quantity: number;
 
@@ -47,12 +51,12 @@ declare module 'stripe' {
       tax: PaymentIntentAmountDetailsLineItem.Tax | null;
 
       /**
-       * Cost of the product. Non-negative integer.
+       * The unit cost of the line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
        */
       unit_cost: number;
 
       /**
-       * A unit of measure for the line item, such as gallons, feet, meters, etc.
+       * A unit of measure for the line item, such as gallons, feet, meters, etc. Required for L3 rates. At most 12 alphanumeric characters long.
        */
       unit_of_measure: string | null;
     }
@@ -111,7 +115,9 @@ declare module 'stripe' {
 
       interface Tax {
         /**
-         * Total portion of the amount that is for tax.
+         * The total amount of tax on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
+         *
+         * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
          */
         total_tax_amount: number;
       }
