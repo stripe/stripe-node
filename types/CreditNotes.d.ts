@@ -238,7 +238,7 @@ declare module 'stripe' {
         /**
          * The PaymentRecord refund details associated with this credit note refund.
          */
-        payment_record_refund?: Refund.PaymentRecordRefund | null;
+        payment_record_refund: Refund.PaymentRecordRefund | null;
 
         /**
          * ID of the refund.
@@ -248,7 +248,7 @@ declare module 'stripe' {
         /**
          * Type of the refund, one of `refund` or `payment_record_refund`.
          */
-        type?: Refund.Type | null;
+        type: Refund.Type | null;
       }
 
       namespace Refund {

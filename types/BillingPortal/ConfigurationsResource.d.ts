@@ -122,6 +122,11 @@ declare module 'stripe' {
              * Whether the feature is enabled.
              */
             enabled: boolean;
+
+            /**
+             * The [Payment Method Configuration](https://docs.stripe.com/api/payment_method_configurations) to use for this portal session. When specified, customers will be able to update their payment method to one of the options specified by the payment method configuration. If not set or set to an empty string, the default payment method configuration is used.
+             */
+            payment_method_configuration?: Stripe.Emptyable<string>;
           }
 
           interface SubscriptionCancel {
@@ -420,6 +425,11 @@ declare module 'stripe' {
              * Whether the feature is enabled.
              */
             enabled: boolean;
+
+            /**
+             * The [Payment Method Configuration](https://docs.stripe.com/api/payment_method_configurations) to use for this portal session. When specified, customers will be able to update their payment method to one of the options specified by the payment method configuration. If not set or set to an empty string, the default payment method configuration is used.
+             */
+            payment_method_configuration?: Stripe.Emptyable<string>;
           }
 
           interface SubscriptionCancel {

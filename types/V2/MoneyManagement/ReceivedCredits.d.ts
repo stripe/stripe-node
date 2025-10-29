@@ -45,6 +45,11 @@ declare module 'stripe' {
           description?: string;
 
           /**
+           * The amount and currency of the original/external credit request.
+           */
+          external_amount?: Amount;
+
+          /**
            * Financial Account ID on which funds for ReceivedCredit were received.
            */
           financial_account: string;

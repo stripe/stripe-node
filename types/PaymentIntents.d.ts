@@ -27,6 +27,11 @@ declare module 'stripe' {
       object: 'payment_intent';
 
       /**
+       * Allocated Funds configuration for this PaymentIntent.
+       */
+      allocated_funds?: PaymentIntent.AllocatedFunds | null;
+
+      /**
        * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
        */
       amount: number;
@@ -262,6 +267,13 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntent {
+      interface AllocatedFunds {
+        /**
+         * Allocated Funds configuration for this PaymentIntent.
+         */
+        enabled: boolean | null;
+      }
+
       interface AmountDetails {
         /**
          * The total discount applied on the transaction.
@@ -648,6 +660,7 @@ declare module 'stripe' {
           | 'payment_intent_mandate_invalid'
           | 'payment_intent_payment_attempt_expired'
           | 'payment_intent_payment_attempt_failed'
+          | 'payment_intent_rate_limit_exceeded'
           | 'payment_intent_unexpected_state'
           | 'payment_method_bank_account_already_verified'
           | 'payment_method_bank_account_blocked'
@@ -1486,23 +1499,23 @@ declare module 'stripe' {
       }
 
       interface PaymentDetails {
+        benefit?: PaymentDetails.Benefit;
+
         car_rental?: PaymentDetails.CarRental;
 
         /**
          * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
          */
-        customer_reference?: string | null;
+        customer_reference: string | null;
 
         event_details?: PaymentDetails.EventDetails;
 
         /**
          * A unique value assigned by the business to identify the transaction.
          */
-        order_reference?: string | null;
+        order_reference: string | null;
 
         subscription?: PaymentDetails.Subscription;
-
-        benefit?: PaymentDetails.Benefit;
       }
 
       namespace PaymentDetails {

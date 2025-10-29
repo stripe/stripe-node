@@ -40,6 +40,11 @@ declare module 'stripe' {
           description?: string;
 
           /**
+           * The amount and currency of the original/external debit request.
+           */
+          external_amount?: Amount;
+
+          /**
            * Financial Account on which funds for ReceivedDebit were debited.
            */
           financial_account: string;

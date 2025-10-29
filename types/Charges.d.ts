@@ -868,6 +868,8 @@ declare module 'stripe' {
            */
           authorization_code: string | null;
 
+          benefits?: Card.Benefits;
+
           /**
            * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
            */
@@ -988,8 +990,6 @@ declare module 'stripe' {
            * If this Card is part of a card wallet, this contains the details of the card wallet.
            */
           wallet: Card.Wallet | null;
-
-          benefits?: Card.Benefits;
         }
 
         namespace Card {
@@ -1547,7 +1547,7 @@ declare module 'stripe' {
         }
 
         namespace Crypto {
-          type Network = 'base' | 'ethereum' | 'polygon';
+          type Network = 'base' | 'ethereum' | 'polygon' | 'solana';
 
           type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
         }
@@ -2368,7 +2368,12 @@ declare module 'stripe' {
 
         interface Qris {}
 
-        interface Rechnung {}
+        interface Rechnung {
+          /**
+           * Payment portal URL.
+           */
+          payment_portal_url: string | null;
+        }
 
         interface RevolutPay {
           funding?: RevolutPay.Funding;
