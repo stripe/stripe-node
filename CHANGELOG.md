@@ -1,5 +1,8 @@
 # Changelog
 ## 19.2.0 - 2025-10-29
+
+This release changes the pinned API version to `2025-10-29.clover`.
+
 * [#2477](https://github.com/stripe/stripe-node/pull/2477) Update generated code
   * Improve docs for PaymentIntent related endpoints
 * [#2469](https://github.com/stripe/stripe-node/pull/2469) Update generated code
