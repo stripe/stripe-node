@@ -35,6 +35,10 @@ declare module 'stripe' {
        */
       amount_reversed: number;
 
+      application_fee?: string | Stripe.ApplicationFee | null;
+
+      application_fee_amount?: number | null;
+
       /**
        * Balance transaction that describes the impact of this transfer on your account balance.
        */

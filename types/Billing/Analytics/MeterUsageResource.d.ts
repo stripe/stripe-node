@@ -66,6 +66,11 @@ declare module 'stripe' {
             tenant_filters?: {
               [key: string]: string;
             };
+
+            /**
+             * List of high cardinality tenant dimension keys to group by. If specified, usage events will be grouped by the given tenant dimension key's values.
+             */
+            tenant_group_by_keys?: Array<string>;
           }
 
           type Timezone =

@@ -41,6 +41,13 @@ declare module 'stripe' {
           starts_at: number;
 
           /**
+           * A set of key-value pairs representing the tenants of the meter usage.
+           */
+          tenants?: {
+            [key: string]: string;
+          } | null;
+
+          /**
            * The aggregated meter usage value for the specified bucket.
            */
           value: number;
