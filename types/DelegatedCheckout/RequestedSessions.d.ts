@@ -77,6 +77,11 @@ declare module 'stripe' {
          */
         payment_method: string | null;
 
+        /**
+         * The preview of the payment method to be created when the requested session is confirmed.
+         */
+        payment_method_preview: RequestedSession.PaymentMethodPreview | null;
+
         seller_details: RequestedSession.SellerDetails;
 
         /**
@@ -264,6 +269,69 @@ declare module 'stripe' {
            * The URL to the order status.
            */
           order_status_url: string | null;
+
+          /**
+           * The seller's order identifier.
+           */
+          order_id: string | null;
+        }
+
+        interface PaymentMethodPreview {
+          /**
+           * The billing details of the payment method.
+           */
+          billing_details: PaymentMethodPreview.BillingDetails | null;
+
+          /**
+           * The card details of the payment method.
+           */
+          card: PaymentMethodPreview.Card | null;
+
+          /**
+           * The type of the payment method.
+           */
+          type: string;
+        }
+
+        namespace PaymentMethodPreview {
+          interface BillingDetails {
+            /**
+             * The billing address.
+             */
+            address: Stripe.Address | null;
+
+            /**
+             * The email address for the billing details.
+             */
+            email: string | null;
+
+            /**
+             * The name for the billing details.
+             */
+            name: string | null;
+
+            /**
+             * The phone number for the billing details.
+             */
+            phone: string | null;
+          }
+
+          interface Card {
+            /**
+             * The expiry month of the card.
+             */
+            exp_month: number;
+
+            /**
+             * The expiry year of the card.
+             */
+            exp_year: number;
+
+            /**
+             * The last 4 digits of the card number.
+             */
+            last4: string;
+          }
         }
 
         interface SellerDetails {}
