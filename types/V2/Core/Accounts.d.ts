@@ -148,6 +148,11 @@ declare module 'stripe' {
                   cross_river_bank?: Commercial.CrossRiverBank;
 
                   /**
+                   * Can create commercial issuing cards with Lead as a BIN sponsor.
+                   */
+                  lead?: Commercial.Lead;
+
+                  /**
                    * Can create commercial issuing cards with Stripe as a BIN sponsor.
                    */
                   stripe?: Commercial.Stripe;
@@ -358,6 +363,68 @@ declare module 'stripe' {
                     }
 
                     namespace SpendCard {
+                      type Status =
+                        | 'active'
+                        | 'pending'
+                        | 'restricted'
+                        | 'unsupported';
+
+                      interface StatusDetail {
+                        /**
+                         * Machine-readable code explaining the reason for the Capability to be in its current status.
+                         */
+                        code: StatusDetail.Code;
+
+                        /**
+                         * Machine-readable code explaining how to make the Capability active.
+                         */
+                        resolution: StatusDetail.Resolution;
+                      }
+
+                      namespace StatusDetail {
+                        type Code =
+                          | 'determining_status'
+                          | 'requirements_past_due'
+                          | 'requirements_pending_verification'
+                          | 'restricted_other'
+                          | 'unsupported_business'
+                          | 'unsupported_country'
+                          | 'unsupported_entity_type';
+
+                        type Resolution =
+                          | 'contact_stripe'
+                          | 'no_resolution'
+                          | 'provide_info';
+                      }
+                    }
+                  }
+
+                  interface Lead {
+                    /**
+                     * Can create commercial Global(cross border) issuing prepaid cards with Lead as BIN sponsor.
+                     */
+                    prepaid_card?: Lead.PrepaidCard;
+                  }
+
+                  namespace Lead {
+                    interface PrepaidCard {
+                      /**
+                       * Whether the Capability has been requested.
+                       */
+                      requested: boolean;
+
+                      /**
+                       * The status of the Capability.
+                       */
+                      status: PrepaidCard.Status;
+
+                      /**
+                       * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                       */
+                      status_details: Array<PrepaidCard.StatusDetail>;
+                    }
+
+                    namespace PrepaidCard {
                       type Status =
                         | 'active'
                         | 'pending'
@@ -5339,6 +5406,16 @@ declare module 'stripe' {
                      * Terms of service acceptances for commercial issuing cards with Cross River Bank as BIN sponsor.
                      */
                     cross_river_bank?: Commercial.CrossRiverBank;
+
+                    /**
+                     * Terms of service acceptances for Stripe commercial card Global issuing.
+                     */
+                    global_account_holder?: Commercial.GlobalAccountHolder;
+
+                    /**
+                     * Terms of service acceptances for commercial issuing cards with Lead as BIN sponsor.
+                     */
+                    lead?: Commercial.Lead;
                   }
 
                   namespace Commercial {
@@ -5709,6 +5786,122 @@ declare module 'stripe' {
                         }
 
                         interface FinancingDisclosures {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date?: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip?: string;
+
+                          /**
+                           * The URL to the service agreement the Account's representative accepted.
+                           */
+                          url?: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+                      }
+                    }
+
+                    interface GlobalAccountHolder {
+                      /**
+                       * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                       */
+                      date?: string;
+
+                      /**
+                       * The IP address from which the Account's representative accepted the terms of service.
+                       */
+                      ip?: string;
+
+                      /**
+                       * The URL to the service agreement the Account's representative accepted.
+                       */
+                      url?: string;
+
+                      /**
+                       * The user agent of the browser from which the Account's representative accepted the terms of service.
+                       */
+                      user_agent?: string;
+                    }
+
+                    interface Lead {
+                      /**
+                       * Terms of service acceptances for commercial issuing Apple Pay cards with Celtic as BIN sponsor.
+                       */
+                      apple_pay?: Lead.ApplePay;
+
+                      /**
+                       * Terms of service acceptances for commercial issuing Global prepaid cards with Lead as BIN sponsor.
+                       */
+                      prepaid_card?: Lead.PrepaidCard;
+                    }
+
+                    namespace Lead {
+                      interface ApplePay {
+                        /**
+                         * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                         */
+                        date?: string;
+
+                        /**
+                         * The IP address from which the Account's representative accepted the terms of service.
+                         */
+                        ip?: string;
+
+                        /**
+                         * The URL to the service agreement the Account's representative accepted.
+                         */
+                        url?: string;
+
+                        /**
+                         * The user agent of the browser from which the Account's representative accepted the terms of service.
+                         */
+                        user_agent?: string;
+                      }
+
+                      interface PrepaidCard {
+                        /**
+                         * Bank terms of service acceptance for commercial Global issuing prepaid cards with Lead as BIN sponsor.
+                         */
+                        bank_terms?: PrepaidCard.BankTerms;
+
+                        /**
+                         * Platform terms of service acceptance for commercial Global issuing prepaid cards with Lead as BIN sponsor.
+                         */
+                        platform?: PrepaidCard.Platform;
+                      }
+
+                      namespace PrepaidCard {
+                        interface BankTerms {
+                          /**
+                           * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                           */
+                          date?: string;
+
+                          /**
+                           * The IP address from which the Account's representative accepted the terms of service.
+                           */
+                          ip?: string;
+
+                          /**
+                           * The URL to the service agreement the Account's representative accepted.
+                           */
+                          url?: string;
+
+                          /**
+                           * The user agent of the browser from which the Account's representative accepted the terms of service.
+                           */
+                          user_agent?: string;
+                        }
+
+                        interface Platform {
                           /**
                            * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                            */
@@ -7137,6 +7330,7 @@ declare module 'stripe' {
                     | 'commercial.celtic.spend_card'
                     | 'commercial.cross_river_bank.charge_card'
                     | 'commercial.cross_river_bank.spend_card'
+                    | 'commercial.lead.prepaid_card'
                     | 'commercial.stripe.charge_card'
                     | 'commercial.stripe.prepaid_card'
                     | 'crypto'
