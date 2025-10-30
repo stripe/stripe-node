@@ -368,7 +368,7 @@ declare module 'stripe' {
           /**
            * The quantity of the line item.
            */
-          quantity?: number;
+          quantity: number;
         }
 
         interface PaymentMethodData {
