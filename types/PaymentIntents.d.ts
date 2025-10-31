@@ -148,6 +148,8 @@ declare module 'stripe' {
        */
       on_behalf_of: string | Stripe.Account | null;
 
+      payment_details?: PaymentIntent.PaymentDetails;
+
       /**
        * ID of the payment method used in this PaymentIntent.
        */
@@ -240,10 +242,52 @@ declare module 'stripe' {
 
     namespace PaymentIntent {
       interface AmountDetails {
+        /**
+         * The total discount applied on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+         *
+         * This field is mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
+         */
+        discount_amount?: number;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         */
+        line_items?: ApiList<Stripe.PaymentIntentAmountDetailsLineItem>;
+
+        shipping?: AmountDetails.Shipping;
+
+        tax?: AmountDetails.Tax;
+
         tip?: AmountDetails.Tip;
       }
 
       namespace AmountDetails {
+        interface Shipping {
+          /**
+           * If a physical good is being shipped, the cost of shipping represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than or equal to 0.
+           */
+          amount: number | null;
+
+          /**
+           * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+           */
+          from_postal_code: string | null;
+
+          /**
+           * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+           */
+          to_postal_code: string | null;
+        }
+
+        interface Tax {
+          /**
+           * The total amount of tax on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
+           *
+           * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
+           */
+          total_tax_amount: number | null;
+        }
+
         interface Tip {
           /**
            * Portion of the amount that corresponds to a tip.
@@ -559,6 +603,7 @@ declare module 'stripe' {
           | 'payment_intent_mandate_invalid'
           | 'payment_intent_payment_attempt_expired'
           | 'payment_intent_payment_attempt_failed'
+          | 'payment_intent_rate_limit_exceeded'
           | 'payment_intent_unexpected_state'
           | 'payment_method_bank_account_already_verified'
           | 'payment_method_bank_account_blocked'
@@ -1390,6 +1435,24 @@ declare module 'stripe' {
            */
           native_url: string;
         }
+      }
+
+      interface PaymentDetails {
+        /**
+         * A unique value to identify the customer. This field is available only for card payments.
+         *
+         * This field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
+         */
+        customer_reference: string | null;
+
+        /**
+         * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+         *
+         * Required when the Payment Method Types array contains `card`, including when [automatic_payment_methods.enabled](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-automatic_payment_methods-enabled) is set to `true`.
+         *
+         * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
+         */
+        order_reference: string | null;
       }
 
       interface PaymentMethodConfigurationDetails {

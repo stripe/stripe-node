@@ -71,6 +71,8 @@ declare module 'stripe' {
 
       cashapp?: PaymentMethodConfiguration.Cashapp;
 
+      crypto?: PaymentMethodConfiguration.Crypto;
+
       customer_balance?: PaymentMethodConfiguration.CustomerBalance;
 
       eps?: PaymentMethodConfiguration.Eps;
@@ -106,6 +108,8 @@ declare module 'stripe' {
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
+
+      mb_way?: PaymentMethodConfiguration.MbWay;
 
       mobilepay?: PaymentMethodConfiguration.Mobilepay;
 
@@ -707,6 +711,40 @@ declare module 'stripe' {
         }
       }
 
+      interface Crypto {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: Crypto.DisplayPreference;
+      }
+
+      namespace Crypto {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
       interface CustomerBalance {
         /**
          * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
@@ -1125,6 +1163,40 @@ declare module 'stripe' {
       }
 
       namespace Link {
+        interface DisplayPreference {
+          /**
+           * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.
+           */
+          overridable: boolean | null;
+
+          /**
+           * The account's display preference.
+           */
+          preference: DisplayPreference.Preference;
+
+          /**
+           * The effective display preference value.
+           */
+          value: DisplayPreference.Value;
+        }
+
+        namespace DisplayPreference {
+          type Preference = 'none' | 'off' | 'on';
+
+          type Value = 'off' | 'on';
+        }
+      }
+
+      interface MbWay {
+        /**
+         * Whether this payment method may be offered at checkout. True if `display_preference` is `on` and the payment method's capability is active.
+         */
+        available: boolean;
+
+        display_preference: MbWay.DisplayPreference;
+      }
+
+      namespace MbWay {
         interface DisplayPreference {
           /**
            * For child configs, whether or not the account's preference will be observed. If `false`, the parent configuration's default is used.

@@ -231,9 +231,35 @@ declare module 'stripe' {
         amount_refunded: number;
 
         /**
+         * The PaymentRecord refund details associated with this credit note refund.
+         */
+        payment_record_refund: Refund.PaymentRecordRefund | null;
+
+        /**
          * ID of the refund.
          */
         refund: string | Stripe.Refund;
+
+        /**
+         * Type of the refund, one of `refund` or `payment_record_refund`.
+         */
+        type: Refund.Type | null;
+      }
+
+      namespace Refund {
+        interface PaymentRecordRefund {
+          /**
+           * ID of the payment record.
+           */
+          payment_record: string;
+
+          /**
+           * ID of the refund group.
+           */
+          refund_group: string;
+        }
+
+        type Type = 'payment_record_refund' | 'refund';
       }
 
       interface ShippingCost {

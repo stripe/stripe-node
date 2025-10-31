@@ -669,6 +669,7 @@ declare module 'stripe' {
           | 'card'
           | 'cashapp'
           | 'crypto'
+          | 'custom'
           | 'customer_balance'
           | 'eps'
           | 'fpx'

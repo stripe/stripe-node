@@ -3,11 +3,12 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The `Charge` object represents a single attempt to move money into your Stripe account.
-     * PaymentIntent confirmation is the most common way to create Charges, but [Account Debits](https://stripe.com/docs/connect/account-debits) may also create Charges.
-     * Some legacy payment flows create Charges directly, which is not recommended for new integrations.
+     * A Payment Record is a resource that allows you to represent payments that occur on- or off-Stripe.
+     * For example, you can create a Payment Record to model a payment made on a different payment processor,
+     * in order to mark an Invoice as paid and a Subscription as active. Payment Records consist of one or
+     * more Payment Attempt Records, which represent individual attempts made on a payment network.
      */
-    interface Charge {
+    interface PaymentRecord {
       /**
        * Unique identifier for the object.
        */
@@ -16,59 +17,47 @@ declare module 'stripe' {
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object: 'charge';
+      object: 'payment_record';
 
       /**
-       * Amount intended to be collected by this payment. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
+       * A representation of an amount of money, consisting of an amount and a currency.
        */
-      amount: number;
+      amount: PaymentRecord.Amount;
 
       /**
-       * Amount in cents (or local equivalent) captured (can be less than the amount attribute on the charge if a partial capture was made).
+       * A representation of an amount of money, consisting of an amount and a currency.
        */
-      amount_captured: number;
+      amount_authorized: PaymentRecord.AmountAuthorized;
 
       /**
-       * Amount in cents (or local equivalent) refunded (can be less than the amount attribute on the charge if a partial refund was issued).
+       * A representation of an amount of money, consisting of an amount and a currency.
        */
-      amount_refunded: number;
+      amount_canceled: PaymentRecord.AmountCanceled;
 
       /**
-       * ID of the Connect application that created the charge.
+       * A representation of an amount of money, consisting of an amount and a currency.
        */
-      application: string | Stripe.Application | null;
+      amount_failed: PaymentRecord.AmountFailed;
 
       /**
-       * The application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collect-fees) for details.
+       * A representation of an amount of money, consisting of an amount and a currency.
        */
-      application_fee: string | Stripe.ApplicationFee | null;
+      amount_guaranteed: PaymentRecord.AmountGuaranteed;
 
       /**
-       * The amount of the application fee (if any) requested for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collect-fees) for details.
+       * A representation of an amount of money, consisting of an amount and a currency.
        */
-      application_fee_amount: number | null;
+      amount_refunded: PaymentRecord.AmountRefunded;
 
       /**
-       * Authorization code on the charge.
+       * A representation of an amount of money, consisting of an amount and a currency.
        */
-      authorization_code?: string;
+      amount_requested: PaymentRecord.AmountRequested;
 
       /**
-       * ID of the balance transaction that describes the impact of this charge on your account balance (not including refunds or disputes).
+       * ID of the Connect application that created the PaymentRecord.
        */
-      balance_transaction: string | Stripe.BalanceTransaction | null;
-
-      billing_details: Charge.BillingDetails;
-
-      /**
-       * The full statement descriptor that is passed to card networks, and that is displayed on your customers' credit card and bank statements. Allows you to see what the statement descriptor looks like after the static and dynamic portions are combined. This value only exists for card payments.
-       */
-      calculated_statement_descriptor: string | null;
-
-      /**
-       * If the charge was created without capturing, this Boolean represents whether it is still uncaptured or has since been captured.
-       */
-      captured: boolean;
+      application: string | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -76,14 +65,14 @@ declare module 'stripe' {
       created: number;
 
       /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       * Customer information for this payment.
        */
-      currency: string;
+      customer_details: PaymentRecord.CustomerDetails | null;
 
       /**
-       * ID of the customer this charge is for if one exists.
+       * Indicates whether the customer was present in your checkout flow during this payment.
        */
-      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+      customer_presence: PaymentRecord.CustomerPresence | null;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -91,31 +80,9 @@ declare module 'stripe' {
       description: string | null;
 
       /**
-       * Whether the charge has been disputed.
+       * ID of the latest Payment Attempt Record attached to this Payment Record.
        */
-      disputed: boolean;
-
-      /**
-       * ID of the balance transaction that describes the reversal of the balance on your account due to payment failure.
-       */
-      failure_balance_transaction: string | Stripe.BalanceTransaction | null;
-
-      /**
-       * Error code explaining reason for charge failure if available (see [the errors section](https://stripe.com/docs/error-codes) for a list of codes).
-       */
-      failure_code: string | null;
-
-      /**
-       * Message to user further explaining reason for charge failure if available.
-       */
-      failure_message: string | null;
-
-      /**
-       * Information on fraud assessments for the charge.
-       */
-      fraud_details: Charge.FraudDetails | null;
-
-      level3?: Charge.Level3;
+      latest_payment_attempt_record: string | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -128,265 +95,129 @@ declare module 'stripe' {
       metadata: Stripe.Metadata;
 
       /**
-       * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+       * Information about the Payment Method debited for this payment.
        */
-      on_behalf_of: string | Stripe.Account | null;
+      payment_method_details: PaymentRecord.PaymentMethodDetails | null;
 
       /**
-       * Details about whether the payment was accepted, and why. See [understanding declines](https://stripe.com/docs/declines) for details.
+       * Processor information associated with this payment.
        */
-      outcome: Charge.Outcome | null;
+      processor_details: PaymentRecord.ProcessorDetails;
 
       /**
-       * `true` if the charge succeeded, or was successfully authorized for later capture.
+       * Shipping information for this payment.
        */
-      paid: boolean;
-
-      /**
-       * ID of the PaymentIntent associated with this charge, if one exists.
-       */
-      payment_intent: string | Stripe.PaymentIntent | null;
-
-      /**
-       * ID of the payment method used in this charge.
-       */
-      payment_method: string | null;
-
-      /**
-       * Details about the payment method at the time of the transaction.
-       */
-      payment_method_details: Charge.PaymentMethodDetails | null;
-
-      presentment_details?: Charge.PresentmentDetails;
-
-      /**
-       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
-       */
-      radar_options?: Charge.RadarOptions;
-
-      /**
-       * This is the email address that the receipt for this charge was sent to.
-       */
-      receipt_email: string | null;
-
-      /**
-       * This is the transaction number that appears on email receipts sent for this charge. This attribute will be `null` until a receipt has been sent.
-       */
-      receipt_number: string | null;
-
-      /**
-       * This is the URL to view the receipt for this charge. The receipt is kept up-to-date to the latest state of the charge, including any refunds. If the charge is for an Invoice, the receipt will be stylized as an Invoice receipt.
-       */
-      receipt_url: string | null;
-
-      /**
-       * Whether the charge has been fully refunded. If the charge is only partially refunded, this attribute will still be false.
-       */
-      refunded: boolean;
-
-      /**
-       * A list of refunds that have been applied to the charge.
-       */
-      refunds?: ApiList<Stripe.Refund> | null;
-
-      /**
-       * ID of the review associated with this charge if one exists.
-       */
-      review: string | Stripe.Review | null;
-
-      /**
-       * Shipping information for the charge.
-       */
-      shipping: Charge.Shipping | null;
-
-      /**
-       * This is a legacy field that will be removed in the future. It contains the Source, Card, or BankAccount object used for the charge. For details about the payment method used for this charge, refer to `payment_method` or `payment_method_details` instead.
-       */
-      source: Stripe.CustomerSource | null;
-
-      /**
-       * The transfer ID which created this charge. Only present if the charge came from another Stripe account. [See the Connect documentation](https://docs.stripe.com/connect/destination-charges) for details.
-       */
-      source_transfer: string | Stripe.Transfer | null;
-
-      /**
-       * For a non-card charge, text that appears on the customer's statement as the statement descriptor. This value overrides the account's default statement descriptor. For information about requirements, including the 22-character limit, see [the Statement Descriptor docs](https://docs.stripe.com/get-started/account/statement-descriptors).
-       *
-       * For a card charge, this value is ignored unless you don't specify a `statement_descriptor_suffix`, in which case this value is used as the suffix.
-       */
-      statement_descriptor: string | null;
-
-      /**
-       * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement. If the account has no prefix value, the suffix is concatenated to the account's statement descriptor.
-       */
-      statement_descriptor_suffix: string | null;
-
-      /**
-       * The status of the payment is either `succeeded`, `pending`, or `failed`.
-       */
-      status: Charge.Status;
-
-      /**
-       * ID of the transfer to the `destination` account (only applicable if the charge was created using the `destination` parameter).
-       */
-      transfer?: string | Stripe.Transfer;
-
-      /**
-       * An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
-       */
-      transfer_data: Charge.TransferData | null;
-
-      /**
-       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers#transfer-options) for details.
-       */
-      transfer_group: string | null;
+      shipping_details: PaymentRecord.ShippingDetails | null;
     }
 
-    namespace Charge {
-      interface BillingDetails {
+    namespace PaymentRecord {
+      interface Amount {
         /**
-         * Billing address.
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
-        address: Stripe.Address | null;
+        currency: string;
 
         /**
-         * Email address.
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         */
+        value: number;
+      }
+
+      interface AmountAuthorized {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         */
+        value: number;
+      }
+
+      interface AmountCanceled {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         */
+        value: number;
+      }
+
+      interface AmountFailed {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         */
+        value: number;
+      }
+
+      interface AmountGuaranteed {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         */
+        value: number;
+      }
+
+      interface AmountRefunded {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         */
+        value: number;
+      }
+
+      interface AmountRequested {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         */
+        value: number;
+      }
+
+      interface CustomerDetails {
+        /**
+         * ID of the Stripe Customer associated with this payment.
+         */
+        customer: string | null;
+
+        /**
+         * The customer's email address.
          */
         email: string | null;
 
         /**
-         * Full name.
+         * The customer's name.
          */
         name: string | null;
 
         /**
-         * Billing phone number (including extension).
+         * The customer's phone number.
          */
         phone: string | null;
-
-        /**
-         * Taxpayer identification number. Used only for transactions between LATAM buyers and non-LATAM sellers.
-         */
-        tax_id: string | null;
       }
 
-      interface FraudDetails {
-        /**
-         * Assessments from Stripe. If set, the value is `fraudulent`.
-         */
-        stripe_report?: string;
-
-        /**
-         * Assessments reported by you. If set, possible values of are `safe` and `fraudulent`.
-         */
-        user_report?: string;
-      }
-
-      interface Level3 {
-        customer_reference?: string;
-
-        line_items: Array<Level3.LineItem>;
-
-        merchant_reference: string;
-
-        shipping_address_zip?: string;
-
-        shipping_amount?: number;
-
-        shipping_from_zip?: string;
-      }
-
-      namespace Level3 {
-        interface LineItem {
-          discount_amount: number | null;
-
-          product_code: string;
-
-          product_description: string;
-
-          quantity: number | null;
-
-          tax_amount: number | null;
-
-          unit_cost: number | null;
-        }
-      }
-
-      interface Outcome {
-        /**
-         * An enumerated value providing a more detailed explanation on [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines).
-         */
-        advice_code: Outcome.AdviceCode | null;
-
-        /**
-         * For charges declined by the network, a 2 digit code which indicates the advice returned by the network on how to proceed with an error.
-         */
-        network_advice_code: string | null;
-
-        /**
-         * For charges declined by the network, an alphanumeric code which indicates the reason the charge failed.
-         */
-        network_decline_code: string | null;
-
-        /**
-         * Possible values are `approved_by_network`, `declined_by_network`, `not_sent_to_network`, and `reversed_after_approval`. The value `reversed_after_approval` indicates the payment was [blocked by Stripe](https://stripe.com/docs/declines#blocked-payments) after bank authorization, and may temporarily appear as "pending" on a cardholder's statement.
-         */
-        network_status: string | null;
-
-        /**
-         * An enumerated value providing a more detailed explanation of the outcome's `type`. Charges blocked by Radar's default block rule have the value `highest_risk_level`. Charges placed in review by Radar's default review rule have the value `elevated_risk_level`. Charges blocked because the payment is unlikely to be authorized have the value `low_probability_of_authorization`. Charges authorized, blocked, or placed in review by custom rules have the value `rule`. See [understanding declines](https://stripe.com/docs/declines) for more details.
-         */
-        reason: string | null;
-
-        /**
-         * Stripe Radar's evaluation of the riskiness of the payment. Possible values for evaluated payments are `normal`, `elevated`, `highest`. For non-card payments, and card-based payments predating the public assignment of risk levels, this field will have the value `not_assessed`. In the event of an error in the evaluation, this field will have the value `unknown`. This field is only available with Radar.
-         */
-        risk_level?: string;
-
-        /**
-         * Stripe Radar's evaluation of the riskiness of the payment. Possible values for evaluated payments are between 0 and 100. For non-card payments, card-based payments predating the public assignment of risk scores, or in the event of an error during evaluation, this field will not be present. This field is only available with Radar for Fraud Teams.
-         */
-        risk_score?: number;
-
-        /**
-         * The ID of the Radar rule that matched the payment, if applicable.
-         */
-        rule?: string | Outcome.Rule;
-
-        /**
-         * A human-readable description of the outcome type and reason, designed for you (the recipient of the payment), not your customer.
-         */
-        seller_message: string | null;
-
-        /**
-         * Possible values are `authorized`, `manual_review`, `issuer_declined`, `blocked`, and `invalid`. See [understanding declines](https://stripe.com/docs/declines) and [Radar reviews](https://stripe.com/docs/radar/reviews) for details.
-         */
-        type: string;
-      }
-
-      namespace Outcome {
-        type AdviceCode =
-          | 'confirm_card_data'
-          | 'do_not_try_again'
-          | 'try_again_later';
-
-        interface Rule {
-          /**
-           * The action taken on the payment.
-           */
-          action: string;
-
-          /**
-           * Unique identifier for the object.
-           */
-          id: string;
-
-          /**
-           * The predicate to evaluate the payment against.
-           */
-          predicate: string;
-        }
-      }
+      type CustomerPresence = 'off_session' | 'on_session';
 
       interface PaymentMethodDetails {
         ach_credit_transfer?: PaymentMethodDetails.AchCreditTransfer;
@@ -413,10 +244,18 @@ declare module 'stripe' {
 
         billie?: PaymentMethodDetails.Billie;
 
+        /**
+         * The billing details associated with the method of payment.
+         */
+        billing_details: PaymentMethodDetails.BillingDetails | null;
+
         blik?: PaymentMethodDetails.Blik;
 
         boleto?: PaymentMethodDetails.Boleto;
 
+        /**
+         * Details of the card used for this payment attempt.
+         */
         card?: PaymentMethodDetails.Card;
 
         card_present?: PaymentMethodDetails.CardPresent;
@@ -424,6 +263,13 @@ declare module 'stripe' {
         cashapp?: PaymentMethodDetails.Cashapp;
 
         crypto?: PaymentMethodDetails.Crypto;
+
+        /**
+         * Custom Payment Methods represent Payment Method types not modeled directly in
+         * the Stripe API. This resource consists of details about the custom payment method
+         * used for this payment attempt.
+         */
+        custom?: PaymentMethodDetails.Custom;
 
         customer_balance?: PaymentMethodDetails.CustomerBalance;
 
@@ -467,6 +313,11 @@ declare module 'stripe' {
 
         payco?: PaymentMethodDetails.Payco;
 
+        /**
+         * ID of the Stripe PaymentMethod used to make this payment.
+         */
+        payment_method: string | null;
+
         paynow?: PaymentMethodDetails.Paynow;
 
         paypal?: PaymentMethodDetails.Paypal;
@@ -500,6 +351,9 @@ declare module 'stripe' {
          */
         type: string;
 
+        /**
+         * Details of the US Bank Account used for this payment attempt.
+         */
         us_bank_account?: PaymentMethodDetails.UsBankAccount;
 
         wechat?: PaymentMethodDetails.Wechat;
@@ -817,6 +671,28 @@ declare module 'stripe' {
           transaction_id: string | null;
         }
 
+        interface BillingDetails {
+          /**
+           * A representation of a physical address.
+           */
+          address: Stripe.Address;
+
+          /**
+           * The billing email associated with the method of payment.
+           */
+          email: string | null;
+
+          /**
+           * The billing name associated with the method of payment.
+           */
+          name: string | null;
+
+          /**
+           * The billing phone number associated with the method of payment.
+           */
+          phone: string | null;
+        }
+
         interface Blik {
           /**
            * A unique and immutable identifier assigned by BLIK to every buyer.
@@ -833,19 +709,9 @@ declare module 'stripe' {
 
         interface Card {
           /**
-           * The authorized amount.
-           */
-          amount_authorized: number | null;
-
-          /**
-           * Authorization code on the charge.
-           */
-          authorization_code: string | null;
-
-          /**
            * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
            */
-          brand: string | null;
+          brand: Card.Brand;
 
           /**
            * When using manual capture, a future timestamp at which the charge will be automatically refunded if uncaptured.
@@ -863,11 +729,6 @@ declare module 'stripe' {
           country: string | null;
 
           /**
-           * A high-level description of the type of cards issued in this range. (For internal use only and not typically available in standard API requests.)
-           */
-          description?: string | null;
-
-          /**
            * Two-digit number representing the card's expiration month.
            */
           exp_month: number;
@@ -876,8 +737,6 @@ declare module 'stripe' {
            * Four-digit number representing the card's expiration year.
            */
           exp_year: number;
-
-          extended_authorization?: Card.ExtendedAuthorization;
 
           /**
            * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
@@ -889,48 +748,22 @@ declare module 'stripe' {
           /**
            * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
            */
-          funding: string | null;
-
-          /**
-           * Issuer identification number of the card. (For internal use only and not typically available in standard API requests.)
-           */
-          iin?: string | null;
-
-          incremental_authorization?: Card.IncrementalAuthorization;
-
-          /**
-           * Installment details for this payment.
-           *
-           * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
-           */
-          installments: Card.Installments | null;
-
-          /**
-           * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
-           */
-          issuer?: string | null;
+          funding: Card.Funding;
 
           /**
            * The last four digits of the card.
            */
-          last4: string | null;
-
-          /**
-           * ID of the mandate used to make this payment or created by it.
-           */
-          mandate: string | null;
+          last4: string;
 
           /**
            * True if this payment was marked as MOTO and out of scope for SCA.
            */
-          moto?: boolean | null;
-
-          multicapture?: Card.Multicapture;
+          moto?: boolean;
 
           /**
            * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
-          network: string | null;
+          network: Card.Network | null;
 
           /**
            * If this card has network token credentials, this contains the details of the network token credentials.
@@ -941,13 +774,6 @@ declare module 'stripe' {
            * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. This value will be present if it is returned by the financial network in the authorization response, and null otherwise.
            */
           network_transaction_id: string | null;
-
-          overcapture?: Card.Overcapture;
-
-          /**
-           * Status of a card based on the card issuer.
-           */
-          regulated_status: Card.RegulatedStatus | null;
 
           /**
            * Populated if this transaction used 3D Secure authentication.
@@ -961,86 +787,59 @@ declare module 'stripe' {
         }
 
         namespace Card {
+          type Brand =
+            | 'amex'
+            | 'cartes_bancaires'
+            | 'diners'
+            | 'discover'
+            | 'eftpos_au'
+            | 'interac'
+            | 'jcb'
+            | 'link'
+            | 'mastercard'
+            | 'unionpay'
+            | 'unknown'
+            | 'visa';
+
           interface Checks {
-            /**
-             * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
-             */
-            address_line1_check: string | null;
+            address_line1_check: Checks.AddressLine1Check | null;
 
-            /**
-             * If a address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
-             */
-            address_postal_code_check: string | null;
+            address_postal_code_check: Checks.AddressPostalCodeCheck | null;
 
-            /**
-             * If a CVC was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
-             */
-            cvc_check: string | null;
+            cvc_check: Checks.CvcCheck | null;
           }
 
-          interface ExtendedAuthorization {
-            /**
-             * Indicates whether or not the capture window is extended beyond the standard authorization.
-             */
-            status: ExtendedAuthorization.Status;
+          namespace Checks {
+            type AddressLine1Check =
+              | 'fail'
+              | 'pass'
+              | 'unavailable'
+              | 'unchecked';
+
+            type AddressPostalCodeCheck =
+              | 'fail'
+              | 'pass'
+              | 'unavailable'
+              | 'unchecked';
+
+            type CvcCheck = 'fail' | 'pass' | 'unavailable' | 'unchecked';
           }
 
-          namespace ExtendedAuthorization {
-            type Status = 'disabled' | 'enabled';
-          }
+          type Funding = 'credit' | 'debit' | 'prepaid' | 'unknown';
 
-          interface IncrementalAuthorization {
-            /**
-             * Indicates whether or not the incremental authorization feature is supported.
-             */
-            status: IncrementalAuthorization.Status;
-          }
-
-          namespace IncrementalAuthorization {
-            type Status = 'available' | 'unavailable';
-          }
-
-          interface Installments {
-            /**
-             * Installment plan selected for the payment.
-             */
-            plan: Installments.Plan | null;
-          }
-
-          namespace Installments {
-            interface Plan {
-              /**
-               * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
-               */
-              count: number | null;
-
-              /**
-               * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
-               * One of `month`.
-               */
-              interval: 'month' | null;
-
-              /**
-               * Type of installment plan, one of `fixed_count`, `bonus`, or `revolving`.
-               */
-              type: Plan.Type;
-            }
-
-            namespace Plan {
-              type Type = 'bonus' | 'fixed_count' | 'revolving';
-            }
-          }
-
-          interface Multicapture {
-            /**
-             * Indicates whether or not multiple captures are supported.
-             */
-            status: Multicapture.Status;
-          }
-
-          namespace Multicapture {
-            type Status = 'available' | 'unavailable';
-          }
+          type Network =
+            | 'amex'
+            | 'cartes_bancaires'
+            | 'diners'
+            | 'discover'
+            | 'eftpos_au'
+            | 'interac'
+            | 'jcb'
+            | 'link'
+            | 'mastercard'
+            | 'unionpay'
+            | 'unknown'
+            | 'visa';
 
           interface NetworkToken {
             /**
@@ -1049,77 +848,18 @@ declare module 'stripe' {
             used: boolean;
           }
 
-          interface Overcapture {
-            /**
-             * The maximum amount that can be captured.
-             */
-            maximum_amount_capturable: number;
-
-            /**
-             * Indicates whether or not the authorized amount can be over-captured.
-             */
-            status: Overcapture.Status;
-          }
-
-          namespace Overcapture {
-            type Status = 'available' | 'unavailable';
-          }
-
-          type RegulatedStatus = 'regulated' | 'unregulated';
-
           interface ThreeDSecure {
-            /**
-             * For authenticated transactions: how the customer was authenticated by
-             * the issuing bank.
-             */
             authentication_flow: ThreeDSecure.AuthenticationFlow | null;
 
-            /**
-             * The Electronic Commerce Indicator (ECI). A protocol-level field
-             * indicating what degree of authentication was performed.
-             */
-            electronic_commerce_indicator: ThreeDSecure.ElectronicCommerceIndicator | null;
-
-            /**
-             * The exemption requested via 3DS and accepted by the issuer at authentication time.
-             */
-            exemption_indicator: ThreeDSecure.ExemptionIndicator | null;
-
-            /**
-             * Whether Stripe requested the value of `exemption_indicator` in the transaction. This will depend on
-             * the outcome of Stripe's internal risk assessment.
-             */
-            exemption_indicator_applied?: boolean;
-
-            /**
-             * Indicates the outcome of 3D Secure authentication.
-             */
             result: ThreeDSecure.Result | null;
 
-            /**
-             * Additional information about why 3D Secure succeeded or failed based
-             * on the `result`.
-             */
             result_reason: ThreeDSecure.ResultReason | null;
 
-            /**
-             * The 3D Secure 1 XID or 3D Secure 2 Directory Server Transaction ID
-             * (dsTransId) for this payment.
-             */
-            transaction_id: string | null;
-
-            /**
-             * The version of 3D Secure that was used.
-             */
             version: ThreeDSecure.Version | null;
           }
 
           namespace ThreeDSecure {
             type AuthenticationFlow = 'challenge' | 'frictionless';
-
-            type ElectronicCommerceIndicator = '01' | '02' | '05' | '06' | '07';
-
-            type ExemptionIndicator = 'low_risk' | 'none';
 
             type Result =
               | 'attempt_acknowledged'
@@ -1142,94 +882,30 @@ declare module 'stripe' {
           }
 
           interface Wallet {
-            amex_express_checkout?: Wallet.AmexExpressCheckout;
-
             apple_pay?: Wallet.ApplePay;
 
             /**
              * (For tokenized numbers only.) The last four digits of the device account number.
              */
-            dynamic_last4: string | null;
+            dynamic_last4?: string;
 
             google_pay?: Wallet.GooglePay;
 
-            link?: Wallet.Link;
-
-            masterpass?: Wallet.Masterpass;
-
-            samsung_pay?: Wallet.SamsungPay;
-
             /**
-             * The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, `visa_checkout`, or `link`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
+             * The type of the card wallet, one of `apple_pay` or `google_pay`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
              */
-            type: Wallet.Type;
-
-            visa_checkout?: Wallet.VisaCheckout;
+            type: string;
           }
 
           namespace Wallet {
-            interface AmexExpressCheckout {}
-
-            interface ApplePay {}
+            interface ApplePay {
+              /**
+               * Type of the apple_pay transaction, one of `apple_pay` or `apple_pay_later`.
+               */
+              type: string;
+            }
 
             interface GooglePay {}
-
-            interface Link {}
-
-            interface Masterpass {
-              /**
-               * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-               */
-              billing_address: Stripe.Address | null;
-
-              /**
-               * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-               */
-              email: string | null;
-
-              /**
-               * Owner's verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-               */
-              name: string | null;
-
-              /**
-               * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-               */
-              shipping_address: Stripe.Address | null;
-            }
-
-            interface SamsungPay {}
-
-            type Type =
-              | 'amex_express_checkout'
-              | 'apple_pay'
-              | 'google_pay'
-              | 'link'
-              | 'masterpass'
-              | 'samsung_pay'
-              | 'visa_checkout';
-
-            interface VisaCheckout {
-              /**
-               * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-               */
-              billing_address: Stripe.Address | null;
-
-              /**
-               * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-               */
-              email: string | null;
-
-              /**
-               * Owner's verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-               */
-              name: string | null;
-
-              /**
-               * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-               */
-              shipping_address: Stripe.Address | null;
-            }
           }
         }
 
@@ -1485,6 +1161,18 @@ declare module 'stripe' {
           type Network = 'base' | 'ethereum' | 'polygon' | 'solana';
 
           type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
+        }
+
+        interface Custom {
+          /**
+           * Display name for the custom (user-defined) payment method type used to make this payment.
+           */
+          display_name: string;
+
+          /**
+           * The custom payment method type associated with this payment.
+           */
+          type: string | null;
         }
 
         interface CustomerBalance {}
@@ -2417,14 +2105,8 @@ declare module 'stripe' {
         interface Twint {}
 
         interface UsBankAccount {
-          /**
-           * Account holder type: individual or company.
-           */
           account_holder_type: UsBankAccount.AccountHolderType | null;
 
-          /**
-           * Account type: checkings or savings. Defaults to checking if omitted.
-           */
           account_type: UsBankAccount.AccountType | null;
 
           /**
@@ -2491,61 +2173,44 @@ declare module 'stripe' {
         interface Zip {}
       }
 
-      interface PresentmentDetails {
+      interface ProcessorDetails {
         /**
-         * Amount intended to be collected by this payment, denominated in `presentment_currency`.
+         * Custom processors represent payment processors not modeled directly in
+         * the Stripe API. This resource consists of details about the custom processor
+         * used for this payment attempt.
          */
-        presentment_amount: number;
+        custom?: ProcessorDetails.Custom;
 
         /**
-         * Currency presented to the customer during payment.
+         * The processor used for this payment attempt.
          */
-        presentment_currency: string;
+        type: 'custom';
       }
 
-      interface RadarOptions {
-        /**
-         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
-         */
-        session?: string;
+      namespace ProcessorDetails {
+        interface Custom {
+          /**
+           * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
+           */
+          payment_reference: string | null;
+        }
       }
 
-      interface Shipping {
-        address?: Stripe.Address;
+      interface ShippingDetails {
+        /**
+         * A representation of a physical address.
+         */
+        address: Stripe.Address;
 
         /**
-         * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+         * The shipping recipient's name.
          */
-        carrier?: string | null;
+        name: string | null;
 
         /**
-         * Recipient name.
+         * The shipping recipient's phone number.
          */
-        name?: string;
-
-        /**
-         * Recipient phone (including extension).
-         */
-        phone?: string | null;
-
-        /**
-         * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-         */
-        tracking_number?: string | null;
-      }
-
-      type Status = 'failed' | 'pending' | 'succeeded';
-
-      interface TransferData {
-        /**
-         * The amount transferred to the destination account, if specified. By default, the entire charge amount is transferred to the destination account.
-         */
-        amount: number | null;
-
-        /**
-         * ID of an existing, connected Stripe account to transfer funds to if `transfer_data` was specified in the charge request.
-         */
-        destination: string | Stripe.Account;
+        phone: string | null;
       }
     }
   }

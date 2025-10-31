@@ -771,6 +771,7 @@ declare module 'stripe' {
           | 'payment_intent_mandate_invalid'
           | 'payment_intent_payment_attempt_expired'
           | 'payment_intent_payment_attempt_failed'
+          | 'payment_intent_rate_limit_exceeded'
           | 'payment_intent_unexpected_state'
           | 'payment_method_bank_account_already_verified'
           | 'payment_method_bank_account_blocked'

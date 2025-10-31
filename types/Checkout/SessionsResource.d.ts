@@ -396,7 +396,7 @@ declare module 'stripe' {
           button_color?: Stripe.Emptyable<string>;
 
           /**
-           * A string to override the business name shown on the Checkout Session.
+           * A string to override the business name shown on the Checkout Session. This only shows at the top of the Checkout page, and your business name still appears in terms, receipts, and other places.
            */
           display_name?: string;
 
@@ -406,12 +406,12 @@ declare module 'stripe' {
           font_family?: Stripe.Emptyable<BrandingSettings.FontFamily>;
 
           /**
-           * The icon for the Checkout Session. You cannot set both `logo` and `icon`.
+           * The icon for the Checkout Session. For best results, use a square image.
            */
           icon?: BrandingSettings.Icon;
 
           /**
-           * The logo for the Checkout Session. You cannot set both `logo` and `icon`.
+           * The logo for the Checkout Session.
            */
           logo?: BrandingSettings.Logo;
         }
@@ -762,6 +762,7 @@ declare module 'stripe' {
           | 'klarna'
           | 'konbini'
           | 'kr_card'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'
@@ -1497,6 +1498,11 @@ declare module 'stripe' {
            * contains details about the Swish payment method options.
            */
           swish?: PaymentMethodOptions.Swish;
+
+          /**
+           * contains details about the TWINT payment method options.
+           */
+          twint?: PaymentMethodOptions.Twint;
 
           /**
            * contains details about the Us Bank Account payment method options.
@@ -2477,6 +2483,19 @@ declare module 'stripe' {
             reference?: string;
           }
 
+          interface Twint {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+             *
+             * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+             *
+             * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
           interface UsBankAccount {
             /**
              * Additional fields for Financial Connections Session creation
@@ -2588,6 +2607,7 @@ declare module 'stripe' {
           | 'konbini'
           | 'kr_card'
           | 'link'
+          | 'mb_way'
           | 'mobilepay'
           | 'multibanco'
           | 'naver_pay'

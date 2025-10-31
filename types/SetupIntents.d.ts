@@ -83,6 +83,13 @@ declare module 'stripe' {
       description: string | null;
 
       /**
+       * Payment method types that are excluded from this SetupIntent.
+       */
+      excluded_payment_method_types: Array<
+        SetupIntent.ExcludedPaymentMethodType
+      > | null;
+
+      /**
        * Indicates the directions of money movement for which this payment method is intended to be used.
        *
        * Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include `outbound` if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.
@@ -185,6 +192,56 @@ declare module 'stripe' {
         | 'abandoned'
         | 'duplicate'
         | 'requested_by_customer';
+
+      type ExcludedPaymentMethodType =
+        | 'acss_debit'
+        | 'affirm'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'alma'
+        | 'amazon_pay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'billie'
+        | 'blik'
+        | 'boleto'
+        | 'card'
+        | 'cashapp'
+        | 'crypto'
+        | 'customer_balance'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'grabpay'
+        | 'ideal'
+        | 'kakao_pay'
+        | 'klarna'
+        | 'konbini'
+        | 'kr_card'
+        | 'mb_way'
+        | 'mobilepay'
+        | 'multibanco'
+        | 'naver_pay'
+        | 'nz_bank_account'
+        | 'oxxo'
+        | 'p24'
+        | 'pay_by_bank'
+        | 'payco'
+        | 'paynow'
+        | 'paypal'
+        | 'pix'
+        | 'promptpay'
+        | 'revolut_pay'
+        | 'samsung_pay'
+        | 'satispay'
+        | 'sepa_debit'
+        | 'sofort'
+        | 'swish'
+        | 'twint'
+        | 'us_bank_account'
+        | 'wechat_pay'
+        | 'zip';
 
       type FlowDirection = 'inbound' | 'outbound';
 
@@ -413,6 +470,7 @@ declare module 'stripe' {
           | 'payment_intent_mandate_invalid'
           | 'payment_intent_payment_attempt_expired'
           | 'payment_intent_payment_attempt_failed'
+          | 'payment_intent_rate_limit_exceeded'
           | 'payment_intent_unexpected_state'
           | 'payment_method_bank_account_already_verified'
           | 'payment_method_bank_account_blocked'

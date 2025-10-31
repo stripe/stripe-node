@@ -416,7 +416,7 @@ function createWebhooksTestSuite(stripe) {
         );
       });
 
-      it('should raise a SignatureVerificationError when the signing secret contians whitespace', async () => {
+      it('should raise a SignatureVerificationError when the signing secret contains whitespace', async () => {
         const header = stripe.webhooks.generateTestHeaderString({
           payload: EVENT_PAYLOAD_STRING,
           secret: SECRET,

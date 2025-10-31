@@ -516,6 +516,7 @@ declare module 'stripe' {
           | 'card'
           | 'cashapp'
           | 'crypto'
+          | 'custom'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -1238,6 +1239,7 @@ declare module 'stripe' {
           | 'card'
           | 'cashapp'
           | 'crypto'
+          | 'custom'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -1831,6 +1833,11 @@ declare module 'stripe' {
        * The ID of the PaymentIntent to attach to the invoice.
        */
       payment_intent?: string;
+
+      /**
+       * The ID of the PaymentRecord to attach to the invoice.
+       */
+      payment_record?: string;
     }
 
     interface InvoiceCreatePreviewParams {

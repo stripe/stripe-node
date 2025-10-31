@@ -70,6 +70,11 @@ declare module 'stripe' {
         label: string;
 
         /**
+         * The last time this reader reported to Stripe backend.
+         */
+        last_seen_at: number | null;
+
+        /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
@@ -288,17 +293,17 @@ declare module 'stripe' {
               namespace Selection {
                 interface Choice {
                   /**
-                   * The id to be selected
+                   * The identifier for the selected choice. Maximum 50 characters.
                    */
                   id: string | null;
 
                   /**
-                   * The button style for the choice
+                   * The button style for the choice. Can be `primary` or `secondary`.
                    */
                   style: Choice.Style | null;
 
                   /**
-                   * The text to be selected
+                   * The text to be selected. Maximum 30 characters.
                    */
                   text: string;
                 }
@@ -324,22 +329,22 @@ declare module 'stripe' {
 
               interface Toggle {
                 /**
-                 * The toggle's default value
+                 * The toggle's default value. Can be `enabled` or `disabled`.
                  */
                 default_value: Toggle.DefaultValue | null;
 
                 /**
-                 * The toggle's description text
+                 * The toggle's description text. Maximum 50 characters.
                  */
                 description: string | null;
 
                 /**
-                 * The toggle's title text
+                 * The toggle's title text. Maximum 50 characters.
                  */
                 title: string | null;
 
                 /**
-                 * The toggle's collected value
+                 * The toggle's collected value. Can be `enabled` or `disabled`.
                  */
                 value: Toggle.Value | null;
               }
@@ -561,12 +566,12 @@ declare module 'stripe' {
 
           interface SetReaderDisplay {
             /**
-             * Cart object to be displayed by the reader.
+             * Cart object to be displayed by the reader, including line items, amounts, and currency.
              */
             cart: SetReaderDisplay.Cart | null;
 
             /**
-             * Type of information to be displayed by the reader.
+             * Type of information to be displayed by the reader. Only `cart` is currently supported.
              */
             type: 'cart';
           }

@@ -253,6 +253,11 @@ declare module 'stripe' {
          * The identified tax location of the customer.
          */
         location: Tax.Location | null;
+
+        /**
+         * The tax calculation provider used for location resolution. Defaults to `stripe` when not using a [third-party provider](https://docs.stripe.com/tax/third-party-apps).
+         */
+        provider: Tax.Provider;
       }
 
       namespace Tax {
@@ -286,6 +291,8 @@ declare module 'stripe' {
             | 'payment_method'
             | 'shipping_destination';
         }
+
+        type Provider = 'anrok' | 'avalara' | 'sphere' | 'stripe';
       }
 
       type TaxExempt = 'exempt' | 'none' | 'reverse';

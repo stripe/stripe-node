@@ -14,6 +14,11 @@ declare module 'stripe' {
       currency: string;
 
       /**
+       * Provides industry-specific information about the amount.
+       */
+      amount_details?: PaymentIntentCreateParams.AmountDetails;
+
+      /**
        * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: number;
@@ -100,6 +105,11 @@ declare module 'stripe' {
        * The Stripe account ID that these funds are intended for. Learn more about the [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       on_behalf_of?: string;
+
+      /**
+       * Provides industry-specific information about the charge.
+       */
+      payment_details?: PaymentIntentCreateParams.PaymentDetails;
 
       /**
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
@@ -193,6 +203,196 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentCreateParams {
+      interface AmountDetails {
+        /**
+         * The total discount applied on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+         *
+         * This field is mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
+         */
+        discount_amount?: Stripe.Emptyable<number>;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         */
+        line_items?: Stripe.Emptyable<Array<AmountDetails.LineItem>>;
+
+        /**
+         * Contains information about the shipping portion of the amount.
+         */
+        shipping?: Stripe.Emptyable<AmountDetails.Shipping>;
+
+        /**
+         * Contains information about the tax portion of the amount.
+         */
+        tax?: Stripe.Emptyable<AmountDetails.Tax>;
+      }
+
+      namespace AmountDetails {
+        interface LineItem {
+          /**
+           * The discount applied on this line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+           *
+           * This field is mutually exclusive with the `amount_details[discount_amount]` field.
+           */
+          discount_amount?: number;
+
+          /**
+           * Payment method-specific information for line items.
+           */
+          payment_method_options?: LineItem.PaymentMethodOptions;
+
+          /**
+           * The product code of the line item, such as an SKU. Required for L3 rates. At most 12 characters long.
+           */
+          product_code?: string;
+
+          /**
+           * The product name of the line item. Required for L3 rates. At most 1024 characters long.
+           *
+           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
+           */
+          product_name: string;
+
+          /**
+           * The quantity of items. Required for L3 rates. An integer greater than 0.
+           */
+          quantity: number;
+
+          /**
+           * Contains information about the tax on the item.
+           */
+          tax?: LineItem.Tax;
+
+          /**
+           * The unit cost of the line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+           */
+          unit_cost: number;
+
+          /**
+           * A unit of measure for the line item, such as gallons, feet, meters, etc.
+           */
+          unit_of_measure?: string;
+        }
+
+        namespace LineItem {
+          interface PaymentMethodOptions {
+            /**
+             * This sub-hash contains line item details that are specific to `card` payment method."
+             */
+            card?: PaymentMethodOptions.Card;
+
+            /**
+             * This sub-hash contains line item details that are specific to `card_present` payment method."
+             */
+            card_present?: PaymentMethodOptions.CardPresent;
+
+            /**
+             * This sub-hash contains line item details that are specific to `klarna` payment method."
+             */
+            klarna?: PaymentMethodOptions.Klarna;
+
+            /**
+             * This sub-hash contains line item details that are specific to `paypal` payment method."
+             */
+            paypal?: PaymentMethodOptions.Paypal;
+          }
+
+          namespace PaymentMethodOptions {
+            interface Card {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface CardPresent {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface Klarna {
+              /**
+               * URL to an image for the product. Max length, 4096 characters.
+               */
+              image_url?: string;
+
+              /**
+               * URL to the product page. Max length, 4096 characters.
+               */
+              product_url?: string;
+
+              /**
+               * Unique reference for this line item to correlate it with your system's internal records. The field is displayed in the Klarna Consumer App if passed.
+               */
+              reference?: string;
+
+              /**
+               * Reference for the subscription this line item is for.
+               */
+              subscription_reference?: string;
+            }
+
+            interface Paypal {
+              /**
+               * Type of the line item.
+               */
+              category?: Paypal.Category;
+
+              /**
+               * Description of the line item.
+               */
+              description?: string;
+
+              /**
+               * The Stripe account ID of the connected account that sells the item.
+               */
+              sold_by?: string;
+            }
+
+            namespace Paypal {
+              type Category = 'digital_goods' | 'donation' | 'physical_goods';
+            }
+          }
+
+          interface Tax {
+            /**
+             * The total amount of tax on a single line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+             *
+             * This field is mutually exclusive with the `amount_details[tax][total_tax_amount]` field.
+             */
+            total_tax_amount: number;
+          }
+        }
+
+        interface Shipping {
+          /**
+           * If a physical good is being shipped, the cost of shipping represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than or equal to 0.
+           */
+          amount?: Stripe.Emptyable<number>;
+
+          /**
+           * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+           */
+          from_postal_code?: Stripe.Emptyable<string>;
+
+          /**
+           * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+           */
+          to_postal_code?: Stripe.Emptyable<string>;
+        }
+
+        interface Tax {
+          /**
+           * The total amount of tax on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
+           *
+           * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
+           */
+          total_tax_amount: number;
+        }
+      }
+
       interface AutomaticPaymentMethods {
         /**
          * Controls whether this PaymentIntent will accept redirect-based payment methods.
@@ -315,6 +515,24 @@ declare module 'stripe' {
       }
 
       type OffSession = 'one_off' | 'recurring';
+
+      interface PaymentDetails {
+        /**
+         * A unique value to identify the customer. This field is available only for card payments.
+         *
+         * This field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
+         */
+        customer_reference?: Stripe.Emptyable<string>;
+
+        /**
+         * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+         *
+         * Required when the Payment Method Types array contains `card`, including when [automatic_payment_methods.enabled](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-automatic_payment_methods-enabled) is set to `true`.
+         *
+         * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
+         */
+        order_reference?: Stripe.Emptyable<string>;
+      }
 
       interface PaymentMethodData {
         /**
@@ -3139,6 +3357,13 @@ declare module 'stripe' {
       amount?: number;
 
       /**
+       * Provides industry-specific information about the amount.
+       */
+      amount_details?: Stripe.Emptyable<
+        PaymentIntentUpdateParams.AmountDetails
+      >;
+
+      /**
        * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: Stripe.Emptyable<number>;
@@ -3183,6 +3408,13 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+      /**
+       * Provides industry-specific information about the charge.
+       */
+      payment_details?: Stripe.Emptyable<
+        PaymentIntentUpdateParams.PaymentDetails
+      >;
 
       /**
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent. To unset this field to null, pass in an empty string.
@@ -3260,6 +3492,196 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentUpdateParams {
+      interface AmountDetails {
+        /**
+         * The total discount applied on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+         *
+         * This field is mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
+         */
+        discount_amount?: Stripe.Emptyable<number>;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         */
+        line_items?: Stripe.Emptyable<Array<AmountDetails.LineItem>>;
+
+        /**
+         * Contains information about the shipping portion of the amount.
+         */
+        shipping?: Stripe.Emptyable<AmountDetails.Shipping>;
+
+        /**
+         * Contains information about the tax portion of the amount.
+         */
+        tax?: Stripe.Emptyable<AmountDetails.Tax>;
+      }
+
+      namespace AmountDetails {
+        interface LineItem {
+          /**
+           * The discount applied on this line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+           *
+           * This field is mutually exclusive with the `amount_details[discount_amount]` field.
+           */
+          discount_amount?: number;
+
+          /**
+           * Payment method-specific information for line items.
+           */
+          payment_method_options?: LineItem.PaymentMethodOptions;
+
+          /**
+           * The product code of the line item, such as an SKU. Required for L3 rates. At most 12 characters long.
+           */
+          product_code?: string;
+
+          /**
+           * The product name of the line item. Required for L3 rates. At most 1024 characters long.
+           *
+           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
+           */
+          product_name: string;
+
+          /**
+           * The quantity of items. Required for L3 rates. An integer greater than 0.
+           */
+          quantity: number;
+
+          /**
+           * Contains information about the tax on the item.
+           */
+          tax?: LineItem.Tax;
+
+          /**
+           * The unit cost of the line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+           */
+          unit_cost: number;
+
+          /**
+           * A unit of measure for the line item, such as gallons, feet, meters, etc.
+           */
+          unit_of_measure?: string;
+        }
+
+        namespace LineItem {
+          interface PaymentMethodOptions {
+            /**
+             * This sub-hash contains line item details that are specific to `card` payment method."
+             */
+            card?: PaymentMethodOptions.Card;
+
+            /**
+             * This sub-hash contains line item details that are specific to `card_present` payment method."
+             */
+            card_present?: PaymentMethodOptions.CardPresent;
+
+            /**
+             * This sub-hash contains line item details that are specific to `klarna` payment method."
+             */
+            klarna?: PaymentMethodOptions.Klarna;
+
+            /**
+             * This sub-hash contains line item details that are specific to `paypal` payment method."
+             */
+            paypal?: PaymentMethodOptions.Paypal;
+          }
+
+          namespace PaymentMethodOptions {
+            interface Card {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface CardPresent {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface Klarna {
+              /**
+               * URL to an image for the product. Max length, 4096 characters.
+               */
+              image_url?: string;
+
+              /**
+               * URL to the product page. Max length, 4096 characters.
+               */
+              product_url?: string;
+
+              /**
+               * Unique reference for this line item to correlate it with your system's internal records. The field is displayed in the Klarna Consumer App if passed.
+               */
+              reference?: string;
+
+              /**
+               * Reference for the subscription this line item is for.
+               */
+              subscription_reference?: string;
+            }
+
+            interface Paypal {
+              /**
+               * Type of the line item.
+               */
+              category?: Paypal.Category;
+
+              /**
+               * Description of the line item.
+               */
+              description?: string;
+
+              /**
+               * The Stripe account ID of the connected account that sells the item.
+               */
+              sold_by?: string;
+            }
+
+            namespace Paypal {
+              type Category = 'digital_goods' | 'donation' | 'physical_goods';
+            }
+          }
+
+          interface Tax {
+            /**
+             * The total amount of tax on a single line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+             *
+             * This field is mutually exclusive with the `amount_details[tax][total_tax_amount]` field.
+             */
+            total_tax_amount: number;
+          }
+        }
+
+        interface Shipping {
+          /**
+           * If a physical good is being shipped, the cost of shipping represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than or equal to 0.
+           */
+          amount?: Stripe.Emptyable<number>;
+
+          /**
+           * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+           */
+          from_postal_code?: Stripe.Emptyable<string>;
+
+          /**
+           * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+           */
+          to_postal_code?: Stripe.Emptyable<string>;
+        }
+
+        interface Tax {
+          /**
+           * The total amount of tax on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
+           *
+           * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
+           */
+          total_tax_amount: number;
+        }
+      }
+
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       type ExcludedPaymentMethodType =
@@ -3311,6 +3733,24 @@ declare module 'stripe' {
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
+
+      interface PaymentDetails {
+        /**
+         * A unique value to identify the customer. This field is available only for card payments.
+         *
+         * This field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
+         */
+        customer_reference?: Stripe.Emptyable<string>;
+
+        /**
+         * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+         *
+         * Required when the Payment Method Types array contains `card`, including when [automatic_payment_methods.enabled](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-automatic_payment_methods-enabled) is set to `true`.
+         *
+         * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
+         */
+        order_reference?: Stripe.Emptyable<string>;
+      }
 
       interface PaymentMethodData {
         /**
@@ -6155,6 +6595,11 @@ declare module 'stripe' {
 
     interface PaymentIntentCaptureParams {
       /**
+       * Provides industry-specific information about the amount.
+       */
+      amount_details?: PaymentIntentCaptureParams.AmountDetails;
+
+      /**
        * The amount to capture from the PaymentIntent, which must be less than or equal to the original amount. Defaults to the full `amount_capturable` if it's not provided.
        */
       amount_to_capture?: number;
@@ -6180,6 +6625,13 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
+       * Provides industry-specific information about the charge.
+       */
+      payment_details?: Stripe.Emptyable<
+        PaymentIntentCaptureParams.PaymentDetails
+      >;
+
+      /**
        * Text that appears on the customer's statement as the statement descriptor for a non-card charge. This value overrides the account's default statement descriptor. For information about requirements, including the 22-character limit, see [the Statement Descriptor docs](https://docs.stripe.com/get-started/account/statement-descriptors).
        *
        * Setting this value for a card charge returns an error. For card charges, set the [statement_descriptor_suffix](https://docs.stripe.com/get-started/account/statement-descriptors#dynamic) instead.
@@ -6199,6 +6651,214 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentCaptureParams {
+      interface AmountDetails {
+        /**
+         * The total discount applied on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+         *
+         * This field is mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
+         */
+        discount_amount?: Stripe.Emptyable<number>;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         */
+        line_items?: Stripe.Emptyable<Array<AmountDetails.LineItem>>;
+
+        /**
+         * Contains information about the shipping portion of the amount.
+         */
+        shipping?: Stripe.Emptyable<AmountDetails.Shipping>;
+
+        /**
+         * Contains information about the tax portion of the amount.
+         */
+        tax?: Stripe.Emptyable<AmountDetails.Tax>;
+      }
+
+      namespace AmountDetails {
+        interface LineItem {
+          /**
+           * The discount applied on this line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+           *
+           * This field is mutually exclusive with the `amount_details[discount_amount]` field.
+           */
+          discount_amount?: number;
+
+          /**
+           * Payment method-specific information for line items.
+           */
+          payment_method_options?: LineItem.PaymentMethodOptions;
+
+          /**
+           * The product code of the line item, such as an SKU. Required for L3 rates. At most 12 characters long.
+           */
+          product_code?: string;
+
+          /**
+           * The product name of the line item. Required for L3 rates. At most 1024 characters long.
+           *
+           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
+           */
+          product_name: string;
+
+          /**
+           * The quantity of items. Required for L3 rates. An integer greater than 0.
+           */
+          quantity: number;
+
+          /**
+           * Contains information about the tax on the item.
+           */
+          tax?: LineItem.Tax;
+
+          /**
+           * The unit cost of the line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+           */
+          unit_cost: number;
+
+          /**
+           * A unit of measure for the line item, such as gallons, feet, meters, etc.
+           */
+          unit_of_measure?: string;
+        }
+
+        namespace LineItem {
+          interface PaymentMethodOptions {
+            /**
+             * This sub-hash contains line item details that are specific to `card` payment method."
+             */
+            card?: PaymentMethodOptions.Card;
+
+            /**
+             * This sub-hash contains line item details that are specific to `card_present` payment method."
+             */
+            card_present?: PaymentMethodOptions.CardPresent;
+
+            /**
+             * This sub-hash contains line item details that are specific to `klarna` payment method."
+             */
+            klarna?: PaymentMethodOptions.Klarna;
+
+            /**
+             * This sub-hash contains line item details that are specific to `paypal` payment method."
+             */
+            paypal?: PaymentMethodOptions.Paypal;
+          }
+
+          namespace PaymentMethodOptions {
+            interface Card {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface CardPresent {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface Klarna {
+              /**
+               * URL to an image for the product. Max length, 4096 characters.
+               */
+              image_url?: string;
+
+              /**
+               * URL to the product page. Max length, 4096 characters.
+               */
+              product_url?: string;
+
+              /**
+               * Unique reference for this line item to correlate it with your system's internal records. The field is displayed in the Klarna Consumer App if passed.
+               */
+              reference?: string;
+
+              /**
+               * Reference for the subscription this line item is for.
+               */
+              subscription_reference?: string;
+            }
+
+            interface Paypal {
+              /**
+               * Type of the line item.
+               */
+              category?: Paypal.Category;
+
+              /**
+               * Description of the line item.
+               */
+              description?: string;
+
+              /**
+               * The Stripe account ID of the connected account that sells the item.
+               */
+              sold_by?: string;
+            }
+
+            namespace Paypal {
+              type Category = 'digital_goods' | 'donation' | 'physical_goods';
+            }
+          }
+
+          interface Tax {
+            /**
+             * The total amount of tax on a single line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+             *
+             * This field is mutually exclusive with the `amount_details[tax][total_tax_amount]` field.
+             */
+            total_tax_amount: number;
+          }
+        }
+
+        interface Shipping {
+          /**
+           * If a physical good is being shipped, the cost of shipping represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than or equal to 0.
+           */
+          amount?: Stripe.Emptyable<number>;
+
+          /**
+           * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+           */
+          from_postal_code?: Stripe.Emptyable<string>;
+
+          /**
+           * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+           */
+          to_postal_code?: Stripe.Emptyable<string>;
+        }
+
+        interface Tax {
+          /**
+           * The total amount of tax on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
+           *
+           * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
+           */
+          total_tax_amount: number;
+        }
+      }
+
+      interface PaymentDetails {
+        /**
+         * A unique value to identify the customer. This field is available only for card payments.
+         *
+         * This field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
+         */
+        customer_reference?: Stripe.Emptyable<string>;
+
+        /**
+         * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+         *
+         * Required when the Payment Method Types array contains `card`, including when [automatic_payment_methods.enabled](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-automatic_payment_methods-enabled) is set to `true`.
+         *
+         * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
+         */
+        order_reference?: Stripe.Emptyable<string>;
+      }
+
       interface TransferData {
         /**
          * The amount that will be transferred automatically when a charge succeeds.
@@ -6208,6 +6868,13 @@ declare module 'stripe' {
     }
 
     interface PaymentIntentConfirmParams {
+      /**
+       * Provides industry-specific information about the amount.
+       */
+      amount_details?: Stripe.Emptyable<
+        PaymentIntentConfirmParams.AmountDetails
+      >;
+
       /**
        * Controls when the funds will be captured from the customer's account.
        */
@@ -6248,6 +6915,13 @@ declare module 'stripe' {
        * Set to `true` to indicate that the customer isn't in your checkout flow during this payment attempt and can't authenticate. Use this parameter in scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
        */
       off_session?: boolean | PaymentIntentConfirmParams.OffSession;
+
+      /**
+       * Provides industry-specific information about the charge.
+       */
+      payment_details?: Stripe.Emptyable<
+        PaymentIntentConfirmParams.PaymentDetails
+      >;
 
       /**
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods/transitioning#compatibility) object) to attach to this PaymentIntent.
@@ -6316,6 +6990,196 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentConfirmParams {
+      interface AmountDetails {
+        /**
+         * The total discount applied on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+         *
+         * This field is mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
+         */
+        discount_amount?: Stripe.Emptyable<number>;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         */
+        line_items?: Stripe.Emptyable<Array<AmountDetails.LineItem>>;
+
+        /**
+         * Contains information about the shipping portion of the amount.
+         */
+        shipping?: Stripe.Emptyable<AmountDetails.Shipping>;
+
+        /**
+         * Contains information about the tax portion of the amount.
+         */
+        tax?: Stripe.Emptyable<AmountDetails.Tax>;
+      }
+
+      namespace AmountDetails {
+        interface LineItem {
+          /**
+           * The discount applied on this line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+           *
+           * This field is mutually exclusive with the `amount_details[discount_amount]` field.
+           */
+          discount_amount?: number;
+
+          /**
+           * Payment method-specific information for line items.
+           */
+          payment_method_options?: LineItem.PaymentMethodOptions;
+
+          /**
+           * The product code of the line item, such as an SKU. Required for L3 rates. At most 12 characters long.
+           */
+          product_code?: string;
+
+          /**
+           * The product name of the line item. Required for L3 rates. At most 1024 characters long.
+           *
+           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
+           */
+          product_name: string;
+
+          /**
+           * The quantity of items. Required for L3 rates. An integer greater than 0.
+           */
+          quantity: number;
+
+          /**
+           * Contains information about the tax on the item.
+           */
+          tax?: LineItem.Tax;
+
+          /**
+           * The unit cost of the line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+           */
+          unit_cost: number;
+
+          /**
+           * A unit of measure for the line item, such as gallons, feet, meters, etc.
+           */
+          unit_of_measure?: string;
+        }
+
+        namespace LineItem {
+          interface PaymentMethodOptions {
+            /**
+             * This sub-hash contains line item details that are specific to `card` payment method."
+             */
+            card?: PaymentMethodOptions.Card;
+
+            /**
+             * This sub-hash contains line item details that are specific to `card_present` payment method."
+             */
+            card_present?: PaymentMethodOptions.CardPresent;
+
+            /**
+             * This sub-hash contains line item details that are specific to `klarna` payment method."
+             */
+            klarna?: PaymentMethodOptions.Klarna;
+
+            /**
+             * This sub-hash contains line item details that are specific to `paypal` payment method."
+             */
+            paypal?: PaymentMethodOptions.Paypal;
+          }
+
+          namespace PaymentMethodOptions {
+            interface Card {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface CardPresent {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface Klarna {
+              /**
+               * URL to an image for the product. Max length, 4096 characters.
+               */
+              image_url?: string;
+
+              /**
+               * URL to the product page. Max length, 4096 characters.
+               */
+              product_url?: string;
+
+              /**
+               * Unique reference for this line item to correlate it with your system's internal records. The field is displayed in the Klarna Consumer App if passed.
+               */
+              reference?: string;
+
+              /**
+               * Reference for the subscription this line item is for.
+               */
+              subscription_reference?: string;
+            }
+
+            interface Paypal {
+              /**
+               * Type of the line item.
+               */
+              category?: Paypal.Category;
+
+              /**
+               * Description of the line item.
+               */
+              description?: string;
+
+              /**
+               * The Stripe account ID of the connected account that sells the item.
+               */
+              sold_by?: string;
+            }
+
+            namespace Paypal {
+              type Category = 'digital_goods' | 'donation' | 'physical_goods';
+            }
+          }
+
+          interface Tax {
+            /**
+             * The total amount of tax on a single line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+             *
+             * This field is mutually exclusive with the `amount_details[tax][total_tax_amount]` field.
+             */
+            total_tax_amount: number;
+          }
+        }
+
+        interface Shipping {
+          /**
+           * If a physical good is being shipped, the cost of shipping represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than or equal to 0.
+           */
+          amount?: Stripe.Emptyable<number>;
+
+          /**
+           * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+           */
+          from_postal_code?: Stripe.Emptyable<string>;
+
+          /**
+           * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+           */
+          to_postal_code?: Stripe.Emptyable<string>;
+        }
+
+        interface Tax {
+          /**
+           * The total amount of tax on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
+           *
+           * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
+           */
+          total_tax_amount: number;
+        }
+      }
+
       type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       type ExcludedPaymentMethodType =
@@ -6418,6 +7282,24 @@ declare module 'stripe' {
       }
 
       type OffSession = 'one_off' | 'recurring';
+
+      interface PaymentDetails {
+        /**
+         * A unique value to identify the customer. This field is available only for card payments.
+         *
+         * This field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
+         */
+        customer_reference?: Stripe.Emptyable<string>;
+
+        /**
+         * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+         *
+         * Required when the Payment Method Types array contains `card`, including when [automatic_payment_methods.enabled](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-automatic_payment_methods-enabled) is set to `true`.
+         *
+         * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
+         */
+        order_reference?: Stripe.Emptyable<string>;
+      }
 
       interface PaymentMethodData {
         /**
@@ -9209,6 +10091,11 @@ declare module 'stripe' {
       amount: number;
 
       /**
+       * Provides industry-specific information about the amount.
+       */
+      amount_details?: PaymentIntentIncrementAuthorizationParams.AmountDetails;
+
+      /**
        * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: number;
@@ -9229,6 +10116,11 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
+       * Provides industry-specific information about the charge.
+       */
+      payment_details?: PaymentIntentIncrementAuthorizationParams.PaymentDetails;
+
+      /**
        * Text that appears on the customer's statement as the statement descriptor for a non-card or card charge. This value overrides the account's default statement descriptor. For information about requirements, including the 22-character limit, see [the Statement Descriptor docs](https://docs.stripe.com/get-started/account/statement-descriptors).
        */
       statement_descriptor?: string;
@@ -9241,12 +10133,228 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentIncrementAuthorizationParams {
+      interface AmountDetails {
+        /**
+         * The total discount applied on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+         *
+         * This field is mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
+         */
+        discount_amount?: Stripe.Emptyable<number>;
+
+        /**
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         */
+        line_items?: Stripe.Emptyable<Array<AmountDetails.LineItem>>;
+
+        /**
+         * Contains information about the shipping portion of the amount.
+         */
+        shipping?: Stripe.Emptyable<AmountDetails.Shipping>;
+
+        /**
+         * Contains information about the tax portion of the amount.
+         */
+        tax?: Stripe.Emptyable<AmountDetails.Tax>;
+      }
+
+      namespace AmountDetails {
+        interface LineItem {
+          /**
+           * The discount applied on this line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+           *
+           * This field is mutually exclusive with the `amount_details[discount_amount]` field.
+           */
+          discount_amount?: number;
+
+          /**
+           * Payment method-specific information for line items.
+           */
+          payment_method_options?: LineItem.PaymentMethodOptions;
+
+          /**
+           * The product code of the line item, such as an SKU. Required for L3 rates. At most 12 characters long.
+           */
+          product_code?: string;
+
+          /**
+           * The product name of the line item. Required for L3 rates. At most 1024 characters long.
+           *
+           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
+           */
+          product_name: string;
+
+          /**
+           * The quantity of items. Required for L3 rates. An integer greater than 0.
+           */
+          quantity: number;
+
+          /**
+           * Contains information about the tax on the item.
+           */
+          tax?: LineItem.Tax;
+
+          /**
+           * The unit cost of the line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+           */
+          unit_cost: number;
+
+          /**
+           * A unit of measure for the line item, such as gallons, feet, meters, etc.
+           */
+          unit_of_measure?: string;
+        }
+
+        namespace LineItem {
+          interface PaymentMethodOptions {
+            /**
+             * This sub-hash contains line item details that are specific to `card` payment method."
+             */
+            card?: PaymentMethodOptions.Card;
+
+            /**
+             * This sub-hash contains line item details that are specific to `card_present` payment method."
+             */
+            card_present?: PaymentMethodOptions.CardPresent;
+
+            /**
+             * This sub-hash contains line item details that are specific to `klarna` payment method."
+             */
+            klarna?: PaymentMethodOptions.Klarna;
+
+            /**
+             * This sub-hash contains line item details that are specific to `paypal` payment method."
+             */
+            paypal?: PaymentMethodOptions.Paypal;
+          }
+
+          namespace PaymentMethodOptions {
+            interface Card {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface CardPresent {
+              /**
+               * Identifier that categorizes the items being purchased using a standardized commodity scheme such as (but not limited to) UNSPSC, NAICS, NAPCS, etc.
+               */
+              commodity_code?: string;
+            }
+
+            interface Klarna {
+              /**
+               * URL to an image for the product. Max length, 4096 characters.
+               */
+              image_url?: string;
+
+              /**
+               * URL to the product page. Max length, 4096 characters.
+               */
+              product_url?: string;
+
+              /**
+               * Unique reference for this line item to correlate it with your system's internal records. The field is displayed in the Klarna Consumer App if passed.
+               */
+              reference?: string;
+
+              /**
+               * Reference for the subscription this line item is for.
+               */
+              subscription_reference?: string;
+            }
+
+            interface Paypal {
+              /**
+               * Type of the line item.
+               */
+              category?: Paypal.Category;
+
+              /**
+               * Description of the line item.
+               */
+              description?: string;
+
+              /**
+               * The Stripe account ID of the connected account that sells the item.
+               */
+              sold_by?: string;
+            }
+
+            namespace Paypal {
+              type Category = 'digital_goods' | 'donation' | 'physical_goods';
+            }
+          }
+
+          interface Tax {
+            /**
+             * The total amount of tax on a single line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+             *
+             * This field is mutually exclusive with the `amount_details[tax][total_tax_amount]` field.
+             */
+            total_tax_amount: number;
+          }
+        }
+
+        interface Shipping {
+          /**
+           * If a physical good is being shipped, the cost of shipping represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than or equal to 0.
+           */
+          amount?: Stripe.Emptyable<number>;
+
+          /**
+           * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
+           */
+          from_postal_code?: Stripe.Emptyable<string>;
+
+          /**
+           * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
+           */
+          to_postal_code?: Stripe.Emptyable<string>;
+        }
+
+        interface Tax {
+          /**
+           * The total amount of tax on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
+           *
+           * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
+           */
+          total_tax_amount: number;
+        }
+      }
+
+      interface PaymentDetails {
+        /**
+         * A unique value to identify the customer. This field is available only for card payments.
+         *
+         * This field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
+         */
+        customer_reference?: Stripe.Emptyable<string>;
+
+        /**
+         * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+         *
+         * Required when the Payment Method Types array contains `card`, including when [automatic_payment_methods.enabled](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-automatic_payment_methods-enabled) is set to `true`.
+         *
+         * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
+         */
+        order_reference?: Stripe.Emptyable<string>;
+      }
+
       interface TransferData {
         /**
          * The amount that will be transferred automatically when a charge succeeds.
          */
         amount?: number;
       }
+    }
+
+    interface PaymentIntentListAmountDetailsLineItemsParams
+      extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
     }
 
     interface PaymentIntentSearchParams {
@@ -9467,6 +10575,19 @@ declare module 'stripe' {
         params: PaymentIntentIncrementAuthorizationParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
+
+      /**
+       * Lists all LineItems of a given PaymentIntent.
+       */
+      listAmountDetailsLineItems(
+        id: string,
+        params?: PaymentIntentListAmountDetailsLineItemsParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.PaymentIntentAmountDetailsLineItem>;
+      listAmountDetailsLineItems(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.PaymentIntentAmountDetailsLineItem>;
 
       /**
        * Search for PaymentIntents you've previously created using Stripe's [Search Query Language](https://docs.stripe.com/docs/search#search-query-language).
