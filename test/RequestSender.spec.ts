@@ -1300,6 +1300,7 @@ describe('RequestSender', () => {
               return done(err);
             }
             try {
+              // exact method isn't important, but it needs to be a v2 endpoint
               const result = await stripe.v2.billing.meterEvents.create({
                 name: 'dåvid',
               });
