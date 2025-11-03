@@ -5,7 +5,9 @@ declare module 'stripe' {
     namespace V2 {
       namespace Core {
         namespace Event {
-          interface Changes {}
+          type Changes = {
+            [key: string]: unknown;
+          };
 
           interface Reason {
             /**

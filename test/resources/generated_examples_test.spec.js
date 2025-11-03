@@ -575,7 +575,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/events/ll_123',
         response:
-          '{"changes":{"key":{}},"context":"context","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":{"type":"request","request":{"id":"obj_123","idempotency_key":"idempotency_key"}},"type":"type","v1_event_id":"v1_event_id","livemode":true}',
+          '{"changes":{"int_key":123,"string_key":"value","boolean_key":true,"object_key":{"object_int_key":123,"object_string_key":"value","object_boolean_key":true},"array_key":[1,2,3]},"context":"context","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":{"type":"request","request":{"id":"obj_123","idempotency_key":"idempotency_key"}},"type":"type","v1_event_id":"v1_event_id","livemode":true}',
       },
     ]);
     const event = await stripe.v2.core.events.retrieve('ll_123');
@@ -6631,6 +6631,58 @@ describe('Generated tests', function() {
       }
     );
     expect(offSessionPayment).not.to.be.null;
+  });
+
+  it('test_v2_reporting_report_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/reporting/reports/id_123',
+        response:
+          '{"id":"obj_123","name":"name","object":"v2.reporting.report","parameters":{"key":{"description":"description","required":true,"type":"string"}},"livemode":true}',
+      },
+    ]);
+    const report = await stripe.v2.reporting.reports.retrieve('id_123');
+    expect(report).not.to.be.null;
+  });
+
+  it('test_v2_reporting_report_run_post', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'POST',
+        path: '/v2/reporting/report_runs',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.reporting.report_run","report":"report","report_name":"report_name","report_parameters":{"int_key":123,"string_key":"value","boolean_key":true,"object_key":{"object_int_key":123,"object_string_key":"value","object_boolean_key":true},"array_key":[1,2,3]},"status":"failed","status_details":{"key":{}},"livemode":true}',
+      },
+    ]);
+    const reportRun = await stripe.v2.reporting.reportRuns.create({
+      report: 'report',
+      report_parameters: {
+        int_key: 123,
+        string_key: 'value',
+        boolean_key: true,
+        object_key: {
+          object_int_key: 123,
+          object_string_key: 'value',
+          object_boolean_key: true,
+        },
+        array_key: [1, 2, 3],
+      },
+    });
+    expect(reportRun).not.to.be.null;
+  });
+
+  it('test_v2_reporting_report_run_get', async function() {
+    const stripe = testUtils.createMockClient([
+      {
+        method: 'GET',
+        path: '/v2/reporting/report_runs/id_123',
+        response:
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.reporting.report_run","report":"report","report_name":"report_name","report_parameters":{"int_key":123,"string_key":"value","boolean_key":true,"object_key":{"object_int_key":123,"object_string_key":"value","object_boolean_key":true},"array_key":[1,2,3]},"status":"failed","status_details":{"key":{}},"livemode":true}',
+      },
+    ]);
+    const reportRun = await stripe.v2.reporting.reportRuns.retrieve('id_123');
+    expect(reportRun).not.to.be.null;
   });
 
   it('test_v2_tax_automatic_rule_post', async function() {
