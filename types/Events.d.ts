@@ -16,9 +16,13 @@ declare module 'stripe' {
       }
 
       namespace Data {
-        interface Object {}
+        type Object = {
+          [key: string]: unknown;
+        };
 
-        interface PreviousAttributes {}
+        type PreviousAttributes = {
+          [key: string]: unknown;
+        };
       }
 
       interface Reason {

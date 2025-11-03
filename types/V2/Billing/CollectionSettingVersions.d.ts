@@ -246,9 +246,13 @@ declare module 'stripe' {
               }
             }
 
-            interface Konbini {}
+            type Konbini = {
+              [key: string]: unknown;
+            };
 
-            interface SepaDebit {}
+            type SepaDebit = {
+              [key: string]: unknown;
+            };
 
             interface UsBankAccount {
               /**
