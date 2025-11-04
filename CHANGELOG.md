@@ -33,6 +33,10 @@ This release changes the pinned API version to `2025-10-29.preview`.
   * Add support for error code `outbound_flow_from_closed_financial_account_unsupported` on `FeatureNotEnabledError`
   * Add support for error code `limit_payout_method_crypto_wallet` on `QuotaExceededError`
 
+## 19.2.1 - 2025-11-04
+* [#2492](https://github.com/stripe/stripe-node/pull/2492) Add support for value `payment_record` to enum `InvoicePayment.payment.type`
+* [#2485](https://github.com/stripe/stripe-node/pull/2485) correctly calculate content-length for JSON bodies that contain unicode
+
 ## 19.2.0 - 2025-10-29
 
 This release changes the pinned API version to `2025-10-29.clover`.
