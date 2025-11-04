@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as ApplePayDomainParams from '../params/ApplePayDomainParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const ApplePayDomains = StripeResource.extend({
+export const ApplePayDomainResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/apple_pay/domains'}),
   retrieve: stripeMethod({
     method: 'GET',
@@ -18,3 +19,4 @@ export const ApplePayDomains = StripeResource.extend({
     fullPath: '/v1/apple_pay/domains/{domain}',
   }),
 });
+export class ApplePayDomain {}

@@ -1,9 +1,10 @@
 // File generated from our OpenAPI spec
 
+import * as FileParams from '../params/FileParams.js';
 import {multipartRequestDataProcessor} from '../multipart.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Files = StripeResource.extend({
+export const FileResource = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v1/files',
@@ -21,3 +22,4 @@ export const Files = StripeResource.extend({
 
   requestDataProcessor: multipartRequestDataProcessor,
 });
+export class File {}

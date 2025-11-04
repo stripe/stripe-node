@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as PaymentMethodDomainParams from '../params/PaymentMethodDomainParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const PaymentMethodDomains = StripeResource.extend({
+export const PaymentMethodDomainResource = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v1/payment_method_domains',
@@ -25,3 +26,4 @@ export const PaymentMethodDomains = StripeResource.extend({
     fullPath: '/v1/payment_method_domains/{payment_method_domain}/validate',
   }),
 });
+export class PaymentMethodDomain {}

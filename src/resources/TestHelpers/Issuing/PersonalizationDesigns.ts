@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as PersonalizationDesignParams from '../params/PersonalizationDesignParams.js';
 import {StripeResource} from '../../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const PersonalizationDesigns = StripeResource.extend({
+export const PersonalizationDesignResource = StripeResource.extend({
   activate: stripeMethod({
     method: 'POST',
     fullPath:
@@ -19,3 +20,4 @@ export const PersonalizationDesigns = StripeResource.extend({
       '/v1/test_helpers/issuing/personalization_designs/{personalization_design}/reject',
   }),
 });
+export class PersonalizationDesign {}

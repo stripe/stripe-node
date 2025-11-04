@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as InboundTransferParams from '../params/InboundTransferParams.js';
 import {StripeResource} from '../../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const InboundTransfers = StripeResource.extend({
+export const InboundTransferResource = StripeResource.extend({
   fail: stripeMethod({
     method: 'POST',
     fullPath: '/v1/test_helpers/treasury/inbound_transfers/{id}/fail',
@@ -16,3 +17,4 @@ export const InboundTransfers = StripeResource.extend({
     fullPath: '/v1/test_helpers/treasury/inbound_transfers/{id}/succeed',
   }),
 });
+export class InboundTransfer {}

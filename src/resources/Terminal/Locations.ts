@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as LocationParams from '../params/LocationParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Locations = StripeResource.extend({
+export const LocationResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/terminal/locations'}),
   retrieve: stripeMethod({
     method: 'GET',
@@ -22,3 +23,4 @@ export const Locations = StripeResource.extend({
     fullPath: '/v1/terminal/locations/{location}',
   }),
 });
+export class Location {}

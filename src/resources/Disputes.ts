@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as DisputeParams from '../params/DisputeParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Disputes = StripeResource.extend({
+export const DisputeResource = StripeResource.extend({
   retrieve: stripeMethod({method: 'GET', fullPath: '/v1/disputes/{dispute}'}),
   update: stripeMethod({method: 'POST', fullPath: '/v1/disputes/{dispute}'}),
   list: stripeMethod({
@@ -15,3 +16,4 @@ export const Disputes = StripeResource.extend({
     fullPath: '/v1/disputes/{dispute}/close',
   }),
 });
+export class Dispute {}

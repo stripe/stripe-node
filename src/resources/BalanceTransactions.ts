@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as BalanceTransactionParams from '../params/BalanceTransactionParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const BalanceTransactions = StripeResource.extend({
+export const BalanceTransactionResource = StripeResource.extend({
   retrieve: stripeMethod({
     method: 'GET',
     fullPath: '/v1/balance_transactions/{id}',
@@ -13,3 +14,4 @@ export const BalanceTransactions = StripeResource.extend({
     methodType: 'list',
   }),
 });
+export class BalanceTransaction {}

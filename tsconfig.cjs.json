@@ -6,6 +6,7 @@
     "target": "es2017",
     "checkJs": false,
     "alwaysStrict": true,
+    "allowImportingTsExtensions": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strict": true,

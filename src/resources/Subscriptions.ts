@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as SubscriptionParams from '../params/SubscriptionParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Subscriptions = StripeResource.extend({
+export const SubscriptionResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/subscriptions'}),
   retrieve: stripeMethod({
     method: 'GET',
@@ -39,3 +40,4 @@ export const Subscriptions = StripeResource.extend({
     methodType: 'search',
   }),
 });
+export class Subscription {}

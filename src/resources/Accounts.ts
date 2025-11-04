@@ -1,9 +1,13 @@
 // File generated from our OpenAPI spec
 
+import * as AccountParams from '../params/AccountParams.js';
+
+export {CreateParams} from '../params/AccountsParams.js';
+
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
 // Since path can either be `account` or `accounts`, support both through stripeMethod path
-export const Accounts = StripeResource.extend({
+export const AccountResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/accounts'}),
 
   retrieve(id: string, ...args: any[]) {
@@ -97,3 +101,4 @@ export const Accounts = StripeResource.extend({
     fullPath: '/v1/accounts/{account}/persons/{person}',
   }),
 });
+export class Account {}

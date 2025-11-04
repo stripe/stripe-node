@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as TaxCodeParams from '../params/TaxCodeParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const TaxCodes = StripeResource.extend({
+export const TaxCodeResource = StripeResource.extend({
   retrieve: stripeMethod({method: 'GET', fullPath: '/v1/tax_codes/{id}'}),
   list: stripeMethod({
     method: 'GET',
@@ -10,3 +11,4 @@ export const TaxCodes = StripeResource.extend({
     methodType: 'list',
   }),
 });
+export class TaxCode {}

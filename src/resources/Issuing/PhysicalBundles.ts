@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as PhysicalBundleParams from '../params/PhysicalBundleParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const PhysicalBundles = StripeResource.extend({
+export const PhysicalBundleResource = StripeResource.extend({
   retrieve: stripeMethod({
     method: 'GET',
     fullPath: '/v1/issuing/physical_bundles/{physical_bundle}',
@@ -13,3 +14,4 @@ export const PhysicalBundles = StripeResource.extend({
     methodType: 'list',
   }),
 });
+export class PhysicalBundle {}

@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as TransactionParams from '../params/TransactionParams.js';
 import {StripeResource} from '../../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Transactions = StripeResource.extend({
+export const TransactionResource = StripeResource.extend({
   createForceCapture: stripeMethod({
     method: 'POST',
     fullPath: '/v1/test_helpers/issuing/transactions/create_force_capture',
@@ -16,3 +17,4 @@ export const Transactions = StripeResource.extend({
     fullPath: '/v1/test_helpers/issuing/transactions/{transaction}/refund',
   }),
 });
+export class Transaction {}

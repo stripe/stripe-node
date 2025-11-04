@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as InvoicePaymentParams from '../params/InvoicePaymentParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const InvoicePayments = StripeResource.extend({
+export const InvoicePaymentResource = StripeResource.extend({
   retrieve: stripeMethod({
     method: 'GET',
     fullPath: '/v1/invoice_payments/{invoice_payment}',
@@ -13,3 +14,4 @@ export const InvoicePayments = StripeResource.extend({
     methodType: 'list',
   }),
 });
+export class InvoicePayment {}

@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as VerificationReportParams from '../params/VerificationReportParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const VerificationReports = StripeResource.extend({
+export const VerificationReportResource = StripeResource.extend({
   retrieve: stripeMethod({
     method: 'GET',
     fullPath: '/v1/identity/verification_reports/{report}',
@@ -13,3 +14,4 @@ export const VerificationReports = StripeResource.extend({
     methodType: 'list',
   }),
 });
+export class VerificationReport {}

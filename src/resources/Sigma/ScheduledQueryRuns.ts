@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as ScheduledQueryRunParams from '../params/ScheduledQueryRunParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const ScheduledQueryRuns = StripeResource.extend({
+export const ScheduledQueryRunResource = StripeResource.extend({
   retrieve: stripeMethod({
     method: 'GET',
     fullPath: '/v1/sigma/scheduled_query_runs/{scheduled_query_run}',
@@ -13,3 +14,4 @@ export const ScheduledQueryRuns = StripeResource.extend({
     methodType: 'list',
   }),
 });
+export class ScheduledQueryRun {}

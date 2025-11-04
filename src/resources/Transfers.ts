@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as TransferParams from '../params/TransferParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Transfers = StripeResource.extend({
+export const TransferResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/transfers'}),
   retrieve: stripeMethod({method: 'GET', fullPath: '/v1/transfers/{transfer}'}),
   update: stripeMethod({method: 'POST', fullPath: '/v1/transfers/{transfer}'}),
@@ -29,3 +30,4 @@ export const Transfers = StripeResource.extend({
     fullPath: '/v1/transfers/{transfer}/reversals/{id}',
   }),
 });
+export class Transfer {}

@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as CreditGrantParams from '../params/CreditGrantParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const CreditGrants = StripeResource.extend({
+export const CreditGrantResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/billing/credit_grants'}),
   retrieve: stripeMethod({
     method: 'GET',
@@ -26,3 +27,4 @@ export const CreditGrants = StripeResource.extend({
     fullPath: '/v1/billing/credit_grants/{id}/void',
   }),
 });
+export class CreditGrant {}

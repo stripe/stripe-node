@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as SourceParams from '../params/SourceParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Sources = StripeResource.extend({
+export const SourceResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/sources'}),
   retrieve: stripeMethod({method: 'GET', fullPath: '/v1/sources/{source}'}),
   update: stripeMethod({method: 'POST', fullPath: '/v1/sources/{source}'}),
@@ -16,3 +17,4 @@ export const Sources = StripeResource.extend({
     fullPath: '/v1/sources/{source}/verify',
   }),
 });
+export class Source {}

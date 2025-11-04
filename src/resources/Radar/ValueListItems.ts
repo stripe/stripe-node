@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as ValueListItemParams from '../params/ValueListItemParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const ValueListItems = StripeResource.extend({
+export const ValueListItemResource = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v1/radar/value_list_items',
@@ -21,3 +22,4 @@ export const ValueListItems = StripeResource.extend({
     fullPath: '/v1/radar/value_list_items/{item}',
   }),
 });
+export class ValueListItem {}

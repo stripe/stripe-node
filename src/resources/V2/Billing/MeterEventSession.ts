@@ -1,10 +1,12 @@
 // File generated from our OpenAPI spec
 
+import * as MeterEventSessionParams from '../params/MeterEventSessionParams.js';
 import {StripeResource} from '../../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const MeterEventSession = StripeResource.extend({
+export const MeterEventSessionResource = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v2/billing/meter_event_session',
   }),
 });
+export class MeterEventSession {}

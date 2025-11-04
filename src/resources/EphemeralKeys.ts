@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as EphemeralKeyParams from '../params/EphemeralKeyParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const EphemeralKeys = StripeResource.extend({
+export const EphemeralKeyResource = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v1/ephemeral_keys',
@@ -16,3 +17,4 @@ export const EphemeralKeys = StripeResource.extend({
   }),
   del: stripeMethod({method: 'DELETE', fullPath: '/v1/ephemeral_keys/{key}'}),
 });
+export class EphemeralKey {}

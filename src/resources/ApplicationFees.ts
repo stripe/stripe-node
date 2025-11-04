@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as ApplicationFeeParams from '../params/ApplicationFeeParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const ApplicationFees = StripeResource.extend({
+export const ApplicationFeeResource = StripeResource.extend({
   retrieve: stripeMethod({
     method: 'GET',
     fullPath: '/v1/application_fees/{id}',
@@ -30,3 +31,4 @@ export const ApplicationFees = StripeResource.extend({
     fullPath: '/v1/application_fees/{fee}/refunds/{id}',
   }),
 });
+export class ApplicationFee {}

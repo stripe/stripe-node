@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as VerificationSessionParams from '../params/VerificationSessionParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const VerificationSessions = StripeResource.extend({
+export const VerificationSessionResource = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v1/identity/verification_sessions',
@@ -29,3 +30,4 @@ export const VerificationSessions = StripeResource.extend({
     fullPath: '/v1/identity/verification_sessions/{session}/redact',
   }),
 });
+export class VerificationSession {}

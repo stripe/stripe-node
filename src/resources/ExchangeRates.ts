@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as ExchangeRateParams from '../params/ExchangeRateParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const ExchangeRates = StripeResource.extend({
+export const ExchangeRateResource = StripeResource.extend({
   retrieve: stripeMethod({
     method: 'GET',
     fullPath: '/v1/exchange_rates/{rate_id}',
@@ -13,3 +14,4 @@ export const ExchangeRates = StripeResource.extend({
     methodType: 'list',
   }),
 });
+export class ExchangeRate {}

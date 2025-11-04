@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as InvoiceParams from '../params/InvoiceParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Invoices = StripeResource.extend({
+export const InvoiceResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/invoices'}),
   retrieve: stripeMethod({method: 'GET', fullPath: '/v1/invoices/{invoice}'}),
   update: stripeMethod({method: 'POST', fullPath: '/v1/invoices/{invoice}'}),
@@ -64,3 +65,4 @@ export const Invoices = StripeResource.extend({
     fullPath: '/v1/invoices/{invoice}/void',
   }),
 });
+export class Invoice {}

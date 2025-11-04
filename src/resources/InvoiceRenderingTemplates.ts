@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as InvoiceRenderingTemplateParams from '../params/InvoiceRenderingTemplateParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const InvoiceRenderingTemplates = StripeResource.extend({
+export const InvoiceRenderingTemplateResource = StripeResource.extend({
   retrieve: stripeMethod({
     method: 'GET',
     fullPath: '/v1/invoice_rendering_templates/{template}',
@@ -21,3 +22,4 @@ export const InvoiceRenderingTemplates = StripeResource.extend({
     fullPath: '/v1/invoice_rendering_templates/{template}/unarchive',
   }),
 });
+export class InvoiceRenderingTemplate {}

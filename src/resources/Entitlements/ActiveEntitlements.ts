@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as ActiveEntitlementParams from '../params/ActiveEntitlementParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const ActiveEntitlements = StripeResource.extend({
+export const ActiveEntitlementResource = StripeResource.extend({
   retrieve: stripeMethod({
     method: 'GET',
     fullPath: '/v1/entitlements/active_entitlements/{id}',
@@ -13,3 +14,4 @@ export const ActiveEntitlements = StripeResource.extend({
     methodType: 'list',
   }),
 });
+export class ActiveEntitlement {}

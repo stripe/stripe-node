@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as AuthorizationParams from '../params/AuthorizationParams.js';
 import {StripeResource} from '../../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Authorizations = StripeResource.extend({
+export const AuthorizationResource = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v1/test_helpers/issuing/authorizations',
@@ -35,3 +36,4 @@ export const Authorizations = StripeResource.extend({
     fullPath: '/v1/test_helpers/issuing/authorizations/{authorization}/reverse',
   }),
 });
+export class Authorization {}

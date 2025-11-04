@@ -1,8 +1,11 @@
 // File generated from our OpenAPI spec
 
+import * as CustomerParams from '../params/CustomerParams.js';
+
+export {CreateParams} from '../params/CustomersParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Customers = StripeResource.extend({
+export const CustomerResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/customers'}),
   retrieve: stripeMethod({method: 'GET', fullPath: '/v1/customers/{customer}'}),
   update: stripeMethod({method: 'POST', fullPath: '/v1/customers/{customer}'}),
@@ -112,3 +115,11 @@ export const Customers = StripeResource.extend({
     fullPath: '/v1/customers/{customer}/sources/{id}/verify',
   }),
 });
+export class Customer {}
+
+export {
+  CustomerCreateParams,
+  CustomerUpdateParams,
+  CustomerRetrieveParams,
+  CustomerDeleteParams,
+} from '../params/CustomersParams.js';

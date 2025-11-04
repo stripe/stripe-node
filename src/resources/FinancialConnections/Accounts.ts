@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as AccountParams from '../params/AccountParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Accounts = StripeResource.extend({
+export const AccountResource = StripeResource.extend({
   retrieve: stripeMethod({
     method: 'GET',
     fullPath: '/v1/financial_connections/accounts/{account}',
@@ -34,3 +35,4 @@ export const Accounts = StripeResource.extend({
     fullPath: '/v1/financial_connections/accounts/{account}/unsubscribe',
   }),
 });
+export class Account {}

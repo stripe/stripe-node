@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as CreditNoteParams from '../params/CreditNoteParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const CreditNotes = StripeResource.extend({
+export const CreditNoteResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/credit_notes'}),
   retrieve: stripeMethod({method: 'GET', fullPath: '/v1/credit_notes/{id}'}),
   update: stripeMethod({method: 'POST', fullPath: '/v1/credit_notes/{id}'}),
@@ -27,3 +28,4 @@ export const CreditNotes = StripeResource.extend({
     fullPath: '/v1/credit_notes/{id}/void',
   }),
 });
+export class CreditNote {}

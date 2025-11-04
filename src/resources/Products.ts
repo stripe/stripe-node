@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as ProductParams from '../params/ProductParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Products = StripeResource.extend({
+export const ProductResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/products'}),
   retrieve: stripeMethod({method: 'GET', fullPath: '/v1/products/{id}'}),
   update: stripeMethod({method: 'POST', fullPath: '/v1/products/{id}'}),
@@ -35,3 +36,4 @@ export const Products = StripeResource.extend({
     methodType: 'search',
   }),
 });
+export class Product {}

@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as PayoutParams from '../params/PayoutParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Payouts = StripeResource.extend({
+export const PayoutResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/payouts'}),
   retrieve: stripeMethod({method: 'GET', fullPath: '/v1/payouts/{payout}'}),
   update: stripeMethod({method: 'POST', fullPath: '/v1/payouts/{payout}'}),
@@ -20,3 +21,4 @@ export const Payouts = StripeResource.extend({
     fullPath: '/v1/payouts/{payout}/reverse',
   }),
 });
+export class Payout {}

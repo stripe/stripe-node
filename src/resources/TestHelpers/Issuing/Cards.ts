@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as CardParams from '../params/CardParams.js';
 import {StripeResource} from '../../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Cards = StripeResource.extend({
+export const CardResource = StripeResource.extend({
   deliverCard: stripeMethod({
     method: 'POST',
     fullPath: '/v1/test_helpers/issuing/cards/{card}/shipping/deliver',
@@ -24,3 +25,4 @@ export const Cards = StripeResource.extend({
     fullPath: '/v1/test_helpers/issuing/cards/{card}/shipping/submit',
   }),
 });
+export class Card {}

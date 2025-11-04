@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as SetupIntentParams from '../params/SetupIntentParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const SetupIntents = StripeResource.extend({
+export const SetupIntentResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/setup_intents'}),
   retrieve: stripeMethod({
     method: 'GET',
@@ -30,3 +31,4 @@ export const SetupIntents = StripeResource.extend({
     fullPath: '/v1/setup_intents/{intent}/verify_microdeposits',
   }),
 });
+export class SetupIntent {}

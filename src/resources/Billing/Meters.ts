@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as MeterParams from '../params/MeterParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Meters = StripeResource.extend({
+export const MeterResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/billing/meters'}),
   retrieve: stripeMethod({method: 'GET', fullPath: '/v1/billing/meters/{id}'}),
   update: stripeMethod({method: 'POST', fullPath: '/v1/billing/meters/{id}'}),
@@ -25,3 +26,4 @@ export const Meters = StripeResource.extend({
     fullPath: '/v1/billing/meters/{id}/reactivate',
   }),
 });
+export class Meter {}

@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as ReviewParams from '../params/ReviewParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Reviews = StripeResource.extend({
+export const ReviewResource = StripeResource.extend({
   retrieve: stripeMethod({method: 'GET', fullPath: '/v1/reviews/{review}'}),
   list: stripeMethod({
     method: 'GET',
@@ -14,3 +15,4 @@ export const Reviews = StripeResource.extend({
     fullPath: '/v1/reviews/{review}/approve',
   }),
 });
+export class Review {}

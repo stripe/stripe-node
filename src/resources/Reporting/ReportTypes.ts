@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as ReportTypeParams from '../params/ReportTypeParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const ReportTypes = StripeResource.extend({
+export const ReportTypeResource = StripeResource.extend({
   retrieve: stripeMethod({
     method: 'GET',
     fullPath: '/v1/reporting/report_types/{report_type}',
@@ -13,3 +14,4 @@ export const ReportTypes = StripeResource.extend({
     methodType: 'list',
   }),
 });
+export class ReportType {}

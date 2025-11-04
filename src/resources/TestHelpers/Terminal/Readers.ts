@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as ReaderParams from '../params/ReaderParams.js';
 import {StripeResource} from '../../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Readers = StripeResource.extend({
+export const ReaderResource = StripeResource.extend({
   presentPaymentMethod: stripeMethod({
     method: 'POST',
     fullPath:
@@ -19,3 +20,4 @@ export const Readers = StripeResource.extend({
       '/v1/test_helpers/terminal/readers/{reader}/timeout_input_collection',
   }),
 });
+export class Reader {}

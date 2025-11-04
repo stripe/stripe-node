@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as ReaderParams from '../params/ReaderParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Readers = StripeResource.extend({
+export const ReaderResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/terminal/readers'}),
   retrieve: stripeMethod({
     method: 'GET',
@@ -54,3 +55,4 @@ export const Readers = StripeResource.extend({
     fullPath: '/v1/terminal/readers/{reader}/set_reader_display',
   }),
 });
+export class Reader {}

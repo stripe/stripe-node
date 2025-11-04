@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as PersonalizationDesignParams from '../params/PersonalizationDesignParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const PersonalizationDesigns = StripeResource.extend({
+export const PersonalizationDesignResource = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v1/issuing/personalization_designs',
@@ -21,3 +22,4 @@ export const PersonalizationDesigns = StripeResource.extend({
     methodType: 'list',
   }),
 });
+export class PersonalizationDesign {}

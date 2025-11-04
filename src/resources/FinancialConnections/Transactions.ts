@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as TransactionParams from '../params/TransactionParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Transactions = StripeResource.extend({
+export const TransactionResource = StripeResource.extend({
   retrieve: stripeMethod({
     method: 'GET',
     fullPath: '/v1/financial_connections/transactions/{transaction}',
@@ -13,3 +14,4 @@ export const Transactions = StripeResource.extend({
     methodType: 'list',
   }),
 });
+export class Transaction {}

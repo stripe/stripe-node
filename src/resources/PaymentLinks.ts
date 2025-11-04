@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as PaymentLinkParams from '../params/PaymentLinkParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const PaymentLinks = StripeResource.extend({
+export const PaymentLinkResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/payment_links'}),
   retrieve: stripeMethod({
     method: 'GET',
@@ -23,3 +24,4 @@ export const PaymentLinks = StripeResource.extend({
     methodType: 'list',
   }),
 });
+export class PaymentLink {}

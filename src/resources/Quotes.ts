@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as QuoteParams from '../params/QuoteParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Quotes = StripeResource.extend({
+export const QuoteResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/quotes'}),
   retrieve: stripeMethod({method: 'GET', fullPath: '/v1/quotes/{quote}'}),
   update: stripeMethod({method: 'POST', fullPath: '/v1/quotes/{quote}'}),
@@ -34,3 +35,4 @@ export const Quotes = StripeResource.extend({
     streaming: true,
   }),
 });
+export class Quote {}

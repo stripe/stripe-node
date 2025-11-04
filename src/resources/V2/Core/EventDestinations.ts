@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as EventDestinationParams from '../params/EventDestinationParams.js';
 import {StripeResource} from '../../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const EventDestinations = StripeResource.extend({
+export const EventDestinationResource = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v2/core/event_destinations',
@@ -37,3 +38,4 @@ export const EventDestinations = StripeResource.extend({
     fullPath: '/v2/core/event_destinations/{id}/ping',
   }),
 });
+export class EventDestination {}

@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as WebhookEndpointParams from '../params/WebhookEndpointParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const WebhookEndpoints = StripeResource.extend({
+export const WebhookEndpointResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/webhook_endpoints'}),
   retrieve: stripeMethod({
     method: 'GET',
@@ -22,3 +23,4 @@ export const WebhookEndpoints = StripeResource.extend({
     fullPath: '/v1/webhook_endpoints/{webhook_endpoint}',
   }),
 });
+export class WebhookEndpoint {}

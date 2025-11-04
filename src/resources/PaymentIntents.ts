@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as PaymentIntentParams from '../params/PaymentIntentParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const PaymentIntents = StripeResource.extend({
+export const PaymentIntentResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/payment_intents'}),
   retrieve: stripeMethod({
     method: 'GET',
@@ -52,3 +53,4 @@ export const PaymentIntents = StripeResource.extend({
     fullPath: '/v1/payment_intents/{intent}/verify_microdeposits',
   }),
 });
+export class PaymentIntent {}

@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as PaymentMethodParams from '../params/PaymentMethodParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const PaymentMethods = StripeResource.extend({
+export const PaymentMethodResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/payment_methods'}),
   retrieve: stripeMethod({
     method: 'GET',
@@ -26,3 +27,4 @@ export const PaymentMethods = StripeResource.extend({
     fullPath: '/v1/payment_methods/{payment_method}/detach',
   }),
 });
+export class PaymentMethod {}

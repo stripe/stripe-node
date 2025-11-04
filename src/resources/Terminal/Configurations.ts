@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as ConfigurationParams from '../params/ConfigurationParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Configurations = StripeResource.extend({
+export const ConfigurationResource = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v1/terminal/configurations',
@@ -25,3 +26,4 @@ export const Configurations = StripeResource.extend({
     fullPath: '/v1/terminal/configurations/{configuration}',
   }),
 });
+export class Configuration {}

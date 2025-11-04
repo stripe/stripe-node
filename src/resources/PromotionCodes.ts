@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as PromotionCodeParams from '../params/PromotionCodeParams.js';
 import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const PromotionCodes = StripeResource.extend({
+export const PromotionCodeResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/promotion_codes'}),
   retrieve: stripeMethod({
     method: 'GET',
@@ -18,3 +19,4 @@ export const PromotionCodes = StripeResource.extend({
     methodType: 'list',
   }),
 });
+export class PromotionCode {}

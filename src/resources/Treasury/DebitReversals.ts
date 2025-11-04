@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as DebitReversalParams from '../params/DebitReversalParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const DebitReversals = StripeResource.extend({
+export const DebitReversalResource = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v1/treasury/debit_reversals',
@@ -17,3 +18,4 @@ export const DebitReversals = StripeResource.extend({
     methodType: 'list',
   }),
 });
+export class DebitReversal {}

@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as InboundTransferParams from '../params/InboundTransferParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const InboundTransfers = StripeResource.extend({
+export const InboundTransferResource = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v1/treasury/inbound_transfers',
@@ -21,3 +22,4 @@ export const InboundTransfers = StripeResource.extend({
     fullPath: '/v1/treasury/inbound_transfers/{inbound_transfer}/cancel',
   }),
 });
+export class InboundTransfer {}

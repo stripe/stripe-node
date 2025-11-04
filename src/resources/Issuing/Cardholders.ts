@@ -1,8 +1,9 @@
 // File generated from our OpenAPI spec
 
+import * as CardholderParams from '../params/CardholderParams.js';
 import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
-export const Cardholders = StripeResource.extend({
+export const CardholderResource = StripeResource.extend({
   create: stripeMethod({method: 'POST', fullPath: '/v1/issuing/cardholders'}),
   retrieve: stripeMethod({
     method: 'GET',
@@ -18,3 +19,4 @@ export const Cardholders = StripeResource.extend({
     methodType: 'list',
   }),
 });
+export class Cardholder {}
