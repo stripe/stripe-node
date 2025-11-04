@@ -43,6 +43,7 @@ import {FinancialAccounts as V2MoneyManagementFinancialAccounts} from './resourc
 import {FinancialAddresses as V2MoneyManagementFinancialAddresses} from './resources/V2/MoneyManagement/FinancialAddresses.js';
 import {FinancialAddresses as V2TestHelpersFinancialAddresses} from './resources/V2/TestHelpers/FinancialAddresses.js';
 import {FinancingOffers as CapitalFinancingOffers} from './resources/Capital/FinancingOffers.js';
+import {FinancingOffers as TestHelpersCapitalFinancingOffers} from './resources/TestHelpers/Capital/FinancingOffers.js';
 import {FinancingSummary as CapitalFinancingSummary} from './resources/Capital/FinancingSummary.js';
 import {FinancingTransactions as CapitalFinancingTransactions} from './resources/Capital/FinancingTransactions.js';
 import {Forms as TaxForms} from './resources/Tax/Forms.js';
@@ -293,6 +294,9 @@ export const TestHelpers = resourceNamespace('testHelpers', {
   Customers: TestHelpersCustomers,
   Refunds: TestHelpersRefunds,
   TestClocks: TestHelpersTestClocks,
+  Capital: resourceNamespace('capital', {
+    FinancingOffers: TestHelpersCapitalFinancingOffers,
+  }),
   Issuing: resourceNamespace('issuing', {
     Authorizations: TestHelpersIssuingAuthorizations,
     Cards: TestHelpersIssuingCards,

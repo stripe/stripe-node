@@ -125,6 +125,7 @@
 ///<reference path='./Terminal/OnboardingLinksResource.d.ts' />
 ///<reference path='./Terminal/ReaderCollectedDataResource.d.ts' />
 ///<reference path='./Terminal/ReadersResource.d.ts' />
+///<reference path='./TestHelpers/Capital/FinancingOffersResource.d.ts' />
 ///<reference path='./TestHelpers/ConfirmationTokensResource.d.ts' />
 ///<reference path='./TestHelpers/CustomersResource.d.ts' />
 ///<reference path='./TestHelpers/Issuing/AuthorizationsResource.d.ts' />
@@ -620,6 +621,9 @@ declare module 'stripe' {
       customers: Stripe.TestHelpers.CustomersResource;
       refunds: Stripe.TestHelpers.RefundsResource;
       testClocks: Stripe.TestHelpers.TestClocksResource;
+      capital: {
+        financingOffers: Stripe.TestHelpers.Capital.FinancingOffersResource;
+      };
       issuing: {
         authorizations: Stripe.TestHelpers.Issuing.AuthorizationsResource;
         cards: Stripe.TestHelpers.Issuing.CardsResource;
