@@ -2067,6 +2067,11 @@ declare module 'stripe' {
 
         interface CardPresent {
           /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: CardPresent.CaptureMethod;
+
+          /**
            * Request ability to capture this payment beyond the standard [authorization validity window](https://stripe.com/docs/terminal/features/extended-authorizations#authorization-validity)
            */
           request_extended_authorization: boolean | null;
@@ -2080,6 +2085,8 @@ declare module 'stripe' {
         }
 
         namespace CardPresent {
+          type CaptureMethod = 'manual' | 'manual_preferred';
+
           interface Routing {
             /**
              * Requested routing priority
