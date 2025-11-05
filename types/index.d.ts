@@ -370,6 +370,7 @@
 ///<reference path='./Topups.d.ts' />
 ///<reference path='./TransferReversals.d.ts' />
 ///<reference path='./Transfers.d.ts' />
+///<reference path='./TransitBalances.d.ts' />
 ///<reference path='./Treasury/CreditReversals.d.ts' />
 ///<reference path='./Treasury/DebitReversals.d.ts' />
 ///<reference path='./Treasury/FinancialAccountFeatures.d.ts' />
