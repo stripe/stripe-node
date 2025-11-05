@@ -259,7 +259,7 @@ declare module 'stripe' {
           amount: number | null;
 
           /**
-           * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+           * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
            */
           amount_type: Payto.AmountType;
 
@@ -269,7 +269,7 @@ declare module 'stripe' {
           end_date: string | null;
 
           /**
-           * The periodicity at which payments will be collected.
+           * The periodicity at which payments will be collected. Defaults to `adhoc`.
            */
           payment_schedule: Payto.PaymentSchedule;
 
@@ -279,7 +279,7 @@ declare module 'stripe' {
           payments_per_period: number | null;
 
           /**
-           * The purpose for which payments are made. Defaults to retail.
+           * The purpose for which payments are made. Has a default value based on your merchant category code.
            */
           purpose: Payto.Purpose | null;
 

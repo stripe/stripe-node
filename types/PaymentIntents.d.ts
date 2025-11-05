@@ -2515,6 +2515,11 @@ declare module 'stripe' {
 
         interface CardPresent {
           /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: CardPresent.CaptureMethod;
+
+          /**
            * Request ability to capture this payment beyond the standard [authorization validity window](https://stripe.com/docs/terminal/features/extended-authorizations#authorization-validity)
            */
           request_extended_authorization: boolean | null;
@@ -2528,6 +2533,8 @@ declare module 'stripe' {
         }
 
         namespace CardPresent {
+          type CaptureMethod = 'manual' | 'manual_preferred';
+
           interface Routing {
             /**
              * Requested routing priority
@@ -3157,7 +3164,7 @@ declare module 'stripe' {
             amount: number | null;
 
             /**
-             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
              */
             amount_type: MandateOptions.AmountType | null;
 
@@ -3167,7 +3174,7 @@ declare module 'stripe' {
             end_date: string | null;
 
             /**
-             * The periodicity at which payments will be collected.
+             * The periodicity at which payments will be collected. Defaults to `adhoc`.
              */
             payment_schedule: MandateOptions.PaymentSchedule | null;
 
@@ -3177,7 +3184,7 @@ declare module 'stripe' {
             payments_per_period: number | null;
 
             /**
-             * The purpose for which payments are made. Defaults to retail.
+             * The purpose for which payments are made. Has a default value based on your merchant category code.
              */
             purpose: MandateOptions.Purpose | null;
           }
