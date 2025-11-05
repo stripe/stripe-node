@@ -1,4 +1,8 @@
 # Changelog
+## 19.3.0 - 2025-11-05
+* [#2488](https://github.com/stripe/stripe-node/pull/2488) Update generated code
+  * Add support for `capture_method` on `PaymentIntent.payment_method_options.card_present`, `PaymentIntentConfirmParams.payment_method_options.card_present`, `PaymentIntentCreateParams.payment_method_options.card_present`, and `PaymentIntentUpdateParams.payment_method_options.card_present`
+
 ## 19.2.1 - 2025-11-04
 * [#2492](https://github.com/stripe/stripe-node/pull/2492) Add support for value `payment_record` to enum `InvoicePayment.payment.type`
 * [#2485](https://github.com/stripe/stripe-node/pull/2485) correctly calculate content-length for JSON bodies that contain unicode
