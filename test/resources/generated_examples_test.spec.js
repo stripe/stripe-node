@@ -575,7 +575,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/events/ll_123',
         response:
-          '{"context":"context","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","reason":{"type":"request","request":{"id":"obj_123","idempotency_key":"idempotency_key"}},"type":"type","livemode":true}',
+          '{"context":"context","created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"object":"v2.core.event","reason":{"type":"request","request":{"id":"obj_123","idempotency_key":"idempotency_key"}},"type":"type"}',
       },
     ]);
     const event = await stripe.v2.core.events.retrieve('ll_123');
@@ -3977,7 +3977,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/events',
         response:
-          '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","type":"type","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"object":"v2.core.event","type":"type"}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const events = await stripe.v2.core.events.list();
@@ -3990,7 +3990,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/core/events/id_123',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","type":"type","livemode":true}',
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"object":"v2.core.event","type":"type"}',
       },
     ]);
     const event = await stripe.v2.core.events.retrieve('id_123');
@@ -4106,7 +4106,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/core/event_destinations/id_123/ping',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.core.event","type":"type","livemode":true}',
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","livemode":true,"object":"v2.core.event","type":"type"}',
       },
     ]);
     const event = await stripe.v2.core.eventDestinations.ping('id_123');
