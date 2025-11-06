@@ -106,7 +106,9 @@ declare module 'stripe' {
       }
 
       namespace Script {
-        interface Configuration {}
+        type Configuration = {
+          [key: string]: unknown;
+        };
       }
     }
 

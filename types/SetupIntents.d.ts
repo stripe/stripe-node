@@ -664,7 +664,9 @@ declare module 'stripe' {
           url: string | null;
         }
 
-        interface UseStripeSdk {}
+        type UseStripeSdk = {
+          [key: string]: unknown;
+        };
 
         interface VerifyWithMicrodeposits {
           /**

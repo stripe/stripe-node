@@ -43,6 +43,7 @@ import {FinancialAccounts as V2MoneyManagementFinancialAccounts} from './resourc
 import {FinancialAddresses as V2MoneyManagementFinancialAddresses} from './resources/V2/MoneyManagement/FinancialAddresses.js';
 import {FinancialAddresses as V2TestHelpersFinancialAddresses} from './resources/V2/TestHelpers/FinancialAddresses.js';
 import {FinancingOffers as CapitalFinancingOffers} from './resources/Capital/FinancingOffers.js';
+import {FinancingOffers as TestHelpersCapitalFinancingOffers} from './resources/TestHelpers/Capital/FinancingOffers.js';
 import {FinancingSummary as CapitalFinancingSummary} from './resources/Capital/FinancingSummary.js';
 import {FinancingTransactions as CapitalFinancingTransactions} from './resources/Capital/FinancingTransactions.js';
 import {Forms as TaxForms} from './resources/Tax/Forms.js';
@@ -103,7 +104,9 @@ import {RedactionJobs as PrivacyRedactionJobs} from './resources/Privacy/Redacti
 import {Refunds as TestHelpersRefunds} from './resources/TestHelpers/Refunds.js';
 import {Registrations as TaxRegistrations} from './resources/Tax/Registrations.js';
 import {ReportRuns as ReportingReportRuns} from './resources/Reporting/ReportRuns.js';
+import {ReportRuns as V2ReportingReportRuns} from './resources/V2/Reporting/ReportRuns.js';
 import {ReportTypes as ReportingReportTypes} from './resources/Reporting/ReportTypes.js';
+import {Reports as V2ReportingReports} from './resources/V2/Reporting/Reports.js';
 import {RequestedSessions as DelegatedCheckoutRequestedSessions} from './resources/DelegatedCheckout/RequestedSessions.js';
 import {Requests as ForwardingRequests} from './resources/Forwarding/Requests.js';
 import {ScheduledQueryRuns as SigmaScheduledQueryRuns} from './resources/Sigma/ScheduledQueryRuns.js';
@@ -291,6 +294,9 @@ export const TestHelpers = resourceNamespace('testHelpers', {
   Customers: TestHelpersCustomers,
   Refunds: TestHelpersRefunds,
   TestClocks: TestHelpersTestClocks,
+  Capital: resourceNamespace('capital', {
+    FinancingOffers: TestHelpersCapitalFinancingOffers,
+  }),
   Issuing: resourceNamespace('issuing', {
     Authorizations: TestHelpersIssuingAuthorizations,
     Cards: TestHelpersIssuingCards,
@@ -372,6 +378,10 @@ export const V2 = resourceNamespace('v2', {
   }),
   Payment: resourceNamespace('payment', {
     OffSessionPayments: V2PaymentsOffSessionPayments,
+  }),
+  Reporting: resourceNamespace('reporting', {
+    ReportRuns: V2ReportingReportRuns,
+    Reports: V2ReportingReports,
   }),
   Tax: resourceNamespace('tax', {AutomaticRules: V2TaxAutomaticRules}),
   TestHelper: resourceNamespace('testHelper', {

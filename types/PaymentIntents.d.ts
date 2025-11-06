@@ -1403,7 +1403,9 @@ declare module 'stripe' {
           }
         }
 
-        interface UseStripeSdk {}
+        type UseStripeSdk = {
+          [key: string]: unknown;
+        };
 
         interface VerifyWithMicrodeposits {
           /**

@@ -92,7 +92,7 @@ declare module 'stripe' {
       }
 
       namespace Payment {
-        type Type = 'charge' | 'payment_intent';
+        type Type = 'charge' | 'payment_intent' | 'payment_record';
       }
 
       interface StatusTransitions {

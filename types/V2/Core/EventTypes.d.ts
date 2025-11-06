@@ -315,7 +315,11 @@ declare module 'stripe' {
       | Stripe.Events.V2PaymentsOffSessionPaymentCreatedEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentFailedEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentRequiresCaptureEvent
-      | Stripe.Events.V2PaymentsOffSessionPaymentSucceededEvent;
+      | Stripe.Events.V2PaymentsOffSessionPaymentSucceededEvent
+      | Stripe.Events.V2ReportingReportRunCreatedEvent
+      | Stripe.Events.V2ReportingReportRunFailedEvent
+      | Stripe.Events.V2ReportingReportRunSucceededEvent
+      | Stripe.Events.V2ReportingReportRunUpdatedEvent;
 
     export type EventNotification =
       | Stripe.Events.V1AccountUpdatedEventNotification
@@ -630,7 +634,11 @@ declare module 'stripe' {
       | Stripe.Events.V2PaymentsOffSessionPaymentCreatedEventNotification
       | Stripe.Events.V2PaymentsOffSessionPaymentFailedEventNotification
       | Stripe.Events.V2PaymentsOffSessionPaymentRequiresCaptureEventNotification
-      | Stripe.Events.V2PaymentsOffSessionPaymentSucceededEventNotification;
+      | Stripe.Events.V2PaymentsOffSessionPaymentSucceededEventNotification
+      | Stripe.Events.V2ReportingReportRunCreatedEventNotification
+      | Stripe.Events.V2ReportingReportRunFailedEventNotification
+      | Stripe.Events.V2ReportingReportRunSucceededEventNotification
+      | Stripe.Events.V2ReportingReportRunUpdatedEventNotification;
   }
 
   namespace Stripe.Events {
@@ -8830,6 +8838,89 @@ declare module 'stripe' {
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
       fetchEvent(): Promise<V2PaymentsOffSessionPaymentSucceededEvent>;
+    }
+
+    /**
+     * Occurs when a ReportRun is created.
+     */
+    export interface V2ReportingReportRunCreatedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.reporting.report_run.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Reporting.ReportRun>;
+    }
+    export interface V2ReportingReportRunCreatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.reporting.report_run.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Reporting.ReportRun>;
+      fetchEvent(): Promise<V2ReportingReportRunCreatedEvent>;
+    }
+
+    /**
+     * Occurs when a ReportRun has failed to complete.
+     */
+    export interface V2ReportingReportRunFailedEvent extends V2.Core.EventBase {
+      type: 'v2.reporting.report_run.failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Reporting.ReportRun>;
+    }
+    export interface V2ReportingReportRunFailedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.reporting.report_run.failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Reporting.ReportRun>;
+      fetchEvent(): Promise<V2ReportingReportRunFailedEvent>;
+    }
+
+    /**
+     * Occurs when a ReportRun has successfully completed.
+     */
+    export interface V2ReportingReportRunSucceededEvent
+      extends V2.Core.EventBase {
+      type: 'v2.reporting.report_run.succeeded';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Reporting.ReportRun>;
+    }
+    export interface V2ReportingReportRunSucceededEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.reporting.report_run.succeeded';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Reporting.ReportRun>;
+      fetchEvent(): Promise<V2ReportingReportRunSucceededEvent>;
+    }
+
+    /**
+     * Occurs when a ReportRun is updated.
+     */
+    export interface V2ReportingReportRunUpdatedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.reporting.report_run.updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Reporting.ReportRun>;
+    }
+    export interface V2ReportingReportRunUpdatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.reporting.report_run.updated';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Reporting.ReportRun>;
+      fetchEvent(): Promise<V2ReportingReportRunUpdatedEvent>;
     }
   }
 }
