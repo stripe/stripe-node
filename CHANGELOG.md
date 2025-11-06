@@ -1,5 +1,14 @@
 # Changelog
 
+## 19.4.0-alpha.1 - 2025-11-06
+* [#2489](https://github.com/stripe/stripe-node/pull/2489) Update generated code for private-preview
+  * Add support for new resources `TransitBalance`, `V2.Reporting.ReportRun`, `V2.Reporting.Report`
+  * Add support for `create` and `retrieve` methods on resource `V2.Reporting.ReportRun`
+  * Add support for `retrieve` method on resource `V2.Reporting.Report`
+  * Add support for `create` and `refill` test helper methods on resource `Capital.FinancingOffer`
+  * Add support for `allocated_funds` on `Charge`, `PaymentIntentConfirmParams`, `PaymentIntentCreateParams`, and `PaymentIntentUpdateParams`
+  * Add support for thin events `V2ReportingReportRunCreatedEvent`, `V2ReportingReportRunFailedEvent`, `V2ReportingReportRunSucceededEvent`, and `V2ReportingReportRunUpdatedEvent` with related object `V2.Reporting.ReportRun`
+
 ## 19.3.0-beta.1 - 2025-10-29
 
 This release changes the pinned API version to `2025-10-29.preview`.
@@ -316,6 +325,8 @@ This release changes the pinned API version to `2025-09-30.preview`. It is built
   * Add support for thin event `V2CoreClaimableSandboxCreatedEvent` with related object `V2.Core.ClaimableSandbox`
   * Add support for thin events `V2MoneyManagementRecipientVerificationCreatedEvent` and `V2MoneyManagementRecipientVerificationUpdatedEvent` with related object `V2.MoneyManagement.RecipientVerification`
   * Add support for error code `account_rate_limit_exceeded` on `RateLimitError`
+  * Remove support for resources `V2.Reporting.ReportRun`, `V2.Reporting.Report`
+  * Remove support for thin events `V2ReportingReportRunCreatedEvent`, `V2ReportingReportRunFailedEvent`, `V2ReportingReportRunSucceededEvent`, and `V2ReportingReportRunUpdatedEvent` with related object `V2.Reporting.ReportRun`
 
 ## 19.0.0 - 2025-09-30
 This release changes the pinned API version to `2025-09-30.clover` and contains breaking changes (prefixed with ⚠️ below)
