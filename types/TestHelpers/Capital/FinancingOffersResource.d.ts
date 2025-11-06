@@ -5,12 +5,24 @@ declare module 'stripe' {
     namespace TestHelpers {
       namespace Capital {
         interface FinancingOfferCreateParams {
+          /**
+           * Amount of financing offered, in minor units. For example, 1,000 USD is represented as 100000.
+           */
           advance_amount: number;
 
+          /**
+           * Fixed fee amount, in minor units. For example, 100 USD is represented as 10000.
+           */
           fee_amount: number;
 
+          /**
+           * The type of financing offer.
+           */
           financing_type: FinancingOfferCreateParams.FinancingType;
 
+          /**
+           * Per-transaction rate at which Stripe withholds funds to repay the financing.
+           */
           withhold_rate: number;
 
           /**
@@ -18,6 +30,9 @@ declare module 'stripe' {
            */
           expand?: Array<string>;
 
+          /**
+           * The status of the financing offer.
+           */
           status?: FinancingOfferCreateParams.Status;
         }
 
@@ -41,12 +56,24 @@ declare module 'stripe' {
 
       namespace Capital {
         interface FinancingOfferRefillParams {
+          /**
+           * Amount of financing offered, in minor units. For example, 1,000 USD is represented as 100000.
+           */
           advance_amount: number;
 
+          /**
+           * Fixed fee amount, in minor units. For example, 100 USD is represented as 10000.
+           */
           fee_amount: number;
 
+          /**
+           * The type of financing offer
+           */
           financing_type: FinancingOfferRefillParams.FinancingType;
 
+          /**
+           * Per-transaction rate at which Stripe withholds funds to repay the financing.
+           */
           withhold_rate: number;
 
           /**
@@ -54,6 +81,9 @@ declare module 'stripe' {
            */
           expand?: Array<string>;
 
+          /**
+           * The status of the financing offer
+           */
           status?: FinancingOfferRefillParams.Status;
         }
 
