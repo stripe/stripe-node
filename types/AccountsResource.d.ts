@@ -1716,6 +1716,16 @@ declare module 'stripe' {
          * The individual's verification document information.
          */
         verification?: Individual.Verification;
+
+        /**
+         * The credit applicant's self-reported yearly income in minor units.
+         */
+        self_reported_income?: Individual.SelfReportedIncome;
+
+        /**
+         * The credit applicant's self-reported monthly housing payment in minor units.
+         */
+        self_reported_monthly_housing_payment?: Individual.SelfReportedMonthlyHousingPayment;
       }
 
       namespace Individual {
@@ -1763,6 +1773,18 @@ declare module 'stripe' {
            * The person's title (e.g., CEO, Support Engineer).
            */
           title?: string;
+        }
+
+        interface SelfReportedIncome {
+          amount: number;
+
+          currency: string;
+        }
+
+        interface SelfReportedMonthlyHousingPayment {
+          amount: number;
+
+          currency: string;
         }
 
         interface Verification {
@@ -3824,6 +3846,16 @@ declare module 'stripe' {
          * The individual's verification document information.
          */
         verification?: Individual.Verification;
+
+        /**
+         * The credit applicant's self-reported yearly income in minor units.
+         */
+        self_reported_income?: Individual.SelfReportedIncome;
+
+        /**
+         * The credit applicant's self-reported monthly housing payment in minor units.
+         */
+        self_reported_monthly_housing_payment?: Individual.SelfReportedMonthlyHousingPayment;
       }
 
       namespace Individual {
@@ -3871,6 +3903,18 @@ declare module 'stripe' {
            * The person's title (e.g., CEO, Support Engineer).
            */
           title?: string;
+        }
+
+        interface SelfReportedIncome {
+          amount: number;
+
+          currency: string;
+        }
+
+        interface SelfReportedMonthlyHousingPayment {
+          amount: number;
+
+          currency: string;
         }
 
         interface Verification {
@@ -4540,6 +4584,16 @@ declare module 'stripe' {
       relationship?: AccountCreatePersonParams.Relationship;
 
       /**
+       * The credit applicant's self-reported yearly income in minor units.
+       */
+      self_reported_income?: AccountCreatePersonParams.SelfReportedIncome;
+
+      /**
+       * The credit applicant's self-reported monthly housing payment in minor units.
+       */
+      self_reported_monthly_housing_payment?: AccountCreatePersonParams.SelfReportedMonthlyHousingPayment;
+
+      /**
        * The last four digits of the person's Social Security number (U.S. only).
        */
       ssn_last_4?: string;
@@ -4681,6 +4735,18 @@ declare module 'stripe' {
          * The person's title (e.g., CEO, Support Engineer).
          */
         title?: string;
+      }
+
+      interface SelfReportedIncome {
+        amount: number;
+
+        currency: string;
+      }
+
+      interface SelfReportedMonthlyHousingPayment {
+        amount: number;
+
+        currency: string;
       }
 
       interface UsCfpbData {
@@ -5169,6 +5235,16 @@ declare module 'stripe' {
       relationship?: AccountUpdatePersonParams.Relationship;
 
       /**
+       * The credit applicant's self-reported yearly income in minor units.
+       */
+      self_reported_income?: AccountUpdatePersonParams.SelfReportedIncome;
+
+      /**
+       * The credit applicant's self-reported monthly housing payment in minor units.
+       */
+      self_reported_monthly_housing_payment?: AccountUpdatePersonParams.SelfReportedMonthlyHousingPayment;
+
+      /**
        * The last four digits of the person's Social Security number (U.S. only).
        */
       ssn_last_4?: string;
@@ -5310,6 +5386,18 @@ declare module 'stripe' {
          * The person's title (e.g., CEO, Support Engineer).
          */
         title?: string;
+      }
+
+      interface SelfReportedIncome {
+        amount: number;
+
+        currency: string;
+      }
+
+      interface SelfReportedMonthlyHousingPayment {
+        amount: number;
+
+        currency: string;
       }
 
       interface UsCfpbData {

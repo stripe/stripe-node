@@ -165,6 +165,10 @@ declare module 'stripe' {
        */
       requirements?: Person.Requirements | null;
 
+      self_reported_income?: Person.SelfReportedIncome;
+
+      self_reported_monthly_housing_payment?: Person.SelfReportedMonthlyHousingPayment;
+
       /**
        * Whether the last four digits of the person's Social Security number have been provided (U.S. only).
        */
@@ -668,6 +672,30 @@ declare module 'stripe' {
             | 'verification_requires_additional_proof_of_registration'
             | 'verification_supportability';
         }
+      }
+
+      interface SelfReportedIncome {
+        /**
+         * Amount in the minor currency unit (e.g., cents for USD)
+         */
+        amount: number;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+      }
+
+      interface SelfReportedMonthlyHousingPayment {
+        /**
+         * Amount in the minor currency unit (e.g., cents for USD)
+         */
+        amount: number;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
       }
 
       interface UsCfpbData {
