@@ -24,11 +24,6 @@ declare module 'stripe' {
           amount_capturable?: Amount;
 
           /**
-           * Provides industry-specific information about the amount.
-           */
-          amount_details?: OffSessionPayment.AmountDetails;
-
-          /**
            * The “presentment amount” to be collected from the customer.
            */
           amount_requested: Amount;
@@ -42,11 +37,6 @@ declare module 'stripe' {
            * Details about the capture configuration for the OffSessionPayment.
            */
           capture?: OffSessionPayment.Capture;
-
-          /**
-           * Whether the OffSessionPayment should be captured automatically or manually.
-           */
-          capture_method?: OffSessionPayment.CaptureMethod;
 
           /**
            * ID of the owning compartment.
@@ -150,95 +140,6 @@ declare module 'stripe' {
         }
 
         namespace OffSessionPayment {
-          interface AmountDetails {
-            /**
-             * The amount the total transaction was discounted for.
-             */
-            discount_amount?: number;
-
-            /**
-             * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
-             */
-            line_items: Array<AmountDetails.LineItem>;
-
-            /**
-             * Contains information about the shipping portion of the amount.
-             */
-            shipping?: AmountDetails.Shipping;
-
-            /**
-             * Contains information about the tax portion of the amount.
-             */
-            tax?: AmountDetails.Tax;
-          }
-
-          namespace AmountDetails {
-            interface LineItem {
-              /**
-               * The amount an item was discounted for. Positive integer.
-               */
-              discount_amount?: number;
-
-              /**
-               * Unique identifier of the product. At most 12 characters long.
-               */
-              product_code?: string;
-
-              /**
-               * Name of the product. At most 100 characters long.
-               */
-              product_name: string;
-
-              /**
-               * Number of items of the product. Positive integer.
-               */
-              quantity: number;
-
-              /**
-               * Contains information about the tax on the item.
-               */
-              tax?: LineItem.Tax;
-
-              /**
-               * Cost of the product. Non-negative integer.
-               */
-              unit_cost: number;
-            }
-
-            namespace LineItem {
-              interface Tax {
-                /**
-                 * Total portion of the amount that is for tax.
-                 */
-                total_tax_amount?: number;
-              }
-            }
-
-            interface Shipping {
-              /**
-               * Portion of the amount that is for shipping.
-               */
-              amount?: number;
-
-              /**
-               * The postal code that represents the shipping source.
-               */
-              from_postal_code?: string;
-
-              /**
-               * The postal code that represents the shipping destination.
-               */
-              to_postal_code?: string;
-            }
-
-            interface Tax {
-              /**
-               * Total portion of the amount that is for tax.
-               */
-              total_tax_amount?: number;
-            }
-          }
-
           type Cadence = 'recurring' | 'unscheduled';
 
           interface Capture {
@@ -256,8 +157,6 @@ declare module 'stripe' {
           namespace Capture {
             type CaptureMethod = 'automatic' | 'manual';
           }
-
-          type CaptureMethod = 'automatic' | 'manual';
 
           type FailureReason =
             | 'authorization_expired'

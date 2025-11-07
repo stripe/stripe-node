@@ -634,7 +634,7 @@ declare module 'stripe' {
                 location?: AutomaticIndirectTax.Location;
 
                 /**
-                 * The data source used to identify the customer's tax location - defaults to 'identity_address'. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions.
+                 * The data source used to identify the customer's tax location - defaults to `identity_address`. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions.
                  */
                 location_source?: AutomaticIndirectTax.LocationSource;
               }
@@ -875,9 +875,19 @@ declare module 'stripe' {
               card_payments?: Merchant.CardPayments;
 
               /**
+               * Settings specific to Konbini payments on the account.
+               */
+              konbini_payments?: Merchant.KonbiniPayments;
+
+              /**
                * The merchant category code for the merchant. MCCs are used to classify businesses based on the goods or services they provide.
                */
               mcc?: string;
+
+              /**
+               * Settings for the default text that appears on statements for language variations.
+               */
+              script_statement_descriptor?: Merchant.ScriptStatementDescriptor;
 
               /**
                * Settings used for SEPA debit payments.
@@ -3574,6 +3584,84 @@ declare module 'stripe' {
                 }
               }
 
+              interface KonbiniPayments {
+                /**
+                 * Support for Konbini payments.
+                 */
+                support?: KonbiniPayments.Support;
+              }
+
+              namespace KonbiniPayments {
+                interface Support {
+                  /**
+                   * Support email address for Konbini payments.
+                   */
+                  email?: string;
+
+                  /**
+                   * Support hours for Konbini payments.
+                   */
+                  hours?: Support.Hours;
+
+                  /**
+                   * Support phone number for Konbini payments.
+                   */
+                  phone?: string;
+                }
+
+                namespace Support {
+                  interface Hours {
+                    /**
+                     * Support hours end time (JST time of day) for in `HH:MM` format.
+                     */
+                    end_time?: string;
+
+                    /**
+                     * Support hours start time (JST time of day) for in `HH:MM` format.
+                     */
+                    start_time?: string;
+                  }
+                }
+              }
+
+              interface ScriptStatementDescriptor {
+                /**
+                 * The Kana variation of statement_descriptor used for charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
+                 */
+                kana?: ScriptStatementDescriptor.Kana;
+
+                /**
+                 * The Kanji variation of statement_descriptor used for charges in Japan. Japanese statement descriptors have [special requirements](https://docs.stripe.com/get-started/account/statement-descriptors#set-japanese-statement-descriptors).
+                 */
+                kanji?: ScriptStatementDescriptor.Kanji;
+              }
+
+              namespace ScriptStatementDescriptor {
+                interface Kana {
+                  /**
+                   * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a statement_descriptor_prefix, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the statement_descriptor text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
+                   */
+                  descriptor?: string;
+
+                  /**
+                   * Default text that appears on statements for card charges outside of Japan, prefixing any dynamic statement_descriptor_suffix specified on the charge. To maximize space for the dynamic part of the descriptor, keep this text short. If you don't specify this value, statement_descriptor is used as the prefix. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
+                   */
+                  prefix?: string;
+                }
+
+                interface Kanji {
+                  /**
+                   * The default text that appears on statements for non-card charges outside of Japan. For card charges, if you don't set a statement_descriptor_prefix, this text is also used as the statement descriptor prefix. In that case, if concatenating the statement descriptor suffix causes the combined statement descriptor to exceed 22 characters, we truncate the statement_descriptor text to limit the full descriptor to 22 characters. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
+                   */
+                  descriptor?: string;
+
+                  /**
+                   * Default text that appears on statements for card charges outside of Japan, prefixing any dynamic statement_descriptor_suffix specified on the charge. To maximize space for the dynamic part of the descriptor, keep this text short. If you don't specify this value, statement_descriptor is used as the prefix. For more information about statement descriptors and their requirements, see the Merchant Configuration settings documentation.
+                   */
+                  prefix?: string;
+                }
+              }
+
               interface SepaDebitPayments {
                 /**
                  * Creditor ID for SEPA debit payments.
@@ -4334,6 +4422,11 @@ declare module 'stripe' {
 
                 interface HoldsCurrencies {
                   /**
+                   * Can hold storage-type funds on Stripe in EUR.
+                   */
+                  eur?: HoldsCurrencies.Eur;
+
+                  /**
                    * Can hold storage-type funds on Stripe in GBP.
                    */
                   gbp?: HoldsCurrencies.Gbp;
@@ -4350,6 +4443,59 @@ declare module 'stripe' {
                 }
 
                 namespace HoldsCurrencies {
+                  interface Eur {
+                    /**
+                     * Whether the Capability has been requested.
+                     */
+                    requested: boolean;
+
+                    /**
+                     * The status of the Capability.
+                     */
+                    status: Eur.Status;
+
+                    /**
+                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     */
+                    status_details: Array<Eur.StatusDetail>;
+                  }
+
+                  namespace Eur {
+                    type Status =
+                      | 'active'
+                      | 'pending'
+                      | 'restricted'
+                      | 'unsupported';
+
+                    interface StatusDetail {
+                      /**
+                       * Machine-readable code explaining the reason for the Capability to be in its current status.
+                       */
+                      code: StatusDetail.Code;
+
+                      /**
+                       * Machine-readable code explaining how to make the Capability active.
+                       */
+                      resolution: StatusDetail.Resolution;
+                    }
+
+                    namespace StatusDetail {
+                      type Code =
+                        | 'determining_status'
+                        | 'requirements_past_due'
+                        | 'requirements_pending_verification'
+                        | 'restricted_other'
+                        | 'unsupported_business'
+                        | 'unsupported_country'
+                        | 'unsupported_entity_type';
+
+                      type Resolution =
+                        | 'contact_stripe'
+                        | 'no_resolution'
+                        | 'provide_info';
+                    }
+                  }
+
                   interface Gbp {
                     /**
                      * Whether the Capability has been requested.
@@ -5195,6 +5341,11 @@ declare module 'stripe' {
                * A value indicating who is responsible for losses when this Account can't pay back negative balances from payments.
                */
               losses_collector: Responsibilities.LossesCollector;
+
+              /**
+               * A value indicating responsibility for collecting requirements on this account.
+               */
+              requirements_collector: Responsibilities.RequirementsCollector;
             }
 
             namespace Responsibilities {
@@ -5205,6 +5356,8 @@ declare module 'stripe' {
                 | 'stripe';
 
               type LossesCollector = 'application' | 'stripe';
+
+              type RequirementsCollector = 'application' | 'stripe';
             }
           }
 
@@ -7111,11 +7264,6 @@ declare module 'stripe' {
 
           interface Requirements {
             /**
-             * A value indicating responsibility for collecting requirements on this account.
-             */
-            collector: Requirements.Collector;
-
-            /**
              * A list of requirements for the Account.
              */
             entries?: Array<Requirements.Entry>;
@@ -7127,8 +7275,6 @@ declare module 'stripe' {
           }
 
           namespace Requirements {
-            type Collector = 'application' | 'stripe';
-
             interface Entry {
               /**
                * Whether the responsibility is with the integrator or with Stripe (to review info, to wait for some condition, etc.) to action the requirement.
@@ -7422,13 +7568,14 @@ declare module 'stripe' {
                 resource?: string;
 
                 /**
-                 * The type of the reference. An additional hash is included with a name matching the type. It contains additional information specific to the type.
+                 * The type of the reference. If the type is "inquiry", the inquiry token can be found in the "inquiry" field.
+                 * Otherwise the type is an API resource, the token for which can be found in the "resource" field.
                  */
                 type: Reference.Type;
               }
 
               namespace Reference {
-                type Type = 'inquiry' | 'resource';
+                type Type = 'inquiry' | 'payment_method' | 'person';
               }
 
               interface RequestedReason {

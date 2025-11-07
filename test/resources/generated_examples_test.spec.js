@@ -6624,7 +6624,6 @@ describe('Generated tests', function() {
     const offSessionPayment = await stripe.v2.payment.offSessionPayments.capture(
       'id_123',
       {
-        amount_to_capture: 1374310455,
         metadata: {
           key: 'metadata',
         },
@@ -6683,80 +6682,6 @@ describe('Generated tests', function() {
     ]);
     const reportRun = await stripe.v2.reporting.reportRuns.retrieve('id_123');
     expect(reportRun).not.to.be.null;
-  });
-
-  it('test_v2_tax_automatic_rule_post', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'POST',
-        path: '/v2/tax/automatic_rules',
-        response:
-          '{"billable_item":"billable_item","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.automatic_rule","status":"active","tax_code":"tax_code","livemode":true}',
-      },
-    ]);
-    const automaticRule = await stripe.v2.tax.automaticRules.create({
-      billable_item: 'billable_item',
-      tax_code: 'tax_code',
-    });
-    expect(automaticRule).not.to.be.null;
-  });
-
-  it('test_v2_tax_automatic_rule_get', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/tax/automatic_rules/find?billable_item=billable_item',
-        response:
-          '{"billable_item":"billable_item","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.automatic_rule","status":"active","tax_code":"tax_code","livemode":true}',
-      },
-    ]);
-    const automaticRule = await stripe.v2.tax.automaticRules.find({
-      billable_item: 'billable_item',
-    });
-    expect(automaticRule).not.to.be.null;
-  });
-
-  it('test_v2_tax_automatic_rule_get_2', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'GET',
-        path: '/v2/tax/automatic_rules/id_123',
-        response:
-          '{"billable_item":"billable_item","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.automatic_rule","status":"active","tax_code":"tax_code","livemode":true}',
-      },
-    ]);
-    const automaticRule = await stripe.v2.tax.automaticRules.retrieve('id_123');
-    expect(automaticRule).not.to.be.null;
-  });
-
-  it('test_v2_tax_automatic_rule_post_2', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'POST',
-        path: '/v2/tax/automatic_rules/id_123',
-        response:
-          '{"billable_item":"billable_item","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.automatic_rule","status":"active","tax_code":"tax_code","livemode":true}',
-      },
-    ]);
-    const automaticRule = await stripe.v2.tax.automaticRules.update('id_123', {
-      tax_code: 'tax_code',
-    });
-    expect(automaticRule).not.to.be.null;
-  });
-
-  it('test_v2_tax_automatic_rule_post_3', async function() {
-    const stripe = testUtils.createMockClient([
-      {
-        method: 'POST',
-        path: '/v2/tax/automatic_rules/id_123/deactivate',
-        response:
-          '{"billable_item":"billable_item","created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.tax.automatic_rule","status":"active","tax_code":"tax_code","livemode":true}',
-      },
-    ]);
-    const automaticRule = await stripe.v2.tax.automaticRules.deactivate(
-      'id_123'
-    );
-    expect(automaticRule).not.to.be.null;
   });
 
   it('test_v2_test_helpers_financial_address_post', async function() {

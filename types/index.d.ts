@@ -207,7 +207,6 @@
 ///<reference path='./V2/Payments/OffSessionPaymentsResource.d.ts' />
 ///<reference path='./V2/Reporting/ReportRunsResource.d.ts' />
 ///<reference path='./V2/Reporting/ReportsResource.d.ts' />
-///<reference path='./V2/Tax/AutomaticRulesResource.d.ts' />
 ///<reference path='./V2/TestHelpers/FinancialAddressesResource.d.ts' />
 ///<reference path='./V2/TestHelpers/MoneyManagementResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
@@ -438,7 +437,6 @@
 ///<reference path='./V2/Payments/OffSessionPayments.d.ts' />
 ///<reference path='./V2/Reporting/ReportRuns.d.ts' />
 ///<reference path='./V2/Reporting/Reports.d.ts' />
-///<reference path='./V2/Tax/AutomaticRules.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
@@ -710,9 +708,6 @@ declare module 'stripe' {
       reporting: {
         reports: Stripe.V2.Reporting.ReportsResource;
         reportRuns: Stripe.V2.Reporting.ReportRunsResource;
-      };
-      tax: {
-        automaticRules: Stripe.V2.Tax.AutomaticRulesResource;
       };
       testHelper: {
         financialAddresses: Stripe.V2.TestHelpers.FinancialAddressesResource;

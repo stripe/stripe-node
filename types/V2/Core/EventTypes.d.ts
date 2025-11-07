@@ -309,6 +309,8 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementRecipientVerificationUpdatedEvent
       | Stripe.Events.V2MoneyManagementTransactionCreatedEvent
       | Stripe.Events.V2MoneyManagementTransactionUpdatedEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentAttemptFailedEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentAttemptStartedEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentCanceledEvent
@@ -628,6 +630,8 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementRecipientVerificationUpdatedEventNotification
       | Stripe.Events.V2MoneyManagementTransactionCreatedEventNotification
       | Stripe.Events.V2MoneyManagementTransactionUpdatedEventNotification
+      | Stripe.Events.V2PaymentsOffSessionPaymentAttemptFailedEventNotification
+      | Stripe.Events.V2PaymentsOffSessionPaymentAttemptStartedEventNotification
       | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEventNotification
       | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEventNotification
       | Stripe.Events.V2PaymentsOffSessionPaymentCanceledEventNotification
@@ -6395,6 +6399,11 @@ declare module 'stripe' {
            * The number of impacted requests.
            */
           impacted_requests: number;
+
+          /**
+           * The percentage of impacted requests.
+           */
+          impacted_requests_percentage?: string;
         }
 
         namespace Impact {
@@ -6472,6 +6481,11 @@ declare module 'stripe' {
            * The number of impacted requests.
            */
           impacted_requests: number;
+
+          /**
+           * The percentage of impacted requests.
+           */
+          impacted_requests_percentage?: string;
         }
 
         namespace Impact {
@@ -6544,6 +6558,11 @@ declare module 'stripe' {
            * The number of impacted requests.
            */
           impacted_requests: number;
+
+          /**
+           * The percentage of impacted requests.
+           */
+          impacted_requests_percentage?: string;
         }
 
         namespace Impact {
@@ -6616,6 +6635,11 @@ declare module 'stripe' {
            * The number of impacted requests.
            */
           impacted_requests: number;
+
+          /**
+           * The percentage of impacted requests.
+           */
+          impacted_requests_percentage?: string;
         }
 
         namespace Impact {
@@ -6990,9 +7014,9 @@ declare module 'stripe' {
       namespace Data {
         export interface Impact {
           /**
-           * The account id the event should have been generated for. Only present when the account is a connected account.
+           * The context the event should have been generated for. Only present when the account is a connected account.
            */
-          account?: string;
+          context?: string;
 
           /**
            * The type of event that Stripe failed to generate.
@@ -7000,19 +7024,28 @@ declare module 'stripe' {
           event_type: string;
 
           /**
-           * Indicates if the event was for livemode or not.
+           * The related object details.
            */
-          livemode: boolean;
+          related_object: Impact.RelatedObject;
+        }
 
-          /**
-           * The number of webhooks that Stripe failed to create and deliver.
-           */
-          missing_delivery_attempts: number;
+        namespace Impact {
+          export interface RelatedObject {
+            /**
+             * The ID of the related object (e.g., "pi_...").
+             */
+            id: string;
 
-          /**
-           * The related object id.
-           */
-          related_object_id: string;
+            /**
+             * The type of the related object (e.g., "payment_intent").
+             */
+            type: string;
+
+            /**
+             * The API URL for the related object (e.g., "/v1/payment_intents/pi_...").
+             */
+            url: string;
+          }
         }
       }
     }
@@ -7420,6 +7453,11 @@ declare module 'stripe' {
           impacted_requests: number;
 
           /**
+           * The percentage of impacted requests.
+           */
+          impacted_requests_percentage?: string;
+
+          /**
            * The type of the payment method.
            */
           payment_method_type: Impact.PaymentMethodType;
@@ -7554,6 +7592,11 @@ declare module 'stripe' {
            * The number of impacted requests.
            */
           impacted_requests: number;
+
+          /**
+           * The percentage of impacted requests.
+           */
+          impacted_requests_percentage?: string;
 
           /**
            * The type of the payment method.
@@ -8689,7 +8732,51 @@ declare module 'stripe' {
     }
 
     /**
+     * Sent after a failed attempt if there are still retries available on the OffSessionPayment.
+     */
+    export interface V2PaymentsOffSessionPaymentAttemptFailedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.payments.off_session_payment.attempt_failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+    export interface V2PaymentsOffSessionPaymentAttemptFailedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.payments.off_session_payment.attempt_failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+      fetchEvent(): Promise<V2PaymentsOffSessionPaymentAttemptFailedEvent>;
+    }
+
+    /**
+     * Sent when our internal scheduling system kicks off an attempt, whether it's a
+     * retry or an initial attempt.
+     */
+    export interface V2PaymentsOffSessionPaymentAttemptStartedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.payments.off_session_payment.attempt_started';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+    export interface V2PaymentsOffSessionPaymentAttemptStartedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.payments.off_session_payment.attempt_started';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+      fetchEvent(): Promise<V2PaymentsOffSessionPaymentAttemptStartedEvent>;
+    }
+
+    /**
      * Sent after a failed authorization if there are still retries available on the OffSessionPayment.
+     * This event has been renamed this to attempt_failed, but we are keeping this around for backwards compatibility.
      */
     export interface V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
       extends V2.Core.EventBase {
@@ -8714,6 +8801,7 @@ declare module 'stripe' {
     /**
      * Sent when our internal scheduling system kicks off an attempt at authorization, whether it's a
      * retry or an initial authorization.
+     * This event has been renamed this to attempt_failed, but we are keeping this around for backwards compatibility.
      */
     export interface V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
       extends V2.Core.EventBase {
@@ -8799,7 +8887,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Off-Session payment requires capture event definition.
+     * Sent when the off-session payment becomes available for capture.
      */
     export interface V2PaymentsOffSessionPaymentRequiresCaptureEvent
       extends V2.Core.EventBase {
