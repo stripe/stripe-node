@@ -59,6 +59,8 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementReceivedDebitUpdatedEvent
       | Stripe.Events.V2MoneyManagementTransactionCreatedEvent
       | Stripe.Events.V2MoneyManagementTransactionUpdatedEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentAttemptFailedEvent
+      | Stripe.Events.V2PaymentsOffSessionPaymentAttemptStartedEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentCanceledEvent
@@ -124,6 +126,8 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementReceivedDebitUpdatedEventNotification
       | Stripe.Events.V2MoneyManagementTransactionCreatedEventNotification
       | Stripe.Events.V2MoneyManagementTransactionUpdatedEventNotification
+      | Stripe.Events.V2PaymentsOffSessionPaymentAttemptFailedEventNotification
+      | Stripe.Events.V2PaymentsOffSessionPaymentAttemptStartedEventNotification
       | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEventNotification
       | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEventNotification
       | Stripe.Events.V2PaymentsOffSessionPaymentCanceledEventNotification
@@ -1716,7 +1720,51 @@ declare module 'stripe' {
     }
 
     /**
+     * Sent after a failed attempt if there are still retries available on the OffSessionPayment.
+     */
+    export interface V2PaymentsOffSessionPaymentAttemptFailedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.payments.off_session_payment.attempt_failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+    export interface V2PaymentsOffSessionPaymentAttemptFailedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.payments.off_session_payment.attempt_failed';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+      fetchEvent(): Promise<V2PaymentsOffSessionPaymentAttemptFailedEvent>;
+    }
+
+    /**
+     * Sent when our internal scheduling system kicks off an attempt, whether it's a
+     * retry or an initial attempt.
+     */
+    export interface V2PaymentsOffSessionPaymentAttemptStartedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.payments.off_session_payment.attempt_started';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+    }
+    export interface V2PaymentsOffSessionPaymentAttemptStartedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.payments.off_session_payment.attempt_started';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
+      fetchEvent(): Promise<V2PaymentsOffSessionPaymentAttemptStartedEvent>;
+    }
+
+    /**
      * Sent after a failed authorization if there are still retries available on the OffSessionPayment.
+     * This event has been renamed this to attempt_failed, but we are keeping this around for backwards compatibility.
      */
     export interface V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
       extends V2.Core.EventBase {
@@ -1741,6 +1789,7 @@ declare module 'stripe' {
     /**
      * Sent when our internal scheduling system kicks off an attempt at authorization, whether it's a
      * retry or an initial authorization.
+     * This event has been renamed this to attempt_failed, but we are keeping this around for backwards compatibility.
      */
     export interface V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
       extends V2.Core.EventBase {
@@ -1826,7 +1875,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Off-Session payment requires capture event definition.
+     * Sent when the off-session payment becomes available for capture.
      */
     export interface V2PaymentsOffSessionPaymentRequiresCaptureEvent
       extends V2.Core.EventBase {

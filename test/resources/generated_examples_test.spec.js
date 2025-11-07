@@ -5559,7 +5559,6 @@ describe('Generated tests', function() {
     const offSessionPayment = await stripe.v2.payment.offSessionPayments.capture(
       'id_123',
       {
-        amount_to_capture: 1374310455,
         metadata: {
           key: 'metadata',
         },

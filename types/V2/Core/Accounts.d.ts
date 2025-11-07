@@ -4458,6 +4458,11 @@ declare module 'stripe' {
                * A value indicating who is responsible for losses when this Account can't pay back negative balances from payments.
                */
               losses_collector: Responsibilities.LossesCollector;
+
+              /**
+               * A value indicating responsibility for collecting requirements on this account.
+               */
+              requirements_collector: Responsibilities.RequirementsCollector;
             }
 
             namespace Responsibilities {
@@ -4468,6 +4473,8 @@ declare module 'stripe' {
                 | 'stripe';
 
               type LossesCollector = 'application' | 'stripe';
+
+              type RequirementsCollector = 'application' | 'stripe';
             }
           }
 
@@ -5798,11 +5805,6 @@ declare module 'stripe' {
 
           interface Requirements {
             /**
-             * A value indicating responsibility for collecting requirements on this account.
-             */
-            collector: Requirements.Collector;
-
-            /**
              * A list of requirements for the Account.
              */
             entries?: Array<Requirements.Entry>;
@@ -5814,8 +5816,6 @@ declare module 'stripe' {
           }
 
           namespace Requirements {
-            type Collector = 'application' | 'stripe';
-
             interface Entry {
               /**
                * Whether the responsibility is with the integrator or with Stripe (to review info, to wait for some condition, etc.) to action the requirement.
@@ -6100,13 +6100,14 @@ declare module 'stripe' {
                 resource?: string;
 
                 /**
-                 * The type of the reference. An additional hash is included with a name matching the type. It contains additional information specific to the type.
+                 * The type of the reference. If the type is "inquiry", the inquiry token can be found in the "inquiry" field.
+                 * Otherwise the type is an API resource, the token for which can be found in the "resource" field.
                  */
                 type: Reference.Type;
               }
 
               namespace Reference {
-                type Type = 'inquiry' | 'resource';
+                type Type = 'inquiry' | 'payment_method' | 'person';
               }
 
               interface RequestedReason {
