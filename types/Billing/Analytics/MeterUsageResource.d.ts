@@ -44,10 +44,10 @@ declare module 'stripe' {
         namespace MeterUsageRetrieveParams {
           interface Meter {
             /**
-             * Key-value pairs used to filter usage events by meter dimension values. If specified, usage will be filtered for matching usage events.
+             * Key-value pairs used to filter usage events by meter dimension values. Each value is an array that can include multiple values for the key. If specified, usage is filtered for matching usage events.
              */
             dimension_filters?: {
-              [key: string]: string;
+              [key: string]: Array<string>;
             };
 
             /**
@@ -61,10 +61,10 @@ declare module 'stripe' {
             meter: string;
 
             /**
-             * Key-value pairs used to filter usage events by high cardinality tenant dimension values. If specified, usage will be filtered for matching usage events.
+             * Key-value pairs used to filter usage events by high cardinality tenant dimension values. Each value is an array that can include multiple values for the key. If specified, usage is filtered for matching usage events.
              */
             tenant_filters?: {
-              [key: string]: string;
+              [key: string]: Array<string>;
             };
           }
 

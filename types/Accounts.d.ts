@@ -163,6 +163,11 @@ declare module 'stripe' {
         product_description?: string | null;
 
         /**
+         * A link to the business's publicly available terms related to the Specified Commercial Transaction Act. Only used for accounts in Japan.
+         */
+        specified_commercial_transactions_act_url?: string | null;
+
+        /**
          * A publicly available mailing address for sending support issues to.
          */
         support_address: Stripe.Address | null;
@@ -1609,6 +1614,8 @@ declare module 'stripe' {
 
         payouts?: Settings.Payouts;
 
+        paypay_payments?: Settings.PaypayPayments;
+
         sepa_debit_payments?: Settings.SepaDebitPayments;
 
         tax_forms?: Settings.TaxForms;
@@ -1845,6 +1852,17 @@ declare module 'stripe' {
               | 'tuesday'
               | 'wednesday';
           }
+        }
+
+        interface PaypayPayments {
+          /**
+           * Whether your business sells digital content or not.
+           */
+          goods_type?: PaypayPayments.GoodsType;
+        }
+
+        namespace PaypayPayments {
+          type GoodsType = 'digital_content' | 'other';
         }
 
         interface SepaDebitPayments {
