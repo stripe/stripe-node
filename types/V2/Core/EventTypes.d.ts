@@ -24,6 +24,7 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreAccountPersonDeletedEvent
       | Stripe.Events.V2CoreAccountPersonUpdatedEvent
       | Stripe.Events.V2CoreEventDestinationPingEvent
+      | Stripe.Events.V2CoreHealthEventGenerationFailureResolvedEvent
       | Stripe.Events.V2MoneyManagementAdjustmentCreatedEvent
       | Stripe.Events.V2MoneyManagementFinancialAccountCreatedEvent
       | Stripe.Events.V2MoneyManagementFinancialAccountUpdatedEvent
@@ -91,6 +92,7 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreAccountPersonDeletedEventNotification
       | Stripe.Events.V2CoreAccountPersonUpdatedEventNotification
       | Stripe.Events.V2CoreEventDestinationPingEventNotification
+      | Stripe.Events.V2CoreHealthEventGenerationFailureResolvedEventNotification
       | Stripe.Events.V2MoneyManagementAdjustmentCreatedEventNotification
       | Stripe.Events.V2MoneyManagementFinancialAccountCreatedEventNotification
       | Stripe.Events.V2MoneyManagementFinancialAccountUpdatedEventNotification
@@ -939,6 +941,88 @@ declare module 'stripe' {
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Core.EventDestination>;
       fetchEvent(): Promise<V2CoreEventDestinationPingEvent>;
+    }
+
+    /**
+     * Occurs when an event generation failure alert is resolved.
+     */
+    export interface V2CoreHealthEventGenerationFailureResolvedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.core.health.event_generation_failure.resolved';
+      // Retrieves data specific to this event.
+      data: V2CoreHealthEventGenerationFailureResolvedEvent.Data;
+    }
+    export interface V2CoreHealthEventGenerationFailureResolvedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.health.event_generation_failure.resolved';
+      fetchEvent(): Promise<V2CoreHealthEventGenerationFailureResolvedEvent>;
+    }
+
+    namespace V2CoreHealthEventGenerationFailureResolvedEvent {
+      export interface Data {
+        /**
+         * The alert ID.
+         */
+        alert_id: string;
+
+        /**
+         * The grouping key for the alert.
+         */
+        grouping_key: string;
+
+        /**
+         * The user impact.
+         */
+        impact: Data.Impact;
+
+        /**
+         * The time when the user experience has returned to expected levels.
+         */
+        resolved_at: string;
+
+        /**
+         * A short description of the alert.
+         */
+        summary: string;
+      }
+
+      namespace Data {
+        export interface Impact {
+          /**
+           * The context the event should have been generated for. Only present when the account is a connected account.
+           */
+          context?: string;
+
+          /**
+           * The type of event that Stripe failed to generate.
+           */
+          event_type: string;
+
+          /**
+           * The related object details.
+           */
+          related_object: Impact.RelatedObject;
+        }
+
+        namespace Impact {
+          export interface RelatedObject {
+            /**
+             * The ID of the related object (e.g., "pi_...").
+             */
+            id: string;
+
+            /**
+             * The type of the related object (e.g., "payment_intent").
+             */
+            type: string;
+
+            /**
+             * The API URL for the related object (e.g., "/v1/payment_intents/pi_...").
+             */
+            url: string;
+          }
+        }
+      }
     }
 
     /**
