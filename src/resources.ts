@@ -36,6 +36,7 @@ import {MeterEventStream as V2BillingMeterEventStream} from './resources/V2/Bill
 import {MeterEvents as BillingMeterEvents} from './resources/Billing/MeterEvents.js';
 import {MeterEvents as V2BillingMeterEvents} from './resources/V2/Billing/MeterEvents.js';
 import {Meters as BillingMeters} from './resources/Billing/Meters.js';
+import {OnboardingLinks as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
 import {Orders as ClimateOrders} from './resources/Climate/Orders.js';
 import {OutboundPayments as TestHelpersTreasuryOutboundPayments} from './resources/TestHelpers/Treasury/OutboundPayments.js';
 import {OutboundPayments as TreasuryOutboundPayments} from './resources/Treasury/OutboundPayments.js';
@@ -202,6 +203,7 @@ export const Terminal = resourceNamespace('terminal', {
   Configurations: TerminalConfigurations,
   ConnectionTokens: TerminalConnectionTokens,
   Locations: TerminalLocations,
+  OnboardingLinks: TerminalOnboardingLinks,
   Readers: TerminalReaders,
 });
 export const TestHelpers = resourceNamespace('testHelpers', {

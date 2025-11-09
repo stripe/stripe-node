@@ -81,6 +81,7 @@ declare module 'stripe' {
       | CustomerCashBalanceTransactionCreatedEvent
       | EntitlementsActiveEntitlementSummaryUpdatedEvent
       | FileCreatedEvent
+      | FinancialConnectionsAccountAccountNumbersUpdatedEvent
       | FinancialConnectionsAccountCreatedEvent
       | FinancialConnectionsAccountDeactivatedEvent
       | FinancialConnectionsAccountDisconnectedEvent
@@ -88,6 +89,7 @@ declare module 'stripe' {
       | FinancialConnectionsAccountRefreshedBalanceEvent
       | FinancialConnectionsAccountRefreshedOwnershipEvent
       | FinancialConnectionsAccountRefreshedTransactionsEvent
+      | FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent
       | IdentityVerificationSessionCanceledEvent
       | IdentityVerificationSessionCreatedEvent
       | IdentityVerificationSessionProcessingEvent
@@ -1509,6 +1511,23 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs when a Financial Connections account's account numbers are updated.
+     */
+    interface FinancialConnectionsAccountAccountNumbersUpdatedEvent
+      extends EventBase {
+      type: 'financial_connections.account.account_numbers_updated';
+      data: FinancialConnectionsAccountAccountNumbersUpdatedEvent.Data;
+    }
+
+    namespace FinancialConnectionsAccountAccountNumbersUpdatedEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.FinancialConnections.Account;
+
+        previous_attributes?: Partial<Stripe.FinancialConnections.Account>;
+      }
+    }
+
+    /**
      * Occurs when a new Financial Connections account is created.
      */
     interface FinancialConnectionsAccountCreatedEvent extends EventBase {
@@ -1616,6 +1635,23 @@ declare module 'stripe' {
     }
 
     namespace FinancialConnectionsAccountRefreshedTransactionsEvent {
+      interface Data extends Stripe.Event.Data {
+        object: Stripe.FinancialConnections.Account;
+
+        previous_attributes?: Partial<Stripe.FinancialConnections.Account>;
+      }
+    }
+
+    /**
+     * Occurs when an Account’s tokenized account number is about to expire.
+     */
+    interface FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent
+      extends EventBase {
+      type: 'financial_connections.account.upcoming_account_number_expiry';
+      data: FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent.Data;
+    }
+
+    namespace FinancialConnectionsAccountUpcomingAccountNumberExpiryEvent {
       interface Data extends Stripe.Event.Data {
         object: Stripe.FinancialConnections.Account;
 

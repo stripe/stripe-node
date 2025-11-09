@@ -1676,7 +1676,8 @@ declare module 'stripe' {
                 | 'bank_account_invalid_details'
                 | 'bank_account_restricted'
                 | 'bank_account_unusable'
-                | 'debit_not_authorized';
+                | 'debit_not_authorized'
+                | 'tokenized_account_number_deactivated';
             }
           }
         }

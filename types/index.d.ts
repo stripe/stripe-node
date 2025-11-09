@@ -104,6 +104,7 @@
 ///<reference path='./Terminal/ConfigurationsResource.d.ts' />
 ///<reference path='./Terminal/ConnectionTokensResource.d.ts' />
 ///<reference path='./Terminal/LocationsResource.d.ts' />
+///<reference path='./Terminal/OnboardingLinksResource.d.ts' />
 ///<reference path='./Terminal/ReadersResource.d.ts' />
 ///<reference path='./TestHelpers/ConfirmationTokensResource.d.ts' />
 ///<reference path='./TestHelpers/CustomersResource.d.ts' />
@@ -265,6 +266,7 @@
 ///<reference path='./Terminal/Configurations.d.ts' />
 ///<reference path='./Terminal/ConnectionTokens.d.ts' />
 ///<reference path='./Terminal/Locations.d.ts' />
+///<reference path='./Terminal/OnboardingLinks.d.ts' />
 ///<reference path='./Terminal/Readers.d.ts' />
 ///<reference path='./TestHelpers/TestClocks.d.ts' />
 ///<reference path='./Tokens.d.ts' />
@@ -436,6 +438,7 @@ declare module 'stripe' {
       configurations: Stripe.Terminal.ConfigurationsResource;
       connectionTokens: Stripe.Terminal.ConnectionTokensResource;
       locations: Stripe.Terminal.LocationsResource;
+      onboardingLinks: Stripe.Terminal.OnboardingLinksResource;
       readers: Stripe.Terminal.ReadersResource;
     };
     testHelpers: {
