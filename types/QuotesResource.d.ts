@@ -1091,6 +1091,18 @@ declare module 'stripe' {
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days?: Stripe.Emptyable<number>;
+
+        /**
+         * Billing schedules that will be applied to the subscription or subscription schedule created when the quote is accepted.
+         */
+        billing_schedules?: Stripe.Emptyable<
+          Array<SubscriptionData.BillingSchedule>
+        >;
+
+        /**
+         * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         */
+        phase_effective_at?: SubscriptionData.PhaseEffectiveAt;
       }
 
       namespace SubscriptionData {
@@ -1121,6 +1133,139 @@ declare module 'stripe' {
           }
 
           type Type = 'classic' | 'flexible';
+        }
+
+        interface BillingSchedule {
+          /**
+           * Configure billing schedule differently for individual subscription items.
+           */
+          applies_to?: Array<BillingSchedule.AppliesTo>;
+
+          /**
+           * The start of the period to bill from when the Quote is accepted.
+           */
+          bill_from: BillingSchedule.BillFrom;
+
+          /**
+           * The end of the period to bill until when the Quote is accepted.
+           */
+          bill_until: BillingSchedule.BillUntil;
+
+          /**
+           * Specify a key for the billing schedule. Must be unique to this field, alphanumeric, and up to 200 characters. If not provided, a unique key will be generated.
+           */
+          key?: string;
+        }
+
+        namespace BillingSchedule {
+          interface AppliesTo {
+            /**
+             * The ID of the price object.
+             */
+            price?: string;
+
+            /**
+             * Controls which subscription items the billing schedule applies to.
+             */
+            type: 'price';
+          }
+
+          interface BillFrom {
+            /**
+             * Details of a Quote line to start the bill period from.
+             */
+            line_starts_at?: BillFrom.LineStartsAt;
+
+            /**
+             * A precise Unix timestamp.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of method to specify the `bill_from` time.
+             */
+            type: BillFrom.Type;
+          }
+
+          namespace BillFrom {
+            interface LineStartsAt {
+              /**
+               * The ID of a quote line.
+               */
+              id?: string;
+
+              /**
+               * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
+               */
+              index?: number;
+            }
+
+            type Type =
+              | 'line_starts_at'
+              | 'now'
+              | 'pause_collection_start'
+              | 'quote_acceptance_date'
+              | 'timestamp';
+          }
+
+          interface BillUntil {
+            /**
+             * Details of the duration over which to bill.
+             */
+            duration?: BillUntil.Duration;
+
+            /**
+             * Details of a Quote line item from which to bill until.
+             */
+            line_ends_at?: BillUntil.LineEndsAt;
+
+            /**
+             * A precise Unix timestamp.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of method to specify the `bill_until` time.
+             */
+            type: BillUntil.Type;
+          }
+
+          namespace BillUntil {
+            interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            interface LineEndsAt {
+              /**
+               * The ID of a quote line.
+               */
+              id?: string;
+
+              /**
+               * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
+               */
+              index?: number;
+            }
+
+            type Type =
+              | 'duration'
+              | 'line_ends_at'
+              | 'schedule_end'
+              | 'timestamp'
+              | 'upcoming_invoice';
+          }
         }
 
         interface BillOnAcceptance {
@@ -1235,6 +1380,8 @@ declare module 'stripe' {
         }
 
         type EndBehavior = 'cancel' | 'release';
+
+        type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
 
         interface Prebilling {
           /**
@@ -1290,6 +1437,18 @@ declare module 'stripe' {
          * Prorations can be disabled by passing `none`.
          */
         proration_behavior?: SubscriptionDataOverride.ProrationBehavior;
+
+        /**
+         * Billing schedules that will be applied to the subscription or subscription schedule created when the quote is accepted.
+         */
+        billing_schedules?: Stripe.Emptyable<
+          Array<SubscriptionDataOverride.BillingSchedule>
+        >;
+
+        /**
+         * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         */
+        phase_effective_at?: SubscriptionDataOverride.PhaseEffectiveAt;
       }
 
       namespace SubscriptionDataOverride {
@@ -1315,6 +1474,139 @@ declare module 'stripe' {
         }
 
         type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+        interface BillingSchedule {
+          /**
+           * Configure billing schedule differently for individual subscription items.
+           */
+          applies_to?: Array<BillingSchedule.AppliesTo>;
+
+          /**
+           * The start of the period to bill from when the Quote is accepted.
+           */
+          bill_from: BillingSchedule.BillFrom;
+
+          /**
+           * The end of the period to bill until when the Quote is accepted.
+           */
+          bill_until: BillingSchedule.BillUntil;
+
+          /**
+           * Specify a key for the billing schedule. Must be unique to this field, alphanumeric, and up to 200 characters. If not provided, a unique key will be generated.
+           */
+          key?: string;
+        }
+
+        namespace BillingSchedule {
+          interface AppliesTo {
+            /**
+             * The ID of the price object.
+             */
+            price?: string;
+
+            /**
+             * Controls which subscription items the billing schedule applies to.
+             */
+            type: 'price';
+          }
+
+          interface BillFrom {
+            /**
+             * Details of a Quote line to start the bill period from.
+             */
+            line_starts_at?: BillFrom.LineStartsAt;
+
+            /**
+             * A precise Unix timestamp.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of method to specify the `bill_from` time.
+             */
+            type: BillFrom.Type;
+          }
+
+          namespace BillFrom {
+            interface LineStartsAt {
+              /**
+               * The ID of a quote line.
+               */
+              id?: string;
+
+              /**
+               * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
+               */
+              index?: number;
+            }
+
+            type Type =
+              | 'line_starts_at'
+              | 'now'
+              | 'pause_collection_start'
+              | 'quote_acceptance_date'
+              | 'timestamp';
+          }
+
+          interface BillUntil {
+            /**
+             * Details of the duration over which to bill.
+             */
+            duration?: BillUntil.Duration;
+
+            /**
+             * Details of a Quote line item from which to bill until.
+             */
+            line_ends_at?: BillUntil.LineEndsAt;
+
+            /**
+             * A precise Unix timestamp.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of method to specify the `bill_until` time.
+             */
+            type: BillUntil.Type;
+          }
+
+          namespace BillUntil {
+            interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            interface LineEndsAt {
+              /**
+               * The ID of a quote line.
+               */
+              id?: string;
+
+              /**
+               * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
+               */
+              index?: number;
+            }
+
+            type Type =
+              | 'duration'
+              | 'line_ends_at'
+              | 'schedule_end'
+              | 'timestamp'
+              | 'upcoming_invoice';
+          }
+        }
 
         interface BillOnAcceptance {
           /**
@@ -1428,6 +1720,8 @@ declare module 'stripe' {
         }
 
         type EndBehavior = 'cancel' | 'release';
+
+        type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
 
         type ProrationBehavior =
           | 'always_invoice'
@@ -2534,10 +2828,155 @@ declare module 'stripe' {
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days?: Stripe.Emptyable<number>;
+
+        /**
+         * Billing schedules that will be applied to the subscription or subscription schedule created when the quote is accepted.
+         */
+        billing_schedules?: Stripe.Emptyable<
+          Array<SubscriptionData.BillingSchedule>
+        >;
+
+        /**
+         * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         */
+        phase_effective_at?: SubscriptionData.PhaseEffectiveAt;
       }
 
       namespace SubscriptionData {
         type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+        interface BillingSchedule {
+          /**
+           * Configure billing schedule differently for individual subscription items.
+           */
+          applies_to?: Array<BillingSchedule.AppliesTo>;
+
+          /**
+           * The start of the period to bill from when the Quote is accepted.
+           */
+          bill_from?: BillingSchedule.BillFrom;
+
+          /**
+           * The end of the period to bill until when the Quote is accepted.
+           */
+          bill_until?: BillingSchedule.BillUntil;
+
+          /**
+           * Specify a key for the billing schedule. Must be unique to this field, alphanumeric, and up to 200 characters. If not provided, a unique key will be generated.
+           */
+          key?: string;
+        }
+
+        namespace BillingSchedule {
+          interface AppliesTo {
+            /**
+             * The ID of the price object.
+             */
+            price?: string;
+
+            /**
+             * Controls which subscription items the billing schedule applies to.
+             */
+            type: 'price';
+          }
+
+          interface BillFrom {
+            /**
+             * Details of a Quote line to start the bill period from.
+             */
+            line_starts_at?: BillFrom.LineStartsAt;
+
+            /**
+             * A precise Unix timestamp.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of method to specify the `bill_from` time.
+             */
+            type: BillFrom.Type;
+          }
+
+          namespace BillFrom {
+            interface LineStartsAt {
+              /**
+               * The ID of a quote line.
+               */
+              id?: string;
+
+              /**
+               * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
+               */
+              index?: number;
+            }
+
+            type Type =
+              | 'line_starts_at'
+              | 'now'
+              | 'pause_collection_start'
+              | 'quote_acceptance_date'
+              | 'timestamp';
+          }
+
+          interface BillUntil {
+            /**
+             * Details of the duration over which to bill.
+             */
+            duration?: BillUntil.Duration;
+
+            /**
+             * Details of a Quote line item from which to bill until.
+             */
+            line_ends_at?: BillUntil.LineEndsAt;
+
+            /**
+             * A precise Unix timestamp.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of method to specify the `bill_until` time.
+             */
+            type: BillUntil.Type;
+          }
+
+          namespace BillUntil {
+            interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            interface LineEndsAt {
+              /**
+               * The ID of a quote line.
+               */
+              id?: string;
+
+              /**
+               * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
+               */
+              index?: number;
+            }
+
+            type Type =
+              | 'duration'
+              | 'line_ends_at'
+              | 'schedule_end'
+              | 'timestamp'
+              | 'upcoming_invoice';
+          }
+        }
 
         interface BillOnAcceptance {
           /**
@@ -2651,6 +3090,8 @@ declare module 'stripe' {
         }
 
         type EndBehavior = 'cancel' | 'release';
+
+        type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
 
         interface Prebilling {
           /**
@@ -2708,6 +3149,18 @@ declare module 'stripe' {
          * Prorations can be disabled by passing `none`.
          */
         proration_behavior?: SubscriptionDataOverride.ProrationBehavior;
+
+        /**
+         * Billing schedules that will be applied to the subscription or subscription schedule created when the quote is accepted.
+         */
+        billing_schedules?: Stripe.Emptyable<
+          Array<SubscriptionDataOverride.BillingSchedule>
+        >;
+
+        /**
+         * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         */
+        phase_effective_at?: SubscriptionDataOverride.PhaseEffectiveAt;
       }
 
       namespace SubscriptionDataOverride {
@@ -2733,6 +3186,139 @@ declare module 'stripe' {
         }
 
         type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+        interface BillingSchedule {
+          /**
+           * Configure billing schedule differently for individual subscription items.
+           */
+          applies_to?: Array<BillingSchedule.AppliesTo>;
+
+          /**
+           * The start of the period to bill from when the Quote is accepted.
+           */
+          bill_from?: BillingSchedule.BillFrom;
+
+          /**
+           * The end of the period to bill until when the Quote is accepted.
+           */
+          bill_until?: BillingSchedule.BillUntil;
+
+          /**
+           * Specify a key for the billing schedule. Must be unique to this field, alphanumeric, and up to 200 characters. If not provided, a unique key will be generated.
+           */
+          key?: string;
+        }
+
+        namespace BillingSchedule {
+          interface AppliesTo {
+            /**
+             * The ID of the price object.
+             */
+            price?: string;
+
+            /**
+             * Controls which subscription items the billing schedule applies to.
+             */
+            type: 'price';
+          }
+
+          interface BillFrom {
+            /**
+             * Details of a Quote line to start the bill period from.
+             */
+            line_starts_at?: BillFrom.LineStartsAt;
+
+            /**
+             * A precise Unix timestamp.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of method to specify the `bill_from` time.
+             */
+            type: BillFrom.Type;
+          }
+
+          namespace BillFrom {
+            interface LineStartsAt {
+              /**
+               * The ID of a quote line.
+               */
+              id?: string;
+
+              /**
+               * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
+               */
+              index?: number;
+            }
+
+            type Type =
+              | 'line_starts_at'
+              | 'now'
+              | 'pause_collection_start'
+              | 'quote_acceptance_date'
+              | 'timestamp';
+          }
+
+          interface BillUntil {
+            /**
+             * Details of the duration over which to bill.
+             */
+            duration?: BillUntil.Duration;
+
+            /**
+             * Details of a Quote line item from which to bill until.
+             */
+            line_ends_at?: BillUntil.LineEndsAt;
+
+            /**
+             * A precise Unix timestamp.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of method to specify the `bill_until` time.
+             */
+            type: BillUntil.Type;
+          }
+
+          namespace BillUntil {
+            interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            interface LineEndsAt {
+              /**
+               * The ID of a quote line.
+               */
+              id?: string;
+
+              /**
+               * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
+               */
+              index?: number;
+            }
+
+            type Type =
+              | 'duration'
+              | 'line_ends_at'
+              | 'schedule_end'
+              | 'timestamp'
+              | 'upcoming_invoice';
+          }
+        }
 
         interface BillOnAcceptance {
           /**
@@ -2846,6 +3432,8 @@ declare module 'stripe' {
         }
 
         type EndBehavior = 'cancel' | 'release';
+
+        type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
 
         type ProrationBehavior =
           | 'always_invoice'

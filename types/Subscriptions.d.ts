@@ -372,6 +372,11 @@ declare module 'stripe' {
          * Unique identifier for the billing schedule.
          */
         key: string;
+
+        /**
+         * Specifies the start of the billing period.
+         */
+        bill_from?: BillingSchedule.BillFrom | null;
       }
 
       namespace BillingSchedule {
@@ -385,6 +390,79 @@ declare module 'stripe' {
            * Controls which subscription items the billing schedule applies to.
            */
           type: 'price';
+        }
+
+        interface BillFrom {
+          /**
+           * Use an index to specify the position of an amendment to start prebilling with.
+           */
+          amendment_start: BillFrom.AmendmentStart | null;
+
+          /**
+           * The time the billing schedule applies from.
+           */
+          computed_timestamp: number | null;
+
+          /**
+           * Lets you bill the period starting from a particular Quote line.
+           */
+          line_starts_at: BillFrom.LineStartsAt | null;
+
+          /**
+           * Timestamp is calculated from the request time.
+           */
+          relative: BillFrom.Relative | null;
+
+          /**
+           * Use a precise Unix timestamp for prebilling to start. Must be earlier than `bill_until`.
+           */
+          timestamp: number | null;
+
+          /**
+           * Describes how the billing schedule determines the start date. Possible values are `timestamp`, `relative`, `amendment_start`, `now`, `quote_acceptance_date`, `line_starts_at`, or `pause_collection_start`.
+           */
+          type: BillFrom.Type;
+        }
+
+        namespace BillFrom {
+          interface AmendmentStart {
+            /**
+             * Use an index to specify the position of an amendment to start prebilling with.
+             */
+            index: number;
+          }
+
+          interface LineStartsAt {
+            /**
+             * Unique identifier for the object.
+             */
+            id: string;
+          }
+
+          interface Relative {
+            /**
+             * Specifies billing duration. Possible values are `day`, `week`, `month`, or `year`.
+             */
+            interval: Relative.Interval;
+
+            /**
+             * The multiplier applied to the interval.
+             */
+            interval_count: number | null;
+          }
+
+          namespace Relative {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type =
+            | 'amendment_start'
+            | 'line_starts_at'
+            | 'now'
+            | 'pause_collection_start'
+            | 'quote_acceptance_date'
+            | 'relative'
+            | 'timestamp';
         }
 
         interface BillUntil {
@@ -407,9 +485,26 @@ declare module 'stripe' {
            * Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
            */
           type: BillUntil.Type;
+
+          /**
+           * Use an index to specify the position of an amendment to end prebilling with.
+           */
+          amendment_end?: BillUntil.AmendmentEnd | null;
+
+          /**
+           * Lets you bill the period ending at a particular Quote line.
+           */
+          line_ends_at?: BillUntil.LineEndsAt | null;
         }
 
         namespace BillUntil {
+          interface AmendmentEnd {
+            /**
+             * Use an index to specify the position of an amendment to end prebilling with.
+             */
+            index: number;
+          }
+
           interface Duration {
             /**
              * Specifies billing duration. Either `day`, `week`, `month` or `year`.
@@ -426,7 +521,20 @@ declare module 'stripe' {
             type Interval = 'day' | 'month' | 'week' | 'year';
           }
 
-          type Type = 'duration' | 'timestamp';
+          interface LineEndsAt {
+            /**
+             * Unique identifier for the object.
+             */
+            id: string;
+          }
+
+          type Type =
+            | 'amendment_end'
+            | 'duration'
+            | 'line_ends_at'
+            | 'schedule_end'
+            | 'timestamp'
+            | 'upcoming_invoice';
         }
       }
 

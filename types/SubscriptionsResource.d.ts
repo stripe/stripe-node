@@ -534,7 +534,13 @@ declare module 'stripe' {
             type Interval = 'day' | 'month' | 'week' | 'year';
           }
 
-          type Type = 'duration' | 'timestamp';
+          type Type =
+            | 'amendment_end'
+            | 'duration'
+            | 'line_ends_at'
+            | 'schedule_end'
+            | 'timestamp'
+            | 'upcoming_invoice';
         }
       }
 
@@ -1775,7 +1781,13 @@ declare module 'stripe' {
             type Interval = 'day' | 'month' | 'week' | 'year';
           }
 
-          type Type = 'duration' | 'timestamp';
+          type Type =
+            | 'amendment_end'
+            | 'duration'
+            | 'line_ends_at'
+            | 'schedule_end'
+            | 'timestamp'
+            | 'upcoming_invoice';
         }
       }
 
