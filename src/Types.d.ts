@@ -7,6 +7,7 @@ import {
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import {HttpClientResponseError} from './RequestSender.js';
 import {StripeContext} from './StripeContext.js';
+import {CryptoProvider} from './crypto/CryptoProvider.js';
 
 export type AppInfo = {name?: string} & Record<string, unknown>;
 export type ApiMode = 'v1' | 'v2';
@@ -180,6 +181,14 @@ export type StripeObject = {
     data: RequestData,
     options: RequestOptions
   ) => Promise<any>;
+  parseEventNotification: (
+    payload: string | Buffer,
+    header: string | Buffer | Array<string>,
+    secret: string,
+    tolerance?: number,
+    cryptoProvider?: CryptoProvider,
+    receivedAt?: number
+  ) => any;
 };
 export type RequestSender = {
   _rawRequest(
