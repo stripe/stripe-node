@@ -9,6 +9,10 @@
   * Add support for `allocated_funds` on `Charge`, `PaymentIntentConfirmParams`, `PaymentIntentCreateParams`, and `PaymentIntentUpdateParams`
   * Add support for thin events `V2ReportingReportRunCreatedEvent`, `V2ReportingReportRunFailedEvent`, `V2ReportingReportRunSucceededEvent`, and `V2ReportingReportRunUpdatedEvent` with related object `V2.Reporting.ReportRun`
 
+## 19.3.1 - 2025-11-12
+* [#2500](https://github.com/stripe/stripe-node/pull/2500) Use `TextEncoder` instead of `Buffer` to ensure support in other JS environments
+  * Fixes issues like [#2499](https://github.com/stripe/stripe-node/issues/2499) and [#2493](https://github.com/stripe/stripe-node/issues/2493) where use of `Buffer.byteLength` was causing errors in some runtime environments.
+
 ## 19.3.0 - 2025-11-05
 * [#2488](https://github.com/stripe/stripe-node/pull/2488) Update generated code
   * Add support for `capture_method` on `PaymentIntent.payment_method_options.card_present`, `PaymentIntentConfirmParams.payment_method_options.card_present`, `PaymentIntentCreateParams.payment_method_options.card_present`, and `PaymentIntentUpdateParams.payment_method_options.card_present`
