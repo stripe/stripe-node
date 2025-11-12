@@ -10,7 +10,6 @@ import {Alerts as BillingAlerts} from './resources/Billing/Alerts.js';
 import {Associations as TaxAssociations} from './resources/Tax/Associations.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
-import {AutomaticRules as V2TaxAutomaticRules} from './resources/V2/Tax/AutomaticRules.js';
 import {BillSettings as V2BillingBillSettings} from './resources/V2/Billing/BillSettings.js';
 import {BlocklistEntries as IdentityBlocklistEntries} from './resources/Identity/BlocklistEntries.js';
 import {Cadences as V2BillingCadences} from './resources/V2/Billing/Cadences.js';
@@ -383,7 +382,6 @@ export const V2 = resourceNamespace('v2', {
     ReportRuns: V2ReportingReportRuns,
     Reports: V2ReportingReports,
   }),
-  Tax: resourceNamespace('tax', {AutomaticRules: V2TaxAutomaticRules}),
   TestHelper: resourceNamespace('testHelper', {
     FinancialAddresses: V2TestHelpersFinancialAddresses,
     MoneyManagement: V2TestHelpersMoneyManagement,

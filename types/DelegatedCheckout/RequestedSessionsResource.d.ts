@@ -64,6 +64,9 @@ declare module 'stripe' {
 
       namespace RequestedSessionCreateParams {
         interface FulfillmentDetails {
+          /**
+           * The customer's address.
+           */
           address?: FulfillmentDetails.Address;
 
           /**
@@ -281,6 +284,9 @@ declare module 'stripe' {
 
       namespace RequestedSessionUpdateParams {
         interface FulfillmentDetails {
+          /**
+           * The customer's address.
+           */
           address?: FulfillmentDetails.Address;
 
           /**

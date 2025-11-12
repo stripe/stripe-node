@@ -433,6 +433,16 @@ declare module 'stripe' {
            * The individual's verification document information.
            */
           verification?: Individual.Verification;
+
+          /**
+           * The credit applicant's self-reported yearly income in minor units.
+           */
+          self_reported_income?: Individual.SelfReportedIncome;
+
+          /**
+           * The credit applicant's self-reported monthly housing payment in minor units.
+           */
+          self_reported_monthly_housing_payment?: Individual.SelfReportedMonthlyHousingPayment;
         }
 
         namespace Individual {
@@ -480,6 +490,18 @@ declare module 'stripe' {
              * The person's title (e.g., CEO, Support Engineer).
              */
             title?: string;
+          }
+
+          interface SelfReportedIncome {
+            amount: number;
+
+            currency: string;
+          }
+
+          interface SelfReportedMonthlyHousingPayment {
+            amount: number;
+
+            currency: string;
           }
 
           interface Verification {
@@ -792,6 +814,16 @@ declare module 'stripe' {
          * The person's verification status.
          */
         verification?: Person.Verification;
+
+        /**
+         * The credit applicant's self-reported yearly income in minor units.
+         */
+        self_reported_income?: Person.SelfReportedIncome;
+
+        /**
+         * The credit applicant's self-reported monthly housing payment in minor units.
+         */
+        self_reported_monthly_housing_payment?: Person.SelfReportedMonthlyHousingPayment;
       }
 
       namespace Person {
@@ -920,6 +952,18 @@ declare module 'stripe' {
            * The person's title (e.g., CEO, Support Engineer).
            */
           title?: string;
+        }
+
+        interface SelfReportedIncome {
+          amount: number;
+
+          currency: string;
+        }
+
+        interface SelfReportedMonthlyHousingPayment {
+          amount: number;
+
+          currency: string;
         }
 
         interface UsCfpbData {
