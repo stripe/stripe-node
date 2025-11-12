@@ -511,6 +511,7 @@ declare module 'stripe' {
               | 'asn_bank'
               | 'bunq'
               | 'buut'
+              | 'finom'
               | 'handelsbanken'
               | 'ing'
               | 'knab'

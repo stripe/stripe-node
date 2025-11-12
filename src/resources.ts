@@ -4,6 +4,7 @@ import {resourceNamespace} from './ResourceNamespace.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
 import {ActiveEntitlements as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
 import {Alerts as BillingAlerts} from './resources/Billing/Alerts.js';
+import {Associations as TaxAssociations} from './resources/Tax/Associations.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
 import {Calculations as TaxCalculations} from './resources/Tax/Calculations.js';
@@ -194,6 +195,7 @@ export const Sigma = resourceNamespace('sigma', {
   ScheduledQueryRuns: SigmaScheduledQueryRuns,
 });
 export const Tax = resourceNamespace('tax', {
+  Associations: TaxAssociations,
   Calculations: TaxCalculations,
   Registrations: TaxRegistrations,
   Settings: TaxSettings,

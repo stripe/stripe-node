@@ -118,6 +118,8 @@ declare module 'stripe' {
         PaymentIntent.ExcludedPaymentMethodType
       > | null;
 
+      hooks?: PaymentIntent.Hooks;
+
       /**
        * The payment error encountered in the previous PaymentIntent confirmation. It will be cleared if the PaymentIntent is later updated for any reason.
        */
@@ -377,6 +379,25 @@ declare module 'stripe' {
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
+
+      interface Hooks {
+        inputs?: Hooks.Inputs;
+      }
+
+      namespace Hooks {
+        interface Inputs {
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: string;
+          }
+        }
+      }
 
       interface LastPaymentError {
         /**

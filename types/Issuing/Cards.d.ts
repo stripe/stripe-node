@@ -70,6 +70,11 @@ declare module 'stripe' {
         last4: string;
 
         /**
+         * Stripe's assessment of whether this card's details have been compromised. If this property isn't null, cancel and reissue the card to prevent fraudulent activity risk.
+         */
+        latest_fraud_warning: Card.LatestFraudWarning | null;
+
+        /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
@@ -137,6 +142,26 @@ declare module 'stripe' {
 
       namespace Card {
         type CancellationReason = 'design_rejected' | 'lost' | 'stolen';
+
+        interface LatestFraudWarning {
+          /**
+           * Timestamp of the most recent fraud warning.
+           */
+          started_at: number | null;
+
+          /**
+           * The type of fraud warning that most recently took place on this card. This field updates with every new fraud warning, so the value changes over time. If populated, cancel and reissue the card.
+           */
+          type: LatestFraudWarning.Type | null;
+        }
+
+        namespace LatestFraudWarning {
+          type Type =
+            | 'card_testing_exposure'
+            | 'fraud_dispute_filed'
+            | 'third_party_reported'
+            | 'user_indicated_fraud';
+        }
 
         type ReplacementReason = 'damaged' | 'expired' | 'lost' | 'stolen';
 

@@ -82,6 +82,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentCreateParams.Hooks;
+
+      /**
        * ID of the mandate that's used for this payment. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
        */
       mandate?: string;
@@ -464,6 +469,31 @@ declare module 'stripe' {
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
+
+      interface Hooks {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: Hooks.Inputs;
+      }
+
+      namespace Hooks {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
 
       interface MandateData {
         /**
@@ -1002,6 +1032,7 @@ declare module 'stripe' {
             | 'asn_bank'
             | 'bunq'
             | 'buut'
+            | 'finom'
             | 'handelsbanken'
             | 'ing'
             | 'knab'
@@ -3416,6 +3447,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentUpdateParams.Hooks;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
@@ -3744,6 +3780,31 @@ declare module 'stripe' {
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
+
+      interface Hooks {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: Hooks.Inputs;
+      }
+
+      namespace Hooks {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
 
       interface PaymentDetails {
         /**
@@ -4231,6 +4292,7 @@ declare module 'stripe' {
             | 'asn_bank'
             | 'bunq'
             | 'buut'
+            | 'finom'
             | 'handelsbanken'
             | 'ing'
             | 'knab'
@@ -6642,6 +6704,11 @@ declare module 'stripe' {
       final_capture?: boolean;
 
       /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentCaptureParams.Hooks;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
@@ -6863,6 +6930,31 @@ declare module 'stripe' {
         }
       }
 
+      interface Hooks {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: Hooks.Inputs;
+      }
+
+      namespace Hooks {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
+
       interface PaymentDetails {
         /**
          * A unique value to identify the customer. This field is available only for card payments.
@@ -6925,6 +7017,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentConfirmParams.Hooks;
 
       /**
        * ID of the mandate that's used for this payment.
@@ -7253,6 +7350,31 @@ declare module 'stripe' {
         | 'us_bank_account'
         | 'wechat_pay'
         | 'zip';
+
+      interface Hooks {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: Hooks.Inputs;
+      }
+
+      namespace Hooks {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
+        }
+      }
 
       interface MandateData {
         /**
@@ -7791,6 +7913,7 @@ declare module 'stripe' {
             | 'asn_bank'
             | 'bunq'
             | 'buut'
+            | 'finom'
             | 'handelsbanken'
             | 'ing'
             | 'knab'
@@ -10144,6 +10267,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * Automations to be run during the PaymentIntent lifecycle
+       */
+      hooks?: PaymentIntentIncrementAuthorizationParams.Hooks;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.MetadataParam;
@@ -10353,6 +10481,31 @@ declare module 'stripe' {
            * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
            */
           total_tax_amount: number;
+        }
+      }
+
+      interface Hooks {
+        /**
+         * Arguments passed in automations
+         */
+        inputs?: Hooks.Inputs;
+      }
+
+      namespace Hooks {
+        interface Inputs {
+          /**
+           * Tax arguments for automations
+           */
+          tax?: Inputs.Tax;
+        }
+
+        namespace Inputs {
+          interface Tax {
+            /**
+             * The [TaxCalculation](https://stripe.com/docs/api/tax/calculations) id
+             */
+            calculation: Stripe.Emptyable<string>;
+          }
         }
       }
 
