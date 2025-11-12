@@ -1093,6 +1093,11 @@ declare module 'stripe' {
          * The type of parent that generated this invoice
          */
         type: Parent.Type;
+
+        /**
+         * Details about the schedule that generated this invoice
+         */
+        schedule_details?: Parent.ScheduleDetails | null;
       }
 
       namespace Parent {
@@ -1108,6 +1113,13 @@ declare module 'stripe' {
            * The quote that generated this invoice
            */
           quote: string;
+        }
+
+        interface ScheduleDetails {
+          /**
+           * The schedule that generated this invoice
+           */
+          schedule: string;
         }
 
         interface SubscriptionDetails {
@@ -1154,6 +1166,7 @@ declare module 'stripe' {
         type Type =
           | 'billing_cadence_details'
           | 'quote_details'
+          | 'schedule_details'
           | 'subscription_details';
       }
 

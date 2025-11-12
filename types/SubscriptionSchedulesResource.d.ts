@@ -14,6 +14,13 @@ declare module 'stripe' {
       billing_mode?: SubscriptionScheduleCreateParams.BillingMode;
 
       /**
+       * Sets the billing schedules for the subscription schedule.
+       */
+      billing_schedules?: Array<
+        SubscriptionScheduleCreateParams.BillingSchedule
+      >;
+
+      /**
        * The identifier of the customer to create the subscription schedule for.
        */
       customer?: string;
@@ -94,6 +101,80 @@ declare module 'stripe' {
         type Type = 'classic' | 'flexible';
       }
 
+      interface BillingSchedule {
+        /**
+         * Configure billing schedule differently for individual subscription items.
+         */
+        applies_to?: Array<BillingSchedule.AppliesTo>;
+
+        /**
+         * The end date for the billing schedule.
+         */
+        bill_until: BillingSchedule.BillUntil;
+
+        /**
+         * Specify a key for the billing schedule. Must be unique to this field, alphanumeric, and up to 200 characters. If not provided, a unique key will be generated.
+         */
+        key?: string;
+      }
+
+      namespace BillingSchedule {
+        interface AppliesTo {
+          /**
+           * The ID of the price object.
+           */
+          price?: string;
+
+          /**
+           * Controls which subscription items the billing schedule applies to.
+           */
+          type: 'price';
+        }
+
+        interface BillUntil {
+          /**
+           * Specifies the billing period.
+           */
+          duration?: BillUntil.Duration;
+
+          /**
+           * The end date of the billing schedule.
+           */
+          timestamp?: number;
+
+          /**
+           * Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
+           */
+          type: BillUntil.Type;
+        }
+
+        namespace BillUntil {
+          interface Duration {
+            /**
+             * Specifies billing duration. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The multiplier applied to the interval.
+             */
+            interval_count?: number;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type =
+            | 'amendment_end'
+            | 'duration'
+            | 'line_ends_at'
+            | 'schedule_end'
+            | 'timestamp'
+            | 'upcoming_invoice';
+        }
+      }
+
       interface DefaultSettings {
         /**
          * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
@@ -146,6 +227,11 @@ declare module 'stripe' {
          * The data with which to automatically create a Transfer for each of the associated subscription's invoices.
          */
         transfer_data?: Stripe.Emptyable<DefaultSettings.TransferData>;
+
+        /**
+         * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         */
+        phase_effective_at?: DefaultSettings.PhaseEffectiveAt;
       }
 
       namespace DefaultSettings {
@@ -229,6 +315,8 @@ declare module 'stripe' {
             type Type = 'account' | 'self';
           }
         }
+
+        type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
 
         interface TransferData {
           /**
@@ -970,6 +1058,13 @@ declare module 'stripe' {
       billing_behavior?: SubscriptionScheduleUpdateParams.BillingBehavior;
 
       /**
+       * Sets the billing schedules for the subscription schedule.
+       */
+      billing_schedules?: Array<
+        SubscriptionScheduleUpdateParams.BillingSchedule
+      >;
+
+      /**
        * Object representing the subscription schedule's default settings.
        */
       default_settings?: SubscriptionScheduleUpdateParams.DefaultSettings;
@@ -1007,6 +1102,80 @@ declare module 'stripe' {
 
     namespace SubscriptionScheduleUpdateParams {
       type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+      interface BillingSchedule {
+        /**
+         * Configure billing schedule differently for individual subscription items.
+         */
+        applies_to?: Array<BillingSchedule.AppliesTo>;
+
+        /**
+         * The end date for the billing schedule.
+         */
+        bill_until?: BillingSchedule.BillUntil;
+
+        /**
+         * Specify a key for the billing schedule. Must be unique to this field, alphanumeric, and up to 200 characters. If not provided, a unique key will be generated.
+         */
+        key?: string;
+      }
+
+      namespace BillingSchedule {
+        interface AppliesTo {
+          /**
+           * The ID of the price object.
+           */
+          price?: string;
+
+          /**
+           * Controls which subscription items the billing schedule applies to.
+           */
+          type: 'price';
+        }
+
+        interface BillUntil {
+          /**
+           * Specifies the billing period.
+           */
+          duration?: BillUntil.Duration;
+
+          /**
+           * The end date of the billing schedule.
+           */
+          timestamp?: number;
+
+          /**
+           * Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
+           */
+          type: BillUntil.Type;
+        }
+
+        namespace BillUntil {
+          interface Duration {
+            /**
+             * Specifies billing duration. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The multiplier applied to the interval.
+             */
+            interval_count?: number;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type =
+            | 'amendment_end'
+            | 'duration'
+            | 'line_ends_at'
+            | 'schedule_end'
+            | 'timestamp'
+            | 'upcoming_invoice';
+        }
+      }
 
       interface DefaultSettings {
         /**
@@ -1060,6 +1229,11 @@ declare module 'stripe' {
          * The data with which to automatically create a Transfer for each of the associated subscription's invoices.
          */
         transfer_data?: Stripe.Emptyable<DefaultSettings.TransferData>;
+
+        /**
+         * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         */
+        phase_effective_at?: DefaultSettings.PhaseEffectiveAt;
       }
 
       namespace DefaultSettings {
@@ -1143,6 +1317,8 @@ declare module 'stripe' {
             type Type = 'account' | 'self';
           }
         }
+
+        type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
 
         interface TransferData {
           /**

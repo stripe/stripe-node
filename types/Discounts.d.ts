@@ -51,6 +51,11 @@ declare module 'stripe' {
        */
       promotion_code: string | Stripe.PromotionCode | null;
 
+      /**
+       * The subscription schedule that this coupon is applied to, if it is applied to a particular subscription schedule.
+       */
+      schedule?: string | null;
+
       source: DeletedDiscount.Source;
 
       /**
@@ -139,6 +144,11 @@ declare module 'stripe' {
        * The promotion code applied to create this discount.
        */
       promotion_code: string | Stripe.PromotionCode | null;
+
+      /**
+       * The subscription schedule that this coupon is applied to, if it is applied to a particular subscription schedule.
+       */
+      schedule?: string | null;
 
       source: Discount.Source;
 
