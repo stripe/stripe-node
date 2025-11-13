@@ -353,6 +353,30 @@ declare module 'stripe' {
            * The amount tax of the total details.
            */
           amount_tax: number | null;
+
+          /**
+           * The applicable fees of the total details.
+           */
+          applicable_fees: Array<TotalDetails.ApplicableFee> | null;
+        }
+
+        namespace TotalDetails {
+          interface ApplicableFee {
+            /**
+             * The amount of the applicable fee.
+             */
+            amount: number;
+
+            /**
+             * The description of the applicable fee.
+             */
+            description: string | null;
+
+            /**
+             * The display name of the applicable fee.
+             */
+            display_name: string;
+          }
         }
       }
     }

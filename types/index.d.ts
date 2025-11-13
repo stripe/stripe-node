@@ -76,6 +76,7 @@
 ///<reference path='./Issuing/FraudLiabilityDebitsResource.d.ts' />
 ///<reference path='./Issuing/PersonalizationDesignsResource.d.ts' />
 ///<reference path='./Issuing/PhysicalBundlesResource.d.ts' />
+///<reference path='./Issuing/ProgramsResource.d.ts' />
 ///<reference path='./Issuing/TokensResource.d.ts' />
 ///<reference path='./Issuing/TransactionsResource.d.ts' />
 ///<reference path='./MandatesResource.d.ts' />
@@ -298,6 +299,7 @@
 ///<reference path='./Issuing/FraudLiabilityDebits.d.ts' />
 ///<reference path='./Issuing/PersonalizationDesigns.d.ts' />
 ///<reference path='./Issuing/PhysicalBundles.d.ts' />
+///<reference path='./Issuing/Programs.d.ts' />
 ///<reference path='./Issuing/Settlements.d.ts' />
 ///<reference path='./Issuing/Tokens.d.ts' />
 ///<reference path='./Issuing/Transactions.d.ts' />
@@ -581,6 +583,7 @@ declare module 'stripe' {
       fraudLiabilityDebits: Stripe.Issuing.FraudLiabilityDebitsResource;
       personalizationDesigns: Stripe.Issuing.PersonalizationDesignsResource;
       physicalBundles: Stripe.Issuing.PhysicalBundlesResource;
+      programs: Stripe.Issuing.ProgramsResource;
       tokens: Stripe.Issuing.TokensResource;
       transactions: Stripe.Issuing.TransactionsResource;
     };

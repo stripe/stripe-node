@@ -38,6 +38,11 @@ declare module 'stripe' {
       billing_mode: SubscriptionSchedule.BillingMode;
 
       /**
+       * Billing schedules for this subscription schedule.
+       */
+      billing_schedules?: Array<SubscriptionSchedule.BillingSchedule> | null;
+
+      /**
        * Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.
        */
       canceled_at: number | null;
@@ -78,6 +83,11 @@ declare module 'stripe' {
        * Details of the most recent price migration that failed for the subscription schedule.
        */
       last_price_migration_error?: SubscriptionSchedule.LastPriceMigrationError | null;
+
+      /**
+       * The most recent invoice this subscription schedule has generated.
+       */
+      latest_invoice?: string | Stripe.Invoice | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -160,6 +170,187 @@ declare module 'stripe' {
         type Type = 'classic' | 'flexible';
       }
 
+      interface BillingSchedule {
+        /**
+         * Specifies which subscription items the billing schedule applies to.
+         */
+        applies_to: Array<BillingSchedule.AppliesTo> | null;
+
+        /**
+         * Specifies the billing period.
+         */
+        bill_until: BillingSchedule.BillUntil;
+
+        /**
+         * Unique identifier for the billing schedule.
+         */
+        key: string;
+
+        /**
+         * Specifies the start of the billing period.
+         */
+        bill_from?: BillingSchedule.BillFrom | null;
+      }
+
+      namespace BillingSchedule {
+        interface AppliesTo {
+          /**
+           * The billing schedule will apply to the subscription item with the given price ID.
+           */
+          price: string | Stripe.Price | null;
+
+          /**
+           * Controls which subscription items the billing schedule applies to.
+           */
+          type: 'price';
+        }
+
+        interface BillFrom {
+          /**
+           * Use an index to specify the position of an amendment to start prebilling with.
+           */
+          amendment_start: BillFrom.AmendmentStart | null;
+
+          /**
+           * The time the billing schedule applies from.
+           */
+          computed_timestamp: number | null;
+
+          /**
+           * Lets you bill the period starting from a particular Quote line.
+           */
+          line_starts_at: BillFrom.LineStartsAt | null;
+
+          /**
+           * Timestamp is calculated from the request time.
+           */
+          relative: BillFrom.Relative | null;
+
+          /**
+           * Use a precise Unix timestamp for prebilling to start. Must be earlier than `bill_until`.
+           */
+          timestamp: number | null;
+
+          /**
+           * Describes how the billing schedule determines the start date. Possible values are `timestamp`, `relative`, `amendment_start`, `now`, `quote_acceptance_date`, `line_starts_at`, or `pause_collection_start`.
+           */
+          type: BillFrom.Type;
+        }
+
+        namespace BillFrom {
+          interface AmendmentStart {
+            /**
+             * Use an index to specify the position of an amendment to start prebilling with.
+             */
+            index: number;
+          }
+
+          interface LineStartsAt {
+            /**
+             * Unique identifier for the object.
+             */
+            id: string;
+          }
+
+          interface Relative {
+            /**
+             * Specifies billing duration. Possible values are `day`, `week`, `month`, or `year`.
+             */
+            interval: Relative.Interval;
+
+            /**
+             * The multiplier applied to the interval.
+             */
+            interval_count: number | null;
+          }
+
+          namespace Relative {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type =
+            | 'amendment_start'
+            | 'line_starts_at'
+            | 'now'
+            | 'pause_collection_start'
+            | 'quote_acceptance_date'
+            | 'relative'
+            | 'timestamp';
+        }
+
+        interface BillUntil {
+          /**
+           * The timestamp the billing schedule will apply until.
+           */
+          computed_timestamp: number;
+
+          /**
+           * Specifies the billing period.
+           */
+          duration: BillUntil.Duration | null;
+
+          /**
+           * If specified, the billing schedule will apply until the specified timestamp.
+           */
+          timestamp: number | null;
+
+          /**
+           * Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
+           */
+          type: BillUntil.Type;
+
+          /**
+           * Use an index to specify the position of an amendment to end prebilling with.
+           */
+          amendment_end?: BillUntil.AmendmentEnd | null;
+
+          /**
+           * Lets you bill the period ending at a particular Quote line.
+           */
+          line_ends_at?: BillUntil.LineEndsAt | null;
+        }
+
+        namespace BillUntil {
+          interface AmendmentEnd {
+            /**
+             * Use an index to specify the position of an amendment to end prebilling with.
+             */
+            index: number;
+          }
+
+          interface Duration {
+            /**
+             * Specifies billing duration. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The multiplier applied to the interval.
+             */
+            interval_count: number | null;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          interface LineEndsAt {
+            /**
+             * Unique identifier for the object.
+             */
+            id: string;
+          }
+
+          type Type =
+            | 'amendment_end'
+            | 'duration'
+            | 'line_ends_at'
+            | 'schedule_end'
+            | 'timestamp'
+            | 'upcoming_invoice';
+        }
+      }
+
       interface CurrentPhase {
         /**
          * The end of this phase of the subscription schedule.
@@ -216,6 +407,11 @@ declare module 'stripe' {
          * The account (if any) the associated subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
          */
         transfer_data: DefaultSettings.TransferData | null;
+
+        /**
+         * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         */
+        phase_effective_at?: DefaultSettings.PhaseEffectiveAt | null;
       }
 
       namespace DefaultSettings {
@@ -303,6 +499,8 @@ declare module 'stripe' {
             type Type = 'account' | 'self';
           }
         }
+
+        type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
 
         interface TransferData {
           /**

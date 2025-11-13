@@ -87,6 +87,7 @@ import {PricingPlanSubscriptions as V2BillingPricingPlanSubscriptions} from './r
 import {PricingPlans as V2BillingPricingPlans} from './resources/V2/Billing/PricingPlans.js';
 import {Products as ClimateProducts} from './resources/Climate/Products.js';
 import {Profiles as V2BillingProfiles} from './resources/V2/Billing/Profiles.js';
+import {Programs as IssuingPrograms} from './resources/Issuing/Programs.js';
 import {RateCardSubscriptions as V2BillingRateCardSubscriptions} from './resources/V2/Billing/RateCardSubscriptions.js';
 import {RateCards as V2BillingRateCards} from './resources/V2/Billing/RateCards.js';
 import {ReaderCollectedData as TerminalReaderCollectedData} from './resources/Terminal/ReaderCollectedData.js';
@@ -254,6 +255,7 @@ export const Issuing = resourceNamespace('issuing', {
   FraudLiabilityDebits: IssuingFraudLiabilityDebits,
   PersonalizationDesigns: IssuingPersonalizationDesigns,
   PhysicalBundles: IssuingPhysicalBundles,
+  Programs: IssuingPrograms,
   Tokens: IssuingTokens,
   Transactions: IssuingTransactions,
 });

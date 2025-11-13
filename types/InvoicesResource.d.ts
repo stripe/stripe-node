@@ -2854,6 +2854,11 @@ declare module 'stripe' {
          * In cases where the `schedule_details` params update the currently active phase, specifies if and how to prorate at the time of the request.
          */
         proration_behavior?: ScheduleDetails.ProrationBehavior;
+
+        /**
+         * Sets the billing schedules for the subscription schedule.
+         */
+        billing_schedules?: Array<ScheduleDetails.BillingSchedule>;
       }
 
       namespace ScheduleDetails {
@@ -3479,6 +3484,80 @@ declare module 'stripe' {
           }
 
           type Type = 'classic' | 'flexible';
+        }
+
+        interface BillingSchedule {
+          /**
+           * Configure billing schedule differently for individual subscription items.
+           */
+          applies_to?: Array<BillingSchedule.AppliesTo>;
+
+          /**
+           * The end date for the billing schedule.
+           */
+          bill_until?: BillingSchedule.BillUntil;
+
+          /**
+           * Specify a key for the billing schedule. Must be unique to this field, alphanumeric, and up to 200 characters. If not provided, a unique key will be generated.
+           */
+          key?: string;
+        }
+
+        namespace BillingSchedule {
+          interface AppliesTo {
+            /**
+             * The ID of the price object.
+             */
+            price?: string;
+
+            /**
+             * Controls which subscription items the billing schedule applies to.
+             */
+            type: 'price';
+          }
+
+          interface BillUntil {
+            /**
+             * Specifies the billing period.
+             */
+            duration?: BillUntil.Duration;
+
+            /**
+             * The end date of the billing schedule.
+             */
+            timestamp?: number;
+
+            /**
+             * Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
+             */
+            type: BillUntil.Type;
+          }
+
+          namespace BillUntil {
+            interface Duration {
+              /**
+               * Specifies billing duration. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The multiplier applied to the interval.
+               */
+              interval_count?: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type Type =
+              | 'amendment_end'
+              | 'duration'
+              | 'line_ends_at'
+              | 'schedule_end'
+              | 'timestamp'
+              | 'upcoming_invoice';
+          }
         }
 
         type EndBehavior = 'cancel' | 'release';

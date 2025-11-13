@@ -158,6 +158,11 @@ declare module 'stripe' {
          * The type of parent that generated this line item
          */
         type: Parent.Type;
+
+        /**
+         * Details about the subscription schedule that generated this line item
+         */
+        schedule_details?: Parent.ScheduleDetails | null;
       }
 
       namespace Parent {
@@ -260,6 +265,13 @@ declare module 'stripe' {
           rate_card_version: string;
         }
 
+        interface ScheduleDetails {
+          /**
+           * The subscription schedule that generated this line item
+           */
+          schedule: string;
+        }
+
         interface SubscriptionItemDetails {
           /**
            * The invoice item that generated this line item
@@ -314,6 +326,7 @@ declare module 'stripe' {
           | 'invoice_item_details'
           | 'license_fee_subscription_details'
           | 'rate_card_subscription_details'
+          | 'schedule_details'
           | 'subscription_item_details';
       }
 
