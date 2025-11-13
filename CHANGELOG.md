@@ -1,5 +1,29 @@
 # Changelog
 
+## 19.4.0-alpha.2 - 2025-11-13
+This release changes the pinned API version to `2025-10-29.preview`.
+
+* [#2501](https://github.com/stripe/stripe-node/pull/2501) Update generated code for private-preview
+  * Add support for new resource `Issuing.Program`
+  * Add support for `create`, `list`, `retrieve`, and `update` methods on resource `Issuing.Program`
+  * Add support for `schedule` on `Discount`
+  * Add support for `applicable_fees` on `DelegatedCheckout.RequestedSession.total_details`
+  * Add support for `schedule_details` on `Invoice.parent`, `InvoiceItem.parent`, `InvoiceLineItem.parent`, and `QuotePreviewInvoice.parent`
+  * Add support for new value `schedule_details` on enum `InvoiceItem.parent.type`
+  * Add support for `billing_schedules` on `InvoiceCreatePreviewParams.schedule_details`, `QuotePreviewSubscriptionSchedule`, `SubscriptionScheduleCreateParams`, `SubscriptionScheduleUpdateParams`, and `SubscriptionSchedule`
+  * Add support for new value `schedule_details` on enums `Invoice.parent.type` and `QuotePreviewInvoice.parent.type`
+  * Add support for new value `schedule_details` on enum `InvoiceLineItem.parent.type`
+  * Add support for `latest_invoice` on `QuotePreviewSubscriptionSchedule` and `SubscriptionSchedule`
+  * Add support for `phase_effective_at` on `QuotePreviewSubscriptionSchedule.default_settings`, `SubscriptionSchedule.default_settings`, `SubscriptionScheduleCreateParams.default_settings`, and `SubscriptionScheduleUpdateParams.default_settings`
+* [#2494](https://github.com/stripe/stripe-node/pull/2494) Update generated code for private-preview
+  * Remove support for resource `V2.Tax.AutomaticRule`
+  * Remove support for `create`, `deactivate`, `find`, `retrieve`, and `update` methods on resource `V2.Tax.AutomaticRule`
+  * Add support for `self_reported_income` and `self_reported_monthly_housing_payment` on `AccountCreateParams.individual`, `AccountCreatePersonParams`, `AccountUpdateParams.individual`, `AccountUpdatePersonParams`, `Person`, `TokenCreateParams.account.individual`, and `TokenCreateParams.person`
+  * Add support for new values `amendment_end`, `line_ends_at`, `schedule_end`, and `upcoming_invoice` on enums `InvoiceCreatePreviewParams.subscription_details.billing_schedules[].bill_until.type`, `Subscription.billing_schedules[].bill_until.type`, `SubscriptionCreateParams.billing_schedules[].bill_until.type`, and `SubscriptionUpdateParams.billing_schedules[].bill_until.type`
+  * Add support for `billing_schedules` and `phase_effective_at` on `Quote.subscription_data_overrides[]`, `Quote.subscription_data`, `QuoteCreateParams.subscription_data_overrides[]`, `QuoteCreateParams.subscription_data`, `QuoteUpdateParams.subscription_data_overrides[]`, and `QuoteUpdateParams.subscription_data`
+  * Add support for `bill_from` on `Subscription.billing_schedules[]`
+  * Add support for `amendment_end` and `line_ends_at` on `Subscription.billing_schedules[].bill_until`
+
 ## 19.4.0-alpha.1 - 2025-11-06
 * [#2489](https://github.com/stripe/stripe-node/pull/2489) Update generated code for private-preview
   * Add support for new resources `TransitBalance`, `V2.Reporting.ReportRun`, `V2.Reporting.Report`
