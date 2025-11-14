@@ -136,10 +136,7 @@ declare module 'stripe' {
               last4: string;
             }
 
-            type Type =
-              | 'gb_bank_account'
-              | 'sepa_bank_account'
-              | 'us_bank_account';
+            type Type = 'gb_bank_account' | 'us_bank_account';
 
             interface UsBankAccount {
               /**

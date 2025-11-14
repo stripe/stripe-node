@@ -59,6 +59,11 @@ declare module 'stripe' {
           display_name?: string;
 
           /**
+           * Information about the future requirements for the Account that will eventually come into effect, including what information needs to be collected, and by when.
+           */
+          future_requirements?: Account.FutureRequirements;
+
+          /**
            * Information about the company, individual, and business represented by the Account.
            */
           identity?: Account.Identity;
@@ -74,7 +79,7 @@ declare module 'stripe' {
           metadata?: Stripe.Metadata;
 
           /**
-           * Information about the requirements for the Account, including what information needs to be collected, and by when.
+           * Information about the active requirements for the Account, including what information needs to be collected, and by when.
            */
           requirements?: Account.Requirements;
         }
@@ -154,12 +159,12 @@ declare module 'stripe' {
                 ip_address?: string;
 
                 /**
-                 * The customer's identified tax location - uses `location_source`. Will only be rendered if the `automatic_indirect_tax` feature is requested and `active`.
+                 * The [identified](https://docs.stripe.com/tax/customer-locations#address-hierarchy-other) tax location of the customer. Will only be rendered if the `automatic_indirect_tax` feature is requested and `active`.
                  */
                 location?: AutomaticIndirectTax.Location;
 
                 /**
-                 * The data source used to identify the customer's tax location - defaults to `identity_address`. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions.
+                 * The data source used to identify the customer's tax location. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions.
                  */
                 location_source?: AutomaticIndirectTax.LocationSource;
               }
@@ -261,7 +266,7 @@ declare module 'stripe' {
 
               interface Capabilities {
                 /**
-                 * Generates requirements for enabling automatic indirect tax calculation on this customer's invoices or subscriptions. Recommended to request this capability if planning to enable automatic tax calculation on this customer's invoices or subscriptions. Uses the `location_source` field.
+                 * Generates requirements for enabling automatic indirect tax calculation on this customer's invoices or subscriptions. Recommended to request this capability if planning to enable automatic tax calculation on this customer's invoices or subscriptions.
                  */
                 automatic_indirect_tax?: Capabilities.AutomaticIndirectTax;
               }
@@ -4478,6 +4483,357 @@ declare module 'stripe' {
             }
           }
 
+          interface FutureRequirements {
+            /**
+             * A list of requirements for the Account.
+             */
+            entries?: Array<FutureRequirements.Entry>;
+
+            /**
+             * The time at which the future requirements become effective.
+             */
+            minimum_transition_date?: string;
+
+            /**
+             * An object containing an overview of requirements for the Account.
+             */
+            summary?: FutureRequirements.Summary;
+          }
+
+          namespace FutureRequirements {
+            interface Entry {
+              /**
+               * Whether the responsibility is with the integrator or with Stripe (to review info, to wait for some condition, etc.) to action the requirement.
+               */
+              awaiting_action_from: Entry.AwaitingActionFrom;
+
+              /**
+               * Machine-readable string describing the requirement.
+               */
+              description: string;
+
+              /**
+               * Descriptions of why the requirement must be collected, or why the collected information isn't satisfactory to Stripe.
+               */
+              errors: Array<Entry.Error>;
+
+              /**
+               * A hash describing the impact of not collecting the requirement, or Stripe not being able to verify the collected information.
+               */
+              impact: Entry.Impact;
+
+              /**
+               * The soonest point when the account will be impacted by not providing the requirement.
+               */
+              minimum_deadline: Entry.MinimumDeadline;
+
+              /**
+               * A reference to the location of the requirement.
+               */
+              reference?: Entry.Reference;
+
+              /**
+               * A list of reasons why Stripe is collecting the requirement.
+               */
+              requested_reasons: Array<Entry.RequestedReason>;
+            }
+
+            namespace Entry {
+              type AwaitingActionFrom = 'stripe' | 'user';
+
+              interface Error {
+                /**
+                 * Machine-readable code describing the error.
+                 */
+                code: Error.Code;
+
+                /**
+                 * Human-readable description of the error.
+                 */
+                description: string;
+              }
+
+              namespace Error {
+                type Code =
+                  | 'invalid_address_city_state_postal_code'
+                  | 'invalid_address_highway_contract_box'
+                  | 'invalid_address_private_mailbox'
+                  | 'invalid_business_profile_name'
+                  | 'invalid_business_profile_name_denylisted'
+                  | 'invalid_company_name_denylisted'
+                  | 'invalid_dob_age_over_maximum'
+                  | 'invalid_dob_age_under_18'
+                  | 'invalid_dob_age_under_minimum'
+                  | 'invalid_product_description_length'
+                  | 'invalid_product_description_url_match'
+                  | 'invalid_representative_country'
+                  | 'invalid_statement_descriptor_business_mismatch'
+                  | 'invalid_statement_descriptor_denylisted'
+                  | 'invalid_statement_descriptor_length'
+                  | 'invalid_statement_descriptor_prefix_denylisted'
+                  | 'invalid_statement_descriptor_prefix_mismatch'
+                  | 'invalid_street_address'
+                  | 'invalid_tax_id'
+                  | 'invalid_tax_id_format'
+                  | 'invalid_tos_acceptance'
+                  | 'invalid_url_denylisted'
+                  | 'invalid_url_format'
+                  | 'invalid_url_website_business_information_mismatch'
+                  | 'invalid_url_website_empty'
+                  | 'invalid_url_website_inaccessible'
+                  | 'invalid_url_website_inaccessible_geoblocked'
+                  | 'invalid_url_website_inaccessible_password_protected'
+                  | 'invalid_url_website_incomplete'
+                  | 'invalid_url_website_incomplete_cancellation_policy'
+                  | 'invalid_url_website_incomplete_customer_service_details'
+                  | 'invalid_url_website_incomplete_legal_restrictions'
+                  | 'invalid_url_website_incomplete_refund_policy'
+                  | 'invalid_url_website_incomplete_return_policy'
+                  | 'invalid_url_website_incomplete_terms_and_conditions'
+                  | 'invalid_url_website_incomplete_under_construction'
+                  | 'invalid_url_website_other'
+                  | 'invalid_url_web_presence_detected'
+                  | 'invalid_value_other'
+                  | 'unresolvable_ip_address'
+                  | 'unresolvable_postal_code'
+                  | 'verification_directors_mismatch'
+                  | 'verification_document_address_mismatch'
+                  | 'verification_document_address_missing'
+                  | 'verification_document_corrupt'
+                  | 'verification_document_country_not_supported'
+                  | 'verification_document_directors_mismatch'
+                  | 'verification_document_dob_mismatch'
+                  | 'verification_document_duplicate_type'
+                  | 'verification_document_expired'
+                  | 'verification_document_failed_copy'
+                  | 'verification_document_failed_greyscale'
+                  | 'verification_document_failed_other'
+                  | 'verification_document_failed_test_mode'
+                  | 'verification_document_fraudulent'
+                  | 'verification_document_id_number_mismatch'
+                  | 'verification_document_id_number_missing'
+                  | 'verification_document_incomplete'
+                  | 'verification_document_invalid'
+                  | 'verification_document_issue_or_expiry_date_missing'
+                  | 'verification_document_manipulated'
+                  | 'verification_document_missing_back'
+                  | 'verification_document_missing_front'
+                  | 'verification_document_name_mismatch'
+                  | 'verification_document_name_missing'
+                  | 'verification_document_nationality_mismatch'
+                  | 'verification_document_not_readable'
+                  | 'verification_document_not_signed'
+                  | 'verification_document_not_uploaded'
+                  | 'verification_document_photo_mismatch'
+                  | 'verification_document_too_large'
+                  | 'verification_document_type_not_supported'
+                  | 'verification_extraneous_directors'
+                  | 'verification_failed_address_match'
+                  | 'verification_failed_business_iec_number'
+                  | 'verification_failed_document_match'
+                  | 'verification_failed_id_number_match'
+                  | 'verification_failed_keyed_identity'
+                  | 'verification_failed_keyed_match'
+                  | 'verification_failed_name_match'
+                  | 'verification_failed_other'
+                  | 'verification_failed_representative_authority'
+                  | 'verification_failed_residential_address'
+                  | 'verification_failed_tax_id_match'
+                  | 'verification_failed_tax_id_not_issued'
+                  | 'verification_missing_directors'
+                  | 'verification_missing_executives'
+                  | 'verification_missing_owners'
+                  | 'verification_requires_additional_memorandum_of_associations'
+                  | 'verification_requires_additional_proof_of_registration'
+                  | 'verification_selfie_document_missing_photo'
+                  | 'verification_selfie_face_mismatch'
+                  | 'verification_selfie_manipulated'
+                  | 'verification_selfie_unverified_other'
+                  | 'verification_supportability'
+                  | 'verification_token_stale';
+              }
+
+              interface Impact {
+                /**
+                 * The Capabilities that will be restricted if the requirement is not collected and satisfactory to Stripe.
+                 */
+                restricts_capabilities?: Array<Impact.RestrictsCapability>;
+              }
+
+              namespace Impact {
+                interface RestrictsCapability {
+                  /**
+                   * The name of the Capability which will be restricted.
+                   */
+                  capability: RestrictsCapability.Capability;
+
+                  /**
+                   * The configuration which specifies the Capability which will be restricted.
+                   */
+                  configuration: RestrictsCapability.Configuration;
+
+                  /**
+                   * Details about when in the account lifecycle the requirement must be collected by the avoid the Capability restriction.
+                   */
+                  deadline: RestrictsCapability.Deadline;
+                }
+
+                namespace RestrictsCapability {
+                  type Capability =
+                    | 'ach_debit_payments'
+                    | 'acss_debit_payments'
+                    | 'affirm_payments'
+                    | 'afterpay_clearpay_payments'
+                    | 'alma_payments'
+                    | 'amazon_pay_payments'
+                    | 'automatic_indirect_tax'
+                    | 'au_becs_debit_payments'
+                    | 'bacs_debit_payments'
+                    | 'bancontact_payments'
+                    | 'bank_accounts.local'
+                    | 'bank_accounts.wire'
+                    | 'blik_payments'
+                    | 'boleto_payments'
+                    | 'cards'
+                    | 'card_payments'
+                    | 'cartes_bancaires_payments'
+                    | 'cashapp_payments'
+                    | 'eps_payments'
+                    | 'financial_addresses.bank_accounts'
+                    | 'fpx_payments'
+                    | 'gb_bank_transfer_payments'
+                    | 'grabpay_payments'
+                    | 'holds_currencies.eur'
+                    | 'holds_currencies.gbp'
+                    | 'holds_currencies.usd'
+                    | 'ideal_payments'
+                    | 'inbound_transfers.financial_accounts'
+                    | 'jcb_payments'
+                    | 'jp_bank_transfer_payments'
+                    | 'kakao_pay_payments'
+                    | 'klarna_payments'
+                    | 'konbini_payments'
+                    | 'kr_card_payments'
+                    | 'link_payments'
+                    | 'mobilepay_payments'
+                    | 'multibanco_payments'
+                    | 'mx_bank_transfer_payments'
+                    | 'naver_pay_payments'
+                    | 'outbound_payments.bank_accounts'
+                    | 'outbound_payments.cards'
+                    | 'outbound_payments.financial_accounts'
+                    | 'outbound_transfers.bank_accounts'
+                    | 'outbound_transfers.financial_accounts'
+                    | 'oxxo_payments'
+                    | 'p24_payments'
+                    | 'payco_payments'
+                    | 'paynow_payments'
+                    | 'pay_by_bank_payments'
+                    | 'promptpay_payments'
+                    | 'revolut_pay_payments'
+                    | 'samsung_pay_payments'
+                    | 'sepa_bank_transfer_payments'
+                    | 'sepa_debit_payments'
+                    | 'stripe_balance.payouts'
+                    | 'stripe_balance.stripe_transfers'
+                    | 'swish_payments'
+                    | 'twint_payments'
+                    | 'us_bank_transfer_payments'
+                    | 'zip_payments';
+
+                  type Configuration =
+                    | 'customer'
+                    | 'merchant'
+                    | 'recipient'
+                    | 'storer';
+
+                  interface Deadline {
+                    /**
+                     * The current status of the requirement's impact.
+                     */
+                    status: Deadline.Status;
+                  }
+
+                  namespace Deadline {
+                    type Status =
+                      | 'currently_due'
+                      | 'eventually_due'
+                      | 'past_due';
+                  }
+                }
+              }
+
+              interface MinimumDeadline {
+                /**
+                 * The current status of the requirement's impact.
+                 */
+                status: MinimumDeadline.Status;
+              }
+
+              namespace MinimumDeadline {
+                type Status = 'currently_due' | 'eventually_due' | 'past_due';
+              }
+
+              interface Reference {
+                /**
+                 * If `inquiry` is the type, the inquiry token.
+                 */
+                inquiry?: string;
+
+                /**
+                 * If `resource` is the type, the resource token.
+                 */
+                resource?: string;
+
+                /**
+                 * The type of the reference. If the type is "inquiry", the inquiry token can be found in the "inquiry" field.
+                 * Otherwise the type is an API resource, the token for which can be found in the "resource" field.
+                 */
+                type: Reference.Type;
+              }
+
+              namespace Reference {
+                type Type = 'inquiry' | 'payment_method' | 'person';
+              }
+
+              interface RequestedReason {
+                /**
+                 * Machine-readable description of Stripe's reason for collecting the requirement.
+                 */
+                code: RequestedReason.Code;
+              }
+
+              namespace RequestedReason {
+                type Code = 'routine_onboarding' | 'routine_verification';
+              }
+            }
+
+            interface Summary {
+              /**
+               * The soonest date and time a requirement on the Account will become `past due`. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: `2022-09-18T13:22:18.123Z`.
+               */
+              minimum_deadline?: Summary.MinimumDeadline;
+            }
+
+            namespace Summary {
+              interface MinimumDeadline {
+                /**
+                 * The current strictest status of all requirements on the Account.
+                 */
+                status: MinimumDeadline.Status;
+
+                /**
+                 * The soonest RFC3339 date & time UTC value a requirement can impact the Account.
+                 */
+                time?: string;
+              }
+
+              namespace MinimumDeadline {
+                type Status = 'currently_due' | 'eventually_due' | 'past_due';
+              }
+            }
+          }
+
           interface Identity {
             /**
              * Attestations from the identity's key people, e.g. owners, executives, directors, representatives.
@@ -4974,6 +5330,7 @@ declare module 'stripe' {
                   | 'ae_crn'
                   | 'ae_vat'
                   | 'ao_nif'
+                  | 'ar_cuit'
                   | 'at_fn'
                   | 'au_abn'
                   | 'au_acn'
@@ -5598,6 +5955,7 @@ declare module 'stripe' {
                 type Type =
                   | 'ae_eid'
                   | 'ao_nif'
+                  | 'ar_dni'
                   | 'az_tin'
                   | 'bd_brc'
                   | 'bd_etin'
@@ -6018,6 +6376,7 @@ declare module 'stripe' {
                     | 'fpx_payments'
                     | 'gb_bank_transfer_payments'
                     | 'grabpay_payments'
+                    | 'holds_currencies.eur'
                     | 'holds_currencies.gbp'
                     | 'holds_currencies.usd'
                     | 'ideal_payments'
@@ -6118,10 +6477,7 @@ declare module 'stripe' {
               }
 
               namespace RequestedReason {
-                type Code =
-                  | 'future_requirements'
-                  | 'routine_onboarding'
-                  | 'routine_verification';
+                type Code = 'routine_onboarding' | 'routine_verification';
               }
             }
 
