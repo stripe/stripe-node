@@ -565,6 +565,11 @@ declare module 'stripe' {
        */
       receivedAt?: number
     ) => Stripe.V2.Core.EventNotification;
+
+    /**
+     * TODO: docs
+     */
+    newEventHandler: (webhookSecret: string) => Stripe.EventHandler;
   }
 
   export default Stripe;

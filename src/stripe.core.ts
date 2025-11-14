@@ -488,8 +488,8 @@ export function createStripe(
     },
 
     parseEventNotification(
-      payload: string | Uint8Array,
-      header: string | Uint8Array,
+      payload: string | Buffer,
+      header: string | Buffer,
       secret: string,
       tolerance?: number,
       cryptoProvider?: CryptoProvider,
