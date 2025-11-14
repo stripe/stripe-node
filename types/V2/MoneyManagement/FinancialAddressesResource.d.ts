@@ -17,10 +17,7 @@ declare module 'stripe' {
         }
 
         namespace FinancialAddressCreateParams {
-          type Type =
-            | 'gb_bank_account'
-            | 'sepa_bank_account'
-            | 'us_bank_account';
+          type Type = 'gb_bank_account' | 'us_bank_account';
         }
       }
 

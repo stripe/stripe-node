@@ -1283,6 +1283,37 @@ describe('RequestSender', () => {
           }
         );
       });
+
+      it('should calculate content-length correctly for unicode strings', (done) => {
+        return getTestServerStripe(
+          {},
+          (req, res) => {
+            res.write(
+              JSON.stringify({
+                gotContentLength: req.headers['content-length'],
+              })
+            );
+            res.end();
+          },
+          async (err, stripe, closeServer) => {
+            if (err) {
+              return done(err);
+            }
+            try {
+              // exact method isn't important, but it needs to be a v2 endpoint
+              const result = await stripe.v2.billing.meterEvents.create({
+                name: 'dåvid',
+              });
+              closeServer();
+              expect(result.gotContentLength).to.equal('17');
+
+              done();
+            } catch (err) {
+              done(err);
+            }
+          }
+        );
+      });
     });
 
     describe('_getSleepTimeInMS', () => {

@@ -30,7 +30,7 @@ declare module 'stripe' {
         /**
          * Information about the tax transactions linked to this payment intent
          */
-        tax_transaction_attempts?: Array<
+        tax_transaction_attempts: Array<
           Association.TaxTransactionAttempt
         > | null;
       }

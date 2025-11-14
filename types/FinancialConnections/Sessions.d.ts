@@ -30,7 +30,7 @@ declare module 'stripe' {
         /**
          * A value that will be passed to the client to launch the authentication flow.
          */
-        client_secret: string;
+        client_secret: string | null;
 
         filters?: Session.Filters;
 

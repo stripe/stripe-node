@@ -1,5 +1,13 @@
 # Changelog
 
+## 19.3.1 - 2025-11-12
+* [#2500](https://github.com/stripe/stripe-node/pull/2500) Use `TextEncoder` instead of `Buffer` to ensure support in other JS environments
+  * Fixes issues like [#2499](https://github.com/stripe/stripe-node/issues/2499) and [#2493](https://github.com/stripe/stripe-node/issues/2493) where use of `Buffer.byteLength` was causing errors in some runtime environments.
+
+## 19.3.0 - 2025-11-05
+* [#2488](https://github.com/stripe/stripe-node/pull/2488) Update generated code
+  * Add support for `capture_method` on `PaymentIntent.payment_method_options.card_present`, `PaymentIntentConfirmParams.payment_method_options.card_present`, `PaymentIntentCreateParams.payment_method_options.card_present`, and `PaymentIntentUpdateParams.payment_method_options.card_present`
+
 ## 19.3.0-beta.1 - 2025-10-29
 
 This release changes the pinned API version to `2025-10-29.preview`.
@@ -32,6 +40,10 @@ This release changes the pinned API version to `2025-10-29.preview`.
   * Add support for error codes `blocked_payout_method_crypto_wallet` and `unsupported_payout_method_crypto_wallet` on `BlockedByStripeError`
   * Add support for error code `outbound_flow_from_closed_financial_account_unsupported` on `FeatureNotEnabledError`
   * Add support for error code `limit_payout_method_crypto_wallet` on `QuotaExceededError`
+
+## 19.2.1 - 2025-11-04
+* [#2492](https://github.com/stripe/stripe-node/pull/2492) Add support for value `payment_record` to enum `InvoicePayment.payment.type`
+* [#2485](https://github.com/stripe/stripe-node/pull/2485) correctly calculate content-length for JSON bodies that contain unicode
 
 ## 19.2.0 - 2025-10-29
 

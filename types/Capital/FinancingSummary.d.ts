@@ -34,7 +34,7 @@ declare module 'stripe' {
       namespace FinancingSummary {
         interface Details {
           /**
-           * Amount of financing offered, in minor units. For example, $1,000 USD will be represented as 100000.
+           * Amount of financing offered, in minor units. For example, 1,000 USD is represented as 100000.
            */
           advance_amount: number;
 
@@ -54,17 +54,17 @@ declare module 'stripe' {
           current_repayment_interval: Details.CurrentRepaymentInterval | null;
 
           /**
-           * Fixed fee amount, in minor units. For example, $100 USD will be represented as 10000.
+           * Fixed fee amount, in minor units. For example, 100 USD is represented as 10000.
            */
           fee_amount: number;
 
           /**
-           * The amount the Connected account has paid toward the financing debt so far, in minor units. For example, $1,000 USD will be represented as 100000.
+           * The amount the Connected account has paid toward the financing debt so far, in minor units. For example, 1,000 USD is represented as 100000.
            */
           paid_amount: number;
 
           /**
-           * The balance remaining to be paid on the financing, in minor units. For example, $1,000 USD will be represented as 100000.
+           * The balance remaining to be paid on the financing, in minor units. For example, 1,000 USD is represented as 100000.
            */
           remaining_amount: number;
 
@@ -74,7 +74,7 @@ declare module 'stripe' {
           repayments_begin_at: number | null;
 
           /**
-           * Per-transaction rate at which Stripe will withhold funds to repay the financing.
+           * Per-transaction rate at which Stripe withholds funds to repay the financing.
            */
           withhold_rate: number;
         }
@@ -88,12 +88,12 @@ declare module 'stripe' {
             due_at: number;
 
             /**
-             * The amount that has already been paid in the current repayment interval, in minor units. For example, $100 USD will be represented as 10000.
+             * The amount that has already been paid in the current repayment interval, in minor units. For example, 100 USD is represented as 10000.
              */
             paid_amount: number | null;
 
             /**
-             * The amount that is yet to be paid in the current repayment interval, in minor units. For example, $100 USD will be represented as 10000.
+             * The amount that is yet to be paid in the current repayment interval, in minor units. For example, 100 USD is represented as 10000.
              */
             remaining_amount: number;
           }

@@ -97,7 +97,7 @@ declare module 'stripe' {
       namespace FinancingOffer {
         interface AcceptedTerms {
           /**
-           * Amount of financing offered, in minor units. For example, $1,000 USD will be represented as 100000.
+           * Amount of financing offered, in minor units. For example, 1,000 USD is represented as 100000.
            */
           advance_amount: number;
 
@@ -107,7 +107,7 @@ declare module 'stripe' {
           currency: string;
 
           /**
-           * Fixed fee amount, in minor units. For example, $100 USD will be represented as 10000.
+           * Fixed fee amount, in minor units. For example, 100 USD is represented as 10000.
            */
           fee_amount: number;
 
@@ -118,7 +118,7 @@ declare module 'stripe' {
           previous_financing_fee_discount_amount: number | null;
 
           /**
-           * Per-transaction rate at which Stripe will withhold funds to repay the financing.
+           * Per-transaction rate at which Stripe withholds funds to repay the financing.
            */
           withhold_rate: number;
         }
@@ -127,7 +127,7 @@ declare module 'stripe' {
 
         interface OfferedTerms {
           /**
-           * Amount of financing offered, in minor units. For example, $1,000 USD will be represented as 100000.
+           * Amount of financing offered, in minor units. For example, 1,000 USD is represented as 100000.
            */
           advance_amount: number;
 
@@ -142,7 +142,7 @@ declare module 'stripe' {
           currency: string;
 
           /**
-           * Fixed fee amount, in minor units. For example, $100 USD will be represented as 10000.
+           * Fixed fee amount, in minor units. For example, 100 USD is represented as 10000.
            */
           fee_amount: number;
 
@@ -155,7 +155,7 @@ declare module 'stripe' {
           previous_financing_fee_discount_rate: number | null;
 
           /**
-           * Per-transaction rate at which Stripe will withhold funds to repay the financing.
+           * Per-transaction rate at which Stripe withholds funds to repay the financing.
            */
           withhold_rate: number;
         }

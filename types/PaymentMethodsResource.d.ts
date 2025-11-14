@@ -600,6 +600,7 @@ declare module 'stripe' {
           | 'asn_bank'
           | 'bunq'
           | 'buut'
+          | 'finom'
           | 'handelsbanken'
           | 'ing'
           | 'knab'
@@ -1088,9 +1089,19 @@ declare module 'stripe' {
 
     interface PaymentMethodListParams extends PaginationParams {
       /**
+       * This field indicates whether this payment method can be shown again to its customer in a checkout flow. Stripe products such as Checkout and Elements use this field to determine whether a payment method can be shown as a saved payment method in a checkout flow.
+       */
+      allow_redisplay?: PaymentMethodListParams.AllowRedisplay;
+
+      /**
        * The ID of the customer whose PaymentMethods will be retrieved.
        */
       customer?: string;
+
+      /**
+       * The ID of the Account whose PaymentMethods will be retrieved.
+       */
+      customer_account?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -1104,6 +1115,8 @@ declare module 'stripe' {
     }
 
     namespace PaymentMethodListParams {
+      type AllowRedisplay = 'always' | 'limited' | 'unspecified';
+
       type Type =
         | 'acss_debit'
         | 'affirm'

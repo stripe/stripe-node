@@ -628,6 +628,11 @@ declare module 'stripe' {
             card_testing_risk?: RiskAssessment.CardTestingRisk;
 
             /**
+             * Stripe's assessment of this authorization's likelihood to be fraudulent.
+             */
+            fraud_risk?: RiskAssessment.FraudRisk;
+
+            /**
              * The dispute risk of the merchant (the seller on a purchase) on an authorization based on all Stripe Issuing activity.
              */
             merchant_dispute_risk?: RiskAssessment.MerchantDisputeRisk;
@@ -653,6 +658,28 @@ declare module 'stripe' {
 
             namespace CardTestingRisk {
               type RiskLevel =
+                | 'elevated'
+                | 'highest'
+                | 'low'
+                | 'normal'
+                | 'not_assessed'
+                | 'unknown';
+            }
+
+            interface FraudRisk {
+              /**
+               * Stripe's assessment of the likelihood of fraud on an authorization.
+               */
+              level: FraudRisk.Level;
+
+              /**
+               * Stripe's numerical model score assessing the likelihood of fraudulent activity. A higher score means a higher likelihood of fraudulent activity, and anything above 25 is considered high risk.
+               */
+              score?: number;
+            }
+
+            namespace FraudRisk {
+              type Level =
                 | 'elevated'
                 | 'highest'
                 | 'low'

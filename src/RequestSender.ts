@@ -722,7 +722,7 @@ export class RequestSender {
             apiMode == 'v2'
               ? 'application/json'
               : 'application/x-www-form-urlencoded',
-          contentLength: requestData.length,
+          contentLength: new TextEncoder().encode(requestData).length, // if we calculate this wrong, the server treats it as invalid json
           apiVersion: apiVersion,
           clientUserAgent,
           method,
