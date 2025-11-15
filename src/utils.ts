@@ -58,7 +58,8 @@ export function queryStringifyRequestData(
     qs
       .stringify(data, {
         serializeDate: (d: Date) => Math.floor(d.getTime() / 1000).toString(),
-        arrayFormat: apiMode == 'v2' ? 'repeat' : 'indices',
+        // Always use indexed format for arrays
+        arrayFormat: 'indices',
       })
       // Don't use strict form encoding by changing the square bracket control
       // characters back to their literals. This is fine by the server, and
