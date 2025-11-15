@@ -847,6 +847,11 @@ declare module 'stripe' {
 
     interface CustomerListBalanceTransactionsParams extends PaginationParams {
       /**
+       * Only return customer balance transactions that were created during the given date interval.
+       */
+      created?: Stripe.RangeQueryParam | number;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;

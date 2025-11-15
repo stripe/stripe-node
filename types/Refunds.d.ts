@@ -152,6 +152,8 @@ declare module 'stripe' {
 
         klarna?: DestinationDetails.Klarna;
 
+        mb_way?: DestinationDetails.MbWay;
+
         multibanco?: DestinationDetails.Multibanco;
 
         mx_bank_transfer?: DestinationDetails.MxBankTransfer;
@@ -173,6 +175,8 @@ declare module 'stripe' {
         swish?: DestinationDetails.Swish;
 
         th_bank_transfer?: DestinationDetails.ThBankTransfer;
+
+        twint?: DestinationDetails.Twint;
 
         /**
          * The type of transaction-specific details of the payment method used in the refund (e.g., `card`). An additional hash is included on `destination_details` with a name matching this value. It contains information specific to the refund transaction.
@@ -309,6 +313,18 @@ declare module 'stripe' {
 
         interface Klarna {}
 
+        interface MbWay {
+          /**
+           * The reference assigned to the refund.
+           */
+          reference: string | null;
+
+          /**
+           * Status of the reference on the refund. This can be `pending`, `available` or `unavailable`.
+           */
+          reference_status: string | null;
+        }
+
         interface Multibanco {
           /**
            * The reference assigned to the refund.
@@ -390,6 +406,8 @@ declare module 'stripe' {
            */
           reference_status: string | null;
         }
+
+        interface Twint {}
 
         interface UsBankTransfer {
           /**
