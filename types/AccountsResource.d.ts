@@ -148,6 +148,11 @@ declare module 'stripe' {
         product_description?: string;
 
         /**
+         * A link to the business's publicly available terms related to the Specified Commercial Transaction Act. Used by the Checkout product and for Japanese payment methods.
+         */
+        specified_commercial_transactions_act_url?: Stripe.Emptyable<string>;
+
+        /**
          * A publicly available mailing address for sending support issues to.
          */
         support_address?: Stripe.AddressParam;
@@ -1708,16 +1713,6 @@ declare module 'stripe' {
         relationship?: Individual.Relationship;
 
         /**
-         * The last four digits of the individual's Social Security Number (U.S. only).
-         */
-        ssn_last_4?: string;
-
-        /**
-         * The individual's verification document information.
-         */
-        verification?: Individual.Verification;
-
-        /**
          * The credit applicant's self-reported yearly income in minor units.
          */
         self_reported_income?: Individual.SelfReportedIncome;
@@ -1726,6 +1721,16 @@ declare module 'stripe' {
          * The credit applicant's self-reported monthly housing payment in minor units.
          */
         self_reported_monthly_housing_payment?: Individual.SelfReportedMonthlyHousingPayment;
+
+        /**
+         * The last four digits of the individual's Social Security Number (U.S. only).
+         */
+        ssn_last_4?: string;
+
+        /**
+         * The individual's verification document information.
+         */
+        verification?: Individual.Verification;
       }
 
       namespace Individual {
@@ -1903,6 +1908,11 @@ declare module 'stripe' {
         payouts?: Settings.Payouts;
 
         /**
+         * Settings specific to the PayPay payments method.
+         */
+        paypay_payments?: Settings.PaypayPayments;
+
+        /**
          * Settings specific to the account's tax forms.
          */
         tax_forms?: Settings.TaxForms;
@@ -2035,7 +2045,7 @@ declare module 'stripe' {
 
         interface Invoices {
           /**
-           * Whether payment methods should be saved when a payment is completed for a one-time invoices on a hosted invoice page.
+           * Whether to save the payment method after a payment is completed for a one-time invoice or a subscription invoice when the customer already has a default payment method on the hosted invoice page.
            */
           hosted_payment_method_save?: Invoices.HostedPaymentMethodSave;
         }
@@ -2130,6 +2140,17 @@ declare module 'stripe' {
               | 'tuesday'
               | 'wednesday';
           }
+        }
+
+        interface PaypayPayments {
+          /**
+           * Whether your business sells digital content or not.
+           */
+          goods_type?: PaypayPayments.GoodsType;
+        }
+
+        namespace PaypayPayments {
+          type GoodsType = 'digital_content' | 'other';
         }
 
         interface TaxForms {
@@ -2370,6 +2391,11 @@ declare module 'stripe' {
          * Internal-only description of the product sold by, or service provided by, the business. Used by Stripe for risk and underwriting purposes.
          */
         product_description?: string;
+
+        /**
+         * A link to the business's publicly available terms related to the Specified Commercial Transaction Act. Only used for accounts in Japan.
+         */
+        specified_commercial_transactions_act_url?: Stripe.Emptyable<string>;
 
         /**
          * A publicly available mailing address for sending support issues to.
@@ -3838,16 +3864,6 @@ declare module 'stripe' {
         relationship?: Individual.Relationship;
 
         /**
-         * The last four digits of the individual's Social Security Number (U.S. only).
-         */
-        ssn_last_4?: string;
-
-        /**
-         * The individual's verification document information.
-         */
-        verification?: Individual.Verification;
-
-        /**
          * The credit applicant's self-reported yearly income in minor units.
          */
         self_reported_income?: Individual.SelfReportedIncome;
@@ -3856,6 +3872,16 @@ declare module 'stripe' {
          * The credit applicant's self-reported monthly housing payment in minor units.
          */
         self_reported_monthly_housing_payment?: Individual.SelfReportedMonthlyHousingPayment;
+
+        /**
+         * The last four digits of the individual's Social Security Number (U.S. only).
+         */
+        ssn_last_4?: string;
+
+        /**
+         * The individual's verification document information.
+         */
+        verification?: Individual.Verification;
       }
 
       namespace Individual {
@@ -4033,6 +4059,11 @@ declare module 'stripe' {
         payouts?: Settings.Payouts;
 
         /**
+         * Settings specific to the PayPay payments method.
+         */
+        paypay_payments?: Settings.PaypayPayments;
+
+        /**
          * Settings specific to the account's tax forms.
          */
         tax_forms?: Settings.TaxForms;
@@ -4170,7 +4201,7 @@ declare module 'stripe' {
           default_account_tax_ids?: Stripe.Emptyable<Array<string>>;
 
           /**
-           * Whether payment methods should be saved when a payment is completed for a one-time invoices on a hosted invoice page.
+           * Whether to save the payment method after a payment is completed for a one-time invoice or a subscription invoice when the customer already has a default payment method on the hosted invoice page.
            */
           hosted_payment_method_save?: Invoices.HostedPaymentMethodSave;
         }
@@ -4265,6 +4296,17 @@ declare module 'stripe' {
               | 'tuesday'
               | 'wednesday';
           }
+        }
+
+        interface PaypayPayments {
+          /**
+           * Whether your business sells digital content or not.
+           */
+          goods_type?: PaypayPayments.GoodsType;
+        }
+
+        namespace PaypayPayments {
+          type GoodsType = 'digital_content' | 'other';
         }
 
         interface TaxForms {

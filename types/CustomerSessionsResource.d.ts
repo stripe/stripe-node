@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     interface CustomerSessionCreateParams {
       /**
-       * Configuration for each component. Exactly 1 component must be enabled.
+       * Configuration for each component. At least 1 component must be enabled.
        */
       components: CustomerSessionCreateParams.Components;
 

@@ -1047,6 +1047,13 @@ declare module 'stripe' {
         billing_mode?: SubscriptionData.BillingMode;
 
         /**
+         * Billing schedules that will be applied to the subscription or subscription schedule created when the quote is accepted.
+         */
+        billing_schedules?: Stripe.Emptyable<
+          Array<SubscriptionData.BillingSchedule>
+        >;
+
+        /**
          * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description?: string;
@@ -1072,6 +1079,11 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
+         * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         */
+        phase_effective_at?: SubscriptionData.PhaseEffectiveAt;
+
+        /**
          * If specified, the invoicing for the given billing cycle iterations will be processed when the quote is accepted. Cannot be used with `effective_date`.
          */
         prebilling?: Stripe.Emptyable<SubscriptionData.Prebilling>;
@@ -1091,18 +1103,6 @@ declare module 'stripe' {
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days?: Stripe.Emptyable<number>;
-
-        /**
-         * Billing schedules that will be applied to the subscription or subscription schedule created when the quote is accepted.
-         */
-        billing_schedules?: Stripe.Emptyable<
-          Array<SubscriptionData.BillingSchedule>
-        >;
-
-        /**
-         * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
-         */
-        phase_effective_at?: SubscriptionData.PhaseEffectiveAt;
       }
 
       namespace SubscriptionData {
@@ -1413,6 +1413,13 @@ declare module 'stripe' {
         billing_behavior?: SubscriptionDataOverride.BillingBehavior;
 
         /**
+         * Billing schedules that will be applied to the subscription or subscription schedule created when the quote is accepted.
+         */
+        billing_schedules?: Stripe.Emptyable<
+          Array<SubscriptionDataOverride.BillingSchedule>
+        >;
+
+        /**
          * The customer the Subscription Data override applies to. This is only relevant when `applies_to.type=new_reference`.
          */
         customer?: string;
@@ -1428,6 +1435,11 @@ declare module 'stripe' {
         end_behavior?: SubscriptionDataOverride.EndBehavior;
 
         /**
+         * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         */
+        phase_effective_at?: SubscriptionDataOverride.PhaseEffectiveAt;
+
+        /**
          * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations). When creating a subscription, valid values are `create_prorations` or `none`.
          *
          * When updating a subscription, valid values are `create_prorations`, `none`, or `always_invoice`.
@@ -1437,18 +1449,6 @@ declare module 'stripe' {
          * Prorations can be disabled by passing `none`.
          */
         proration_behavior?: SubscriptionDataOverride.ProrationBehavior;
-
-        /**
-         * Billing schedules that will be applied to the subscription or subscription schedule created when the quote is accepted.
-         */
-        billing_schedules?: Stripe.Emptyable<
-          Array<SubscriptionDataOverride.BillingSchedule>
-        >;
-
-        /**
-         * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
-         */
-        phase_effective_at?: SubscriptionDataOverride.PhaseEffectiveAt;
       }
 
       namespace SubscriptionDataOverride {
@@ -2789,6 +2789,13 @@ declare module 'stripe' {
         billing_cycle_anchor?: Stripe.Emptyable<'reset'>;
 
         /**
+         * Billing schedules that will be applied to the subscription or subscription schedule created when the quote is accepted.
+         */
+        billing_schedules?: Stripe.Emptyable<
+          Array<SubscriptionData.BillingSchedule>
+        >;
+
+        /**
          * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description?: Stripe.Emptyable<string>;
@@ -2807,6 +2814,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on the subscription or subscription schedule when the quote is accepted. If a recurring price is included in `line_items`, this field will be passed to the resulting subscription's `metadata` field. If `subscription_data.effective_date` is used, this field will be passed to the resulting subscription schedule's `phases.metadata` field. Unlike object-level metadata, this field is declarative. Updates will clear prior values.
          */
         metadata?: Stripe.MetadataParam;
+
+        /**
+         * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         */
+        phase_effective_at?: SubscriptionData.PhaseEffectiveAt;
 
         /**
          * If specified, the invoicing for the given billing cycle iterations will be processed when the quote is accepted. Cannot be used with `effective_date`.
@@ -2828,18 +2840,6 @@ declare module 'stripe' {
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days?: Stripe.Emptyable<number>;
-
-        /**
-         * Billing schedules that will be applied to the subscription or subscription schedule created when the quote is accepted.
-         */
-        billing_schedules?: Stripe.Emptyable<
-          Array<SubscriptionData.BillingSchedule>
-        >;
-
-        /**
-         * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
-         */
-        phase_effective_at?: SubscriptionData.PhaseEffectiveAt;
       }
 
       namespace SubscriptionData {
@@ -3125,6 +3125,13 @@ declare module 'stripe' {
         billing_behavior?: SubscriptionDataOverride.BillingBehavior;
 
         /**
+         * Billing schedules that will be applied to the subscription or subscription schedule created when the quote is accepted.
+         */
+        billing_schedules?: Stripe.Emptyable<
+          Array<SubscriptionDataOverride.BillingSchedule>
+        >;
+
+        /**
          * The customer the Subscription Data override applies to.
          */
         customer?: string;
@@ -3140,6 +3147,11 @@ declare module 'stripe' {
         end_behavior?: SubscriptionDataOverride.EndBehavior;
 
         /**
+         * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         */
+        phase_effective_at?: SubscriptionDataOverride.PhaseEffectiveAt;
+
+        /**
          * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations). When creating a subscription, valid values are `create_prorations` or `none`.
          *
          * When updating a subscription, valid values are `create_prorations`, `none`, or `always_invoice`.
@@ -3149,18 +3161,6 @@ declare module 'stripe' {
          * Prorations can be disabled by passing `none`.
          */
         proration_behavior?: SubscriptionDataOverride.ProrationBehavior;
-
-        /**
-         * Billing schedules that will be applied to the subscription or subscription schedule created when the quote is accepted.
-         */
-        billing_schedules?: Stripe.Emptyable<
-          Array<SubscriptionDataOverride.BillingSchedule>
-        >;
-
-        /**
-         * Configures how the subscription schedule handles billing for phase transitions when the quote is accepted. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
-         */
-        phase_effective_at?: SubscriptionDataOverride.PhaseEffectiveAt;
       }
 
       namespace SubscriptionDataOverride {

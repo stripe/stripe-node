@@ -241,7 +241,9 @@ declare module 'stripe' {
 
       interface AmountDetails {
         /**
-         * The total discount applied on the transaction.
+         * The total discount applied on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+         *
+         * This field is mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
          */
         discount_amount?: Stripe.Emptyable<number>;
 
@@ -264,7 +266,9 @@ declare module 'stripe' {
       namespace AmountDetails {
         interface LineItem {
           /**
-           * The amount an item was discounted for. Positive integer.
+           * The discount applied on this line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+           *
+           * This field is mutually exclusive with the `amount_details[discount_amount]` field.
            */
           discount_amount?: number;
 
@@ -274,17 +278,19 @@ declare module 'stripe' {
           payment_method_options?: LineItem.PaymentMethodOptions;
 
           /**
-           * Unique identifier of the product. At most 12 characters long.
+           * The product code of the line item, such as an SKU. Required for L3 rates. At most 12 characters long.
            */
           product_code?: string;
 
           /**
-           * Name of the product. At most 100 characters long.
+           * The product name of the line item. Required for L3 rates. At most 1024 characters long.
+           *
+           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
            */
           product_name: string;
 
           /**
-           * Number of items of the product. Positive integer.
+           * The quantity of items. Required for L3 rates. An integer greater than 0.
            */
           quantity: number;
 
@@ -294,7 +300,7 @@ declare module 'stripe' {
           tax?: LineItem.Tax;
 
           /**
-           * Cost of the product. Non-negative integer.
+           * The unit cost of the line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
            */
           unit_cost: number;
 
@@ -388,7 +394,9 @@ declare module 'stripe' {
 
           interface Tax {
             /**
-             * The total tax on an item. Non-negative integer.
+             * The total amount of tax on a single line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+             *
+             * This field is mutually exclusive with the `amount_details[tax][total_tax_amount]` field.
              */
             total_tax_amount: number;
           }
@@ -396,24 +404,26 @@ declare module 'stripe' {
 
         interface Shipping {
           /**
-           * Portion of the amount that is for shipping.
+           * If a physical good is being shipped, the cost of shipping represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than or equal to 0.
            */
           amount?: Stripe.Emptyable<number>;
 
           /**
-           * The postal code that represents the shipping source.
+           * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
            */
           from_postal_code?: Stripe.Emptyable<string>;
 
           /**
-           * The postal code that represents the shipping destination.
+           * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
            */
           to_postal_code?: Stripe.Emptyable<string>;
         }
 
         interface Tax {
           /**
-           * Total portion of the amount that is for tax.
+           * The total amount of tax on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
+           *
+           * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
            */
           total_tax_amount: number;
         }
@@ -587,7 +597,16 @@ declare module 'stripe' {
         car_rental?: PaymentDetails.CarRental;
 
         /**
-         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
+         * Car rental data for this PaymentIntent.
+         */
+        car_rental_data?: Stripe.Emptyable<
+          Array<PaymentDetails.CarRentalDatum>
+        >;
+
+        /**
+         * A unique value to identify the customer. This field is available only for card payments.
+         *
+         * This field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
          */
         customer_reference?: Stripe.Emptyable<string>;
 
@@ -602,12 +621,26 @@ declare module 'stripe' {
         flight?: PaymentDetails.Flight;
 
         /**
+         * Flight data for this PaymentIntent.
+         */
+        flight_data?: Stripe.Emptyable<Array<PaymentDetails.FlightDatum>>;
+
+        /**
          * Lodging reservation details for this PaymentIntent
          */
         lodging?: PaymentDetails.Lodging;
 
         /**
-         * A unique value assigned by the business to identify the transaction.
+         * Lodging data for this PaymentIntent.
+         */
+        lodging_data?: Stripe.Emptyable<Array<PaymentDetails.LodgingDatum>>;
+
+        /**
+         * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+         *
+         * Required when the Payment Method Types array contains `card`, including when [automatic_payment_methods.enabled](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-automatic_payment_methods-enabled) is set to `true`.
+         *
+         * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
          */
         order_reference?: Stripe.Emptyable<string>;
 
@@ -840,6 +873,479 @@ declare module 'stripe' {
           type RateInterval = 'day' | 'month' | 'week';
         }
 
+        interface CarRentalDatum {
+          /**
+           * Affiliate (such as travel agency) details for the rental.
+           */
+          affiliate?: CarRentalDatum.Affiliate;
+
+          /**
+           * Booking confirmation number for the car rental.
+           */
+          booking_number?: string;
+
+          /**
+           * Name of the car rental company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Customer service phone number for the car rental company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Number of days the car is being rented.
+           */
+          days_rented?: number;
+
+          /**
+           * Distance details for the rental.
+           */
+          distance?: CarRentalDatum.Distance;
+
+          /**
+           * List of drivers for the rental.
+           */
+          drivers?: Array<CarRentalDatum.Driver>;
+
+          /**
+           * Drop-off location details.
+           */
+          drop_off: CarRentalDatum.DropOff;
+
+          /**
+           * Insurance details for the rental.
+           */
+          insurances?: Array<CarRentalDatum.Insurance>;
+
+          /**
+           * Indicates if the customer was a no-show.
+           */
+          no_show_indicator?: boolean;
+
+          /**
+           * Pickup location details.
+           */
+          pickup: CarRentalDatum.Pickup;
+
+          /**
+           * Name of the person renting the vehicle.
+           */
+          renter_name?: string;
+
+          /**
+           * Total cost breakdown for the rental.
+           */
+          total: CarRentalDatum.Total;
+
+          /**
+           * Vehicle details for the rental.
+           */
+          vehicle?: CarRentalDatum.Vehicle;
+        }
+
+        namespace CarRentalDatum {
+          interface Affiliate {
+            /**
+             * Affiliate partner code.
+             */
+            code?: string;
+
+            /**
+             * Name of affiliate partner.
+             */
+            name?: string;
+          }
+
+          interface Distance {
+            /**
+             * Distance traveled.
+             */
+            amount: number;
+
+            /**
+             * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+             */
+            unit: Distance.Unit;
+          }
+
+          namespace Distance {
+            type Unit = 'kilometers' | 'miles';
+          }
+
+          interface Driver {
+            /**
+             * Driver's date of birth.
+             */
+            date_of_birth?: Driver.DateOfBirth;
+
+            /**
+             * Driver's identification number.
+             */
+            driver_identification_number?: string;
+
+            /**
+             * Driver's tax number.
+             */
+            driver_tax_number?: string;
+
+            /**
+             * Driver's full name.
+             */
+            name: string;
+          }
+
+          namespace Driver {
+            interface DateOfBirth {
+              /**
+               * Day of birth (1-31).
+               */
+              day: number;
+
+              /**
+               * Month of birth (1-12).
+               */
+              month: number;
+
+              /**
+               * Year of birth (must be greater than 1900).
+               */
+              year: number;
+            }
+          }
+
+          interface DropOff {
+            /**
+             * Address of the rental location.
+             */
+            address: DropOff.Address;
+
+            /**
+             * Location name.
+             */
+            location_name?: string;
+
+            /**
+             * Timestamp for the location.
+             */
+            time: number;
+          }
+
+          namespace DropOff {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1, such as the street, PO Box, or company name.
+               */
+              line1: string;
+
+              /**
+               * Address line 2, such as the apartment, suite, unit, or building.
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
+
+          interface Insurance {
+            /**
+             * Amount of the insurance coverage in cents.
+             */
+            amount: number;
+
+            /**
+             * Currency of the insurance amount.
+             */
+            currency?: string;
+
+            /**
+             * Name of the insurance company.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance coverage.
+             */
+            insurance_type: Insurance.InsuranceType;
+          }
+
+          namespace Insurance {
+            type InsuranceType =
+              | 'liability_supplement'
+              | 'loss_damage_waiver'
+              | 'other'
+              | 'partial_damage_waiver'
+              | 'personal_accident'
+              | 'personal_effects';
+          }
+
+          interface Pickup {
+            /**
+             * Address of the rental location.
+             */
+            address: Pickup.Address;
+
+            /**
+             * Location name.
+             */
+            location_name?: string;
+
+            /**
+             * Timestamp for the location.
+             */
+            time: number;
+          }
+
+          namespace Pickup {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1, such as the street, PO Box, or company name.
+               */
+              line1: string;
+
+              /**
+               * Address line 2, such as the apartment, suite, unit, or building.
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
+
+          interface Total {
+            /**
+             * Total amount in cents.
+             */
+            amount: number;
+
+            /**
+             * Currency of the amount.
+             */
+            currency?: string;
+
+            /**
+             * Discount details for the rental.
+             */
+            discounts?: Total.Discounts;
+
+            /**
+             * Additional charges for the rental.
+             */
+            extra_charges?: Array<Total.ExtraCharge>;
+
+            /**
+             * Rate per unit for the rental.
+             */
+            rate_per_unit?: number;
+
+            /**
+             * Unit of measurement for the rate.
+             */
+            rate_unit?: Total.RateUnit;
+
+            /**
+             * Tax breakdown for the rental.
+             */
+            tax?: Total.Tax;
+          }
+
+          namespace Total {
+            interface Discounts {
+              /**
+               * Corporate client discount code.
+               */
+              corporate_client_code?: string;
+
+              /**
+               * Coupon code applied to the rental.
+               */
+              coupon?: string;
+
+              /**
+               * Maximum number of free miles or kilometers included.
+               */
+              maximum_free_miles_or_kilometers?: number;
+            }
+
+            interface ExtraCharge {
+              /**
+               * Amount of the extra charge in cents.
+               */
+              amount: number;
+
+              /**
+               * Type of extra charge.
+               */
+              type: ExtraCharge.Type;
+            }
+
+            namespace ExtraCharge {
+              type Type =
+                | 'extra_mileage'
+                | 'gas'
+                | 'gps'
+                | 'late_charge'
+                | 'one_way_drop_off'
+                | 'other'
+                | 'parking'
+                | 'phone'
+                | 'regular_mileage'
+                | 'towing';
+            }
+
+            type RateUnit =
+              | 'days'
+              | 'kilometers'
+              | 'miles'
+              | 'months'
+              | 'weeks';
+
+            interface Tax {
+              /**
+               * Indicates if the transaction is tax exempt.
+               */
+              tax_exempt_indicator?: boolean;
+
+              /**
+               * Array of tax details.
+               */
+              taxes?: Array<Tax.Tax>;
+            }
+
+            namespace Tax {
+              interface Tax {
+                /**
+                 * Tax amount.
+                 */
+                amount?: number;
+
+                /**
+                 * Tax rate applied.
+                 */
+                rate?: number;
+
+                /**
+                 * Type of tax applied.
+                 */
+                type?: string;
+              }
+            }
+          }
+
+          interface Vehicle {
+            /**
+             * Make of the rental vehicle.
+             */
+            make?: string;
+
+            /**
+             * Model of the rental vehicle.
+             */
+            model?: string;
+
+            /**
+             * Odometer reading at the time of rental.
+             */
+            odometer?: number;
+
+            /**
+             * Type of the rental vehicle.
+             */
+            type?: Vehicle.Type;
+
+            /**
+             * Class of the rental vehicle.
+             */
+            vehicle_class?: Vehicle.VehicleClass;
+
+            /**
+             * Vehicle identification number (VIN).
+             */
+            vehicle_identification_number?: string;
+          }
+
+          namespace Vehicle {
+            type Type =
+              | 'cargo_van'
+              | 'compact'
+              | 'economy'
+              | 'exotic'
+              | 'exotic_suv'
+              | 'fifteen_passenger_van'
+              | 'four_wheel_drive'
+              | 'full_size'
+              | 'intermediate'
+              | 'large_suv'
+              | 'large_truck'
+              | 'luxury'
+              | 'medium_suv'
+              | 'midsize'
+              | 'mini'
+              | 'minivan'
+              | 'miscellaneous'
+              | 'moped'
+              | 'moving_van'
+              | 'premium'
+              | 'regular'
+              | 'small_medium_truck'
+              | 'small_suv'
+              | 'special'
+              | 'standard'
+              | 'stretch'
+              | 'subcompact'
+              | 'taxi'
+              | 'twelve_foot_truck'
+              | 'twelve_passenger_van'
+              | 'twenty_foot_truck'
+              | 'twenty_four_foot_truck'
+              | 'twenty_six_foot_truck'
+              | 'unique';
+
+            type VehicleClass =
+              | 'business'
+              | 'economy'
+              | 'first_class'
+              | 'premium_economy';
+          }
+        }
+
         interface EventDetails {
           /**
            * Indicates if the tickets are digitally checked when entering the venue.
@@ -1070,6 +1576,343 @@ declare module 'stripe' {
           }
         }
 
+        interface FlightDatum {
+          /**
+           * Affiliate details if applicable.
+           */
+          affiliate?: FlightDatum.Affiliate;
+
+          /**
+           * Reservation reference.
+           */
+          booking_number?: string;
+
+          /**
+           * Computerized reservation system used to make the reservation and purchase the ticket.
+           */
+          computerized_reservation_system?: string;
+
+          /**
+           * Ticket restrictions.
+           */
+          endorsements_and_restrictions?: string;
+
+          /**
+           * List of insurances.
+           */
+          insurances?: Array<FlightDatum.Insurance>;
+
+          /**
+           * List of passengers.
+           */
+          passengers?: Array<FlightDatum.Passenger>;
+
+          /**
+           * List of flight segments.
+           */
+          segments: Array<FlightDatum.Segment>;
+
+          /**
+           * Electronic ticket indicator.
+           */
+          ticket_electronically_issued_indicator?: boolean;
+
+          /**
+           * Total cost breakdown.
+           */
+          total: FlightDatum.Total;
+
+          /**
+           * Type of flight transaction.
+           */
+          transaction_type?: FlightDatum.TransactionType;
+        }
+
+        namespace FlightDatum {
+          interface Affiliate {
+            /**
+             * Affiliate partner code.
+             */
+            code?: string;
+
+            /**
+             * Name of affiliate partner.
+             */
+            name?: string;
+
+            /**
+             * Code provided by the company to a travel agent authorizing ticket issuance.
+             */
+            travel_authorization_code?: string;
+          }
+
+          interface Insurance {
+            /**
+             * Insurance cost.
+             */
+            amount: number;
+
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Insurance company name.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type: Insurance.InsuranceType;
+          }
+
+          namespace Insurance {
+            type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+
+          interface Passenger {
+            /**
+             * Passenger's full name.
+             */
+            name: string;
+          }
+
+          interface Segment {
+            /**
+             * Segment fare amount.
+             */
+            amount?: number;
+
+            /**
+             * Arrival details.
+             */
+            arrival: Segment.Arrival;
+
+            /**
+             * Airline carrier code.
+             */
+            carrier_code: string;
+
+            /**
+             * Carrier name.
+             */
+            carrier_name?: string;
+
+            /**
+             * Segment currency.
+             */
+            currency?: string;
+
+            /**
+             * Departure details.
+             */
+            departure: Segment.Departure;
+
+            /**
+             * Exchange ticket number.
+             */
+            exchange_ticket_number?: string;
+
+            /**
+             * Fare basis code.
+             */
+            fare_basis_code?: string;
+
+            /**
+             * Additional fees.
+             */
+            fees?: number;
+
+            /**
+             * Flight number.
+             */
+            flight_number?: string;
+
+            /**
+             * Stopover indicator.
+             */
+            is_stop_over_indicator?: boolean;
+
+            /**
+             * Refundable ticket indicator.
+             */
+            refundable?: boolean;
+
+            /**
+             * Class of service.
+             */
+            service_class: Segment.ServiceClass;
+
+            /**
+             * Tax amount for segment.
+             */
+            tax_amount?: number;
+
+            /**
+             * Ticket number.
+             */
+            ticket_number?: string;
+          }
+
+          namespace Segment {
+            interface Arrival {
+              /**
+               * Arrival airport IATA code.
+               */
+              airport: string;
+
+              /**
+               * Arrival date/time.
+               */
+              arrives_at?: number;
+
+              /**
+               * Arrival city.
+               */
+              city?: string;
+
+              /**
+               * Arrival country.
+               */
+              country?: string;
+            }
+
+            interface Departure {
+              /**
+               * Departure airport IATA code.
+               */
+              airport: string;
+
+              /**
+               * Departure city.
+               */
+              city?: string;
+
+              /**
+               * Departure country.
+               */
+              country?: string;
+
+              /**
+               * Departure date/time.
+               */
+              departs_at: number;
+            }
+
+            type ServiceClass =
+              | 'business'
+              | 'economy'
+              | 'first_class'
+              | 'premium_economy';
+          }
+
+          interface Total {
+            /**
+             * Total flight amount.
+             */
+            amount: number;
+
+            /**
+             * Reason for credit.
+             */
+            credit_reason?: Total.CreditReason;
+
+            /**
+             * Total currency.
+             */
+            currency?: string;
+
+            /**
+             * Discount details.
+             */
+            discounts?: Total.Discounts;
+
+            /**
+             * Additional charges.
+             */
+            extra_charges?: Array<Total.ExtraCharge>;
+
+            /**
+             * Tax breakdown.
+             */
+            tax?: Total.Tax;
+          }
+
+          namespace Total {
+            type CreditReason =
+              | 'other'
+              | 'partial_ticket_refund'
+              | 'passenger_transport_ancillary_cancellation'
+              | 'ticket_and_ancillary_cancellation'
+              | 'ticket_cancellation';
+
+            interface Discounts {
+              /**
+               * Corporate client discount code.
+               */
+              corporate_client_code?: string;
+            }
+
+            interface ExtraCharge {
+              /**
+               * Amount of additional charges.
+               */
+              amount?: number;
+
+              /**
+               * Type of additional charges.
+               */
+              type?: ExtraCharge.Type;
+            }
+
+            namespace ExtraCharge {
+              type Type =
+                | 'additional_fees'
+                | 'ancillary_service_charges'
+                | 'exchange_fee';
+            }
+
+            interface Tax {
+              /**
+               * Array of tax details.
+               */
+              taxes?: Array<Tax.Tax>;
+            }
+
+            namespace Tax {
+              interface Tax {
+                /**
+                 * Tax amount.
+                 */
+                amount?: number;
+
+                /**
+                 * Tax rate.
+                 */
+                rate?: number;
+
+                /**
+                 * Type of tax.
+                 */
+                type?: string;
+              }
+            }
+          }
+
+          type TransactionType =
+            | 'exchange_ticket'
+            | 'miscellaneous'
+            | 'refund'
+            | 'ticket_purchase';
+        }
+
         interface Lodging {
           /**
            * The lodging location's address.
@@ -1233,6 +2076,360 @@ declare module 'stripe' {
              * Full name of the person or entity on the lodging reservation.
              */
             name: string;
+          }
+        }
+
+        interface LodgingDatum {
+          /**
+           * Accommodation details for the lodging.
+           */
+          accommodation?: LodgingDatum.Accommodation;
+
+          /**
+           * Affiliate details if applicable.
+           */
+          affiliate?: LodgingDatum.Affiliate;
+
+          /**
+           * Booking confirmation number for the lodging.
+           */
+          booking_number?: string;
+
+          /**
+           * Check-in date.
+           */
+          checkin_at: number;
+
+          /**
+           * Check-out date.
+           */
+          checkout_at: number;
+
+          /**
+           * Customer service phone number for the lodging company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Whether the lodging is compliant with any hotel fire safety regulations.
+           */
+          fire_safety_act_compliance_indicator?: boolean;
+
+          /**
+           * List of guests for the lodging.
+           */
+          guests?: Array<LodgingDatum.Guest>;
+
+          /**
+           * Host details for the lodging.
+           */
+          host?: LodgingDatum.Host;
+
+          /**
+           * List of insurances for the lodging.
+           */
+          insurances?: Array<LodgingDatum.Insurance>;
+
+          /**
+           * Whether the renter is a no-show.
+           */
+          no_show_indicator?: boolean;
+
+          /**
+           * Renter ID number for the lodging.
+           */
+          renter_id_number?: string;
+
+          /**
+           * Renter name for the lodging.
+           */
+          renter_name?: string;
+
+          /**
+           * Total details for the lodging.
+           */
+          total: LodgingDatum.Total;
+        }
+
+        namespace LodgingDatum {
+          interface Accommodation {
+            /**
+             * Type of accommodation.
+             */
+            accommodation_type?: Accommodation.AccommodationType;
+
+            /**
+             * Bed type.
+             */
+            bed_type?: string;
+
+            /**
+             * Daily accommodation rate in cents.
+             */
+            daily_rate_amount?: number;
+
+            /**
+             * Number of nights.
+             */
+            nights?: number;
+
+            /**
+             * Number of rooms, cabanas, apartments, and so on.
+             */
+            number_of_rooms?: number;
+
+            /**
+             * Rate type.
+             */
+            rate_type?: string;
+
+            /**
+             * Whether smoking is allowed.
+             */
+            smoking_indicator?: boolean;
+          }
+
+          namespace Accommodation {
+            type AccommodationType =
+              | 'apartment'
+              | 'cabana'
+              | 'house'
+              | 'penthouse'
+              | 'room'
+              | 'standard'
+              | 'suite'
+              | 'villa';
+          }
+
+          interface Affiliate {
+            /**
+             * Affiliate partner code.
+             */
+            code?: string;
+
+            /**
+             * Affiliate partner name.
+             */
+            name?: string;
+          }
+
+          interface Guest {
+            /**
+             * Guest's full name.
+             */
+            name: string;
+          }
+
+          interface Host {
+            /**
+             * Address of the host.
+             */
+            address?: Host.Address;
+
+            /**
+             * Host's country of domicile.
+             */
+            country_of_domicile?: string;
+
+            /**
+             * Reference number for the host.
+             */
+            host_reference?: string;
+
+            /**
+             * Type of host.
+             */
+            host_type?: Host.HostType;
+
+            /**
+             * Name of the lodging property or host.
+             */
+            name?: string;
+
+            /**
+             * Total number of reservations for the host.
+             */
+            number_of_reservations?: number;
+
+            /**
+             * Property phone number.
+             */
+            property_phone_number?: string;
+
+            /**
+             * Host's registration date.
+             */
+            registered_at?: number;
+          }
+
+          namespace Host {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1, such as the street, PO Box, or company name.
+               */
+              line1: string;
+
+              /**
+               * Address line 2, such as the apartment, suite, unit, or building.
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+
+            type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+          }
+
+          interface Insurance {
+            /**
+             * Price of the insurance coverage in cents.
+             */
+            amount: number;
+
+            /**
+             * Currency of the insurance amount.
+             */
+            currency?: string;
+
+            /**
+             * Name of the insurance company.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance coverage.
+             */
+            insurance_type: Insurance.InsuranceType;
+          }
+
+          namespace Insurance {
+            type InsuranceType =
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+
+          interface Total {
+            /**
+             * Total price of the lodging reservation in cents.
+             */
+            amount: number;
+
+            /**
+             * Cash advances in cents.
+             */
+            cash_advances?: number;
+
+            /**
+             * Currency of the total amount.
+             */
+            currency?: string;
+
+            /**
+             * Discount details for the lodging.
+             */
+            discounts?: Total.Discounts;
+
+            /**
+             * Additional charges for the lodging.
+             */
+            extra_charges?: Array<Total.ExtraCharge>;
+
+            /**
+             * Prepaid amount in cents.
+             */
+            prepaid_amount?: number;
+
+            /**
+             * Tax breakdown for the lodging reservation.
+             */
+            tax?: Total.Tax;
+          }
+
+          namespace Total {
+            interface Discounts {
+              /**
+               * Corporate client discount code.
+               */
+              corporate_client_code?: string;
+
+              /**
+               * Coupon code.
+               */
+              coupon?: string;
+            }
+
+            interface ExtraCharge {
+              /**
+               * Amount of the extra charge in cents.
+               */
+              amount?: number;
+
+              /**
+               * Type of extra charge.
+               */
+              type?: ExtraCharge.Type;
+            }
+
+            namespace ExtraCharge {
+              type Type =
+                | 'gift_shop'
+                | 'laundry'
+                | 'mini_bar'
+                | 'other'
+                | 'phone'
+                | 'restaurant';
+            }
+
+            interface Tax {
+              /**
+               * Indicates whether the transaction is tax exempt.
+               */
+              tax_exempt_indicator?: boolean;
+
+              /**
+               * Tax details.
+               */
+              taxes?: Array<Tax.Tax>;
+            }
+
+            namespace Tax {
+              interface Tax {
+                /**
+                 * Tax amount in cents.
+                 */
+                amount?: number;
+
+                /**
+                 * Tax rate.
+                 */
+                rate?: number;
+
+                /**
+                 * Type of tax applied.
+                 */
+                type?: string;
+              }
+            }
           }
         }
 
@@ -1815,6 +3012,7 @@ declare module 'stripe' {
             | 'asn_bank'
             | 'bunq'
             | 'buut'
+            | 'finom'
             | 'handelsbanken'
             | 'ing'
             | 'knab'
@@ -3134,6 +4332,15 @@ declare module 'stripe' {
 
         interface CardPresent {
           /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: CardPresent.CaptureMethod;
+
+          /**
            * Request ability to capture this payment beyond the standard [authorization validity window](https://stripe.com/docs/terminal/features/extended-authorizations#authorization-validity)
            */
           request_extended_authorization?: boolean;
@@ -3150,6 +4357,8 @@ declare module 'stripe' {
         }
 
         namespace CardPresent {
+          type CaptureMethod = 'manual' | 'manual_preferred';
+
           interface Routing {
             /**
              * Routing requested priority
@@ -3464,6 +4673,13 @@ declare module 'stripe' {
            * Subscription details if setting up or charging a subscription.
            */
           subscriptions?: Stripe.Emptyable<Array<Klarna.Subscription>>;
+
+          /**
+           * Supplementary Purchase Data for the corresponding Klarna payment
+           */
+          supplementary_purchase_data?: Stripe.Emptyable<
+            Klarna.SupplementaryPurchaseData
+          >;
         }
 
         namespace Klarna {
@@ -3588,6 +4804,1182 @@ declare module 'stripe' {
                * The date of the next charge for the subscription in YYYY-MM-DD format.
                */
               date: string;
+            }
+          }
+
+          interface SupplementaryPurchaseData {
+            /**
+             * Supplementary bus reservation details.
+             */
+            bus_reservation_details?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.BusReservationDetail>
+            >;
+
+            /**
+             * Supplementary event reservation details.
+             */
+            event_reservation_details?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.EventReservationDetail>
+            >;
+
+            /**
+             * Supplementary ferry reservation details.
+             */
+            ferry_reservation_details?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.FerryReservationDetail>
+            >;
+
+            /**
+             * Supplementary insurance details.
+             */
+            insurances?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.Insurance>
+            >;
+
+            /**
+             * Supplementary marketplace seller details.
+             */
+            marketplace_sellers?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.MarketplaceSeller>
+            >;
+
+            /**
+             * Supplementary round trip reservation details.
+             */
+            round_trip_reservation_details?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.RoundTripReservationDetail>
+            >;
+
+            /**
+             * Supplementary train reservation details.
+             */
+            train_reservation_details?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.TrainReservationDetail>
+            >;
+
+            /**
+             * Voucher details, such as a gift card or discount code.
+             */
+            vouchers?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.Voucher>
+            >;
+          }
+
+          namespace SupplementaryPurchaseData {
+            interface BusReservationDetail {
+              /**
+               * Name of associated or partner company for the service.
+               */
+              affiliate_name?: string;
+
+              /**
+               * Arrival details.
+               */
+              arrival?: BusReservationDetail.Arrival;
+
+              /**
+               * Name of transportation company.
+               */
+              carrier_name?: string;
+
+              /**
+               * Currency.
+               */
+              currency?: string;
+
+              /**
+               * Departure details.
+               */
+              departure?: BusReservationDetail.Departure;
+
+              /**
+               * List of insurances for this reservation.
+               */
+              insurances?: Array<BusReservationDetail.Insurance>;
+
+              /**
+               * List of passengers that this reservation applies to.
+               */
+              passengers?: Array<BusReservationDetail.Passenger>;
+
+              /**
+               * Price in cents.
+               */
+              price?: number;
+
+              /**
+               * Ticket class.
+               */
+              ticket_class?: BusReservationDetail.TicketClass;
+            }
+
+            namespace BusReservationDetail {
+              interface Arrival {
+                /**
+                 * Address of the arrival location.
+                 */
+                address?: Arrival.Address;
+
+                /**
+                 * Identifier name or reference for the arrival location.
+                 */
+                arrival_location?: string;
+              }
+
+              namespace Arrival {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Departure {
+                /**
+                 * Address of the departure location.
+                 */
+                address?: Departure.Address;
+
+                /**
+                 * Timestamp of departure.
+                 */
+                departs_at?: number;
+
+                /**
+                 * Identifier name or reference for the origin location.
+                 */
+                departure_location?: string;
+              }
+
+              namespace Departure {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Insurance {
+                /**
+                 * Insurance currency.
+                 */
+                currency?: string;
+
+                /**
+                 * Name of the company providing the insurance.
+                 */
+                insurance_company_name?: string;
+
+                /**
+                 * Type of insurance.
+                 */
+                insurance_type?: Insurance.InsuranceType;
+
+                /**
+                 * Price of insurance in cents.
+                 */
+                price?: number;
+              }
+
+              namespace Insurance {
+                type InsuranceType =
+                  | 'baggage'
+                  | 'bankruptcy'
+                  | 'cancelation'
+                  | 'emergency'
+                  | 'medical';
+              }
+
+              interface Passenger {
+                /**
+                 * The family name of the person.
+                 */
+                family_name?: string;
+
+                /**
+                 * The given name of the person.
+                 */
+                given_name?: string;
+              }
+
+              type TicketClass =
+                | 'business'
+                | 'economy'
+                | 'first_class'
+                | 'premium_economy';
+            }
+
+            interface EventReservationDetail {
+              /**
+               * Indicates if the tickets are digitally checked when entering the venue.
+               */
+              access_controlled_venue?: boolean;
+
+              /**
+               * Address of the event.
+               */
+              address?: EventReservationDetail.Address;
+
+              /**
+               * Name of associated or partner company for the service.
+               */
+              affiliate_name?: string;
+
+              /**
+               * End timestamp of the event.
+               */
+              ends_at?: number;
+
+              /**
+               * Company selling the ticket.
+               */
+              event_company_name?: string;
+
+              /**
+               * Name of the event.
+               */
+              event_name?: string;
+
+              /**
+               * Type of the event.
+               */
+              event_type?: EventReservationDetail.EventType;
+
+              /**
+               * List of insurances for this event.
+               */
+              insurances?: Array<EventReservationDetail.Insurance>;
+
+              /**
+               * Start timestamp of the event.
+               */
+              starts_at?: number;
+
+              /**
+               * Name of the venue where the event takes place.
+               */
+              venue_name?: string;
+            }
+
+            namespace EventReservationDetail {
+              interface Address {
+                /**
+                 * The city or town.
+                 */
+                city?: string;
+
+                /**
+                 * The country in ISO 3166-1 alpha-2 format.
+                 */
+                country?: string;
+
+                /**
+                 * The postal code formatted according to country.
+                 */
+                postal_code?: string;
+
+                /**
+                 * The state, county, province, or region formatted according to country.
+                 */
+                region?: string;
+
+                /**
+                 * Line 1 of the street address.
+                 */
+                street_address?: string;
+
+                /**
+                 * Line 2 of the street address.
+                 */
+                street_address2?: string;
+              }
+
+              type EventType =
+                | 'concert'
+                | 'conference'
+                | 'digital_education'
+                | 'expo'
+                | 'festival'
+                | 'in_person_education'
+                | 'sport'
+                | 'tour';
+
+              interface Insurance {
+                /**
+                 * Insurance currency.
+                 */
+                currency?: string;
+
+                /**
+                 * Name of the company providing the insurance.
+                 */
+                insurance_company_name?: string;
+
+                /**
+                 * Type of insurance.
+                 */
+                insurance_type?: Insurance.InsuranceType;
+
+                /**
+                 * Price of insurance in cents.
+                 */
+                price?: number;
+              }
+
+              namespace Insurance {
+                type InsuranceType =
+                  | 'bankruptcy'
+                  | 'cancelation'
+                  | 'emergency'
+                  | 'medical';
+              }
+            }
+
+            interface FerryReservationDetail {
+              /**
+               * Name of associated or partner company for the service.
+               */
+              affiliate_name?: string;
+
+              /**
+               * Arrival details.
+               */
+              arrival?: FerryReservationDetail.Arrival;
+
+              /**
+               * Name of transportation company.
+               */
+              carrier_name?: string;
+
+              /**
+               * Currency.
+               */
+              currency?: string;
+
+              /**
+               * Departure details.
+               */
+              departure?: FerryReservationDetail.Departure;
+
+              /**
+               * List of insurances for this reservation.
+               */
+              insurances?: Array<FerryReservationDetail.Insurance>;
+
+              /**
+               * List of passengers that this reservation applies to.
+               */
+              passengers?: Array<FerryReservationDetail.Passenger>;
+
+              /**
+               * Price in cents.
+               */
+              price?: number;
+
+              /**
+               * Ticket class.
+               */
+              ticket_class?: FerryReservationDetail.TicketClass;
+            }
+
+            namespace FerryReservationDetail {
+              interface Arrival {
+                /**
+                 * Address of the arrival location.
+                 */
+                address?: Arrival.Address;
+
+                /**
+                 * Identifier name or reference for the arrival location.
+                 */
+                arrival_location?: string;
+              }
+
+              namespace Arrival {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Departure {
+                /**
+                 * Address of the departure location.
+                 */
+                address?: Departure.Address;
+
+                /**
+                 * Timestamp of departure.
+                 */
+                departs_at?: number;
+
+                /**
+                 * Identifier name or reference for the origin location.
+                 */
+                departure_location?: string;
+              }
+
+              namespace Departure {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Insurance {
+                /**
+                 * Insurance currency.
+                 */
+                currency?: string;
+
+                /**
+                 * Name of the company providing the insurance.
+                 */
+                insurance_company_name?: string;
+
+                /**
+                 * Type of insurance.
+                 */
+                insurance_type?: Insurance.InsuranceType;
+
+                /**
+                 * Price of insurance in cents.
+                 */
+                price?: number;
+              }
+
+              namespace Insurance {
+                type InsuranceType =
+                  | 'baggage'
+                  | 'bankruptcy'
+                  | 'cancelation'
+                  | 'emergency'
+                  | 'medical';
+              }
+
+              interface Passenger {
+                /**
+                 * The family name of the person.
+                 */
+                family_name?: string;
+
+                /**
+                 * The given name of the person.
+                 */
+                given_name?: string;
+              }
+
+              type TicketClass =
+                | 'business'
+                | 'economy'
+                | 'first_class'
+                | 'premium_economy';
+            }
+
+            interface Insurance {
+              /**
+               * Insurance currency.
+               */
+              currency?: string;
+
+              /**
+               * Name of the company providing the insurance.
+               */
+              insurance_company_name?: string;
+
+              /**
+               * Type of insurance
+               */
+              insurance_type?: Insurance.InsuranceType;
+
+              /**
+               * Price of insurance in cents.
+               */
+              price?: number;
+            }
+
+            namespace Insurance {
+              type InsuranceType =
+                | 'bankruptcy'
+                | 'cancelation'
+                | 'emergency'
+                | 'medical';
+            }
+
+            interface MarketplaceSeller {
+              /**
+               * The references to line items for purchases with multiple associated sub-sellers.
+               */
+              line_item_references?: Array<string>;
+
+              /**
+               * The address of the selling or delivering merchant.
+               */
+              marketplace_seller_address?: MarketplaceSeller.MarketplaceSellerAddress;
+
+              /**
+               * The name of the marketplace seller.
+               */
+              marketplace_seller_name?: string;
+
+              /**
+               * The unique identifier for the marketplace seller.
+               */
+              marketplace_seller_reference?: string;
+
+              /**
+               * The number of transactions the sub-seller completed in the last 12 months.
+               */
+              number_of_transactions?: number;
+
+              /**
+               * The category of the product.
+               */
+              product_category?: MarketplaceSeller.ProductCategory;
+
+              /**
+               * The date when the seller's account with the marketplace was last logged in.
+               */
+              seller_last_login_at?: number;
+
+              /**
+               * The current rating of the marketplace seller. If the marketplace uses numeric ranking, map these to the enum values.
+               */
+              seller_rating?: MarketplaceSeller.SellerRating;
+
+              /**
+               * The date when the seller's account with the marketplace was created.
+               */
+              seller_registered_at?: number;
+
+              /**
+               * The date when the seller's account with the marketplace was last updated.
+               */
+              seller_updated_at?: number;
+
+              /**
+               * The references to shipping addresses for purchases with multiple associated sub-sellers.
+               */
+              shipping_references?: Array<string>;
+
+              /**
+               * The accumulated amount of sales transactions made by the sub-merchant or sub-seller within the past 12 months in the payment currency. These transactions are in minor currency units.
+               */
+              volume_of_transactions?: number;
+            }
+
+            namespace MarketplaceSeller {
+              interface MarketplaceSellerAddress {
+                /**
+                 * The city or town.
+                 */
+                city?: string;
+
+                /**
+                 * The country in ISO 3166-1 alpha-2 format.
+                 */
+                country?: string;
+
+                /**
+                 * The postal code formatted according to country.
+                 */
+                postal_code?: string;
+
+                /**
+                 * The state, county, province, or region formatted according to country.
+                 */
+                region?: string;
+
+                /**
+                 * Line 1 of the street address.
+                 */
+                street_address?: string;
+
+                /**
+                 * Line 2 of the street address.
+                 */
+                street_address2?: string;
+              }
+
+              type ProductCategory =
+                | 'accessories'
+                | 'appliances'
+                | 'apps_and_games'
+                | 'arts_crafts_and_sewing'
+                | 'automotive'
+                | 'baby'
+                | 'baby_clothing'
+                | 'bags_and_purses'
+                | 'beauty'
+                | 'books'
+                | 'cds_and_vinyl'
+                | 'cell_phones_and_accessories'
+                | 'collectibles_and_fine_arts'
+                | 'digital_music'
+                | 'electronics'
+                | 'grocery_and_gourmet_food'
+                | 'handmade'
+                | 'health_and_personal_care'
+                | 'home_and_kitchen'
+                | 'industrial_and_scientific'
+                | 'luggage_and_travel_gear'
+                | 'magazine_subscriptions'
+                | 'men_clothing'
+                | 'musical_instruments'
+                | 'office_products'
+                | 'patio_lawn_and_garden'
+                | 'pet_supplies'
+                | 'shoes'
+                | 'software'
+                | 'sports_and_outdoors'
+                | 'tools_and_home_improvement'
+                | 'toys_and_games'
+                | 'video_games'
+                | 'women_clothing';
+
+              type SellerRating =
+                | 'high'
+                | 'low'
+                | 'medium'
+                | 'very_high'
+                | 'very_low';
+            }
+
+            interface RoundTripReservationDetail {
+              /**
+               * Name of associated or partner company for the service.
+               */
+              affiliate_name?: string;
+
+              /**
+               * Arrival details.
+               */
+              arrival?: RoundTripReservationDetail.Arrival;
+
+              /**
+               * Name of transportation company.
+               */
+              carrier_name?: string;
+
+              /**
+               * Currency.
+               */
+              currency?: string;
+
+              /**
+               * Departure details.
+               */
+              departure?: RoundTripReservationDetail.Departure;
+
+              /**
+               * List of insurances for this reservation.
+               */
+              insurances?: Array<RoundTripReservationDetail.Insurance>;
+
+              /**
+               * List of passengers that this reservation applies to.
+               */
+              passengers?: Array<RoundTripReservationDetail.Passenger>;
+
+              /**
+               * Price in cents.
+               */
+              price?: number;
+
+              /**
+               * Ticket class.
+               */
+              ticket_class?: RoundTripReservationDetail.TicketClass;
+            }
+
+            namespace RoundTripReservationDetail {
+              interface Arrival {
+                /**
+                 * Address of the arrival location.
+                 */
+                address?: Arrival.Address;
+
+                /**
+                 * Identifier name or reference for the arrival location.
+                 */
+                arrival_location?: string;
+              }
+
+              namespace Arrival {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Departure {
+                /**
+                 * Address of the departure location.
+                 */
+                address?: Departure.Address;
+
+                /**
+                 * Timestamp of departure.
+                 */
+                departs_at?: number;
+
+                /**
+                 * Identifier name or reference for the origin location.
+                 */
+                departure_location?: string;
+              }
+
+              namespace Departure {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Insurance {
+                /**
+                 * Insurance currency.
+                 */
+                currency?: string;
+
+                /**
+                 * Name of the company providing the insurance.
+                 */
+                insurance_company_name?: string;
+
+                /**
+                 * Type of insurance.
+                 */
+                insurance_type?: Insurance.InsuranceType;
+
+                /**
+                 * Price of insurance in cents.
+                 */
+                price?: number;
+              }
+
+              namespace Insurance {
+                type InsuranceType =
+                  | 'baggage'
+                  | 'bankruptcy'
+                  | 'cancelation'
+                  | 'emergency'
+                  | 'medical';
+              }
+
+              interface Passenger {
+                /**
+                 * The family name of the person.
+                 */
+                family_name?: string;
+
+                /**
+                 * The given name of the person.
+                 */
+                given_name?: string;
+              }
+
+              type TicketClass =
+                | 'business'
+                | 'economy'
+                | 'first_class'
+                | 'premium_economy';
+            }
+
+            interface TrainReservationDetail {
+              /**
+               * Name of associated or partner company for the service.
+               */
+              affiliate_name?: string;
+
+              /**
+               * Arrival details.
+               */
+              arrival?: TrainReservationDetail.Arrival;
+
+              /**
+               * Name of transportation company.
+               */
+              carrier_name?: string;
+
+              /**
+               * Currency.
+               */
+              currency?: string;
+
+              /**
+               * Departure details.
+               */
+              departure?: TrainReservationDetail.Departure;
+
+              /**
+               * List of insurances for this reservation.
+               */
+              insurances?: Array<TrainReservationDetail.Insurance>;
+
+              /**
+               * List of passengers that this reservation applies to.
+               */
+              passengers?: Array<TrainReservationDetail.Passenger>;
+
+              /**
+               * Price in cents.
+               */
+              price?: number;
+
+              /**
+               * Ticket class.
+               */
+              ticket_class?: TrainReservationDetail.TicketClass;
+            }
+
+            namespace TrainReservationDetail {
+              interface Arrival {
+                /**
+                 * Address of the arrival location.
+                 */
+                address?: Arrival.Address;
+
+                /**
+                 * Identifier name or reference for the arrival location.
+                 */
+                arrival_location?: string;
+              }
+
+              namespace Arrival {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Departure {
+                /**
+                 * Address of the departure location.
+                 */
+                address?: Departure.Address;
+
+                /**
+                 * Timestamp of departure.
+                 */
+                departs_at?: number;
+
+                /**
+                 * Identifier name or reference for the origin location.
+                 */
+                departure_location?: string;
+              }
+
+              namespace Departure {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Insurance {
+                /**
+                 * Insurance currency.
+                 */
+                currency?: string;
+
+                /**
+                 * Name of the company providing the insurance.
+                 */
+                insurance_company_name?: string;
+
+                /**
+                 * Type of insurance.
+                 */
+                insurance_type?: Insurance.InsuranceType;
+
+                /**
+                 * Price of insurance in cents.
+                 */
+                price?: number;
+              }
+
+              namespace Insurance {
+                type InsuranceType =
+                  | 'baggage'
+                  | 'bankruptcy'
+                  | 'cancelation'
+                  | 'emergency'
+                  | 'medical';
+              }
+
+              interface Passenger {
+                /**
+                 * The family name of the person.
+                 */
+                family_name?: string;
+
+                /**
+                 * The given name of the person.
+                 */
+                given_name?: string;
+              }
+
+              type TicketClass =
+                | 'business'
+                | 'economy'
+                | 'first_class'
+                | 'premium_economy';
+            }
+
+            interface Voucher {
+              /**
+               * Name of associated or partner company for this voucher.
+               */
+              affiliate_name?: string;
+
+              /**
+               * The voucher validity end time.
+               */
+              ends_at?: number;
+
+              /**
+               * The voucher validity start time.
+               */
+              starts_at?: number;
+
+              /**
+               * The issuer or provider of this voucher.
+               */
+              voucher_company?: string;
+
+              /**
+               * The name or reference to identify the voucher.
+               */
+              voucher_name?: string;
+
+              /**
+               * The type of this voucher.
+               */
+              voucher_type?: Voucher.VoucherType;
+            }
+
+            namespace Voucher {
+              type VoucherType =
+                | 'digital_product'
+                | 'discount'
+                | 'gift_card'
+                | 'physical_product'
+                | 'services';
             }
           }
         }
@@ -4037,7 +6429,7 @@ declare module 'stripe' {
             amount?: number;
 
             /**
-             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
              */
             amount_type?: MandateOptions.AmountType;
 
@@ -4047,7 +6439,7 @@ declare module 'stripe' {
             end_date?: string;
 
             /**
-             * The periodicity at which payments will be collected.
+             * The periodicity at which payments will be collected. Defaults to `adhoc`.
              */
             payment_schedule?: MandateOptions.PaymentSchedule;
 
@@ -4057,7 +6449,7 @@ declare module 'stripe' {
             payments_per_period?: number;
 
             /**
-             * The purpose for which payments are made. Defaults to retail.
+             * The purpose for which payments are made. Has a default value based on your merchant category code.
              */
             purpose?: MandateOptions.Purpose;
           }
@@ -4841,7 +7233,9 @@ declare module 'stripe' {
 
       interface AmountDetails {
         /**
-         * The total discount applied on the transaction.
+         * The total discount applied on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+         *
+         * This field is mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
          */
         discount_amount?: Stripe.Emptyable<number>;
 
@@ -4864,7 +7258,9 @@ declare module 'stripe' {
       namespace AmountDetails {
         interface LineItem {
           /**
-           * The amount an item was discounted for. Positive integer.
+           * The discount applied on this line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+           *
+           * This field is mutually exclusive with the `amount_details[discount_amount]` field.
            */
           discount_amount?: number;
 
@@ -4874,17 +7270,19 @@ declare module 'stripe' {
           payment_method_options?: LineItem.PaymentMethodOptions;
 
           /**
-           * Unique identifier of the product. At most 12 characters long.
+           * The product code of the line item, such as an SKU. Required for L3 rates. At most 12 characters long.
            */
           product_code?: string;
 
           /**
-           * Name of the product. At most 100 characters long.
+           * The product name of the line item. Required for L3 rates. At most 1024 characters long.
+           *
+           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
            */
           product_name: string;
 
           /**
-           * Number of items of the product. Positive integer.
+           * The quantity of items. Required for L3 rates. An integer greater than 0.
            */
           quantity: number;
 
@@ -4894,7 +7292,7 @@ declare module 'stripe' {
           tax?: LineItem.Tax;
 
           /**
-           * Cost of the product. Non-negative integer.
+           * The unit cost of the line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
            */
           unit_cost: number;
 
@@ -4988,7 +7386,9 @@ declare module 'stripe' {
 
           interface Tax {
             /**
-             * The total tax on an item. Non-negative integer.
+             * The total amount of tax on a single line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+             *
+             * This field is mutually exclusive with the `amount_details[tax][total_tax_amount]` field.
              */
             total_tax_amount: number;
           }
@@ -4996,24 +7396,26 @@ declare module 'stripe' {
 
         interface Shipping {
           /**
-           * Portion of the amount that is for shipping.
+           * If a physical good is being shipped, the cost of shipping represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than or equal to 0.
            */
           amount?: Stripe.Emptyable<number>;
 
           /**
-           * The postal code that represents the shipping source.
+           * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
            */
           from_postal_code?: Stripe.Emptyable<string>;
 
           /**
-           * The postal code that represents the shipping destination.
+           * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
            */
           to_postal_code?: Stripe.Emptyable<string>;
         }
 
         interface Tax {
           /**
-           * Total portion of the amount that is for tax.
+           * The total amount of tax on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
+           *
+           * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
            */
           total_tax_amount: number;
         }
@@ -5151,7 +7553,16 @@ declare module 'stripe' {
         car_rental?: PaymentDetails.CarRental;
 
         /**
-         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
+         * Car rental data for this PaymentIntent.
+         */
+        car_rental_data?: Stripe.Emptyable<
+          Array<PaymentDetails.CarRentalDatum>
+        >;
+
+        /**
+         * A unique value to identify the customer. This field is available only for card payments.
+         *
+         * This field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
          */
         customer_reference?: Stripe.Emptyable<string>;
 
@@ -5166,12 +7577,26 @@ declare module 'stripe' {
         flight?: PaymentDetails.Flight;
 
         /**
+         * Flight data for this PaymentIntent.
+         */
+        flight_data?: Stripe.Emptyable<Array<PaymentDetails.FlightDatum>>;
+
+        /**
          * Lodging reservation details for this PaymentIntent
          */
         lodging?: PaymentDetails.Lodging;
 
         /**
-         * A unique value assigned by the business to identify the transaction.
+         * Lodging data for this PaymentIntent.
+         */
+        lodging_data?: Stripe.Emptyable<Array<PaymentDetails.LodgingDatum>>;
+
+        /**
+         * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+         *
+         * Required when the Payment Method Types array contains `card`, including when [automatic_payment_methods.enabled](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-automatic_payment_methods-enabled) is set to `true`.
+         *
+         * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
          */
         order_reference?: Stripe.Emptyable<string>;
 
@@ -5404,6 +7829,479 @@ declare module 'stripe' {
           type RateInterval = 'day' | 'month' | 'week';
         }
 
+        interface CarRentalDatum {
+          /**
+           * Affiliate (such as travel agency) details for the rental.
+           */
+          affiliate?: CarRentalDatum.Affiliate;
+
+          /**
+           * Booking confirmation number for the car rental.
+           */
+          booking_number?: string;
+
+          /**
+           * Name of the car rental company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Customer service phone number for the car rental company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Number of days the car is being rented.
+           */
+          days_rented?: number;
+
+          /**
+           * Distance details for the rental.
+           */
+          distance?: CarRentalDatum.Distance;
+
+          /**
+           * List of drivers for the rental.
+           */
+          drivers?: Array<CarRentalDatum.Driver>;
+
+          /**
+           * Drop-off location details.
+           */
+          drop_off: CarRentalDatum.DropOff;
+
+          /**
+           * Insurance details for the rental.
+           */
+          insurances?: Array<CarRentalDatum.Insurance>;
+
+          /**
+           * Indicates if the customer was a no-show.
+           */
+          no_show_indicator?: boolean;
+
+          /**
+           * Pickup location details.
+           */
+          pickup: CarRentalDatum.Pickup;
+
+          /**
+           * Name of the person renting the vehicle.
+           */
+          renter_name?: string;
+
+          /**
+           * Total cost breakdown for the rental.
+           */
+          total: CarRentalDatum.Total;
+
+          /**
+           * Vehicle details for the rental.
+           */
+          vehicle?: CarRentalDatum.Vehicle;
+        }
+
+        namespace CarRentalDatum {
+          interface Affiliate {
+            /**
+             * Affiliate partner code.
+             */
+            code?: string;
+
+            /**
+             * Name of affiliate partner.
+             */
+            name?: string;
+          }
+
+          interface Distance {
+            /**
+             * Distance traveled.
+             */
+            amount: number;
+
+            /**
+             * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+             */
+            unit: Distance.Unit;
+          }
+
+          namespace Distance {
+            type Unit = 'kilometers' | 'miles';
+          }
+
+          interface Driver {
+            /**
+             * Driver's date of birth.
+             */
+            date_of_birth?: Driver.DateOfBirth;
+
+            /**
+             * Driver's identification number.
+             */
+            driver_identification_number?: string;
+
+            /**
+             * Driver's tax number.
+             */
+            driver_tax_number?: string;
+
+            /**
+             * Driver's full name.
+             */
+            name: string;
+          }
+
+          namespace Driver {
+            interface DateOfBirth {
+              /**
+               * Day of birth (1-31).
+               */
+              day: number;
+
+              /**
+               * Month of birth (1-12).
+               */
+              month: number;
+
+              /**
+               * Year of birth (must be greater than 1900).
+               */
+              year: number;
+            }
+          }
+
+          interface DropOff {
+            /**
+             * Address of the rental location.
+             */
+            address: DropOff.Address;
+
+            /**
+             * Location name.
+             */
+            location_name?: string;
+
+            /**
+             * Timestamp for the location.
+             */
+            time: number;
+          }
+
+          namespace DropOff {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1, such as the street, PO Box, or company name.
+               */
+              line1: string;
+
+              /**
+               * Address line 2, such as the apartment, suite, unit, or building.
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
+
+          interface Insurance {
+            /**
+             * Amount of the insurance coverage in cents.
+             */
+            amount: number;
+
+            /**
+             * Currency of the insurance amount.
+             */
+            currency?: string;
+
+            /**
+             * Name of the insurance company.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance coverage.
+             */
+            insurance_type: Insurance.InsuranceType;
+          }
+
+          namespace Insurance {
+            type InsuranceType =
+              | 'liability_supplement'
+              | 'loss_damage_waiver'
+              | 'other'
+              | 'partial_damage_waiver'
+              | 'personal_accident'
+              | 'personal_effects';
+          }
+
+          interface Pickup {
+            /**
+             * Address of the rental location.
+             */
+            address: Pickup.Address;
+
+            /**
+             * Location name.
+             */
+            location_name?: string;
+
+            /**
+             * Timestamp for the location.
+             */
+            time: number;
+          }
+
+          namespace Pickup {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1, such as the street, PO Box, or company name.
+               */
+              line1: string;
+
+              /**
+               * Address line 2, such as the apartment, suite, unit, or building.
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
+
+          interface Total {
+            /**
+             * Total amount in cents.
+             */
+            amount: number;
+
+            /**
+             * Currency of the amount.
+             */
+            currency?: string;
+
+            /**
+             * Discount details for the rental.
+             */
+            discounts?: Total.Discounts;
+
+            /**
+             * Additional charges for the rental.
+             */
+            extra_charges?: Array<Total.ExtraCharge>;
+
+            /**
+             * Rate per unit for the rental.
+             */
+            rate_per_unit?: number;
+
+            /**
+             * Unit of measurement for the rate.
+             */
+            rate_unit?: Total.RateUnit;
+
+            /**
+             * Tax breakdown for the rental.
+             */
+            tax?: Total.Tax;
+          }
+
+          namespace Total {
+            interface Discounts {
+              /**
+               * Corporate client discount code.
+               */
+              corporate_client_code?: string;
+
+              /**
+               * Coupon code applied to the rental.
+               */
+              coupon?: string;
+
+              /**
+               * Maximum number of free miles or kilometers included.
+               */
+              maximum_free_miles_or_kilometers?: number;
+            }
+
+            interface ExtraCharge {
+              /**
+               * Amount of the extra charge in cents.
+               */
+              amount: number;
+
+              /**
+               * Type of extra charge.
+               */
+              type: ExtraCharge.Type;
+            }
+
+            namespace ExtraCharge {
+              type Type =
+                | 'extra_mileage'
+                | 'gas'
+                | 'gps'
+                | 'late_charge'
+                | 'one_way_drop_off'
+                | 'other'
+                | 'parking'
+                | 'phone'
+                | 'regular_mileage'
+                | 'towing';
+            }
+
+            type RateUnit =
+              | 'days'
+              | 'kilometers'
+              | 'miles'
+              | 'months'
+              | 'weeks';
+
+            interface Tax {
+              /**
+               * Indicates if the transaction is tax exempt.
+               */
+              tax_exempt_indicator?: boolean;
+
+              /**
+               * Array of tax details.
+               */
+              taxes?: Array<Tax.Tax>;
+            }
+
+            namespace Tax {
+              interface Tax {
+                /**
+                 * Tax amount.
+                 */
+                amount?: number;
+
+                /**
+                 * Tax rate applied.
+                 */
+                rate?: number;
+
+                /**
+                 * Type of tax applied.
+                 */
+                type?: string;
+              }
+            }
+          }
+
+          interface Vehicle {
+            /**
+             * Make of the rental vehicle.
+             */
+            make?: string;
+
+            /**
+             * Model of the rental vehicle.
+             */
+            model?: string;
+
+            /**
+             * Odometer reading at the time of rental.
+             */
+            odometer?: number;
+
+            /**
+             * Type of the rental vehicle.
+             */
+            type?: Vehicle.Type;
+
+            /**
+             * Class of the rental vehicle.
+             */
+            vehicle_class?: Vehicle.VehicleClass;
+
+            /**
+             * Vehicle identification number (VIN).
+             */
+            vehicle_identification_number?: string;
+          }
+
+          namespace Vehicle {
+            type Type =
+              | 'cargo_van'
+              | 'compact'
+              | 'economy'
+              | 'exotic'
+              | 'exotic_suv'
+              | 'fifteen_passenger_van'
+              | 'four_wheel_drive'
+              | 'full_size'
+              | 'intermediate'
+              | 'large_suv'
+              | 'large_truck'
+              | 'luxury'
+              | 'medium_suv'
+              | 'midsize'
+              | 'mini'
+              | 'minivan'
+              | 'miscellaneous'
+              | 'moped'
+              | 'moving_van'
+              | 'premium'
+              | 'regular'
+              | 'small_medium_truck'
+              | 'small_suv'
+              | 'special'
+              | 'standard'
+              | 'stretch'
+              | 'subcompact'
+              | 'taxi'
+              | 'twelve_foot_truck'
+              | 'twelve_passenger_van'
+              | 'twenty_foot_truck'
+              | 'twenty_four_foot_truck'
+              | 'twenty_six_foot_truck'
+              | 'unique';
+
+            type VehicleClass =
+              | 'business'
+              | 'economy'
+              | 'first_class'
+              | 'premium_economy';
+          }
+        }
+
         interface EventDetails {
           /**
            * Indicates if the tickets are digitally checked when entering the venue.
@@ -5634,6 +8532,343 @@ declare module 'stripe' {
           }
         }
 
+        interface FlightDatum {
+          /**
+           * Affiliate details if applicable.
+           */
+          affiliate?: FlightDatum.Affiliate;
+
+          /**
+           * Reservation reference.
+           */
+          booking_number?: string;
+
+          /**
+           * Computerized reservation system used to make the reservation and purchase the ticket.
+           */
+          computerized_reservation_system?: string;
+
+          /**
+           * Ticket restrictions.
+           */
+          endorsements_and_restrictions?: string;
+
+          /**
+           * List of insurances.
+           */
+          insurances?: Array<FlightDatum.Insurance>;
+
+          /**
+           * List of passengers.
+           */
+          passengers?: Array<FlightDatum.Passenger>;
+
+          /**
+           * List of flight segments.
+           */
+          segments: Array<FlightDatum.Segment>;
+
+          /**
+           * Electronic ticket indicator.
+           */
+          ticket_electronically_issued_indicator?: boolean;
+
+          /**
+           * Total cost breakdown.
+           */
+          total: FlightDatum.Total;
+
+          /**
+           * Type of flight transaction.
+           */
+          transaction_type?: FlightDatum.TransactionType;
+        }
+
+        namespace FlightDatum {
+          interface Affiliate {
+            /**
+             * Affiliate partner code.
+             */
+            code?: string;
+
+            /**
+             * Name of affiliate partner.
+             */
+            name?: string;
+
+            /**
+             * Code provided by the company to a travel agent authorizing ticket issuance.
+             */
+            travel_authorization_code?: string;
+          }
+
+          interface Insurance {
+            /**
+             * Insurance cost.
+             */
+            amount: number;
+
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Insurance company name.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type: Insurance.InsuranceType;
+          }
+
+          namespace Insurance {
+            type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+
+          interface Passenger {
+            /**
+             * Passenger's full name.
+             */
+            name: string;
+          }
+
+          interface Segment {
+            /**
+             * Segment fare amount.
+             */
+            amount?: number;
+
+            /**
+             * Arrival details.
+             */
+            arrival: Segment.Arrival;
+
+            /**
+             * Airline carrier code.
+             */
+            carrier_code: string;
+
+            /**
+             * Carrier name.
+             */
+            carrier_name?: string;
+
+            /**
+             * Segment currency.
+             */
+            currency?: string;
+
+            /**
+             * Departure details.
+             */
+            departure: Segment.Departure;
+
+            /**
+             * Exchange ticket number.
+             */
+            exchange_ticket_number?: string;
+
+            /**
+             * Fare basis code.
+             */
+            fare_basis_code?: string;
+
+            /**
+             * Additional fees.
+             */
+            fees?: number;
+
+            /**
+             * Flight number.
+             */
+            flight_number?: string;
+
+            /**
+             * Stopover indicator.
+             */
+            is_stop_over_indicator?: boolean;
+
+            /**
+             * Refundable ticket indicator.
+             */
+            refundable?: boolean;
+
+            /**
+             * Class of service.
+             */
+            service_class: Segment.ServiceClass;
+
+            /**
+             * Tax amount for segment.
+             */
+            tax_amount?: number;
+
+            /**
+             * Ticket number.
+             */
+            ticket_number?: string;
+          }
+
+          namespace Segment {
+            interface Arrival {
+              /**
+               * Arrival airport IATA code.
+               */
+              airport: string;
+
+              /**
+               * Arrival date/time.
+               */
+              arrives_at?: number;
+
+              /**
+               * Arrival city.
+               */
+              city?: string;
+
+              /**
+               * Arrival country.
+               */
+              country?: string;
+            }
+
+            interface Departure {
+              /**
+               * Departure airport IATA code.
+               */
+              airport: string;
+
+              /**
+               * Departure city.
+               */
+              city?: string;
+
+              /**
+               * Departure country.
+               */
+              country?: string;
+
+              /**
+               * Departure date/time.
+               */
+              departs_at: number;
+            }
+
+            type ServiceClass =
+              | 'business'
+              | 'economy'
+              | 'first_class'
+              | 'premium_economy';
+          }
+
+          interface Total {
+            /**
+             * Total flight amount.
+             */
+            amount: number;
+
+            /**
+             * Reason for credit.
+             */
+            credit_reason?: Total.CreditReason;
+
+            /**
+             * Total currency.
+             */
+            currency?: string;
+
+            /**
+             * Discount details.
+             */
+            discounts?: Total.Discounts;
+
+            /**
+             * Additional charges.
+             */
+            extra_charges?: Array<Total.ExtraCharge>;
+
+            /**
+             * Tax breakdown.
+             */
+            tax?: Total.Tax;
+          }
+
+          namespace Total {
+            type CreditReason =
+              | 'other'
+              | 'partial_ticket_refund'
+              | 'passenger_transport_ancillary_cancellation'
+              | 'ticket_and_ancillary_cancellation'
+              | 'ticket_cancellation';
+
+            interface Discounts {
+              /**
+               * Corporate client discount code.
+               */
+              corporate_client_code?: string;
+            }
+
+            interface ExtraCharge {
+              /**
+               * Amount of additional charges.
+               */
+              amount?: number;
+
+              /**
+               * Type of additional charges.
+               */
+              type?: ExtraCharge.Type;
+            }
+
+            namespace ExtraCharge {
+              type Type =
+                | 'additional_fees'
+                | 'ancillary_service_charges'
+                | 'exchange_fee';
+            }
+
+            interface Tax {
+              /**
+               * Array of tax details.
+               */
+              taxes?: Array<Tax.Tax>;
+            }
+
+            namespace Tax {
+              interface Tax {
+                /**
+                 * Tax amount.
+                 */
+                amount?: number;
+
+                /**
+                 * Tax rate.
+                 */
+                rate?: number;
+
+                /**
+                 * Type of tax.
+                 */
+                type?: string;
+              }
+            }
+          }
+
+          type TransactionType =
+            | 'exchange_ticket'
+            | 'miscellaneous'
+            | 'refund'
+            | 'ticket_purchase';
+        }
+
         interface Lodging {
           /**
            * The lodging location's address.
@@ -5797,6 +9032,360 @@ declare module 'stripe' {
              * Full name of the person or entity on the lodging reservation.
              */
             name: string;
+          }
+        }
+
+        interface LodgingDatum {
+          /**
+           * Accommodation details for the lodging.
+           */
+          accommodation?: LodgingDatum.Accommodation;
+
+          /**
+           * Affiliate details if applicable.
+           */
+          affiliate?: LodgingDatum.Affiliate;
+
+          /**
+           * Booking confirmation number for the lodging.
+           */
+          booking_number?: string;
+
+          /**
+           * Check-in date.
+           */
+          checkin_at: number;
+
+          /**
+           * Check-out date.
+           */
+          checkout_at: number;
+
+          /**
+           * Customer service phone number for the lodging company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Whether the lodging is compliant with any hotel fire safety regulations.
+           */
+          fire_safety_act_compliance_indicator?: boolean;
+
+          /**
+           * List of guests for the lodging.
+           */
+          guests?: Array<LodgingDatum.Guest>;
+
+          /**
+           * Host details for the lodging.
+           */
+          host?: LodgingDatum.Host;
+
+          /**
+           * List of insurances for the lodging.
+           */
+          insurances?: Array<LodgingDatum.Insurance>;
+
+          /**
+           * Whether the renter is a no-show.
+           */
+          no_show_indicator?: boolean;
+
+          /**
+           * Renter ID number for the lodging.
+           */
+          renter_id_number?: string;
+
+          /**
+           * Renter name for the lodging.
+           */
+          renter_name?: string;
+
+          /**
+           * Total details for the lodging.
+           */
+          total: LodgingDatum.Total;
+        }
+
+        namespace LodgingDatum {
+          interface Accommodation {
+            /**
+             * Type of accommodation.
+             */
+            accommodation_type?: Accommodation.AccommodationType;
+
+            /**
+             * Bed type.
+             */
+            bed_type?: string;
+
+            /**
+             * Daily accommodation rate in cents.
+             */
+            daily_rate_amount?: number;
+
+            /**
+             * Number of nights.
+             */
+            nights?: number;
+
+            /**
+             * Number of rooms, cabanas, apartments, and so on.
+             */
+            number_of_rooms?: number;
+
+            /**
+             * Rate type.
+             */
+            rate_type?: string;
+
+            /**
+             * Whether smoking is allowed.
+             */
+            smoking_indicator?: boolean;
+          }
+
+          namespace Accommodation {
+            type AccommodationType =
+              | 'apartment'
+              | 'cabana'
+              | 'house'
+              | 'penthouse'
+              | 'room'
+              | 'standard'
+              | 'suite'
+              | 'villa';
+          }
+
+          interface Affiliate {
+            /**
+             * Affiliate partner code.
+             */
+            code?: string;
+
+            /**
+             * Affiliate partner name.
+             */
+            name?: string;
+          }
+
+          interface Guest {
+            /**
+             * Guest's full name.
+             */
+            name: string;
+          }
+
+          interface Host {
+            /**
+             * Address of the host.
+             */
+            address?: Host.Address;
+
+            /**
+             * Host's country of domicile.
+             */
+            country_of_domicile?: string;
+
+            /**
+             * Reference number for the host.
+             */
+            host_reference?: string;
+
+            /**
+             * Type of host.
+             */
+            host_type?: Host.HostType;
+
+            /**
+             * Name of the lodging property or host.
+             */
+            name?: string;
+
+            /**
+             * Total number of reservations for the host.
+             */
+            number_of_reservations?: number;
+
+            /**
+             * Property phone number.
+             */
+            property_phone_number?: string;
+
+            /**
+             * Host's registration date.
+             */
+            registered_at?: number;
+          }
+
+          namespace Host {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1, such as the street, PO Box, or company name.
+               */
+              line1: string;
+
+              /**
+               * Address line 2, such as the apartment, suite, unit, or building.
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+
+            type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+          }
+
+          interface Insurance {
+            /**
+             * Price of the insurance coverage in cents.
+             */
+            amount: number;
+
+            /**
+             * Currency of the insurance amount.
+             */
+            currency?: string;
+
+            /**
+             * Name of the insurance company.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance coverage.
+             */
+            insurance_type: Insurance.InsuranceType;
+          }
+
+          namespace Insurance {
+            type InsuranceType =
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+
+          interface Total {
+            /**
+             * Total price of the lodging reservation in cents.
+             */
+            amount: number;
+
+            /**
+             * Cash advances in cents.
+             */
+            cash_advances?: number;
+
+            /**
+             * Currency of the total amount.
+             */
+            currency?: string;
+
+            /**
+             * Discount details for the lodging.
+             */
+            discounts?: Total.Discounts;
+
+            /**
+             * Additional charges for the lodging.
+             */
+            extra_charges?: Array<Total.ExtraCharge>;
+
+            /**
+             * Prepaid amount in cents.
+             */
+            prepaid_amount?: number;
+
+            /**
+             * Tax breakdown for the lodging reservation.
+             */
+            tax?: Total.Tax;
+          }
+
+          namespace Total {
+            interface Discounts {
+              /**
+               * Corporate client discount code.
+               */
+              corporate_client_code?: string;
+
+              /**
+               * Coupon code.
+               */
+              coupon?: string;
+            }
+
+            interface ExtraCharge {
+              /**
+               * Amount of the extra charge in cents.
+               */
+              amount?: number;
+
+              /**
+               * Type of extra charge.
+               */
+              type?: ExtraCharge.Type;
+            }
+
+            namespace ExtraCharge {
+              type Type =
+                | 'gift_shop'
+                | 'laundry'
+                | 'mini_bar'
+                | 'other'
+                | 'phone'
+                | 'restaurant';
+            }
+
+            interface Tax {
+              /**
+               * Indicates whether the transaction is tax exempt.
+               */
+              tax_exempt_indicator?: boolean;
+
+              /**
+               * Tax details.
+               */
+              taxes?: Array<Tax.Tax>;
+            }
+
+            namespace Tax {
+              interface Tax {
+                /**
+                 * Tax amount in cents.
+                 */
+                amount?: number;
+
+                /**
+                 * Tax rate.
+                 */
+                rate?: number;
+
+                /**
+                 * Type of tax applied.
+                 */
+                type?: string;
+              }
+            }
           }
         }
 
@@ -6379,6 +9968,7 @@ declare module 'stripe' {
             | 'asn_bank'
             | 'bunq'
             | 'buut'
+            | 'finom'
             | 'handelsbanken'
             | 'ing'
             | 'knab'
@@ -7698,6 +11288,15 @@ declare module 'stripe' {
 
         interface CardPresent {
           /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: CardPresent.CaptureMethod;
+
+          /**
            * Request ability to capture this payment beyond the standard [authorization validity window](https://stripe.com/docs/terminal/features/extended-authorizations#authorization-validity)
            */
           request_extended_authorization?: boolean;
@@ -7714,6 +11313,8 @@ declare module 'stripe' {
         }
 
         namespace CardPresent {
+          type CaptureMethod = 'manual' | 'manual_preferred';
+
           interface Routing {
             /**
              * Routing requested priority
@@ -8028,6 +11629,13 @@ declare module 'stripe' {
            * Subscription details if setting up or charging a subscription.
            */
           subscriptions?: Stripe.Emptyable<Array<Klarna.Subscription>>;
+
+          /**
+           * Supplementary Purchase Data for the corresponding Klarna payment
+           */
+          supplementary_purchase_data?: Stripe.Emptyable<
+            Klarna.SupplementaryPurchaseData
+          >;
         }
 
         namespace Klarna {
@@ -8152,6 +11760,1182 @@ declare module 'stripe' {
                * The date of the next charge for the subscription in YYYY-MM-DD format.
                */
               date: string;
+            }
+          }
+
+          interface SupplementaryPurchaseData {
+            /**
+             * Supplementary bus reservation details.
+             */
+            bus_reservation_details?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.BusReservationDetail>
+            >;
+
+            /**
+             * Supplementary event reservation details.
+             */
+            event_reservation_details?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.EventReservationDetail>
+            >;
+
+            /**
+             * Supplementary ferry reservation details.
+             */
+            ferry_reservation_details?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.FerryReservationDetail>
+            >;
+
+            /**
+             * Supplementary insurance details.
+             */
+            insurances?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.Insurance>
+            >;
+
+            /**
+             * Supplementary marketplace seller details.
+             */
+            marketplace_sellers?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.MarketplaceSeller>
+            >;
+
+            /**
+             * Supplementary round trip reservation details.
+             */
+            round_trip_reservation_details?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.RoundTripReservationDetail>
+            >;
+
+            /**
+             * Supplementary train reservation details.
+             */
+            train_reservation_details?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.TrainReservationDetail>
+            >;
+
+            /**
+             * Voucher details, such as a gift card or discount code.
+             */
+            vouchers?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.Voucher>
+            >;
+          }
+
+          namespace SupplementaryPurchaseData {
+            interface BusReservationDetail {
+              /**
+               * Name of associated or partner company for the service.
+               */
+              affiliate_name?: string;
+
+              /**
+               * Arrival details.
+               */
+              arrival?: BusReservationDetail.Arrival;
+
+              /**
+               * Name of transportation company.
+               */
+              carrier_name?: string;
+
+              /**
+               * Currency.
+               */
+              currency?: string;
+
+              /**
+               * Departure details.
+               */
+              departure?: BusReservationDetail.Departure;
+
+              /**
+               * List of insurances for this reservation.
+               */
+              insurances?: Array<BusReservationDetail.Insurance>;
+
+              /**
+               * List of passengers that this reservation applies to.
+               */
+              passengers?: Array<BusReservationDetail.Passenger>;
+
+              /**
+               * Price in cents.
+               */
+              price?: number;
+
+              /**
+               * Ticket class.
+               */
+              ticket_class?: BusReservationDetail.TicketClass;
+            }
+
+            namespace BusReservationDetail {
+              interface Arrival {
+                /**
+                 * Address of the arrival location.
+                 */
+                address?: Arrival.Address;
+
+                /**
+                 * Identifier name or reference for the arrival location.
+                 */
+                arrival_location?: string;
+              }
+
+              namespace Arrival {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Departure {
+                /**
+                 * Address of the departure location.
+                 */
+                address?: Departure.Address;
+
+                /**
+                 * Timestamp of departure.
+                 */
+                departs_at?: number;
+
+                /**
+                 * Identifier name or reference for the origin location.
+                 */
+                departure_location?: string;
+              }
+
+              namespace Departure {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Insurance {
+                /**
+                 * Insurance currency.
+                 */
+                currency?: string;
+
+                /**
+                 * Name of the company providing the insurance.
+                 */
+                insurance_company_name?: string;
+
+                /**
+                 * Type of insurance.
+                 */
+                insurance_type?: Insurance.InsuranceType;
+
+                /**
+                 * Price of insurance in cents.
+                 */
+                price?: number;
+              }
+
+              namespace Insurance {
+                type InsuranceType =
+                  | 'baggage'
+                  | 'bankruptcy'
+                  | 'cancelation'
+                  | 'emergency'
+                  | 'medical';
+              }
+
+              interface Passenger {
+                /**
+                 * The family name of the person.
+                 */
+                family_name?: string;
+
+                /**
+                 * The given name of the person.
+                 */
+                given_name?: string;
+              }
+
+              type TicketClass =
+                | 'business'
+                | 'economy'
+                | 'first_class'
+                | 'premium_economy';
+            }
+
+            interface EventReservationDetail {
+              /**
+               * Indicates if the tickets are digitally checked when entering the venue.
+               */
+              access_controlled_venue?: boolean;
+
+              /**
+               * Address of the event.
+               */
+              address?: EventReservationDetail.Address;
+
+              /**
+               * Name of associated or partner company for the service.
+               */
+              affiliate_name?: string;
+
+              /**
+               * End timestamp of the event.
+               */
+              ends_at?: number;
+
+              /**
+               * Company selling the ticket.
+               */
+              event_company_name?: string;
+
+              /**
+               * Name of the event.
+               */
+              event_name?: string;
+
+              /**
+               * Type of the event.
+               */
+              event_type?: EventReservationDetail.EventType;
+
+              /**
+               * List of insurances for this event.
+               */
+              insurances?: Array<EventReservationDetail.Insurance>;
+
+              /**
+               * Start timestamp of the event.
+               */
+              starts_at?: number;
+
+              /**
+               * Name of the venue where the event takes place.
+               */
+              venue_name?: string;
+            }
+
+            namespace EventReservationDetail {
+              interface Address {
+                /**
+                 * The city or town.
+                 */
+                city?: string;
+
+                /**
+                 * The country in ISO 3166-1 alpha-2 format.
+                 */
+                country?: string;
+
+                /**
+                 * The postal code formatted according to country.
+                 */
+                postal_code?: string;
+
+                /**
+                 * The state, county, province, or region formatted according to country.
+                 */
+                region?: string;
+
+                /**
+                 * Line 1 of the street address.
+                 */
+                street_address?: string;
+
+                /**
+                 * Line 2 of the street address.
+                 */
+                street_address2?: string;
+              }
+
+              type EventType =
+                | 'concert'
+                | 'conference'
+                | 'digital_education'
+                | 'expo'
+                | 'festival'
+                | 'in_person_education'
+                | 'sport'
+                | 'tour';
+
+              interface Insurance {
+                /**
+                 * Insurance currency.
+                 */
+                currency?: string;
+
+                /**
+                 * Name of the company providing the insurance.
+                 */
+                insurance_company_name?: string;
+
+                /**
+                 * Type of insurance.
+                 */
+                insurance_type?: Insurance.InsuranceType;
+
+                /**
+                 * Price of insurance in cents.
+                 */
+                price?: number;
+              }
+
+              namespace Insurance {
+                type InsuranceType =
+                  | 'bankruptcy'
+                  | 'cancelation'
+                  | 'emergency'
+                  | 'medical';
+              }
+            }
+
+            interface FerryReservationDetail {
+              /**
+               * Name of associated or partner company for the service.
+               */
+              affiliate_name?: string;
+
+              /**
+               * Arrival details.
+               */
+              arrival?: FerryReservationDetail.Arrival;
+
+              /**
+               * Name of transportation company.
+               */
+              carrier_name?: string;
+
+              /**
+               * Currency.
+               */
+              currency?: string;
+
+              /**
+               * Departure details.
+               */
+              departure?: FerryReservationDetail.Departure;
+
+              /**
+               * List of insurances for this reservation.
+               */
+              insurances?: Array<FerryReservationDetail.Insurance>;
+
+              /**
+               * List of passengers that this reservation applies to.
+               */
+              passengers?: Array<FerryReservationDetail.Passenger>;
+
+              /**
+               * Price in cents.
+               */
+              price?: number;
+
+              /**
+               * Ticket class.
+               */
+              ticket_class?: FerryReservationDetail.TicketClass;
+            }
+
+            namespace FerryReservationDetail {
+              interface Arrival {
+                /**
+                 * Address of the arrival location.
+                 */
+                address?: Arrival.Address;
+
+                /**
+                 * Identifier name or reference for the arrival location.
+                 */
+                arrival_location?: string;
+              }
+
+              namespace Arrival {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Departure {
+                /**
+                 * Address of the departure location.
+                 */
+                address?: Departure.Address;
+
+                /**
+                 * Timestamp of departure.
+                 */
+                departs_at?: number;
+
+                /**
+                 * Identifier name or reference for the origin location.
+                 */
+                departure_location?: string;
+              }
+
+              namespace Departure {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Insurance {
+                /**
+                 * Insurance currency.
+                 */
+                currency?: string;
+
+                /**
+                 * Name of the company providing the insurance.
+                 */
+                insurance_company_name?: string;
+
+                /**
+                 * Type of insurance.
+                 */
+                insurance_type?: Insurance.InsuranceType;
+
+                /**
+                 * Price of insurance in cents.
+                 */
+                price?: number;
+              }
+
+              namespace Insurance {
+                type InsuranceType =
+                  | 'baggage'
+                  | 'bankruptcy'
+                  | 'cancelation'
+                  | 'emergency'
+                  | 'medical';
+              }
+
+              interface Passenger {
+                /**
+                 * The family name of the person.
+                 */
+                family_name?: string;
+
+                /**
+                 * The given name of the person.
+                 */
+                given_name?: string;
+              }
+
+              type TicketClass =
+                | 'business'
+                | 'economy'
+                | 'first_class'
+                | 'premium_economy';
+            }
+
+            interface Insurance {
+              /**
+               * Insurance currency.
+               */
+              currency?: string;
+
+              /**
+               * Name of the company providing the insurance.
+               */
+              insurance_company_name?: string;
+
+              /**
+               * Type of insurance
+               */
+              insurance_type?: Insurance.InsuranceType;
+
+              /**
+               * Price of insurance in cents.
+               */
+              price?: number;
+            }
+
+            namespace Insurance {
+              type InsuranceType =
+                | 'bankruptcy'
+                | 'cancelation'
+                | 'emergency'
+                | 'medical';
+            }
+
+            interface MarketplaceSeller {
+              /**
+               * The references to line items for purchases with multiple associated sub-sellers.
+               */
+              line_item_references?: Array<string>;
+
+              /**
+               * The address of the selling or delivering merchant.
+               */
+              marketplace_seller_address?: MarketplaceSeller.MarketplaceSellerAddress;
+
+              /**
+               * The name of the marketplace seller.
+               */
+              marketplace_seller_name?: string;
+
+              /**
+               * The unique identifier for the marketplace seller.
+               */
+              marketplace_seller_reference?: string;
+
+              /**
+               * The number of transactions the sub-seller completed in the last 12 months.
+               */
+              number_of_transactions?: number;
+
+              /**
+               * The category of the product.
+               */
+              product_category?: MarketplaceSeller.ProductCategory;
+
+              /**
+               * The date when the seller's account with the marketplace was last logged in.
+               */
+              seller_last_login_at?: number;
+
+              /**
+               * The current rating of the marketplace seller. If the marketplace uses numeric ranking, map these to the enum values.
+               */
+              seller_rating?: MarketplaceSeller.SellerRating;
+
+              /**
+               * The date when the seller's account with the marketplace was created.
+               */
+              seller_registered_at?: number;
+
+              /**
+               * The date when the seller's account with the marketplace was last updated.
+               */
+              seller_updated_at?: number;
+
+              /**
+               * The references to shipping addresses for purchases with multiple associated sub-sellers.
+               */
+              shipping_references?: Array<string>;
+
+              /**
+               * The accumulated amount of sales transactions made by the sub-merchant or sub-seller within the past 12 months in the payment currency. These transactions are in minor currency units.
+               */
+              volume_of_transactions?: number;
+            }
+
+            namespace MarketplaceSeller {
+              interface MarketplaceSellerAddress {
+                /**
+                 * The city or town.
+                 */
+                city?: string;
+
+                /**
+                 * The country in ISO 3166-1 alpha-2 format.
+                 */
+                country?: string;
+
+                /**
+                 * The postal code formatted according to country.
+                 */
+                postal_code?: string;
+
+                /**
+                 * The state, county, province, or region formatted according to country.
+                 */
+                region?: string;
+
+                /**
+                 * Line 1 of the street address.
+                 */
+                street_address?: string;
+
+                /**
+                 * Line 2 of the street address.
+                 */
+                street_address2?: string;
+              }
+
+              type ProductCategory =
+                | 'accessories'
+                | 'appliances'
+                | 'apps_and_games'
+                | 'arts_crafts_and_sewing'
+                | 'automotive'
+                | 'baby'
+                | 'baby_clothing'
+                | 'bags_and_purses'
+                | 'beauty'
+                | 'books'
+                | 'cds_and_vinyl'
+                | 'cell_phones_and_accessories'
+                | 'collectibles_and_fine_arts'
+                | 'digital_music'
+                | 'electronics'
+                | 'grocery_and_gourmet_food'
+                | 'handmade'
+                | 'health_and_personal_care'
+                | 'home_and_kitchen'
+                | 'industrial_and_scientific'
+                | 'luggage_and_travel_gear'
+                | 'magazine_subscriptions'
+                | 'men_clothing'
+                | 'musical_instruments'
+                | 'office_products'
+                | 'patio_lawn_and_garden'
+                | 'pet_supplies'
+                | 'shoes'
+                | 'software'
+                | 'sports_and_outdoors'
+                | 'tools_and_home_improvement'
+                | 'toys_and_games'
+                | 'video_games'
+                | 'women_clothing';
+
+              type SellerRating =
+                | 'high'
+                | 'low'
+                | 'medium'
+                | 'very_high'
+                | 'very_low';
+            }
+
+            interface RoundTripReservationDetail {
+              /**
+               * Name of associated or partner company for the service.
+               */
+              affiliate_name?: string;
+
+              /**
+               * Arrival details.
+               */
+              arrival?: RoundTripReservationDetail.Arrival;
+
+              /**
+               * Name of transportation company.
+               */
+              carrier_name?: string;
+
+              /**
+               * Currency.
+               */
+              currency?: string;
+
+              /**
+               * Departure details.
+               */
+              departure?: RoundTripReservationDetail.Departure;
+
+              /**
+               * List of insurances for this reservation.
+               */
+              insurances?: Array<RoundTripReservationDetail.Insurance>;
+
+              /**
+               * List of passengers that this reservation applies to.
+               */
+              passengers?: Array<RoundTripReservationDetail.Passenger>;
+
+              /**
+               * Price in cents.
+               */
+              price?: number;
+
+              /**
+               * Ticket class.
+               */
+              ticket_class?: RoundTripReservationDetail.TicketClass;
+            }
+
+            namespace RoundTripReservationDetail {
+              interface Arrival {
+                /**
+                 * Address of the arrival location.
+                 */
+                address?: Arrival.Address;
+
+                /**
+                 * Identifier name or reference for the arrival location.
+                 */
+                arrival_location?: string;
+              }
+
+              namespace Arrival {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Departure {
+                /**
+                 * Address of the departure location.
+                 */
+                address?: Departure.Address;
+
+                /**
+                 * Timestamp of departure.
+                 */
+                departs_at?: number;
+
+                /**
+                 * Identifier name or reference for the origin location.
+                 */
+                departure_location?: string;
+              }
+
+              namespace Departure {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Insurance {
+                /**
+                 * Insurance currency.
+                 */
+                currency?: string;
+
+                /**
+                 * Name of the company providing the insurance.
+                 */
+                insurance_company_name?: string;
+
+                /**
+                 * Type of insurance.
+                 */
+                insurance_type?: Insurance.InsuranceType;
+
+                /**
+                 * Price of insurance in cents.
+                 */
+                price?: number;
+              }
+
+              namespace Insurance {
+                type InsuranceType =
+                  | 'baggage'
+                  | 'bankruptcy'
+                  | 'cancelation'
+                  | 'emergency'
+                  | 'medical';
+              }
+
+              interface Passenger {
+                /**
+                 * The family name of the person.
+                 */
+                family_name?: string;
+
+                /**
+                 * The given name of the person.
+                 */
+                given_name?: string;
+              }
+
+              type TicketClass =
+                | 'business'
+                | 'economy'
+                | 'first_class'
+                | 'premium_economy';
+            }
+
+            interface TrainReservationDetail {
+              /**
+               * Name of associated or partner company for the service.
+               */
+              affiliate_name?: string;
+
+              /**
+               * Arrival details.
+               */
+              arrival?: TrainReservationDetail.Arrival;
+
+              /**
+               * Name of transportation company.
+               */
+              carrier_name?: string;
+
+              /**
+               * Currency.
+               */
+              currency?: string;
+
+              /**
+               * Departure details.
+               */
+              departure?: TrainReservationDetail.Departure;
+
+              /**
+               * List of insurances for this reservation.
+               */
+              insurances?: Array<TrainReservationDetail.Insurance>;
+
+              /**
+               * List of passengers that this reservation applies to.
+               */
+              passengers?: Array<TrainReservationDetail.Passenger>;
+
+              /**
+               * Price in cents.
+               */
+              price?: number;
+
+              /**
+               * Ticket class.
+               */
+              ticket_class?: TrainReservationDetail.TicketClass;
+            }
+
+            namespace TrainReservationDetail {
+              interface Arrival {
+                /**
+                 * Address of the arrival location.
+                 */
+                address?: Arrival.Address;
+
+                /**
+                 * Identifier name or reference for the arrival location.
+                 */
+                arrival_location?: string;
+              }
+
+              namespace Arrival {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Departure {
+                /**
+                 * Address of the departure location.
+                 */
+                address?: Departure.Address;
+
+                /**
+                 * Timestamp of departure.
+                 */
+                departs_at?: number;
+
+                /**
+                 * Identifier name or reference for the origin location.
+                 */
+                departure_location?: string;
+              }
+
+              namespace Departure {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Insurance {
+                /**
+                 * Insurance currency.
+                 */
+                currency?: string;
+
+                /**
+                 * Name of the company providing the insurance.
+                 */
+                insurance_company_name?: string;
+
+                /**
+                 * Type of insurance.
+                 */
+                insurance_type?: Insurance.InsuranceType;
+
+                /**
+                 * Price of insurance in cents.
+                 */
+                price?: number;
+              }
+
+              namespace Insurance {
+                type InsuranceType =
+                  | 'baggage'
+                  | 'bankruptcy'
+                  | 'cancelation'
+                  | 'emergency'
+                  | 'medical';
+              }
+
+              interface Passenger {
+                /**
+                 * The family name of the person.
+                 */
+                family_name?: string;
+
+                /**
+                 * The given name of the person.
+                 */
+                given_name?: string;
+              }
+
+              type TicketClass =
+                | 'business'
+                | 'economy'
+                | 'first_class'
+                | 'premium_economy';
+            }
+
+            interface Voucher {
+              /**
+               * Name of associated or partner company for this voucher.
+               */
+              affiliate_name?: string;
+
+              /**
+               * The voucher validity end time.
+               */
+              ends_at?: number;
+
+              /**
+               * The voucher validity start time.
+               */
+              starts_at?: number;
+
+              /**
+               * The issuer or provider of this voucher.
+               */
+              voucher_company?: string;
+
+              /**
+               * The name or reference to identify the voucher.
+               */
+              voucher_name?: string;
+
+              /**
+               * The type of this voucher.
+               */
+              voucher_type?: Voucher.VoucherType;
+            }
+
+            namespace Voucher {
+              type VoucherType =
+                | 'digital_product'
+                | 'discount'
+                | 'gift_card'
+                | 'physical_product'
+                | 'services';
             }
           }
         }
@@ -8601,7 +13385,7 @@ declare module 'stripe' {
             amount?: number;
 
             /**
-             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
              */
             amount_type?: MandateOptions.AmountType;
 
@@ -8611,7 +13395,7 @@ declare module 'stripe' {
             end_date?: string;
 
             /**
-             * The periodicity at which payments will be collected.
+             * The periodicity at which payments will be collected. Defaults to `adhoc`.
              */
             payment_schedule?: MandateOptions.PaymentSchedule;
 
@@ -8621,7 +13405,7 @@ declare module 'stripe' {
             payments_per_period?: number;
 
             /**
-             * The purpose for which payments are made. Defaults to retail.
+             * The purpose for which payments are made. Has a default value based on your merchant category code.
              */
             purpose?: MandateOptions.Purpose;
           }
@@ -9321,7 +14105,9 @@ declare module 'stripe' {
     namespace PaymentIntentCaptureParams {
       interface AmountDetails {
         /**
-         * The total discount applied on the transaction.
+         * The total discount applied on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+         *
+         * This field is mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
          */
         discount_amount?: Stripe.Emptyable<number>;
 
@@ -9344,7 +14130,9 @@ declare module 'stripe' {
       namespace AmountDetails {
         interface LineItem {
           /**
-           * The amount an item was discounted for. Positive integer.
+           * The discount applied on this line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+           *
+           * This field is mutually exclusive with the `amount_details[discount_amount]` field.
            */
           discount_amount?: number;
 
@@ -9354,17 +14142,19 @@ declare module 'stripe' {
           payment_method_options?: LineItem.PaymentMethodOptions;
 
           /**
-           * Unique identifier of the product. At most 12 characters long.
+           * The product code of the line item, such as an SKU. Required for L3 rates. At most 12 characters long.
            */
           product_code?: string;
 
           /**
-           * Name of the product. At most 100 characters long.
+           * The product name of the line item. Required for L3 rates. At most 1024 characters long.
+           *
+           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
            */
           product_name: string;
 
           /**
-           * Number of items of the product. Positive integer.
+           * The quantity of items. Required for L3 rates. An integer greater than 0.
            */
           quantity: number;
 
@@ -9374,7 +14164,7 @@ declare module 'stripe' {
           tax?: LineItem.Tax;
 
           /**
-           * Cost of the product. Non-negative integer.
+           * The unit cost of the line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
            */
           unit_cost: number;
 
@@ -9468,7 +14258,9 @@ declare module 'stripe' {
 
           interface Tax {
             /**
-             * The total tax on an item. Non-negative integer.
+             * The total amount of tax on a single line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+             *
+             * This field is mutually exclusive with the `amount_details[tax][total_tax_amount]` field.
              */
             total_tax_amount: number;
           }
@@ -9476,24 +14268,26 @@ declare module 'stripe' {
 
         interface Shipping {
           /**
-           * Portion of the amount that is for shipping.
+           * If a physical good is being shipped, the cost of shipping represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than or equal to 0.
            */
           amount?: Stripe.Emptyable<number>;
 
           /**
-           * The postal code that represents the shipping source.
+           * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
            */
           from_postal_code?: Stripe.Emptyable<string>;
 
           /**
-           * The postal code that represents the shipping destination.
+           * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
            */
           to_postal_code?: Stripe.Emptyable<string>;
         }
 
         interface Tax {
           /**
-           * Total portion of the amount that is for tax.
+           * The total amount of tax on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
+           *
+           * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
            */
           total_tax_amount: number;
         }
@@ -9531,7 +14325,16 @@ declare module 'stripe' {
         car_rental?: PaymentDetails.CarRental;
 
         /**
-         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
+         * Car rental data for this PaymentIntent.
+         */
+        car_rental_data?: Stripe.Emptyable<
+          Array<PaymentDetails.CarRentalDatum>
+        >;
+
+        /**
+         * A unique value to identify the customer. This field is available only for card payments.
+         *
+         * This field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
          */
         customer_reference?: Stripe.Emptyable<string>;
 
@@ -9546,12 +14349,26 @@ declare module 'stripe' {
         flight?: PaymentDetails.Flight;
 
         /**
+         * Flight data for this PaymentIntent.
+         */
+        flight_data?: Stripe.Emptyable<Array<PaymentDetails.FlightDatum>>;
+
+        /**
          * Lodging reservation details for this PaymentIntent
          */
         lodging?: PaymentDetails.Lodging;
 
         /**
-         * A unique value assigned by the business to identify the transaction.
+         * Lodging data for this PaymentIntent.
+         */
+        lodging_data?: Stripe.Emptyable<Array<PaymentDetails.LodgingDatum>>;
+
+        /**
+         * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+         *
+         * Required when the Payment Method Types array contains `card`, including when [automatic_payment_methods.enabled](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-automatic_payment_methods-enabled) is set to `true`.
+         *
+         * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
          */
         order_reference?: Stripe.Emptyable<string>;
 
@@ -9766,6 +14583,479 @@ declare module 'stripe' {
             | 'parking_violation';
 
           type RateInterval = 'day' | 'month' | 'week';
+        }
+
+        interface CarRentalDatum {
+          /**
+           * Affiliate (such as travel agency) details for the rental.
+           */
+          affiliate?: CarRentalDatum.Affiliate;
+
+          /**
+           * Booking confirmation number for the car rental.
+           */
+          booking_number?: string;
+
+          /**
+           * Name of the car rental company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Customer service phone number for the car rental company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Number of days the car is being rented.
+           */
+          days_rented?: number;
+
+          /**
+           * Distance details for the rental.
+           */
+          distance?: CarRentalDatum.Distance;
+
+          /**
+           * List of drivers for the rental.
+           */
+          drivers?: Array<CarRentalDatum.Driver>;
+
+          /**
+           * Drop-off location details.
+           */
+          drop_off: CarRentalDatum.DropOff;
+
+          /**
+           * Insurance details for the rental.
+           */
+          insurances?: Array<CarRentalDatum.Insurance>;
+
+          /**
+           * Indicates if the customer was a no-show.
+           */
+          no_show_indicator?: boolean;
+
+          /**
+           * Pickup location details.
+           */
+          pickup: CarRentalDatum.Pickup;
+
+          /**
+           * Name of the person renting the vehicle.
+           */
+          renter_name?: string;
+
+          /**
+           * Total cost breakdown for the rental.
+           */
+          total: CarRentalDatum.Total;
+
+          /**
+           * Vehicle details for the rental.
+           */
+          vehicle?: CarRentalDatum.Vehicle;
+        }
+
+        namespace CarRentalDatum {
+          interface Affiliate {
+            /**
+             * Affiliate partner code.
+             */
+            code?: string;
+
+            /**
+             * Name of affiliate partner.
+             */
+            name?: string;
+          }
+
+          interface Distance {
+            /**
+             * Distance traveled.
+             */
+            amount: number;
+
+            /**
+             * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+             */
+            unit: Distance.Unit;
+          }
+
+          namespace Distance {
+            type Unit = 'kilometers' | 'miles';
+          }
+
+          interface Driver {
+            /**
+             * Driver's date of birth.
+             */
+            date_of_birth?: Driver.DateOfBirth;
+
+            /**
+             * Driver's identification number.
+             */
+            driver_identification_number?: string;
+
+            /**
+             * Driver's tax number.
+             */
+            driver_tax_number?: string;
+
+            /**
+             * Driver's full name.
+             */
+            name: string;
+          }
+
+          namespace Driver {
+            interface DateOfBirth {
+              /**
+               * Day of birth (1-31).
+               */
+              day: number;
+
+              /**
+               * Month of birth (1-12).
+               */
+              month: number;
+
+              /**
+               * Year of birth (must be greater than 1900).
+               */
+              year: number;
+            }
+          }
+
+          interface DropOff {
+            /**
+             * Address of the rental location.
+             */
+            address: DropOff.Address;
+
+            /**
+             * Location name.
+             */
+            location_name?: string;
+
+            /**
+             * Timestamp for the location.
+             */
+            time: number;
+          }
+
+          namespace DropOff {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1, such as the street, PO Box, or company name.
+               */
+              line1: string;
+
+              /**
+               * Address line 2, such as the apartment, suite, unit, or building.
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
+
+          interface Insurance {
+            /**
+             * Amount of the insurance coverage in cents.
+             */
+            amount: number;
+
+            /**
+             * Currency of the insurance amount.
+             */
+            currency?: string;
+
+            /**
+             * Name of the insurance company.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance coverage.
+             */
+            insurance_type: Insurance.InsuranceType;
+          }
+
+          namespace Insurance {
+            type InsuranceType =
+              | 'liability_supplement'
+              | 'loss_damage_waiver'
+              | 'other'
+              | 'partial_damage_waiver'
+              | 'personal_accident'
+              | 'personal_effects';
+          }
+
+          interface Pickup {
+            /**
+             * Address of the rental location.
+             */
+            address: Pickup.Address;
+
+            /**
+             * Location name.
+             */
+            location_name?: string;
+
+            /**
+             * Timestamp for the location.
+             */
+            time: number;
+          }
+
+          namespace Pickup {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1, such as the street, PO Box, or company name.
+               */
+              line1: string;
+
+              /**
+               * Address line 2, such as the apartment, suite, unit, or building.
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
+
+          interface Total {
+            /**
+             * Total amount in cents.
+             */
+            amount: number;
+
+            /**
+             * Currency of the amount.
+             */
+            currency?: string;
+
+            /**
+             * Discount details for the rental.
+             */
+            discounts?: Total.Discounts;
+
+            /**
+             * Additional charges for the rental.
+             */
+            extra_charges?: Array<Total.ExtraCharge>;
+
+            /**
+             * Rate per unit for the rental.
+             */
+            rate_per_unit?: number;
+
+            /**
+             * Unit of measurement for the rate.
+             */
+            rate_unit?: Total.RateUnit;
+
+            /**
+             * Tax breakdown for the rental.
+             */
+            tax?: Total.Tax;
+          }
+
+          namespace Total {
+            interface Discounts {
+              /**
+               * Corporate client discount code.
+               */
+              corporate_client_code?: string;
+
+              /**
+               * Coupon code applied to the rental.
+               */
+              coupon?: string;
+
+              /**
+               * Maximum number of free miles or kilometers included.
+               */
+              maximum_free_miles_or_kilometers?: number;
+            }
+
+            interface ExtraCharge {
+              /**
+               * Amount of the extra charge in cents.
+               */
+              amount: number;
+
+              /**
+               * Type of extra charge.
+               */
+              type: ExtraCharge.Type;
+            }
+
+            namespace ExtraCharge {
+              type Type =
+                | 'extra_mileage'
+                | 'gas'
+                | 'gps'
+                | 'late_charge'
+                | 'one_way_drop_off'
+                | 'other'
+                | 'parking'
+                | 'phone'
+                | 'regular_mileage'
+                | 'towing';
+            }
+
+            type RateUnit =
+              | 'days'
+              | 'kilometers'
+              | 'miles'
+              | 'months'
+              | 'weeks';
+
+            interface Tax {
+              /**
+               * Indicates if the transaction is tax exempt.
+               */
+              tax_exempt_indicator?: boolean;
+
+              /**
+               * Array of tax details.
+               */
+              taxes?: Array<Tax.Tax>;
+            }
+
+            namespace Tax {
+              interface Tax {
+                /**
+                 * Tax amount.
+                 */
+                amount?: number;
+
+                /**
+                 * Tax rate applied.
+                 */
+                rate?: number;
+
+                /**
+                 * Type of tax applied.
+                 */
+                type?: string;
+              }
+            }
+          }
+
+          interface Vehicle {
+            /**
+             * Make of the rental vehicle.
+             */
+            make?: string;
+
+            /**
+             * Model of the rental vehicle.
+             */
+            model?: string;
+
+            /**
+             * Odometer reading at the time of rental.
+             */
+            odometer?: number;
+
+            /**
+             * Type of the rental vehicle.
+             */
+            type?: Vehicle.Type;
+
+            /**
+             * Class of the rental vehicle.
+             */
+            vehicle_class?: Vehicle.VehicleClass;
+
+            /**
+             * Vehicle identification number (VIN).
+             */
+            vehicle_identification_number?: string;
+          }
+
+          namespace Vehicle {
+            type Type =
+              | 'cargo_van'
+              | 'compact'
+              | 'economy'
+              | 'exotic'
+              | 'exotic_suv'
+              | 'fifteen_passenger_van'
+              | 'four_wheel_drive'
+              | 'full_size'
+              | 'intermediate'
+              | 'large_suv'
+              | 'large_truck'
+              | 'luxury'
+              | 'medium_suv'
+              | 'midsize'
+              | 'mini'
+              | 'minivan'
+              | 'miscellaneous'
+              | 'moped'
+              | 'moving_van'
+              | 'premium'
+              | 'regular'
+              | 'small_medium_truck'
+              | 'small_suv'
+              | 'special'
+              | 'standard'
+              | 'stretch'
+              | 'subcompact'
+              | 'taxi'
+              | 'twelve_foot_truck'
+              | 'twelve_passenger_van'
+              | 'twenty_foot_truck'
+              | 'twenty_four_foot_truck'
+              | 'twenty_six_foot_truck'
+              | 'unique';
+
+            type VehicleClass =
+              | 'business'
+              | 'economy'
+              | 'first_class'
+              | 'premium_economy';
+          }
         }
 
         interface EventDetails {
@@ -9998,6 +15288,343 @@ declare module 'stripe' {
           }
         }
 
+        interface FlightDatum {
+          /**
+           * Affiliate details if applicable.
+           */
+          affiliate?: FlightDatum.Affiliate;
+
+          /**
+           * Reservation reference.
+           */
+          booking_number?: string;
+
+          /**
+           * Computerized reservation system used to make the reservation and purchase the ticket.
+           */
+          computerized_reservation_system?: string;
+
+          /**
+           * Ticket restrictions.
+           */
+          endorsements_and_restrictions?: string;
+
+          /**
+           * List of insurances.
+           */
+          insurances?: Array<FlightDatum.Insurance>;
+
+          /**
+           * List of passengers.
+           */
+          passengers?: Array<FlightDatum.Passenger>;
+
+          /**
+           * List of flight segments.
+           */
+          segments: Array<FlightDatum.Segment>;
+
+          /**
+           * Electronic ticket indicator.
+           */
+          ticket_electronically_issued_indicator?: boolean;
+
+          /**
+           * Total cost breakdown.
+           */
+          total: FlightDatum.Total;
+
+          /**
+           * Type of flight transaction.
+           */
+          transaction_type?: FlightDatum.TransactionType;
+        }
+
+        namespace FlightDatum {
+          interface Affiliate {
+            /**
+             * Affiliate partner code.
+             */
+            code?: string;
+
+            /**
+             * Name of affiliate partner.
+             */
+            name?: string;
+
+            /**
+             * Code provided by the company to a travel agent authorizing ticket issuance.
+             */
+            travel_authorization_code?: string;
+          }
+
+          interface Insurance {
+            /**
+             * Insurance cost.
+             */
+            amount: number;
+
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Insurance company name.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type: Insurance.InsuranceType;
+          }
+
+          namespace Insurance {
+            type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+
+          interface Passenger {
+            /**
+             * Passenger's full name.
+             */
+            name: string;
+          }
+
+          interface Segment {
+            /**
+             * Segment fare amount.
+             */
+            amount?: number;
+
+            /**
+             * Arrival details.
+             */
+            arrival: Segment.Arrival;
+
+            /**
+             * Airline carrier code.
+             */
+            carrier_code: string;
+
+            /**
+             * Carrier name.
+             */
+            carrier_name?: string;
+
+            /**
+             * Segment currency.
+             */
+            currency?: string;
+
+            /**
+             * Departure details.
+             */
+            departure: Segment.Departure;
+
+            /**
+             * Exchange ticket number.
+             */
+            exchange_ticket_number?: string;
+
+            /**
+             * Fare basis code.
+             */
+            fare_basis_code?: string;
+
+            /**
+             * Additional fees.
+             */
+            fees?: number;
+
+            /**
+             * Flight number.
+             */
+            flight_number?: string;
+
+            /**
+             * Stopover indicator.
+             */
+            is_stop_over_indicator?: boolean;
+
+            /**
+             * Refundable ticket indicator.
+             */
+            refundable?: boolean;
+
+            /**
+             * Class of service.
+             */
+            service_class: Segment.ServiceClass;
+
+            /**
+             * Tax amount for segment.
+             */
+            tax_amount?: number;
+
+            /**
+             * Ticket number.
+             */
+            ticket_number?: string;
+          }
+
+          namespace Segment {
+            interface Arrival {
+              /**
+               * Arrival airport IATA code.
+               */
+              airport: string;
+
+              /**
+               * Arrival date/time.
+               */
+              arrives_at?: number;
+
+              /**
+               * Arrival city.
+               */
+              city?: string;
+
+              /**
+               * Arrival country.
+               */
+              country?: string;
+            }
+
+            interface Departure {
+              /**
+               * Departure airport IATA code.
+               */
+              airport: string;
+
+              /**
+               * Departure city.
+               */
+              city?: string;
+
+              /**
+               * Departure country.
+               */
+              country?: string;
+
+              /**
+               * Departure date/time.
+               */
+              departs_at: number;
+            }
+
+            type ServiceClass =
+              | 'business'
+              | 'economy'
+              | 'first_class'
+              | 'premium_economy';
+          }
+
+          interface Total {
+            /**
+             * Total flight amount.
+             */
+            amount: number;
+
+            /**
+             * Reason for credit.
+             */
+            credit_reason?: Total.CreditReason;
+
+            /**
+             * Total currency.
+             */
+            currency?: string;
+
+            /**
+             * Discount details.
+             */
+            discounts?: Total.Discounts;
+
+            /**
+             * Additional charges.
+             */
+            extra_charges?: Array<Total.ExtraCharge>;
+
+            /**
+             * Tax breakdown.
+             */
+            tax?: Total.Tax;
+          }
+
+          namespace Total {
+            type CreditReason =
+              | 'other'
+              | 'partial_ticket_refund'
+              | 'passenger_transport_ancillary_cancellation'
+              | 'ticket_and_ancillary_cancellation'
+              | 'ticket_cancellation';
+
+            interface Discounts {
+              /**
+               * Corporate client discount code.
+               */
+              corporate_client_code?: string;
+            }
+
+            interface ExtraCharge {
+              /**
+               * Amount of additional charges.
+               */
+              amount?: number;
+
+              /**
+               * Type of additional charges.
+               */
+              type?: ExtraCharge.Type;
+            }
+
+            namespace ExtraCharge {
+              type Type =
+                | 'additional_fees'
+                | 'ancillary_service_charges'
+                | 'exchange_fee';
+            }
+
+            interface Tax {
+              /**
+               * Array of tax details.
+               */
+              taxes?: Array<Tax.Tax>;
+            }
+
+            namespace Tax {
+              interface Tax {
+                /**
+                 * Tax amount.
+                 */
+                amount?: number;
+
+                /**
+                 * Tax rate.
+                 */
+                rate?: number;
+
+                /**
+                 * Type of tax.
+                 */
+                type?: string;
+              }
+            }
+          }
+
+          type TransactionType =
+            | 'exchange_ticket'
+            | 'miscellaneous'
+            | 'refund'
+            | 'ticket_purchase';
+        }
+
         interface Lodging {
           /**
            * The lodging location's address.
@@ -10161,6 +15788,360 @@ declare module 'stripe' {
              * Full name of the person or entity on the lodging reservation.
              */
             name: string;
+          }
+        }
+
+        interface LodgingDatum {
+          /**
+           * Accommodation details for the lodging.
+           */
+          accommodation?: LodgingDatum.Accommodation;
+
+          /**
+           * Affiliate details if applicable.
+           */
+          affiliate?: LodgingDatum.Affiliate;
+
+          /**
+           * Booking confirmation number for the lodging.
+           */
+          booking_number?: string;
+
+          /**
+           * Check-in date.
+           */
+          checkin_at: number;
+
+          /**
+           * Check-out date.
+           */
+          checkout_at: number;
+
+          /**
+           * Customer service phone number for the lodging company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Whether the lodging is compliant with any hotel fire safety regulations.
+           */
+          fire_safety_act_compliance_indicator?: boolean;
+
+          /**
+           * List of guests for the lodging.
+           */
+          guests?: Array<LodgingDatum.Guest>;
+
+          /**
+           * Host details for the lodging.
+           */
+          host?: LodgingDatum.Host;
+
+          /**
+           * List of insurances for the lodging.
+           */
+          insurances?: Array<LodgingDatum.Insurance>;
+
+          /**
+           * Whether the renter is a no-show.
+           */
+          no_show_indicator?: boolean;
+
+          /**
+           * Renter ID number for the lodging.
+           */
+          renter_id_number?: string;
+
+          /**
+           * Renter name for the lodging.
+           */
+          renter_name?: string;
+
+          /**
+           * Total details for the lodging.
+           */
+          total: LodgingDatum.Total;
+        }
+
+        namespace LodgingDatum {
+          interface Accommodation {
+            /**
+             * Type of accommodation.
+             */
+            accommodation_type?: Accommodation.AccommodationType;
+
+            /**
+             * Bed type.
+             */
+            bed_type?: string;
+
+            /**
+             * Daily accommodation rate in cents.
+             */
+            daily_rate_amount?: number;
+
+            /**
+             * Number of nights.
+             */
+            nights?: number;
+
+            /**
+             * Number of rooms, cabanas, apartments, and so on.
+             */
+            number_of_rooms?: number;
+
+            /**
+             * Rate type.
+             */
+            rate_type?: string;
+
+            /**
+             * Whether smoking is allowed.
+             */
+            smoking_indicator?: boolean;
+          }
+
+          namespace Accommodation {
+            type AccommodationType =
+              | 'apartment'
+              | 'cabana'
+              | 'house'
+              | 'penthouse'
+              | 'room'
+              | 'standard'
+              | 'suite'
+              | 'villa';
+          }
+
+          interface Affiliate {
+            /**
+             * Affiliate partner code.
+             */
+            code?: string;
+
+            /**
+             * Affiliate partner name.
+             */
+            name?: string;
+          }
+
+          interface Guest {
+            /**
+             * Guest's full name.
+             */
+            name: string;
+          }
+
+          interface Host {
+            /**
+             * Address of the host.
+             */
+            address?: Host.Address;
+
+            /**
+             * Host's country of domicile.
+             */
+            country_of_domicile?: string;
+
+            /**
+             * Reference number for the host.
+             */
+            host_reference?: string;
+
+            /**
+             * Type of host.
+             */
+            host_type?: Host.HostType;
+
+            /**
+             * Name of the lodging property or host.
+             */
+            name?: string;
+
+            /**
+             * Total number of reservations for the host.
+             */
+            number_of_reservations?: number;
+
+            /**
+             * Property phone number.
+             */
+            property_phone_number?: string;
+
+            /**
+             * Host's registration date.
+             */
+            registered_at?: number;
+          }
+
+          namespace Host {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1, such as the street, PO Box, or company name.
+               */
+              line1: string;
+
+              /**
+               * Address line 2, such as the apartment, suite, unit, or building.
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+
+            type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+          }
+
+          interface Insurance {
+            /**
+             * Price of the insurance coverage in cents.
+             */
+            amount: number;
+
+            /**
+             * Currency of the insurance amount.
+             */
+            currency?: string;
+
+            /**
+             * Name of the insurance company.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance coverage.
+             */
+            insurance_type: Insurance.InsuranceType;
+          }
+
+          namespace Insurance {
+            type InsuranceType =
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+
+          interface Total {
+            /**
+             * Total price of the lodging reservation in cents.
+             */
+            amount: number;
+
+            /**
+             * Cash advances in cents.
+             */
+            cash_advances?: number;
+
+            /**
+             * Currency of the total amount.
+             */
+            currency?: string;
+
+            /**
+             * Discount details for the lodging.
+             */
+            discounts?: Total.Discounts;
+
+            /**
+             * Additional charges for the lodging.
+             */
+            extra_charges?: Array<Total.ExtraCharge>;
+
+            /**
+             * Prepaid amount in cents.
+             */
+            prepaid_amount?: number;
+
+            /**
+             * Tax breakdown for the lodging reservation.
+             */
+            tax?: Total.Tax;
+          }
+
+          namespace Total {
+            interface Discounts {
+              /**
+               * Corporate client discount code.
+               */
+              corporate_client_code?: string;
+
+              /**
+               * Coupon code.
+               */
+              coupon?: string;
+            }
+
+            interface ExtraCharge {
+              /**
+               * Amount of the extra charge in cents.
+               */
+              amount?: number;
+
+              /**
+               * Type of extra charge.
+               */
+              type?: ExtraCharge.Type;
+            }
+
+            namespace ExtraCharge {
+              type Type =
+                | 'gift_shop'
+                | 'laundry'
+                | 'mini_bar'
+                | 'other'
+                | 'phone'
+                | 'restaurant';
+            }
+
+            interface Tax {
+              /**
+               * Indicates whether the transaction is tax exempt.
+               */
+              tax_exempt_indicator?: boolean;
+
+              /**
+               * Tax details.
+               */
+              taxes?: Array<Tax.Tax>;
+            }
+
+            namespace Tax {
+              interface Tax {
+                /**
+                 * Tax amount in cents.
+                 */
+                amount?: number;
+
+                /**
+                 * Tax rate.
+                 */
+                rate?: number;
+
+                /**
+                 * Type of tax applied.
+                 */
+                type?: string;
+              }
+            }
           }
         }
 
@@ -10382,7 +16363,9 @@ declare module 'stripe' {
 
       interface AmountDetails {
         /**
-         * The total discount applied on the transaction.
+         * The total discount applied on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+         *
+         * This field is mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
          */
         discount_amount?: Stripe.Emptyable<number>;
 
@@ -10405,7 +16388,9 @@ declare module 'stripe' {
       namespace AmountDetails {
         interface LineItem {
           /**
-           * The amount an item was discounted for. Positive integer.
+           * The discount applied on this line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+           *
+           * This field is mutually exclusive with the `amount_details[discount_amount]` field.
            */
           discount_amount?: number;
 
@@ -10415,17 +16400,19 @@ declare module 'stripe' {
           payment_method_options?: LineItem.PaymentMethodOptions;
 
           /**
-           * Unique identifier of the product. At most 12 characters long.
+           * The product code of the line item, such as an SKU. Required for L3 rates. At most 12 characters long.
            */
           product_code?: string;
 
           /**
-           * Name of the product. At most 100 characters long.
+           * The product name of the line item. Required for L3 rates. At most 1024 characters long.
+           *
+           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
            */
           product_name: string;
 
           /**
-           * Number of items of the product. Positive integer.
+           * The quantity of items. Required for L3 rates. An integer greater than 0.
            */
           quantity: number;
 
@@ -10435,7 +16422,7 @@ declare module 'stripe' {
           tax?: LineItem.Tax;
 
           /**
-           * Cost of the product. Non-negative integer.
+           * The unit cost of the line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
            */
           unit_cost: number;
 
@@ -10529,7 +16516,9 @@ declare module 'stripe' {
 
           interface Tax {
             /**
-             * The total tax on an item. Non-negative integer.
+             * The total amount of tax on a single line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+             *
+             * This field is mutually exclusive with the `amount_details[tax][total_tax_amount]` field.
              */
             total_tax_amount: number;
           }
@@ -10537,24 +16526,26 @@ declare module 'stripe' {
 
         interface Shipping {
           /**
-           * Portion of the amount that is for shipping.
+           * If a physical good is being shipped, the cost of shipping represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than or equal to 0.
            */
           amount?: Stripe.Emptyable<number>;
 
           /**
-           * The postal code that represents the shipping source.
+           * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
            */
           from_postal_code?: Stripe.Emptyable<string>;
 
           /**
-           * The postal code that represents the shipping destination.
+           * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
            */
           to_postal_code?: Stripe.Emptyable<string>;
         }
 
         interface Tax {
           /**
-           * Total portion of the amount that is for tax.
+           * The total amount of tax on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
+           *
+           * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
            */
           total_tax_amount: number;
         }
@@ -10708,7 +16699,16 @@ declare module 'stripe' {
         car_rental?: PaymentDetails.CarRental;
 
         /**
-         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
+         * Car rental data for this PaymentIntent.
+         */
+        car_rental_data?: Stripe.Emptyable<
+          Array<PaymentDetails.CarRentalDatum>
+        >;
+
+        /**
+         * A unique value to identify the customer. This field is available only for card payments.
+         *
+         * This field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
          */
         customer_reference?: Stripe.Emptyable<string>;
 
@@ -10723,12 +16723,26 @@ declare module 'stripe' {
         flight?: PaymentDetails.Flight;
 
         /**
+         * Flight data for this PaymentIntent.
+         */
+        flight_data?: Stripe.Emptyable<Array<PaymentDetails.FlightDatum>>;
+
+        /**
          * Lodging reservation details for this PaymentIntent
          */
         lodging?: PaymentDetails.Lodging;
 
         /**
-         * A unique value assigned by the business to identify the transaction.
+         * Lodging data for this PaymentIntent.
+         */
+        lodging_data?: Stripe.Emptyable<Array<PaymentDetails.LodgingDatum>>;
+
+        /**
+         * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+         *
+         * Required when the Payment Method Types array contains `card`, including when [automatic_payment_methods.enabled](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-automatic_payment_methods-enabled) is set to `true`.
+         *
+         * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
          */
         order_reference?: Stripe.Emptyable<string>;
 
@@ -10961,6 +16975,479 @@ declare module 'stripe' {
           type RateInterval = 'day' | 'month' | 'week';
         }
 
+        interface CarRentalDatum {
+          /**
+           * Affiliate (such as travel agency) details for the rental.
+           */
+          affiliate?: CarRentalDatum.Affiliate;
+
+          /**
+           * Booking confirmation number for the car rental.
+           */
+          booking_number?: string;
+
+          /**
+           * Name of the car rental company.
+           */
+          carrier_name?: string;
+
+          /**
+           * Customer service phone number for the car rental company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Number of days the car is being rented.
+           */
+          days_rented?: number;
+
+          /**
+           * Distance details for the rental.
+           */
+          distance?: CarRentalDatum.Distance;
+
+          /**
+           * List of drivers for the rental.
+           */
+          drivers?: Array<CarRentalDatum.Driver>;
+
+          /**
+           * Drop-off location details.
+           */
+          drop_off: CarRentalDatum.DropOff;
+
+          /**
+           * Insurance details for the rental.
+           */
+          insurances?: Array<CarRentalDatum.Insurance>;
+
+          /**
+           * Indicates if the customer was a no-show.
+           */
+          no_show_indicator?: boolean;
+
+          /**
+           * Pickup location details.
+           */
+          pickup: CarRentalDatum.Pickup;
+
+          /**
+           * Name of the person renting the vehicle.
+           */
+          renter_name?: string;
+
+          /**
+           * Total cost breakdown for the rental.
+           */
+          total: CarRentalDatum.Total;
+
+          /**
+           * Vehicle details for the rental.
+           */
+          vehicle?: CarRentalDatum.Vehicle;
+        }
+
+        namespace CarRentalDatum {
+          interface Affiliate {
+            /**
+             * Affiliate partner code.
+             */
+            code?: string;
+
+            /**
+             * Name of affiliate partner.
+             */
+            name?: string;
+          }
+
+          interface Distance {
+            /**
+             * Distance traveled.
+             */
+            amount: number;
+
+            /**
+             * Unit of measurement for the distance traveled. One of `miles` or `kilometers`.
+             */
+            unit: Distance.Unit;
+          }
+
+          namespace Distance {
+            type Unit = 'kilometers' | 'miles';
+          }
+
+          interface Driver {
+            /**
+             * Driver's date of birth.
+             */
+            date_of_birth?: Driver.DateOfBirth;
+
+            /**
+             * Driver's identification number.
+             */
+            driver_identification_number?: string;
+
+            /**
+             * Driver's tax number.
+             */
+            driver_tax_number?: string;
+
+            /**
+             * Driver's full name.
+             */
+            name: string;
+          }
+
+          namespace Driver {
+            interface DateOfBirth {
+              /**
+               * Day of birth (1-31).
+               */
+              day: number;
+
+              /**
+               * Month of birth (1-12).
+               */
+              month: number;
+
+              /**
+               * Year of birth (must be greater than 1900).
+               */
+              year: number;
+            }
+          }
+
+          interface DropOff {
+            /**
+             * Address of the rental location.
+             */
+            address: DropOff.Address;
+
+            /**
+             * Location name.
+             */
+            location_name?: string;
+
+            /**
+             * Timestamp for the location.
+             */
+            time: number;
+          }
+
+          namespace DropOff {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1, such as the street, PO Box, or company name.
+               */
+              line1: string;
+
+              /**
+               * Address line 2, such as the apartment, suite, unit, or building.
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
+
+          interface Insurance {
+            /**
+             * Amount of the insurance coverage in cents.
+             */
+            amount: number;
+
+            /**
+             * Currency of the insurance amount.
+             */
+            currency?: string;
+
+            /**
+             * Name of the insurance company.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance coverage.
+             */
+            insurance_type: Insurance.InsuranceType;
+          }
+
+          namespace Insurance {
+            type InsuranceType =
+              | 'liability_supplement'
+              | 'loss_damage_waiver'
+              | 'other'
+              | 'partial_damage_waiver'
+              | 'personal_accident'
+              | 'personal_effects';
+          }
+
+          interface Pickup {
+            /**
+             * Address of the rental location.
+             */
+            address: Pickup.Address;
+
+            /**
+             * Location name.
+             */
+            location_name?: string;
+
+            /**
+             * Timestamp for the location.
+             */
+            time: number;
+          }
+
+          namespace Pickup {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1, such as the street, PO Box, or company name.
+               */
+              line1: string;
+
+              /**
+               * Address line 2, such as the apartment, suite, unit, or building.
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+          }
+
+          interface Total {
+            /**
+             * Total amount in cents.
+             */
+            amount: number;
+
+            /**
+             * Currency of the amount.
+             */
+            currency?: string;
+
+            /**
+             * Discount details for the rental.
+             */
+            discounts?: Total.Discounts;
+
+            /**
+             * Additional charges for the rental.
+             */
+            extra_charges?: Array<Total.ExtraCharge>;
+
+            /**
+             * Rate per unit for the rental.
+             */
+            rate_per_unit?: number;
+
+            /**
+             * Unit of measurement for the rate.
+             */
+            rate_unit?: Total.RateUnit;
+
+            /**
+             * Tax breakdown for the rental.
+             */
+            tax?: Total.Tax;
+          }
+
+          namespace Total {
+            interface Discounts {
+              /**
+               * Corporate client discount code.
+               */
+              corporate_client_code?: string;
+
+              /**
+               * Coupon code applied to the rental.
+               */
+              coupon?: string;
+
+              /**
+               * Maximum number of free miles or kilometers included.
+               */
+              maximum_free_miles_or_kilometers?: number;
+            }
+
+            interface ExtraCharge {
+              /**
+               * Amount of the extra charge in cents.
+               */
+              amount: number;
+
+              /**
+               * Type of extra charge.
+               */
+              type: ExtraCharge.Type;
+            }
+
+            namespace ExtraCharge {
+              type Type =
+                | 'extra_mileage'
+                | 'gas'
+                | 'gps'
+                | 'late_charge'
+                | 'one_way_drop_off'
+                | 'other'
+                | 'parking'
+                | 'phone'
+                | 'regular_mileage'
+                | 'towing';
+            }
+
+            type RateUnit =
+              | 'days'
+              | 'kilometers'
+              | 'miles'
+              | 'months'
+              | 'weeks';
+
+            interface Tax {
+              /**
+               * Indicates if the transaction is tax exempt.
+               */
+              tax_exempt_indicator?: boolean;
+
+              /**
+               * Array of tax details.
+               */
+              taxes?: Array<Tax.Tax>;
+            }
+
+            namespace Tax {
+              interface Tax {
+                /**
+                 * Tax amount.
+                 */
+                amount?: number;
+
+                /**
+                 * Tax rate applied.
+                 */
+                rate?: number;
+
+                /**
+                 * Type of tax applied.
+                 */
+                type?: string;
+              }
+            }
+          }
+
+          interface Vehicle {
+            /**
+             * Make of the rental vehicle.
+             */
+            make?: string;
+
+            /**
+             * Model of the rental vehicle.
+             */
+            model?: string;
+
+            /**
+             * Odometer reading at the time of rental.
+             */
+            odometer?: number;
+
+            /**
+             * Type of the rental vehicle.
+             */
+            type?: Vehicle.Type;
+
+            /**
+             * Class of the rental vehicle.
+             */
+            vehicle_class?: Vehicle.VehicleClass;
+
+            /**
+             * Vehicle identification number (VIN).
+             */
+            vehicle_identification_number?: string;
+          }
+
+          namespace Vehicle {
+            type Type =
+              | 'cargo_van'
+              | 'compact'
+              | 'economy'
+              | 'exotic'
+              | 'exotic_suv'
+              | 'fifteen_passenger_van'
+              | 'four_wheel_drive'
+              | 'full_size'
+              | 'intermediate'
+              | 'large_suv'
+              | 'large_truck'
+              | 'luxury'
+              | 'medium_suv'
+              | 'midsize'
+              | 'mini'
+              | 'minivan'
+              | 'miscellaneous'
+              | 'moped'
+              | 'moving_van'
+              | 'premium'
+              | 'regular'
+              | 'small_medium_truck'
+              | 'small_suv'
+              | 'special'
+              | 'standard'
+              | 'stretch'
+              | 'subcompact'
+              | 'taxi'
+              | 'twelve_foot_truck'
+              | 'twelve_passenger_van'
+              | 'twenty_foot_truck'
+              | 'twenty_four_foot_truck'
+              | 'twenty_six_foot_truck'
+              | 'unique';
+
+            type VehicleClass =
+              | 'business'
+              | 'economy'
+              | 'first_class'
+              | 'premium_economy';
+          }
+        }
+
         interface EventDetails {
           /**
            * Indicates if the tickets are digitally checked when entering the venue.
@@ -11191,6 +17678,343 @@ declare module 'stripe' {
           }
         }
 
+        interface FlightDatum {
+          /**
+           * Affiliate details if applicable.
+           */
+          affiliate?: FlightDatum.Affiliate;
+
+          /**
+           * Reservation reference.
+           */
+          booking_number?: string;
+
+          /**
+           * Computerized reservation system used to make the reservation and purchase the ticket.
+           */
+          computerized_reservation_system?: string;
+
+          /**
+           * Ticket restrictions.
+           */
+          endorsements_and_restrictions?: string;
+
+          /**
+           * List of insurances.
+           */
+          insurances?: Array<FlightDatum.Insurance>;
+
+          /**
+           * List of passengers.
+           */
+          passengers?: Array<FlightDatum.Passenger>;
+
+          /**
+           * List of flight segments.
+           */
+          segments: Array<FlightDatum.Segment>;
+
+          /**
+           * Electronic ticket indicator.
+           */
+          ticket_electronically_issued_indicator?: boolean;
+
+          /**
+           * Total cost breakdown.
+           */
+          total: FlightDatum.Total;
+
+          /**
+           * Type of flight transaction.
+           */
+          transaction_type?: FlightDatum.TransactionType;
+        }
+
+        namespace FlightDatum {
+          interface Affiliate {
+            /**
+             * Affiliate partner code.
+             */
+            code?: string;
+
+            /**
+             * Name of affiliate partner.
+             */
+            name?: string;
+
+            /**
+             * Code provided by the company to a travel agent authorizing ticket issuance.
+             */
+            travel_authorization_code?: string;
+          }
+
+          interface Insurance {
+            /**
+             * Insurance cost.
+             */
+            amount: number;
+
+            /**
+             * Insurance currency.
+             */
+            currency?: string;
+
+            /**
+             * Insurance company name.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance.
+             */
+            insurance_type: Insurance.InsuranceType;
+          }
+
+          namespace Insurance {
+            type InsuranceType =
+              | 'baggage'
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+
+          interface Passenger {
+            /**
+             * Passenger's full name.
+             */
+            name: string;
+          }
+
+          interface Segment {
+            /**
+             * Segment fare amount.
+             */
+            amount?: number;
+
+            /**
+             * Arrival details.
+             */
+            arrival: Segment.Arrival;
+
+            /**
+             * Airline carrier code.
+             */
+            carrier_code: string;
+
+            /**
+             * Carrier name.
+             */
+            carrier_name?: string;
+
+            /**
+             * Segment currency.
+             */
+            currency?: string;
+
+            /**
+             * Departure details.
+             */
+            departure: Segment.Departure;
+
+            /**
+             * Exchange ticket number.
+             */
+            exchange_ticket_number?: string;
+
+            /**
+             * Fare basis code.
+             */
+            fare_basis_code?: string;
+
+            /**
+             * Additional fees.
+             */
+            fees?: number;
+
+            /**
+             * Flight number.
+             */
+            flight_number?: string;
+
+            /**
+             * Stopover indicator.
+             */
+            is_stop_over_indicator?: boolean;
+
+            /**
+             * Refundable ticket indicator.
+             */
+            refundable?: boolean;
+
+            /**
+             * Class of service.
+             */
+            service_class: Segment.ServiceClass;
+
+            /**
+             * Tax amount for segment.
+             */
+            tax_amount?: number;
+
+            /**
+             * Ticket number.
+             */
+            ticket_number?: string;
+          }
+
+          namespace Segment {
+            interface Arrival {
+              /**
+               * Arrival airport IATA code.
+               */
+              airport: string;
+
+              /**
+               * Arrival date/time.
+               */
+              arrives_at?: number;
+
+              /**
+               * Arrival city.
+               */
+              city?: string;
+
+              /**
+               * Arrival country.
+               */
+              country?: string;
+            }
+
+            interface Departure {
+              /**
+               * Departure airport IATA code.
+               */
+              airport: string;
+
+              /**
+               * Departure city.
+               */
+              city?: string;
+
+              /**
+               * Departure country.
+               */
+              country?: string;
+
+              /**
+               * Departure date/time.
+               */
+              departs_at: number;
+            }
+
+            type ServiceClass =
+              | 'business'
+              | 'economy'
+              | 'first_class'
+              | 'premium_economy';
+          }
+
+          interface Total {
+            /**
+             * Total flight amount.
+             */
+            amount: number;
+
+            /**
+             * Reason for credit.
+             */
+            credit_reason?: Total.CreditReason;
+
+            /**
+             * Total currency.
+             */
+            currency?: string;
+
+            /**
+             * Discount details.
+             */
+            discounts?: Total.Discounts;
+
+            /**
+             * Additional charges.
+             */
+            extra_charges?: Array<Total.ExtraCharge>;
+
+            /**
+             * Tax breakdown.
+             */
+            tax?: Total.Tax;
+          }
+
+          namespace Total {
+            type CreditReason =
+              | 'other'
+              | 'partial_ticket_refund'
+              | 'passenger_transport_ancillary_cancellation'
+              | 'ticket_and_ancillary_cancellation'
+              | 'ticket_cancellation';
+
+            interface Discounts {
+              /**
+               * Corporate client discount code.
+               */
+              corporate_client_code?: string;
+            }
+
+            interface ExtraCharge {
+              /**
+               * Amount of additional charges.
+               */
+              amount?: number;
+
+              /**
+               * Type of additional charges.
+               */
+              type?: ExtraCharge.Type;
+            }
+
+            namespace ExtraCharge {
+              type Type =
+                | 'additional_fees'
+                | 'ancillary_service_charges'
+                | 'exchange_fee';
+            }
+
+            interface Tax {
+              /**
+               * Array of tax details.
+               */
+              taxes?: Array<Tax.Tax>;
+            }
+
+            namespace Tax {
+              interface Tax {
+                /**
+                 * Tax amount.
+                 */
+                amount?: number;
+
+                /**
+                 * Tax rate.
+                 */
+                rate?: number;
+
+                /**
+                 * Type of tax.
+                 */
+                type?: string;
+              }
+            }
+          }
+
+          type TransactionType =
+            | 'exchange_ticket'
+            | 'miscellaneous'
+            | 'refund'
+            | 'ticket_purchase';
+        }
+
         interface Lodging {
           /**
            * The lodging location's address.
@@ -11354,6 +18178,360 @@ declare module 'stripe' {
              * Full name of the person or entity on the lodging reservation.
              */
             name: string;
+          }
+        }
+
+        interface LodgingDatum {
+          /**
+           * Accommodation details for the lodging.
+           */
+          accommodation?: LodgingDatum.Accommodation;
+
+          /**
+           * Affiliate details if applicable.
+           */
+          affiliate?: LodgingDatum.Affiliate;
+
+          /**
+           * Booking confirmation number for the lodging.
+           */
+          booking_number?: string;
+
+          /**
+           * Check-in date.
+           */
+          checkin_at: number;
+
+          /**
+           * Check-out date.
+           */
+          checkout_at: number;
+
+          /**
+           * Customer service phone number for the lodging company.
+           */
+          customer_service_phone_number?: string;
+
+          /**
+           * Whether the lodging is compliant with any hotel fire safety regulations.
+           */
+          fire_safety_act_compliance_indicator?: boolean;
+
+          /**
+           * List of guests for the lodging.
+           */
+          guests?: Array<LodgingDatum.Guest>;
+
+          /**
+           * Host details for the lodging.
+           */
+          host?: LodgingDatum.Host;
+
+          /**
+           * List of insurances for the lodging.
+           */
+          insurances?: Array<LodgingDatum.Insurance>;
+
+          /**
+           * Whether the renter is a no-show.
+           */
+          no_show_indicator?: boolean;
+
+          /**
+           * Renter ID number for the lodging.
+           */
+          renter_id_number?: string;
+
+          /**
+           * Renter name for the lodging.
+           */
+          renter_name?: string;
+
+          /**
+           * Total details for the lodging.
+           */
+          total: LodgingDatum.Total;
+        }
+
+        namespace LodgingDatum {
+          interface Accommodation {
+            /**
+             * Type of accommodation.
+             */
+            accommodation_type?: Accommodation.AccommodationType;
+
+            /**
+             * Bed type.
+             */
+            bed_type?: string;
+
+            /**
+             * Daily accommodation rate in cents.
+             */
+            daily_rate_amount?: number;
+
+            /**
+             * Number of nights.
+             */
+            nights?: number;
+
+            /**
+             * Number of rooms, cabanas, apartments, and so on.
+             */
+            number_of_rooms?: number;
+
+            /**
+             * Rate type.
+             */
+            rate_type?: string;
+
+            /**
+             * Whether smoking is allowed.
+             */
+            smoking_indicator?: boolean;
+          }
+
+          namespace Accommodation {
+            type AccommodationType =
+              | 'apartment'
+              | 'cabana'
+              | 'house'
+              | 'penthouse'
+              | 'room'
+              | 'standard'
+              | 'suite'
+              | 'villa';
+          }
+
+          interface Affiliate {
+            /**
+             * Affiliate partner code.
+             */
+            code?: string;
+
+            /**
+             * Affiliate partner name.
+             */
+            name?: string;
+          }
+
+          interface Guest {
+            /**
+             * Guest's full name.
+             */
+            name: string;
+          }
+
+          interface Host {
+            /**
+             * Address of the host.
+             */
+            address?: Host.Address;
+
+            /**
+             * Host's country of domicile.
+             */
+            country_of_domicile?: string;
+
+            /**
+             * Reference number for the host.
+             */
+            host_reference?: string;
+
+            /**
+             * Type of host.
+             */
+            host_type?: Host.HostType;
+
+            /**
+             * Name of the lodging property or host.
+             */
+            name?: string;
+
+            /**
+             * Total number of reservations for the host.
+             */
+            number_of_reservations?: number;
+
+            /**
+             * Property phone number.
+             */
+            property_phone_number?: string;
+
+            /**
+             * Host's registration date.
+             */
+            registered_at?: number;
+          }
+
+          namespace Host {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1, such as the street, PO Box, or company name.
+               */
+              line1: string;
+
+              /**
+               * Address line 2, such as the apartment, suite, unit, or building.
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string;
+
+              /**
+               * State, county, province, or region.
+               */
+              state?: string;
+            }
+
+            type HostType = 'hostel' | 'hotel' | 'owner' | 'rental_agency';
+          }
+
+          interface Insurance {
+            /**
+             * Price of the insurance coverage in cents.
+             */
+            amount: number;
+
+            /**
+             * Currency of the insurance amount.
+             */
+            currency?: string;
+
+            /**
+             * Name of the insurance company.
+             */
+            insurance_company_name?: string;
+
+            /**
+             * Type of insurance coverage.
+             */
+            insurance_type: Insurance.InsuranceType;
+          }
+
+          namespace Insurance {
+            type InsuranceType =
+              | 'bankruptcy'
+              | 'cancelation'
+              | 'emergency'
+              | 'medical';
+          }
+
+          interface Total {
+            /**
+             * Total price of the lodging reservation in cents.
+             */
+            amount: number;
+
+            /**
+             * Cash advances in cents.
+             */
+            cash_advances?: number;
+
+            /**
+             * Currency of the total amount.
+             */
+            currency?: string;
+
+            /**
+             * Discount details for the lodging.
+             */
+            discounts?: Total.Discounts;
+
+            /**
+             * Additional charges for the lodging.
+             */
+            extra_charges?: Array<Total.ExtraCharge>;
+
+            /**
+             * Prepaid amount in cents.
+             */
+            prepaid_amount?: number;
+
+            /**
+             * Tax breakdown for the lodging reservation.
+             */
+            tax?: Total.Tax;
+          }
+
+          namespace Total {
+            interface Discounts {
+              /**
+               * Corporate client discount code.
+               */
+              corporate_client_code?: string;
+
+              /**
+               * Coupon code.
+               */
+              coupon?: string;
+            }
+
+            interface ExtraCharge {
+              /**
+               * Amount of the extra charge in cents.
+               */
+              amount?: number;
+
+              /**
+               * Type of extra charge.
+               */
+              type?: ExtraCharge.Type;
+            }
+
+            namespace ExtraCharge {
+              type Type =
+                | 'gift_shop'
+                | 'laundry'
+                | 'mini_bar'
+                | 'other'
+                | 'phone'
+                | 'restaurant';
+            }
+
+            interface Tax {
+              /**
+               * Indicates whether the transaction is tax exempt.
+               */
+              tax_exempt_indicator?: boolean;
+
+              /**
+               * Tax details.
+               */
+              taxes?: Array<Tax.Tax>;
+            }
+
+            namespace Tax {
+              interface Tax {
+                /**
+                 * Tax amount in cents.
+                 */
+                amount?: number;
+
+                /**
+                 * Tax rate.
+                 */
+                rate?: number;
+
+                /**
+                 * Type of tax applied.
+                 */
+                type?: string;
+              }
+            }
           }
         }
 
@@ -11936,6 +19114,7 @@ declare module 'stripe' {
             | 'asn_bank'
             | 'bunq'
             | 'buut'
+            | 'finom'
             | 'handelsbanken'
             | 'ing'
             | 'knab'
@@ -13255,6 +20434,15 @@ declare module 'stripe' {
 
         interface CardPresent {
           /**
+           * Controls when the funds are captured from the customer's account.
+           *
+           * If provided, this parameter overrides the behavior of the top-level [capture_method](https://docs.stripe.com/api/payment_intents/update#update_payment_intent-capture_method) for this payment method type when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter unsets the stored value for this payment method type.
+           */
+          capture_method?: CardPresent.CaptureMethod;
+
+          /**
            * Request ability to capture this payment beyond the standard [authorization validity window](https://stripe.com/docs/terminal/features/extended-authorizations#authorization-validity)
            */
           request_extended_authorization?: boolean;
@@ -13271,6 +20459,8 @@ declare module 'stripe' {
         }
 
         namespace CardPresent {
+          type CaptureMethod = 'manual' | 'manual_preferred';
+
           interface Routing {
             /**
              * Routing requested priority
@@ -13585,6 +20775,13 @@ declare module 'stripe' {
            * Subscription details if setting up or charging a subscription.
            */
           subscriptions?: Stripe.Emptyable<Array<Klarna.Subscription>>;
+
+          /**
+           * Supplementary Purchase Data for the corresponding Klarna payment
+           */
+          supplementary_purchase_data?: Stripe.Emptyable<
+            Klarna.SupplementaryPurchaseData
+          >;
         }
 
         namespace Klarna {
@@ -13709,6 +20906,1182 @@ declare module 'stripe' {
                * The date of the next charge for the subscription in YYYY-MM-DD format.
                */
               date: string;
+            }
+          }
+
+          interface SupplementaryPurchaseData {
+            /**
+             * Supplementary bus reservation details.
+             */
+            bus_reservation_details?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.BusReservationDetail>
+            >;
+
+            /**
+             * Supplementary event reservation details.
+             */
+            event_reservation_details?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.EventReservationDetail>
+            >;
+
+            /**
+             * Supplementary ferry reservation details.
+             */
+            ferry_reservation_details?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.FerryReservationDetail>
+            >;
+
+            /**
+             * Supplementary insurance details.
+             */
+            insurances?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.Insurance>
+            >;
+
+            /**
+             * Supplementary marketplace seller details.
+             */
+            marketplace_sellers?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.MarketplaceSeller>
+            >;
+
+            /**
+             * Supplementary round trip reservation details.
+             */
+            round_trip_reservation_details?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.RoundTripReservationDetail>
+            >;
+
+            /**
+             * Supplementary train reservation details.
+             */
+            train_reservation_details?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.TrainReservationDetail>
+            >;
+
+            /**
+             * Voucher details, such as a gift card or discount code.
+             */
+            vouchers?: Stripe.Emptyable<
+              Array<SupplementaryPurchaseData.Voucher>
+            >;
+          }
+
+          namespace SupplementaryPurchaseData {
+            interface BusReservationDetail {
+              /**
+               * Name of associated or partner company for the service.
+               */
+              affiliate_name?: string;
+
+              /**
+               * Arrival details.
+               */
+              arrival?: BusReservationDetail.Arrival;
+
+              /**
+               * Name of transportation company.
+               */
+              carrier_name?: string;
+
+              /**
+               * Currency.
+               */
+              currency?: string;
+
+              /**
+               * Departure details.
+               */
+              departure?: BusReservationDetail.Departure;
+
+              /**
+               * List of insurances for this reservation.
+               */
+              insurances?: Array<BusReservationDetail.Insurance>;
+
+              /**
+               * List of passengers that this reservation applies to.
+               */
+              passengers?: Array<BusReservationDetail.Passenger>;
+
+              /**
+               * Price in cents.
+               */
+              price?: number;
+
+              /**
+               * Ticket class.
+               */
+              ticket_class?: BusReservationDetail.TicketClass;
+            }
+
+            namespace BusReservationDetail {
+              interface Arrival {
+                /**
+                 * Address of the arrival location.
+                 */
+                address?: Arrival.Address;
+
+                /**
+                 * Identifier name or reference for the arrival location.
+                 */
+                arrival_location?: string;
+              }
+
+              namespace Arrival {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Departure {
+                /**
+                 * Address of the departure location.
+                 */
+                address?: Departure.Address;
+
+                /**
+                 * Timestamp of departure.
+                 */
+                departs_at?: number;
+
+                /**
+                 * Identifier name or reference for the origin location.
+                 */
+                departure_location?: string;
+              }
+
+              namespace Departure {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Insurance {
+                /**
+                 * Insurance currency.
+                 */
+                currency?: string;
+
+                /**
+                 * Name of the company providing the insurance.
+                 */
+                insurance_company_name?: string;
+
+                /**
+                 * Type of insurance.
+                 */
+                insurance_type?: Insurance.InsuranceType;
+
+                /**
+                 * Price of insurance in cents.
+                 */
+                price?: number;
+              }
+
+              namespace Insurance {
+                type InsuranceType =
+                  | 'baggage'
+                  | 'bankruptcy'
+                  | 'cancelation'
+                  | 'emergency'
+                  | 'medical';
+              }
+
+              interface Passenger {
+                /**
+                 * The family name of the person.
+                 */
+                family_name?: string;
+
+                /**
+                 * The given name of the person.
+                 */
+                given_name?: string;
+              }
+
+              type TicketClass =
+                | 'business'
+                | 'economy'
+                | 'first_class'
+                | 'premium_economy';
+            }
+
+            interface EventReservationDetail {
+              /**
+               * Indicates if the tickets are digitally checked when entering the venue.
+               */
+              access_controlled_venue?: boolean;
+
+              /**
+               * Address of the event.
+               */
+              address?: EventReservationDetail.Address;
+
+              /**
+               * Name of associated or partner company for the service.
+               */
+              affiliate_name?: string;
+
+              /**
+               * End timestamp of the event.
+               */
+              ends_at?: number;
+
+              /**
+               * Company selling the ticket.
+               */
+              event_company_name?: string;
+
+              /**
+               * Name of the event.
+               */
+              event_name?: string;
+
+              /**
+               * Type of the event.
+               */
+              event_type?: EventReservationDetail.EventType;
+
+              /**
+               * List of insurances for this event.
+               */
+              insurances?: Array<EventReservationDetail.Insurance>;
+
+              /**
+               * Start timestamp of the event.
+               */
+              starts_at?: number;
+
+              /**
+               * Name of the venue where the event takes place.
+               */
+              venue_name?: string;
+            }
+
+            namespace EventReservationDetail {
+              interface Address {
+                /**
+                 * The city or town.
+                 */
+                city?: string;
+
+                /**
+                 * The country in ISO 3166-1 alpha-2 format.
+                 */
+                country?: string;
+
+                /**
+                 * The postal code formatted according to country.
+                 */
+                postal_code?: string;
+
+                /**
+                 * The state, county, province, or region formatted according to country.
+                 */
+                region?: string;
+
+                /**
+                 * Line 1 of the street address.
+                 */
+                street_address?: string;
+
+                /**
+                 * Line 2 of the street address.
+                 */
+                street_address2?: string;
+              }
+
+              type EventType =
+                | 'concert'
+                | 'conference'
+                | 'digital_education'
+                | 'expo'
+                | 'festival'
+                | 'in_person_education'
+                | 'sport'
+                | 'tour';
+
+              interface Insurance {
+                /**
+                 * Insurance currency.
+                 */
+                currency?: string;
+
+                /**
+                 * Name of the company providing the insurance.
+                 */
+                insurance_company_name?: string;
+
+                /**
+                 * Type of insurance.
+                 */
+                insurance_type?: Insurance.InsuranceType;
+
+                /**
+                 * Price of insurance in cents.
+                 */
+                price?: number;
+              }
+
+              namespace Insurance {
+                type InsuranceType =
+                  | 'bankruptcy'
+                  | 'cancelation'
+                  | 'emergency'
+                  | 'medical';
+              }
+            }
+
+            interface FerryReservationDetail {
+              /**
+               * Name of associated or partner company for the service.
+               */
+              affiliate_name?: string;
+
+              /**
+               * Arrival details.
+               */
+              arrival?: FerryReservationDetail.Arrival;
+
+              /**
+               * Name of transportation company.
+               */
+              carrier_name?: string;
+
+              /**
+               * Currency.
+               */
+              currency?: string;
+
+              /**
+               * Departure details.
+               */
+              departure?: FerryReservationDetail.Departure;
+
+              /**
+               * List of insurances for this reservation.
+               */
+              insurances?: Array<FerryReservationDetail.Insurance>;
+
+              /**
+               * List of passengers that this reservation applies to.
+               */
+              passengers?: Array<FerryReservationDetail.Passenger>;
+
+              /**
+               * Price in cents.
+               */
+              price?: number;
+
+              /**
+               * Ticket class.
+               */
+              ticket_class?: FerryReservationDetail.TicketClass;
+            }
+
+            namespace FerryReservationDetail {
+              interface Arrival {
+                /**
+                 * Address of the arrival location.
+                 */
+                address?: Arrival.Address;
+
+                /**
+                 * Identifier name or reference for the arrival location.
+                 */
+                arrival_location?: string;
+              }
+
+              namespace Arrival {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Departure {
+                /**
+                 * Address of the departure location.
+                 */
+                address?: Departure.Address;
+
+                /**
+                 * Timestamp of departure.
+                 */
+                departs_at?: number;
+
+                /**
+                 * Identifier name or reference for the origin location.
+                 */
+                departure_location?: string;
+              }
+
+              namespace Departure {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Insurance {
+                /**
+                 * Insurance currency.
+                 */
+                currency?: string;
+
+                /**
+                 * Name of the company providing the insurance.
+                 */
+                insurance_company_name?: string;
+
+                /**
+                 * Type of insurance.
+                 */
+                insurance_type?: Insurance.InsuranceType;
+
+                /**
+                 * Price of insurance in cents.
+                 */
+                price?: number;
+              }
+
+              namespace Insurance {
+                type InsuranceType =
+                  | 'baggage'
+                  | 'bankruptcy'
+                  | 'cancelation'
+                  | 'emergency'
+                  | 'medical';
+              }
+
+              interface Passenger {
+                /**
+                 * The family name of the person.
+                 */
+                family_name?: string;
+
+                /**
+                 * The given name of the person.
+                 */
+                given_name?: string;
+              }
+
+              type TicketClass =
+                | 'business'
+                | 'economy'
+                | 'first_class'
+                | 'premium_economy';
+            }
+
+            interface Insurance {
+              /**
+               * Insurance currency.
+               */
+              currency?: string;
+
+              /**
+               * Name of the company providing the insurance.
+               */
+              insurance_company_name?: string;
+
+              /**
+               * Type of insurance
+               */
+              insurance_type?: Insurance.InsuranceType;
+
+              /**
+               * Price of insurance in cents.
+               */
+              price?: number;
+            }
+
+            namespace Insurance {
+              type InsuranceType =
+                | 'bankruptcy'
+                | 'cancelation'
+                | 'emergency'
+                | 'medical';
+            }
+
+            interface MarketplaceSeller {
+              /**
+               * The references to line items for purchases with multiple associated sub-sellers.
+               */
+              line_item_references?: Array<string>;
+
+              /**
+               * The address of the selling or delivering merchant.
+               */
+              marketplace_seller_address?: MarketplaceSeller.MarketplaceSellerAddress;
+
+              /**
+               * The name of the marketplace seller.
+               */
+              marketplace_seller_name?: string;
+
+              /**
+               * The unique identifier for the marketplace seller.
+               */
+              marketplace_seller_reference?: string;
+
+              /**
+               * The number of transactions the sub-seller completed in the last 12 months.
+               */
+              number_of_transactions?: number;
+
+              /**
+               * The category of the product.
+               */
+              product_category?: MarketplaceSeller.ProductCategory;
+
+              /**
+               * The date when the seller's account with the marketplace was last logged in.
+               */
+              seller_last_login_at?: number;
+
+              /**
+               * The current rating of the marketplace seller. If the marketplace uses numeric ranking, map these to the enum values.
+               */
+              seller_rating?: MarketplaceSeller.SellerRating;
+
+              /**
+               * The date when the seller's account with the marketplace was created.
+               */
+              seller_registered_at?: number;
+
+              /**
+               * The date when the seller's account with the marketplace was last updated.
+               */
+              seller_updated_at?: number;
+
+              /**
+               * The references to shipping addresses for purchases with multiple associated sub-sellers.
+               */
+              shipping_references?: Array<string>;
+
+              /**
+               * The accumulated amount of sales transactions made by the sub-merchant or sub-seller within the past 12 months in the payment currency. These transactions are in minor currency units.
+               */
+              volume_of_transactions?: number;
+            }
+
+            namespace MarketplaceSeller {
+              interface MarketplaceSellerAddress {
+                /**
+                 * The city or town.
+                 */
+                city?: string;
+
+                /**
+                 * The country in ISO 3166-1 alpha-2 format.
+                 */
+                country?: string;
+
+                /**
+                 * The postal code formatted according to country.
+                 */
+                postal_code?: string;
+
+                /**
+                 * The state, county, province, or region formatted according to country.
+                 */
+                region?: string;
+
+                /**
+                 * Line 1 of the street address.
+                 */
+                street_address?: string;
+
+                /**
+                 * Line 2 of the street address.
+                 */
+                street_address2?: string;
+              }
+
+              type ProductCategory =
+                | 'accessories'
+                | 'appliances'
+                | 'apps_and_games'
+                | 'arts_crafts_and_sewing'
+                | 'automotive'
+                | 'baby'
+                | 'baby_clothing'
+                | 'bags_and_purses'
+                | 'beauty'
+                | 'books'
+                | 'cds_and_vinyl'
+                | 'cell_phones_and_accessories'
+                | 'collectibles_and_fine_arts'
+                | 'digital_music'
+                | 'electronics'
+                | 'grocery_and_gourmet_food'
+                | 'handmade'
+                | 'health_and_personal_care'
+                | 'home_and_kitchen'
+                | 'industrial_and_scientific'
+                | 'luggage_and_travel_gear'
+                | 'magazine_subscriptions'
+                | 'men_clothing'
+                | 'musical_instruments'
+                | 'office_products'
+                | 'patio_lawn_and_garden'
+                | 'pet_supplies'
+                | 'shoes'
+                | 'software'
+                | 'sports_and_outdoors'
+                | 'tools_and_home_improvement'
+                | 'toys_and_games'
+                | 'video_games'
+                | 'women_clothing';
+
+              type SellerRating =
+                | 'high'
+                | 'low'
+                | 'medium'
+                | 'very_high'
+                | 'very_low';
+            }
+
+            interface RoundTripReservationDetail {
+              /**
+               * Name of associated or partner company for the service.
+               */
+              affiliate_name?: string;
+
+              /**
+               * Arrival details.
+               */
+              arrival?: RoundTripReservationDetail.Arrival;
+
+              /**
+               * Name of transportation company.
+               */
+              carrier_name?: string;
+
+              /**
+               * Currency.
+               */
+              currency?: string;
+
+              /**
+               * Departure details.
+               */
+              departure?: RoundTripReservationDetail.Departure;
+
+              /**
+               * List of insurances for this reservation.
+               */
+              insurances?: Array<RoundTripReservationDetail.Insurance>;
+
+              /**
+               * List of passengers that this reservation applies to.
+               */
+              passengers?: Array<RoundTripReservationDetail.Passenger>;
+
+              /**
+               * Price in cents.
+               */
+              price?: number;
+
+              /**
+               * Ticket class.
+               */
+              ticket_class?: RoundTripReservationDetail.TicketClass;
+            }
+
+            namespace RoundTripReservationDetail {
+              interface Arrival {
+                /**
+                 * Address of the arrival location.
+                 */
+                address?: Arrival.Address;
+
+                /**
+                 * Identifier name or reference for the arrival location.
+                 */
+                arrival_location?: string;
+              }
+
+              namespace Arrival {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Departure {
+                /**
+                 * Address of the departure location.
+                 */
+                address?: Departure.Address;
+
+                /**
+                 * Timestamp of departure.
+                 */
+                departs_at?: number;
+
+                /**
+                 * Identifier name or reference for the origin location.
+                 */
+                departure_location?: string;
+              }
+
+              namespace Departure {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Insurance {
+                /**
+                 * Insurance currency.
+                 */
+                currency?: string;
+
+                /**
+                 * Name of the company providing the insurance.
+                 */
+                insurance_company_name?: string;
+
+                /**
+                 * Type of insurance.
+                 */
+                insurance_type?: Insurance.InsuranceType;
+
+                /**
+                 * Price of insurance in cents.
+                 */
+                price?: number;
+              }
+
+              namespace Insurance {
+                type InsuranceType =
+                  | 'baggage'
+                  | 'bankruptcy'
+                  | 'cancelation'
+                  | 'emergency'
+                  | 'medical';
+              }
+
+              interface Passenger {
+                /**
+                 * The family name of the person.
+                 */
+                family_name?: string;
+
+                /**
+                 * The given name of the person.
+                 */
+                given_name?: string;
+              }
+
+              type TicketClass =
+                | 'business'
+                | 'economy'
+                | 'first_class'
+                | 'premium_economy';
+            }
+
+            interface TrainReservationDetail {
+              /**
+               * Name of associated or partner company for the service.
+               */
+              affiliate_name?: string;
+
+              /**
+               * Arrival details.
+               */
+              arrival?: TrainReservationDetail.Arrival;
+
+              /**
+               * Name of transportation company.
+               */
+              carrier_name?: string;
+
+              /**
+               * Currency.
+               */
+              currency?: string;
+
+              /**
+               * Departure details.
+               */
+              departure?: TrainReservationDetail.Departure;
+
+              /**
+               * List of insurances for this reservation.
+               */
+              insurances?: Array<TrainReservationDetail.Insurance>;
+
+              /**
+               * List of passengers that this reservation applies to.
+               */
+              passengers?: Array<TrainReservationDetail.Passenger>;
+
+              /**
+               * Price in cents.
+               */
+              price?: number;
+
+              /**
+               * Ticket class.
+               */
+              ticket_class?: TrainReservationDetail.TicketClass;
+            }
+
+            namespace TrainReservationDetail {
+              interface Arrival {
+                /**
+                 * Address of the arrival location.
+                 */
+                address?: Arrival.Address;
+
+                /**
+                 * Identifier name or reference for the arrival location.
+                 */
+                arrival_location?: string;
+              }
+
+              namespace Arrival {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Departure {
+                /**
+                 * Address of the departure location.
+                 */
+                address?: Departure.Address;
+
+                /**
+                 * Timestamp of departure.
+                 */
+                departs_at?: number;
+
+                /**
+                 * Identifier name or reference for the origin location.
+                 */
+                departure_location?: string;
+              }
+
+              namespace Departure {
+                interface Address {
+                  /**
+                   * The city or town.
+                   */
+                  city?: string;
+
+                  /**
+                   * The country in ISO 3166-1 alpha-2 format.
+                   */
+                  country?: string;
+
+                  /**
+                   * The postal code formatted according to country.
+                   */
+                  postal_code?: string;
+
+                  /**
+                   * The state, county, province, or region formatted according to country.
+                   */
+                  region?: string;
+
+                  /**
+                   * Line 1 of the street address.
+                   */
+                  street_address?: string;
+
+                  /**
+                   * Line 2 of the street address.
+                   */
+                  street_address2?: string;
+                }
+              }
+
+              interface Insurance {
+                /**
+                 * Insurance currency.
+                 */
+                currency?: string;
+
+                /**
+                 * Name of the company providing the insurance.
+                 */
+                insurance_company_name?: string;
+
+                /**
+                 * Type of insurance.
+                 */
+                insurance_type?: Insurance.InsuranceType;
+
+                /**
+                 * Price of insurance in cents.
+                 */
+                price?: number;
+              }
+
+              namespace Insurance {
+                type InsuranceType =
+                  | 'baggage'
+                  | 'bankruptcy'
+                  | 'cancelation'
+                  | 'emergency'
+                  | 'medical';
+              }
+
+              interface Passenger {
+                /**
+                 * The family name of the person.
+                 */
+                family_name?: string;
+
+                /**
+                 * The given name of the person.
+                 */
+                given_name?: string;
+              }
+
+              type TicketClass =
+                | 'business'
+                | 'economy'
+                | 'first_class'
+                | 'premium_economy';
+            }
+
+            interface Voucher {
+              /**
+               * Name of associated or partner company for this voucher.
+               */
+              affiliate_name?: string;
+
+              /**
+               * The voucher validity end time.
+               */
+              ends_at?: number;
+
+              /**
+               * The voucher validity start time.
+               */
+              starts_at?: number;
+
+              /**
+               * The issuer or provider of this voucher.
+               */
+              voucher_company?: string;
+
+              /**
+               * The name or reference to identify the voucher.
+               */
+              voucher_name?: string;
+
+              /**
+               * The type of this voucher.
+               */
+              voucher_type?: Voucher.VoucherType;
+            }
+
+            namespace Voucher {
+              type VoucherType =
+                | 'digital_product'
+                | 'discount'
+                | 'gift_card'
+                | 'physical_product'
+                | 'services';
             }
           }
         }
@@ -14158,7 +22531,7 @@ declare module 'stripe' {
             amount?: number;
 
             /**
-             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
              */
             amount_type?: MandateOptions.AmountType;
 
@@ -14168,7 +22541,7 @@ declare module 'stripe' {
             end_date?: string;
 
             /**
-             * The periodicity at which payments will be collected.
+             * The periodicity at which payments will be collected. Defaults to `adhoc`.
              */
             payment_schedule?: MandateOptions.PaymentSchedule;
 
@@ -14178,7 +22551,7 @@ declare module 'stripe' {
             payments_per_period?: number;
 
             /**
-             * The purpose for which payments are made. Defaults to retail.
+             * The purpose for which payments are made. Has a default value based on your merchant category code.
              */
             purpose?: MandateOptions.Purpose;
           }
@@ -14883,7 +23256,9 @@ declare module 'stripe' {
     namespace PaymentIntentIncrementAuthorizationParams {
       interface AmountDetails {
         /**
-         * The total discount applied on the transaction.
+         * The total discount applied on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+         *
+         * This field is mutually exclusive with the `amount_details[line_items][#][discount_amount]` field.
          */
         discount_amount?: Stripe.Emptyable<number>;
 
@@ -14906,7 +23281,9 @@ declare module 'stripe' {
       namespace AmountDetails {
         interface LineItem {
           /**
-           * The amount an item was discounted for. Positive integer.
+           * The discount applied on this line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than 0.
+           *
+           * This field is mutually exclusive with the `amount_details[discount_amount]` field.
            */
           discount_amount?: number;
 
@@ -14916,17 +23293,19 @@ declare module 'stripe' {
           payment_method_options?: LineItem.PaymentMethodOptions;
 
           /**
-           * Unique identifier of the product. At most 12 characters long.
+           * The product code of the line item, such as an SKU. Required for L3 rates. At most 12 characters long.
            */
           product_code?: string;
 
           /**
-           * Name of the product. At most 100 characters long.
+           * The product name of the line item. Required for L3 rates. At most 1024 characters long.
+           *
+           * For Cards, this field is truncated to 26 alphanumeric characters before being sent to the card networks. For Paypal, this field is truncated to 127 characters.
            */
           product_name: string;
 
           /**
-           * Number of items of the product. Positive integer.
+           * The quantity of items. Required for L3 rates. An integer greater than 0.
            */
           quantity: number;
 
@@ -14936,7 +23315,7 @@ declare module 'stripe' {
           tax?: LineItem.Tax;
 
           /**
-           * Cost of the product. Non-negative integer.
+           * The unit cost of the line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
            */
           unit_cost: number;
 
@@ -15030,7 +23409,9 @@ declare module 'stripe' {
 
           interface Tax {
             /**
-             * The total tax on an item. Non-negative integer.
+             * The total amount of tax on a single line item represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L3 rates. An integer greater than or equal to 0.
+             *
+             * This field is mutually exclusive with the `amount_details[tax][total_tax_amount]` field.
              */
             total_tax_amount: number;
           }
@@ -15038,24 +23419,26 @@ declare module 'stripe' {
 
         interface Shipping {
           /**
-           * Portion of the amount that is for shipping.
+           * If a physical good is being shipped, the cost of shipping represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). An integer greater than or equal to 0.
            */
           amount?: Stripe.Emptyable<number>;
 
           /**
-           * The postal code that represents the shipping source.
+           * If a physical good is being shipped, the postal code of where it is being shipped from. At most 10 alphanumeric characters long, hyphens are allowed.
            */
           from_postal_code?: Stripe.Emptyable<string>;
 
           /**
-           * The postal code that represents the shipping destination.
+           * If a physical good is being shipped, the postal code of where it is being shipped to. At most 10 alphanumeric characters long, hyphens are allowed.
            */
           to_postal_code?: Stripe.Emptyable<string>;
         }
 
         interface Tax {
           /**
-           * Total portion of the amount that is for tax.
+           * The total amount of tax on the transaction represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Required for L2 rates. An integer greater than or equal to 0.
+           *
+           * This field is mutually exclusive with the `amount_details[line_items][#][tax][total_tax_amount]` field.
            */
           total_tax_amount: number;
         }
@@ -15088,12 +23471,18 @@ declare module 'stripe' {
 
       interface PaymentDetails {
         /**
-         * Some customers might be required by their company or organization to provide this information. If so, provide this value. Otherwise you can ignore this field.
+         * A unique value to identify the customer. This field is available only for card payments.
+         *
+         * This field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks.
          */
         customer_reference?: Stripe.Emptyable<string>;
 
         /**
-         * A unique value assigned by the business to identify the transaction.
+         * A unique value assigned by the business to identify the transaction. Required for L2 and L3 rates.
+         *
+         * Required when the Payment Method Types array contains `card`, including when [automatic_payment_methods.enabled](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-automatic_payment_methods-enabled) is set to `true`.
+         *
+         * For Cards, this field is truncated to 25 alphanumeric characters, excluding spaces, before being sent to card networks. For Klarna, this field is truncated to 255 characters and is visible to customers when they view the order in the Klarna app.
          */
         order_reference?: Stripe.Emptyable<string>;
       }

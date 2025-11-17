@@ -765,6 +765,11 @@ declare module 'stripe' {
         billing_mode: SubscriptionData.BillingMode;
 
         /**
+         * Billing schedules that will be applied to the subscription or subscription schedule created from this quote.
+         */
+        billing_schedules?: Array<SubscriptionData.BillingSchedule> | null;
+
+        /**
          * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
          */
         description: string | null;
@@ -790,6 +795,11 @@ declare module 'stripe' {
         metadata: Stripe.Metadata | null;
 
         /**
+         * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         */
+        phase_effective_at?: SubscriptionData.PhaseEffectiveAt | null;
+
+        /**
          * If specified, the invoicing for the given billing cycle iterations will be processed when the quote is accepted. Cannot be used with `effective_date`.
          */
         prebilling?: SubscriptionData.Prebilling | null;
@@ -803,16 +813,6 @@ declare module 'stripe' {
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days: number | null;
-
-        /**
-         * Billing schedules that will be applied to the subscription or subscription schedule created from this quote.
-         */
-        billing_schedules?: Array<SubscriptionData.BillingSchedule> | null;
-
-        /**
-         * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
-         */
-        phase_effective_at?: SubscriptionData.PhaseEffectiveAt | null;
       }
 
       namespace SubscriptionData {
@@ -849,7 +849,12 @@ declare module 'stripe' {
           applies_to: Array<BillingSchedule.AppliesTo> | null;
 
           /**
-           * Specifies the billing period.
+           * Specifies the start of the billing period.
+           */
+          bill_from?: BillingSchedule.BillFrom | null;
+
+          /**
+           * Specifies the end of billing period.
            */
           bill_until: BillingSchedule.BillUntil;
 
@@ -857,11 +862,6 @@ declare module 'stripe' {
            * Unique identifier for the billing schedule.
            */
           key: string;
-
-          /**
-           * Specifies the start of the billing period.
-           */
-          bill_from?: BillingSchedule.BillFrom | null;
         }
 
         namespace BillingSchedule {
@@ -952,6 +952,11 @@ declare module 'stripe' {
 
           interface BillUntil {
             /**
+             * Use an index to specify the position of an amendment to end prebilling with.
+             */
+            amendment_end?: BillUntil.AmendmentEnd | null;
+
+            /**
              * The timestamp the billing schedule will apply until.
              */
             computed_timestamp: number;
@@ -962,6 +967,11 @@ declare module 'stripe' {
             duration: BillUntil.Duration | null;
 
             /**
+             * Lets you bill the period ending at a particular Quote line.
+             */
+            line_ends_at?: BillUntil.LineEndsAt | null;
+
+            /**
              * If specified, the billing schedule will apply until the specified timestamp.
              */
             timestamp: number | null;
@@ -970,16 +980,6 @@ declare module 'stripe' {
              * Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
              */
             type: BillUntil.Type;
-
-            /**
-             * Use an index to specify the position of an amendment to end prebilling with.
-             */
-            amendment_end?: BillUntil.AmendmentEnd | null;
-
-            /**
-             * Lets you bill the period ending at a particular Quote line.
-             */
-            line_ends_at?: BillUntil.LineEndsAt | null;
           }
 
           namespace BillUntil {
@@ -1162,6 +1162,13 @@ declare module 'stripe' {
         billing_behavior?: SubscriptionDataOverride.BillingBehavior;
 
         /**
+         * Billing schedules that will be applied to the subscription or subscription schedule created from this quote.
+         */
+        billing_schedules?: Array<
+          SubscriptionDataOverride.BillingSchedule
+        > | null;
+
+        /**
          * The customer which this quote belongs to. A customer is required before finalizing the quote. Once specified, it cannot be changed.
          */
         customer: string | null;
@@ -1177,21 +1184,14 @@ declare module 'stripe' {
         end_behavior?: SubscriptionDataOverride.EndBehavior | null;
 
         /**
-         * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the quote is accepted.
-         */
-        proration_behavior?: SubscriptionDataOverride.ProrationBehavior | null;
-
-        /**
-         * Billing schedules that will be applied to the subscription or subscription schedule created from this quote.
-         */
-        billing_schedules?: Array<
-          SubscriptionDataOverride.BillingSchedule
-        > | null;
-
-        /**
          * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
          */
         phase_effective_at?: SubscriptionDataOverride.PhaseEffectiveAt | null;
+
+        /**
+         * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the quote is accepted.
+         */
+        proration_behavior?: SubscriptionDataOverride.ProrationBehavior | null;
       }
 
       namespace SubscriptionDataOverride {
@@ -1225,7 +1225,12 @@ declare module 'stripe' {
           applies_to: Array<BillingSchedule.AppliesTo> | null;
 
           /**
-           * Specifies the billing period.
+           * Specifies the start of the billing period.
+           */
+          bill_from?: BillingSchedule.BillFrom | null;
+
+          /**
+           * Specifies the end of billing period.
            */
           bill_until: BillingSchedule.BillUntil;
 
@@ -1233,11 +1238,6 @@ declare module 'stripe' {
            * Unique identifier for the billing schedule.
            */
           key: string;
-
-          /**
-           * Specifies the start of the billing period.
-           */
-          bill_from?: BillingSchedule.BillFrom | null;
         }
 
         namespace BillingSchedule {
@@ -1328,6 +1328,11 @@ declare module 'stripe' {
 
           interface BillUntil {
             /**
+             * Use an index to specify the position of an amendment to end prebilling with.
+             */
+            amendment_end?: BillUntil.AmendmentEnd | null;
+
+            /**
              * The timestamp the billing schedule will apply until.
              */
             computed_timestamp: number;
@@ -1338,6 +1343,11 @@ declare module 'stripe' {
             duration: BillUntil.Duration | null;
 
             /**
+             * Lets you bill the period ending at a particular Quote line.
+             */
+            line_ends_at?: BillUntil.LineEndsAt | null;
+
+            /**
              * If specified, the billing schedule will apply until the specified timestamp.
              */
             timestamp: number | null;
@@ -1346,16 +1356,6 @@ declare module 'stripe' {
              * Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
              */
             type: BillUntil.Type;
-
-            /**
-             * Use an index to specify the position of an amendment to end prebilling with.
-             */
-            amendment_end?: BillUntil.AmendmentEnd | null;
-
-            /**
-             * Lets you bill the period ending at a particular Quote line.
-             */
-            line_ends_at?: BillUntil.LineEndsAt | null;
           }
 
           namespace BillUntil {

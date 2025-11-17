@@ -266,14 +266,14 @@ declare module 'stripe' {
 
         interface OrderDetails {
           /**
-           * The URL to the order status.
-           */
-          order_status_url: string | null;
-
-          /**
            * The seller's order identifier.
            */
           order_id: string | null;
+
+          /**
+           * The URL to the order status.
+           */
+          order_status_url: string | null;
         }
 
         interface PaymentMethodPreview {
