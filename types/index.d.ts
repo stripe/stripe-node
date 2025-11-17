@@ -161,6 +161,8 @@
 ///<reference path='./V2/Billing/MeterEventsResource.d.ts' />
 ///<reference path='./V2/Billing/ProfilesResource.d.ts' />
 ///<reference path='./V2/Core/AccountLinksResource.d.ts' />
+///<reference path='./V2/Core/AccountTokensResource.d.ts' />
+///<reference path='./V2/Core/Accounts/PersonTokensResource.d.ts' />
 ///<reference path='./V2/Core/Accounts/PersonsResource.d.ts' />
 ///<reference path='./V2/Core/AccountsResource.d.ts' />
 ///<reference path='./V2/Core/EventDestinationsResource.d.ts' />
@@ -181,7 +183,6 @@
 ///<reference path='./V2/MoneyManagement/ReceivedDebitsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionEntriesResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionsResource.d.ts' />
-///<reference path='./V2/Payments/OffSessionPaymentsResource.d.ts' />
 ///<reference path='./V2/TestHelpers/FinancialAddressesResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
@@ -361,7 +362,9 @@
 ///<reference path='./V2/Billing/MeterEvents.d.ts' />
 ///<reference path='./V2/Billing/Profiles.d.ts' />
 ///<reference path='./V2/Core/AccountLinks.d.ts' />
+///<reference path='./V2/Core/AccountPersonTokens.d.ts' />
 ///<reference path='./V2/Core/AccountPersons.d.ts' />
+///<reference path='./V2/Core/AccountTokens.d.ts' />
 ///<reference path='./V2/Core/Accounts.d.ts' />
 ///<reference path='./V2/Core/EventDestinations.d.ts' />
 ///<reference path='./V2/Core/Events.d.ts' />
@@ -384,7 +387,6 @@
 ///<reference path='./V2/MoneyManagement/ReceivedDebits.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionEntries.d.ts' />
 ///<reference path='./V2/MoneyManagement/Transactions.d.ts' />
-///<reference path='./V2/Payments/OffSessionPayments.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
@@ -607,6 +609,7 @@ declare module 'stripe' {
       core: {
         accounts: Stripe.V2.Core.AccountsResource;
         accountLinks: Stripe.V2.Core.AccountLinksResource;
+        accountTokens: Stripe.V2.Core.AccountTokensResource;
         events: Stripe.V2.Core.EventsResource;
         eventDestinations: Stripe.V2.Core.EventDestinationsResource;
         vault: {
@@ -629,9 +632,6 @@ declare module 'stripe' {
         receivedDebits: Stripe.V2.MoneyManagement.ReceivedDebitsResource;
         transactions: Stripe.V2.MoneyManagement.TransactionsResource;
         transactionEntries: Stripe.V2.MoneyManagement.TransactionEntriesResource;
-      };
-      payment: {
-        offSessionPayments: Stripe.V2.Payments.OffSessionPaymentsResource;
       };
       testHelper: {
         financialAddresses: Stripe.V2.TestHelpers.FinancialAddressesResource;

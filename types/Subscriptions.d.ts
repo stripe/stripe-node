@@ -364,7 +364,7 @@ declare module 'stripe' {
         applies_to: Array<BillingSchedule.AppliesTo> | null;
 
         /**
-         * Specifies the billing period.
+         * Specifies the end of billing period.
          */
         bill_until: BillingSchedule.BillUntil;
 

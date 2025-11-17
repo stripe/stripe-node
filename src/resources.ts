@@ -2,6 +2,7 @@
 
 import {resourceNamespace} from './ResourceNamespace.js';
 import {AccountLinks as V2CoreAccountLinks} from './resources/V2/Core/AccountLinks.js';
+import {AccountTokens as V2CoreAccountTokens} from './resources/V2/Core/AccountTokens.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
 import {Accounts as V2CoreAccounts} from './resources/V2/Core/Accounts.js';
 import {ActiveEntitlements as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
@@ -57,7 +58,6 @@ import {MeterEvents as BillingMeterEvents} from './resources/Billing/MeterEvents
 import {MeterEvents as V2BillingMeterEvents} from './resources/V2/Billing/MeterEvents.js';
 import {MeterUsage as BillingAnalyticsMeterUsage} from './resources/Billing/Analytics/MeterUsage.js';
 import {Meters as BillingMeters} from './resources/Billing/Meters.js';
-import {OffSessionPayments as V2PaymentsOffSessionPayments} from './resources/V2/Payments/OffSessionPayments.js';
 import {OnboardingLinks as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
 import {Orders as ClimateOrders} from './resources/Climate/Orders.js';
 import {OutboundPaymentQuotes as V2MoneyManagementOutboundPaymentQuotes} from './resources/V2/MoneyManagement/OutboundPaymentQuotes.js';
@@ -312,6 +312,7 @@ export const V2 = resourceNamespace('v2', {
   }),
   Core: resourceNamespace('core', {
     AccountLinks: V2CoreAccountLinks,
+    AccountTokens: V2CoreAccountTokens,
     Accounts: V2CoreAccounts,
     EventDestinations: V2CoreEventDestinations,
     Events: V2CoreEvents,
@@ -335,9 +336,6 @@ export const V2 = resourceNamespace('v2', {
     ReceivedDebits: V2MoneyManagementReceivedDebits,
     TransactionEntries: V2MoneyManagementTransactionEntries,
     Transactions: V2MoneyManagementTransactions,
-  }),
-  Payment: resourceNamespace('payment', {
-    OffSessionPayments: V2PaymentsOffSessionPayments,
   }),
   TestHelper: resourceNamespace('testHelper', {
     FinancialAddresses: V2TestHelpersFinancialAddresses,

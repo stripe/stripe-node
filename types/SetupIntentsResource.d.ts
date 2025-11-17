@@ -778,6 +778,7 @@ declare module 'stripe' {
             | 'asn_bank'
             | 'bunq'
             | 'buut'
+            | 'finom'
             | 'handelsbanken'
             | 'ing'
             | 'knab'
@@ -1644,7 +1645,7 @@ declare module 'stripe' {
             amount?: number;
 
             /**
-             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
              */
             amount_type?: MandateOptions.AmountType;
 
@@ -1654,7 +1655,7 @@ declare module 'stripe' {
             end_date?: string;
 
             /**
-             * The periodicity at which payments will be collected.
+             * The periodicity at which payments will be collected. Defaults to `adhoc`.
              */
             payment_schedule?: MandateOptions.PaymentSchedule;
 
@@ -1664,7 +1665,7 @@ declare module 'stripe' {
             payments_per_period?: number;
 
             /**
-             * The purpose for which payments are made. Defaults to retail.
+             * The purpose for which payments are made. Has a default value based on your merchant category code.
              */
             purpose?: MandateOptions.Purpose;
 
@@ -2582,6 +2583,7 @@ declare module 'stripe' {
             | 'asn_bank'
             | 'bunq'
             | 'buut'
+            | 'finom'
             | 'handelsbanken'
             | 'ing'
             | 'knab'
@@ -3448,7 +3450,7 @@ declare module 'stripe' {
             amount?: number;
 
             /**
-             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
              */
             amount_type?: MandateOptions.AmountType;
 
@@ -3458,7 +3460,7 @@ declare module 'stripe' {
             end_date?: string;
 
             /**
-             * The periodicity at which payments will be collected.
+             * The periodicity at which payments will be collected. Defaults to `adhoc`.
              */
             payment_schedule?: MandateOptions.PaymentSchedule;
 
@@ -3468,7 +3470,7 @@ declare module 'stripe' {
             payments_per_period?: number;
 
             /**
-             * The purpose for which payments are made. Defaults to retail.
+             * The purpose for which payments are made. Has a default value based on your merchant category code.
              */
             purpose?: MandateOptions.Purpose;
 
@@ -4368,6 +4370,7 @@ declare module 'stripe' {
             | 'asn_bank'
             | 'bunq'
             | 'buut'
+            | 'finom'
             | 'handelsbanken'
             | 'ing'
             | 'knab'
@@ -5234,7 +5237,7 @@ declare module 'stripe' {
             amount?: number;
 
             /**
-             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively.
+             * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
              */
             amount_type?: MandateOptions.AmountType;
 
@@ -5244,7 +5247,7 @@ declare module 'stripe' {
             end_date?: string;
 
             /**
-             * The periodicity at which payments will be collected.
+             * The periodicity at which payments will be collected. Defaults to `adhoc`.
              */
             payment_schedule?: MandateOptions.PaymentSchedule;
 
@@ -5254,7 +5257,7 @@ declare module 'stripe' {
             payments_per_period?: number;
 
             /**
-             * The purpose for which payments are made. Defaults to retail.
+             * The purpose for which payments are made. Has a default value based on your merchant category code.
              */
             purpose?: MandateOptions.Purpose;
 

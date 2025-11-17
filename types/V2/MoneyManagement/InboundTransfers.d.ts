@@ -168,9 +168,13 @@ declare module 'stripe' {
                 | 'insufficient_funds';
             }
 
-            interface BankDebitProcessing {}
+            type BankDebitProcessing = {
+              [key: string]: unknown;
+            };
 
-            interface BankDebitQueued {}
+            type BankDebitQueued = {
+              [key: string]: unknown;
+            };
 
             interface BankDebitReturned {
               /**
@@ -188,7 +192,9 @@ declare module 'stripe' {
                 | 'insufficient_funds';
             }
 
-            interface BankDebitSucceeded {}
+            type BankDebitSucceeded = {
+              [key: string]: unknown;
+            };
 
             type Level = 'canonical' | 'debug';
 

@@ -24,6 +24,7 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreAccountPersonDeletedEvent
       | Stripe.Events.V2CoreAccountPersonUpdatedEvent
       | Stripe.Events.V2CoreEventDestinationPingEvent
+      | Stripe.Events.V2CoreHealthEventGenerationFailureResolvedEvent
       | Stripe.Events.V2MoneyManagementAdjustmentCreatedEvent
       | Stripe.Events.V2MoneyManagementFinancialAccountCreatedEvent
       | Stripe.Events.V2MoneyManagementFinancialAccountUpdatedEvent
@@ -58,14 +59,7 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementReceivedDebitSucceededEvent
       | Stripe.Events.V2MoneyManagementReceivedDebitUpdatedEvent
       | Stripe.Events.V2MoneyManagementTransactionCreatedEvent
-      | Stripe.Events.V2MoneyManagementTransactionUpdatedEvent
-      | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
-      | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
-      | Stripe.Events.V2PaymentsOffSessionPaymentCanceledEvent
-      | Stripe.Events.V2PaymentsOffSessionPaymentCreatedEvent
-      | Stripe.Events.V2PaymentsOffSessionPaymentFailedEvent
-      | Stripe.Events.V2PaymentsOffSessionPaymentRequiresCaptureEvent
-      | Stripe.Events.V2PaymentsOffSessionPaymentSucceededEvent;
+      | Stripe.Events.V2MoneyManagementTransactionUpdatedEvent;
 
     export type EventNotification =
       | Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification
@@ -89,6 +83,7 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreAccountPersonDeletedEventNotification
       | Stripe.Events.V2CoreAccountPersonUpdatedEventNotification
       | Stripe.Events.V2CoreEventDestinationPingEventNotification
+      | Stripe.Events.V2CoreHealthEventGenerationFailureResolvedEventNotification
       | Stripe.Events.V2MoneyManagementAdjustmentCreatedEventNotification
       | Stripe.Events.V2MoneyManagementFinancialAccountCreatedEventNotification
       | Stripe.Events.V2MoneyManagementFinancialAccountUpdatedEventNotification
@@ -123,14 +118,7 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementReceivedDebitSucceededEventNotification
       | Stripe.Events.V2MoneyManagementReceivedDebitUpdatedEventNotification
       | Stripe.Events.V2MoneyManagementTransactionCreatedEventNotification
-      | Stripe.Events.V2MoneyManagementTransactionUpdatedEventNotification
-      | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEventNotification
-      | Stripe.Events.V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEventNotification
-      | Stripe.Events.V2PaymentsOffSessionPaymentCanceledEventNotification
-      | Stripe.Events.V2PaymentsOffSessionPaymentCreatedEventNotification
-      | Stripe.Events.V2PaymentsOffSessionPaymentFailedEventNotification
-      | Stripe.Events.V2PaymentsOffSessionPaymentRequiresCaptureEventNotification
-      | Stripe.Events.V2PaymentsOffSessionPaymentSucceededEventNotification;
+      | Stripe.Events.V2MoneyManagementTransactionUpdatedEventNotification;
   }
 
   namespace Stripe.Events {
@@ -938,6 +926,88 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs when an event generation failure alert is resolved.
+     */
+    export interface V2CoreHealthEventGenerationFailureResolvedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.core.health.event_generation_failure.resolved';
+      // Retrieves data specific to this event.
+      data: V2CoreHealthEventGenerationFailureResolvedEvent.Data;
+    }
+    export interface V2CoreHealthEventGenerationFailureResolvedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.health.event_generation_failure.resolved';
+      fetchEvent(): Promise<V2CoreHealthEventGenerationFailureResolvedEvent>;
+    }
+
+    namespace V2CoreHealthEventGenerationFailureResolvedEvent {
+      export interface Data {
+        /**
+         * The alert ID.
+         */
+        alert_id: string;
+
+        /**
+         * The grouping key for the alert.
+         */
+        grouping_key: string;
+
+        /**
+         * The user impact.
+         */
+        impact: Data.Impact;
+
+        /**
+         * The time when the user experience has returned to expected levels.
+         */
+        resolved_at: string;
+
+        /**
+         * A short description of the alert.
+         */
+        summary: string;
+      }
+
+      namespace Data {
+        export interface Impact {
+          /**
+           * The context the event should have been generated for. Only present when the account is a connected account.
+           */
+          context?: string;
+
+          /**
+           * The type of event that Stripe failed to generate.
+           */
+          event_type: string;
+
+          /**
+           * The related object details.
+           */
+          related_object: Impact.RelatedObject;
+        }
+
+        namespace Impact {
+          export interface RelatedObject {
+            /**
+             * The ID of the related object (e.g., "pi_...").
+             */
+            id: string;
+
+            /**
+             * The type of the related object (e.g., "payment_intent").
+             */
+            type: string;
+
+            /**
+             * The API URL for the related object (e.g., "/v1/payment_intents/pi_...").
+             */
+            url: string;
+          }
+        }
+      }
+    }
+
+    /**
      * Occurs when an Adjustment is created.
      */
     export interface V2MoneyManagementAdjustmentCreatedEvent
@@ -1713,158 +1783,6 @@ declare module 'stripe' {
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.Transaction>;
       fetchEvent(): Promise<V2MoneyManagementTransactionUpdatedEvent>;
-    }
-
-    /**
-     * Sent after a failed authorization if there are still retries available on the OffSessionPayment.
-     */
-    export interface V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
-      extends V2.Core.EventBase {
-      type: 'v2.payments.off_session_payment.authorization_attempt_failed';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-    }
-    export interface V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEventNotification
-      extends V2.Core.EventNotificationBase {
-      type: 'v2.payments.off_session_payment.authorization_attempt_failed';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-      fetchEvent(): Promise<
-        V2PaymentsOffSessionPaymentAuthorizationAttemptFailedEvent
-      >;
-    }
-
-    /**
-     * Sent when our internal scheduling system kicks off an attempt at authorization, whether it's a
-     * retry or an initial authorization.
-     */
-    export interface V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
-      extends V2.Core.EventBase {
-      type: 'v2.payments.off_session_payment.authorization_attempt_started';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-    }
-    export interface V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEventNotification
-      extends V2.Core.EventNotificationBase {
-      type: 'v2.payments.off_session_payment.authorization_attempt_started';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-      fetchEvent(): Promise<
-        V2PaymentsOffSessionPaymentAuthorizationAttemptStartedEvent
-      >;
-    }
-
-    /**
-     * Sent immediately following a user's call to the Off-Session Payments cancel endpoint.
-     */
-    export interface V2PaymentsOffSessionPaymentCanceledEvent
-      extends V2.Core.EventBase {
-      type: 'v2.payments.off_session_payment.canceled';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-    }
-    export interface V2PaymentsOffSessionPaymentCanceledEventNotification
-      extends V2.Core.EventNotificationBase {
-      type: 'v2.payments.off_session_payment.canceled';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-      fetchEvent(): Promise<V2PaymentsOffSessionPaymentCanceledEvent>;
-    }
-
-    /**
-     * Sent immediately following a user's call to the Off-Session Payments create endpoint.
-     */
-    export interface V2PaymentsOffSessionPaymentCreatedEvent
-      extends V2.Core.EventBase {
-      type: 'v2.payments.off_session_payment.created';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-    }
-    export interface V2PaymentsOffSessionPaymentCreatedEventNotification
-      extends V2.Core.EventNotificationBase {
-      type: 'v2.payments.off_session_payment.created';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-      fetchEvent(): Promise<V2PaymentsOffSessionPaymentCreatedEvent>;
-    }
-
-    /**
-     * Sent after a failed authorization if there are no retries remaining, or if the failure is unretryable.
-     */
-    export interface V2PaymentsOffSessionPaymentFailedEvent
-      extends V2.Core.EventBase {
-      type: 'v2.payments.off_session_payment.failed';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-    }
-    export interface V2PaymentsOffSessionPaymentFailedEventNotification
-      extends V2.Core.EventNotificationBase {
-      type: 'v2.payments.off_session_payment.failed';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-      fetchEvent(): Promise<V2PaymentsOffSessionPaymentFailedEvent>;
-    }
-
-    /**
-     * Off-Session payment requires capture event definition.
-     */
-    export interface V2PaymentsOffSessionPaymentRequiresCaptureEvent
-      extends V2.Core.EventBase {
-      type: 'v2.payments.off_session_payment.requires_capture';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-    }
-    export interface V2PaymentsOffSessionPaymentRequiresCaptureEventNotification
-      extends V2.Core.EventNotificationBase {
-      type: 'v2.payments.off_session_payment.requires_capture';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-      fetchEvent(): Promise<V2PaymentsOffSessionPaymentRequiresCaptureEvent>;
-    }
-
-    /**
-     * Sent immediately after a successful authorization.
-     */
-    export interface V2PaymentsOffSessionPaymentSucceededEvent
-      extends V2.Core.EventBase {
-      type: 'v2.payments.off_session_payment.succeeded';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-    }
-    export interface V2PaymentsOffSessionPaymentSucceededEventNotification
-      extends V2.Core.EventNotificationBase {
-      type: 'v2.payments.off_session_payment.succeeded';
-      // Object containing the reference to API resource relevant to the event.
-      related_object: V2.Core.Events.RelatedObject;
-      // Retrieves the object associated with the event.
-      fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
-      fetchEvent(): Promise<V2PaymentsOffSessionPaymentSucceededEvent>;
     }
   }
 }
