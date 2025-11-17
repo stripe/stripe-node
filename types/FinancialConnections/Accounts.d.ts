@@ -23,6 +23,11 @@ declare module 'stripe' {
         account_holder: Account.AccountHolder | null;
 
         /**
+         * Details about the account numbers.
+         */
+        account_numbers: Array<Account.AccountNumber> | null;
+
+        /**
          * The most recent information about the account's balance.
          */
         balance: Account.Balance | null;
@@ -138,6 +143,34 @@ declare module 'stripe' {
 
         namespace AccountHolder {
           type Type = 'account' | 'customer';
+        }
+
+        interface AccountNumber {
+          /**
+           * When the account number is expected to expire, if applicable.
+           */
+          expected_expiry_date: number | null;
+
+          /**
+           * The type of account number associated with the account.
+           */
+          identifier_type: AccountNumber.IdentifierType;
+
+          /**
+           * Whether the account number is currently active and usable for transactions.
+           */
+          status: AccountNumber.Status;
+
+          /**
+           * The payment networks that the account number can be used for.
+           */
+          supported_networks: Array<'ach'>;
+        }
+
+        namespace AccountNumber {
+          type IdentifierType = 'account_number' | 'tokenized_account_number';
+
+          type Status = 'deactivated' | 'transactable';
         }
 
         interface Balance {
