@@ -12,29 +12,14 @@ declare module 'stripe' {
       namespace Core {
         interface EventListParams {
           /**
-           * Filter for events created after the specified timestamp.
+           * Set of filters to query events within a range of `created` timestamps.
            */
-          gt?: string;
-
-          /**
-           * Filter for events created at or after the specified timestamp.
-           */
-          gte?: string;
+          created?: Stripe.RangeQueryParam;
 
           /**
            * The page size.
            */
           limit?: number;
-
-          /**
-           * Filter for events created before the specified timestamp.
-           */
-          lt?: string;
-
-          /**
-           * Filter for events created at or before the specified timestamp.
-           */
-          lte?: string;
 
           /**
            * Primary object ID used to retrieve related events.
