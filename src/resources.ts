@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {resourceNamespace} from './ResourceNamespace.js';
+import {AccountEvaluations as RadarAccountEvaluations} from './resources/Radar/AccountEvaluations.js';
 import {AccountLinks as V2CoreAccountLinks} from './resources/V2/Core/AccountLinks.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
 import {Accounts as V2CoreAccounts} from './resources/V2/Core/Accounts.js';
@@ -142,6 +143,7 @@ export {ApplicationFees} from './resources/ApplicationFees.js';
 export {Balance} from './resources/Balance.js';
 export {BalanceSettings} from './resources/BalanceSettings.js';
 export {BalanceTransactions} from './resources/BalanceTransactions.js';
+export {BalanceTransfers} from './resources/BalanceTransfers.js';
 export {Charges} from './resources/Charges.js';
 export {ConfirmationTokens} from './resources/ConfirmationTokens.js';
 export {CountrySpecs} from './resources/CountrySpecs.js';
@@ -263,6 +265,7 @@ export const Privacy = resourceNamespace('privacy', {
   RedactionJobs: PrivacyRedactionJobs,
 });
 export const Radar = resourceNamespace('radar', {
+  AccountEvaluations: RadarAccountEvaluations,
   EarlyFraudWarnings: RadarEarlyFraudWarnings,
   ValueListItems: RadarValueListItems,
   ValueLists: RadarValueLists,

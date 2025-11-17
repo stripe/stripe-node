@@ -425,16 +425,6 @@ declare module 'stripe' {
           relationship?: Individual.Relationship;
 
           /**
-           * The last four digits of the individual's Social Security Number (U.S. only).
-           */
-          ssn_last_4?: string;
-
-          /**
-           * The individual's verification document information.
-           */
-          verification?: Individual.Verification;
-
-          /**
            * The credit applicant's self-reported yearly income in minor units.
            */
           self_reported_income?: Individual.SelfReportedIncome;
@@ -443,6 +433,16 @@ declare module 'stripe' {
            * The credit applicant's self-reported monthly housing payment in minor units.
            */
           self_reported_monthly_housing_payment?: Individual.SelfReportedMonthlyHousingPayment;
+
+          /**
+           * The last four digits of the individual's Social Security Number (U.S. only).
+           */
+          ssn_last_4?: string;
+
+          /**
+           * The individual's verification document information.
+           */
+          verification?: Individual.Verification;
         }
 
         namespace Individual {
@@ -801,6 +801,16 @@ declare module 'stripe' {
         relationship?: Person.Relationship;
 
         /**
+         * The credit applicant's self-reported yearly income in minor units.
+         */
+        self_reported_income?: Person.SelfReportedIncome;
+
+        /**
+         * The credit applicant's self-reported monthly housing payment in minor units.
+         */
+        self_reported_monthly_housing_payment?: Person.SelfReportedMonthlyHousingPayment;
+
+        /**
          * The last four digits of the person's Social Security number (U.S. only).
          */
         ssn_last_4?: string;
@@ -814,16 +824,6 @@ declare module 'stripe' {
          * The person's verification status.
          */
         verification?: Person.Verification;
-
-        /**
-         * The credit applicant's self-reported yearly income in minor units.
-         */
-        self_reported_income?: Person.SelfReportedIncome;
-
-        /**
-         * The credit applicant's self-reported monthly housing payment in minor units.
-         */
-        self_reported_monthly_housing_payment?: Person.SelfReportedMonthlyHousingPayment;
       }
 
       namespace Person {

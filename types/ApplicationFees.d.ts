@@ -95,14 +95,14 @@ declare module 'stripe' {
         payout?: string;
 
         /**
-         * Type of object that created the application fee.
-         */
-        type: FeeSource.Type;
-
-        /**
          * Transfer ID that created this application fee.
          */
         transfer?: string;
+
+        /**
+         * Type of object that created the application fee.
+         */
+        type: FeeSource.Type;
       }
 
       namespace FeeSource {

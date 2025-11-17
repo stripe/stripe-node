@@ -121,7 +121,7 @@ describe('utils', () => {
           },
           'v2'
         )
-      ).to.equal('include=a&include=b');
+      ).to.equal('include[0]=a&include[1]=b');
     });
   });
 

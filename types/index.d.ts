@@ -20,6 +20,7 @@
 ///<reference path='./BalanceResource.d.ts' />
 ///<reference path='./BalanceSettingsResource.d.ts' />
 ///<reference path='./BalanceTransactionsResource.d.ts' />
+///<reference path='./BalanceTransfersResource.d.ts' />
 ///<reference path='./Billing/AlertsResource.d.ts' />
 ///<reference path='./Billing/Analytics/MeterUsageResource.d.ts' />
 ///<reference path='./Billing/CreditBalanceSummaryResource.d.ts' />
@@ -96,6 +97,7 @@
 ///<reference path='./ProductsResource.d.ts' />
 ///<reference path='./PromotionCodesResource.d.ts' />
 ///<reference path='./QuotesResource.d.ts' />
+///<reference path='./Radar/AccountEvaluationsResource.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarningsResource.d.ts' />
 ///<reference path='./Radar/ValueListItemsResource.d.ts' />
 ///<reference path='./Radar/ValueListsResource.d.ts' />
@@ -223,6 +225,7 @@
 ///<reference path='./BalanceSettings.d.ts' />
 ///<reference path='./BalanceTransactionSources.d.ts' />
 ///<reference path='./BalanceTransactions.d.ts' />
+///<reference path='./BalanceTransfers.d.ts' />
 ///<reference path='./BankAccounts.d.ts' />
 ///<reference path='./Billing/AlertTriggereds.d.ts' />
 ///<reference path='./Billing/Alerts.d.ts' />
@@ -330,6 +333,7 @@
 ///<reference path='./QuotePreviewInvoices.d.ts' />
 ///<reference path='./QuotePreviewSubscriptionSchedules.d.ts' />
 ///<reference path='./Quotes.d.ts' />
+///<reference path='./Radar/AccountEvaluations.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarnings.d.ts' />
 ///<reference path='./Radar/ValueListItems.d.ts' />
 ///<reference path='./Radar/ValueLists.d.ts' />
@@ -469,6 +473,7 @@ declare module 'stripe' {
     balance: Stripe.BalanceResource;
     balanceSettings: Stripe.BalanceSettingsResource;
     balanceTransactions: Stripe.BalanceTransactionsResource;
+    balanceTransfers: Stripe.BalanceTransfersResource;
     charges: Stripe.ChargesResource;
     confirmationTokens: Stripe.ConfirmationTokensResource;
     countrySpecs: Stripe.CountrySpecsResource;
@@ -591,6 +596,7 @@ declare module 'stripe' {
       redactionJobs: Stripe.Privacy.RedactionJobsResource;
     };
     radar: {
+      accountEvaluations: Stripe.Radar.AccountEvaluationsResource;
       earlyFraudWarnings: Stripe.Radar.EarlyFraudWarningsResource;
       valueLists: Stripe.Radar.ValueListsResource;
       valueListItems: Stripe.Radar.ValueListItemsResource;

@@ -364,7 +364,12 @@ declare module 'stripe' {
         applies_to: Array<BillingSchedule.AppliesTo> | null;
 
         /**
-         * Specifies the billing period.
+         * Specifies the start of the billing period.
+         */
+        bill_from?: BillingSchedule.BillFrom | null;
+
+        /**
+         * Specifies the end of billing period.
          */
         bill_until: BillingSchedule.BillUntil;
 
@@ -372,11 +377,6 @@ declare module 'stripe' {
          * Unique identifier for the billing schedule.
          */
         key: string;
-
-        /**
-         * Specifies the start of the billing period.
-         */
-        bill_from?: BillingSchedule.BillFrom | null;
       }
 
       namespace BillingSchedule {
@@ -467,6 +467,11 @@ declare module 'stripe' {
 
         interface BillUntil {
           /**
+           * Use an index to specify the position of an amendment to end prebilling with.
+           */
+          amendment_end?: BillUntil.AmendmentEnd | null;
+
+          /**
            * The timestamp the billing schedule will apply until.
            */
           computed_timestamp: number;
@@ -477,6 +482,11 @@ declare module 'stripe' {
           duration: BillUntil.Duration | null;
 
           /**
+           * Lets you bill the period ending at a particular Quote line.
+           */
+          line_ends_at?: BillUntil.LineEndsAt | null;
+
+          /**
            * If specified, the billing schedule will apply until the specified timestamp.
            */
           timestamp: number | null;
@@ -485,16 +495,6 @@ declare module 'stripe' {
            * Describes how the billing schedule will determine the end date. Either `duration` or `timestamp`.
            */
           type: BillUntil.Type;
-
-          /**
-           * Use an index to specify the position of an amendment to end prebilling with.
-           */
-          amendment_end?: BillUntil.AmendmentEnd | null;
-
-          /**
-           * Lets you bill the period ending at a particular Quote line.
-           */
-          line_ends_at?: BillUntil.LineEndsAt | null;
         }
 
         namespace BillUntil {

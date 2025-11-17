@@ -1060,8 +1060,8 @@ declare module 'stripe' {
       /**
        * Sets the billing schedules for the subscription schedule.
        */
-      billing_schedules?: Array<
-        SubscriptionScheduleUpdateParams.BillingSchedule
+      billing_schedules?: Stripe.Emptyable<
+        Array<SubscriptionScheduleUpdateParams.BillingSchedule>
       >;
 
       /**
