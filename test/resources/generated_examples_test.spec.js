@@ -4458,7 +4458,7 @@ describe('Generated tests', function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
-        path: '/v2/billing/license_fees?lookup_keys=lookup_keys',
+        path: '/v2/billing/license_fees?lookup_keys[0]=lookup_keys',
         response:
           '{"data":[{"active":true,"created":"1970-01-12T21:42:34.472Z","currency":"usd","display_name":"display_name","id":"obj_123","latest_version":"latest_version","licensed_item":{"created":"1970-01-12T21:42:34.472Z","display_name":"display_name","id":"obj_123","object":"v2.billing.licensed_item","livemode":true},"live_version":"live_version","object":"v2.billing.license_fee","service_interval":"month","service_interval_count":1375336415,"tax_behavior":"exclusive","tiers":[{}],"livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
@@ -4976,7 +4976,7 @@ describe('Generated tests', function() {
     const stripe = testUtils.createMockClient([
       {
         method: 'GET',
-        path: '/v2/billing/profiles?lookup_keys=lookup_keys',
+        path: '/v2/billing/profiles?lookup_keys[0]=lookup_keys',
         response:
           '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","object":"v2.billing.profile","status":"active","livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
