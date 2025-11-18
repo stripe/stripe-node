@@ -2912,6 +2912,11 @@ declare module 'stripe' {
            * Settings related to subscription trials.
            */
           trial_settings?: Amendment.TrialSettings;
+
+          /**
+           * Actions to apply to the billing schedules.
+           */
+          billing_schedules_actions?: Array<Amendment.BillingSchedulesAction>;
         }
 
         namespace Amendment {
@@ -3020,6 +3025,34 @@ declare module 'stripe' {
           }
 
           type BillingCycleAnchor = 'amendment_start' | 'automatic';
+
+          interface BillingSchedulesAction {
+            /**
+             * Specify which subscription items the billing schedule applies to.
+             */
+            applies_to?: Array<BillingSchedulesAction.AppliesTo>;
+
+            /**
+             * Select the action.
+             */
+            type: BillingSchedulesAction.Type;
+          }
+
+          namespace BillingSchedulesAction {
+            interface AppliesTo {
+              /**
+               * The ID of the price object.
+               */
+              price?: string;
+
+              /**
+               * Controls which subscription items the billing schedule applies to.
+               */
+              type: 'price';
+            }
+
+            type Type = 'remove' | 'set';
+          }
 
           interface DiscountAction {
             /**
