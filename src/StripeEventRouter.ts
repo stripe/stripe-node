@@ -122,8 +122,10 @@ export class StripeEventHandler {
       this.webhookSecret
     );
 
-    // TODO: bind event context to client; reset after
+    // Bind event context to client temporarily, then restore after handler completes
+    const originalContext = this.client._api.stripeContext;
     try {
+      this.client._api.stripeContext = event.context;
       const handler = this.registeredHandlers[event.type];
       if (handler) {
         return await handler(event, this.client);
@@ -133,6 +135,7 @@ export class StripeEventHandler {
         });
       }
     } finally {
+      this.client._api.stripeContext = originalContext;
     }
   }
 }
