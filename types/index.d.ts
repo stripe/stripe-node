@@ -718,6 +718,18 @@ declare module 'stripe' {
        */
       receivedAt?: number
     ) => Stripe.V2.Core.EventNotification;
+
+    /**
+     * TODO: docs
+     */
+    router: (
+      webhookSecret: string,
+      onUnhandledHandler: (
+        event: Stripe.UnhandledEventHandler,
+        client: Stripe,
+        details: Stripe.UnhandledNotificationDetails
+      ) => Promise<void>
+    ) => Stripe.EventRouter;
   }
 
   export default Stripe;

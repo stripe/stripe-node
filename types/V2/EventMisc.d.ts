@@ -26,6 +26,40 @@ declare module 'stripe' {
       static parse(contextStr?: string | null): StripeContext;
     }
 
+    interface UnhandledNotificationDetails {
+      isKnownEventType: boolean;
+    }
+
+    type UnhandledEventHandler = (
+      event: V2.Core.EventNotificationBase,
+      client: Stripe,
+      details: UnhandledNotificationDetails
+    ) => Promise<void>;
+
+    class EventRouter {
+      constructor(
+        client: Stripe,
+        webhookSecret: string,
+        onUnhandledHandler: UnhandledEventHandler
+      );
+
+      register<T extends Stripe.V2.Core.EventNotification['type']>(
+        eventType: T,
+        handler: (
+          eventNotification: Extract<
+            Stripe.V2.Core.EventNotification,
+            {type: T}
+          >,
+          client: Stripe
+        ) => void
+      ): this;
+
+      handle(
+        rawBody: string | Uint8Array,
+        signature: string | Uint8Array
+      ): void;
+    }
+
     namespace Events {
       /**
        * Represents the shape of an EventNotification that the SDK didn't know about when it was generated.

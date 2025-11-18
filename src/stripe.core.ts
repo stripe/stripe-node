@@ -22,6 +22,7 @@ import {
   pascalToCamelCase,
   validateInteger,
 } from './utils.js';
+import {StripeEventHandler} from './StripeEventRouter.js';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -542,6 +543,9 @@ export function createStripe(
       };
 
       return eventNotification;
+    },
+    router(webhookSecret: string, onUnhandledHandler: any) {
+      return new StripeEventHandler(this, webhookSecret, onUnhandledHandler);
     },
   } as StripeObject;
 
