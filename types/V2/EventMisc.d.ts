@@ -43,7 +43,7 @@ declare module 'stripe' {
         onUnhandledHandler: UnhandledEventHandler
       );
 
-      register<T extends Stripe.V2.Core.EventNotification['type']>(
+      on<T extends Stripe.V2.Core.EventNotification['type']>(
         eventType: T,
         handler: (
           eventNotification: Extract<
@@ -52,6 +52,9 @@ declare module 'stripe' {
           >,
           client: Stripe
         ) => void
+        // a very cool thing would be if the whole class was generic and `on` returned all of the event types, but omitting the one we just used.
+        // So `.on('a').on('a') would be a type error.
+        // but, the event types aren't accessible from the runtime code, so we can't (yet)
       ): this;
 
       handle(
