@@ -259,9 +259,39 @@ declare module 'stripe' {
           sku_id: string;
 
           /**
-           * The unit amount of the line item.
+           * The per-unit amount of the item before any discounts or taxes are applied.
            */
           unit_amount: number;
+
+          /**
+           * The total discount for this line item. If no discount were applied, defaults to 0.
+           */
+          amount_discount: number;
+
+          /**
+           * The total before any discounts or taxes are applied.
+           */
+          amount_subtotal: number;
+
+          /**
+           * The total after discounts but before taxes are applied.
+           */
+          amount_subtotal_after_discount: number;
+
+          /**
+           * The total after discounts and taxes.
+           */
+          amount_total: number;
+
+          /**
+           * The per-unit amount of the item after discounts but before taxes are applied.
+           */
+          unit_amount_after_discount: number;
+
+          /**
+           * The per-unit discount amount. If no discount were applied, defaults to 0.
+           */
+          unit_discount: number;
         }
 
         interface OrderDetails {
@@ -353,6 +383,11 @@ declare module 'stripe' {
            * The amount tax of the total details.
            */
           amount_tax: number | null;
+
+          /**
+           * Total of all items after discounts but before taxes are applied.
+           */
+          amount_subtotal_after_discount: number | null;
 
           /**
            * The applicable fees of the total details.

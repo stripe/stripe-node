@@ -1280,7 +1280,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 
       /**
-       * Retrieves a payment method's balance.
+       * Retrieves a PaymentMethod's Balance.
        */
       checkBalance(
         id: string,

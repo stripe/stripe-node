@@ -63,6 +63,11 @@ declare module 'stripe' {
       current_period_start: number;
 
       /**
+       * The current trial that is applied to this subscription item.
+       */
+      current_trial?: SubscriptionItem.CurrentTrial | null;
+
+      /**
        * Always true for a deleted object
        */
       deleted?: void;
@@ -126,6 +131,14 @@ declare module 'stripe' {
          * Usage threshold that triggers the subscription to create an invoice
          */
         usage_gte: number | null;
+      }
+
+      interface CurrentTrial {
+        end_date: number;
+
+        start_date: number;
+
+        trial_offer: string;
       }
 
       interface Trial {

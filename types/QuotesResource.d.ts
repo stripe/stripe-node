@@ -312,6 +312,11 @@ declare module 'stripe' {
          * Settings related to subscription trials.
          */
         trial_settings?: Line.TrialSettings;
+
+        /**
+         * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         */
+        effective_at?: Line.EffectiveAt;
       }
 
       namespace Line {
@@ -438,6 +443,11 @@ declare module 'stripe' {
              * Options that configure the trial on the subscription item.
              */
             trial?: AddItem.Trial;
+
+            /**
+             * The ID of the trial offer to apply to the configuration item.
+             */
+            trial_offer?: string;
           }
 
           namespace AddItem {
@@ -590,6 +600,11 @@ declare module 'stripe' {
              * If an item with the `price` already exists, passing this will override the `trial` configuration on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `trial`.
              */
             trial?: SetItem.Trial;
+
+            /**
+             * The ID of the trial offer to apply to the configuration item.
+             */
+            trial_offer?: string;
           }
 
           namespace SetItem {
@@ -724,6 +739,8 @@ declare module 'stripe' {
            */
           prorate?: boolean;
         }
+
+        type EffectiveAt = 'billing_period_start' | 'line_start';
 
         interface EndsAt {
           /**
@@ -1049,9 +1066,7 @@ declare module 'stripe' {
         /**
          * Billing schedules that will be applied to the subscription or subscription schedule created when the quote is accepted.
          */
-        billing_schedules?: Stripe.Emptyable<
-          Array<SubscriptionData.BillingSchedule>
-        >;
+        billing_schedules?: Array<SubscriptionData.BillingSchedule>;
 
         /**
          * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces and certain local payment methods UIs.
@@ -1381,7 +1396,7 @@ declare module 'stripe' {
 
         type EndBehavior = 'cancel' | 'release';
 
-        type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
+        type PhaseEffectiveAt = 'billing_period_start' | 'line_start';
 
         interface Prebilling {
           /**
@@ -1415,9 +1430,7 @@ declare module 'stripe' {
         /**
          * Billing schedules that will be applied to the subscription or subscription schedule created when the quote is accepted.
          */
-        billing_schedules?: Stripe.Emptyable<
-          Array<SubscriptionDataOverride.BillingSchedule>
-        >;
+        billing_schedules?: Array<SubscriptionDataOverride.BillingSchedule>;
 
         /**
          * The customer the Subscription Data override applies to. This is only relevant when `applies_to.type=new_reference`.
@@ -1721,7 +1734,7 @@ declare module 'stripe' {
 
         type EndBehavior = 'cancel' | 'release';
 
-        type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
+        type PhaseEffectiveAt = 'billing_period_start' | 'line_start';
 
         type ProrationBehavior =
           | 'always_invoice'
@@ -2047,6 +2060,11 @@ declare module 'stripe' {
          * Settings related to subscription trials.
          */
         trial_settings?: Line.TrialSettings;
+
+        /**
+         * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         */
+        effective_at?: Line.EffectiveAt;
       }
 
       namespace Line {
@@ -2173,6 +2191,11 @@ declare module 'stripe' {
              * Options that configure the trial on the subscription item.
              */
             trial?: AddItem.Trial;
+
+            /**
+             * The ID of the trial offer to apply to the configuration item.
+             */
+            trial_offer?: string;
           }
 
           namespace AddItem {
@@ -2325,6 +2348,11 @@ declare module 'stripe' {
              * If an item with the `price` already exists, passing this will override the `trial` configuration on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `trial`.
              */
             trial?: SetItem.Trial;
+
+            /**
+             * The ID of the trial offer to apply to the configuration item.
+             */
+            trial_offer?: string;
           }
 
           namespace SetItem {
@@ -2459,6 +2487,8 @@ declare module 'stripe' {
            */
           prorate?: boolean;
         }
+
+        type EffectiveAt = 'billing_period_start' | 'line_start';
 
         interface EndsAt {
           /**
@@ -3091,7 +3121,7 @@ declare module 'stripe' {
 
         type EndBehavior = 'cancel' | 'release';
 
-        type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
+        type PhaseEffectiveAt = 'billing_period_start' | 'line_start';
 
         interface Prebilling {
           /**
@@ -3433,7 +3463,7 @@ declare module 'stripe' {
 
         type EndBehavior = 'cancel' | 'release';
 
-        type PhaseEffectiveAt = 'billing_period_start' | 'phase_start';
+        type PhaseEffectiveAt = 'billing_period_start' | 'line_start';
 
         type ProrationBehavior =
           | 'always_invoice'

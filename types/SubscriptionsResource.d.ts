@@ -534,13 +534,7 @@ declare module 'stripe' {
             type Interval = 'day' | 'month' | 'week' | 'year';
           }
 
-          type Type =
-            | 'amendment_end'
-            | 'duration'
-            | 'line_ends_at'
-            | 'schedule_end'
-            | 'timestamp'
-            | 'upcoming_invoice';
+          type Type = 'duration' | 'timestamp';
         }
       }
 
@@ -696,6 +690,11 @@ declare module 'stripe' {
          * Define options to configure the trial on the subscription item.
          */
         trial?: Item.Trial;
+
+        /**
+         * The trial offer to apply to this subscription item.
+         */
+        current_trial?: Item.CurrentTrial;
       }
 
       namespace Item {
@@ -704,6 +703,18 @@ declare module 'stripe' {
            * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
            */
           usage_gte: number;
+        }
+
+        interface CurrentTrial {
+          /**
+           * Unix timestamp representing the end of the trial offer period. Required when the trial offer has `duration.type=timestamp`. Cannot be specified when `duration.type=relative`.
+           */
+          trial_end?: number;
+
+          /**
+           * The ID of the trial offer to apply to the subscription item.
+           */
+          trial_offer: string;
         }
 
         interface Discount {
@@ -1781,13 +1792,7 @@ declare module 'stripe' {
             type Interval = 'day' | 'month' | 'week' | 'year';
           }
 
-          type Type =
-            | 'amendment_end'
-            | 'duration'
-            | 'line_ends_at'
-            | 'schedule_end'
-            | 'timestamp'
-            | 'upcoming_invoice';
+          type Type = 'duration' | 'timestamp';
         }
       }
 
@@ -1977,6 +1982,11 @@ declare module 'stripe' {
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
          */
         tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * The trial offer to apply to this subscription item.
+         */
+        current_trial?: Item.CurrentTrial;
       }
 
       namespace Item {
@@ -1985,6 +1995,18 @@ declare module 'stripe' {
            * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
            */
           usage_gte: number;
+        }
+
+        interface CurrentTrial {
+          /**
+           * Unix timestamp representing the end of the trial offer period. Required when the trial offer has `duration.type=timestamp`. Cannot be specified when `duration.type=relative`.
+           */
+          trial_end?: number;
+
+          /**
+           * The ID of the trial offer to apply to the subscription item.
+           */
+          trial_offer: string;
         }
 
         interface Discount {

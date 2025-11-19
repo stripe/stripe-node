@@ -165,13 +165,7 @@ declare module 'stripe' {
             type Interval = 'day' | 'month' | 'week' | 'year';
           }
 
-          type Type =
-            | 'amendment_end'
-            | 'duration'
-            | 'line_ends_at'
-            | 'schedule_end'
-            | 'timestamp'
-            | 'upcoming_invoice';
+          type Type = 'duration' | 'timestamp';
         }
       }
 
@@ -843,6 +837,11 @@ declare module 'stripe' {
            * Options that configure the trial on the subscription item.
            */
           trial?: Item.Trial;
+
+          /**
+           * The ID of the trial offer to apply to the configuration item.
+           */
+          trial_offer?: string;
         }
 
         namespace Item {
@@ -1174,13 +1173,7 @@ declare module 'stripe' {
             type Interval = 'day' | 'month' | 'week' | 'year';
           }
 
-          type Type =
-            | 'amendment_end'
-            | 'duration'
-            | 'line_ends_at'
-            | 'schedule_end'
-            | 'timestamp'
-            | 'upcoming_invoice';
+          type Type = 'duration' | 'timestamp';
         }
       }
 
@@ -1857,6 +1850,11 @@ declare module 'stripe' {
            * Options that configure the trial on the subscription item.
            */
           trial?: Item.Trial;
+
+          /**
+           * The ID of the trial offer to apply to the configuration item.
+           */
+          trial_offer?: string;
         }
 
         namespace Item {
@@ -2195,6 +2193,11 @@ declare module 'stripe' {
          * Actions to apply to the billing schedules.
          */
         billing_schedules_actions?: Array<Amendment.BillingSchedulesAction>;
+
+        /**
+         * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+         */
+        effective_at?: Amendment.EffectiveAt;
       }
 
       namespace Amendment {
@@ -2428,6 +2431,8 @@ declare module 'stripe' {
           type Type = 'add' | 'remove' | 'set';
         }
 
+        type EffectiveAt = 'amendment_start' | 'billing_period_start';
+
         interface ItemAction {
           /**
            * Details of the subscription item to add. If an item with the same `price` exists, it will be replaced by this new item. Otherwise, it adds the new item.
@@ -2481,6 +2486,11 @@ declare module 'stripe' {
              * Options that configure the trial on the subscription item.
              */
             trial?: Add.Trial;
+
+            /**
+             * The ID of the trial offer to apply to the configuration item.
+             */
+            trial_offer?: string;
           }
 
           namespace Add {
@@ -2599,6 +2609,11 @@ declare module 'stripe' {
              * If an item with the `price` already exists, passing this will override the `trial` configuration on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `trial`.
              */
             trial?: Set.Trial;
+
+            /**
+             * The ID of the trial offer to apply to the configuration item.
+             */
+            trial_offer?: string;
           }
 
           namespace Set {

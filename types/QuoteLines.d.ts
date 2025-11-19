@@ -37,6 +37,11 @@ declare module 'stripe' {
       cancel_subscription_schedule: QuoteLine.CancelSubscriptionSchedule | null;
 
       /**
+       * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+       */
+      effective_at?: QuoteLine.EffectiveAt | null;
+
+      /**
        * Details to identify the end of the time range modified by the proposed change. If not supplied, the quote line is considered a point-in-time operation that only affects the exact timestamp at `starts_at`, and a restricted set of attributes is supported on the quote line.
        */
       ends_at: QuoteLine.EndsAt | null;
@@ -191,6 +196,11 @@ declare module 'stripe' {
            * Options that configure the trial on the subscription item.
            */
           trial?: AddItem.Trial | null;
+
+          /**
+           * The ID of the trial offer to apply to the configuration item.
+           */
+          trial_offer?: string | null;
         }
 
         namespace AddItem {
@@ -356,6 +366,11 @@ declare module 'stripe' {
            * Options that configure the trial on the subscription item.
            */
           trial?: SetItem.Trial | null;
+
+          /**
+           * The ID of the trial offer to apply to the configuration item.
+           */
+          trial_offer?: string | null;
         }
 
         namespace SetItem {
@@ -465,6 +480,8 @@ declare module 'stripe' {
          */
         prorate: boolean | null;
       }
+
+      type EffectiveAt = 'billing_period_start' | 'line_start';
 
       interface EndsAt {
         /**
