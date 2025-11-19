@@ -28,6 +28,7 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.core.account_person.deleted',
   'v2.core.account_person.updated',
   'v2.core.event_destination.ping',
+  'v2.core.health.event_generation_failure.resolved',
   'v2.money_management.adjustment.created',
   'v2.money_management.financial_account.created',
   'v2.money_management.financial_account.updated',
@@ -63,13 +64,6 @@ const KNOWN_EVENT_TYPES = new Set([
   'v2.money_management.received_debit.updated',
   'v2.money_management.transaction.created',
   'v2.money_management.transaction.updated',
-  'v2.payments.off_session_payment.authorization_attempt_failed',
-  'v2.payments.off_session_payment.authorization_attempt_started',
-  'v2.payments.off_session_payment.canceled',
-  'v2.payments.off_session_payment.created',
-  'v2.payments.off_session_payment.failed',
-  'v2.payments.off_session_payment.requires_capture',
-  'v2.payments.off_session_payment.succeeded',
   // event-types: The end of the section generated from our OpenAPI spec
 ]);
 
