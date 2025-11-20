@@ -3,6 +3,7 @@
 import {resourceNamespace} from './ResourceNamespace.js';
 import {AccountEvaluations as RadarAccountEvaluations} from './resources/Radar/AccountEvaluations.js';
 import {AccountLinks as V2CoreAccountLinks} from './resources/V2/Core/AccountLinks.js';
+import {AccountTokens as V2CoreAccountTokens} from './resources/V2/Core/AccountTokens.js';
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts.js';
 import {Accounts as V2CoreAccounts} from './resources/V2/Core/Accounts.js';
 import {ActiveEntitlements as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
@@ -29,6 +30,7 @@ import {CreditBalanceTransactions as BillingCreditBalanceTransactions} from './r
 import {CreditGrants as BillingCreditGrants} from './resources/Billing/CreditGrants.js';
 import {CreditReversals as TreasuryCreditReversals} from './resources/Treasury/CreditReversals.js';
 import {CreditUnderwritingRecords as IssuingCreditUnderwritingRecords} from './resources/Issuing/CreditUnderwritingRecords.js';
+import {CurrencyConversions as V2MoneyManagementCurrencyConversions} from './resources/V2/MoneyManagement/CurrencyConversions.js';
 import {CustomPricingUnits as V2BillingCustomPricingUnits} from './resources/V2/Billing/CustomPricingUnits.js';
 import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Customers.js';
 import {DebitReversals as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
@@ -354,6 +356,7 @@ export const V2 = resourceNamespace('v2', {
   }),
   Core: resourceNamespace('core', {
     AccountLinks: V2CoreAccountLinks,
+    AccountTokens: V2CoreAccountTokens,
     Accounts: V2CoreAccounts,
     ClaimableSandboxes: V2CoreClaimableSandboxes,
     EventDestinations: V2CoreEventDestinations,
@@ -365,6 +368,7 @@ export const V2 = resourceNamespace('v2', {
   }),
   MoneyManagement: resourceNamespace('moneyManagement', {
     Adjustments: V2MoneyManagementAdjustments,
+    CurrencyConversions: V2MoneyManagementCurrencyConversions,
     FinancialAccounts: V2MoneyManagementFinancialAccounts,
     FinancialAddresses: V2MoneyManagementFinancialAddresses,
     InboundTransfers: V2MoneyManagementInboundTransfers,
