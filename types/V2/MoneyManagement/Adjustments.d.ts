@@ -26,7 +26,7 @@ declare module 'stripe' {
           /**
            * The amount of the Adjustment.
            */
-          amount: Amount;
+          amount: Adjustment.Amount;
 
           /**
            * Time at which the object was created. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
@@ -102,6 +102,18 @@ declare module 'stripe' {
               | 'outbound_transfer'
               | 'received_credit'
               | 'received_debit';
+          }
+
+          interface Amount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value?: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency?: string;
           }
         }
       }

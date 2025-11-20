@@ -21,7 +21,7 @@ declare module 'stripe' {
           /**
            * Amount and currency of the ReceivedDebit.
            */
-          amount: Amount;
+          amount: ReceivedDebit.Amount;
 
           /**
            * This object stores details about the originating banking transaction that resulted in the ReceivedDebit. Present if `type` field value is `bank_transfer`.
@@ -76,6 +76,18 @@ declare module 'stripe' {
         }
 
         namespace ReceivedDebit {
+          interface Amount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value?: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency?: string;
+          }
+
           interface BankTransfer {
             /**
              * The Financial Address that was debited.

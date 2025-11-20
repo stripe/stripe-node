@@ -22,7 +22,7 @@ declare module 'stripe' {
           /**
            * The amount in specified currency that will land in the FinancialAccount balance.
            */
-          amount: Amount;
+          amount: InboundTransfer.Amount;
 
           /**
            * Creation time of the InboundTransfer. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
@@ -61,11 +61,23 @@ declare module 'stripe' {
         }
 
         namespace InboundTransfer {
+          interface Amount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value?: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency?: string;
+          }
+
           interface From {
             /**
              * The amount in specified currency that was debited from the Payment Method.
              */
-            debited: Amount;
+            debited: From.Debited;
 
             /**
              * The Payment Method object used to create the InboundTransfer.
@@ -74,6 +86,18 @@ declare module 'stripe' {
           }
 
           namespace From {
+            interface Debited {
+              /**
+               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+               */
+              value?: number;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency?: string;
+            }
+
             interface PaymentMethod {
               /**
                * The type of object this destination represents. For a us bank account, we expect us_bank_account.
@@ -91,12 +115,26 @@ declare module 'stripe' {
             /**
              * The amount by which the FinancialAccount balance is credited.
              */
-            credited: Amount;
+            credited: To.Credited;
 
             /**
              * The FinancialAccount that funds will land in.
              */
             financial_account: string;
+          }
+
+          namespace To {
+            interface Credited {
+              /**
+               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+               */
+              value?: number;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency?: string;
+            }
           }
 
           interface TransferHistory {
