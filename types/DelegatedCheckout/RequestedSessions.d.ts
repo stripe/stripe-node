@@ -20,12 +20,12 @@ declare module 'stripe' {
         /**
          * The subtotal amount of the requested session.
          */
-        amount_subtotal: number;
+        amount_subtotal: number | null;
 
         /**
          * The total amount of the requested session.
          */
-        amount_total: number;
+        amount_total: number | null;
 
         /**
          * Time at which the object was created. Measured in seconds since the Unix epoch.
