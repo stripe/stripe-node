@@ -185,6 +185,8 @@
 ///<reference path='./V2/Billing/RateCardsResource.d.ts' />
 ///<reference path='./V2/Billing/ServiceActionsResource.d.ts' />
 ///<reference path='./V2/Core/AccountLinksResource.d.ts' />
+///<reference path='./V2/Core/AccountTokensResource.d.ts' />
+///<reference path='./V2/Core/Accounts/PersonTokensResource.d.ts' />
 ///<reference path='./V2/Core/Accounts/PersonsResource.d.ts' />
 ///<reference path='./V2/Core/AccountsResource.d.ts' />
 ///<reference path='./V2/Core/ClaimableSandboxesResource.d.ts' />
@@ -193,6 +195,7 @@
 ///<reference path='./V2/Core/Vault/GbBankAccountsResource.d.ts' />
 ///<reference path='./V2/Core/Vault/UsBankAccountsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/AdjustmentsResource.d.ts' />
+///<reference path='./V2/MoneyManagement/CurrencyConversionsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/FinancialAccountsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/FinancialAddressesResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/InboundTransfersResource.d.ts' />
@@ -415,7 +418,9 @@
 ///<reference path='./V2/Billing/RateCards.d.ts' />
 ///<reference path='./V2/Billing/ServiceActions.d.ts' />
 ///<reference path='./V2/Core/AccountLinks.d.ts' />
+///<reference path='./V2/Core/AccountPersonTokens.d.ts' />
 ///<reference path='./V2/Core/AccountPersons.d.ts' />
+///<reference path='./V2/Core/AccountTokens.d.ts' />
 ///<reference path='./V2/Core/Accounts.d.ts' />
 ///<reference path='./V2/Core/ClaimableSandboxes.d.ts' />
 ///<reference path='./V2/Core/EventDestinations.d.ts' />
@@ -426,6 +431,7 @@
 ///<reference path='./V2/FinancialAddressCreditSimulations.d.ts' />
 ///<reference path='./V2/FinancialAddressGeneratedMicrodeposits.d.ts' />
 ///<reference path='./V2/MoneyManagement/Adjustments.d.ts' />
+///<reference path='./V2/MoneyManagement/CurrencyConversions.d.ts' />
 ///<reference path='./V2/MoneyManagement/FinancialAccounts.d.ts' />
 ///<reference path='./V2/MoneyManagement/FinancialAddresses.d.ts' />
 ///<reference path='./V2/MoneyManagement/InboundTransfers.d.ts' />
@@ -686,6 +692,7 @@ declare module 'stripe' {
       core: {
         accounts: Stripe.V2.Core.AccountsResource;
         accountLinks: Stripe.V2.Core.AccountLinksResource;
+        accountTokens: Stripe.V2.Core.AccountTokensResource;
         claimableSandboxes: Stripe.V2.Core.ClaimableSandboxesResource;
         events: Stripe.V2.Core.EventsResource;
         eventDestinations: Stripe.V2.Core.EventDestinationsResource;
@@ -696,6 +703,7 @@ declare module 'stripe' {
       };
       moneyManagement: {
         adjustments: Stripe.V2.MoneyManagement.AdjustmentsResource;
+        currencyConversions: Stripe.V2.MoneyManagement.CurrencyConversionsResource;
         financialAccounts: Stripe.V2.MoneyManagement.FinancialAccountsResource;
         financialAddresses: Stripe.V2.MoneyManagement.FinancialAddressesResource;
         inboundTransfers: Stripe.V2.MoneyManagement.InboundTransfersResource;

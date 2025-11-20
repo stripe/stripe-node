@@ -8,7 +8,7 @@ declare module 'stripe' {
           /**
            * The “presentment amount” to be collected from the customer.
            */
-          amount: Amount;
+          amount: OffSessionPaymentCreateParams.Amount;
 
           /**
            * The frequency of the underlying payment.
@@ -21,10 +21,10 @@ declare module 'stripe' {
           customer: string;
 
           /**
-           * Set of [key-value pairs](https://docs.corp.stripe.com/api/metadata) that you can
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can
            * attach to an object. This can be useful for storing additional information about
            * the object in a structured format. Learn more about
-           * [storing information in metadata](https://docs.corp.stripe.com/payments/payment-intents#storing-information-in-metadata).
+           * [storing information in metadata](https://docs.stripe.com/payments/payment-intents#storing-information-in-metadata).
            */
           metadata: Stripe.MetadataParam;
 
@@ -34,19 +34,9 @@ declare module 'stripe' {
           payment_method: string;
 
           /**
-           * Provides industry-specific information about the amount.
-           */
-          amount_details?: OffSessionPaymentCreateParams.AmountDetails;
-
-          /**
            * Details about the capture configuration for the OffSessionPayment.
            */
           capture?: OffSessionPaymentCreateParams.Capture;
-
-          /**
-           * Whether the OffSessionPayment should be captured automatically or manually.
-           */
-          capture_method?: OffSessionPaymentCreateParams.CaptureMethod;
 
           /**
            * The account (if any) for which the funds of the OffSessionPayment are intended.
@@ -89,99 +79,22 @@ declare module 'stripe' {
           test_clock?: string;
 
           /**
-           * The data that automatically creates a Transfer after the payment finalizes. Learn more about the use case for [connected accounts](https://docs.corp.stripe.com/payments/connected-accounts).
+           * The data that automatically creates a Transfer after the payment finalizes. Learn more about the use case for [connected accounts](https://docs.stripe.com/payments/connected-accounts).
            */
           transfer_data?: OffSessionPaymentCreateParams.TransferData;
         }
 
         namespace OffSessionPaymentCreateParams {
-          interface AmountDetails {
+          interface Amount {
             /**
-             * The amount the total transaction was discounted for.
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
              */
-            discount_amount?: number;
-
-            /**
-             * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
-             */
-            line_items: Array<AmountDetails.LineItem>;
+            value?: number;
 
             /**
-             * Contains information about the shipping portion of the amount.
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
              */
-            shipping?: AmountDetails.Shipping;
-
-            /**
-             * Contains information about the tax portion of the amount.
-             */
-            tax?: AmountDetails.Tax;
-          }
-
-          namespace AmountDetails {
-            interface LineItem {
-              /**
-               * The amount an item was discounted for. Positive integer.
-               */
-              discount_amount?: number;
-
-              /**
-               * Unique identifier of the product. At most 12 characters long.
-               */
-              product_code?: string;
-
-              /**
-               * Name of the product. At most 100 characters long.
-               */
-              product_name: string;
-
-              /**
-               * Number of items of the product. Positive integer.
-               */
-              quantity: number;
-
-              /**
-               * Contains information about the tax on the item.
-               */
-              tax?: LineItem.Tax;
-
-              /**
-               * Cost of the product. Non-negative integer.
-               */
-              unit_cost: number;
-            }
-
-            namespace LineItem {
-              interface Tax {
-                /**
-                 * Total portion of the amount that is for tax.
-                 */
-                total_tax_amount?: number;
-              }
-            }
-
-            interface Shipping {
-              /**
-               * Portion of the amount that is for shipping.
-               */
-              amount?: number;
-
-              /**
-               * The postal code that represents the shipping source.
-               */
-              from_postal_code?: string;
-
-              /**
-               * The postal code that represents the shipping destination.
-               */
-              to_postal_code?: string;
-            }
-
-            interface Tax {
-              /**
-               * Total portion of the amount that is for tax.
-               */
-              total_tax_amount?: number;
-            }
+            currency?: string;
           }
 
           type Cadence = 'recurring' | 'unscheduled';
@@ -196,8 +109,6 @@ declare module 'stripe' {
           namespace Capture {
             type CaptureMethod = 'automatic' | 'manual';
           }
-
-          type CaptureMethod = 'automatic' | 'manual';
 
           interface PaymentMethodOptions {
             /**
@@ -236,11 +147,11 @@ declare module 'stripe' {
             /**
              * Indicates the strategy for how you want Stripe to retry the payment.
              */
-            retry_strategy: RetryDetails.RetryStrategy;
+            retry_strategy?: RetryDetails.RetryStrategy;
           }
 
           namespace RetryDetails {
-            type RetryStrategy = 'heuristic' | 'none' | 'scheduled' | 'smart';
+            type RetryStrategy = 'best_available' | 'none';
           }
 
           interface TransferData {
@@ -249,7 +160,7 @@ declare module 'stripe' {
              * automatically after the payment succeeds. If no amount is specified, by default
              * the entire payment amount is transferred to the destination account. The amount
              * must be less than or equal to the
-             * [amount_requested](https://docs.corp.stripe.com/api/v2/off-session-payments/object?api-version=2025-05-28.preview#v2_off_session_payment_object-amount_requested),
+             * [amount_requested](https://docs.stripe.com/api/v2/off-session-payments/object?api-version=2025-05-28.preview#v2_off_session_payment_object-amount_requested),
              * and must be a positive integer representing how much to transfer in the smallest
              * currency unit (e.g., 100 cents to charge $1.00).
              */
@@ -284,17 +195,17 @@ declare module 'stripe' {
       namespace Payments {
         interface OffSessionPaymentCaptureParams {
           /**
-           * The amount to capture.
-           */
-          amount_to_capture: number;
-
-          /**
-           * Set of [key-value pairs](https://docs.corp.stripe.com/api/metadata) that you can
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can
            * attach to an object. This can be useful for storing additional information about
            * the object in a structured format. Learn more about
-           * [storing information in metadata](https://docs.corp.stripe.com/payments/payment-intents#storing-information-in-metadata).
+           * [storing information in metadata](https://docs.stripe.com/payments/payment-intents#storing-information-in-metadata).
            */
           metadata: Stripe.MetadataParam;
+
+          /**
+           * The amount to capture.
+           */
+          amount_to_capture?: number;
 
           /**
            * Text that appears on the customer's statement as the statement descriptor for a
@@ -312,7 +223,7 @@ declare module 'stripe' {
           statement_descriptor_suffix?: string;
 
           /**
-           * The data that automatically creates a Transfer after the payment finalizes. Learn more about the use case for [connected accounts](https://docs.corp.stripe.com/payments/connected-accounts).
+           * The data that automatically creates a Transfer after the payment finalizes. Learn more about the use case for [connected accounts](https://docs.stripe.com/payments/connected-accounts).
            */
           transfer_data?: OffSessionPaymentCaptureParams.TransferData;
         }
@@ -324,17 +235,11 @@ declare module 'stripe' {
              * automatically after the payment succeeds. If no amount is specified, by default
              * the entire payment amount is transferred to the destination account. The amount
              * must be less than or equal to the
-             * [amount_requested](https://docs.corp.stripe.com/api/v2/off-session-payments/object?api-version=2025-05-28.preview#v2_off_session_payment_object-amount_requested),
+             * [amount_requested](https://docs.stripe.com/api/v2/off-session-payments/object?api-version=2025-05-28.preview#v2_off_session_payment_object-amount_requested),
              * and must be a positive integer representing how much to transfer in the smallest
              * currency unit (e.g., 100 cents to charge $1.00).
              */
             amount?: number;
-
-            /**
-             * The account (if any) that the payment is attributed to for tax reporting, and
-             * where funds from the payment are transferred to after payment success.
-             */
-            destination: string;
           }
         }
       }

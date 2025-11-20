@@ -8,7 +8,7 @@ declare module 'stripe' {
           /**
            * The amount, in specified currency, by which the FinancialAccount balance will increase due to the InboundTransfer.
            */
-          amount: Amount;
+          amount: InboundTransferCreateParams.Amount;
 
           /**
            * Object containing details about where the funds will originate from.
@@ -27,6 +27,18 @@ declare module 'stripe' {
         }
 
         namespace InboundTransferCreateParams {
+          interface Amount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value?: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency?: string;
+          }
+
           interface From {
             /**
              * An optional currency field used to specify which currency is debited from the Payment Method.

@@ -8,7 +8,7 @@ declare module 'stripe' {
           /**
            * Object containing the amount value and currency to credit.
            */
-          amount: Amount;
+          amount: FinancialAddressCreditParams.Amount;
 
           /**
            * Open Enum. The network to use in simulating the funds flow. This will be the reflected in the resulting ReceivedCredit.
@@ -22,6 +22,18 @@ declare module 'stripe' {
         }
 
         namespace FinancialAddressCreditParams {
+          interface Amount {
+            /**
+             * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+             */
+            value?: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency?: string;
+          }
+
           type Network =
             | 'ach'
             | 'fps'

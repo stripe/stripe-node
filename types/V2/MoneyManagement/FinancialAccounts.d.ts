@@ -78,22 +78,60 @@ declare module 'stripe' {
              * Balance that can be used for money movement.
              */
             available: {
-              [key: string]: Amount;
+              [key: string]: Balance.Available;
             };
 
             /**
              * Balance of inbound funds that will later transition to the `available` balance.
              */
             inbound_pending: {
-              [key: string]: Amount;
+              [key: string]: Balance.InboundPending;
             };
 
             /**
              * Balance of funds that are being used for a pending outbound money movement.
              */
             outbound_pending: {
-              [key: string]: Amount;
+              [key: string]: Balance.OutboundPending;
             };
+          }
+
+          namespace Balance {
+            interface Available {
+              /**
+               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+               */
+              value?: number;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency?: string;
+            }
+
+            interface InboundPending {
+              /**
+               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+               */
+              value?: number;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency?: string;
+            }
+
+            interface OutboundPending {
+              /**
+               * A non-negative integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#minor-units).
+               */
+              value?: number;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency?: string;
+            }
           }
 
           interface Other {
