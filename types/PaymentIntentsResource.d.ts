@@ -167,6 +167,11 @@ declare module 'stripe' {
       payment_method_types?: Array<string>;
 
       /**
+       * When you enable this parameter, this PaymentIntent will route your payment to processors that you configure in the dashboard.
+       */
+      payments_orchestration?: PaymentIntentCreateParams.PaymentsOrchestration;
+
+      /**
        * Options to configure Radar. Learn more about [Radar Sessions](https://stripe.com/docs/radar/radar-session).
        */
       radar_options?: PaymentIntentCreateParams.RadarOptions;
@@ -6982,6 +6987,13 @@ declare module 'stripe' {
            */
           setup_future_usage?: 'none';
         }
+      }
+
+      interface PaymentsOrchestration {
+        /**
+         * Whether this feature is enabled.
+         */
+        enabled: boolean;
       }
 
       interface RadarOptions {
