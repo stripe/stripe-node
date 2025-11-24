@@ -94,6 +94,7 @@
 ///<reference path='./PlansResource.d.ts' />
 ///<reference path='./PricesResource.d.ts' />
 ///<reference path='./Privacy/RedactionJobsResource.d.ts' />
+///<reference path='./ProductCatalog/TrialOffersResource.d.ts' />
 ///<reference path='./ProductsResource.d.ts' />
 ///<reference path='./PromotionCodesResource.d.ts' />
 ///<reference path='./QuotesResource.d.ts' />
@@ -329,6 +330,7 @@
 ///<reference path='./Prices.d.ts' />
 ///<reference path='./Privacy/RedactionJobValidationErrors.d.ts' />
 ///<reference path='./Privacy/RedactionJobs.d.ts' />
+///<reference path='./ProductCatalog/TrialOffers.d.ts' />
 ///<reference path='./ProductFeatures.d.ts' />
 ///<reference path='./Products.d.ts' />
 ///<reference path='./PromotionCodes.d.ts' />
@@ -600,6 +602,9 @@ declare module 'stripe' {
     };
     privacy: {
       redactionJobs: Stripe.Privacy.RedactionJobsResource;
+    };
+    productCatalog: {
+      trialOffers: Stripe.ProductCatalog.TrialOffersResource;
     };
     radar: {
       accountEvaluations: Stripe.Radar.AccountEvaluationsResource;

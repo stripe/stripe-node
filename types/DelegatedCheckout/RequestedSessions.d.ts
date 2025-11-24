@@ -272,26 +272,6 @@ declare module 'stripe' {
            * The total before any discounts or taxes are applied.
            */
           amount_subtotal: number;
-
-          /**
-           * The total after discounts but before taxes are applied.
-           */
-          amount_subtotal_after_discount: number;
-
-          /**
-           * The total after discounts and taxes.
-           */
-          amount_total: number;
-
-          /**
-           * The per-unit amount of the item after discounts but before taxes are applied.
-           */
-          unit_amount_after_discount: number;
-
-          /**
-           * The per-unit discount amount. If no discount were applied, defaults to 0.
-           */
-          unit_discount: number;
         }
 
         interface OrderDetails {
@@ -370,11 +350,6 @@ declare module 'stripe' {
 
         interface TotalDetails {
           /**
-           * The amount discount of the total details.
-           */
-          amount_discount: number | null;
-
-          /**
            * The amount fulfillment of the total details.
            */
           amount_fulfillment: number | null;
@@ -385,9 +360,14 @@ declare module 'stripe' {
           amount_tax: number | null;
 
           /**
-           * Total of all items after discounts but before taxes are applied.
+           * The amount of order-level discounts applied to the cart. The total discount amount for this session can be computed by summing the cart discount and the item discounts.
            */
-          amount_subtotal_after_discount: number | null;
+          amount_cart_discount: number | null;
+
+          /**
+           * The amount of item-level discounts applied to the cart. The total discount amount for this session can be computed by summing the cart discount and the item discounts.
+           */
+          amount_items_discount: number | null;
 
           /**
            * The applicable fees of the total details.

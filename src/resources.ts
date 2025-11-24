@@ -130,6 +130,7 @@ import {Transactions as TaxTransactions} from './resources/Tax/Transactions.js';
 import {Transactions as TestHelpersIssuingTransactions} from './resources/TestHelpers/Issuing/Transactions.js';
 import {Transactions as TreasuryTransactions} from './resources/Treasury/Transactions.js';
 import {Transactions as V2MoneyManagementTransactions} from './resources/V2/MoneyManagement/Transactions.js';
+import {TrialOffers as ProductCatalogTrialOffers} from './resources/ProductCatalog/TrialOffers.js';
 import {UsBankAccounts as V2CoreVaultUsBankAccounts} from './resources/V2/Core/Vault/UsBankAccounts.js';
 import {ValueListItems as RadarValueListItems} from './resources/Radar/ValueListItems.js';
 import {ValueLists as RadarValueLists} from './resources/Radar/ValueLists.js';
@@ -265,6 +266,9 @@ export const Issuing = resourceNamespace('issuing', {
 });
 export const Privacy = resourceNamespace('privacy', {
   RedactionJobs: PrivacyRedactionJobs,
+});
+export const ProductCatalog = resourceNamespace('productCatalog', {
+  TrialOffers: ProductCatalogTrialOffers,
 });
 export const Radar = resourceNamespace('radar', {
   AccountEvaluations: RadarAccountEvaluations,
