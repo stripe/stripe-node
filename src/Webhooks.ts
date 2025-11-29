@@ -64,6 +64,22 @@ export type WebhookObject = {
     cryptoProvider: CryptoProvider,
     receivedAt: number
   ) => Promise<WebhookEvent>;
+  constructEventWithValidation: (
+    payload: WebhookPayload,
+    header: WebhookHeader,
+    secret: string,
+    tolerance: null,
+    cryptoProvider: CryptoProvider,
+    receivedAt: number
+  ) => WebhookEvent;
+  constructEventWithValidationAsync: (
+    payload: WebhookPayload,
+    header: WebhookHeader,
+    secret: string,
+    tolerance: number,
+    cryptoProvider: CryptoProvider,
+    receivedAt: number
+  ) => Promise<WebhookEvent>;
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
   generateTestHeaderStringAsync: (
     opts: WebhookTestHeaderOptions
@@ -138,6 +154,116 @@ export function createWebhooks(
           ? JSON.parse(new TextDecoder('utf8').decode(payload))
           : JSON.parse(payload);
       return jsonPayload;
+    },
+
+    /**
+     * Constructs a webhook event with Zod schema validation
+     * 
+     * This method verifies the signature and validates the event structure
+     * using Zod schemas, providing fail-fast validation for malformed events.
+     * 
+     * Note: Requires 'zod' to be installed as a peer dependency.
+     * 
+     * @param {string|Uint8Array} payload - Raw webhook payload from Stripe
+     * @param {string|Uint8Array} header - Stripe-Signature header value
+     * @param {string} secret - Webhook endpoint secret
+     * @param {number} tolerance - Maximum allowed time difference in seconds
+     * @param {CryptoProvider} cryptoProvider - Crypto provider for signature verification
+     * @param {number} receivedAt - Timestamp when webhook was received
+     * @returns {WebhookEvent} Validated webhook event
+     * @throws {StripeSignatureVerificationError} If signature is invalid
+     * @throws {ZodError} If event structure is invalid
+     * @throws {Error} If zod is not installed
+     */
+    constructEventWithValidation(
+      payload: WebhookPayload,
+      header: WebhookHeader,
+      secret: string,
+      tolerance: null,
+      cryptoProvider: CryptoProvider,
+      receivedAt: number
+    ): WebhookEvent {
+      const event = this.constructEvent(
+        payload,
+        header,
+        secret,
+        tolerance,
+        cryptoProvider,
+        receivedAt
+      );
+
+      try {
+        // Dynamic import to make zod optional
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const {validateEvent} = require('./schemas/events.js');
+        return validateEvent(event);
+      } catch (error) {
+        if (
+          error instanceof Error &&
+          error.message.includes('Cannot find module')
+        ) {
+          throw new Error(
+            'Zod validation requires the "zod" package to be installed. ' +
+              'Install it with: npm install zod'
+          );
+        }
+        throw error;
+      }
+    },
+
+    /**
+     * Constructs a webhook event with Zod schema validation (async)
+     * 
+     * This method verifies the signature asynchronously and validates the event
+     * structure using Zod schemas, providing fail-fast validation for malformed events.
+     * 
+     * Note: Requires 'zod' to be installed as a peer dependency.
+     * 
+     * @param {string|Uint8Array} payload - Raw webhook payload from Stripe
+     * @param {string|Uint8Array} header - Stripe-Signature header value
+     * @param {string} secret - Webhook endpoint secret
+     * @param {number} tolerance - Maximum allowed time difference in seconds
+     * @param {CryptoProvider} cryptoProvider - Crypto provider for signature verification
+     * @param {number} receivedAt - Timestamp when webhook was received
+     * @returns {Promise<WebhookEvent>} Validated webhook event
+     * @throws {StripeSignatureVerificationError} If signature is invalid
+     * @throws {ZodError} If event structure is invalid
+     * @throws {Error} If zod is not installed
+     */
+    async constructEventWithValidationAsync(
+      payload: WebhookPayload,
+      header: WebhookHeader,
+      secret: string,
+      tolerance: number,
+      cryptoProvider: CryptoProvider,
+      receivedAt: number
+    ): Promise<WebhookEvent> {
+      const event = await this.constructEventAsync(
+        payload,
+        header,
+        secret,
+        tolerance,
+        cryptoProvider,
+        receivedAt
+      );
+
+      try {
+        // Dynamic import to make zod optional
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const {validateEvent} = require('./schemas/events.js');
+        return validateEvent(event);
+      } catch (error) {
+        if (
+          error instanceof Error &&
+          error.message.includes('Cannot find module')
+        ) {
+          throw new Error(
+            'Zod validation requires the "zod" package to be installed. ' +
+              'Install it with: npm install zod'
+          );
+        }
+        throw error;
+      }
     },
 
     /**
