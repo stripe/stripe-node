@@ -113,7 +113,7 @@ declare module 'stripe' {
             postal_code: string;
 
             /**
-             * State, county, province, or region.
+             * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
              */
             state: string;
           }
@@ -199,7 +199,7 @@ declare module 'stripe' {
               postal_code: string;
 
               /**
-               * State, county, province, or region.
+               * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
                */
               state: string;
             }
@@ -338,7 +338,7 @@ declare module 'stripe' {
             postal_code: string;
 
             /**
-             * State, county, province, or region.
+             * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
              */
             state: string;
           }
@@ -445,7 +445,7 @@ declare module 'stripe' {
               postal_code: string;
 
               /**
-               * State, county, province, or region.
+               * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
                */
               state: string;
             }
