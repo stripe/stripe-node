@@ -80,6 +80,11 @@ declare module 'stripe' {
           status_transitions?: ReceivedCredit.StatusTransitions;
 
           /**
+           * This object stores details about the stripe balance pay refund that resulted in the ReceivedCredit. Present if `type` field value is `stripe_balance_payment`.
+           */
+          stripe_balance_payment?: ReceivedCredit.StripeBalancePayment;
+
+          /**
            * Open Enum. The type of flow that caused the ReceivedCredit.
            */
           type: ReceivedCredit.Type;
@@ -323,7 +328,18 @@ declare module 'stripe' {
             succeeded_at?: string;
           }
 
-          type Type = 'balance_transfer' | 'bank_transfer' | 'external_credit';
+          interface StripeBalancePayment {
+            /**
+             * Statement descriptor for the Stripe Balance Payment.
+             */
+            statement_descriptor?: string;
+          }
+
+          type Type =
+            | 'balance_transfer'
+            | 'bank_transfer'
+            | 'external_credit'
+            | 'stripe_balance_payment';
         }
       }
     }

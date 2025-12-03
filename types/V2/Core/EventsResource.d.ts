@@ -6,7 +6,12 @@ declare module 'stripe' {
   namespace Stripe {
     namespace V2 {
       namespace Core {
-        interface EventRetrieveParams {}
+        interface EventRetrieveParams {
+          /**
+           * Additional fields to include in the response.
+           */
+          include?: Array<'reason.request.client'>;
+        }
       }
 
       namespace Core {
@@ -15,6 +20,11 @@ declare module 'stripe' {
            * Set of filters to query events within a range of `created` timestamps.
            */
           created?: Stripe.RangeQueryParam;
+
+          /**
+           * Additional fields to include in the response.
+           */
+          include?: Array<'reason.request.client'>;
 
           /**
            * The page size.

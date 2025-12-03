@@ -24,6 +24,11 @@ declare module 'stripe' {
           amount: ReceivedDebit.Amount;
 
           /**
+           * This object stores details about the balance transfer object that resulted in the ReceivedDebit.
+           */
+          balance_transfer?: ReceivedDebit.BalanceTransfer;
+
+          /**
            * This object stores details about the originating banking transaction that resulted in the ReceivedDebit. Present if `type` field value is `bank_transfer`.
            */
           bank_transfer?: ReceivedDebit.BankTransfer;
@@ -75,7 +80,12 @@ declare module 'stripe' {
           status_transitions?: ReceivedDebit.StatusTransitions;
 
           /**
-           * Open Enum. The type of the ReceivedDebit.
+           * This object stores details about the Stripe Balance Payment that resulted in the ReceivedDebit.
+           */
+          stripe_balance_payment?: ReceivedDebit.StripeBalancePayment;
+
+          /**
+           * Open enum, the type of the received debit.
            */
           type: ReceivedDebit.Type;
         }
@@ -91,6 +101,18 @@ declare module 'stripe' {
              * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
              */
             currency?: string;
+          }
+
+          interface BalanceTransfer {
+            /**
+             * Open Enum. The type of balance transfer that originated the ReceivedDebit.
+             */
+            type: 'topup';
+
+            /**
+             * The ID of the topup object that originated the ReceivedDebit.
+             */
+            topup?: string;
           }
 
           interface BankTransfer {
@@ -202,7 +224,23 @@ declare module 'stripe' {
             succeeded_at?: string;
           }
 
-          type Type = 'bank_transfer' | 'external_debit';
+          interface StripeBalancePayment {
+            /**
+             * ID of the debit agreement associated with this payment.
+             */
+            debit_agreement?: string;
+
+            /**
+             * Statement descriptor for the Stripe Balance Payment.
+             */
+            statement_descriptor?: string;
+          }
+
+          type Type =
+            | 'balance_transfer'
+            | 'bank_transfer'
+            | 'external_debit'
+            | 'stripe_balance_payment';
         }
       }
     }
