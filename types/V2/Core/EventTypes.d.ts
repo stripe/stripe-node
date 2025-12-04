@@ -86,6 +86,12 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreHealthTrafficVolumeDropResolvedEvent
       | Stripe.Events.V2CoreHealthWebhookLatencyFiringEvent
       | Stripe.Events.V2CoreHealthWebhookLatencyResolvedEvent
+      | Stripe.Events.V2IamApiKeyCreatedEvent
+      | Stripe.Events.V2IamApiKeyDefaultSecretRevealedEvent
+      | Stripe.Events.V2IamApiKeyExpiredEvent
+      | Stripe.Events.V2IamApiKeyPermissionsUpdatedEvent
+      | Stripe.Events.V2IamApiKeyRotatedEvent
+      | Stripe.Events.V2IamApiKeyUpdatedEvent
       | Stripe.Events.V2MoneyManagementAdjustmentCreatedEvent
       | Stripe.Events.V2MoneyManagementFinancialAccountCreatedEvent
       | Stripe.Events.V2MoneyManagementFinancialAccountUpdatedEvent
@@ -221,6 +227,12 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreHealthTrafficVolumeDropResolvedEventNotification
       | Stripe.Events.V2CoreHealthWebhookLatencyFiringEventNotification
       | Stripe.Events.V2CoreHealthWebhookLatencyResolvedEventNotification
+      | Stripe.Events.V2IamApiKeyCreatedEventNotification
+      | Stripe.Events.V2IamApiKeyDefaultSecretRevealedEventNotification
+      | Stripe.Events.V2IamApiKeyExpiredEventNotification
+      | Stripe.Events.V2IamApiKeyPermissionsUpdatedEventNotification
+      | Stripe.Events.V2IamApiKeyRotatedEventNotification
+      | Stripe.Events.V2IamApiKeyUpdatedEventNotification
       | Stripe.Events.V2MoneyManagementAdjustmentCreatedEventNotification
       | Stripe.Events.V2MoneyManagementFinancialAccountCreatedEventNotification
       | Stripe.Events.V2MoneyManagementFinancialAccountUpdatedEventNotification
@@ -3857,6 +3869,91 @@ declare module 'stripe' {
           impacted_requests: number;
         }
       }
+    }
+
+    /**
+     * Occurs when an API Key is created.
+     */
+    export interface V2IamApiKeyCreatedEvent extends V2.Core.EventBase {
+      type: 'v2.iam.api_key.created';
+    }
+    export interface V2IamApiKeyCreatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.iam.api_key.created';
+      fetchEvent(): Promise<V2IamApiKeyCreatedEvent>;
+    }
+
+    /**
+     * Occurs when the default API Key's secret is revealed.
+     */
+    export interface V2IamApiKeyDefaultSecretRevealedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.iam.api_key.default_secret_revealed';
+    }
+    export interface V2IamApiKeyDefaultSecretRevealedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.iam.api_key.default_secret_revealed';
+      fetchEvent(): Promise<V2IamApiKeyDefaultSecretRevealedEvent>;
+    }
+
+    /**
+     * Occurs when an API Key is expired.
+     */
+    export interface V2IamApiKeyExpiredEvent extends V2.Core.EventBase {
+      type: 'v2.iam.api_key.expired';
+    }
+    export interface V2IamApiKeyExpiredEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.iam.api_key.expired';
+      fetchEvent(): Promise<V2IamApiKeyExpiredEvent>;
+    }
+
+    /**
+     * Occurs when an API Key's permissions are updated.
+     */
+    export interface V2IamApiKeyPermissionsUpdatedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.iam.api_key.permissions_updated';
+    }
+    export interface V2IamApiKeyPermissionsUpdatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.iam.api_key.permissions_updated';
+      fetchEvent(): Promise<V2IamApiKeyPermissionsUpdatedEvent>;
+    }
+
+    /**
+     * Occurs when an API Key is rotated.
+     */
+    export interface V2IamApiKeyRotatedEvent extends V2.Core.EventBase {
+      type: 'v2.iam.api_key.rotated';
+      // Retrieves data specific to this event.
+      data: V2IamApiKeyRotatedEvent.Data;
+    }
+    export interface V2IamApiKeyRotatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.iam.api_key.rotated';
+      fetchEvent(): Promise<V2IamApiKeyRotatedEvent>;
+    }
+
+    namespace V2IamApiKeyRotatedEvent {
+      export interface Data {
+        /**
+         * ID of the new key that was created due to rotation.
+         */
+        new_api_key: string;
+      }
+    }
+
+    /**
+     * Occurs when an API Key is updated.
+     */
+    export interface V2IamApiKeyUpdatedEvent extends V2.Core.EventBase {
+      type: 'v2.iam.api_key.updated';
+    }
+    export interface V2IamApiKeyUpdatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.iam.api_key.updated';
+      fetchEvent(): Promise<V2IamApiKeyUpdatedEvent>;
     }
 
     /**
