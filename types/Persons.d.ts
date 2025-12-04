@@ -676,7 +676,7 @@ declare module 'stripe' {
 
       interface SelfReportedIncome {
         /**
-         * Amount in the minor currency unit (e.g., cents for USD)
+         * The amount in the minor currency unit (for example, cents for USD).
          */
         amount: number;
 
@@ -688,7 +688,7 @@ declare module 'stripe' {
 
       interface SelfReportedMonthlyHousingPayment {
         /**
-         * Amount in the minor currency unit (e.g., cents for USD)
+         * The amount in the minor currency unit (for example, cents for USD).
          */
         amount: number;
 

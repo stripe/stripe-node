@@ -493,14 +493,26 @@ declare module 'stripe' {
           }
 
           interface SelfReportedIncome {
+            /**
+             * The amount in the minor currency unit (for example, cents for USD).
+             */
             amount: number;
 
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
             currency: string;
           }
 
           interface SelfReportedMonthlyHousingPayment {
+            /**
+             * The amount in the minor currency unit (for example, cents for USD).
+             */
             amount: number;
 
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
             currency: string;
           }
 
@@ -955,14 +967,26 @@ declare module 'stripe' {
         }
 
         interface SelfReportedIncome {
+          /**
+           * The amount in the minor currency unit (for example, cents for USD).
+           */
           amount: number;
 
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
           currency: string;
         }
 
         interface SelfReportedMonthlyHousingPayment {
+          /**
+           * The amount in the minor currency unit (for example, cents for USD).
+           */
           amount: number;
 
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
           currency: string;
         }
 

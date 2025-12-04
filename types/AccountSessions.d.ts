@@ -89,6 +89,11 @@ declare module 'stripe' {
         tax_registrations: Components.TaxRegistrations;
 
         tax_settings: Components.TaxSettings;
+
+        /**
+         * Configuration for the [check scanning](https://docs.stripe.com/connect/supported-embedded-components/check-scanning/) embedded component.
+         */
+        check_scanning?: Components.CheckScanning | null;
       }
 
       namespace Components {
@@ -212,6 +217,19 @@ declare module 'stripe' {
         }
 
         namespace CapitalFinancingPromotion {
+          interface Features {}
+        }
+
+        interface CheckScanning {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          features: CheckScanning.Features;
+        }
+
+        namespace CheckScanning {
           interface Features {}
         }
 

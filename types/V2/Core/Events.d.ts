@@ -24,6 +24,11 @@ declare module 'stripe' {
           namespace Reason {
             interface Request {
               /**
+               * The client details that made the request.
+               */
+              client?: Request.Client;
+
+              /**
                * ID of the API request that caused the event.
                */
               id: string;
@@ -32,6 +37,62 @@ declare module 'stripe' {
                * The idempotency key transmitted during the request.
                */
               idempotency_key: string;
+            }
+
+            namespace Request {
+              interface Client {
+                /**
+                 * The type of the client.
+                 */
+                type: Client.Type;
+
+                /**
+                 * API key that triggered the event.
+                 */
+                api_key?: Client.ApiKey;
+
+                /**
+                 * Dashboard user that triggered the event.
+                 */
+                dashboard_user?: Client.DashboardUser;
+
+                /**
+                 * Stripe action that triggered the event.
+                 */
+                stripe_action?: Client.StripeAction;
+              }
+
+              namespace Client {
+                interface ApiKey {
+                  /**
+                   * The ID of the API key.
+                   */
+                  id: string;
+                }
+
+                interface DashboardUser {
+                  /**
+                   * The email of the dashboard user.
+                   */
+                  email: string;
+
+                  /**
+                   * The IP address of the user.
+                   */
+                  ip_address: string;
+
+                  /**
+                   * The machine identifier of the user.
+                   */
+                  machine_identifier: string;
+                }
+
+                type StripeAction = {
+                  [key: string]: unknown;
+                };
+
+                type Type = 'api_key' | 'dashboard_user' | 'stripe_action';
+              }
             }
           }
         }
