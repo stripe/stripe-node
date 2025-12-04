@@ -1,5 +1,17 @@
 # Changelog
 
+## 20.1.0-alpha.4 - 2025-12-04
+* [#2519](https://github.com/stripe/stripe-node/pull/2519) Update generated code for private-preview
+  * Add support for event notifications `V2IamApiKeyCreatedEvent`, `V2IamApiKeyDefaultSecretRevealedEvent`, `V2IamApiKeyExpiredEvent`, `V2IamApiKeyPermissionsUpdatedEvent`, `V2IamApiKeyRotatedEvent`, and `V2IamApiKeyUpdatedEvent`
+* [#2517](https://github.com/stripe/stripe-node/pull/2517) Update generated code for private-preview
+  * Add support for `check_scanning` on `AccountSession.components`
+  * Add support for `client` on `V2.Core.Event.reason.request`
+  * Add support for `stripe_balance_payment` on `V2.MoneyManagement.ReceivedCredit` and `V2.MoneyManagement.ReceivedDebit`
+  * Add support for new value `stripe_balance_payment` on enum `V2.MoneyManagement.ReceivedCredit.type`
+  * Add support for `balance_transfer` on `V2.MoneyManagement.ReceivedDebit`
+  * Add support for new values `balance_transfer` and `stripe_balance_payment` on enum `V2.MoneyManagement.ReceivedDebit.type`
+  * Add support for `include` on `V2.Core.EventListParams` and `V2.Core.EventRetrieveParams`
+
 ## 20.1.0-alpha.3 - 2025-11-24
 * [#2512](https://github.com/stripe/stripe-node/pull/2512) Update generated code for private-preview
   * Add support for new resource `ProductCatalog.TrialOffer`
