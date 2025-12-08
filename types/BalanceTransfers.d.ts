@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     /**
      * Balance transfers represent funds moving between balance types on your Stripe account.
-     * They currently support moving funds between your Stripe balance and your [Issuing](https://stripe.com/docs/issuing) balance and between your [Allocated Funds](https://stripe.com/docs/connect/funds-segregation) balance and your Stripe balance.
+     * They currently support moving funds between your Stripe balance and your [Issuing](https://docs.stripe.com/issuing) balance and between your [Allocated Funds](https://docs.stripe.com/connect/funds-segregation) balance and your Stripe balance.
      */
     interface BalanceTransfer {
       /**
@@ -38,7 +38,7 @@ declare module 'stripe' {
       destination_balance: BalanceTransfer.DestinationBalance | null;
 
       /**
-       * A [hosted transaction receipt](https://stripe.com/docs/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
+       * A [hosted transaction receipt](https://docs.stripe.com/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
        */
       hosted_regulatory_receipt_url: string | null;
 
@@ -48,7 +48,7 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata;
 

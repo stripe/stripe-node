@@ -487,12 +487,114 @@ declare module 'stripe' {
         payment_method?: string;
 
         /**
+         * The payment method data for this requested session.
+         */
+        payment_method_data?: RequestedSessionConfirmParams.PaymentMethodData;
+
+        /**
          * Risk details/signals associated with the requested session
          */
         risk_details?: RequestedSessionConfirmParams.RiskDetails;
       }
 
       namespace RequestedSessionConfirmParams {
+        interface PaymentMethodData {
+          /**
+           * The billing details for the payment method data.
+           */
+          billing_details?: PaymentMethodData.BillingDetails;
+
+          /**
+           * The card for the payment method data.
+           */
+          card?: PaymentMethodData.Card;
+
+          /**
+           * The type of the payment method data.
+           */
+          type?: 'card';
+        }
+
+        namespace PaymentMethodData {
+          interface BillingDetails {
+            /**
+             * The address for the billing details.
+             */
+            address?: BillingDetails.Address;
+
+            /**
+             * The email for the billing details.
+             */
+            email?: string;
+
+            /**
+             * The name for the billing details.
+             */
+            name?: string;
+
+            /**
+             * The phone for the billing details.
+             */
+            phone?: string;
+          }
+
+          namespace BillingDetails {
+            interface Address {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * Address line 1, such as the street, PO Box, or company name.
+               */
+              line1: string;
+
+              /**
+               * Address line 2, such as the apartment, suite, unit, or building.
+               */
+              line2?: string;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string;
+
+              /**
+               * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
+               */
+              state: string;
+            }
+          }
+
+          interface Card {
+            /**
+             * The CVC of the card.
+             */
+            cvc?: string;
+
+            /**
+             * The expiration month of the card.
+             */
+            exp_month: number;
+
+            /**
+             * The expiration year of the card.
+             */
+            exp_year: number;
+
+            /**
+             * The number of the card.
+             */
+            number: string;
+          }
+        }
+
         interface RiskDetails {
           /**
            * The client device metadata details for this requested session.

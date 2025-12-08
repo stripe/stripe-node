@@ -63,7 +63,7 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
         metadata: Stripe.Metadata | null;
 
@@ -272,6 +272,72 @@ declare module 'stripe' {
            * The total before any discounts or taxes are applied.
            */
           amount_subtotal: number;
+
+          product_details?: LineItemDetail.ProductDetails;
+        }
+
+        namespace LineItemDetail {
+          interface ProductDetails {
+            /**
+             * Custom attributes for the product.
+             */
+            custom_attributes: Array<ProductDetails.CustomAttribute> | null;
+
+            /**
+             * The description of the product.
+             */
+            description: string | null;
+
+            /**
+             * Disclosures for the product.
+             */
+            disclosures: Array<ProductDetails.Disclosure> | null;
+
+            /**
+             * The images of the product.
+             */
+            images: Array<string> | null;
+
+            /**
+             * The title of the product.
+             */
+            title: string;
+          }
+
+          namespace ProductDetails {
+            interface CustomAttribute {
+              /**
+               * The display name of the custom attribute.
+               */
+              display_name: string;
+
+              /**
+               * The value of the custom attribute.
+               */
+              value: string;
+            }
+
+            interface Disclosure {
+              /**
+               * The content of the disclosure.
+               */
+              content: string;
+
+              /**
+               * The content type of the disclosure.
+               */
+              content_type: Disclosure.ContentType;
+
+              /**
+               * The type of disclosure.
+               */
+              type: 'disclaimer';
+            }
+
+            namespace Disclosure {
+              type ContentType = 'link' | 'markdown' | 'plain';
+            }
+          }
         }
 
         interface OrderDetails {

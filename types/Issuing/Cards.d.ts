@@ -1260,6 +1260,11 @@ declare module 'stripe' {
              * Reason the card is ineligible for Apple Pay
              */
             ineligible_reason: ApplePay.IneligibleReason | null;
+
+            /**
+             * Unique identifier for the card in Apple Pay
+             */
+            primary_account_identifier?: string | null;
           }
 
           namespace ApplePay {
@@ -1279,6 +1284,11 @@ declare module 'stripe' {
              * Reason the card is ineligible for Google Pay
              */
             ineligible_reason: GooglePay.IneligibleReason | null;
+
+            /**
+             * Unique identifier for the card in Google Pay
+             */
+            primary_account_identifier?: string | null;
           }
 
           namespace GooglePay {

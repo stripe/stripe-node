@@ -175,6 +175,11 @@ declare module 'stripe' {
          * Configuration for the [tax threshold monitoring](https://docs.stripe.com/connect/supported-embedded-components/tax-threshold-monitoring/) embedded component.
          */
         tax_threshold_monitoring?: Components.TaxThresholdMonitoring;
+
+        /**
+         * Configuration for the [check scanning](https://docs.stripe.com/connect/supported-embedded-components/check-scanning/) embedded component.
+         */
+        check_scanning?: Components.CheckScanning;
       }
 
       namespace Components {
@@ -374,6 +379,22 @@ declare module 'stripe' {
         }
 
         namespace CapitalOverview {
+          interface Features {}
+        }
+
+        interface CheckScanning {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * An empty list, because this embedded component has no features.
+           */
+          features?: CheckScanning.Features;
+        }
+
+        namespace CheckScanning {
           interface Features {}
         }
 

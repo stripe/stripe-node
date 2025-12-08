@@ -2297,12 +2297,45 @@ declare module 'stripe' {
          * Only return cards that have the given type. One of `virtual` or `physical`.
          */
         type?: CardListParams.Type;
+
+        /**
+         * Filter cards by wallet settings.
+         */
+        wallets?: CardListParams.Wallets;
       }
 
       namespace CardListParams {
         type Status = 'active' | 'canceled' | 'inactive';
 
         type Type = 'physical' | 'virtual';
+
+        interface Wallets {
+          /**
+           * Filter cards by Apple Pay wallet details.
+           */
+          apple_pay?: Wallets.ApplePay;
+
+          /**
+           * Filter cards by Google Pay wallet details.
+           */
+          google_pay?: Wallets.GooglePay;
+        }
+
+        namespace Wallets {
+          interface ApplePay {
+            /**
+             * Query by Apple Pay primary account identifier.
+             */
+            primary_account_identifier?: string;
+          }
+
+          interface GooglePay {
+            /**
+             * Query by Google Pay primary account identifier.
+             */
+            primary_account_identifier?: string;
+          }
+        }
       }
 
       class CardsResource {
