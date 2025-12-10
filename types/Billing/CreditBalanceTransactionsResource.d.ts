@@ -17,12 +17,12 @@ declare module 'stripe' {
         credit_grant?: string;
 
         /**
-         * The customer for which to fetch credit balance transactions.
+         * The customer whose credit balance transactions you're retrieving.
          */
         customer?: string;
 
         /**
-         * The account for which to fetch credit balance transactions.
+         * The account representing the customer whose credit balance transactions you're retrieving.
          */
         customer_account?: string;
 

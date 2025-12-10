@@ -14,12 +14,12 @@ declare module 'stripe' {
       amounts_due?: Stripe.Emptyable<Array<InvoiceCreateParams.AmountsDue>>;
 
       /**
-       * A fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/billing/invoices/connect#collecting-fees).
+       * A fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://docs.stripe.com/billing/invoices/connect#collecting-fees).
        */
       application_fee_amount?: number;
 
       /**
-       * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action. Defaults to false.
+       * Controls whether Stripe performs [automatic collection](https://docs.stripe.com/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action. Defaults to false.
        */
       auto_advance?: boolean;
 
@@ -49,12 +49,12 @@ declare module 'stripe' {
       custom_fields?: Stripe.Emptyable<Array<InvoiceCreateParams.CustomField>>;
 
       /**
-       * The ID of the customer who will be billed.
+       * The ID of the customer to bill.
        */
       customer?: string;
 
       /**
-       * The ID of the account who will be billed.
+       * The ID of the account to bill.
        */
       customer_account?: string;
 
@@ -114,7 +114,7 @@ declare module 'stripe' {
       footer?: string;
 
       /**
-       * Revise an existing invoice. The new invoice will be created in `status=draft`. See the [revision documentation](https://stripe.com/docs/invoicing/invoice-revisions) for more details.
+       * Revise an existing invoice. The new invoice will be created in `status=draft`. See the [revision documentation](https://docs.stripe.com/invoicing/invoice-revisions) for more details.
        */
       from_invoice?: InvoiceCreateParams.FromInvoice;
 
@@ -124,7 +124,7 @@ declare module 'stripe' {
       issuer?: InvoiceCreateParams.Issuer;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
@@ -134,7 +134,7 @@ declare module 'stripe' {
       number?: string;
 
       /**
-       * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+       * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://docs.stripe.com/billing/invoices/connect) documentation for details.
        */
       on_behalf_of?: string;
 
@@ -204,7 +204,7 @@ declare module 'stripe' {
 
       interface AutomaticTax {
         /**
-         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
+         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://docs.stripe.com/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
          */
         enabled: boolean;
 
@@ -391,6 +391,11 @@ declare module 'stripe' {
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
           /**
+           * If paying by `payto`, this sub-hash contains details about the PayTo payment method options to pass to the invoice's PaymentIntent.
+           */
+          payto?: Stripe.Emptyable<PaymentMethodOptions.Payto>;
+
+          /**
            * If paying by `pix`, this sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
            */
           pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
@@ -456,12 +461,12 @@ declare module 'stripe' {
             /**
              * Installment configuration for payments attempted on this invoice.
              *
-             * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
+             * For more information, see the [installments integration guide](https://docs.stripe.com/payments/installments).
              */
             installments?: Card.Installments;
 
             /**
-             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
           }
@@ -545,6 +550,42 @@ declare module 'stripe' {
           interface IdBankTransfer {}
 
           interface Konbini {}
+
+          interface Payto {
+            /**
+             * Additional fields for Mandate creation.
+             */
+            mandate_options?: Payto.MandateOptions;
+          }
+
+          namespace Payto {
+            interface MandateOptions {
+              /**
+               * The maximum amount that can be collected in a single invoice. If you don't specify a maximum, then there is no limit.
+               */
+              amount?: number;
+
+              /**
+               * The purpose for which payments are made. Has a default value based on your merchant category code.
+               */
+              purpose?: MandateOptions.Purpose;
+            }
+
+            namespace MandateOptions {
+              type Purpose =
+                | 'dependant_support'
+                | 'government'
+                | 'loan'
+                | 'mortgage'
+                | 'other'
+                | 'pension'
+                | 'personal'
+                | 'retail'
+                | 'salary'
+                | 'tax'
+                | 'utility';
+            }
+          }
 
           interface Pix {
             /**
@@ -692,6 +733,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
@@ -776,7 +818,7 @@ declare module 'stripe' {
           fixed_amount?: ShippingRateData.FixedAmount;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -786,7 +828,7 @@ declare module 'stripe' {
           tax_behavior?: ShippingRateData.TaxBehavior;
 
           /**
-           * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+           * A [tax code](https://docs.stripe.com/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
            */
           tax_code?: string;
 
@@ -933,12 +975,12 @@ declare module 'stripe' {
       amounts_due?: Stripe.Emptyable<Array<InvoiceUpdateParams.AmountsDue>>;
 
       /**
-       * A fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/billing/invoices/connect#collecting-fees).
+       * A fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://docs.stripe.com/billing/invoices/connect#collecting-fees).
        */
       application_fee_amount?: number;
 
       /**
-       * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice.
+       * Controls whether Stripe performs [automatic collection](https://docs.stripe.com/invoicing/integration/automatic-advancement-collection) of the invoice.
        */
       auto_advance?: boolean;
 
@@ -1023,7 +1065,7 @@ declare module 'stripe' {
       issuer?: InvoiceUpdateParams.Issuer;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
@@ -1033,7 +1075,7 @@ declare module 'stripe' {
       number?: Stripe.Emptyable<string>;
 
       /**
-       * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+       * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://docs.stripe.com/billing/invoices/connect) documentation for details.
        */
       on_behalf_of?: Stripe.Emptyable<string>;
 
@@ -1093,7 +1135,7 @@ declare module 'stripe' {
 
       interface AutomaticTax {
         /**
-         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
+         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://docs.stripe.com/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
          */
         enabled: boolean;
 
@@ -1268,6 +1310,11 @@ declare module 'stripe' {
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
           /**
+           * If paying by `payto`, this sub-hash contains details about the PayTo payment method options to pass to the invoice's PaymentIntent.
+           */
+          payto?: Stripe.Emptyable<PaymentMethodOptions.Payto>;
+
+          /**
            * If paying by `pix`, this sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
            */
           pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
@@ -1333,12 +1380,12 @@ declare module 'stripe' {
             /**
              * Installment configuration for payments attempted on this invoice.
              *
-             * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
+             * For more information, see the [installments integration guide](https://docs.stripe.com/payments/installments).
              */
             installments?: Card.Installments;
 
             /**
-             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
           }
@@ -1422,6 +1469,42 @@ declare module 'stripe' {
           interface IdBankTransfer {}
 
           interface Konbini {}
+
+          interface Payto {
+            /**
+             * Additional fields for Mandate creation.
+             */
+            mandate_options?: Payto.MandateOptions;
+          }
+
+          namespace Payto {
+            interface MandateOptions {
+              /**
+               * The maximum amount that can be collected in a single invoice. If you don't specify a maximum, then there is no limit.
+               */
+              amount?: number;
+
+              /**
+               * The purpose for which payments are made. Has a default value based on your merchant category code.
+               */
+              purpose?: MandateOptions.Purpose;
+            }
+
+            namespace MandateOptions {
+              type Purpose =
+                | 'dependant_support'
+                | 'government'
+                | 'loan'
+                | 'mortgage'
+                | 'other'
+                | 'pension'
+                | 'personal'
+                | 'retail'
+                | 'salary'
+                | 'tax'
+                | 'utility';
+            }
+          }
 
           interface Pix {
             /**
@@ -1569,6 +1652,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
@@ -1651,7 +1735,7 @@ declare module 'stripe' {
           fixed_amount?: ShippingRateData.FixedAmount;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -1661,7 +1745,7 @@ declare module 'stripe' {
           tax_behavior?: ShippingRateData.TaxBehavior;
 
           /**
-           * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+           * A [tax code](https://docs.stripe.com/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
            */
           tax_code?: string;
 
@@ -1811,7 +1895,7 @@ declare module 'stripe' {
       customer?: string;
 
       /**
-       * Only return invoices for the account specified by this account ID.
+       * Only return invoices for the account representing the customer specified by this account ID.
        */
       customer_account?: string;
 
@@ -1823,7 +1907,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
+       * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://docs.stripe.com/billing/invoices/workflow#workflow-overview)
        */
       status?: InvoiceListParams.Status;
 
@@ -1853,7 +1937,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       invoice_metadata?: Stripe.Emptyable<{
         [key: string]: string;
@@ -1893,17 +1977,17 @@ declare module 'stripe' {
         margins?: Stripe.Emptyable<Array<string>>;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
-         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://docs.stripe.com/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
          */
         period?: Line.Period;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+         * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
          */
         price_data?: Line.PriceData;
 
@@ -1918,7 +2002,7 @@ declare module 'stripe' {
         quantity?: number;
 
         /**
-         * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://stripe.com/docs/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://stripe.com/docs/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
+         * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
          */
         tax_amounts?: Stripe.Emptyable<Array<Line.TaxAmount>>;
 
@@ -2019,7 +2103,7 @@ declare module 'stripe' {
           product_data?: PriceData.ProductData;
 
           /**
-           * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
            */
           tax_behavior?: PriceData.TaxBehavior;
 
@@ -2047,7 +2131,7 @@ declare module 'stripe' {
             images?: Array<string>;
 
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: Stripe.MetadataParam;
 
@@ -2057,7 +2141,7 @@ declare module 'stripe' {
             name: string;
 
             /**
-             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+             * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
              */
             tax_code?: string;
 
@@ -2235,7 +2319,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
@@ -2263,7 +2347,7 @@ declare module 'stripe' {
       automatic_tax?: InvoiceCreatePreviewParams.AutomaticTax;
 
       /**
-       * The identifier of the billing cadence for which you'd like to retrieve the upcoming invoice.Cannot be provided when `subscription`, `schedule`, `subscription_details` or `schedule_details` are provided.
+       * The identifier of the billing cadence for which you'd like to retrieve the upcoming invoice. Cannot be provided when `subscription`, `schedule`, `subscription_details` or `schedule_details` are provided.
        */
       billing_cadence?: string;
 
@@ -2273,12 +2357,12 @@ declare module 'stripe' {
       currency?: string;
 
       /**
-       * The identifier of the customer whose upcoming invoice you'd like to retrieve. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
+       * The identifier of the customer whose upcoming invoice you're retrieving. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
        */
       customer?: string;
 
       /**
-       * The identifier of the account whose upcoming invoice you'd like to retrieve. If `automatic_tax` is enabled then one of `customer`, `customer_account`, `customer_details`, `subscription`, or `schedule` must be set.
+       * The identifier of the account representing the customer whose upcoming invoice you're retrieving. If `automatic_tax` is enabled then one of `customer`, `customer_account`, `customer_details`, `subscription`, or `schedule` must be set.
        */
       customer_account?: string;
 
@@ -2308,7 +2392,7 @@ declare module 'stripe' {
       issuer?: InvoiceCreatePreviewParams.Issuer;
 
       /**
-       * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+       * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://docs.stripe.com/billing/invoices/connect) documentation for details.
        */
       on_behalf_of?: Stripe.Emptyable<string>;
 
@@ -2341,7 +2425,7 @@ declare module 'stripe' {
     namespace InvoiceCreatePreviewParams {
       interface AutomaticTax {
         /**
-         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
+         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://docs.stripe.com/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
          */
         enabled: boolean;
 
@@ -2371,7 +2455,7 @@ declare module 'stripe' {
 
       interface CustomerDetails {
         /**
-         * The customer's address.
+         * The customer's address. Learn about [country-specific requirements for calculating tax](https://docs.stripe.com/invoicing/taxes?dashboard-or-api=dashboard#set-up-customer).
          */
         address?: Stripe.Emptyable<Stripe.AddressParam>;
 
@@ -2643,12 +2727,12 @@ declare module 'stripe' {
         invoiceitem?: string;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
-         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://docs.stripe.com/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
          */
         period?: InvoiceItem.Period;
 
@@ -2658,7 +2742,7 @@ declare module 'stripe' {
         price?: string;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+         * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
          */
         price_data?: InvoiceItem.PriceData;
 
@@ -2668,12 +2752,12 @@ declare module 'stripe' {
         quantity?: number;
 
         /**
-         * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
          */
         tax_behavior?: InvoiceItem.TaxBehavior;
 
         /**
-         * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+         * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
          */
         tax_code?: Stripe.Emptyable<string>;
 
@@ -2779,7 +2863,7 @@ declare module 'stripe' {
           product: string;
 
           /**
-           * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
            */
           tax_behavior?: PriceData.TaxBehavior;
 
@@ -2836,6 +2920,13 @@ declare module 'stripe' {
         billing_mode?: ScheduleDetails.BillingMode;
 
         /**
+         * Sets the billing schedules for the subscription schedule.
+         */
+        billing_schedules?: Stripe.Emptyable<
+          Array<ScheduleDetails.BillingSchedule>
+        >;
+
+        /**
          * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running. `cancel` will end the subscription schedule and cancel the underlying subscription.
          */
         end_behavior?: ScheduleDetails.EndBehavior;
@@ -2854,13 +2945,6 @@ declare module 'stripe' {
          * In cases where the `schedule_details` params update the currently active phase, specifies if and how to prorate at the time of the request.
          */
         proration_behavior?: ScheduleDetails.ProrationBehavior;
-
-        /**
-         * Sets the billing schedules for the subscription schedule.
-         */
-        billing_schedules?: Stripe.Emptyable<
-          Array<ScheduleDetails.BillingSchedule>
-        >;
       }
 
       namespace ScheduleDetails {
@@ -2881,9 +2965,19 @@ declare module 'stripe' {
           billing_cycle_anchor?: Amendment.BillingCycleAnchor;
 
           /**
+           * Actions to apply to the billing schedules.
+           */
+          billing_schedules_actions?: Array<Amendment.BillingSchedulesAction>;
+
+          /**
            * Changes to the coupons being redeemed or discounts being applied during the amendment time span.
            */
           discount_actions?: Array<Amendment.DiscountAction>;
+
+          /**
+           * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+           */
+          effective_at?: Amendment.EffectiveAt;
 
           /**
            * Changes to the subscription items during the amendment time span.
@@ -2914,16 +3008,6 @@ declare module 'stripe' {
            * Settings related to subscription trials.
            */
           trial_settings?: Amendment.TrialSettings;
-
-          /**
-           * Actions to apply to the billing schedules.
-           */
-          billing_schedules_actions?: Array<Amendment.BillingSchedulesAction>;
-
-          /**
-           * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
-           */
-          effective_at?: Amendment.EffectiveAt;
         }
 
         namespace Amendment {
@@ -3189,7 +3273,7 @@ declare module 'stripe' {
               discounts?: Array<Add.Discount>;
 
               /**
-               * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+               * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
                */
               metadata?: Stripe.MetadataParam;
 
@@ -3625,7 +3709,7 @@ declare module 'stripe' {
           automatic_tax?: Phase.AutomaticTax;
 
           /**
-           * Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+           * Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial. For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
            */
           billing_cycle_anchor?: Phase.BillingCycleAnchor;
 
@@ -3650,7 +3734,7 @@ declare module 'stripe' {
           default_payment_method?: string;
 
           /**
-           * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
+           * A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://docs.stripe.com/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
            */
           default_tax_rates?: Stripe.Emptyable<Array<string>>;
 
@@ -3670,7 +3754,12 @@ declare module 'stripe' {
           duration?: Phase.Duration;
 
           /**
-           * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
+           * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
+           */
+          effective_at?: Phase.EffectiveAt;
+
+          /**
+           * The date at which this phase of the subscription schedule ends. If set, `duration` must not be set.
            */
           end_date?: number | 'now';
 
@@ -3685,7 +3774,7 @@ declare module 'stripe' {
           items: Array<Phase.Item>;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual keys in the subscription's `metadata` can be unset by posting an empty value to them in the phase's `metadata`. To unset all keys in the subscription's `metadata`, update the subscription directly or unset every key individually from the phase's `metadata`.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual keys in the subscription's `metadata` can be unset by posting an empty value to them in the phase's `metadata`. To unset all keys in the subscription's `metadata`, update the subscription directly or unset every key individually from the phase's `metadata`.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -3695,12 +3784,12 @@ declare module 'stripe' {
           on_behalf_of?: string;
 
           /**
-           * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/docs/billing/subscriptions/pause-payment).
+           * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://docs.stripe.com/billing/subscriptions/pause-payment).
            */
           pause_collection?: Phase.PauseCollection;
 
           /**
-           * Controls whether the subscription schedule should create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase if there is a difference in billing configuration. It's different from the request-level [proration_behavior](https://stripe.com/docs/api/subscription_schedules/update#update_subscription_schedule-proration_behavior) parameter which controls what happens if the update request affects the billing configuration (item price, quantity, etc.) of the current phase.
+           * Controls whether the subscription schedule should create [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when transitioning to this phase if there is a difference in billing configuration. It's different from the request-level [proration_behavior](https://docs.stripe.com/api/subscription_schedules/update#update_subscription_schedule-proration_behavior) parameter which controls what happens if the update request affects the billing configuration (item price, quantity, etc.) of the current phase.
            */
           proration_behavior?: Phase.ProrationBehavior;
 
@@ -3733,11 +3822,6 @@ declare module 'stripe' {
            * Settings related to subscription trials.
            */
           trial_settings?: Phase.TrialSettings;
-
-          /**
-           * Configures how the subscription schedule handles billing for phase transitions. Possible values are `phase_start` (default) or `billing_period_start`. `phase_start` bills based on the current state of the subscription, ignoring changes scheduled in future phases. `billing_period_start` bills predictively for upcoming phase transitions within the current billing cycle, including pricing changes and service period adjustments that will occur before the next invoice.
-           */
-          effective_at?: Phase.EffectiveAt;
         }
 
         namespace Phase {
@@ -3748,7 +3832,7 @@ declare module 'stripe' {
             discounts?: Array<AddInvoiceItem.Discount>;
 
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: Stripe.MetadataParam;
 
@@ -3763,7 +3847,7 @@ declare module 'stripe' {
             price?: string;
 
             /**
-             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+             * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
              */
             price_data?: AddInvoiceItem.PriceData;
 
@@ -3901,7 +3985,7 @@ declare module 'stripe' {
               product: string;
 
               /**
-               * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+               * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
                */
               tax_behavior?: PriceData.TaxBehavior;
 
@@ -4093,7 +4177,7 @@ declare module 'stripe' {
             discounts?: Stripe.Emptyable<Array<Item.Discount>>;
 
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a configuration item. Metadata on a configuration item will update the underlying subscription item's `metadata` when the phase is entered, adding new keys and replacing existing keys. Individual keys in the subscription item's `metadata` can be unset by posting an empty value to them in the configuration item's `metadata`. To unset all keys in the subscription item's `metadata`, update the subscription item directly or unset every key individually from the configuration item's `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to a configuration item. Metadata on a configuration item will update the underlying subscription item's `metadata` when the phase is entered, adding new keys and replacing existing keys. Individual keys in the subscription item's `metadata` can be unset by posting an empty value to them in the configuration item's `metadata`. To unset all keys in the subscription item's `metadata`, update the subscription item directly or unset every key individually from the configuration item's `metadata`.
              */
             metadata?: Stripe.MetadataParam;
 
@@ -4108,7 +4192,7 @@ declare module 'stripe' {
             price?: string;
 
             /**
-             * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+             * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
              */
             price_data?: Item.PriceData;
 
@@ -4118,7 +4202,7 @@ declare module 'stripe' {
             quantity?: number;
 
             /**
-             * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+             * A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
              */
             tax_rates?: Stripe.Emptyable<Array<string>>;
 
@@ -4136,7 +4220,7 @@ declare module 'stripe' {
           namespace Item {
             interface BillingThresholds {
               /**
-               * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+               * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
                */
               usage_gte: number;
             }
@@ -4219,7 +4303,7 @@ declare module 'stripe' {
               recurring: PriceData.Recurring;
 
               /**
-               * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+               * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
                */
               tax_behavior?: PriceData.TaxBehavior;
 
@@ -4397,7 +4481,7 @@ declare module 'stripe' {
 
       interface SubscriptionDetails {
         /**
-         * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+         * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://docs.stripe.com/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
          */
         billing_cycle_anchor?: SubscriptionDetails.BillingCycleAnchor | number;
 
@@ -4444,7 +4528,7 @@ declare module 'stripe' {
         prebilling?: SubscriptionDetails.Prebilling;
 
         /**
-         * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+         * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
          */
         proration_behavior?: SubscriptionDetails.ProrationBehavior;
 
@@ -4581,6 +4665,11 @@ declare module 'stripe' {
           clear_usage?: boolean;
 
           /**
+           * The trial offer to apply to this subscription item.
+           */
+          current_trial?: Item.CurrentTrial;
+
+          /**
            * A flag that, if set to `true`, will delete the specified item.
            */
           deleted?: boolean;
@@ -4596,7 +4685,7 @@ declare module 'stripe' {
           id?: string;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
           metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
@@ -4611,7 +4700,7 @@ declare module 'stripe' {
           price?: string;
 
           /**
-           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+           * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
            */
           price_data?: Item.PriceData;
 
@@ -4621,20 +4710,15 @@ declare module 'stripe' {
           quantity?: number;
 
           /**
-           * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+           * A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
            */
           tax_rates?: Stripe.Emptyable<Array<string>>;
-
-          /**
-           * The trial offer to apply to this subscription item.
-           */
-          current_trial?: Item.CurrentTrial;
         }
 
         namespace Item {
           interface BillingThresholds {
             /**
-             * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+             * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
              */
             usage_gte: number;
           }
@@ -4729,7 +4813,7 @@ declare module 'stripe' {
             recurring: PriceData.Recurring;
 
             /**
-             * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
              */
             tax_behavior?: PriceData.TaxBehavior;
 
@@ -4781,7 +4865,7 @@ declare module 'stripe' {
 
     interface InvoiceFinalizeInvoiceParams {
       /**
-       * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
+       * Controls whether Stripe performs [automatic collection](https://docs.stripe.com/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
        */
       auto_advance?: boolean;
 
@@ -4856,7 +4940,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       invoice_metadata?: Stripe.Emptyable<{
         [key: string]: string;
@@ -4883,7 +4967,7 @@ declare module 'stripe' {
 
     interface InvoiceSearchParams {
       /**
-       * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for invoices](https://stripe.com/docs/search#query-fields-for-invoices).
+       * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for invoices](https://docs.stripe.com/search#query-fields-for-invoices).
        */
       query: string;
 
@@ -4922,7 +5006,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
        */
       invoice_metadata?: Stripe.Emptyable<{
         [key: string]: string;
@@ -4962,17 +5046,17 @@ declare module 'stripe' {
         margins?: Stripe.Emptyable<Array<string>>;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
-         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://docs.stripe.com/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
          */
         period?: Line.Period;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+         * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
          */
         price_data?: Line.PriceData;
 
@@ -4987,7 +5071,7 @@ declare module 'stripe' {
         quantity?: number;
 
         /**
-         * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://stripe.com/docs/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://stripe.com/docs/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
+         * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
          */
         tax_amounts?: Stripe.Emptyable<Array<Line.TaxAmount>>;
 
@@ -5088,7 +5172,7 @@ declare module 'stripe' {
           product_data?: PriceData.ProductData;
 
           /**
-           * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
            */
           tax_behavior?: PriceData.TaxBehavior;
 
@@ -5116,7 +5200,7 @@ declare module 'stripe' {
             images?: Array<string>;
 
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: Stripe.MetadataParam;
 
@@ -5126,7 +5210,7 @@ declare module 'stripe' {
             name: string;
 
             /**
-             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+             * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
              */
             tax_code?: string;
 
@@ -5296,17 +5380,17 @@ declare module 'stripe' {
       margins?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. For [type=subscription](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-type) line items, the incoming metadata specified on the request is directly used to set this value, in contrast to [type=invoiceitem](api/invoices/line_item#invoice_line_item_object-type) line items, where any existing metadata on the invoice line is merged with the incoming data.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
-       * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+       * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://docs.stripe.com/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
        */
       period?: InvoiceUpdateLineItemParams.Period;
 
       /**
-       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
        */
       price_data?: InvoiceUpdateLineItemParams.PriceData;
 
@@ -5321,7 +5405,7 @@ declare module 'stripe' {
       quantity?: number;
 
       /**
-       * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://stripe.com/docs/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://stripe.com/docs/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://stripe.com/docs/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
+       * A list of up to 10 tax amounts for this line item. This can be useful if you calculate taxes on your own or use a third-party to calculate them. You cannot set tax amounts if any line item has [tax_rates](https://docs.stripe.com/api/invoices/line_item#invoice_line_item_object-tax_rates) or if the invoice has [default_tax_rates](https://docs.stripe.com/api/invoices/object#invoice_object-default_tax_rates) or uses [automatic tax](https://docs.stripe.com/tax/invoicing). Pass an empty string to remove previously defined tax amounts.
        */
       tax_amounts?: Stripe.Emptyable<
         Array<InvoiceUpdateLineItemParams.TaxAmount>
@@ -5424,7 +5508,7 @@ declare module 'stripe' {
         product_data?: PriceData.ProductData;
 
         /**
-         * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
          */
         tax_behavior?: PriceData.TaxBehavior;
 
@@ -5452,7 +5536,7 @@ declare module 'stripe' {
           images?: Array<string>;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -5462,7 +5546,7 @@ declare module 'stripe' {
           name: string;
 
           /**
-           * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+           * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
            */
           tax_code?: string;
 

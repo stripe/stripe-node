@@ -5,7 +5,7 @@ declare module 'stripe' {
     /**
      * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
      * For example, you can use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
-     * Later, you can use [PaymentIntents](https://stripe.com/docs/api#payment_intents) to drive the payment flow.
+     * Later, you can use [PaymentIntents](https://api.stripe.com#payment_intents) to drive the payment flow.
      *
      * Create a SetupIntent when you're ready to collect your customer's payment credentials.
      * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
@@ -16,9 +16,9 @@ declare module 'stripe' {
      * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
      * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
      * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
-     * If you use the SetupIntent with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer),
+     * If you use the SetupIntent with a [Customer](https://api.stripe.com#setup_intent_object-customer),
      * it automatically attaches the resulting payment method to that Customer after successful setup.
-     * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
+     * We recommend using SetupIntents or [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) on
      * PaymentIntents to save payment methods to prevent saving invalid or unoptimized payment methods.
      *
      * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
@@ -124,7 +124,7 @@ declare module 'stripe' {
       mandate: string | Stripe.Mandate | null;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata | null;
 
@@ -144,7 +144,7 @@ declare module 'stripe' {
       payment_method: string | Stripe.PaymentMethod | null;
 
       /**
-       * Information about the [payment method configuration](https://stripe.com/docs/api/payment_method_configurations) used for this Setup Intent.
+       * Information about the [payment method configuration](https://docs.stripe.com/api/payment_method_configurations) used for this Setup Intent.
        */
       payment_method_configuration_details: SetupIntent.PaymentMethodConfigurationDetails | null;
 
@@ -166,7 +166,7 @@ declare module 'stripe' {
       single_use_mandate: string | Stripe.Mandate | null;
 
       /**
-       * [Status](https://stripe.com/docs/payments/intents#intent-statuses) of this SetupIntent, one of `requires_payment_method`, `requires_confirmation`, `requires_action`, `processing`, `canceled`, or `succeeded`.
+       * [Status](https://docs.stripe.com/payments/intents#intent-statuses) of this SetupIntent, one of `requires_payment_method`, `requires_confirmation`, `requires_action`, `processing`, `canceled`, or `succeeded`.
        */
       status: SetupIntent.Status;
 
@@ -183,7 +183,7 @@ declare module 'stripe' {
         /**
          * Controls whether this SetupIntent will accept redirect-based payment methods.
          *
-         * Redirect-based payment methods may require your customer to be redirected to a payment method's app or site for authentication or additional steps. To [confirm](https://stripe.com/docs/api/setup_intents/confirm) this SetupIntent, you may be required to provide a `return_url` to redirect customers back to your site after they authenticate or complete the setup.
+         * Redirect-based payment methods may require your customer to be redirected to a payment method's app or site for authentication or additional steps. To [confirm](https://docs.stripe.com/api/setup_intents/confirm) this SetupIntent, you may be required to provide a `return_url` to redirect customers back to your site after they authenticate or complete the setup.
          */
         allow_redirects?: AutomaticPaymentMethods.AllowRedirects;
 
@@ -264,7 +264,7 @@ declare module 'stripe' {
 
       interface LastSetupError {
         /**
-         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines) if they provide one.
+         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://docs.stripe.com/declines#retrying-issuer-declines) if they provide one.
          */
         advice_code?: string;
 
@@ -274,17 +274,17 @@ declare module 'stripe' {
         charge?: string;
 
         /**
-         * For some errors that could be handled programmatically, a short string indicating the [error code](https://stripe.com/docs/error-codes) reported.
+         * For some errors that could be handled programmatically, a short string indicating the [error code](https://docs.stripe.com/error-codes) reported.
          */
         code?: LastSetupError.Code;
 
         /**
-         * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://stripe.com/docs/declines#issuer-declines) if they provide one.
+         * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://docs.stripe.com/declines#issuer-declines) if they provide one.
          */
         decline_code?: string;
 
         /**
-         * A URL to more information about the [error code](https://stripe.com/docs/error-codes) reported.
+         * A URL to more information about the [error code](https://docs.stripe.com/error-codes) reported.
          */
         doc_url?: string;
 
@@ -315,20 +315,20 @@ declare module 'stripe' {
          * see the history of payment attempts for a particular session.
          *
          * A PaymentIntent transitions through
-         * [multiple statuses](https://stripe.com/docs/payments/intents#intent-statuses)
+         * [multiple statuses](https://docs.stripe.com/payments/paymentintents/lifecycle)
          * throughout its lifetime as it interfaces with Stripe.js to perform
          * authentication flows and ultimately creates at most one successful charge.
          *
-         * Related guide: [Payment Intents API](https://stripe.com/docs/payments/payment-intents)
+         * Related guide: [Payment Intents API](https://docs.stripe.com/payments/payment-intents)
          */
         payment_intent?: Stripe.PaymentIntent;
 
         /**
          * PaymentMethod objects represent your customer's payment instruments.
-         * You can use them with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or save them to
+         * You can use them with [PaymentIntents](https://docs.stripe.com/payments/payment-intents) to collect payments or save them to
          * Customer objects to store instrument details for future payments.
          *
-         * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
+         * Related guides: [Payment Methods](https://docs.stripe.com/payments/payment-methods) and [More Payment Scenarios](https://docs.stripe.com/payments/more-payment-scenarios).
          */
         payment_method?: Stripe.PaymentMethod;
 
@@ -345,7 +345,7 @@ declare module 'stripe' {
         /**
          * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
          * For example, you can use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
-         * Later, you can use [PaymentIntents](https://stripe.com/docs/api#payment_intents) to drive the payment flow.
+         * Later, you can use [PaymentIntents](https://api.stripe.com#payment_intents) to drive the payment flow.
          *
          * Create a SetupIntent when you're ready to collect your customer's payment credentials.
          * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
@@ -356,9 +356,9 @@ declare module 'stripe' {
          * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
          * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
          * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
-         * If you use the SetupIntent with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer),
+         * If you use the SetupIntent with a [Customer](https://api.stripe.com#setup_intent_object-customer),
          * it automatically attaches the resulting payment method to that Customer after successful setup.
-         * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
+         * We recommend using SetupIntents or [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) on
          * PaymentIntents to save payment methods to prevent saving invalid or unoptimized payment methods.
          *
          * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
@@ -383,6 +383,7 @@ declare module 'stripe' {
           | 'account_information_mismatch'
           | 'account_invalid'
           | 'account_number_invalid'
+          | 'account_token_required_for_v2_account'
           | 'acss_debit_session_incomplete'
           | 'alipay_upgrade_required'
           | 'amount_too_large'
@@ -811,7 +812,7 @@ declare module 'stripe' {
           network: Card.Network | null;
 
           /**
-           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure: Card.RequestThreeDSecure | null;
         }

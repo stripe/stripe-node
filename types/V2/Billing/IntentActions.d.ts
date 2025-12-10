@@ -121,9 +121,9 @@ declare module 'stripe' {
 
           interface Deactivate {
             /**
-             * Configuration for the billing details.
+             * Allows users to override the collect at behavior.
              */
-            billing_details: Deactivate.BillingDetails;
+            collect_at: Deactivate.CollectAt;
 
             /**
              * When the deactivate action will take effect. If not specified, the default behavior is on_reserve.
@@ -142,16 +142,7 @@ declare module 'stripe' {
           }
 
           namespace Deactivate {
-            interface BillingDetails {
-              /**
-               * This controls the proration adjustment for the partial servicing period.
-               */
-              proration_behavior?: BillingDetails.ProrationBehavior;
-            }
-
-            namespace BillingDetails {
-              type ProrationBehavior = 'no_adjustment' | 'prorated_adjustment';
-            }
+            type CollectAt = 'next_billing_date' | 'on_effective_at';
 
             interface EffectiveAt {
               /**
@@ -175,9 +166,52 @@ declare module 'stripe' {
 
             interface PricingPlanSubscriptionDetails {
               /**
+               * Allows users to override the partial period behavior.
+               */
+              overrides?: PricingPlanSubscriptionDetails.Overrides;
+
+              /**
                * ID of the Pricing Plan Subscription to deactivate.
                */
               pricing_plan_subscription: string;
+            }
+
+            namespace PricingPlanSubscriptionDetails {
+              interface Overrides {
+                /**
+                 * Override for the partial period behavior.
+                 */
+                partial_period_behaviors: Array<
+                  Overrides.PartialPeriodBehavior
+                >;
+              }
+
+              namespace Overrides {
+                interface PartialPeriodBehavior {
+                  /**
+                   * Type of the partial period behavior override.
+                   */
+                  type: 'license_fee';
+
+                  /**
+                   * Override for the license fee.
+                   */
+                  license_fee?: PartialPeriodBehavior.LicenseFee;
+                }
+
+                namespace PartialPeriodBehavior {
+                  interface LicenseFee {
+                    /**
+                     * The proration behavior for the partial servicing period. Defines how we prorate the license fee when the user is deactivating.
+                     */
+                    credit_proration_behavior: LicenseFee.CreditProrationBehavior;
+                  }
+
+                  namespace LicenseFee {
+                    type CreditProrationBehavior = 'none' | 'prorated';
+                  }
+                }
+              }
             }
 
             type Type =
@@ -187,9 +221,9 @@ declare module 'stripe' {
 
           interface Modify {
             /**
-             * Configuration for the billing details.
+             * Allows users to override the collect at behavior.
              */
-            billing_details: Modify.BillingDetails;
+            collect_at: Modify.CollectAt;
 
             /**
              * When the modify action will take effect. If not specified, the default behavior is on_reserve.
@@ -208,16 +242,7 @@ declare module 'stripe' {
           }
 
           namespace Modify {
-            interface BillingDetails {
-              /**
-               * This controls the proration adjustment for the partial servicing period.
-               */
-              proration_behavior?: BillingDetails.ProrationBehavior;
-            }
-
-            namespace BillingDetails {
-              type ProrationBehavior = 'no_adjustment' | 'prorated_adjustment';
-            }
+            type CollectAt = 'next_billing_date' | 'on_effective_at';
 
             interface EffectiveAt {
               /**
@@ -257,6 +282,11 @@ declare module 'stripe' {
               new_pricing_plan_version: string;
 
               /**
+               * Allows users to override the partial period behavior.
+               */
+              overrides?: PricingPlanSubscriptionDetails.Overrides;
+
+              /**
                * ID of the Pricing Plan Subscription to modify.
                */
               pricing_plan_subscription: string;
@@ -279,6 +309,49 @@ declare module 'stripe' {
                  */
                 pricing_plan_component?: string;
               }
+
+              interface Overrides {
+                /**
+                 * Override for the partial period behavior.
+                 */
+                partial_period_behaviors: Array<
+                  Overrides.PartialPeriodBehavior
+                >;
+              }
+
+              namespace Overrides {
+                interface PartialPeriodBehavior {
+                  /**
+                   * Type of the partial period behavior override.
+                   */
+                  type: 'license_fee';
+
+                  /**
+                   * Override for the license fee.
+                   */
+                  license_fee?: PartialPeriodBehavior.LicenseFee;
+                }
+
+                namespace PartialPeriodBehavior {
+                  interface LicenseFee {
+                    /**
+                     * The proration behavior for the partial servicing period. Defines how we prorate the license fee when the user is upgrading.
+                     */
+                    credit_proration_behavior: LicenseFee.CreditProrationBehavior;
+
+                    /**
+                     * The proration behavior for the partial servicing period. Defines how we prorate the license fee when the user is downgrading.
+                     */
+                    debit_proration_behavior: LicenseFee.DebitProrationBehavior;
+                  }
+
+                  namespace LicenseFee {
+                    type CreditProrationBehavior = 'none' | 'prorated';
+
+                    type DebitProrationBehavior = 'none' | 'prorated';
+                  }
+                }
+              }
             }
 
             type Type =
@@ -300,9 +373,9 @@ declare module 'stripe' {
 
           interface Subscribe {
             /**
-             * Configuration for the billing details. If not specified, see the default behavior for individual attributes.
+             * Allows users to override the collect at behavior.
              */
-            billing_details: Subscribe.BillingDetails;
+            collect_at: Subscribe.CollectAt;
 
             /**
              * When the subscribe action will take effect. If not specified, the default behavior is on_reserve.
@@ -326,16 +399,7 @@ declare module 'stripe' {
           }
 
           namespace Subscribe {
-            interface BillingDetails {
-              /**
-               * This controls the proration adjustment for the partial servicing period.
-               */
-              proration_behavior?: BillingDetails.ProrationBehavior;
-            }
-
-            namespace BillingDetails {
-              type ProrationBehavior = 'no_adjustment' | 'prorated_adjustment';
-            }
+            type CollectAt = 'next_billing_date' | 'on_effective_at';
 
             interface EffectiveAt {
               /**
@@ -370,6 +434,11 @@ declare module 'stripe' {
               metadata?: Stripe.Metadata;
 
               /**
+               * Allows users to override the partial period behavior.
+               */
+              overrides?: PricingPlanSubscriptionDetails.Overrides;
+
+              /**
                * ID of the Pricing Plan to subscribe to.
                */
               pricing_plan: string;
@@ -401,6 +470,42 @@ declare module 'stripe' {
                  * ID of the pricing plan component.
                  */
                 pricing_plan_component?: string;
+              }
+
+              interface Overrides {
+                /**
+                 * Override for the partial period behavior.
+                 */
+                partial_period_behaviors: Array<
+                  Overrides.PartialPeriodBehavior
+                >;
+              }
+
+              namespace Overrides {
+                interface PartialPeriodBehavior {
+                  /**
+                   * Type of the partial period behavior override.
+                   */
+                  type: 'license_fee';
+
+                  /**
+                   * Override for the license fee.
+                   */
+                  license_fee?: PartialPeriodBehavior.LicenseFee;
+                }
+
+                namespace PartialPeriodBehavior {
+                  interface LicenseFee {
+                    /**
+                     * The proration behavior for the partial servicing period. Defines how we prorate the license fee when the user is subscribing.
+                     */
+                    debit_proration_behavior: LicenseFee.DebitProrationBehavior;
+                  }
+
+                  namespace LicenseFee {
+                    type DebitProrationBehavior = 'none' | 'prorated';
+                  }
+                }
               }
             }
 

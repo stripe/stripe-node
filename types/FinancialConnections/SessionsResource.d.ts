@@ -50,17 +50,17 @@ declare module 'stripe' {
       namespace SessionCreateParams {
         interface AccountHolder {
           /**
-           * The ID of the Stripe account whose accounts will be retrieved. Should only be present if `type` is `account`.
+           * The ID of the Stripe account whose accounts you will retrieve. Only available when `type` is `account`.
            */
           account?: string;
 
           /**
-           * The ID of the Stripe customer whose accounts will be retrieved. Should only be present if `type` is `customer`.
+           * The ID of the Stripe customer whose accounts you will retrieve. Only available when `type` is `customer`.
            */
           customer?: string;
 
           /**
-           * The ID of the Stripe customer Account whose accounts will be retrieved. Should only be present if `type` is `customer`.
+           * The ID of Account representing a customer whose accounts you will retrieve. Only available when `type` is `customer`.
            */
           customer_account?: string;
 

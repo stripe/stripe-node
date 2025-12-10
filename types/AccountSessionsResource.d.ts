@@ -67,6 +67,11 @@ declare module 'stripe' {
         capital_overview?: Components.CapitalOverview;
 
         /**
+         * Configuration for the [check scanning](https://docs.stripe.com/connect/supported-embedded-components/check-scanning/) embedded component.
+         */
+        check_scanning?: Components.CheckScanning;
+
+        /**
          * Configuration for the [disputes list](https://docs.stripe.com/connect/supported-embedded-components/disputes-list/) embedded component.
          */
         disputes_list?: Components.DisputesList;
@@ -175,11 +180,6 @@ declare module 'stripe' {
          * Configuration for the [tax threshold monitoring](https://docs.stripe.com/connect/supported-embedded-components/tax-threshold-monitoring/) embedded component.
          */
         tax_threshold_monitoring?: Components.TaxThresholdMonitoring;
-
-        /**
-         * Configuration for the [check scanning](https://docs.stripe.com/connect/supported-embedded-components/check-scanning/) embedded component.
-         */
-        check_scanning?: Components.CheckScanning;
       }
 
       namespace Components {

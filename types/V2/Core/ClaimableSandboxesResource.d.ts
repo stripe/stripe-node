@@ -31,7 +31,7 @@ declare module 'stripe' {
             email: string;
 
             /**
-             * Name for the sandbox. If not provided, this will be generated.
+             * Name for the sandbox.
              */
             name?: string;
           }

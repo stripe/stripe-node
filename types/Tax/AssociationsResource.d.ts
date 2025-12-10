@@ -5,7 +5,7 @@ declare module 'stripe' {
     namespace Tax {
       interface AssociationFindParams {
         /**
-         * Valid [PaymentIntent](https://stripe.com/docs/api/payment_intents/object) id
+         * Valid [PaymentIntent](https://docs.stripe.com/api/payment_intents/object) id
          */
         payment_intent: string;
 

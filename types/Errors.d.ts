@@ -12,6 +12,7 @@ declare module 'stripe' {
       | 'already_canceled'
       | 'already_exists'
       | 'blocked_by_stripe'
+      | 'controlled_by_alternate_resource'
       | 'controlled_by_dashboard'
       | 'feature_not_enabled'
       | 'financial_account_not_open'
@@ -141,6 +142,7 @@ declare module 'stripe' {
           | 'AlreadyCanceledError'
           | 'AlreadyExistsError'
           | 'BlockedByStripeError'
+          | 'ControlledByAlternateResourceError'
           | 'ControlledByDashboardError'
           | 'FeatureNotEnabledError'
           | 'FinancialAccountNotOpenError'
@@ -309,6 +311,10 @@ declare module 'stripe' {
       export class BlockedByStripeError extends StripeError {
         readonly type: 'BlockedByStripeError';
         readonly rawType: 'blocked_by_stripe';
+      }
+      export class ControlledByAlternateResourceError extends StripeError {
+        readonly type: 'ControlledByAlternateResourceError';
+        readonly rawType: 'controlled_by_alternate_resource';
       }
       export class ControlledByDashboardError extends StripeError {
         readonly type: 'ControlledByDashboardError';

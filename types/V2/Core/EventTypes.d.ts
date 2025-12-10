@@ -82,6 +82,8 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreHealthIssuingAuthorizationRequestTimeoutResolvedEvent
       | Stripe.Events.V2CoreHealthPaymentMethodErrorFiringEvent
       | Stripe.Events.V2CoreHealthPaymentMethodErrorResolvedEvent
+      | Stripe.Events.V2CoreHealthSepaDebitDelayedFiringEvent
+      | Stripe.Events.V2CoreHealthSepaDebitDelayedResolvedEvent
       | Stripe.Events.V2CoreHealthTrafficVolumeDropFiringEvent
       | Stripe.Events.V2CoreHealthTrafficVolumeDropResolvedEvent
       | Stripe.Events.V2CoreHealthWebhookLatencyFiringEvent
@@ -115,6 +117,7 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementOutboundTransferPostedEvent
       | Stripe.Events.V2MoneyManagementOutboundTransferReturnedEvent
       | Stripe.Events.V2MoneyManagementOutboundTransferUpdatedEvent
+      | Stripe.Events.V2MoneyManagementPayoutMethodCreatedEvent
       | Stripe.Events.V2MoneyManagementPayoutMethodUpdatedEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditAvailableEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditFailedEvent
@@ -138,6 +141,17 @@ declare module 'stripe' {
       | Stripe.Events.V2PaymentsOffSessionPaymentFailedEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentRequiresCaptureEvent
       | Stripe.Events.V2PaymentsOffSessionPaymentSucceededEvent
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentCanceledEvent
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentCreatedEvent
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentErroredEvent
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentFundsNotReceivedEvent
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentMatchedEvent
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentNotFoundEvent
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentSettledEvent
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentSubmittedEvent
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentSplitCanceledEvent
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentSplitCreatedEvent
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentSplitSettledEvent
       | Stripe.Events.V2ReportingReportRunCreatedEvent
       | Stripe.Events.V2ReportingReportRunFailedEvent
       | Stripe.Events.V2ReportingReportRunSucceededEvent
@@ -223,6 +237,8 @@ declare module 'stripe' {
       | Stripe.Events.V2CoreHealthIssuingAuthorizationRequestTimeoutResolvedEventNotification
       | Stripe.Events.V2CoreHealthPaymentMethodErrorFiringEventNotification
       | Stripe.Events.V2CoreHealthPaymentMethodErrorResolvedEventNotification
+      | Stripe.Events.V2CoreHealthSepaDebitDelayedFiringEventNotification
+      | Stripe.Events.V2CoreHealthSepaDebitDelayedResolvedEventNotification
       | Stripe.Events.V2CoreHealthTrafficVolumeDropFiringEventNotification
       | Stripe.Events.V2CoreHealthTrafficVolumeDropResolvedEventNotification
       | Stripe.Events.V2CoreHealthWebhookLatencyFiringEventNotification
@@ -256,6 +272,7 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementOutboundTransferPostedEventNotification
       | Stripe.Events.V2MoneyManagementOutboundTransferReturnedEventNotification
       | Stripe.Events.V2MoneyManagementOutboundTransferUpdatedEventNotification
+      | Stripe.Events.V2MoneyManagementPayoutMethodCreatedEventNotification
       | Stripe.Events.V2MoneyManagementPayoutMethodUpdatedEventNotification
       | Stripe.Events.V2MoneyManagementReceivedCreditAvailableEventNotification
       | Stripe.Events.V2MoneyManagementReceivedCreditFailedEventNotification
@@ -279,6 +296,17 @@ declare module 'stripe' {
       | Stripe.Events.V2PaymentsOffSessionPaymentFailedEventNotification
       | Stripe.Events.V2PaymentsOffSessionPaymentRequiresCaptureEventNotification
       | Stripe.Events.V2PaymentsOffSessionPaymentSucceededEventNotification
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentCanceledEventNotification
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentCreatedEventNotification
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentErroredEventNotification
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentFundsNotReceivedEventNotification
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentMatchedEventNotification
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentNotFoundEventNotification
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentSettledEventNotification
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentSubmittedEventNotification
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentSplitCanceledEventNotification
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentSplitCreatedEventNotification
+      | Stripe.Events.V2PaymentsSettlementAllocationIntentSplitSettledEventNotification
       | Stripe.Events.V2ReportingReportRunCreatedEventNotification
       | Stripe.Events.V2ReportingReportRunFailedEventNotification
       | Stripe.Events.V2ReportingReportRunSucceededEventNotification
@@ -2248,10 +2276,32 @@ declare module 'stripe' {
            * The percentage of impacted requests.
            */
           impacted_requests_percentage?: string;
+
+          /**
+           * The top impacted connected accounts (only for platforms).
+           */
+          top_impacted_accounts?: Array<Impact.TopImpactedAccount>;
         }
 
         namespace Impact {
           export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT';
+
+          export interface TopImpactedAccount {
+            /**
+             * The account ID of the impacted connected account.
+             */
+            account: string;
+
+            /**
+             * The number of impacted requests.
+             */
+            impacted_requests: number;
+
+            /**
+             * The percentage of impacted requests.
+             */
+            impacted_requests_percentage?: string;
+          }
         }
       }
     }
@@ -2330,10 +2380,32 @@ declare module 'stripe' {
            * The percentage of impacted requests.
            */
           impacted_requests_percentage?: string;
+
+          /**
+           * The top impacted connected accounts (only for platforms).
+           */
+          top_impacted_accounts?: Array<Impact.TopImpactedAccount>;
         }
 
         namespace Impact {
           export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT';
+
+          export interface TopImpactedAccount {
+            /**
+             * The account ID of the impacted connected account.
+             */
+            account: string;
+
+            /**
+             * The number of impacted requests.
+             */
+            impacted_requests: number;
+
+            /**
+             * The percentage of impacted requests.
+             */
+            impacted_requests_percentage?: string;
+          }
         }
       }
     }
@@ -2407,10 +2479,32 @@ declare module 'stripe' {
            * The percentage of impacted requests.
            */
           impacted_requests_percentage?: string;
+
+          /**
+           * The top impacted connected accounts (only for platforms).
+           */
+          top_impacted_accounts?: Array<Impact.TopImpactedAccount>;
         }
 
         namespace Impact {
           export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT';
+
+          export interface TopImpactedAccount {
+            /**
+             * The account ID of the impacted connected account.
+             */
+            account: string;
+
+            /**
+             * The number of impacted requests.
+             */
+            impacted_requests: number;
+
+            /**
+             * The percentage of impacted requests.
+             */
+            impacted_requests_percentage?: string;
+          }
         }
       }
     }
@@ -2484,10 +2578,32 @@ declare module 'stripe' {
            * The percentage of impacted requests.
            */
           impacted_requests_percentage?: string;
+
+          /**
+           * The top impacted connected accounts (only for platforms).
+           */
+          top_impacted_accounts?: Array<Impact.TopImpactedAccount>;
         }
 
         namespace Impact {
           export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT';
+
+          export interface TopImpactedAccount {
+            /**
+             * The account ID of the impacted connected account.
+             */
+            account: string;
+
+            /**
+             * The number of impacted requests.
+             */
+            impacted_requests: number;
+
+            /**
+             * The percentage of impacted requests.
+             */
+            impacted_requests_percentage?: string;
+          }
         }
       }
     }
@@ -3421,6 +3537,11 @@ declare module 'stripe' {
            * The type of the payment method.
            */
           payment_method_type: Impact.PaymentMethodType;
+
+          /**
+           * The top impacted connected accounts (only for platforms).
+           */
+          top_impacted_accounts?: Array<Impact.TopImpactedAccount>;
         }
 
         namespace Impact {
@@ -3494,6 +3615,23 @@ declare module 'stripe' {
             | 'vipps'
             | 'wechat_pay'
             | 'zip';
+
+          export interface TopImpactedAccount {
+            /**
+             * The account ID of the impacted connected account.
+             */
+            account: string;
+
+            /**
+             * The number of impacted requests.
+             */
+            impacted_requests: number;
+
+            /**
+             * The percentage of impacted requests.
+             */
+            impacted_requests_percentage?: string;
+          }
         }
       }
     }
@@ -3562,6 +3700,11 @@ declare module 'stripe' {
            * The type of the payment method.
            */
           payment_method_type: Impact.PaymentMethodType;
+
+          /**
+           * The top impacted connected accounts (only for platforms).
+           */
+          top_impacted_accounts?: Array<Impact.TopImpactedAccount>;
         }
 
         namespace Impact {
@@ -3635,6 +3778,134 @@ declare module 'stripe' {
             | 'vipps'
             | 'wechat_pay'
             | 'zip';
+
+          export interface TopImpactedAccount {
+            /**
+             * The account ID of the impacted connected account.
+             */
+            account: string;
+
+            /**
+             * The number of impacted requests.
+             */
+            impacted_requests: number;
+
+            /**
+             * The percentage of impacted requests.
+             */
+            impacted_requests_percentage?: string;
+          }
+        }
+      }
+    }
+
+    /**
+     * Occurs when a SEPA debit delayed alert is firing.
+     */
+    export interface V2CoreHealthSepaDebitDelayedFiringEvent
+      extends V2.Core.EventBase {
+      type: 'v2.core.health.sepa_debit_delayed.firing';
+      // Retrieves data specific to this event.
+      data: V2CoreHealthSepaDebitDelayedFiringEvent.Data;
+    }
+    export interface V2CoreHealthSepaDebitDelayedFiringEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.health.sepa_debit_delayed.firing';
+      fetchEvent(): Promise<V2CoreHealthSepaDebitDelayedFiringEvent>;
+    }
+
+    namespace V2CoreHealthSepaDebitDelayedFiringEvent {
+      export interface Data {
+        /**
+         * The grouping key for the alert.
+         */
+        grouping_key: string;
+
+        /**
+         * The user impact.
+         */
+        impact: Data.Impact;
+
+        /**
+         * The time when impact on the user experience was first detected.
+         */
+        started_at: string;
+
+        /**
+         * A short description of the alert.
+         */
+        summary: string;
+      }
+
+      namespace Data {
+        export interface Impact {
+          /**
+           * The number of impacted payments.
+           */
+          impacted_payments: number;
+
+          /**
+           * The percentage of impacted payments.
+           */
+          impacted_payments_percentage: string;
+        }
+      }
+    }
+
+    /**
+     * Occurs when a SEPA debit delayed alert is resolved.
+     */
+    export interface V2CoreHealthSepaDebitDelayedResolvedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.core.health.sepa_debit_delayed.resolved';
+      // Retrieves data specific to this event.
+      data: V2CoreHealthSepaDebitDelayedResolvedEvent.Data;
+    }
+    export interface V2CoreHealthSepaDebitDelayedResolvedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.core.health.sepa_debit_delayed.resolved';
+      fetchEvent(): Promise<V2CoreHealthSepaDebitDelayedResolvedEvent>;
+    }
+
+    namespace V2CoreHealthSepaDebitDelayedResolvedEvent {
+      export interface Data {
+        /**
+         * The grouping key for the alert.
+         */
+        grouping_key: string;
+
+        /**
+         * The user impact.
+         */
+        impact: Data.Impact;
+
+        /**
+         * The time when the user experience has returned to expected levels.
+         */
+        resolved_at: string;
+
+        /**
+         * The time when impact on the user experience was first detected.
+         */
+        started_at: string;
+
+        /**
+         * A short description of the alert.
+         */
+        summary: string;
+      }
+
+      namespace Data {
+        export interface Impact {
+          /**
+           * The number of impacted payments.
+           */
+          impacted_payments: number;
+
+          /**
+           * The percentage of impacted payments.
+           */
+          impacted_payments_percentage: string;
         }
       }
     }
@@ -4461,6 +4732,27 @@ declare module 'stripe' {
     }
 
     /**
+     * Occurs when a PayoutMethod is created.
+     */
+    export interface V2MoneyManagementPayoutMethodCreatedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.money_management.payout_method.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.MoneyManagement.PayoutMethod>;
+    }
+    export interface V2MoneyManagementPayoutMethodCreatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.money_management.payout_method.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.MoneyManagement.PayoutMethod>;
+      fetchEvent(): Promise<V2MoneyManagementPayoutMethodCreatedEvent>;
+    }
+
+    /**
      * Occurs when a PayoutMethod is updated.
      */
     export interface V2MoneyManagementPayoutMethodUpdatedEvent
@@ -4971,6 +5263,314 @@ declare module 'stripe' {
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.Payments.OffSessionPayment>;
       fetchEvent(): Promise<V2PaymentsOffSessionPaymentSucceededEvent>;
+    }
+
+    /**
+     * Occurs when a settlement allocation intent is canceled.
+     */
+    export interface V2PaymentsSettlementAllocationIntentCanceledEvent
+      extends V2.Core.EventBase {
+      type: 'v2.payments.settlement_allocation_intent.canceled';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.SettlementAllocationIntent>;
+    }
+    export interface V2PaymentsSettlementAllocationIntentCanceledEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.payments.settlement_allocation_intent.canceled';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.SettlementAllocationIntent>;
+      fetchEvent(): Promise<V2PaymentsSettlementAllocationIntentCanceledEvent>;
+    }
+
+    /**
+     * Occurs when a settlement allocation intent is created.
+     */
+    export interface V2PaymentsSettlementAllocationIntentCreatedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.payments.settlement_allocation_intent.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.SettlementAllocationIntent>;
+    }
+    export interface V2PaymentsSettlementAllocationIntentCreatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.payments.settlement_allocation_intent.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.SettlementAllocationIntent>;
+      fetchEvent(): Promise<V2PaymentsSettlementAllocationIntentCreatedEvent>;
+    }
+
+    /**
+     * Occurs when an error occurs in reconciling a settlement allocation intent.
+     */
+    export interface V2PaymentsSettlementAllocationIntentErroredEvent
+      extends V2.Core.EventBase {
+      type: 'v2.payments.settlement_allocation_intent.errored';
+      // Retrieves data specific to this event.
+      data: V2PaymentsSettlementAllocationIntentErroredEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.SettlementAllocationIntent>;
+    }
+    export interface V2PaymentsSettlementAllocationIntentErroredEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.payments.settlement_allocation_intent.errored';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.SettlementAllocationIntent>;
+      fetchEvent(): Promise<V2PaymentsSettlementAllocationIntentErroredEvent>;
+    }
+
+    namespace V2PaymentsSettlementAllocationIntentErroredEvent {
+      export interface Data {
+        /**
+         * Stripe doc link to debug the issue.
+         */
+        doc_url?: string;
+
+        /**
+         * User Message detailing the reason code and possible resolution .
+         */
+        message: string;
+
+        /**
+         * Open Enum. The `errored` status reason.
+         */
+        reason_code: 'amount_mismatch';
+      }
+    }
+
+    /**
+     * Occurs when no received credit exists for a settlement allocation intent.
+     */
+    export interface V2PaymentsSettlementAllocationIntentFundsNotReceivedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.payments.settlement_allocation_intent.funds_not_received';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.SettlementAllocationIntent>;
+    }
+    export interface V2PaymentsSettlementAllocationIntentFundsNotReceivedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.payments.settlement_allocation_intent.funds_not_received';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.SettlementAllocationIntent>;
+      fetchEvent(): Promise<
+        V2PaymentsSettlementAllocationIntentFundsNotReceivedEvent
+      >;
+    }
+
+    /**
+     * Occurs when a settlement allocation intent is matched.
+     */
+    export interface V2PaymentsSettlementAllocationIntentMatchedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.payments.settlement_allocation_intent.matched';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.SettlementAllocationIntent>;
+    }
+    export interface V2PaymentsSettlementAllocationIntentMatchedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.payments.settlement_allocation_intent.matched';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.SettlementAllocationIntent>;
+      fetchEvent(): Promise<V2PaymentsSettlementAllocationIntentMatchedEvent>;
+    }
+
+    /**
+     * Occurs when a ReceivedCredit has no settlement intent matching it.
+     */
+    export interface V2PaymentsSettlementAllocationIntentNotFoundEvent
+      extends V2.Core.EventBase {
+      type: 'v2.payments.settlement_allocation_intent.not_found';
+      // Retrieves data specific to this event.
+      data: V2PaymentsSettlementAllocationIntentNotFoundEvent.Data;
+    }
+    export interface V2PaymentsSettlementAllocationIntentNotFoundEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.payments.settlement_allocation_intent.not_found';
+      fetchEvent(): Promise<V2PaymentsSettlementAllocationIntentNotFoundEvent>;
+    }
+
+    namespace V2PaymentsSettlementAllocationIntentNotFoundEvent {
+      export interface Data {
+        /**
+         * The ID of the ReceivedCredit.
+         */
+        received_credit_id: string;
+      }
+    }
+
+    /**
+     * Occurs when a settlement allocation intent is settled.
+     */
+    export interface V2PaymentsSettlementAllocationIntentSettledEvent
+      extends V2.Core.EventBase {
+      type: 'v2.payments.settlement_allocation_intent.settled';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.SettlementAllocationIntent>;
+    }
+    export interface V2PaymentsSettlementAllocationIntentSettledEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.payments.settlement_allocation_intent.settled';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.SettlementAllocationIntent>;
+      fetchEvent(): Promise<V2PaymentsSettlementAllocationIntentSettledEvent>;
+    }
+
+    /**
+     * Occurs when a settlement allocation intent is submitted.
+     */
+    export interface V2PaymentsSettlementAllocationIntentSubmittedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.payments.settlement_allocation_intent.submitted';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.SettlementAllocationIntent>;
+    }
+    export interface V2PaymentsSettlementAllocationIntentSubmittedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.payments.settlement_allocation_intent.submitted';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.Payments.SettlementAllocationIntent>;
+      fetchEvent(): Promise<V2PaymentsSettlementAllocationIntentSubmittedEvent>;
+    }
+
+    /**
+     * Occurs when a settlement allocation intent split is canceled.
+     */
+    export interface V2PaymentsSettlementAllocationIntentSplitCanceledEvent
+      extends V2.Core.EventBase {
+      type: 'v2.payments.settlement_allocation_intent_split.canceled';
+      // Retrieves data specific to this event.
+      data: V2PaymentsSettlementAllocationIntentSplitCanceledEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<
+        V2.Payments.SettlementAllocationIntentSplit
+      >;
+    }
+    export interface V2PaymentsSettlementAllocationIntentSplitCanceledEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.payments.settlement_allocation_intent_split.canceled';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<
+        V2.Payments.SettlementAllocationIntentSplit
+      >;
+      fetchEvent(): Promise<
+        V2PaymentsSettlementAllocationIntentSplitCanceledEvent
+      >;
+    }
+
+    namespace V2PaymentsSettlementAllocationIntentSplitCanceledEvent {
+      export interface Data {
+        /**
+         * The ID of the SettlementAllocationIntent this split belongs to.
+         */
+        settlement_allocation_intent_id: string;
+      }
+    }
+
+    /**
+     * Occurs when a settlement allocation intent split is created.
+     */
+    export interface V2PaymentsSettlementAllocationIntentSplitCreatedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.payments.settlement_allocation_intent_split.created';
+      // Retrieves data specific to this event.
+      data: V2PaymentsSettlementAllocationIntentSplitCreatedEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<
+        V2.Payments.SettlementAllocationIntentSplit
+      >;
+    }
+    export interface V2PaymentsSettlementAllocationIntentSplitCreatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.payments.settlement_allocation_intent_split.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<
+        V2.Payments.SettlementAllocationIntentSplit
+      >;
+      fetchEvent(): Promise<
+        V2PaymentsSettlementAllocationIntentSplitCreatedEvent
+      >;
+    }
+
+    namespace V2PaymentsSettlementAllocationIntentSplitCreatedEvent {
+      export interface Data {
+        /**
+         * The ID of the SettlementAllocationIntent this split belongs to.
+         */
+        settlement_allocation_intent_id: string;
+      }
+    }
+
+    /**
+     * Occurs when a settlement allocation intent split is settled.
+     */
+    export interface V2PaymentsSettlementAllocationIntentSplitSettledEvent
+      extends V2.Core.EventBase {
+      type: 'v2.payments.settlement_allocation_intent_split.settled';
+      // Retrieves data specific to this event.
+      data: V2PaymentsSettlementAllocationIntentSplitSettledEvent.Data;
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<
+        V2.Payments.SettlementAllocationIntentSplit
+      >;
+    }
+    export interface V2PaymentsSettlementAllocationIntentSplitSettledEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.payments.settlement_allocation_intent_split.settled';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<
+        V2.Payments.SettlementAllocationIntentSplit
+      >;
+      fetchEvent(): Promise<
+        V2PaymentsSettlementAllocationIntentSplitSettledEvent
+      >;
+    }
+
+    namespace V2PaymentsSettlementAllocationIntentSplitSettledEvent {
+      export interface Data {
+        /**
+         * The ID of the SettlementAllocationIntent this split belongs to.
+         */
+        settlement_allocation_intent_id: string;
+      }
     }
 
     /**

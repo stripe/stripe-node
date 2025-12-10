@@ -182,6 +182,9 @@ declare module 'stripe' {
         type TaxBehavior = 'exclusive' | 'inclusive';
 
         interface TaxRateDetails {
+          /**
+           * ID of the tax rate
+           */
           tax_rate: string;
         }
       }

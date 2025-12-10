@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Issuing {
       /**
-       * You can [create physical or virtual cards](https://stripe.com/docs/issuing) that are issued to cardholders.
+       * You can [create physical or virtual cards](https://docs.stripe.com/issuing) that are issued to cardholders.
        */
       interface Card {
         /**
@@ -28,9 +28,9 @@ declare module 'stripe' {
         cancellation_reason: Card.CancellationReason | null;
 
         /**
-         * An Issuing `Cardholder` object represents an individual or business entity who is [issued](https://stripe.com/docs/issuing) cards.
+         * An Issuing `Cardholder` object represents an individual or business entity who is [issued](https://docs.stripe.com/issuing) cards.
          *
-         * Related guide: [How to create a cardholder](https://stripe.com/docs/issuing/cards/virtual/issue-cards#create-cardholder)
+         * Related guide: [How to create a cardholder](https://docs.stripe.com/issuing/cards/virtual/issue-cards#create-cardholder)
          */
         cardholder: Stripe.Issuing.Cardholder;
 
@@ -45,7 +45,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * The card's CVC. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with [the `expand` parameter](https://stripe.com/docs/api/expanding_objects). Additionally, it's only available via the ["Retrieve a card" endpoint](https://stripe.com/docs/api/issuing/cards/retrieve), not via "List all cards" or any other endpoint.
+         * The card's CVC. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with [the `expand` parameter](https://docs.stripe.com/api/expanding_objects). Additionally, it's only available via the ["Retrieve a card" endpoint](https://docs.stripe.com/api/issuing/cards/retrieve), not via "List all cards" or any other endpoint.
          */
         cvc?: string;
 
@@ -80,12 +80,12 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
         metadata: Stripe.Metadata;
 
         /**
-         * The full unredacted card number. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with [the `expand` parameter](https://stripe.com/docs/api/expanding_objects). Additionally, it's only available via the ["Retrieve a card" endpoint](https://stripe.com/docs/api/issuing/cards/retrieve), not via "List all cards" or any other endpoint.
+         * The full unredacted card number. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with [the `expand` parameter](https://docs.stripe.com/api/expanding_objects). Additionally, it's only available via the ["Retrieve a card" endpoint](https://docs.stripe.com/api/issuing/cards/retrieve), not via "List all cards" or any other endpoint.
          */
         number?: string;
 
@@ -284,7 +284,7 @@ declare module 'stripe' {
 
         interface SpendingControls {
           /**
-           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
+           * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
            */
           allowed_categories: Array<SpendingControls.AllowedCategory> | null;
 
@@ -294,7 +294,7 @@ declare module 'stripe' {
           allowed_merchant_countries: Array<string> | null;
 
           /**
-           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
+           * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
            */
           blocked_categories: Array<SpendingControls.BlockedCategory> | null;
 
@@ -911,12 +911,12 @@ declare module 'stripe' {
 
           interface SpendingLimit {
             /**
-             * Maximum amount allowed to spend per interval. This amount is in the card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+             * Maximum amount allowed to spend per interval. This amount is in the card's currency and in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
              */
             amount: number;
 
             /**
-             * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
+             * Array of strings containing [categories](https://docs.stripe.com/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
              */
             categories: Array<SpendingLimit.Category> | null;
 

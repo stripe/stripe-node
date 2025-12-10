@@ -14,12 +14,12 @@ declare module 'stripe' {
       currency?: string;
 
       /**
-       * The ID of the customer who will be billed when this invoice item is billed.
+       * The ID of the customer to bill for this invoice item.
        */
       customer?: string;
 
       /**
-       * The ID of the account who will be billed when this invoice item is billed.
+       * The ID of the account representing the customer to bill for this invoice item.
        */
       customer_account?: string;
 
@@ -54,17 +54,17 @@ declare module 'stripe' {
       margins?: Array<string>;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
-       * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+       * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://docs.stripe.com/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
        */
       period?: InvoiceItemCreateParams.Period;
 
       /**
-       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
        */
       price_data?: InvoiceItemCreateParams.PriceData;
 
@@ -84,12 +84,12 @@ declare module 'stripe' {
       subscription?: string;
 
       /**
-       * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+       * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
        */
       tax_behavior?: InvoiceItemCreateParams.TaxBehavior;
 
       /**
-       * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+       * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
        */
       tax_code?: Stripe.Emptyable<string>;
 
@@ -190,7 +190,7 @@ declare module 'stripe' {
         product: string;
 
         /**
-         * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
          */
         tax_behavior?: PriceData.TaxBehavior;
 
@@ -258,17 +258,17 @@ declare module 'stripe' {
       margins?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
-       * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+       * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://docs.stripe.com/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://docs.stripe.com/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
        */
       period?: InvoiceItemUpdateParams.Period;
 
       /**
-       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
        */
       price_data?: InvoiceItemUpdateParams.PriceData;
 
@@ -283,12 +283,12 @@ declare module 'stripe' {
       quantity?: number;
 
       /**
-       * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+       * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
        */
       tax_behavior?: InvoiceItemUpdateParams.TaxBehavior;
 
       /**
-       * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+       * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
        */
       tax_code?: Stripe.Emptyable<string>;
 
@@ -389,7 +389,7 @@ declare module 'stripe' {
         product: string;
 
         /**
-         * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
          */
         tax_behavior?: PriceData.TaxBehavior;
 
@@ -425,12 +425,12 @@ declare module 'stripe' {
       created?: Stripe.RangeQueryParam | number;
 
       /**
-       * The identifier of the customer whose invoice items to return. If none is provided, all invoice items will be returned.
+       * The identifier of the customer whose invoice items to return. If none is provided, returns all invoice items.
        */
       customer?: string;
 
       /**
-       * The identifier of the account whose invoice items to return. If none is provided, all invoice items will be returned.
+       * The identifier of the account representing the customer whose invoice items to return. If none is provided, returns all invoice items.
        */
       customer_account?: string;
 

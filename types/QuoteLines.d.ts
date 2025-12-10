@@ -173,7 +173,7 @@ declare module 'stripe' {
           discounts: Array<AddItem.Discount>;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an item. Metadata on this item will update the underlying subscription item's `metadata` when the phase is entered.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an item. Metadata on this item will update the underlying subscription item's `metadata` when the phase is entered.
            */
           metadata: Stripe.Metadata | null;
 
@@ -343,7 +343,7 @@ declare module 'stripe' {
           discounts: Array<SetItem.Discount>;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an item. Metadata on this item will update the underlying subscription item's `metadata` when the phase is entered.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an item. Metadata on this item will update the underlying subscription item's `metadata` when the phase is entered.
            */
           metadata: Stripe.Metadata | null;
 
@@ -548,7 +548,7 @@ declare module 'stripe' {
 
       interface SetPauseCollection {
         /**
-         * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/docs/billing/subscriptions/pause-payment).
+         * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://docs.stripe.com/billing/subscriptions/pause-payment).
          */
         set?: SetPauseCollection.Set | null;
 

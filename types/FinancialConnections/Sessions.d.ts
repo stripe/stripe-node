@@ -69,12 +69,12 @@ declare module 'stripe' {
       namespace Session {
         interface AccountHolder {
           /**
-           * The ID of the Stripe account this account belongs to. Should only be present if `account_holder.type` is `account`.
+           * The ID of the Stripe account that this account belongs to. Only available when `account_holder.type` is `account`.
            */
           account?: string | Stripe.Account;
 
           /**
-           * ID of the Stripe customer this account belongs to. Present if and only if `account_holder.type` is `customer`.
+           * The ID for an Account representing a customer that this account belongs to. Only available when `account_holder.type` is `customer`.
            */
           customer?: string | Stripe.Customer;
 

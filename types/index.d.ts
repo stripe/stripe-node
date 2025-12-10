@@ -195,6 +195,7 @@
 ///<reference path='./V2/Core/EventsResource.d.ts' />
 ///<reference path='./V2/Core/Vault/GbBankAccountsResource.d.ts' />
 ///<reference path='./V2/Core/Vault/UsBankAccountsResource.d.ts' />
+///<reference path='./V2/Iam/ApiKeysResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/AdjustmentsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/CurrencyConversionsResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/FinancialAccountsResource.d.ts' />
@@ -212,8 +213,11 @@
 ///<reference path='./V2/MoneyManagement/TransactionEntriesResource.d.ts' />
 ///<reference path='./V2/MoneyManagement/TransactionsResource.d.ts' />
 ///<reference path='./V2/Payments/OffSessionPaymentsResource.d.ts' />
+///<reference path='./V2/Payments/SettlementAllocationIntents/SplitsResource.d.ts' />
+///<reference path='./V2/Payments/SettlementAllocationIntentsResource.d.ts' />
 ///<reference path='./V2/Reporting/ReportRunsResource.d.ts' />
 ///<reference path='./V2/Reporting/ReportsResource.d.ts' />
+///<reference path='./V2/Tax/ManualRulesResource.d.ts' />
 ///<reference path='./V2/TestHelpers/FinancialAddressesResource.d.ts' />
 ///<reference path='./V2/TestHelpers/MoneyManagementResource.d.ts' />
 ///<reference path='./WebhookEndpointsResource.d.ts' />
@@ -432,6 +436,7 @@
 ///<reference path='./V2/DeletedObject.d.ts' />
 ///<reference path='./V2/FinancialAddressCreditSimulations.d.ts' />
 ///<reference path='./V2/FinancialAddressGeneratedMicrodeposits.d.ts' />
+///<reference path='./V2/Iam/ApiKeys.d.ts' />
 ///<reference path='./V2/MoneyManagement/Adjustments.d.ts' />
 ///<reference path='./V2/MoneyManagement/CurrencyConversions.d.ts' />
 ///<reference path='./V2/MoneyManagement/FinancialAccounts.d.ts' />
@@ -449,8 +454,11 @@
 ///<reference path='./V2/MoneyManagement/TransactionEntries.d.ts' />
 ///<reference path='./V2/MoneyManagement/Transactions.d.ts' />
 ///<reference path='./V2/Payments/OffSessionPayments.d.ts' />
+///<reference path='./V2/Payments/SettlementAllocationIntentSplits.d.ts' />
+///<reference path='./V2/Payments/SettlementAllocationIntents.d.ts' />
 ///<reference path='./V2/Reporting/ReportRuns.d.ts' />
 ///<reference path='./V2/Reporting/Reports.d.ts' />
+///<reference path='./V2/Tax/ManualRules.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
@@ -706,6 +714,9 @@ declare module 'stripe' {
           usBankAccounts: Stripe.V2.Core.Vault.UsBankAccountsResource;
         };
       };
+      iam: {
+        apiKeys: Stripe.V2.Iam.ApiKeysResource;
+      };
       moneyManagement: {
         adjustments: Stripe.V2.MoneyManagement.AdjustmentsResource;
         currencyConversions: Stripe.V2.MoneyManagement.CurrencyConversionsResource;
@@ -726,10 +737,14 @@ declare module 'stripe' {
       };
       payment: {
         offSessionPayments: Stripe.V2.Payments.OffSessionPaymentsResource;
+        settlementAllocationIntents: Stripe.V2.Payments.SettlementAllocationIntentsResource;
       };
       reporting: {
         reports: Stripe.V2.Reporting.ReportsResource;
         reportRuns: Stripe.V2.Reporting.ReportRunsResource;
+      };
+      tax: {
+        manualRules: Stripe.V2.Tax.ManualRulesResource;
       };
       testHelper: {
         financialAddresses: Stripe.V2.TestHelpers.FinancialAddressesResource;

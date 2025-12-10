@@ -25,7 +25,7 @@ declare module 'stripe' {
         /**
          * The account the balance is for.
          */
-        customer_account?: string | null;
+        customer_account: string | null;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

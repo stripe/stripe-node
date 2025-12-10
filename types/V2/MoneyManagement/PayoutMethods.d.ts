@@ -19,6 +19,11 @@ declare module 'stripe' {
           object: 'v2.money_management.payout_method';
 
           /**
+           * The alternative reference for this payout method, if it's a projected payout method.
+           */
+          alternative_reference?: PayoutMethod.AlternativeReference;
+
+          /**
            * A set of available payout speeds for this payout method.
            */
           available_payout_speeds: Array<PayoutMethod.AvailablePayoutSpeed>;
@@ -65,6 +70,22 @@ declare module 'stripe' {
         }
 
         namespace PayoutMethod {
+          interface AlternativeReference {
+            /**
+             * The ID of the alternative resource being referenced.
+             */
+            id: string;
+
+            /**
+             * The type of the alternative reference (e.g., external_account for V1 external accounts).
+             */
+            type: AlternativeReference.Type;
+          }
+
+          namespace AlternativeReference {
+            type Type = 'external_account' | 'payment_method';
+          }
+
           type AvailablePayoutSpeed = 'instant' | 'standard';
 
           interface BankAccount {
@@ -94,6 +115,11 @@ declare module 'stripe' {
              * List of enabled flows for this bank account (wire or local).
              */
             enabled_delivery_options: Array<string>;
+
+            /**
+             * The ID of the Financial Connections Account used to create the bank account.
+             */
+            financial_connections_account?: string;
 
             /**
              * The last 4 digits of the account number.

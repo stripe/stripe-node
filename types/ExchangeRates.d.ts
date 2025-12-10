@@ -11,13 +11,13 @@ declare module 'stripe' {
      * rate (for example, to dynamically price an item for a user with a default
      * payment in a foreign currency).
      *
-     * Please refer to our [Exchange Rates API](https://stripe.com/docs/fx-rates) guide for more details.
+     * Please refer to our [Exchange Rates API](https://docs.stripe.com/fx-rates) guide for more details.
      *
      * *[Note: this integration path is supported but no longer recommended]* Additionally,
      * you can guarantee that a charge is made with an exchange rate that you expect is
      * current. To do so, you must pass in the exchange_rate to charges endpoints. If the
      * value is no longer up to date, the charge won't go through. Please refer to our
-     * [Using with charges](https://stripe.com/docs/exchange-rates) guide for more details.
+     * [Using with charges](https://docs.stripe.com/exchange-rates) guide for more details.
      *
      * -----
      *
