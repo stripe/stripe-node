@@ -5,14 +5,19 @@ declare module 'stripe' {
     namespace Billing {
       interface CreditBalanceSummaryRetrieveParams {
         /**
-         * The customer for which to fetch credit balance summary.
-         */
-        customer: string;
-
-        /**
          * The filter criteria for the credit balance summary.
          */
         filter: CreditBalanceSummaryRetrieveParams.Filter;
+
+        /**
+         * The customer whose credit balance summary you're retrieving.
+         */
+        customer?: string;
+
+        /**
+         * The account representing the customer whose credit balance summary you're retrieving.
+         */
+        customer_account?: string;
 
         /**
          * Specifies which fields in the response should be expanded.

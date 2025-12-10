@@ -8,11 +8,11 @@ declare module 'stripe' {
      * just like a `Card` object: once chargeable, they can be charged, or can be
      * attached to customers.
      *
-     * Stripe doesn't recommend using the deprecated [Sources API](https://stripe.com/docs/api/sources).
-     * We recommend that you adopt the [PaymentMethods API](https://stripe.com/docs/api/payment_methods).
+     * Stripe doesn't recommend using the deprecated [Sources API](https://docs.stripe.com/api/sources).
+     * We recommend that you adopt the [PaymentMethods API](https://docs.stripe.com/api/payment_methods).
      * This newer API provides access to our latest features and payment method types.
      *
-     * Related guides: [Sources API](https://stripe.com/docs/sources) and [Sources & Customers](https://stripe.com/docs/sources/customers).
+     * Related guides: [Sources API](https://docs.stripe.com/sources) and [Sources & Customers](https://docs.stripe.com/sources/customers).
      */
     interface Source {
       /**
@@ -92,7 +92,7 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata | null;
 
@@ -130,7 +130,7 @@ declare module 'stripe' {
       three_d_secure?: Source.ThreeDSecure;
 
       /**
-       * The `type` of the source. The `type` is a payment method, one of `ach_credit_transfer`, `ach_debit`, `alipay`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `multibanco`, `klarna`, `p24`, `sepa_debit`, `sofort`, `three_d_secure`, or `wechat`. An additional hash is included on the source with a name matching this value. It contains additional information specific to the [payment method](https://stripe.com/docs/sources) used.
+       * The `type` of the source. The `type` is a payment method, one of `ach_credit_transfer`, `ach_debit`, `alipay`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `multibanco`, `klarna`, `p24`, `sepa_debit`, `sofort`, `three_d_secure`, or `wechat`. An additional hash is included on the source with a name matching this value. It contains additional information specific to the [payment method](https://docs.stripe.com/sources) used.
        */
       type: Source.Type;
 

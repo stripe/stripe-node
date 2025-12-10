@@ -5,9 +5,9 @@ declare module 'stripe' {
     /**
      * A payment link is a shareable URL that will take your customers to a hosted payment page. A payment link can be shared and used multiple times.
      *
-     * When a customer opens a payment link it will open a new [checkout session](https://stripe.com/docs/api/checkout/sessions) to render the payment page. You can use [checkout session events](https://stripe.com/docs/api/events/types#event_types-checkout.session.completed) to track payments through payment links.
+     * When a customer opens a payment link it will open a new [checkout session](https://docs.stripe.com/api/checkout/sessions) to render the payment page. You can use [checkout session events](https://docs.stripe.com/api/events/types#event_types-checkout.session.completed) to track payments through payment links.
      *
-     * Related guide: [Payment Links API](https://stripe.com/docs/payment-links)
+     * Related guide: [Payment Links API](https://docs.stripe.com/payment-links)
      */
     interface PaymentLink {
       /**
@@ -101,7 +101,7 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata;
 
@@ -467,7 +467,7 @@ declare module 'stripe' {
           issuer: InvoiceData.Issuer | null;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata: Stripe.Metadata | null;
 
@@ -591,7 +591,7 @@ declare module 'stripe' {
         description: string | null;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on [Payment Intents](https://stripe.com/docs/api/payment_intents) generated from this payment link.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will set metadata on [Payment Intents](https://docs.stripe.com/api/payment_intents) generated from this payment link.
          */
         metadata: Stripe.Metadata;
 
@@ -611,7 +611,7 @@ declare module 'stripe' {
         statement_descriptor_suffix: string | null;
 
         /**
-         * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+         * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://docs.stripe.com/connect/separate-charges-and-transfers) for details.
          */
         transfer_group: string | null;
       }
@@ -653,6 +653,7 @@ declare module 'stripe' {
         | 'pay_by_bank'
         | 'paynow'
         | 'paypal'
+        | 'payto'
         | 'pix'
         | 'promptpay'
         | 'satispay'
@@ -961,7 +962,7 @@ declare module 'stripe' {
         invoice_settings: SubscriptionData.InvoiceSettings;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will set metadata on [Subscriptions](https://stripe.com/docs/api/subscriptions) generated from this payment link.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that will set metadata on [Subscriptions](https://docs.stripe.com/api/subscriptions) generated from this payment link.
          */
         metadata: Stripe.Metadata;
 

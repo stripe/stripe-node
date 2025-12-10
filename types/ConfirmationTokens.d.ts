@@ -8,8 +8,8 @@ declare module 'stripe' {
      * is successful, values present on the ConfirmationToken are written onto the Intent.
      *
      * To learn more about how to use ConfirmationToken, visit the related guides:
-     * - [Finalize payments on the server](https://stripe.com/docs/payments/finalize-payments-on-the-server)
-     * - [Build two-step confirmation](https://stripe.com/docs/payments/build-a-two-step-confirmation).
+     * - [Finalize payments on the server](https://docs.stripe.com/payments/finalize-payments-on-the-server)
+     * - [Build two-step confirmation](https://docs.stripe.com/payments/build-a-two-step-confirmation).
      */
     interface ConfirmationToken {
       /**
@@ -65,7 +65,7 @@ declare module 'stripe' {
       /**
        * Indicates that you intend to make future payments with this ConfirmationToken's payment method.
        *
-       * The presence of this property will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete.
+       * The presence of this property will [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete.
        */
       setup_future_usage: ConfirmationToken.SetupFutureUsage | null;
 
@@ -217,6 +217,8 @@ declare module 'stripe' {
          */
         customer: string | Stripe.Customer | null;
 
+        customer_account: string | null;
+
         customer_balance?: PaymentMethodPreview.CustomerBalance;
 
         eps?: PaymentMethodPreview.Eps;
@@ -262,6 +264,8 @@ declare module 'stripe' {
         paynow?: PaymentMethodPreview.Paynow;
 
         paypal?: PaymentMethodPreview.Paypal;
+
+        payto?: PaymentMethodPreview.Payto;
 
         pix?: PaymentMethodPreview.Pix;
 
@@ -616,7 +620,7 @@ declare module 'stripe' {
                 iin?: string | null;
 
                 /**
-                 * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
+                 * Whether this [PaymentIntent](https://docs.stripe.com/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
                  */
                 incremental_authorization_supported: boolean;
 
@@ -1105,7 +1109,7 @@ declare module 'stripe' {
 
         interface Ideal {
           /**
-           * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
+           * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `mollie`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
            */
           bank: Ideal.Bank | null;
 
@@ -1125,6 +1129,7 @@ declare module 'stripe' {
             | 'handelsbanken'
             | 'ing'
             | 'knab'
+            | 'mollie'
             | 'moneyou'
             | 'n26'
             | 'nn'
@@ -1147,6 +1152,7 @@ declare module 'stripe' {
             | 'HANDNL2A'
             | 'INGBNL2A'
             | 'KNABNL2H'
+            | 'MLLENL2A'
             | 'MOYONL21'
             | 'NNBANL2G'
             | 'NTSBDEB1'
@@ -1451,6 +1457,23 @@ declare module 'stripe' {
           payer_id: string | null;
         }
 
+        interface Payto {
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number: string | null;
+
+          /**
+           * Last four digits of the bank account number.
+           */
+          last4: string | null;
+
+          /**
+           * The PayID alias for the bank account.
+           */
+          pay_id: string | null;
+        }
+
         interface Pix {}
 
         interface Promptpay {}
@@ -1559,6 +1582,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'

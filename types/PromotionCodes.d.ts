@@ -6,7 +6,7 @@ declare module 'stripe' {
      * A Promotion Code represents a customer-redeemable code for an underlying promotion.
      * You can create multiple codes for a single promotion.
      *
-     * If you enable promotion codes in your [customer portal configuration](https://stripe.com/docs/customer-management/configure-portal), then customers can redeem a code themselves when updating a subscription in the portal.
+     * If you enable promotion codes in your [customer portal configuration](https://docs.stripe.com/customer-management/configure-portal), then customers can redeem a code themselves when updating a subscription in the portal.
      * Customers can also view the currently active promotion codes and coupons on each of their subscriptions in the portal.
      */
     interface PromotionCode {
@@ -36,9 +36,14 @@ declare module 'stripe' {
       created: number;
 
       /**
-       * The customer that this promotion code can be used by.
+       * The customer who can use this promotion code.
        */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+
+      /**
+       * The account representing the customer who can use this promotion code.
+       */
+      customer_account: string | null;
 
       /**
        * Date at which the promotion code can no longer be redeemed.
@@ -56,7 +61,7 @@ declare module 'stripe' {
       max_redemptions: number | null;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata | null;
 

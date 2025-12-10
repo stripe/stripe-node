@@ -5,7 +5,7 @@ declare module 'stripe' {
     /**
      * A subscription schedule allows you to create and manage the lifecycle of a subscription by predefining expected changes.
      *
-     * Related guide: [Subscription schedules](https://stripe.com/docs/billing/subscriptions/subscription-schedules)
+     * Related guide: [Subscription schedules](https://docs.stripe.com/billing/subscriptions/subscription-schedules)
      */
     interface SubscriptionSchedule {
       /**
@@ -57,6 +57,11 @@ declare module 'stripe' {
        */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
+      /**
+       * ID of the account who owns the subscription schedule.
+       */
+      customer_account: string | null;
+
       default_settings: SubscriptionSchedule.DefaultSettings;
 
       /**
@@ -70,7 +75,7 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata | null;
 
@@ -90,7 +95,7 @@ declare module 'stripe' {
       released_subscription: string | null;
 
       /**
-       * The present status of the subscription schedule. Possible values are `not_started`, `active`, `completed`, `released`, and `canceled`. You can read more about the different states in our [behavior guide](https://stripe.com/docs/billing/subscriptions/subscription-schedules).
+       * The present status of the subscription schedule. Possible values are `not_started`, `active`, `completed`, `released`, and `canceled`. You can read more about the different states in our [behavior guide](https://docs.stripe.com/billing/subscriptions/subscription-schedules).
        */
       status: SubscriptionSchedule.Status;
 
@@ -159,7 +164,7 @@ declare module 'stripe' {
         automatic_tax?: DefaultSettings.AutomaticTax;
 
         /**
-         * Possible values are `phase_start` or `automatic`. If `phase_start` then billing cycle anchor of the subscription is set to the start of the phase when entering the phase. If `automatic` then the billing cycle anchor is automatically modified as needed when entering the phase. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+         * Possible values are `phase_start` or `automatic`. If `phase_start` then billing cycle anchor of the subscription is set to the start of the phase when entering the phase. If `automatic` then the billing cycle anchor is automatically modified as needed when entering the phase. For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
          */
         billing_cycle_anchor: DefaultSettings.BillingCycleAnchor;
 
@@ -311,7 +316,7 @@ declare module 'stripe' {
         automatic_tax?: Phase.AutomaticTax;
 
         /**
-         * Possible values are `phase_start` or `automatic`. If `phase_start` then billing cycle anchor of the subscription is set to the start of the phase when entering the phase. If `automatic` then the billing cycle anchor is automatically modified as needed when entering the phase. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+         * Possible values are `phase_start` or `automatic`. If `phase_start` then billing cycle anchor of the subscription is set to the start of the phase when entering the phase. If `automatic` then the billing cycle anchor is automatically modified as needed when entering the phase. For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
          */
         billing_cycle_anchor: Phase.BillingCycleAnchor | null;
 
@@ -366,7 +371,7 @@ declare module 'stripe' {
         items: Array<Phase.Item>;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered. Updating the underlying subscription's `metadata` directly will not affect the current phase's `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered. Updating the underlying subscription's `metadata` directly will not affect the current phase's `metadata`.
          */
         metadata: Stripe.Metadata | null;
 
@@ -404,7 +409,7 @@ declare module 'stripe' {
           discounts: Array<AddInvoiceItem.Discount>;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
            */
           metadata: Stripe.Metadata | null;
 
@@ -602,7 +607,7 @@ declare module 'stripe' {
           discounts: Array<Item.Discount>;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an item. Metadata on this item will update the underlying subscription item's `metadata` when the phase is entered.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an item. Metadata on this item will update the underlying subscription item's `metadata` when the phase is entered.
            */
           metadata: Stripe.Metadata | null;
 

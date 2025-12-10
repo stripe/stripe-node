@@ -4,10 +4,10 @@ declare module 'stripe' {
   namespace Stripe {
     /**
      * PaymentMethod objects represent your customer's payment instruments.
-     * You can use them with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or save them to
+     * You can use them with [PaymentIntents](https://docs.stripe.com/payments/payment-intents) to collect payments or save them to
      * Customer objects to store instrument details for future payments.
      *
-     * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
+     * Related guides: [Payment Methods](https://docs.stripe.com/payments/payment-methods) and [More Payment Scenarios](https://docs.stripe.com/payments/more-payment-scenarios).
      */
     interface PaymentMethod {
       /**
@@ -71,6 +71,8 @@ declare module 'stripe' {
        */
       customer: string | Stripe.Customer | null;
 
+      customer_account: string | null;
+
       customer_balance?: PaymentMethod.CustomerBalance;
 
       eps?: PaymentMethod.Eps;
@@ -103,7 +105,7 @@ declare module 'stripe' {
       mb_way?: PaymentMethod.MbWay;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata | null;
 
@@ -127,12 +129,14 @@ declare module 'stripe' {
 
       paypal?: PaymentMethod.Paypal;
 
+      payto?: PaymentMethod.Payto;
+
       pix?: PaymentMethod.Pix;
 
       promptpay?: PaymentMethod.Promptpay;
 
       /**
-       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
        */
       radar_options?: PaymentMethod.RadarOptions;
 
@@ -485,7 +489,7 @@ declare module 'stripe' {
               iin?: string | null;
 
               /**
-               * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
+               * Whether this [PaymentIntent](https://docs.stripe.com/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
                */
               incremental_authorization_supported: boolean;
 
@@ -1005,7 +1009,7 @@ declare module 'stripe' {
 
       interface Ideal {
         /**
-         * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
+         * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `mollie`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
          */
         bank: Ideal.Bank | null;
 
@@ -1025,6 +1029,7 @@ declare module 'stripe' {
           | 'handelsbanken'
           | 'ing'
           | 'knab'
+          | 'mollie'
           | 'moneyou'
           | 'n26'
           | 'nn'
@@ -1047,6 +1052,7 @@ declare module 'stripe' {
           | 'HANDNL2A'
           | 'INGBNL2A'
           | 'KNABNL2H'
+          | 'MLLENL2A'
           | 'MOYONL21'
           | 'NNBANL2G'
           | 'NTSBDEB1'
@@ -1351,13 +1357,30 @@ declare module 'stripe' {
         payer_id: string | null;
       }
 
+      interface Payto {
+        /**
+         * Bank-State-Branch number of the bank account.
+         */
+        bsb_number: string | null;
+
+        /**
+         * Last four digits of the bank account number.
+         */
+        last4: string | null;
+
+        /**
+         * The PayID alias for the bank account.
+         */
+        pay_id: string | null;
+      }
+
       interface Pix {}
 
       interface Promptpay {}
 
       interface RadarOptions {
         /**
-         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+         * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
          */
         session?: string;
       }
@@ -1466,6 +1489,7 @@ declare module 'stripe' {
         | 'payco'
         | 'paynow'
         | 'paypal'
+        | 'payto'
         | 'pix'
         | 'promptpay'
         | 'revolut_pay'
