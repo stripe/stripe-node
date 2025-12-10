@@ -72,6 +72,11 @@ declare module 'stripe' {
       tax_code?: string;
 
       /**
+       * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+       */
+      tax_details?: ProductCreateParams.TaxDetails;
+
+      /**
        * The type of the product. Defaults to `service` if not explicitly specified, enabling use of this product with Subscriptions and Plans. Set this parameter to `good` to use this product with Orders and SKUs. On API versions before `2018-02-05`, this field defaults to `good` for compatibility reasons.
        */
       type?: ProductCreateParams.Type;
@@ -283,6 +288,13 @@ declare module 'stripe' {
         width: number;
       }
 
+      interface TaxDetails {
+        /**
+         * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+         */
+        tax_code: string;
+      }
+
       type Type = 'good' | 'service';
     }
 
@@ -362,6 +374,11 @@ declare module 'stripe' {
       tax_code?: Stripe.Emptyable<string>;
 
       /**
+       * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+       */
+      tax_details?: Stripe.Emptyable<ProductUpdateParams.TaxDetails>;
+
+      /**
        * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal. May only be set if `type=service`.
        */
       unit_label?: Stripe.Emptyable<string>;
@@ -400,6 +417,13 @@ declare module 'stripe' {
          * Width, in inches. Maximum precision is 2 decimal places.
          */
         width: number;
+      }
+
+      interface TaxDetails {
+        /**
+         * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+         */
+        tax_code: string;
       }
     }
 
