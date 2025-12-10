@@ -12,6 +12,7 @@ declare module 'stripe' {
       | 'already_canceled'
       | 'already_exists'
       | 'blocked_by_stripe'
+      | 'controlled_by_alternate_resource'
       | 'controlled_by_dashboard'
       | 'feature_not_enabled'
       | 'financial_account_not_open'
@@ -21,7 +22,6 @@ declare module 'stripe' {
       | 'non_zero_balance'
       | 'not_cancelable'
       | 'quota_exceeded'
-      | 'rate_limit'
       | 'recipient_not_notifiable'
       | 'temporary_session_expired';
     // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec
@@ -141,6 +141,7 @@ declare module 'stripe' {
           | 'AlreadyCanceledError'
           | 'AlreadyExistsError'
           | 'BlockedByStripeError'
+          | 'ControlledByAlternateResourceError'
           | 'ControlledByDashboardError'
           | 'FeatureNotEnabledError'
           | 'FinancialAccountNotOpenError'
@@ -150,7 +151,6 @@ declare module 'stripe' {
           | 'NonZeroBalanceError'
           | 'NotCancelableError'
           | 'QuotaExceededError'
-          | 'RateLimitError'
           | 'RecipientNotNotifiableError'
           | 'TemporarySessionExpiredError';
         // errorClassNameEnum: The end of the section generated from our OpenAPI spec
@@ -310,6 +310,10 @@ declare module 'stripe' {
         readonly type: 'BlockedByStripeError';
         readonly rawType: 'blocked_by_stripe';
       }
+      export class ControlledByAlternateResourceError extends StripeError {
+        readonly type: 'ControlledByAlternateResourceError';
+        readonly rawType: 'controlled_by_alternate_resource';
+      }
       export class ControlledByDashboardError extends StripeError {
         readonly type: 'ControlledByDashboardError';
         readonly rawType: 'controlled_by_dashboard';
@@ -346,10 +350,6 @@ declare module 'stripe' {
       export class QuotaExceededError extends StripeError {
         readonly type: 'QuotaExceededError';
         readonly rawType: 'quota_exceeded';
-      }
-      export class RateLimitError extends StripeError {
-        readonly type: 'RateLimitError';
-        readonly rawType: 'rate_limit';
       }
       export class RecipientNotNotifiableError extends StripeError {
         readonly type: 'RecipientNotNotifiableError';

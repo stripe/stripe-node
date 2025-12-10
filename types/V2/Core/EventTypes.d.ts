@@ -48,6 +48,7 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementOutboundTransferPostedEvent
       | Stripe.Events.V2MoneyManagementOutboundTransferReturnedEvent
       | Stripe.Events.V2MoneyManagementOutboundTransferUpdatedEvent
+      | Stripe.Events.V2MoneyManagementPayoutMethodCreatedEvent
       | Stripe.Events.V2MoneyManagementPayoutMethodUpdatedEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditAvailableEvent
       | Stripe.Events.V2MoneyManagementReceivedCreditFailedEvent
@@ -107,6 +108,7 @@ declare module 'stripe' {
       | Stripe.Events.V2MoneyManagementOutboundTransferPostedEventNotification
       | Stripe.Events.V2MoneyManagementOutboundTransferReturnedEventNotification
       | Stripe.Events.V2MoneyManagementOutboundTransferUpdatedEventNotification
+      | Stripe.Events.V2MoneyManagementPayoutMethodCreatedEventNotification
       | Stripe.Events.V2MoneyManagementPayoutMethodUpdatedEventNotification
       | Stripe.Events.V2MoneyManagementReceivedCreditAvailableEventNotification
       | Stripe.Events.V2MoneyManagementReceivedCreditFailedEventNotification
@@ -1509,6 +1511,27 @@ declare module 'stripe' {
       // Retrieves the object associated with the event.
       fetchRelatedObject(): Promise<V2.MoneyManagement.OutboundTransfer>;
       fetchEvent(): Promise<V2MoneyManagementOutboundTransferUpdatedEvent>;
+    }
+
+    /**
+     * Occurs when a PayoutMethod is created.
+     */
+    export interface V2MoneyManagementPayoutMethodCreatedEvent
+      extends V2.Core.EventBase {
+      type: 'v2.money_management.payout_method.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.MoneyManagement.PayoutMethod>;
+    }
+    export interface V2MoneyManagementPayoutMethodCreatedEventNotification
+      extends V2.Core.EventNotificationBase {
+      type: 'v2.money_management.payout_method.created';
+      // Object containing the reference to API resource relevant to the event.
+      related_object: V2.Core.Events.RelatedObject;
+      // Retrieves the object associated with the event.
+      fetchRelatedObject(): Promise<V2.MoneyManagement.PayoutMethod>;
+      fetchEvent(): Promise<V2MoneyManagementPayoutMethodCreatedEvent>;
     }
 
     /**

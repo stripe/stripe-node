@@ -6,11 +6,6 @@ declare module 'stripe' {
       namespace Core {
         interface AccountTokenCreateParams {
           /**
-           * Information about the company, individual, and business represented by the Account.
-           */
-          identity: AccountTokenCreateParams.Identity;
-
-          /**
            * The default contact email address for the Account. Required when configuring the account as a merchant or recipient.
            */
           contact_email?: string;
@@ -19,6 +14,11 @@ declare module 'stripe' {
            * A descriptive name for the Account. This name will be surfaced in the Stripe Dashboard and on any invoices sent to the Account.
            */
           display_name?: string;
+
+          /**
+           * Information about the company, individual, and business represented by the Account.
+           */
+          identity?: AccountTokenCreateParams.Identity;
         }
 
         namespace AccountTokenCreateParams {
@@ -168,7 +168,7 @@ declare module 'stripe' {
               documents?: BusinessDetails.Documents;
 
               /**
-               * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
+               * Estimated maximum number of workers currently engaged by the business (including employees, contractors, and vendors).
                */
               estimated_worker_count?: number;
 
@@ -447,70 +447,111 @@ declare module 'stripe' {
                   | 'ao_nif'
                   | 'ar_cuit'
                   | 'at_fn'
+                  | 'at_stn'
+                  | 'at_vat'
                   | 'au_abn'
                   | 'au_acn'
                   | 'au_in'
                   | 'az_tin'
                   | 'bd_etin'
                   | 'be_cbe'
+                  | 'be_vat'
                   | 'bg_uic'
+                  | 'bg_vat'
                   | 'br_cnpj'
                   | 'ca_cn'
                   | 'ca_crarr'
+                  | 'ca_gst_hst'
                   | 'ca_neq'
                   | 'ca_rid'
                   | 'ch_chid'
                   | 'ch_uid'
                   | 'cr_cpj'
                   | 'cr_nite'
+                  | 'cy_he'
                   | 'cy_tic'
+                  | 'cy_vat'
                   | 'cz_ico'
+                  | 'cz_vat'
                   | 'de_hrn'
+                  | 'de_stn'
                   | 'de_vat'
                   | 'dk_cvr'
+                  | 'dk_vat'
                   | 'do_rcn'
                   | 'ee_rk'
+                  | 'ee_vat'
                   | 'es_cif'
+                  | 'es_vat'
+                  | 'fi_vat'
                   | 'fi_yt'
+                  | 'fr_rna'
                   | 'fr_siren'
                   | 'fr_vat'
                   | 'gb_crn'
                   | 'gi_crn'
+                  | 'gr_afm'
                   | 'gr_gemi'
+                  | 'gr_vat'
                   | 'gt_nit'
                   | 'hk_br'
                   | 'hk_cr'
-                  | 'hk_mbs'
+                  | 'hr_mbs'
+                  | 'hr_oib'
+                  | 'hr_vat'
                   | 'hu_cjs'
+                  | 'hu_tin'
+                  | 'hu_vat'
                   | 'ie_crn'
+                  | 'ie_trn'
+                  | 'ie_vat'
                   | 'it_rea'
                   | 'it_vat'
                   | 'jp_cn'
                   | 'kz_bin'
                   | 'li_uid'
                   | 'lt_ccrn'
+                  | 'lt_vat'
+                  | 'lu_nif'
                   | 'lu_rcs'
+                  | 'lu_vat'
                   | 'lv_urn'
+                  | 'lv_vat'
                   | 'mt_crn'
+                  | 'mt_tin'
+                  | 'mt_vat'
                   | 'mx_rfc'
                   | 'my_brn'
                   | 'my_coid'
+                  | 'my_itn'
                   | 'my_sst'
                   | 'mz_nuit'
                   | 'nl_kvk'
+                  | 'nl_rsin'
+                  | 'nl_vat'
                   | 'no_orgnr'
                   | 'nz_bn'
+                  | 'nz_ird'
                   | 'pe_ruc'
                   | 'pk_ntn'
+                  | 'pl_nip'
                   | 'pl_regon'
+                  | 'pl_vat'
                   | 'pt_vat'
                   | 'ro_cui'
+                  | 'ro_orc'
+                  | 'ro_vat'
                   | 'sa_crn'
                   | 'sa_tin'
                   | 'se_orgnr'
+                  | 'se_vat'
                   | 'sg_uen'
                   | 'si_msp'
+                  | 'si_tin'
+                  | 'si_vat'
+                  | 'sk_dic'
                   | 'sk_ico'
+                  | 'sk_vat'
                   | 'th_crn'
                   | 'th_prn'
                   | 'th_tin'
@@ -739,7 +780,7 @@ declare module 'stripe' {
                 state?: string;
 
                 /**
-                 * Town or cho-me.
+                 * Town or district.
                  */
                 town?: string;
               }
@@ -920,36 +961,81 @@ declare module 'stripe' {
                 type Type =
                   | 'ae_eid'
                   | 'ao_nif'
+                  | 'ar_cuil'
                   | 'ar_dni'
+                  | 'at_stn'
                   | 'az_tin'
                   | 'bd_brc'
                   | 'bd_etin'
                   | 'bd_nid'
+                  | 'be_nrn'
+                  | 'bg_ucn'
+                  | 'bn_nric'
                   | 'br_cpf'
+                  | 'ca_sin'
+                  | 'ch_oasi'
+                  | 'cl_rut'
+                  | 'cn_pp'
+                  | 'co_nuip'
+                  | 'cr_ci'
                   | 'cr_cpf'
                   | 'cr_dimex'
                   | 'cr_nite'
+                  | 'cy_tic'
+                  | 'cz_rc'
                   | 'de_stn'
+                  | 'dk_cpr'
+                  | 'do_cie'
                   | 'do_rcn'
+                  | 'ec_ci'
+                  | 'ee_ik'
+                  | 'es_nif'
+                  | 'fi_hetu'
+                  | 'fr_nir'
+                  | 'gb_nino'
+                  | 'gr_afm'
                   | 'gt_nit'
                   | 'hk_id'
+                  | 'hr_oib'
+                  | 'hu_ad'
+                  | 'id_nik'
+                  | 'ie_ppsn'
+                  | 'is_kt'
+                  | 'it_cf'
+                  | 'jp_inc'
+                  | 'ke_pin'
                   | 'kz_iin'
+                  | 'li_peid'
+                  | 'lt_ak'
+                  | 'lu_nif'
+                  | 'lv_pk'
                   | 'mx_rfc'
                   | 'my_nric'
                   | 'mz_nuit'
+                  | 'ng_nin'
                   | 'nl_bsn'
+                  | 'no_nin'
+                  | 'nz_ird'
                   | 'pe_dni'
                   | 'pk_cnic'
                   | 'pk_snic'
+                  | 'pl_pesel'
+                  | 'pt_nif'
+                  | 'ro_cnp'
                   | 'sa_tin'
+                  | 'se_pin'
                   | 'sg_fin'
                   | 'sg_nric'
+                  | 'sk_dic'
                   | 'th_lc'
                   | 'th_pin'
+                  | 'tr_tin'
                   | 'us_itin'
                   | 'us_itin_last_4'
                   | 'us_ssn'
-                  | 'us_ssn_last_4';
+                  | 'us_ssn_last_4'
+                  | 'uy_dni'
+                  | 'za_id';
               }
 
               type LegalGender = 'female' | 'male';
@@ -1047,7 +1133,10 @@ declare module 'stripe' {
            * Creates an Account Token.
            */
           create(
-            params: AccountTokenCreateParams,
+            params?: AccountTokenCreateParams,
+            options?: RequestOptions
+          ): Promise<Stripe.Response<Stripe.V2.Core.AccountToken>>;
+          create(
             options?: RequestOptions
           ): Promise<Stripe.Response<Stripe.V2.Core.AccountToken>>;
 

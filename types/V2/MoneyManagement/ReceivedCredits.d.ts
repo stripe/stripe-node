@@ -118,10 +118,19 @@ declare module 'stripe' {
              * The ID of the payout object that originated the ReceivedCredit.
              */
             payout_v1?: string;
+
+            /**
+             * The ID of the v1 transfer object that originated the ReceivedCredit.
+             */
+            transfer?: string;
           }
 
           namespace BalanceTransfer {
-            type Type = 'outbound_payment' | 'outbound_transfer' | 'payout_v1';
+            type Type =
+              | 'outbound_payment'
+              | 'outbound_transfer'
+              | 'transfer'
+              | 'payout_v1';
           }
 
           interface BankTransfer {

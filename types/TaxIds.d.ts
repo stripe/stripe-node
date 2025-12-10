@@ -23,10 +23,10 @@ declare module 'stripe' {
     }
 
     /**
-     * You can add one or multiple tax IDs to a [customer](https://stripe.com/docs/api/customers) or account.
+     * You can add one or multiple tax IDs to a [customer](https://docs.stripe.com/api/customers) or account.
      * Customer and account tax IDs get displayed on related invoices and credit notes.
      *
-     * Related guides: [Customer tax identification numbers](https://stripe.com/docs/billing/taxes/tax-ids), [Account tax IDs](https://stripe.com/docs/invoicing/connect#account-tax-ids)
+     * Related guides: [Customer tax identification numbers](https://docs.stripe.com/billing/taxes/tax-ids), [Account tax IDs](https://docs.stripe.com/invoicing/connect#account-tax-ids)
      */
     interface TaxId {
       /**
@@ -55,9 +55,9 @@ declare module 'stripe' {
       customer: string | Stripe.Customer | null;
 
       /**
-       * ID of the account.
+       * ID of the Account representing the customer.
        */
-      customer_account?: string | null;
+      customer_account: string | null;
 
       /**
        * Always true for a deleted object
@@ -108,9 +108,9 @@ declare module 'stripe' {
         customer?: string | Stripe.Customer;
 
         /**
-         * The account being referenced when `type` is `customer`.
+         * The Account representing the customer being referenced when `type` is `customer`.
          */
-        customer_account?: string | null;
+        customer_account: string | null;
 
         /**
          * Type of owner referenced.

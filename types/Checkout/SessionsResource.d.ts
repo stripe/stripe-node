@@ -69,15 +69,15 @@ declare module 'stripe' {
         /**
          * ID of an existing Customer, if one exists. In `payment` mode, the customer's most recently saved card
          * payment method will be used to prefill the email, name, card details, and billing address
-         * on the Checkout page. In `subscription` mode, the customer's [default payment method](https://stripe.com/docs/api/customers/update#update_customer-invoice_settings-default_payment_method)
+         * on the Checkout page. In `subscription` mode, the customer's [default payment method](https://docs.stripe.com/api/customers/update#update_customer-invoice_settings-default_payment_method)
          * will be used if it's a card, otherwise the most recently saved card will be used. A valid billing address, billing name and billing email are required on the payment method for Checkout to prefill the customer's card details.
          *
-         * If the Customer already has a valid [email](https://stripe.com/docs/api/customers/object#customer_object-email) set, the email will be prefilled and not editable in Checkout.
+         * If the Customer already has a valid [email](https://docs.stripe.com/api/customers/object#customer_object-email) set, the email will be prefilled and not editable in Checkout.
          * If the Customer does not have a valid `email`, Checkout will set the email entered during the session on the Customer.
          *
          * If blank for Checkout Sessions in `subscription` mode or with `customer_creation` set as `always` in `payment` mode, Checkout will create a new Customer object based on information provided during the payment flow.
          *
-         * You can set [`payment_intent_data.setup_future_usage`](https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-payment_intent_data-setup_future_usage) to have Checkout automatically attach the payment method to the Customer you pass in for future reuse.
+         * You can set [`payment_intent_data.setup_future_usage`](https://docs.stripe.com/api/checkout/sessions/create#create_checkout_session-payment_intent_data-setup_future_usage) to have Checkout automatically attach the payment method to the Customer you pass in for future reuse.
          */
         customer?: string;
 
@@ -87,12 +87,12 @@ declare module 'stripe' {
         customer_account?: string;
 
         /**
-         * Configure whether a Checkout Session creates a [Customer](https://stripe.com/docs/api/customers) during Session confirmation.
+         * Configure whether a Checkout Session creates a [Customer](https://docs.stripe.com/api/customers) during Session confirmation.
          *
          * When a Customer is not created, you can still retrieve email, address, and other customer data entered in Checkout
-         * with [customer_details](https://stripe.com/docs/api/checkout/sessions/object#checkout_session_object-customer_details).
+         * with [customer_details](https://docs.stripe.com/api/checkout/sessions/object#checkout_session_object-customer_details).
          *
-         * Sessions that don't create Customers instead are grouped by [guest customers](https://stripe.com/docs/payments/checkout/guest-customers)
+         * Sessions that don't create Customers instead are grouped by [guest customers](https://docs.stripe.com/payments/checkout/guest-customers)
          * in the Dashboard. Promotion codes limited to first time customers will return invalid for these Sessions.
          *
          * Can only be set in `payment` and `setup` mode.
@@ -141,7 +141,7 @@ declare module 'stripe' {
         invoice_creation?: SessionCreateParams.InvoiceCreation;
 
         /**
-         * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices). The parameter is required for `payment` and `subscription` mode.
+         * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [Prices](https://docs.stripe.com/api/prices). The parameter is required for `payment` and `subscription` mode.
          *
          * For `payment` mode, there is a maximum of 100 line items, however it is recommended to consolidate line items if there are more than a few dozen.
          *
@@ -155,7 +155,7 @@ declare module 'stripe' {
         locale?: SessionCreateParams.Locale;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
 
@@ -169,12 +169,12 @@ declare module 'stripe' {
          *
          * You can configure Checkout to collect your customers' business names, individual names, or both. Each name field can be either required or optional.
          *
-         * If a [Customer](https://stripe.com/docs/api/customers) is created or provided, the names can be saved to the Customer object as well.
+         * If a [Customer](https://docs.stripe.com/api/customers) is created or provided, the names can be saved to the Customer object as well.
          */
         name_collection?: SessionCreateParams.NameCollection;
 
         /**
-         * A list of optional items the customer can add to their order at checkout. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices).
+         * A list of optional items the customer can add to their order at checkout. Use this parameter to pass one-time or recurring [Prices](https://docs.stripe.com/api/prices).
          *
          * There is a maximum of 10 optional items allowed on a Checkout Session, and the existing limits on the number of line items allowed on a Checkout Session apply to the combined number of line items and optional items.
          *
@@ -200,7 +200,7 @@ declare module 'stripe' {
          *
          * Can only be set in `subscription` mode. Defaults to `always`.
          *
-         * If you'd like information on how to collect a payment method outside of Checkout, read the guide on configuring [subscriptions with a free trial](https://stripe.com/docs/payments/checkout/free-trials).
+         * If you'd like information on how to collect a payment method outside of Checkout, read the guide on configuring [subscriptions with a free trial](https://docs.stripe.com/payments/checkout/free-trials).
          */
         payment_method_collection?: SessionCreateParams.PaymentMethodCollection;
 
@@ -223,7 +223,7 @@ declare module 'stripe' {
          * A list of the types of payment methods (e.g., `card`) this Checkout Session can accept.
          *
          * You can omit this attribute to manage your payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
-         * See [Dynamic Payment Methods](https://stripe.com/docs/payments/payment-methods/integration-options#using-dynamic-payment-methods) for more details.
+         * See [Dynamic Payment Methods](https://docs.stripe.com/payments/payment-methods/integration-options#using-dynamic-payment-methods) for more details.
          *
          * Read more about the supported payment methods and their requirements in our [payment
          * method details guide](https://docs.stripe.com/docs/payments/checkout/payment-methods).
@@ -245,12 +245,12 @@ declare module 'stripe' {
          * Controls phone number collection settings for the session.
          *
          * We recommend that you review your privacy policy and check with your legal contacts
-         * before using this feature. Learn more about [collecting phone numbers with Checkout](https://stripe.com/docs/payments/checkout/phone-numbers).
+         * before using this feature. Learn more about [collecting phone numbers with Checkout](https://docs.stripe.com/payments/checkout/phone-numbers).
          */
         phone_number_collection?: SessionCreateParams.PhoneNumberCollection;
 
         /**
-         * This parameter applies to `ui_mode: embedded`. Learn more about the [redirect behavior](https://stripe.com/docs/payments/checkout/custom-success-page?payment-ui=embedded-form) of embedded sessions. Defaults to `always`.
+         * This parameter applies to `ui_mode: embedded`. Learn more about the [redirect behavior](https://docs.stripe.com/payments/checkout/custom-success-page?payment-ui=embedded-form) of embedded sessions. Defaults to `always`.
          */
         redirect_on_completion?: SessionCreateParams.RedirectOnCompletion;
 
@@ -299,7 +299,7 @@ declare module 'stripe' {
          * is complete.
          * This parameter is not allowed if ui_mode is `embedded` or `custom`. If you'd like to use
          * information from the successful Checkout Session on your page, read the
-         * guide on [customizing your success page](https://stripe.com/docs/payments/checkout/custom-success-page).
+         * guide on [customizing your success page](https://docs.stripe.com/payments/checkout/custom-success-page).
          */
         success_url?: string;
 
@@ -736,7 +736,7 @@ declare module 'stripe' {
           coupon?: string;
 
           /**
-           * Data used to generate a new [Coupon](https://stripe.com/docs/api/coupon) object inline. One of `coupon` or `coupon_data` is required when updating discounts.
+           * Data used to generate a new [Coupon](https://docs.stripe.com/api/coupon) object inline. One of `coupon` or `coupon_data` is required when updating discounts.
            */
           coupon_data?: Discount.CouponData;
 
@@ -764,7 +764,7 @@ declare module 'stripe' {
             duration?: CouponData.Duration;
 
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
@@ -880,7 +880,7 @@ declare module 'stripe' {
             issuer?: InvoiceData.Issuer;
 
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: Stripe.MetadataParam;
 
@@ -946,22 +946,22 @@ declare module 'stripe' {
           adjustable_quantity?: LineItem.AdjustableQuantity;
 
           /**
-           * The [tax rates](https://stripe.com/docs/api/tax_rates) that will be applied to this line item depending on the customer's billing/shipping address. We currently support the following countries: US, GB, AU, and all countries in the EU.
+           * The [tax rates](https://docs.stripe.com/api/tax_rates) that will be applied to this line item depending on the customer's billing/shipping address. We currently support the following countries: US, GB, AU, and all countries in the EU.
            */
           dynamic_tax_rates?: Array<string>;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
           metadata?: Stripe.MetadataParam;
 
           /**
-           * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object. One of `price` or `price_data` is required.
+           * The ID of the [Price](https://docs.stripe.com/api/prices) or [Plan](https://docs.stripe.com/api/plans) object. One of `price` or `price_data` is required.
            */
           price?: string;
 
           /**
-           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+           * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
            */
           price_data?: LineItem.PriceData;
 
@@ -971,7 +971,7 @@ declare module 'stripe' {
           quantity?: number;
 
           /**
-           * The [tax rates](https://stripe.com/docs/api/tax_rates) which apply to this line item.
+           * The [tax rates](https://docs.stripe.com/api/tax_rates) which apply to this line item.
            */
           tax_rates?: Array<string>;
         }
@@ -1016,7 +1016,7 @@ declare module 'stripe' {
             recurring?: PriceData.Recurring;
 
             /**
-             * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
              */
             tax_behavior?: PriceData.TaxBehavior;
 
@@ -1044,7 +1044,7 @@ declare module 'stripe' {
               images?: Array<string>;
 
               /**
-               * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+               * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
                */
               metadata?: Stripe.MetadataParam;
 
@@ -1054,7 +1054,7 @@ declare module 'stripe' {
               name: string;
 
               /**
-               * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+               * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
                */
               tax_code?: string;
 
@@ -1174,7 +1174,7 @@ declare module 'stripe' {
           adjustable_quantity?: OptionalItem.AdjustableQuantity;
 
           /**
-           * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object.
+           * The ID of the [Price](https://docs.stripe.com/api/prices) or [Plan](https://docs.stripe.com/api/plans) object.
            */
           price: string;
 
@@ -1207,7 +1207,7 @@ declare module 'stripe' {
 
         interface PaymentIntentData {
           /**
-           * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+           * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total amount captured. For more information, see the PaymentIntents [use case for connected accounts](https://docs.stripe.com/payments/connected-accounts).
            */
           application_fee_amount?: number;
 
@@ -1222,7 +1222,7 @@ declare module 'stripe' {
           description?: string;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -1239,7 +1239,7 @@ declare module 'stripe' {
           receipt_email?: string;
 
           /**
-           * Indicates that you intend to [make future payments](https://stripe.com/docs/payments/payment-intents#future-usage) with the payment
+           * Indicates that you intend to [make future payments](https://docs.stripe.com/payments/payment-intents#future-usage) with the payment
            * method collected by this Checkout Session.
            *
            * When setting this to `on_session`, Checkout will show a notice to the
@@ -1281,12 +1281,12 @@ declare module 'stripe' {
 
           /**
            * The parameters used to automatically create a Transfer when the payment succeeds.
-           * For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+           * For more information, see the PaymentIntents [use case for connected accounts](https://docs.stripe.com/payments/connected-accounts).
            */
           transfer_data?: PaymentIntentData.TransferData;
 
           /**
-           * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+           * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://docs.stripe.com/connect/separate-charges-and-transfers) for details.
            */
           transfer_group?: string;
         }
@@ -1867,7 +1867,7 @@ declare module 'stripe' {
             request_overcapture?: Card.RequestOvercapture;
 
             /**
-             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. If not provided, this value defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
 
@@ -2382,7 +2382,7 @@ declare module 'stripe' {
             capture_method?: Stripe.Emptyable<'manual'>;
 
             /**
-             * [Preferred locale](https://stripe.com/docs/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
+             * [Preferred locale](https://docs.stripe.com/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
              */
             preferred_locale?: Paypal.PreferredLocale;
 
@@ -2470,37 +2470,39 @@ declare module 'stripe' {
               /**
                * Amount that will be collected. It is required when `amount_type` is `fixed`.
                */
-              amount?: number;
+              amount?: Stripe.Emptyable<number>;
 
               /**
                * The type of amount that will be collected. The amount charged must be exact or up to the value of `amount` param for `fixed` or `maximum` type respectively. Defaults to `maximum`.
                */
-              amount_type?: MandateOptions.AmountType;
+              amount_type?: Stripe.Emptyable<MandateOptions.AmountType>;
 
               /**
                * Date, in YYYY-MM-DD format, after which payments will not be collected. Defaults to no end date.
                */
-              end_date?: string;
+              end_date?: Stripe.Emptyable<string>;
 
               /**
                * The periodicity at which payments will be collected. Defaults to `adhoc`.
                */
-              payment_schedule?: MandateOptions.PaymentSchedule;
+              payment_schedule?: Stripe.Emptyable<
+                MandateOptions.PaymentSchedule
+              >;
 
               /**
                * The number of payments that will be made during a payment period. Defaults to 1 except for when `payment_schedule` is `adhoc`. In that case, it defaults to no limit.
                */
-              payments_per_period?: number;
+              payments_per_period?: Stripe.Emptyable<number>;
 
               /**
                * The purpose for which payments are made. Has a default value based on your merchant category code.
                */
-              purpose?: MandateOptions.Purpose;
+              purpose?: Stripe.Emptyable<MandateOptions.Purpose>;
 
               /**
                * Date, in YYYY-MM-DD format, from which payments will be collected. Defaults to confirmation time.
                */
-              start_date?: string;
+              start_date?: Stripe.Emptyable<string>;
             }
 
             namespace MandateOptions {
@@ -2981,7 +2983,7 @@ declare module 'stripe' {
           description?: string;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -3271,7 +3273,7 @@ declare module 'stripe' {
             fixed_amount?: ShippingRateData.FixedAmount;
 
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: Stripe.MetadataParam;
 
@@ -3281,7 +3283,7 @@ declare module 'stripe' {
             tax_behavior?: ShippingRateData.TaxBehavior;
 
             /**
-             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+             * A [tax code](https://docs.stripe.com/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
              */
             tax_code?: string;
 
@@ -3407,7 +3409,7 @@ declare module 'stripe' {
           /**
            * The subscription's description, meant to be displayable to the customer.
            * Use this field to optionally store an explanation of the subscription
-           * for rendering in the [customer portal](https://stripe.com/docs/customer-management).
+           * for rendering in the [customer portal](https://docs.stripe.com/customer-management).
            */
           description?: string;
 
@@ -3417,7 +3419,7 @@ declare module 'stripe' {
           invoice_settings?: SubscriptionData.InvoiceSettings;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -3630,7 +3632,7 @@ declare module 'stripe' {
         line_items?: Array<SessionUpdateParams.LineItem>;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
@@ -3721,7 +3723,7 @@ declare module 'stripe' {
               postal_code?: string;
 
               /**
-               * State, county, province, or region.
+               * State, county, province, or region ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
                */
               state?: string;
             }
@@ -3730,12 +3732,12 @@ declare module 'stripe' {
 
         interface Discount {
           /**
-           * The ID of the [Coupon](https://stripe.com/docs/api/coupons) to apply to this Session. One of `coupon` or `coupon_data` is required when updating discounts.
+           * The ID of the [Coupon](https://docs.stripe.com/api/coupons) to apply to this Session. One of `coupon` or `coupon_data` is required when updating discounts.
            */
           coupon?: string;
 
           /**
-           * Data used to generate a new [Coupon](https://stripe.com/docs/api/coupon) object inline. One of `coupon` or `coupon_data` is required when updating discounts.
+           * Data used to generate a new [Coupon](https://docs.stripe.com/api/coupon) object inline. One of `coupon` or `coupon_data` is required when updating discounts.
            */
           coupon_data?: Discount.CouponData;
         }
@@ -3758,7 +3760,7 @@ declare module 'stripe' {
             duration?: CouponData.Duration;
 
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
@@ -3824,17 +3826,17 @@ declare module 'stripe' {
           id?: string;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
           metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
           /**
-           * The ID of the [Price](https://stripe.com/docs/api/prices). One of `price` or `price_data` is required when creating a new line item.
+           * The ID of the [Price](https://docs.stripe.com/api/prices). One of `price` or `price_data` is required when creating a new line item.
            */
           price?: string;
 
           /**
-           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required when creating a new line item.
+           * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required when creating a new line item.
            */
           price_data?: LineItem.PriceData;
 
@@ -3844,7 +3846,7 @@ declare module 'stripe' {
           quantity?: number;
 
           /**
-           * The [tax rates](https://stripe.com/docs/api/tax_rates) which apply to this line item.
+           * The [tax rates](https://docs.stripe.com/api/tax_rates) which apply to this line item.
            */
           tax_rates?: Stripe.Emptyable<Array<string>>;
         }
@@ -3889,7 +3891,7 @@ declare module 'stripe' {
             recurring?: PriceData.Recurring;
 
             /**
-             * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
              */
             tax_behavior?: PriceData.TaxBehavior;
 
@@ -3917,7 +3919,7 @@ declare module 'stripe' {
               images?: Array<string>;
 
               /**
-               * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+               * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
                */
               metadata?: Stripe.MetadataParam;
 
@@ -3927,7 +3929,7 @@ declare module 'stripe' {
               name: string;
 
               /**
-               * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+               * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
                */
               tax_code?: string;
 
@@ -3987,7 +3989,7 @@ declare module 'stripe' {
             fixed_amount?: ShippingRateData.FixedAmount;
 
             /**
-             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
              */
             metadata?: Stripe.MetadataParam;
 
@@ -3997,7 +3999,7 @@ declare module 'stripe' {
             tax_behavior?: ShippingRateData.TaxBehavior;
 
             /**
-             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+             * A [tax code](https://docs.stripe.com/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
              */
             tax_code?: string;
 

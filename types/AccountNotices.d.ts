@@ -5,7 +5,7 @@ declare module 'stripe' {
     /**
      * A notice to a Connected account. Notice can be sent by Stripe on your behalf or you can opt to send the notices yourself.
      *
-     * See the [guide to send notices](https://stripe.com/docs/issuing/compliance-us/issuing-regulated-customer-notices) to your connected accounts.
+     * See the [guide to send notices](https://docs.stripe.com/issuing/compliance-us/issuing-regulated-customer-notices) to your connected accounts.
      */
     interface AccountNotice {
       /**
@@ -44,12 +44,12 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata | null;
 
       /**
-       * Reason the notice is being sent. The reason determines what copy the notice must contain. See the [regulated customer notices](https://stripe.com/docs/issuing/compliance-us/issuing-regulated-customer-notices) guide. All reasons might not apply to your integration, and Stripe might add new reasons in the future, so we recommend an internal warning when you receive an unknown reason.
+       * Reason the notice is being sent. The reason determines what copy the notice must contain. See the [regulated customer notices](https://docs.stripe.com/issuing/compliance-us/issuing-regulated-customer-notices) guide. All reasons might not apply to your integration, and Stripe might add new reasons in the future, so we recommend an internal warning when you receive an unknown reason.
        */
       reason: AccountNotice.Reason;
 
@@ -79,17 +79,17 @@ declare module 'stripe' {
 
       interface LinkedObjects {
         /**
-         * Associated [Capability](https://stripe.com/docs/api/capabilities)
+         * Associated [Capability](https://docs.stripe.com/api/capabilities)
          */
         capability: string | null;
 
         /**
-         * Associated [Credit Underwriting Record](https://stripe.com/docs/api/issuing/credit_underwriting_record)
+         * Associated [Credit Underwriting Record](https://docs.stripe.com/api/issuing/credit_underwriting_record)
          */
         issuing_credit_underwriting_record?: string | null;
 
         /**
-         * Associated [Issuing Dispute](https://stripe.com/docs/api/issuing/disputes)
+         * Associated [Issuing Dispute](https://docs.stripe.com/api/issuing/disputes)
          */
         issuing_dispute: string | null;
       }

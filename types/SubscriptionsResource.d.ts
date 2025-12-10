@@ -29,7 +29,7 @@ declare module 'stripe' {
       billing_cadence?: string;
 
       /**
-       * A future timestamp in UTC format to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). The anchor is the reference point that aligns future billing cycle dates. It sets the day of week for `week` intervals, the day of month for `month` and `year` intervals, and the month of year for `year` intervals.
+       * A future timestamp in UTC format to anchor the subscription's [billing cycle](https://docs.stripe.com/subscriptions/billing-cycle). The anchor is the reference point that aligns future billing cycle dates. It sets the day of week for `week` intervals, the day of month for `month` and `year` intervals, and the month of year for `year` intervals.
        */
       billing_cycle_anchor?: number;
 
@@ -81,7 +81,7 @@ declare module 'stripe' {
       customer?: string;
 
       /**
-       * The identifier of the account to subscribe.
+       * The identifier of the account representing the customer to subscribe.
        */
       customer_account?: string;
 
@@ -91,12 +91,12 @@ declare module 'stripe' {
       days_until_due?: number;
 
       /**
-       * ID of the default payment method for the subscription. It must belong to the customer associated with the subscription. This takes precedence over `default_source`. If neither are set, invoices will use the customer's [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) or [default_source](https://stripe.com/docs/api/customers/object#customer_object-default_source).
+       * ID of the default payment method for the subscription. It must belong to the customer associated with the subscription. This takes precedence over `default_source`. If neither are set, invoices will use the customer's [invoice_settings.default_payment_method](https://docs.stripe.com/api/customers/object#customer_object-invoice_settings-default_payment_method) or [default_source](https://docs.stripe.com/api/customers/object#customer_object-default_source).
        */
       default_payment_method?: string;
 
       /**
-       * ID of the default payment source for the subscription. It must belong to the customer associated with the subscription and be in a chargeable state. If `default_payment_method` is also set, `default_payment_method` will take precedence. If neither are set, invoices will use the customer's [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) or [default_source](https://stripe.com/docs/api/customers/object#customer_object-default_source).
+       * ID of the default payment source for the subscription. It must belong to the customer associated with the subscription and be in a chargeable state. If `default_payment_method` is also set, `default_payment_method` will take precedence. If neither are set, invoices will use the customer's [invoice_settings.default_payment_method](https://docs.stripe.com/api/customers/object#customer_object-invoice_settings-default_payment_method) or [default_source](https://docs.stripe.com/api/customers/object#customer_object-default_source).
        */
       default_source?: string;
 
@@ -131,7 +131,7 @@ declare module 'stripe' {
       items?: Array<SubscriptionCreateParams.Item>;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
@@ -148,11 +148,11 @@ declare module 'stripe' {
       /**
        * Only applies to subscriptions with `collection_method=charge_automatically`.
        *
-       * Use `allow_incomplete` to create Subscriptions with `status=incomplete` if the first invoice can't be paid. Creating Subscriptions with this status allows you to manage scenarios where additional customer actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
+       * Use `allow_incomplete` to create Subscriptions with `status=incomplete` if the first invoice can't be paid. Creating Subscriptions with this status allows you to manage scenarios where additional customer actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://docs.stripe.com/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
        *
-       * Use `default_incomplete` to create Subscriptions with `status=incomplete` when the first invoice requires payment, otherwise start as active. Subscriptions transition to `status=active` when successfully confirming the PaymentIntent on the first invoice. This allows simpler management of scenarios where additional customer actions are needed to pay a subscription's invoice, such as failed payments, [SCA regulation](https://stripe.com/docs/billing/migration/strong-customer-authentication), or collecting a mandate for a bank debit payment method. If the PaymentIntent is not confirmed within 23 hours Subscriptions transition to `status=incomplete_expired`, which is a terminal state.
+       * Use `default_incomplete` to create Subscriptions with `status=incomplete` when the first invoice requires payment, otherwise start as active. Subscriptions transition to `status=active` when successfully confirming the PaymentIntent on the first invoice. This allows simpler management of scenarios where additional customer actions are needed to pay a subscription's invoice, such as failed payments, [SCA regulation](https://docs.stripe.com/billing/migration/strong-customer-authentication), or collecting a mandate for a bank debit payment method. If the PaymentIntent is not confirmed within 23 hours Subscriptions transition to `status=incomplete_expired`, which is a terminal state.
        *
-       * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice can't be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further customer action is needed, this parameter doesn't create a Subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
+       * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice can't be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further customer action is needed, this parameter doesn't create a Subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://docs.stripe.com/upgrades#2019-03-14) to learn more.
        *
        * `pending_if_incomplete` is only used with updates and cannot be passed when creating a Subscription.
        *
@@ -166,7 +166,7 @@ declare module 'stripe' {
       payment_settings?: SubscriptionCreateParams.PaymentSettings;
 
       /**
-       * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
+       * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://docs.stripe.com/api#create_invoice) for the given subscription at the specified interval.
        */
       pending_invoice_item_interval?: Stripe.Emptyable<
         SubscriptionCreateParams.PendingInvoiceItemInterval
@@ -178,7 +178,7 @@ declare module 'stripe' {
       prebilling?: SubscriptionCreateParams.Prebilling;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) resulting from the `billing_cycle_anchor`. If no value is passed, the default is `create_prorations`.
+       * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) resulting from the `billing_cycle_anchor`. If no value is passed, the default is `create_prorations`.
        */
       proration_behavior?: SubscriptionCreateParams.ProrationBehavior;
 
@@ -188,17 +188,17 @@ declare module 'stripe' {
       transfer_data?: SubscriptionCreateParams.TransferData;
 
       /**
-       * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`. See [Using trial periods on subscriptions](https://stripe.com/docs/billing/subscriptions/trials) to learn more.
+       * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`. See [Using trial periods on subscriptions](https://docs.stripe.com/billing/subscriptions/trials) to learn more.
        */
       trial_end?: 'now' | number;
 
       /**
-       * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed. See [Using trial periods on subscriptions](https://stripe.com/docs/billing/subscriptions/trials) to learn more.
+       * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed. See [Using trial periods on subscriptions](https://docs.stripe.com/billing/subscriptions/trials) to learn more.
        */
       trial_from_plan?: boolean;
 
       /**
-       * Integer representing the number of trial period days before the customer is charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. See [Using trial periods on subscriptions](https://stripe.com/docs/billing/subscriptions/trials) to learn more.
+       * Integer representing the number of trial period days before the customer is charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. See [Using trial periods on subscriptions](https://docs.stripe.com/billing/subscriptions/trials) to learn more.
        */
       trial_period_days?: number;
 
@@ -216,7 +216,7 @@ declare module 'stripe' {
         discounts?: Array<AddInvoiceItem.Discount>;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
 
@@ -231,7 +231,7 @@ declare module 'stripe' {
         price?: string;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+         * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
          */
         price_data?: AddInvoiceItem.PriceData;
 
@@ -366,7 +366,7 @@ declare module 'stripe' {
           product: string;
 
           /**
-           * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
            */
           tax_behavior?: PriceData.TaxBehavior;
 
@@ -657,7 +657,7 @@ declare module 'stripe' {
         discounts?: Stripe.Emptyable<Array<Item.Discount>>;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
 
@@ -672,7 +672,7 @@ declare module 'stripe' {
         price?: string;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+         * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline.
          */
         price_data?: Item.PriceData;
 
@@ -682,7 +682,7 @@ declare module 'stripe' {
         quantity?: number;
 
         /**
-         * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+         * A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
          */
         tax_rates?: Stripe.Emptyable<Array<string>>;
 
@@ -695,7 +695,7 @@ declare module 'stripe' {
       namespace Item {
         interface BillingThresholds {
           /**
-           * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+           * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
            */
           usage_gte: number;
         }
@@ -778,7 +778,7 @@ declare module 'stripe' {
           recurring: PriceData.Recurring;
 
           /**
-           * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
            */
           tax_behavior?: PriceData.TaxBehavior;
 
@@ -892,6 +892,11 @@ declare module 'stripe' {
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
           /**
+           * This sub-hash contains details about the PayTo payment method options to pass to the invoice's PaymentIntent.
+           */
+          payto?: Stripe.Emptyable<PaymentMethodOptions.Payto>;
+
+          /**
            * This sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
            */
           pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
@@ -965,7 +970,7 @@ declare module 'stripe' {
             network?: Card.Network;
 
             /**
-             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
           }
@@ -1048,6 +1053,42 @@ declare module 'stripe' {
           interface IdBankTransfer {}
 
           interface Konbini {}
+
+          interface Payto {
+            /**
+             * Additional fields for Mandate creation.
+             */
+            mandate_options?: Payto.MandateOptions;
+          }
+
+          namespace Payto {
+            interface MandateOptions {
+              /**
+               * The maximum amount that can be collected in a single invoice. If you don't specify a maximum, then there is no limit.
+               */
+              amount?: number;
+
+              /**
+               * The purpose for which payments are made. Has a default value based on your merchant category code.
+               */
+              purpose?: MandateOptions.Purpose;
+            }
+
+            namespace MandateOptions {
+              type Purpose =
+                | 'dependant_support'
+                | 'government'
+                | 'loan'
+                | 'mortgage'
+                | 'other'
+                | 'pension'
+                | 'personal'
+                | 'retail'
+                | 'salary'
+                | 'tax'
+                | 'utility';
+            }
+          }
 
           interface Pix {
             /**
@@ -1226,6 +1267,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
@@ -1337,7 +1379,7 @@ declare module 'stripe' {
       billing_cadence?: string;
 
       /**
-       * Either `now` or `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time (in UTC). For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+       * Either `now` or `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time (in UTC). For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
        */
       billing_cycle_anchor?: SubscriptionUpdateParams.BillingCycleAnchor;
 
@@ -1381,12 +1423,12 @@ declare module 'stripe' {
       days_until_due?: number;
 
       /**
-       * ID of the default payment method for the subscription. It must belong to the customer associated with the subscription. This takes precedence over `default_source`. If neither are set, invoices will use the customer's [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) or [default_source](https://stripe.com/docs/api/customers/object#customer_object-default_source).
+       * ID of the default payment method for the subscription. It must belong to the customer associated with the subscription. This takes precedence over `default_source`. If neither are set, invoices will use the customer's [invoice_settings.default_payment_method](https://docs.stripe.com/api/customers/object#customer_object-invoice_settings-default_payment_method) or [default_source](https://docs.stripe.com/api/customers/object#customer_object-default_source).
        */
       default_payment_method?: string;
 
       /**
-       * ID of the default payment source for the subscription. It must belong to the customer associated with the subscription and be in a chargeable state. If `default_payment_method` is also set, `default_payment_method` will take precedence. If neither are set, invoices will use the customer's [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) or [default_source](https://stripe.com/docs/api/customers/object#customer_object-default_source).
+       * ID of the default payment source for the subscription. It must belong to the customer associated with the subscription and be in a chargeable state. If `default_payment_method` is also set, `default_payment_method` will take precedence. If neither are set, invoices will use the customer's [invoice_settings.default_payment_method](https://docs.stripe.com/api/customers/object#customer_object-invoice_settings-default_payment_method) or [default_source](https://docs.stripe.com/api/customers/object#customer_object-default_source).
        */
       default_source?: Stripe.Emptyable<string>;
 
@@ -1421,7 +1463,7 @@ declare module 'stripe' {
       items?: Array<SubscriptionUpdateParams.Item>;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
@@ -1436,18 +1478,18 @@ declare module 'stripe' {
       on_behalf_of?: Stripe.Emptyable<string>;
 
       /**
-       * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/docs/billing/subscriptions/pause-payment).
+       * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://docs.stripe.com/billing/subscriptions/pause-payment).
        */
       pause_collection?: Stripe.Emptyable<
         SubscriptionUpdateParams.PauseCollection
       >;
 
       /**
-       * Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
+       * Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://docs.stripe.com/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
        *
-       * Use `default_incomplete` to transition the subscription to `status=past_due` when payment is required and await explicit confirmation of the invoice's payment intent. This allows simpler management of scenarios where additional user actions are needed to pay a subscription's invoice. Such as failed payments, [SCA regulation](https://stripe.com/docs/billing/migration/strong-customer-authentication), or collecting a mandate for a bank debit payment method.
+       * Use `default_incomplete` to transition the subscription to `status=past_due` when payment is required and await explicit confirmation of the invoice's payment intent. This allows simpler management of scenarios where additional user actions are needed to pay a subscription's invoice. Such as failed payments, [SCA regulation](https://docs.stripe.com/billing/migration/strong-customer-authentication), or collecting a mandate for a bank debit payment method.
        *
-       * Use `pending_if_incomplete` to update the subscription using [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://stripe.com/docs/billing/pending-updates-reference#supported-attributes).
+       * Use `pending_if_incomplete` to update the subscription using [pending updates](https://docs.stripe.com/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://docs.stripe.com/billing/pending-updates-reference#supported-attributes).
        *
        * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://docs.stripe.com/changelog/2019-03-14) to learn more.
        */
@@ -1459,7 +1501,7 @@ declare module 'stripe' {
       payment_settings?: SubscriptionUpdateParams.PaymentSettings;
 
       /**
-       * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
+       * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://docs.stripe.com/api#create_invoice) for the given subscription at the specified interval.
        */
       pending_invoice_item_interval?: Stripe.Emptyable<
         SubscriptionUpdateParams.PendingInvoiceItemInterval
@@ -1471,7 +1513,7 @@ declare module 'stripe' {
       prebilling?: SubscriptionUpdateParams.Prebilling;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+       * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
        */
       proration_behavior?: SubscriptionUpdateParams.ProrationBehavior;
 
@@ -1491,7 +1533,7 @@ declare module 'stripe' {
       trial_end?: 'now' | number;
 
       /**
-       * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed. See [Using trial periods on subscriptions](https://stripe.com/docs/billing/subscriptions/trials) to learn more.
+       * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed. See [Using trial periods on subscriptions](https://docs.stripe.com/billing/subscriptions/trials) to learn more.
        */
       trial_from_plan?: boolean;
 
@@ -1509,7 +1551,7 @@ declare module 'stripe' {
         discounts?: Array<AddInvoiceItem.Discount>;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
 
@@ -1524,7 +1566,7 @@ declare module 'stripe' {
         price?: string;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+         * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
          */
         price_data?: AddInvoiceItem.PriceData;
 
@@ -1659,7 +1701,7 @@ declare module 'stripe' {
           product: string;
 
           /**
-           * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
            */
           tax_behavior?: PriceData.TaxBehavior;
 
@@ -1937,7 +1979,7 @@ declare module 'stripe' {
         id?: string;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
@@ -1952,7 +1994,7 @@ declare module 'stripe' {
         price?: string;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+         * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
          */
         price_data?: Item.PriceData;
 
@@ -1962,7 +2004,7 @@ declare module 'stripe' {
         quantity?: number;
 
         /**
-         * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+         * A list of [Tax Rate](https://docs.stripe.com/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://docs.stripe.com/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
          */
         tax_rates?: Stripe.Emptyable<Array<string>>;
       }
@@ -1970,7 +2012,7 @@ declare module 'stripe' {
       namespace Item {
         interface BillingThresholds {
           /**
-           * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
+           * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://docs.stripe.com/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
            */
           usage_gte: number;
         }
@@ -2053,7 +2095,7 @@ declare module 'stripe' {
           recurring: PriceData.Recurring;
 
           /**
-           * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
            */
           tax_behavior?: PriceData.TaxBehavior;
 
@@ -2167,6 +2209,11 @@ declare module 'stripe' {
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
           /**
+           * This sub-hash contains details about the PayTo payment method options to pass to the invoice's PaymentIntent.
+           */
+          payto?: Stripe.Emptyable<PaymentMethodOptions.Payto>;
+
+          /**
            * This sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
            */
           pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
@@ -2240,7 +2287,7 @@ declare module 'stripe' {
             network?: Card.Network;
 
             /**
-             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
           }
@@ -2323,6 +2370,42 @@ declare module 'stripe' {
           interface IdBankTransfer {}
 
           interface Konbini {}
+
+          interface Payto {
+            /**
+             * Additional fields for Mandate creation.
+             */
+            mandate_options?: Payto.MandateOptions;
+          }
+
+          namespace Payto {
+            interface MandateOptions {
+              /**
+               * The maximum amount that can be collected in a single invoice. If you don't specify a maximum, then there is no limit.
+               */
+              amount?: number;
+
+              /**
+               * The purpose for which payments are made. Has a default value based on your merchant category code.
+               */
+              purpose?: MandateOptions.Purpose;
+            }
+
+            namespace MandateOptions {
+              type Purpose =
+                | 'dependant_support'
+                | 'government'
+                | 'loan'
+                | 'mortgage'
+                | 'other'
+                | 'pension'
+                | 'personal'
+                | 'retail'
+                | 'salary'
+                | 'tax'
+                | 'utility';
+            }
+          }
 
           interface Pix {
             /**
@@ -2501,6 +2584,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
@@ -2610,12 +2694,12 @@ declare module 'stripe' {
       current_period_start?: Stripe.RangeQueryParam | number;
 
       /**
-       * The ID of the customer whose subscriptions will be retrieved.
+       * The ID of the customer whose subscriptions you're retrieving.
        */
       customer?: string;
 
       /**
-       * The ID of the account whose subscriptions will be retrieved.
+       * The ID of the account representing the customer whose subscriptions you're retrieving.
        */
       customer_account?: string;
 
@@ -2635,7 +2719,7 @@ declare module 'stripe' {
       price?: string;
 
       /**
-       * The status of the subscriptions to retrieve. Passing in a value of `canceled` will return all canceled subscriptions, including those belonging to deleted customers. Pass `ended` to find subscriptions that are canceled and subscriptions that are expired due to [incomplete payment](https://stripe.com/docs/billing/subscriptions/overview#subscription-statuses). Passing in a value of `all` will return subscriptions of all statuses. If no value is supplied, all subscriptions that have not been canceled are returned.
+       * The status of the subscriptions to retrieve. Passing in a value of `canceled` will return all canceled subscriptions, including those belonging to deleted customers. Pass `ended` to find subscriptions that are canceled and subscriptions that are expired due to [incomplete payment](https://docs.stripe.com/billing/subscriptions/overview#subscription-statuses). Passing in a value of `all` will return subscriptions of all statuses. If no value is supplied, all subscriptions that have not been canceled are returned.
        */
       status?: SubscriptionListParams.Status;
 
@@ -2771,7 +2855,7 @@ declare module 'stripe' {
 
     interface SubscriptionResumeParams {
       /**
-       * The billing cycle anchor that applies when the subscription is resumed. Either `now` or `unchanged`. The default is `now`. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+       * The billing cycle anchor that applies when the subscription is resumed. Either `now` or `unchanged`. The default is `now`. For more information, see the billing cycle [documentation](https://docs.stripe.com/billing/subscriptions/billing-cycle).
        */
       billing_cycle_anchor?: SubscriptionResumeParams.BillingCycleAnchor;
 
@@ -2781,7 +2865,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/billing/subscriptions/prorations) resulting from the `billing_cycle_anchor` being `unchanged`. When the `billing_cycle_anchor` is set to `now` (default value), no prorations are generated. If no value is passed, the default is `create_prorations`.
+       * Determines how to handle [prorations](https://docs.stripe.com/billing/subscriptions/prorations) resulting from the `billing_cycle_anchor` being `unchanged`. When the `billing_cycle_anchor` is set to `now` (default value), no prorations are generated. If no value is passed, the default is `create_prorations`.
        */
       proration_behavior?: SubscriptionResumeParams.ProrationBehavior;
 
@@ -2799,7 +2883,7 @@ declare module 'stripe' {
 
     interface SubscriptionSearchParams {
       /**
-       * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for subscriptions](https://stripe.com/docs/search#query-fields-for-subscriptions).
+       * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for subscriptions](https://docs.stripe.com/search#query-fields-for-subscriptions).
        */
       query: string;
 

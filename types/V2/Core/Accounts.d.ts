@@ -19,17 +19,17 @@ declare module 'stripe' {
           object: 'v2.core.account';
 
           /**
-           * Filter only accounts that have all of the configurations specified. If omitted, returns all accounts regardless of which configurations they have.
+           * The configurations that have been applied to this account.
            */
           applied_configurations: Array<Account.AppliedConfiguration>;
 
           /**
-           * A value indicating if the Account has been closed.
+           * Indicates whether the account has been closed.
            */
           closed?: boolean;
 
           /**
-           * An Account Configuration which allows the Account to take on a key persona across Stripe products.
+           * An Account represents a company, individual, or other entity that a user interacts with. Accounts store identity information and one or more configurations that enable product-specific capabilities. You can assign configurations at creation or add them later.
            */
           configuration?: Account.Configuration;
 
@@ -49,7 +49,7 @@ declare module 'stripe' {
           dashboard?: Account.Dashboard;
 
           /**
-           * Default values to be used on Account Configurations.
+           * Default values for settings shared across Account configurations.
            */
           defaults?: Account.Defaults;
 
@@ -98,12 +98,12 @@ declare module 'stripe' {
             customer?: Configuration.Customer;
 
             /**
-             * The Merchant configuration allows the Account to act as a connected account and collect payments facilitated by a Connect platform. You can add this configuration to your connected accounts only if you've completed onboarding as a Connect platform.
+             * Enables the Account to act as a connected account and collect payments facilitated by a Connect platform. You must onboard your platform to Connect before you can add this configuration to your connected accounts. Utilize this configuration when the Account will be the Merchant of Record, like with Direct charges or Destination Charges with on_behalf_of set.
              */
             merchant?: Configuration.Merchant;
 
             /**
-             * The Recipient Configuration allows the Account to receive funds.
+             * The Recipient Configuration allows the Account to receive funds. Utilize this configuration if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
              */
             recipient?: Configuration.Recipient;
 
@@ -116,17 +116,17 @@ declare module 'stripe' {
           namespace Configuration {
             interface Customer {
               /**
-               * Represents the state of the configuration, and can be updated to deactivate or re-apply a configuration.
+               * Indicates whether the customer configuration is active. You can deactivate or reactivate the customer configuration by updating this property. Deactivating the configuration by setting this value to false will unrequest all capabilities within the configuration. It will not delete any of the configuration's other properties.
                */
               applied: boolean;
 
               /**
-               * Automatic indirect tax settings to be used when automatic tax calculation is enabled on the customer's invoices, subscriptions, checkout sessions, or payment links. Surfaces if automatic tax calculation is possible given the current customer location information.
+               * Settings for automatic indirect tax calculation on the customer's invoices, subscriptions, Checkout Sessions, and Payment Links. Available when automatic tax calculation is available for the customer account's location.
                */
               automatic_indirect_tax?: Customer.AutomaticIndirectTax;
 
               /**
-               * Billing settings - default settings used for this customer in Billing flows such as Invoices and Subscriptions.
+               * Default Billing settings for the customer account, used in Invoices and Subscriptions.
                */
               billing?: Customer.Billing;
 
@@ -149,7 +149,7 @@ declare module 'stripe' {
             namespace Customer {
               interface AutomaticIndirectTax {
                 /**
-                 * Describes the customer's tax exemption status, which is `none`, `exempt`, or `reverse`. When set to reverse, invoice and receipt PDFs include the following text: “Reverse charge”.
+                 * The customer account's tax exemption status: `none`, `exempt`, or `reverse`. When `reverse`, invoice and receipt PDFs include "Reverse charge".
                  */
                 exempt?: AutomaticIndirectTax.Exempt;
 
@@ -159,12 +159,12 @@ declare module 'stripe' {
                 ip_address?: string;
 
                 /**
-                 * The [identified](https://docs.stripe.com/tax/customer-locations#address-hierarchy-other) tax location of the customer. Will only be rendered if the `automatic_indirect_tax` feature is requested and `active`.
+                 * The customer account's identified tax location, derived from `location_source`. Only rendered if the `automatic_indirect_tax` feature is requested and `active`.
                  */
                 location?: AutomaticIndirectTax.Location;
 
                 /**
-                 * The data source used to identify the customer's tax location. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions.
+                 * Data source used to identify the customer account's tax location. Defaults to `identity_address`. Used for automatic indirect tax calculation.
                  */
                 location_source?: AutomaticIndirectTax.LocationSource;
               }
@@ -193,12 +193,12 @@ declare module 'stripe' {
 
               interface Billing {
                 /**
-                 * ID of a payment method that's attached to the customer, to be used as the customer's default payment method for invoices and subscriptions.
+                 * ID of a PaymentMethod attached to the customer account to use as the default for invoices and subscriptions.
                  */
                 default_payment_method?: string;
 
                 /**
-                 * Default settings used on invoices for this customer.
+                 * Default invoice settings for the customer account.
                  */
                 invoice?: Billing.Invoice;
               }
@@ -211,22 +211,22 @@ declare module 'stripe' {
                   custom_fields: Array<Invoice.CustomField>;
 
                   /**
-                   * Default footer to be displayed on invoices for this customer.
+                   * Default invoice footer.
                    */
                   footer?: string;
 
                   /**
-                   * The sequence to be used on the customer's next invoice. Defaults to 1.
+                   * Sequence number to use on the customer account's next invoice. Defaults to 1.
                    */
                   next_sequence?: number;
 
                   /**
-                   * The prefix for the customer used to generate unique invoice numbers. Must be 3–12 uppercase letters or numbers.
+                   * Prefix used to generate unique invoice numbers. Must be 3-12 uppercase letters or numbers.
                    */
                   prefix?: string;
 
                   /**
-                   * Default options for invoice PDF rendering for this customer.
+                   * Default invoice PDF rendering options.
                    */
                   rendering?: Invoice.Rendering;
                 }
@@ -246,7 +246,7 @@ declare module 'stripe' {
 
                   interface Rendering {
                     /**
-                     * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of exclude_tax or include_inclusive_tax. include_inclusive_tax will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. exclude_tax will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
+                     * Indicates whether displayed line item prices and amounts on invoice PDFs include inclusive tax amounts. Must be either `include_inclusive_tax` or `exclude_tax`.
                      */
                     amount_tax_display?: Rendering.AmountTaxDisplay;
 
@@ -274,17 +274,12 @@ declare module 'stripe' {
               namespace Capabilities {
                 interface AutomaticIndirectTax {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: AutomaticIndirectTax.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<AutomaticIndirectTax.StatusDetail>;
                 }
@@ -380,12 +375,12 @@ declare module 'stripe' {
 
             interface Merchant {
               /**
-               * Represents the state of the configuration, and can be updated to deactivate or re-apply a configuration.
+               * Indicates whether the merchant configuration is active. You can deactivate or reactivate the merchant configuration by updating this property. Deactivating the configuration by setting this value to false doesn't delete the configuration's properties.
                */
               applied: boolean;
 
               /**
-               * Settings used for Bacs debit payments.
+               * Settings for Bacs Direct Debit payments.
                */
               bacs_debit_payments?: Merchant.BacsDebitPayments;
 
@@ -410,7 +405,7 @@ declare module 'stripe' {
               konbini_payments?: Merchant.KonbiniPayments;
 
               /**
-               * The merchant category code for the merchant. MCCs are used to classify businesses based on the goods or services they provide.
+               * The Merchant Category Code (MCC) for the merchant. MCCs classify businesses based on the goods or services they provide.
                */
               mcc?: string;
 
@@ -420,7 +415,7 @@ declare module 'stripe' {
               script_statement_descriptor?: Merchant.ScriptStatementDescriptor;
 
               /**
-               * Settings used for SEPA debit payments.
+               * Settings for SEPA Direct Debit payments.
                */
               sepa_debit_payments?: Merchant.SepaDebitPayments;
 
@@ -438,12 +433,12 @@ declare module 'stripe' {
             namespace Merchant {
               interface BacsDebitPayments {
                 /**
-                 * Display name for Bacs debit payments.
+                 * Display name for Bacs Direct Debit payments.
                  */
                 display_name?: string;
 
                 /**
-                 * Service user number for Bacs debit payments.
+                 * Service User Number (SUN) for Bacs Direct Debit payments.
                  */
                 service_user_number?: string;
               }
@@ -700,17 +695,12 @@ declare module 'stripe' {
               namespace Capabilities {
                 interface AchDebitPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: AchDebitPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<AchDebitPayments.StatusDetail>;
                 }
@@ -753,17 +743,12 @@ declare module 'stripe' {
 
                 interface AcssDebitPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: AcssDebitPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<AcssDebitPayments.StatusDetail>;
                 }
@@ -806,17 +791,12 @@ declare module 'stripe' {
 
                 interface AffirmPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: AffirmPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<AffirmPayments.StatusDetail>;
                 }
@@ -859,17 +839,12 @@ declare module 'stripe' {
 
                 interface AfterpayClearpayPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: AfterpayClearpayPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<AfterpayClearpayPayments.StatusDetail>;
                 }
@@ -912,17 +887,12 @@ declare module 'stripe' {
 
                 interface AlmaPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: AlmaPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<AlmaPayments.StatusDetail>;
                 }
@@ -965,17 +935,12 @@ declare module 'stripe' {
 
                 interface AmazonPayPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: AmazonPayPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<AmazonPayPayments.StatusDetail>;
                 }
@@ -1018,17 +983,12 @@ declare module 'stripe' {
 
                 interface AuBecsDebitPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: AuBecsDebitPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<AuBecsDebitPayments.StatusDetail>;
                 }
@@ -1071,17 +1031,12 @@ declare module 'stripe' {
 
                 interface BacsDebitPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: BacsDebitPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<BacsDebitPayments.StatusDetail>;
                 }
@@ -1124,17 +1079,12 @@ declare module 'stripe' {
 
                 interface BancontactPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: BancontactPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<BancontactPayments.StatusDetail>;
                 }
@@ -1177,17 +1127,12 @@ declare module 'stripe' {
 
                 interface BlikPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: BlikPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<BlikPayments.StatusDetail>;
                 }
@@ -1230,17 +1175,12 @@ declare module 'stripe' {
 
                 interface BoletoPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: BoletoPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<BoletoPayments.StatusDetail>;
                 }
@@ -1283,17 +1223,12 @@ declare module 'stripe' {
 
                 interface CardPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: CardPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<CardPayments.StatusDetail>;
                 }
@@ -1336,17 +1271,12 @@ declare module 'stripe' {
 
                 interface CartesBancairesPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: CartesBancairesPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<CartesBancairesPayments.StatusDetail>;
                 }
@@ -1389,17 +1319,12 @@ declare module 'stripe' {
 
                 interface CashappPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: CashappPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<CashappPayments.StatusDetail>;
                 }
@@ -1442,17 +1367,12 @@ declare module 'stripe' {
 
                 interface EpsPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: EpsPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<EpsPayments.StatusDetail>;
                 }
@@ -1495,17 +1415,12 @@ declare module 'stripe' {
 
                 interface FpxPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: FpxPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<FpxPayments.StatusDetail>;
                 }
@@ -1548,17 +1463,12 @@ declare module 'stripe' {
 
                 interface GbBankTransferPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: GbBankTransferPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<GbBankTransferPayments.StatusDetail>;
                 }
@@ -1601,17 +1511,12 @@ declare module 'stripe' {
 
                 interface GrabpayPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: GrabpayPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<GrabpayPayments.StatusDetail>;
                 }
@@ -1654,17 +1559,12 @@ declare module 'stripe' {
 
                 interface IdealPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: IdealPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<IdealPayments.StatusDetail>;
                 }
@@ -1707,17 +1607,12 @@ declare module 'stripe' {
 
                 interface JcbPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: JcbPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<JcbPayments.StatusDetail>;
                 }
@@ -1760,17 +1655,12 @@ declare module 'stripe' {
 
                 interface JpBankTransferPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: JpBankTransferPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<JpBankTransferPayments.StatusDetail>;
                 }
@@ -1813,17 +1703,12 @@ declare module 'stripe' {
 
                 interface KakaoPayPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: KakaoPayPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<KakaoPayPayments.StatusDetail>;
                 }
@@ -1866,17 +1751,12 @@ declare module 'stripe' {
 
                 interface KlarnaPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: KlarnaPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<KlarnaPayments.StatusDetail>;
                 }
@@ -1919,17 +1799,12 @@ declare module 'stripe' {
 
                 interface KonbiniPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: KonbiniPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<KonbiniPayments.StatusDetail>;
                 }
@@ -1972,17 +1847,12 @@ declare module 'stripe' {
 
                 interface KrCardPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: KrCardPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<KrCardPayments.StatusDetail>;
                 }
@@ -2025,17 +1895,12 @@ declare module 'stripe' {
 
                 interface LinkPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: LinkPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<LinkPayments.StatusDetail>;
                 }
@@ -2078,17 +1943,12 @@ declare module 'stripe' {
 
                 interface MobilepayPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: MobilepayPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<MobilepayPayments.StatusDetail>;
                 }
@@ -2131,17 +1991,12 @@ declare module 'stripe' {
 
                 interface MultibancoPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: MultibancoPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<MultibancoPayments.StatusDetail>;
                 }
@@ -2184,17 +2039,12 @@ declare module 'stripe' {
 
                 interface MxBankTransferPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: MxBankTransferPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<MxBankTransferPayments.StatusDetail>;
                 }
@@ -2237,17 +2087,12 @@ declare module 'stripe' {
 
                 interface NaverPayPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: NaverPayPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<NaverPayPayments.StatusDetail>;
                 }
@@ -2290,17 +2135,12 @@ declare module 'stripe' {
 
                 interface OxxoPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: OxxoPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<OxxoPayments.StatusDetail>;
                 }
@@ -2343,17 +2183,12 @@ declare module 'stripe' {
 
                 interface P24Payments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: P24Payments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<P24Payments.StatusDetail>;
                 }
@@ -2396,17 +2231,12 @@ declare module 'stripe' {
 
                 interface PayByBankPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: PayByBankPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<PayByBankPayments.StatusDetail>;
                 }
@@ -2449,17 +2279,12 @@ declare module 'stripe' {
 
                 interface PaycoPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: PaycoPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<PaycoPayments.StatusDetail>;
                 }
@@ -2502,17 +2327,12 @@ declare module 'stripe' {
 
                 interface PaynowPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: PaynowPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<PaynowPayments.StatusDetail>;
                 }
@@ -2555,17 +2375,12 @@ declare module 'stripe' {
 
                 interface PromptpayPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: PromptpayPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<PromptpayPayments.StatusDetail>;
                 }
@@ -2608,17 +2423,12 @@ declare module 'stripe' {
 
                 interface RevolutPayPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: RevolutPayPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<RevolutPayPayments.StatusDetail>;
                 }
@@ -2661,17 +2471,12 @@ declare module 'stripe' {
 
                 interface SamsungPayPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: SamsungPayPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<SamsungPayPayments.StatusDetail>;
                 }
@@ -2714,17 +2519,12 @@ declare module 'stripe' {
 
                 interface SepaBankTransferPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: SepaBankTransferPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<SepaBankTransferPayments.StatusDetail>;
                 }
@@ -2767,17 +2567,12 @@ declare module 'stripe' {
 
                 interface SepaDebitPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: SepaDebitPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<SepaDebitPayments.StatusDetail>;
                 }
@@ -2820,7 +2615,7 @@ declare module 'stripe' {
 
                 interface StripeBalance {
                   /**
-                   * Allows the account to do payouts using their Stripe Balance (/v1/balance).
+                   * Enables this Account to complete payouts from their Stripe Balance (/v1/balance).
                    */
                   payouts?: StripeBalance.Payouts;
                 }
@@ -2828,17 +2623,12 @@ declare module 'stripe' {
                 namespace StripeBalance {
                   interface Payouts {
                     /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
                      * The status of the Capability.
                      */
                     status: Payouts.Status;
 
                     /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
                      */
                     status_details: Array<Payouts.StatusDetail>;
                   }
@@ -2882,17 +2672,12 @@ declare module 'stripe' {
 
                 interface SwishPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: SwishPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<SwishPayments.StatusDetail>;
                 }
@@ -2935,17 +2720,12 @@ declare module 'stripe' {
 
                 interface TwintPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: TwintPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<TwintPayments.StatusDetail>;
                 }
@@ -2988,17 +2768,12 @@ declare module 'stripe' {
 
                 interface UsBankTransferPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: UsBankTransferPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<UsBankTransferPayments.StatusDetail>;
                 }
@@ -3041,17 +2816,12 @@ declare module 'stripe' {
 
                 interface ZipPayments {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: ZipPayments.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<ZipPayments.StatusDetail>;
                 }
@@ -3194,7 +2964,7 @@ declare module 'stripe' {
 
               interface SepaDebitPayments {
                 /**
-                 * Creditor ID for SEPA debit payments.
+                 * Creditor ID for SEPA Direct Debit payments.
                  */
                 creditor_id?: string;
               }
@@ -3266,7 +3036,7 @@ declare module 'stripe' {
                   state?: string;
 
                   /**
-                   * Town or cho-me.
+                   * Town or district.
                    */
                   town?: string;
                 }
@@ -3275,7 +3045,7 @@ declare module 'stripe' {
 
             interface Recipient {
               /**
-               * Represents the state of the configuration, and can be updated to deactivate or re-apply a configuration.
+               * Indicates whether the recipient configuration is active. You can deactivate or reactivate the recipient configuration by updating this property. Deactivating the configuration by setting this value to false  unrequest all capabilities within the configuration. It will not delete any of the configuration's other properties.
                */
               applied: boolean;
 
@@ -3298,7 +3068,7 @@ declare module 'stripe' {
                 bank_accounts?: Capabilities.BankAccounts;
 
                 /**
-                 * Capability that enable OutboundPayments to a debit card linked to this Account.
+                 * Enables this Account to receive OutboundPayments to a linked debit card.
                  */
                 cards?: Capabilities.Cards;
 
@@ -3324,17 +3094,12 @@ declare module 'stripe' {
                 namespace BankAccounts {
                   interface Local {
                     /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
                      * The status of the Capability.
                      */
                     status: Local.Status;
 
                     /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
                      */
                     status_details: Array<Local.StatusDetail>;
                   }
@@ -3377,17 +3142,12 @@ declare module 'stripe' {
 
                   interface Wire {
                     /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
                      * The status of the Capability.
                      */
                     status: Wire.Status;
 
                     /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
                      */
                     status_details: Array<Wire.StatusDetail>;
                   }
@@ -3431,17 +3191,12 @@ declare module 'stripe' {
 
                 interface Cards {
                   /**
-                   * Whether the Capability has been requested.
-                   */
-                  requested: boolean;
-
-                  /**
                    * The status of the Capability.
                    */
                   status: Cards.Status;
 
                   /**
-                   * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                   * Additional details about the capability's status. This value is empty when `status` is `active`.
                    */
                   status_details: Array<Cards.StatusDetail>;
                 }
@@ -3484,12 +3239,12 @@ declare module 'stripe' {
 
                 interface StripeBalance {
                   /**
-                   * Allows the account to do payouts using their Stripe Balance (/v1/balance).
+                   * Enables this Account to complete payouts from their Stripe Balance (/v1/balance).
                    */
                   payouts?: StripeBalance.Payouts;
 
                   /**
-                   * Allows the account to receive /v1/transfers into their Stripe Balance (/v1/balance).
+                   * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance).
                    */
                   stripe_transfers?: StripeBalance.StripeTransfers;
                 }
@@ -3497,17 +3252,12 @@ declare module 'stripe' {
                 namespace StripeBalance {
                   interface Payouts {
                     /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
                      * The status of the Capability.
                      */
                     status: Payouts.Status;
 
                     /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
                      */
                     status_details: Array<Payouts.StatusDetail>;
                   }
@@ -3550,17 +3300,12 @@ declare module 'stripe' {
 
                   interface StripeTransfers {
                     /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
                      * The status of the Capability.
                      */
                     status: StripeTransfers.Status;
 
                     /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
                      */
                     status_details: Array<StripeTransfers.StatusDetail>;
                   }
@@ -3617,13 +3362,17 @@ declare module 'stripe' {
 
               namespace DefaultOutboundDestination {
                 type Type =
+                  | 'al_bank_account'
+                  | 'am_bank_account'
                   | 'at_bank_account'
                   | 'au_bank_account'
                   | 'ba_bank_account'
                   | 'be_bank_account'
                   | 'bg_bank_account'
                   | 'bj_bank_account'
+                  | 'bn_bank_account'
                   | 'bs_bank_account'
+                  | 'bw_bank_account'
                   | 'card'
                   | 'ca_bank_account'
                   | 'ch_bank_account'
@@ -3633,6 +3382,7 @@ declare module 'stripe' {
                   | 'cz_bank_account'
                   | 'de_bank_account'
                   | 'dk_bank_account'
+                  | 'dz_bank_account'
                   | 'ec_bank_account'
                   | 'ee_bank_account'
                   | 'es_bank_account'
@@ -3641,6 +3391,7 @@ declare module 'stripe' {
                   | 'fr_bank_account'
                   | 'gb_bank_account'
                   | 'gr_bank_account'
+                  | 'gy_bank_account'
                   | 'hr_bank_account'
                   | 'hu_bank_account'
                   | 'id_bank_account'
@@ -3649,11 +3400,16 @@ declare module 'stripe' {
                   | 'in_bank_account'
                   | 'is_bank_account'
                   | 'it_bank_account'
+                  | 'jm_bank_account'
+                  | 'jo_bank_account'
                   | 'ke_bank_account'
+                  | 'kw_bank_account'
                   | 'li_bank_account'
+                  | 'lk_bank_account'
                   | 'lt_bank_account'
                   | 'lu_bank_account'
                   | 'lv_bank_account'
+                  | 'ma_bank_account'
                   | 'mn_bank_account'
                   | 'mt_bank_account'
                   | 'mu_bank_account'
@@ -3662,6 +3418,7 @@ declare module 'stripe' {
                   | 'nl_bank_account'
                   | 'no_bank_account'
                   | 'nz_bank_account'
+                  | 'om_bank_account'
                   | 'pa_bank_account'
                   | 'ph_bank_account'
                   | 'pl_bank_account'
@@ -3676,6 +3433,7 @@ declare module 'stripe' {
                   | 'sv_bank_account'
                   | 'tn_bank_account'
                   | 'tr_bank_account'
+                  | 'tz_bank_account'
                   | 'us_bank_account'
                   | 'za_bank_account';
               }
@@ -3683,7 +3441,7 @@ declare module 'stripe' {
 
             interface Storer {
               /**
-               * Represents the state of the configuration, and can be updated to deactivate or re-apply a configuration.
+               * Indicates whether the storer configuration is active. You cannot deactivate (or reactivate) the storer configuration by updating this property.
                */
               applied: boolean;
 
@@ -3706,17 +3464,17 @@ declare module 'stripe' {
                 holds_currencies?: Capabilities.HoldsCurrencies;
 
                 /**
-                 * Can pull funds from an external source, owned by yourself, to a FinancialAccount.
+                 * Hash containing capabilities related to InboundTransfers.
                  */
                 inbound_transfers?: Capabilities.InboundTransfers;
 
                 /**
-                 * Can send funds from a FinancialAccount to a destination owned by someone else.
+                 * Hash containing capabilities related to [OutboundPayments](https://docs.stripe.com/api/treasury/outbound_payments?api-version=preview).
                  */
                 outbound_payments?: Capabilities.OutboundPayments;
 
                 /**
-                 * Can send funds from a FinancialAccount to a destination owned by yourself.
+                 * Hash containing capabilities related to [OutboundTransfers](https://docs.stripe.com/api/treasury/outbound_transfers?api-version=preview).
                  */
                 outbound_transfers?: Capabilities.OutboundTransfers;
               }
@@ -3732,17 +3490,12 @@ declare module 'stripe' {
                 namespace FinancialAddresses {
                   interface BankAccounts {
                     /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
                      * The status of the Capability.
                      */
                     status: BankAccounts.Status;
 
                     /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
                      */
                     status_details: Array<BankAccounts.StatusDetail>;
                   }
@@ -3804,17 +3557,12 @@ declare module 'stripe' {
                 namespace HoldsCurrencies {
                   interface Eur {
                     /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
                      * The status of the Capability.
                      */
                     status: Eur.Status;
 
                     /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
                      */
                     status_details: Array<Eur.StatusDetail>;
                   }
@@ -3857,17 +3605,12 @@ declare module 'stripe' {
 
                   interface Gbp {
                     /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
                      * The status of the Capability.
                      */
                     status: Gbp.Status;
 
                     /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
                      */
                     status_details: Array<Gbp.StatusDetail>;
                   }
@@ -3910,17 +3653,12 @@ declare module 'stripe' {
 
                   interface Usd {
                     /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
                      * The status of the Capability.
                      */
                     status: Usd.Status;
 
                     /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
                      */
                     status_details: Array<Usd.StatusDetail>;
                   }
@@ -3964,7 +3702,7 @@ declare module 'stripe' {
 
                 interface InboundTransfers {
                   /**
-                   * Can pull funds from an external bank account, owned by yourself, to a FinancialAccount.
+                   * Can pull funds into a FinancialAccount from an external bank account owned by the user.
                    */
                   bank_accounts?: InboundTransfers.BankAccounts;
                 }
@@ -3972,17 +3710,12 @@ declare module 'stripe' {
                 namespace InboundTransfers {
                   interface BankAccounts {
                     /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
                      * The status of the Capability.
                      */
                     status: BankAccounts.Status;
 
                     /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
                      */
                     status_details: Array<BankAccounts.StatusDetail>;
                   }
@@ -4026,17 +3759,17 @@ declare module 'stripe' {
 
                 interface OutboundPayments {
                   /**
-                   * Can send funds from a FinancialAccount to a bank account, owned by someone else.
+                   * Can send funds from a FinancialAccount to a bank account owned by a different entity.
                    */
                   bank_accounts?: OutboundPayments.BankAccounts;
 
                   /**
-                   * Can send funds from a FinancialAccount to a debit card, owned by someone else.
+                   * Can send funds from a FinancialAccount to a debit card owned by a different entity.
                    */
                   cards?: OutboundPayments.Cards;
 
                   /**
-                   * Can send funds from a FinancialAccount to another FinancialAccount, owned by someone else.
+                   * Can send funds from a FinancialAccount to a FinancialAccount owned by a different entity.
                    */
                   financial_accounts?: OutboundPayments.FinancialAccounts;
                 }
@@ -4044,17 +3777,12 @@ declare module 'stripe' {
                 namespace OutboundPayments {
                   interface BankAccounts {
                     /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
                      * The status of the Capability.
                      */
                     status: BankAccounts.Status;
 
                     /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
                      */
                     status_details: Array<BankAccounts.StatusDetail>;
                   }
@@ -4097,17 +3825,12 @@ declare module 'stripe' {
 
                   interface Cards {
                     /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
                      * The status of the Capability.
                      */
                     status: Cards.Status;
 
                     /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
                      */
                     status_details: Array<Cards.StatusDetail>;
                   }
@@ -4150,17 +3873,12 @@ declare module 'stripe' {
 
                   interface FinancialAccounts {
                     /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
                      * The status of the Capability.
                      */
                     status: FinancialAccounts.Status;
 
                     /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
                      */
                     status_details: Array<FinancialAccounts.StatusDetail>;
                   }
@@ -4204,12 +3922,12 @@ declare module 'stripe' {
 
                 interface OutboundTransfers {
                   /**
-                   * Can send funds from a FinancialAccount, to a bank account, owned by yourself.
+                   * Can send funds from a FinancialAccount to a bank account belonging to the same user.
                    */
                   bank_accounts?: OutboundTransfers.BankAccounts;
 
                   /**
-                   * Can send funds from a FinancialAccount to another FinancialAccount, owned by yourself.
+                   * Can send funds from a FinancialAccount to another FinancialAccount belonging to the same user.
                    */
                   financial_accounts?: OutboundTransfers.FinancialAccounts;
                 }
@@ -4217,17 +3935,12 @@ declare module 'stripe' {
                 namespace OutboundTransfers {
                   interface BankAccounts {
                     /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
                      * The status of the Capability.
                      */
                     status: BankAccounts.Status;
 
                     /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
                      */
                     status_details: Array<BankAccounts.StatusDetail>;
                   }
@@ -4270,17 +3983,12 @@ declare module 'stripe' {
 
                   interface FinancialAccounts {
                     /**
-                     * Whether the Capability has been requested.
-                     */
-                    requested: boolean;
-
-                    /**
                      * The status of the Capability.
                      */
                     status: FinancialAccounts.Status;
 
                     /**
-                     * Additional details regarding the status of the Capability. `status_details` will be empty if the Capability's status is `active`.
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
                      */
                     status_details: Array<FinancialAccounts.StatusDetail>;
                   }
@@ -4346,7 +4054,7 @@ declare module 'stripe' {
             /**
              * Default responsibilities held by either Stripe or the platform.
              */
-            responsibilities?: Defaults.Responsibilities;
+            responsibilities: Defaults.Responsibilities;
           }
 
           namespace Defaults {
@@ -4443,7 +4151,7 @@ declare module 'stripe' {
               business_url?: string;
 
               /**
-               * The company's legal name.
+               * The customer-facing business name.
                */
               doing_business_as?: string;
 
@@ -4455,14 +4163,14 @@ declare module 'stripe' {
 
             interface Responsibilities {
               /**
-               * A value indicating the responsible payer of a bundle of Stripe fees for pricing-control eligible products on this Account.
+               * Indicates whether the platform or connected account is responsible for paying Stripe fees for pricing-control-eligible products.
                */
-              fees_collector: Responsibilities.FeesCollector;
+              fees_collector?: Responsibilities.FeesCollector;
 
               /**
-               * A value indicating who is responsible for losses when this Account can't pay back negative balances from payments.
+               * A value indicating responsibility for collecting requirements on this account.
                */
-              losses_collector: Responsibilities.LossesCollector;
+              losses_collector?: Responsibilities.LossesCollector;
 
               /**
                * A value indicating responsibility for collecting requirements on this account.
@@ -4503,7 +4211,7 @@ declare module 'stripe' {
           namespace FutureRequirements {
             interface Entry {
               /**
-               * Whether the responsibility is with the integrator or with Stripe (to review info, to wait for some condition, etc.) to action the requirement.
+               * Indicates whether the platform or Stripe is currently responsible for taking action on the requirement. Value can be `user` or `stripe`.
                */
               awaiting_action_from: Entry.AwaitingActionFrom;
 
@@ -5035,7 +4743,7 @@ declare module 'stripe' {
               documents?: BusinessDetails.Documents;
 
               /**
-               * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
+               * Estimated maximum number of workers currently engaged by the business (including employees, contractors, and vendors).
                */
               estimated_worker_count?: number;
 
@@ -5045,7 +4753,7 @@ declare module 'stripe' {
               id_numbers?: Array<BusinessDetails.IdNumber>;
 
               /**
-               * An estimate of the monthly revenue of the business.
+               * An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
                */
               monthly_estimated_revenue?: BusinessDetails.MonthlyEstimatedRevenue;
 
@@ -5108,14 +4816,14 @@ declare module 'stripe' {
                 state?: string;
 
                 /**
-                 * Town or cho-me.
+                 * Town or district.
                  */
                 town?: string;
               }
 
               interface AnnualRevenue {
                 /**
-                 * A non-negative integer representing the amount in the smallest currency unit.
+                 * Annual revenue amount in minor currency units (for example, '123' for 1.23 USD).
                  */
                 amount?: AnnualRevenue.Amount;
 
@@ -5346,70 +5054,111 @@ declare module 'stripe' {
                   | 'ao_nif'
                   | 'ar_cuit'
                   | 'at_fn'
+                  | 'at_stn'
+                  | 'at_vat'
                   | 'au_abn'
                   | 'au_acn'
                   | 'au_in'
                   | 'az_tin'
                   | 'bd_etin'
                   | 'be_cbe'
+                  | 'be_vat'
                   | 'bg_uic'
+                  | 'bg_vat'
                   | 'br_cnpj'
                   | 'ca_cn'
                   | 'ca_crarr'
+                  | 'ca_gst_hst'
                   | 'ca_neq'
                   | 'ca_rid'
                   | 'ch_chid'
                   | 'ch_uid'
                   | 'cr_cpj'
                   | 'cr_nite'
+                  | 'cy_he'
                   | 'cy_tic'
+                  | 'cy_vat'
                   | 'cz_ico'
+                  | 'cz_vat'
                   | 'de_hrn'
+                  | 'de_stn'
                   | 'de_vat'
                   | 'dk_cvr'
+                  | 'dk_vat'
                   | 'do_rcn'
                   | 'ee_rk'
+                  | 'ee_vat'
                   | 'es_cif'
+                  | 'es_vat'
+                  | 'fi_vat'
                   | 'fi_yt'
+                  | 'fr_rna'
                   | 'fr_siren'
                   | 'fr_vat'
                   | 'gb_crn'
                   | 'gi_crn'
+                  | 'gr_afm'
                   | 'gr_gemi'
+                  | 'gr_vat'
                   | 'gt_nit'
                   | 'hk_br'
                   | 'hk_cr'
-                  | 'hk_mbs'
+                  | 'hr_mbs'
+                  | 'hr_oib'
+                  | 'hr_vat'
                   | 'hu_cjs'
+                  | 'hu_tin'
+                  | 'hu_vat'
                   | 'ie_crn'
+                  | 'ie_trn'
+                  | 'ie_vat'
                   | 'it_rea'
                   | 'it_vat'
                   | 'jp_cn'
                   | 'kz_bin'
                   | 'li_uid'
                   | 'lt_ccrn'
+                  | 'lt_vat'
+                  | 'lu_nif'
                   | 'lu_rcs'
+                  | 'lu_vat'
                   | 'lv_urn'
+                  | 'lv_vat'
                   | 'mt_crn'
+                  | 'mt_tin'
+                  | 'mt_vat'
                   | 'mx_rfc'
                   | 'my_brn'
                   | 'my_coid'
+                  | 'my_itn'
                   | 'my_sst'
                   | 'mz_nuit'
                   | 'nl_kvk'
+                  | 'nl_rsin'
+                  | 'nl_vat'
                   | 'no_orgnr'
                   | 'nz_bn'
+                  | 'nz_ird'
                   | 'pe_ruc'
                   | 'pk_ntn'
+                  | 'pl_nip'
                   | 'pl_regon'
+                  | 'pl_vat'
                   | 'pt_vat'
                   | 'ro_cui'
+                  | 'ro_orc'
+                  | 'ro_vat'
                   | 'sa_crn'
                   | 'sa_tin'
                   | 'se_orgnr'
+                  | 'se_vat'
                   | 'sg_uen'
                   | 'si_msp'
+                  | 'si_tin'
+                  | 'si_vat'
+                  | 'sk_dic'
                   | 'sk_ico'
+                  | 'sk_vat'
                   | 'th_crn'
                   | 'th_prn'
                   | 'th_tin'
@@ -5418,7 +5167,7 @@ declare module 'stripe' {
 
               interface MonthlyEstimatedRevenue {
                 /**
-                 * A non-negative integer representing the amount in the smallest currency unit.
+                 * Estimated monthly revenue amount in minor currency units (for example, '123' for 1.23 USD).
                  */
                 amount?: MonthlyEstimatedRevenue.Amount;
               }
@@ -5482,7 +5231,7 @@ declare module 'stripe' {
                   state?: string;
 
                   /**
-                   * Town or cho-me.
+                   * Town or district.
                    */
                   town?: string;
                 }
@@ -5519,7 +5268,7 @@ declare module 'stripe' {
                   state?: string;
 
                   /**
-                   * Town or cho-me.
+                   * Town or district.
                    */
                   town?: string;
                 }
@@ -5744,7 +5493,7 @@ declare module 'stripe' {
                 state?: string;
 
                 /**
-                 * Town or cho-me.
+                 * Town or district.
                  */
                 town?: string;
               }
@@ -5833,7 +5582,7 @@ declare module 'stripe' {
                 state?: string;
 
                 /**
-                 * Town or cho-me.
+                 * Town or district.
                  */
                 town?: string;
               }
@@ -5983,36 +5732,81 @@ declare module 'stripe' {
                 type Type =
                   | 'ae_eid'
                   | 'ao_nif'
+                  | 'ar_cuil'
                   | 'ar_dni'
+                  | 'at_stn'
                   | 'az_tin'
                   | 'bd_brc'
                   | 'bd_etin'
                   | 'bd_nid'
+                  | 'be_nrn'
+                  | 'bg_ucn'
+                  | 'bn_nric'
                   | 'br_cpf'
+                  | 'ca_sin'
+                  | 'ch_oasi'
+                  | 'cl_rut'
+                  | 'cn_pp'
+                  | 'co_nuip'
+                  | 'cr_ci'
                   | 'cr_cpf'
                   | 'cr_dimex'
                   | 'cr_nite'
+                  | 'cy_tic'
+                  | 'cz_rc'
                   | 'de_stn'
+                  | 'dk_cpr'
+                  | 'do_cie'
                   | 'do_rcn'
+                  | 'ec_ci'
+                  | 'ee_ik'
+                  | 'es_nif'
+                  | 'fi_hetu'
+                  | 'fr_nir'
+                  | 'gb_nino'
+                  | 'gr_afm'
                   | 'gt_nit'
                   | 'hk_id'
+                  | 'hr_oib'
+                  | 'hu_ad'
+                  | 'id_nik'
+                  | 'ie_ppsn'
+                  | 'is_kt'
+                  | 'it_cf'
+                  | 'jp_inc'
+                  | 'ke_pin'
                   | 'kz_iin'
+                  | 'li_peid'
+                  | 'lt_ak'
+                  | 'lu_nif'
+                  | 'lv_pk'
                   | 'mx_rfc'
                   | 'my_nric'
                   | 'mz_nuit'
+                  | 'ng_nin'
                   | 'nl_bsn'
+                  | 'no_nin'
+                  | 'nz_ird'
                   | 'pe_dni'
                   | 'pk_cnic'
                   | 'pk_snic'
+                  | 'pl_pesel'
+                  | 'pt_nif'
+                  | 'ro_cnp'
                   | 'sa_tin'
+                  | 'se_pin'
                   | 'sg_fin'
                   | 'sg_nric'
+                  | 'sk_dic'
                   | 'th_lc'
                   | 'th_pin'
+                  | 'tr_tin'
                   | 'us_itin'
                   | 'us_itin_last_4'
                   | 'us_ssn'
-                  | 'us_ssn_last_4';
+                  | 'us_ssn_last_4'
+                  | 'uy_dni'
+                  | 'za_id';
               }
 
               type LegalGender = 'female' | 'male';
@@ -6021,12 +5815,12 @@ declare module 'stripe' {
 
               interface Relationship {
                 /**
-                 * Whether the individual is an authorizer of the Account's legal entity.
+                 * Whether the individual is an authorizer of the Account's identity.
                  */
                 authorizer?: boolean;
 
                 /**
-                 * Whether the individual is a director of the Account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
+                 * Whether the individual is a director of the Account's identity. Directors are typically members of the governing board of the company or are responsible for making sure that the company meets its regulatory obligations.
                  */
                 director?: boolean;
 
@@ -6041,12 +5835,12 @@ declare module 'stripe' {
                 legal_guardian?: boolean;
 
                 /**
-                 * Whether the individual is an owner of the Account's legal entity.
+                 * Whether the individual is an owner of the Account's identity.
                  */
                 owner?: boolean;
 
                 /**
-                 * The percent owned by the individual of the Account's legal entity.
+                 * The percentage of the Account's identity that the individual owns.
                  */
                 percent_ownership?: string;
 
@@ -6106,7 +5900,7 @@ declare module 'stripe' {
                   state?: string;
 
                   /**
-                   * Town or cho-me.
+                   * Town or district.
                    */
                   town?: string;
                 }
@@ -6143,7 +5937,7 @@ declare module 'stripe' {
                   state?: string;
 
                   /**
-                   * Town or cho-me.
+                   * Town or district.
                    */
                   town?: string;
                 }
@@ -6204,7 +5998,7 @@ declare module 'stripe' {
           namespace Requirements {
             interface Entry {
               /**
-               * Whether the responsibility is with the integrator or with Stripe (to review info, to wait for some condition, etc.) to action the requirement.
+               * Indicates whether the platform or Stripe is currently responsible for taking action on the requirement. Value can be `user` or `stripe`.
                */
               awaiting_action_from: Entry.AwaitingActionFrom;
 

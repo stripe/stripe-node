@@ -59,12 +59,12 @@ declare module 'stripe' {
             customer?: Configuration.Customer;
 
             /**
-             * The Merchant configuration allows the Account to act as a connected account and collect payments facilitated by a Connect platform. You can add this configuration to your connected accounts only if you've completed onboarding as a Connect platform.
+             * Enables the Account to act as a connected account and collect payments facilitated by a Connect platform. You must onboard your platform to Connect before you can add this configuration to your connected accounts. Utilize this configuration when the Account will be the Merchant of Record, like with Direct charges or Destination Charges with on_behalf_of set.
              */
             merchant?: Configuration.Merchant;
 
             /**
-             * The Recipient Configuration allows the Account to receive funds.
+             * The Recipient Configuration allows the Account to receive funds. Utilize this configuration if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
              */
             recipient?: Configuration.Recipient;
 
@@ -132,7 +132,7 @@ declare module 'stripe' {
 
               interface Billing {
                 /**
-                 * Default settings used on invoices for this customer.
+                 * Default invoice settings for the customer account.
                  */
                 invoice?: Billing.Invoice;
               }
@@ -145,22 +145,22 @@ declare module 'stripe' {
                   custom_fields?: Array<Invoice.CustomField>;
 
                   /**
-                   * Default footer to be displayed on invoices for this customer.
+                   * Default invoice footer.
                    */
                   footer?: string;
 
                   /**
-                   * The sequence to be used on the customer's next invoice. Defaults to 1.
+                   * Sequence number to use on the customer account's next invoice. Defaults to 1.
                    */
                   next_sequence?: number;
 
                   /**
-                   * The prefix for the customer used to generate unique invoice numbers. Must be 3–12 uppercase letters or numbers.
+                   * Prefix used to generate unique invoice numbers. Must be 3-12 uppercase letters or numbers.
                    */
                   prefix?: string;
 
                   /**
-                   * Default options for invoice PDF rendering for this customer.
+                   * Default invoice PDF rendering options.
                    */
                   rendering?: Invoice.Rendering;
                 }
@@ -180,7 +180,7 @@ declare module 'stripe' {
 
                   interface Rendering {
                     /**
-                     * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of exclude_tax or include_inclusive_tax. include_inclusive_tax will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. exclude_tax will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
+                     * Indicates whether displayed line item prices and amounts on invoice PDFs include inclusive tax amounts. Must be either `include_inclusive_tax` or `exclude_tax`.
                      */
                     amount_tax_display?: Rendering.AmountTaxDisplay;
 
@@ -259,7 +259,7 @@ declare module 'stripe' {
               konbini_payments?: Merchant.KonbiniPayments;
 
               /**
-               * The merchant category code for the Merchant Configuration. MCCs are used to classify businesses based on the goods or services they provide.
+               * The Merchant Category Code (MCC) for the Merchant Configuration. MCCs classify businesses based on the goods or services they provide.
                */
               mcc?: string;
 
@@ -282,7 +282,7 @@ declare module 'stripe' {
             namespace Merchant {
               interface BacsDebitPayments {
                 /**
-                 * Display name for Bacs debit payments.
+                 * Display name for Bacs Direct Debit payments.
                  */
                 display_name?: string;
               }
@@ -1007,7 +1007,7 @@ declare module 'stripe' {
                   state?: string;
 
                   /**
-                   * Town or cho-me.
+                   * Town or district.
                    */
                   town?: string;
                 }
@@ -1077,7 +1077,7 @@ declare module 'stripe' {
 
                 interface StripeBalance {
                   /**
-                   * Allows the account to receive /v1/transfers into their Stripe Balance (/v1/balance).
+                   * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance).
                    */
                   stripe_transfers?: StripeBalance.StripeTransfers;
                 }
@@ -1624,7 +1624,7 @@ declare module 'stripe' {
               documents?: BusinessDetails.Documents;
 
               /**
-               * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
+               * Estimated maximum number of workers currently engaged by the business (including employees, contractors, and vendors).
                */
               estimated_worker_count?: number;
 
@@ -1697,7 +1697,7 @@ declare module 'stripe' {
                 state?: string;
 
                 /**
-                 * Town or cho-me.
+                 * Town or district.
                  */
                 town?: string;
               }
@@ -1940,70 +1940,111 @@ declare module 'stripe' {
                   | 'ao_nif'
                   | 'ar_cuit'
                   | 'at_fn'
+                  | 'at_stn'
+                  | 'at_vat'
                   | 'au_abn'
                   | 'au_acn'
                   | 'au_in'
                   | 'az_tin'
                   | 'bd_etin'
                   | 'be_cbe'
+                  | 'be_vat'
                   | 'bg_uic'
+                  | 'bg_vat'
                   | 'br_cnpj'
                   | 'ca_cn'
                   | 'ca_crarr'
+                  | 'ca_gst_hst'
                   | 'ca_neq'
                   | 'ca_rid'
                   | 'ch_chid'
                   | 'ch_uid'
                   | 'cr_cpj'
                   | 'cr_nite'
+                  | 'cy_he'
                   | 'cy_tic'
+                  | 'cy_vat'
                   | 'cz_ico'
+                  | 'cz_vat'
                   | 'de_hrn'
+                  | 'de_stn'
                   | 'de_vat'
                   | 'dk_cvr'
+                  | 'dk_vat'
                   | 'do_rcn'
                   | 'ee_rk'
+                  | 'ee_vat'
                   | 'es_cif'
+                  | 'es_vat'
+                  | 'fi_vat'
                   | 'fi_yt'
+                  | 'fr_rna'
                   | 'fr_siren'
                   | 'fr_vat'
                   | 'gb_crn'
                   | 'gi_crn'
+                  | 'gr_afm'
                   | 'gr_gemi'
+                  | 'gr_vat'
                   | 'gt_nit'
                   | 'hk_br'
                   | 'hk_cr'
-                  | 'hk_mbs'
+                  | 'hr_mbs'
+                  | 'hr_oib'
+                  | 'hr_vat'
                   | 'hu_cjs'
+                  | 'hu_tin'
+                  | 'hu_vat'
                   | 'ie_crn'
+                  | 'ie_trn'
+                  | 'ie_vat'
                   | 'it_rea'
                   | 'it_vat'
                   | 'jp_cn'
                   | 'kz_bin'
                   | 'li_uid'
                   | 'lt_ccrn'
+                  | 'lt_vat'
+                  | 'lu_nif'
                   | 'lu_rcs'
+                  | 'lu_vat'
                   | 'lv_urn'
+                  | 'lv_vat'
                   | 'mt_crn'
+                  | 'mt_tin'
+                  | 'mt_vat'
                   | 'mx_rfc'
                   | 'my_brn'
                   | 'my_coid'
+                  | 'my_itn'
                   | 'my_sst'
                   | 'mz_nuit'
                   | 'nl_kvk'
+                  | 'nl_rsin'
+                  | 'nl_vat'
                   | 'no_orgnr'
                   | 'nz_bn'
+                  | 'nz_ird'
                   | 'pe_ruc'
                   | 'pk_ntn'
+                  | 'pl_nip'
                   | 'pl_regon'
+                  | 'pl_vat'
                   | 'pt_vat'
                   | 'ro_cui'
+                  | 'ro_orc'
+                  | 'ro_vat'
                   | 'sa_crn'
                   | 'sa_tin'
                   | 'se_orgnr'
+                  | 'se_vat'
                   | 'sg_uen'
                   | 'si_msp'
+                  | 'si_tin'
+                  | 'si_vat'
+                  | 'sk_dic'
                   | 'sk_ico'
+                  | 'sk_vat'
                   | 'th_crn'
                   | 'th_prn'
                   | 'th_tin'
@@ -2076,7 +2117,7 @@ declare module 'stripe' {
                   state?: string;
 
                   /**
-                   * Town or cho-me.
+                   * Town or district.
                    */
                   town?: string;
                 }
@@ -2113,7 +2154,7 @@ declare module 'stripe' {
                   state?: string;
 
                   /**
-                   * Town or cho-me.
+                   * Town or district.
                    */
                   town?: string;
                 }
@@ -2308,7 +2349,7 @@ declare module 'stripe' {
                 state?: string;
 
                 /**
-                 * Town or cho-me.
+                 * Town or district.
                  */
                 town?: string;
               }
@@ -2371,7 +2412,7 @@ declare module 'stripe' {
                 state?: string;
 
                 /**
-                 * Town or cho-me.
+                 * Town or district.
                  */
                 town?: string;
               }
@@ -2526,36 +2567,81 @@ declare module 'stripe' {
                 type Type =
                   | 'ae_eid'
                   | 'ao_nif'
+                  | 'ar_cuil'
                   | 'ar_dni'
+                  | 'at_stn'
                   | 'az_tin'
                   | 'bd_brc'
                   | 'bd_etin'
                   | 'bd_nid'
+                  | 'be_nrn'
+                  | 'bg_ucn'
+                  | 'bn_nric'
                   | 'br_cpf'
+                  | 'ca_sin'
+                  | 'ch_oasi'
+                  | 'cl_rut'
+                  | 'cn_pp'
+                  | 'co_nuip'
+                  | 'cr_ci'
                   | 'cr_cpf'
                   | 'cr_dimex'
                   | 'cr_nite'
+                  | 'cy_tic'
+                  | 'cz_rc'
                   | 'de_stn'
+                  | 'dk_cpr'
+                  | 'do_cie'
                   | 'do_rcn'
+                  | 'ec_ci'
+                  | 'ee_ik'
+                  | 'es_nif'
+                  | 'fi_hetu'
+                  | 'fr_nir'
+                  | 'gb_nino'
+                  | 'gr_afm'
                   | 'gt_nit'
                   | 'hk_id'
+                  | 'hr_oib'
+                  | 'hu_ad'
+                  | 'id_nik'
+                  | 'ie_ppsn'
+                  | 'is_kt'
+                  | 'it_cf'
+                  | 'jp_inc'
+                  | 'ke_pin'
                   | 'kz_iin'
+                  | 'li_peid'
+                  | 'lt_ak'
+                  | 'lu_nif'
+                  | 'lv_pk'
                   | 'mx_rfc'
                   | 'my_nric'
                   | 'mz_nuit'
+                  | 'ng_nin'
                   | 'nl_bsn'
+                  | 'no_nin'
+                  | 'nz_ird'
                   | 'pe_dni'
                   | 'pk_cnic'
                   | 'pk_snic'
+                  | 'pl_pesel'
+                  | 'pt_nif'
+                  | 'ro_cnp'
                   | 'sa_tin'
+                  | 'se_pin'
                   | 'sg_fin'
                   | 'sg_nric'
+                  | 'sk_dic'
                   | 'th_lc'
                   | 'th_pin'
+                  | 'tr_tin'
                   | 'us_itin'
                   | 'us_itin_last_4'
                   | 'us_ssn'
-                  | 'us_ssn_last_4';
+                  | 'us_ssn_last_4'
+                  | 'uy_dni'
+                  | 'za_id';
               }
 
               type LegalGender = 'female' | 'male';
@@ -2634,7 +2720,7 @@ declare module 'stripe' {
                   state?: string;
 
                   /**
-                   * Town or cho-me.
+                   * Town or district.
                    */
                   town?: string;
                 }
@@ -2671,7 +2757,7 @@ declare module 'stripe' {
                   state?: string;
 
                   /**
-                   * Town or cho-me.
+                   * Town or district.
                    */
                   town?: string;
                 }
@@ -2806,12 +2892,12 @@ declare module 'stripe' {
             customer?: Configuration.Customer;
 
             /**
-             * The Merchant configuration allows the Account to act as a connected account and collect payments facilitated by a Connect platform. You can add this configuration to your connected accounts only if you've completed onboarding as a Connect platform.
+             * Enables the Account to act as a connected account and collect payments facilitated by a Connect platform. You must onboard your platform to Connect before you can add this configuration to your connected accounts. Utilize this configuration when the Account will be the Merchant of Record, like with Direct charges or Destination Charges with on_behalf_of set.
              */
             merchant?: Configuration.Merchant;
 
             /**
-             * The Recipient Configuration allows the Account to receive funds.
+             * The Recipient Configuration allows the Account to receive funds. Utilize this configuration if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
              */
             recipient?: Configuration.Recipient;
 
@@ -2857,7 +2943,7 @@ declare module 'stripe' {
             namespace Customer {
               interface AutomaticIndirectTax {
                 /**
-                 * Describes the customer's tax exemption status, which is `none`, `exempt`, or `reverse`. When set to reverse, invoice and receipt PDFs include the following text: “Reverse charge”.
+                 * The customer account's tax exemption status: `none`, `exempt`, or `reverse`. When `reverse`, invoice and receipt PDFs include "Reverse charge".
                  */
                 exempt?: AutomaticIndirectTax.Exempt;
 
@@ -2867,12 +2953,12 @@ declare module 'stripe' {
                 ip_address?: string;
 
                 /**
-                 * The data source used to identify the customer's tax location - defaults to `identity_address`. Will only be used for automatic tax calculation on the customer's Invoices and Subscriptions. This behavior is now deprecated for new users.
+                 * Data source used to identify the customer account's tax location. Defaults to `identity_address`. Used for automatic indirect tax calculation.
                  */
                 location_source?: AutomaticIndirectTax.LocationSource;
 
                 /**
-                 * A per-request flag that indicates when Stripe should validate the customer tax location - defaults to 'auto'.
+                 * A per-request flag that indicates when Stripe should validate the customer tax location - defaults to `auto`.
                  */
                 validate_location?: AutomaticIndirectTax.ValidateLocation;
               }
@@ -2891,12 +2977,12 @@ declare module 'stripe' {
 
               interface Billing {
                 /**
-                 * ID of a payment method that's attached to the customer, to be used as the customer's default payment method for invoices and subscriptions.
+                 * ID of a PaymentMethod attached to the customer account to use as the default for invoices and subscriptions.
                  */
                 default_payment_method?: string;
 
                 /**
-                 * Default settings used on invoices for this customer.
+                 * Default invoice settings for the customer account.
                  */
                 invoice?: Billing.Invoice;
               }
@@ -2909,22 +2995,22 @@ declare module 'stripe' {
                   custom_fields?: Array<Invoice.CustomField>;
 
                   /**
-                   * Default footer to be displayed on invoices for this customer.
+                   * Default invoice footer.
                    */
                   footer?: string;
 
                   /**
-                   * The sequence to be used on the customer's next invoice. Defaults to 1.
+                   * Sequence number to use on the customer account's next invoice. Defaults to 1.
                    */
                   next_sequence?: number;
 
                   /**
-                   * The prefix for the customer used to generate unique invoice numbers. Must be 3–12 uppercase letters or numbers.
+                   * Prefix used to generate unique invoice numbers. Must be 3-12 uppercase letters or numbers.
                    */
                   prefix?: string;
 
                   /**
-                   * Default options for invoice PDF rendering for this customer.
+                   * Default invoice PDF rendering options.
                    */
                   rendering?: Invoice.Rendering;
                 }
@@ -2944,7 +3030,7 @@ declare module 'stripe' {
 
                   interface Rendering {
                     /**
-                     * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of exclude_tax or include_inclusive_tax. include_inclusive_tax will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. exclude_tax will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
+                     * Indicates whether displayed line item prices and amounts on invoice PDFs include inclusive tax amounts. Must be either `include_inclusive_tax` or `exclude_tax`.
                      */
                     amount_tax_display?: Rendering.AmountTaxDisplay;
 
@@ -3003,7 +3089,7 @@ declare module 'stripe' {
               applied?: boolean;
 
               /**
-               * Settings used for Bacs debit payments.
+               * Settings for Bacs Direct Debit payments.
                */
               bacs_debit_payments?: Merchant.BacsDebitPayments;
 
@@ -3028,7 +3114,7 @@ declare module 'stripe' {
               konbini_payments?: Merchant.KonbiniPayments;
 
               /**
-               * The merchant category code for the merchant. MCCs are used to classify businesses based on the goods or services they provide.
+               * The Merchant Category Code (MCC) for the merchant. MCCs classify businesses based on the goods or services they provide.
                */
               mcc?: string;
 
@@ -3038,7 +3124,7 @@ declare module 'stripe' {
               script_statement_descriptor?: Merchant.ScriptStatementDescriptor;
 
               /**
-               * Statement descriptor.
+               * Settings for the default [statement descriptor](https://docs.stripe.com/connect/statement-descriptors) text.
                */
               statement_descriptor?: Merchant.StatementDescriptor;
 
@@ -3051,7 +3137,7 @@ declare module 'stripe' {
             namespace Merchant {
               interface BacsDebitPayments {
                 /**
-                 * Display name for Bacs debit payments.
+                 * Display name for Bacs Direct Debit payments.
                  */
                 display_name?: string;
               }
@@ -3817,7 +3903,7 @@ declare module 'stripe' {
 
                 interface StripeBalance {
                   /**
-                   * Allows the account to receive /v1/transfers into their Stripe Balance (/v1/balance).
+                   * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance).
                    */
                   stripe_transfers?: StripeBalance.StripeTransfers;
                 }
@@ -4391,7 +4477,7 @@ declare module 'stripe' {
               documents?: BusinessDetails.Documents;
 
               /**
-               * An estimated upper bound of employees, contractors, vendors, etc. currently working for the business.
+               * Estimated maximum number of workers currently engaged by the business (including employees, contractors, and vendors).
                */
               estimated_worker_count?: number;
 
@@ -4670,70 +4756,111 @@ declare module 'stripe' {
                   | 'ao_nif'
                   | 'ar_cuit'
                   | 'at_fn'
+                  | 'at_stn'
+                  | 'at_vat'
                   | 'au_abn'
                   | 'au_acn'
                   | 'au_in'
                   | 'az_tin'
                   | 'bd_etin'
                   | 'be_cbe'
+                  | 'be_vat'
                   | 'bg_uic'
+                  | 'bg_vat'
                   | 'br_cnpj'
                   | 'ca_cn'
                   | 'ca_crarr'
+                  | 'ca_gst_hst'
                   | 'ca_neq'
                   | 'ca_rid'
                   | 'ch_chid'
                   | 'ch_uid'
                   | 'cr_cpj'
                   | 'cr_nite'
+                  | 'cy_he'
                   | 'cy_tic'
+                  | 'cy_vat'
                   | 'cz_ico'
+                  | 'cz_vat'
                   | 'de_hrn'
+                  | 'de_stn'
                   | 'de_vat'
                   | 'dk_cvr'
+                  | 'dk_vat'
                   | 'do_rcn'
                   | 'ee_rk'
+                  | 'ee_vat'
                   | 'es_cif'
+                  | 'es_vat'
+                  | 'fi_vat'
                   | 'fi_yt'
+                  | 'fr_rna'
                   | 'fr_siren'
                   | 'fr_vat'
                   | 'gb_crn'
                   | 'gi_crn'
+                  | 'gr_afm'
                   | 'gr_gemi'
+                  | 'gr_vat'
                   | 'gt_nit'
                   | 'hk_br'
                   | 'hk_cr'
-                  | 'hk_mbs'
+                  | 'hr_mbs'
+                  | 'hr_oib'
+                  | 'hr_vat'
                   | 'hu_cjs'
+                  | 'hu_tin'
+                  | 'hu_vat'
                   | 'ie_crn'
+                  | 'ie_trn'
+                  | 'ie_vat'
                   | 'it_rea'
                   | 'it_vat'
                   | 'jp_cn'
                   | 'kz_bin'
                   | 'li_uid'
                   | 'lt_ccrn'
+                  | 'lt_vat'
+                  | 'lu_nif'
                   | 'lu_rcs'
+                  | 'lu_vat'
                   | 'lv_urn'
+                  | 'lv_vat'
                   | 'mt_crn'
+                  | 'mt_tin'
+                  | 'mt_vat'
                   | 'mx_rfc'
                   | 'my_brn'
                   | 'my_coid'
+                  | 'my_itn'
                   | 'my_sst'
                   | 'mz_nuit'
                   | 'nl_kvk'
+                  | 'nl_rsin'
+                  | 'nl_vat'
                   | 'no_orgnr'
                   | 'nz_bn'
+                  | 'nz_ird'
                   | 'pe_ruc'
                   | 'pk_ntn'
+                  | 'pl_nip'
                   | 'pl_regon'
+                  | 'pl_vat'
                   | 'pt_vat'
                   | 'ro_cui'
+                  | 'ro_orc'
+                  | 'ro_vat'
                   | 'sa_crn'
                   | 'sa_tin'
                   | 'se_orgnr'
+                  | 'se_vat'
                   | 'sg_uen'
                   | 'si_msp'
+                  | 'si_tin'
+                  | 'si_vat'
+                  | 'sk_dic'
                   | 'sk_ico'
+                  | 'sk_vat'
                   | 'th_crn'
                   | 'th_prn'
                   | 'th_tin'
@@ -4962,7 +5089,7 @@ declare module 'stripe' {
                 state?: string;
 
                 /**
-                 * Town or cho-me.
+                 * Town or district.
                  */
                 town?: string;
               }
@@ -5143,36 +5270,81 @@ declare module 'stripe' {
                 type Type =
                   | 'ae_eid'
                   | 'ao_nif'
+                  | 'ar_cuil'
                   | 'ar_dni'
+                  | 'at_stn'
                   | 'az_tin'
                   | 'bd_brc'
                   | 'bd_etin'
                   | 'bd_nid'
+                  | 'be_nrn'
+                  | 'bg_ucn'
+                  | 'bn_nric'
                   | 'br_cpf'
+                  | 'ca_sin'
+                  | 'ch_oasi'
+                  | 'cl_rut'
+                  | 'cn_pp'
+                  | 'co_nuip'
+                  | 'cr_ci'
                   | 'cr_cpf'
                   | 'cr_dimex'
                   | 'cr_nite'
+                  | 'cy_tic'
+                  | 'cz_rc'
                   | 'de_stn'
+                  | 'dk_cpr'
+                  | 'do_cie'
                   | 'do_rcn'
+                  | 'ec_ci'
+                  | 'ee_ik'
+                  | 'es_nif'
+                  | 'fi_hetu'
+                  | 'fr_nir'
+                  | 'gb_nino'
+                  | 'gr_afm'
                   | 'gt_nit'
                   | 'hk_id'
+                  | 'hr_oib'
+                  | 'hu_ad'
+                  | 'id_nik'
+                  | 'ie_ppsn'
+                  | 'is_kt'
+                  | 'it_cf'
+                  | 'jp_inc'
+                  | 'ke_pin'
                   | 'kz_iin'
+                  | 'li_peid'
+                  | 'lt_ak'
+                  | 'lu_nif'
+                  | 'lv_pk'
                   | 'mx_rfc'
                   | 'my_nric'
                   | 'mz_nuit'
+                  | 'ng_nin'
                   | 'nl_bsn'
+                  | 'no_nin'
+                  | 'nz_ird'
                   | 'pe_dni'
                   | 'pk_cnic'
                   | 'pk_snic'
+                  | 'pl_pesel'
+                  | 'pt_nif'
+                  | 'ro_cnp'
                   | 'sa_tin'
+                  | 'se_pin'
                   | 'sg_fin'
                   | 'sg_nric'
+                  | 'sk_dic'
                   | 'th_lc'
                   | 'th_pin'
+                  | 'tr_tin'
                   | 'us_itin'
                   | 'us_itin_last_4'
                   | 'us_ssn'
-                  | 'us_ssn_last_4';
+                  | 'us_ssn_last_4'
+                  | 'uy_dni'
+                  | 'za_id';
               }
 
               type LegalGender = 'female' | 'male';
@@ -5275,7 +5447,9 @@ declare module 'stripe' {
           /**
            * Filter only accounts that have all of the configurations specified. If omitted, returns all accounts regardless of which configurations they have.
            */
-          applied_configurations?: Array<string>;
+          applied_configurations?: Array<
+            AccountListParams.AppliedConfiguration
+          >;
 
           /**
            * Filter by whether the account is closed. If omitted, returns only Accounts that are not closed.
@@ -5286,6 +5460,14 @@ declare module 'stripe' {
            * The upper limit on the number of accounts returned by the List Account request.
            */
           limit?: number;
+        }
+
+        namespace AccountListParams {
+          type AppliedConfiguration =
+            | 'customer'
+            | 'merchant'
+            | 'recipient'
+            | 'storer';
         }
       }
 
@@ -5326,7 +5508,6 @@ declare module 'stripe' {
 
           /**
            * Retrieves the details of an Account.
-           * @throws Stripe.RateLimitError
            */
           retrieve(
             id: string,
@@ -5340,7 +5521,6 @@ declare module 'stripe' {
 
           /**
            * Updates the details of an Account.
-           * @throws Stripe.RateLimitError
            */
           update(
             id: string,

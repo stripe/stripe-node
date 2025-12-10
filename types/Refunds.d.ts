@@ -7,7 +7,7 @@ declare module 'stripe' {
      * refunded yet. Funds are refunded to the credit or debit card that's
      * initially charged.
      *
-     * Related guide: [Refunds](https://stripe.com/docs/refunds)
+     * Related guide: [Refunds](https://docs.stripe.com/refunds)
      */
     interface Refund {
       /**
@@ -68,7 +68,7 @@ declare module 'stripe' {
       instructions_email?: string;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata | null;
 
@@ -102,7 +102,7 @@ declare module 'stripe' {
       source_transfer_reversal: string | Stripe.TransferReversal | null;
 
       /**
-       * Status of the refund. This can be `pending`, `requires_action`, `succeeded`, `failed`, or `canceled`. Learn more about [failed refunds](https://stripe.com/docs/refunds#failed-refunds).
+       * Status of the refund. This can be `pending`, `requires_action`, `succeeded`, `failed`, or `canceled`. Learn more about [failed refunds](https://docs.stripe.com/refunds#failed-refunds).
        */
       status: string | null;
 

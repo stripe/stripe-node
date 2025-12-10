@@ -85,7 +85,7 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata;
 
@@ -123,7 +123,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
          */
         value: number;
       }
@@ -135,7 +135,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
          */
         value: number;
       }
@@ -147,7 +147,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
          */
         value: number;
       }
@@ -159,7 +159,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
          */
         value: number;
       }
@@ -171,7 +171,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
          */
         value: number;
       }
@@ -183,7 +183,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
          */
         value: number;
       }
@@ -195,7 +195,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * A positive integer representing the amount in the currency's [minor unit](https://stripe.com/docs/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
+         * A positive integer representing the amount in the currency's [minor unit](https://docs.stripe.com/currencies#zero-decimal). For example, `100` can represent 1 USD or 100 JPY.
          */
         value: number;
       }
@@ -366,7 +366,7 @@ declare module 'stripe' {
         twint?: PaymentMethodDetails.Twint;
 
         /**
-         * The type of transaction-specific details of the payment method used in the payment. See [PaymentMethod.type](https://stripe.com/docs/api/payment_methods/object#payment_method_object-type) for the full list of possible types.
+         * The type of transaction-specific details of the payment method used in the payment. See [PaymentMethod.type](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type) for the full list of possible types.
          * An additional hash is included on `payment_method_details` with a name matching this value.
          * It contains information specific to the payment method.
          */
@@ -474,12 +474,12 @@ declare module 'stripe' {
 
         interface Affirm {
           /**
-           * ID of the [location](https://stripe.com/docs/api/terminal/locations) that this transaction's reader is assigned to.
+           * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
            */
           location?: string;
 
           /**
-           * ID of the [reader](https://stripe.com/docs/api/terminal/readers) this transaction was made on.
+           * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
            */
           reader?: string;
 
@@ -732,6 +732,11 @@ declare module 'stripe' {
 
         interface Card {
           /**
+           * The authorization code of the payment.
+           */
+          authorization_code: string | null;
+
+          /**
            * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
            */
           brand: Card.Brand;
@@ -750,6 +755,11 @@ declare module 'stripe' {
            * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
            */
           country: string | null;
+
+          /**
+           * A high-level description of the type of cards issued in this range.
+           */
+          description: string | null;
 
           /**
            * Two-digit number representing the card's expiration month.
@@ -774,6 +784,21 @@ declare module 'stripe' {
           funding: Card.Funding;
 
           /**
+           * Issuer identification number of the card.
+           */
+          iin: string | null;
+
+          /**
+           * Installment details for this payment.
+           */
+          installments: Card.Installments | null;
+
+          /**
+           * The name of the card's issuing bank.
+           */
+          issuer: string | null;
+
+          /**
            * The last four digits of the card.
            */
           last4: string;
@@ -789,6 +814,16 @@ declare module 'stripe' {
           network: Card.Network | null;
 
           /**
+           * Advice code from the card network for the failed payment.
+           */
+          network_advice_code: string | null;
+
+          /**
+           * Decline code from the card network for the failed payment.
+           */
+          network_decline_code: string | null;
+
+          /**
            * If this card has network token credentials, this contains the details of the network token credentials.
            */
           network_token?: Card.NetworkToken | null;
@@ -797,6 +832,11 @@ declare module 'stripe' {
            * This is used by the financial networks to identify a transaction. Visa calls this the Transaction ID, Mastercard calls this the Trace ID, and American Express calls this the Acquirer Reference Data. This value will be present if it is returned by the financial network in the authorization response, and null otherwise.
            */
           network_transaction_id: string | null;
+
+          /**
+           * The transaction type that was passed for an off-session, Merchant-Initiated transaction, one of `recurring` or `unscheduled`.
+           */
+          stored_credential_usage: Card.StoredCredentialUsage | null;
 
           /**
            * Populated if this transaction used 3D Secure authentication.
@@ -850,6 +890,33 @@ declare module 'stripe' {
 
           type Funding = 'credit' | 'debit' | 'prepaid' | 'unknown';
 
+          interface Installments {
+            plan: Installments.Plan | null;
+          }
+
+          namespace Installments {
+            interface Plan {
+              /**
+               * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+               */
+              count: number | null;
+
+              /**
+               * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card. One of `month`.
+               */
+              interval: 'month' | null;
+
+              /**
+               * Type of installment plan, one of `fixed_count`, `revolving`, or `bonus`.
+               */
+              type: Plan.Type;
+            }
+
+            namespace Plan {
+              type Type = 'bonus' | 'fixed_count' | 'revolving';
+            }
+          }
+
           type Network =
             | 'amex'
             | 'cartes_bancaires'
@@ -870,6 +937,8 @@ declare module 'stripe' {
              */
             used: boolean;
           }
+
+          type StoredCredentialUsage = 'recurring' | 'unscheduled';
 
           interface ThreeDSecure {
             authentication_flow: ThreeDSecure.AuthenticationFlow | null;
@@ -1006,7 +1075,7 @@ declare module 'stripe' {
           iin?: string | null;
 
           /**
-           * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
+           * Whether this [PaymentIntent](https://docs.stripe.com/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
            */
           incremental_authorization_supported: boolean;
 
@@ -1357,7 +1426,7 @@ declare module 'stripe' {
 
         interface Ideal {
           /**
-           * The customer's bank. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
+           * The customer's bank. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `mollie`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
            */
           bank: Ideal.Bank | null;
 
@@ -1403,6 +1472,7 @@ declare module 'stripe' {
             | 'handelsbanken'
             | 'ing'
             | 'knab'
+            | 'mollie'
             | 'moneyou'
             | 'n26'
             | 'nn'
@@ -1425,6 +1495,7 @@ declare module 'stripe' {
             | 'HANDNL2A'
             | 'INGBNL2A'
             | 'KNABNL2H'
+            | 'MLLENL2A'
             | 'MOYONL21'
             | 'NNBANL2G'
             | 'NTSBDEB1'
@@ -1881,12 +1952,12 @@ declare module 'stripe' {
 
         interface Paynow {
           /**
-           * ID of the [location](https://stripe.com/docs/api/terminal/locations) that this transaction's reader is assigned to.
+           * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
            */
           location?: string;
 
           /**
-           * ID of the [reader](https://stripe.com/docs/api/terminal/readers) this transaction was made on.
+           * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
            */
           reader?: string;
 
@@ -2150,7 +2221,7 @@ declare module 'stripe' {
           last4: string | null;
 
           /**
-           * Find the ID of the mandate used for this payment under the [payment_method_details.sepa_debit.mandate](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-sepa_debit-mandate) property on the Charge. Use this mandate ID to [retrieve the Mandate](https://stripe.com/docs/api/mandates/retrieve).
+           * Find the ID of the mandate used for this payment under the [payment_method_details.sepa_debit.mandate](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-sepa_debit-mandate) property on the Charge. Use this mandate ID to [retrieve the Mandate](https://docs.stripe.com/api/mandates/retrieve).
            */
           mandate: string | null;
         }
@@ -2311,12 +2382,12 @@ declare module 'stripe' {
           fingerprint: string | null;
 
           /**
-           * ID of the [location](https://stripe.com/docs/api/terminal/locations) that this transaction's reader is assigned to.
+           * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
            */
           location?: string;
 
           /**
-           * ID of the [reader](https://stripe.com/docs/api/terminal/readers) this transaction was made on.
+           * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
            */
           reader?: string;
 

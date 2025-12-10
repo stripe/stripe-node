@@ -70,7 +70,7 @@ declare module 'stripe' {
           status_transitions?: ReceivedDebit.StatusTransitions;
 
           /**
-           * Open Enum. The type of the ReceivedDebit.
+           * Open enum, the type of the received debit.
            */
           type: ReceivedDebit.Type;
         }

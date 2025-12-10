@@ -42,6 +42,7 @@ export type RawErrorType =
   | 'already_canceled'
   | 'already_exists'
   | 'blocked_by_stripe'
+  | 'controlled_by_alternate_resource'
   | 'controlled_by_dashboard'
   | 'feature_not_enabled'
   | 'financial_account_not_open'
@@ -51,7 +52,6 @@ export type RawErrorType =
   | 'non_zero_balance'
   | 'not_cancelable'
   | 'quota_exceeded'
-  | 'rate_limit'
   | 'recipient_not_notifiable'
   | 'temporary_session_expired';
 // rawErrorTypeEnum: The end of the section generated from our OpenAPI spec

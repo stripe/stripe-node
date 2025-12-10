@@ -5,7 +5,7 @@ declare module 'stripe' {
     namespace V2 {
       namespace Core {
         /**
-         * Person retrieval response schema.
+         * A Person represents an individual associated with an Account's identity (for example, an owner, director, executive, or representative). Use Persons to provide and update identity information for verification and compliance.
          */
         interface AccountPerson {
           /**
@@ -167,7 +167,7 @@ declare module 'stripe' {
             state?: string;
 
             /**
-             * Town or cho-me.
+             * Town or district.
              */
             town?: string;
           }
@@ -256,7 +256,7 @@ declare module 'stripe' {
             state?: string;
 
             /**
-             * Town or cho-me.
+             * Town or district.
              */
             town?: string;
           }
@@ -406,36 +406,81 @@ declare module 'stripe' {
             type Type =
               | 'ae_eid'
               | 'ao_nif'
+              | 'ar_cuil'
               | 'ar_dni'
+              | 'at_stn'
               | 'az_tin'
               | 'bd_brc'
               | 'bd_etin'
               | 'bd_nid'
+              | 'be_nrn'
+              | 'bg_ucn'
+              | 'bn_nric'
               | 'br_cpf'
+              | 'ca_sin'
+              | 'ch_oasi'
+              | 'cl_rut'
+              | 'cn_pp'
+              | 'co_nuip'
+              | 'cr_ci'
               | 'cr_cpf'
               | 'cr_dimex'
               | 'cr_nite'
+              | 'cy_tic'
+              | 'cz_rc'
               | 'de_stn'
+              | 'dk_cpr'
+              | 'do_cie'
               | 'do_rcn'
+              | 'ec_ci'
+              | 'ee_ik'
+              | 'es_nif'
+              | 'fi_hetu'
+              | 'fr_nir'
+              | 'gb_nino'
+              | 'gr_afm'
               | 'gt_nit'
               | 'hk_id'
+              | 'hr_oib'
+              | 'hu_ad'
+              | 'id_nik'
+              | 'ie_ppsn'
+              | 'is_kt'
+              | 'it_cf'
+              | 'jp_inc'
+              | 'ke_pin'
               | 'kz_iin'
+              | 'li_peid'
+              | 'lt_ak'
+              | 'lu_nif'
+              | 'lv_pk'
               | 'mx_rfc'
               | 'my_nric'
               | 'mz_nuit'
+              | 'ng_nin'
               | 'nl_bsn'
+              | 'no_nin'
+              | 'nz_ird'
               | 'pe_dni'
               | 'pk_cnic'
               | 'pk_snic'
+              | 'pl_pesel'
+              | 'pt_nif'
+              | 'ro_cnp'
               | 'sa_tin'
+              | 'se_pin'
               | 'sg_fin'
               | 'sg_nric'
+              | 'sk_dic'
               | 'th_lc'
               | 'th_pin'
+              | 'tr_tin'
               | 'us_itin'
               | 'us_itin_last_4'
               | 'us_ssn'
-              | 'us_ssn_last_4';
+              | 'us_ssn_last_4'
+              | 'uy_dni'
+              | 'za_id';
           }
 
           type LegalGender = 'female' | 'male';
@@ -444,12 +489,12 @@ declare module 'stripe' {
 
           interface Relationship {
             /**
-             * Whether the individual is an authorizer of the Account's legal entity.
+             * Whether the individual is an authorizer of the Account's identity.
              */
             authorizer?: boolean;
 
             /**
-             * Whether the individual is a director of the Account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
+             * Whether the individual is a director of the Account's identity. Directors are typically members of the governing board of the company or are responsible for making sure that the company meets its regulatory obligations.
              */
             director?: boolean;
 
@@ -464,12 +509,12 @@ declare module 'stripe' {
             legal_guardian?: boolean;
 
             /**
-             * Whether the individual is an owner of the Account's legal entity.
+             * Whether the individual is an owner of the Account's identity.
              */
             owner?: boolean;
 
             /**
-             * The percent owned by the individual of the Account's legal entity.
+             * The percentage of the Account's identity that the individual owns.
              */
             percent_ownership?: string;
 
@@ -529,7 +574,7 @@ declare module 'stripe' {
               state?: string;
 
               /**
-               * Town or cho-me.
+               * Town or district.
                */
               town?: string;
             }
@@ -566,7 +611,7 @@ declare module 'stripe' {
               state?: string;
 
               /**
-               * Town or cho-me.
+               * Town or district.
                */
               town?: string;
             }
