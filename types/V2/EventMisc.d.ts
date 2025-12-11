@@ -45,7 +45,7 @@ declare module 'stripe' {
 
       on<T extends Stripe.V2.Core.EventNotification['type']>(
         eventType: T,
-        handler: (
+        callback: (
           eventNotification: Extract<
             Stripe.V2.Core.EventNotification,
             {type: T}
@@ -60,7 +60,7 @@ declare module 'stripe' {
       handle(
         rawBody: string | Uint8Array,
         signature: string | Uint8Array
-      ): void;
+      ): Promise<void>;
     }
 
     namespace Events {

@@ -728,7 +728,7 @@ declare module 'stripe' {
     notificationHandler: (
       webhookSecret: string,
       fallbackCallback: (
-        event: Stripe.FallbackCallback,
+        event: Stripe.Events.UnknownEventNotification,
         client: Stripe,
         details: Stripe.UnhandledNotificationDetails
       ) => Promise<void>

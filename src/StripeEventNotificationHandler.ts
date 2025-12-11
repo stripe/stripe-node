@@ -67,7 +67,7 @@ const KNOWN_EVENT_TYPES = new Set([
   // event-types: The end of the section generated from our OpenAPI spec
 ]);
 
-export class StripeEventHandler {
+export class StripeEventNotificationHandler {
   private registeredHandlers: Record<string, HandlerCallback> = {};
   private hasHandledEvent = false;
 
@@ -83,7 +83,7 @@ export class StripeEventHandler {
   ) {}
 
   // these types are duplicated in the manual types
-  public on(type: string, handler: HandlerCallback): this {
+  public on(type: string, callback: HandlerCallback): this {
     if (this.hasHandledEvent) {
       throw new Error(
         'Cannot register new handlers after an event has been handled. This is indicative of a bug.'
@@ -94,7 +94,7 @@ export class StripeEventHandler {
       throw new Error(`Handler already registered for event type: ${type}`);
     }
 
-    this.registeredHandlers[type] = handler;
+    this.registeredHandlers[type] = callback;
     return this;
   }
 
@@ -109,6 +109,7 @@ export class StripeEventHandler {
     rawBody: string | Buffer,
     signature: string | Buffer
   ): Promise<void> {
+    // we're not worried about thread safety here because we expect callbacks will be registered synchronously on app startup
     this.hasHandledEvent = true;
     const event = this.client.parseEventNotification(
       rawBody,

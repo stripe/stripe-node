@@ -355,3 +355,30 @@ async (): Promise<void> => {
   // union of all V2 Events
   let g: Stripe.V2.Core.Event;
 }
+
+async (): Promise<void> => {
+  // event handler
+  const handler = stripe.notificationHandler(
+    'whsec_123',
+    async (unhandledEvent, client, details) => {
+      const e: Stripe.Events.UnknownEventNotification = unhandledEvent;
+      const s: Stripe = client;
+      const d: Stripe.UnhandledNotificationDetails = details;
+    }
+  );
+
+  handler
+    .on('v1.billing.meter.error_report_triggered', async (event) => {
+      const meter: Stripe.Billing.Meter = await event.fetchRelatedObject();
+      const e: Stripe.Events.V1BillingMeterErrorReportTriggeredEventNotification = event;
+      const evt: Stripe.Events.V1BillingMeterErrorReportTriggeredEvent = await event.fetchEvent();
+    })
+    .on('v1.billing.meter.no_meter_found', async (event) => {
+      const e: Stripe.Events.V1BillingMeterNoMeterFoundEventNotification = event;
+      // @ts-expect-error - shouldn't be available
+      const meter: Stripe.Billing.Meter = await event.fetchRelatedObject();
+      const evt: Stripe.Events.V1BillingMeterNoMeterFoundEvent = await event.fetchEvent();
+    });
+
+  const res: void = await handler.handle('', '');
+};
