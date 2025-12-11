@@ -233,6 +233,11 @@ declare module 'stripe' {
       setup_future_usage: PaymentIntent.SetupFutureUsage | null;
 
       /**
+       * ID of the shared payment token granted to be used in this PaymentIntent
+       */
+      shared_payment_granted_token?: string | null;
+
+      /**
        * Shipping information for this PaymentIntent.
        */
       shipping: PaymentIntent.Shipping | null;

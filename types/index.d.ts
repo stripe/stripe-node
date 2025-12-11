@@ -108,6 +108,7 @@
 ///<reference path='./ReviewsResource.d.ts' />
 ///<reference path='./SetupAttemptsResource.d.ts' />
 ///<reference path='./SetupIntentsResource.d.ts' />
+///<reference path='./SharedPayment/GrantedTokensResource.d.ts' />
 ///<reference path='./ShippingRatesResource.d.ts' />
 ///<reference path='./Sigma/ScheduledQueryRunsResource.d.ts' />
 ///<reference path='./SourcesResource.d.ts' />
@@ -137,6 +138,7 @@
 ///<reference path='./TestHelpers/Issuing/PersonalizationDesignsResource.d.ts' />
 ///<reference path='./TestHelpers/Issuing/TransactionsResource.d.ts' />
 ///<reference path='./TestHelpers/RefundsResource.d.ts' />
+///<reference path='./TestHelpers/SharedPayment/GrantedTokensResource.d.ts' />
 ///<reference path='./TestHelpers/Terminal/ReadersResource.d.ts' />
 ///<reference path='./TestHelpers/TestClocksResource.d.ts' />
 ///<reference path='./TestHelpers/Treasury/InboundTransfersResource.d.ts' />
@@ -353,6 +355,7 @@
 ///<reference path='./Reviews.d.ts' />
 ///<reference path='./SetupAttempts.d.ts' />
 ///<reference path='./SetupIntents.d.ts' />
+///<reference path='./SharedPayment/GrantedTokens.d.ts' />
 ///<reference path='./ShippingRates.d.ts' />
 ///<reference path='./Sigma/ScheduledQueryRuns.d.ts' />
 ///<reference path='./SourceMandateNotifications.d.ts' />
@@ -624,6 +627,9 @@ declare module 'stripe' {
       reportRuns: Stripe.Reporting.ReportRunsResource;
       reportTypes: Stripe.Reporting.ReportTypesResource;
     };
+    sharedPayment: {
+      grantedTokens: Stripe.SharedPayment.GrantedTokensResource;
+    };
     sigma: {
       scheduledQueryRuns: Stripe.Sigma.ScheduledQueryRunsResource;
     };
@@ -656,6 +662,9 @@ declare module 'stripe' {
         cards: Stripe.TestHelpers.Issuing.CardsResource;
         personalizationDesigns: Stripe.TestHelpers.Issuing.PersonalizationDesignsResource;
         transactions: Stripe.TestHelpers.Issuing.TransactionsResource;
+      };
+      sharedPayment: {
+        grantedTokens: Stripe.TestHelpers.SharedPayment.GrantedTokensResource;
       };
       terminal: {
         readers: Stripe.TestHelpers.Terminal.ReadersResource;

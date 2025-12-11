@@ -203,6 +203,11 @@ declare module 'stripe' {
       setup_future_usage?: PaymentIntentCreateParams.SetupFutureUsage;
 
       /**
+       * ID of the SharedPaymentToken used to confirm this PaymentIntent.
+       */
+      shared_payment_granted_token?: string;
+
+      /**
        * Shipping information for this PaymentIntent.
        */
       shipping?: PaymentIntentCreateParams.Shipping;
@@ -16355,6 +16360,11 @@ declare module 'stripe' {
       setup_future_usage?: Stripe.Emptyable<
         PaymentIntentConfirmParams.SetupFutureUsage
       >;
+
+      /**
+       * ID of the SharedPaymentToken used to confirm this PaymentIntent.
+       */
+      shared_payment_granted_token?: string;
 
       /**
        * Shipping information for this PaymentIntent.

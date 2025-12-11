@@ -52,6 +52,8 @@ import {FinancingTransactions as CapitalFinancingTransactions} from './resources
 import {Forms as TaxForms} from './resources/Tax/Forms.js';
 import {FraudLiabilityDebits as IssuingFraudLiabilityDebits} from './resources/Issuing/FraudLiabilityDebits.js';
 import {GbBankAccounts as V2CoreVaultGbBankAccounts} from './resources/V2/Core/Vault/GbBankAccounts.js';
+import {GrantedTokens as SharedPaymentGrantedTokens} from './resources/SharedPayment/GrantedTokens.js';
+import {GrantedTokens as TestHelpersSharedPaymentGrantedTokens} from './resources/TestHelpers/SharedPayment/GrantedTokens.js';
 import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {InboundTransfers as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
@@ -283,6 +285,9 @@ export const Reporting = resourceNamespace('reporting', {
   ReportRuns: ReportingReportRuns,
   ReportTypes: ReportingReportTypes,
 });
+export const SharedPayment = resourceNamespace('sharedPayment', {
+  GrantedTokens: SharedPaymentGrantedTokens,
+});
 export const Sigma = resourceNamespace('sigma', {
   ScheduledQueryRuns: SigmaScheduledQueryRuns,
 });
@@ -315,6 +320,9 @@ export const TestHelpers = resourceNamespace('testHelpers', {
     Cards: TestHelpersIssuingCards,
     PersonalizationDesigns: TestHelpersIssuingPersonalizationDesigns,
     Transactions: TestHelpersIssuingTransactions,
+  }),
+  SharedPayment: resourceNamespace('sharedPayment', {
+    GrantedTokens: TestHelpersSharedPaymentGrantedTokens,
   }),
   Terminal: resourceNamespace('terminal', {
     Readers: TestHelpersTerminalReaders,
