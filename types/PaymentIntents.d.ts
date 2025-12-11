@@ -9,7 +9,7 @@ declare module 'stripe' {
      * see the history of payment attempts for a particular session.
      *
      * A PaymentIntent transitions through
-     * [multiple statuses](https://docs.stripe.com/payments/intents#intent-statuses)
+     * [multiple statuses](https://docs.stripe.com/payments/paymentintents/lifecycle)
      * throughout its lifetime as it interfaces with Stripe.js to perform
      * authentication flows and ultimately creates at most one successful charge.
      *
@@ -262,7 +262,7 @@ declare module 'stripe' {
         discount_amount?: number;
 
         /**
-         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 100 line items.
+         * A list of line items, each containing information about a product in the PaymentIntent. There is a maximum of 200 line items.
          */
         line_items?: ApiList<Stripe.PaymentIntentAmountDetailsLineItem>;
 
@@ -463,7 +463,7 @@ declare module 'stripe' {
          * see the history of payment attempts for a particular session.
          *
          * A PaymentIntent transitions through
-         * [multiple statuses](https://docs.stripe.com/payments/intents#intent-statuses)
+         * [multiple statuses](https://docs.stripe.com/payments/paymentintents/lifecycle)
          * throughout its lifetime as it interfaces with Stripe.js to perform
          * authentication flows and ultimately creates at most one successful charge.
          *

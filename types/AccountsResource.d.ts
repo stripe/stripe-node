@@ -1349,6 +1349,9 @@ declare module 'stripe' {
            */
           files?: Array<string>;
 
+          /**
+           * Information regarding the person signing the document if applicable.
+           */
           signer?: ProofOfRegistration.Signer;
         }
 
@@ -1367,6 +1370,9 @@ declare module 'stripe' {
            */
           files?: Array<string>;
 
+          /**
+           * Information regarding the person signing the document if applicable.
+           */
           signer?: ProofOfUltimateBeneficialOwnership.Signer;
         }
 
@@ -3275,6 +3281,9 @@ declare module 'stripe' {
            */
           files?: Array<string>;
 
+          /**
+           * Information regarding the person signing the document if applicable.
+           */
           signer?: ProofOfRegistration.Signer;
         }
 
@@ -3293,6 +3302,9 @@ declare module 'stripe' {
            */
           files?: Array<string>;
 
+          /**
+           * Information regarding the person signing the document if applicable.
+           */
           signer?: ProofOfUltimateBeneficialOwnership.Signer;
         }
 
