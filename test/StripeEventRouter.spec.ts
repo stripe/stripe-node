@@ -162,7 +162,7 @@ describe('StripeEventRouter', () => {
       expect(normalizedContext).to.equal('event_context_456');
     });
 
-    it('should restore original stripe context after handler success', async () => {
+    it('should not modify original client context after handler success', async () => {
       const stripe = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
         stripeContext: 'original_context_123',
       });
@@ -191,7 +191,7 @@ describe('StripeEventRouter', () => {
       expect(contextInHandler?.toString()).to.equal('event_context_456');
       expect(normalizedInHandler).to.equal('event_context_456');
       expect(stripe._api.stripeContext).to.equal(originalContext);
-      // Verify context is restored for future requests
+      // Verify original client context is unchanged
       const normalizedAfter = stripe._requestSender._normalizeStripeContext(
         undefined,
         stripe.getApiField('stripeContext')
@@ -199,7 +199,7 @@ describe('StripeEventRouter', () => {
       expect(normalizedAfter).to.equal('original_context_123');
     });
 
-    it('should restore original stripe context after handler error', async () => {
+    it('should not modify original client context after handler error', async () => {
       const stripe = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
         stripeContext: 'original_context_123',
       });
@@ -233,7 +233,7 @@ describe('StripeEventRouter', () => {
       }
 
       expect(stripe._api.stripeContext).to.equal(originalContext);
-      // Verify context is restored even after error
+      // Verify original client context is unchanged even after error
       const normalizedAfter = stripe._requestSender._normalizeStripeContext(
         undefined,
         stripe.getApiField('stripeContext')
@@ -241,7 +241,7 @@ describe('StripeEventRouter', () => {
       expect(normalizedAfter).to.equal('original_context_123');
     });
 
-    it('should set stripe context to null when event has no context', async () => {
+    it('should create client with null context when event has no context', async () => {
       const stripe = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
         stripeContext: 'original_context_123',
       });
@@ -283,7 +283,7 @@ describe('StripeEventRouter', () => {
       expect(stripe._api.stripeContext?.toString()).to.equal(
         'original_context_123'
       );
-      // Verify context is restored for future requests
+      // Verify original client context is unchanged
       const normalizedAfter = stripe._requestSender._normalizeStripeContext(
         undefined,
         stripe.getApiField('stripeContext')
@@ -363,7 +363,7 @@ describe('StripeEventRouter', () => {
   });
 
   describe('client configuration', () => {
-    it('should pass same client instance with updated stripe context', async () => {
+    it('should pass new client instance with event stripe context', async () => {
       const stripe = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
         stripeContext: 'original_context_xyz',
       });
@@ -384,11 +384,11 @@ describe('StripeEventRouter', () => {
       const sigHeader = generateHeader(v1BillingMeterPayload);
       await router.handle(v1BillingMeterPayload, sigHeader);
 
-      // The handler should receive the same client instance
-      expect(receivedClient).to.equal(stripe);
-      // But with the event's context temporarily set
+      // The handler should receive a new client instance (not the same reference)
+      expect(receivedClient).to.not.equal(stripe);
+      // With the event's context
       expect(receivedContext?.toString()).to.equal('event_context_456');
-      // And the original context should be restored after handling
+      // And the original client's context should remain unchanged
       expect(stripe._api.stripeContext?.toString()).to.equal(
         'original_context_xyz'
       );

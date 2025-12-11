@@ -116,20 +116,24 @@ export class StripeEventHandler {
       this.webhookSecret
     );
 
-    // Bind event context to client temporarily, then restore after handler completes
-    const originalContext = this.client._api.stripeContext;
-    try {
-      this.client._api.stripeContext = event.context;
-      const handler = this.registeredHandlers[event.type];
-      if (handler) {
-        return await handler(event, this.client);
-      } else {
-        return await this.onUnhandledHandler(event, this.client, {
-          isKnownEventType: KNOWN_EVENT_TYPES.has(event.type),
-        });
-      }
-    } finally {
-      this.client._api.stripeContext = originalContext;
+    // Create a new client with the event's context instead of modifying the shared client
+    // This ensures thread-safety when processing webhooks in parallel
+    // We create a shallow copy and override _api with a new object containing the event context
+    // This reuses expensive resources like httpClient (Flyweight pattern)
+    const eventClient = Object.create(Object.getPrototypeOf(this.client));
+    Object.assign(eventClient, this.client);
+    eventClient._api = {
+      ...this.client._api,
+      stripeContext: event.context,
+    };
+
+    const handler = this.registeredHandlers[event.type];
+    if (handler) {
+      return await handler(event, eventClient);
+    } else {
+      return await this.onUnhandledHandler(event, eventClient, {
+        isKnownEventType: KNOWN_EVENT_TYPES.has(event.type),
+      });
     }
   }
 }
