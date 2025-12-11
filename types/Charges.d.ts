@@ -591,6 +591,11 @@ declare module 'stripe' {
           bank_name: string | null;
 
           /**
+           * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+           */
+          expected_debit_date?: string;
+
+          /**
            * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
            */
           fingerprint: string | null;
@@ -746,6 +751,11 @@ declare module 'stripe' {
           bsb_number: string | null;
 
           /**
+           * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+           */
+          expected_debit_date?: string;
+
+          /**
            * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
            */
           fingerprint: string | null;
@@ -762,6 +772,11 @@ declare module 'stripe' {
         }
 
         interface BacsDebit {
+          /**
+           * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+           */
+          expected_debit_date?: string;
+
           /**
            * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
            */
@@ -2146,6 +2161,11 @@ declare module 'stripe' {
           branch_code: string;
 
           /**
+           * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+           */
+          expected_debit_date?: string;
+
+          /**
            * Last four digits of the bank account number.
            */
           last4: string;
@@ -2487,6 +2507,11 @@ declare module 'stripe' {
           country: string | null;
 
           /**
+           * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+           */
+          expected_debit_date?: string;
+
+          /**
            * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
            */
           fingerprint: string | null;
@@ -2616,6 +2641,11 @@ declare module 'stripe' {
            * Name of the bank associated with the bank account.
            */
           bank_name: string | null;
+
+          /**
+           * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+           */
+          expected_debit_date?: string;
 
           /**
            * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.

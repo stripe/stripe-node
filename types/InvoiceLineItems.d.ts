@@ -314,7 +314,7 @@ declare module 'stripe' {
           /**
            * The ID of the price this item is associated with.
            */
-          price: string;
+          price: string | Stripe.Price;
 
           /**
            * The ID of the product this item is associated with.
