@@ -30,17 +30,17 @@ declare module 'stripe' {
       isKnownEventType: boolean;
     }
 
-    type UnhandledEventHandler = (
+    type FallbackCallback = (
       event: V2.Core.EventNotificationBase,
       client: Stripe,
       details: UnhandledNotificationDetails
     ) => Promise<void>;
 
-    class EventRouter {
+    class EventNotificationHandler {
       constructor(
         client: Stripe,
         webhookSecret: string,
-        onUnhandledHandler: UnhandledEventHandler
+        fallbackCallback: FallbackCallback
       );
 
       on<T extends Stripe.V2.Core.EventNotification['type']>(

@@ -14,10 +14,10 @@ function generateHeader(payload: string): string {
   });
 }
 
-describe('StripeEventRouter', () => {
+describe('StripeEventNotificationHandler', () => {
   let stripe: any;
-  let eventRouter: any;
-  let onUnhandledHandler: any;
+  let eventHandler: any;
+  let fallbackCallback: any;
 
   // Event payloads
   const v1BillingMeterPayload = JSON.stringify({
@@ -59,29 +59,32 @@ describe('StripeEventRouter', () => {
 
   beforeEach(() => {
     stripe = getSpyableStripe({});
-    onUnhandledHandler = async () => {};
-    eventRouter = stripe.router(DUMMY_WEBHOOK_SECRET, onUnhandledHandler);
+    fallbackCallback = async () => {};
+    eventHandler = stripe.notificationHandler(
+      DUMMY_WEBHOOK_SECRET,
+      fallbackCallback
+    );
   });
 
   describe('handler registration and routing', () => {
     it('should route event to registered handler', async () => {
-      let handlerCalled = false;
+      let callbackCalled = false;
       let receivedEvent: any = null;
       let receivedClient: any = null;
 
-      eventRouter.on(
+      eventHandler.on(
         'v1.billing.meter.error_report_triggered',
         async (event: any, client: any) => {
-          handlerCalled = true;
+          callbackCalled = true;
           receivedEvent = event;
           receivedClient = client;
         }
       );
 
       const sigHeader = generateHeader(v1BillingMeterPayload);
-      await eventRouter.handle(v1BillingMeterPayload, sigHeader);
+      await eventHandler.handle(v1BillingMeterPayload, sigHeader);
 
-      expect(handlerCalled).to.be.true;
+      expect(callbackCalled).to.be.true;
       expect(receivedEvent.type).to.equal(
         'v1.billing.meter.error_report_triggered'
       );
@@ -91,44 +94,50 @@ describe('StripeEventRouter', () => {
     });
 
     it('should route different events to their respective handlers', async () => {
-      let billingHandlerCalled = false;
-      let noMeterHandlerCalled = false;
+      let billingCallbackCalled = false;
+      let noMeterCallbackCalled = false;
 
-      eventRouter.on('v1.billing.meter.error_report_triggered', async () => {
-        billingHandlerCalled = true;
+      eventHandler.on('v1.billing.meter.error_report_triggered', async () => {
+        billingCallbackCalled = true;
       });
 
-      eventRouter.on('v1.billing.meter.no_meter_found', async () => {
-        noMeterHandlerCalled = true;
+      eventHandler.on('v1.billing.meter.no_meter_found', async () => {
+        noMeterCallbackCalled = true;
       });
 
       const sigHeader1 = generateHeader(v1BillingMeterPayload);
-      await eventRouter.handle(v1BillingMeterPayload, sigHeader1);
-      expect(billingHandlerCalled).to.be.true;
+      await eventHandler.handle(v1BillingMeterPayload, sigHeader1);
+      expect(billingCallbackCalled).to.be.true;
 
       const sigHeader2 = generateHeader(v1BillingMeterNoMeterFoundPayload);
-      await eventRouter.handle(v1BillingMeterNoMeterFoundPayload, sigHeader2);
-      expect(noMeterHandlerCalled).to.be.true;
+      await eventHandler.handle(v1BillingMeterNoMeterFoundPayload, sigHeader2);
+      expect(noMeterCallbackCalled).to.be.true;
     });
 
     it('should throw error when registering handler after handling', async () => {
-      eventRouter.on('v1.billing.meter.error_report_triggered', async () => {});
+      eventHandler.on(
+        'v1.billing.meter.error_report_triggered',
+        async () => {}
+      );
 
       const sigHeader = generateHeader(v1BillingMeterPayload);
-      await eventRouter.handle(v1BillingMeterPayload, sigHeader);
+      await eventHandler.handle(v1BillingMeterPayload, sigHeader);
 
       expect(() => {
-        eventRouter.on('v1.billing.meter.no_meter_found', async () => {});
+        eventHandler.on('v1.billing.meter.no_meter_found', async () => {});
       }).to.throw(
         /Cannot register new handlers after an event has been handled/
       );
     });
 
     it('should throw error when registering duplicate handler', () => {
-      eventRouter.on('v1.billing.meter.error_report_triggered', async () => {});
+      eventHandler.on(
+        'v1.billing.meter.error_report_triggered',
+        async () => {}
+      );
 
       expect(() => {
-        eventRouter.on(
+        eventHandler.on(
           'v1.billing.meter.error_report_triggered',
           async () => {}
         );
@@ -141,7 +150,7 @@ describe('StripeEventRouter', () => {
       let receivedContext: any = null;
       let normalizedContext: any = null;
 
-      eventRouter.on(
+      eventHandler.on(
         'v1.billing.meter.error_report_triggered',
         async (event: any, client: any) => {
           receivedContext = client._api.stripeContext;
@@ -154,7 +163,7 @@ describe('StripeEventRouter', () => {
       );
 
       const sigHeader = generateHeader(v1BillingMeterPayload);
-      await eventRouter.handle(v1BillingMeterPayload, sigHeader);
+      await eventHandler.handle(v1BillingMeterPayload, sigHeader);
 
       // The event has context 'event_context_456'
       expect(receivedContext?.toString()).to.equal('event_context_456');
@@ -167,12 +176,15 @@ describe('StripeEventRouter', () => {
         stripeContext: 'original_context_123',
       });
 
-      const router = stripe.router(DUMMY_WEBHOOK_SECRET, async () => {});
+      const handler = stripe.notificationHandler(
+        DUMMY_WEBHOOK_SECRET,
+        async () => {}
+      );
 
       let contextInHandler: any = null;
       let normalizedInHandler: any = null;
 
-      router.on(
+      handler.on(
         'v1.billing.meter.error_report_triggered',
         async (event: any, client: any) => {
           contextInHandler = client._api.stripeContext;
@@ -186,7 +198,7 @@ describe('StripeEventRouter', () => {
       const originalContext = stripe._api.stripeContext;
 
       const sigHeader = generateHeader(v1BillingMeterPayload);
-      await router.handle(v1BillingMeterPayload, sigHeader);
+      await handler.handle(v1BillingMeterPayload, sigHeader);
 
       expect(contextInHandler?.toString()).to.equal('event_context_456');
       expect(normalizedInHandler).to.equal('event_context_456');
@@ -204,9 +216,12 @@ describe('StripeEventRouter', () => {
         stripeContext: 'original_context_123',
       });
 
-      const router = stripe.router(DUMMY_WEBHOOK_SECRET, async () => {});
+      const handler = stripe.notificationHandler(
+        DUMMY_WEBHOOK_SECRET,
+        async () => {}
+      );
 
-      router.on(
+      handler.on(
         'v1.billing.meter.error_report_triggered',
         async (event: any, client: any) => {
           const context = client._api.stripeContext;
@@ -225,7 +240,7 @@ describe('StripeEventRouter', () => {
       const sigHeader = generateHeader(v1BillingMeterPayload);
 
       try {
-        await router.handle(v1BillingMeterPayload, sigHeader);
+        await handler.handle(v1BillingMeterPayload, sigHeader);
         expect.fail('Should have thrown error');
       } catch (err) {
         // @ts-expect-error
@@ -246,7 +261,10 @@ describe('StripeEventRouter', () => {
         stripeContext: 'original_context_123',
       });
 
-      const router = stripe.router(DUMMY_WEBHOOK_SECRET, async () => {});
+      const handler = stripe.notificationHandler(
+        DUMMY_WEBHOOK_SECRET,
+        async () => {}
+      );
 
       let receivedContext: any = null;
       let normalizedInHandler: any = null;
@@ -261,7 +279,7 @@ describe('StripeEventRouter', () => {
         context: null,
       });
 
-      router.on(
+      handler.on(
         'v1.billing.meter.no_meter_found',
         async (event: any, client: any) => {
           receivedContext = client._api.stripeContext;
@@ -276,7 +294,7 @@ describe('StripeEventRouter', () => {
       expect(originalContext?.toString()).to.equal('original_context_123');
 
       const sigHeader = generateHeader(noContextPayload);
-      await router.handle(noContextPayload, sigHeader);
+      await handler.handle(noContextPayload, sigHeader);
 
       expect(receivedContext).to.be.null;
       expect(normalizedInHandler).to.be.null;
@@ -299,7 +317,7 @@ describe('StripeEventRouter', () => {
       let unhandledClient: any = null;
       let unhandledInfo: any = null;
 
-      const router = stripe.router(
+      const handler = stripe.notificationHandler(
         DUMMY_WEBHOOK_SECRET,
         async (event: any, client: any, info: any) => {
           unhandledCalled = true;
@@ -310,7 +328,7 @@ describe('StripeEventRouter', () => {
       );
 
       const sigHeader = generateHeader(unknownEventPayload);
-      await router.handle(unknownEventPayload, sigHeader);
+      await handler.handle(unknownEventPayload, sigHeader);
 
       expect(unhandledCalled).to.be.true;
       expect(unhandledEvent.type).to.equal('llama.created');
@@ -323,7 +341,7 @@ describe('StripeEventRouter', () => {
       let unhandledEvent: any = null;
       let unhandledInfo: any = null;
 
-      const router = stripe.router(
+      const handler = stripe.notificationHandler(
         DUMMY_WEBHOOK_SECRET,
         async (event: any, client: any, info: any) => {
           unhandledCalled = true;
@@ -333,7 +351,7 @@ describe('StripeEventRouter', () => {
       );
 
       const sigHeader = generateHeader(v1BillingMeterPayload);
-      await router.handle(v1BillingMeterPayload, sigHeader);
+      await handler.handle(v1BillingMeterPayload, sigHeader);
 
       expect(unhandledCalled).to.be.true;
       expect(unhandledEvent.type).to.equal(
@@ -346,16 +364,19 @@ describe('StripeEventRouter', () => {
       let handlerCalled = false;
       let unhandledCalled = false;
 
-      const router = stripe.router(DUMMY_WEBHOOK_SECRET, async () => {
-        unhandledCalled = true;
-      });
+      const handler = stripe.notificationHandler(
+        DUMMY_WEBHOOK_SECRET,
+        async () => {
+          unhandledCalled = true;
+        }
+      );
 
-      router.on('v1.billing.meter.error_report_triggered', async () => {
+      handler.on('v1.billing.meter.error_report_triggered', async () => {
         handlerCalled = true;
       });
 
       const sigHeader = generateHeader(v1BillingMeterPayload);
-      await router.handle(v1BillingMeterPayload, sigHeader);
+      await handler.handle(v1BillingMeterPayload, sigHeader);
 
       expect(handlerCalled).to.be.true;
       expect(unhandledCalled).to.be.false;
@@ -368,12 +389,15 @@ describe('StripeEventRouter', () => {
         stripeContext: 'original_context_xyz',
       });
 
-      const router = stripe.router(DUMMY_WEBHOOK_SECRET, async () => {});
+      const handler = stripe.notificationHandler(
+        DUMMY_WEBHOOK_SECRET,
+        async () => {}
+      );
 
       let receivedClient: any = null;
       let receivedContext: any = null;
 
-      router.on(
+      handler.on(
         'v1.billing.meter.error_report_triggered',
         async (event: any, client: any) => {
           receivedClient = client;
@@ -382,7 +406,7 @@ describe('StripeEventRouter', () => {
       );
 
       const sigHeader = generateHeader(v1BillingMeterPayload);
-      await router.handle(v1BillingMeterPayload, sigHeader);
+      await handler.handle(v1BillingMeterPayload, sigHeader);
 
       // The handler should receive a new client instance (not the same reference)
       expect(receivedClient).to.not.equal(stripe);
@@ -400,7 +424,7 @@ describe('StripeEventRouter', () => {
       let errorThrown = false;
 
       try {
-        await eventRouter.handle(v1BillingMeterPayload, 'invalid_signature');
+        await eventHandler.handle(v1BillingMeterPayload, 'invalid_signature');
       } catch (err) {
         errorThrown = true;
         // @ts-expect-error
@@ -413,23 +437,29 @@ describe('StripeEventRouter', () => {
 
   describe('registeredEventTypes', () => {
     it('should return empty list when no handlers are registered', () => {
-      const types = eventRouter.registeredEventTypes();
+      const types = eventHandler.registeredEventTypes();
       expect(types).to.deep.equal([]);
     });
 
     it('should return single event type when one handler is registered', () => {
-      eventRouter.on('v1.billing.meter.error_report_triggered', async () => {});
+      eventHandler.on(
+        'v1.billing.meter.error_report_triggered',
+        async () => {}
+      );
 
-      const types = eventRouter.registeredEventTypes();
+      const types = eventHandler.registeredEventTypes();
       expect(types).to.deep.equal(['v1.billing.meter.error_report_triggered']);
     });
 
     it('should return multiple event types in alphabetical order', () => {
       // Register in non-alphabetical order
-      eventRouter.on('v1.billing.meter.no_meter_found', async () => {});
-      eventRouter.on('v1.billing.meter.error_report_triggered', async () => {});
+      eventHandler.on('v1.billing.meter.no_meter_found', async () => {});
+      eventHandler.on(
+        'v1.billing.meter.error_report_triggered',
+        async () => {}
+      );
 
-      const types = eventRouter.registeredEventTypes();
+      const types = eventHandler.registeredEventTypes();
       expect(types).to.deep.equal([
         'v1.billing.meter.error_report_triggered',
         'v1.billing.meter.no_meter_found',

@@ -720,16 +720,19 @@ declare module 'stripe' {
     ) => Stripe.V2.Core.EventNotification;
 
     /**
-     * TODO: docs
+     * Create a new EventNotificationHandler bound to this Stripe client. It will inherit all of the client's request configuration.
+     *
+     * @param webhookSecret - Your Webhook Signing Secret for this endpoint (e.g., `whsec_...`).
+     * @param fallbackCallback - A callback that will be invoked when no other callback is registered for a given event type.
      */
-    router: (
+    notificationHandler: (
       webhookSecret: string,
-      onUnhandledHandler: (
-        event: Stripe.UnhandledEventHandler,
+      fallbackCallback: (
+        event: Stripe.FallbackCallback,
         client: Stripe,
         details: Stripe.UnhandledNotificationDetails
       ) => Promise<void>
-    ) => Stripe.EventRouter;
+    ) => Stripe.EventNotificationHandler;
   }
 
   export default Stripe;

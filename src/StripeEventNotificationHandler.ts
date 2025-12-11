@@ -75,7 +75,7 @@ export class StripeEventHandler {
   constructor(
     private client: StripeObject,
     private webhookSecret: string,
-    private onUnhandledHandler: (
+    private fallbackCallback: (
       event: any,
       client: any,
       details: any
@@ -104,8 +104,8 @@ export class StripeEventHandler {
     return keys;
   }
 
-  // these types are duplicated in the manual types, so they're just here for internal use
   public async handle(
+    // these types are duplicated in the manual types, so they're just here for internal use
     rawBody: string | Buffer,
     signature: string | Buffer
   ): Promise<void> {
@@ -131,7 +131,7 @@ export class StripeEventHandler {
     if (handler) {
       return await handler(event, eventClient);
     } else {
-      return await this.onUnhandledHandler(event, eventClient, {
+      return await this.fallbackCallback(event, eventClient, {
         isKnownEventType: KNOWN_EVENT_TYPES.has(event.type),
       });
     }

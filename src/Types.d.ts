@@ -205,7 +205,7 @@ export type StripeObject = {
     cryptoProvider?: CryptoProvider,
     receivedAt?: number
   ) => any;
-  router: (webhookSecret: string, onUnhandledHandler: any) => any;
+  notificationHandler: (webhookSecret: string, fallbackCallback: any) => any;
 };
 export type RequestSender = {
   _rawRequest(
