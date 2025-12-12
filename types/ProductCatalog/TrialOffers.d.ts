@@ -35,7 +35,7 @@ declare module 'stripe' {
 
       namespace TrialOffer {
         interface Duration {
-          relative: Duration.Relative;
+          relative?: Duration.Relative;
 
           /**
            * The type of trial offer duration.
