@@ -2149,6 +2149,20 @@ declare module 'stripe' {
              * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
              */
             unit_label?: string;
+
+            /**
+             * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+             */
+            tax_details?: ProductData.TaxDetails;
+          }
+
+          namespace ProductData {
+            interface TaxDetails {
+              /**
+               * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+               */
+              tax_code: string;
+            }
           }
 
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
@@ -5218,6 +5232,20 @@ declare module 'stripe' {
              * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
              */
             unit_label?: string;
+
+            /**
+             * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+             */
+            tax_details?: ProductData.TaxDetails;
+          }
+
+          namespace ProductData {
+            interface TaxDetails {
+              /**
+               * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+               */
+              tax_code: string;
+            }
           }
 
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
@@ -5554,6 +5582,20 @@ declare module 'stripe' {
            * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
            */
           unit_label?: string;
+
+          /**
+           * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+           */
+          tax_details?: ProductData.TaxDetails;
+        }
+
+        namespace ProductData {
+          interface TaxDetails {
+            /**
+             * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+             */
+            tax_code: string;
+          }
         }
 
         type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
