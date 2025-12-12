@@ -88,6 +88,11 @@ declare module 'stripe' {
       subscription: string | Stripe.Subscription | null;
 
       /**
+       * The subtotal of the line item, in cents (or local equivalent), before any discounts or taxes.
+       */
+      subtotal: number;
+
+      /**
        * The tax information of the line item.
        */
       taxes: Array<InvoiceLineItem.Tax> | null;

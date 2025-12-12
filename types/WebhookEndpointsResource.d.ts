@@ -159,7 +159,8 @@ declare module 'stripe' {
         | '2025-09-30.clover'
         | '2025-10-29.clover'
         | '2025-11-17.clover'
-        | '2025-12-15.clover';
+        | '2025-12-15.clover'
+        | '2026-01-28.clover';
 
       type EnabledEvent =
         | '*'
