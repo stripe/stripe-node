@@ -14,7 +14,7 @@ declare module 'stripe' {
       active?: boolean;
 
       /**
-       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object. This Price will be set as the default price for this product.
+       * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object. This Price will be set as the default price for this product.
        */
       default_price_data?: ProductCreateParams.DefaultPriceData;
 
@@ -39,12 +39,12 @@ declare module 'stripe' {
       images?: Array<string>;
 
       /**
-       * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
+       * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://docs.stripe.com/payments/checkout/pricing-table).
        */
       marketing_features?: Array<ProductCreateParams.MarketingFeature>;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.MetadataParam;
 
@@ -67,9 +67,14 @@ declare module 'stripe' {
       statement_descriptor?: string;
 
       /**
-       * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+       * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
        */
       tax_code?: string;
+
+      /**
+       * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+       */
+      tax_details?: ProductCreateParams.TaxDetails;
 
       /**
        * The type of the product. Defaults to `service` if not explicitly specified, enabling use of this product with Subscriptions and Plans. Set this parameter to `good` to use this product with Orders and SKUs. On API versions before `2018-02-05`, this field defaults to `good` for compatibility reasons.
@@ -107,7 +112,7 @@ declare module 'stripe' {
         custom_unit_amount?: DefaultPriceData.CustomUnitAmount;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
 
@@ -117,7 +122,7 @@ declare module 'stripe' {
         recurring?: DefaultPriceData.Recurring;
 
         /**
-         * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
          */
         tax_behavior?: DefaultPriceData.TaxBehavior;
 
@@ -140,7 +145,7 @@ declare module 'stripe' {
           custom_unit_amount?: CurrencyOptions.CustomUnitAmount;
 
           /**
-           * Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
            */
           tax_behavior?: CurrencyOptions.TaxBehavior;
 
@@ -283,6 +288,13 @@ declare module 'stripe' {
         width: number;
       }
 
+      interface TaxDetails {
+        /**
+         * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+         */
+        tax_code: string;
+      }
+
       type Type = 'good' | 'service';
     }
 
@@ -300,7 +312,7 @@ declare module 'stripe' {
       active?: boolean;
 
       /**
-       * The ID of the [Price](https://stripe.com/docs/api/prices) object that is the default price for this product.
+       * The ID of the [Price](https://docs.stripe.com/api/prices) object that is the default price for this product.
        */
       default_price?: string;
 
@@ -320,14 +332,14 @@ declare module 'stripe' {
       images?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://stripe.com/docs/payments/checkout/pricing-table).
+       * A list of up to 15 marketing features for this product. These are displayed in [pricing tables](https://docs.stripe.com/payments/checkout/pricing-table).
        */
       marketing_features?: Stripe.Emptyable<
         Array<ProductUpdateParams.MarketingFeature>
       >;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
@@ -357,9 +369,14 @@ declare module 'stripe' {
       statement_descriptor?: string;
 
       /**
-       * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+       * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
        */
       tax_code?: Stripe.Emptyable<string>;
+
+      /**
+       * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+       */
+      tax_details?: Stripe.Emptyable<ProductUpdateParams.TaxDetails>;
 
       /**
        * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal. May only be set if `type=service`.
@@ -401,6 +418,13 @@ declare module 'stripe' {
          */
         width: number;
       }
+
+      interface TaxDetails {
+        /**
+         * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+         */
+        tax_code: string;
+      }
     }
 
     interface ProductListParams extends PaginationParams {
@@ -420,7 +444,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Only return products with the given IDs. Cannot be used with [starting_after](https://stripe.com/docs/api#list_products-starting_after) or [ending_before](https://stripe.com/docs/api#list_products-ending_before).
+       * Only return products with the given IDs. Cannot be used with [starting_after](https://api.stripe.com#list_products-starting_after) or [ending_before](https://api.stripe.com#list_products-ending_before).
        */
       ids?: Array<string>;
 
@@ -448,7 +472,7 @@ declare module 'stripe' {
 
     interface ProductCreateFeatureParams {
       /**
-       * The ID of the [Feature](https://stripe.com/docs/api/entitlements/feature) object attached to this product.
+       * The ID of the [Feature](https://docs.stripe.com/api/entitlements/feature) object attached to this product.
        */
       entitlement_feature: string;
 
@@ -476,7 +500,7 @@ declare module 'stripe' {
 
     interface ProductSearchParams {
       /**
-       * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for products](https://stripe.com/docs/search#query-fields-for-products).
+       * The search query string. See [search query language](https://docs.stripe.com/search#search-query-language) and the list of supported [query fields for products](https://docs.stripe.com/search#query-fields-for-products).
        */
       query: string;
 

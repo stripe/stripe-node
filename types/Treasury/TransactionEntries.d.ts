@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Treasury {
       /**
-       * TransactionEntries represent individual units of money movements within a single [Transaction](https://stripe.com/docs/api#transactions).
+       * TransactionEntries represent individual units of money movements within a single [Transaction](https://api.stripe.com#transactions).
        */
       interface TransactionEntry {
         /**
@@ -93,33 +93,33 @@ declare module 'stripe' {
 
         interface FlowDetails {
           /**
-           * You can reverse some [ReceivedCredits](https://stripe.com/docs/api#received_credits) depending on their network and source flow. Reversing a ReceivedCredit leads to the creation of a new object known as a CreditReversal.
+           * You can reverse some [ReceivedCredits](https://api.stripe.com#received_credits) depending on their network and source flow. Reversing a ReceivedCredit leads to the creation of a new object known as a CreditReversal.
            */
           credit_reversal?: Stripe.Treasury.CreditReversal;
 
           /**
-           * You can reverse some [ReceivedDebits](https://stripe.com/docs/api#received_debits) depending on their network and source flow. Reversing a ReceivedDebit leads to the creation of a new object known as a DebitReversal.
+           * You can reverse some [ReceivedDebits](https://api.stripe.com#received_debits) depending on their network and source flow. Reversing a ReceivedDebit leads to the creation of a new object known as a DebitReversal.
            */
           debit_reversal?: Stripe.Treasury.DebitReversal;
 
           /**
-           * Use [InboundTransfers](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/into/inbound-transfers) to add funds to your [FinancialAccount](https://stripe.com/docs/api#financial_accounts) via a PaymentMethod that is owned by you. The funds will be transferred via an ACH debit.
+           * Use [InboundTransfers](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/into/inbound-transfers) to add funds to your [FinancialAccount](https://api.stripe.com#financial_accounts) via a PaymentMethod that is owned by you. The funds will be transferred via an ACH debit.
            *
            * Related guide: [Moving money with Treasury using InboundTransfer objects](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/into/inbound-transfers)
            */
           inbound_transfer?: Stripe.Treasury.InboundTransfer;
 
           /**
-           * When an [issued card](https://stripe.com/docs/issuing) is used to make a purchase, an Issuing `Authorization`
-           * object is created. [Authorizations](https://stripe.com/docs/issuing/purchases/authorizations) must be approved for the
+           * When an [issued card](https://docs.stripe.com/issuing) is used to make a purchase, an Issuing `Authorization`
+           * object is created. [Authorizations](https://docs.stripe.com/issuing/purchases/authorizations) must be approved for the
            * purchase to be completed successfully.
            *
-           * Related guide: [Issued card authorizations](https://stripe.com/docs/issuing/purchases/authorizations)
+           * Related guide: [Issued card authorizations](https://docs.stripe.com/issuing/purchases/authorizations)
            */
           issuing_authorization?: Stripe.Issuing.Authorization;
 
           /**
-           * Use [OutboundPayments](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/out-of/outbound-payments) to send funds to another party's external bank account or [FinancialAccount](https://stripe.com/docs/api#financial_accounts). To send money to an account belonging to the same user, use an [OutboundTransfer](https://stripe.com/docs/api#outbound_transfers).
+           * Use [OutboundPayments](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/out-of/outbound-payments) to send funds to another party's external bank account or [FinancialAccount](https://api.stripe.com#financial_accounts). To send money to an account belonging to the same user, use an [OutboundTransfer](https://api.stripe.com#outbound_transfers).
            *
            * Simulate OutboundPayment state changes with the `/v1/test_helpers/treasury/outbound_payments` endpoints. These methods can only be called on test mode objects.
            *
@@ -128,7 +128,7 @@ declare module 'stripe' {
           outbound_payment?: Stripe.Treasury.OutboundPayment;
 
           /**
-           * Use [OutboundTransfers](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/out-of/outbound-transfers) to transfer funds from a [FinancialAccount](https://stripe.com/docs/api#financial_accounts) to a PaymentMethod belonging to the same entity. To send funds to a different party, use [OutboundPayments](https://stripe.com/docs/api#outbound_payments) instead. You can send funds over ACH rails or through a domestic wire transfer to a user's own external bank account.
+           * Use [OutboundTransfers](https://docs.stripe.com/docs/treasury/moving-money/financial-accounts/out-of/outbound-transfers) to transfer funds from a [FinancialAccount](https://api.stripe.com#financial_accounts) to a PaymentMethod belonging to the same entity. To send funds to a different party, use [OutboundPayments](https://api.stripe.com#outbound_payments) instead. You can send funds over ACH rails or through a domestic wire transfer to a user's own external bank account.
            *
            * Simulate OutboundTransfer state changes with the `/v1/test_helpers/treasury/outbound_transfers` endpoints. These methods can only be called on test mode objects.
            *
@@ -137,12 +137,12 @@ declare module 'stripe' {
           outbound_transfer?: Stripe.Treasury.OutboundTransfer;
 
           /**
-           * ReceivedCredits represent funds sent to a [FinancialAccount](https://stripe.com/docs/api#financial_accounts) (for example, via ACH or wire). These money movements are not initiated from the FinancialAccount.
+           * ReceivedCredits represent funds sent to a [FinancialAccount](https://api.stripe.com#financial_accounts) (for example, via ACH or wire). These money movements are not initiated from the FinancialAccount.
            */
           received_credit?: Stripe.Treasury.ReceivedCredit;
 
           /**
-           * ReceivedDebits represent funds pulled from a [FinancialAccount](https://stripe.com/docs/api#financial_accounts). These are not initiated from the FinancialAccount.
+           * ReceivedDebits represent funds pulled from a [FinancialAccount](https://api.stripe.com#financial_accounts). These are not initiated from the FinancialAccount.
            */
           received_debit?: Stripe.Treasury.ReceivedDebit;
 

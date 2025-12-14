@@ -23,7 +23,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * The Stripe account ID that the mandates are intended for. Learn more about the [use case for connected accounts payments](https://stripe.com/docs/payments/connected-accounts).
+       * The Stripe account ID that the mandates are intended for. Learn more about the [use case for connected accounts payments](https://docs.stripe.com/payments/connected-accounts).
        */
       on_behalf_of?: string;
     }

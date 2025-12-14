@@ -26,13 +26,13 @@ declare module 'stripe' {
      * Invoices are statements of amounts owed by a customer, and are either
      * generated one-off, or generated periodically from a subscription.
      *
-     * They contain [invoice items](https://stripe.com/docs/api#invoiceitems), and proration adjustments
+     * They contain [invoice items](https://api.stripe.com#invoiceitems), and proration adjustments
      * that may be caused by subscription upgrades/downgrades (if necessary).
      *
      * If your invoice is configured to be billed through automatic charges,
      * Stripe automatically finalizes your invoice and attempts payment. Note
      * that finalizing the invoice,
-     * [when automatic](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection), does
+     * [when automatic](https://docs.stripe.com/invoicing/integration/automatic-advancement-collection), does
      * not happen immediately as the invoice is created. Stripe waits
      * until one hour after the last webhook was successfully sent (or the last
      * webhook timed out after failing). If you (and the platforms you may have
@@ -52,9 +52,9 @@ declare module 'stripe' {
      * customer's credit balance which is applied to the next invoice.
      *
      * More details on the customer's credit balance are
-     * [here](https://stripe.com/docs/billing/customer/balance).
+     * [here](https://docs.stripe.com/billing/customer/balance).
      *
-     * Related guide: [Send invoices to customers](https://stripe.com/docs/billing/invoices/sending)
+     * Related guide: [Send invoices to customers](https://docs.stripe.com/billing/invoices/sending)
      */
     interface Invoice {
       /**
@@ -134,7 +134,7 @@ declare module 'stripe' {
       attempted: boolean;
 
       /**
-       * Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
+       * Controls whether Stripe performs [automatic collection](https://docs.stripe.com/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
        */
       auto_advance?: boolean;
 
@@ -184,14 +184,14 @@ declare module 'stripe' {
       custom_fields: Array<Invoice.CustomField> | null;
 
       /**
-       * The ID of the customer who will be billed.
+       * The ID of the customer to bill.
        */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
-       * The ID of the account who will be billed.
+       * The ID of the account representing the customer to bill.
        */
-      customer_account?: string | null;
+      customer_account: string | null;
 
       /**
        * The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
@@ -284,7 +284,7 @@ declare module 'stripe' {
       footer: string | null;
 
       /**
-       * Details of the invoice that was cloned. See the [revision documentation](https://stripe.com/docs/invoicing/invoice-revisions) for more details.
+       * Details of the invoice that was cloned. See the [revision documentation](https://docs.stripe.com/invoicing/invoice-revisions) for more details.
        */
       from_invoice: Invoice.FromInvoice | null;
 
@@ -321,7 +321,7 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata | null;
 
@@ -336,7 +336,7 @@ declare module 'stripe' {
       number: string | null;
 
       /**
-       * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+       * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://docs.stripe.com/billing/invoices/connect) documentation for details.
        */
       on_behalf_of: string | Stripe.Account | null;
 
@@ -403,7 +403,7 @@ declare module 'stripe' {
       statement_descriptor: string | null;
 
       /**
-       * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
+       * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://docs.stripe.com/billing/invoices/workflow#workflow-overview)
        */
       status: Invoice.Status | null;
 
@@ -459,7 +459,7 @@ declare module 'stripe' {
       total_taxes: Array<Invoice.TotalTax> | null;
 
       /**
-       * Invoices are automatically paid or sent 1 hour after webhooks are delivered, or until all webhook delivery attempts have [been exhausted](https://stripe.com/docs/billing/webhooks#understand). This field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had no webhooks to deliver, this will be set while the invoice is being created.
+       * Invoices are automatically paid or sent 1 hour after webhooks are delivered, or until all webhook delivery attempts have [been exhausted](https://docs.stripe.com/billing/webhooks#understand). This field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had no webhooks to deliver, this will be set while the invoice is being created.
        */
       webhooks_delivered_at: number | null;
     }
@@ -518,7 +518,7 @@ declare module 'stripe' {
         disabled_reason: AutomaticTax.DisabledReason | null;
 
         /**
-         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
+         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://docs.stripe.com/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
          */
         enabled: boolean;
 
@@ -782,7 +782,7 @@ declare module 'stripe' {
 
       interface LastFinalizationError {
         /**
-         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines) if they provide one.
+         * For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://docs.stripe.com/declines#retrying-issuer-declines) if they provide one.
          */
         advice_code?: string;
 
@@ -792,17 +792,17 @@ declare module 'stripe' {
         charge?: string;
 
         /**
-         * For some errors that could be handled programmatically, a short string indicating the [error code](https://stripe.com/docs/error-codes) reported.
+         * For some errors that could be handled programmatically, a short string indicating the [error code](https://docs.stripe.com/error-codes) reported.
          */
         code?: LastFinalizationError.Code;
 
         /**
-         * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://stripe.com/docs/declines#issuer-declines) if they provide one.
+         * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://docs.stripe.com/declines#issuer-declines) if they provide one.
          */
         decline_code?: string;
 
         /**
-         * A URL to more information about the [error code](https://stripe.com/docs/error-codes) reported.
+         * A URL to more information about the [error code](https://docs.stripe.com/error-codes) reported.
          */
         doc_url?: string;
 
@@ -833,20 +833,20 @@ declare module 'stripe' {
          * see the history of payment attempts for a particular session.
          *
          * A PaymentIntent transitions through
-         * [multiple statuses](https://stripe.com/docs/payments/intents#intent-statuses)
+         * [multiple statuses](https://docs.stripe.com/payments/paymentintents/lifecycle)
          * throughout its lifetime as it interfaces with Stripe.js to perform
          * authentication flows and ultimately creates at most one successful charge.
          *
-         * Related guide: [Payment Intents API](https://stripe.com/docs/payments/payment-intents)
+         * Related guide: [Payment Intents API](https://docs.stripe.com/payments/payment-intents)
          */
         payment_intent?: Stripe.PaymentIntent;
 
         /**
          * PaymentMethod objects represent your customer's payment instruments.
-         * You can use them with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or save them to
+         * You can use them with [PaymentIntents](https://docs.stripe.com/payments/payment-intents) to collect payments or save them to
          * Customer objects to store instrument details for future payments.
          *
-         * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
+         * Related guides: [Payment Methods](https://docs.stripe.com/payments/payment-methods) and [More Payment Scenarios](https://docs.stripe.com/payments/more-payment-scenarios).
          */
         payment_method?: Stripe.PaymentMethod;
 
@@ -863,7 +863,7 @@ declare module 'stripe' {
         /**
          * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
          * For example, you can use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
-         * Later, you can use [PaymentIntents](https://stripe.com/docs/api#payment_intents) to drive the payment flow.
+         * Later, you can use [PaymentIntents](https://api.stripe.com#payment_intents) to drive the payment flow.
          *
          * Create a SetupIntent when you're ready to collect your customer's payment credentials.
          * Don't maintain long-lived, unconfirmed SetupIntents because they might not be valid.
@@ -874,9 +874,9 @@ declare module 'stripe' {
          * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) might need to be run through
          * [Strong Customer Authentication](https://docs.stripe.com/strong-customer-authentication) during payment method collection
          * to streamline later [off-session payments](https://docs.stripe.com/payments/setup-intents).
-         * If you use the SetupIntent with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer),
+         * If you use the SetupIntent with a [Customer](https://api.stripe.com#setup_intent_object-customer),
          * it automatically attaches the resulting payment method to that Customer after successful setup.
-         * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
+         * We recommend using SetupIntents or [setup_future_usage](https://api.stripe.com#payment_intent_object-setup_future_usage) on
          * PaymentIntents to save payment methods to prevent saving invalid or unoptimized payment methods.
          *
          * By using SetupIntents, you can reduce friction for your customers, even as regulations change over time.
@@ -901,6 +901,7 @@ declare module 'stripe' {
           | 'account_information_mismatch'
           | 'account_invalid'
           | 'account_number_invalid'
+          | 'account_token_required_for_v2_account'
           | 'acss_debit_session_incomplete'
           | 'alipay_upgrade_required'
           | 'amount_too_large'
@@ -1101,6 +1102,11 @@ declare module 'stripe' {
         quote_details: Parent.QuoteDetails | null;
 
         /**
+         * Details about the schedule that generated this invoice
+         */
+        schedule_details?: Parent.ScheduleDetails | null;
+
+        /**
          * Details about the subscription that generated this invoice
          */
         subscription_details: Parent.SubscriptionDetails | null;
@@ -1109,11 +1115,6 @@ declare module 'stripe' {
          * The type of parent that generated this invoice
          */
         type: Parent.Type;
-
-        /**
-         * Details about the schedule that generated this invoice
-         */
-        schedule_details?: Parent.ScheduleDetails | null;
       }
 
       namespace Parent {
@@ -1140,13 +1141,13 @@ declare module 'stripe' {
 
         interface SubscriptionDetails {
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) defined as subscription metadata when an invoice is created. Becomes an immutable snapshot of the subscription metadata at the time of invoice finalization.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) defined as subscription metadata when an invoice is created. Becomes an immutable snapshot of the subscription metadata at the time of invoice finalization.
            *  *Note: This attribute is populated only for invoices created on or after June 29, 2023.*
            */
           metadata: Stripe.Metadata | null;
 
           /**
-           * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://stripe.com/docs/billing/subscriptions/pause-payment).
+           * If specified, payment collection for this subscription will be paused. Note that the subscription status will be unchanged and will not be updated to `paused`. Learn more about [pausing collection](https://docs.stripe.com/billing/subscriptions/pause-payment).
            */
           pause_collection?: SubscriptionDetails.PauseCollection | null;
 
@@ -1236,6 +1237,11 @@ declare module 'stripe' {
           konbini: PaymentMethodOptions.Konbini | null;
 
           /**
+           * If paying by `payto`, this sub-hash contains details about the PayTo payment method options to pass to the invoice's PaymentIntent.
+           */
+          payto?: PaymentMethodOptions.Payto | null;
+
+          /**
            * If paying by `pix`, this sub-hash contains details about the Pix payment method options to pass to the invoice's PaymentIntent.
            */
           pix?: PaymentMethodOptions.Pix | null;
@@ -1296,7 +1302,7 @@ declare module 'stripe' {
             installments?: Card.Installments;
 
             /**
-             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://docs.stripe.com/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://docs.stripe.com/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure: Card.RequestThreeDSecure | null;
           }
@@ -1348,6 +1354,46 @@ declare module 'stripe' {
           interface IdBankTransfer {}
 
           interface Konbini {}
+
+          interface Payto {
+            mandate_options?: Payto.MandateOptions;
+          }
+
+          namespace Payto {
+            interface MandateOptions {
+              /**
+               * The maximum amount that can be collected in a single invoice. If you don't specify a maximum, then there is no limit.
+               */
+              amount: number | null;
+
+              /**
+               * Only `maximum` is supported.
+               */
+              amount_type: MandateOptions.AmountType | null;
+
+              /**
+               * The purpose for which payments are made. Has a default value based on your merchant category code.
+               */
+              purpose: MandateOptions.Purpose | null;
+            }
+
+            namespace MandateOptions {
+              type AmountType = 'fixed' | 'maximum';
+
+              type Purpose =
+                | 'dependant_support'
+                | 'government'
+                | 'loan'
+                | 'mortgage'
+                | 'other'
+                | 'pension'
+                | 'personal'
+                | 'retail'
+                | 'salary'
+                | 'tax'
+                | 'utility';
+            }
+          }
 
           interface Pix {
             /**
@@ -1486,6 +1532,7 @@ declare module 'stripe' {
           | 'payco'
           | 'paynow'
           | 'paypal'
+          | 'payto'
           | 'pix'
           | 'promptpay'
           | 'revolut_pay'
@@ -1792,6 +1839,9 @@ declare module 'stripe' {
         type TaxBehavior = 'exclusive' | 'inclusive';
 
         interface TaxRateDetails {
+          /**
+           * ID of the tax rate
+           */
           tax_rate: string;
         }
       }

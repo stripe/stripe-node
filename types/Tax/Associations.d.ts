@@ -18,12 +18,12 @@ declare module 'stripe' {
         object: 'tax.association';
 
         /**
-         * The [Tax Calculation](https://stripe.com/docs/api/tax/calculations/object) that was included in PaymentIntent.
+         * The [Tax Calculation](https://docs.stripe.com/api/tax/calculations/object) that was included in PaymentIntent.
          */
         calculation: string;
 
         /**
-         * The [PaymentIntent](https://stripe.com/docs/api/payment_intents/object) that this Tax Association is tracking.
+         * The [PaymentIntent](https://docs.stripe.com/api/payment_intents/object) that this Tax Association is tracking.
          */
         payment_intent: string;
 
@@ -55,7 +55,7 @@ declare module 'stripe' {
         namespace TaxTransactionAttempt {
           interface Committed {
             /**
-             * The [Tax Transaction](https://stripe.com/docs/api/tax/transaction/object)
+             * The [Tax Transaction](https://docs.stripe.com/api/tax/transaction/object)
              */
             transaction: string;
           }

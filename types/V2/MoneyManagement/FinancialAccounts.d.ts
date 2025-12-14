@@ -44,6 +44,12 @@ declare module 'stripe' {
           livemode: boolean;
 
           /**
+           * If this is a managed FinancialAccount, `managed_by` indicates the product that created and manages this FinancialAccount. For managed FinancialAccounts,
+           * creation of money management resources can only be orchestrated by the managing product.
+           */
+          managed_by?: FinancialAccount.ManagedBy;
+
+          /**
            * Metadata associated with the FinancialAccount.
            */
           metadata?: Stripe.Metadata;
@@ -52,6 +58,11 @@ declare module 'stripe' {
            * If this is a `other` FinancialAccount, this hash indicates what the actual type is. Upgrade your API version to see it reflected in `type`.
            */
           other?: FinancialAccount.Other;
+
+          /**
+           * If this is a `payments` FinancialAccount, this hash include details specific to `payments` FinancialAccount.
+           */
+          payments?: FinancialAccount.Payments;
 
           /**
            * Closed Enum. An enum representing the status of the FinancialAccount. This indicates whether or not the FinancialAccount can be used for any money movement flows.
@@ -134,11 +145,30 @@ declare module 'stripe' {
             }
           }
 
+          interface ManagedBy {
+            /**
+             * Enum describing the Stripe product that is managing this FinancialAccount.
+             */
+            type: 'multiprocessor_settlement';
+          }
+
           interface Other {
             /**
              * The type of the FinancialAccount, represented as a string. Upgrade your API version to see the type reflected in `financial_account.type`.
              */
             type: string;
+          }
+
+          interface Payments {
+            /**
+             * The currency that non-settlement currency payments will be converted to.
+             */
+            default_currency: string;
+
+            /**
+             * Settlement currencies enabled for this FinancialAccount. Payments in other currencies will be automatically converted to `default_currency`.
+             */
+            settlement_currencies: Array<string>;
           }
 
           type Status = 'closed' | 'open' | 'pending';
@@ -178,7 +208,7 @@ declare module 'stripe' {
             holds_currencies: Array<string>;
           }
 
-          type Type = 'other' | 'storage';
+          type Type = 'other' | 'payments' | 'storage';
         }
       }
     }

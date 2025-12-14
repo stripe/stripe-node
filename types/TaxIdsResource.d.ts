@@ -27,7 +27,7 @@ declare module 'stripe' {
     namespace TaxIdCreateParams {
       interface Owner {
         /**
-         * Account the tax ID belongs to. Required when `type=account`
+         * Connected Account the tax ID belongs to. Required when `type=account`
          */
         account?: string;
 
@@ -37,7 +37,7 @@ declare module 'stripe' {
         customer?: string;
 
         /**
-         * v2 Account the tax ID belongs to. Can be used in place of `customer` when `type=customer`
+         * ID of the Account representing the customer that the tax ID belongs to. Can be used in place of `customer` when `type=customer`
          */
         customer_account?: string;
 
@@ -186,7 +186,7 @@ declare module 'stripe' {
     namespace TaxIdListParams {
       interface Owner {
         /**
-         * Account the tax ID belongs to. Required when `type=account`
+         * Connected Account the tax ID belongs to. Required when `type=account`
          */
         account?: string;
 
@@ -196,7 +196,7 @@ declare module 'stripe' {
         customer?: string;
 
         /**
-         * v2 Account the tax ID belongs to. Can be used in place of `customer` when `type=customer`
+         * ID of the Account representing the customer that the tax ID belongs to. Can be used in place of `customer` when `type=customer`
          */
         customer_account?: string;
 

@@ -32,7 +32,7 @@ declare module 'stripe' {
         /**
          * Indicates that you intend to make future payments with this ConfirmationToken's payment method.
          *
-         * The presence of this property will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete.
+         * The presence of this property will [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete.
          */
         setup_future_usage?: ConfirmationTokenCreateParams.SetupFutureUsage;
 
@@ -200,7 +200,7 @@ declare module 'stripe' {
           mb_way?: PaymentMethodData.MbWay;
 
           /**
-           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
           metadata?: Stripe.MetadataParam;
 
@@ -280,7 +280,7 @@ declare module 'stripe' {
           qris?: PaymentMethodData.Qris;
 
           /**
-           * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+           * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
            */
           radar_options?: PaymentMethodData.RadarOptions;
 
@@ -568,6 +568,7 @@ declare module 'stripe' {
               | 'handelsbanken'
               | 'ing'
               | 'knab'
+              | 'mollie'
               | 'moneyou'
               | 'n26'
               | 'nn'
@@ -736,7 +737,7 @@ declare module 'stripe' {
 
           interface RadarOptions {
             /**
-             * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+             * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
              */
             session?: string;
           }

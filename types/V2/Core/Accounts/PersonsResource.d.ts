@@ -140,7 +140,7 @@ declare module 'stripe' {
               state?: string;
 
               /**
-               * Town or cho-me.
+               * Town or district.
                */
               town?: string;
             }
@@ -229,7 +229,7 @@ declare module 'stripe' {
               state?: string;
 
               /**
-               * Town or cho-me.
+               * Town or district.
                */
               town?: string;
             }
@@ -384,36 +384,81 @@ declare module 'stripe' {
               type Type =
                 | 'ae_eid'
                 | 'ao_nif'
+                | 'ar_cuil'
                 | 'ar_dni'
+                | 'at_stn'
                 | 'az_tin'
                 | 'bd_brc'
                 | 'bd_etin'
                 | 'bd_nid'
+                | 'be_nrn'
+                | 'bg_ucn'
+                | 'bn_nric'
                 | 'br_cpf'
+                | 'ca_sin'
+                | 'ch_oasi'
+                | 'cl_rut'
+                | 'cn_pp'
+                | 'co_nuip'
+                | 'cr_ci'
                 | 'cr_cpf'
                 | 'cr_dimex'
                 | 'cr_nite'
+                | 'cy_tic'
+                | 'cz_rc'
                 | 'de_stn'
+                | 'dk_cpr'
+                | 'do_cie'
                 | 'do_rcn'
+                | 'ec_ci'
+                | 'ee_ik'
+                | 'es_nif'
+                | 'fi_hetu'
+                | 'fr_nir'
+                | 'gb_nino'
+                | 'gr_afm'
                 | 'gt_nit'
                 | 'hk_id'
+                | 'hr_oib'
+                | 'hu_ad'
+                | 'id_nik'
+                | 'ie_ppsn'
+                | 'is_kt'
+                | 'it_cf'
+                | 'jp_inc'
+                | 'ke_pin'
                 | 'kz_iin'
+                | 'li_peid'
+                | 'lt_ak'
+                | 'lu_nif'
+                | 'lv_pk'
                 | 'mx_rfc'
                 | 'my_nric'
                 | 'mz_nuit'
+                | 'ng_nin'
                 | 'nl_bsn'
+                | 'no_nin'
+                | 'nz_ird'
                 | 'pe_dni'
                 | 'pk_cnic'
                 | 'pk_snic'
+                | 'pl_pesel'
+                | 'pt_nif'
+                | 'ro_cnp'
                 | 'sa_tin'
+                | 'se_pin'
                 | 'sg_fin'
                 | 'sg_nric'
+                | 'sk_dic'
                 | 'th_lc'
                 | 'th_pin'
+                | 'tr_tin'
                 | 'us_itin'
                 | 'us_itin_last_4'
                 | 'us_ssn'
-                | 'us_ssn_last_4';
+                | 'us_ssn_last_4'
+                | 'uy_dni'
+                | 'za_id';
             }
 
             type LegalGender = 'female' | 'male';
@@ -422,7 +467,7 @@ declare module 'stripe' {
 
             interface Relationship {
               /**
-               * Whether the individual is an authorizer of the Account's legal entity.
+               * Whether the individual is an authorizer of the Account's identity.
                */
               authorizer?: boolean;
 
@@ -507,7 +552,7 @@ declare module 'stripe' {
                 state?: string;
 
                 /**
-                 * Town or cho-me.
+                 * Town or district.
                  */
                 town?: string;
               }
@@ -544,7 +589,7 @@ declare module 'stripe' {
                 state?: string;
 
                 /**
-                 * Town or cho-me.
+                 * Town or district.
                  */
                 town?: string;
               }
@@ -734,7 +779,7 @@ declare module 'stripe' {
               state?: string;
 
               /**
-               * Town or cho-me.
+               * Town or district.
                */
               town?: string;
             }
@@ -941,36 +986,81 @@ declare module 'stripe' {
               type Type =
                 | 'ae_eid'
                 | 'ao_nif'
+                | 'ar_cuil'
                 | 'ar_dni'
+                | 'at_stn'
                 | 'az_tin'
                 | 'bd_brc'
                 | 'bd_etin'
                 | 'bd_nid'
+                | 'be_nrn'
+                | 'bg_ucn'
+                | 'bn_nric'
                 | 'br_cpf'
+                | 'ca_sin'
+                | 'ch_oasi'
+                | 'cl_rut'
+                | 'cn_pp'
+                | 'co_nuip'
+                | 'cr_ci'
                 | 'cr_cpf'
                 | 'cr_dimex'
                 | 'cr_nite'
+                | 'cy_tic'
+                | 'cz_rc'
                 | 'de_stn'
+                | 'dk_cpr'
+                | 'do_cie'
                 | 'do_rcn'
+                | 'ec_ci'
+                | 'ee_ik'
+                | 'es_nif'
+                | 'fi_hetu'
+                | 'fr_nir'
+                | 'gb_nino'
+                | 'gr_afm'
                 | 'gt_nit'
                 | 'hk_id'
+                | 'hr_oib'
+                | 'hu_ad'
+                | 'id_nik'
+                | 'ie_ppsn'
+                | 'is_kt'
+                | 'it_cf'
+                | 'jp_inc'
+                | 'ke_pin'
                 | 'kz_iin'
+                | 'li_peid'
+                | 'lt_ak'
+                | 'lu_nif'
+                | 'lv_pk'
                 | 'mx_rfc'
                 | 'my_nric'
                 | 'mz_nuit'
+                | 'ng_nin'
                 | 'nl_bsn'
+                | 'no_nin'
+                | 'nz_ird'
                 | 'pe_dni'
                 | 'pk_cnic'
                 | 'pk_snic'
+                | 'pl_pesel'
+                | 'pt_nif'
+                | 'ro_cnp'
                 | 'sa_tin'
+                | 'se_pin'
                 | 'sg_fin'
                 | 'sg_nric'
+                | 'sk_dic'
                 | 'th_lc'
                 | 'th_pin'
+                | 'tr_tin'
                 | 'us_itin'
                 | 'us_itin_last_4'
                 | 'us_ssn'
-                | 'us_ssn_last_4';
+                | 'us_ssn_last_4'
+                | 'uy_dni'
+                | 'za_id';
             }
 
             type LegalGender = 'female' | 'male';
@@ -979,7 +1069,7 @@ declare module 'stripe' {
 
             interface Relationship {
               /**
-               * Whether the individual is an authorizer of the Account's legal entity.
+               * Whether the individual is an authorizer of the Account's identity.
                */
               authorizer?: boolean;
 
@@ -1093,7 +1183,7 @@ declare module 'stripe' {
         namespace Accounts {
           class PersonsResource {
             /**
-             * Create a Person associated with an Account.
+             * Create a Person. Adds an individual to an Account's identity. You can set relationship attributes and identity information at creation.
              */
             create(
               id: string,
@@ -1131,7 +1221,7 @@ declare module 'stripe' {
             ): Promise<Stripe.Response<Stripe.V2.Core.AccountPerson>>;
 
             /**
-             * Returns a list of Persons associated with an Account.
+             * Returns a paginated list of Persons associated with an Account.
              */
             list(
               id: string,

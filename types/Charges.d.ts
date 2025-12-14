@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     /**
      * The `Charge` object represents a single attempt to move money into your Stripe account.
-     * PaymentIntent confirmation is the most common way to create Charges, but [Account Debits](https://stripe.com/docs/connect/account-debits) may also create Charges.
+     * PaymentIntent confirmation is the most common way to create Charges, but [Account Debits](https://docs.stripe.com/connect/account-debits) may also create Charges.
      * Some legacy payment flows create Charges directly, which is not recommended for new integrations.
      */
     interface Charge {
@@ -24,7 +24,7 @@ declare module 'stripe' {
       allocated_funds?: Stripe.TransitBalance;
 
       /**
-       * Amount intended to be collected by this payment. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
+       * Amount intended to be collected by this payment. A positive integer representing how much to charge in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://docs.stripe.com/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
        */
       amount: number;
 
@@ -44,12 +44,12 @@ declare module 'stripe' {
       application: string | Stripe.Application | null;
 
       /**
-       * The application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collect-fees) for details.
+       * The application fee (if any) for the charge. [See the Connect documentation](https://docs.stripe.com/connect/direct-charges#collect-fees) for details.
        */
       application_fee: string | Stripe.ApplicationFee | null;
 
       /**
-       * The amount of the application fee (if any) requested for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collect-fees) for details.
+       * The amount of the application fee (if any) requested for the charge. [See the Connect documentation](https://docs.stripe.com/connect/direct-charges#collect-fees) for details.
        */
       application_fee_amount: number | null;
 
@@ -106,7 +106,7 @@ declare module 'stripe' {
       failure_balance_transaction: string | Stripe.BalanceTransaction | null;
 
       /**
-       * Error code explaining reason for charge failure if available (see [the errors section](https://stripe.com/docs/error-codes) for a list of codes).
+       * Error code explaining reason for charge failure if available (see [the errors section](https://docs.stripe.com/error-codes) for a list of codes).
        */
       failure_code: string | null;
 
@@ -128,17 +128,17 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata;
 
       /**
-       * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers) for details.
+       * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://docs.stripe.com/connect/separate-charges-and-transfers) for details.
        */
       on_behalf_of: string | Stripe.Account | null;
 
       /**
-       * Details about whether the payment was accepted, and why. See [understanding declines](https://stripe.com/docs/declines) for details.
+       * Details about whether the payment was accepted, and why. See [understanding declines](https://docs.stripe.com/declines) for details.
        */
       outcome: Charge.Outcome | null;
 
@@ -165,7 +165,7 @@ declare module 'stripe' {
       presentment_details?: Charge.PresentmentDetails;
 
       /**
-       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
        */
       radar_options?: Charge.RadarOptions;
 
@@ -237,12 +237,12 @@ declare module 'stripe' {
       transfer?: string | Stripe.Transfer;
 
       /**
-       * An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
+       * An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://docs.stripe.com/connect/destination-charges) for details.
        */
       transfer_data: Charge.TransferData | null;
 
       /**
-       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/separate-charges-and-transfers#transfer-options) for details.
+       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://docs.stripe.com/connect/separate-charges-and-transfers#transfer-options) for details.
        */
       transfer_group: string | null;
     }
@@ -319,7 +319,7 @@ declare module 'stripe' {
 
       interface Outcome {
         /**
-         * An enumerated value providing a more detailed explanation on [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines).
+         * An enumerated value providing a more detailed explanation on [how to proceed with an error](https://docs.stripe.com/declines#retrying-issuer-declines).
          */
         advice_code: Outcome.AdviceCode | null;
 
@@ -334,12 +334,12 @@ declare module 'stripe' {
         network_decline_code: string | null;
 
         /**
-         * Possible values are `approved_by_network`, `declined_by_network`, `not_sent_to_network`, and `reversed_after_approval`. The value `reversed_after_approval` indicates the payment was [blocked by Stripe](https://stripe.com/docs/declines#blocked-payments) after bank authorization, and may temporarily appear as "pending" on a cardholder's statement.
+         * Possible values are `approved_by_network`, `declined_by_network`, `not_sent_to_network`, and `reversed_after_approval`. The value `reversed_after_approval` indicates the payment was [blocked by Stripe](https://docs.stripe.com/declines#blocked-payments) after bank authorization, and may temporarily appear as "pending" on a cardholder's statement.
          */
         network_status: string | null;
 
         /**
-         * An enumerated value providing a more detailed explanation of the outcome's `type`. Charges blocked by Radar's default block rule have the value `highest_risk_level`. Charges placed in review by Radar's default review rule have the value `elevated_risk_level`. Charges blocked because the payment is unlikely to be authorized have the value `low_probability_of_authorization`. Charges authorized, blocked, or placed in review by custom rules have the value `rule`. See [understanding declines](https://stripe.com/docs/declines) for more details.
+         * An enumerated value providing a more detailed explanation of the outcome's `type`. Charges blocked by Radar's default block rule have the value `highest_risk_level`. Charges placed in review by Radar's default review rule have the value `elevated_risk_level`. Charges blocked because the payment is unlikely to be authorized have the value `low_probability_of_authorization`. Charges authorized, blocked, or placed in review by custom rules have the value `rule`. See [understanding declines](https://docs.stripe.com/declines) for more details.
          */
         reason: string | null;
 
@@ -364,7 +364,7 @@ declare module 'stripe' {
         seller_message: string | null;
 
         /**
-         * Possible values are `authorized`, `manual_review`, `issuer_declined`, `blocked`, and `invalid`. See [understanding declines](https://stripe.com/docs/declines) and [Radar reviews](https://stripe.com/docs/radar/reviews) for details.
+         * Possible values are `authorized`, `manual_review`, `issuer_declined`, `blocked`, and `invalid`. See [understanding declines](https://docs.stripe.com/declines) and [Radar reviews](https://docs.stripe.com/radar/reviews) for details.
          */
         type: string;
       }
@@ -515,7 +515,7 @@ declare module 'stripe' {
         twint?: PaymentMethodDetails.Twint;
 
         /**
-         * The type of transaction-specific details of the payment method used in the payment. See [PaymentMethod.type](https://stripe.com/docs/api/payment_methods/object#payment_method_object-type) for the full list of possible types.
+         * The type of transaction-specific details of the payment method used in the payment. See [PaymentMethod.type](https://docs.stripe.com/api/payment_methods/object#payment_method_object-type) for the full list of possible types.
          * An additional hash is included on `payment_method_details` with a name matching this value.
          * It contains information specific to the payment method.
          */
@@ -596,6 +596,11 @@ declare module 'stripe' {
           bank_name: string | null;
 
           /**
+           * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+           */
+          expected_debit_date?: string;
+
+          /**
            * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
            */
           fingerprint: string | null;
@@ -623,12 +628,12 @@ declare module 'stripe' {
 
         interface Affirm {
           /**
-           * ID of the [location](https://stripe.com/docs/api/terminal/locations) that this transaction's reader is assigned to.
+           * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
            */
           location?: string;
 
           /**
-           * ID of the [reader](https://stripe.com/docs/api/terminal/readers) this transaction was made on.
+           * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
            */
           reader?: string;
 
@@ -751,6 +756,11 @@ declare module 'stripe' {
           bsb_number: string | null;
 
           /**
+           * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+           */
+          expected_debit_date?: string;
+
+          /**
            * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
            */
           fingerprint: string | null;
@@ -767,6 +777,11 @@ declare module 'stripe' {
         }
 
         interface BacsDebit {
+          /**
+           * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+           */
+          expected_debit_date?: string;
+
           /**
            * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
            */
@@ -936,7 +951,7 @@ declare module 'stripe' {
           /**
            * Installment details for this payment.
            *
-           * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
+           * For more information, see the [installments integration guide](https://docs.stripe.com/payments/installments).
            */
           installments: Card.Installments | null;
 
@@ -1377,7 +1392,7 @@ declare module 'stripe' {
           iin?: string | null;
 
           /**
-           * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
+           * Whether this [PaymentIntent](https://docs.stripe.com/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://docs.stripe.com/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
            */
           incremental_authorization_supported: boolean;
 
@@ -1716,7 +1731,7 @@ declare module 'stripe' {
 
         interface Ideal {
           /**
-           * The customer's bank. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
+           * The customer's bank. Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `finom`, `handelsbanken`, `ing`, `knab`, `mollie`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
            */
           bank: Ideal.Bank | null;
 
@@ -1762,6 +1777,7 @@ declare module 'stripe' {
             | 'handelsbanken'
             | 'ing'
             | 'knab'
+            | 'mollie'
             | 'moneyou'
             | 'n26'
             | 'nn'
@@ -1784,6 +1800,7 @@ declare module 'stripe' {
             | 'HANDNL2A'
             | 'INGBNL2A'
             | 'KNABNL2H'
+            | 'MLLENL2A'
             | 'MOYONL21'
             | 'NNBANL2G'
             | 'NTSBDEB1'
@@ -2158,6 +2175,11 @@ declare module 'stripe' {
           branch_code: string;
 
           /**
+           * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+           */
+          expected_debit_date?: string;
+
+          /**
            * Last four digits of the bank account number.
            */
           last4: string;
@@ -2240,12 +2262,12 @@ declare module 'stripe' {
 
         interface Paynow {
           /**
-           * ID of the [location](https://stripe.com/docs/api/terminal/locations) that this transaction's reader is assigned to.
+           * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
            */
           location?: string;
 
           /**
-           * ID of the [reader](https://stripe.com/docs/api/terminal/readers) this transaction was made on.
+           * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
            */
           reader?: string;
 
@@ -2499,6 +2521,11 @@ declare module 'stripe' {
           country: string | null;
 
           /**
+           * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+           */
+          expected_debit_date?: string;
+
+          /**
            * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
            */
           fingerprint: string | null;
@@ -2509,7 +2536,7 @@ declare module 'stripe' {
           last4: string | null;
 
           /**
-           * Find the ID of the mandate used for this payment under the [payment_method_details.sepa_debit.mandate](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-sepa_debit-mandate) property on the Charge. Use this mandate ID to [retrieve the Mandate](https://stripe.com/docs/api/mandates/retrieve).
+           * Find the ID of the mandate used for this payment under the [payment_method_details.sepa_debit.mandate](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-sepa_debit-mandate) property on the Charge. Use this mandate ID to [retrieve the Mandate](https://docs.stripe.com/api/mandates/retrieve).
            */
           mandate: string | null;
         }
@@ -2630,6 +2657,11 @@ declare module 'stripe' {
           bank_name: string | null;
 
           /**
+           * Estimated date to debit the customer's bank account. A date string in YYYY-MM-DD format.
+           */
+          expected_debit_date?: string;
+
+          /**
            * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
            */
           fingerprint: string | null;
@@ -2670,12 +2702,12 @@ declare module 'stripe' {
           fingerprint: string | null;
 
           /**
-           * ID of the [location](https://stripe.com/docs/api/terminal/locations) that this transaction's reader is assigned to.
+           * ID of the [location](https://docs.stripe.com/api/terminal/locations) that this transaction's reader is assigned to.
            */
           location?: string;
 
           /**
-           * ID of the [reader](https://stripe.com/docs/api/terminal/readers) this transaction was made on.
+           * ID of the [reader](https://docs.stripe.com/api/terminal/readers) this transaction was made on.
            */
           reader?: string;
 
@@ -2702,7 +2734,7 @@ declare module 'stripe' {
 
       interface RadarOptions {
         /**
-         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+         * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
          */
         session?: string;
       }

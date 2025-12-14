@@ -67,6 +67,11 @@ declare module 'stripe' {
         capital_overview?: Components.CapitalOverview;
 
         /**
+         * Configuration for the [check scanning](https://docs.stripe.com/connect/supported-embedded-components/check-scanning/) embedded component.
+         */
+        check_scanning?: Components.CheckScanning;
+
+        /**
          * Configuration for the [disputes list](https://docs.stripe.com/connect/supported-embedded-components/disputes-list/) embedded component.
          */
         disputes_list?: Components.DisputesList;
@@ -374,6 +379,22 @@ declare module 'stripe' {
         }
 
         namespace CapitalOverview {
+          interface Features {}
+        }
+
+        interface CheckScanning {
+          /**
+           * Whether the embedded component is enabled.
+           */
+          enabled: boolean;
+
+          /**
+           * An empty list, because this embedded component has no features.
+           */
+          features?: CheckScanning.Features;
+        }
+
+        namespace CheckScanning {
           interface Features {}
         }
 

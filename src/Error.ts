@@ -39,6 +39,8 @@ export const generateV2Error = (
       return new AlreadyExistsError(rawStripeError);
     case 'blocked_by_stripe':
       return new BlockedByStripeError(rawStripeError);
+    case 'controlled_by_alternate_resource':
+      return new ControlledByAlternateResourceError(rawStripeError);
     case 'controlled_by_dashboard':
       return new ControlledByDashboardError(rawStripeError);
     case 'feature_not_enabled':
@@ -273,6 +275,11 @@ export class AlreadyExistsError extends StripeError {
 export class BlockedByStripeError extends StripeError {
   constructor(rawStripeError: StripeRawError = {}) {
     super(rawStripeError, 'BlockedByStripeError');
+  }
+}
+export class ControlledByAlternateResourceError extends StripeError {
+  constructor(rawStripeError: StripeRawError = {}) {
+    super(rawStripeError, 'ControlledByAlternateResourceError');
   }
 }
 export class ControlledByDashboardError extends StripeError {

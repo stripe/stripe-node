@@ -252,6 +252,7 @@ declare module 'stripe' {
            * @throws Stripe.BlockedByStripeError
            * @throws Stripe.InvalidPayoutMethodError
            * @throws Stripe.QuotaExceededError
+           * @throws Stripe.ControlledByAlternateResourceError
            */
           create(
             params?: OutboundSetupIntentCreateParams,
@@ -287,6 +288,7 @@ declare module 'stripe' {
            * @throws Stripe.QuotaExceededError
            * @throws Stripe.BlockedByStripeError
            * @throws Stripe.InvalidPayoutMethodError
+           * @throws Stripe.ControlledByAlternateResourceError
            */
           update(
             id: string,

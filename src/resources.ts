@@ -9,6 +9,7 @@ import {Accounts as V2CoreAccounts} from './resources/V2/Core/Accounts.js';
 import {ActiveEntitlements as EntitlementsActiveEntitlements} from './resources/Entitlements/ActiveEntitlements.js';
 import {Adjustments as V2MoneyManagementAdjustments} from './resources/V2/MoneyManagement/Adjustments.js';
 import {Alerts as BillingAlerts} from './resources/Billing/Alerts.js';
+import {ApiKeys as V2IamApiKeys} from './resources/V2/Iam/ApiKeys.js';
 import {Associations as TaxAssociations} from './resources/Tax/Associations.js';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {Authorizations as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
@@ -51,6 +52,8 @@ import {FinancingTransactions as CapitalFinancingTransactions} from './resources
 import {Forms as TaxForms} from './resources/Tax/Forms.js';
 import {FraudLiabilityDebits as IssuingFraudLiabilityDebits} from './resources/Issuing/FraudLiabilityDebits.js';
 import {GbBankAccounts as V2CoreVaultGbBankAccounts} from './resources/V2/Core/Vault/GbBankAccounts.js';
+import {GrantedTokens as SharedPaymentGrantedTokens} from './resources/SharedPayment/GrantedTokens.js';
+import {GrantedTokens as TestHelpersSharedPaymentGrantedTokens} from './resources/TestHelpers/SharedPayment/GrantedTokens.js';
 import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers.js';
 import {InboundTransfers as V2MoneyManagementInboundTransfers} from './resources/V2/MoneyManagement/InboundTransfers.js';
@@ -60,6 +63,7 @@ import {LicenseFeeSubscriptions as V2BillingLicenseFeeSubscriptions} from './res
 import {LicenseFees as V2BillingLicenseFees} from './resources/V2/Billing/LicenseFees.js';
 import {LicensedItems as V2BillingLicensedItems} from './resources/V2/Billing/LicensedItems.js';
 import {Locations as TerminalLocations} from './resources/Terminal/Locations.js';
+import {ManualRules as V2TaxManualRules} from './resources/V2/Tax/ManualRules.js';
 import {MeterEventAdjustments as BillingMeterEventAdjustments} from './resources/Billing/MeterEventAdjustments.js';
 import {MeterEventAdjustments as V2BillingMeterEventAdjustments} from './resources/V2/Billing/MeterEventAdjustments.js';
 import {MeterEventSession as V2BillingMeterEventSession} from './resources/V2/Billing/MeterEventSession.js';
@@ -119,6 +123,7 @@ import {Sessions as BillingPortalSessions} from './resources/BillingPortal/Sessi
 import {Sessions as CheckoutSessions} from './resources/Checkout/Sessions.js';
 import {Sessions as FinancialConnectionsSessions} from './resources/FinancialConnections/Sessions.js';
 import {Settings as TaxSettings} from './resources/Tax/Settings.js';
+import {SettlementAllocationIntents as V2PaymentsSettlementAllocationIntents} from './resources/V2/Payments/SettlementAllocationIntents.js';
 import {Suppliers as ClimateSuppliers} from './resources/Climate/Suppliers.js';
 import {TestClocks as TestHelpersTestClocks} from './resources/TestHelpers/TestClocks.js';
 import {Tokens as IssuingTokens} from './resources/Issuing/Tokens.js';
@@ -280,6 +285,9 @@ export const Reporting = resourceNamespace('reporting', {
   ReportRuns: ReportingReportRuns,
   ReportTypes: ReportingReportTypes,
 });
+export const SharedPayment = resourceNamespace('sharedPayment', {
+  GrantedTokens: SharedPaymentGrantedTokens,
+});
 export const Sigma = resourceNamespace('sigma', {
   ScheduledQueryRuns: SigmaScheduledQueryRuns,
 });
@@ -312,6 +320,9 @@ export const TestHelpers = resourceNamespace('testHelpers', {
     Cards: TestHelpersIssuingCards,
     PersonalizationDesigns: TestHelpersIssuingPersonalizationDesigns,
     Transactions: TestHelpersIssuingTransactions,
+  }),
+  SharedPayment: resourceNamespace('sharedPayment', {
+    GrantedTokens: TestHelpersSharedPaymentGrantedTokens,
   }),
   Terminal: resourceNamespace('terminal', {
     Readers: TestHelpersTerminalReaders,
@@ -370,6 +381,7 @@ export const V2 = resourceNamespace('v2', {
       UsBankAccounts: V2CoreVaultUsBankAccounts,
     }),
   }),
+  Iam: resourceNamespace('iam', {ApiKeys: V2IamApiKeys}),
   MoneyManagement: resourceNamespace('moneyManagement', {
     Adjustments: V2MoneyManagementAdjustments,
     CurrencyConversions: V2MoneyManagementCurrencyConversions,
@@ -390,11 +402,13 @@ export const V2 = resourceNamespace('v2', {
   }),
   Payment: resourceNamespace('payment', {
     OffSessionPayments: V2PaymentsOffSessionPayments,
+    SettlementAllocationIntents: V2PaymentsSettlementAllocationIntents,
   }),
   Reporting: resourceNamespace('reporting', {
     ReportRuns: V2ReportingReportRuns,
     Reports: V2ReportingReports,
   }),
+  Tax: resourceNamespace('tax', {ManualRules: V2TaxManualRules}),
   TestHelper: resourceNamespace('testHelper', {
     FinancialAddresses: V2TestHelpersFinancialAddresses,
     MoneyManagement: V2TestHelpersMoneyManagement,

@@ -25,7 +25,7 @@ declare module 'stripe' {
         /**
          * The account the balance is for.
          */
-        customer_account?: string | null;
+        customer_account: string | null;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -99,7 +99,7 @@ declare module 'stripe' {
                 lookup_key: string | null;
 
                 /**
-                 * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+                 * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
                  */
                 metadata: Stripe.Metadata;
 
@@ -183,7 +183,7 @@ declare module 'stripe' {
                 lookup_key: string | null;
 
                 /**
-                 * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+                 * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
                  */
                 metadata: Stripe.Metadata;
 

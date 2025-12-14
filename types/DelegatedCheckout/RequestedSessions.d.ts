@@ -63,7 +63,7 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
         metadata: Stripe.Metadata | null;
 
@@ -229,6 +229,16 @@ declare module 'stripe' {
 
         interface LineItemDetail {
           /**
+           * The total discount for this line item. If no discount were applied, defaults to 0.
+           */
+          amount_discount: number;
+
+          /**
+           * The total before any discounts or taxes are applied.
+           */
+          amount_subtotal: number;
+
+          /**
            * The description of the line item.
            */
           description: string | null;
@@ -248,6 +258,8 @@ declare module 'stripe' {
            */
           name: string;
 
+          product_details?: LineItemDetail.ProductDetails;
+
           /**
            * The quantity of the line item.
            */
@@ -262,16 +274,70 @@ declare module 'stripe' {
            * The per-unit amount of the item before any discounts or taxes are applied.
            */
           unit_amount: number;
+        }
 
-          /**
-           * The total discount for this line item. If no discount were applied, defaults to 0.
-           */
-          amount_discount: number;
+        namespace LineItemDetail {
+          interface ProductDetails {
+            /**
+             * Custom attributes for the product.
+             */
+            custom_attributes: Array<ProductDetails.CustomAttribute> | null;
 
-          /**
-           * The total before any discounts or taxes are applied.
-           */
-          amount_subtotal: number;
+            /**
+             * The description of the product.
+             */
+            description: string | null;
+
+            /**
+             * Disclosures for the product.
+             */
+            disclosures: Array<ProductDetails.Disclosure> | null;
+
+            /**
+             * The images of the product.
+             */
+            images: Array<string> | null;
+
+            /**
+             * The title of the product.
+             */
+            title: string;
+          }
+
+          namespace ProductDetails {
+            interface CustomAttribute {
+              /**
+               * The display name of the custom attribute.
+               */
+              display_name: string;
+
+              /**
+               * The value of the custom attribute.
+               */
+              value: string;
+            }
+
+            interface Disclosure {
+              /**
+               * The content of the disclosure.
+               */
+              content: string;
+
+              /**
+               * The content type of the disclosure.
+               */
+              content_type: Disclosure.ContentType;
+
+              /**
+               * The type of disclosure.
+               */
+              type: 'disclaimer';
+            }
+
+            namespace Disclosure {
+              type ContentType = 'link' | 'markdown' | 'plain';
+            }
+          }
         }
 
         interface OrderDetails {
@@ -350,24 +416,24 @@ declare module 'stripe' {
 
         interface TotalDetails {
           /**
-           * The amount fulfillment of the total details.
-           */
-          amount_fulfillment: number | null;
-
-          /**
-           * The amount tax of the total details.
-           */
-          amount_tax: number | null;
-
-          /**
            * The amount of order-level discounts applied to the cart. The total discount amount for this session can be computed by summing the cart discount and the item discounts.
            */
           amount_cart_discount: number | null;
 
           /**
+           * The amount fulfillment of the total details.
+           */
+          amount_fulfillment: number | null;
+
+          /**
            * The amount of item-level discounts applied to the cart. The total discount amount for this session can be computed by summing the cart discount and the item discounts.
            */
           amount_items_discount: number | null;
+
+          /**
+           * The amount tax of the total details.
+           */
+          amount_tax: number | null;
 
           /**
            * The applicable fees of the total details.

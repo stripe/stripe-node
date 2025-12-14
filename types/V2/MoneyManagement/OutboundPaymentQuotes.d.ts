@@ -78,10 +78,17 @@ declare module 'stripe' {
              * Open Enum. Method for bank account.
              */
             bank_account?: DeliveryOptions.BankAccount;
+
+            /**
+             * Open Enum. Speed of the payout.
+             */
+            speed?: DeliveryOptions.Speed;
           }
 
           namespace DeliveryOptions {
             type BankAccount = 'automatic' | 'local' | 'wire';
+
+            type Speed = 'instant' | 'next_business_day' | 'standard';
           }
 
           interface EstimatedFee {
@@ -113,6 +120,7 @@ declare module 'stripe' {
               | 'cross_border_payout_fee'
               | 'foreign_exchange_fee'
               | 'instant_payout_fee'
+              | 'real_time_payout_fee'
               | 'standard_payout_fee'
               | 'wire_payout_fee';
           }

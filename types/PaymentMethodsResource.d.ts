@@ -179,7 +179,7 @@ declare module 'stripe' {
       mb_way?: PaymentMethodCreateParams.MbWay;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.MetadataParam;
 
@@ -264,7 +264,7 @@ declare module 'stripe' {
       qris?: PaymentMethodCreateParams.Qris;
 
       /**
-       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       * Options to configure Radar. See [Radar Session](https://docs.stripe.com/radar/radar-session) for more information.
        */
       radar_options?: PaymentMethodCreateParams.RadarOptions;
 
@@ -604,6 +604,7 @@ declare module 'stripe' {
           | 'handelsbanken'
           | 'ing'
           | 'knab'
+          | 'mollie'
           | 'moneyou'
           | 'n26'
           | 'nn'
@@ -772,7 +773,7 @@ declare module 'stripe' {
 
       interface RadarOptions {
         /**
-         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+         * A [Radar Session](https://docs.stripe.com/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
          */
         session?: string;
       }
@@ -976,7 +977,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
@@ -1185,7 +1186,7 @@ declare module 'stripe' {
       customer?: string;
 
       /**
-       * The ID of the account to which to attach the PaymentMethod.
+       * The ID of the Account representing the customer to which to attach the PaymentMethod.
        */
       customer_account?: string;
 
@@ -1246,7 +1247,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 
       /**
-       * Returns a list of PaymentMethods for Treasury flows. If you want to list the PaymentMethods attached to a Customer for payments, you should use the [List a Customer's PaymentMethods](https://docs.stripe.com/docs/api/payment_methods/customer_list) API instead.
+       * Returns a list of all PaymentMethods.
        */
       list(
         params?: PaymentMethodListParams,

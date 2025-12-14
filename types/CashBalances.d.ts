@@ -12,7 +12,7 @@ declare module 'stripe' {
       object: 'cash_balance';
 
       /**
-       * A hash of all cash balances available to this customer. You cannot delete a customer with any cash balances, even if the balance is 0. Amounts are represented in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+       * A hash of all cash balances available to this customer. You cannot delete a customer with any cash balances, even if the balance is 0. Amounts are represented in the [smallest currency unit](https://docs.stripe.com/currencies#zero-decimal).
        */
       available: {
         [key: string]: number;
@@ -24,9 +24,9 @@ declare module 'stripe' {
       customer: string;
 
       /**
-       * The ID of the account whose cash balance this object represents.
+       * The ID of an Account representing a customer whose cash balance this object represents.
        */
-      customer_account?: string | null;
+      customer_account: string | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
