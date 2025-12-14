@@ -65,10 +65,17 @@ declare module 'stripe' {
            * The status of the FinancialAccount to filter by. By default, closed FinancialAccounts are not returned.
            */
           status?: FinancialAccountListParams.Status;
+
+          /**
+           * Filter for FinancialAccount `type`. By default, FinancialAccounts of any `type` are returned.
+           */
+          types?: Array<FinancialAccountListParams.Type>;
         }
 
         namespace FinancialAccountListParams {
           type Status = 'closed' | 'open' | 'pending';
+
+          type Type = 'payments' | 'storage';
         }
       }
 

@@ -3526,6 +3526,11 @@ declare module 'stripe' {
               namespace Capabilities {
                 interface BankAccounts {
                   /**
+                   * Enables this Account to receive OutboundPayments to linked bank accounts over real time rails.
+                   */
+                  instant?: BankAccounts.Instant;
+
+                  /**
                    * Enables this Account to receive OutboundPayments to linked bank accounts over local networks.
                    */
                   local?: BankAccounts.Local;
@@ -3537,6 +3542,54 @@ declare module 'stripe' {
                 }
 
                 namespace BankAccounts {
+                  interface Instant {
+                    /**
+                     * The status of the Capability.
+                     */
+                    status: Instant.Status;
+
+                    /**
+                     * Additional details about the capability's status. This value is empty when `status` is `active`.
+                     */
+                    status_details: Array<Instant.StatusDetail>;
+                  }
+
+                  namespace Instant {
+                    type Status =
+                      | 'active'
+                      | 'pending'
+                      | 'restricted'
+                      | 'unsupported';
+
+                    interface StatusDetail {
+                      /**
+                       * Machine-readable code explaining the reason for the Capability to be in its current status.
+                       */
+                      code: StatusDetail.Code;
+
+                      /**
+                       * Machine-readable code explaining how to make the Capability active.
+                       */
+                      resolution: StatusDetail.Resolution;
+                    }
+
+                    namespace StatusDetail {
+                      type Code =
+                        | 'determining_status'
+                        | 'requirements_past_due'
+                        | 'requirements_pending_verification'
+                        | 'restricted_other'
+                        | 'unsupported_business'
+                        | 'unsupported_country'
+                        | 'unsupported_entity_type';
+
+                      type Resolution =
+                        | 'contact_stripe'
+                        | 'no_resolution'
+                        | 'provide_info';
+                    }
+                  }
+
                   interface Local {
                     /**
                      * The status of the Capability.
@@ -5221,6 +5274,7 @@ declare module 'stripe' {
                     | 'au_becs_debit_payments'
                     | 'bacs_debit_payments'
                     | 'bancontact_payments'
+                    | 'bank_accounts.instant'
                     | 'bank_accounts.local'
                     | 'bank_accounts.wire'
                     | 'blik_payments'
@@ -7593,6 +7647,7 @@ declare module 'stripe' {
                     | 'au_becs_debit_payments'
                     | 'bacs_debit_payments'
                     | 'bancontact_payments'
+                    | 'bank_accounts.instant'
                     | 'bank_accounts.local'
                     | 'bank_accounts.wire'
                     | 'blik_payments'

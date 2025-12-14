@@ -6,22 +6,22 @@ declare module 'stripe' {
       namespace Payments {
         interface SettlementAllocationIntentCreateParams {
           /**
-           * The amount and currency of the SettlementAllocationIntent.
+           * The amount and currency of the SettlementAllocationIntent. Allowed Currencies are `gbp` | `eur`.
            */
           amount: SettlementAllocationIntentCreateParams.Amount;
 
           /**
-           * Expected date when we expect to receive the funds.
+           * Date when we expect to receive the funds. Must be in future .
            */
           expected_settlement_date: string;
 
           /**
-           * FinancialAccount where the funds are expected to land / FinancialAccount to map this SettlementAllocationIntent to.
+           * Financial Account Id where the funds are expected for this SettlementAllocationIntent.
            */
           financial_account: string;
 
           /**
-           * Reference for the settlement intent . Max 255 characters . The reference used by PSP to send funds to Stripe .
+           * Reference for the SettlementAllocationIntent. This should be same as the transaction reference used by payments processor to send funds to Stripe. Must have length between 5 and 255 characters and it must be unique among existing SettlementAllocationIntents that have a non-terminal status (`pending`, `submitted`, `matched`, `errored`).
            */
           reference: string;
 
@@ -53,7 +53,7 @@ declare module 'stripe' {
       namespace Payments {
         interface SettlementAllocationIntentUpdateParams {
           /**
-           * The new amount for the SettlementAllocationIntent.
+           * The new amount for the SettlementAllocationIntent. Only amount.value can be updated and currency must remain same.
            */
           amount?: SettlementAllocationIntentUpdateParams.Amount;
 
@@ -91,7 +91,7 @@ declare module 'stripe' {
           splits: Stripe.V2.Payments.SettlementAllocationIntents.SplitsResource;
 
           /**
-           * Create SettlementAllocationIntent API.
+           * Create a new SettlementAllocationIntent.
            */
           create(
             params: SettlementAllocationIntentCreateParams,
@@ -101,7 +101,7 @@ declare module 'stripe' {
           >;
 
           /**
-           * Retrieve SettlementAllocationIntent API.
+           * Retrieve an existing SettlementAllocationIntent.
            */
           retrieve(
             id: string,
@@ -118,7 +118,7 @@ declare module 'stripe' {
           >;
 
           /**
-           * Update SettlementAllocationIntent API.
+           * Updates SettlementAllocationIntent. Only SettlementAllocationIntent with status `pending`, `submitted` and `errored` can be updated. Only amount and reference fields can be updated for a SettlementAllocationIntent and at least one must be present. Updating an `amount` moves the SettlementAllocationIntent `pending` status and updating the `reference` for `errored` SettlementAllocationIntent moves it to `submitted`.
            */
           update(
             id: string,
@@ -129,7 +129,7 @@ declare module 'stripe' {
           >;
 
           /**
-           * Cancel SettlementAllocationIntent API.
+           * Cancels an existing SettlementAllocationIntent. Only SettlementAllocationIntent with status `pending`, `submitted` and `errored` can be `canceled`.
            */
           cancel(
             id: string,
@@ -146,7 +146,7 @@ declare module 'stripe' {
           >;
 
           /**
-           * Submit SettlementAllocationIntent API.
+           * Submits a SettlementAllocationIntent. Only SettlementAllocationIntent with status `pending` can be `submitted`. The net sum of SettlementAllocationIntentSplit amount must be equal to SettlementAllocationIntent amount to be eligible to be submitted.
            */
           submit(
             id: string,

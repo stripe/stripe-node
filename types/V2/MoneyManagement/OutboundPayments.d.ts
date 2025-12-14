@@ -137,10 +137,17 @@ declare module 'stripe' {
              * Open Enum. Method for bank account.
              */
             bank_account?: DeliveryOptions.BankAccount;
+
+            /**
+             * Open Enum. Speed of the payout.
+             */
+            speed?: DeliveryOptions.Speed;
           }
 
           namespace DeliveryOptions {
             type BankAccount = 'automatic' | 'local' | 'wire';
+
+            type Speed = 'instant' | 'next_business_day' | 'standard';
           }
 
           interface From {

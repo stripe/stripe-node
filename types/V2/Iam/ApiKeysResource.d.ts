@@ -93,18 +93,14 @@ declare module 'stripe' {
       }
 
       namespace Iam {
-        interface ApiKeyExpireParams {
-          /**
-           * Duration in minutes before the key expires (defaults to immediate).
-           */
-          expire_in_minutes?: number;
-        }
+        interface ApiKeyExpireParams {}
       }
 
       namespace Iam {
         interface ApiKeyRotateParams {
           /**
-           * Duration in minutes before the current key expires.
+           * Duration in minutes before the current key expires, with a maximum of 7 days (10080 minutes).
+           * If not provided, the current key expires immediately.
            */
           expire_current_key_in_minutes?: number;
 

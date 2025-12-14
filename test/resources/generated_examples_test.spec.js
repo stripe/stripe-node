@@ -5938,7 +5938,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/iam/api_keys',
         response:
-          '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","ip_allowlist":["ip_allowlist"],"object":"v2.iam.api_key","type":"publishable_key","livemode":true}],"next_page_url":null,"previous_page_url":null}',
+          '{"data":[{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","ip_allowlist":["ip_allowlist"],"object":"v2.iam.api_key","status":"active","type":"publishable_key","livemode":true}],"next_page_url":null,"previous_page_url":null}',
       },
     ]);
     const apiKeys = await stripe.v2.iam.apiKeys.list();
@@ -5951,7 +5951,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/iam/api_keys',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","ip_allowlist":["ip_allowlist"],"object":"v2.iam.api_key","type":"publishable_key","livemode":true}',
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","ip_allowlist":["ip_allowlist"],"object":"v2.iam.api_key","status":"active","type":"publishable_key","livemode":true}',
       },
     ]);
     const apiKey = await stripe.v2.iam.apiKeys.create({
@@ -5966,7 +5966,7 @@ describe('Generated tests', function() {
         method: 'GET',
         path: '/v2/iam/api_keys/id_123',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","ip_allowlist":["ip_allowlist"],"object":"v2.iam.api_key","type":"publishable_key","livemode":true}',
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","ip_allowlist":["ip_allowlist"],"object":"v2.iam.api_key","status":"active","type":"publishable_key","livemode":true}',
       },
     ]);
     const apiKey = await stripe.v2.iam.apiKeys.retrieve('id_123');
@@ -5979,7 +5979,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/iam/api_keys/id_123',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","ip_allowlist":["ip_allowlist"],"object":"v2.iam.api_key","type":"publishable_key","livemode":true}',
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","ip_allowlist":["ip_allowlist"],"object":"v2.iam.api_key","status":"active","type":"publishable_key","livemode":true}',
       },
     ]);
     const apiKey = await stripe.v2.iam.apiKeys.update('id_123');
@@ -5992,7 +5992,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/iam/api_keys/id_123/expire',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","ip_allowlist":["ip_allowlist"],"object":"v2.iam.api_key","type":"publishable_key","livemode":true}',
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","ip_allowlist":["ip_allowlist"],"object":"v2.iam.api_key","status":"active","type":"publishable_key","livemode":true}',
       },
     ]);
     const apiKey = await stripe.v2.iam.apiKeys.expire('id_123');
@@ -6005,7 +6005,7 @@ describe('Generated tests', function() {
         method: 'POST',
         path: '/v2/iam/api_keys/id_123/rotate',
         response:
-          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","ip_allowlist":["ip_allowlist"],"object":"v2.iam.api_key","type":"publishable_key","livemode":true}',
+          '{"created":"1970-01-12T21:42:34.472Z","id":"obj_123","ip_allowlist":["ip_allowlist"],"object":"v2.iam.api_key","status":"active","type":"publishable_key","livemode":true}',
       },
     ]);
     const apiKey = await stripe.v2.iam.apiKeys.rotate('id_123');

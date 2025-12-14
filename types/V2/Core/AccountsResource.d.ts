@@ -1194,6 +1194,11 @@ declare module 'stripe' {
               namespace Capabilities {
                 interface BankAccounts {
                   /**
+                   * Enables this Account to receive OutboundPayments to linked bank accounts over real time rails.
+                   */
+                  instant?: BankAccounts.Instant;
+
+                  /**
                    * Enables this Account to receive OutboundPayments to linked bank accounts over local networks.
                    */
                   local?: BankAccounts.Local;
@@ -1205,6 +1210,13 @@ declare module 'stripe' {
                 }
 
                 namespace BankAccounts {
+                  interface Instant {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested: boolean;
+                  }
+
                   interface Local {
                     /**
                      * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -4843,6 +4855,11 @@ declare module 'stripe' {
               namespace Capabilities {
                 interface BankAccounts {
                   /**
+                   * Enables this Account to receive OutboundPayments to linked bank accounts over real time rails.
+                   */
+                  instant?: BankAccounts.Instant;
+
+                  /**
                    * Enables this Account to receive OutboundPayments to linked bank accounts over local networks.
                    */
                   local?: BankAccounts.Local;
@@ -4854,6 +4871,13 @@ declare module 'stripe' {
                 }
 
                 namespace BankAccounts {
+                  interface Instant {
+                    /**
+                     * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                     */
+                    requested?: boolean;
+                  }
+
                   interface Local {
                     /**
                      * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.

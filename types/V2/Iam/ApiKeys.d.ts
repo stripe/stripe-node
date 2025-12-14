@@ -29,7 +29,7 @@ declare module 'stripe' {
           expires_at?: string;
 
           /**
-           * List of IP addresses allowed to use this API key.
+           * List of IP addresses allowed to use this API key. Addresses use IPv4 protocol, and may be a CIDR range (e.g., [100.10.38.255, 100.10.38.0/24]).
            */
           ip_allowlist: Array<string>;
 
@@ -46,7 +46,7 @@ declare module 'stripe' {
           /**
            * Account that manages this API key (for keys managed by platforms).
            */
-          managed_by?: string;
+          managed_by?: ApiKey.ManagedBy;
 
           /**
            * Name of the API key.
@@ -71,7 +71,7 @@ declare module 'stripe' {
           /**
            * Current status of the API key (e.g., active, expired).
            */
-          status?: ApiKey.Status;
+          status: ApiKey.Status;
 
           /**
            * Type of the API key.
@@ -80,11 +80,32 @@ declare module 'stripe' {
         }
 
         namespace ApiKey {
+          interface ManagedBy {
+            /**
+             * The type of entity.
+             */
+            type: 'application';
+
+            /**
+             * An application.
+             */
+            application?: ManagedBy.Application;
+          }
+
+          namespace ManagedBy {
+            interface Application {
+              /**
+               * Identifier of the application.
+               */
+              id: string;
+            }
+          }
+
           interface PublishableKey {
             /**
              * The plaintext token for the API key.
              */
-            token?: string;
+            token: string;
           }
 
           interface SecretKey {

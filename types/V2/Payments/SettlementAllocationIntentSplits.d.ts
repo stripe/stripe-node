@@ -19,7 +19,7 @@ declare module 'stripe' {
           object: 'v2.payments.settlement_allocation_intent_split';
 
           /**
-           * The ID of the account that will be used for the debit/credit.
+           * The account id against which the SettlementAllocationIntentSplit should be settled.
            */
           account: string;
 
@@ -74,22 +74,22 @@ declare module 'stripe' {
 
           interface Flow {
             /**
-             * Type of the flow linked to the transaction which settled the split. The field matching this value will contain the ID of the flow.
+             * Type of the flow linked to the transaction which settled the SettlementAllocationIntentSplit. The field matching this value will contain the ID of the flow.
              */
             type: Flow.Type;
 
             /**
-             * If applicable, the ID of the OutboundPayment that created this Transaction.
+             * If applicable, the ID of the OutboundPayment that created this transaction.
              */
             outbound_payment?: string;
 
             /**
-             * If applicable, the ID of the OutboundTransfer that created this Transaction.
+             * If applicable, the ID of the OutboundTransfer that created this transaction.
              */
             outbound_transfer?: string;
 
             /**
-             * If applicable, the ID of the ReceivedCredit that created this Transaction.
+             * If applicable, the ID of the ReceivedCredit that created this transaction.
              */
             received_credit?: string;
           }

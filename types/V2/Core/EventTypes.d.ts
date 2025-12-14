@@ -1769,6 +1769,7 @@ declare module 'stripe' {
 
       namespace Data {
         export type UpdatedCapability =
+          | 'bank_accounts.instant'
           | 'bank_accounts.local'
           | 'bank_accounts.wire'
           | 'cards'
@@ -5266,7 +5267,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when a settlement allocation intent is canceled.
+     * Occurs when a SettlementAllocationIntent is canceled.
      */
     export interface V2PaymentsSettlementAllocationIntentCanceledEvent
       extends V2.Core.EventBase {
@@ -5287,7 +5288,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when a settlement allocation intent is created.
+     * Occurs when a SettlementAllocationIntent is created.
      */
     export interface V2PaymentsSettlementAllocationIntentCreatedEvent
       extends V2.Core.EventBase {
@@ -5308,7 +5309,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when an error occurs in reconciling a settlement allocation intent.
+     * Occurs when an error occurs in reconciling a SettlementAllocationIntent.
      */
     export interface V2PaymentsSettlementAllocationIntentErroredEvent
       extends V2.Core.EventBase {
@@ -5350,7 +5351,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when no received credit exists for a settlement allocation intent.
+     * Occurs when SettlementAllocationIntent's `expected_settlement_date` is one day away and no matching ReceivedCredit exists.
      */
     export interface V2PaymentsSettlementAllocationIntentFundsNotReceivedEvent
       extends V2.Core.EventBase {
@@ -5373,7 +5374,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when a settlement allocation intent is matched.
+     * Occurs when a SettlementAllocationIntent is matched.
      */
     export interface V2PaymentsSettlementAllocationIntentMatchedEvent
       extends V2.Core.EventBase {
@@ -5394,7 +5395,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when a ReceivedCredit has no settlement intent matching it.
+     * Occurs when a ReceivedCredit has no SettlementAllocationIntent matching it.
      */
     export interface V2PaymentsSettlementAllocationIntentNotFoundEvent
       extends V2.Core.EventBase {
@@ -5418,7 +5419,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when a settlement allocation intent is settled.
+     * Occurs when a SettlementAllocationIntent is settled.
      */
     export interface V2PaymentsSettlementAllocationIntentSettledEvent
       extends V2.Core.EventBase {
@@ -5439,7 +5440,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when a settlement allocation intent is submitted.
+     * Occurs when a SettlementAllocationIntent is submitted.
      */
     export interface V2PaymentsSettlementAllocationIntentSubmittedEvent
       extends V2.Core.EventBase {
@@ -5460,7 +5461,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when a settlement allocation intent split is canceled.
+     * Occurs when a SettlementAllocationIntentSplit is canceled.
      */
     export interface V2PaymentsSettlementAllocationIntentSplitCanceledEvent
       extends V2.Core.EventBase {
@@ -5498,7 +5499,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when a settlement allocation intent split is created.
+     * Occurs when a SettlementAllocationIntentSplit is created.
      */
     export interface V2PaymentsSettlementAllocationIntentSplitCreatedEvent
       extends V2.Core.EventBase {
@@ -5536,7 +5537,7 @@ declare module 'stripe' {
     }
 
     /**
-     * Occurs when a settlement allocation intent split is settled.
+     * Occurs when a SettlementAllocationIntentSplit is settled.
      */
     export interface V2PaymentsSettlementAllocationIntentSplitSettledEvent
       extends V2.Core.EventBase {

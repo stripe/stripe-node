@@ -24,17 +24,17 @@ declare module 'stripe' {
           amount: SettlementAllocationIntent.Amount;
 
           /**
-           * Timestamp at which Settlement Intent was created .
+           * Timestamp at which SettlementAllocationIntent was created .
            */
           created: string;
 
           /**
-           * Expected date when we expect to receive the funds.
+           * Date when we expect to receive the funds.
            */
           expected_settlement_date: string;
 
           /**
-           * Financial Account Id where the funds are expected.
+           * FinancialAccount ID where the funds are expected.
            */
           financial_account: string;
 
@@ -54,17 +54,17 @@ declare module 'stripe' {
           metadata?: Stripe.Metadata;
 
           /**
-           * Reference for the settlement intent . The reference used by PSP to send funds to Stripe .
+           * Reference for the SettlementAllocationIntent. This is the transaction reference used by payments processor to send funds to Stripe .
            */
           reference: string;
 
           /**
-           * Settlement Intent status.
+           * SettlementAllocationIntent status.
            */
           status: SettlementAllocationIntent.Status;
 
           /**
-           * This hash contains detailed information that elaborates on the specific status of the SettlementAllocationIntent. e.g the reason behind the error failure if the status is marked as `errored`.
+           * Status details for a SettlementAllocationIntent in `errored` state.
            */
           status_details?: SettlementAllocationIntent.StatusDetails;
         }

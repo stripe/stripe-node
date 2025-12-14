@@ -7,7 +7,7 @@ declare module 'stripe' {
         namespace SettlementAllocationIntents {
           interface SplitCreateParams {
             /**
-             * The account to target for this credit/debit.
+             * The target account for settling the SettlementAllocationIntentSplit.
              */
             account: string;
 
