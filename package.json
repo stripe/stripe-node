@@ -1,6 +1,6 @@
 {
   "name": "stripe",
-  "version": "20.1.0-alpha.4",
+  "version": "20.2.0-alpha.1",
   "description": "Stripe API wrapper",
   "keywords": [
     "stripe",
